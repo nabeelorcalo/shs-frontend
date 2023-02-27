@@ -11,6 +11,7 @@ interface ButtonProps {
   onClick?: () => void,
   disabled?: boolean,
   icon?: any
+  style?: any
 }
 
 export const Button = ({ 
@@ -30,7 +31,7 @@ export const Button = ({
       size={size}
       type={type}
       block={block}
-      style={{ backgroundColor: color }}
+      style={{ backgroundColor: color, ...props?.style }}
       loading={loading}
       shape={shape}
       disabled={disabled}
