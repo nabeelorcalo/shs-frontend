@@ -2,7 +2,8 @@ import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
 import { Layout } from 'antd';
 import AppHeader from './components/header';
-const { Footer, Sider, Content } = Layout;
+import AppSidebar from './components/sidebar';
+const { Footer, Content } = Layout;
 
 
 function AppLayout() {
@@ -38,7 +39,7 @@ function AppLayout() {
 
       <Layout>
 
-        <Sider>Sider</Sider>
+        <AppSidebar />
 
         <Content>Content</Content>
 

@@ -151,3 +151,102 @@
   }
 }
 
+
+.ant-drawer  {
+  .ant-drawer-content.notifications-drawer {
+    border-radius: 8px 0 0 8px;
+    .ant-drawer-header {
+      padding: 30px 30px 10px 30px;
+      border: none;
+      .ant-drawer-title {
+        color: #4C0027;
+        font-size: 18px;
+        line-height: 1.333333;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+      }
+    }
+    .ant-drawer-body {
+      padding: 0 30px 10px 30px;
+
+      .ant-list.ant-list-split {
+        .ant-list-items {
+          .ant-list-item {
+            border-color: #D9DBE9;
+            padding-top: 20px;
+            padding-bottom: 10px;
+
+            .ant-list-item-meta {
+              .ant-list-item-meta-avatar {
+                margin-right: 15px;
+              }
+              .ant-list-item-meta-title {
+                color: #14142B;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.5714285;
+                font-family: 'Poppins', sans-serif;
+                margin: 0;
+              }
+              .ant-list-item-meta-description {
+                color: #A0A3BD;
+                font-size: 12px;
+                line-height: 2;
+                font-family: 'Poppins', sans-serif;
+                margin-top: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.ant-dropdown.user-dropdown {
+  .user-dropdown-container {
+    padding: 20px 30px;
+    background-color: #fff;
+    box-shadow: 0px 0px 8px 2px #09A1DA1A;
+    border-radius: 8px;
+    min-width: 336px;
+    box-sizing: border-box;
+
+    .user-dropdown-meta {
+      display: flex;
+      border-bottom: 1px solid #D9DBE9;
+      padding-bottom: 20px;
+
+      .ant-avatar {
+        margin-right: 20px;
+      }
+      .user-dropdown-meta-content {
+        flex: 1;
+
+        .ant-typography {
+          margin: 0;
+        }
+        .user-meta-role {
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 1.5;
+        }
+      }
+    }
+
+    .ant-dropdown-menu {
+      padding: 10px 0;
+      .ant-dropdown-menu-item {
+        padding: 10px 0;
+        font-size: 14px;
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+    
+  }
+}
+
+
