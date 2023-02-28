@@ -1,0 +1,23 @@
+.input-wrapper {
+    .search-bar {
+        background: #E6F4F9;
+        border-radius: 8px;
+        border: 2px solid transparent;
+        opacity: 0.7;
+
+        &:hover {
+            border: 2px solid rgba(90, 89, 128, 0.5);
+            opacity: 1;
+            background-color: #fff;
+        }
+
+        .ant-input-prefix {
+            margin-right: 10px;
+        }
+
+        .ant-input {
+            background-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+    }
+}
