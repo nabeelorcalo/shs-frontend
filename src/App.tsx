@@ -1,15 +1,29 @@
-import { Space } from 'antd'
-import { Button } from './components'
+import React, {FC, useEffect} from 'react'
+import AppLayout from './layout'
 
 function App() {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
 
+
+
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+
+  }, [])
+
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
-    <div className="p-10">
-      <Space>
-        <Button type='dashed' label='new' />
-        <Button type='primary' label='stuff' />
-      </Space>
-    </div>
+    <AppLayout />
   )
 }
 

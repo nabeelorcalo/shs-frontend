@@ -1,0 +1,153 @@
+.ant-layout-header {
+  background-color: #fff;
+  box-shadow: 0px 4px 12px 0px #0000000A;
+  line-height: normal;
+  padding: 10px 0;
+  height: 80px;
+  display: flex;
+
+  .ikd-logo {
+    width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ikd-header-content {
+    flex: 1;
+    display: flex;
+
+    .ikd-header-left {
+      display: flex;
+      height: 100%;
+
+      .ikd-header-collapsebale {
+        border-left: 1px solid #D9DBE9;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      
+        .ikd-collapseable-button {
+          height: 24px;
+          width: 24px;
+          overflow: hidden;
+          cursor: pointer;
+      
+          .ikd-collapseable-button-toggle {
+            width: 48px;
+            height: 24px;
+            display: flex;
+            transition: all 0.25s;
+          }
+      
+          &.hide {
+            .ikd-collapseable-button-toggle{
+              transform: translateX(0);
+            }
+          }
+          .ikd-collapseable-button-toggle{
+            transform: translateX(-24px);
+          }
+        }
+      }
+      
+      .ikd-search-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 600px;
+        border-left: 1px solid #D9DBE9;
+        padding-left: 20px;
+        .ant-input-group-wrapper {
+          .ant-input-wrapper {
+            .ant-input-affix-wrapper {
+              padding: 0;
+              position: relative;
+              .ant-input-prefix {
+                margin: 0;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                left: 20px;
+                margin-top: -12px;
+                z-index: 99;
+              }
+              .ant-input {
+                background-color: #E6F4F9;
+                border-radius: 8px;
+                transition: all 0.3s;
+                padding-left: 64px;
+                height: 48px;
+                width: 64px;
+                opacity: 0;
+              }
+            }
+            .ant-input-group-addon {
+              display: none;
+            }
+          }
+        }
+        &.expand {
+          .ant-input-group-wrapper {
+            .ant-input-wrapper {
+              .ant-input-affix-wrapper {
+                .ant-input {
+                  width: 100%;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .ikd-header-organisation {
+        border-left: 1px solid #D9DBE9;
+        padding: 0 20px;
+      
+        .organisation-title {
+          font-size: 12px;
+          color: #A0A3BD;
+          line-height: 100%;
+          margin-bottom: 14px;
+        }
+      }
+    }
+
+    .ikd-header-right {
+      display: flex;
+      margin-left: auto;
+      padding-right: 30px;
+      .loggedin-user {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .ikd-header-notification {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 30px;
+
+        .notification-handler {
+          cursor: pointer;
+        }
+      }
+      .ikd-header-message-notif {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 30px;
+
+        .message-notif-handler {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
