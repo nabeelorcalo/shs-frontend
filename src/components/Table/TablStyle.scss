@@ -1,0 +1,138 @@
+.table_main_wrapper {
+    .ant-table-content {
+        table {
+            .ant-table-thead {
+                tr {
+                    .ant-table-cell {
+                        color: #14142A;
+                        font-weight: 400;
+                        text-align: center;
+                        background: #E6F4F9;
+                        border-bottom: unset;
+                        padding-top: 18px;
+                        padding-bottom: 18px;
+
+                    }
+                }
+
+            }
+
+            .ant-table-tbody {
+                background-color: #fff;
+
+                .ant-table-row {
+                    &:hover {
+                        .ant-table-cell {
+                            background: unset;
+                            border-bottom: 1px solid #D9DBE9
+                        }
+
+                    }
+
+                    .ant-table-cell {
+                        border-bottom: 1px solid #fff;
+                        text-align: center;
+                        color: #4E4B66;
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 24px;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    .ant-pagination {
+        .ant-pagination-prev {
+            background: #FFFFFF;
+            border: 1px solid #D9DBE9;
+
+            &:hover {
+                &:not(.ant-pagination-disabled) {
+                    .ant-pagination-item-link {
+                        background-color: #E6F4F9;
+                    }
+                }
+            }
+
+            .ant-pagination-item-link {
+                svg {
+                    path {
+                        fill: #A0A3BD;
+                    }
+                }
+            }
+
+            &.ant-pagination-disabled {
+                background-color: #C4C4CA;
+                border: unset;
+
+                .ant-pagination-item-link {
+                    svg {
+                        path {
+                            fill: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-pagination-next {
+            background: #FFFFFF;
+            border: 1px solid #D9DBE9;
+
+            &:hover {
+                &:not(.ant-pagination-disabled) {
+                    .ant-pagination-item-link {
+                        background-color: #E6F4F9;
+                    }
+                }
+            }
+
+            .ant-pagination-item-link {
+                svg {
+                    path {
+                        fill: #A0A3BD;
+                    }
+                }
+            }
+
+            &.ant-pagination-disabled {
+                background-color: #C4C4CA;
+                border: unset;
+
+                .ant-pagination-item-link {
+                    svg {
+                        path {
+                            fill: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-pagination-item {
+            border: 1px solid #D9DBE9;
+
+            &:not(.ant-pagination-item-active) {
+                &:hover {
+                    background-color: #E6F4F9;
+                }
+
+            }
+
+        }
+
+        .ant-pagination-item-active {
+            border: 1px solid #4A9D77;
+            background-color: #4A9D77;
+
+            a {
+                color: #fff;
+            }
+        }
+
+    }
+}
