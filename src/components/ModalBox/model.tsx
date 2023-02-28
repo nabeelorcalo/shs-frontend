@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-
+import {  Modal } from 'antd';
+import "./modal.scss"
 interface Props {
   title: string;
   okText?: string;
@@ -13,7 +13,7 @@ interface Props {
 const Model = ({ title, okText = 'Add', onOk, open, setOpen, children, ...rest }: Props) => {
 
   return (
-    <Modal title={title} open={open} okText={okText} onOk={setOpen} onCancel={setOpen} closeIcon={''} {...rest}>
+    <Modal width={'650px'} title={title} open={open} okText={okText} onOk={setOpen} onCancel={setOpen} closeIcon={''} {...rest} className='modal-wrapper'>
       {children}
     </Modal>
   )
