@@ -3,8 +3,29 @@
   border-radius: 16px;
 
   .time-clock-in {
-    &:hover {
-      box-shadow: 0 0 15px rgba(33, 33, 33, 0.2);
+    -webkit-animation: glowing 0.4s ease-in-out infinite alternate;
+    -moz-animation: glowing 0.4s ease-in-out infinite alternate;
+    animation: glowing 0.4s ease-in-out infinite alternate;
+  }
+  @keyframes glowing {
+    from {
+      box-shadow: 0 0 15px #b0cfc0, 0 0 20px #7ca591;
+    }
+    to {
+      box-shadow: 0 0 20px #b0cfc0, 0 0 25px #7ca591;
+    }
+  }
+  .time-clock-out {
+    -webkit-animation: glowing1 0.4s ease-in-out infinite alternate;
+    -moz-animation: glowing1 0.4s ease-in-out infinite alternate;
+    animation: glowing1 0.4s ease-in-out infinite alternate;
+  }
+  @keyframes glowing1 {
+    from {
+      box-shadow: 0 0 15px #be8383, 0 0 20px #be8383;
+    }
+    to {
+      box-shadow: 0 0 20px #af7272, 0 0 25px #af7272;
     }
   }
 }

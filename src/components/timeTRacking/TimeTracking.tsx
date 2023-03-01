@@ -1,12 +1,47 @@
 import { Card } from "antd";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./TimeTracking.scss";
 
 const TimeTracking: React.FC = () => {
-  const [timeStart, setTimeStart] = useState<boolean>(false);
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef<any>(null);
+  const startTimeRef = useRef<any>(null);
 
-  const timeTrackingHandler = () => {
-    setTimeStart(!timeStart);
+  const [clockTrack, setClockTrack] = useState({ in: " 00:00", out: "00:00" });
+
+  const formatTime = (time: any) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time - hours * 3600) / 60);
+    const seconds = time - hours * 3600 - minutes * 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const handleStart = () => {
+    setIsRunning(true);
+    setClockTrack({
+      ...clockTrack,
+      in: formatTime(time).substring(0, formatTime(time).length - 3),
+    });
+    startTimeRef.current = Date.now() - time * 1000;
+    intervalRef.current = setInterval(() => {
+      setTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
+    }, 1000);
+  };
+
+  const handleStop = () => {
+    setClockTrack({
+      ...clockTrack,
+      out: formatTime(time).substring(0, formatTime(time).length - 3),
+    });
+    setIsRunning(false);
+    clearInterval(intervalRef.current);
+  };
+
+  const handleReset = () => {
+    setTime(0);
   };
 
   return (
@@ -17,12 +52,10 @@ const TimeTracking: React.FC = () => {
             Time Tracking
           </p>
         </div>
-        <div
-          onClick={timeTrackingHandler}
-          className="clock-time flex justify-center items-center"
-        >
-          {!timeStart && (
+        <div className="clock-time flex justify-center items-center">
+          {!isRunning ? (
             <div
+              onClick={handleStart}
               className="time-clock-in flex justify-center items-center cursor-pointer"
               style={{
                 background: "#66AC8B",
@@ -33,11 +66,10 @@ const TimeTracking: React.FC = () => {
             >
               <p className="font-medium text-base text-white"> Clock in</p>
             </div>
-          )}
-
-          {timeStart && (
+          ) : (
             <div
-              className="time-clock-out time-clock-in flex justify-center items-center cursor-pointer"
+              onClick={handleStop}
+              className="time-clock-out flex justify-center items-center cursor-pointer"
               style={{
                 background: "#E94E5D",
                 width: "100px",
@@ -53,7 +85,7 @@ const TimeTracking: React.FC = () => {
           className="time font-medium text-4xl text-center mt-4"
           style={{ color: "#4E4B66" }}
         >
-          09:00:26
+          {formatTime(time)}
         </div>
         <div className="date text-sm font-medium text-center mt-4">
           Wednesday, 21 September
@@ -68,7 +100,7 @@ const TimeTracking: React.FC = () => {
               Clock In
             </div>
             <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
-              09:00
+              {clockTrack.in}
             </div>
           </div>
 
@@ -80,7 +112,7 @@ const TimeTracking: React.FC = () => {
               Clock Out
             </div>
             <div className="font-medium text-sm " style={{ color: "#4E4B66" }}>
-              09:00
+              {clockTrack.out}
             </div>
           </div>
         </div>
