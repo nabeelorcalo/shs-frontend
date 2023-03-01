@@ -1,9 +1,8 @@
-import { Button, Col, Row, Space } from 'antd'
+import { Button, Col, Row,Typography} from 'antd'
 import { useState } from 'react';
 import DateAndTimePicker from './components/DateAndTimePicker/DateAndTimePicker'
 import Model from './components/ModalBox/model'
 import { InputComp } from './components/Input/input';
-
 
 function App() {
 
@@ -25,6 +24,24 @@ function App() {
           </Col>
         </Row>
       </Model>
+      <Button type='dashed' label='new' />
+      <Button type='primary' label='stuff' />
+      <br />
+      <Typography.Title level={1}>
+        I'm h1
+      </Typography.Title>
+
+      <br />
+
+      <Typography.Title level={2}>
+        I'm h2
+      </Typography.Title>
+
+      <br />
+
+      <Typography.Title level={3}>
+        I'm h3
+      </Typography.Title>
     </div>
   )
 }
