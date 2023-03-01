@@ -1,4 +1,6 @@
 import { Input as AntInput } from 'antd';
+import { SearchIcon } from '../../assets/images';
+
 import './style.scss';
 
 interface Props {
@@ -11,7 +13,7 @@ interface Props {
     handleChange({ }): void;
 }
 
-export const SearchBar = ({ size, placeholder, icon, name, value, className, handleChange, ...rest }: Props) => {
+export const SearchBar = ({ size, placeholder, icon = SearchIcon, name, value, className, handleChange, ...rest }: Props) => {
     return (
         <div className='input-wrapper'>
             <AntInput

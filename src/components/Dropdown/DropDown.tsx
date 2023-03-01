@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Checkbox, Dropdown as AntDropDown } from 'antd';
-import { ArrowDownDark, SearchIcon } from '../../assets/images';
+import { ArrowDownDark } from '../../assets/images';
 import { SearchBar } from '../SearchBar/SearchBar';
 import './style.scss';
 import { CommonDatePicker } from '../calendars/CommonDatePicker';
@@ -61,7 +61,6 @@ export const DropDown = ({
                     name='searchbar'
                     placeholder='Search'
                     handleChange={setSearchValue}
-                    icon={SearchIcon}
                 />,
                 key: option
             }
