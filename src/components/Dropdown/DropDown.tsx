@@ -19,6 +19,7 @@ interface Props {
     setValue?: any;
     setSearchValue?: any;
     setSelectedList?: any;
+    setDateValue?: any;
     pilled?: boolean;
 }
 
@@ -37,6 +38,7 @@ export const DropDown = ({
     setSearchValue,
     selectedList = [],
     setSelectedList,
+    setDateValue,
     ...props
 }: Props) => {
 
@@ -80,12 +82,14 @@ export const DropDown = ({
                 >
                     {option === 'custom' && requireDatePicker ?
                         <CommonDatePicker
+                            requireAsButton
                             btnClassName='drop-down-btn'
                             name={option}
                             open={openPicker}
                             setOpen={setOpenPicker}
                             dropdownClassName='picker-extra-class'
-                            placement='bottomRight'
+                            placement='bottomLeft'
+                            setValue={setDateValue}
                         /> :
                         option}
                 </label>

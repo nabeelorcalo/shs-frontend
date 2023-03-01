@@ -29,6 +29,15 @@ SimpleDropDown.args = {
     setValue: () => { },
 }
 
+export const SimpleDropDownPilled = Template.bind({})
+SimpleDropDownPilled.args = {
+    name: 'this month',
+    value: '',
+    options: ['item 0', 'item 1', 'item 2'],
+    setValue: () => { },
+    pilled: true
+}
+
 export const DropDownWithSearchBar = Template.bind({});
 DropDownWithSearchBar.args = {
     name: 'this month',
@@ -84,4 +93,13 @@ DropDownWithSearchBarAndCheckBoxAndDateRange.args = {
     setSelectedList: () => { },
     setSearchValue: () => { },
     setValue: () => { }
+}
+
+export const DropDownWithDatePicker = Template.bind({});
+DropDownWithDatePicker.args = {
+    name: 'this month',
+    value: '',
+    options: ['item 0', 'item 1', 'item 2', 'custom'],
+    placement: 'bottomRight',
+    requireDatePicker: true,
 }

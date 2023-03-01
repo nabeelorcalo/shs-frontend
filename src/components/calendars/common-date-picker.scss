@@ -1,23 +1,28 @@
 .common-date-picker-wrapper {
-.ant-picker{
-    width: 100%;
-    height: 48px;
-    input{
-        color: #A0A3BD;
+    .ant-picker {
+        width: 100%;
+        height: 48px;
+
+        input {
+            color: #A0A3BD;
+        }
     }
-}
-    // .ant-picker {
-    //     position: absolute;
-    //     width: 100%;
-    //     left: 0%;
-    //     z-index: -1;
-    //     opacity: 0;
-    // }
+
     .label {
         display: block;
         font-size: 16px;
         color: #6E7191;
         margin-bottom: 4px;
+    }
+}
+
+.hide-field {
+    .ant-picker {
+        position: absolute;
+        width: 100%;
+        left: 0%;
+        z-index: -1;
+        opacity: 0;
     }
 }
 
@@ -71,9 +76,10 @@
                             .ant-picker-cell-inner {
                                 font-size: 14px;
                                 border-radius: 50px;
-                                &::before{
+
+                                &::before {
                                     border-radius: 50px;
-                                   }
+                                }
                             }
                         }
 
@@ -84,8 +90,8 @@
                         .ant-picker-cell-selected {
                             color: #fff;
                             opacity: 1;
-                          
-                           
+
+
                         }
                     }
                 }

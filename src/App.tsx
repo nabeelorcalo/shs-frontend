@@ -1,79 +1,73 @@
-import { Button, Col, Row, Typography } from 'antd'
-import { useState } from 'react';
-import DateAndTimePicker from './components/DateAndTimePicker/DateAndTimePicker'
-import Model from './components/ModalBox/model'
-import { Input } from './components/Input/input';
 import "./App.scss"
-import { Checkbox } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { CommonDatePicker } from './components';
-
-
-const onChange = (e: CheckboxChangeEvent) => {
-  console.log(`checked = ${e.target.checked}`);
-};
+import { CommonDatePicker, DropDown, SearchBar } from "./components"
 
 function App() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [openPicker, setOpenPicker] = useState(false);
-  const [openPicker2, setOpenPicker2] = useState(false);
-
   return (
     <div className="p-10">
-      <Button type="primary" onClick={() => setIsModalOpen(!isModalOpen)}>
-        Open Modal
-      </Button>
-      <Model title='Set a Goal' open={isModalOpen} setOpen={() => setIsModalOpen(!isModalOpen)} okText='Add'>
-        <Row gutter={20}>
-          <Col span={24} className='mt-[25px]'>
-            <Input className='mt-[25px]' label='Goal Name' handleChange={(e: any) => console.log(e.target.value)} />
-          </Col>
-          <Col span={12} className='mt-[25px]'>
-            <CommonDatePicker
-              label='Start Date'
-              open={openPicker}
-              placement={'bottomLeft'}
-              setOpen={setOpenPicker}
-              setValue={(val: string) => console.log(val)}
-            />
-          </Col>
-          <Col span={12} className='mt-[25px]'>
-            <CommonDatePicker
-              label='End Date'
-              open={openPicker2}
-              placement={'bottomRight'}
-              setOpen={setOpenPicker2}
-              setValue={(val: string) => console.log(val)}
-            />
-
-          </Col>
-        </Row>
-        <Checkbox className='checkbox mt-[25px]' onChange={onChange}><span style={{color:'#6E7191'}}>Mark as main goal</span></Checkbox>
-      </Model>
-      {/* <Button type='dashed' label='new' />
-      <Button type='primary' label='stuff' />
-      <br />
-      <Typography.Title level={1}>
-        I'm h1
-      </Typography.Title>
-
-
-        <div className="p-10">
-          <Button type='dashed' label='new' />
-          <Button type='primary' label='stuff' />
-          <br />
-          <Typography.Title level={1}>
-            I'm h1
-          </Typography.Title>
-
-          <br />
-
-      <Typography.Title level={3}>
-        I'm h3
-      </Typography.Title> */}
+      <CommonDatePicker open={false} label={'DatePicker With Label'} />
+      <CommonDatePicker open={false} />
+      <SearchBar placeholder={'Search'} handleChange={(e: any) => console.log(e.target.value)} />
+      <DropDown
+        name='simple drop down'
+        value={''}
+        options={['item 1']}
+        setValue={(val: string) => console.log(val)}
+      />
+      <DropDown
+        name='drop down with search bar'
+        value={''}
+        options={['search', 'item 1']}
+        setValue={(val: string) => console.log(val)}
+        requireSearchBar
+        searchValue=''
+        setSearchValue={(e: any) => console.log(e.target.value)}
+      />
+      <DropDown
+        name='drop down with search bar and checkbox'
+        value={''}
+        options={['search', 'item 1']}
+        setValue={(val: string) => console.log(val)}
+        requireSearchBar
+        searchValue=''
+        setSearchValue={(e: any) => console.log(e.target.value)}
+        requireCheckbox
+        selectedList={[]}
+      // setSelectedList
+      />
+      <DropDown
+        name='drop down with search bar and checkbox right'
+        value={''}
+        options={['search', 'item 1']}
+        setValue={(val: string) => console.log(val)}
+        requireSearchBar
+        searchValue=''
+        setSearchValue={(e: any) => console.log(e.target.value)}
+        requireCheckbox
+        checkboxPosition='right'
+        selectedList={[]}
+      // setSelectedList
+      />
+      <DropDown
+        name='drop down with date picker'
+        value={''}
+        options={['item 0', 'item 1', 'custom']}
+        setValue={(val: string) => console.log(val)}
+        requireDatePicker
+        placement='bottomRight'
+      />
+      <DropDown
+        name='drop down pilled with date picker'
+        value={''}
+        options={['item 0', 'item 1', 'custom']}
+        setValue={(val: string) => console.log(val)}
+        requireDatePicker
+        setDateValue={(val: string) => console.log(val)}
+        placement='bottomRight'
+        pilled
+      />
     </div>
   )
 }

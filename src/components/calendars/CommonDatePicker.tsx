@@ -11,6 +11,7 @@ interface Props {
     open?: boolean;
     placement?: "bottomRight" | "bottomLeft" | "topLeft" | "topRight" | undefined;
     btnClassName?: string;
+    requireAsButton?: boolean;
     endIcon?: any;
     startIcon?: any;
     setOpen?: any;
@@ -30,7 +31,8 @@ export const CommonDatePicker = ({
     endIcon: EndIcon,
     size = 'large',
     setOpen,
-    label = 'label',
+    label,
+    requireAsButton,
     setValue
 }:
     Props) => {
@@ -43,10 +45,10 @@ export const CommonDatePicker = ({
     }
 
     return (
-        <div className='common-date-picker-wrapper'>
-            {/* <Button className={`${btnClassName}`} onClick={() => setOpen(!open)}>
+        <div className={`${requireAsButton ? 'hide-field' : 'common-date-picker-wrapper'}`}>
+            {requireAsButton && <Button className={`${btnClassName}`} onClick={() => setOpen(!open)}>
                 {name}
-            </Button> */}
+            </Button>}
             {label && <label className='label'>{label}</label>}
             <AntDatePicker
                 open={open}
