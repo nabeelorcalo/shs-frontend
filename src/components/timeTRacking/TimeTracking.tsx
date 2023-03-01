@@ -2,7 +2,9 @@ import { Card } from "antd";
 import React, { useRef, useState } from "react";
 import "./TimeTracking.scss";
 
-const TimeTracking: React.FC = () => {
+const TimeTracking: React.FC = (props: any) => {
+  const { type } = props;
+
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef<any>(null);
@@ -45,7 +47,10 @@ const TimeTracking: React.FC = () => {
   };
 
   return (
-    <Card className="time-tracking" bordered={false} style={{ width: 300 }}>
+    <Card
+      className={type ? "time-tracking" : "timeTrackig-horizontal"}
+      bordered={false}
+    >
       <div className="time-tracking-body">
         <div className="time-title">
           <p className="font-medium text-lg" style={{ color: "#4E4B66" }}>
@@ -91,31 +96,36 @@ const TimeTracking: React.FC = () => {
           Wednesday, 21 September
         </div>
 
-        <div
-          className="mt-4 p-4"
-          style={{ background: "#E6F4F9", borderRadius: "10px" }}
-        >
-          <div className="flex justify-between">
-            <div className="font-medium text-sm" style={{ color: "#A0A3BD" }}>
-              Clock In
+        {type ? (
+          <div
+            className="mt-4 p-4"
+            style={{ background: "#E6F4F9", borderRadius: "10px" }}
+          >
+            <div className="flex justify-between">
+              <div className="font-medium text-sm" style={{ color: "#A0A3BD" }}>
+                Clock In
+              </div>
+              <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
+                {clockTrack.in}
+              </div>
             </div>
-            <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
-              {clockTrack.in}
-            </div>
-          </div>
 
-          <div className="flex justify-between mt-4">
-            <div
-              className="font-medium text-sm text-white"
-              style={{ color: "#A0A3BD" }}
-            >
-              Clock Out
-            </div>
-            <div className="font-medium text-sm " style={{ color: "#4E4B66" }}>
-              {clockTrack.out}
+            <div className="flex justify-between mt-4">
+              <div
+                className="font-medium text-sm text-white"
+                style={{ color: "#A0A3BD" }}
+              >
+                Clock Out
+              </div>
+              <div
+                className="font-medium text-sm "
+                style={{ color: "#4E4B66" }}
+              >
+                {clockTrack.out}
+              </div>
             </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </Card>
   );

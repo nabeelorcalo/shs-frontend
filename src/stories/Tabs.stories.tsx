@@ -30,6 +30,6 @@ const Template: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
 
 export const AppTabs = Template.bind({});
 AppTabs.args = {
-  item: items,
+  items: items,
   onchange: () => console.log("change"),
 };
