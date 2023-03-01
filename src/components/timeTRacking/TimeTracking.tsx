@@ -2,6 +2,7 @@ import { Card } from "antd";
 import React, { useRef, useState } from "react";
 import "./TimeTracking.scss";
 
+
 const TimeTracking: React.FC = (props: any) => {
   const { type } = props;
 

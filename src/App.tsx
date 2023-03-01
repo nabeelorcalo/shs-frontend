@@ -4,7 +4,7 @@ import { Button } from "./components";
 import TimeTracking from "./components/timeTRacking/TimeTracking";
 
 function App() {
-  const [vartical, setVartical] = useState(true)
+  const [vartical, setVartical] = useState<any>(true)
   return (
     <div className="p-10">
       <Space>
