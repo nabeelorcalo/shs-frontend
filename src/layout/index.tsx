@@ -9,6 +9,10 @@ import ResetLink from "../auth-temp/sign-in/reset-password/ResetLink";
 import ResetPassword from "../auth-temp/sign-in/reset-password";
 import CreatePassword from "../auth-temp/sign-in/reset-password/create-password";
 import PasswordSuccess from "../auth-temp/sign-in/reset-password/create-password/PasswordSuccess";
+import SignUp from "../auth-temp/sign-up";
+import VerificationLink from "../auth-temp/sign-up/signup-form/VerificationLink";
+import IdentityVerification from "../auth-temp/sign-up/signup-form/verification/IdentityVerification";
+import DbsVerification from "../auth-temp/sign-up/signup-form/verification/DbsVerification";
 
 function AppLayout() {
   /* VARIABLE DECLARATION
@@ -30,11 +34,17 @@ function AppLayout() {
   -------------------------------------------------------------------------------------*/
 
   return [
-    <SignIn />,
-    <ResetPassword />,
-    <ResetLink />,
-    <CreatePassword />,
-    <PasswordSuccess />,
+    // <SignIn />,
+    // <ResetPassword />,
+    // <ResetLink />,
+    // <CreatePassword />,
+    // <PasswordSuccess />,
+    <>
+      <SignUp />,
+      <VerificationLink />,
+      <IdentityVerification />
+      <DbsVerification />
+    </>,
   ];
 
   return (
