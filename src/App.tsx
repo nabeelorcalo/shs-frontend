@@ -3,6 +3,13 @@ import { useState } from 'react';
 import DateAndTimePicker from './components/DateAndTimePicker/DateAndTimePicker'
 import Model from './components/ModalBox/model'
 import { InputComp } from './components/Input/input';
+import  "./App.scss"
+import { Checkbox } from 'antd';
+import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+
+const onChange = (e: CheckboxChangeEvent) => {
+  console.log(`checked = ${e.target.checked}`);
+};
 
 function App() {
 
@@ -21,10 +28,12 @@ function App() {
           </Col>
           <Col lg={12}>
             <DateAndTimePicker label='End Date' size='large' />
+            
           </Col>
+          <Checkbox className='checkbox' onChange={onChange}>Mark as main goal</Checkbox>
         </Row>
       </Model>
-      <Button type='dashed' label='new' />
+      {/* <Button type='dashed' label='new' />
       <Button type='primary' label='stuff' />
       <br />
       <Typography.Title level={1}>
@@ -41,7 +50,7 @@ function App() {
 
       <Typography.Title level={3}>
         I'm h3
-      </Typography.Title>
+      </Typography.Title> */}
     </div>
   )
 }
