@@ -21,18 +21,67 @@ export default {
 
 const Template: ComponentStory<typeof DropDown> = (args) => <DropDown {...args} />
 
-export const DropDownComp = Template.bind({})
-DropDownComp.args = {
+export const SimpleDropDown = Template.bind({})
+SimpleDropDown.args = {
     name: 'this month',
     value: '',
     options: ['search', 'item 1', 'item 2'],
-    requireSearchBar: false,
-    requireCheckbox: false,
-    checkboxPosition: 'left',
-    searchValue: '',
-    selectedList: [],
-    // setValue: function (e) { console.log(e) },
-    // setSearchValue: function () { },
-    // setSelectedList: function () { }
+    setValue: () => { },
 }
 
+export const DropDownWithSearchBar = Template.bind({});
+DropDownWithSearchBar.args = {
+    name: 'this month',
+    value: '',
+    options: ['search', 'item 1', 'item 2'],
+    requireSearchBar: true,
+    searchValue: '',
+    placement: 'bottomRight',
+    setValue: () => { },
+}
+
+export const DropDownWithCheckbox = Template.bind({});
+DropDownWithCheckbox.args = {
+    name: 'this month',
+    value: '',
+    options: ['search', 'item 1', 'item 2'],
+    requireCheckbox: true,
+    checkboxPosition: '',
+    selectedList: [],
+    placement: 'bottomRight',
+    setSelectedList: () => { },
+    setValue: () => { },
+}
+
+export const DropDownWithSearchBarAndCheckBox = Template.bind({});
+DropDownWithSearchBarAndCheckBox.args = {
+    name: 'this month',
+    value: '',
+    options: ['search', 'item 1', 'item 2'],
+    requireSearchBar: true,
+    searchValue: '',
+    requireCheckbox: true,
+    checkboxPosition: 'right',
+    selectedList: [],
+    placement: 'bottomRight',
+    setSelectedList: () => { },
+    setSearchValue: () => { },
+    setValue: () => { },
+}
+
+export const DropDownWithSearchBarAndCheckBoxAndDateRange = Template.bind({});
+DropDownWithSearchBarAndCheckBoxAndDateRange.args = {
+    name: 'this month',
+    value: '',
+    options: ['item 0', 'item 1', 'item 2', 'custom'],
+    requireSearchBar: true,
+    searchValue: '',
+    requireCheckbox: true,
+    checkboxPosition: 'right',
+    selectedList: [],
+    placement: 'bottomRight',
+    requireDatePicker: true,
+    setSelectedList: () => { },
+    setSearchValue: () => { },
+    setValue: () => { }
+}

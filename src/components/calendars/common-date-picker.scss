@@ -1,0 +1,88 @@
+.common-date-picker-wrapper {
+    .ant-picker {
+        position: absolute;
+        width: 100%;
+        left: 0%;
+        z-index: -1;
+        opacity: 0;
+    }
+}
+
+
+.common-datepicker-dropdown-wrapper {
+    background: #FFFFFF;
+    border: 2px solid #D9DBE9;
+    box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+
+    .ant-picker-panel-container {
+        padding: 15px;
+
+        .ant-picker-header {
+            border-bottom: 0.8px solid #E4E5E7;
+
+            .ant-picker-header-super-prev-btn,
+            .ant-picker-header-super-next-btn {
+                display: none;
+            }
+
+            .ant-picker-header-view {
+                order: -1;
+                display: flex;
+            }
+        }
+
+        .ant-picker-body {
+            padding: 0;
+
+            .ant-picker-content {
+                margin-top: 15px;
+                width: 100%;
+
+                thead {
+                    tr {
+                        th {
+                            color: #A0A3BD;
+                            font-size: 14px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        .ant-picker-cell {
+                            color: #A0A3BD;
+
+                            .ant-picker-cell-inner {
+                                font-size: 14px;
+                            }
+                        }
+
+                        .ant-picker-cell-in-view {
+                            color: #14142A !important;
+                        }
+
+                        .ant-picker-cell-selected {
+                            color: #fff;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+        .ant-picker-footer {
+            border: none;
+
+            .ant-picker-footer-extra {
+                border: none;
+            }
+
+            .ant-picker-today-btn {
+                display: none;
+            }
+        }
+    }
+}

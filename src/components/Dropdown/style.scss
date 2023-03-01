@@ -16,6 +16,9 @@
         border: 2px solid rgba(90, 89, 128, 0.5);
         background-color: #fff;
     }
+    &.pilled{
+        border-radius: 50px;
+    }
 }
 
 .drop-down-overlay {
@@ -66,9 +69,17 @@
                         text-transform: capitalize;
                         cursor: pointer;
                     }
-                    .calendar-wrapper{
-                        position: absolute;
-                        bottom: -50px;
+                    .common-date-picker-wrapper{
+                        .drop-down-btn{
+                            all: unset;
+                        }
+                        .ant-picker{
+                            position: absolute;
+                            width: 100%;
+                            left: 0%;
+                            z-index: -1;
+                            opacity: 0;
+                        }
                     }
                 }
             }

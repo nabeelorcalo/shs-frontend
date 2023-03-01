@@ -24,7 +24,9 @@ Simple.args = {
     size: 'small',
     placeholder: 'search',
     value: 'value',
+    className: '',
     name: 'search bar',
-    icon: ''
+    icon: '',
+    handleChange: () => { }
 }
 

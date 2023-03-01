@@ -17,7 +17,9 @@
 
         .ant-input {
             background-color: transparent;
-            font-family: 'Outfit', sans-serif;
+            &:focus{
+                outline: none;
+            }
         }
     }
 }
