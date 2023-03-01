@@ -57,42 +57,46 @@ const TimeTracking: React.FC = (props: any) => {
             Time Tracking
           </p>
         </div>
-        <div className="clock-time flex justify-center items-center">
-          {!isRunning ? (
-            <div
-              onClick={handleStart}
-              className="time-clock-in flex justify-center items-center cursor-pointer"
-              style={{
-                background: "#66AC8B",
-                width: "100px",
-                height: "100px",
-                borderRadius: "50%",
-              }}
-            >
-              <p className="font-medium text-base text-white"> Clock in</p>
-            </div>
-          ) : (
-            <div
-              onClick={handleStop}
-              className="time-clock-out flex justify-center items-center cursor-pointer"
-              style={{
-                background: "#E94E5D",
-                width: "100px",
-                height: "100px",
-                borderRadius: "50%",
-              }}
-            >
-              <p className="font-medium text-base text-white">Clock Out</p>
-            </div>
-          )}
+
+        <div className={ type ? "clock-time-main": "clock-time-main-horizontal"}>
+          <div className={ type ? "clock-time flex justify-center items-center" :"mr-8"}>
+            {!isRunning ? (
+              <div
+                onClick={handleStart}
+                className="time-clock-in flex justify-center items-center cursor-pointer" 
+                style={{
+                  background: "#66AC8B",
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                }}
+              >
+                <p className="font-medium text-base text-white"> Clock in</p>
+              </div>
+            ) : (
+              <div
+                onClick={handleStop}
+                className="time-clock-out flex justify-center items-center cursor-pointer"
+                style={{
+                  background: "#E94E5D",
+                  width: "100px",
+                  height: "100px",
+                  borderRadius: "50%",
+                }}
+              >
+                <p className="font-medium text-base text-white">Clock Out</p>
+              </div>
+            )}
+          </div>
+          <div
+            className={type ?"time font-medium text-4xl text-center mt-4" : "time font-medium text-4xl text-center"}
+            style={{ color: "#4E4B66" }}
+          >
+            {formatTime(time)}
+          </div>
         </div>
-        <div
-          className="time font-medium text-4xl text-center mt-4"
-          style={{ color: "#4E4B66" }}
-        >
-          {formatTime(time)}
-        </div>
-        <div className="date text-sm font-medium text-center mt-4">
+
+        <div className={type ? "date text-sm font-medium text-center mt-4" : "date text-sm font-medium text-end mt-4"}>
           Wednesday, 21 September
         </div>
 
@@ -125,7 +129,14 @@ const TimeTracking: React.FC = (props: any) => {
               </div>
             </div>
           </div>
-        ) : null}
+        ) : 
+        <div className="flex justify-end mt-4">
+          <div className="font-medium text-sm mr-4"
+                style={{ color: "#4E4B66" }}>{clockTrack.in}</div>
+          <div  className="font-medium text-sm "
+                style={{ color: "#4E4B66" }}>{clockTrack.out}</div>
+        </div>
+        }
       </div>
     </Card>
   );
