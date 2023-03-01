@@ -3,11 +3,37 @@ export { ReactComponent as Logo } from './header/logo.svg';
 export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
 export { ReactComponent as IconCollapsebleOn } from './header/icon-collapseable-on.svg';
 export { ReactComponent as IconSearchNormal } from './header/icon-search-normal.svg';
-export { ReactComponent as MessageNotif  } from './header/message-notif.svg';
-export { ReactComponent as Notification  } from './header/Notification.svg';
-export { ReactComponent as IconGlobe  } from './header/global.svg';
-export { ReactComponent as IconLogout  } from './header/Logout.svg';
-export { ReactComponent as IconProfile  } from './header/Profile.svg';
+export { ReactComponent as MessageNotif } from './header/message-notif.svg';
+export { ReactComponent as Notification } from './header/Notification.svg';
+export { ReactComponent as IconGlobe } from './header/global.svg';
+export { ReactComponent as IconLogout } from './header/Logout.svg';
+export { ReactComponent as IconProfile } from './header/Profile.svg';
 
+// Sidebar Icons
+export { ReactComponent as IconDashboard } from './sidebar/icon-dashboard.svg';
+export { ReactComponent as IconBriefcase } from './sidebar/icon-briefcase.svg';
+export { ReactComponent as IconClipboardTick } from './sidebar/icon-clipboard-tick.svg';
+export { ReactComponent as IconDocumentText } from './sidebar/icon-document-text.svg';
+export { ReactComponent as IconTaskSquare } from './sidebar/icon-task-square.svg';
+export { ReactComponent as IconUserProfile } from './sidebar/icon-profile.svg';
+export { ReactComponent as IconFolder } from './sidebar/icon-folder.svg';
+export { ReactComponent as IconRanking } from './sidebar/icon-ranking.svg';
+export { ReactComponent as IconCalendar } from './sidebar/icon-calendar.svg';
+export { ReactComponent as IconHouse } from './sidebar/icon-house.svg';
+export { ReactComponent as IconRecipes } from './sidebar/icon-recipes.svg';
+export { ReactComponent as IconGift } from './sidebar/icon-gift.svg';
+export { ReactComponent as IconCalendarTick } from './sidebar/icon-calendar-tick.svg';
+export { ReactComponent as IconCalendarRemove } from './sidebar/icon-calendar-remove.svg';
+export { ReactComponent as IconTimer } from './sidebar/icon-timer.svg';
+export { ReactComponent as IconChart } from './sidebar/icon-chart.svg';
+export { ReactComponent as IconData } from './sidebar/icon-data.svg';
+export { ReactComponent as IconLikeShapes } from './sidebar/icon-like-shapes.svg';
+export { ReactComponent as IconEmojiSad } from './sidebar/icon-emoji-sad.svg';
+export { ReactComponent as IconWalletCheck } from './sidebar/icon-wallet-check.svg';
+export { ReactComponent as IconEdit } from './sidebar/icon-edit.svg';
+export { ReactComponent as IconProfileUsers } from './sidebar/icon-profile-2user.svg';
+export { ReactComponent as IconDocument } from './sidebar/icon-document.svg';
+// export { ReactComponent as Icon  } from './sidebar/icon-.svg';
+// export { ReactComponent as Icon  } from './sidebar/icon-.svg';
 
 

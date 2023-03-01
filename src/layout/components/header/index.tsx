@@ -88,6 +88,10 @@ const AppHeader:FC = () => {
   const closeNotificationDrawer = () => {
     setOpenNotificationDrawer(false)
   }
+
+  const navigaeToInbox = () => {
+    console.log('Inbox')
+  }
   
 
 
@@ -144,7 +148,7 @@ const AppHeader:FC = () => {
 
         <div className='ikd-header-right'>
           <div className='ikd-header-message-notif'>
-            <div className='message-notif-handler'>
+            <div className='message-notif-handler' onClick={() => navigaeToInbox()}>
               <MessageNotif />
             </div>
           </div>
@@ -176,7 +180,9 @@ const AppHeader:FC = () => {
                 </div>
               )}
             >
-              <Avatar size={48} src={avatar} />
+              <div className='loggedin-user-avatar'>
+                <Avatar size={48} src={avatar} />
+              </div>
             </Dropdown>
           </div>
         </div>
