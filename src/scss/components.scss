@@ -1,6 +1,7 @@
 @import "./colors";
 @import "./theme_variables.scss";
 
+// Button Component
 .btn-primary,
 .btn-deactive,
 .btn-cancel,
@@ -62,3 +63,5 @@
     color: $grey-color !important;
   }
 }
+
+// Alert Copmonent
