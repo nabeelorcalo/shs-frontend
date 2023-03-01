@@ -1,4 +1,5 @@
 .table_main_wrapper {
+    position: relative;
     .ant-table-content {
         table {
             .ant-table-thead {
@@ -16,6 +17,7 @@
                 }
 
             }
+        
 
             .ant-table-tbody {
                 background-color: #fff;
@@ -45,6 +47,7 @@
     }
 
     .ant-pagination {
+      
         .ant-pagination-prev {
             background: #FFFFFF;
             border: 1px solid #D9DBE9;
@@ -134,5 +137,11 @@
             }
         }
 
+    }
+    .Counter{
+        position: absolute;
+        left: 0;
+        bottom: 22px;
+        color: #A0A3BD;
     }
 }

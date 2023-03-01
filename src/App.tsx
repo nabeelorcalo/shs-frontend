@@ -1,16 +1,12 @@
 import { Space, Typography } from 'antd'
 import { Button } from './components'
-
-import BoxWrapper from './components/BoxWrapper/BoxWrapper'
-import GlobalTable from './components/Table/Table'
+import Table from './components/Alert/Noman/Table'
 const App = () => {
   return (
     <div className="p-10">
-      <BoxWrapper>
-        <GlobalTable />
-      </BoxWrapper>
+      <Table/>
 
-      
+
       <Button type='dashed' label='new' />
       <Button type='primary' label='stuff' />
       <Typography.Title level={1}>
