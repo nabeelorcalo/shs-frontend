@@ -1,4 +1,5 @@
-import { Rate } from 'antd';
+import { Rate, Typography } from 'antd';
+const { Paragraph, Text } = Typography;
 interface RecipeCardProps {
   image?: string;
   alt?: string;
@@ -6,7 +7,9 @@ interface RecipeCardProps {
   description?: string;
   radius?: string;
   boxShadow?: string;
-  padding?: string;
+  ratingValue?: number;
+  ratingColor?:string
+
 }
 
 export const RecipeCard = ({
@@ -16,14 +19,16 @@ export const RecipeCard = ({
   radius,
   boxShadow,
   alt,
-  padding,
+  ratingValue,
+  ratingColor
+
 }: RecipeCardProps) => {
   return (
-    <div className={`flex flex-col max-w-sm ${padding}  ${radius} ${boxShadow}`}>
-      <img src={image} alt={alt} />
-      <p>{title}</p>
-      <p>{description}</p>
-      <Rate disabled defaultValue={4} />
+    <div style={{ borderRadius: radius, boxShadow: boxShadow }} className={`flex flex-col max-w-sm p-5 cursor-pointer`}>
+      <img src={image} alt={alt} width="100%" />
+      <Typography.Title level={5} className="px-2 my-1 font-medium">{title}</Typography.Title>
+      <Paragraph className='md:w-80' >{description}</Paragraph>
+      <Rate disabled defaultValue={ratingValue} className="px-2" style={{color:ratingColor}} />
     </div>
   );
 };
