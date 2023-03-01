@@ -7,7 +7,6 @@ interface HorizonalLineCardProps {
   subTitle?: string;
   content?: string;
   alt?: string;
-
   progressbarValue: number;
   progressbarColor: string;
 }

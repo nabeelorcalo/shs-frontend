@@ -14,9 +14,10 @@ const Template: ComponentStory<typeof HorizonalLineCard> = (
 export const Primary = Template.bind({});
 Primary.args = {
   title: "Media",
-  content: "128GB",
   icon: icon,
   progressbarValue: 50,
   progressbarColor: "red",
-  subTitle:"Create Balance in Life"
+  subTitle:"Create Balance in Life",
+  content:"10 of 10 tasks complete"
+ 
 };

@@ -38,14 +38,14 @@ function App() {
       /> */}
         {/* <ColorfullIconsWithProgressbar icon={icon} title="Media" storage='64GB' progressbar={<Progress percent={30}/>}/> */}
         <AddEventInCalendar />
-        <HorizonalLineCard
+        {/* <HorizonalLineCard
           icon={icon}
           title="Main Goal"
           subTitle="Create Balance in Life"
           percent="20%"
           progressbar={<Progress percent={30} showInfo={false}/>}
           content="10 of 10 tasks completed"
-        />
+        /> */}
       </div>
     </div>
   );
