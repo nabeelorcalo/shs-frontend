@@ -1,4 +1,11 @@
 .input-wrapper {
+    .label {
+        display: block;
+        font-size: 16px;
+        color: #6E7191;
+        margin-bottom: 4px;
+    }
+
     .input {
         border: 1px solid #D9DBE9;
         border-radius: 8px;
@@ -9,6 +16,7 @@
         line-height: 24px;
         margin-top: 5px;
         height: 48px;
+        color: #A0A3BD;
 
         &:hover {
             border: 1px solid rgba(90, 89, 128, 0.5);

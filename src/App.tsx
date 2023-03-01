@@ -1,19 +1,25 @@
-import { Button, Col, Row,Typography} from 'antd'
+import { Button, Col, Row, Typography } from 'antd'
 import { useState } from 'react';
 import DateAndTimePicker from './components/DateAndTimePicker/DateAndTimePicker'
 import Model from './components/ModalBox/model'
-import { InputComp } from './components/Input/input';
-import  "./App.scss"
+import { Input } from './components/Input/input';
+import "./App.scss"
 import { Checkbox } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { CommonDatePicker } from './components';
+
 
 const onChange = (e: CheckboxChangeEvent) => {
   console.log(`checked = ${e.target.checked}`);
 };
 
 function App() {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [openPicker, setOpenPicker] = useState(false);
+  const [openPicker2, setOpenPicker2] = useState(false);
 
   return (
     <div className="p-10">
@@ -21,17 +27,31 @@ function App() {
         Open Modal
       </Button>
       <Model title='Set a Goal' open={isModalOpen} setOpen={() => setIsModalOpen(!isModalOpen)} okText='Add'>
-        <InputComp size='middle' label='Goal Name' />
-        <Row gutter={[16, 16]}>
-          <Col lg={12}>
-            <DateAndTimePicker label='Start Date' size='large' />
+        <Row gutter={20}>
+          <Col span={24} className='mt-[25px]'>
+            <Input className='mt-[25px]' label='Goal Name' handleChange={(e: any) => console.log(e.target.value)} />
           </Col>
-          <Col lg={12}>
-            <DateAndTimePicker label='End Date' size='large' />
-            
+          <Col span={12} className='mt-[25px]'>
+            <CommonDatePicker
+              label='Start Date'
+              open={openPicker}
+              placement={'bottomLeft'}
+              setOpen={setOpenPicker}
+              setValue={(val: string) => console.log(val)}
+            />
           </Col>
-          <Checkbox className='checkbox' onChange={onChange}>Mark as main goal</Checkbox>
+          <Col span={12} className='mt-[25px]'>
+            <CommonDatePicker
+              label='End Date'
+              open={openPicker2}
+              placement={'bottomRight'}
+              setOpen={setOpenPicker2}
+              setValue={(val: string) => console.log(val)}
+            />
+
+          </Col>
         </Row>
+        <Checkbox className='checkbox mt-[25px]' onChange={onChange}><span style={{color:'#6E7191'}}>Mark as main goal</span></Checkbox>
       </Model>
       {/* <Button type='dashed' label='new' />
       <Button type='primary' label='stuff' />
@@ -40,13 +60,16 @@ function App() {
         I'm h1
       </Typography.Title>
 
-      <br />
 
-      <Typography.Title level={2}>
-        I'm h2
-      </Typography.Title>
+        <div className="p-10">
+          <Button type='dashed' label='new' />
+          <Button type='primary' label='stuff' />
+          <br />
+          <Typography.Title level={1}>
+            I'm h1
+          </Typography.Title>
 
-      <br />
+          <br />
 
       <Typography.Title level={3}>
         I'm h3
