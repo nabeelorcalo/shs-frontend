@@ -1,7 +1,6 @@
 import { Space } from 'antd';
-import React from 'react'
-import BoxWrapper from '../../BoxWrapper/BoxWrapper';
-import GlobalTable from '../../Table/Table';
+import BoxWrapper from '../BoxWrapper/BoxWrapper';
+import GlobalTable from '../Table/Table';
 interface DataType {
     key: string,
     dateApplied: string,

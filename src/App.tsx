@@ -1,6 +1,6 @@
 import { Space, Typography } from 'antd'
 import { Button } from './components'
-import Table from './components/Alert/Noman/Table'
+import Table from './components/Noman/Table'
 const App = () => {
   return (
     <div className="p-10">
