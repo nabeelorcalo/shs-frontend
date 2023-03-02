@@ -9,6 +9,11 @@ import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
 import {ROUTES_CONSTANTS} from "./config/constants";
 
+// Remove it
+// Graph dummy pages
+import Graph from './pages/dummy';
+// 
+
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
@@ -84,6 +89,12 @@ export const publicRoutes = [
     key: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
+  },
+  // Remove below dummy graph page
+  {
+    key: "graph",
+    path: `graph`,
+    element: <Graph />,
   },
 ];
 
