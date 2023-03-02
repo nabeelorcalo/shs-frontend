@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react'
-import Charts from './components/ChartsOfGraphs/Chats'
 import AppLayout from './layout'
-import "../src/App.scss";
+import "./App.scss";
+import Charts from './components/ChartsOfGraphs/Charts';
 
 function App() {
   /* VARIABLE DECLARATION
@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <AppLayout />
-      <Charts />
+      <Charts  />
     </>
   )
 }
