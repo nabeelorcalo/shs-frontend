@@ -7,9 +7,7 @@ import Signup from "./pages/onBoarding/signup";
 import ForgotPassword from "./pages/onBoarding/forgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
-import SelfAssesment from "./pages/selfAssesment";
-import DigiVault from "./pages/digiVault";
-import Payments from "./pages/payments";
+import {ROUTES_CONSTANTS} from "./config/constants";
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -61,41 +59,41 @@ const Report = Loadable(lazy(() => import("./pages/report")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
+const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
+const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
+const Payments = Loadable(lazy(() => import("./pages/payments")));
 const Error = Loadable(lazy(() => import("./pages/404"))); // error page
 
-export const authRoutes = [
-  { path: "/", element: <Navigate to="login" /> },
+export const publicRoutes = [
   {
-    path: "login",
+    key: `${ROUTES_CONSTANTS.LOGIN}`,
+    path: "/",
+    element: <Navigate to={ROUTES_CONSTANTS.LOGIN} />
+  },
+  {
+    key: `${ROUTES_CONSTANTS.LOGIN}`,
+    path: `${ROUTES_CONSTANTS.LOGIN}`,
     element: <Login />,
   },
   {
-    path: "sign-up",
+    key: `${ROUTES_CONSTANTS.SIGNUP}`,
+    path: `${ROUTES_CONSTANTS.SIGNUP}`,
     element: <Signup />,
   },
   {
-    path: "forgot-password",
+    key: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
+    path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
   },
 ];
 
+// path: `${ROUTES_CONSTANTS.}`,
+
 // Manager
-const managerRoutes: any = [
+const managerRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -106,51 +104,63 @@ const managerRoutes: any = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "internships",
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         element: <Internships />,
       },
       {
-        path: "interns",
+        key: `${ROUTES_CONSTANTS.INTERNS}`,
+        path: `${ROUTES_CONSTANTS.INTERNS}`,
         element: <Interns />,
       },
       {
-        path: "attendance",
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
       },
       {
-        path: "leaves",
+        key: `${ROUTES_CONSTANTS.LEAVES}`,
+        path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
       },
       {
-        path: "timesheets",
+        key: `${ROUTES_CONSTANTS.TIMESHEET}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
       },
       {
-        path: "performance",
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
       },
       {
-        path: "documents",
+        key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
+        path: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         element: <Documents />,
       },
       {
-        path: "structure",
+        key: `${ROUTES_CONSTANTS.STRUCTURE}`,
+        path: `${ROUTES_CONSTANTS.STRUCTURE}`,
         element: <Structure />,
       },
       {
-        path: "case-studies",
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES}`,
         element: <CaseStudies />,
       },
       {
-        path: "grievances",
+        key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
       },
       {
-        path: "calendar",
+        key: `${ROUTES_CONSTANTS.CALENDAR}`,
+        path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
       },
     ],
@@ -165,19 +175,7 @@ const managerRoutes: any = [
 const delegateAgentRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -188,19 +186,23 @@ const delegateAgentRoutes = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "delegate-members",
+        key: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
+        path: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
         element: <DelegateMembers />,
       },
       {
-        path: "withdrawal-request",
+        key: `${ROUTES_CONSTANTS.WITHDRAWAL_REQUEST}`,
+        path: `${ROUTES_CONSTANTS.WITHDRAWAL_REQUEST}`,
         element: <WithDrawalRequest />,
       },
       {
-        path: "withdrawals",
+        key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
+        path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         element: <WithDrawals />,
       },
     ],
@@ -215,19 +217,7 @@ const delegateAgentRoutes = [
 const systemAdminRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -238,39 +228,48 @@ const systemAdminRoutes = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "students",
+        key: `${ROUTES_CONSTANTS.STUDENT}`,
+        path: `${ROUTES_CONSTANTS.STUDENT}`,
         element: <Students />,
       },
       {
-        path: "universities",
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         element: <Universities />,
       },
       {
-        path: "companies",
+        key: `${ROUTES_CONSTANTS.COMPANIES}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}`,
         element: <Companies />,
       },
       {
-        path: "admin",
+        key: `${ROUTES_CONSTANTS.ADMIN}`,
+        path: `${ROUTES_CONSTANTS.ADMIN}`,
         element: <Admin />,
       },
       {
-        path: "delegate-agent",
+        key: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
+        path: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
         element: <DelegateAgent />,
       },
       {
-        path: "property-agent",
+        key: `${ROUTES_CONSTANTS.PROPERTY_AGENT}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_AGENT}`,
         element: <PropertyAgent />,
       },
       {
-        path: "help-desk",
+        key: `${ROUTES_CONSTANTS.HELP_DESK}`,
+        path: `${ROUTES_CONSTANTS.HELP_DESK}`,
         element: <HelpDesk />,
       },
       {
-        path: "activity-log",
+        key: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
+        path: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
         element: <ActivityLog />,
       },
     ],
@@ -285,19 +284,7 @@ const systemAdminRoutes = [
 const companyAdminRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -308,59 +295,73 @@ const companyAdminRoutes = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "candidates",
+        key: `${ROUTES_CONSTANTS.CANDIDATES}`,
+        path: `${ROUTES_CONSTANTS.CANDIDATES}`,
         element: <Candidates />,
       },
       {
-        path: "internships",
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         element: <Internships />,
       },
       {
-        path: "offer-letter",
+        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
         element: <OfferLetters />,
       },
       {
-        path: "contracts",
+        key: `${ROUTES_CONSTANTS.CONTRACTS}`,
+        path: `${ROUTES_CONSTANTS.CONTRACTS}`,
         element: <Contracts />,
       },
       {
-        path: "interns",
+        key: `${ROUTES_CONSTANTS.INTERNS}`,
+        path: `${ROUTES_CONSTANTS.INTERNS}`,
         element: <Interns />,
       },
       {
-        path: "managers",
+        key: `${ROUTES_CONSTANTS.MANAGERS}`,
+        path: `${ROUTES_CONSTANTS.MANAGERS}`,
         element: <Managers />,
       },
       {
-        path: "universities",
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         element: <Universities />,
       },
       {
-        path: "structure",
+        key: `${ROUTES_CONSTANTS.STRUCTURE}`,
+        path: `${ROUTES_CONSTANTS.STRUCTURE}`,
         element: <Structure />,
       },
       {
-        path: "attendance",
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
       },
       {
-        path: "leaves",
+        key: `${ROUTES_CONSTANTS.LEAVES}`,
+        path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
       },
       {
-        path: "timesheets",
+        key: `${ROUTES_CONSTANTS.TIMESHEET}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
       },
       {
-        path: "performance",
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
       },
       {
-        path: "documents",
+        key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
+        path: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         element: <Documents />,
       },
     ],
@@ -375,19 +376,7 @@ const companyAdminRoutes = [
 const internRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -398,55 +387,68 @@ const internRoutes = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "attendance",
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
       },
       {
-        path: "leaves",
+        key: `${ROUTES_CONSTANTS.LEAVES}`,
+        path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
       },
       {
-        path: "timesheets",
+        key: `${ROUTES_CONSTANTS.TIMESHEET}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
       },
       {
-        path: "performance",
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
       },
       {
-        path: "structure",
+        key: `${ROUTES_CONSTANTS.STRUCTURE}`,
+        path: `${ROUTES_CONSTANTS.STRUCTURE}`,
         element: <Structure />,
       },
       {
-        path: "self-assessment",
+        key: `${ROUTES_CONSTANTS.SELF_ASSESSMENT}`,
+        path: `${ROUTES_CONSTANTS.SELF_ASSESSMENT}`,
         element: <SelfAssesment />,
       },
       {
-        path: "grievances",
+        key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
       },
       {
-        path: "digivault",
+        key: `${ROUTES_CONSTANTS.DIGIVAULT}`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}`,
         element: <DigiVault />,
       },
       {
-        path: "dream-up",
+        key: `${ROUTES_CONSTANTS.DREAM_UP}`,
+        path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
       },
       {
-        path: "payments",
+        key: `${ROUTES_CONSTANTS.PAYMENTS}`,
+        path: `${ROUTES_CONSTANTS.PAYMENTS}`,
         element: <Payments />,
       },
       {
-        path: "calendar",
+        key: `${ROUTES_CONSTANTS.CALENDAR}`,
+        path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
       },
       {
-        path: "accommodation",
+        key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
+        path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
     ],
@@ -461,19 +463,7 @@ const internRoutes = [
 const studentRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -484,51 +474,63 @@ const studentRoutes = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "search-jobs",
+        key: `${ROUTES_CONSTANTS.SEARCH_JOBS}`,
+        path: `${ROUTES_CONSTANTS.SEARCH_JOBS}`,
         element: <SearchJobs />,
       },
       {
-        path: "application",
+        key: `${ROUTES_CONSTANTS.APPLICATION}`,
+        path: `${ROUTES_CONSTANTS.APPLICATION}`,
         element: <Application />,
       },
       {
-        path: "offer-letter",
+        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
         element: <OfferLetters />,
       },
       {
-        path: "contracts",
+        key: `${ROUTES_CONSTANTS.CONTRACTS}`,
+        path: `${ROUTES_CONSTANTS.CONTRACTS}`,
         element: <Contracts />,
       },
       {
-        path: "profile",
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
         element: <Profile />,
       },
       {
-        path: "digivault",
+        key: `${ROUTES_CONSTANTS.DIGIVAULT}`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}`,
         element: <DigiVault />,
       },
       {
-        path: "dream-up",
+        key: `${ROUTES_CONSTANTS.DREAM_UP}`,
+        path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
       },
       {
-        path: "calendar",
+        key: `${ROUTES_CONSTANTS.CALENDAR}`,
+        path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
       },
       {
-        path: "accommodation",
+        key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
+        path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
       {
-        path: "recipes",
+        key: `${ROUTES_CONSTANTS.RECIPES}`,
+        path: `${ROUTES_CONSTANTS.RECIPES}`,
         element: <Recipes />,
       },
       {
-        path: "earn-with-us",
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
       },
     ],
@@ -542,19 +544,7 @@ const studentRoutes = [
 const universityRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -565,27 +555,33 @@ const universityRoutes = [
     ),
     children: [
       {
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        path: "students",
+        key: `${ROUTES_CONSTANTS.STUDENT}`,
+        path: `${ROUTES_CONSTANTS.STUDENT}`,
         element: <Students />,
       },
       {
-        path: "companies",
+        key: `${ROUTES_CONSTANTS.COMPANIES}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}`,
         element: <Companies />,
       },
       {
-        path: "attendance",
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
       },
       {
-        path: "performance",
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
       },
       {
-        path: "report",
+        key: `${ROUTES_CONSTANTS.REPORT}`,
+        path: `${ROUTES_CONSTANTS.REPORT}`,
         element: <Report />,
       },
     ],
@@ -600,22 +596,7 @@ const agentRoutes = [
   {
     key: "/",
     path: "/",
-    element: <Navigate to="dashboard" />
-  },
-  {
-    key: "login",
-    path: "login",
-    element: <Login />,
-  },
-  {
-    key: "signup",
-    path: "signup",
-    element: <Signup />,
-  },
-  {
-    key: "forgot-password",
-    path: "forgot-password",
-    element: <ForgotPassword />,
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
     path: "/",
@@ -626,23 +607,23 @@ const agentRoutes = [
     ),
     children: [
       {
-        key: "dashboard",
-        path: "dashboard",
+        key: `${ROUTES_CONSTANTS.DASHBOARD}`,
+        path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
       {
-        key: "listings",
-        path: "listings",
+        key: `${ROUTES_CONSTANTS.LISTINGS}`,
+        path: `${ROUTES_CONSTANTS.LISTINGS}`,
         element: <Listings />,
       },
       {
-        key: "offers",
-        path: "offers",
+        key: `${ROUTES_CONSTANTS.OFFERS}`,
+        path: `${ROUTES_CONSTANTS.OFFERS}`,
         element: <Offers />,
       },
       {
-        key: "reservations",
-        path: "reservations",
+        key: `${ROUTES_CONSTANTS.RESERVATIONS}`,
+        path: `${ROUTES_CONSTANTS.RESERVATIONS}`,
         element: <Reservations />,
       },
     ],
@@ -657,14 +638,14 @@ const ROLES_ROUTES: any = {
   SystemAdmin: systemAdminRoutes,
   Manager: managerRoutes,
   DelegateAgent: delegateAgentRoutes,
-  CompanyAdmin: companyAdminRoutes, 
-  intern: internRoutes,
+  CompanyAdmin: companyAdminRoutes,
+  Intern: internRoutes,
   Student: studentRoutes,
   University: universityRoutes,
   Agent: agentRoutes,
-  auth: authRoutes,
+  Public: publicRoutes,
 };
 
 export const getRoutes = (role: any) => {
-  return ROLES_ROUTES[role] ?? authRoutes;
+  return ROLES_ROUTES[role] ?? publicRoutes;
 };

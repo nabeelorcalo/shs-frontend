@@ -11,7 +11,9 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
+  const publicRoutes = getRoutes('Public');
   const routes = getRoutes(userData.role);
+  routes.push(publicRoutes);
   const pages = useRoutes(routes);
 
   /* HOOKS
