@@ -111,3 +111,29 @@
         }
     }
 }
+
+.month-picker {
+    .ant-picker {
+        background-color: #E6F4F9;
+        border: 2px solid transparent;
+
+        &.active {
+            border-color: rgba(90, 89, 128, 0.5);
+        }
+
+        &:hover {
+            border-color: rgba(90, 89, 128, 0.5);
+            cursor: pointer;
+        }
+
+        .ant-picker-input {
+            input {
+                cursor: pointer;
+            }
+        }
+
+        .ant-picker-suffix {
+            margin-right: 10px;
+        }
+    }
+}

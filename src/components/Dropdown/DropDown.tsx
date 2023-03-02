@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Checkbox, Dropdown as AntDropDown } from 'antd';
-import { ArrowDownDark } from '../../assets/images';
+import { ArrowDownDark, DownloadIcon } from '../../assets/images';
 import { SearchBar } from '../SearchBar/SearchBar';
 import './style.scss';
 import { CommonDatePicker } from '../calendars/CommonDatePicker';
@@ -12,7 +12,7 @@ interface Props {
     requireSearchBar?: boolean;
     requireCheckbox?: boolean;
     requireDatePicker?: boolean;
-    checkboxPosition?: string;
+    checkboxOnRight?: boolean;
     searchValue?: string;
     selectedList?: string[];
     placement?: "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight" | "top" | "bottom" | undefined;
@@ -21,6 +21,8 @@ interface Props {
     setSelectedList?: any;
     setDateValue?: any;
     pilled?: boolean;
+    datePickerValue?: string;
+    requiredDownloadIcon?: boolean;
 }
 
 export const DropDown = ({
@@ -30,18 +32,19 @@ export const DropDown = ({
     requireSearchBar = false,
     requireCheckbox = false,
     requireDatePicker = false,
-    checkboxPosition = '',
+    checkboxOnRight = false,
     searchValue = '',
     placement = 'bottomRight',
     setValue,
     pilled = false,
+    datePickerValue,
     setSearchValue,
     selectedList = [],
     setSelectedList,
     setDateValue,
+    requiredDownloadIcon,
     ...props
 }: Props) => {
-
 
     const [visible, setVisible] = useState(false);
     const [openPicker, setOpenPicker] = useState(false);
@@ -53,7 +56,6 @@ export const DropDown = ({
             setSelectedList(selectedList.filter(op => op !== option));
     };
 
-
     const items = options?.map((option: string, i: number) => {
         if (requireSearchBar && option === 'search') {
             return {
@@ -61,40 +63,43 @@ export const DropDown = ({
                     size='middle'
                     value={searchValue}
                     name='searchbar'
-                    placeholder='Search'
                     handleChange={setSearchValue}
                 />,
                 key: option
             }
         }
+        if (requireCheckbox) {
+            return {
+                label: <div className={`flex  gap-5 ${checkboxOnRight ? 'justify-between flex-row-reverse' : ''}`}>
+                    <Checkbox id={option} name={option}
+                        onChange={(e) => handleCheckbox(e, option)}
+                        checked={selectedList.includes(option)}
+                    >
+                    </Checkbox>
+                    <label htmlFor={option} className='capitalize cursor-pointer'>{option}</label>
+                </div>,
+                key: option
+            }
+        }
+        if (requireDatePicker && option === datePickerValue) {
+            return {
+                label:
+                    <CommonDatePicker
+                        requireAsButton
+                        btnClassName='drop-down-btn'
+                        name={option}
+                        open={openPicker}
+                        setOpen={setOpenPicker}
+                        dropdownClassName='picker-extra-class'
+                        placement='bottomLeft'
+                        setValue={setValue}
+                    />,
+                key: option
+            }
+        }
         return {
-            label: <span className={`drop-down-menu-item ${checkboxPosition === 'right' && option !== 'custom' && 'checkbox-right'}`}>
-                {requireCheckbox && option !== 'custom' && <Checkbox
-                    onChange={(e) => requireCheckbox && handleCheckbox(e, option)}
-                    checked={selectedList.includes(option)}
-                    id={`item${i}`}
-                    name={`item${i}`}
-                    className={`check-box ${checkboxPosition === 'right' && 'mr-0'}`} />}
-                <label
-                    htmlFor={`item${i}`}
-                    className='option'
-                    onClick={() => !requireCheckbox && setValue(option)}
-                >
-                    {option === 'custom' && requireDatePicker ?
-                        <CommonDatePicker
-                            requireAsButton
-                            btnClassName='drop-down-btn'
-                            name={option}
-                            open={openPicker}
-                            setOpen={setOpenPicker}
-                            dropdownClassName='picker-extra-class'
-                            placement='bottomLeft'
-                            setValue={setDateValue}
-                        /> :
-                        option}
-                </label>
-            </span>,
-            key: option,
+            label: <span className='capitalize' onClick={() => setValue(option)}>{option}</span>,
+            key: option
         }
     });
 
@@ -104,14 +109,14 @@ export const DropDown = ({
             trigger={['click']}
             open={visible}
             placement={placement}
-            className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'}`}
+            className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'} ${requiredDownloadIcon && 'flex items-center justify-center'}`}
             overlayClassName='drop-down-overlay'
             onOpenChange={setVisible}
             {...props}
         >
             <div>
-                <span>{value ? value : name}</span>
-                <img src={ArrowDownDark} alt='icon' style={{ marginLeft: '10px' }} />
+                {!requiredDownloadIcon && <span>{value ? value : name}</span>}
+                <img src={requiredDownloadIcon ? DownloadIcon : ArrowDownDark} alt='icon' style={{ marginLeft: requiredDownloadIcon ? '' : '10px' }} />
             </div>
         </AntDropDown>
     )

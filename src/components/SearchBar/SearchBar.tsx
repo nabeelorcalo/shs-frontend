@@ -13,7 +13,7 @@ interface Props {
     handleChange({ }): void;
 }
 
-export const SearchBar = ({ size, placeholder, icon = SearchIcon, name, value, className, handleChange, ...rest }: Props) => {
+export const SearchBar = ({ size, placeholder = 'Search', icon = SearchIcon, name, value, className, handleChange, ...rest }: Props) => {
     return (
         <div className='input-wrapper'>
             <AntInput

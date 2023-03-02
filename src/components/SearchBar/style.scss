@@ -1,9 +1,14 @@
 .input-wrapper {
+    .ant-input-affix-wrapper:focus {
+        box-shadow: none !important;
+        border-inline-end-width: 0;
+    }
     .search-bar {
         background: #E6F4F9;
         border-radius: 8px;
         border: 2px solid transparent;
         opacity: 0.7;
+        
 
         &:hover {
             border: 2px solid rgba(90, 89, 128, 0.5);

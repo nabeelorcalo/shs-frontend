@@ -51,39 +51,26 @@
                     cursor: context-menu;
                     position: relative;
 
-                    &.checkbox-right {
-                        flex-direction: row-reverse;
-                        justify-content: space-between;
-                    }
-
-                    .check-box {
-                        margin-right: 22px;
-
-                        &.mr-0 {
-                            margin-right: 0px;
-                        }
-                    }
-
                     .option {
                         color: #4E4B66;
                         font-size: 16px;
                         text-transform: capitalize;
                         cursor: pointer;
                     }
+                }
 
-                    .hide-field {
-                        .drop-down-btn {
-                            all: unset;
-                        }
+                .hide-field {
+                    .drop-down-btn {
+                        all: unset;
+                    }
 
-                        .ant-picker {
-                            // display: none;
-                            position: absolute;
-                            width: 0%;
-                            left: 0%;
-                            z-index: -1;
-                            opacity: 0;
-                        }
+                    .ant-picker {
+                        position: absolute;
+                        width: 0%;
+                        left: -5.5%;
+                        top: 5px;
+                        z-index: -1;
+                        opacity: 0;
                     }
                 }
             }

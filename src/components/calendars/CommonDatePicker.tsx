@@ -18,6 +18,9 @@ interface Props {
     setValue?: any;
     size?: 'large' | 'middle' | 'small';
     label?: string;
+    picker?: "time" | "date" | "week" | "month" | "quarter" | "year" | undefined;
+    onBtnClick?: any;
+    monthPicker?: boolean;
 }
 
 export const CommonDatePicker = ({
@@ -33,7 +36,9 @@ export const CommonDatePicker = ({
     setOpen,
     label,
     requireAsButton,
-    setValue
+    setValue,
+    monthPicker = false,
+    picker,
 }:
     Props) => {
 
@@ -45,9 +50,9 @@ export const CommonDatePicker = ({
     }
 
     return (
-        <div className={`${requireAsButton ? 'hide-field' : 'common-date-picker-wrapper'}`}>
+        <div className={`${requireAsButton ? 'hide-field' : 'common-date-picker-wrapper'} ${monthPicker && 'month-picker'}`}>
             {requireAsButton && <Button className={`${btnClassName}`} onClick={() => setOpen(!open)}>
-                {name}
+                <span className='capitalize'>{name}</span>
             </Button>}
             {label && <label className='label'>{label}</label>}
             <AntDatePicker
@@ -57,10 +62,11 @@ export const CommonDatePicker = ({
                 placement={placement}
                 onOpenChange={() => setOpen(!open)}
                 className={className}
-                popupClassName={`common-datepicker-dropdown-wrapper ${dropdownClassName}`}
+                popupClassName={`common-datepicker-dropdown-wrapper ${dropdownClassName} ${monthPicker && 'month-picker'}`}
                 onChange={handleChange}
                 clearIcon={''}
-                suffixIcon={<img src={CalendarIcon} alt='icon' />}
+                picker={picker}
+                suffixIcon={<img src={monthPicker ? ArrowDownDark : CalendarIcon} alt='icon' />}
             />
         </div>
     )
