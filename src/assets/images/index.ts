@@ -33,7 +33,13 @@ export { ReactComponent as IconWalletCheck } from './sidebar/icon-wallet-check.s
 export { ReactComponent as IconEdit } from './sidebar/icon-edit.svg';
 export { ReactComponent as IconProfileUsers } from './sidebar/icon-profile-2user.svg';
 export { ReactComponent as IconDocument } from './sidebar/icon-document.svg';
-// export { ReactComponent as Icon  } from './sidebar/icon-.svg';
-// export { ReactComponent as Icon  } from './sidebar/icon-.svg';
+export { ReactComponent as IconPeoples  } from './sidebar/icon-peoples.svg';
+export { ReactComponent as IconProfileCircle  } from './sidebar/icon-profile-circle.svg';
+export { ReactComponent as IconCourtHouse  } from './sidebar/icon-courthouse.svg';
+export { ReactComponent as IconTeacher  } from './sidebar/icon-teacher.svg';
+
+
+
+
 
 

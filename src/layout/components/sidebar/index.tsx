@@ -2,66 +2,27 @@ import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
 import type { MenuProps } from 'antd';
 import { Avatar, Typography, Layout, Menu, theme } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import MenuItemsStudents from './menuItemsStudents'
-import {
-  IconDashboard,
-  IconBriefcase,
-  IconClipboardTick,
-  IconDocumentText,
-  IconTaskSquare,
-  IconUserProfile,
-  IconFolder,
-  IconRanking,
-  IconCalendar,
-  IconHouse,
-  IconRecipes,
-  IconGift,
-  IconCalendarTick,
-  IconCalendarRemove,
-  IconTimer,
-  IconChart,
-  IconData,
-  IconLikeShapes,
-  IconEmojiSad,
-  IconWalletCheck,
-  IconEdit,
-  IconProfileUsers,
-  IconDocument
-} from '../../../assets/images'
+import { useNavigate, useLocation } from 'react-router-dom';
+import { } from '../../../assets/images'
 import avatar from '../../../assets/images/header/avatar.svg'
-import MenuStudents from './menuStudents';
-import MenuIntern from './menuIntern';
-import MenuManager from './menuManager';
+import { itemsManager } from './menuManager'
+import { itemsStudents } from './menuStudents'
+import { itemsIntern } from './menuIntern'
+import { itemsCompanyAdmin } from './menuCompanyAdmin'
+import { itemsUniversity } from './menuUniversity'
 const { Sider } = Layout;
-type MenuItem = Required<MenuProps>['items'][number];
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group',
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
-}
 
 
 const AppSidebar:FC = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { useToken } = theme;
-  const { token } = useToken();
   const navigate = useNavigate()
+  const location = useLocation()
+  const { useToken } = theme
+  const { token } = useToken()
   const [collapsed, setCollapsed] = useState(false)
-
-
+  const [ selectedKey, setSelectedKey ] = useState(location.pathname)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -75,9 +36,28 @@ const AppSidebar:FC = () => {
   -------------------------------------------------------------------------------------*/
   const handleMenuClick : MenuProps['onClick'] = (item) => {
     if(item.key) {
+      setSelectedKey(item.key)
       navigate(item.key)
     }
   };
+
+  const menuSwitcher = (role:string) => {
+    if(role === "student") {
+      return itemsStudents
+    }
+    if(role === "intern") {
+      return itemsIntern
+    }
+    if(role === "manager") {
+      return itemsManager
+    }
+    if(role === 'companyAdmin') {
+      return itemsCompanyAdmin
+    }
+    if(role === 'university') {
+      return itemsUniversity
+    }
+  }
   
 
 
@@ -100,20 +80,13 @@ const AppSidebar:FC = () => {
       </div>
 
       <Menu
+        items={menuSwitcher('student')}
         onClick={handleMenuClick}
-        defaultSelectedKeys={['dashboard']}
+        defaultSelectedKeys={[selectedKey]}
         mode="inline"
-        // items={sidebarMenuitems}
         theme="dark"
         style={{backgroundColor: token.colorPrimary}}
-      >
-        {/* <MenuStudents /> */}
-
-        {/* <MenuIntern /> */}
-
-        <MenuManager />
-
-      </Menu>
+      />
     </Sider>
   )
 }

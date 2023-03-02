@@ -1,6 +1,4 @@
-import React, { FC, useEffect } from 'react'
-import './style.scss'
-import { Menu } from 'antd';
+import React from 'react'
 import {
   IconDashboard,
   IconFolder,
@@ -17,89 +15,53 @@ import {
   IconWalletCheck,
 } from '../../../assets/images'
 
+import type { MenuProps } from 'antd';
+type MenuItem = Required<MenuProps>['items'][number]
 
-
-const MenuIntern:FC = () => {
-  /* VARIABLE DECLARATION
-  -------------------------------------------------------------------------------------*/
-
-
-
-  /* EVENT LISTENERS
-  -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
-
-  /* EVENT FUNCTIONS
-  -------------------------------------------------------------------------------------*/
-
-  
-
-
-  /* RENDER APP
-  -------------------------------------------------------------------------------------*/
-  return (
-    <>
-      <Menu.Item key="dashboard" icon={<IconDashboard />}>
-        Dashboard
-      </Menu.Item>
-
-      {/* ORGANIZATION GROUP */}
-      <Menu.ItemGroup key="organisation" title="Organisation">
-        <Menu.Item key="attendance" icon={<IconCalendarTick />}>
-          Attendance
-        </Menu.Item>
-        <Menu.Item key="leaves" icon={<IconCalendarRemove />}>
-          Leaves
-        </Menu.Item>
-        <Menu.Item key="timesheet" icon={<IconTimer />}>
-          Timesheet
-        </Menu.Item>
-        <Menu.Item key="performance" icon={<IconChart />}>
-          Performance
-        </Menu.Item>
-        <Menu.Item key="structure" icon={<IconData />}>
-          Structure
-        </Menu.Item>
-      </Menu.ItemGroup>
-
-      {/* REPORTS GROUP */}
-      <Menu.ItemGroup key="report" title="Report">
-        <Menu.Item key="self-assessment" icon={<IconLikeShapes />}>
-          Self Assessment
-        </Menu.Item>
-        <Menu.Item key="grievances" icon={<IconEmojiSad />}>
-          Grievances
-        </Menu.Item>
-      </Menu.ItemGroup>
-
-      {/* PERSONAL GROUP */}
-      <Menu.ItemGroup key="personal" title="Personal">
-        <Menu.Item key="digivault" icon={<IconFolder />}>
-          DigiVault
-        </Menu.Item>
-        <Menu.Item key="dream-up" icon={<IconRanking />}>
-          Dream Up
-        </Menu.Item>
-        <Menu.Item key="payments" icon={<IconWalletCheck />}>
-          Payments
-        </Menu.Item>
-        <Menu.Item key="calendar" icon={<IconCalendar />}>
-          Calendar
-        </Menu.Item>
-      </Menu.ItemGroup>
-
-      {/* DISCOVER GROUP */}
-      <Menu.ItemGroup key="discover" title="Discover">
-        <Menu.Item key="accommodation" icon={<IconHouse />}>
-          Accommodation
-        </Menu.Item>
-      </Menu.ItemGroup>
-    </>
-  )
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group',
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
 }
 
-export default MenuIntern
+export const itemsIntern: MenuProps['items'] = [
+  getItem('Dashboard', '/dashboard', <IconDashboard />),
+
+  // ORGANIZATION GROUP
+  getItem('Organisation', 'organisation', null, [
+    getItem('Attendance', '/attendance', <IconCalendarTick />),
+    getItem('Leaves', '/leaves', <IconCalendarRemove />),
+    getItem('Timesheet', '/timesheet', <IconTimer />),
+    getItem('Performance', '/performance', <IconChart />),
+    getItem('Structure', '/structure', <IconData />),
+  ], 'group'),
+
+  // REPORTS GROUP
+  getItem('Report', 'report', null, [
+    getItem('Self Assessment', '/self-assessment', <IconLikeShapes />),
+    getItem('Grievances', '/grievances', <IconEmojiSad />),
+  ], 'group'),
+
+  // PERSONAL GROUP
+  getItem('Personal', 'personal', null, [
+    getItem('DigiVault', '/digivault', <IconFolder />),
+    getItem('Dream Up', '/dream-up', <IconRanking />),
+    getItem('Payments', '/payments', <IconWalletCheck />),
+    getItem('Calendar', '/calendar', <IconCalendar />),
+  ], 'group'),
+
+  // DISCOVER GROUP
+  getItem('Discover', 'discover', null, [
+    getItem('Accommodation', '/accommodation', <IconHouse />),
+  ], 'group'),
+]

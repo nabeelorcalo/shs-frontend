@@ -1,6 +1,4 @@
-import React, { FC, useEffect } from 'react'
-import './style.scss'
-import { Menu } from 'antd';
+import React from 'react'
 import {
   IconDashboard,
   IconCalendar,
@@ -16,82 +14,48 @@ import {
   IconDocument
 } from '../../../assets/images'
 
+import type { MenuProps } from 'antd';
+type MenuItem = Required<MenuProps>['items'][number]
 
-
-const MenuManager:FC = () => {
-  /* VARIABLE DECLARATION
-  -------------------------------------------------------------------------------------*/
-
-
-
-  /* EVENT LISTENERS
-  -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
-
-  /* EVENT FUNCTIONS
-  -------------------------------------------------------------------------------------*/
-
-  
-
-
-  /* RENDER APP
-  -------------------------------------------------------------------------------------*/
-  return (
-    <>
-      <Menu.Item key="dashboard" icon={<IconDashboard />}>
-        Dashboard
-      </Menu.Item>
-
-      {/* ORGANIZATION GROUP */}
-      <Menu.ItemGroup key="organisation" title="Organisation">
-          <Menu.Item key="internships" icon={<IconEdit />}>
-            Internships
-          </Menu.Item>
-          <Menu.Item key="interns" icon={<IconProfileUsers />}>
-            Interns
-          </Menu.Item>
-          <Menu.Item key="attendance" icon={<IconCalendarTick />}>
-            Attendance
-          </Menu.Item>
-          <Menu.Item key="leaves" icon={<IconCalendarRemove />}>
-            Leaves
-          </Menu.Item>
-          <Menu.Item key="timesheets" icon={<IconTimer />}>
-            Timesheets
-          </Menu.Item>
-          <Menu.Item key="performance" icon={<IconChart />}>
-            Performance
-          </Menu.Item>
-          <Menu.Item key="documents" icon={<IconDocument />}>
-            Documents
-          </Menu.Item>
-          <Menu.Item key="structure" icon={<IconData />}>
-            Structure
-          </Menu.Item>
-        </Menu.ItemGroup>
-
-      {/* REPORTS GROUP */}
-      <Menu.ItemGroup key="report" title="Report">
-          <Menu.Item key="case-studies" icon={<IconLikeShapes />}>
-            Case Studies
-          </Menu.Item>
-          <Menu.Item key="grievances" icon={<IconEmojiSad />}>
-            Grievances
-          </Menu.Item>
-        </Menu.ItemGroup>
-
-      {/* PERSONAL GROUP */}
-      <Menu.ItemGroup key="personal" title="Personal">
-        <Menu.Item key="calendar" icon={<IconCalendar />}>
-          Calendar
-        </Menu.Item>
-      </Menu.ItemGroup>
-    </>
-  )
+function getItem(
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group',
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
 }
 
-export default MenuManager
+export const itemsManager: MenuProps['items'] = [
+  getItem('Dashboard', '/dashboard', <IconDashboard />),
+
+  // ORGANIZATION GROUP
+  getItem('Organisation', 'organisation', null, [
+    getItem('Internships', '/internships', <IconEdit />),
+    getItem('Interns', '/interns', <IconProfileUsers />),
+    getItem('Attendance', '/attendance', <IconCalendarTick />),
+    getItem('Leaves', '/leaves', <IconCalendarRemove />),
+    getItem('Timesheets', '/timesheets', <IconTimer />),
+    getItem('Performance', '/performance', <IconChart />),
+    getItem('Documents', '/documents', <IconDocument />),
+    getItem('Structure', '/structure', <IconData />),
+  ], 'group'),
+
+  // REPORTS GROUP
+  getItem('Report', 'report', null, [
+    getItem('Case Studies', '/case-studies', <IconLikeShapes />),
+    getItem('Grievances', '/grievances', <IconEmojiSad />),
+  ], 'group'),
+
+  // PERSONAL GROUP
+  getItem('Personal', 'personal', null, [
+    getItem('Calendar', '/calendar', <IconCalendar />),
+  ], 'group'),
+]
