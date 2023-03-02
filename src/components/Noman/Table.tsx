@@ -137,7 +137,7 @@ const Table = () => {
     return (
         <div className='main_table'>
             <BoxWrapper>
-                <GlobalTable columns={columns} tableData={data} pagination={false}
+                <GlobalTable columns={columns} tableData={data} pagination={true}
                     expandable={{
                         expandedRowRender: expandedRowRender,
                         // rowExpandable: (data: any) => data?.anyArray?.length > 0,

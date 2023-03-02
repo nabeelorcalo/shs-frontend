@@ -104,6 +104,52 @@ Expandable.args = {
         expandedRowRender: (data:any) => {<p>{data.key}</p> },
         rowExpandable: (data: any) => data?.anyArray?.length > 0,
     }
+}
+export const bgWhiteTable = Template.bind({})
+bgWhiteTable.args = {
+    columns: [{
+        title: 'No',
+        dataIndex: 'no',
+        key: 'no',
+    },
+    {
+        title: 'Date Applied',
+        dataIndex: 'dateApplied',
+        key: 'dateApplied',
+    },
+    {
+        title: 'Company',
+        dataIndex: 'company',
+        key: 'company',
 
+    },],
+    tableData: [{
+        no: '01',
+        dateApplied: '01/07 /2022',
+        company: 'kljdasfhuasd',
+        typeOfWork: 'New York No. 1 Lake Park',
+        internshipType: 'nice',
+        natureOfWork: "asduhfuiyasdg",
+        Position: "gjdifsdu",
+        Status: "fjgvifd",
+        Actions: "fduhguisd",
+    },
+    {
+        no: '02',
+        dateApplied: '01/07 /2022',
+        company: 'kljdasfhuasd',
+        typeOfWork: 'New York No. 1 Lake Park',
+        internshipType: 'nice',
+        natureOfWork: "asduhfuiyasdg",
+        Position: "gjdifsdu",
+        Status: "fjgvifd",
+        Actions: "fduhguisd",
+    },],
+    pagination: false,
+    bgWhiteTable:true,
+    expandable: {
+        expandedRowRender: (data:any) => {<p>{data.key}</p> },
+        rowExpandable: (data: any) => data?.anyArray?.length > 0,
+    }
 
 }

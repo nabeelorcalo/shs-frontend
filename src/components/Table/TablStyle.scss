@@ -1,53 +1,51 @@
-.table_main_wrapper {
-    position: relative;
-    .ant-table-content {
-        table {
-            .ant-table-thead {
-                tr {
-                    .ant-table-cell {
-                        color: #14142A;
-                        font-weight: 400;
-                        text-align: center;
-                        background: #E6F4F9;
-                        border-bottom: unset;
-                        padding-top: 18px;
-                        padding-bottom: 18px;
-
+@mixin tablestyel {
+    table {
+        .ant-table-thead {
+            tr {
+                .ant-table-cell {
+                    color: #14142A;
+                    font-weight: 400;
+                    text-align: center;
+                    background: #E6F4F9;
+                    border-bottom: unset;
+                    padding-top: 18px;
+                    padding-bottom: 18px;
+                    &::before{
+                        content: unset !important;
                     }
-                }
-
-            }
-        
-
-            .ant-table-tbody {
-                background-color: #fff;
-
-                .ant-table-row {
-                    &:hover {
-                        .ant-table-cell {
-                            background: unset;
-                            border-bottom: 1px solid #D9DBE9
-                        }
-
-                    }
-
-                    .ant-table-cell {
-                        border-bottom: 1px solid #fff;
-                        text-align: center;
-                        color: #4E4B66;
-                        font-weight: 400;
-                        font-size: 16px;
-                        line-height: 24px;
-                    }
-
                 }
             }
         }
 
+        .ant-table-tbody {
+            background-color: #fff;
+
+            .ant-table-row {
+                &:hover {
+                    .ant-table-cell {
+                        background: unset;
+                        border-bottom: 1px solid #D9DBE9
+                    }
+
+                }
+
+                .ant-table-cell {
+                    border-bottom: 1px solid #fff;
+                    text-align: center;
+                    color: #4E4B66;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+
+            }
+        }
     }
 
+}
+@mixin pagination {
     .ant-pagination {
-      
+
         .ant-pagination-prev {
             background: #FFFFFF;
             border: 1px solid #D9DBE9;
@@ -138,10 +136,52 @@
         }
 
     }
-    .Counter{
-        position: absolute;
-        left: 0;
-        bottom: 22px;
-        color: #A0A3BD;
+
+}
+
+@mixin Counter {
+    position: absolute;
+    left: 0;
+    bottom: 22px;
+    color: #A0A3BD;
+}
+
+.primary_table_wrapper {
+    position: relative;
+
+    .ant-table-content {
+        @include tablestyel;
+
     }
+
+    @include pagination;
+
+    .Counter {
+        @include Counter;
+    }
+}
+
+.whiteHeadTable {
+    position: relative;
+
+    .ant-table-content {
+        @include tablestyel;
+
+        table {
+            .ant-table-thead {
+                tr {
+                    .ant-table-cell {
+                        background: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    @include pagination;
+
+    .Counter {
+        @include Counter;
+    }
+
 }
