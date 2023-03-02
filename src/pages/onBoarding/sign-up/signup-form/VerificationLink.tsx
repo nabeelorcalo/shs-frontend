@@ -1,8 +1,9 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
-import logo from "../../../assets/login/shslogo.svg";
+import { SHSLogo } from "../../../../../assets/images";
 import fly from "../../../assets/login/fly.png";
-import "../signup.scss";
+
+import '../../styles.scss';
 
 const VerificationLink = () => {
   return (
@@ -10,7 +11,7 @@ const VerificationLink = () => {
       <Row className="verfiction-link-style">
         <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+      <SHSLogo/>
           </div>
           <div
             style={{

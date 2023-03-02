@@ -10,9 +10,9 @@ import {
   Typography,
 } from "antd";
 import React, { useState } from "react";
-import logo from "../../../../assets/login/shslogo.svg";
+import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
-import back from "../../../../assets/login/BackLoginButton.svg";
+import { BackButton } from "../../../../../assets/images";
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -41,7 +41,7 @@ const Address = () => {
       <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+      <SHSLogo/>
           </div>
           <div
             style={{
@@ -54,7 +54,7 @@ const Address = () => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 5 of 7</Typography>
               <div className="flex align-center justify-center">
-                <img src={back} alt="" />
+                <img src={BackButton} alt="" />
                 <Typography.Title level={3}>Address</Typography.Title>
               </div>
 

@@ -1,6 +1,6 @@
 import {
   Button,
-  Checkbox,
+  DatePicker,
   Col,
   Form,
   Input,
@@ -9,22 +9,40 @@ import {
   Space,
   Typography,
 } from "antd";
-import React from "react";
-import logo from "../../../../assets/login/shslogo.svg";
+import React, { useState } from "react";
+import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
-import back from "../../../../assets/login/BackLoginButton.svg";
+import { BackButton } from "../../../../../assets/images";
 
-const Documents = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+const onFinish = (values: any) => {
+  console.log("Received values of form: ", values);
+};
+const { Option } = Select;
+
+import type { SelectProps } from "antd";
+
+const UniversityDetails = (props: any) => {
+  const [data, setData] = useState<SelectProps["options"]>([]);
+  const [value, setValue] = useState<string>();
+
+  const handleSearch = (newValue: string) => {
+    // if (newValue) {
+    //   fetch(newValue, setData);
+    // } else {
+    setData([]);
+    // }
   };
-  const { Option } = Select;
+
+  const { RangePicker } = DatePicker;
+  const handleChange = (newValue: string) => {
+    setValue(newValue);
+  };
   return (
-    <div className="identity">
-      <Row className="identity-style">
+    <div className="university-detail">
+      <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+      <SHSLogo/>
           </div>
           <div
             style={{
@@ -35,11 +53,11 @@ const Documents = () => {
             }}
           >
             <div className="main-title-wrapper">
-              <Typography className="steps">Step 4 of 7</Typography>
+              <Typography className="steps">Step 3 of 7</Typography>
               <div className="flex align-center justify-around">
-                <img src={back} alt="" />
+          <BackButton/>
                 <Typography.Title level={3}>
-                  Identity Documents
+                  University Details
                 </Typography.Title>
               </div>
 
@@ -51,7 +69,7 @@ const Documents = () => {
                   textAlign: "center",
                 }}
               >
-                Provide your identity documents for verification
+                Tell us about your university
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
@@ -63,51 +81,74 @@ const Documents = () => {
                 onFinish={onFinish}
               >
                 <Form.Item
-                  name="Visa Status"
-                  label="Visa Status"
+                  label="University"
+                  name="UniversityDocument"
                   rules={[
-                    { required: true, message: "Please select Visa Status!" },
+                    {
+                      required: true,
+                      message: "Please University Valid Document!",
+                    },
                   ]}
+                  style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <Select placeholder="select your Visa Status" size="large">
+                  <Input
+                    placeholder="Search universities"
+                    className="input-style"
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="Course"
+                  label="Course"
+                  rules={[{ required: true, message: "Please select Course!" }]}
+                >
+                  <Select placeholder="select your Course" size="large">
                     <Option value="male">Male</Option>
                     <Option value="female">Female</Option>
                     <Option value="other">Other</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  label="CV"
-                  name="CVDocument"
+                  label="University Email"
+                  name="University Email"
                   rules={[
                     {
                       required: true,
-                      message: "Please  Valid Document!",
+                      message: "Please input your University Email!",
                     },
                   ]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  style={{ width: "100%" }}
                 >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
-                    <Input type="file" style={{ display: "none" }} />
-                  </div>
+                  <Input
+                    placeholder="University Email"
+                    className="input-style"
+                  />
                 </Form.Item>
+
                 <Form.Item
-                  label="Passport"
-                  name="PassportDocument"
+                  name="Graduation Year"
+                  label="Graduation Year"
                   rules={[
                     {
                       required: true,
-                      message: "Please  Valid Document!",
+                      message: "Please select Graduation Year!",
                     },
                   ]}
-                  style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
-                    <Input type="file" style={{ display: "none" }} />
-                  </div>
+                  <Select
+                    placeholder="select your Graduation Year"
+                    size="large"
+                  >
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                    <Option value="other">Other</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item label="Internship Start Date">
+                  <RangePicker />
                 </Form.Item>
                 <Form.Item
-                  label="BRP"
-                  name="BRPDocument"
+                  label="Univeristy Approval"
+                  name="uploadDocument"
                   rules={[
                     {
                       required: true,
@@ -142,4 +183,4 @@ const Documents = () => {
   );
 };
 
-export default Documents;
+export default UniversityDetails;

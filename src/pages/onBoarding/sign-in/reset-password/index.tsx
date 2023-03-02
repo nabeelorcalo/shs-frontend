@@ -1,16 +1,16 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
-import logo from "../../assets/login/shslogo.svg";
-import SignupForm from "./signup-form/SignupForm";
-import "./signup.scss";
+import { SHSLogo } from "../../../assets/images";
+import "../../sign-in/signin.scss";
+import ResetPasswordForm from "./ResetPasswordForm";
 
-const SignUp = () => {
+const ResetPassword = () => {
   return (
-    <div className="signup-form">
-      <Row className="form-style">
-        <Col xxl={12} xl={12} lg={14} md={18} sm={24} xs={24}>
+    <div className="reset-form">
+      <Row className="reset-form-style">
+        <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+      <SHSLogo/>
           </div>
           <div
             style={{
@@ -21,12 +21,12 @@ const SignUp = () => {
             }}
           >
             <div className="main-title-wrapper">
-              <Typography.Title level={2}>Sign up</Typography.Title>
+              <Typography.Title level={2}>Reset Password</Typography.Title>
               <Typography.Title level={3}>
-                Find the right career path
+                Confirm your email to receive link
               </Typography.Title>
             </div>
-            <SignupForm />
+            <ResetPasswordForm />
           </div>
         </Col>
       </Row>
@@ -34,4 +34,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default ResetPassword;

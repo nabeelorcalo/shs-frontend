@@ -1,16 +1,16 @@
-import { Button, Col, Row, Typography } from "antd";
+import { Col, Row, Typography } from "antd";
+import { SHSLogo } from "../../../../../assets/images";
 import React from "react";
-import logo from "../../../assets/login/shslogo.svg";
-import fly from "../../../assets/login/fly.png";
-import "../../sign-in/signin.scss";
+import "../../../sign-in/signin.scss";
+import fly from "../../../../assets/login/fly.png";
 
-const ResetLink = () => {
+const PasswordSuccess = () => {
   return (
-    <div className="reset-link">
-      <Row className="reset-link-style">
+    <div className="password-success">
+      <Row className="password-success-style">
         <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+      <SHSLogo/>
           </div>
           <div
             style={{
@@ -34,7 +34,7 @@ const ResetLink = () => {
                   textAlign: "center",
                 }}
               >
-                Check your email
+                Password Reset Successful
               </Typography>
               <Typography
                 style={{
@@ -46,16 +46,10 @@ const ResetLink = () => {
                   textAlign: "center",
                 }}
               >
-                We’ve sent you password reset link!
+                Your password has been reset successfully.
               </Typography>
             </div>
-            <div>
-              <Typography className="text-center mt-2 mb-2">
-                <a href="" style={{ color: "#E95060" }}>
-                  Resend
-                </a>
-              </Typography>
-            </div>
+
             <div>
               <Typography className="text-center mt-2 mb-2">
                 Back to &nbsp;
@@ -71,4 +65,4 @@ const ResetLink = () => {
   );
 };
 
-export default ResetLink;
+export default PasswordSuccess;

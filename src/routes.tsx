@@ -1,9 +1,9 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
-import Login from "./pages/onBoarding/login";
-import Signup from "./pages/onBoarding/signup";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import SignIn from "./pages/onBoarding/sign-in";
+import SignUp from "./pages/onBoarding/sign-up/index";
 import ForgotPassword from "./pages/onBoarding/ForgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
@@ -13,15 +13,12 @@ import Payments from "./pages/payments";
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
-  <Suspense
-    fallback={
-      <Spin indicator={spinIcon} />
-    }
-  >
-    <Component {...props} />
-  </Suspense>
-);
+const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
+  (
+    <Suspense fallback={<Spin indicator={spinIcon} />}>
+      <Component {...props} />
+    </Suspense>
+  );
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -36,7 +33,9 @@ const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure")));
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
-const WithDrawalRequest = Loadable(lazy(() => import("./pages/withdrawalRequest")));
+const WithDrawalRequest = Loadable(
+  lazy(() => import("./pages/withdrawalRequest"))
+);
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
 const Universities = Loadable(lazy(() => import("./pages/universities")));
@@ -65,11 +64,11 @@ export const authRoutes = [
   { path: "/", element: <Navigate to="login" /> },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "sign-up",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -81,15 +80,15 @@ export const authRoutes = [
 const managerRoutes: any = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
+    element: <Navigate to="dashboard" />,
   },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -100,7 +99,7 @@ const managerRoutes: any = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -163,15 +162,15 @@ const managerRoutes: any = [
 const delegateAgentRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
+    element: <Navigate to="dashboard" />,
   },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -182,7 +181,7 @@ const delegateAgentRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -213,15 +212,15 @@ const delegateAgentRoutes = [
 const systemAdminRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
+    element: <Navigate to="dashboard" />,
   },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -232,7 +231,7 @@ const systemAdminRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -283,15 +282,15 @@ const systemAdminRoutes = [
 const companyAdminRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
+    element: <Navigate to="dashboard" />,
   },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -302,7 +301,7 @@ const companyAdminRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -373,15 +372,15 @@ const companyAdminRoutes = [
 const internRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
+    element: <Navigate to="dashboard" />,
   },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -392,7 +391,7 @@ const internRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -459,15 +458,15 @@ const internRoutes = [
 const studentRoutes = [
   {
     path: "/",
-    element: <Navigate to="dashboard" />
+    element: <Navigate to="dashboard" />,
   },
   {
     path: "login",
-    element: <Login />,
+    element: <SignIn />,
   },
   {
     path: "signup",
-    element: <Signup />,
+    element: <SignUp />,
   },
   {
     path: "forgot-password",
@@ -478,7 +477,7 @@ const studentRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {

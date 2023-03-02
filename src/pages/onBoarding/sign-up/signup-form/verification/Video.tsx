@@ -9,10 +9,10 @@ import {
   Typography,
 } from "antd";
 import React, { useState } from "react";
-import logo from "../../../../assets/login/shslogo.svg";
+import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
-import back from "../../../../assets/login/BackLoginButton.svg";
-import round from "../../../../assets/login/round.svg";
+import { BackButton ,Round} from "../../../../../assets/images";
+
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -31,7 +31,7 @@ const Video = () => {
       <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+      <SHSLogo/>
           </div>
           <div
             style={{
@@ -44,7 +44,7 @@ const Video = () => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 7 of 7</Typography>
               <div className="flex align-center justify-center">
-                <img src={back} alt="" />
+          <BackButton/>
                 <Typography.Title level={3}>Video</Typography.Title>
               </div>
 
@@ -153,7 +153,7 @@ const Video = () => {
                           }}
                         >
                           <img
-                            src={round}
+                            src={Round}
                             alt=""
                             style={{ marginTop: "2px", marginLeft: "2px" }}
                           />

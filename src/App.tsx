@@ -1,11 +1,10 @@
 import React, {FC, useEffect} from 'react'
+import  { getRoutes } from './routes'
 import AppLayout from './layout'
 
 function App() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-
-
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -17,14 +16,11 @@ function App() {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  
+
 
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
-  return (
-    <AppLayout />
-  )
+  return  <></>
 }
-
 export default App

@@ -3,7 +3,7 @@ import { Col, Row, Typography } from "antd";
 import "./signin.scss";
 import React from "react";
 import SigninForm from "./signin-form/SigninForm";
-import logo from "../../assets/login/shslogo.svg";
+import { SHSLogo } from "../../../assets/images";
 
 const role: string = "Student";
 const SignIn = () => {
@@ -12,7 +12,7 @@ const SignIn = () => {
       <Row className="form-style">
         <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={logo} alt="error" />
+           <SHSLogo/>
           </div>
           <div
             style={{

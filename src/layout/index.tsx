@@ -38,24 +38,24 @@ function AppLayout() {
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
 
-  return [
-    // <SignIn />,
-    // <ResetPassword />,
-    // <ResetLink />,
-    // <CreatePassword />,
-    // <PasswordSuccess />,
-    <>
-      <SignUp />,
-      <VerificationLink />,
-      <IdentityVerification />
-      <DbsVerification />
-      <UniversityDetails />
-      <Documents />
-      <Address />
-      <Photograph />
-      <Video/>
-    </>,
-  ];
+  // return [
+  // <SignIn />,
+  // <ResetPassword />,
+  // <ResetLink />,
+  // <CreatePassword />,
+  // <PasswordSuccess />,
+  // <>
+  //   <SignUp />,
+  //   <VerificationLink />,
+  //   <IdentityVerification />
+  //   <DbsVerification />
+  //   <UniversityDetails />
+  //   <Documents />
+  //   <Address />
+  //   <Photograph />
+  //   <Video/>
+  // </>,
+  // ];
 
   return (
     <Layout>
