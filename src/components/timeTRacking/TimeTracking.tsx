@@ -2,9 +2,8 @@ import { Card } from "antd";
 import React, { useRef, useState } from "react";
 import "./TimeTracking.scss";
 
-
 const TimeTracking: React.FC = (props: any) => {
-  const { type } = props;
+  const { vartical } = props;
 
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -49,7 +48,7 @@ const TimeTracking: React.FC = (props: any) => {
 
   return (
     <Card
-      className={type ? "time-tracking" : "timeTrackig-horizontal"}
+      className={vartical ? "time-tracking" : "timeTrackig-horizontal"}
       bordered={false}
     >
       <div className="time-tracking-body">
@@ -59,12 +58,20 @@ const TimeTracking: React.FC = (props: any) => {
           </p>
         </div>
 
-        <div className={ type ? "clock-time-main": "clock-time-main-horizontal"}>
-          <div className={ type ? "clock-time flex justify-center items-center" :"mr-8"}>
+        <div
+          className={
+            vartical ? "clock-time-main" : "clock-time-main-horizontal"
+          }
+        >
+          <div
+            className={
+              vartical ? "clock-time flex justify-center items-center" : "mr-8"
+            }
+          >
             {!isRunning ? (
               <div
                 onClick={handleStart}
-                className="time-clock-in flex justify-center items-center cursor-pointer" 
+                className="time-clock-in flex justify-center items-center cursor-pointer"
                 style={{
                   background: "#66AC8B",
                   width: "100px",
@@ -90,18 +97,28 @@ const TimeTracking: React.FC = (props: any) => {
             )}
           </div>
           <div
-            className={type ?"time font-medium text-4xl text-center mt-4" : "time font-medium text-4xl text-center"}
+            className={
+              vartical
+                ? "time font-medium text-4xl text-center mt-4"
+                : "time font-medium text-4xl text-center"
+            }
             style={{ color: "#4E4B66" }}
           >
             {formatTime(time)}
           </div>
         </div>
 
-        <div className={type ? "date text-sm font-medium text-center mt-4" : "date text-sm font-medium text-end mt-4"}>
+        <div
+          className={
+            vartical
+              ? "date text-sm font-medium text-center mt-4"
+              : "date text-sm font-medium text-end mt-4"
+          }
+        >
           Wednesday, 21 September
         </div>
 
-        {type ? (
+        {vartical ? (
           <div
             className="mt-4 p-4"
             style={{ background: "#E6F4F9", borderRadius: "10px" }}
@@ -130,14 +147,19 @@ const TimeTracking: React.FC = (props: any) => {
               </div>
             </div>
           </div>
-        ) : 
-        <div className="flex justify-end mt-4">
-          <div className="font-medium text-sm mr-4"
-                style={{ color: "#4E4B66" }}>{clockTrack.in}</div>
-          <div  className="font-medium text-sm "
-                style={{ color: "#4E4B66" }}>{clockTrack.out}</div>
-        </div>
-        }
+        ) : (
+          <div className="flex justify-end mt-4">
+            <div
+              className="font-medium text-sm mr-4"
+              style={{ color: "#4E4B66" }}
+            >
+              {clockTrack.in}
+            </div>
+            <div className="font-medium text-sm " style={{ color: "#4E4B66" }}>
+              {clockTrack.out}
+            </div>
+          </div>
+        )}
       </div>
     </Card>
   );

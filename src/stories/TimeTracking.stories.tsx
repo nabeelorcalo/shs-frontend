@@ -12,10 +12,10 @@ const Template: ComponentStory<typeof TimeTracking> = (args) => (
 
 export const Vertical = Template.bind({});
 Vertical.args = {
-  type: true,
+  vartical: true,
 };
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {
-  type: false,
+  vartical: false,
 };
