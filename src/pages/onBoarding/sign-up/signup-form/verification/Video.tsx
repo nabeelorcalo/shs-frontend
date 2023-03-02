@@ -11,8 +11,7 @@ import {
 import React, { useState } from "react";
 import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
-import { BackButton ,Round} from "../../../../../assets/images";
-
+import { BackButton, Round } from "../../../../../assets/images";
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -31,75 +30,35 @@ const Video = () => {
       <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <SHSLogo />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 7 of 7</Typography>
-              <div className="flex align-center justify-center">
-          <BackButton/>
-                <Typography.Title level={3}>Video</Typography.Title>
+              <div className="flex items-center">
+                <div>
+                  <BackButton />
+                </div>
+                <div className="mx-auto">
+                  <Typography.Title level={3}>Video</Typography.Title>
+                </div>
               </div>
 
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  color: "#4E4B66",
-                  textAlign: "center",
-                }}
-              >
+              <Typography className="steps-description">
                 Create your video interview to get hired
               </Typography>
             </div>
             <div>
-              <Typography
-                style={{
-                  fontSize: "20px",
-                  fontWeight: 500,
-                  color: "#363565",
-                  fontFamily: "Outfit",
-                }}
-              >
+              <Typography className="video-description">
                 Create an introductory video by answering the following
                 questions in 30 to 60 seconds
               </Typography>
               <ul>
-                <li
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: 400,
-                    color: "#4E4B66",
-                    fontFamily: "Outfit",
-                  }}
-                >
-                  Tell us about yourself
-                </li>
-                <li
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: 400,
-                    color: "#4E4B66",
-                    fontFamily: "Outfit",
-                  }}
-                >
+                <li className="list-style">Tell us about yourself</li>
+                <li className="list-style">
                   Why have you applied for this internship?
                 </li>
-                <li
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: 400,
-                    color: "#4E4B66",
-                    fontFamily: "Outfit",
-                  }}
-                >
+                <li className="list-style">
                   Why do you want to work in this industry?
                 </li>
               </ul>
@@ -120,41 +79,10 @@ const Video = () => {
                   className="flex justify-center mt-10"
                 >
                   <Upload name="logo" action="/upload.do" listType="picture">
-                    <div
-                      style={{
-                        border: " 1px solid #E6F4F9",
-                        background: "#FFFFFF",
-                        boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)",
-                        borderRadius: "10px",
-                        padding: "10px",
-                        width: "500px",
-                        height: "350px",
-                      }}
-                    >
-                      <div
-                        style={{
-                          background: "#E6F4F9",
-
-                          borderRadius: "16px",
-                          width: "500px",
-                          height: "350px",
-                          position: "relative",
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: "45%",
-                            left: "45%",
-                            border: "10px solid white",
-                            borderRadius: "100%",
-                            height: "25px",
-                            width: "25px",
-                          }}
-                        >
-                          <img
-                            src={Round}
-                            alt=""
+                    <div className="main-box-video">
+                      <div className="secondary-box-div">
+                        <div className="inner-box-video">
+                          <Round
                             style={{ marginTop: "2px", marginLeft: "2px" }}
                           />
                         </div>
@@ -162,18 +90,27 @@ const Video = () => {
                     </div>
                   </Upload>
                 </Form.Item>
-                <Space>
-                  <Button className="btn-cancel" htmlType="submit">
-                    Skip
-                  </Button>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="btn-primary"
-                  >
-                    Next
-                  </Button>
-                </Space>
+                <Row gutter={10}>
+                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                    <Button
+                      className="btn-cancel btn-cancel-verification"
+                      htmlType="submit"
+                    >
+                      Skip
+                    </Button>
+                  </Col>
+                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Form>
             </div>
           </div>

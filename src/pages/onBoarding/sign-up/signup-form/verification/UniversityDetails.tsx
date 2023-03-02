@@ -42,7 +42,7 @@ const UniversityDetails = (props: any) => {
       <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <SHSLogo />
           </div>
           <div
             style={{
@@ -54,11 +54,15 @@ const UniversityDetails = (props: any) => {
           >
             <div className="main-title-wrapper">
               <Typography className="steps">Step 3 of 7</Typography>
-              <div className="flex align-center justify-around">
-          <BackButton/>
-                <Typography.Title level={3}>
-                  University Details
-                </Typography.Title>
+              <div className="flex items-center">
+                <div>
+                  <BackButton />
+                </div>
+                <div className="mx-auto">
+                  <Typography.Title level={3}>
+                    Univerisity Details
+                  </Typography.Title>
+                </div>
               </div>
 
               <Typography
@@ -157,7 +161,13 @@ const UniversityDetails = (props: any) => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
+                  <div
+                    style={{
+                      border: "2px dashed black",
+                      height: "60px",
+                      width: "100%",
+                    }}
+                  >
                     <Input type="file" style={{ display: "none" }} />
                   </div>
                 </Form.Item>

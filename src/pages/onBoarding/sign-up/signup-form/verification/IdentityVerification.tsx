@@ -33,33 +33,23 @@ const IdentityVerification = () => {
       <Row className="identity-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <SHSLogo />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 7</Typography>
-              <div className="flex align-center justify-around">
-                <BackButton/>
-                <Typography.Title level={3}>
-                  Identity Verification
-                </Typography.Title>
+              <div className="flex items-center">
+                <div>
+                  <BackButton />
+                </div>
+                <div className="mx-auto">
+                  <Typography.Title level={3}>
+                    Identity Verification
+                  </Typography.Title>
+                </div>
               </div>
 
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  color: "#4E4B66",
-                  textAlign: "center",
-                }}
-              >
+              <Typography className="steps-description">
                 Verifying your identity makes it easier for employers to
                 shortlist candidates
               </Typography>
@@ -83,7 +73,6 @@ const IdentityVerification = () => {
                           message: "Please input your First Name!",
                         },
                       ]}
-                      style={{ width: "100%" }}
                     >
                       <Input placeholder="First Name" className="input-style" />
                     </Form.Item>
@@ -98,7 +87,6 @@ const IdentityVerification = () => {
                           message: "Please input your Last Name!",
                         },
                       ]}
-                      style={{ width: "100%" }}
                     >
                       <Input placeholder="Last Name" className="input-style" />
                     </Form.Item>
@@ -111,7 +99,6 @@ const IdentityVerification = () => {
                   rules={[
                     { required: true, message: "Please input your Country!" },
                   ]}
-                  style={{ width: "100%" }}
                 >
                   <Input placeholder="Country" className="input-style" />
                 </Form.Item>
@@ -124,23 +111,31 @@ const IdentityVerification = () => {
                       message: "Please input your Document Type!",
                     },
                   ]}
-                  style={{ width: "100%" }}
                 >
                   <Input placeholder="Document Type" className="input-style" />
                 </Form.Item>
 
-                <Space>
-                  <Button className="btn-cancel" htmlType="submit">
-                    Skip
-                  </Button>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="btn-primary"
-                  >
-                    Next
-                  </Button>
-                </Space>
+                <Row gutter={10}>
+                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                    <Button
+                      className="btn-cancel btn-cancel-verification"
+                      htmlType="submit"
+                    >
+                      Skip
+                    </Button>
+                  </Col>
+                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
 
                 <div>
                   <Typography className="text-center">

@@ -10,48 +10,21 @@ const ResetLink = () => {
       <Row className="reset-link-style">
         <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <SHSLogo />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="fly-wrapper">
               <img src={fly} alt="error" />
             </div>
             <div className="main-wrapper">
-              <Typography
-                style={{
-                  color: "#363565",
-                  fontSize: "30px",
-                  fontWeight: 500,
-                  lineHeight: "40px",
-                  fontFamily: "Outfit",
-                  textAlign: "center",
-                }}
-              >
-                Check your email
-              </Typography>
-              <Typography
-                style={{
-                  color: "#4E4B66",
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  lineHeight: "40px",
-                  fontFamily: "Outfit",
-                  textAlign: "center",
-                }}
-              >
+              <Typography className="main-title">Check your email</Typography>
+              <Typography className="secondary-title">
                 We’ve sent you password reset link!
               </Typography>
             </div>
             <div>
               <Typography className="text-center mt-2 mb-2">
-                <a href="" style={{ color: "#E95060" }}>
+                <a href="" className="a-tag-signup">
                   Resend
                 </a>
               </Typography>
@@ -59,7 +32,7 @@ const ResetLink = () => {
             <div>
               <Typography className="text-center mt-2 mb-2">
                 Back to &nbsp;
-                <a href="" style={{ color: "#E95060" }}>
+                <a href="" className="a-tag-signup">
                   Login
                 </a>
               </Typography>

@@ -20,7 +20,6 @@ const ResetPasswordForm = () => {
             label="Email"
             name="Email"
             rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ width: "100%" }}
           >
             <Input placeholder="Email" className="input-style" />
           </Form.Item>
@@ -37,8 +36,8 @@ const ResetPasswordForm = () => {
           <div>
             <Typography className="text-center">
               Back to &nbsp;
-              <a href="" style={{ color: "#E95060" }}>
-                 Login
+              <a href="" className="a-tag-signup ">
+                Login
               </a>
             </Typography>
           </div>

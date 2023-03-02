@@ -33,19 +33,16 @@ const Photograph = () => {
           <div className="logo-wrapper">
             <img src={SHSLogo} alt="error" />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 6 of 7</Typography>
-              <div className="flex align-center justify-center">
-                <img src={BackButton} alt="" />
-                <Typography.Title level={3}>Photograph</Typography.Title>
+              <div className="flex items-center">
+                <div>
+                  <BackButton />
+                </div>
+                <div className="mx-auto">
+                  <Typography.Title level={3}>Photograph</Typography.Title>
+                </div>
               </div>
 
               <Typography
@@ -59,16 +56,7 @@ const Photograph = () => {
                 Upload your profile picture
               </Typography>
             </div>
-            <Form.Item
-              name="upload"
-              valuePropName="fileList"
-              getValueFromEvent={normFile}
-              className="flex justify-center mt-10"
-            >
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <img src={uploadImage} alt="" />
-              </Upload>
-            </Form.Item>
+
             <div className="text-center">
               <Typography
                 style={{
@@ -80,14 +68,7 @@ const Photograph = () => {
               >
                 A photo of you
               </Typography>
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  fontFamily: "Outfit",
-                  color: "#4E4B66",
-                }}
-              >
+              <Typography className="steps-description">
                 Take a minute to upload a profile photo.
               </Typography>
             </div>
@@ -99,18 +80,37 @@ const Photograph = () => {
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
               >
-                <Space>
-                  <Button className="btn-cancel" htmlType="submit">
-                    Skip
-                  </Button>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="btn-primary"
-                  >
-                    Next
-                  </Button>
-                </Space>
+                <Form.Item
+                  name="upload"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  className="flex justify-center mt-10"
+                >
+                  <Upload name="logo" action="/upload.do" listType="picture">
+                    <img src={uploadImage} alt="" />
+                  </Upload>
+                </Form.Item>
+                <Row gutter={10}>
+                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                    <Button
+                      className="btn-cancel btn-cancel-verification"
+                      htmlType="submit"
+                    >
+                      Skip
+                    </Button>
+                  </Col>
+                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Form>
             </div>
           </div>

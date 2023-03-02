@@ -1,12 +1,24 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { useState } from "react";
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
 };
 
 const SigninForm = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    console.log(formData);
+  };
+
   return (
     <div>
       <div className="form-wrapper">
@@ -21,9 +33,13 @@ const SigninForm = () => {
             label="Email"
             name="Email"
             rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ width: "100%" }}
           >
-            <Input placeholder="Email" className="input-style" />
+            <Input
+              placeholder="Email"
+              className="input-style"
+              onChange={handleChange}
+              name="Email"
+            />
           </Form.Item>
           <Form.Item
             label="Password"
@@ -34,6 +50,8 @@ const SigninForm = () => {
               type="password"
               placeholder="Password"
               className="input-style"
+              onChange={handleChange}
+              name="password"
             />
           </Form.Item>
           <Form.Item>
@@ -41,10 +59,8 @@ const SigninForm = () => {
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
 
-            <a className="login-form-forgot " href="../ResetPassword">
-              <Typography style={{ color: "#363565" }}>
-                Forgot password
-              </Typography>
+            <a className="login-form-forgot " href="/forgot-password">
+              <Typography>Forgot password</Typography>
             </a>
           </Form.Item>
 
@@ -60,7 +76,7 @@ const SigninForm = () => {
           <div>
             <Typography className="text-center">
               Don’t have an account?
-              <a href="" style={{ color: "#E95060" }}>
+              <a href="/signup" className="a-tag-signup">
                 Sign up
               </a>
             </Typography>

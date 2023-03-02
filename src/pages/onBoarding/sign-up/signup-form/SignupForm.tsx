@@ -42,7 +42,6 @@ const SignupForm = () => {
               rules={[
                 { required: true, message: "Please input your First Name!" },
               ]}
-              style={{ width: "100%" }}
             >
               <Input placeholder="First Name" className="input-style" />
             </Form.Item>
@@ -54,7 +53,6 @@ const SignupForm = () => {
               rules={[
                 { required: true, message: "Please input your Last Name!" },
               ]}
-              style={{ width: "100%" }}
             >
               <Input placeholder="Last Name" className="input-style" />
             </Form.Item>
@@ -65,7 +63,6 @@ const SignupForm = () => {
           label="Email"
           name="Email"
           rules={[{ required: true, message: "Please input your Email!" }]}
-          style={{ width: "100%" }}
         >
           <Input placeholder="Email" className="input-style" />
         </Form.Item>
@@ -95,7 +92,6 @@ const SignupForm = () => {
               rules={[
                 { required: true, message: "Please input your Date of Birth!" },
               ]}
-              style={{ width: "100%" }}
             >
               <Input
                 type="date"
@@ -151,18 +147,6 @@ const SignupForm = () => {
         </Row>
 
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox>Remember me</Checkbox>
-          </Form.Item>
-
-          <a className="login-form-forgot " href="../ResetPassword">
-            <Typography style={{ color: "#363565" }}>
-              Forgot password
-            </Typography>
-          </a>
-        </Form.Item>
-
-        <Form.Item>
           <Button
             type="primary"
             htmlType="submit"
@@ -174,7 +158,7 @@ const SignupForm = () => {
         <div>
           <Typography className="text-center">
             Already have an account?
-            <a href="" style={{ color: "#E95060" }}>
+            <a href="" className="a-tag-signup">
               Sign In
             </a>
           </Typography>

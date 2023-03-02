@@ -10,16 +10,9 @@ const PasswordSuccess = () => {
       <Row className="password-success-style">
         <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <SHSLogo />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="fly-wrapper">
               <img src={fly} alt="error" />
             </div>

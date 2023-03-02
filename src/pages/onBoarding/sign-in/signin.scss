@@ -32,6 +32,21 @@
     background-color: $primary-color;
     width: 100%;
   }
+  .form-inner-wrapper {
+    border: 1px solid #d9dbe9;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .a-tag-signup {
+    color: #e95060;
+  }
+  .a-tag-signup:hover {
+    color: #e95060;
+  }
+  .login-form-forgot {
+    color: #363565;
+  }
 }
 
 .reset-form {
@@ -55,6 +70,12 @@
     justify-content: center;
     margin-bottom: 1rem;
   }
+  .a-tag-signup {
+    color: #e95060;
+  }
+  .a-tag-signup:hover {
+    color: #e95060;
+  }
 }
 
 .reset-link {
@@ -72,6 +93,34 @@
     display: flex;
     justify-content: center;
   }
+  .form-inner-wrapper {
+    border: 1px solid #d9dbe9;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .main-title {
+    color: #363565;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 40px;
+    font-family: Outfit;
+    text-align: center;
+  }
+  .secondary-title {
+    color: #4e4b66;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 40px;
+    font-family: Outfit;
+    text-align: center;
+  }
+  .a-tag-signup {
+    color: #e95060;
+  }
+  .a-tag-signup:hover {
+    color: #e95060;
+  }
 }
 
 .create-password {
@@ -84,6 +133,12 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+  }
+  .form-inner-wrapper {
+    border: 1px solid #d9dbe9;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
   }
 }
 
@@ -101,5 +156,11 @@
   .fly-wrapper {
     display: flex;
     justify-content: center;
+  }
+  .form-inner-wrapper {
+    border: 1px solid #d9dbe9;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
   }
 }

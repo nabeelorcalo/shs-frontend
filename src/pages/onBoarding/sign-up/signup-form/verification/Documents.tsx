@@ -25,33 +25,23 @@ const Documents = () => {
       <Row className="identity-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <SHSLogo />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 4 of 7</Typography>
-              <div className="flex align-center justify-around">
-                <img src={BackButton} alt="" />
-                <Typography.Title level={3}>
-                  Identity Documents
-                </Typography.Title>
+              <div className="flex items-center">
+                <div>
+                  <BackButton />
+                </div>
+                <div className="mx-auto">
+                  <Typography.Title level={3}>
+                    Identity Documents
+                  </Typography.Title>
+                </div>
               </div>
 
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  color: "#4E4B66",
-                  textAlign: "center",
-                }}
-              >
+              <Typography className="steps-description">
                 Provide your identity documents for verification
               </Typography>
             </div>
@@ -87,7 +77,13 @@ const Documents = () => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
+                  <div
+                    style={{
+                      border: "2px dashed black",
+                      height: "60px",
+                      width: "100%",
+                    }}
+                  >
                     <Input type="file" style={{ display: "none" }} />
                   </div>
                 </Form.Item>
@@ -102,7 +98,13 @@ const Documents = () => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
+                  <div
+                    style={{
+                      border: "2px dashed black",
+                      height: "60px",
+                      width: "100%",
+                    }}
+                  >
                     <Input type="file" style={{ display: "none" }} />
                   </div>
                 </Form.Item>
@@ -117,23 +119,38 @@ const Documents = () => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
+                  <div
+                    style={{
+                      border: "2px dashed black",
+                      height: "60px",
+                      width: "100%",
+                    }}
+                  >
                     <Input type="file" style={{ display: "none" }} />
                   </div>
                 </Form.Item>
 
-                <Space>
-                  <Button className="btn-cancel" htmlType="submit">
-                    Skip
-                  </Button>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="btn-primary"
-                  >
-                    Next
-                  </Button>
-                </Space>
+                <Row gutter={10}>
+                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                    <Button
+                      className="btn-cancel btn-cancel-verification"
+                      htmlType="submit"
+                    >
+                      Skip
+                    </Button>
+                  </Col>
+                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Form>
             </div>
           </div>
