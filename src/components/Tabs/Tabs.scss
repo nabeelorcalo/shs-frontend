@@ -6,9 +6,15 @@
 }
 
 .ant-tabs-tab-btn {
-  color: #363565;
+  color: #a0a3bd !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
 }
 
 .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: #363565;
+  color: #363565 !important;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
 }

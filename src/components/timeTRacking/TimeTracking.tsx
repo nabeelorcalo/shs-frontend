@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import React, { useRef, useState } from "react";
 import "./TimeTracking.scss";
+import dayjs from "dayjs";
 
 const TimeTracking: React.FC = (props: any) => {
   const { vartical } = props;
@@ -45,6 +46,8 @@ const TimeTracking: React.FC = (props: any) => {
   const handleReset = () => {
     setTime(0);
   };
+
+  const formattedDate = dayjs(new Date()).format("dddd, D MMMM");
 
   return (
     <Card
@@ -115,7 +118,7 @@ const TimeTracking: React.FC = (props: any) => {
               : "date text-sm font-medium text-end mt-4"
           }
         >
-          Wednesday, 21 September
+          {formattedDate}
         </div>
 
         {vartical ? (

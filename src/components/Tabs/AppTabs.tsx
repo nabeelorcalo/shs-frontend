@@ -1,8 +1,13 @@
-import { Tabs, TabsProps } from "antd";
+import { Tabs } from "antd";
 import React from "react";
 import "./Tabs.scss";
 
-const AppTabs = (props: any) => {
+interface TabProps {
+  items: any;
+  onChange: any;
+}
+
+const AppTabs = (props: TabProps) => {
   const { items, onChange } = props;
 
   return (
