@@ -57,9 +57,11 @@ const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
-
-// error
-const Error = Loadable(lazy(() => import("./pages/404")));
+const Report = Loadable(lazy(() => import("./pages/report")));
+const Listings = Loadable(lazy(() => import("./pages/listings")));
+const Offers = Loadable(lazy(() => import("./pages/offers")));
+const Reservations = Loadable(lazy(() => import("./pages/reservations")));
+const Error = Loadable(lazy(() => import("./pages/404"))); // error page
 
 export const authRoutes = [
   { path: "/", element: <Navigate to="login" /> },
@@ -537,13 +539,121 @@ const studentRoutes = [
   },
 ];
 
+const universityRoutes = [
+  {
+    path: "/",
+    element: <Navigate to="dashboard" />
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
+  {
+    path: "forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/",
+    element: (
+      <AuthGuard>
+        <Layout />
+      </AuthGuard >
+    ),
+    children: [
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "students",
+        element: <Students />,
+      },
+      {
+        path: "companies",
+        element: <Companies />,
+      },
+      {
+        path: "attendance",
+        element: <Attendance />,
+      },
+      {
+        path: "performance",
+        element: <Performance />,
+      },
+      {
+        path: "report",
+        element: <Report />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <Error />,
+  },
+];
+
+const agentRoutes = [
+  {
+    path: "/",
+    element: <Navigate to="dashboard" />
+  },
+  {
+    path: "login",
+    element: <Login />,
+  },
+  {
+    path: "signup",
+    element: <Signup />,
+  },
+  {
+    path: "forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/",
+    element: (
+      <AuthGuard>
+        <Layout />
+      </AuthGuard >
+    ),
+    children: [
+      {
+        path: "dashboard",
+        element: <Dashboard />,
+      },
+      {
+        path: "listings",
+        element: <Listings />,
+      },
+      {
+        path: "offers",
+        element: <Offers />,
+      },
+      {
+        path: "reservations",
+        element: <Reservations />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <Error />,
+  },
+];
+
 const ROLES_ROUTES: any = {
   SystemAdmin: systemAdminRoutes,
   Manager: managerRoutes,
   DelegateAgent: delegateAgentRoutes,
-  CompanyAdmin: companyAdminRoutes,
+  CompanyAdmin: companyAdminRoutes, 
   intern: internRoutes,
   Student: studentRoutes,
+  University: universityRoutes,
+  Agent: agentRoutes,
   auth: authRoutes,
 };
 
