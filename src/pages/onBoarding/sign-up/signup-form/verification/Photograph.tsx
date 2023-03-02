@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 import { SHSLogo, BackButton } from "../../../../../assets/images";
 import "./Verification.scss";
-import uploadImage from "../../../../../assets/images/uploadimage.png";
+import uploadImage from "../../../../../assets/images/login/uploadimage.png";
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -31,7 +31,7 @@ const Photograph = () => {
       <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-      <SHSLogo/>
+            <img src={SHSLogo} alt="error" />
           </div>
           <div
             style={{
