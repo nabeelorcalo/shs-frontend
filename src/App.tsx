@@ -1,5 +1,6 @@
-import { Space, Typography } from 'antd'
+import {  Space, Typography } from 'antd'
 import { Button } from './components'
+import { PopupModal } from './components'
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Typography.Title level={3}>
         I'm h3
       </Typography.Title>
+      <Button type='primary' label='stuff' onClick={()=>console.log("modal button clicked")} />
     </div>
   )
 }
