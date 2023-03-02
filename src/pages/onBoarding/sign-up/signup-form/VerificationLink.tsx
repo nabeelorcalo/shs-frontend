@@ -1,7 +1,7 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
-import { SHSLogo } from "../../../../../assets/images";
-import fly from "../../../assets/login/fly.png";
+import { SHSLogo } from "../../../../assets/images";
+import fly from "../../../../assets/images/login/fly.png";
 
 import '../../styles.scss';
 

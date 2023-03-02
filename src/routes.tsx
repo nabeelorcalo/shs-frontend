@@ -1,13 +1,18 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
-import Login from "./pages/onBoarding/login";
-import Signup from "./pages/onBoarding/signup";
-import ForgotPassword from "./pages/onBoarding/forgotPassword";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import Login from "./pages/onBoarding/sign-in";
+import Signup from "./pages/onBoarding/sign-up";
+import ForgotPassword from "./pages/onBoarding/sign-in/reset-password";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
-import {ROUTES_CONSTANTS} from "./config/constants";
+import { ROUTES_CONSTANTS } from "./config/constants";
+import ResetLinkSent from "./pages/onBoarding/sign-in/reset-password/ResetLink";
+import CreatePassword from "./pages/onBoarding/sign-in/reset-password/create-password";
+import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-password/PasswordSuccess";
+import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
+import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -67,7 +72,7 @@ export const publicRoutes = [
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.LOGIN} />
+    element: <Navigate to={ROUTES_CONSTANTS.LOGIN} />,
   },
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
@@ -84,6 +89,31 @@ export const publicRoutes = [
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
   },
+  {
+    key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    element: <ResetLinkSent />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.CREATE_PASSWORD}`,
+    path: `${ROUTES_CONSTANTS.CREATE_PASSWORD}`,
+    element: <CreatePassword />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.SUCCESSFULLY_CREATE_PASSWORD}`,
+    path: `${ROUTES_CONSTANTS.SUCCESSFULLY_CREATE_PASSWORD}`,
+    element: <PasswordSuccess />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`,
+    path: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`,
+    element: <VerificationLinkSent />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
+    path: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
+    element: <VerificationSteps />,
+  },
 ];
 
 // Manager
@@ -91,7 +121,7 @@ const managerRoutes = [
   {
     key: `main`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `mainLayout`,
@@ -176,7 +206,7 @@ const delegateAgentRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -221,7 +251,7 @@ const systemAdminRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -291,7 +321,7 @@ const companyAdminRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -386,7 +416,7 @@ const internRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -476,7 +506,7 @@ const studentRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -560,7 +590,7 @@ const universityRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -568,7 +598,7 @@ const universityRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -614,7 +644,7 @@ const agentRoutes = [
   {
     key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -622,7 +652,7 @@ const agentRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {

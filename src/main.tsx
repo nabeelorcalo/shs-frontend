@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ConfigProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          {getRoutes("auth").map((item: any) => (
+          {getRoutes('public').map((item: any) => (
             <Route path={item.path} element={item.element} />
           ))}
         </Routes>

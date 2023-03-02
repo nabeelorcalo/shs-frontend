@@ -1,6 +1,6 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
-import { SHSLogo } from "../../../assets/images";
+import { SHSLogo } from "../../../../assets/images";
 import "../../sign-in/signin.scss";
 import ResetPasswordForm from "./ResetPasswordForm";
 
