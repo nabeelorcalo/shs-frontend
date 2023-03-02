@@ -37,6 +37,23 @@ export { ReactComponent as IconPeoples  } from './sidebar/icon-peoples.svg';
 export { ReactComponent as IconProfileCircle  } from './sidebar/icon-profile-circle.svg';
 export { ReactComponent as IconCourtHouse  } from './sidebar/icon-courthouse.svg';
 export { ReactComponent as IconTeacher  } from './sidebar/icon-teacher.svg';
+export { ReactComponent as IconDelegateAgent  } from './sidebar/icon-delegate-aent.svg';
+export { ReactComponent as IconHeadset  } from './sidebar/icon-headset.svg';
+export { ReactComponent as IconActivity  } from './sidebar/icon-activity.svg';
+export { ReactComponent as IconEmptyWalletAdd  } from './sidebar/icon-empty-wallet-add.svg';
+export { ReactComponent as IconWithdrawal  } from './sidebar/icon-withdrawl.svg';
+export { ReactComponent as IconClipboardText  } from './sidebar/icon-clipboard-text.svg';
+export { ReactComponent as IconDiscountShape  } from './sidebar/icon-discount-shape.svg';
+export { ReactComponent as IconMouseSquare  } from './sidebar/icon-mouse-square.svg';
+
+
+
+
+
+
+
+
+
 
 
 

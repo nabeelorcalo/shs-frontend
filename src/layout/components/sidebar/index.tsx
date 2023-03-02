@@ -10,18 +10,25 @@ import { itemsStudents } from './menuStudents'
 import { itemsIntern } from './menuIntern'
 import { itemsCompanyAdmin } from './menuCompanyAdmin'
 import { itemsUniversity } from './menuUniversity'
+import { itemsSystemAdmin } from './menuSystemAdmin'
+import { itemsDelegateAgent } from './menuDelegateAgent'
+import { itemsPropertyAgent } from './menuPropertyAgent'
 const { Sider } = Layout;
 
+type SidebarProps = {
+  collapsed: boolean
+  sidebarToggler: () => void
+}
 
 
-const AppSidebar:FC = () => {
+
+const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const location = useLocation()
   const { useToken } = theme
   const { token } = useToken()
-  const [collapsed, setCollapsed] = useState(false)
   const [ selectedKey, setSelectedKey ] = useState(location.pathname)
 
   /* EVENT LISTENERS
@@ -57,8 +64,16 @@ const AppSidebar:FC = () => {
     if(role === 'university') {
       return itemsUniversity
     }
+    if(role === 'systemAdmin') {
+      return itemsSystemAdmin
+    }
+    if(role === 'delegateAgent') {
+      return itemsDelegateAgent
+    }
+    if(role === 'propertyAgent') {
+      return itemsPropertyAgent
+    }
   }
-  
 
 
   /* RENDER APP
@@ -69,6 +84,7 @@ const AppSidebar:FC = () => {
       collapsible
       collapsed={collapsed}
       width={250}
+      collapsedWidth={94}
       style={{backgroundColor: token.colorPrimary}}
     >
       <div className='sidebar-user-profile'>

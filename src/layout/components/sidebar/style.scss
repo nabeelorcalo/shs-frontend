@@ -10,10 +10,13 @@
     padding: 20px 0;
   
     .ant-avatar {
-      margin-right: 20px;
+      min-width: 48px;
+      max-width: 48px;
     }
     .sidebar-user-profile-content {
       flex: 1;
+      margin-left: 20px;
+      white-space: nowrap;
   
       .ant-typography {
         margin: 0;
@@ -32,15 +35,17 @@
   }
 
   .ant-menu.ant-menu-dark {
-    padding: 22px 0;
+    padding: 24px 0;
     .ant-menu-item {
-      margin: 2px 0;
+      border-radius: 12px;
+      margin: 4px 0 0;
       height: 42px;
       line-height: 42px;
       font-size: 16px;
       font-weight: 400;
       color: #ffffff;
       padding: 0 15px !important;
+      width: auto;
 
       &.ant-menu-item-selected {
         background-color: #252445;
@@ -60,5 +65,29 @@
         color: #A0A3BD;
       }
     }
+  }
+
+  &.ant-layout-sider-collapsed {
+    .sidebar-user-profile {
+      text-align: center;
+      display: block;
+      .sidebar-user-profile-content {
+        opacity: 0;
+        margin-left: 0;
+        display: none;
+      }
+    }
+    .ant-menu-item {
+      .ant-menu-item-icon {
+        vertical-align: -6px;
+      } 
+    }
+
+    .ant-menu-item-group {
+      .ant-menu-item-group-title {
+        display: none;
+      }
+    }
+    
   }
 }
