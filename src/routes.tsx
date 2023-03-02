@@ -168,7 +168,7 @@ const managerRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -177,12 +177,12 @@ const managerRoutes = [
 // Delegate Agent Routes
 const delegateAgentRoutes = [
   {
-    key:"main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -213,7 +213,7 @@ const delegateAgentRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -222,12 +222,12 @@ const delegateAgentRoutes = [
 // System Admin Routes
 const systemAdminRoutes = [
   {
-    key:"main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -283,7 +283,7 @@ const systemAdminRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -292,12 +292,12 @@ const systemAdminRoutes = [
 // Company Admin Routes
 const companyAdminRoutes = [
   {
-    key:"main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -378,7 +378,7 @@ const companyAdminRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -387,12 +387,12 @@ const companyAdminRoutes = [
 // Intern Routes
 const internRoutes = [
   {
-    key:"main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -468,7 +468,7 @@ const internRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -477,12 +477,12 @@ const internRoutes = [
 // Student Routes
 const studentRoutes = [
   {
-    key:"main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -553,7 +553,7 @@ const studentRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -561,12 +561,12 @@ const studentRoutes = [
 
 const universityRoutes = [
   {
-    key:"main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -607,7 +607,7 @@ const universityRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
@@ -615,12 +615,12 @@ const universityRoutes = [
 
 const agentRoutes = [
   {
-    key: "main",
+    key: `{ROUTES_CONSTANTS.MAIN}`,
     path: "/",
     element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
   },
   {
-    key:"mainLayout",
+    key: `{ROUTES_CONSTANTS.MAIN_LAYOUT}`,
     path: "/",
     element: (
       <AuthGuard>
@@ -651,7 +651,7 @@ const agentRoutes = [
     ],
   },
   {
-    key:"error",
+    key: `{ROUTES_CONSTANTS.ERROR_PAGE}`,
     path: "*",
     element: <Error />,
   },
