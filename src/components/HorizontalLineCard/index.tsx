@@ -2,10 +2,10 @@ import { Progress } from "antd";
 import "./HorizontalLineCard.scss";
 import { theme } from "../../theme";
 interface HorizonalLineCardProps {
-  icon?: string;
-  title?: string;
-  subTitle?: string;
-  content?: string;
+  icon: string;
+  title: string;
+  subTitle: string;
+  content: string;
   alt?: string;
   progressbarValue: number;
   progressbarColor: string;
@@ -32,7 +32,7 @@ export const HorizonalLineCard = ({
             {subTitle}
           </span>
           <span className="text-sm md:text-lg font-medium dark-gray ">
-            {progressbarValue}
+            {progressbarValue}%
           </span>
           <span className="sm:w-[200px]">
             <Progress

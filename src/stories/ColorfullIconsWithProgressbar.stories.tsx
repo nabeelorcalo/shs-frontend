@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { ColorfullIconsWithProgressbar } from "../components/ColorfullIconsWithProgressbar";
-import icon from "../assets/images/AddEventInCalendar/icon.svg";
+import icon from "../assets/images/ColorfullIconsProgressbar/media.svg";
 
 export default {
   title: "Components/ColorfullIconsWithProgressbar",

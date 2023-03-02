@@ -1,12 +1,12 @@
 import { Progress } from "antd";
 
 interface ColorfullIconsWithProgressbarProps {
-  icon?: string;
-  title?: string;
-  storage?: string;
+  icon: string;
+  title: string;
+  storage: string;
   alt?: string;
-  progressbarValue?:number
-  progressbarColor?:string
+  progressbarValue:number
+  progressbarColor:string
 }
 export const ColorfullIconsWithProgressbar = ({
   icon,
