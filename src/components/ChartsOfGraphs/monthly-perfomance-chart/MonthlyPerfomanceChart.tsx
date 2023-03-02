@@ -10,7 +10,7 @@ const MonthlyPerfomanceChart = (props: any) => {
   } = props
 
   const [data, setData] = useState(perfomanceChart);
-  const config = {
+  const config:any = {
     data,
     xField: XField,
     yField: YField,
@@ -19,11 +19,15 @@ const MonthlyPerfomanceChart = (props: any) => {
     columnStyle: columnStyle,
     columnWidthRatio: columnWidth,
     color: color,
+    legend: {
+      layout: 'horizontal',
+      position: 'top-right',
+    }
   };
   return (
     <BoxWrapper>
-      <Column 
-      marginRatio={marginRatio} {...config} />
+      <Column
+        marginRatio={marginRatio} {...config} />
     </BoxWrapper>
   )
 }
