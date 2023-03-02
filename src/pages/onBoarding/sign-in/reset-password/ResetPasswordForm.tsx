@@ -36,7 +36,7 @@ const ResetPasswordForm = () => {
           <div>
             <Typography className="text-center">
               Back to &nbsp;
-              <a href="" className="a-tag-signup ">
+              <a href="/login" className="a-tag-signup ">
                 Login
               </a>
             </Typography>
