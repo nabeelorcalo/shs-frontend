@@ -3,15 +3,15 @@ import React, { useRef, useState } from "react";
 import "./TimeTracking.scss";
 import dayjs from "dayjs";
 
-const TimeTracking: React.FC = (props: any) => {
+const TimeTracking = (props: any) => {
   const { vartical } = props;
 
-  const [time, setTime] = useState(0);
-  const [isRunning, setIsRunning] = useState(false);
+  const [time, setTime] = useState<number>(0);
+  const [isRunning, setIsRunning] = useState<any>(false);
   const intervalRef = useRef<any>(null);
   const startTimeRef = useRef<any>(null);
-
-  const [clockTrack, setClockTrack] = useState({ in: " 00:00", out: "00:00" });
+  const [clockInTime, setClockInTime] = useState<any>("00:00");
+  const [clockOutTime, setClockOutTime] = useState<any>("00:00");
 
   const formatTime = (time: any) => {
     const hours = Math.floor(time / 3600);
@@ -23,11 +23,8 @@ const TimeTracking: React.FC = (props: any) => {
   };
 
   const handleStart = () => {
+    setClockInTime(dayjs().format("HH:mm"));
     setIsRunning(true);
-    setClockTrack({
-      ...clockTrack,
-      in: formatTime(time).substring(0, formatTime(time).length - 3),
-    });
     startTimeRef.current = Date.now() - time * 1000;
     intervalRef.current = setInterval(() => {
       setTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
@@ -35,10 +32,7 @@ const TimeTracking: React.FC = (props: any) => {
   };
 
   const handleStop = () => {
-    setClockTrack({
-      ...clockTrack,
-      out: formatTime(time).substring(0, formatTime(time).length - 3),
-    });
+    setClockOutTime(dayjs().format("HH:mm"));
     setIsRunning(false);
     clearInterval(intervalRef.current);
   };
@@ -95,7 +89,7 @@ const TimeTracking: React.FC = (props: any) => {
                   borderRadius: "50%",
                 }}
               >
-                <p className="font-medium text-base text-white">Clock Out</p>
+                <p className="font-medium text-base text-white">Clock out</p>
               </div>
             )}
           </div>
@@ -131,7 +125,7 @@ const TimeTracking: React.FC = (props: any) => {
                 Clock In
               </div>
               <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
-                {clockTrack.in}
+                {clockInTime}
               </div>
             </div>
 
@@ -142,11 +136,8 @@ const TimeTracking: React.FC = (props: any) => {
               >
                 Clock Out
               </div>
-              <div
-                className="font-medium text-sm "
-                style={{ color: "#4E4B66" }}
-              >
-                {clockTrack.out}
+              <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
+                {clockOutTime}
               </div>
             </div>
           </div>
@@ -156,10 +147,10 @@ const TimeTracking: React.FC = (props: any) => {
               className="font-medium text-sm mr-4"
               style={{ color: "#4E4B66" }}
             >
-              {clockTrack.in}
+              {clockInTime}
             </div>
             <div className="font-medium text-sm " style={{ color: "#4E4B66" }}>
-              {clockTrack.out}
+              {clockOutTime}
             </div>
           </div>
         )}

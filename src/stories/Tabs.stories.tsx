@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Tabs from "../components/Tabs/AppTabs";
+import Tabs from "../components/Tabs";
 import { TabsProps } from "antd";
 
 const items: TabsProps["items"] = [
@@ -31,5 +31,4 @@ const Template: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
 export const AppTabs = Template.bind({});
 AppTabs.args = {
   items: items,
-  onchange: () => console.log("change"),
 };

@@ -4,11 +4,10 @@ import "./Tabs.scss";
 
 interface TabProps {
   items: any;
-  onChange: any;
 }
 
 const AppTabs = (props: TabProps) => {
-  const { items, onChange } = props;
+  const { items } = props;
 
   return (
     <div>
@@ -16,7 +15,6 @@ const AppTabs = (props: TabProps) => {
         size="large"
         defaultActiveKey="1"
         items={items}
-        onChange={onChange}
       />
     </div>
   );
