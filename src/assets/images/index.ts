@@ -9,5 +9,7 @@ export { ReactComponent as IconGlobe  } from './header/global.svg';
 export { ReactComponent as IconLogout  } from './header/Logout.svg';
 export { ReactComponent as IconProfile  } from './header/Profile.svg';
 
+export {default as InfoIcon} from "../images/chart/info-icon.png";
+
 
 

@@ -5,6 +5,8 @@ import "./App.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
 import AppLayout from './layout'
+import "./App.scss";
+import Charts from './components/ChartsOfGraphs/Charts';
 
 function App() {
   /* VARIABLE DECLARATION
