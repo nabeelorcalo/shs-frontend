@@ -14,20 +14,22 @@ function App() {
   const publicRoutes = getRoutes('Public');
   const routes = getRoutes(userData.role);
   routes.push(publicRoutes);
+ 
+  
   const pages = useRoutes(routes);
 
   /* HOOKS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    if (
-      !userData.token &&
-      !pathname.includes("sign-up") &&
-      !pathname.includes("forget-password") &&
-      !pathname.includes("reset-password")
-    ) {
-      navigate("/login");
-    }
-  }, [pathname]);
+  // useEffect(() => {
+  //   if (
+  //     !userData.token &&
+  //     !pathname.includes("signup") &&
+  //     !pathname.includes("forget-password") &&
+  //     !pathname.includes("reset-password")
+  //   ) {
+  //     navigate("/login");
+  //   }
+  // }, [pathname]);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -38,7 +40,9 @@ function App() {
   -------------------------------------------------------------------------------------*/
   return (
     // <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <>
       {pages}
+      </>
     // </ErrorBoundary>
   )
 }
