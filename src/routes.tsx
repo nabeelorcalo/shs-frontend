@@ -87,8 +87,6 @@ export const publicRoutes = [
   },
 ];
 
-// path: `${ROUTES_CONSTANTS.}`,
-
 // Manager
 const managerRoutes = [
   {
