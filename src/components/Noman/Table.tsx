@@ -133,7 +133,6 @@ const expandedRowRender = (data: any) => {
         <div>{data.dateApplied}</div>
     )
 }
-
 const Table = () => {
     return (
         <div className='main_table'>
