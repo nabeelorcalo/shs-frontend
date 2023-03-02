@@ -4,7 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import Login from "./pages/onBoarding/login";
 import Signup from "./pages/onBoarding/signup";
-import ForgotPassword from "./pages/onBoarding/ForgotPassword";
+import ForgotPassword from "./pages/onBoarding/forgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
 import SelfAssesment from "./pages/selfAssesment";
@@ -598,18 +598,22 @@ const universityRoutes = [
 
 const agentRoutes = [
   {
+    key: "/",
     path: "/",
     element: <Navigate to="dashboard" />
   },
   {
+    key: "login",
     path: "login",
     element: <Login />,
   },
   {
+    key: "signup",
     path: "signup",
     element: <Signup />,
   },
   {
+    key: "forgot-password",
     path: "forgot-password",
     element: <ForgotPassword />,
   },
@@ -622,18 +626,22 @@ const agentRoutes = [
     ),
     children: [
       {
+        key: "dashboard",
         path: "dashboard",
         element: <Dashboard />,
       },
       {
+        key: "listings",
         path: "listings",
         element: <Listings />,
       },
       {
+        key: "offers",
         path: "offers",
         element: <Offers />,
       },
       {
+        key: "reservations",
         path: "reservations",
         element: <Reservations />,
       },
