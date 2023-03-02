@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import "./style.scss";
+import "../style.scss";
 
 const NotFound = () => {
-  return (
-    <p>404</p>
-  )
-}
+  return <p>404</p>;
+};
 
-export default NotFound
+export default NotFound;

@@ -11,38 +11,31 @@ import { useState } from "react";
 function VerificationSteps(props: any) {
   const [currentStep, setCurrentStep] = useState(1);
 
-  switch(currentStep){
+  switch (currentStep) {
     case 1: {
-        return <IdentityVerification/>;
-   
+      return <IdentityVerification />;
     }
     case 2: {
-        return <DbsVerification/>;
-
+      return <DbsVerification />;
     }
     case 3: {
-        return <UniversityDetails/> ;
-
+      return <UniversityDetails />;
     }
     case 4: {
-        return <Documents/>
-
+      return <Documents />;
     }
     case 5: {
-        return <Address/>;
-
+      return <Address />;
     }
     case 6: {
-        return <Photograph/>;
-  
+      return <Photograph />;
     }
     case 7: {
-        return <Video/>;
-
+      return <Video />;
     }
     default:
-        return <p>Something went wrong!</p>
-  } 
+      return <p>Something went wrong!</p>;
+  }
 }
 
 export default VerificationSteps;

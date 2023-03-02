@@ -46,7 +46,7 @@ const IdentityVerification = () => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 7</Typography>
               <div className="flex align-center justify-around">
-                <img src={BackButton} alt="" />
+                <BackButton/>
                 <Typography.Title level={3}>
                   Identity Verification
                 </Typography.Title>
