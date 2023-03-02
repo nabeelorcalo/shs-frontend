@@ -19,7 +19,8 @@ Primary.args = {
     radius:"8px",
     ratingValue: 4,
     ratingColor: "yellow",
-    boxShadow:"1px 1px 5px 5px rgba(9, 161, 218, 0.1)"
+    boxShadow:"1px 1px 5px 5px rgba(9, 161, 218, 0.1)",
+    onClick: (() => console.log("ok"))
   
   
  
