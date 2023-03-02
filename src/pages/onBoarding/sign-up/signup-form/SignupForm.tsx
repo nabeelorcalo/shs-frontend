@@ -158,7 +158,7 @@ const SignupForm = () => {
         <div>
           <Typography className="text-center">
             Already have an account?
-            <a href="" className="a-tag-signup">
+            <a href="/login" className="a-tag-signup">
               Sign In
             </a>
           </Typography>
