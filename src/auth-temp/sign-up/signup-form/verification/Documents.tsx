@@ -14,7 +14,7 @@ import logo from "../../../../assets/login/shslogo.svg";
 import "./Verification.scss";
 import back from "../../../../assets/login/BackLoginButton.svg";
 
-const DbsVerification = () => {
+const Documents = () => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
@@ -35,10 +35,12 @@ const DbsVerification = () => {
             }}
           >
             <div className="main-title-wrapper">
-              <Typography className="steps">Step 2 of 7</Typography>
+              <Typography className="steps">Step 4 of 7</Typography>
               <div className="flex align-center justify-around">
                 <img src={back} alt="" />
-                <Typography.Title level={3}>DBS Verification</Typography.Title>
+                <Typography.Title level={3}>
+                  Identity Documents
+                </Typography.Title>
               </div>
 
               <Typography
@@ -49,7 +51,7 @@ const DbsVerification = () => {
                   textAlign: "center",
                 }}
               >
-                Provide your background details
+                Provide your identity documents for verification
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
@@ -61,8 +63,51 @@ const DbsVerification = () => {
                 onFinish={onFinish}
               >
                 <Form.Item
-                  label="Upload"
-                  name="uploadDocument"
+                  name="Visa Status"
+                  label="Visa Status"
+                  rules={[
+                    { required: true, message: "Please select Visa Status!" },
+                  ]}
+                >
+                  <Select placeholder="select your Visa Status" size="large">
+                    <Option value="male">Male</Option>
+                    <Option value="female">Female</Option>
+                    <Option value="other">Other</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="CV"
+                  name="CVDocument"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please  Valid Document!",
+                    },
+                  ]}
+                  style={{ width: "100%", marginBottom: "20px" }}
+                >
+                  <div style={{ border: "2px dashed black", height: "60px" }}>
+                    <Input type="file" style={{ display: "none" }} />
+                  </div>
+                </Form.Item>
+                <Form.Item
+                  label="Passport"
+                  name="PassportDocument"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please  Valid Document!",
+                    },
+                  ]}
+                  style={{ width: "100%", marginBottom: "20px" }}
+                >
+                  <div style={{ border: "2px dashed black", height: "60px" }}>
+                    <Input type="file" style={{ display: "none" }} />
+                  </div>
+                </Form.Item>
+                <Form.Item
+                  label="BRP"
+                  name="BRPDocument"
                   rules={[
                     {
                       required: true,
@@ -75,13 +120,7 @@ const DbsVerification = () => {
                     <Input type="file" style={{ display: "none" }} />
                   </div>
                 </Form.Item>
-                <Typography style={{ marginBottom: "20px" }}>
-                  or <a href="">Apply Now</a>
-                </Typography>
-                <Typography style={{ marginBottom: "20px" }}>
-                  You must be 16 or over to apply. It usually takes up to 14
-                  days to receive your certificate.
-                </Typography>
+
                 <Space>
                   <Button className="btn-cancel" htmlType="submit">
                     Skip
@@ -103,4 +142,4 @@ const DbsVerification = () => {
   );
 };
 
-export default DbsVerification;
+export default Documents;

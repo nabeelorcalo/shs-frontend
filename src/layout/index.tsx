@@ -13,6 +13,11 @@ import SignUp from "../auth-temp/sign-up";
 import VerificationLink from "../auth-temp/sign-up/signup-form/VerificationLink";
 import IdentityVerification from "../auth-temp/sign-up/signup-form/verification/IdentityVerification";
 import DbsVerification from "../auth-temp/sign-up/signup-form/verification/DbsVerification";
+import UniversityDetails from "../auth-temp/sign-up/signup-form/verification/UniversityDetails";
+import Documents from "../auth-temp/sign-up/signup-form/verification/Documents";
+import Address from "../auth-temp/sign-up/signup-form/verification/Address";
+import Photograph from "../auth-temp/sign-up/signup-form/verification/Photograph";
+import Video from "../auth-temp/sign-up/signup-form/verification/Video";
 
 function AppLayout() {
   /* VARIABLE DECLARATION
@@ -44,6 +49,11 @@ function AppLayout() {
       <VerificationLink />,
       <IdentityVerification />
       <DbsVerification />
+      <UniversityDetails />
+      <Documents />
+      <Address />
+      <Photograph />
+      <Video/>
     </>,
   ];
 

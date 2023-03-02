@@ -1,27 +1,35 @@
 import {
   Button,
-  Checkbox,
+  Upload,
   Col,
   Form,
-  Input,
   Row,
   Select,
   Space,
   Typography,
 } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../../../assets/login/shslogo.svg";
 import "./Verification.scss";
 import back from "../../../../assets/login/BackLoginButton.svg";
+import uploadImage from "../../../../assets/login/uploadimage.png";
 
-const DbsVerification = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+const onFinish = (values: any) => {
+  console.log("Received values of form: ", values);
+};
+const { Option } = Select;
+
+const Photograph = () => {
+  const normFile = (e: any) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
   };
-  const { Option } = Select;
   return (
-    <div className="identity">
-      <Row className="identity-style">
+    <div className="university-detail">
+      <Row className="university-detail-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
             <img src={logo} alt="error" />
@@ -35,10 +43,10 @@ const DbsVerification = () => {
             }}
           >
             <div className="main-title-wrapper">
-              <Typography className="steps">Step 2 of 7</Typography>
-              <div className="flex align-center justify-around">
+              <Typography className="steps">Step 6 of 7</Typography>
+              <div className="flex align-center justify-center">
                 <img src={back} alt="" />
-                <Typography.Title level={3}>DBS Verification</Typography.Title>
+                <Typography.Title level={3}>Photograph</Typography.Title>
               </div>
 
               <Typography
@@ -49,7 +57,39 @@ const DbsVerification = () => {
                   textAlign: "center",
                 }}
               >
-                Provide your background details
+                Upload your profile picture
+              </Typography>
+            </div>
+            <Form.Item
+              name="upload"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              className="flex justify-center mt-10"
+            >
+              <Upload name="logo" action="/upload.do" listType="picture">
+                <img src={uploadImage} alt="" />
+              </Upload>
+            </Form.Item>
+            <div className="text-center">
+              <Typography
+                style={{
+                  fontSize: "24px",
+                  fontWeight: 600,
+                  fontFamily: "Outfit",
+                  color: "#14142A",
+                }}
+              >
+                A photo of you
+              </Typography>
+              <Typography
+                style={{
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  fontFamily: "Outfit",
+                  color: "#4E4B66",
+                }}
+              >
+                Take a minute to upload a profile photo.
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
@@ -60,28 +100,6 @@ const DbsVerification = () => {
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
               >
-                <Form.Item
-                  label="Upload"
-                  name="uploadDocument"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
-                  style={{ width: "100%", marginBottom: "20px" }}
-                >
-                  <div style={{ border: "2px dashed black", height: "60px" }}>
-                    <Input type="file" style={{ display: "none" }} />
-                  </div>
-                </Form.Item>
-                <Typography style={{ marginBottom: "20px" }}>
-                  or <a href="">Apply Now</a>
-                </Typography>
-                <Typography style={{ marginBottom: "20px" }}>
-                  You must be 16 or over to apply. It usually takes up to 14
-                  days to receive your certificate.
-                </Typography>
                 <Space>
                   <Button className="btn-cancel" htmlType="submit">
                     Skip
@@ -103,4 +121,4 @@ const DbsVerification = () => {
   );
 };
 
-export default DbsVerification;
+export default Photograph;
