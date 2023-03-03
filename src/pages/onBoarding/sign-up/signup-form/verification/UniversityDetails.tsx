@@ -10,7 +10,7 @@ import {
   Typography,
 } from "antd";
 import React, { useState } from "react";
-import { SHSLogo } from "../../../../../assets/images";
+import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
 
@@ -44,14 +44,7 @@ const UniversityDetails = (props: any) => {
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
-          <div
-            style={{
-              border: "1px solid #D9DBE9",
-              boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "16px",
-              padding: "2rem",
-            }}
-          >
+          <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 3 of 7</Typography>
               <div className="flex items-center">
@@ -65,14 +58,7 @@ const UniversityDetails = (props: any) => {
                 </div>
               </div>
 
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  color: "#4E4B66",
-                  textAlign: "center",
-                }}
-              >
+              <Typography className="steps-description">
                 Tell us about your university
               </Typography>
             </div>
@@ -161,14 +147,29 @@ const UniversityDetails = (props: any) => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div
-                    style={{
-                      border: "2px dashed black",
-                      height: "60px",
-                      width: "100%",
-                    }}
-                  >
-                    <Input type="file" style={{ display: "none" }} />
+                  <div className="dragger">
+                    <Row className="p-3">
+                      <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <Typography className="dragger-title">
+                          Drag & drop files or
+                          <span style={{ color: "#E95060" }}>Browse</span>
+                        </Typography>
+                        <Typography className="dragger-description">
+                          Support jpeg,pdf and doc files
+                        </Typography>
+                      </Col>
+                      <Col
+                        xxl={12}
+                        xl={12}
+                        lg={12}
+                        md={12}
+                        sm={12}
+                        xs={12}
+                        className="flex justify-end"
+                      >
+                        <DocumentUpload />
+                      </Col>
+                    </Row>
                   </div>
                 </Form.Item>
 

@@ -3,12 +3,8 @@ import ReactVideoRecorder from "react-video-recorder";
 
 const VideoRecorderLocal = () => {
   return (
-    <ReactVideoRecorder
-      onRecordingComplete={(videoBlob:any) => {
-        // Do something with the video...
-        console.log("videoBlob", videoBlob);
-      }}
-    />
+    <p>Video</p>
+    // <ReactVideoRecorder/>
   );
 };
 

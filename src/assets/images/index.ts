@@ -15,4 +15,4 @@ export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
 export { ReactComponent as Round } from "./login/round.svg";
-
+export { ReactComponent as DocumentUpload } from './login/document-upload.svg';

@@ -11,7 +11,11 @@ import {
 } from "antd";
 import React from "react";
 import "./Verification.scss";
-import { BackButton, SHSLogo } from "../../../../../assets/images";
+import {
+  BackButton,
+  DocumentUpload,
+  SHSLogo,
+} from "../../../../../assets/images";
 
 const DbsVerification = () => {
   const onFinish = (values: any) => {
@@ -62,14 +66,29 @@ const DbsVerification = () => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <div
-                    style={{
-                      border: "2px dashed black",
-                      height: "60px",
-                      width: "100%",
-                    }}
-                  >
-                    <Input type="file" style={{ display: "none" }} />
+                  <div className="dragger">
+                    <Row className="p-3">
+                      <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                        <Typography className="dragger-title">
+                          Drag & drop files or
+                          <span style={{ color: "#E95060" }}>Browse</span>
+                        </Typography>
+                        <Typography className="dragger-description">
+                          Support jpeg,pdf and doc files
+                        </Typography>
+                      </Col>
+                      <Col
+                        xxl={12}
+                        xl={12}
+                        lg={12}
+                        md={12}
+                        sm={12}
+                        xs={12}
+                        className="flex justify-end"
+                      >
+                        <DocumentUpload />
+                      </Col>
+                    </Row>
                   </div>
                 </Form.Item>
                 <Typography style={{ marginBottom: "20px" }}>
