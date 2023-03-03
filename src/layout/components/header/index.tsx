@@ -2,15 +2,21 @@ import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
 import { Button, MenuProps, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import { Logo, IconCollapsebleOff, IconCollapsebleOn, IconSearchNormal, MessageNotif, Notification,
+import { 
+  Logo,
+  IconCollapsebleOff,
+  IconCollapsebleOn,
+  IconSearchNormal,
+  MessageNotif,
+  Notification,
   IconGlobe,
   IconLogout,
-  IconProfile
+  IconProfile,
+  IconCross
 } from '../../../assets/images'
-import { Layout, Input, Dropdown, Avatar, Drawer, List, Card } from 'antd';
+import { Layout, Input, Dropdown, Avatar, Drawer, List } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
-const { Meta } = Card
 import organizationLogo from '../../../assets/images/header/organisation.svg'
 import avatar from '../../../assets/images/header/avatar.svg'
 
@@ -58,6 +64,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false)
+  const [mobileSearch, setMobileSearch] = useState(false)
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
 
   const menuStyle = {
@@ -79,6 +86,8 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
   const onSearch = (value: string) => console.log(value);
 
   const handleSearchExpand = () => setSearchWidthToggle(!searchWidthToggle);
+
+  const handleMobileSearch = () => setMobileSearch(!mobileSearch);
 
   const showNotificationDrawer = () => {
     setOpenNotificationDrawer(true)
@@ -139,7 +148,18 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
               bordered={false}
               onSearch={onSearch}
             />
-            
+          </div>
+
+          <div className={`mobile-search-box ${mobileSearch ? 'show' : 'hide'}`}>
+            <div className='mobile-searchbox-toggler' onClick={() => handleMobileSearch()}>
+              <IconSearchNormal />
+            </div>
+            <Search 
+              placeholder='Search anything...'
+              bordered={false}
+              onSearch={onSearch}
+              prefix={<IconCross onClick={() => setMobileSearch(false)} />}
+            />
           </div>
           {/* Global Search Ends */}
 
