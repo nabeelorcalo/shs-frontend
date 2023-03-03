@@ -12,10 +12,10 @@ const AuthGuard = ({ children }: AuthGuardProps) => {
   );
 
   const { pathname } = useLocation();
-
-  if (!!!JSON.parse(localStorage.getItem("UserData") || "null")) {
-    return <Navigate to="/login" />;
-  }
+  // ----- UNCOMMENT BELOW CODE AFTER AUTH API INTEGRATIONS 
+  // if (!!!JSON.parse(localStorage.getItem("UserData") || "null")) {
+  //   return <Navigate to="/login" />;
+  // }
 
   if (requestedLocation && pathname !== requestedLocation) {
     setRequestedLocation(null);

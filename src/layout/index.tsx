@@ -3,7 +3,7 @@ import './style.scss'
 import { Layout } from 'antd';
 import AppHeader from './components/header';
 import AppSidebar from './components/sidebar';
-import AppFooter from './components/footer'
+import { Outlet } from 'react-router-dom';
 const { Content } = Layout;
 
 
@@ -47,7 +47,9 @@ function AppLayout() {
           sidebarToggler={collapsedSidebar}
         />
 
-        <Content>Content</Content>
+        <Content>
+          <Outlet />
+        </Content>
 
       </Layout>
 
