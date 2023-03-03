@@ -44,7 +44,11 @@ export { ReactComponent as IconEmptyWalletAdd  } from './sidebar/icon-empty-wall
 export { ReactComponent as IconWithdrawal  } from './sidebar/icon-withdrawl.svg';
 export { ReactComponent as IconClipboardText  } from './sidebar/icon-clipboard-text.svg';
 export { ReactComponent as IconDiscountShape  } from './sidebar/icon-discount-shape.svg';
-export { ReactComponent as IconMouseSquare  } from './sidebar/icon-mouse-square.svg';
+export { ReactComponent as IconFacebook  } from './footer/icon-social-facebook.svg';
+export { ReactComponent as IconTwitter  } from './footer/icon-social-twitter.svg';
+export { ReactComponent as IconInstagram  } from './footer/icon-social-instagram.svg';
+export { ReactComponent as IconLinkedin  } from './footer/icon-social-linkedin.svg';
+export { ReactComponent as IconYoutube  } from './footer/icon-social-youtube.svg';
 
 
 

@@ -1,5 +1,8 @@
 .ant-layout {
   .ant-layout.ant-layout-has-sider {
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 140px);
+  }
+  .ant-layout-content {
+    padding: 30px;
   }
 }

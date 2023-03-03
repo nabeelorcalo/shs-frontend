@@ -1,17 +1,9 @@
 import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom';
-import { Logo, IconCollapsebleOff, IconCollapsebleOn, IconSearchNormal, MessageNotif, Notification,
-  IconGlobe,
-  IconLogout,
-  IconProfile
-} from '../../../assets/images'
+import { IconFacebook, IconYoutube, IconLinkedin, IconInstagram, IconTwitter } from '../../../assets/images'
 import { Layout } from 'antd';
-
 const { Footer } = Layout;
-
-
-
 
 
 const AppFooter:FC = () => {
@@ -37,6 +29,13 @@ const AppFooter:FC = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <Footer>
+      <ul className='social-links'>
+        <li><Link to=""><IconFacebook /></Link></li>
+        <li><Link to=""><IconTwitter /></Link></li>
+        <li><Link to=""><IconInstagram /></Link></li>
+        <li><Link to=""><IconLinkedin /></Link></li>
+        <li><Link to=""><IconYoutube /></Link></li>
+      </ul>
       <div className='footer-copyright'>
         Copyrights &copy; 2022 All Rights Reserved by <span>Student Help Squad</span>
       </div>
