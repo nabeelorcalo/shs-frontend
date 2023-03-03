@@ -2,7 +2,7 @@ import { Button, DatePicker as AntDatePicker } from 'antd';
 import { useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import './common-date-picker.scss';
-import { ArrowDownDark, SearchIcon, CalendarIcon } from '../../assets/images';
+import { ArrowDownDark, CalendarIcon } from '../../assets/images';
 
 interface Props {
     name?: string;
@@ -12,8 +12,6 @@ interface Props {
     placement?: "bottomRight" | "bottomLeft" | "topLeft" | "topRight" | undefined;
     btnClassName?: string;
     requireAsButton?: boolean;
-    endIcon?: any;
-    startIcon?: any;
     setOpen?: any;
     setValue?: any;
     size?: 'large' | 'middle' | 'small';
@@ -30,8 +28,6 @@ export const CommonDatePicker = ({
     className,
     dropdownClassName,
     btnClassName,
-    startIcon: StartIcon,
-    endIcon: EndIcon,
     size = 'large',
     setOpen,
     label,
@@ -39,6 +35,7 @@ export const CommonDatePicker = ({
     setValue,
     monthPicker = false,
     picker,
+    ...rest
 }:
     Props) => {
 
@@ -62,11 +59,12 @@ export const CommonDatePicker = ({
                 placement={placement}
                 onOpenChange={() => setOpen(!open)}
                 className={className}
-                popupClassName={`common-datepicker-popup-wrapper ${dropdownClassName} ${monthPicker && 'month-picker'}`}
+                popupClassName={`common-datepicker-popup-wrapper ${dropdownClassName}`}
                 onChange={handleChange}
                 clearIcon={''}
                 picker={picker}
                 suffixIcon={<img src={monthPicker ? ArrowDownDark : CalendarIcon} alt='icon' />}
+                {...rest}
             />
         </div>
     )

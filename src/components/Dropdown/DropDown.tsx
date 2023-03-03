@@ -20,8 +20,10 @@ interface Props {
     setSearchValue?: any;
     setSelectedList?: any;
     setDateValue?: any;
+    startIcon?: any;
     pilled?: boolean;
-    datePickerValue?: string;
+    showPickerOnVal?: string;
+    endIcon?: any;
     requiredDownloadIcon?: boolean;
 }
 
@@ -37,11 +39,13 @@ export const DropDown = ({
     placement = 'bottomRight',
     setValue,
     pilled = false,
-    datePickerValue,
+    showPickerOnVal,
     setSearchValue,
     selectedList = [],
     setSelectedList,
     setDateValue,
+    startIcon,
+    endIcon = ArrowDownDark,
     requiredDownloadIcon,
     ...props
 }: Props) => {
@@ -81,7 +85,7 @@ export const DropDown = ({
                 key: option
             }
         }
-        if (requireDatePicker && option === datePickerValue) {
+        if (requireDatePicker && option === showPickerOnVal) {
             return {
                 label:
                     <CommonDatePicker
@@ -115,8 +119,11 @@ export const DropDown = ({
             {...props}
         >
             <div>
-                {!requiredDownloadIcon && <span>{value ? value : name}</span>}
-                <img src={requiredDownloadIcon ? DownloadIcon : ArrowDownDark} alt='icon' style={{ marginLeft: requiredDownloadIcon ? '' : '10px' }} />
+                <div>
+                    {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '10px' }} />}
+                    {!requiredDownloadIcon && <span>{value ? value : name}</span>}
+                </div>
+                <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ marginLeft: requiredDownloadIcon ? '1px' : '10px' }} />
             </div>
         </AntDropDown>
     )

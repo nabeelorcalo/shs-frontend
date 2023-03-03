@@ -4,7 +4,12 @@
     .ant-picker {
         width: 100%;
         height: 48px;
-        border: 1px solid rgba($color: $input-hover-color, $alpha: 0.5);
+        border-radius: 8px;
+        border: 2px solid $input-hover-color;
+
+        &:hover {
+            border-color: $input-hover-color;
+        }
 
         input {
             color: $text-success-placeholder-color;
@@ -13,7 +18,7 @@
 
     .ant-picker-focused {
         box-shadow: none;
-        border: 1px solid $input-hover-color;
+        border: 2px solid $input-hover-color;
     }
 
     .label {
@@ -123,12 +128,14 @@
         background-color: $text-input-bg-color;
         border: 2px solid transparent;
 
-        &.active {
+        &.ant-picker-focused {
             border-color: $input-hover-color;
+            background-color: $white-bg-color;
         }
 
         &:hover {
             border-color: $input-hover-color;
+            background-color: $white-bg-color;
             cursor: pointer;
         }
 
