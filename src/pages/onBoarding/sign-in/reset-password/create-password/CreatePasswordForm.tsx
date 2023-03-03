@@ -84,7 +84,7 @@ const CreatePasswordForm = () => {
           <Form.Item>
             <Button
               type="primary"
-              htmlType="submit"
+              //htmlType="submit"
               className="login-form-button"
               //   disabled={
               //     password !== confirmPassword || !confirmPassword || !password

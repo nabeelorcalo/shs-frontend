@@ -182,7 +182,7 @@ const Documents = (props: any) => {
                   <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      htmlType="submit"
+                      //htmlType="submit"
                     >
                       Skip
                     </Button>
@@ -191,7 +191,7 @@ const Documents = (props: any) => {
                     <Form.Item>
                       <Button
                         type="primary"
-                        htmlType="submit"
+                        //htmlType="submit"
                         className="login-form-button"
                         onClick={() => {
                           setCurrentStep(5);

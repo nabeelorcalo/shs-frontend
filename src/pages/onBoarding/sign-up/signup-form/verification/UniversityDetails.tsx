@@ -177,12 +177,14 @@ const UniversityDetails = (props: any) => {
               </Form.Item>
 
               <Space>
-                <Button className="btn-cancel" htmlType="submit">
+                <Button className="btn-cancel" 
+                //htmlType="submit"
+                >
                   Skip
                 </Button>
                 <Button
                   type="primary"
-                  htmlType="submit"
+                  //htmlType="submit"
                   className="btn-primary"
                   onClick={() => {
                     setCurrentStep(4);
