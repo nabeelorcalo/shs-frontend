@@ -1,9 +1,6 @@
 import { DropDown } from "../components";
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { fireEvent, userEvent, within } from '@storybook/testing-library'
-
-
 export default {
     title: 'Components/DropDown',
     component: DropDown,
@@ -29,15 +26,24 @@ SimpleDropDown.args = {
     setValue: () => { },
 }
 
+export const SimpleDropDownPilled = Template.bind({})
+SimpleDropDownPilled.args = {
+    name: 'name',
+    value: '',
+    options: ['item 0', 'item 1', 'item 2'],
+    setValue: () => { },
+    pilled: true
+}
+
 export const DropDownWithSearchBar = Template.bind({});
 DropDownWithSearchBar.args = {
-    name: 'this month',
+    name: 'name',
     value: '',
     options: ['search', 'item 1', 'item 2'],
     requireSearchBar: true,
     searchValue: '',
-    placement: 'bottomRight',
     setValue: () => { },
+    setSearchValue: () => { }
 }
 
 export const DropDownWithCheckbox = Template.bind({});
@@ -46,7 +52,6 @@ DropDownWithCheckbox.args = {
     value: '',
     options: ['search', 'item 1', 'item 2'],
     requireCheckbox: true,
-    checkboxPosition: '',
     selectedList: [],
     placement: 'bottomRight',
     setSelectedList: () => { },
@@ -55,33 +60,46 @@ DropDownWithCheckbox.args = {
 
 export const DropDownWithSearchBarAndCheckBox = Template.bind({});
 DropDownWithSearchBarAndCheckBox.args = {
-    name: 'this month',
+    name: 'name',
     value: '',
     options: ['search', 'item 1', 'item 2'],
     requireSearchBar: true,
     searchValue: '',
     requireCheckbox: true,
-    checkboxPosition: 'right',
     selectedList: [],
-    placement: 'bottomRight',
     setSelectedList: () => { },
     setSearchValue: () => { },
     setValue: () => { },
 }
 
-export const DropDownWithSearchBarAndCheckBoxAndDateRange = Template.bind({});
-DropDownWithSearchBarAndCheckBoxAndDateRange.args = {
-    name: 'this month',
+export const DropDownWithSearchBarAndCheckBoxRight = Template.bind({});
+DropDownWithSearchBarAndCheckBoxRight.args = {
+    name: 'name',
     value: '',
-    options: ['item 0', 'item 1', 'item 2', 'custom'],
+    options: ['search', 'item 1', 'item 2'],
     requireSearchBar: true,
     searchValue: '',
     requireCheckbox: true,
-    checkboxPosition: 'right',
+    checkboxOnRight: true,
     selectedList: [],
-    placement: 'bottomRight',
-    requireDatePicker: true,
     setSelectedList: () => { },
     setSearchValue: () => { },
+    setValue: () => { },
+}
+
+export const DropDownWithDatePicker = Template.bind({});
+DropDownWithDatePicker.args = {
+    name: 'this month',
+    value: '',
+    options: ['search', 'item 1', 'item 2', 'custom'],
+    datePickerValue: 'custom',
+    setValue: () => { },
+}
+
+export const DownloadIcon = Template.bind({});
+DownloadIcon.args = {
+    requiredDownloadIcon: true,
+    options: ['pdf', 'excel'],
+    value: '',
     setValue: () => { }
 }

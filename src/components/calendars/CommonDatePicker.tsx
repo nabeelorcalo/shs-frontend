@@ -2,7 +2,7 @@ import { Button, DatePicker as AntDatePicker } from 'antd';
 import { useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import './common-date-picker.scss';
-import { ArrowDownDark, SearchIcon, CalendarIcon } from '../../assets/images';
+import { ArrowDownDark, CalendarIcon } from '../../assets/images';
 
 interface Props {
     name?: string;
@@ -11,12 +11,14 @@ interface Props {
     open?: boolean;
     placement?: "bottomRight" | "bottomLeft" | "topLeft" | "topRight" | undefined;
     btnClassName?: string;
-    endIcon?: any;
-    startIcon?: any;
+    requireAsButton?: boolean;
     setOpen?: any;
     setValue?: any;
     size?: 'large' | 'middle' | 'small';
     label?: string;
+    picker?: "time" | "date" | "week" | "month" | "quarter" | "year" | undefined;
+    onBtnClick?: any;
+    monthPicker?: boolean;
 }
 
 export const CommonDatePicker = ({
@@ -26,12 +28,14 @@ export const CommonDatePicker = ({
     className,
     dropdownClassName,
     btnClassName,
-    startIcon: StartIcon,
-    endIcon: EndIcon,
     size = 'large',
     setOpen,
-    label = 'label',
-    setValue
+    label,
+    requireAsButton,
+    setValue,
+    monthPicker = false,
+    picker,
+    ...rest
 }:
     Props) => {
 
@@ -43,10 +47,10 @@ export const CommonDatePicker = ({
     }
 
     return (
-        <div className='common-date-picker-wrapper'>
-            {/* <Button className={`${btnClassName}`} onClick={() => setOpen(!open)}>
-                {name}
-            </Button> */}
+        <div className={`${requireAsButton ? 'hide-field' : 'common-date-picker-wrapper'} ${monthPicker && 'month-picker'}`}>
+            {requireAsButton && <Button className={`${btnClassName}`} onClick={() => setOpen(!open)}>
+                <span className='capitalize'>{name}</span>
+            </Button>}
             {label && <label className='label'>{label}</label>}
             <AntDatePicker
                 open={open}
@@ -55,10 +59,12 @@ export const CommonDatePicker = ({
                 placement={placement}
                 onOpenChange={() => setOpen(!open)}
                 className={className}
-                popupClassName={`common-datepicker-dropdown-wrapper ${dropdownClassName}`}
+                popupClassName={`common-datepicker-popup-wrapper ${dropdownClassName}`}
                 onChange={handleChange}
                 clearIcon={''}
-                suffixIcon={<img src={CalendarIcon} alt='icon' />}
+                picker={picker}
+                suffixIcon={<img src={monthPicker ? ArrowDownDark : CalendarIcon} alt='icon' />}
+                {...rest}
             />
         </div>
     )
