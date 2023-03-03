@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import "./style.scss";
 
-const NotFound = () => {
+const Reservations = () => {
   return (
-    <p>404</p>
+    <p>Reservations</p>
   )
 }
 
-export default NotFound
+export default Reservations
