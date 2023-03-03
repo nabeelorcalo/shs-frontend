@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './style.scss'
 import { Layout } from 'antd';
 import AppHeader from './components/header';
