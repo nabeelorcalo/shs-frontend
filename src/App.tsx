@@ -1,40 +1,49 @@
-import { Space, TabsProps } from "antd";
-import { useState } from "react";
-import { Button } from "./components";
-import AppTabs from "./components/Tabs";
-import TimeTracking from "./components/TimeTracking";
+import React, { FC, useEffect } from 'react'
+import { useLocation, useNavigate, useRoutes } from "react-router-dom";
+import { getRoutes } from "./routes";
+import "./App.scss";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "./pages/errors/errorBoundary";
+import AppLayout from './layout'
 
 function App() {
-  const [vartical, setVartical] = useState<any>(true);
-  const [varticales, setVarticales] = useState<any>(false);
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
+  const publicRoutes = getRoutes('Public');
+  const routes = getRoutes(userData.role);
+  routes.push(publicRoutes);
+ 
+  
+  const pages = useRoutes(routes);
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: `Tabs1`,
-      children: "Components1",
-    },
-    {
-      key: "2",
-      label: `Tabs2`,
-      children: "Components2",
-    },
-    {
-      key: "3",
-      label: `Tabs3`,
-      children: "Components3",
-    },
-  ];
+  /* HOOKS
+  -------------------------------------------------------------------------------------*/
+  // useEffect(() => {
+  //   if (
+  //     !userData.token &&
+  //     !pathname.includes("signup") &&
+  //     !pathname.includes("forget-password") &&
+  //     !pathname.includes("reset-password")
+  //   ) {
+  //     navigate("/login");
+  //   }
+  // }, [pathname]);
 
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
-    <div className="p-10">
-      <Space>
-        <TimeTracking vartical={vartical} />
-        <TimeTracking vartical={varticales} />
-        <AppTabs items={items} />
-      </Space>
-    </div>
-  );
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      {pages}
+    </ErrorBoundary>
+  )
 }
 
 export default App;
