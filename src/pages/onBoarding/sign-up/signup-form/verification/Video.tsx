@@ -79,8 +79,8 @@ const Video = () => {
                   getValueFromEvent={normFile}
                   className="flex justify-center mt-10"
                 >
-                  <VideoRecorderLocal />
-                  {/* <Upload name="logo" action="/upload.do" listType="picture">
+                  {/* <VideoRecorderLocal /> */}
+                  <Upload name="logo" action="/upload.do" listType="picture">
                     <div className="main-box-video">
                       <div className="secondary-box-div">
                         <div className="inner-box-video">
@@ -90,7 +90,7 @@ const Video = () => {
                         </div>
                       </div>
                     </div>
-                  </Upload> */}
+                  </Upload>
                 </Form.Item>
                 <Row gutter={10}>
                   <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
