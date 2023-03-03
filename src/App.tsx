@@ -1,9 +1,12 @@
-import {  Space, Typography } from 'antd'
+import { CloseCircleFilled } from '@ant-design/icons'
+import { Modal, Typography } from 'antd'
+import { useState } from 'react'
 import { Button } from './components'
-import { PopupModal } from './components'
+import { EmojiEvaluation } from './components'
 
 function App() {
-
+  const [openModal, setOpenModal] = useState(false)
+  console.log(openModal)
   return (
     <div className="p-10">
       <Button type='dashed' label='new' />
@@ -24,7 +27,7 @@ function App() {
       <Typography.Title level={3}>
         I'm h3
       </Typography.Title>
-      <Button type='primary' label='stuff' onClick={()=>console.log("modal button clicked")} />
+      <EmojiEvaluation state={openModal} />
     </div>
   )
 }
