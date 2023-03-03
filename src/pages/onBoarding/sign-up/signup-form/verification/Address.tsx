@@ -10,7 +10,8 @@ import {
   Typography,
 } from "antd";
 import React, { useState } from "react";
-import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
+import { ArrowDownDark, DocumentUpload } from "../../../../../assets/images";
+import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
 
@@ -20,9 +21,13 @@ const onFinish = (values: any) => {
 const { Option } = Select;
 
 import type { SelectProps } from "antd";
+import { DropDown } from "../../../../../components";
 const Address = () => {
+  const [value, setValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [selectedList, setSelectedList] = useState([]);
   const [data, setData] = useState<SelectProps["options"]>([]);
-  const [value, setValue] = useState<string>();
+  // const [value, setValue] = useState<string>();
 
   const handleSearch = (newValue: string) => {
     // if (newValue) {
@@ -39,16 +44,16 @@ const Address = () => {
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <SHSLogo />
+            <img src={SHSLogo} alt="error" />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 5 of 7</Typography>
               <div className="flex items-center">
                 <div>
-                  <BackButton />
+                  <img src={BackButton} alt="error" />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Address</Typography.Title>
@@ -78,7 +83,15 @@ const Address = () => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <Input placeholder="Search" className="input-style" />
+                  <DropDown
+                    name="Search"
+                    value={value}
+                    options={["search", "item 1"]}
+                    setValue={setValue}
+                    requireSearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                  />
                 </Form.Item>
                 <Row gutter={20}>
                   <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -145,11 +158,13 @@ const Address = () => {
                         { required: true, message: "Please select Country!" },
                       ]}
                     >
-                      <Select placeholder="select your Country" size="large">
-                        <Option value="male">Male</Option>
-                        <Option value="female">Female</Option>
-                        <Option value="other">Other</Option>
-                      </Select>
+                      <DropDown
+                        name="Select"
+                        value={value}
+                        options={["item 1", "item 2", "item 3"]}
+                        setValue={setValue}
+                        startIcon={ArrowDownDark}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -185,7 +200,7 @@ const Address = () => {
                         xs={12}
                         className="flex justify-end"
                       >
-                        <DocumentUpload />
+                        <img src={DocumentUpload} alt="error" />
                       </Col>
                     </Row>
                   </div>

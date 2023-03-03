@@ -33,14 +33,14 @@ const IdentityVerification = () => {
       <Row className="identity-style">
         <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <SHSLogo />
+            <img src={SHSLogo} alt="error" />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 7</Typography>
               <div className="flex items-center">
                 <div>
-                  <BackButton />
+                  <img src={BackButton} alt="error" />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -63,7 +63,7 @@ const IdentityVerification = () => {
                 onFinish={onFinish}
               >
                 <Row gutter={20}>
-                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                  <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
                     <Form.Item
                       label="First Name"
                       name="firstName"

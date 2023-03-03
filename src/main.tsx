@@ -12,6 +12,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ConfigProvider theme={theme}>
       <BrowserRouter>
+        <App />
         <Routes>
           {getRoutes("Public").map((item: any) => (
             <Route path={item.path} element={item.element} />

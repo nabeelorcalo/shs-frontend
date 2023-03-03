@@ -9,7 +9,7 @@ import React from "react";
 import { useState } from "react";
 
 function VerificationSteps(props: any) {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [currentStep, setCurrentStep] = useState(5);
 
   
 

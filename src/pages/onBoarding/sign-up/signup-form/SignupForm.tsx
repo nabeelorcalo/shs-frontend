@@ -1,15 +1,6 @@
 import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  Row,
-  Select,
-  Typography,
-} from "antd";
+import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
+import { CommonDatePicker } from "../../../../components";
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -93,11 +84,7 @@ const SignupForm = () => {
                 { required: true, message: "Please input your Date of Birth!" },
               ]}
             >
-              <Input
-                type="date"
-                placeholder="Date of Birth"
-                className="input-style"
-              />
+              <CommonDatePicker />
             </Form.Item>
           </Col>
         </Row>

@@ -11,11 +11,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@types/react-video-recorder": "^3.19.0",
-=======
     "@ant-design/plots": "^1.2.5",
->>>>>>> arsalan-tahir
     "antd": "^5.2.2",
     "dayjs": "^1.11.7",
     "react": "^18.2.0",

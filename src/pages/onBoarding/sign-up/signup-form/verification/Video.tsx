@@ -29,16 +29,16 @@ const Video = () => {
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <SHSLogo />
+            <img src={SHSLogo} alt="error" />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 7 of 7</Typography>
               <div className="flex items-center">
                 <div>
-                  <BackButton />
+                  <img src={BackButton} alt="error" />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Video</Typography.Title>
@@ -84,7 +84,9 @@ const Video = () => {
                     <div className="main-box-video">
                       <div className="secondary-box-div">
                         <div className="inner-box-video">
-                          <Round
+                          <img
+                            src={Round}
+                            alt="error"
                             style={{ marginTop: "2px", marginLeft: "2px" }}
                           />
                         </div>

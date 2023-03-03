@@ -20,10 +20,12 @@ const onFinish = (values: any) => {
 const { Option } = Select;
 
 import type { SelectProps } from "antd";
+import { DropDown } from "../../../../../components";
 
 const UniversityDetails = (props: any) => {
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
+  const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = (newValue: string) => {
     // if (newValue) {
@@ -40,16 +42,16 @@ const UniversityDetails = (props: any) => {
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <SHSLogo />
+            <img src={SHSLogo} alt="error" />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 3 of 7</Typography>
               <div className="flex items-center">
                 <div>
-                  <BackButton />
+                  <img src={BackButton} alt="error" />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -81,9 +83,14 @@ const UniversityDetails = (props: any) => {
                   ]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <Input
-                    placeholder="Search universities"
-                    className="input-style"
+                  <DropDown
+                    name="Search  University"
+                    value={value}
+                    options={["search", "item 1"]}
+                    setValue={setValue}
+                    requireSearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
                   />
                 </Form.Item>
                 <Form.Item
@@ -91,11 +98,15 @@ const UniversityDetails = (props: any) => {
                   label="Course"
                   rules={[{ required: true, message: "Please select Course!" }]}
                 >
-                  <Select placeholder="select your Course" size="large">
-                    <Option value="male">Male</Option>
-                    <Option value="female">Female</Option>
-                    <Option value="other">Other</Option>
-                  </Select>
+                  <DropDown
+                    name="Enter Course Name"
+                    value={value}
+                    options={["search", "item 1"]}
+                    setValue={setValue}
+                    requireSearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="University Email"
@@ -124,17 +135,21 @@ const UniversityDetails = (props: any) => {
                     },
                   ]}
                 >
-                  <Select
-                    placeholder="select your Graduation Year"
-                    size="large"
-                  >
-                    <Option value="male">Male</Option>
-                    <Option value="female">Female</Option>
-                    <Option value="other">Other</Option>
-                  </Select>
+                  <DropDown
+                    name="Select"
+                    value={value}
+                    options={["search", "item 1"]}
+                    setValue={setValue}
+                    requireSearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                  />
                 </Form.Item>
                 <Form.Item label="Internship Start Date">
-                  <RangePicker />
+                  <DatePicker />
+                </Form.Item>
+                <Form.Item label="Internship End Date">
+                  <DatePicker />
                 </Form.Item>
                 <Form.Item
                   label="Univeristy Approval"
@@ -167,7 +182,7 @@ const UniversityDetails = (props: any) => {
                         xs={12}
                         className="flex justify-end"
                       >
-                        <DocumentUpload />
+                        <img src={DocumentUpload} alt="error" />
                       </Col>
                     </Row>
                   </div>

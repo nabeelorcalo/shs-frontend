@@ -7,10 +7,6 @@
     margin-top: 6rem;
   }
 
-  .ant-form-item .ant-form-item-control-input-content {
-    display: flex;
-    justify-content: space-between;
-  }
   .signup-link {
     display: block !important;
   }
@@ -29,7 +25,7 @@
   }
   .login-form-button {
     padding: 10px 0px 30px 0px;
-    background-color: $primary-color;
+    background-color: $primary-bg-color;
     width: 100%;
   }
   .form-inner-wrapper {
@@ -62,7 +58,7 @@
   }
   .login-form-button {
     padding: 10px 0px 30px 0px;
-    background-color: $primary-color;
+    background-color: $primary-bg-color;
     width: 100%;
   }
   .logo-wrapper {

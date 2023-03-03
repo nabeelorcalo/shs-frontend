@@ -9,13 +9,21 @@ import {
   Space,
   Typography,
 } from "antd";
-import React from "react";
-import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
+import React, { useState } from "react";
+import {
+  ArrowDownDark,
+  DocumentUpload,
+  SHSLogo,
+} from "../../../../../assets/images";
 import "./Verification.scss";
 
 import { BackButton } from "../../../../../assets/images";
+import { DropDown } from "../../../../../components";
 
 const Documents = () => {
+  const [value, setValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+  const [selectedList, setSelectedList] = useState([]);
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
@@ -23,16 +31,16 @@ const Documents = () => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <SHSLogo />
+            <img src={SHSLogo} alt="error" />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 4 of 7</Typography>
               <div className="flex items-center">
                 <div>
-                  <BackButton />
+                  <img src={BackButton} alt="error" />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -60,11 +68,13 @@ const Documents = () => {
                     { required: true, message: "Please select Visa Status!" },
                   ]}
                 >
-                  <Select placeholder="select your Visa Status" size="large">
-                    <Option value="male">Male</Option>
-                    <Option value="female">Female</Option>
-                    <Option value="other">Other</Option>
-                  </Select>
+                  <DropDown
+                    name="Select"
+                    value={value}
+                    options={["item 1", "item 2", "item 3"]}
+                    setValue={setValue}
+                    startIcon={ArrowDownDark}
+                  />
                 </Form.Item>
                 <Form.Item
                   label="CV"
@@ -97,7 +107,7 @@ const Documents = () => {
                         xs={12}
                         className="flex justify-end"
                       >
-                        <DocumentUpload />
+                        <img src={DocumentUpload} alt="error" />
                       </Col>
                     </Row>
                   </div>
@@ -133,7 +143,7 @@ const Documents = () => {
                         xs={12}
                         className="flex justify-end"
                       >
-                        <DocumentUpload />
+                        <img src={DocumentUpload} alt="error" />
                       </Col>
                     </Row>
                   </div>
@@ -169,7 +179,7 @@ const Documents = () => {
                         xs={12}
                         className="flex justify-end"
                       >
-                        <DocumentUpload />
+                        <img src={DocumentUpload} alt="error" />
                       </Col>
                     </Row>
                   </div>
