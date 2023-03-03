@@ -42,7 +42,6 @@ function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       {pages}
-      <Table/>
     </ErrorBoundary>
   )
 }
