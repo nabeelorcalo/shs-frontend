@@ -52,17 +52,3 @@ export { ReactComponent as IconTwitter  } from './footer/icon-social-twitter.svg
 export { ReactComponent as IconInstagram  } from './footer/icon-social-instagram.svg';
 export { ReactComponent as IconLinkedin  } from './footer/icon-social-linkedin.svg';
 export { ReactComponent as IconYoutube  } from './footer/icon-social-youtube.svg';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
