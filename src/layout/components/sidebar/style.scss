@@ -1,0 +1,27 @@
+.sidebar-user-profile {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #D9D9D9;
+  padding: 20px;
+
+  .ant-avatar {
+    margin-right: 20px;
+  }
+  .sidebar-user-profile-content {
+    flex: 1;
+
+    .ant-typography {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.277777778;
+      color: #ffffff;
+    }
+    .sidebar-user-profile-role {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.2857;
+      color: #9BD5E8;
+    }
+  }
+}

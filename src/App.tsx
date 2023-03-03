@@ -1,34 +1,47 @@
-import { CloseCircleFilled } from '@ant-design/icons'
-import { Modal, Typography } from 'antd'
-import { useState } from 'react'
-import { Button } from './components'
-import { EmojiEvaluation } from './components'
+import React, { FC, useEffect } from 'react'
+import { useLocation, useNavigate, useRoutes } from "react-router-dom";
+import { getRoutes } from "./routes";
+import "./App.scss";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "./pages/errors/errorBoundary";
+import AppLayout from './layout'
 
 function App() {
-  const [openModal, setOpenModal] = useState(false)
-  console.log(openModal)
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
+  const user_role = userData.role || 'Intern';
+  const publicRoutes = getRoutes('Public');
+  let routes = getRoutes(user_role);
+  routes = routes.concat(publicRoutes);
+  
+  const pages = useRoutes(routes);
+  /* HOOKS
+  -------------------------------------------------------------------------------------*/
+  // useEffect(() => {
+  //   if (
+  //     !userData.token &&
+  //     !pathname.includes("signup") &&
+  //     !pathname.includes("forget-password") &&
+  //     !pathname.includes("reset-password")
+  //   ) {
+  //     navigate("/login");
+  //   }
+  // }, [pathname]);
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
-    <div className="p-10">
-      <Button type='dashed' label='new' />
-      <Button type='primary' label='stuff' />
-      <br />
-      <Typography.Title level={1}>
-        I'm h1
-      </Typography.Title>
-
-      <br />
-
-      <Typography.Title level={2}>
-        I'm h2
-      </Typography.Title>
-
-      <br />
-
-      <Typography.Title level={3}>
-        I'm h3
-      </Typography.Title>
-      <EmojiEvaluation state={openModal} />
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      {pages}
+    </ErrorBoundary>
   )
 }
 
