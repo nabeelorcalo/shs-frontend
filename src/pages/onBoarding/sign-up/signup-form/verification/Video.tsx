@@ -14,11 +14,8 @@ import "./Verification.scss";
 import { BackButton, Round } from "../../../../../assets/images";
 import VideoRecorderLocal from "./VideoRecorderLocal";
 
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
-
-const Video = () => {
+const Video = (props: any) => {
+  const { currentStep, setCurrentStep } = props;
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
@@ -66,56 +63,49 @@ const Video = () => {
             </div>
 
             <div className="sign-up-form-wrapper">
-              <Form
-                layout="vertical"
-                name="normal_login"
-                className="login-form"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
+              <Form.Item
+                name="upload"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                className="flex justify-center mt-10"
               >
-                <Form.Item
-                  name="upload"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  className="flex justify-center mt-10"
-                >
-                  {/* <VideoRecorderLocal /> */}
-                  <Upload name="logo" action="/upload.do" listType="picture">
-                    <div className="main-box-video">
-                      <div className="secondary-box-div">
-                        <div className="inner-box-video">
-                          <img
-                            src={Round}
-                            alt="error"
-                            style={{ marginTop: "2px", marginLeft: "2px" }}
-                          />
-                        </div>
+                {/* <VideoRecorderLocal /> */}
+                <Upload name="logo" action="/upload.do" listType="picture">
+                  <div className="main-box-video">
+                    <div className="secondary-box-div">
+                      <div className="inner-box-video">
+                        <img
+                          src={Round}
+                          alt="error"
+                          style={{ marginTop: "2px", marginLeft: "2px" }}
+                        />
                       </div>
                     </div>
-                  </Upload>
-                </Form.Item>
-                <Row gutter={10}>
-                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                  </div>
+                </Upload>
+              </Form.Item>
+              <Row gutter={10}>
+                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                  <Button
+                    className="btn-cancel btn-cancel-verification"
+                    htmlType="submit"
+                  >
+                    Skip
+                  </Button>
+                </Col>
+                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                  <Form.Item>
                     <Button
-                      className="btn-cancel btn-cancel-verification"
+                      onClick={() => setCurrentStep(1)}
+                      type="primary"
                       htmlType="submit"
+                      className="login-form-button"
                     >
-                      Skip
+                      Next
                     </Button>
-                  </Col>
-                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="login-form-button"
-                      >
-                        Next
-                      </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Form>
+                  </Form.Item>
+                </Col>
+              </Row>
             </div>
           </div>
         </Col>

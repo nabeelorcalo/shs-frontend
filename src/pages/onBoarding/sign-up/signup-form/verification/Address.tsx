@@ -15,14 +15,12 @@ import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
 
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
 const { Option } = Select;
 
 import type { SelectProps } from "antd";
 import { DropDown } from "../../../../../components";
-const Address = () => {
+const Address = (props: any) => {
+  const  {currentStep , setCurrentStep} = props
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [selectedList, setSelectedList] = useState([]);
@@ -65,13 +63,7 @@ const Address = () => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form
-                layout="vertical"
-                name="normal_login"
-                className="login-form"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-              >
+      
                 <Form.Item
                   label="Post Code"
                   name="postcode"
@@ -221,13 +213,16 @@ const Address = () => {
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"
+                        onClick={() => {
+                          setCurrentStep(6);
+                        }}
                       >
                         Next
                       </Button>
                     </Form.Item>
                   </Col>
                 </Row>
-              </Form>
+     
             </div>
           </div>
         </Col>

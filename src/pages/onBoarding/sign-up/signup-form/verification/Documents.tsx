@@ -20,13 +20,12 @@ import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
 import { DropDown } from "../../../../../components";
 
-const Documents = () => {
+const Documents = (props: any) => {
+  const  {currentStep , setCurrentStep} = props
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [selectedList, setSelectedList] = useState([]);
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
+
   const { Option } = Select;
   return (
     <div className="identity">
@@ -54,13 +53,7 @@ const Documents = () => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form
-                layout="vertical"
-                name="normal_login"
-                className="login-form"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-              >
+             
                 <Form.Item
                   name="Visa Status"
                   label="Visa Status"
@@ -200,13 +193,16 @@ const Documents = () => {
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"
+                        onClick={() => {
+                          setCurrentStep(5);
+                        }}
                       >
                         Next
                       </Button>
                     </Form.Item>
                   </Col>
                 </Row>
-              </Form>
+   
             </div>
           </div>
         </Col>

@@ -7,37 +7,72 @@ import Photograph from "./Photograph";
 import Video from "./Video";
 import React from "react";
 import { useState } from "react";
+import {
+  Button,
+  DatePicker,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Typography,
+} from "antd";
+const onFinish = (values: any) => {
+  console.log("Received values of form: ", values);
+};
 
 function VerificationSteps(props: any) {
-  const [currentStep, setCurrentStep] = useState(5);
+  const [currentStep, setCurrentStep] = useState(1);
 
-  
-
-  switch (currentStep) {
-    case 1: {
-      return <IdentityVerification />;
-    }
-    case 2: {
-      return <DbsVerification />;
-    }
-    case 3: {
-      return <UniversityDetails />;
-    }
-    case 4: {
-      return <Documents />;
-    }
-    case 5: {
-      return <Address />;
-    }
-    case 6: {
-      return <Photograph />;
-    }
-    case 7: {
-      return <Video />;
-    }
-    default:
-      return <p>Something went wrong!</p>;
-  }
+  return (
+    <>
+      <Form
+        layout="vertical"
+        name="normal_login"
+        className="login-form"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+      >
+        {currentStep == 1 && (
+          <IdentityVerification
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep == 2 && (
+          <DbsVerification
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep == 3 && (
+          <UniversityDetails
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep == 4 && (
+          <Documents
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep == 5 && (
+          <Address currentStep={currentStep} setCurrentStep={setCurrentStep} />
+        )}
+        {currentStep == 6 && (
+          <Photograph
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
+          />
+        )}
+        {currentStep == 7 && (
+          <Video currentStep={currentStep} setCurrentStep={setCurrentStep} />
+        )}
+      </Form>
+    </>
+  );
 }
 
 export default VerificationSteps;

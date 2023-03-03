@@ -14,12 +14,11 @@ import React from "react";
 import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
 import { SHSLogo } from "../../../../../assets/images";
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
+
 const { Option } = Select;
 
-const IdentityVerification = () => {
+const IdentityVerification = (props: any) => {
+  const { currentStep, setCurrentStep } = props;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 70 }}>
@@ -55,13 +54,7 @@ const IdentityVerification = () => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form
-                layout="vertical"
-                name="normal_login"
-                className="login-form"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-              >
+            
                 <Row gutter={20}>
                   <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
                     <Form.Item
@@ -127,6 +120,10 @@ const IdentityVerification = () => {
                   <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
                     <Form.Item>
                       <Button
+                        onClick={() => {
+                          console.log('hello')
+                          setCurrentStep(2);
+                        }}
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"
@@ -142,7 +139,7 @@ const IdentityVerification = () => {
                     Why I need to verify myself?
                   </Typography>
                 </div>
-              </Form>
+             
             </div>
           </div>
         </Col>

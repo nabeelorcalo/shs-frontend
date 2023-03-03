@@ -13,12 +13,10 @@ import { SHSLogo, BackButton } from "../../../../../assets/images";
 import "./Verification.scss";
 import uploadImage from "../../../../../assets/images/login/uploadimage.png";
 
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
 const { Option } = Select;
 
-const Photograph = () => {
+const Photograph = (props: any) => {
+  const { currentStep, setCurrentStep } = props;
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
@@ -73,45 +71,40 @@ const Photograph = () => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form
-                layout="vertical"
-                name="normal_login"
-                className="login-form"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
+              <Form.Item
+                name="upload"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                className="flex justify-center mt-10"
               >
-                <Form.Item
-                  name="upload"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                  className="flex justify-center mt-10"
-                >
-                  <Upload name="logo" action="/upload.do" listType="picture">
-                    <img src={uploadImage} alt="" />
-                  </Upload>
-                </Form.Item>
-                <Row gutter={10}>
-                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                <Upload name="logo" action="/upload.do" listType="picture">
+                  <img src={uploadImage} alt="" />
+                </Upload>
+              </Form.Item>
+              <Row gutter={10}>
+                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                  <Button
+                    className="btn-cancel btn-cancel-verification"
+                    htmlType="submit"
+                  >
+                    Skip
+                  </Button>
+                </Col>
+                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                  <Form.Item>
                     <Button
-                      className="btn-cancel btn-cancel-verification"
+                      type="primary"
                       htmlType="submit"
+                      className="login-form-button"
+                      onClick={() => {
+                        setCurrentStep(7);
+                      }}
                     >
-                      Skip
+                      Next
                     </Button>
-                  </Col>
-                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="login-form-button"
-                      >
-                        Next
-                      </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Form>
+                  </Form.Item>
+                </Col>
+              </Row>
             </div>
           </div>
         </Col>
