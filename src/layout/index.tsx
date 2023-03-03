@@ -3,6 +3,7 @@ import './style.scss'
 import { Layout } from 'antd';
 import AppHeader from './components/header';
 import AppSidebar from './components/sidebar';
+import { Outlet } from 'react-router-dom';
 const { Footer, Content } = Layout;
 
 
@@ -41,7 +42,9 @@ function AppLayout() {
 
         <AppSidebar />
 
-        <Content>Content</Content>
+        <Content>
+          <Outlet />
+        </Content>
 
       </Layout>
 
