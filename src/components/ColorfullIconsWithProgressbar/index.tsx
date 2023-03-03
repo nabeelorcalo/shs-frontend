@@ -1,36 +1,47 @@
 import { Progress } from "antd";
-
+import "./ColorfullIconWithProgressbar.scss";
+import icon from "../../assets/images/ColorfullIconsProgressbar/media.svg";
 interface ColorfullIconsWithProgressbarProps {
-  icon: string;
+  icon?: string;
   title: string;
   storage: string;
   alt?: string;
-  progressbarValue:number
-  progressbarColor:string
+  progressbarValue: number;
+  progressbarColor: string;
 }
-export const ColorfullIconsWithProgressbar = ({
-  icon,
-  title,
-  storage,
-  alt,
-  progressbarValue,
-  progressbarColor
-}: ColorfullIconsWithProgressbarProps) => {
-  return (
-    <div className="flex max-w-[250px]   ">
-      <img src={icon} alt={alt} width="40px" />
-      <div className="sm:w-[200px] pl-3 ">
-        <div className="flex justify-between">
-          <span className="font-normal text-sm" style={{ color: "#4E4B66" }}>
-            {title}
-          </span>
-          <span className="font-normal text-sm" style={{ color: "#A0A3BD" }}>
-            {storage}
-          </span>
-        </div>
+[];
 
-        <span className="sm:w-[200px]"><Progress percent={progressbarValue} showInfo={false} strokeColor={progressbarColor} /></span>
-      </div>
-    </div>
+export const ColorfullIconsWithProgressbar = (props: any) => {
+  const { arraydata } = props;
+
+  return (
+    <>
+      {arraydata.map((item: ColorfullIconsWithProgressbarProps, index: any) => {
+        return (
+          <div
+            key={index}
+            className="flex max-w-[250px]  colorfull-icon-progress-bar"
+          >
+            <img src={item.icon} width="40px" />
+            <div className="sm:w-[200px] pl-3 ">
+              <div className="flex justify-between">
+                <span className="font-normal text-sm title">{item.title}</span>
+                <span className="font-normal text-sm storage">
+                  {item.storage}
+                </span>
+              </div>
+
+              <span className="sm:w-[200px]">
+                <Progress
+                  percent={item.progressbarValue}
+                  showInfo={false}
+                  strokeColor={item.progressbarColor}
+                />
+              </span>
+            </div>
+          </div>
+        );
+      })}
+    </>
   );
 };

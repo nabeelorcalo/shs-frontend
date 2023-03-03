@@ -5,6 +5,30 @@ import "./App.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
 import AppLayout from './layout'
+import { ColorfullIconsWithProgressbar } from './components/ColorfullIconsWithProgressbar';
+import { HorizonalLineCard } from './components/HorizontalLineCard';
+
+
+const arrrydata = [
+  {
+   
+    progressbarColor: "red",
+    progressbarValue: 50,
+    storage: "128GB",
+    title: "Media",
+    subTitle:"dddd",
+    content:"dddddddddddd"
+  },
+  {
+   
+    progressbarColor: "yellow",
+    progressbarValue: 50,
+    storage: "128GB",
+    title: "Media",
+    subTitle:"dddd",
+    content:"dddddddddddd"
+  },
+];
 
 
 
@@ -43,9 +67,11 @@ function App() {
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      {pages}
-    </ErrorBoundary>
+    // <ErrorBoundary FallbackComponent={ErrorFallback}>
+    //   {pages}
+    // </ErrorBoundary>
+<HorizonalLineCard  arraydata={arrrydata}/>
+
   )
 }
 

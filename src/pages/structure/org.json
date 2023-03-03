@@ -1,0 +1,59 @@
+{
+    "tradingName": "Intersys",
+    "organizationChildRelationship": [
+      {
+        "tradingName": "Warszawa",
+        "organizationChildRelationship": [
+          {
+            "tradingName": "Piętro 1",
+            "account": [
+              {
+                "name": "P1",
+                "product": { "name": "" }
+              },
+              {
+                "name": "P2",
+                "product": { "name": "250 Plans" }
+              }
+            ]
+          },
+          {
+            "tradingName": "Piętro 2",
+            "account": [
+              {
+                "name": "P1",
+                "product": { "name": "" }
+              },
+              {
+                "name": "P2",
+                "product": { "name": "250 Plans" }
+              }
+            ]
+          },
+          {
+            "tradingName": "Piętro 3",
+            "account": [
+              {
+                "name": "P1",
+                "product": { "name": "" }
+              },
+              {
+                "name": "P2",
+                "product": { "name": "250 Plans" }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "tradingName": "Rzeszów",
+        "account": [
+          {
+            "name": "P1",
+            "product": { "name": "" }
+          }
+        ]
+      }
+    ]
+  }
+  
