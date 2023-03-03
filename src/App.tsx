@@ -1,12 +1,13 @@
-import { Button, Col, Row, Typography } from 'antd'
+import { Button, Col, Row } from 'antd'
 import { useState } from 'react';
-import DateAndTimePicker from './components/DateAndTimePicker/DateAndTimePicker'
 import Model from './components/ModalBox/model'
 import { Input } from './components/Input/input';
 import "./App.scss"
 import { Checkbox } from 'antd';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { CommonDatePicker } from './components';
+import HiringPipeline from './components/HiringPIpeline/hiringPipeline';
+import Widgets, { array } from './components/DocumentsWidgets/widgets';
 
 
 const onChange = (e: CheckboxChangeEvent) => {
@@ -74,6 +75,8 @@ function App() {
       <Typography.Title level={3}>
         I'm h3
       </Typography.Title> */}
+      <HiringPipeline />
+      <Widgets data={array} />
     </div>
   )
 }

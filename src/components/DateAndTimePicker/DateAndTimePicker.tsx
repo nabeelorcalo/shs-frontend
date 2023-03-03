@@ -31,7 +31,7 @@ const customWeekStartEndFormat: DatePickerProps['format'] = (value) =>
       <div className='date-wrapper'>
     <label className='label'>{label}</label>
     <DatePicker defaultValue={dayjs('01/01/2015', dateFormatList[0])} format={dateFormatList} size={size} className='datePicker-wrapper'/>  
-      
+
     </div>
     )
 }
