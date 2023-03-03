@@ -1,14 +1,23 @@
-// Header Icons
-export { ReactComponent as Logo } from "./header/logo.svg";
-export { ReactComponent as IconCollapsebleOff } from "./header/icon-collapseable-off.svg";
-export { ReactComponent as IconCollapsebleOn } from "./header/icon-collapseable-on.svg";
-export { ReactComponent as IconSearchNormal } from "./header/icon-search-normal.svg";
-export { ReactComponent as MessageNotif } from "./header/message-notif.svg";
-export { ReactComponent as Notification } from "./header/Notification.svg";
-export { ReactComponent as IconGlobe } from "./header/global.svg";
-export { ReactComponent as IconLogout } from "./header/Logout.svg";
+export { }
 
-export { ReactComponent as IconProfile } from "./header/Profile.svg";
+
+// export { ReactComponent as AppLogo } from './AppLogo.svg';
+
+export { default as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';
+export {default as InfoIcon} from "../images/chart/info-icon.png";
+export { ReactComponent as Logo } from './header/logo.svg';
+export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
+export { ReactComponent as IconCollapsebleOn } from './header/icon-collapseable-on.svg';
+export { ReactComponent as IconSearchNormal } from './header/icon-search-normal.svg';
+export { ReactComponent as MessageNotif } from './header/message-notif.svg';
+export { ReactComponent as Notification } from './header/Notification.svg';
+export { ReactComponent as IconGlobe } from './header/global.svg';
+export { ReactComponent as IconLogout } from './header/Logout.svg';
+export { ReactComponent as IconProfile } from './header/Profile.svg';
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from './sidebar/icon-dashboard.svg';
