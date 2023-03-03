@@ -109,7 +109,7 @@ export const DropDown = ({
             trigger={['click']}
             open={visible}
             placement={placement}
-            className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'} ${requiredDownloadIcon && 'flex items-center justify-center'}`}
+            className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'} `}
             overlayClassName='drop-down-overlay'
             onOpenChange={setVisible}
             {...props}

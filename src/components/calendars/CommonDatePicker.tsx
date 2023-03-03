@@ -62,7 +62,7 @@ export const CommonDatePicker = ({
                 placement={placement}
                 onOpenChange={() => setOpen(!open)}
                 className={className}
-                popupClassName={`common-datepicker-dropdown-wrapper ${dropdownClassName} ${monthPicker && 'month-picker'}`}
+                popupClassName={`common-datepicker-popup-wrapper ${dropdownClassName} ${monthPicker && 'month-picker'}`}
                 onChange={handleChange}
                 clearIcon={''}
                 picker={picker}

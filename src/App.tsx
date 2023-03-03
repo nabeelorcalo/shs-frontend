@@ -2,6 +2,11 @@ import { Col, Row } from "antd"
 import { useState } from "react"
 import "./App.scss"
 import { CommonDatePicker, DropDown, SearchBar } from "./components"
+import React, { FC, useEffect } from 'react'
+import AppLayout from './layout'
+import "./App.scss";
+import Charts from './components/ChartsOfGraphs/Charts';
+import { Input } from "./components/Input/input"
 
 function App() {
 
@@ -13,7 +18,10 @@ function App() {
 
   return (
     <div className="p-10">
+      {/* <AppLayout /> */}
+      {/* <Charts  /> */}
       <Row gutter={20}>
+        <Col span={4}><Input type="password" placeholder={'dfdsfsf'} required label="label" handleChange={(e) => { }} /></Col>
         <Col span={4} className='mt-5'>
           {['small', 'middle', 'large'].map((size: any) =>
             <SearchBar size={size} className="my-3" handleChange={(val: string) => console.log(val)} />

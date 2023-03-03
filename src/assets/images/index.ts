@@ -25,5 +25,7 @@ export { default as IconProfile } from './header/Profile.svg';
 
 
 
+export {default as InfoIcon} from "../images/chart/info-icon.png";
+
 
 

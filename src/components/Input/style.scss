@@ -1,21 +1,28 @@
+@import '../../scss/_colors.scss';
+
 .input-wrapper {
     .label {
         display: block;
         font-size: 16px;
-        color: #6E7191;
+        color: $text-teriary-label-color;
         margin-bottom: 4px;
     }
 
     .input {
-        border: 1px solid #D9DBE9;
+        border: 2px solid $text-error-line-color;
         border-radius: 8px;
         font-size: 16px;
         margin-top: 5px;
         height: 48px;
-        color: #A0A3BD;
+        color: $text-success-placeholder-color;
 
         &:hover {
-            border: 1px solid rgba(90, 89, 128, 0.5);
+            border: 2px solid $input-hover-color;
+        }
+
+        &:focus {
+            box-shadow: none;
+            border: 2px solid $input-hover-color;
         }
     }
 

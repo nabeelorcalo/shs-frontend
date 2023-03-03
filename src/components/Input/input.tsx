@@ -6,29 +6,32 @@ interface Props {
     id?: string;
     size?: "small" | "middle" | "large";
     label?: string;
-    height?: string;
     name?: string;
     className?: string;
     value?: string;
-    handleChange({ }): void
+    handleChange({ }): void;
+    required?: boolean;
+    type: string;
+    placeholder?: string;
 
 }
 
 export const Input = (props: Props) => {
-    const { id, size, label, height = '48px', name, value, className, handleChange } = props
+    const { required, id, size, label, name, value, type, placeholder, className, handleChange, ...rest } = props
 
     return (
         <div className='input-wrapper'>
-            {label && <label className='label'>{label}</label>}
+            {label && <label className='label'>{label} {required && <span>*</span>}</label>}
             <AntInput
                 id={id}
+                type={type}
                 name={name}
                 value={value}
+                placeholder={placeholder}
                 className={`input ${{ className }}`}
-                placeholder="Enter Goal Name"
                 onChange={handleChange}
                 size={size}
-                style={{ height: height }}
+                {...rest}
             />
         </div>
     )
