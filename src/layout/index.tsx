@@ -1,16 +1,17 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './style.scss'
 import { Layout } from 'antd';
 import AppHeader from './components/header';
 import AppSidebar from './components/sidebar';
-const { Footer, Content } = Layout;
+import AppFooter from './components/footer';
+import { Outlet } from 'react-router-dom';
+const { Content } = Layout;
 
 
 function AppLayout() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [sidebarToggle, setSidebarToggle] = useState(false)
-
+  const [collapsed, setCollapsed] = useState(false)
 
 
   /* EVENT LISTENERS
@@ -23,10 +24,10 @@ function AppLayout() {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function collapseSidebar() {
-    setSidebarToggle(!sidebarToggle)
-    console.log(sidebarToggle)
+  const collapsedSidebar = () => {
+    setCollapsed(!collapsed)
   }
+
   
 
 
@@ -35,17 +36,25 @@ function AppLayout() {
   return (
     <Layout>
 
-      <AppHeader />
+      <AppHeader
+        collapsed={collapsed}
+        sidebarToggler={collapsedSidebar}
+      />
 
       <Layout>
 
-        <AppSidebar />
+        <AppSidebar
+          collapsed={collapsed}
+          sidebarToggler={collapsedSidebar}
+        />
 
-        <Content>Content</Content>
+        <Content>
+          <Outlet />
+        </Content>
 
       </Layout>
 
-      <Footer>Footer</Footer>
+      <AppFooter />
 
     </Layout>
   )

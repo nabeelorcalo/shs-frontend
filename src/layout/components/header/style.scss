@@ -1,6 +1,6 @@
 .ant-layout-header {
   background-color: #fff;
-  box-shadow: 0px 4px 12px 0px #0000000A;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.04);
   line-height: normal;
   padding: 10px 0;
   height: 80px;
@@ -124,6 +124,10 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+
+        .ant-dropdown-trigger.loggedin-user-avatar {
+          cursor: pointer;
+        }
       }
       .ikd-header-notification {
         height: 100%;
@@ -172,7 +176,7 @@
       .ant-list.ant-list-split {
         .ant-list-items {
           .ant-list-item {
-            border-color: #D9DBE9;
+            border-bottom: 1px solid #D9DBE9;
             padding-top: 20px;
             padding-bottom: 10px;
 
@@ -205,10 +209,22 @@
 
 
 .ant-dropdown.user-dropdown {
+  .ant-dropdown-arrow {
+    background-image: url(../../../assets/images/header/polygon.png);
+    background-repeat: no-repeat;
+    height: 33px;
+    width: 30px;
+    top: 13px;
+    &::after, &::before {
+      display: none;
+    }
+  }
   .user-dropdown-container {
+    border: 1px solid #D9DBE9;
     padding: 20px 30px;
     background-color: #fff;
     box-shadow: 0px 0px 8px 2px #09A1DA1A;
+
     border-radius: 8px;
     min-width: 336px;
     box-sizing: border-box;
@@ -242,6 +258,10 @@
         font-size: 14px;
         &:hover {
           background-color: transparent;
+        }
+
+        .ant-dropdown-menu-item-icon {
+          margin-right: 20px;
         }
       }
     }
