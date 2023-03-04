@@ -7,6 +7,7 @@ import { ErrorFallback } from "./pages/errors/errorBoundary";
 import AppLayout from './layout'
 import "./App.scss";
 import Charts from './components/ChartsOfGraphs/Charts';
+import Table from './components/Noman/Table';
 
 function App() {
   /* VARIABLE DECLARATION

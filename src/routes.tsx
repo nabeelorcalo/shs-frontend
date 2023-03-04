@@ -11,7 +11,7 @@ import {ROUTES_CONSTANTS} from "./config/constants";
 
 // Remove it
 // Graph dummy pages
-import Graph from './pages/dummy';
+import Graph from './pages/graphs';
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
