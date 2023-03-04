@@ -1,91 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
 import { DualAxes } from '@ant-design/plots';
+import data from './data';
 
-const CustomTooltip = (props: any) => {
-  // if (active) {
-  //   return (
-  //     <div className="custom-tooltip">
-  //       <p className="label">{`${label}`}</p>
-  //       <p className="title">{`Data 1: ${payload[0].value}`}</p>
-  //       <p className="title">{`Data 2: ${payload[1].value}`}</p>
-  //     </div>
-  //   );
-  // }
-  return null;
-};
+const Graph = (props: any) => {
+  // const parent: any = document.getElementsByClassName('registered-members');
+  // const legendPosition: any = parent.innerWidth - 808; // <== uncommnt it
 
-const Graph = () => {
-  const data = [
-    {
-      month: 'Jan',
-      present: 30,
-      absent: 10,
-    },
-    {
-      month: 'Feb',
-      present: 20,
-      absent: 3,
-    },
-    {
-      month: 'Mar',
-      present: 10,
-      absent: 5,
-    },
-    {
-      month: 'Apr',
-      present: 7,
-      absent: 5,
-    },
-    {
-      month: 'May',
-      present: 4,
-      absent: 9,
-    },
-    {
-      month: 'Jun',
-      present: 6,
-      absent: 35,
-    },
-    {
-      month: 'Jul',
-      present: 7,
-      absent: 17,
-    },
-    {
-      month: 'Aug',
-      present: 100,
-      absent: 0,
-    },
-    {
-      month: 'Sep',
-      present: 50,
-      absent: 0,
-    },
-    {
-      month: 'Oct',
-      present: 13,
-      absent: 16,
-    },
-    {
-      month: 'Nov',
-      present: 4,
-      absent: 8,
-    },
-    {
-      month: 'Dec',
-      present: 10,
-      absent: 20,
-    },
-  ];
-
+  const legendPosition: any = window.innerWidth - 750; // <== Remove it
+  console.log("legendPosition: ", legendPosition);
+  
   const config = {
     data: [data, data],
     xField: 'month',
-    yField: ['present', 'absent'],
+    yField: ['Active', 'Inactive'],
 
-    tooltip: {
-      customContent: (props: any) => <CustomTooltip />
+    legend: {
+      position: 'top',
+      align: 'right',
+      offsetX: legendPosition,
+      marker: { symbol: 'square', radius: 8 }
+      // verticalAlign: 'right',
+      // layout: 'horizontal',
     },
 
     xAxis: {
@@ -104,14 +39,17 @@ const Graph = () => {
 
     yAxis: [
       {
-        // min: 0,
-        // max: 100,
+        min: 0,
+        max: 100,
         tickCount: 3,
         label: {
           formatter: (val: any) => `${val}%`,
         },
       },
       {
+        min: 0,
+        max: 100,
+        tickCount: 3,
         label: null,
       },
     ],
@@ -127,14 +65,13 @@ const Graph = () => {
         },
         // label: {
         //   formatter: (datum: any) => {
-        //     return `${datum.absent}`;
+        //     return `${datum.Active}`;
         //   },
         // },
         point: {
           shape: 'circle',
           size: 10,
           style: {
-            // opacity: 0.5,
             stroke: '#4A9D77',
             fill: '#4A9D77',
           },
@@ -150,30 +87,34 @@ const Graph = () => {
         },
         // label: {
         //   formatter: (datum: any) => {
-        //     return `${datum.absent}`;
+        //     return `${datum.Inactive}`;
         //   },
         // },
         point: {
           shape: 'circle',
           size: 10,
           style: {
-            opacity: 0.5,
             stroke: '#E94E5D',
             fill: '#E94E5D',
           },
         },
       },
     ],
-    options: {
-      tooltips: {
-        callbacks: {
-          title: () => "Tile",
-          label: () => "Body"
-        }
-      }
-    }
+
+    tooltip: {
+      formatter: (props: any) => {
+        let attributeName = props.hasOwnProperty('Active') ? "Active" : "Inactive";
+        let value = attributeName === 'Active' ? props.Active : props.Inactive;
+
+        return { name: attributeName, value: `${value}%` }
+      },
+    },
+
   };
-  return <DualAxes {...config} />;
+
+  return (
+    <DualAxes {...config} />
+  );
 };
 
 export default Graph;
