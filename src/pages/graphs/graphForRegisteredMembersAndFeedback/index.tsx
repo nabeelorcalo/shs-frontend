@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { DualAxes } from '@ant-design/plots';
-import data from './data';
+import { registerMemeberData, resolutionFeedbackData } from './data';
+import { IconLikeShapes } from '../../../assets/images';
 
-const Graph = (props: any) => {
+const Graph = ({ graphName }: any) => {
+  const data = graphName === "registerMember" ? registerMemeberData : resolutionFeedbackData;
+  const yFields = graphName === "registerMember" ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
+
   // const parent: any = document.getElementsByClassName('registered-members');
   // const legendPosition: any = parent.innerWidth - 808; // <== uncommnt it
 
   const legendPosition: any = window.innerWidth - 750; // <== Remove it
   console.log("legendPosition: ", legendPosition);
-  
+
+  const legendMarker = (iconName: string) => {
+    return (
+      <IconLikeShapes />
+    );
+  };
+
   const config = {
     data: [data, data],
     xField: 'month',
-    yField: ['Active', 'Inactive'],
+    yField: yFields,
 
     legend: {
       position: 'top',
       align: 'right',
       offsetX: legendPosition,
-      marker: { symbol: 'square', radius: 8 }
-      // verticalAlign: 'right',
-      // layout: 'horizontal',
+      marker: { symbol: 'square', radius: 8, },
+      legendMarker
     },
 
     xAxis: {
@@ -35,6 +44,7 @@ const Graph = (props: any) => {
           },
         },
       },
+      tickLine: null,
     },
 
     yAxis: [
@@ -103,8 +113,15 @@ const Graph = (props: any) => {
 
     tooltip: {
       formatter: (props: any) => {
-        let attributeName = props.hasOwnProperty('Active') ? "Active" : "Inactive";
-        let value = attributeName === 'Active' ? props.Active : props.Inactive;
+        let attributeName, value;
+
+        if (graphName === "registerMember") {
+          attributeName = props.hasOwnProperty('Active') ? "Active" : "Inactive";
+          value = attributeName === 'Active' ? props.Active : props.Inactive;
+        } else {
+          attributeName = props.hasOwnProperty('Positive') ? "Positive" : "Negative";
+          value = attributeName === 'Positive' ? props.Positive : props.Negative;
+        }
 
         return { name: attributeName, value: `${value}%` }
       },

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import RegisteredMember from './registeredMembers';
+import GraphOne from './graphForRegisteredMembersAndFeedback';
+import GraphTwo from './graphForAttendanceAndListings';
 
 const Graph = (props: any) => {
   return (
-    <RegisteredMember />
+    <GraphOne graphName="resolutionFeedback" />
   );
 };
 
