@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import "./style.scss";
+import LeaveRequest from "../../components/LeaveRequest";
 
 const Calendar = () => {
   return (
-    <p>Calendar</p>
+  <>
+    <p>Calendar </p>
+    <LeaveRequest title="Leave Request"/>
+    </>
   )
 }
 
