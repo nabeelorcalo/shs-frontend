@@ -13,7 +13,7 @@ const EmojiRating = ({title}) => {
     const [hover4, setHover4] = useState(false)
     return (
         <div className="w-5/12">
-            <p>{title}</p>
+            <p className="text-sm">{title}</p>
             <div>
             <div className="flex gap-4 justify-between">
                 <a onClick={()=>{ setHover1(!hover1);console.log(hover1)}} > {hover1?<Emoji1st/>:<EmojiGray1st/>} </a>

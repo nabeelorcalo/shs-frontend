@@ -23,7 +23,7 @@ const desc = [
   },
 ];
 
-const LeaveRequest = ({ title }: any) => {
+const EmojiEvaluation = ({ title }: any) => {
   const [show, setShow] = useState(false)
 
   return (
@@ -109,4 +109,4 @@ const LeaveRequest = ({ title }: any) => {
   )
 }
 
-export default LeaveRequest
+export default EmojiEvaluation
