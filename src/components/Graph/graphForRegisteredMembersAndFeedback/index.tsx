@@ -14,11 +14,11 @@ const Graph = ({ graphName }: any) => {
   const legendPosition: any = window.innerWidth - 800; // <== Remove it
   console.log("legendPosition: ", legendPosition);
 
-  const legendMarker = (iconName: string) => {
-    return (
-      <IconLikeShapes />
-    );
-  };
+  // const legendMarker = (iconName: string) => {
+  //   return (
+  //     <IconLikeShapes />
+  //   );
+  // };
 
   const config = {
     data: [data, data],
@@ -30,7 +30,7 @@ const Graph = ({ graphName }: any) => {
       align: 'right',
       offsetX: legendPosition,
       marker: { symbol: 'square', radius: 8, },
-      legendMarker
+      // legendMarker
     },
 
     xAxis: {

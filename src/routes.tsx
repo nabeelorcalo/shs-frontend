@@ -10,8 +10,8 @@ import Layout from "./layout";
 import {ROUTES_CONSTANTS} from "./config/constants";
 
 // Remove it
-// Graph dummy pages
-import Graph from './pages/graphs';
+// Graph dummy components
+import Graph from './components/Graph';
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;

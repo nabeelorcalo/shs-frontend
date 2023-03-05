@@ -3,7 +3,7 @@ import { Line } from '@ant-design/plots';
 import { attendanceData, listingsData } from './data';
 import constants from '../../../config/constants';
 
-const Attendance = ({ graphName }: any) => {
+const Graph = ({ graphName }: any) => {
   const data = graphName === constants.ATTENDANCE ? attendanceData : listingsData;
   const maxValue = graphName === constants.ATTENDANCE ? 30 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
@@ -112,4 +112,4 @@ const Attendance = ({ graphName }: any) => {
   } />;
 };
 
-export default Attendance;
+export default Graph;
