@@ -1,16 +1,15 @@
 import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
-import { Button, Modal } from 'antd'
-import UploadDocument from '../UploadDocument';
+import { Button, Modal, Input } from 'antd'
 
 
 
-const MyProfileDocUpload = ({ title }: any) => {
+const CreateFolderModal = ({ title }: any) => {
   const [show, setShow] = useState(false)
 
   return (
     <>
-      <Button onClick={() => { setShow(!show) }}>Upload Doc my profile</Button>
+      <Button onClick={() => { setShow(!show) }}>Create New Folder Modal</Button>
       <div>
         <Modal
           title={title}
@@ -28,11 +27,15 @@ const MyProfileDocUpload = ({ title }: any) => {
             </Button>,
           ]}
         >
-          <UploadDocument />
+          <div className="my-8">
+              <p>Create New Folder</p>
+              <Input rows={4} placeholder="Enter Folder Name" maxLength={6} />
+
+            </div>
         </Modal>
       </div>
     </>
   )
 }
 
-export default MyProfileDocUpload
+export default CreateFolderModal
