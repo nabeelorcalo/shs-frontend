@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { DualAxes } from '@ant-design/plots';
 import { registerMemeberData, resolutionFeedbackData } from './data';
 import { IconLikeShapes } from '../../../assets/images';
+import constants from '../../../config/constants';
 
 const Graph = ({ graphName }: any) => {
-  const data = graphName === "registerMember" ? registerMemeberData : resolutionFeedbackData;
-  const yFields = graphName === "registerMember" ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
+  const data = graphName === constants.REGISTER_MEMBERS ? registerMemeberData : resolutionFeedbackData;
+  const yFields = graphName === constants.REGISTER_MEMBERS ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
 
   // const parent: any = document.getElementsByClassName('registered-members');
   // const legendPosition: any = parent.innerWidth - 808; // <== uncommnt it
 
-  const legendPosition: any = window.innerWidth - 750; // <== Remove it
+  const legendPosition: any = window.innerWidth - 800; // <== Remove it
   console.log("legendPosition: ", legendPosition);
 
   const legendMarker = (iconName: string) => {
@@ -115,7 +116,7 @@ const Graph = ({ graphName }: any) => {
       formatter: (props: any) => {
         let attributeName, value;
 
-        if (graphName === "registerMember") {
+        if (graphName === constants.REGISTER_MEMBERS) {
           attributeName = props.hasOwnProperty('Active') ? "Active" : "Inactive";
           value = attributeName === 'Active' ? props.Active : props.Inactive;
         } else {

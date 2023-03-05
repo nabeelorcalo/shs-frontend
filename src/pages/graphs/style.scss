@@ -1,0 +1,19 @@
+@import "../../scss/colors" ;
+
+.rewards div .g2-tooltip {
+  font-size: 14px !important;
+  font-weight: 600;
+  border-radius: 8px !important;
+  padding: 0 !important;
+  font-family: 'Outfit';
+  background-color: $red-graph-tooltip-color !important;
+}
+
+.registerAgents div .g2-tooltip {
+  font-weight: 600;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+  padding: 0 !important;
+  font-family: 'Outfit';
+  background-color: $green-graph-tooltip-color !important;
+}

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/plots';
 import { attendanceData, listingsData } from './data';
+import constants from '../../../config/constants';
 
 const Attendance = ({ graphName }: any) => {
-  const data = graphName === "attendance" ? attendanceData : listingsData;
-  const maxValue = graphName === "attendance" ? 30 : 100;
-  const yTicks = graphName === "attendance" ? 4 : 3;
-  const colors: any = graphName === "attendance" ?
+  const data = graphName === constants.ATTENDANCE ? attendanceData : listingsData;
+  const maxValue = graphName === constants.ATTENDANCE ? 30 : 100;
+  const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
+  const colors: any = graphName === constants.ATTENDANCE ?
     ["#4A9D77", "#E94E5D", "#FFC15D"]
     :
     ["#E94E5D", "#4A9D77", "#FFC15D"];
 
-  const attributeColors: any = graphName === "attendance" ?
+  const attributeColors: any = graphName === constants.ATTENDANCE ?
     {
       "Present": "#4A9D77",
       "Absent": "#E94E5D",
@@ -26,7 +27,7 @@ const Attendance = ({ graphName }: any) => {
   // const parent: any = document.getElementsByClassName('registered-members');
   // const legendPosition: any = parent.innerWidth - 808; // <== uncommnt it
 
-  const legendPosition: any = window.innerWidth - 850; // <== Remove it
+  const legendPosition: any = window.innerWidth - 900; // <== Remove it
   console.log("legendPosition: ", legendPosition, "yTicks: ", yTicks);
 
   const config = {
@@ -102,7 +103,7 @@ const Attendance = ({ graphName }: any) => {
     },
   };
 
-  if(graphName === "attendance"){
+  if(graphName === constants.ATTENDANCE){
     delete config.yAxis.label;
     delete config.tooltip;
   }
