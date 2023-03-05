@@ -4,6 +4,7 @@ import "./style.scss";
 import LeaveRequest from "../../components/LeaveRequest";
 import EmojiEvaluation from "../../components/EmojiEvaluation"
 import AssesmentModal from "../../components/AssesmentModal"
+import MyProfileDocUpload from "../../components/MyProfileDocUpload";
 
 const Calendar = () => {
   const name = "Calvin Grayson"
@@ -13,6 +14,7 @@ const Calendar = () => {
       <LeaveRequest title="Leave Request" />
       <EmojiEvaluation title={`Performance Report - ${name}`} />
       <AssesmentModal title="Signature"/>
+      <MyProfileDocUpload title="Upload Documents"/>
     </div>
   )
 }

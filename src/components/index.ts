@@ -5,3 +5,4 @@ export * from './AssesmentModal';
 export * from './AssesmentDragAndDrop';
 export * from './DrawSignature';
 export * from './TypeSignature';
+export * from './UploadDocument'
