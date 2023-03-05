@@ -55,3 +55,13 @@ export { ReactComponent as IconYoutube  } from './footer/icon-social-youtube.svg
 
 // Leaves Icons
 export { ReactComponent as DocumentUpload  } from './leaves/document-upload.svg';
+
+// Rating Emojis
+export { ReactComponent as Emoji1st  } from './RatingEmojis/Emoji1st.svg';
+export { ReactComponent as Emoji2nd  } from './RatingEmojis/Emoji2nd.svg';
+export { ReactComponent as Emoji3rd  } from './RatingEmojis/Emoji3rd.svg';
+export { ReactComponent as Emoji4th  } from './RatingEmojis/Emoji4th.svg';
+export { ReactComponent as EmojiGray1st  } from './RatingEmojis/EmojiGray1st.svg';
+export { ReactComponent as EmojiGray2nd  } from './RatingEmojis/EmojiGray2nd.svg';
+export { ReactComponent as EmojiGray3rd  } from './RatingEmojis/EmojiGray3rd.svg';
+export { ReactComponent as EmojiGray4th  } from './RatingEmojis/EmojiGray4th.svg';
