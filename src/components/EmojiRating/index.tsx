@@ -3,7 +3,7 @@ import { Rate } from 'antd';
 import { Emoji1st, Emoji2nd, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray2nd, EmojiGray3rd, EmojiGray4th } from '../../assets/images';
 
 
-const desc = ['Unsatisfactory', 'Still Learning', 'Meeting Expectations', 'Exceeding Expectations'];
+
 
 
 const EmojiRating = ({title}) => {

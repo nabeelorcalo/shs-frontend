@@ -2,15 +2,33 @@ import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import EmojiRating from '../EmojiRating'
+import { Emoji1st, Emoji2nd, Emoji3rd, Emoji4th } from '../../assets/images'
 
-
+const desc = [
+  {
+    title: 'Unsatisfactory',
+    comp: <Emoji1st />
+  },
+  {
+    title: 'Still Learning',
+    comp: <Emoji2nd />
+  },
+  {
+    title: 'Meeting Expectations',
+    comp: <Emoji3rd />
+  },
+  {
+    title: 'Exceeding Expectations',
+    comp: <Emoji4th />
+  },
+];
 
 const LeaveRequest = ({ title }: any) => {
   const [show, setShow] = useState(false)
 
   return (
     <>
-      <Button onClick={() => { setShow(!show) }}>Leave request form</Button>
+      <Button onClick={() => { setShow(!show) }}>Emoji evaluation form</Button>
       <div>
         <Modal
           title={title}
@@ -29,10 +47,20 @@ const LeaveRequest = ({ title }: any) => {
           ]}
         >
           <div className="mt-8 mx-3">
+            <div className="flex gap-3">
+              {
+                desc.map((item, idx) => {
+                  return (
+                    <p className="flex gap-2 text-sm">{item.comp}<span>{item.title}</span></p>
+                  )
+                })
+              }
+            </div>
             <div className="my-8">
               <div className="flex gap-3 font-bold">
                 <p>Learning Objectives</p>
                 <p>74%</p>
+
               </div>
               <div className="flex justify-between flex-wrap">
                 <EmojiRating title="Works to full potential" />
