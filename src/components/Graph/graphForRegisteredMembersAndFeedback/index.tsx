@@ -8,12 +8,6 @@ const Graph = ({ graphName }: any) => {
   const data = graphName === constants.REGISTER_MEMBERS ? registerMemeberData : resolutionFeedbackData;
   const yFields = graphName === constants.REGISTER_MEMBERS ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
 
-  // const parent: any = document.getElementsByClassName('registered-members');
-  // const legendPosition: any = parent.innerWidth - 808; // <== uncommnt it
-
-  const legendPosition: any = window.innerWidth - 800; // <== Remove it
-  console.log("legendPosition: ", legendPosition);
-
   // const legendMarker = (iconName: string) => {
   //   return (
   //     <IconLikeShapes />
@@ -26,9 +20,7 @@ const Graph = ({ graphName }: any) => {
     yField: yFields,
 
     legend: {
-      position: 'top',
-      align: 'right',
-      offsetX: legendPosition,
+      position: 'top-right',
       marker: { symbol: 'square', radius: 8, },
       // legendMarker
     },

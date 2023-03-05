@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import GraphOne from './graphForRegisteredMembersAndFeedback';
 import GraphTwo from './graphForAttendanceAndListings';
 import GraphThree from './graphForRegisterAgentsAndRewards';
+import GraphFour from './graphForGrowthAnalytics';
 import constants from '../../config/constants';
 import BoxWrapper from '../../components/BoxWrapper/BoxWrapper';
 
 const Graph = (props: any) => {
   return (
     <div className='p-4'>
+      <BoxWrapper >
+        <GraphFour />
+      </BoxWrapper>
+
       {/* Register Member Graph */}
       <BoxWrapper >
         <GraphOne graphName={constants.REGISTER_MEMBERS} />

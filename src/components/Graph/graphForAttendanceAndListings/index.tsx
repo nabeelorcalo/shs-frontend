@@ -24,12 +24,6 @@ const Graph = ({ graphName }: any) => {
       "Vacant": "#FFC15D"
     };
 
-  // const parent: any = document.getElementsByClassName('registered-members');
-  // const legendPosition: any = parent.innerWidth - 808; // <== uncommnt it
-
-  const legendPosition: any = window.innerWidth - 900; // <== Remove it
-  console.log("legendPosition: ", legendPosition, "yTicks: ", yTicks);
-
   const config = {
     data,
     xField: 'month',
@@ -69,9 +63,7 @@ const Graph = ({ graphName }: any) => {
     },
 
     legend: {
-      position: 'top',
-      align: 'right',
-      offsetX: legendPosition,
+      position: 'top-right',
       marker: function (name: any) {
         return { symbol: 'square', style: { fill: attributeColors[name], radius: 8 } }
       },
