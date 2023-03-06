@@ -34,56 +34,52 @@ const Graph = () => {
   return (
     <>
       {assessmentsName.map((item, index) => (
-        <>
-          <Row className='flex flex-row items-center' >
-            <Col xs={6} sm={6} md={2} lg={2} xl={2}>
-              <div className=''>
-                <p>{item}</p>
-              </div>
-            </Col>
-            <Col xs={2} sm={2} md={1} lg={1} xl={1}>
-              <div className=''>
-                {renderIcon(item)}
-              </div>
-            </Col>
-            <Col xs={4} sm={4} md={8} lg={8} xl={8}>
-              <Slider
-                disabled
-                min={1}
-                max={5}
-                defaultValue={index > 4 ? 5 : index + 1}
-                tooltip={{
-                  open: true,
-                  formatter: (value: any) => `0${value}`,
-                }}
-                trackStyle={{ background: 'transparent' }}
-                className="life-assessment-slider"
-              />
-            </Col>
-          </Row>
+        <div className="flex items-center">
+          <div className='flex-none w-[120px]'>
+            {item}
+          </div>
 
-          {index === 7 &&
-            <Row className='flex flex-row items-center' >
-              <Col className="gutter-row" span={2} />
-              <Col className="gutter-row" span={1} />
-              <Col className="gutter-row text-xs txtColor" span={2}>
+          <div className='flex-none w-20'>
+            {renderIcon(item)}
+          </div>
+
+          <div className='flex-initial w-full'>
+            <Slider
+              disabled
+              min={1}
+              max={5}
+              defaultValue={index > 4 ? 5 : index + 1}
+              tooltip={{
+                open: true,
+                formatter: (value: any) => `0${value}`,
+              }}
+              trackStyle={{ background: 'transparent' }}
+              className="life-assessment-slider"
+            />
+          </div>
+
+          {/* {index === 7 &&
+            <div className="flex items-center">
+              <div className='flex-none w-[120px]'></div>
+              <div className='flex-none w-20'></div>
+              <div className='flex-none w-20'>
                 1
-              </Col>
-              <Col className="gutter-row text-xs txtColor" span={2}>
+              </div>
+              <div className='flex-none w-20'>
                 2
-              </Col>
-              <Col className="gutter-row text-xs txtColor" span={2}>
+              </div>
+              <div className='flex-none w-20'>
                 3
-              </Col>
-              <Col className="gutter-row text-xs txtColor" span={2}>
+              </div>
+              <div className='flex-none w-20'>
                 4
-              </Col>
-              <Col className="gutter-row text-xs txtColor" span={2}>
+              </div>
+              <div className='flex-none w-20'>
                 5
-              </Col>
-            </Row>
-          }
-        </>
+              </div>
+            </div>
+          } */}
+        </div>
       ))}
     </>
   )
