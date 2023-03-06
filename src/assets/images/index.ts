@@ -1,4 +1,13 @@
+export { }
+
 // Header Icons
+// export { ReactComponent as AppLogo } from './AppLogo.svg';
+
+// sickLeave-card icon 
+export { default as SickIcon } from './sick.png';
+export { default as CasualIcon } from './sick.png';
+export { default as WFHIcon } from './sick.png';
+export { default as MedicalIcon } from './sick.png';
 export { ReactComponent as Logo } from './header/logo.svg';
 export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
 export { ReactComponent as IconCollapsebleOn } from './header/icon-collapseable-on.svg';

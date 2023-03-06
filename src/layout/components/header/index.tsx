@@ -2,17 +2,18 @@ import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
 import { Button, MenuProps, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import { Logo, IconCollapsebleOff, IconCollapsebleOn, IconSearchNormal, MessageNotif, Notification,
-  IconGlobe,
-  IconLogout,
-  IconProfile
-} from '../../../assets/images'
+// import { Logo, IconCollapsebleOff, IconCollapsebleOn, IconSearchNormal, MessageNotif, Notification,
+//   IconGlobe,
+//   IconLogout,
+//   IconProfile
+// } from '../../../assets/images'
 import { Layout, Input, Dropdown, Avatar, Drawer, List, Card } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
 const { Meta } = Card
 import organizationLogo from '../../../assets/images/header/organisation.svg'
 import avatar from '../../../assets/images/header/avatar.svg'
+import { MessageNotif } from '../../../assets/images';
 
 type HeaderProps = {
   collapsed: boolean
@@ -24,17 +25,17 @@ const items: MenuProps['items'] = [
   {
     key: '1',
     label: "Profile",
-    icon: <IconProfile />,
+    // icon: <IconProfile />,
   },
   {
     key: '2',
     label: "Go to Website",
-    icon: <IconGlobe />,
+    // icon: <IconGlobe />,
   },
   {
     key: '3',
     label: "Logout",
-    icon: <IconLogout />,
+    // icon: <IconLogout />,
   },
 ];
 
@@ -101,7 +102,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
 
       <div className='ikd-logo'>
         <Link to="/">
-          <Logo />
+          {/* <Logo /> */}
         </Link>
       </div>
 
@@ -114,10 +115,10 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
             <div className={`ikd-collapseable-button ${collapsed? 'show': 'hide'}`} onClick={() => sidebarToggler()}>
               <div className='ikd-collapseable-button-toggle'>
                 <div className='toggle-off'>
-                  <IconCollapsebleOff />
+                  {/* <IconCollapsebleOff /> */}
                 </div>
                 <div className='toggle-on'>
-                  <IconCollapsebleOn />
+                  {/* <IconCollapsebleOn /> */}
                 </div>
               </div>
             </div>
@@ -135,7 +136,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
           <div className={`ikd-search-box ${searchWidthToggle? 'expand': 'collapsed'}`}>
             <Search 
               placeholder='Search anything...'
-              prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
+              // prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
               bordered={false}
               onSearch={onSearch}
             />
@@ -153,7 +154,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
           </div>
           <div className='ikd-header-notification'>
             <div className='notification-handler' onClick={() => showNotificationDrawer()}>
-              <Notification />
+              {/* <Notification /> */}
             </div>
           </div>
           <div className='loggedin-user'>
