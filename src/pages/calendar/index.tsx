@@ -11,15 +11,9 @@ import EditGoalTask from "../../components/EditGoalTask";
 const Calendar = () => {
   const name = "Calvin Grayson"
   return (
-    <div className="flex gap-3">
+
       <p>Calendar </p>
-      <LeaveRequest title="Leave Request" />
-      <EmojiEvaluation title={`Performance Report - ${name}`} />
-      <AssesmentModal title="Signature"/>
-      <MyProfileDocUpload title="Upload Documents"/>
-      <CreateFolderModal title="Create New Folder"/>
-      <EditGoalTask title="Edit Goal Task"/>
-    </div>
+
   )
 }
 
