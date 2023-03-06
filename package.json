@@ -11,6 +11,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@ant-design/plots": "^1.2.5",
     "@ant-design/icons": "^5.0.1",
     "antd": "^5.2.2",
     "clsx": "^1.2.1",
