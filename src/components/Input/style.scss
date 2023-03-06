@@ -1,0 +1,30 @@
+@import '../../scss/_colors.scss';
+
+.input-wrapper {
+    .label {
+        display: block;
+        font-size: 16px;
+        color: $text-teriary-label-color;
+        margin-bottom: 4px;
+    }
+
+    .input {
+        border: 2px solid $text-error-line-color;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 5px;
+        height: 48px;
+        color: $text-success-placeholder-color;
+        border-radius: 8px;
+
+        &:hover {
+            border: 2px solid $input-hover-color;
+        }
+
+        &:focus {
+            box-shadow: none;
+            border: 2px solid $input-hover-color;
+        }
+    }
+
+}

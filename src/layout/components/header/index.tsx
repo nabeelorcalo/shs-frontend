@@ -144,7 +144,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
           <div className={`ikd-search-box ${searchWidthToggle? 'expand': 'collapsed'}`}>
             <Search 
               placeholder='Search anything...'
-              prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
+              // prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
               bordered={false}
               onSearch={onSearch}
             />
@@ -158,7 +158,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
               placeholder='Search anything...'
               bordered={false}
               onSearch={onSearch}
-              prefix={<IconCross onClick={() => setMobileSearch(false)} />}
+              // prefix={<IconCross onClick={() => setMobileSearch(false)} />}
             />
           </div>
           {/* Global Search Ends */}

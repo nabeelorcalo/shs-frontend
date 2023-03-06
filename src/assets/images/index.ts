@@ -72,3 +72,10 @@ export { ReactComponent as EmojiGray1st  } from './RatingEmojis/EmojiGray1st.svg
 export { ReactComponent as EmojiGray2nd  } from './RatingEmojis/EmojiGray2nd.svg';
 export { ReactComponent as EmojiGray3rd  } from './RatingEmojis/EmojiGray3rd.svg';
 export { ReactComponent as EmojiGray4th  } from './RatingEmojis/EmojiGray4th.svg';
+
+// Callendar Icons
+export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';

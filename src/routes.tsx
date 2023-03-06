@@ -7,8 +7,8 @@ import Signup from "./pages/onBoarding/signup";
 import ForgotPassword from "./pages/onBoarding/forgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
-import {ROUTES_CONSTANTS} from "./config/constants";
-
+import { ROUTES_CONSTANTS } from "./config/constants";
+import DropDownDemo from "./components/Dropdown/dropdown-demo";
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
@@ -85,6 +85,12 @@ export const publicRoutes = [
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
   },
+  // demo dropdowns
+  {
+    key: 'dropdowndemo',
+    path: '/demodropdown',
+    element: <DropDownDemo />
+  }
 ];
 
 // Manager

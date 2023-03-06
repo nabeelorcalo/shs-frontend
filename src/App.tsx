@@ -6,7 +6,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
 import AppLayout from './layout'
 
-
 function App() {
 
   /* VARIABLE DECLARATION
@@ -29,7 +28,7 @@ function App() {
   const publicRoutes = getRoutes('Public');
   let routes = getRoutes(user_role);
   routes = routes.concat(publicRoutes);
-  
+
   const pages = useRoutes(routes);
   /* HOOKS
   -------------------------------------------------------------------------------------*/
@@ -44,13 +43,6 @@ function App() {
   //   }
   // }, [pathname]);
 
-  /* EVENT FUNCTIONS
-  -------------------------------------------------------------------------------------*/
-
-
-
-  /* RENDER APP
-  -------------------------------------------------------------------------------------*/
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       {pages}
