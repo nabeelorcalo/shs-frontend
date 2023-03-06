@@ -14,7 +14,7 @@ import {
   IconGift,
 } from '../../../assets/images'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, SEARCH_JOBS, APPLICATION, OFFER_LETTER, CONTRACTS, PROFILE, DIGIVAULT, DREAM_UP, CALENDAR, ACCOMMODATION, RECIPES, EARN_WITH_US } = ROUTES_CONSTANTS
+const { DASHBOARD, SEARCH_JOBS, APPLICATION, OFFER_LETTER, CONTRACTS, PROFILE, DIGIVAULT, DREAM_UP, CALENDAR, ACCOMMODATION, RECIPES, EARN_WITH_US } = ROUTES_CONSTANTS;
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 function getItem(
