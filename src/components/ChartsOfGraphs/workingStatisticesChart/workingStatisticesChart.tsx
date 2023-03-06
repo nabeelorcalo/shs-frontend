@@ -1,52 +1,13 @@
 import { Column } from '@ant-design/plots';
 import { useEffect, useState } from 'react';
 import BoxWrapper from '../../BoxWrapper/BoxWrapper';
+import { statisticesData } from './workingChart';
 
-const MockData = [
-  {
-    days: "Mon",
-    value: 0.5,
-    type: "Under Time"
-  },
-  {
-    days: "Tue",
-    value: 5,
-    type: "Under Time"
-  },
 
-  {
-    days: "Wed",
-    value: 6,
-    type: "Shift"
-  },
-  {
-    days: "Thu",
-    value: 5,
-    type: "Over Time"
-  },
-  {
-    days: "Fri",
-    value: 10,
-    type: "Over Time"
-  },
-  {
-    days: "Sat",
-    value: 2,
-    type: "Holiday"
-  },
-  {
-    days: "Sun",
-    value: 8,
-    type: "Holiday"
-  },
-]
 const WorkingStatisticesChart = (props: any) => {
   const { isStack = true, xField = "days", yField = "value",
     seriesField = "type", legend = { layout: "horizontal", position: 'top-right' } } = props
-  const [data, setData] = useState<any>([]);
-  useEffect(() => {
-    setData(MockData)
-  }, [])
+  const [data, setData] = useState<any>(statisticesData);
 
   const config: any = {
     data,
