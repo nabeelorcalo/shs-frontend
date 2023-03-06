@@ -15,7 +15,7 @@ export const ROUTES_CONSTANTS: any = {
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
   TIMESHEET: "timesheet",
-  PERFOMRANCE: "performance",
+  PERFORMANCE: "performance",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",

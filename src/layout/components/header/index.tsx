@@ -2,34 +2,40 @@ import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
 import { Button, MenuProps, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import { Logo, IconCollapsebleOff, IconCollapsebleOn, IconSearchNormal, MessageNotif, Notification,
-  IconGlobe,
-  IconLogout,
-  IconProfile
-} from '../../../assets/images'
+// import { Logo, IconCollapsebleOff, IconCollapsebleOn, IconSearchNormal, MessageNotif, Notification,
+//   IconGlobe,
+//   IconLogout,
+//   IconProfile
+// } from '../../../assets/images'
 import { Layout, Input, Dropdown, Avatar, Drawer, List, Card } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
 const { Meta } = Card
 import organizationLogo from '../../../assets/images/header/organisation.svg'
 import avatar from '../../../assets/images/header/avatar.svg'
+import { MessageNotif } from '../../../assets/images';
+
+type HeaderProps = {
+  collapsed: boolean
+  sidebarToggler: () => void
+}
 
 // Temporary
 const items: MenuProps['items'] = [
   {
     key: '1',
     label: "Profile",
-    icon: <IconProfile />,
+    // icon: <IconProfile />,
   },
   {
     key: '2',
     label: "Go to Website",
-    icon: <IconGlobe />,
+    // icon: <IconGlobe />,
   },
   {
     key: '3',
     label: "Logout",
-    icon: <IconLogout />,
+    // icon: <IconLogout />,
   },
 ];
 
@@ -49,10 +55,9 @@ const data = [
 ];
 
 
-const AppHeader:FC = () => {
+const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [sidebarToggle, setSidebarToggle] = useState(false)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false)
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
 
@@ -72,11 +77,6 @@ const AppHeader:FC = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function collapseSidebar() {
-    setSidebarToggle(!sidebarToggle)
-    console.log(sidebarToggle)
-  }
-
   const onSearch = (value: string) => console.log(value);
 
   const handleSearchExpand = () => setSearchWidthToggle(!searchWidthToggle);
@@ -88,6 +88,10 @@ const AppHeader:FC = () => {
   const closeNotificationDrawer = () => {
     setOpenNotificationDrawer(false)
   }
+
+  const navigaeToInbox = () => {
+    console.log('Inbox')
+  }
   
 
 
@@ -98,7 +102,7 @@ const AppHeader:FC = () => {
 
       <div className='ikd-logo'>
         <Link to="/">
-          <Logo />
+          {/* <Logo /> */}
         </Link>
       </div>
 
@@ -108,13 +112,13 @@ const AppHeader:FC = () => {
 
           {/* Collapseable */}
           <div className='ikd-header-collapsebale'>
-            <div className={`ikd-collapseable-button ${sidebarToggle? 'show': 'hide'}`} onClick={() => collapseSidebar()}>
+            <div className={`ikd-collapseable-button ${collapsed? 'show': 'hide'}`} onClick={() => sidebarToggler()}>
               <div className='ikd-collapseable-button-toggle'>
                 <div className='toggle-off'>
-                  <IconCollapsebleOff />
+                  {/* <IconCollapsebleOff /> */}
                 </div>
                 <div className='toggle-on'>
-                  <IconCollapsebleOn />
+                  {/* <IconCollapsebleOn /> */}
                 </div>
               </div>
             </div>
@@ -132,7 +136,7 @@ const AppHeader:FC = () => {
           <div className={`ikd-search-box ${searchWidthToggle? 'expand': 'collapsed'}`}>
             <Search 
               placeholder='Search anything...'
-              prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
+              // prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
               bordered={false}
               onSearch={onSearch}
             />
@@ -144,13 +148,13 @@ const AppHeader:FC = () => {
 
         <div className='ikd-header-right'>
           <div className='ikd-header-message-notif'>
-            <div className='message-notif-handler'>
+            <div className='message-notif-handler' onClick={() => navigaeToInbox()}>
               <MessageNotif />
             </div>
           </div>
           <div className='ikd-header-notification'>
             <div className='notification-handler' onClick={() => showNotificationDrawer()}>
-              <Notification />
+              {/* <Notification /> */}
             </div>
           </div>
           <div className='loggedin-user'>
@@ -176,7 +180,9 @@ const AppHeader:FC = () => {
                 </div>
               )}
             >
-              <Avatar size={48} src={avatar} />
+              <div className='loggedin-user-avatar'>
+                <Avatar size={48} src={avatar} />
+              </div>
             </Dropdown>
           </div>
         </div>
