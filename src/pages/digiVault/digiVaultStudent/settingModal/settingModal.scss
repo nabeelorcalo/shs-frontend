@@ -1,0 +1,49 @@
+.setting-modal {
+  .modal-header {
+    .modal-title {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      color: #14142a;
+    }
+
+    .modal-close {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0a3bd;
+      color: white;
+    }
+  }
+  .sub-title-modal {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #363565;
+  }
+
+  .modal-p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4e4b66;
+  }
+
+  .ant-switch {
+    height: 12px !important;
+    min-width: 40px;
+
+    .ant-switch-handle {
+      top: -4px;
+    }
+  }
+
+  .modal-reset-pass {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: #363565;
+    cursor: pointer;
+  }
+}
