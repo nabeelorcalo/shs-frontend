@@ -1,235 +1,106 @@
-// import { useState } from "react";
-// import { Outlet } from "react-router-dom";
-// import "./style.scss";
-
-// const Structure = () => {
-//   return (
-//     <p>Structure</p>
-//   )
-// }
-
+import "./style.scss";
 import React from "react";
+import { Tree, TreeNode } from "react-organizational-chart";
+import _ from "lodash";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import organization from "./org.json";
+import { DownOutlined, PoweroffOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button } from "antd";
 
-// import { Tree, TreeNode } from "react-organizational-chart";
-// import _ from "lodash";
-// import clsx from "clsx";
-// // import Card from "@material-ui/core/Card";
-// // import CardContent from "@material-ui/core/CardContent";
-// // import CardHeader from "@material-ui/core/CardHeader";
-// // import Typography from "@material-ui/core/Typography";
-// // import Box from "@material-ui/core/Box";
-// // import IconButton from "@material-ui/core/IconButton";
-// // import BusinessIcon from "@material-ui/icons/Business";
-// // import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
-// // import MoreVertIcon from "@material-ui/icons/MoreVert";
-// // import Avatar from "@material-ui/core/Avatar";
-// // import Menu from "@material-ui/core/Menu";
-// // import MenuItem from "@material-ui/core/MenuItem";
-// // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-// // import ListItemIcon from "@material-ui/core/ListItemIcon";
-// // import ListItemText from "@material-ui/core/ListItemText";
-// // import Badge from "@material-ui/core/Badge";
-// // import Tooltip from "@material-ui/core/Tooltip";
-// import { DndProvider } from "react-dnd";
-// // import { HTML5Backend } from "react-dnd-html5-backend";
-// import { useDrag, useDrop } from "react-dnd";
-// import organization from "./org.json";
-// import { Card } from "antd";
-// import { DownOutlined } from "@ant-design/icons";
+function Organization({ org, onCollapse, collapsed }: any) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleClick = (event: any) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-// // import {
-// //   createMuiTheme,
-// //   makeStyles,
-// //   ThemeProvider
-// // } from "@material-ui/core/styles";
+  return (
+    <div className="struture flex justify-center mt-3">
+      <div className="card shadow-sm relative rounded-lg">
+        <div className="borderLeft absolute"></div>
+        {/* <CardHeader
+          avatar={
+            <Avatar>
+              <BusinessIcon color="primary" />
+            </Avatar>
+          }
+          title={org.tradingName}
+        /> */}
+        <div className="content flex flex-col ">
+          <div> <Avatar className="avater " size={48} icon={<UserOutlined />} /></div>
+          <div> {org.tradingName}</div>
+       
+         
+        </div>
+        <h4>{org.title}</h4>
+        {/* <IconButton size="small" onClick={onCollapse}>
+          <ExpandMoreIcon />
+        </IconButton> */}
+       
+         
+          <DownOutlined onClick={onCollapse} size={12}/>
+          
+          
+      
+      </div>
+    </div>
+  );
+}
 
-// // const useStyles = makeStyles((theme) => ({
-// //   root: {
-// //     background: "white",
-// //     display: "inline-block",
-// //     borderRadius: 16
-// //   },
-// //   expand: {
-// //     transform: "rotate(0deg)",
-// //     marginTop: -10,
-// //     marginLeft: "auto",
-// //     transition: theme.transitions.create("transform", {
-// //       duration: theme.transitions.duration.short
-// //     })
-// //   },
-// //   expandOpen: {
-// //     transform: "rotate(180deg)"
-// //   },
-// //   avatar: {
-// //     backgroundColor: "#ECECF4"
-// //   }
-// // }));
+function Node({ o, parent }: any) {
+  const [collapsed, setCollapsed] = React.useState(o.collapsed);
+  const handleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
+  React.useEffect(() => {
+    o.collapsed = collapsed;
+  });
+  const T = parent
+    ? TreeNode
+    : (props: any) => (
+        <Tree
+          {...props}
+          lineWidth={"1px"}
+          lineColor={"#bbc"}
+          // lineBorderRadius={"12px"}
+          lineStyle={"dotted"}
+        >
+          {props.children}
+        </Tree>
+      );
+  return collapsed ? (
+    <T
+      label={
+        <Organization
+          org={o}
+          onCollapse={handleCollapse}
+          collapsed={collapsed}
+        />
+      }
+    />
+  ) : (
+    <T
+      label={
+        <Organization
+          org={o}
+          onCollapse={handleCollapse}
+          collapsed={collapsed}
+        />
+      }
+    >
+      {_.map(o.organizationChildRelationship, (c) => (
+        <Node o={c} parent={o} />
+      ))}
+    </T>
+  );
+}
 
-// function Organization({ org, onCollapse, collapsed }: any) {
-//   const [anchorEl, setAnchorEl] = React.useState(null);
-//   const handleClick = (event: any) => {
-//     setAnchorEl(event.currentTarget);
-//   };
-//   const handleClose = () => {
-//     setAnchorEl(null);
-//   };
-//   const [{ canDrop, isOver }, drop] = useDrop({
-//     accept: "account",
-//     drop: () => ({ name: org.tradingName }),
-//     collect: (monitor) => ({
-//       isOver: monitor.isOver(),
-//       canDrop: monitor.canDrop(),
-//     }),
-//   });
-//   const isActive = canDrop && isOver;
-//   let backgroundColor = "white";
-//   if (isActive) {
-//     backgroundColor = "#ddffd2";
-//   } else if (canDrop) {
-//     backgroundColor = "#ffeedc";
-//   }
-//   return (
-//     <Card
-//       // variant="outlined"
-//       ref={drop}
-//       style={{ backgroundColor }}
-//     >
-//       {/* <CardHeader
-//         avatar={
-//           <Tooltip
-//             title={`${_.size(
-//               org.organizationChildRelationship
-//             )} Sub Profile, ${_.size(org.account)} Sub Account`}
-//             arrow
-//           >
-//             <Badge
-//               style={{ cursor: "pointer" }}
-//               color="secondary"
-//               anchorOrigin={{
-//                 vertical: "bottom",
-//                 horizontal: "right"
-//               }}
-//               showZero
-//               invisible={!collapsed}
-//               overlap="circle"
-//               badgeContent={_.size(org.organizationChildRelationship)}
-//               onClick={onCollapse}
-//             >
-//               <Avatar className={classes.avatar}>
-//                 <BusinessIcon color="primary" />
-//               </Avatar>
-//             </Badge>
-//           </Tooltip>
-//         }
-//         title={org.tradingName}
-//         action={
-//           <IconButton size="small" onClick={handleClick}>
-//             <MoreVertIcon />
-//           </IconButton>
-//         }
-//       /> */}
-
-//       {/* <Menu open={Boolean(anchorEl)} anchorEl={anchorEl} onClose={handleClose}>
-//         <MenuItem onClick={handleClose}>
-//           <ListItemIcon>
-//             <BusinessIcon color="primary" />
-//           </ListItemIcon>
-//           <ListItemText primary="Add Sub Profile" />
-//         </MenuItem>
-//         <MenuItem onClick={handleClose}>
-//           <ListItemIcon>
-//             <AccountBalanceIcon color="secondary" />
-//           </ListItemIcon>
-//           <ListItemText primary="Add Sub Account" />
-//         </MenuItem>
-//       </Menu> */}
-//       <DownOutlined onClick={onCollapse} />
-//     </Card>
-//   );
-// }
-// function Account({ a }: any): any {
-//   const [{ isDragging }, drag] = useDrag({
-//     item: { name: a.name, type: "account" },
-//     end: (item, monitor) => {
-//       const dropResult = monitor.getDropResult();
-//       if (item && dropResult) {
-//         alert(`You moved ${item.name} to ${dropResult.name}`);
-//       }
-//     },
-//     collect: (monitor) => ({
-//       isDragging: monitor.isDragging(),
-//     }),
-//   });
-//   const opacity = isDragging ? 0.4 : 1;
-//   return (
-//     <Card ref={drag} style={{ cursor: "pointer", opacity }}>
-//       <DownOutlined color="secondary" />
-
-//       <p>title={a.name}</p>
-//     </Card>
-//   );
-// }
-// function Product({ p }: any) {
-//   return (
-//     <Card>
-//       <p>{p.name}</p>
-//     </Card>
-//   );
-// }
-// function Node({ o, parent }: any) {
-//   const [collapsed, setCollapsed] = React.useState(o.collapsed);
-//   const handleCollapse = () => {
-//     setCollapsed(!collapsed);
-//   };
-//   React.useEffect(() => {
-//     o.collapsed = collapsed;
-//   });
-//   const T = parent
-//     ? TreeNode
-//     : (props: any) => (
-//         <Tree
-//           {...props}
-//           lineWidth={"2px"}
-//           lineColor={"#bbc"}
-//           lineBorderRadius={"12px"}
-//         >
-//           {props.children}
-//         </Tree>
-//       );
-//   return collapsed ? (
-//     <T
-//       label={
-//         <Organization
-//           org={o}
-//           onCollapse={handleCollapse}
-//           collapsed={collapsed}
-//         />
-//       }
-//     />
-//   ) : (
-//     <T
-//       label={
-//         <Organization
-//           org={o}
-//           onCollapse={handleCollapse}
-//           collapsed={collapsed}
-//         />
-//       }
-//     >
-//       {_.map(o.account, (a) => (
-//         <TreeNode label={<Account a={a} />}></TreeNode>
-//       ))}
-//       {_.map(o.organizationChildRelationship, (c) => (
-//         <Node o={c} parent={o} />
-//       ))}
-//     </T>
-//   );
-// }
-
-// export default function Structure() {
-//   return (
-//     <div>
-//       <Node o={organization} />
-//     </div>
-//   );
-// }
+export default function Structure(props: any) {
+  return (
+    <div >
+      <DndProvider backend={HTML5Backend}>
+        <Node o={organization} />
+      </DndProvider>
+    </div>
+  );
+}
