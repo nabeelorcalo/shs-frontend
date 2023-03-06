@@ -2,21 +2,24 @@ import { Divider } from "antd";
 import BoxWrapper from "../BoxWrapper/boxWrapper";
 import './style.scss';
 interface LeaveCardProps {
-    icon?: any
+    Icon?: any
     title?: string
     total?: string
     pending?: string
     approved?: string
     declined?: string
+    bg?: string
 }
 export const LeaveCard = (props: LeaveCardProps) => {
-    const { title, total, pending, approved, declined, icon } = props
+    const { title, total, pending, approved, declined, Icon,bg } = props
+    console.log(Icon);
+    
     return (
         <BoxWrapper className="leave-card-wrapper">
             <div className="upper_part flex items-center justify-between">
                 <div className="upper_part_1 flex items-center">
-                    <div className="imgBg rounded-lg flex items-center justify-center w-[60px] h-[60px]">
-                        <img src={icon} alt='icon' />
+                    <div className="imgBg rounded-lg flex items-center justify-center w-[60px] h-[60px]" style={{background: `${bg}`}}>
+                        <Icon/>
                     </div>
                     <h4 className=" ml-2 my-0 font-semibold  text-[20px]">{title}</h4>
                 </div>

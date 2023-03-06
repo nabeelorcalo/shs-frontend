@@ -1,0 +1,74 @@
+.calander_main_wrapper {
+    .fc-media-screen {
+        .fc-header-toolbar {
+            border-bottom: 1px solid #D9DBE9;
+            padding-bottom: 10px;
+
+            .fc-toolbar-chunk {
+                display: flex;
+                align-items: center;
+
+                .fc-prev-button,
+                .fc-next-button {
+                    background-color: transparent;
+                    border: none;
+                    padding: 0;
+
+                    .fc-icon-chevron-left,
+                    .fc-icon-chevron-right {
+                        color: #4E4B66;
+                    }
+                }
+            }
+        }
+    }
+
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+        border: none;
+    }
+
+    .fc-theme-standard .fc-scrollgrid {
+        border: none;
+    }
+
+    .fc-col-header-cell-cushion {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+        color: #6E7191;
+    }
+
+    .fc-col-header-cell.fc-day.fc-day-sun {
+        text-align: left;
+    }
+
+    .fc-scrollgrid-sync-table {
+        tr {
+            td {
+                .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
+                    background-color: rgba(230, 244, 249, 0.25);
+                }
+            }
+        }
+    }
+
+
+
+    // events 
+    .events-wrapper {
+        padding: 0 40px;
+        border-radius: 6px;
+    }
+
+    .fc .fc-daygrid-day.fc-day-today {
+        background: none !important;
+    }
+
+    .fc-h-event {
+        background: none !important;
+        border: none !important;
+        color: none !important;
+    }
+
+}

@@ -1,6 +1,8 @@
 import { Col, Divider, Row, Typography } from 'antd'
+import { Heart, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard } from '../../../components'
-import BoxWrapper from '../../../components/BoxWrapper/boxWrapper'
+import BoxWrapper from '../../../components/BoxWrapper/boxWrapper';
+import Calendar from "./calendar/calendar"
 import "./style.scss"
 const leaveCardData: any = [
   {
@@ -28,7 +30,7 @@ const leaveCardData: any = [
     leavType: "Medical",
     leaveLength: 19,
     pending: 12,
-    approvedLeaves: 11,
+    approved: 11,
     declined: 5,
   },
 ]
@@ -44,23 +46,30 @@ const upcomingHolidayData: any = [
   { id: "9", day: "Monday", date: "9 january", holidayType: "New Year's Day" },
   { id: "10", day: "Monday", date: "10 january", holidayType: "New Year's Day" },
 ]
+const CardIcon =[
+  {Icon:Heart,bg:"rgba(76, 164, 253, 0.1)"},
+  {Icon:LeavesIcon,bg:"rgba(255, 193, 93, 0.1)"},
+  {Icon:WorkFromHom,bg:"rgba(233, 111, 124, 0.1)"},
+  {Icon: MedicalHeart,bg:"rgba(106, 173, 142, 0.1)"}
+]
 const index = () => {
   return (
     <div className='intrne_main'>
-      <Row gutter={20} >
-        {leaveCardData.map((data: any) => (
-          <Col className="gutter-row" span={6}>
-            <LeaveCard icon="" title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
+      <Row gutter={[20,20]} >
+        {leaveCardData.map((data: any,index:number) => (
+          <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6} >
+            <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
           </Col>
         ))}
       </Row>
-      <Row className='mt-[30px] second_row h-full' gutter={20}>
-        <Col span={17}>
-          <BoxWrapper>
-            <h1>uwgeyrgfweu</h1>
+      <Row className='mt-[30px] second_row h-full' gutter={[20,20]}>
+        <Col  xs={24} md={12} xl={17}>
+          <BoxWrapper className='h-full'>
+            {/* <h1>Calendar will goes here</h1> */}
+            <Calendar />
           </BoxWrapper>
         </Col>
-        <Col span={7}>
+        <Col xs={24} md={12} xl={7} >
           <BoxWrapper className="left_upcoming_holiudays">
             <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Upcoming Holidays</h4>
             <ul className='upcoming_holidayList p-0 m-0  list-none h-[470px] overflow-y-auto'>
