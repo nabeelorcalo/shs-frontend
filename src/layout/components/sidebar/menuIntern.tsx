@@ -15,6 +15,8 @@ import {
   IconWalletCheck,
 } from '../../../assets/images'
 
+import { ROUTES_CONSTANTS } from '../../../config/constants';
+
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -39,7 +41,7 @@ export const itemsIntern: MenuProps['items'] = [
 
   // ORGANIZATION GROUP
   getItem('Organisation', 'organisation', null, [
-    getItem('Attendance', '/attendance', <IconCalendarTick />),
+    getItem('Attendance', `/${ROUTES_CONSTANTS.ATTENDANCE}`, <IconCalendarTick />),
     getItem('Leaves', '/leaves', <IconCalendarRemove />),
     getItem('Timesheet', '/timesheet', <IconTimer />),
     getItem('Performance', '/performance', <IconChart />),

@@ -12,7 +12,8 @@ import {
   IconHouse,
   IconRecipes,
   IconGift,
-} from '../../../assets/images'
+} from '../../../assets/images';
+import {ROUTES_CONSTANTS} from '../../../config/constants';
 
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
@@ -38,7 +39,7 @@ export const itemsStudents: MenuProps['items'] = [
 
   // JOB GROUP
   getItem('Jobs', 'jobs', null, [
-    getItem('Search Jobs', '/search-jobs', <IconBriefcase />),
+    getItem('Search Jobs', `/${ROUTES_CONSTANTS.SEARCH_JOBS}`, <IconBriefcase />),
     getItem('Applications', '/applications', <IconDocumentText />),
     getItem('Offer Letters', '/offer-letters', <IconClipboardTick />),
     getItem('Contracts', '/contracts', <IconTaskSquare />),
