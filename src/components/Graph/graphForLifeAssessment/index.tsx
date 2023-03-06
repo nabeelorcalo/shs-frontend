@@ -36,17 +36,17 @@ const Graph = () => {
       {assessmentsName.map((item, index) => (
         <>
           <Row className='flex flex-row items-center' >
-            <Col className="gutter-row" span={2}>
+            <Col xs={6} sm={6} md={2} lg={2} xl={2}>
               <div className=''>
                 <p>{item}</p>
               </div>
             </Col>
-            <Col className="gutter-row" span={1}>
+            <Col xs={2} sm={2} md={1} lg={1} xl={1}>
               <div className=''>
                 {renderIcon(item)}
               </div>
             </Col>
-            <Col className="gutter-row" span={8}>
+            <Col xs={4} sm={4} md={8} lg={8} xl={8}>
               <Slider
                 disabled
                 min={1}
