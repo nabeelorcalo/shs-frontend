@@ -18,6 +18,13 @@ export { default as Notification } from './header/Notification.svg';
 export { default as IconGlobe } from './header/global.svg';
 export { default as IconLogout } from './header/Logout.svg';
 export { default as IconProfile } from './header/Profile.svg';
+// export { default as AppLogo } from './AppLogo.svg';
+
+// sickLeave-card icon 
+export { default as SickIcon } from './sick.png';
+export { default as CasualIcon } from './sick.png';
+export { default as WFHIcon } from './sick.png';
+export { default as MedicalIcon } from './sick.png';
 
 // Sidebar Icons
 export { default as IconDashboard } from './sidebar/icon-dashboard.svg';
@@ -62,3 +69,16 @@ export { default as IconTwitter  } from './footer/icon-social-twitter.svg';
 export { default as IconInstagram  } from './footer/icon-social-instagram.svg';
 export { default as IconLinkedin  } from './footer/icon-social-linkedin.svg';
 export { default as IconYoutube  } from './footer/icon-social-youtube.svg';
+
+// Leaves Icons
+export { default as DocumentUpload  } from './leaves/document-upload.svg';
+
+// Rating Emojis
+export { default as Emoji1st  } from './RatingEmojis/Emoji1st.svg';
+export { default as Emoji2nd  } from './RatingEmojis/Emoji2nd.svg';
+export { default as Emoji3rd  } from './RatingEmojis/Emoji3rd.svg';
+export { default as Emoji4th  } from './RatingEmojis/Emoji4th.svg';
+export { default as EmojiGray1st  } from './RatingEmojis/EmojiGray1st.svg';
+export { default as EmojiGray2nd  } from './RatingEmojis/EmojiGray2nd.svg';
+export { default as EmojiGray3rd  } from './RatingEmojis/EmojiGray3rd.svg';
+export { default as EmojiGray4th  } from './RatingEmojis/EmojiGray4th.svg';
