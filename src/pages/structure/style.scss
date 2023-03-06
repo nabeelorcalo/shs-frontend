@@ -1,34 +1,30 @@
- 
- .struture {
+@import "../../scss/colors.scss";
+.struture {
   .card {
-    border: 1px solid #4CA4FD;
-    // color: $white-color;
-    // max-width: 200px;
     height: 100px;
     text-align: center;
     .borderLeft {
-      border: 1px solid #E96F7C;
+      border: 1px solid #e96f7c;
       left: 20%;
       width: 115px;
       z-index: 0;
     }
-    .avater-content{
-        bottom:70px;
-        left:35%
-       
+    .avater-content {
+      bottom: 70px;
+      left: 35%;
     }
-    .content{
-        .avater{
-            z-index: 2000;
-            
-           
-        }
+    .content {
+      .avater {
+        z-index: 2000;
+      }
     }
-    .card-footer{
-        bottom: -10px;
-        left:35%;
-        border: 1px solid #E96F7C;
-
+    .card-footer {
+      bottom: -10px;
+      left: 35%;
+      border: 1px solid $text-error-line-color;
+      span{
+        color: $text-success-placeholder-color;
+      }
     }
   }
 }

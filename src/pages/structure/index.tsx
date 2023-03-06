@@ -1,41 +1,50 @@
 import "./style.scss";
-import React from "react";
+import React, { useState } from "react";
 import { Tree, TreeNode } from "react-organizational-chart";
 import _ from "lodash";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import organization from "./org.json";
-import avaterImg from "../../assets/images/structure/avatar-img.svg";
 import {
-  DownOutlined,
-  PoweroffOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+  Icondownward,
+  IconStructureAdmin,
+  IconProfile2person,
+} from "../../assets/images";
 import { Avatar, Button } from "antd";
+import { boolean } from "yargs";
 
 function Organization({ org, onCollapse, collapsed }: any) {
+  const [hideFooterButton, setHideFooterButton] = useState<any>(`${_.size(org.organizationChildRelationshi)}` == "1")
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
-    console.log("event", event);
+   
   };
+  console.log("event", hideFooterButton);
 
   return (
-    <div className="struture flex justify-center mt-3">
-      <div className="card shadow-sm relative rounded-lg lg:w-[200px]">
+    <div className="struture  flex justify-center mt-3">
+      <div className="card white-bg-color shadow-sm relative rounded-lg lg:w-[200px]">
         <div className="borderLeft absolute"></div>
         <div className="avater-content absolute">
           {" "}
-          <Avatar className="" size={48} src={avaterImg} />
+          <Avatar className="" size={48} icon={<IconStructureAdmin />} />
         </div>
-        <div className="content pt-3">
-          <div className="pt-5"> {org.tradingName}</div>
-          <span className="my-5">{org.title}</span>
-          <div className="w-[50px]  absolute card-footer rounded-full" ><DownOutlined onClick={onCollapse} size={12} /></div>
+        <div className="content pt-3 ">
+          <div className="pt-5 font-semibold text-base"> {org.tradingName}</div>
+          <span className="my-5 text-sm font-normal">{org.title}</span>
+         {hideFooterButton && <div className="w-[81px] h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
+            <span className="pt-1 ">
+              <IconProfile2person />
+            </span>
+            <span className="font-medium text-sm mx-2 mt-0.5">{`${_.size(
+              org.organizationChildRelationship
+            )}`}</span>
+            <span onClick={onCollapse} className="cursor-pointer ">
+              <Icondownward />
+            </span>
+          </div>}
         </div>
-        
-
-       
       </div>
     </div>
   );
