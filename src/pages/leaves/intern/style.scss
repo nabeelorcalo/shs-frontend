@@ -1,19 +1,35 @@
 .intrne_main {
     .left_upcoming_holiudays {
-        .second_row{
-            .h4 {
-                font-weight: 500;
-                font-size: 20px;
-                line-height: 28px;
-                color:red;
+        .upcomming_Holiday {
+            color: #4E4B66;
+        }
+        .upcoming_holidayList {
+            // height: 395px;
+            // overflow-y: auto;
+            &::-webkit-scrollbar{
+                width: 0;
             }
-            .upcoming_holidayList{
-                padding: 0;
-                margin: 0;
-                list-style-type: none;
+            .List_item_wrapper {
+                .List_item_main {
+                    .left_side {
+                        .light_text {
+                            color: #A0A3BD;
+                        }
+
+                        .date_text {
+                            color: #14142A;
+                        }
+                    }
+
+                    .holiday_typeText {
+                        color: #14142A;
+
+                    }
+
+                }
             }
 
         }
-       
     }
+
 }

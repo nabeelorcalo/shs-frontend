@@ -18,7 +18,7 @@ export const LeaveCard = (props: LeaveCardProps) => {
                     <div className="imgBg rounded-lg flex items-center justify-center w-[60px] h-[60px]">
                         <img src={icon} alt='icon' />
                     </div>
-                    <h4 className="my-0 font-semibold  text-[20px]">{title}</h4>
+                    <h4 className=" ml-2 my-0 font-semibold  text-[20px]">{title}</h4>
                 </div>
                 <h2 className="my-0 font-medium  text-[30px]">{total}</h2>
             </div>
