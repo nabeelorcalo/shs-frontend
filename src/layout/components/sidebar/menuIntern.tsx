@@ -41,7 +41,7 @@ export const itemsIntern: MenuProps['items'] = [
   getItem('Organisation', 'organisation', null, [
     getItem('Attendance', '/attendance', <IconCalendarTick />),
     getItem('Leaves', '/leaves', <IconCalendarRemove />),
-    getItem('Timesheet', '/timesheet', <IconTimer />),
+    // getItem('Timesheet', '/timesheet', <IconTimer />),
     getItem('Performance', '/performance', <IconChart />),
     getItem('Structure', '/structure', <IconData />),
   ], 'group'),
