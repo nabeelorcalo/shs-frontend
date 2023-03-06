@@ -1,4 +1,4 @@
-import { Col, Modal, Row, Switch } from "antd";
+import { Col, Modal, Row, Slider, Switch } from "antd";
 import "./settingModal.scss";
 
 const SettingModal = (props: any) => {
@@ -11,7 +11,7 @@ const SettingModal = (props: any) => {
       footer={null}
       closable={false}
     >
-      <div className="modal-header flex justify-between pb-4">
+      <div className="modal-header flex justify-between pb-8">
         <div className="modal-title">Settings</div>
         <div
           onClick={() => setModal2Open(false)}
@@ -20,7 +20,7 @@ const SettingModal = (props: any) => {
           x
         </div>
       </div>
-      <div className="sub-title-modal">Security</div>
+      <div className="sub-title-modal mb-8">Security</div>
       <Row className="flex justify-between items-center">
         <Col>
           <div className="modal-p">
@@ -37,14 +37,38 @@ const SettingModal = (props: any) => {
             </span>
           </div>
         </Col>
-        <Col className="flex items-center justify-between">
+        <Col className="flex items-center justify-between ">
           <p style={{ color: "#6E7191" }} className="pr-2">
             On
           </p>
           <Switch />
         </Col>
       </Row>
-      <div className="modal-body"></div>
+      <div className="modal-body mt-8">
+        <div className="flex justify-between">
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+          <p>|</p>
+        </div>
+        <Slider tooltip={{ formatter: null }} />
+        <div className="flex justify-between mb-8 mt-6">
+          <p>1 min</p>
+          <p>5 min</p>
+          <p>30 min</p>
+          <p>1hr</p>
+          <p>1 day</p>
+        </div>
+      </div>
       <div className="modal-reset-pass">Reset Password</div>
     </Modal>
   );

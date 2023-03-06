@@ -38,6 +38,34 @@
     }
   }
 
+  .modal-body {
+    .ant-slider-horizontal .ant-slider-track {
+      width: 220px;
+      height: 10px;
+      background: #363565;
+      border-radius: 8px;
+    }
+    .ant-slider-horizontal .ant-slider-rail {
+      width: 468px !important;
+      height: 10px !important;
+      background: #e6f4f9 !important;
+      border-radius: 8px;
+    }
+    .ant-slider .ant-slider-handle {
+      width: 22px;
+      height: 22px;
+      color: #363565;
+    }
+    .ant-slider-handle::after {
+      color: #363565;
+      width: 22px;
+      height: 22px;
+      top: -4px;
+      background-color: #363565;
+      box-shadow: none;
+    }
+  }
+
   .modal-reset-pass {
     font-weight: 500;
     font-size: 16px;

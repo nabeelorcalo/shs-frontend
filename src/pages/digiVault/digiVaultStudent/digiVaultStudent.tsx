@@ -1,12 +1,56 @@
 import { DownCircleOutlined, SettingFilled } from "@ant-design/icons";
 import { Button, Col, Divider, Row, Space, Switch } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppTabs from "../../../components/Tabs";
 import "./digiVaultStudent.scss";
 import SettingModal from "./settingModal/settingModal";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
+import icon from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
+
+const arraydata = [
+  {
+    icon: icon,
+    progressbarColor: "red",
+    progressbarValue: 20,
+    storage: "128GB",
+    title: "Media",
+  },
+  {
+    icon: icon,
+    progressbarColor: "yellow",
+    progressbarValue: 50,
+    storage: "128GB",
+    title: "Media",
+  },
+  {
+    icon: icon,
+    progressbarColor: "red",
+    progressbarValue: 20,
+    storage: "128GB",
+    title: "Media",
+  },
+  {
+    icon: icon,
+    progressbarColor: "red",
+    progressbarValue: 80,
+    storage: "128GB",
+    title: "Media",
+  },
+  {
+    icon: icon,
+    progressbarColor: "red",
+    progressbarValue: 20,
+    storage: "128GB",
+    title: "Media",
+  },
+];
 
 const DigiVaultStudent = () => {
   const [modal2Open, setModal2Open] = useState(false);
+  const [percentage, setPercentage] = useState(68);
+
   return (
     <div className="digivault">
       <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
@@ -35,7 +79,7 @@ const DigiVaultStudent = () => {
       <Divider />
 
       <Row gutter={20} className="">
-        <Col xxl={16} xl={16} lg={16} md={16} sm={16} xs={24}>
+        <Col xxl={18} xl={18} lg={18} md={18} sm={18} xs={24}>
           <div className="manage-vault">
             <div
               style={{ color: "#363565" }}
@@ -50,8 +94,27 @@ const DigiVaultStudent = () => {
             </Row>
           </div>
         </Col>
-        <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-          <div className="storage"></div>
+        <Col xxl={6} xl={6} lg={6} md={6} sm={6} xs={24}>
+          <div className="storage">
+            <Row>
+              <Col lg={8}>
+                <div style={{ width: "100%" }}>
+                  <CircularProgressbar
+                    value={percentage}
+                    text={`${percentage}%`}
+                  />
+                </div>
+              </Col>
+              <Col className="flex flex-col justify-center  ml-4" lg={12}>
+                <div className="available-storage  pb-4">Available Storage</div>
+                <div className="available-storage-value">130GB / 512GB</div>
+              </Col>
+            </Row>
+
+            <div className="pt-8">
+              <ColorfullIconsWithProgressbar arraydata={arraydata} />
+            </div>
+          </div>
         </Col>
       </Row>
 
