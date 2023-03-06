@@ -5,16 +5,6 @@ import { ComponentStory, ComponentMeta } from '@storybook/react'
 export default {
     title: 'Components/SearchBar',
     component: SearchBar,
-    docs: {
-        source: {
-            type: 'code'
-        }
-    },
-    argTypes: {
-        color: {
-            control: { type: 'color' },
-        }
-    }
 } as ComponentMeta<typeof SearchBar>
 
 const Template: ComponentStory<typeof SearchBar> = (args) => <SearchBar {...args} />
