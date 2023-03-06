@@ -8,7 +8,7 @@ import "./style.scss";
 const Profile = () => {
   return (
     <div className="main-student-profile">
-      <Row>
+      <Row gutter={10}>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="title-bar">
             <Typography className="main-profile-title">My Profile</Typography>
