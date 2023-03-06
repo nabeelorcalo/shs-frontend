@@ -1,13 +1,14 @@
-import React, { FC, useEffect } from 'react'
+import React from 'react'
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { getRoutes } from "./routes";
 import "./App.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
 import AppLayout from './layout'
-import Table from './components/Noman/Table';
+
 
 function App() {
+
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -54,7 +55,8 @@ function App() {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       {pages}
     </ErrorBoundary>
+
   )
 }
 
-export default App
+export default App;

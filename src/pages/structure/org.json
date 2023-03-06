@@ -1,0 +1,72 @@
+{
+    "tradingName": "Jane Cooper",
+    "title":"Admin",
+    "organizationChildRelationship": [
+      {
+        "tradingName": "Warszawa",
+        "organizationChildRelationship": [
+          {
+            "tradingName": "Piętro 1"
+          },
+          {
+            "tradingName": "Piętro 2"
+            
+          }
+         
+        ]
+      },
+      {
+        "tradingName": "Rzeszów",
+        "organizationChildRelationship": [
+          {
+            "tradingName": "Piętro 1"
+          },
+          {
+            "tradingName": "Piętro 2"
+            
+          }
+         
+        ]
+      },
+      {
+        "tradingName": "Rzeszów",
+        "organizationChildRelationship": [
+          {
+            "tradingName": "Piętro 1"
+          },
+          {
+            "tradingName": "Piętro 2"
+            
+          }
+         
+        ]
+      },
+      {
+        "tradingName": "Rzeszów",
+        "organizationChildRelationship": [
+          {
+            "tradingName": "Piętro 1"
+          },
+          {
+            "tradingName": "Piętro 2"
+            
+          }
+         
+        ]
+      },
+      {
+        "tradingName": "Rzeszów",
+        "organizationChildRelationship": [
+          {
+            "tradingName": "Piętro 1"
+          },
+          {
+            "tradingName": "Piętro 2"
+            
+          }
+         
+        ]
+      }
+    ]
+  }
+  
