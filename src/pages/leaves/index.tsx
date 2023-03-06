@@ -9,10 +9,10 @@ import Student from "./student/index"
 const Leaves = () => {
   return (
     <>
-      <CompanyAdmin />
+      {/* <CompanyAdmin /> */}
       <Internee />
-      <Manger/>
-      <Student/>
+      {/* <Manger/>
+      <Student/> */}
     </>
 
   )
