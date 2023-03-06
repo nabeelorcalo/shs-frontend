@@ -97,7 +97,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
     setOpenNotificationDrawer(false)
   }
 
-  const navigaeToInbox = () => {
+  const navigateToInbox = () => {
     console.log('Inbox')
   }
   
@@ -167,7 +167,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
 
         <div className='ikd-header-right'>
           <div className='ikd-header-message-notif'>
-            <div className='message-notif-handler' onClick={() => navigaeToInbox()}>
+            <div className='message-notif-handler' onClick={() => navigateToInbox()}>
               <MessageNotif />
             </div>
           </div>

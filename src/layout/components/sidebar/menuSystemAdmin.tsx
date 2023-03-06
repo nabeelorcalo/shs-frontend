@@ -1,18 +1,8 @@
 import React from 'react'
 import {
   IconDashboard,
-  IconCalendarTick,
-  IconCalendarRemove,
-  IconTimer,
-  IconChart,
-  IconData,
-  IconEdit,
   IconProfileUsers,
-  IconDocument,
   IconPeoples,
-  IconClipboardTick,
-  IconTaskSquare,
-  IconProfileCircle,
   IconCourtHouse,
   IconTeacher,
   IconBriefcase,
@@ -20,10 +10,10 @@ import {
   IconHeadset,
   IconActivity
 } from '../../../assets/images'
-
+import { ROUTES_CONSTANTS } from '../../../config/constants'
+const { DASHBOARD, STUDENT, UNIVERSITIES, COMPANIES, ADMIN, DELEGATE_AGENT, PROPERTY_AGENT, HELP_DESK, ACTIVITY_LOG } = ROUTES_CONSTANTS;
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
-
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -41,26 +31,26 @@ function getItem(
 }
 
 export const itemsSystemAdmin: MenuProps['items'] = [
-  getItem('Dashboard', '/dashboard', <IconDashboard />),
+  getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
 
   // USER MANAGEMENT GROUP
   getItem('User Management', 'user-management', null, [
-    getItem('Students', '/students', <IconTeacher />),
-    getItem('Universities', '/universities', <IconCourtHouse />),
-    getItem('Companies', '/companies', <IconBriefcase />),
-    getItem('Admin', '/Admin', <IconProfileUsers />),
+    getItem('Students', `/${STUDENT}`, <IconTeacher />),
+    getItem('Universities', `/${UNIVERSITIES}`, <IconCourtHouse />),
+    getItem('Companies', `/${COMPANIES}`, <IconBriefcase />),
+    getItem('Admin', `/${ADMIN}`, <IconProfileUsers />),
   ], 'group'),
 
   // AGENT MANAGEMENT
   getItem('Agent Management', 'agent-management', null, [
-    getItem('Delegate Agent  ', '/delegate-agent  ', <IconDelegateAgent />),
-    getItem('Property Agent', '/property-agent', <IconPeoples />),
+    getItem('Delegate Agent  ', `/${DELEGATE_AGENT}`, <IconDelegateAgent />),
+    getItem('Property Agent', `/${PROPERTY_AGENT}`, <IconPeoples />),
   ], 'group'),
 
   // SUPPORT GROUP
   getItem('Support', 'support', null, [
-    getItem('Help Desk', '/help-desk', <IconHeadset />),
-    getItem('Activity Log', '/activity-log', <IconActivity />),
+    getItem('Help Desk', `/${HELP_DESK}`, <IconHeadset />),
+    getItem('Activity Log', `/${ACTIVITY_LOG}`, <IconActivity />),
     
   ], 'group'),
 ]

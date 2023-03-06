@@ -51,28 +51,28 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
   };
 
   const menuSwitcher = (role:string) => {
-    if(role === "student") {
+    if(role === "Student") {
       return itemsStudents
     }
-    if(role === "intern") {
+    if(role === "Intern") {
       return itemsIntern
     }
-    if(role === "manager") {
+    if(role === "Manager") {
       return itemsManager
     }
-    if(role === 'companyAdmin') {
+    if(role === 'Company Admin') {
       return itemsCompanyAdmin
     }
-    if(role === 'university') {
+    if(role === 'University Rep') {
       return itemsUniversity
     }
-    if(role === 'systemAdmin') {
+    if(role === 'System Admin') {
       return itemsSystemAdmin
     }
-    if(role === 'delegateAgent') {
+    if(role === 'Delegate Agent') {
       return itemsDelegateAgent
     }
-    if(role === 'propertyAgent') {
+    if(role === 'Agent') {
       return itemsPropertyAgent
     }
   }
@@ -103,7 +103,7 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
       </div>
 
       <Menu
-        items={menuSwitcher('intern')}
+        items={menuSwitcher('Delegate Agent')}
         onClick={handleMenuClick}
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
