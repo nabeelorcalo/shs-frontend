@@ -11,10 +11,11 @@ import {
   IconProfile2person,
 } from "../../assets/images";
 import { Avatar, Button } from "antd";
-import { boolean } from "yargs";
+
+
 
 function Organization({ org, onCollapse, collapsed }: any) {
-  const [hideFooterButton, setHideFooterButton] = useState<any>(`${_.size(org.organizationChildRelationshi)}` == "1")
+  const [hideFooterButton, setHideFooterButton] = useState<any>(`${_.size(org.organizationChildRelationship)}` > "0")
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -23,11 +24,11 @@ function Organization({ org, onCollapse, collapsed }: any) {
   console.log("event", hideFooterButton);
 
   return (
-    <div className="struture  flex justify-center mt-3">
+    <div className="struture-card flex justify-center mt-3 h-[100px]">
       <div className="card white-bg-color shadow-sm relative rounded-lg lg:w-[200px]">
-        <div className="borderLeft absolute"></div>
-        <div className="avater-content absolute">
-          {" "}
+        <div className="borderLeft absolute "style={{  border:`1px solid ${org.color}`}}></div>
+        <div className="avater-content absolute " >
+         
           <Avatar className="" size={48} icon={<IconStructureAdmin />} />
         </div>
         <div className="content pt-3 ">
@@ -100,7 +101,7 @@ function Node({ o, parent }: any) {
 
 export default function Structure(props: any) {
   return (
-    <div>
+    <div className="structure w-[100%] h-[100vh] ">
       <DndProvider backend={HTML5Backend}>
         <Node o={organization} />
       </DndProvider>
