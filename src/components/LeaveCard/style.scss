@@ -1,0 +1,81 @@
+.leave-card-wrapper {
+    margin-right: 10px;
+    .upper-part {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .upper-part-1 {
+            display: flex;
+            align-items: center;
+
+            .imgBg {
+                background: rgba($color: #4CA4FD, $alpha: 0.1);
+                border-radius: 8px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 60px;
+                height: 60px;
+            }
+
+            h4 {
+                color: #14142A;
+                font-size: 20px;
+                font-weight: 600;
+                line-height: 28px;
+                margin-left: 20px;
+            }
+
+            h2 {
+                color: #4E4B66;
+                font-size: 30px;
+                font-weight: 500;
+                line-height: 40px;
+            }
+        }
+    }
+
+    .lower-part {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        padding-inline: 15px;
+        flex-wrap: wrap;
+
+        .remainingLeave {
+            position: relative;
+
+            &::before {
+                position: absolute;
+                content: "";
+                left: -33px;
+                transform: rotate(90deg);
+                top: 27px;
+                width: 33px;
+                height: 2px;
+                background-color: #D9DBE9;
+            }
+
+            &::after {
+                position: absolute;
+                content: "";
+                right: -31px;
+                transform: rotate(90deg);
+                top: 26px;
+                width: 33px;
+                height: 2px;
+                background-color: #D9DBE9;
+            }
+
+        }
+
+        h6 {
+            color: #14142A;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 24px;
+            margin: 0;
+        }
+    }
+}

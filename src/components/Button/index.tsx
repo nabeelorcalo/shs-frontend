@@ -1,6 +1,6 @@
 import { Button as AntButton } from 'antd'
 
-interface ButtonProps {
+ interface ButtonProps {
   label: string
   type: 'primary' | 'dashed' | 'text' | 'default'
   block?: boolean,
