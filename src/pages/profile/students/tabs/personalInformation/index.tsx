@@ -1,27 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Divider,
   Form,
   Input,
   Radio,
   Row,
+  Select,
   Typography,
 } from "antd";
 import "../Tabs.scss";
 
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
+import { CommonDatePicker, DropDown } from "../../../../../components";
+import { CalendarIcon } from "../../../../../assets/images";
+import { Option } from "antd/es/mentions";
 
 const PersonalInformation = () => {
+  const [value, setValue] = useState('');
+  const [isdate1, setIsDate1] = useState(false);
+
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select style={{ width: 70 }}>
+        <Option value="86">+86</Option>
+        <Option value="87">+87</Option>
+      </Select>
+    </Form.Item>
+  );
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
 
   const [isDependents, setIsDependents] = React.useState(2);
   const [dependents, setDependents] = React.useState<any>([]);
+  const [searchValue, setSearchValue] = useState('');
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -42,10 +58,21 @@ const PersonalInformation = () => {
         <Row gutter={20}>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="First Name"
+              name="firstName"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your First Name!" },
+              ]}
+            >
+              <Input placeholder="Enter First Name" />
+            </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Form.Item
+              label="Last Name"
+              name="lastName"
+              rules={[
+                { required: true, message: "Please input your Last Name!" },
               ]}
             >
               <Input />
@@ -53,109 +80,118 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Gender"
+              name="gender"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your gender!" },
+              ]}
+            >
+              <DropDown
+                 name='simple drop down'
+                 value={value}
+                 options={['item 1', 'item 2', 'item 3']}
+                setValue={setValue}
+              />
+            </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Form.Item
+              label="Place Of Birth"
+              name="pob"
+              rules={[
+                { required: true, message: "Please input your POB!" },
               ]}
             >
               <Input />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
+          <Form.Item
+              label="Nationality"
+              name="nationality"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Nationality!" },
+              ]}
+            >
+              <DropDown
+                 name='simple drop down'
+                 value={value}
+                 options={['item 1', 'item 2', 'item 3']}
+                setValue={setValue}
+              />
+            </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Form.Item
+              label="Date of Birth"
+              name="dob"
+              rules={[
+                { required: true, message: "Please input your dob!" },
+              ]}
+            >
+              <CommonDatePicker
+                 requireAsButton
+                 btnIcon={CalendarIcon}
+                 btnClassName={'h-[48px]'}
+                 placement="bottomLeft"
+                 open={isdate1}
+                 setOpen={setIsDate1}
+                 setValue={setValue}/>
+            </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Form.Item
+              label="Personal Email"
+              name="email"
+              rules={[
+                { required: true, message: "Please input your Email!" },
               ]}
             >
               <Input />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Form.Item
+        name="phone"
+        label="Phone Number"
+        rules={[{ required: true, message: 'Please input your phone number!' }]}
+      >
+        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+      </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="National Ensurance Number"
+              name="nen"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your National Ensurace Number!" },
               ]}
             >
-              <Input />
+              <Input placeholder="Enter Here" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Visa Status"
+              name="visastatus"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Visa Status!" },
               ]}
             >
-              <Input />
+             <DropDown
+                 name='simple drop down'
+                 value={value}
+                 options={['item 1', 'item 2', 'item 3']}
+                setValue={setValue}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Delegate Refrence Number"
+              name="drn"
               rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Delegate Refrence Number!" },
               ]}
             >
               <Input />
@@ -169,13 +205,13 @@ const PersonalInformation = () => {
         <Row>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Description"
+              name="description"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Description!" },
               ]}
             >
-              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} />
+              <TextArea rows={4} placeholder="Write about yourself" maxLength={6} />
             </Form.Item>
           </Col>
         </Row>
@@ -186,10 +222,29 @@ const PersonalInformation = () => {
         <Row gutter={20}>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Post Code"
+              name="postcode"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Post Code!" },
+              ]}
+            >
+             <DropDown
+                        name='drop down with search bar'
+                        value={value}
+                        options={['search', 'item 1']}
+                        setValue={setValue}
+                        requireSearchBar
+                        searchValue={searchValue}
+                        setSearchValue={setSearchValue}
+                    />
+            </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Form.Item
+              label="House No"
+              name="houseno"
+              rules={[
+                { required: true, message: "Please input your House No!" },
               ]}
             >
               <Input />
@@ -197,10 +252,10 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Street"
+              name="street"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Street!" },
               ]}
             >
               <Input />
@@ -208,32 +263,26 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Country"
+              name="country"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Country!" },
               ]}
             >
-              <Input />
+               <DropDown
+                 name='simple drop down'
+                 value={value}
+                 options={['item 1', 'item 2', 'item 3']}
+                setValue={setValue}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="City"
+              name="city"
               rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your City!" },
               ]}
             >
               <Input />
@@ -285,10 +334,10 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
-              label="Username"
-              name="username"
+              label="Medical Condition"
+              name="medicalcondition"
               rules={[
-                { required: true, message: "Please input your username!" },
+                { required: true, message: "Please input your Medical Condition!" },
               ]}
             >
               <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} />
@@ -296,7 +345,7 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
-              label="radio"
+              label="Do you have Dependies"
               // name="username"
               //   rules={[
               //     { required: true, message: "Please input your username!" },

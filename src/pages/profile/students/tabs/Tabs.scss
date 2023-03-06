@@ -10,3 +10,41 @@
     margin-bottom: 1rem;
   }
 }
+.general-information{
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: #14142a;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.immigration-status{
+  .status-card{
+    background: #FFFFFF;
+border: 1px solid #FFFFFF;
+box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+border-radius: 16px;
+padding: 1rem;
+cursor: pointer;
+  }
+  .title{
+    font-family: 'Outfit';
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+
+
+/* Text/Body */
+
+color: #4E4B66;
+margin-top: 1rem;
+margin-bottom: 1rem;
+
+  }
+}
