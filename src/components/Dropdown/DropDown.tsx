@@ -119,10 +119,10 @@ export const DropDown = ({
             {...props}
         >
             <div>
-                <div>
+                <p>
                     {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '10px' }} />}
                     {!requiredDownloadIcon && <span>{value ? value : name}</span>}
-                </div>
+                </p>
                 <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ marginLeft: requiredDownloadIcon ? '1px' : '10px' }} />
             </div>
         </AntDropDown>

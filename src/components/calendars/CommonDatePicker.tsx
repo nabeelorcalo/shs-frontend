@@ -18,7 +18,10 @@ interface Props {
     label?: string;
     picker?: "time" | "date" | "week" | "month" | "quarter" | "year" | undefined;
     onBtnClick?: any;
+    btnIcon?: any;
+    endIcon?: any;
     monthPicker?: boolean;
+    btnIcononRight?: boolean;
 }
 
 export const CommonDatePicker = ({
@@ -35,6 +38,9 @@ export const CommonDatePicker = ({
     setValue,
     monthPicker = false,
     picker,
+    btnIcon,
+    endIcon = CalendarIcon,
+    btnIcononRight = false,
     ...rest
 }:
     Props) => {
@@ -48,7 +54,8 @@ export const CommonDatePicker = ({
 
     return (
         <div className={`${requireAsButton ? 'hide-field' : 'common-date-picker-wrapper'} ${monthPicker && 'month-picker'}`}>
-            {requireAsButton && <Button className={`${btnClassName}`} onClick={() => setOpen(!open)}>
+            {requireAsButton && <Button className={`w-full flex items-center justify-between ${btnIcononRight ? 'flex-row-reverse' : ''} ${btnClassName}`} onClick={() => setOpen(!open)}>
+                {btnIcon && <img src={btnIcon} alt='icon' />}
                 <span className='capitalize'>{name}</span>
             </Button>}
             {label && <label className='label'>{label}</label>}
@@ -63,7 +70,7 @@ export const CommonDatePicker = ({
                 onChange={handleChange}
                 clearIcon={''}
                 picker={picker}
-                suffixIcon={<img src={monthPicker ? ArrowDownDark : CalendarIcon} alt='icon' />}
+                suffixIcon={<img src={monthPicker ? ArrowDownDark : endIcon} alt='icon' />}
                 {...rest}
             />
         </div>

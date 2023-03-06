@@ -1,6 +1,6 @@
 import { Col, Row } from "antd"
 import { useState } from "react"
-import { ArrowDownDark } from "../../assets/images";
+import { ArrowDownDark, CalendarIcon } from "../../assets/images";
 import { CommonDatePicker } from "../calendars/CommonDatePicker";
 import { Input } from "../Input/input";
 import { SearchBar } from "../SearchBar/SearchBar";
@@ -38,6 +38,30 @@ function DropDownDemo() {
                     )}
                 </Col>
                 {/* date picker with label */}
+                <Col span={3} className='mt-5'>
+                    <CommonDatePicker
+                        requireAsButton
+                        btnClassName={'h-[48px]'}
+                        btnIcononRight
+                        placement="bottomLeft"
+                        open={isdate}
+                        setOpen={setIsDate}
+                        setValue={setValue}
+                        btnIcon={CalendarIcon}
+                    />
+                </Col>
+                {/* date picker with label */}
+                <Col span={3} className='mt-5'>
+                    <CommonDatePicker
+                        requireAsButton
+                        btnIcon={CalendarIcon}
+                        btnClassName={'h-[48px]'}
+                        placement="bottomLeft"
+                        open={isdate}
+                        setOpen={setIsDate}
+                        setValue={setValue}
+                    />
+                </Col>
                 <Col span={4} className='mt-5'>
                     <CommonDatePicker
                         placement="bottomLeft"
