@@ -50,6 +50,11 @@
     background: #ffffff;
     border: 1px solid #e6f4f9;
     border-radius: 10px;
+    .storage-bar-header {
+      background: #e6f4f9;
+      opacity: 0.3;
+      border-radius: 10px;
+    }
     .available-storage {
       font-weight: 500;
       font-size: 20px;

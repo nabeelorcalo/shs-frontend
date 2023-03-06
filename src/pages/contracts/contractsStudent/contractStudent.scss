@@ -1,0 +1,34 @@
+.contract-student {
+    .contract-student-title {
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 32px;
+        color: #363565;
+
+    }
+
+    .contract-status {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        background: #FFFFFF;
+        border: 1px solid #E6F4F9;
+        border-radius: 10px;
+    }
+
+    .status-box {
+        margin-right: 2rem;
+        width: 20px;
+        height: 20px;
+        background: #FFC15E;
+        border-radius: 4px;
+    }
+
+    .status-box-text {
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        color: #14142A;
+
+    }
+}

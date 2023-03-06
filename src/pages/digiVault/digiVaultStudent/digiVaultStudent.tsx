@@ -1,50 +1,104 @@
 import { DownCircleOutlined, SettingFilled } from "@ant-design/icons";
-import { Button, Col, Divider, Row, Space, Switch } from "antd";
+import { Button, Col, Divider, Progress, Row, Space, Switch } from "antd";
 import React, { useState, useEffect } from "react";
 import AppTabs from "../../../components/Tabs";
 import "./digiVaultStudent.scss";
 import SettingModal from "./settingModal/settingModal";
-import { CircularProgressbar } from "react-circular-progressbar";
+import GlobalTable from "../../../components/Table/Table";
 import "react-circular-progressbar/dist/styles.css";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
-import icon from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
+import gallery from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
+import Video from "../../../assets/images/ColorfullIconsProgressbar/video.png";
+import Document from "../../../assets/images/ColorfullIconsProgressbar/document.png";
+import Folder from "../../../assets/images/ColorfullIconsProgressbar/folder.png";
+import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
 
 const arraydata = [
   {
-    icon: icon,
+    icon: gallery,
     progressbarColor: "red",
-    progressbarValue: 20,
+    progressbarValue: 30,
     storage: "128GB",
     title: "Media",
   },
   {
-    icon: icon,
-    progressbarColor: "yellow",
+    icon: Video,
+    progressbarColor: "red",
+    progressbarValue: 60,
+    storage: "128GB",
+    title: "Video",
+  },
+  {
+    icon: Document,
+    progressbarColor: "red",
     progressbarValue: 50,
     storage: "128GB",
-    title: "Media",
+    title: "Document",
   },
   {
-    icon: icon,
-    progressbarColor: "red",
-    progressbarValue: 20,
-    storage: "128GB",
-    title: "Media",
-  },
-  {
-    icon: icon,
+    icon: Folder,
     progressbarColor: "red",
     progressbarValue: 80,
     storage: "128GB",
-    title: "Media",
+    title: "Folder",
   },
-  {
-    icon: icon,
-    progressbarColor: "red",
-    progressbarValue: 20,
-    storage: "128GB",
-    title: "Media",
-  },
+];
+
+const columns = [
+    {
+        title: 'No',
+        dataIndex: 'key',
+        key: 'key',
+        minWidth: 300
+    },
+    {
+        title: 'Date Applied',
+        dataIndex: 'dateApplied',
+        key: 'dateApplied',
+    },
+    {
+        title: 'Company',
+        dataIndex: 'company',
+        key: 'company',
+
+    },
+    {
+        title: 'Type of work',
+        dataIndex: 'typeOfWork',
+        key: 'typeOfWork',
+        width: 200,
+
+    },
+    {
+        title: 'Internship Type',
+        dataIndex: 'internshipType',
+        key: 'internshipType',
+    },
+    {
+        title: 'Nature of work',
+        dataIndex: 'natureOfWork',
+        key: 'natureOfWork',
+    },
+    {
+        title: 'position',
+        dataIndex: 'Position',
+        key: 'Position',
+    },
+    {
+        title: 'Status',
+        dataIndex: 'Status',
+        key: 'Status',
+    },
+    {
+        title: 'Action',
+        key: 'action',
+        render: (_: any, data: any) => (
+            <Space size="middle">
+                <a onClick={()=>alert(`Id For The Editabel record is  ${data.key} `)}>Edit</a>
+                <a onClick={()=>alert(`deleted record id  ${data.key} `)}>Delete</a>
+            </Space>
+        ),
+    },
 ];
 
 const DigiVaultStudent = () => {
@@ -89,23 +143,25 @@ const DigiVaultStudent = () => {
             </div>
             <Row gutter={[8, 20]} className="p-2">
               <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
-                <div className="vault-card"></div>
+                <div>
+                  <DigivaultCard />
+                </div>
               </Col>
             </Row>
           </div>
         </Col>
         <Col xxl={6} xl={6} lg={6} md={6} sm={6} xs={24}>
           <div className="storage">
-            <Row>
-              <Col lg={8}>
-                <div style={{ width: "100%" }}>
-                  <CircularProgressbar
-                    value={percentage}
-                    text={`${percentage}%`}
-                  />
-                </div>
+            <Row className="storage-bar-header">
+              <Col lg={10}>
+                <Progress
+                  strokeColor={"#5D89F4"}
+                  strokeLinecap="butt"
+                  type="circle"
+                  percent={75}
+                />
               </Col>
-              <Col className="flex flex-col justify-center  ml-4" lg={12}>
+              <Col className="flex flex-col justify-center  ml-4" lg={14}>
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>
               </Col>
@@ -124,7 +180,9 @@ const DigiVaultStudent = () => {
             <div className="recent-files-title font-semibold text-lg">
               Recent Files
             </div>
-            <div className="recent-files-tible"></div>
+            <div className="recent-files-tible">
+              <GlobalTable columns={columns}/>
+            </div>
           </div>
         </Col>
       </Row>
