@@ -11,8 +11,12 @@ import EditGoalTask from "../../components/EditGoalTask";
 const Calendar = () => {
   const name = "Calvin Grayson"
   return (
-
+    <>
       <p>Calendar </p>
+      <AssesmentModal title="Signature" />
+      <MyProfileDocUpload title="Upload Documents"/>
+    </>
+
 
   )
 }
