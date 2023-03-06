@@ -57,4 +57,12 @@ export { ReactComponent as IconLinkedin  } from './footer/icon-social-linkedin.s
 export { ReactComponent as IconYoutube  } from './footer/icon-social-youtube.svg';
 
 // Graph and Chart Icons
-export { ReactComponent as FinanceIcon  } from './chart/financeIcon.svg';
+export { ReactComponent as Finance  } from './chart/financeIcon.svg';
+export { ReactComponent as Relationship  } from './chart/Heart.svg';
+export { ReactComponent as Health  } from './chart/healthIcon.svg';
+export { ReactComponent as Heart  } from './chart/heartIcon.svg';
+export { ReactComponent as Education  } from './chart/Education.svg';
+export { ReactComponent as Development  } from './chart/Development.svg';
+export { ReactComponent as Family  } from './chart/Family.svg';
+export { ReactComponent as Social  } from './chart/Social.svg';
+export { ReactComponent as Recreation  } from './chart/Recreation.svg';
