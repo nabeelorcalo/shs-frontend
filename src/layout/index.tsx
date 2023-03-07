@@ -46,6 +46,7 @@ function AppLayout() {
         <AppSidebar
           collapsed={collapsed}
           sidebarToggler={collapsedSidebar}
+          setCollapsed={setCollapsed}
         />
 
         <Content>

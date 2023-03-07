@@ -7,10 +7,10 @@ import {
   IconTeacher,
   IconLikeShapes
 } from '../../../assets/images'
-
+import { ROUTES_CONSTANTS } from '../../../config/constants'
+const { DASHBOARD, STUDENT, COMPANIES, ATTENDANCE, PERFORMANCE, REPORT } = ROUTES_CONSTANTS
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
-
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -28,18 +28,18 @@ function getItem(
 }
 
 export const itemsUniversity: MenuProps['items'] = [
-  getItem('Dashboard', '/dashboard', <IconDashboard />),
+  getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
 
   // PEOPLE GROUP
   getItem('People', 'people', null, [
-    getItem('Students', '/students', <IconTeacher />),
-    getItem('Companies', '/companies', <IconBriefcase />),
+    getItem('Students', `/${STUDENT}`, <IconTeacher />),
+    getItem('Companies', `/${COMPANIES}`, <IconBriefcase />),
   ], 'group'),
 
   // ORGANIZATION GROUP
   getItem('Organisation', 'organisation', null, [
-    getItem('Attendance', '/attendance', <IconCalendarTick />),
-    getItem('Performance', '/performance', <IconChart />),
-    getItem('Report', '/report', <IconLikeShapes />),
+    getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick />),
+    getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
+    getItem('Report', `/${REPORT}`, <IconLikeShapes />),
   ], 'group'),
 ]
