@@ -12,8 +12,6 @@ interface LeaveCardProps {
 }
 export const LeaveCard = (props: LeaveCardProps) => {
     const { title, total, pending, approved, declined, Icon,bg } = props
-    console.log(Icon);
-    
     return (
         <BoxWrapper className="leave-card-wrapper">
             <div className="upper_part flex items-center justify-between">

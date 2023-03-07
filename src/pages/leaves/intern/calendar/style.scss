@@ -19,13 +19,46 @@
                         color: #4E4B66;
                     }
                 }
+
+                .fc .fc-button-primary:focus {
+                    box-shadow: none;
+                }
+
+                .fc-toolbar-title {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #14142A;
+                }
+            }
+
+        }
+    }
+
+    .fc .fc-daygrid-day-frame {
+        background-color: rgba(230, 244, 249, 0.25);
+        border-radius: 6px;
+
+        .fc-daygrid-day-top {
+            justify-content: start;
+
+            a {
+                color: #4E4B66;
             }
         }
+    }
+
+    .fc .fc-daygrid-day.fc-day-today {
+        background-color: unset;
     }
 
     .fc-theme-standard td,
     .fc-theme-standard th {
         border: none;
+    }
+
+    .fc-theme-standard td {
+        padding: 10px;
     }
 
     .fc-theme-standard .fc-scrollgrid {
@@ -39,36 +72,37 @@
         color: #6E7191;
     }
 
-    .fc-col-header-cell.fc-day.fc-day-sun {
+    .fc-scrollgrid-sync-inner {
         text-align: left;
+        padding: 0 15px;
     }
 
-    .fc-scrollgrid-sync-table {
-        tr {
-            td {
-                .fc-daygrid-day-frame.fc-scrollgrid-sync-inner {
-                    background-color: rgba(230, 244, 249, 0.25);
-                }
-            }
-        }
-    }
+    // .fc-col-header-cell.fc-day.fc-day-sun {
+    //     text-align: left;
+    // }
+    // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.sick {
+    //     background-color: red;
+    // }
+    // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.casual {
+    //     background-color: green;
+    // }
 
-
-
-    // events 
-    .events-wrapper {
-        padding: 0 40px;
-        border-radius: 6px;
-    }
-
-    .fc .fc-daygrid-day.fc-day-today {
-        background: none !important;
+    .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+        min-height: 3rem;
     }
 
     .fc-h-event {
-        background: none !important;
-        border: none !important;
-        color: none !important;
+        background: none;
+        border: none;
+        color: none;
+    }
+
+
+    @media screen and (max-width: 575px) {
+        .fc-scrollgrid-sync-inner {
+            padding: 0 0px;
+        }
+
     }
 
 }

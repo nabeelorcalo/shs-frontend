@@ -15,6 +15,7 @@
     "@ant-design/plots": "^1.2.5",
     "@fullcalendar/core": "^6.1.4",
     "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/interaction": "^6.1.4",
     "@fullcalendar/react": "^6.1.4",
     "antd": "^5.2.2",
     "clsx": "^1.2.1",
