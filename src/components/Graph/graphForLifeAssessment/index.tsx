@@ -57,30 +57,27 @@ const Graph = () => {
               className="life-assessment-slider"
             />
           </div>
-
-          {/* {index === 7 &&
-            <div className="flex items-center">
-              <div className='flex-none w-[120px]'></div>
-              <div className='flex-none w-20'></div>
-              <div className='flex-none w-20'>
-                1
-              </div>
-              <div className='flex-none w-20'>
-                2
-              </div>
-              <div className='flex-none w-20'>
-                3
-              </div>
-              <div className='flex-none w-20'>
-                4
-              </div>
-              <div className='flex-none w-20'>
-                5
-              </div>
-            </div>
-          } */}
         </div>
       ))}
+      <div className="flex items-center">
+        <div className='flex-none w-[120px]'></div>
+        <div className='flex-none w-20'></div>
+        <div className='flex-initial w-[345px] text-sm txtColor'>
+          1
+        </div>
+        <div className='flex-initial w-[343px] text-sm txtColor'>
+          2
+        </div>
+        <div className='flex-initial w-[345px] text-sm txtColor'>
+          3
+        </div>
+        <div className='flex-initial w-[345px] text-sm txtColor'>
+          4
+        </div>
+        <div className='flex-initial w-2 text-sm txtColor'>
+          5
+        </div>
+      </div>
     </>
   )
 };
