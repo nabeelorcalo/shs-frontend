@@ -9,9 +9,9 @@ import "./style.scss";
 const DigiVault = () => {
   return (
     <div>
-      <DigiVaultStudent />
+      {/* <DigiVaultStudent /> */}
       {/* <OfferLetters/> */}
-      {/* <ContractsStudent/> */}
+      <ContractsStudent/>
       {/* <ManageVault /> */}
     </div>
   );

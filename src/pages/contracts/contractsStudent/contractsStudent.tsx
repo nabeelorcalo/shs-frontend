@@ -2,6 +2,25 @@ import { Col, Divider, Row } from "antd";
 import React from "react";
 import { SearchBar } from "../../../components";
 import "./contractStudent.scss";
+import Signed from "../../../assets/images/ColorfullIconsProgressbar/Signed.png";
+import Recieved from "../../../assets/images/ColorfullIconsProgressbar/recieved.png";
+import Rejected from "../../../assets/images/ColorfullIconsProgressbar/rejected.png";
+
+
+const contractRecieved = [
+  {
+    id: "1",
+    img: Recieved,
+    title: "Contract",
+    subTitle: "From PowerSource",
+  },
+  {
+    id: "2",
+    img: Recieved,
+    title: "Contract",
+    subTitle: "From PowerSource",
+  },
+];
 
 
 const contractStatus = [
@@ -29,7 +48,7 @@ const ContractsStudent = () => {
 
   return (
     <div className="contract-student">
-      <Row>
+      <Row gutter={[0, 12]}>
         <Col>
           <div className="contract-student-title">Contracts</div>
         </Col>
@@ -46,7 +65,7 @@ const ContractsStudent = () => {
                     return (
                         <Col key={item.id} xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
                         <div className="contract-status">
-                          <div className= "status-box"></div>
+                          <div style={{backgroundColor: item.color}} className= "status-box"></div>
                           <div className="status-box-text">{item.status}</div>
                         </div>
                       </Col>
@@ -55,8 +74,70 @@ const ContractsStudent = () => {
             }
           </Row>
         </Col>
-        <Col>
-          <div></div>
+       
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+          <Row gutter={10}>
+            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+              {contractRecieved.map((item) => {
+                return (
+                  <div className="contract-status-recieved mb-4">
+                    <div>
+                      <img src={item.img} alt="imgIcon" />
+                    </div>
+
+                    <div className="ml-4">
+                      <div className="contract-status-recieved-title mb-1">
+                        {item.title}
+                      </div>
+                      <div className="contract-status-recieved-sub">
+                        {item.subTitle}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </Col>
+            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+              {contractRecieved.map((item) => {
+                return (
+                  <div className="contract-status-recieved mb-4">
+                    <div>
+                      <img src={item.img} alt="imgIcon" />
+                    </div>
+
+                    <div className="ml-4">
+                      <div className="contract-status-recieved-title mb-1">
+                        {item.title}
+                      </div>
+                      <div className="contract-status-recieved-sub">
+                        {item.subTitle}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </Col>
+            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+              {contractRecieved.map((item) => {
+                return (
+                  <div className="contract-status-recieved mb-4">
+                    <div>
+                      <img src={item.img} alt="imgIcon" />
+                    </div>
+
+                    <div className="ml-4">
+                      <div className="contract-status-recieved-title mb-1">
+                        {item.title}
+                      </div>
+                      <div className="contract-status-recieved-sub">
+                        {item.subTitle}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </Col>
+          </Row>
         </Col>
       </Row>
     </div>

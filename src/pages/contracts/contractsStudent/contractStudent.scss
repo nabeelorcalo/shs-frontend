@@ -31,4 +31,28 @@
         color: #14142A;
 
     }
+
+
+    .contract-status-recieved {
+        padding: 14px;
+        display: flex;
+        align-items: center;
+        background: #FFFFFF;
+        border: 1px solid #E6F4F9;
+        border-radius: 10px;
+
+        .contract-status-recieved-title {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            color: #14142A;
+        }
+
+        .contract-status-recieved-sub {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #4E4B66;
+        }
+    }
 }
