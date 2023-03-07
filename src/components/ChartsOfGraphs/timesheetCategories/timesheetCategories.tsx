@@ -1,8 +1,9 @@
 import { Pie } from '@ant-design/plots';
 import { useState } from 'react';
 import BoxWrapper from '../../BoxWrapper/BoxWrapper';
-import { TimeSheetCategories } from './timeSheet';
-const TimesheetCategories = (props: any) => {
+import { TimeSheetCategoriesData } from './timeSheet';
+
+export const TimesheetCategories = (props: any) => {
     const {
         appendPadding = 10,
         angleField = 'value',
@@ -32,7 +33,7 @@ const TimesheetCategories = (props: any) => {
         }, heading,
     } = props
 
-    const [data] = useState(TimeSheetCategories)
+    const [data] = useState(TimeSheetCategoriesData)
 
     const config: any = {
         appendPadding: appendPadding,
@@ -53,5 +54,3 @@ const TimesheetCategories = (props: any) => {
         </BoxWrapper>
     )
 }
-
-export default TimesheetCategories

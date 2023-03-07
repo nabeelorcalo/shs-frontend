@@ -1,4 +1,4 @@
-export const TimeSheetCategories = [
+export const TimeSheetCategoriesData = [
     {
         type: 'Design Task',
         value: 30,

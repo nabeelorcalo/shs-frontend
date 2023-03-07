@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import BoxWrapper from '../../BoxWrapper/BoxWrapper';
 import { perfomanceChart } from './MonthlyPerfomance';
 
-const MonthlyPerfomanceChart = (props: any) => {
+export const MonthlyPerfomanceChart = (props: any) => {
   const { XField = "city", YField = "value", seriesField = "type", isGroup = true,
     columnStyle = { radius: [20, 20, 0, 0] },
     color = ['#9BD5E8', '#F08D97', '#78DAAC'], marginRatio = ".5", heading,
@@ -35,5 +35,3 @@ const MonthlyPerfomanceChart = (props: any) => {
     </BoxWrapper>
   )
 }
-
-export default MonthlyPerfomanceChart

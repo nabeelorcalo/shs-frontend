@@ -3,7 +3,7 @@ import { Col, Row } from 'antd';
 import { InfoIcon } from '../../../assets/images';
 import BoxWrapper from '../../BoxWrapper/BoxWrapper';
 
-const DashboardCharts = (props: any) => {
+export const DashboardCharts = (props: any) => {
   const { height = 65, percent = 0.3, bgColor = "#ABAFB1", barColor = '#363565', memoryUsed = "45.5", memoryFree = "55.5", heading, usedSpace, freeSpace } = props
   const config = {
     height: height,
@@ -33,5 +33,3 @@ const DashboardCharts = (props: any) => {
 
 
 }
-
-export default DashboardCharts 

@@ -3,7 +3,7 @@ import { InterShipData } from "./internShipData";
 import { RadialBar } from "@ant-design/plots";
 import BoxWrapper from "../../BoxWrapper/BoxWrapper";
 
-const InternshipSummaryChart = (props: any) => {
+export const InternshipSummaryChart = (props: any) => {
     const {
         xField = "name",
         yField = "star",
@@ -60,4 +60,3 @@ const InternshipSummaryChart = (props: any) => {
         </BoxWrapper>
     )
 }
-export default InternshipSummaryChart

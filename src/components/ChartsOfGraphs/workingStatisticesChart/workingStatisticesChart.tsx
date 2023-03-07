@@ -4,7 +4,7 @@ import BoxWrapper from '../../BoxWrapper/BoxWrapper';
 import { statisticesData } from './workingChart';
 
 
-const WorkingStatisticesChart = (props: any) => {
+export const WorkingStatisticesChart = (props: any) => {
   const { isStack = true, xField = "days", yField = "value",
     seriesField = "type", legend = { layout: "horizontal", position: 'top-right' }, heading } = props
   const [data] = useState<any>(statisticesData);
@@ -44,5 +44,3 @@ const WorkingStatisticesChart = (props: any) => {
   )
 
 }
-
-export default WorkingStatisticesChart
