@@ -13,7 +13,7 @@ const Graph = (props: any) => {
     <div className='p-4'>
 
       <BoxWrapper >
-        <GraphFive />
+        <GraphFive monthName="Jan" />
       </BoxWrapper>
 
       {/* <BoxWrapper >

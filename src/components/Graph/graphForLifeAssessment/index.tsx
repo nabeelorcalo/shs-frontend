@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { registerMemeberData, resolutionFeedbackData } from './data';
+import data from './data';
 import { Finance, Relationship, Health, Education, Development, Family, Social, Recreation } from '../../../assets/images';
 import constants from '../../../config/constants';
 import { Col, Row, Slider } from 'antd';
 
 
-const Graph = () => {
+const Graph = ({monthName}: any) => {
   const assessmentsName = ["Finance", "Relationships", "Health", "Education", "Development", "Family", "Social Life", "Recreation"];
+  const filteredArray = data.filter(obj => obj.month === monthName);
 
   const renderIcon = (name: string) => {
     switch (name) {
@@ -48,7 +49,7 @@ const Graph = () => {
               disabled
               min={1}
               max={5}
-              defaultValue={index > 4 ? 5 : index + 1}
+              defaultValue={filteredArray[index].value}
               tooltip={{
                 open: true,
                 formatter: (value: any) => `0${value}`,
