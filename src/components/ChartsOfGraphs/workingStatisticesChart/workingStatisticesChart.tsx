@@ -6,8 +6,8 @@ import { statisticesData } from './workingChart';
 
 const WorkingStatisticesChart = (props: any) => {
   const { isStack = true, xField = "days", yField = "value",
-    seriesField = "type", legend = { layout: "horizontal", position: 'top-right' } } = props
-  const [data, setData] = useState<any>(statisticesData);
+    seriesField = "type", legend = { layout: "horizontal", position: 'top-right' }, heading } = props
+  const [data] = useState<any>(statisticesData);
 
   const config: any = {
     data,
@@ -38,7 +38,7 @@ const WorkingStatisticesChart = (props: any) => {
   };
   return (
     <BoxWrapper>
-      <p className='text-xl font-medium text-secondary-color'>Work Statistices</p>
+      {heading && <p className='text-xl font-medium text-secondary-color'>{heading}</p>}
       <Column {...config} maxColumnWidth={50} />
     </BoxWrapper>
   )

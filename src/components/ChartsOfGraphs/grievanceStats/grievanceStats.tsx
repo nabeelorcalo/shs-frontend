@@ -27,7 +27,7 @@ const GrievanceStats = (props: any) => {
     };
     return (
         <BoxWrapper>
-            {statsHeading && <p>{statsHeading}</p>}
+            {statsHeading && <p className='text-secondary-color font-medium text-xl'>{statsHeading}</p>}
             <Column {...config} columnWidthRatio={.3} />
         </BoxWrapper>
     )

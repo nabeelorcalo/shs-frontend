@@ -1,59 +1,63 @@
-import { RadialBar } from "@ant-design/plots";
 import { useState } from "react";
 import { InterShipData } from "./internShipData";
+import { RadialBar } from "@ant-design/plots";
+import BoxWrapper from "../../BoxWrapper/BoxWrapper";
 
-const InternshipSummaryChart = () => {
+const InternshipSummaryChart = (props: any) => {
+    const {
+        xField = "name",
+        yField = "star",
+        autoFit = true,
+        padding = "auto",
+        maxAngle = 360,
+        radius = 0.8,
+        innerRadius = 0.37,
+        colorField = "name",
+        barStyle = { lineCap: "round", },
+        intervalPadding = 9.1,
+        xAxis = { label: null },
+        heading,
+    } = props
+
     const [data] = useState(InterShipData);
 
     const config: any = {
         data,
-        xField: 'name',
-        yField: 'star',
-        maxAngle: 350,
-        radius: 0.8,
-        innerRadius: 0.2,
-        tooltip: {
-            formatter: (datum: any) => {
-                return {
-                    name: 'star数',
-                    value: datum.star,
-                };
-            },
-        },
-        colorField: 'star',
-        color: ({ star }: any) => {
-            if (star > 10000) {
-                return '#6349ec';
-            } else if (star > 1000) {
-                return '#ff9300';
-            }
-
-            return '#ff93a7';
-        },
+        xField: xField,
+        yField: yField,
+        autoFit: autoFit,
+        padding: padding,
+        maxAngle: maxAngle,
+        radius: radius,
+        innerRadius: innerRadius,
+        colorField: colorField,
         barBackground: {},
-        barStyle: {
-            lineCap: 'round',
+        color: ({ name }: any) => {
+            if (name == "Gray") {
+                return "#A0A3BD";
+            } else if (name == "yellow") {
+                return "#FFC15E";
+            } else if (name == "blue") {
+                return "#4783FF";
+            } else if (name == "green") {
+                return " #4A9D77";
+            }
+            return "#ff93a7";
         },
-        annotations: [
-            {
-                type: 'html',
-                position: ['50%', '50%'],
-                html: (container: any, view: any) => {
-                    const coord = view.getCoordinate();
-                    const w = coord.polarRadius * coord.innerRadius * 1.15;
-                    return `<div style="transform:translate(-50%,-46%)">
-              <img width="${(w / 203) * 231
-                        }" height="${w}" alt="" src="https://gw.alipayobjects.com/zos/antfincdn/zrh%24J08soH/AntV%252520LOGO%2525202.png">
-                </div>`;
-                },
-            },
-        ],
+        barStyle: barStyle,
+        intervalPadding: intervalPadding,
+        xAxis: xAxis,
     };
     return (
-        <div>
-            <RadialBar {...config} />
-        </div>
+        <BoxWrapper>
+            {heading && <p className="text-secondary-color font-medium text-xl">{heading}</p>}
+            <RadialBar
+                style={{ height: "300px", marginTop: "-15px" }}
+                tooltip={false}
+                {...config}
+                className="transition-from-right"
+            />
+        </BoxWrapper>
     )
 }
-
 export default InternshipSummaryChart

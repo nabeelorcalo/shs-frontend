@@ -6,20 +6,21 @@ import { perfomanceChart } from './MonthlyPerfomance';
 const MonthlyPerfomanceChart = (props: any) => {
   const { XField = "city", YField = "value", seriesField = "type", isGroup = true,
     columnStyle = { radius: [20, 20, 0, 0] },
-    color = ['#9BD5E8', '#F08D97', '#78DAAC'], marginRatio = ".5", columnWidth = 0.2, heading,
-    className,
-    textColor = "#4E4B66", fontSize = "20px", fontWeight = "500"
+    color = ['#9BD5E8', '#F08D97', '#78DAAC'], marginRatio = ".5", heading,
+    columnWidthRatio = .2,
+    textColor = "#4E4B66", fontSize = "20px", fontWeight = "500",
+    data = { perfomanceChart }
   } = props
 
-  const [data] = useState(perfomanceChart);
+  const [chartData] = useState(data);
   const config: any = {
-    data,
+    data: chartData,
     xField: XField,
     yField: YField,
     seriesField: seriesField,
     isGroup: isGroup,
     columnStyle: columnStyle,
-    columnWidthRatio: columnWidth,
+    columnWidthRatio: columnWidthRatio,
     color: color,
     legend: {
       layout: 'horizontal',

@@ -4,7 +4,7 @@ import { InfoIcon } from '../../../assets/images';
 import BoxWrapper from '../../BoxWrapper/BoxWrapper';
 
 const DashboardCharts = (props: any) => {
-  const { height = 65, percent = 0.3, bgColor = "#ABAFB1", barColor = '#363565', memoryUsed = "45.5", memoryFree = "55.5" } = props
+  const { height = 65, percent = 0.3, bgColor = "#ABAFB1", barColor = '#363565', memoryUsed = "45.5", memoryFree = "55.5", heading, usedSpace, freeSpace } = props
   const config = {
     height: height,
     autoFit: false,
@@ -16,12 +16,12 @@ const DashboardCharts = (props: any) => {
       <Col lg={12} md={12} sm={20} xs={24} >
         <BoxWrapper>
           <div className='flex justify-between mt-5'>
-            <span className='text-secondary-color text-base font-medium'>System Storage</span>
+            {heading && <span className='text-secondary-color text-base font-medium'>{heading}</span>}
             <img src={InfoIcon} alt="infoIcon" />
           </div>
           <div className='flex justify-between mt-7'>
-            <span className='text-base font-medium '>{memoryUsed} GB Used</span>
-            <span className='text-base font-medium ' >{memoryFree} GB Free</span>
+            {usedSpace && <span className='text-base font-medium '>{memoryUsed} {usedSpace}</span>}
+            {freeSpace && <span className='text-base font-medium ' >{memoryFree} {freeSpace}</span>}
           </div>
           <div style={{ borderRadius: "28%", overflow: "hidden", marginTop: "-10px" }} >
             <Progress {...config} />
