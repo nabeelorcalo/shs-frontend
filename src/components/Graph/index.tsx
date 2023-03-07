@@ -17,9 +17,9 @@ const Graph = (props: any) => {
       </BoxWrapper>
 
       <BoxWrapper >
-      //   <GraphFour />
-      // </BoxWrapper>
-      
+        <GraphFour />
+      </BoxWrapper>
+
       {/* Register Member Graph */}
       <BoxWrapper >
         <GraphOne graphName={constants.REGISTER_MEMBERS} />
