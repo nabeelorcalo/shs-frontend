@@ -8,3 +8,39 @@
 //         height: 100%;
 //     }
 // }
+
+// .widget-wrapper {
+//     transition: all 0.2s ease;
+//     overflow: hidden;
+
+//     .box-wrapper {
+//         margin: 0;
+//         // background-color: orange;
+//         z-index: 1;
+//         transition: all 0.2s linear;
+
+//         &:hover {
+//             width: 80%;
+//         }
+//     }
+
+//     .view-all {
+//         background-color: red;
+//         z-index: -1;
+//         // height: 100%;
+//     }
+// }
+
+// .contract-card {
+//     transition: all 0.2s linear;
+
+//     .box-wrapper {
+//         transition: all 0.2s linear;
+//         background-color: red;
+
+//         &:hover {
+//             transition: all 0.2s linear;
+//             width: 90%;
+//         }
+//     }
+// }
