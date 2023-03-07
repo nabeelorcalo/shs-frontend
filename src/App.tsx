@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { FC, useEffect } from 'react'
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { getRoutes } from "./routes";
 import "./App.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
-import AppLayout from './layout'
 
 function App() {
 
@@ -47,7 +46,6 @@ function App() {
     <ErrorBoundary FallbackComponent={ErrorFallback}>
       {pages}
     </ErrorBoundary>
-
   )
 }
 

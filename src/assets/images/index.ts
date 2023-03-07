@@ -9,6 +9,7 @@ export { ReactComponent as IconGlobe } from './header/global.svg';
 export { ReactComponent as IconLogout } from './header/Logout.svg';
 export { ReactComponent as IconProfile } from './header/Profile.svg';
 export { ReactComponent as IconCross } from './header/icon-cross.svg';
+export {default as InfoIcon} from "../images/chart/info-icon.png";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from './sidebar/icon-dashboard.svg';
@@ -54,6 +55,17 @@ export { ReactComponent as IconInstagram  } from './footer/icon-social-instagram
 export { ReactComponent as IconLinkedin  } from './footer/icon-social-linkedin.svg';
 export { ReactComponent as IconYoutube  } from './footer/icon-social-youtube.svg';
 
+// Graph and Chart Icons
+export { ReactComponent as Finance  } from './chart/financeIcon.svg';
+export { ReactComponent as Relationship  } from './chart/Heart.svg';
+export { ReactComponent as Health  } from './chart/healthIcon.svg';
+export { ReactComponent as Heart  } from './chart/heartIcon.svg';
+export { ReactComponent as Education  } from './chart/Education.svg';
+export { ReactComponent as Development  } from './chart/Development.svg';
+export { ReactComponent as Family  } from './chart/Family.svg';
+export { ReactComponent as Social  } from './chart/Social.svg';
+export { ReactComponent as Recreation  } from './chart/Recreation.svg';
+
 // Leaves Icons
 export { ReactComponent as DocumentUpload  } from './leaves/document-upload.svg';
 
@@ -80,7 +92,7 @@ export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
 // Leave ModuleIcon
-export { ReactComponent as Heart} from './leaves/Heart.svg';
+export { ReactComponent as HeartIcon} from './leaves/Heart.svg';
 export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
 export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
 export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';

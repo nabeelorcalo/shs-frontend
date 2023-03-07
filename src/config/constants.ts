@@ -1,5 +1,11 @@
 export default {
   // appUrl: process.env.REACT_APP_APP_URL || "http://localhost:8001",
+  ATTENDANCE: "attendance",
+  REGISTER_AGENTS: "registerAgents",
+  REWARDS: "rewards",
+  REGISTER_MEMBERS: "registerMember",
+  FEEDBACk: "feedback",
+  LISTINGS: "listings",
 }
 
 export const ROUTES_CONSTANTS: any = {
@@ -50,5 +56,6 @@ export const ROUTES_CONSTANTS: any = {
   LISTINGS: "listings",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
-  VIEWLEAVEHISTORY:"Leaves/Leave-history"
+  VIEWLEAVEHISTORY:"Leaves/Leave-history",
+  SETTING: "setting"
 };

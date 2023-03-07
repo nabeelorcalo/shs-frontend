@@ -1,5 +1,5 @@
 import { Button, Col, Divider, Row, Typography } from 'antd'
-import { Heart, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
+import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard } from '../../../components'
 import BoxWrapper from '../../../components/BoxWrapper/boxWrapper';
 import Calendar from "./calendar/calendar"
@@ -48,7 +48,7 @@ const upcomingHolidayData: any = [
   { id: "10", day: "Monday", date: "10 january", holidayType: "New Year's Day" },
 ]
 const CardIcon = [
-  { Icon: Heart, bg: "rgba(76, 164, 253, 0.1)" },
+  { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
   { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" },
   { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
