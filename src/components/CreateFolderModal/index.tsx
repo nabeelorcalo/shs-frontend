@@ -23,7 +23,7 @@ const CreateFolderModal = ({ title }: any) => {
               Cancel
             </Button>,
             <Button onClick={() => { setShow(!show) }} key="submit" style={{ backgroundColor: '#4a9d77', color: '#fff', border: '1px solid #4a9d77', padding: '0px 20px' }}>
-              Submit
+              Create
             </Button>,
           ]}
         >
