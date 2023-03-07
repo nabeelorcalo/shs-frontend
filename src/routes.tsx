@@ -62,6 +62,7 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
+const Setting = Loadable(lazy(() => import("./pages/setting")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
 export const publicRoutes = [
@@ -368,6 +369,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SETTING}`,
+        path: `${ROUTES_CONSTANTS.SETTING}`,
+        element: <Setting />,
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
