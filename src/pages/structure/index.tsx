@@ -6,9 +6,9 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import organization from "./org.json";
 import {
-  Icondownward,
-  IconStructureAdmin,
-  IconProfile2person,
+  // Icondownward,
+  // IconStructureAdmin,
+  // IconProfile2person,
 } from "../../assets/images";
 import { Avatar, Button } from "antd";
 
@@ -30,7 +30,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
           style={{ border: `1px solid ${org.color}` }}
         ></div>
         <div className="avater-content absolute ">
-          <Avatar className="" size={48} icon={<IconStructureAdmin />} />
+          <Avatar className="" size={48}  />
         </div>
         <div className="content pt-3 ">
           <div className="pt-5 font-semibold text-base"> {org.tradingName}</div>
@@ -38,13 +38,13 @@ function Organization({ org, onCollapse, collapsed }: any) {
           {hideFooterButton && (
             <div className="w-[81px] h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
               <span className="pt-1 ">
-                <IconProfile2person />
+                {/* <IconProfile2person /> */}
               </span>
               <span className="font-medium text-sm mx-2 mt-0.5">{`${_.size(
                 org.organizationChildRelationship
               )}`}</span>
               <span onClick={onCollapse} className="cursor-pointer ">
-                <Icondownward />
+                {/* <Icondownward /> */}
               </span>
             </div>
           )}
