@@ -84,6 +84,7 @@ export { ReactComponent as Heart} from './leaves/Heart.svg';
 export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
 export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
 export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';
+export { ReactComponent as MoreIcon} from './leaves/MoreIcon.svg';
 
 
 

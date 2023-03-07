@@ -1,8 +1,9 @@
-import { Col, Divider, Row, Typography } from 'antd'
+import { Button, Col, Divider, Row, Typography } from 'antd'
 import { Heart, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard } from '../../../components'
 import BoxWrapper from '../../../components/BoxWrapper/boxWrapper';
 import Calendar from "./calendar/calendar"
+import action from "../actionHandler"
 import "./style.scss"
 const leaveCardData: any = [
   {
@@ -46,26 +47,37 @@ const upcomingHolidayData: any = [
   { id: "9", day: "Monday", date: "9 january", holidayType: "New Year's Day" },
   { id: "10", day: "Monday", date: "10 january", holidayType: "New Year's Day" },
 ]
-const CardIcon =[
-  {Icon:Heart,bg:"rgba(76, 164, 253, 0.1)"},
-  {Icon:LeavesIcon,bg:"rgba(255, 193, 93, 0.1)"},
-  {Icon:WorkFromHom,bg:"rgba(233, 111, 124, 0.1)"},
-  {Icon: MedicalHeart,bg:"rgba(106, 173, 142, 0.1)"}
+const CardIcon = [
+  { Icon: Heart, bg: "rgba(76, 164, 253, 0.1)" },
+  { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
+  { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" },
+  { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
 ]
 const index = () => {
   return (
     <div className='intrne_main'>
-      <Row gutter={[20,20]} >
-        {leaveCardData.map((data: any,index:number) => (
+      <Row className=' items-center'>
+        <Col xs={24} md={12} lg={12}>
+          <h3 className='m-0 font-semibold '>Leave</h3>
+        </Col>
+        <Col xs={24} md={12} lg={12} >
+          <div className='flex items-center justify-end view_history_button_wrapper'>
+          <Button className='button font-semibold'>View History</Button>
+
+          </div>
+        </Col>
+        <Divider />
+      </Row>
+      <Row gutter={[20, 20]} >
+        {leaveCardData.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6} >
             <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
           </Col>
         ))}
       </Row>
-      <Row className='mt-[30px] second_row h-full' gutter={[20,20]}>
-        <Col  xs={24} md={12} xl={17}>
+      <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
+        <Col xs={24} md={12} xl={17}>
           <BoxWrapper className='h-full'>
-            {/* <h1>Calendar will goes here</h1> */}
             <Calendar />
           </BoxWrapper>
         </Col>

@@ -50,4 +50,5 @@ export const ROUTES_CONSTANTS: any = {
   LISTINGS: "listings",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
+  VIEWLEAVEHISTORY:"Leaves/Leave-history"
 };
