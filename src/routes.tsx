@@ -10,8 +10,9 @@ import Layout from "./layout";
 import {ROUTES_CONSTANTS} from "./config/constants";
 
 // Remove it
-// Graph dummy components
+// dummy components
 import Graph from './components/Graph';
+import DropDownDemo from "./components/Dropdown/dropdown-demo";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -67,6 +68,7 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
+const Setting = Loadable(lazy(() => import("./pages/setting")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
 export const publicRoutes = [
@@ -90,12 +92,20 @@ export const publicRoutes = [
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
   },
-  // Remove below dummy graph page
+  // ------Remove below demo components------
+  // Demo Graphs
   {
     key: "graph",
     path: `graph`,
     element: <Graph />,
   },
+  // Demo dropdowns
+  {
+    key: 'dropdowndemo',
+    path: '/demodropdown',
+    element: <DropDownDemo />
+  }
+  // ------Remove till here------
 ];
 
 // Manager
@@ -373,6 +383,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SETTING}`,
+        path: `${ROUTES_CONSTANTS.SETTING}`,
+        element: <Setting />,
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,

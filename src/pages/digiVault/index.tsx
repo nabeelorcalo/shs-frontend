@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import DigiVaultStudent from "./digiVaultStudent/digiVaultStudent";
 import "./style.scss";
 
 const DigiVault = () => {
   return (
-    <p>DigiVault</p>
-  )
-}
+    <div>
+      <DigiVaultStudent />
+    </div>
+  );
+};
 
-export default DigiVault
+export default DigiVault;

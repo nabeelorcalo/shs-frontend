@@ -14,10 +14,11 @@ import {
   IconEmojiSad,
   IconWalletCheck,
 } from '../../../assets/images'
+import { ROUTES_CONSTANTS } from '../../../config/constants'
+const { DASHBOARD, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, STRUCTURE, SELF_ASSESSMENT, GRIEVANCES, DIGIVAULT, DREAM_UP, PAYMENTS, CALENDAR, ACCOMMODATION } = ROUTES_CONSTANTS;
 
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
-
 function getItem(
   label: React.ReactNode,
   key: React.Key,
@@ -35,33 +36,33 @@ function getItem(
 }
 
 export const itemsIntern: MenuProps['items'] = [
-  getItem('Dashboard', '/dashboard', <IconDashboard />),
+  getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
 
   // ORGANIZATION GROUP
   getItem('Organisation', 'organisation', null, [
-    getItem('Attendance', '/attendance', <IconCalendarTick />),
-    getItem('Leaves', '/leaves', <IconCalendarRemove />),
-    getItem('Timesheet', '/timesheet', <IconTimer />),
-    getItem('Performance', '/performance', <IconChart />),
-    getItem('Structure', '/structure', <IconData />),
+    getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick />),
+    getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove />),
+    getItem('Timesheet', `/${TIMESHEET}`, <IconTimer />),
+    getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
+    getItem('Structure', `/${STRUCTURE}`, <IconData />),
   ], 'group'),
 
   // REPORTS GROUP
   getItem('Report', 'report', null, [
-    getItem('Self Assessment', '/self-assessment', <IconLikeShapes />),
-    getItem('Grievances', '/grievances', <IconEmojiSad />),
+    getItem('Self Assessment', `/${SELF_ASSESSMENT}`, <IconLikeShapes />),
+    getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
   ], 'group'),
 
   // PERSONAL GROUP
   getItem('Personal', 'personal', null, [
-    getItem('DigiVault', '/digivault', <IconFolder />),
-    getItem('Dream Up', '/dream-up', <IconRanking />),
-    getItem('Payments', '/payments', <IconWalletCheck />),
-    getItem('Calendar', '/calendar', <IconCalendar />),
+    getItem('DigiVault', `/${DIGIVAULT}`, <IconFolder />),
+    getItem('Dream Up', `/${DREAM_UP}`, <IconRanking />),
+    getItem('Payments', `/${PAYMENTS}`, <IconWalletCheck />),
+    getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
   ], 'group'),
 
   // DISCOVER GROUP
   getItem('Discover', 'discover', null, [
-    getItem('Accommodation', '/accommodation', <IconHouse />),
+    getItem('Accommodation', `/${ACCOMMODATION}`, <IconHouse />),
   ], 'group'),
 ]
