@@ -36,15 +36,15 @@ const AppFooter:FC = () => {
         <li><Link to=""><IconLinkedin /></Link></li>
         <li><Link to=""><IconYoutube /></Link></li>
       </ul>
-      <div className='footer-copyright'>
-        Copyrights &copy; 2022 All Rights Reserved by <span>Student Help Squad</span>
-      </div>
       <div className='footer-menu'>
         <ul>
           <li><Link to="#">Cookies Policy</Link></li>
           <li><Link to="#">Privacy Policy</Link></li>
           <li><Link to="#">Terms &amp; Conditions</Link></li>
         </ul>
+      </div>
+      <div className='footer-copyright'>
+        Copyrights &copy; 2022 All Rights Reserved by <span>Student Help Squad</span>
       </div>
     </Footer>
   )

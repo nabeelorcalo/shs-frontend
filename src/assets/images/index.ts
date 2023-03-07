@@ -1,13 +1,4 @@
-export { }
-
 // Header Icons
-// export { ReactComponent as AppLogo } from './AppLogo.svg';
-
-// sickLeave-card icon 
-export { default as SickIcon } from './sick.png';
-export { default as CasualIcon } from './sick.png';
-export { default as WFHIcon } from './sick.png';
-export { default as MedicalIcon } from './sick.png';
 export { ReactComponent as Logo } from './header/logo.svg';
 export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
 export { ReactComponent as IconCollapsebleOn } from './header/icon-collapseable-on.svg';
@@ -17,6 +8,8 @@ export { ReactComponent as Notification } from './header/Notification.svg';
 export { ReactComponent as IconGlobe } from './header/global.svg';
 export { ReactComponent as IconLogout } from './header/Logout.svg';
 export { ReactComponent as IconProfile } from './header/Profile.svg';
+export { ReactComponent as IconCross } from './header/icon-cross.svg';
+export {default as InfoIcon} from "../images/chart/info-icon.png";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from './sidebar/icon-dashboard.svg';
@@ -62,8 +55,25 @@ export { ReactComponent as IconInstagram  } from './footer/icon-social-instagram
 export { ReactComponent as IconLinkedin  } from './footer/icon-social-linkedin.svg';
 export { ReactComponent as IconYoutube  } from './footer/icon-social-youtube.svg';
 
+// Graph and Chart Icons
+export { ReactComponent as Finance  } from './chart/financeIcon.svg';
+export { ReactComponent as Relationship  } from './chart/Heart.svg';
+export { ReactComponent as Health  } from './chart/healthIcon.svg';
+export { ReactComponent as Heart  } from './chart/heartIcon.svg';
+export { ReactComponent as Education  } from './chart/Education.svg';
+export { ReactComponent as Development  } from './chart/Development.svg';
+export { ReactComponent as Family  } from './chart/Family.svg';
+export { ReactComponent as Social  } from './chart/Social.svg';
+export { ReactComponent as Recreation  } from './chart/Recreation.svg';
+
 // Leaves Icons
 export { ReactComponent as DocumentUpload  } from './leaves/document-upload.svg';
+
+// sickLeave-card icon 
+export { default as SickIcon } from './sick.png';
+export { default as CasualIcon } from './sick.png';
+export { default as WFHIcon } from './sick.png';
+export { default as MedicalIcon } from './sick.png';
 
 // Rating Emojis
 export { ReactComponent as Emoji1st  } from './RatingEmojis/Emoji1st.svg';
@@ -74,3 +84,10 @@ export { ReactComponent as EmojiGray1st  } from './RatingEmojis/EmojiGray1st.svg
 export { ReactComponent as EmojiGray2nd  } from './RatingEmojis/EmojiGray2nd.svg';
 export { ReactComponent as EmojiGray3rd  } from './RatingEmojis/EmojiGray3rd.svg';
 export { ReactComponent as EmojiGray4th  } from './RatingEmojis/EmojiGray4th.svg';
+
+// Callendar Icons
+export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';
