@@ -1,27 +1,52 @@
-import { Button, Col, Row } from 'antd'
-import { useState } from 'react';
-import Model from './components/ModalBox/model'
-import "./App.scss"
-import { Checkbox } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import HiringPipeline from './components/HiringPIpeline/hiringPipeline';
-import Widgets, { array } from './components/DocumentsWidgets/widgets';
-import GoalModal from './components/ModalBox/GoalModal/GoalModal';
+import React, { FC, useEffect } from 'react'
+import { useLocation, useNavigate, useRoutes } from "react-router-dom";
+import { getRoutes } from "./routes";
+import "./App.scss";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "./pages/errors/errorBoundary";
 
 function App() {
-  const [open, setOpen] = useState(false);
+
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
+  // const user_role = userData.role; // Uncomment it when login implemented
+  const user_role = userData.role || 'Student'; // <===== Place bootom roles here ot use.
+
+  // Possibe string of roles:
+  // SystemAdmin,
+  // Manager,
+  // DelegateAgent,
+  // CompanyAdmin,
+  // Intern,
+  // Student,
+  // University,
+  // Agent,
+  const publicRoutes = getRoutes('Public');
+  let routes = getRoutes(user_role);
+  routes = routes.concat(publicRoutes);
+
+  const pages = useRoutes(routes);
+  /* HOOKS
+  -------------------------------------------------------------------------------------*/
+  // useEffect(() => {
+  //   if (
+  //     !userData.token &&
+  //     !pathname.includes("signup") &&
+  //     !pathname.includes("forget-password") &&
+  //     !pathname.includes("reset-password")
+  //   ) {
+  //     navigate("/login");
+  //   }
+  // }, [pathname]);
 
   return (
-    <div className="p-10">
-      <Button type="primary" onClick={() => setOpen(!open)}>
-        Open Modal
-      </Button>
-
-      <GoalModal open={open} setOpen={() => setOpen(!open)}/>
-      <HiringPipeline />
-      <Widgets data={array} />
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      {pages}
+    </ErrorBoundary>
   )
 }
 
-export default App
+export default App;

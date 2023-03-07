@@ -1,0 +1,50 @@
+@import "../../scss/colors";
+
+.txtColor{
+  color: $text-success-placeholder-color;
+}
+
+.rewards div .g2-tooltip,
+.registerAgents div .g2-tooltip {
+  font-size: 14px !important;
+  font-weight: 600;
+  border-radius: 8px !important;
+  padding: 0 !important;
+  font-family: 'Outfit';
+  color: #fff;
+  background-color: $red-graph-tooltip-color !important;
+}
+
+.life-assessment-slider {
+  &.ant-slider.ant-slider-disabled {
+    .ant-slider-rail {
+      background-color: rgba(0, 0, 0, 0.03) !important;
+    }
+
+    .ant-slider-track {
+      background-color: transparent !important;
+    }
+
+    .ant-slider-handle::after {
+      background-color: $text-success-placeholder-color;
+    }
+  }
+}
+
+.ant-tooltip.ant-slider-tooltip {
+  .ant-tooltip-content {
+    top: 12px;
+    .ant-tooltip-inner {
+      color: $text-success-placeholder-color;
+      background-color: transparent;
+      box-shadow: none ;
+      min-width: 0;
+      min-height: 0;
+      padding:0;
+      font-size: 12px;
+    }
+    .ant-tooltip-arrow{
+      visibility: hidden;
+    }
+  }
+}

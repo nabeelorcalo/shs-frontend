@@ -1,7 +1,7 @@
 import { Col, Row } from "antd"
 import { useState } from "react"
-import { ArrowDownDark } from "../../assets/images";
-import { CommonDatePicker } from "../calendars/CommonDatePicker";
+import { ArrowDownDark, CalendarIcon } from "../../assets/images";
+import { CommonDatePicker } from "../calendars/CommonDatePicker/CommonDatePicker";
 import { Input } from "../Input/input";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { DropDown } from "./DropDown";
@@ -9,6 +9,9 @@ import { DropDown } from "./DropDown";
 function DropDownDemo() {
 
     const [isdate, setIsDate] = useState(false);
+    const [isdate1, setIsDate1] = useState(false);
+    const [isdate2, setIsDate2] = useState(false);
+    const [isdate3, setIsDate3] = useState(false);
     const [value, setValue] = useState('');
     const [searchValue, setSearchValue] = useState('');
     const [selectedList, setSelectedList] = useState([]);
@@ -37,12 +40,37 @@ function DropDownDemo() {
                         />
                     )}
                 </Col>
-                {/* date picker with label */}
-                <Col span={4} className='mt-5'>
+                {/* date picker with start Icon */}
+                <Col span={3} className='mt-5'>
                     <CommonDatePicker
+                        requireAsButton
+                        btnClassName={'h-[48px]'}
+                        btnIcononRight
                         placement="bottomLeft"
                         open={isdate}
                         setOpen={setIsDate}
+                        setValue={setValue}
+                        btnIcon={CalendarIcon}
+                    />
+                </Col>
+                {/* date picker with end Icon */}
+                <Col span={3} className='mt-5'>
+                    <CommonDatePicker
+                        requireAsButton
+                        btnIcon={CalendarIcon}
+                        btnClassName={'h-[48px]'}
+                        placement="bottomLeft"
+                        open={isdate1}
+                        setOpen={setIsDate1}
+                        setValue={setValue}
+                    />
+                </Col>
+                {/* date picker with with label */}
+                <Col span={4} className='mt-5'>
+                    <CommonDatePicker
+                        placement="bottomLeft"
+                        open={isdate2}
+                        setOpen={setIsDate2}
                         setValue={setValue}
                         label={'DatePicker With Label'}
                     />
@@ -54,8 +82,8 @@ function DropDownDemo() {
                         monthPicker
                         picker="month"
                         placement="bottomLeft"
-                        open={isdate}
-                        setOpen={setIsDate}
+                        open={isdate3}
+                        setOpen={setIsDate3}
                         setValue={setValue}
                     />
                 </Col>
@@ -67,13 +95,23 @@ function DropDownDemo() {
                         value={value}
                         options={['item 1', 'item 2', 'item 3']}
                         setValue={setValue}
-                        startIcon={ArrowDownDark}
+                        startIcon={CalendarIcon}
+                        endIcon={''}
                     />
                 </Col>
-                {/* simple drop down pilled */}
+                {/* simple drop down with endIcon */}
                 <Col span={4} className='mt-5'>
                     <DropDown
-                        name='simple drop down pilled'
+                        name='simple drop down'
+                        value={value}
+                        options={['item 1', 'item 2', 'item 3']}
+                        setValue={setValue}
+                    />
+                </Col>
+                {/*drop down pilled */}
+                <Col span={4} className='mt-5'>
+                    <DropDown
+                        name='drop down pilled'
                         value={value}
                         options={['item 1', 'item 2', 'item 3']}
                         setValue={setValue}
@@ -99,7 +137,7 @@ function DropDownDemo() {
                     <DropDown
                         name='drop down with checkbox'
                         value={value}
-                        options={['search', 'item 1', 'item 2', 'item 3']}
+                        options={['item 1', 'item 2', 'item 3']}
                         setValue={setValue}
                         requireCheckbox
                         selectedList={selectedList}
@@ -131,7 +169,7 @@ function DropDownDemo() {
                         value={value}
                         options={['item 0', 'item 1', 'custom']}
                         setValue={setValue}
-                        showPickerOnVal={'custom'}
+                        showDatePickerOnVal={'custom'}
                         requireDatePicker
                         placement='bottomLeft'
                     />
@@ -144,7 +182,7 @@ function DropDownDemo() {
                         value={value}
                         options={['item 0', 'item 1', 'date range']}
                         setValue={setValue}
-                        showPickerOnVal={'date range'}
+                        showDatePickerOnVal={'date range'}
                         requireDatePicker
                         placement='bottomLeft'
                         pilled

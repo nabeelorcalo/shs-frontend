@@ -2,63 +2,37 @@ import { useState } from 'react';
 import { Checkbox, Dropdown as AntDropDown } from 'antd';
 import { ArrowDownDark, DownloadIcon } from '../../assets/images';
 import { SearchBar } from '../SearchBar/SearchBar';
+import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
+import { DropDownInterface } from './DropDown_interface';
+import { handleCheckbox } from './actionHandle';
 import './style.scss';
-import { CommonDatePicker } from '../calendars/CommonDatePicker';
 
-interface Props {
-    name?: string;
-    value?: string;
-    options?: string[];
-    requireSearchBar?: boolean;
-    requireCheckbox?: boolean;
-    requireDatePicker?: boolean;
-    checkboxOnRight?: boolean;
-    searchValue?: string;
-    selectedList?: string[];
-    placement?: "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight" | "top" | "bottom" | undefined;
-    setValue?: any;
-    setSearchValue?: any;
-    setSelectedList?: any;
-    setDateValue?: any;
-    startIcon?: any;
-    pilled?: boolean;
-    showPickerOnVal?: string;
-    endIcon?: any;
-    requiredDownloadIcon?: boolean;
-}
 
-export const DropDown = ({
-    name = 'this month',
-    value,
-    options = [],
-    requireSearchBar = false,
-    requireCheckbox = false,
-    requireDatePicker = false,
-    checkboxOnRight = false,
-    searchValue = '',
-    placement = 'bottomRight',
-    setValue,
-    pilled = false,
-    showPickerOnVal,
-    setSearchValue,
-    selectedList = [],
-    setSelectedList,
-    setDateValue,
-    startIcon,
-    endIcon = ArrowDownDark,
-    requiredDownloadIcon,
-    ...props
-}: Props) => {
+
+export const DropDown = (props: DropDownInterface) => {
+    const {
+        name = 'this month',
+        value,
+        options = [],
+        requireSearchBar = false,
+        requireCheckbox = false,
+        requireDatePicker = false,
+        checkboxOnRight = false,
+        searchValue = '',
+        placement = 'bottomRight',
+        setValue,
+        pilled = false,
+        showDatePickerOnVal,
+        setSearchValue,
+        selectedList = [],
+        setSelectedList,
+        startIcon,
+        endIcon = ArrowDownDark,
+        requiredDownloadIcon,
+    } = props;
 
     const [visible, setVisible] = useState(false);
     const [openPicker, setOpenPicker] = useState(false);
-
-
-    const handleCheckbox = (e: any, option: string) => {
-        e.target.checked ?
-            setSelectedList([...selectedList, option]) :
-            setSelectedList(selectedList.filter(op => op !== option));
-    };
 
     const items = options?.map((option: string, i: number) => {
         if (requireSearchBar && option === 'search') {
@@ -76,7 +50,7 @@ export const DropDown = ({
             return {
                 label: <div className={`flex  gap-5 ${checkboxOnRight ? 'justify-between flex-row-reverse' : ''}`}>
                     <Checkbox id={option} name={option}
-                        onChange={(e) => handleCheckbox(e, option)}
+                        onChange={(e) => handleCheckbox(e, option, setSelectedList)}
                         checked={selectedList.includes(option)}
                     >
                     </Checkbox>
@@ -85,7 +59,7 @@ export const DropDown = ({
                 key: option
             }
         }
-        if (requireDatePicker && option === showPickerOnVal) {
+        if (requireDatePicker && option === showDatePickerOnVal) {
             return {
                 label:
                     <CommonDatePicker
@@ -119,11 +93,11 @@ export const DropDown = ({
             {...props}
         >
             <div>
-                <div>
-                    {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '10px' }} />}
+                <p className='flex items-center'>
+                    {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '20px' }} />}
                     {!requiredDownloadIcon && <span>{value ? value : name}</span>}
-                </div>
-                <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ marginLeft: requiredDownloadIcon ? '1px' : '10px' }} />
+                </p>
+                <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ display: !endIcon ? 'none' : '', marginLeft: requiredDownloadIcon ? '1px' : '10px' }} />
             </div>
         </AntDropDown>
     )
