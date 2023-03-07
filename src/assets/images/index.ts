@@ -97,6 +97,10 @@ export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
 export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
 export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';
 export { ReactComponent as MoreIcon} from './leaves/MoreIcon.svg';
+export { ReactComponent as CalendarWhiteIcon} from './leaves/CalendarWhiteIcon.svg';
+export { ReactComponent as DownloadIconLeave} from './leaves/DownloadIconLeave.svg';
+export { ReactComponent as FilterIconLeave} from './leaves/FilterIconLeave.svg';
+export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';
 
 
 

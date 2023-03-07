@@ -4,8 +4,9 @@ import type { MenuProps } from 'antd';
 import BoxWrapper from "../../components/BoxWrapper/boxWrapper"
 import GlobalTable from "../../components/Table/Table"
 import "./style.scss"
-import { MoreIcon } from "../../assets/images";
+import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, MoreIcon } from "../../assets/images";
 import { Button, SearchBar } from "../../components";
+import { background } from "@storybook/theming";
 interface DataType {
   key: string,
   requestDate: string,
@@ -74,7 +75,7 @@ const columns = [
           backgroundColor: data.status === "Pending" ?
             "#FFC15E" : data.status === "Declined" ?
               "#D83A52" : "#4ED185",
-              color:"#fff"
+          color: "#fff"
         }}>
         {data.status}
       </div>
@@ -126,7 +127,7 @@ const data: DataType[] = [
     status: "Declined",
     Actions: "fduhguisd",
   },
-  
+
 
 ];
 
@@ -135,13 +136,44 @@ const index = () => {
     <div className="main_view_detail">
       <Row className=' items-center'>
         <Col xs={24} md={12} lg={12}>
-          <SearchBar className="SearchBar" handleChange={(e:any)=>{console.log(e);
-          }}/>
+          <SearchBar className="SearchBar" handleChange={(e: any) => {
+            console.log(e);
+          }} />
         </Col>
         <Col xs={24} md={12} lg={12} >
           <div className='flex items-center justify-end view_history_button_wrapper'>
-            <Button label="hello" type="primary" onClick={()=>{console.log("heloo");
-            }}/>
+          <Button
+              icon={<FilterIconLeave className="mr-2" />}
+              label="Filters"
+              upcomingIcon={<ChevronRight className="ml-2" />}
+              onClick={() => { }}
+              shape="default"
+              size="large"
+              type="default"
+              style={{ color: "#A0A3BD", background: "#E6F4F9", display: "flex", alignItems: "center", }}
+              className="button_request_leave mr-5"
+            />
+            <Button
+              icon={<DownloadIconLeave />}
+              onClick={() => { }}
+              shape="default"
+              size="large"
+              type="default"
+              className="button_request_leave mr-5"
+              style={{ background: "#E6F4F9", display: "flex", alignItems: "center", justifyContent: "center" }}
+            />
+            <Button
+              icon={<CalendarWhiteIcon className="mr-1" />}
+              label="Request Leave"
+              onClick={() => { }}
+              shape="default"
+              size="large"
+              type="default"
+              style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center" }}
+              className="button_request_leave"
+            />
+
+
           </div>
         </Col>
         <Divider />

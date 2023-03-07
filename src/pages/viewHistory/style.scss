@@ -3,8 +3,11 @@
         max-width: 375px;
     }
     .view_history_button_wrapper{
-        // .button{
-        //     padding: 14px 30px;
-        // }
+        .button_request_leave{
+            border: unset;
+            &:hover{
+                border: unset;
+            }
+        }
     }
 }
