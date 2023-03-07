@@ -1,55 +1,14 @@
-.ant-layout-header {
-  background-color: #fff;
-  box-shadow: 0px 4px 12px 0px #0000000A;
-  line-height: normal;
-  padding: 10px 0;
-  height: 80px;
-  display: flex;
-
-  .ik-logo {
-    width: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ik-header-content {
-    flex: 1;
-
-    .ik-header-left {
-      display: flex;
-      height: 100%;
+.ant-layout {
+  .ant-layout.ant-layout-has-sider {
+    min-height: calc(100vh - 120px);
+    @media (min-width: 601px) {
+      min-height: calc(100vh - 130px);
+    }
+    @media (min-width: 992px) {
+      min-height: calc(100vh - 140px);
     }
   }
-}
-
-.ik-header-collapsebale {
-  border-left: 1px solid #D9DBE9;
-  padding: 0 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .ik-collapseable-button {
-    height: 24px;
-    width: 24px;
-    overflow: hidden;
-    cursor: pointer;
-
-    .ik-collapseable-button-toggle {
-      width: 48px;
-      height: 24px;
-      display: flex;
-      transition: all 0.25s;
-    }
-
-    &.hide {
-      .ik-collapseable-button-toggle{
-        transform: translateX(0);
-      }
-    }
-    .ik-collapseable-button-toggle{
-      transform: translateX(-24px);
-    }
+  .ant-layout-content {
+    padding: 30px;
   }
 }

@@ -1,16 +1,30 @@
 .ant-layout-header {
   background-color: #fff;
-  box-shadow: 0px 4px 12px 0px #0000000A;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.04);
   line-height: normal;
   padding: 10px 0;
   height: 80px;
   display: flex;
+  position: relative;
+  @media (max-width: 991px) {
+    height: 70px;
+  }
+  @media (max-width: 600px) {
+    height: 60px;
+  }
 
   .ikd-logo {
     width: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+    padding: 0 15px;
+    @media (max-width: 767px) {
+      max-width: 120px;
+      min-width: 120px;
+      width: 100%;
+    }
   }
 
   .ikd-header-content {
@@ -20,6 +34,7 @@
     .ikd-header-left {
       display: flex;
       height: 100%;
+      padding-right: 20px;
 
       .ikd-header-collapsebale {
         border-left: 1px solid #D9DBE9;
@@ -27,6 +42,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        @media (max-width: 767px) {
+          padding: 0 15px;
+        }
       
         .ikd-collapseable-button {
           height: 24px;
@@ -59,6 +77,19 @@
         width: 600px;
         border-left: 1px solid #D9DBE9;
         padding-left: 20px;
+        @media (max-width: 1400px) {
+          width: 400px;
+        }
+        @media (max-width: 1200px) {
+          max-width: 400px;
+          width: 100%;
+        }
+        @media (max-width: 767px) {
+          padding-left: 15px;
+        }
+        @media (max-width: 600px) {
+          display: none;
+        }
         .ant-input-group-wrapper {
           .ant-input-wrapper {
             .ant-input-affix-wrapper {
@@ -101,16 +132,78 @@
           }
         }
       }
+
+      .mobile-search-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-left: 1px solid #D9DBE9;
+        padding-left: 15px;
+        @media (min-width: 601px) {
+          display: none;
+        }
+        .mobile-searchbox-toggler {
+          cursor: pointer;
+          min-width: 24px;
+        }
+        .ant-input-group-wrapper {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 0;
+          z-index: 111;
+          overflow: hidden;
+          transition: all 0.3s;
+          .ant-input-wrapper {
+            .ant-input-affix-wrapper {
+              padding: 0;
+              position: relative;
+              .ant-input-prefix {
+                margin: 0;
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                left: 20px;
+                margin-top: -12px;
+                z-index: 99;
+              }
+              .ant-input {
+                background-color: #E6F4F9;
+                border-radius: 0;
+                transition: all 0.3s;
+                padding-left: 64px;
+                height: 60px;
+                width: 100%;
+              }
+            }
+            .ant-input-group-addon {
+              display: none;
+            }
+          }
+        }
+        &.show {
+          .ant-input-group-wrapper {
+            width: 199%;
+          }
+        }
+      }
       
       .ikd-header-organisation {
         border-left: 1px solid #D9DBE9;
         padding: 0 20px;
-      
+        @media (max-width: 960px) {
+          display: none;
+        }
         .organisation-title {
           font-size: 12px;
           color: #A0A3BD;
           line-height: 100%;
           margin-bottom: 14px;
+          white-space: nowrap;
+        }
+        .organisation-logo {
+          min-width: 120px;
         }
       }
     }
@@ -119,30 +212,43 @@
       display: flex;
       margin-left: auto;
       padding-right: 30px;
+      @media (max-width: 767px) {
+        padding-right: 15px;
+      }
       .loggedin-user {
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
+
+        .ant-dropdown-trigger.loggedin-user-avatar {
+          cursor: pointer;
+        }
       }
       .ikd-header-notification {
+        min-width: 24px;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-right: 30px;
-
+        @media (max-width: 767px) {
+          margin-right: 15px;
+        }
         .notification-handler {
           cursor: pointer;
         }
       }
       .ikd-header-message-notif {
+        min-width: 24px;
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-right: 30px;
-
+        @media (max-width: 767px) {
+          margin-right: 15px;
+        }
         .message-notif-handler {
           cursor: pointer;
         }
@@ -150,7 +256,6 @@
     }
   }
 }
-
 
 .ant-drawer  {
   .ant-drawer-content.notifications-drawer {
@@ -172,7 +277,7 @@
       .ant-list.ant-list-split {
         .ant-list-items {
           .ant-list-item {
-            border-color: #D9DBE9;
+            border-bottom: 1px solid #D9DBE9;
             padding-top: 20px;
             padding-bottom: 10px;
 
@@ -203,12 +308,23 @@
   }
 }
 
-
 .ant-dropdown.user-dropdown {
+  .ant-dropdown-arrow {
+    background-image: url(../../../assets/images/header/polygon.png);
+    background-repeat: no-repeat;
+    height: 33px;
+    width: 30px;
+    top: 13px;
+    &::after, &::before {
+      display: none;
+    }
+  }
   .user-dropdown-container {
+    border: 1px solid #D9DBE9;
     padding: 20px 30px;
     background-color: #fff;
     box-shadow: 0px 0px 8px 2px #09A1DA1A;
+
     border-radius: 8px;
     min-width: 336px;
     box-sizing: border-box;
@@ -243,10 +359,12 @@
         &:hover {
           background-color: transparent;
         }
+
+        .ant-dropdown-menu-item-icon {
+          margin-right: 20px;
+        }
       }
     }
     
   }
 }
-
-

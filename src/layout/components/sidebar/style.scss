@@ -1,27 +1,93 @@
-.sidebar-user-profile {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #D9D9D9;
-  padding: 20px;
-
-  .ant-avatar {
-    margin-right: 20px;
+.ant-layout-sider {
+  .ant-layout-sider-children {
+    padding: 35px 0;
   }
-  .sidebar-user-profile-content {
-    flex: 1;
 
-    .ant-typography {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 600;
-      line-height: 1.277777778;
+  .sidebar-user-profile {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(217, 217, 217, 0.25);
+    padding: 20px;
+  
+    .ant-avatar {
+      min-width: 48px;
+      max-width: 48px;
+    }
+    .sidebar-user-profile-content {
+      flex: 1;
+      margin-left: 20px;
+      white-space: nowrap;
+  
+      .ant-typography {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.277777778;
+        color: #ffffff;
+      }
+      .sidebar-user-profile-role {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.2857;
+        color: #9BD5E8;
+      }
+    }
+  }
+
+  .ant-menu.ant-menu-dark {
+    padding: 24px 20px;
+    .ant-menu-item {
+      border-radius: 12px;
+      margin: 4px 0 0;
+      height: 42px;
+      line-height: 42px;
+      font-size: 16px;
+      font-weight: 400;
       color: #ffffff;
+      padding: 0 15px !important;
+      width: auto;
+
+      &.ant-menu-item-selected {
+        background-color: #252445;
+        color: #ffffff;
+      }
+
+      .ant-menu-title-content {
+        margin-left: 15px;
+      }
     }
-    .sidebar-user-profile-role {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.2857;
-      color: #9BD5E8;
+    .ant-menu-item-group {
+      .ant-menu-item-group-title {
+        padding: 8px 0 12px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5714285;
+        color: #A0A3BD;
+      }
     }
+  }
+
+  &.ant-layout-sider-collapsed {
+    .sidebar-user-profile {
+      text-align: center;
+      display: block;
+      .sidebar-user-profile-content {
+        opacity: 0;
+        margin-left: 0;
+        display: none;
+      }
+    }
+    .ant-menu-item {
+      .ant-menu-item-icon {
+        vertical-align: -6px;
+      } 
+    }
+
+    .ant-menu-item-group {
+      .ant-menu-item-group-title {
+        display: none;
+      }
+    }
+    
   }
 }

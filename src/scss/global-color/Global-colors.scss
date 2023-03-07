@@ -1,4 +1,4 @@
-@import "../colors.scss" ;
+@import "../_colors.scss" ;
 .primary-bg-color {
     background-color: $primary-bg-color;
 }
@@ -189,4 +189,12 @@
 
 .text-info-color {
     color: $text-info-color;
+}
+
+.red-graph-tooltip-bg{
+    background-color: $red-graph-tooltip-color;
+}
+
+.green-graph-tooltip-bg{
+    background-color: $green-graph-tooltip-color;
 }

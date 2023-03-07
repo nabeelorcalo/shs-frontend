@@ -1,50 +1,37 @@
 import React, {FC, useEffect, useState} from 'react'
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import './style.scss'
 import type { MenuProps } from 'antd';
-import { Avatar, Typography, Layout, Menu } from 'antd';
-import { Link } from 'react-router-dom';
-import {
-} from '../../../assets/images'
+import { Avatar, Typography, Layout, Menu, theme } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { } from '../../../assets/images'
 import avatar from '../../../assets/images/header/avatar.svg'
+import { itemsManager } from './menuManager'
+import { itemsStudents } from './menuStudents'
+import { itemsIntern } from './menuIntern'
+import { itemsCompanyAdmin } from './menuCompanyAdmin'
+import { itemsUniversity } from './menuUniversity'
+import { itemsSystemAdmin } from './menuSystemAdmin'
+import { itemsDelegateAgent } from './menuDelegateAgent'
+import { itemsPropertyAgent } from './menuPropertyAgent'
 const { Sider } = Layout;
-type MenuItem = Required<MenuProps>['items'][number];
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: 'group',
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  } as MenuItem;
+type SidebarProps = {
+  collapsed: boolean
+  sidebarToggler: () => void
+  setCollapsed:any
 }
 
 
-// Temporary
 
-
-
-const AppSidebar:FC = () => {
+const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [collapsed, setCollapsed] = useState(false);
-  const items: MenuProps['items'] = [
-    getItem('Dashboard', 'dashboard', <SettingOutlined />),
-  
-    getItem('Jobs', 'jobs', null, [
-      getItem('Search Jobs', 'searchJobs'),
-      getItem('Applications', 'applications')
-    ], 'group'),
-  ];
-
-
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { useToken } = theme
+  const { token } = useToken()
+  const [selectedKey, setSelectedKey] = useState(location.pathname)
+  const [collapsedWidth, setCollapsedWidth] = useState(94)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -56,10 +43,39 @@ const AppSidebar:FC = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
+  const handleMenuClick : MenuProps['onClick'] = (item) => {
+    if(item.key) {
+      setSelectedKey(item.key)
+      navigate(item.key)
+    }
   };
-  
+
+  const menuSwitcher = (role:string) => {
+    if(role === "Student") {
+      return itemsStudents
+    }
+    if(role === "Intern") {
+      return itemsIntern
+    }
+    if(role === "Manager") {
+      return itemsManager
+    }
+    if(role === 'Company Admin') {
+      return itemsCompanyAdmin
+    }
+    if(role === 'University Rep') {
+      return itemsUniversity
+    }
+    if(role === 'System Admin') {
+      return itemsSystemAdmin
+    }
+    if(role === 'Delegate Agent') {
+      return itemsDelegateAgent
+    }
+    if(role === 'Agent') {
+      return itemsPropertyAgent
+    }
+  }
 
 
   /* RENDER APP
@@ -70,6 +86,13 @@ const AppSidebar:FC = () => {
       collapsible
       collapsed={collapsed}
       width={250}
+      collapsedWidth={collapsedWidth}
+      breakpoint="md"
+      style={{backgroundColor: token.colorPrimary}}
+      onBreakpoint={(broken) => {
+        setCollapsedWidth(broken ? 0: 94)
+        setCollapsed(broken)
+      }}
     >
       <div className='sidebar-user-profile'>
         <Avatar size={48} src={avatar} />
@@ -80,12 +103,12 @@ const AppSidebar:FC = () => {
       </div>
 
       <Menu
-        onClick={onClick}
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
+        items={menuSwitcher('Student')}
+        onClick={handleMenuClick}
+        defaultSelectedKeys={[selectedKey]}
         mode="inline"
-        items={items}
         theme="dark"
+        style={{backgroundColor: token.colorPrimary}}
       />
     </Sider>
   )
