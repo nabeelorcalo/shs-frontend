@@ -8,97 +8,97 @@ import GlobalTable from "../../../components/Table/Table";
 import "react-circular-progressbar/dist/styles.css";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import gallery from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
-import Video from "../../../assets/images/ColorfullIconsProgressbar/video.png";
-import Document from "../../../assets/images/ColorfullIconsProgressbar/document.png";
-import Folder from "../../../assets/images/ColorfullIconsProgressbar/folder.png";
+import Video from "../../../assets/images/ColorfullIconsProgressbar/video.svg";
+import Document from "../../../assets/images/ColorfullIconsProgressbar/doc.svg";
+import Folder from "../../../assets/images/ColorfullIconsProgressbar/file.svg";
 import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
+import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
+import More from "../../../assets/images/ColorfullIconsProgressbar/More.svg";
 
 const arraydata = [
   {
     icon: gallery,
-    progressbarColor: "red",
+    progressbarColor: "#4CA4FD",
     progressbarValue: 30,
-    storage: "128GB",
+    storage: "123GB",
     title: "Media",
   },
   {
     icon: Video,
-    progressbarColor: "red",
+    progressbarColor: "#E96F7C",
     progressbarValue: 60,
-    storage: "128GB",
+    storage: "126GB",
     title: "Video",
   },
   {
     icon: Document,
-    progressbarColor: "red",
+    progressbarColor: "#FFC15D",
     progressbarValue: 50,
-    storage: "128GB",
+    storage: "28GB",
     title: "Document",
   },
   {
     icon: Folder,
-    progressbarColor: "red",
+    progressbarColor: "#6AAD8E",
     progressbarValue: 80,
     storage: "128GB",
-    title: "Folder",
+    title: "Other Files",
   },
 ];
 
 const columns = [
-    {
-        title: 'No',
-        dataIndex: 'key',
-        key: 'key',
-        minWidth: 300
-    },
-    {
-        title: 'Date Applied',
-        dataIndex: 'dateApplied',
-        key: 'dateApplied',
-    },
-    {
-        title: 'Company',
-        dataIndex: 'company',
-        key: 'company',
+  {
+    title: "Title",
+    dataIndex: "Title",
+    key: "key",
+    minWidth: 300,
+  },
+  {
+    title: "Date Modified",
+    dataIndex: "datemodified",
+    key: "datemodified",
+  },
+  {
+    title: "Size",
+    dataIndex: "size",
+    key: "size",
+  },
 
-    },
-    {
-        title: 'Type of work',
-        dataIndex: 'typeOfWork',
-        key: 'typeOfWork',
-        width: 200,
+  {
+    title: "Action",
+    key: "Action",
+    render: (_: any, data: any) => (
+      <Space size="middle">
+        <div style={{ cursor: "pointer" }}>
+          <img src={More} alt="threedots" />
+        </div>
+      </Space>
+    ),
+  },
+];
 
-    },
-    {
-        title: 'Internship Type',
-        dataIndex: 'internshipType',
-        key: 'internshipType',
-    },
-    {
-        title: 'Nature of work',
-        dataIndex: 'natureOfWork',
-        key: 'natureOfWork',
-    },
-    {
-        title: 'position',
-        dataIndex: 'Position',
-        key: 'Position',
-    },
-    {
-        title: 'Status',
-        dataIndex: 'Status',
-        key: 'Status',
-    },
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_: any, data: any) => (
-            <Space size="middle">
-                <a onClick={()=>alert(`Id For The Editabel record is  ${data.key} `)}>Edit</a>
-                <a onClick={()=>alert(`deleted record id  ${data.key} `)}>Delete</a>
-            </Space>
-        ),
-    },
+const tableData = [
+  {
+    key: "01",
+    Title: "file",
+    datemodified: "kljdasfhuasd",
+    size: "123",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "02",
+    Title: "file2",
+    datemodified: "kljdasfhuasd",
+    size: "123",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "03",
+    Title: "file3",
+    datemodified: "kljdasfhuasd",
+    size: "123",
+    Actions: "fduhguisd",
+  },
 ];
 
 const DigiVaultStudent = () => {
@@ -125,7 +125,7 @@ const DigiVaultStudent = () => {
               <span className="setting-btn-text font-normal text-sm">
                 Settings
               </span>
-              <SettingFilled style={{ color: "#A0A3BD" }} />
+              <img src={SettingIcon} alt="settIcon" width={24} height={24} />
             </Button>
           </div>
         </Col>
@@ -150,18 +150,28 @@ const DigiVaultStudent = () => {
             </Row>
           </div>
         </Col>
+
         <Col xxl={6} xl={6} lg={6} md={6} sm={6} xs={24}>
           <div className="storage">
             <Row className="storage-bar-header">
-              <Col lg={10}>
+              <Col xxl={10} xl={10} lg={10} md={10} sm={6} xs={24}>
                 <Progress
+                  strokeWidth={12}
                   strokeColor={"#5D89F4"}
                   strokeLinecap="butt"
                   type="circle"
                   percent={75}
                 />
               </Col>
-              <Col className="flex flex-col justify-center  ml-4" lg={14}>
+              <Col
+                xxl={12}
+                xl={12}
+                lg={12}
+                md={12}
+                sm={6}
+                xs={24}
+                className="flex flex-col justify-center  ml-4"
+              >
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>
               </Col>
@@ -177,11 +187,15 @@ const DigiVaultStudent = () => {
       <Row className="pt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="recent-files">
-            <div className="recent-files-title font-semibold text-lg">
+            <div className="recent-files-title font-semibold text-lg pb-6">
               Recent Files
             </div>
             <div className="recent-files-tible">
-              <GlobalTable columns={columns}/>
+              <GlobalTable
+                pagination={false}
+                columns={columns}
+                tableData={tableData}
+              />
             </div>
           </div>
         </Col>

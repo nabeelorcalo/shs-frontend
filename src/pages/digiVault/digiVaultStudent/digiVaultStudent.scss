@@ -52,8 +52,8 @@
     border-radius: 10px;
     .storage-bar-header {
       background: #e6f4f9;
-      opacity: 0.3;
       border-radius: 10px;
+      padding: 10px;
     }
     .available-storage {
       font-weight: 500;
@@ -66,6 +66,17 @@
       font-size: 14px;
       line-height: 22px;
       color: #a0a3bd;
+    }
+
+    .ant-progress-circle-path {
+      color: #5d89f4 !important;
+    }
+
+    .ant-progress-text {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 32px;
+      color: #4e4b66;
     }
   }
 
@@ -84,4 +95,6 @@
     .recent-files-tible {
     }
   }
+
+  
 }
