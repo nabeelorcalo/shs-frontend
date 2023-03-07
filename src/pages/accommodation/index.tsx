@@ -1,12 +1,21 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import "./style.scss";
 
 const Accommodation = () => {
   return (
     <div className="page-content">
-      <PageHeader title="Accommodation" />
+      <PageHeader
+        title="Accommodation"
+      />
+      <div className="page-filterbar">
+        <div className="page-filterbar-left">
+
+        </div>
+        <div className="page-filterbar-left">
+
+        </div>
+      </div>
     </div>
   )
 }
