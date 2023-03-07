@@ -11,7 +11,7 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
-  const user_role = userData.role || "Student";
+  const user_role = userData.role || "SystemAdmin";
   const publicRoutes = getRoutes("Public");
   let routes = getRoutes(user_role);
   routes = routes.concat(publicRoutes);

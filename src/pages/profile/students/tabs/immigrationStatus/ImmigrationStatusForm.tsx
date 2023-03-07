@@ -16,9 +16,6 @@ const ImmigrationStatusForm = () => {
           <Form
               layout='vertical'
     name="basic"
-    
-   
- 
     initialValues={{ remember: true }}
     onFinish={onFinish}
     onFinishFailed={onFinishFailed}
