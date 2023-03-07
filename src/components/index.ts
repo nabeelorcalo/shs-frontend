@@ -12,3 +12,4 @@ export * from './DrawSignature';
 export * from './TypeSignature';
 export * from './UploadDocument'
 export * from './LeaveCard/leaveCard';
+export * from './ContractCard/ContractCard'

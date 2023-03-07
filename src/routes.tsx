@@ -7,12 +7,13 @@ import Signup from "./pages/onBoarding/signup";
 import ForgotPassword from "./pages/onBoarding/forgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
-import {ROUTES_CONSTANTS} from "./config/constants";
+import { ROUTES_CONSTANTS } from "./config/constants";
 
 // Remove it
 // dummy components
 import Graph from './components/Graph';
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+import DemoCard from "./components/ContractCard/demoCard";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -104,6 +105,11 @@ export const publicRoutes = [
     key: 'dropdowndemo',
     path: '/demodropdown',
     element: <DropDownDemo />
+  },
+  {
+    key: 'card',
+    path: "/democards",
+    element: <DemoCard />
   }
   // ------Remove till here------
 ];
