@@ -1,3 +1,7 @@
+@import '../../../../scss/colors';
+
+
+
 .personal-information {
   .title {
     font-family: "Outfit";
@@ -8,6 +12,15 @@
     color: #14142a;
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+  .input-style{
+    height: 48px;
+    border-radius: 8px;
+    background-color: #E6F4F9;
+  }
+  .text-area{
+    border-radius: 8px;
+    background-color: #E6F4F9;
   }
 }
 .general-information{
@@ -20,6 +33,15 @@
     color: #14142a;
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+  .input-style{
+    height: 48px;
+    border-radius: 8px;
+    background-color: #E6F4F9;
+  }
+  .text-area{
+    border-radius: 8px;
+    background-color: #E6F4F9;
   }
 }
 .immigration-status{
@@ -37,14 +59,85 @@ font-style: normal;
 font-weight: 500;
 font-size: 16px;
 line-height: 24px;
-/* identical to box height, or 150% */
-
-
-/* Text/Body */
-
 color: #4E4B66;
 margin-top: 1rem;
 margin-bottom: 1rem;
 
   }
+ 
 }
+.immigration-form{
+  .input-style{
+    background: #FFFFFF;
+    height: 48px;
+    
+    box-shadow: 0px 2px 48px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+  }
+}
+.document-tabs{
+  .upload-button{
+    background: #4A9D77;
+border: 1px solid #4A9D77;
+box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+border-radius: 8px;
+color: $white-bg-color;
+  }
+  .animate{
+    background: "#FFFFFF";
+    border-radius: 8px;
+    padding:1rem;
+    margin-top: 20px;
+   
+  } 
+  .animate:hover {
+    background-color: #E6F4F9;
+  }
+  
+  .animate:hover .button-ts {
+    display: block;
+  display: flex;
+  gap: 10px;
+  }
+  
+  .animate .button-ts {
+    display: none;
+  }
+  
+}
+.card-tabs{
+  .upload-button{
+    background: #4A9D77;
+border: 1px solid #4A9D77;
+box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+border-radius: 8px;
+color: $white-bg-color;
+  }
+  
+  
+ 
+}
+.animate{
+  background: "#FFFFFF";
+  border-radius: 8px;
+  padding:1rem;
+  margin-top: 20px;
+ 
+} 
+.animate:hover {
+  background-color: #E6F4F9;
+}
+
+.animate:hover .button-ts {
+  display: block;
+display: flex;
+gap: 10px;
+}
+
+.animate .button-ts {
+  display: none;
+}
+
+ 
+
+

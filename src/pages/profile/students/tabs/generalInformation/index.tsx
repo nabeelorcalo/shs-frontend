@@ -1,4 +1,5 @@
 import {
+  AutoComplete,
     Button,
     Col,
     Divider,
@@ -88,7 +89,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your email!" },
               ]}
             >
-              <Input />
+              <Input className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -118,7 +119,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Address!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -129,7 +130,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -156,19 +157,30 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your University Contact Name!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-            <Form.Item
-              label="University Phone Number"
-              name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+          <Form.Item
+        name="phone"
+        label="Phone Number"
+              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              
             >
-                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-            </Form.Item>
+               <Input.Group compact>
+      <Select size="large" defaultValue="+92" style={{ width: '25%' }}>
+        <Option value="+44">+44</Option>
+        <Option value="+92">+92</Option>
+      </Select>
+                <AutoComplete
+                  size='large'
+        style={{ width: '75%' }}
+        placeholder="xxxxxxx-xxx"
+        options={[{ value: 'text 1' }, { value: 'text 2' }]}
+      />
+    </Input.Group>
+
+      </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
@@ -178,7 +190,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Graduate Year!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -243,7 +255,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Company Name!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
         </Row>
@@ -260,19 +272,30 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
           <Form.Item
-              label="Phone Number"
-              name="phonenumber"
-              rules={[
-                { required: true, message: "Please input your Phone Number!" },
-              ]}
+        name="phone"
+        label="Phone Number"
+              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              
             >
-                <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
-            </Form.Item>
+               <Input.Group compact>
+      <Select size="large" defaultValue="+92" style={{ width: '25%' }}>
+        <Option value="+44">+44</Option>
+        <Option value="+92">+92</Option>
+      </Select>
+                <AutoComplete
+                  size='large'
+        style={{ width: '75%' }}
+        placeholder="xxxxxxx-xxx"
+        options={[{ value: 'text 1' }, { value: 'text 2' }]}
+      />
+    </Input.Group>
+
+      </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             <Form.Item
@@ -317,7 +340,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Address!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -328,7 +351,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -339,7 +362,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Country!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
               </Row>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  AutoComplete,
   Button,
   Col,
   Divider,
@@ -24,7 +25,7 @@ const PersonalInformation = () => {
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
+      <Select style={{ width: 70,height:"48px" }}>
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
@@ -64,7 +65,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your First Name!" },
               ]}
             >
-              <Input placeholder="Enter First Name" />
+              <Input placeholder="Enter First Name" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -75,7 +76,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Last Name!" },
               ]}
             >
-              <Input />
+              <Input className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -102,7 +103,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your POB!" },
               ]}
             >
-              <Input />
+              <Input className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -147,16 +148,29 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Email!" },
               ]}
             >
-              <Input />
+              <Input className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
           <Form.Item
         name="phone"
         label="Phone Number"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
-      >
-        <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              
+            >
+               <Input.Group compact>
+      <Select size="large" defaultValue="+92" style={{ width: '25%' }}>
+        <Option value="+44">+44</Option>
+        <Option value="+92">+92</Option>
+      </Select>
+                <AutoComplete
+                  size='large'
+        style={{ width: '75%' }}
+        placeholder="xxxxxxx-xxx"
+        options={[{ value: 'text 1' }, { value: 'text 2' }]}
+      />
+    </Input.Group>
+
       </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -167,7 +181,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your National Ensurace Number!" },
               ]}
             >
-              <Input placeholder="Enter Here" />
+              <Input placeholder="Enter Here" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -194,7 +208,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Delegate Refrence Number!" },
               ]}
             >
-              <Input />
+              <Input className="input-style" />
             </Form.Item>
           </Col>
         </Row>
@@ -211,7 +225,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Description!" },
               ]}
             >
-              <TextArea rows={4} placeholder="Write about yourself" maxLength={6} />
+              <TextArea rows={4} placeholder="Write about yourself" maxLength={6} className="text-area" />
             </Form.Item>
           </Col>
         </Row>
@@ -247,7 +261,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your House No!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -258,7 +272,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Street!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -285,7 +299,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input />
+              <Input className="input-style"/>
             </Form.Item>
           </Col>
         </Row>
@@ -340,7 +354,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Medical Condition!" },
               ]}
             >
-              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} />
+              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="text-area"/>
             </Form.Item>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
