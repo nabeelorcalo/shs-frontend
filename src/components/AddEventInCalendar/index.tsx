@@ -1,6 +1,4 @@
-import {
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { VideoCameraOutlined } from "@ant-design/icons";
 import { Button, Form, Modal, Radio, Space, TimePicker } from "antd";
 import { useState } from "react";
 import closeIcon from "../../assets/images/AddEventInCalendar/close-circle.svg";
@@ -9,15 +7,20 @@ import { Tabs, TabsProps } from "antd";
 import { Input } from "antd";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { CloseCircleFilled } from "@ant-design/icons/lib/icons";
+import AppTabs from "../Tabs";
 const { TextArea } = Input;
 dayjs.extend(customParseFormat);
 
 interface AddEventInCalendarProps {
-  title?: string;
+  title: string;
   closeFunction?: any;
   open?: boolean;
   zoomVideoLink?: string;
   setOpen?: any;
+  width?: any;
+  closeIcon?: any;
+  footer?: any;
 }
 
 export const AddEventInCalendar = ({
@@ -25,6 +28,7 @@ export const AddEventInCalendar = ({
   closeFunction,
   setOpen,
   open,
+  width,
   zoomVideoLink,
 }: AddEventInCalendarProps) => {
   const onChange = (key: string) => {
@@ -95,31 +99,6 @@ export const AddEventInCalendar = ({
             <label>Description</label>
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
-
-          <div className="flex justify-end mt-5">
-            <Button
-              className="mx-2 mx--2 competitor-modal-cencel-btn"
-              style={{
-                height: "40px",
-                color: "#4a9d77 ",
-                border: "1px solid #4a9d77",
-              }}
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="mx-2 "
-              style={{
-                height: "40px",
-                background: "#4a9d77",
-                color: "#FFFFFF",
-                width: "80px",
-              }}
-            >
-              Add
-            </Button>
-          </div>
         </Form>
       </div>
     );
@@ -168,7 +147,7 @@ export const AddEventInCalendar = ({
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
 
-          <div className="flex justify-end mt-5">
+          {/* <div className="flex justify-end mt-5">
             <Button
               className="mx-2 mx--2 competitor-modal-cencel-btn"
               style={{
@@ -191,45 +170,69 @@ export const AddEventInCalendar = ({
             >
               Add
             </Button>
-          </div>
+          </div> */}
         </Form>
       </div>
     );
   };
 
-  const items: TabsProps["items"] = [
-    { key: "1", label: `Meeting`, children: <Meeting /> },
-    { key: "2", label: `Reminder`, children: <Reminder /> },
-  ];
+  // const items: TabsProps["items"] = [
+  //   { key: "1", label: `Meeting`, children: <Meeting /> },
+  //   { key: "2", label: `Reminder`, children: <Reminder /> },
+  // ];
+ 
 
   return (
     <div className="add-event-in-calendar">
- 
       <Modal
         open={open}
         centered
         onCancel={closeFunction}
-        closable={false}
-        footer={null}
+        closeIcon={
+          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+        }
+        footer={[
+          <Button
+            key="Cancel"
+            style={{
+              border: "1px solid #4a9d77",
+              color: "#4a9d77",
+              padding: "0px 20px",
+            }}
+          >
+            Cancel
+          </Button>,
+          <Button
+            key="submit"
+            style={{
+              backgroundColor: "#4a9d77",
+              border: "1px solid #4a9d77",
+              color: "#fff",
+              padding: "0px 20px",
+            }}
+          >
+            Submit
+          </Button>,
+        ]}
+        title={title}
+        width={720}
       >
         <div className="flex flex-col">
-          <div className="flex justify-between">
-            <span className="text-xl font-medium" style={{ color: "#14142A" }}>
-              {title}
-            </span>
-            <img
-              src={closeIcon}
-              alt="closeIcon"
-              onClick={() => setOpen(false)}
-            ></img>
-          </div>
-
-          <Tabs
-            size="large"
-            defaultActiveKey="1"
-            items={items}
-            onChange={onChange}
-          />
+        <AppTabs
+  items={[
+    {
+      children: <Meeting />,
+      key: '1',
+      label: 'Meeting'
+    },
+    {
+      children: <Reminder />,
+      key: '2',
+      label: 'Reminder'
+    },
+ 
+  ]}
+ />
         </div>
       </Modal>
     </div>

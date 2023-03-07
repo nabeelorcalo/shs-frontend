@@ -1,4 +1,6 @@
-// Header Icons
+
+
+
 export { ReactComponent as Logo } from './header/logo.svg';
 export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
 export { ReactComponent as IconCollapsebleOn } from './header/icon-collapseable-on.svg';
@@ -91,3 +93,9 @@ export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
+
+
+//structure
+export { ReactComponent as StructureCompanyAdminAvater } from './structure/avatar-img.svg';
+export { ReactComponent as StructureCompanyAdminDownward} from './structure/downward.svg';
+export { ReactComponent as StructureCompanyAdminProfile2user } from './structure/profile-2user.svg';
