@@ -341,8 +341,8 @@ const companyAdminRoutes = [
         element: <Internships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -536,8 +536,8 @@ const studentRoutes = [
         element: <Application />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
