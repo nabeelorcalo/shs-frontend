@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 // Header Icons
 export { ReactComponent as Logo } from './header/logo.svg';
 export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
