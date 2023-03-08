@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
-    "@ant-design/plots": "^1.2.5",
     "@ant-design/icons": "^5.0.1",
+    "@ant-design/plots": "^1.2.5",
     "antd": "^5.2.2",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.7",
@@ -24,7 +24,10 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
     "react-organizational-chart": "^2.2.0",
+    "react-responsive-pinch-zoom-pan": "^0.3.0",
     "react-router-dom": "^6.8.2",
+    "react-swipeable-views": "0.14.0",
+    "react-zoom-pan-pinch": "^3.0.2",
     "storybook": "^6.5.16",
     "vite-plugin-svgr": "^2.4.0"
   },
