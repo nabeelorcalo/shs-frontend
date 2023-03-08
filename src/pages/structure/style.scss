@@ -1,16 +1,17 @@
 @import "../../scss/colors.scss";
 .structure {
-
   overflow-x: scroll;
   &::-webkit-scrollbar {
     background-color: #363565;
     border-radius: 10px;
     border: 3px solid #ffffff;
-   
   }
 }
+// .zoom-button {
+//   right: 0;
+//   bottom: 50%;
+// }
 .struture-card {
-  
   .card {
     text-align: center;
     .borderLeft {

@@ -98,3 +98,15 @@ export { default as SearchIcon } from './search-icon.png';
 export { ReactComponent as StructureCompanyAdminAvater } from './structure/avatar-img.svg';
 export { ReactComponent as StructureCompanyAdminDownward} from './structure/downward.svg';
 export { ReactComponent as StructureCompanyAdminProfile2user } from './structure/profile-2user.svg';
+export { ReactComponent as StructureMinus} from './structure/minus.svg';
+export { ReactComponent as StructureAdd } from './structure/add.svg';
+
+//setting
+export { ReactComponent as SettingMap } from './setting/map.svg';
+export { ReactComponent as SettingPeople } from './setting/people.svg';
+export { ReactComponent as SettingCalendarRemove } from './setting/calendar-remove.svg';
+export { ReactComponent as SettingChart } from './setting/chart.svg';
+export { ReactComponent as SettingDocument } from './setting/document.svg';
+export { ReactComponent as SettingShifts } from './setting/Shifts.svg';
+export { ReactComponent as SettingTimer } from './setting/timer.svg';
+export { ReactComponent as SettingHorizontalLine } from './setting/horizontal-line.svg';
