@@ -5,16 +5,6 @@ import _ from "lodash";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import organization from "./org.json";
-import {
-  TransformWrapper,
-  TransformComponent,
-  ReactZoomPanPinchRef,
-} from "react-zoom-pan-pinch";
-import PinchZoomPan from "react-responsive-pinch-zoom-pan";
-import SwipeableViews from "react-swipeable-views";
-
-
-
 
 import {
   StructureCompanyAdminAvater,
@@ -23,14 +13,6 @@ import {
 } from "../../assets/images";
 import { Avatar, Button } from "antd";
 import { UpOutlined } from "@ant-design/icons/lib/icons";
-
-const Controls = ({ zoomIn, zoomOut, resetTransform }: any) => (
-  <>
-    <button onClick={() => zoomIn()}>+</button>
-    <button onClick={() => zoomOut()}>-</button>
-    <button onClick={() => resetTransform()}>x</button>
-  </>
-);
 
 function Organization({ org, onCollapse, collapsed }: any) {
   const [iconChagne, setIconChagne] = useState<boolean>(true);
@@ -45,13 +27,14 @@ function Organization({ org, onCollapse, collapsed }: any) {
   console.log("event", hideFooterButton);
 
   return (
-    <div className="struture-card flex justify-center mt-5 h-[100px]">
-      <div className="card white-bg-color shadow-sm relative rounded-lg lg:w-[200px]">
+    <div className="w-[200px] mx-auto lg:w-[100%]">
+    <div className="struture-card center flex justify-center mt-5 h-[100px]">
+      <div className="card white-bg-color shadow-sm relative rounded-lg w-[150px] lg:w-[200px]">
         <div
-          className="borderLeft absolute "
+          className="borderLeft absolute w-[80px] lg:w-[115px] "
           style={{ border: `1px solid ${org.color}` }}
         ></div>
-        <div className="avater-content absolute ">
+        <div className="avater-content absolute left-[30%] lg:left-[35%] ">
           <Avatar
             className=""
             size={48}
@@ -62,7 +45,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
           <div className="pt-5 font-semibold text-base"> {org.tradingName}</div>
           <span className="my-5 text-sm font-normal">{org.title}</span>
           {hideFooterButton && (
-            <div className="w-[81px] h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
+            <div className="lg:w-[100px] lg:h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
               <span className="pt-1 ">
                 <StructureCompanyAdminProfile2user />
               </span>
@@ -86,6 +69,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
         </div>
       </div>
     </div>
+    </div>
   );
 }
 
@@ -100,17 +84,17 @@ function Node({ o, parent }: any) {
   const T = parent
     ? TreeNode
     : (props: any) => (
-      <Tree
-        {...props}
-        lineWidth={"1px"}
-        lineColor={"#bbc"}
-        // lineBorderRadius={"12px"}
-        nodePadding={"20px"}
-        lineStyle={"dotted"}
-      >
-        {props.children}
-      </Tree>
-    );
+        <Tree
+          {...props}
+          lineWidth={"1px"}
+          lineColor={"#bbc"}
+          // lineBorderRadius={"12px"}
+          nodePadding={"10px"}
+          lineStyle={"dotted"}
+        >
+          {props.children}
+        </Tree>
+      );
   return collapsed ? (
     <T
       label={
@@ -139,100 +123,11 @@ function Node({ o, parent }: any) {
 }
 
 export default function Structure(props: any) {
-
-
-
-
-  const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
-
-  const transformOptions = {
-    initialScale: 1,
-    minScale: 0.5,
-    maxScale: 0.5
-  }
   return (
-    <TransformWrapper
-    initialScale={500}
-    initialPositionX={200}
-    initialPositionY={100}
-    centerZoomedOut={false}
-   
-  >
-    {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-      <React.Fragment> <div className="structure w-full h-[100vh] ">
-        <div className="tools">
-          <button onClick={() => zoomIn()}>+</button>
-          <button onClick={() => zoomOut()}>-</button>
-          
-        </div>
-        <TransformComponent>
-      
-        <DndProvider backend={HTML5Backend}>
-        <div className="structure w-full h-[100vh] ">
-        <Node o={organization} />
-        </div>
-     </DndProvider>
-     
-        </TransformComponent>
-        </div>
-      </React.Fragment>
-    )}
-  </TransformWrapper>
-  //   <SwipeableViews enableMouseEvents>
-  //   <PinchZoomPan>
-  //     <img alt="Test Image" src="http://picsum.photos/750/750" />
-  //   </PinchZoomPan>
-  //   {/* <PinchZoomPan>
-  //     <img alt="Test Image" src="http://picsum.photos/750/750" />
-  //   </PinchZoomPan> */}
-  // </SwipeableViews>
-   
-  //   <TransformWrapper 
-  //   initialScale={1}
-  //   minScale={8}
-  //   maxScale={7}
-  //   initialPositionX={200}
-  //   initialPositionY={100}
-  // >
-  //   {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-  //     <React.Fragment>
-  //       <div className="tools">
-  //         <button onClick={() => zoomIn()}>+</button>
-  //         <button onClick={() => zoomOut()}>-</button>
-  //         <button onClick={() => resetTransform()}>x</button>
-  //       </div>
-        
-  //       <TransformComponent>
-  //         <div style={{height:"100vh"}}>
-  //         <img src="image.jpg" alt="test" />
-  //         <div>Example text</div>
-  //         </div>
-  //       </TransformComponent>
-  //     </React.Fragment>
-  //   )}
-  // </TransformWrapper>
-  
-    // <div className="structure w-[100%] h-[100vh] ">
-    //        <TransformWrapper
-    //     initialScale={1}
-    //     initialPositionX={1000}
-    //     initialPositionY={1000}
-    //     ref={transformComponentRef}
-    //   >
-    //     {(utils) => (
-    //       <React.Fragment>
-    //         <Controls {...utils} />
-    //         <TransformComponent>
-    //         <DndProvider backend={HTML5Backend}>
-    //     <Node o={organization} />
-    //   </DndProvider>
-    //         </TransformComponent>
-    //       </React.Fragment>
-    //     )}
-    //   </TransformWrapper>
-    
-
-
-    // </div>
+    <div className="w-[100%]" >
+      <DndProvider backend={HTML5Backend}>
+      <div className="structure h-[100vh]"><Node o={organization} /></div>  
+      </DndProvider>
+    </div>
   );
 }
