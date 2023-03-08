@@ -7,7 +7,7 @@ import ContentMenu from "../../components/ContentMenu";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
-
+import { Form, Input, Button, Slider } from 'antd'
 
 
 const Accommodation = () => {
@@ -90,9 +90,33 @@ const Accommodation = () => {
         open={drawerOpen}
         onClose={closeDrawer}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <div className="shs-filter-form">
+          <Form layout="vertical">
+            <div className="shs-form-group">
+              <div className="form-group-title">Price Range</div>
+              <Form.Item name="priceRange">
+                <Slider
+                  min={0}
+                  max={1000}
+                  defaultValue={0}
+                  marks={{
+                    0: '£0',
+                    1000: '£1000',
+                  }}
+                />
+              </Form.Item>
+            </div>
+            <div className="shs-form-group">
+              <div className="form-group-title">Availability</div>
+                <Form.Item name="moveInDate" label="Move in Date">
+                  
+                </Form.Item>
+                <Form.Item name="moveOutDate" label="Move Out Date">
+                  
+                </Form.Item>
+            </div>
+          </Form>
+        </div>
       </Drawer>
     </>
   )
