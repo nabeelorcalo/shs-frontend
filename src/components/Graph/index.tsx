@@ -5,8 +5,9 @@ import GraphThree from './graphForRegisterAgentsAndRewards';
 import GraphFour from './graphForGrowthAnalytics';
 import GraphFive from './graphForLifeAssessment';
 import constants from '../../config/constants';
-// import BoxWrapper from '../../components/BoxWrapper/BoxWrapper';
+
 import "./style.scss"
+import BoxWrapper from '../BoxWrapper/BoxWrapper';
 
 const Graph = (props: any) => {
   return (
