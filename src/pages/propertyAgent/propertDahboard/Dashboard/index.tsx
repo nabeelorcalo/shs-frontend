@@ -1,9 +1,15 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
+import { MonthlyPerfomanceChart } from "../../../../components";
+import { propertiesStatsData } from "../../../../components/ChartsOfGraphs/chartsMockData/propertiesStats";
 import "./Dashboard.scss";
-import { cardData, innerCard } from "./DashboardMock";
+import { cardData, graphData, innerCard } from "./DashboardMock";
+import { useNavigate } from 'react-router-dom';
 
 const MainDashboard = () => {
+
+const nivagate = useNavigate()
+
   return (
     <div className="main-dashboard">
       <Row gutter={[10, 10]}>
@@ -61,9 +67,13 @@ const MainDashboard = () => {
       <Row gutter={[10, 10]} className="mt-2">
         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
           <div className="graph-card">
-            <Typography className="recent-card-typo">
-              Properties stats
-            </Typography>
+            <MonthlyPerfomanceChart
+              heading={"Properties Stats"}
+              columnWidthRatio="0.3"
+              marginRatio="1.5"
+              color={["#4A9D77", "#E95060", "#FFC15D"]}
+              data={graphData}
+            />
           </div>
         </Col>
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
@@ -71,19 +81,17 @@ const MainDashboard = () => {
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
-                      <div className="inner-activities">
-                          
-            </div>
+            <div className="inner-activities"></div>
           </div>
         </Col>
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-          <div className="recent-card-listing">
+          <div  className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
               {innerCard.map((item, index) => {
                 return (
                   <>
-                    <div className="inner-card">
+                    <div onClick={() => item.status === "Published" ? nivagate("published") : item.status === "Rejected"? nivagate("rejected"):''} className="inner-card">
                       <Row>
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>

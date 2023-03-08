@@ -13,6 +13,7 @@ import {ROUTES_CONSTANTS} from "./config/constants";
 // dummy components
 import Graph from './components/Graph';
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+import PropertyDetail from './pages/propertyAgent/propertDahboard/Dashboard/propertyDetail';
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -295,6 +296,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PROPERTY_AGENT}`,
         path: `${ROUTES_CONSTANTS.PROPERTY_AGENT}`,
         element: <PropertyAgent />,
+      },
+      {
+        key: `propertyDetails`,
+        path: `property-agent/:id`,
+        element: <PropertyDetail/>,
       },
       {
         key: `${ROUTES_CONSTANTS.HELP_DESK}`,

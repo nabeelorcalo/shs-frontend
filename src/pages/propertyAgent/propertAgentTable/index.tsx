@@ -60,11 +60,11 @@ const columns = [
  
     {
         dataIndex: "Actions",
-        render: (_: any, data: any) => (
-            <div className='border-solid border-2 border-indigo-600'>
-              
-            </div>
-        ),
+        // render: (_: any, data: any) => (
+        //     <div className='border-solid border-2 border-indigo-600'>
+        //       p
+        //     </div>
+        // ),
       key: "Actions",
       title: "Actions",
     },
