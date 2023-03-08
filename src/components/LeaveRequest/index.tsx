@@ -88,7 +88,6 @@ const LeaveRequest = ({ title }: any) => {
             <div className="flex flex-col gap-2  my-2">
               <p>Reason<span className="text-[red]">*</span></p>
               <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
-
             </div>
             <div className="flex flex-col gap-2 my-2">
               <p>attachement</p>

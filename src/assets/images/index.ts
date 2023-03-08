@@ -95,3 +95,16 @@ export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
+// Leave ModuleIcon
+export { ReactComponent as HeartIcon} from './leaves/Heart.svg';
+export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
+export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
+export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';
+export { ReactComponent as MoreIcon} from './leaves/MoreIcon.svg';
+export { ReactComponent as CalendarWhiteIcon} from './leaves/CalendarWhiteIcon.svg';
+export { ReactComponent as DownloadIconLeave} from './leaves/DownloadIconLeave.svg';
+export { ReactComponent as FilterIconLeave} from './leaves/FilterIconLeave.svg';
+export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';
+
+
+
