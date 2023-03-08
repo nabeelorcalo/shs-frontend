@@ -1,3 +1,13 @@
 .page-filterbar {
   margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+
+  .page-filterbar-left {
+    flex: 1;
+  }
+
+  .page-filterbar-right {
+    
+  }
 }

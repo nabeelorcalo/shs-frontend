@@ -573,28 +573,28 @@ const studentRoutes = [
         children: [
           {
             key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <h1>Available Properties</h1>,
             index: true,
           },
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <Dashboard />,
+            element: <h1>SAVED_SEARCHES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <h1>RENTED_PROPERTIES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <Dashboard />,
+            element: <h1>BOOKING_REQUESTS</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <Dashboard />,
+            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
           },
         ]
       },

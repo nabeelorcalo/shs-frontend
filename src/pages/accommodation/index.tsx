@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./style.scss";
 import type { MenuProps } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import PageHeader from "../../components/PageHeader";
 import ContentMenu from "../../components/ContentMenu";
 import {ROUTES_CONSTANTS} from "../../config/constants";
+import FiltersButton from "../../components/FiltersButton";
+import Drawer from "../../components/Drawer";
 
 
 
@@ -13,10 +15,9 @@ const Accommodation = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const location = useLocation()
-  console.log(location)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES } = ROUTES_CONSTANTS
-
   const items = [
     {
       label: 'Available Properties',
@@ -46,29 +47,54 @@ const Accommodation = () => {
     }
   };
 
+  const openDrawer = () => {
+    setDrawerOpen(true)
+  }
+
+  const closeDrawer = () => {
+    setDrawerOpen(false)
+  }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <div className="page-content">
-      <PageHeader
-        title="Accommodation"
-      />
-      <div className="page-filterbar">
-        <div className="page-filterbar-left">
+    <>
+      <div className="page-content">
+        <PageHeader
+          title="Accommodation"
+        />
+        <div className="page-filterbar">
+          <div className="page-filterbar-left">
 
+          </div>
+          <div className="page-filterbar-right">
+            <FiltersButton
+              label="Filters"
+              onClick={() => openDrawer()}
+            />
+          </div>
         </div>
-        <div className="page-filterbar-right">
 
-        </div>
+        <ContentMenu 
+          items={items}
+          handleMenuClick={handleMenuClick}
+          selectedKey={selectedKey}
+        />
+
+          <Outlet />
       </div>
 
-      <ContentMenu 
-        items={items}
-        handleMenuClick={handleMenuClick}
-        selectedKey={selectedKey}
-      />
-    </div>
+      <Drawer
+        title="Filters"
+        open={drawerOpen}
+        onClose={closeDrawer}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
+    </>
   )
 }
 

@@ -92,3 +92,8 @@ export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
+
+// Accommodation Icons
+export {ReactComponent as IconFilters} from "../images/icon-filters.svg";
+export {ReactComponent as IconFiltersAngle} from "../images/icon-filters-angle.svg";
+export {ReactComponent as IconCloseCircle} from "../images/icon-close-circle.svg";
