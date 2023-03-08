@@ -1,10 +1,22 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import PageHeader from "../../components/PageHeader";
 import "./style.scss";
 
 const Accommodation = () => {
   return (
-    <p>Accommodation</p>
+    <div className="page-content">
+      <PageHeader
+        title="Accommodation"
+      />
+      <div className="page-filterbar">
+        <div className="page-filterbar-left">
+
+        </div>
+        <div className="page-filterbar-left">
+
+        </div>
+      </div>
+    </div>
   )
 }
 
