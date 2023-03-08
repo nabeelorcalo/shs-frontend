@@ -12,3 +12,10 @@ export * from './DrawSignature';
 export * from './TypeSignature';
 export * from './UploadDocument'
 export * from './LeaveCard/leaveCard';
+export * from "./ChartsOfGraphs/dashboard-chart/DashboardCharts"
+export * from "./ChartsOfGraphs/monthly-perfomance-chart/MonthlyPerfomanceChart"
+export * from "./ChartsOfGraphs/overAll-perfomance-charts/OverAllPerfomance"
+export * from "./ChartsOfGraphs/workingStatisticesChart/workingStatisticesChart"
+export * from "./ChartsOfGraphs/timesheetCategories/timesheetCategories"
+export * from "./ChartsOfGraphs/grievanceStats/GrievanceStatsData"
+export * from "./ChartsOfGraphs/intershipSummaryChart/internshipSummaryChart"
