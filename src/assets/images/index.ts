@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 // Header Icons
 // export { default as AppLogo } from './AppLogo.svg';
 /// <reference types="vite-plugin-svgr/client" />
@@ -59,21 +60,21 @@ export { ReactComponent as IconFacebook } from './footer/icon-social-facebook.sv
 export { ReactComponent as IconTwitter } from './footer/icon-social-twitter.svg';
 export { ReactComponent as IconInstagram } from './footer/icon-social-instagram.svg';
 export { ReactComponent as IconLinkedin } from './footer/icon-social-linkedin.svg';
-export { ReactComponent as IconYoutube } from './footer/icon-social-linkedin.svg';
+export { ReactComponent as IconYoutube } from './footer/icon-social-youtube.svg';
 
 // Graph and Chart Icons
-export { default as Finance } from './chart/financeIcon.svg';
-export { default as Relationship } from './chart/Heart.svg';
-export { default as Health } from './chart/healthIcon.svg';
-export { default as Heart } from './chart/heartIcon.svg';
-export { default as Education } from './chart/Education.svg';
-export { default as Development } from './chart/Development.svg';
-export { default as Family } from './chart/Family.svg';
-export { default as Social } from './chart/Social.svg';
-export { default as Recreation } from './chart/Recreation.svg';
+export { ReactComponent as Finance } from './chart/financeIcon.svg';
+export { ReactComponent as Relationship } from './chart/Heart.svg';
+export { ReactComponent as Health } from './chart/healthIcon.svg';
+export { ReactComponent as Heart } from './chart/heartIcon.svg';
+export { ReactComponent as Education } from './chart/Education.svg';
+export { ReactComponent as Development } from './chart/Development.svg';
+export { ReactComponent as Family } from './chart/Family.svg';
+export { ReactComponent as Social } from './chart/Social.svg';
+export { ReactComponent as Recreation } from './chart/Recreation.svg';
 
 // Leaves Icons
-export { default as DocumentUpload } from './leaves/document-upload.svg';
+export { ReactComponent as DocumentUpload } from './leaves/document-upload.svg';
 
 // sickLeave-card icon 
 export { default as SickIcon } from './sick.png';
@@ -82,14 +83,14 @@ export { default as WFHIcon } from './sick.png';
 export { default as MedicalIcon } from './sick.png';
 
 // Rating Emojis
-export { default as Emoji1st } from './RatingEmojis/Emoji1st.svg';
-export { default as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
-export { default as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
-export { default as Emoji4th } from './RatingEmojis/Emoji4th.svg';
-export { default as EmojiGray1st } from './RatingEmojis/EmojiGray1st.svg';
-export { default as EmojiGray2nd } from './RatingEmojis/EmojiGray2nd.svg';
-export { default as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg';
-export { default as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
+export { ReactComponent as Emoji1st } from './RatingEmojis/Emoji1st.svg';
+export { ReactComponent as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
+export { ReactComponent as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
+export { ReactComponent as Emoji4th } from './RatingEmojis/Emoji4th.svg';
+export { ReactComponent as EmojiGray1st } from './RatingEmojis/EmojiGray1st.svg';
+export { ReactComponent as EmojiGray2nd } from './RatingEmojis/EmojiGray2nd.svg';
+export { ReactComponent as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg';
+export { ReactComponent as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
 
 // Callendar Icons
 export { default as ArrowDownDark } from './dropdown-arrow-dark.svg';

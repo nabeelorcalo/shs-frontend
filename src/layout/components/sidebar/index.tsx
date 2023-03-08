@@ -3,6 +3,7 @@ import './style.scss'
 import type { MenuProps } from 'antd';
 import { Avatar, Typography, Layout, Menu, theme } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
+import constants from '../../../config/constants';
 import { } from '../../../assets/images'
 import avatar from '../../../assets/images/header/avatar.svg'
 import { itemsManager } from './menuManager'
@@ -60,16 +61,16 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
     if(role === "Manager") {
       return itemsManager
     }
-    if(role === 'Company Admin') {
+    if(role === 'CompanyAdmin') {
       return itemsCompanyAdmin
     }
-    if(role === 'University Rep') {
+    if(role === 'University') {
       return itemsUniversity
     }
-    if(role === 'System Admin') {
+    if(role === 'SystemAdmin') {
       return itemsSystemAdmin
     }
-    if(role === 'Delegate Agent') {
+    if(role === 'DelegateAgent') {
       return itemsDelegateAgent
     }
     if(role === 'Agent') {
@@ -103,7 +104,7 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
       </div>
 
       <Menu
-        items={menuSwitcher('Student')}
+        items={menuSwitcher(constants.USER_ROLE)}
         onClick={handleMenuClick}
         defaultSelectedKeys={[selectedKey]}
         mode="inline"

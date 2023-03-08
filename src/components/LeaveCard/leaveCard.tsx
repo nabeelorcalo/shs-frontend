@@ -1,5 +1,5 @@
 import { Divider } from "antd";
-import BoxWrapper from "../BoxWrapper/boxWrapper";
+import {BoxWrapper} from "../BoxWrapper/boxWrapper";
 import './style.scss';
 interface LeaveCardProps {
     title?: string

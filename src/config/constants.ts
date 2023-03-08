@@ -6,7 +6,18 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
+  USER_ROLE: "Student"
 }
+
+  // Possibe string of roles:
+  // SystemAdmin,
+  // Manager,
+  // DelegateAgent,
+  // CompanyAdmin,
+  // Intern,
+  // Student,
+  // University,
+  // Agent,
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
@@ -47,6 +58,10 @@ export const ROUTES_CONSTANTS: any = {
   DREAM_UP: "dream-up",
   PAYMENTS: "payments",
   ACCOMMODATION: "accommodation",
+  SAVED_SEARCHES: "saved-searches",
+  RENTED_PROPERTIES: "rented-properties",
+  BOOKING_REQUESTS: "booking-requests",
+  ACCOMMODATION_PAYMENTS: "payments",
   SEARCH_JOBS: "search-jobs",
   APPLICATION: "application",
   PROFILE: "profile",
@@ -56,5 +71,8 @@ export const ROUTES_CONSTANTS: any = {
   LISTINGS: "listings",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
-  SETTING: "setting"
+  SETTING: "settings",
+  CERTIFICATES: "certificates",
+  PAYROLL: "payroll",
+  PERSONALISATION: "personalisation"
 };
