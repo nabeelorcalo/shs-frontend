@@ -1,7 +1,7 @@
 import { Progress } from '@ant-design/plots';
 import { Col, Row } from 'antd';
 import { InfoIcon } from '../../../assets/images';
-import BoxWrapper from '../../BoxWrapper/BoxWrapper';
+import {BoxWrapper} from '../../BoxWrapper/boxWrapper';
 
 export const DashboardCharts = (props: any) => {
   const { height = 65, percent = 0.3, bgColor = "#ABAFB1", barColor = '#363565', memoryUsed = "45.5", memoryFree = "55.5", heading, usedSpace, freeSpace } = props
