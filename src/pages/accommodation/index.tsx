@@ -40,7 +40,6 @@ const Accommodation = () => {
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handleMenuClick: MenuProps['onClick'] = (item) => {
-    console.log(item)
     if(item.key) {
       setSelectedKey(item.key)
       navigate(item.key)

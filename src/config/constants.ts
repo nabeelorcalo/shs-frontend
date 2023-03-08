@@ -6,7 +6,18 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
+  USER_ROLE: "Student"
 }
+
+  // Possibe string of roles:
+  // SystemAdmin,
+  // Manager,
+  // DelegateAgent,
+  // CompanyAdmin,
+  // Intern,
+  // Student,
+  // University,
+  // Agent,
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
