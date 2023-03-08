@@ -4,11 +4,7 @@ import OfferLetterStudent from "./offerLettersSudent/offerLetterStudent";
 import "./style.scss";
 
 const OfferLetters = () => {
-  return (
-    <div>
-      <OfferLetterStudent/>
-    </div>
-  )
-}
+  return <div>ewfwfwefwef</div>;
+};
 
-export default OfferLetters
+export default OfferLetters;
