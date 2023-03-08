@@ -20,6 +20,7 @@ export const ROUTES_CONSTANTS: any = {
   INTERNS: "interns",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
+  VIEWLEAVEHISTORY:"history",
   TIMESHEET: "timesheet",
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
@@ -56,6 +57,5 @@ export const ROUTES_CONSTANTS: any = {
   LISTINGS: "listings",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
-  VIEWLEAVEHISTORY:"history",
   SETTING: "setting"
 };

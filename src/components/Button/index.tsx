@@ -14,6 +14,7 @@ import { Button as AntButton } from 'antd'
   upcomingIcon?:any,
   icon?: any
   style?: any
+  htmlType?:any
 }
 
 export const Button = ({ 

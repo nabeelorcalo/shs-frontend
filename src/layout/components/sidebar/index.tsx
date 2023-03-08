@@ -103,7 +103,7 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
       </div>
 
       <Menu
-        items={menuSwitcher('Student')}
+        items={menuSwitcher('Intern')}
         onClick={handleMenuClick}
         defaultSelectedKeys={[selectedKey]}
         mode="inline"

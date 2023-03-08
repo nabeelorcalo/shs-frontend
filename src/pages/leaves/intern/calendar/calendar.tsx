@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from "react";
 import './style.scss'
+import ModalWrapper from "./modalWrapper";
 
 const calendarEventData = [
     {
@@ -36,8 +37,9 @@ const calendarEventData = [
 ]
 const Calendar = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-    console.log('isAddModalOpen', isAddModalOpen);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [eventData, setEventData] = useState({})
+    console.log('eventData', eventData);
 
     // console.log('isEditModalOpen', isEditModalOpen);
 
@@ -117,10 +119,11 @@ const Calendar = () => {
                     // eventRender={}
                     events={calendarEventData}
                     eventContent={handleEventContent}
-                    eventClick={() => setIsEditModalOpen(true)}
+                    eventClick={(e) => {setIsEditModalOpen(true); setEventData(e)}}
                     dateClick={() => setIsAddModalOpen(true)}
                 />
             </div>
+            <ModalWrapper isEditModalOpen={isEditModalOpen} eventData={eventData} setIsEditModalOpen={setIsEditModalOpen} />
         </>
     )
 }

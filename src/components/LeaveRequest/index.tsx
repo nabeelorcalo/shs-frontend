@@ -84,7 +84,6 @@ const LeaveRequest = ({ title }: any) => {
             <div className="my-8">
               <p>Reason<span className="text-[red]">*</span></p>
               <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
-
             </div>
             <div className="my-8">
               <p>attachement</p>

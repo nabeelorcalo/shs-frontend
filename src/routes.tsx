@@ -68,7 +68,7 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
-const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
+const ViewHistory = Loadable(lazy(() => import("./pages/leaves/intern/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
@@ -439,13 +439,12 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
-        children: [
-          {
-            key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-            path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-            element: < Navigate to={ROUTES_CONSTANTS.VIEWLEAVEHISTORY} />,
-          },
-        ]
+      
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        element: <ViewHistory/>,
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,

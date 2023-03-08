@@ -7,6 +7,7 @@ import action from "../actionHandler"
 import "./style.scss"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
+import LeaveRequest from '../../../components/LeaveRequest';
 const leaveCardData: any = [
   {
     leavType: "Sick",
@@ -103,6 +104,7 @@ const index = () => {
           </BoxWrapper>
         </Col>
       </Row>
+      <LeaveRequest />
     </div>
   )
 }

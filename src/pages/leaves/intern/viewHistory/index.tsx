@@ -1,12 +1,13 @@
 
-import { Col, Divider, Dropdown, Row, Space } from "antd";
+import { Col, Divider, Drawer, Dropdown, Form, Row, Select, Space } from "antd";
 import type { MenuProps } from 'antd';
-import BoxWrapper from "../../components/BoxWrapper/boxWrapper"
-import GlobalTable from "../../components/Table/Table"
+import BoxWrapper from "../../../../components/BoxWrapper/boxWrapper"
+import GlobalTable from "../../../../components/Table/Table"
 import "./style.scss"
-import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, MoreIcon } from "../../assets/images";
-import { Button, SearchBar } from "../../components";
-import { background } from "@storybook/theming";
+import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, MoreIcon } from "../../../../assets/images";
+import { Button, SearchBar } from "../../../../components";
+import { useState } from "react";
+import { CloseCircleFilled } from "@ant-design/icons";
 interface DataType {
   key: string,
   requestDate: string,
@@ -127,11 +128,27 @@ const data: DataType[] = [
     status: "Declined",
     Actions: "fduhguisd",
   },
-
-
 ];
 
 const index = () => {
+  const [open, setOpen] = useState(false);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
   return (
     <div className="main_view_detail">
       <Row className=' items-center'>
@@ -142,17 +159,18 @@ const index = () => {
         </Col>
         <Col xs={24} md={12} lg={12} >
           <div className='flex items-center justify-end view_history_button_wrapper'>
-          <Button
+            <Button
               icon={<FilterIconLeave className="mr-2" />}
               label="Filters"
               upcomingIcon={<ChevronRight className="ml-2" />}
-              onClick={() => { }}
+              onClick={showDrawer}
               shape="default"
               size="large"
               type="default"
               style={{ color: "#A0A3BD", background: "#E6F4F9", display: "flex", alignItems: "center", }}
               className="button_request_leave mr-5"
             />
+            {/* <Dropdown menu={{ items }} trigger={['click']}> */}
             <Button
               icon={<DownloadIconLeave />}
               onClick={() => { }}
@@ -162,6 +180,7 @@ const index = () => {
               className="button_request_leave mr-5"
               style={{ background: "#E6F4F9", display: "flex", alignItems: "center", justifyContent: "center" }}
             />
+            {/* </Dropdown> */}
             <Button
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
@@ -172,8 +191,6 @@ const index = () => {
               style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center" }}
               className="button_request_leave"
             />
-
-
           </div>
         </Col>
         <Divider />
@@ -181,6 +198,90 @@ const index = () => {
       <BoxWrapper>
         <GlobalTable columns={columns} tableData={data} pagination={true} />
       </BoxWrapper>
+      <Drawer title="Filters" className="drawar_main" placement="right" onClose={onClose} open={open} closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px', right: "0" }} />}>
+        <div className="data_container">
+          <Form
+            name="basic"
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 24 }}
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+          >
+            <Form.Item
+              label="Leave Type"
+              name="Leave Type"
+            >
+              <Select
+                defaultValue="sick"
+                onChange={handleChange}
+                size="large"
+                options={[
+                  { value: 'sick', label: 'Sick' },
+                  { value: 'casual', label: 'Casual' },
+                  { value: 'work from home', label: 'Work From Home' },
+                  { value: 'medicale', label: 'Medicale'},
+                ]}
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Time Frame"
+              name="time frame"
+            >
+            <Select
+                defaultValue="lucy"
+                onChange={handleChange}
+                size="large"
+                options={[
+                  { value: 'jack', label: 'Jack' },
+                  { value: 'lucy', label: 'Lucy' },
+                  { value: 'Yiminghe', label: 'yiminghe' },
+                ]}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Status"
+              name="status"
+            >
+            <Select
+                defaultValue=""
+                onChange={handleChange}
+                size="large"
+                options={[
+                  { value: 'jack', label: 'Pendung' },
+                  { value: 'lucy', label: 'Approved' },
+                  { value: 'Yiminghe', label: 'Declined' },
+                ]}
+              />
+            </Form.Item>
+          </Form>
+
+        </div>
+        <div className='flex items-center justify-end view_history_button_wrapper'>
+          <Button
+            label="Reset"
+            htmlType="button"
+            onClick={showDrawer}
+            shape="default"
+            size="large"
+            type="default"
+            style={{ color: "#4A9D77", background: "#fff", display: "flex", alignItems: "center", border: "1px solid #4A9D77" }}
+            className="button_request_leave  mr-5"
+          />
+          <Button
+            label="Apply"
+            htmlType="submit"
+            onClick={() => { }}
+            shape="default"
+            size="large"
+            type="default"
+            style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #4A9D77" }}
+            className="button_request_leave"
+          />
+        </div>
+      </Drawer>
 
     </div>
   )

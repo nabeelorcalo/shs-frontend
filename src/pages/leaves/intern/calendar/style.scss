@@ -34,6 +34,13 @@
 
         }
     }
+    .fc .fc-button-primary{
+        background-color: #4A9D77;
+        border: unset;
+        &:hover{
+            background-color: green;
+        }
+    }
 
     .fc .fc-daygrid-day-frame {
         background-color: rgba(230, 244, 249, 0.25);
