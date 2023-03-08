@@ -439,6 +439,13 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+            path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+            element: < Navigate to={ROUTES_CONSTANTS.VIEWLEAVEHISTORY} />,
+          },
+        ]
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
@@ -490,11 +497,7 @@ const internRoutes = [
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
-      {
-        key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-        path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-        element: <ViewHistory />,
-      },
+
     ],
   },
   {

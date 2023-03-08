@@ -5,6 +5,8 @@ import BoxWrapper from '../../../components/BoxWrapper/boxWrapper';
 import Calendar from "./calendar/calendar"
 import action from "../actionHandler"
 import "./style.scss"
+import { useNavigate } from 'react-router-dom';
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 const leaveCardData: any = [
   {
     leavType: "Sick",
@@ -54,6 +56,7 @@ const CardIcon = [
   { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
 ]
 const index = () => {
+  const navigate = useNavigate()
   return (
     <div className='intrne_main'>
       <Row className=' items-center'>
@@ -62,8 +65,7 @@ const index = () => {
         </Col>
         <Col xs={24} md={12} lg={12} >
           <div className='flex items-center justify-end view_history_button_wrapper'>
-          <Button className='button font-semibold'>View History</Button>
-
+            <Button className='button font-semibold' onClick={() => navigate(ROUTES_CONSTANTS.VIEWLEAVEHISTORY)}>View History</Button>
           </div>
         </Col>
         <Divider />

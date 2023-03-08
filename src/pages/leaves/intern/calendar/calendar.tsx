@@ -9,29 +9,29 @@ const calendarEventData = [
         id: "1",
         title: "Sick",
         eventType: "sick",
-        start: "2023-03-06T11:21:00",
-        end: "2023-03-07T12:22:00"
+        start: "2023-03-03T11:21:00",
+        end: "2023-03-03T12:22:00"
     },
     {
         id: "2",
         title: "casual",
         eventType: "casual",
-        start: "2023-03-06T01:21:00",
-        end: "2023-03-07T05:22:00"
+        start: "2023-03-04T01:21:00",
+        end: "2023-03-05T05:22:00"
     },
     {
         id: "3",
         title: "work from home",
         eventType: "work from home",
-        start: "2023-03-07T06:21:00",
-        end: "2023-03-06T07:22:00"
+        start: "2023-03-06T06:21:00",
+        end: "2023-03-08T07:22:00"
     },
     {
         id: "4",
         title: "medical",
         eventType: "medical",
-        start: "2023-03-03T09:21:00",
-        end: "2023-03-07T11:22:00"
+        start: "2023-03-09T09:21:00",
+        end: "2023-03-11T11:22:00"
     }
 ]
 const Calendar = () => {
@@ -46,8 +46,8 @@ const Calendar = () => {
         const applyBg2 = document.getElementsByClassName('fc-daygrid-event-harness');
 
         for (let index = 0; index < applyBg2.length; index++) {
-            const element = applyBg2[index];
-            const renderBg = element.closest('.fc-daygrid-day-frame.fc-scrollgrid-sync-inner')
+            const element = applyBg2[index].closest('.fc-daygrid-day-frame.fc-scrollgrid-sync-inner');
+            // const renderBg = element.closest('.fc-daygrid-day-frame.fc-scrollgrid-sync-inner')
             // switch (eventType) {
             //     case 'sick':
             //         element.classList.add('sick');
@@ -65,8 +65,12 @@ const Calendar = () => {
             //     default:
             //         break;
             // }
-            renderBg?.classList.add(events.eventType === 'sick' ? 'sick' : 'dd')
-            console.log(renderBg);
+            let e = events.eventType;
+            // console.log(e);
+
+            element?.classList.add(e === 'sick' ? 'sick' : e === 'casual' ? 'casual' : e === 'work from home' ? 'work-from-home' : e === 'medical' ? 'medical' : '');
+
+            // console.log(element);
 
         }
 
