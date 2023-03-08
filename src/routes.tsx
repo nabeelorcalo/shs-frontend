@@ -111,6 +111,11 @@ export const publicRoutes = [
     key: 'charts',
     path: '/charts',
     element: <Charts />
+  },
+  {
+    key: 'candidates',
+    path: '/candidates',
+    element: <Candidates />
   }
   // ------Remove till here------
 ];
