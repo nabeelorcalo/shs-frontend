@@ -1,5 +1,11 @@
 export default {
   // appUrl: process.env.REACT_APP_APP_URL || "http://localhost:8001",
+  ATTENDANCE: "attendance",
+  REGISTER_AGENTS: "registerAgents",
+  REWARDS: "rewards",
+  REGISTER_MEMBERS: "registerMember",
+  FEEDBACk: "feedback",
+  LISTINGS: "listings",
 }
 
 export const ROUTES_CONSTANTS: any = {
@@ -41,6 +47,10 @@ export const ROUTES_CONSTANTS: any = {
   DREAM_UP: "dream-up",
   PAYMENTS: "payments",
   ACCOMMODATION: "accommodation",
+  SAVED_SEARCHES: "saved-searches",
+  RENTED_PROPERTIES: "rented-properties",
+  BOOKING_REQUESTS: "booking-requests",
+  ACCOMMODATION_PAYMENTS: "payments",
   SEARCH_JOBS: "search-jobs",
   APPLICATION: "application",
   PROFILE: "profile",
@@ -50,4 +60,8 @@ export const ROUTES_CONSTANTS: any = {
   LISTINGS: "listings",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
+  SETTING: "settings",
+  CERTIFICATES: "certificates",
+  PAYROLL: "payroll",
+  PERSONALISATION: "personalisation"
 };

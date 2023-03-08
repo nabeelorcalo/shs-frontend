@@ -7,8 +7,14 @@ import Signup from "./pages/onBoarding/signup";
 import ForgotPassword from "./pages/onBoarding/forgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
-import { ROUTES_CONSTANTS } from "./config/constants";
+import {ROUTES_CONSTANTS} from "./config/constants";
+
+// Remove it
+// dummy components
+import Graph from './components/Graph';
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+// 
+
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
@@ -62,6 +68,8 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
+const Setting = Loadable(lazy(() => import("./pages/setting")));
+const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
 export const publicRoutes = [
@@ -85,12 +93,20 @@ export const publicRoutes = [
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
   },
-  // demo dropdowns
+  // ------Remove below demo components------
+  // Demo Graphs
+  {
+    key: "graph",
+    path: `graph`,
+    element: <Graph />,
+  },
+  // Demo dropdowns
   {
     key: 'dropdowndemo',
     path: '/demodropdown',
     element: <DropDownDemo />
   }
+  // ------Remove till here------
 ];
 
 // Manager
@@ -325,8 +341,8 @@ const companyAdminRoutes = [
         element: <Internships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -370,6 +386,11 @@ const companyAdminRoutes = [
         element: <Timesheet />,
       },
       {
+        key: `${ROUTES_CONSTANTS.SETTING}`,
+        path: `${ROUTES_CONSTANTS.SETTING}`,
+        element: <Setting />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
@@ -378,6 +399,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         path: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         element: <Documents />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERSONALISATION}`,
+        path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
+        element: <Personalisation />,
       },
     ],
   },
@@ -510,8 +536,8 @@ const studentRoutes = [
         element: <Application />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -543,6 +569,34 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
+
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
+            element: <Dashboard />,
+            index: true,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            element: <Dashboard />,
+          },
+        ]
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

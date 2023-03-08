@@ -18,18 +18,20 @@ const { Sider } = Layout;
 type SidebarProps = {
   collapsed: boolean
   sidebarToggler: () => void
+  setCollapsed:any
 }
 
 
 
-const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler}) => {
+const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const location = useLocation()
   const { useToken } = theme
   const { token } = useToken()
-  const [ selectedKey, setSelectedKey ] = useState(location.pathname)
+  const [selectedKey, setSelectedKey] = useState(location.pathname)
+  const [collapsedWidth, setCollapsedWidth] = useState(94)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -49,28 +51,28 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler}) => {
   };
 
   const menuSwitcher = (role:string) => {
-    if(role === "student") {
+    if(role === "Student") {
       return itemsStudents
     }
-    if(role === "intern") {
+    if(role === "Intern") {
       return itemsIntern
     }
-    if(role === "manager") {
+    if(role === "Manager") {
       return itemsManager
     }
-    if(role === 'companyAdmin') {
+    if(role === 'Company Admin') {
       return itemsCompanyAdmin
     }
-    if(role === 'university') {
+    if(role === 'University Rep') {
       return itemsUniversity
     }
-    if(role === 'systemAdmin') {
+    if(role === 'System Admin') {
       return itemsSystemAdmin
     }
-    if(role === 'delegateAgent') {
+    if(role === 'Delegate Agent') {
       return itemsDelegateAgent
     }
-    if(role === 'propertyAgent') {
+    if(role === 'Agent') {
       return itemsPropertyAgent
     }
   }
@@ -84,8 +86,13 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler}) => {
       collapsible
       collapsed={collapsed}
       width={250}
-      collapsedWidth={94}
+      collapsedWidth={collapsedWidth}
+      breakpoint="md"
       style={{backgroundColor: token.colorPrimary}}
+      onBreakpoint={(broken) => {
+        setCollapsedWidth(broken ? 0: 94)
+        setCollapsed(broken)
+      }}
     >
       <div className='sidebar-user-profile'>
         <Avatar size={48} src={avatar} />
