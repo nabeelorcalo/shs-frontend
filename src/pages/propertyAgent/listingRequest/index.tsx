@@ -1,7 +1,12 @@
-import { MoreOutlined } from "@ant-design/icons";
-import React from "react";
+import {
+  MoreOutlined,
+  NodeExpandOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import React, { useState } from "react";
 import GlobalTable from "../../../components/Table/Table";
-import { Typography } from 'antd';
+import { Button, Col, Row, Typography } from "antd";
+import { DropDown } from "../../../components";
 
 const columns = [
   {
@@ -136,8 +141,37 @@ const tableData = [
 ];
 
 const ListingRequest = () => {
+  const [value, setValue] = useState('');
   return (
     <div className="listing-request">
+      <Row>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+          <div className="flex justify-end gap-2 mb-3">
+            <Button
+              style={{
+                background: "#E6F4F9",
+                borderRadius: "8px",
+                color: "#A0A3BD",
+                fontWeight: 400,
+                fontSize: "16px",
+                fontFamily: "Outfit",
+                margin: "12px",
+            
+              }}
+            >
+              <NodeExpandOutlined style={{ fontSize: "16px" }}  />
+              Filter
+              <RightOutlined style={{ fontSize: "12px" }} />
+            </Button>
+            <DropDown
+              requiredDownloadIcon
+              options={["pdf", "excel"]}
+              value={value}
+              setValue={setValue}
+            />
+          </div>
+        </Col>
+      </Row>
       <GlobalTable tableData={tableData} columns={columns} />
     </div>
   );

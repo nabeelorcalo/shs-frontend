@@ -3,12 +3,11 @@ import React from "react";
 import { MonthlyPerfomanceChart } from "../../../../components";
 import { propertiesStatsData } from "../../../../components/ChartsOfGraphs/chartsMockData/propertiesStats";
 import "./Dashboard.scss";
-import { cardData, graphData, innerCard } from "./DashboardMock";
-import { useNavigate } from 'react-router-dom';
+import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
+import { useNavigate } from "react-router-dom";
 
 const MainDashboard = () => {
-
-const nivagate = useNavigate()
+  const nivagate = useNavigate();
 
   return (
     <div className="main-dashboard">
@@ -81,17 +80,84 @@ const nivagate = useNavigate()
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
-            <div className="inner-activities"></div>
+            <div className="inner-activities flex">
+              <Row>
+                {activityData.map((item, index) => {
+                  return (
+                    <>
+                        <div style={{ display: "flex" }}>
+                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+                    <Typography>{item.date}</Typography>
+                  </Col>
+                  <hr />
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <div>
+                      <Typography
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: 600,
+                          color: "#14142A",
+                        }}
+                      >
+                        {item.userStatus}
+                      </Typography>
+                      <div className="flex ">
+                        <img src={item.img} alt="1" />
+                        <Typography
+                          style={{
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            color: "#6E7191",
+                            marginRight: "10px",
+                            marginLeft:"10px"
+                          }}
+                        >
+                          {item.detail}
+                        </Typography>
+                        <div
+                          
+                          style={{ background: " #4783FF",padding:"2px", color:"white" }}
+                        >
+                          View
+                        </div>
+                      </div>
+                      <Typography  style={{
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            color: "#6E7191",
+                            // marginRight: "10px",
+                            // marginLeft:"10px"
+                          }}>{item.time}</Typography>
+                    </div>
+                  </Col>
+                </div>
+                    </>
+                  )
+                })}
+              
+              </Row>
+            </div>
           </div>
         </Col>
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-          <div  className="recent-card-listing">
+          <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
               {innerCard.map((item, index) => {
                 return (
                   <>
-                    <div onClick={() => item.status === "Published" ? nivagate("published") : item.status === "Rejected"? nivagate("rejected"):''} className="inner-card">
+                    <div
+                      onClick={() =>
+                        item.status === "Published"
+                          ? nivagate("published")
+                          : item.status === "Rejected"
+                          ? nivagate("rejected")
+                          : item.status === "Pending"
+                          ? nivagate("pending")
+                          : ""
+                      }
+                      className="inner-card"
+                    >
                       <Row>
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>

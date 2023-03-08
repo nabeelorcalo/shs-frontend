@@ -370,6 +370,25 @@ export const graphData = [
 
 ];
 
+export const activityData = [
+    {
+        date: "11 Nov",
+        userStatus: "New User Created",
+        img: "",
+        detail: "Albert added as a new agent",
+        time:"02:53 pm "
+        
+    },
+    {
+        date: "11 Nov",
+        userStatus: "New User Created",
+        img: "",
+        detail: "Albert added as a new agent",
+        time:"02:53 pm "
+        
+    },
+]
+
 
 export const propertDetailSide = [
     {
