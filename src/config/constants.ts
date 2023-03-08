@@ -6,7 +6,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Student"
+  USER_ROLE: "Intern"
 }
 
   // Possibe string of roles:
@@ -31,6 +31,7 @@ export const ROUTES_CONSTANTS: any = {
   INTERNS: "interns",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
+  VIEWLEAVEHISTORY:"leaves/history",
   TIMESHEET: "timesheet",
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
