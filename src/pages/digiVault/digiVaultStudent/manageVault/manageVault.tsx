@@ -19,6 +19,8 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import MyProfileDocUpload from "../../../../components/MyProfileDocUpload";
 import MenuItem from "antd/es/menu/MenuItem";
 import UploadDocument from "../../../../components/UploadDocument";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const columns = [
   {
@@ -76,12 +78,11 @@ const tableData = [
 ];
 
 const ManageVault = (props: any) => {
-  const { title = "Education" } = props;
-
   const [open, setISOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [upLoadFile, setUpLoadFile] = useState(false);
   const [upLoadFolder, setUpLoadFolder] = useState(false);
+  
 
   const handleChange = () => {
     console.log("log");
@@ -102,14 +103,26 @@ const ManageVault = (props: any) => {
     </Menu>
   );
 
+  const router = useNavigate();
+  const location = useLocation();
+
+  const titleName = location.pathname.split("/");
+
   return (
     <div className="manage-vault-main">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">
-            <span className="manage-vault-title-text mr-2">{title}</span>
+            <span className="manage-vault-title-text mr-2 capitalize">
+              {titleName[2]}
+            </span>
             <span className="dash-vault-line">|</span>
-            <span className="manage-vault-title-text-sub ml-2">DigiVault</span>
+            <span
+              onClick={() => router("/digivault")}
+              className="manage-vault-title-text-sub ml-2 cursor-pointer"
+            >
+              DigiVault
+            </span>
           </div>
         </Col>
         <Divider />

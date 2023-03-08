@@ -7,13 +7,14 @@ import Signup from "./pages/onBoarding/signup";
 import ForgotPassword from "./pages/onBoarding/forgotPassword";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
-import {ROUTES_CONSTANTS} from "./config/constants";
+import { ROUTES_CONSTANTS } from "./config/constants";
 
 // Remove it
 // dummy components
-import Graph from './components/Graph';
+import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
-// 
+import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+//
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -101,10 +102,10 @@ export const publicRoutes = [
   },
   // Demo dropdowns
   {
-    key: 'dropdowndemo',
-    path: '/demodropdown',
-    element: <DropDownDemo />
-  }
+    key: "dropdowndemo",
+    path: "/demodropdown",
+    element: <DropDownDemo />,
+  },
   // ------Remove till here------
 ];
 
@@ -555,6 +556,11 @@ const studentRoutes = [
         element: <DigiVault />,
       },
       {
+        key: `manageVault`,
+        path: `digivault/:id`,
+        element: <ManageVault />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
         path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
@@ -595,7 +601,7 @@ const studentRoutes = [
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             element: <Dashboard />,
           },
-        ]
+        ],
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

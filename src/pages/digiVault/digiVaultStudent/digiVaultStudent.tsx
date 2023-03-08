@@ -14,6 +14,74 @@ import Folder from "../../../assets/images/ColorfullIconsProgressbar/file.svg";
 import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
 import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
 import More from "../../../assets/images/ColorfullIconsProgressbar/More.svg";
+import { useNavigate } from "react-router-dom";
+import EducationImg from "../../../assets/images/digivault/manageVault/bankingFolder.svg";
+import EducationImgSub from "../../../assets/images/digivault/manageVault/cil_education.svg";
+import BAnkingImg from "../../../assets/images/digivault/manageVault/bankingFolder.svg";
+import BAnkingImgSub from "../../../assets/images/digivault/manageVault/ph_bank.svg";
+import HealthImg from "../../../assets/images/digivault/manageVault/health.svg";
+import HealthImgSub from "../../../assets/images/digivault/manageVault/ic_outline-health-and-safety.svg";
+import TransImg from "../../../assets/images/digivault/manageVault/transport.svg";
+import TransImgSub from "../../../assets/images/digivault/manageVault/material-symbols_emoji-transportation-outline-rounded.svg";
+import GovImg from "../../../assets/images/digivault/manageVault/gov.svg";
+import GovImgSub from "../../../assets/images/digivault/manageVault/fluent_building-government-24-regular.svg";
+import Other from "../../../assets/images/digivault/manageVault/others.svg";
+
+const manageVaultArr = [
+  {
+    id: "1",
+    titleImg: EducationImg,
+    subImg: EducationImgSub,
+    Title: "Education",
+    subTitle: "Manage your educational documents",
+    path: "education",
+    bgcolor: "#4CA4FD",
+  },
+  {
+    id: "2",
+    titleImg: BAnkingImg,
+    subImg: BAnkingImgSub,
+    Title: "Banking",
+    subTitle: "Manage your banking documents",
+    path: "banking",
+    bgcolor: "#5D89F2",
+  },
+  {
+    id: "3",
+    titleImg: HealthImg,
+    subImg: HealthImgSub,
+    Title: "Health",
+    subTitle: "Manage your health documents",
+    path: "health",
+    bgcolor: "#5D89F4",
+  },
+  {
+    id: "4",
+    titleImg: TransImg,
+    subImg: TransImgSub,
+    Title: "Transportation",
+    subTitle: "Manage your transportation documents",
+    path: "transport",
+    bgcolor: "#5D89F8",
+  },
+  {
+    id: "5",
+    titleImg: GovImg,
+    subImg: GovImgSub,
+    Title: "Government",
+    subTitle: "Manage your government documents",
+    path: "government",
+    bgcolor: "#5D89F8",
+  },
+  {
+    id: "6",
+    titleImg: Other,
+    Title: "Others",
+    subTitle: "Manage your others documents",
+    path: "others",
+    bgcolor: "#5D89F8",
+  },
+];
 
 const arraydata = [
   {
@@ -46,39 +114,9 @@ const arraydata = [
   },
 ];
 
-const columns = [
-  {
-    title: "Title",
-    dataIndex: "Title",
-    key: "key",
-    minWidth: 300,
-  },
-  {
-    title: "Date Modified",
-    dataIndex: "datemodified",
-    key: "datemodified",
-  },
-  {
-    title: "Size",
-    dataIndex: "size",
-    key: "size",
-  },
-
-  {
-    title: "Action",
-    key: "Action",
-    render: (_: any, data: any) => (
-      <Space size="middle">
-        <div style={{ cursor: "pointer" }}>
-          <img src={More} alt="threedots" />
-        </div>
-      </Space>
-    ),
-  },
-];
-
 const tableData = [
   {
+    id: "1",
     key: "01",
     Title: "file",
     datemodified: "kljdasfhuasd",
@@ -86,6 +124,7 @@ const tableData = [
     Actions: "fduhguisd",
   },
   {
+    id: "2",
     key: "02",
     Title: "file2",
     datemodified: "kljdasfhuasd",
@@ -93,6 +132,7 @@ const tableData = [
     Actions: "fduhguisd",
   },
   {
+    id: "3",
     key: "03",
     Title: "file3",
     datemodified: "kljdasfhuasd",
@@ -104,6 +144,79 @@ const tableData = [
 const DigiVaultStudent = () => {
   const [modal2Open, setModal2Open] = useState(false);
   const [percentage, setPercentage] = useState(68);
+  const [toggleOperation, setToggleOperation] = useState({
+    isOpen: true,
+    id: "",
+  });
+
+  const navigate = useNavigate();
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "Title",
+      key: "key",
+      minWidth: 300,
+    },
+    {
+      title: "Date Modified",
+      dataIndex: "datemodified",
+      key: "datemodified",
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
+    },
+
+    {
+      title: "Action",
+      key: "Action",
+      render: (_: any, data: any) => (
+        <Space size="middle">
+          <div
+            onClick={() => {
+              setToggleOperation({ isOpen: true, id: data.key });
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <img src={More} alt="threedots" />
+          </div>
+
+          {toggleOperation.isOpen && toggleOperation.id === data.key && (
+            <div className="table-droupdown z-10">
+              <p
+                onClick={() => {
+                  setToggleOperation({
+                    isOpen: false,
+                    id: data.key,
+                  });
+                }}
+                style={{
+                  cursor: "pointer",
+                  textAlign: "left",
+                  paddingBottom: "15px",
+                }}
+              >
+                View
+              </p>
+              <p
+                onClick={() => {
+                  setToggleOperation({
+                    isOpen: false,
+                    id: data.key,
+                  });
+                }}
+                style={{ cursor: "pointer", textAlign: "left" }}
+              >
+                Delete
+              </p>
+            </div>
+          )}
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="digivault">
@@ -142,11 +255,20 @@ const DigiVaultStudent = () => {
               Manage your vault
             </div>
             <Row gutter={[8, 20]} className="p-2">
-              <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
-                <div>
-                  <DigivaultCard />
-                </div>
-              </Col>
+              {manageVaultArr.map((item) => {
+                return (
+                  <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
+                    <DigivaultCard
+                      bgColor={item.bgcolor}
+                      onClick={() => navigate(item.path)}
+                      titleImg={item.titleImg}
+                      subImg={item.subImg}
+                      title={item.Title}
+                      subTitle={item.subTitle}
+                    />
+                  </Col>
+                );
+              })}
             </Row>
           </div>
         </Col>

@@ -4,18 +4,23 @@ import "./style.scss";
 import Education from "../../assets/images/digivault/education.png";
 import Education1 from "../../assets/images/digivault/education1.png";
 
-const DigivaultCard = () => {
+const DigivaultCard = (props: any) => {
+  const { onClick, titleImg, subImg, title, subTitle, bgColor } = props;
+
+  console.log(bgColor);
+
   return (
-    <BoxWrapper className="digivault-wrapper">
-      <div className="upper-part">
+    <BoxWrapper onClick={onClick} className={`digivault-wrapper`}>
+      <div className={`upper-part`}>
         <div className="bgImg">
           {/* <EducationIcon  /> */}
-          <img src={Education} alt="icon" />
+          <img src={titleImg} alt="icon" />
         </div>
-        <img src={Education1} alt="icon" />
+        {title === "Others" ? "" : <img src={subImg} alt="icon" />}
       </div>
-      <h4>Education</h4>
-      <h6>Manage your educational documents</h6>
+      <h4>{title}</h4>
+
+      <h6>{subTitle}</h6>
     </BoxWrapper>
   );
 };
