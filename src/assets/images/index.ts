@@ -105,6 +105,9 @@ export { ReactComponent as CalendarWhiteIcon} from './leaves/CalendarWhiteIcon.s
 export { ReactComponent as DownloadIconLeave} from './leaves/DownloadIconLeave.svg';
 export { ReactComponent as FilterIconLeave} from './leaves/FilterIconLeave.svg';
 export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';
+export { default as LeaveProfileImg } from './leaves/images/ProfileImg.jpg';
+export { default as LeaveDocumentIcon } from './leaves/LeaveDocumentIcon.svg';
+
 
 
 

@@ -4,14 +4,15 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from "react";
 import './style.scss'
 import ModalWrapper from "./modalWrapper";
+import CalendarDataDrwawe from "./calendarDataDrwawe";
 
 const calendarEventData = [
     {
         id: "1",
         title: "Sick",
         eventType: "sick",
-        start: "2023-03-03T11:21:00",
-        end: "2023-03-03T12:22:00"
+        start: "2023-03-03T09:21:00",
+        end: "2023-03-03T05:22:00"
     },
     {
         id: "2",
@@ -77,14 +78,13 @@ const Calendar = () => {
         }
 
 
-        const backgroundColor = events?.eventType === 'sick' ? 'rgba(76, 164, 253, 0.25)' : events?.eventType === 'casual' ? 'rgba(255, 193, 93, 0.25)' : events?.eventType === 'work from home' ? 'rgba(233, 111, 124, 0.25)' : events?.eventType === 'medical' ? 'rgba(74, 157, 119, 0.25)' : '';
-        const borderColor = events?.eventType === 'Sick' ? 'rgba(76, 164, 253, 1)' : events?.eventType === 'Casual' ? 'rgba(255, 193, 93, 1)' : events?.eventType === 'Work From Home' ? 'rgba(233, 111, 124, 1)' : events?.eventType === 'medical' ? 'rgba(106, 173, 142, 1)' : '';
+        const backgroundColor = events?.eventType === 'sick' ? 'rgba(76, 164, 253, 1)' : events?.eventType === 'casual' ? 'rgba(255, 193, 93, 1)' : events?.eventType === 'work from home' ? 'rgba(233, 111, 124, 1)' : 'rgba(74, 157, 119, 1)';
+        // const borderColor = events?.eventType === 'sick' ? 'rgba(76, 164, 253, 1)' : events?.eventType === 'Casual' ? 'rgba(255, 193, 93, 1)' : events?.eventType === 'Work From Home' ? 'rgba(233, 111, 124, 1)' : events?.eventType === 'medical' ? 'rgba(106, 173, 142, 1)' : '';
 
         return (
             <>
-
                 <div className="events-wrapper " style={{ background: backgroundColor }}>
-                    <div style={{ backgroundColor: borderColor }} className="w-full rounded-sm ">dddd</div>
+                    <div  className="w-full  p-[4px] rounded-md "></div>
                 </div>
             </>
         )
@@ -110,20 +110,18 @@ const Calendar = () => {
                         month: "short",
                         year: "numeric"
                     }}
-                    // eventRender={}
-                    views={{
-                        dayGridMonth: {
-                            backgroundColor: 'red',
-                        }
-                    }}
-                    // eventRender={}
                     events={calendarEventData}
                     eventContent={handleEventContent}
-                    eventClick={(e) => {setIsEditModalOpen(true); setEventData(e)}}
+                    eventClick={(e) => { setIsEditModalOpen(true); setEventData(e) }}
                     dateClick={() => setIsAddModalOpen(true)}
                 />
             </div>
-            <ModalWrapper isEditModalOpen={isEditModalOpen} eventData={eventData} setIsEditModalOpen={setIsEditModalOpen} />
+            <CalendarDataDrwawe
+                // title={"hello"}
+                setIsEditModalOpen={setIsEditModalOpen}
+                eventData={eventData}
+                isEditModalOpen={isEditModalOpen} />
+            {/* <ModalWrapper isEditModalOpen={isEditModalOpen} eventData={eventData} setIsEditModalOpen={setIsEditModalOpen} /> */}
         </>
     )
 }
