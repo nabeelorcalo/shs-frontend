@@ -16,37 +16,37 @@ const Graph = ({ graphName }: any) => {
   const RegisterAgentsToolip = (props: any) => {
     return (
       <div className={`flex flex-col h-[167px] w-[262px] rounded-lg ${bgClass}`}>
-        <p className='ml-auto mr-auto font-semibold'>Total Agents</p>
+        <p className='ml-auto mr-auto p-[12px] font-semibold'>Total Agents</p>
         <Divider className='m-0 bg-white' />
         <div className='pl-4 pb-2'>
-          <Row className='flex flex-row ml-2 mr-2' gutter={[10, 24]}>
-            <Col className='flex-col' span={9}>
+          <div className='flex flex-row'>
+            <div className='flex-col flex-none w-[90px] pt-[20px]'>
               <p className='font-normal'>Universities</p>
-              <p className='font-semibold'>05</p>
-            </Col>
+              <p className='pt-2 font-semibold'>05</p>
+            </div>
 
-            <Col className='flex-col' span={7}>
+            <div className='flex-col flex-none w-[85px] pt-[20px]'>
               <p className='font-normal'>Interns</p>
-              <p className='font-semibold'>01</p>
-            </Col>
+              <p className='pt-2 font-semibold'>01</p>
+            </div>
 
-            <Col className='flex-col' span={8}>
+            <div className='flex-col flex-none w-[85px] pt-[20px]'>
               <p className='font-normal'>Students</p>
-              <p className='font-semibold'>02</p>
-            </Col>
-          </Row>
+              <p className='pt-2 font-semibold'>02</p>
+            </div>
+          </div>
 
-          <Row className='flex flex-row ml-2 mr-2' gutter={[10, 24]}>
-            <Col className='flex-col' span={9}>
+          <div className='flex flex-row'>
+            <div className='flex-col flex-none w-[90px] pt-[22px]'>
               <p className='font-normal'>Companies</p>
-              <p className='font-semibold'>10</p>
-            </Col>
+              <p className='pt-2 font-semibold'>10</p>
+            </div>
 
-            <Col className='flex-col' span={15}>
+            <div className='flex-col flex-none w-full pt-[22px]'>
               <p className='font-normal'>Delegate Agents</p>
-              <p className='font-semibold'>02</p>
-            </Col>
-          </Row>
+              <p className='pt-2 font-semibold'>02</p>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -55,37 +55,37 @@ const Graph = ({ graphName }: any) => {
   const RewardToolip = (props: any) => {
     return (
       <div className={`flex flex-col h-[167px] w-[262px] rounded-lg ${bgClass}`}>
-        <p className='ml-auto mr-auto font-semibold'>Rewards</p>
+        <p className='ml-auto mr-auto p-[12px] font-semibold'>Rewards</p>
         <Divider className='m-0 bg-white' />
-        <div className='pl-4 pb-2'>
-          <Row className='flex flex-row ml-2 mr-2' gutter={[10, 24]}>
-            <Col className='flex-col' span={9}>
+        <div className='px-4 pb-2'>
+          <div className='flex flex-row'>
+            <div className='flex-col flex-none w-[90px] pt-[20px]'>
               <p className='font-normal'>Universities</p>
-              <p className='font-semibold'>£1,000</p>
-            </Col>
+              <p className='pt-2 font-semibold'>$10000</p>
+            </div>
 
-            <Col className='flex-col' span={7}>
+            <div className='flex-col flex-none w-[85px] pt-[20px]'>
               <p className='font-normal'>Interns</p>
-              <p className='font-semibold'>£1,000</p>
-            </Col>
+              <p className='pt-2 font-semibold'>$10000</p>
+            </div>
 
-            <Col className='flex-col' span={8}>
+            <div className='flex-col flex-none w-[85px] pt-[18px]'>
               <p className='font-normal'>Students</p>
-              <p className='font-semibold'>£1,000</p>
-            </Col>
-          </Row>
+              <p className='pt-2 font-semibold'>$10000</p>
+            </div>
+          </div>
 
-          <Row className='flex flex-row ml-2 mr-2' gutter={[10, 24]}>
-            <Col className='flex-col' span={9}>
+          <div className='flex flex-row'>
+            <div className='flex-col flex-none w-[90px] pt-[22px]'>
               <p className='font-normal'>Companies</p>
-              <p className='font-semibold'>£1,000</p>
-            </Col>
+              <p className='pt-2 font-semibold'>$10000</p>
+            </div>
 
-            <Col className='flex-col' span={15}>
+            <div className='flex-col flex-none w-full pt-[18px]'>
               <p className='font-normal'>Delegate Agents</p>
-              <p className='font-semibold'>£1,000</p>
-            </Col>
-          </Row>
+              <p className='pt-2 font-semibold'>$10000</p>
+            </div>
+          </div>
         </div>
       </div>
     )
