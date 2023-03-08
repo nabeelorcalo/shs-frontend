@@ -13,10 +13,14 @@ import {
   IconClipboardTick,
   IconTaskSquare,
   IconProfileCircle,
-  IconCourtHouse
+  IconCourtHouse,
+  IconLikeShapes,
+  IconEmojiSad,
+  IconWalletCheck,
+  IconCalendar
 } from '../../../assets/images'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, CANDIDATES, INTERNSHIPS, OFFER_LETTER, CONTRACTS, INTERNS, MANAGERS, UNIVERSITIES, STRUCTURE, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, DOCUMENTS } = ROUTES_CONSTANTS
+const { DASHBOARD, CANDIDATES, INTERNSHIPS, OFFER_LETTER, CONTRACTS, INTERNS, MANAGERS, UNIVERSITIES, STRUCTURE, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, DOCUMENTS, PAYROLL, CASE_STUDIES, GRIEVANCES, CERTIFICATES, CALENDAR, SETTING, PERSONALISATION  } = ROUTES_CONSTANTS
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 function getItem(
@@ -61,6 +65,24 @@ export const itemsCompanyAdmin: MenuProps['items'] = [
     getItem('Timesheets', `/${TIMESHEET}`, <IconTimer />),
     getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
     getItem('Documents', `/${DOCUMENTS}`, <IconDocument />),
-    
+    getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck />),
+  ], 'group'),
+
+  // REPORTS GROUP
+  getItem('Report', 'report', null, [
+    getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes />),
+    getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
+    getItem('Certificates', `/${CERTIFICATES}`, <IconEmojiSad />),
+  ], 'group'),
+
+  // PERSONAL GROUP
+  getItem('Personal', 'personal', null, [
+    getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
+  ], 'group'),
+
+  // SETUP GROUP
+  getItem('Setup', 'setup', null, [
+    getItem('Settings', `/${SETTING}`, <IconCalendar />),
+    getItem('Personalisation', `/${PERSONALISATION}`, <IconCalendar />),
   ], 'group'),
 ]
