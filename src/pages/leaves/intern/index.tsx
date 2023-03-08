@@ -104,7 +104,7 @@ const index = () => {
           </BoxWrapper>
         </Col>
       </Row>
-      <LeaveRequest />
+      {/* <LeaveRequest /> */}
     </div>
   )
 }
