@@ -68,6 +68,7 @@ const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
+const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
 export const publicRoutes = [
@@ -339,8 +340,8 @@ const companyAdminRoutes = [
         element: <Internships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -397,6 +398,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         path: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         element: <Documents />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERSONALISATION}`,
+        path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
+        element: <Personalisation />,
       },
     ],
   },
@@ -529,8 +535,8 @@ const studentRoutes = [
         element: <Application />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -562,6 +568,34 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
+
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
+            element: <Dashboard />,
+            index: true,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            element: <Dashboard />,
+          },
+        ]
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

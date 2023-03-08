@@ -13,7 +13,7 @@ function App() {
   const { pathname } = useLocation();
   const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
   // const user_role = userData.role; // Uncomment it when login implemented
-  const user_role = userData.role || 'Student'; // <===== Place bootom roles here ot use.
+  const user_role = userData.role || 'CompanyAdmin'; // <===== Place bootom roles here ot use.
 
   // Possibe string of roles:
   // SystemAdmin,
