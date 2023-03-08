@@ -1,11 +1,11 @@
 
 import { Col, Divider, Drawer, Dropdown, Form, Row, Select, Space } from "antd";
 import type { MenuProps } from 'antd';
-import BoxWrapper from "../../../../components/BoxWrapper/boxWrapper"
-import GlobalTable from "../../../../components/Table/Table"
+import {BoxWrapper} from "../../components/BoxWrapper/boxWrapper"
+import GlobalTable from "../../components/Table/Table"
 import "./style.scss"
-import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, MoreIcon } from "../../../../assets/images";
-import { Button, SearchBar } from "../../../../components";
+import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, MoreIcon } from "../../assets/images";
+import { Button, SearchBar } from "../../components";
 import { useState } from "react";
 import { CloseCircleFilled } from "@ant-design/icons";
 interface DataType {

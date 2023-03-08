@@ -1,0 +1,33 @@
+.shs-content-menu {
+  .ant-menu.ant-menu-light.ant-menu-horizontal {
+    background-color: transparent;
+
+    .ant-menu-item {
+      color: #A0A3BD;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      padding: 0;
+      padding-bottom: 14px;
+      margin-left: 50px;
+      &:first-child {
+        margin-left: 0;
+      }
+      &::after {
+        border: none;
+      }
+
+      &.ant-menu-item-selected {
+        color: #363565;
+        &::after {
+          border: none;
+          height: 4px;
+          background-color: #363565;
+          width: 100%;
+          left: 0;
+          border-radius: 8px 8px 0 0;
+        }
+      }
+    }
+  }
+}

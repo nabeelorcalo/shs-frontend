@@ -68,8 +68,10 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
-const ViewHistory = Loadable(lazy(() => import("./pages/leaves/intern/viewHistory")));
+const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
+const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
+const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
 export const publicRoutes = [
@@ -105,6 +107,11 @@ export const publicRoutes = [
     key: 'dropdowndemo',
     path: '/demodropdown',
     element: <DropDownDemo />
+  },
+  {
+    key: 'charts',
+    path: '/charts',
+    element: <Charts />
   }
   // ------Remove till here------
 ];
@@ -341,8 +348,8 @@ const companyAdminRoutes = [
         element: <Internships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -400,6 +407,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         element: <Documents />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.PERSONALISATION}`,
+        path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
+        element: <Personalisation />,
+      },
     ],
   },
   {
@@ -439,6 +451,7 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
+  
       
       },
       {
@@ -538,8 +551,8 @@ const studentRoutes = [
         element: <Application />,
       },
       {
-        key: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
-        path: `${ROUTES_CONSTANTS.OFFER_LETTERS}`,
+        key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
+        path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
       },
       {
@@ -571,6 +584,34 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
+
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
+            element: <Dashboard />,
+            index: true,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            element: <Dashboard />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            element: <Dashboard />,
+          },
+        ]
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,
