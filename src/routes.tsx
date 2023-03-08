@@ -13,6 +13,15 @@ import { ROUTES_CONSTANTS } from "./config/constants";
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+//Setting Child Component
+import SettingPerformance from "./components/Setting/Performance/Performance";
+import SettingDepartment from "./components/Setting/Department/Department";
+import SettingLeaves from "./components/Setting/Leaves/Leaves";
+import SettingLocation from "./components/Setting/Location/Location";
+import SettingTemplate from "./components/Setting/Templates/Templates";
+import SettingShifts from "./components/Setting/Shifts/Shifts";
+import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
+import SettingPayroll from "./components/Setting/Payroll/Payroll";
 //
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -388,43 +397,48 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,
         path: `${ROUTES_CONSTANTS.SETTING}`,
-        element: <Setting />,
+        // element: <Setting />,
         children: [
           {
             key: `location`,
-            element: <Timesheet />,
+            element:  <Setting title="Location" ><SettingLocation /> </Setting>,
             path: "location",
             index: true,
           },
           {
             key: `department`,
-            element: <h1>fdfdsf</h1>,
+            element: <Setting title="Department" ><SettingDepartment/> </Setting>,
             path: "department",
           },
           {
-            key: `d`,
-            element: <h1>xyz</h1>,
-            path: "d",
+            key: `leaves`,
+            element:<Setting title="Leaves" ><SettingLeaves/></Setting> ,
+            path: "leaves",
           },
           {
-            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <Dashboard />,
+            key: `performance`,
+            path: `performance`,
+          element:<Setting title="Performance" ><SettingPerformance/></Setting>  ,
           },
           {
-            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <Dashboard />,
+            key: `template`,
+            path: `template`,
+            element: <Setting title="Template" > <SettingTemplate /></Setting>,
           },
           {
-            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <Dashboard />,
+            key: `shifts`,
+            path: `shifts`,
+            element: <Setting title="Shifts" > <SettingShifts /></Setting>,
           },
           {
-            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <Dashboard />,
+            key: `timesheet`,
+            path: `timesheet`,
+            element: <Setting title="Timesheet" > <SettingTimesheet /></Setting>,
+          },
+          {
+            key: `payroll`,
+            path: `payroll`,
+            element:<Setting title="Payroll" >  <SettingPayroll /></Setting>,
           },
         ],
       },

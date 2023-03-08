@@ -13,7 +13,7 @@ const { Title } = Typography;
 
 const menuLinks = [
   {
-    title: "Location",
+    title: "Locations",
     link: "/settings/location",
     icon: <SettingMap />,
     description: "Add different geographical locations for your organisation",
@@ -27,7 +27,7 @@ const menuLinks = [
   },
   {
     title: "Leaves",
-    link: "/settings/leave",
+    link: "/settings/leaves",
     icon: <SettingCalendarRemove />,
     description: "Create leave policies to allow your people to take time off",
   },
@@ -45,19 +45,19 @@ const menuLinks = [
   },
   {
     title: "Shifts",
-    link: "/settings/shift",
+    link: "/settings/shifts",
     icon: <SettingShifts />,
     description: "Add shifts for your people to manage different shifts",
   },
   {
     title: "Timesheet",
-    link: "/timesheet",
+    link: "/settings/timesheet",
     icon: <SettingMap />,
     description: "Manage timesheet categories and track tasks for team members",
   },
   {
     title: "Payroll",
-    link: "/setting/payroll",
+    link: "/settings/payroll",
     icon: "icon",
     description:
       "Add departments within your organisation for people management",
@@ -66,8 +66,8 @@ const menuLinks = [
 
 const SettingSidebar: React.FC = () => {
   return (
-    <div style={{ backgroundColor: "#fff" }}>
-      {/* <div style={{ listStyleType: "none", marginTop: "30px" }}> */}
+    <div>
+
       <div className="overflow-none ">
         {menuLinks.map((item, idx) => {
           return (
@@ -77,26 +77,30 @@ const SettingSidebar: React.FC = () => {
                 to={item.link}
                 className={({ isActive }) =>
                   isActive
-                    ? "flex items-center  space-x-2 text-[#14142A] bg-[#E6F4F9] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
-                    : "flex items-center  space-x-2 text-[#6E7191] bg-white rounded-lg hover:bg-[#E6F4F9] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
+                    ? "flex items-center  text-[#14142A] bg-[#E6F4F9] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
+                    : "flex items-center  text-[#6E7191] bg-white rounded-lg hover:bg-[#E6F4F9] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
                 }
               >
-                <div className="flex flex-col">
-                  <div className="flex">
-                    <span>{item.icon}</span>
+                <div className="px-2 m-0">
+                  <div className="flex flex-col my-2">
+                    <div className="flex">
+                      <span>{item.icon}</span>
 
-                    <span className="font-medium mx-3 text-base text-primary-color  ">
-                      {item.title}
-                    </span>
+                      <span className="font-medium mx-3 text-base text-primary-color  ">
+                        {item.title}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-normal text-sm pt-1 ">
+                        {item.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-normal text-sm pt-1">
-                      {item.description}
-                    </p>
-                  </div>
+                  <Divider className="mb-0 " />
                 </div>
               </NavLink>
-              <Divider />
+              {/* <Divider /> */}
+
             </>
           );
         })}

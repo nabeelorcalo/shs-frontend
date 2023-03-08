@@ -14,29 +14,29 @@ const Setting = (props: any) => {
   return (
     <>
       <div className="flex ">
-        <Title level={3}>Location </Title>
+        <Title level={3}>{props.title} </Title>
         <span className="mx-2">
           <SettingHorizontalLine />
         </span>
-        <Title className="mt-1" level={4}>Setting </Title>
+        <Title className="mt-0.5" level={4}>Setting </Title>
       </div>
-      <Row gutter={16}>
-        <Col span={5}>
+      <Row gutter={16} className="mt-5">
+        <Col sm={10} md={8} lg={5}>
           <div
             style={{
               backgroundColor: "#fff",
               borderRadius: "15px",
               height: "100%",
               textAlign: "left",
-              padding: "30px 20px",
+              // padding: "30px 20px",
             }}
           >
-            <SettingSidebar />
+           <div className="rounded-lg"><SettingSidebar /></div> 
           </div>
         </Col>
         <Col span={19}>
-          <Title level={2}>{props.title}</Title>
-          {/* <h2>dddd</h2> */}
+        {props.children}
+         
           <Outlet />
         </Col>
       </Row>
