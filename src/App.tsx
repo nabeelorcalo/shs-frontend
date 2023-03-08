@@ -4,6 +4,7 @@ import { getRoutes } from "./routes";
 import "./App.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
+import constants from './config/constants';
 
 function App() {
   /* VARIABLE DECLARATION
@@ -12,22 +13,12 @@ function App() {
   const { pathname } = useLocation();
   const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
   // const user_role = userData.role; // Uncomment it when login implemented
-  const user_role = userData.role || 'SystemAdmin'; // <===== Place bootom roles here ot use.
-
-  // Possibe string of roles:
-  // SystemAdmin,
-  // Manager,
-  // DelegateAgent,
-  // CompanyAdmin,
-  // Intern,
-  // Student,
-  // University,
-  // Agent,
+  const user_role = userData.role || constants.USER_ROLE;
   const publicRoutes = getRoutes('Public');
   let routes = getRoutes(user_role);
   routes = routes.concat(publicRoutes);
-
   const pages = useRoutes(routes);
+  
   /* HOOKS
   -------------------------------------------------------------------------------------*/
   // useEffect(() => {

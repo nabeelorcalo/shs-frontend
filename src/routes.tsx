@@ -69,6 +69,7 @@ const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
+const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
@@ -105,6 +106,11 @@ export const publicRoutes = [
     key: 'dropdowndemo',
     path: '/demodropdown',
     element: <DropDownDemo />
+  },
+  {
+    key: 'charts',
+    path: '/charts',
+    element: <Charts />
   }
   // ------Remove till here------
 ];
