@@ -102,6 +102,12 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
+    {
+      key: "candidates",
+    path: `candidates`,
+    element: <Candidates />,
+    
+  },
   // Demo dropdowns
   {
     key: 'dropdowndemo',
