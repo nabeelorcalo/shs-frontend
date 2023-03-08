@@ -70,6 +70,9 @@ export { ReactComponent as Recreation } from './chart/Recreation.svg';
 // Leaves Icons
 export { ReactComponent as DocumentUpload } from './leaves/document-upload.svg';
 
+// Uploads Icons
+export { ReactComponent as DocumentCardIcon  } from './uploads/Document-Card.svg';
+
 // sickLeave-card icon 
 export { default as SickIcon } from './sick.png';
 export { default as CasualIcon } from './sick.png';

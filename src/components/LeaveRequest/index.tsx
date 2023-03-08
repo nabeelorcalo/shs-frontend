@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
+import { ArrowDownDark, DownloadIcon } from '../../assets/images';
 import DragAndDropUpload from '../DragAndDrop';
 import { Button, Modal, Select, Radio, DatePicker, Input } from 'antd'
 import dayjs from 'dayjs';
+import { DropDown } from '../Dropdown/DropDown';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const dateFormat = 'YYYY/MM/DD';
@@ -17,7 +19,7 @@ const LeaveRequest = ({ title }: any) => {
           title={title}
           open={show}
           onCancel={() => { setShow(!show) }}
-          width={640}
+          width={600}
           maskClosable={false}
           closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px' }} />}
           footer={[
@@ -29,8 +31,10 @@ const LeaveRequest = ({ title }: any) => {
             </Button>,
           ]}
         >
-          <div className="mt-8">
+          <div className="mt-8 flex flex-col gap-2 ">
+
             <p>Leave Type<span className="text-[red]">*</span></p>
+            {/* <DropDown name="Select" endIcon options={['sick', 'casual', 'work from home', 'medical']} /> */}
             <Select
               showSearch
               style={{ width: '100%' }}
@@ -56,23 +60,23 @@ const LeaveRequest = ({ title }: any) => {
                 },
               ]}
             />
-            <div className="my-8">
+            <div className="my-2">
               <Radio.Group onChange={() => { }} value={"FullDay"}>
                 <Radio value={"FullDay"}>Full Day</Radio>
                 <Radio value={"HalfDay"}>Half Day</Radio>
 
               </Radio.Group>
             </div>
-            <div className="my-4 flex gap-3">
-              <div className="w-1/3">
+            <div className="my-2 flex gap-3">
+              <div className=" flex flex-col gap-2  w-1/3">
                 <p>Date From<span className="text-[red]">*</span></p>
                 <DatePicker onChange={() => { }} />
               </div>
-              <div className="w-1/3">
+              <div className=" flex flex-col gap-2  w-1/3">
                 <p>Date From<span className="text-[red]">*</span></p>
                 <DatePicker onChange={() => { }} />
               </div>
-              <div className="w-1/3">
+              <div className="flex flex-col gap-2  w-1/3">
                 <p>Days</p>
                 <Input
                   placeholder={0}
@@ -81,11 +85,11 @@ const LeaveRequest = ({ title }: any) => {
                 />
               </div>
             </div>
-            <div className="my-8">
+            <div className="flex flex-col gap-2  my-2">
               <p>Reason<span className="text-[red]">*</span></p>
               <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
             </div>
-            <div className="my-8">
+            <div className="flex flex-col gap-2 my-2">
               <p>attachement</p>
               <DragAndDropUpload />
 
