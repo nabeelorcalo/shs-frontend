@@ -2,6 +2,7 @@ import { Col, Divider, Row, Typography } from 'antd'
 import React from 'react'
 import AppTabs from '../../../components/Tabs'
 import ListingRequest from '../listingRequest'
+import PropertyAgentTable from '../propertAgentTable'
 import MainDashboard from './Dashboard'
 
 
@@ -19,7 +20,7 @@ const items = [
     {
         key: '3',
         label: "Property Agents",
-        children:"xxx",
+        children:<PropertyAgentTable/>,
     },
 ]
 
