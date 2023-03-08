@@ -246,13 +246,13 @@ const index = () => {
               name="status"
             >
             <Select
-                defaultValue=""
+                defaultValue="Pending"
                 onChange={handleChange}
                 size="large"
                 options={[
-                  { value: 'jack', label: 'Pendung' },
-                  { value: 'lucy', label: 'Approved' },
-                  { value: 'Yiminghe', label: 'Declined' },
+                  { value: 'pending', label: 'Pending' },
+                  { value: 'declined', label: 'Declined' },
+                  { value: 'approved', label: 'Approved' },
                 ]}
               />
             </Form.Item>
