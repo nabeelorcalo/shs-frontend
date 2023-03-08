@@ -15,7 +15,7 @@ const Calendar = () => {
   return (
     <>
       <p>Calendar </p>
-      <div className="flex gap-3">
+      <div className="flex gap-3 my-3">
         <LeaveRequest title="Leave Request" />
         <EmojiEvaluation title={`Performance Report - ${name}`} />
         <AssesmentModal title="Signature" />
