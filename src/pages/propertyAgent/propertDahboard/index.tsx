@@ -1,6 +1,7 @@
 import { Col, Divider, Row, Typography } from 'antd'
 import React from 'react'
 import AppTabs from '../../../components/Tabs'
+import ListingRequest from '../listingRequest'
 import MainDashboard from './Dashboard'
 
 
@@ -13,7 +14,7 @@ const items = [
     {
         key: '2',
         label: "Listings Request",
-        children:"rrr",
+        children:<ListingRequest/>,
     },
     {
         key: '3',
