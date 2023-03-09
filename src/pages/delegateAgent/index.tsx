@@ -6,6 +6,7 @@ import Rewards from "./delegateAgentTabs/delegateReawards";
 import WithDrawalRequest from "./delegateAgentTabs/delegateWithDrawlRequest";
 import Dashboard from "./delegateAgentTabs/delelgatedashboard";
 import "./style.scss";
+import DelegateMain from './delegateAgentTabs/delegateMain';
 
 const items = [
   {
@@ -16,7 +17,7 @@ const items = [
   {
       key: '2',
       label: "Delegate Agents",
-      children:'f',
+      children:<DelegateMain/>,
   },
   {
       key: '3',

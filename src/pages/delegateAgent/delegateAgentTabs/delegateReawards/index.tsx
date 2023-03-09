@@ -24,12 +24,12 @@ const Rewards = () => {
           return (
             <>
               <Row gutter={30} className="mb-7 mt-5">
-                <Col xxl={3} xl={3} lg={4} md={24} sm={24} xs={24}>
+                <Col xxl={3} xl={4} lg={4} md={24} sm={24} xs={24}>
                   <Typography className="text-xl font-medium font-outfit text-[#4e4b66]">
                     {item.mainLable}
                   </Typography>
                 </Col>
-                <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+                <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
                   <Typography className="text-base font-semibold font-outfit text-[#6e7191]">
                     {item.lableOne}
                   </Typography>
@@ -39,7 +39,7 @@ const Rewards = () => {
                     className="bg-[#E6F4F9] rounded-[8px]"
                   />
                 </Col>
-                <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+                <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
                   <Typography className="text-base font-semibold font-outfit text-[#6e7191]">
                     {item.lableTwo}
                   </Typography>
