@@ -17,10 +17,18 @@ Default.args = {
     title: 'Accommodation',
 }
 
+export const WithBorder = Template.bind({})
+WithBorder.args = {
+    title: 'Accommodation',
+    actions: true,
+    bordered: true
+}
+
 export const WithActions = Template.bind({})
 WithActions.args = {
     title: 'DigiVault',
     actions: true,
+    bordered: true,
     children: <Space wrap>
         <Button type='primary'>Click me</Button>
         <Button danger icon={<DownloadOutlined />}>Download</Button>
