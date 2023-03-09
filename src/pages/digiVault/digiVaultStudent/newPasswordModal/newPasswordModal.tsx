@@ -25,36 +25,7 @@ const NewPasswordModal = (props: any) => {
           <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
         }
         footer={false}
-        // footer={[
-        //   <Button
-        //     onClick={() => {
-        //       setNewPass(!newPass);
-        //     }}
-        //     key="Cancel"
-        //     style={{
-        //       border: "1px solid #4a9d77",
-        //       color: "#4a9d77",
-        //       padding: "0px 20px",
-        //     }}
-        //   >
-        //     Cancel
-        //   </Button>,
-        //   <Button
-        //     onClick={() => {
-        //       setNewPass(!newPass);
-        //       setIsChecked(true);
-        //     }}
-        //     key="submit"
-        //     style={{
-        //       backgroundColor: "#4a9d77",
-        //       color: "#fff",
-        //       border: "1px solid #4a9d77",
-        //       padding: "0px 20px",
-        //     }}
-        //   >
-        //     Upload
-        //   </Button>,
-        // ]}
+        
       >
         <div className="text-center mt-6 mb-6">
           <h1 className="color-[#363565]">Create New Password</h1>
@@ -102,15 +73,19 @@ const NewPasswordModal = (props: any) => {
               <Input.Password size="large" />
             </Form.Item>
           </div>
+
+          <div>
           <Button
             onClick={() => {
               setNewPass(!newPass);
               setIsChecked(true);
             }}
-            className="create-passwor-btn bg-[#363565] color-[fffff]"
+            className="create-passwor-btn bg-[#363565] color-[fffff] min-w-full"
           >
             Continue
           </Button>
+          </div>
+          
         </Form>
       </Modal>
     </div>

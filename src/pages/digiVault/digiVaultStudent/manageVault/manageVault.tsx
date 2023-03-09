@@ -133,10 +133,10 @@ const ManageVault = (props: any) => {
 
   const menu1 = (
     <Menu>
-      <Menu.Item onClick={() => setUpLoadFile(true)} key="1">
+      <Menu.Item onClick={() => {setUpLoadFile(true); setVisible(false)}}key="1">
         Upload files
       </Menu.Item>
-      <Menu.Item onClick={() => setUpLoadFolder(true)} key="2">
+      <Menu.Item onClick={() => {setUpLoadFolder(true); setVisible(false)}} key="2">
         Upload folder
       </Menu.Item>
     </Menu>
@@ -166,14 +166,16 @@ const ManageVault = (props: any) => {
         </Col>
         <Divider />
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row>
-            <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-              <SearchBar size="large" handleChange={handleChange} />
+          <Row gutter={[10,20]}>
+            <Col xxl={6} xl={6} lg={8} md={8} sm={24} xs={24}>
+              <SearchBar size="middle" handleChange={handleChange} />
             </Col>
 
-            <Col xxl={12} xl={12} lg={12} md={12} sm={0} xs={0}></Col>
+            <Col xxl={14} xl={12} lg={8} md={2} sm={0} xs={0}></Col>
 
-            <Col className="" xxl={3} xl={3} lg={3} md={3} sm={24} xs={24}>
+            <Col xxl={4} xl={6} lg={8} md={14} sm={24} xs={24}>
+            <Row gutter={[10,10]}>
+            <Col className="flex justify-end" xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
               <Button
                 onClick={() => setISOpen(true)}
                 className="foldet-add-btn"
@@ -184,10 +186,10 @@ const ManageVault = (props: any) => {
 
             <Col
               className="flex justify-end"
-              xxl={3}
-              xl={3}
-              lg={3}
-              md={3}
+              xxl={12}
+              xl={12}
+              lg={12}
+              md={12}
               sm={24}
               xs={24}
             >
@@ -209,6 +211,12 @@ const ManageVault = (props: any) => {
                 </Button>
               </Dropdown>
             </Col>
+            </Row>
+            </Col>
+
+            
+
+           
           </Row>
         </Col>
       </Row>

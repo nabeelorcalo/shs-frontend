@@ -7,7 +7,7 @@ import Recieved from "../../../assets/images/ColorfullIconsProgressbar/recieved.
 import Rejected from "../../../assets/images/ColorfullIconsProgressbar/rejected.png";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 
-const contractRecieved = [
+const contractReceived = [
   {
     id: "1",
     img: Recieved,
@@ -111,13 +111,15 @@ const ContractsStudent = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={10}>
             <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-              {contractRecieved.map((item) => {
+              {contractReceived.map((item) => {
                 return (
+                  <div>
                   <ContractCard
                     img={item.img}
                     title={item.title}
                     description={item.subTitle}
                   />
+                  </div>
                 );
               })}
             </Col>

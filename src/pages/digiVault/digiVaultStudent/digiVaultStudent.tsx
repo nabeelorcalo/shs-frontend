@@ -261,8 +261,8 @@ const DigiVaultStudent = () => {
       </Row>
       <Divider />
 
-      <Row gutter={20} className="">
-        <Col xxl={18} xl={18} lg={18} md={18} sm={18} xs={24}>
+      <Row gutter={[20,10]} className="">
+        <Col xxl={18} xl={16} lg={16} md={24} sm={24} xs={24}>
           <div className="manage-vault">
             <div
               style={{ color: "#363565" }}
@@ -273,7 +273,7 @@ const DigiVaultStudent = () => {
             <Row gutter={[8, 20]} className="p-2">
               {manageVaultArr.map((item, index) => {
                 return (
-                  <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
+                  <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
@@ -290,10 +290,10 @@ const DigiVaultStudent = () => {
           </div>
         </Col>
 
-        <Col xxl={6} xl={6} lg={6} md={6} sm={6} xs={24}>
+        <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
-            <Row className="storage-bar-header">
-              <Col xxl={10} xl={10} lg={10} md={10} sm={6} xs={24}>
+            <Row gutter={4} className="storage-bar-header">
+              <Col xxl={8} xl={10} lg={24} md={8} sm={8} xs={24}>
                 <Progress
                   strokeWidth={12}
                   strokeColor={"#5D89F4"}
@@ -302,14 +302,15 @@ const DigiVaultStudent = () => {
                   percent={75}
                 />
               </Col>
+
               <Col
-                xxl={12}
-                xl={12}
-                lg={12}
+                xxl={14}
+                xl={14}
+                lg={24}
                 md={12}
-                sm={6}
+                sm={14}
                 xs={24}
-                className="flex flex-col justify-center  ml-4"
+                className="flex flex-col justify-center"
               >
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>

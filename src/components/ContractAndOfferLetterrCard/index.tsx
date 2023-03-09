@@ -63,7 +63,7 @@ export const ContractCard = (props: any) => {
       )}
 
       <div className="view-all-btn flex">
-        <span className="capitalize">view all <span className="ml-2"><ArrowRightOutlined /></span></span>
+        <span className="capitalize">view<span className="ml-2"><ArrowRightOutlined /></span></span>
       </div>
     </div>
   );
