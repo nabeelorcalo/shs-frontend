@@ -13,6 +13,7 @@
     font-size: 20px;
     line-height: 28px;
     color: #4e4b66;
+    margin-top: 5px;
   }
   .card-number {
     font-family: "Outfit";
@@ -144,4 +145,26 @@ gap: 10px;
 
 .animate .button-ts {
   display: none;
+}
+
+.activity-data{
+  background: #FFFFFF;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 10px;
+  
+  .main-title{
+    font-family: 'Outfit';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 32px;
+color: #363565;
+  }
+  .activity-data-table{
+    background: #FFFFFF;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 10px;
+  }
 }

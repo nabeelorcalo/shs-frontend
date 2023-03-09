@@ -387,6 +387,23 @@ export const activityData = [
         time:"02:53 pm "
         
     },
+    {
+        date: "11 Nov",
+        userStatus: "New User Created",
+        img: "",
+        detail: "Albert added as a new agent",
+        time:"02:53 pm "
+        
+    },
+    {
+        date: "11 Nov",
+        userStatus: "New User Created",
+        img: "",
+        detail: "Albert added as a new agent",
+        time:"03:53 pm "
+        
+    },
+   
 ]
 
 

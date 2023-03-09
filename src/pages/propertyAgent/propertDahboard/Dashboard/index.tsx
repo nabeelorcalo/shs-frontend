@@ -80,18 +80,18 @@ const MainDashboard = () => {
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
-            <div className="inner-activities flex">
+            <div className="inner-activities flex mt-4">
               <Row>
                 {activityData.map((item, index) => {
                   return (
                     <>
-                        <div style={{ display: "flex" }}>
+                        <div style={{ display: "flex" ,marginBottom:'1rem'}}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Typography>{item.date}</Typography>
                   </Col>
                   <hr />
-                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                    <div>
+                  <Col xxl={15} xl={15} lg={15} md={24} sm={24} xs={24}>
+                    <div className="ml-2">
                       <Typography
                         style={{
                           fontSize: "14px",
@@ -114,12 +114,7 @@ const MainDashboard = () => {
                         >
                           {item.detail}
                         </Typography>
-                        <div
-                          
-                          style={{ background: " #4783FF",padding:"2px", color:"white" }}
-                        >
-                          View
-                        </div>
+                    
                       </div>
                       <Typography  style={{
                             fontSize: "14px",
@@ -129,15 +124,26 @@ const MainDashboard = () => {
                             // marginLeft:"10px"
                           }}>{item.time}</Typography>
                     </div>
-                  </Col>
+                        </Col>
+                        <Col xxl={3} xl={3} lg={3} md={24} sm={24} xs={24}>
+                        <div
+                          
+                          style={{ background: " #4783FF",padding:"4px", color:"white" ,textAlign:"center",width:"140%",borderRadius:"8px"}}
+                        >
+                          View
+                        </div>
+                        </Col>
                 </div>
                     </>
                   )
                 })}
-              
+               
               </Row>
+             
             </div>
-          </div>
+            <div className="text-center ">
+                  <a href="activityData" className="underline decoration-2">View All</a> </div>
+            </div>
         </Col>
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
           <div className="recent-card-listing">
@@ -261,11 +267,16 @@ const MainDashboard = () => {
                         </Col>
                       </Row>
                     </div>
+                    
                   </>
                 );
-              })}
+              })}<div className="text-center ">
+              <a href="ListingRequest" className="underline decoration-2">View All</a> </div>
+        </div>
             </div>
-          </div>
+            
+          
+          
         </Col>
       </Row>
     </div>

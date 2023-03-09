@@ -91,7 +91,7 @@ const Graph = ({ graphName }: any) => {
     )
   }
 
-  const CutomTooltip = (props: any) => {
+ const CutomTooltip = (props: any) => {
     return (
       <>
         {

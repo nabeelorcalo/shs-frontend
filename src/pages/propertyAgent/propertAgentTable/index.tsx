@@ -1,5 +1,5 @@
-import { MoreOutlined, SearchOutlined } from '@ant-design/icons';
-import { Col, Row } from 'antd';
+import { MoreOutlined, NodeExpandOutlined, RightOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Col, Row } from 'antd';
 import React, { useState } from 'react'
 import { DropDown, SearchBar } from '../../../components';
 import GlobalTable from '../../../components/Table/Table';
@@ -127,29 +127,50 @@ const columns = [
 
 
 const PropertyAgentTable = () => {
-    const [value, setValue] = useState('');
+ 
+  const [value, setValue] = useState('');
+  const searchValue = () => {
+  
+  }
   return (
       <div className='property-agent-table'>
           <div className='inner-agent-table'>
-              <Row gutter={10}>
-                  <Col xxl={4} xl={4} lg={4} md={4} sm={4} xs={24} className='mt-3'>
-                  <SearchBar   className=""
-  handleChange={() => {}}
-  icon=''
-  name="search bar"
-  placeholder="search"
-  size="large"
-  value=""/>
-                  </Col>
-                  <Col xxl={5} xl={4} lg={4} md={4} sm={4} xs={24} className='mt-3'>
+          <Row className='m-2'>
+              <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
+                  <SearchBar handleChange={searchValue}/>
+              </Col>
+              <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
+                  <div className='flex justify-end items-center'>
+                  <Button
+              style={{
+                background: "#E6F4F9",
+                borderRadius: "8px",
+                color: "#A0A3BD",
+                fontWeight: 400,
+                fontSize: "16px",
+                fontFamily: "Outfit",
+                margin: "12px",
+            
+              }}
+            >
+              <NodeExpandOutlined style={{ fontSize: "16px" }}  />
+              Filter
+              <RightOutlined style={{ fontSize: "12px" }} />
+                  </Button>
+                  <div className='w-32'>
                   <DropDown
-                        requiredDownloadIcon
-                        options={['pdf', 'excel']}
-                        value={value}
-                        setValue={setValue}
-                    />
-                  </Col>
-              </Row>
+                    
+                    requiredDownloadIcon
+                    options={['pdf', 'excel']}
+                    value={value}
+                    setValue={setValue}
+                />
+                  </div>
+                  </div>
+             
+                 
+              </Col>
+          </Row> 
               <Row className='mt-4'>
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <GlobalTable tableData={tableData} columns={columns} pagination={false} />
