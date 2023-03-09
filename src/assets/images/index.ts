@@ -1,5 +1,12 @@
 /// <reference types="vite-plugin-svgr/client" />
 // Header Icons
+// export { default as AppLogo } from './AppLogo.svg';
+/// <reference types="vite-plugin-svgr/client" />
+export { default as ContractsRecieved } from './contractsRecieved.png';
+export { default as ContractsRejected } from './contractsRejected.png';
+export { default as ContractsSigned } from './contractsSigned.png';
+
+export { default as InfoIcon } from "../images/chart/info-icon.png";
 export { ReactComponent as Logo } from './header/logo.svg';
 export { ReactComponent as IconCollapsebleOff } from './header/icon-collapseable-off.svg';
 export { ReactComponent as IconCollapsebleOn } from './header/icon-collapseable-on.svg';
@@ -10,7 +17,6 @@ export { ReactComponent as IconGlobe } from './header/global.svg';
 export { ReactComponent as IconLogout } from './header/Logout.svg';
 export { ReactComponent as IconProfile } from './header/Profile.svg';
 export { ReactComponent as IconCross } from './header/icon-cross.svg';
-export { default as InfoIcon } from "../images/chart/info-icon.png";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from './sidebar/icon-dashboard.svg';
@@ -90,7 +96,7 @@ export { ReactComponent as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg'
 export { ReactComponent as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
 
 // Callendar Icons
-export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as ArrowDownDark } from './dropdown-arrow-dark.svg';
 export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';

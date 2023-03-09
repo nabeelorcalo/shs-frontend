@@ -1,0 +1,28 @@
+.pipeline-wrapper {
+    display: flex;
+}
+
+.hiringPipeline {
+    text-align: center;
+    height: 80px;
+    margin-left: -40px;
+    width: 227px;
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background: #F4F5F7;
+    border: 1px solid #D2D6DC;
+    box-shadow: 0px 1px 2px rgba(55, 65, 81, 0.08);
+}
+
+.hiringPipeline2 {
+    text-align: center;
+    -webkit-clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+    clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+
+}
+
+.para {
+    margin: 0;
+    position: relative;
+    top: 28px;
+    color: white;
+}
