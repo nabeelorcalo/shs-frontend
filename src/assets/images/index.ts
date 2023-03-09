@@ -73,6 +73,16 @@ export { ReactComponent as Family } from './chart/Family.svg';
 export { ReactComponent as Social } from './chart/Social.svg';
 export { ReactComponent as Recreation } from './chart/Recreation.svg';
 
+export { default as FinanceIcon  } from './chart/financeIcon.svg';
+export { default as RelationshipIcon  } from './chart/Heart.svg';
+export { default as HealthIcon  } from './chart/healthIcon.svg';
+export { default as HeartIcon  } from './chart/heartIcon.svg';
+export { default as EducationIcon  } from './chart/Education.svg';
+export { default as DevelopmentIcon  } from './chart/Development.svg';
+export { default as FamilyIcon  } from './chart/Family.svg';
+export { default as SocialLifeIcon  } from './chart/Social.svg';
+export { default as RecreationIcon  } from './chart/Recreation.svg';
+
 // Leaves Icons
 export { ReactComponent as DocumentUpload } from './leaves/document-upload.svg';
 

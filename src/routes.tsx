@@ -458,8 +458,6 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
-  
-      
       },
       {
         key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
@@ -516,7 +514,6 @@ const internRoutes = [
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
-
     ],
   },
   {
