@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './Alert';
+export * from './LeaveCard';
 export * from './Graph';
 export * from './Dropdown/DropDown';
 export * from './SearchBar/SearchBar';
@@ -11,7 +12,7 @@ export * from './AssesmentDragAndDrop';
 export * from './DrawSignature';
 export * from './TypeSignature';
 export * from './UploadDocument'
-export * from './LeaveCard/leaveCard';
+// export * from './LeaveCard/leaveCard';
 export * from "./ChartsOfGraphs/dashboard-chart/DashboardCharts"
 export * from "./ChartsOfGraphs/monthly-perfomance-chart/MonthlyPerfomanceChart"
 export * from "./ChartsOfGraphs/overAll-perfomance-charts/OverAllPerfomance"

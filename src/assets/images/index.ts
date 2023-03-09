@@ -73,8 +73,20 @@ export { ReactComponent as Family } from './chart/Family.svg';
 export { ReactComponent as Social } from './chart/Social.svg';
 export { ReactComponent as Recreation } from './chart/Recreation.svg';
 
+export { default as FinanceIcon  } from './chart/financeIcon.svg';
+export { default as RelationshipIcon  } from './chart/Heart.svg';
+export { default as HealthIcon  } from './chart/healthIcon.svg';
+export { default as EducationIcon  } from './chart/Education.svg';
+export { default as DevelopmentIcon  } from './chart/Development.svg';
+export { default as FamilyIcon  } from './chart/Family.svg';
+export { default as SocialLifeIcon  } from './chart/Social.svg';
+export { default as RecreationIcon  } from './chart/Recreation.svg';
+
 // Leaves Icons
 export { ReactComponent as DocumentUpload } from './leaves/document-upload.svg';
+
+// Uploads Icons
+export { ReactComponent as DocumentCardIcon  } from './uploads/Document-Card.svg';
 
 // sickLeave-card icon 
 export { default as SickIcon } from './sick.png';
@@ -98,3 +110,19 @@ export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
+
+// Accommodation Icons
+export {ReactComponent as IconFilters} from "../images/icon-filters.svg";
+export {ReactComponent as IconFiltersAngle} from "../images/icon-filters-angle.svg";
+export {ReactComponent as IconCloseCircle} from "../images/icon-close-circle.svg";
+
+// Leave ModuleIcon
+export { ReactComponent as HeartIcon} from './leaves/Heart.svg';
+export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
+export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
+export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';
+export { ReactComponent as MoreIcon} from './leaves/MoreIcon.svg';
+export { ReactComponent as CalendarWhiteIcon} from './leaves/CalendarWhiteIcon.svg';
+export { ReactComponent as DownloadIconLeave} from './leaves/DownloadIconLeave.svg';
+export { ReactComponent as FilterIconLeave} from './leaves/FilterIconLeave.svg';
+export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';

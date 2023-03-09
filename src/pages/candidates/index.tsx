@@ -8,7 +8,6 @@ const Candidates = () => {
   return (
     <>
 
-
       <Row gutter={20} className='justify-between flex-wrap'>
         <Col lg={5}>
           <SearchBar size="large" handleChange={(e) => { }} />
