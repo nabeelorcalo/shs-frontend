@@ -15,6 +15,8 @@ import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 //
+import DemoCard from "./components/ContractCard/demoCard";
+// 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -58,6 +60,7 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -102,6 +105,12 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
+    {
+      key: "candidates",
+    path: `candidates`,
+    element: <Candidates />,
+    
+  },
   // Demo dropdowns
   {
     key: 'dropdowndemo',
@@ -109,9 +118,9 @@ export const publicRoutes = [
     element: <DropDownDemo />
   },
   {
-    key: 'charts',
-    path: '/charts',
-    element: <Charts />
+    key: 'card',
+    path: "/democards",
+    element: <DemoCard />
   }
   // ------Remove till here------
 ];
@@ -451,8 +460,6 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
-  
-      
       },
       {
         key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
@@ -509,7 +516,6 @@ const internRoutes = [
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
-
     ],
   },
   {
@@ -593,28 +599,28 @@ const studentRoutes = [
         children: [
           {
             key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <AvailableProperties />,
             index: true,
           },
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <Dashboard />,
+            element: <h1>SAVED_SEARCHES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <h1>RENTED_PROPERTIES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <Dashboard />,
+            element: <h1>BOOKING_REQUESTS</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <Dashboard />,
+            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
           },
         ],
       },

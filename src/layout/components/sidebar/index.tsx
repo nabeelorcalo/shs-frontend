@@ -98,7 +98,7 @@ const AppSidebar: FC<SidebarProps> = ({
         <Avatar size={48} src={avatar} />
         <div className="sidebar-user-profile-content">
           <Typography.Title level={4}>Maria Sanoid</Typography.Title>
-          <div className="sidebar-user-profile-role">Student</div>
+          <div className='sidebar-user-profile-role'>{constants.USER_ROLE}</div>
         </div>
       </div>
 
