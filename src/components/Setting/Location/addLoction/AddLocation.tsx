@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Typography, Row, Col, Divider, Form, Button } from "antd";
+import { Typography, Row, Col, Divider, Form, TimePicker, } from "antd";
 import { SettingHorizontalLine } from "../../../../assets/images";
 import BoxWrapper from "../../../BoxWrapper/BoxWrapper";
 import { Input } from "../../../Input/input";
 import { SearchBar } from "../../../SearchBar/SearchBar";
 import { RecipeCard } from "../../../RecipeCard";
+import icon from "../../../../assets/images/RecipeCard/recipeCard.png";
+import { Button } from "../../../Button";
+import dayjs, { Dayjs } from "dayjs";
 
 const { Title, Paragraph } = Typography;
 
@@ -31,7 +34,7 @@ const AddLocation: React.FC = () => {
   return (
     <div>
       <BoxWrapper>
-       
+
         <div className="flex ">
           <Title level={3}>Add Location </Title>
           <span className="mx-2">
@@ -103,24 +106,13 @@ const AddLocation: React.FC = () => {
           </Row>
           <Divider />
         </Form>
-        <RecipeCard
-          arraydata={[
-            {
-              title: "Sticky Orange Chicken",
-              description:
-                "This dish is a real crowd-pleaser. The sweet citrus glaze makes the chicken sticky and delicious—and it’s easy to make! ",
-
-              ratingValue: 4,
-            },
-            {
-              title: "Sticky Orange Chicken",
-              description:
-                "This dish is a real crowd-pleaser. The sweet citrus glaze makes the chicken sticky and delicious—and it’s easy to make! ",
-
-              ratingValue: 4,
-            },
-          ]}
-        />
+        <div className="flex flex-col justify-between">
+              <label>Start Time</label>
+              <TimePicker
+                className="input-style md:w-[220px]"
+                defaultOpenValue={dayjs("00:00", "HH:mm")}
+              />
+            </div>
       </BoxWrapper>
     </div>
   );

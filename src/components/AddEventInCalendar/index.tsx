@@ -1,5 +1,5 @@
 import { VideoCameraOutlined } from "@ant-design/icons";
-import { Button, Form, Modal, Radio, Space, TimePicker } from "antd";
+import { Button, Form, Modal, Radio, Select, Space, TimePicker } from "antd";
 import { useState } from "react";
 import closeIcon from "../../assets/images/AddEventInCalendar/close-circle.svg";
 import "./AddEventInCalendar.scss";
@@ -11,6 +11,7 @@ import { CloseCircleFilled } from "@ant-design/icons/lib/icons";
 import AppTabs from "../Tabs";
 const { TextArea } = Input;
 dayjs.extend(customParseFormat);
+const format = 'HH:mm';
 
 interface AddEventInCalendarProps {
   title: string;
@@ -40,45 +41,79 @@ export const AddEventInCalendar = ({
     return (
       <div className="meeting h-[550px]">
         <Form layout="vertical">
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ width: "100%" }}
-          >
-            <Input placeholder="Title" className="input-style" />{" "}
-          </Form.Item>
-          <Form.Item
-            label="Attendees"
-            name="title"
-            rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ width: "100%" }}
-          >
-            <Input placeholder="Title" className="input-style" />{" "}
-          </Form.Item>
-          <Form.Item
-            label="Recurrence"
-            name="title"
-            rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ width: "100%" }}
-          >
-            <Input placeholder="Title" className="input-style" />{" "}
-          </Form.Item>
-          <div className="flex flex-col md:flex-row justify-between">
-            <div className="flex flex-col justify-between">
+          <p>Title<span className="text-[red]">*</span></p>
+          <Input placeholder="Title" className="input-style" />{" "}
+
+
+          <p>Attendees<span className="text-[red]">*</span></p>
+          <Select
+
+            size="large"
+            style={{ width: '100%' }}
+            placeholder="Select"
+
+            optionFilterProp="children"
+            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            options={[
+              {
+                value: '1',
+                label: 'Sick',
+              },
+              {
+                value: '2',
+                label: 'Casual',
+              },
+              {
+                value: '3',
+                label: 'Work From Home',
+              },
+              {
+                value: '4',
+                label: 'Medical',
+              },
+            ]}
+          />
+          <p>Recurrence<span className="text-[red]">*</span></p>
+          <Select
+
+            size="large"
+            style={{ width: '100%' }}
+            placeholder="Select"
+
+            optionFilterProp="children"
+            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            options={[
+              {
+                value: '1',
+                label: 'Sick',
+              },
+              {
+                value: '2',
+                label: 'Casual',
+              },
+              {
+                value: '3',
+                label: 'Work From Home',
+              },
+              {
+                value: '4',
+                label: 'Medical',
+              },
+            ]}
+          />
+
+
+          <div className="flex flex-col md:flex-row justify-between w-full mt-5">
+
+            <div className="flex flex-col justify-between w-full pr-2 ">
               <label>Start Time</label>
-              <TimePicker
-                className="input-style md:w-[220px]"
-                defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
-              />
+              <TimePicker className="h-[45px]" defaultValue={dayjs('12:08', format)} format={format} />
             </div>
-            <div className="flex flex-col">
-              <label>End Time</label>
-              <TimePicker
-                className="input-style md:w-[220px]"
-                defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
-              />
+            <div className="flex flex-col w-full pl-1">
+              <label >End Time</label>
+              <TimePicker className="h-[45px] mt-2" defaultValue={dayjs('12:08', format)} format={format} />
             </div>
+
           </div>
           <div className="mt-3 flex flex-col">
             <label>Location</label>
@@ -107,39 +142,27 @@ export const AddEventInCalendar = ({
     return (
       <div className="meeting h-[550px]">
         <Form layout="vertical">
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please input your Email!" }]}
-            style={{ width: "100%" }}
-          >
-            <Input placeholder="Title" className="input-style" />{" "}
-          </Form.Item>
+        <p>Title<span className="text-[red]">*</span></p>
+          <Input placeholder="Title" className="input-style" />{" "}
+
           <div className="flex flex-col md:flex-row justify-between pb-3">
-            <Form.Item
-              label="Attendees"
-              name="title"
-              rules={[{ required: true, message: "Please input your Email!" }]}
-              className="input-style md:w-[220px]"
-            >
-              <Input placeholder="Title" className="input-style" />{" "}
-            </Form.Item>
-            <Form.Item
-              label="Recurrence"
-              name="title"
-              rules={[{ required: true, message: "Please input your Email!" }]}
-              className="input-style md:w-[220px]"
-            >
-              <Input placeholder="Title" className="input-style" />{" "}
-            </Form.Item>
+     
+            
+           <div className="d-flex w-full pr-1"><p>Attendees<span className="text-[red]">*</span></p>
+              <Input placeholder="Title" className="input-style" />
+              </div> 
+           
+
+              <div className="d-flex w-full pl-1">
+                <p>Recurrence<span className="text-[red]">*</span></p>
+              <Input placeholder="Title" className="input-style" />
+              </div>
+          
           </div>
 
           <div className="flex flex-col justify-between py-3">
             <label> Time</label>
-            <TimePicker
-              className="input-style "
-              defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
-            />
+            <TimePicker className="h-[45px] mt-2" defaultValue={dayjs('12:08', format)} format={format} />
           </div>
 
           <div className="mt-3 flex flex-col">
@@ -180,7 +203,7 @@ export const AddEventInCalendar = ({
   //   { key: "1", label: `Meeting`, children: <Meeting /> },
   //   { key: "2", label: `Reminder`, children: <Reminder /> },
   // ];
- 
+
 
   return (
     <div className="add-event-in-calendar">
@@ -218,21 +241,21 @@ export const AddEventInCalendar = ({
         width={720}
       >
         <div className="flex flex-col">
-        <AppTabs
-  items={[
-    {
-      children: <Meeting />,
-      key: '1',
-      label: 'Meeting'
-    },
-    {
-      children: <Reminder />,
-      key: '2',
-      label: 'Reminder'
-    },
- 
-  ]}
- />
+          <AppTabs
+            items={[
+              {
+                children: <Meeting />,
+                key: '1',
+                label: 'Meeting'
+              },
+              {
+                children: <Reminder />,
+                key: '2',
+                label: 'Reminder'
+              },
+
+            ]}
+          />
         </div>
       </Modal>
     </div>

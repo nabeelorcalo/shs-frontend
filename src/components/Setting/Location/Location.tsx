@@ -15,6 +15,7 @@ import cardImage from "../../../assets/images/setting/locationImage.svg";
 import { DropDown } from "../../Dropdown/DropDown";
 import { Button } from "../../Button";
 import { NavLink } from "react-router-dom";
+import { AddEventInCalendar } from "../../AddEventInCalendar";
 const { Title, Text } = Typography;
 const menu = (
   <Menu>
@@ -47,17 +48,17 @@ let overview = [
 ];
 
 const SettingLocation: React.FC = () => {
-  const handleChange = () => {};
+  const handleChange = () => { };
   return (
     <div>
       <div className="flex justify-between">
-         <SearchBar size="large" handleChange={handleChange} />
+        <SearchBar size="large" handleChange={handleChange} />
         <NavLink to="/settings/add-location">
           <Button
             color="#4a9d77"
             icon={<Settinglocation className="mx-2" />}
             label="Add Location"
-            onClick={() => {}}
+            onClick={() => { }}
             type="primary"
             size="large"
           />
@@ -94,6 +95,7 @@ const SettingLocation: React.FC = () => {
           );
         })}
       </Row>
+      
     </div>
   );
 };
