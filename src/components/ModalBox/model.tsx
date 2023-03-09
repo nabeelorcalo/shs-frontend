@@ -21,7 +21,7 @@ const Model = ({ icon = CloseCircleIcon, width = '650px', title, okText = 'Add',
       title={title}
       open={open}
       okText={okText}
-      onOk={setOpen}
+      onOk={onOk}
       onCancel={setOpen}
       className='modal-wrapper'
       closeIcon={<img src={icon} />}
