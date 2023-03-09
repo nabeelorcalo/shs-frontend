@@ -5,11 +5,14 @@
         .ant-table-cell {
           color: #14142A;
           font-weight: 400;
-          text-align: center;
+          text-align: left;
           background: #E6F4F9;
           border-bottom: unset;
           padding-top: 18px;
           padding-bottom: 18px;
+          &:last-child{
+            text-align: center;
+          }
 
           &::before {
             content: unset !important;
@@ -31,11 +34,14 @@
 
         .ant-table-cell {
           border-bottom: 1px solid #fff;
-          text-align: center;
+          text-align: left;
           color: #4E4B66;
           font-weight: 400;
           font-size: 16px;
           line-height: 24px;
+          &:last-child{
+            text-align: center;
+          }
         }
 
         .ant-table-row-expand-icon-cell {
