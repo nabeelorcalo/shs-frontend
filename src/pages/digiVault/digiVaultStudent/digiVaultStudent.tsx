@@ -5,6 +5,7 @@ import AppTabs from "../../../components/Tabs";
 import "./digiVaultStudent.scss";
 import SettingModal from "./settingModal/settingModal";
 import GlobalTable from "../../../components/Table/Table";
+
 import "react-circular-progressbar/dist/styles.css";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import gallery from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
@@ -15,17 +16,20 @@ import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
 import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
 import More from "../../../assets/images/ColorfullIconsProgressbar/More.svg";
 import { useNavigate } from "react-router-dom";
-import EducationImg from "../../../assets/images/digivault/manageVault/bankingFolder.svg";
-import EducationImgSub from "../../../assets/images/digivault/manageVault/cil_education.svg";
-import BAnkingImg from "../../../assets/images/digivault/manageVault/bankingFolder.svg";
-import BAnkingImgSub from "../../../assets/images/digivault/manageVault/ph_bank.svg";
-import HealthImg from "../../../assets/images/digivault/manageVault/health.svg";
-import HealthImgSub from "../../../assets/images/digivault/manageVault/ic_outline-health-and-safety.svg";
-import TransImg from "../../../assets/images/digivault/manageVault/transport.svg";
-import TransImgSub from "../../../assets/images/digivault/manageVault/material-symbols_emoji-transportation-outline-rounded.svg";
-import GovImg from "../../../assets/images/digivault/manageVault/gov.svg";
-import GovImgSub from "../../../assets/images/digivault/manageVault/fluent_building-government-24-regular.svg";
-import Other from "../../../assets/images/digivault/manageVault/others.svg";
+import NewPasswordModal from "./newPasswordModal/newPasswordModal";
+import {
+  EducationImg,
+  EducationImgSub,
+  BAnkingImg,
+  BAnkingImgSub,
+  HealthImg,
+  HealthImgSub,
+  TransImg,
+  TransImgSub,
+  GovImg,
+  GovImgSub,
+  Other,
+} from "../../../assets/images";
 
 const manageVaultArr = [
   {
@@ -144,10 +148,12 @@ const tableData = [
 const DigiVaultStudent = () => {
   const [modal2Open, setModal2Open] = useState(false);
   const [percentage, setPercentage] = useState(68);
+  const [isChecked, setIsChecked] = useState(false);
   const [toggleOperation, setToggleOperation] = useState({
     isOpen: true,
     id: "",
   });
+  const [newPass, setNewPass] = useState(false);
 
   const navigate = useNavigate();
 
@@ -220,6 +226,11 @@ const DigiVaultStudent = () => {
 
   return (
     <div className="digivault">
+      <NewPasswordModal
+        newPass={newPass}
+        setNewPass={setNewPass}
+        setIsChecked={setIsChecked}
+      />
       <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -232,7 +243,12 @@ const DigiVaultStudent = () => {
               <p style={{ color: "#6E7191" }} className="pr-2">
                 Lock
               </p>
-              <Switch />
+              <Switch
+                checked={isChecked}
+                onClick={() => {
+                  setNewPass(true);
+                }}
+              />
             </div>
             <Button onClick={() => setModal2Open(true)} className="setting-btn">
               <span className="setting-btn-text font-normal text-sm">
@@ -255,14 +271,15 @@ const DigiVaultStudent = () => {
               Manage your vault
             </div>
             <Row gutter={[8, 20]} className="p-2">
-              {manageVaultArr.map((item) => {
+              {manageVaultArr.map((item, index) => {
                 return (
                   <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
                     <DigivaultCard
+                      index={index}
                       bgColor={item.bgcolor}
                       onClick={() => navigate(item.path)}
-                      titleImg={item.titleImg}
-                      subImg={item.subImg}
+                      TitleImg={item.titleImg}
+                      SubImg={item.subImg}
                       title={item.Title}
                       subTitle={item.subTitle}
                     />

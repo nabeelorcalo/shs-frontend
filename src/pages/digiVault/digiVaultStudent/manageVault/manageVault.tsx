@@ -22,37 +22,6 @@ import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-const columns = [
-  {
-    title: "Title",
-    dataIndex: "Title",
-    key: "key",
-    minWidth: 300,
-  },
-  {
-    title: "Date Modified",
-    dataIndex: "datemodified",
-    key: "datemodified",
-  },
-  {
-    title: "Size",
-    dataIndex: "size",
-    key: "size",
-  },
-
-  {
-    title: "Action",
-    key: "Action",
-    render: (_: any, data: any) => (
-      <Space size="middle">
-        <div style={{ cursor: "pointer" }}>
-          <img src={More} alt="threedots" />
-        </div>
-      </Space>
-    ),
-  },
-];
-
 const tableData = [
   {
     key: "01",
@@ -82,7 +51,77 @@ const ManageVault = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [upLoadFile, setUpLoadFile] = useState(false);
   const [upLoadFolder, setUpLoadFolder] = useState(false);
-  
+  const [toggleOperation, setToggleOperation] = useState({
+    isOpen: true,
+    id: "",
+  });
+
+  const columns = [
+    {
+      title: "Title",
+      dataIndex: "Title",
+      key: "key",
+      minWidth: 300,
+    },
+    {
+      title: "Date Modified",
+      dataIndex: "datemodified",
+      key: "datemodified",
+    },
+    {
+      title: "Size",
+      dataIndex: "size",
+      key: "size",
+    },
+
+    {
+      title: "Action",
+      key: "Action",
+      render: (_: any, data: any) => (
+        <Space size="middle">
+          <div
+            onClick={() => {
+              setToggleOperation({ isOpen: true, id: data.key });
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            <img src={More} alt="threedots" />
+          </div>
+
+          {toggleOperation.isOpen && toggleOperation.id === data.key && (
+            <div className="table-droupdown z-10">
+              <p
+                onClick={() => {
+                  setToggleOperation({
+                    isOpen: false,
+                    id: data.key,
+                  });
+                }}
+                style={{
+                  cursor: "pointer",
+                  textAlign: "left",
+                  paddingBottom: "15px",
+                }}
+              >
+                View
+              </p>
+              <p
+                onClick={() => {
+                  setToggleOperation({
+                    isOpen: false,
+                    id: data.key,
+                  });
+                }}
+                style={{ cursor: "pointer", textAlign: "left" }}
+              >
+                Delete
+              </p>
+            </div>
+          )}
+        </Space>
+      ),
+    },
+  ];
 
   const handleChange = () => {
     console.log("log");

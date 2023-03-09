@@ -5,6 +5,7 @@ import "./offerLettersStudent.scss";
 import Signed from "../../../assets/images/ColorfullIconsProgressbar/Signed.png";
 import Recieved from "../../../assets/images/ColorfullIconsProgressbar/recieved.png";
 import Rejected from "../../../assets/images/ColorfullIconsProgressbar/rejected.png";
+import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 
 const offerLetterRecieved = [
   {
@@ -16,6 +17,36 @@ const offerLetterRecieved = [
   {
     id: "2",
     img: Recieved,
+    title: "Contract",
+    subTitle: "From PowerSource",
+  },
+];
+
+const offerLetterRejected = [
+  {
+    id: "1",
+    img: Rejected,
+    title: "Contract",
+    subTitle: "From PowerSource",
+  },
+  {
+    id: "2",
+    img: Rejected,
+    title: "Contract",
+    subTitle: "From PowerSource",
+  },
+];
+
+const offerLetterSigned = [
+  {
+    id: "1",
+    img: Signed,
+    title: "Contract",
+    subTitle: "From PowerSource",
+  },
+  {
+    id: "2",
+    img: Signed,
     title: "Contract",
     subTitle: "From PowerSource",
   },
@@ -79,60 +110,33 @@ const OfferLetterStudent = () => {
             <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
               {offerLetterRecieved.map((item) => {
                 return (
-                  <div className="offer-letter-status-recieved mb-4">
-                    <div>
-                      <img src={item.img} alt="imgIcon" />
-                    </div>
-
-                    <div className="ml-4">
-                      <div className="offer-letter-status-recieved-title mb-1">
-                        {item.title}
-                      </div>
-                      <div className="offer-letter-status-recieved-sub">
-                        {item.subTitle}
-                      </div>
-                    </div>
-                  </div>
+                  <ContractCard
+                    img={item.img}
+                    title={item.title}
+                    description={item.subTitle}
+                  />
                 );
               })}
             </Col>
             <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-              {offerLetterRecieved.map((item) => {
+              {offerLetterRejected.map((item) => {
                 return (
-                  <div className="offer-letter-status-recieved mb-4">
-                    <div>
-                      <img src={item.img} alt="imgIcon" />
-                    </div>
-
-                    <div className="ml-4">
-                      <div className="offer-letter-status-recieved-title mb-1">
-                        {item.title}
-                      </div>
-                      <div className="offer-letter-status-recieved-sub">
-                        {item.subTitle}
-                      </div>
-                    </div>
-                  </div>
+                  <ContractCard
+                    img={item.img}
+                    title={item.title}
+                    description={item.subTitle}
+                  />
                 );
               })}
             </Col>
             <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-              {offerLetterRecieved.map((item) => {
+              {offerLetterSigned.map((item) => {
                 return (
-                  <div className="offer-letter-status-recieved mb-4">
-                    <div>
-                      <img src={item.img} alt="imgIcon" />
-                    </div>
-
-                    <div className="ml-4">
-                      <div className="offer-letter-status-recieved-title mb-1">
-                        {item.title}
-                      </div>
-                      <div className="offer-letter-status-recieved-sub">
-                        {item.subTitle}
-                      </div>
-                    </div>
-                  </div>
+                  <ContractCard
+                    img={item.img}
+                    title={item.title}
+                    description={item.subTitle}
+                  />
                 );
               })}
             </Col>

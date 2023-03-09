@@ -5,23 +5,25 @@ import Education from "../../assets/images/digivault/education.png";
 import Education1 from "../../assets/images/digivault/education1.png";
 
 const DigivaultCard = (props: any) => {
-  const { onClick, titleImg, subImg, title, subTitle, bgColor } = props;
+  const { onClick, TitleImg, SubImg, title, subTitle, bgColor, index } = props;
 
   console.log(bgColor);
 
   return (
-    <BoxWrapper className={`digivault-wrapper`}>
-      <div className={`upper-part`}>
-        <div className="bgImg">
-          {/* <EducationIcon  /> */}
-          <img src={titleImg} alt="icon" />
+    <div onClick={onClick}>
+      <BoxWrapper className={`hover-effect-${index}  digivault-wrapper`}>
+        <div className={`upper-part`}>
+          <div className="bgImg">
+            {/* <EducationIcon  /> */}
+            <TitleImg color={"red"} fill={"red"} />
+          </div>
+          {title === "Others" ? "" : <SubImg />}
         </div>
-        {title === "Others" ? "" : <img src={subImg} alt="icon" />}
-      </div>
-      <h4>{title}</h4>
+        <h4>{title}</h4>
 
-      <h6>{subTitle}</h6>
-    </BoxWrapper>
+        <h6>{subTitle}</h6>
+      </BoxWrapper>
+    </div>
   );
 };
 

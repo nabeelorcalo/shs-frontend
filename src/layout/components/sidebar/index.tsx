@@ -1,38 +1,40 @@
-import React, {FC, useEffect, useState} from 'react'
-import './style.scss'
-import type { MenuProps } from 'antd';
-import { Avatar, Typography, Layout, Menu, theme } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
-import constants from '../../../config/constants';
-import { } from '../../../assets/images'
-import avatar from '../../../assets/images/header/avatar.svg'
-import { itemsManager } from './menuManager'
-import { itemsStudents } from './menuStudents'
-import { itemsIntern } from './menuIntern'
-import { itemsCompanyAdmin } from './menuCompanyAdmin'
-import { itemsUniversity } from './menuUniversity'
-import { itemsSystemAdmin } from './menuSystemAdmin'
-import { itemsDelegateAgent } from './menuDelegateAgent'
-import { itemsPropertyAgent } from './menuPropertyAgent'
+import React, { FC, useEffect, useState } from "react";
+import "./style.scss";
+import type { MenuProps } from "antd";
+import { Avatar, Typography, Layout, Menu, theme } from "antd";
+import { useNavigate, useLocation } from "react-router-dom";
+import constants from "../../../config/constants";
+import {} from "../../../assets/images";
+import avatar from "../../../assets/images/header/avatar.svg";
+import { itemsManager } from "./menuManager";
+import { itemsStudents } from "./menuStudents";
+import { itemsIntern } from "./menuIntern";
+import { itemsCompanyAdmin } from "./menuCompanyAdmin";
+import { itemsUniversity } from "./menuUniversity";
+import { itemsSystemAdmin } from "./menuSystemAdmin";
+import { itemsDelegateAgent } from "./menuDelegateAgent";
+import { itemsPropertyAgent } from "./menuPropertyAgent";
 const { Sider } = Layout;
 
 type SidebarProps = {
-  collapsed: boolean
-  sidebarToggler: () => void
-  setCollapsed:any
-}
+  collapsed: boolean;
+  sidebarToggler: () => void;
+  setCollapsed: any;
+};
 
-
-
-const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) => {
+const AppSidebar: FC<SidebarProps> = ({
+  collapsed,
+  sidebarToggler,
+  setCollapsed,
+}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { useToken } = theme
-  const { token } = useToken()
-  const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const [collapsedWidth, setCollapsedWidth] = useState(94)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { useToken } = theme;
+  const { token } = useToken();
+  const [selectedKey, setSelectedKey] = useState(location.pathname);
+  const [collapsedWidth, setCollapsedWidth] = useState(94);
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -47,9 +49,8 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
     }
   };
 
-
   const menuSwitcher = (role: string) => {
-    if (role === "student") {
+    if (role === "Student") {
       return itemsStudents;
     }
     if (role === "intern") {
@@ -58,21 +59,20 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
     if (role === "manager") {
       return itemsManager;
     }
-    if(role === 'CompanyAdmin') {
-      return itemsCompanyAdmin
+    if (role === "CompanyAdmin") {
+      return itemsCompanyAdmin;
     }
-    if(role === 'University') {
-      return itemsUniversity
+    if (role === "University") {
+      return itemsUniversity;
     }
-    if(role === 'SystemAdmin') {
-      return itemsSystemAdmin
+    if (role === "SystemAdmin") {
+      return itemsSystemAdmin;
     }
-    if(role === 'DelegateAgent') {
-      return itemsDelegateAgent
+    if (role === "DelegateAgent") {
+      return itemsDelegateAgent;
     }
-    if(role === 'Agent') {
-      return itemsPropertyAgent
-
+    if (role === "Agent") {
+      return itemsPropertyAgent;
     }
   };
 
@@ -84,17 +84,15 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
       collapsible
       collapsed={collapsed}
       width={250}
-
       // collapsedWidth={94}
       // style={{ backgroundColor: token.colorPrimary }}
       collapsedWidth={collapsedWidth}
       breakpoint="md"
-      style={{backgroundColor: token.colorPrimary}}
+      style={{ backgroundColor: token.colorPrimary }}
       onBreakpoint={(broken) => {
-        setCollapsedWidth(broken ? 0: 94)
-        setCollapsed(broken)
+        setCollapsedWidth(broken ? 0 : 94);
+        setCollapsed(broken);
       }}
-
     >
       <div className="sidebar-user-profile">
         <Avatar size={48} src={avatar} />
