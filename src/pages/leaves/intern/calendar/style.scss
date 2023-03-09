@@ -1,0 +1,115 @@
+.calander_main_wrapper {
+    .fc-media-screen {
+        .fc-header-toolbar {
+            border-bottom: 1px solid #D9DBE9;
+            padding-bottom: 10px;
+
+            .fc-toolbar-chunk {
+                display: flex;
+                align-items: center;
+
+                .fc-prev-button,
+                .fc-next-button {
+                    background-color: transparent;
+                    border: none;
+                    padding: 0;
+
+                    .fc-icon-chevron-left,
+                    .fc-icon-chevron-right {
+                        color: #4E4B66;
+                    }
+                }
+
+                .fc .fc-button-primary:focus {
+                    box-shadow: none;
+                }
+
+                .fc-toolbar-title {
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 24px;
+                    color: #14142A;
+                }
+            }
+
+        }
+    }
+    .fc .fc-button-primary{
+        background-color: #4A9D77;
+        border: unset;
+        &:hover{
+            background-color: green;
+        }
+    }
+
+    .fc .fc-daygrid-day-frame {
+        background-color: rgba(230, 244, 249, 0.25);
+        border-radius: 6px;
+
+        .fc-daygrid-day-top {
+            justify-content: start;
+
+            a {
+                color: #4E4B66;
+            }
+        }
+    }
+
+    .fc .fc-daygrid-day.fc-day-today {
+        background-color: unset;
+    }
+
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+        border: none;
+    }
+
+    .fc-theme-standard td {
+        padding: 10px;
+    }
+
+    .fc-theme-standard .fc-scrollgrid {
+        border: none;
+    }
+
+    .fc-col-header-cell-cushion {
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 28px;
+        color: #6E7191;
+    }
+
+    .fc-scrollgrid-sync-inner {
+        text-align: left;
+        padding: 0 15px;
+    }
+
+    // .fc-col-header-cell.fc-day.fc-day-sun {
+    //     text-align: left;
+    // }
+    // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.sick {
+    //     background-color: red;
+    // }
+    // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.casual {
+    //     background-color: green;
+    // }
+
+    .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+        min-height: 3rem;
+    }
+
+    .fc-h-event {
+        background: none;
+        border: none;
+        color: none;
+    }
+
+
+    @media screen and (max-width: 575px) {
+        .fc-scrollgrid-sync-inner {
+            padding: 0 0px;
+        }
+
+    }
+
+}
