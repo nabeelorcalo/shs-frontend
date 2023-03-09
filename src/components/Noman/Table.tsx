@@ -9,7 +9,7 @@ interface DataType {
     internshipType: string,
     natureOfWork: string,
     Position: string,
-    Status: string,
+    Status: string, 
     Actions: string,
     anyArray?: any,
 }

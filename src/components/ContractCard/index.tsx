@@ -1,9 +1,9 @@
 import { Progress } from 'antd';
-import {BoxWrapper} from '../BoxWrapper/boxWrapper';
-import './ContractCard.scss';
+import { BoxWrapper } from '../BoxWrapper/boxWrapper';
+import './style.scss';
 import TimeIcon from "../../assets/images/timesheetTime.png"
 import Clock from "../../assets/images/Clock.png"
-
+import { ContractsSigned } from '../../assets/images';
 
 
 export const ContractCard = (props: any) => {
@@ -18,7 +18,8 @@ export const ContractCard = (props: any) => {
         totalHours,
         progress,
         workedHours,
-        strokeColor
+        strokeColor,
+        handleViewAll
     } = props;
     return (
         <div className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${cardWithProgressBar && 'contract-card-progress'}`}
@@ -44,11 +45,11 @@ export const ContractCard = (props: any) => {
                         <div className='flex items-center'>
                             <img src={Clock} className='img w-[48px] h-[48px] object-cover' />
                             <div className='ml-[20px] capitalize'>
-                                <p>Total hours</p>
+                                <span className='inline-block w-[90px]'>Total hours</span>
                                 <span>{totalHours}</span>
                             </div>
                         </div>
-                        <Progress percent={progress} strokeColor={strokeColor} />
+                        <Progress className='flex' percent={progress} strokeColor={strokeColor} />
                     </div>
                     <div className="relative flex items-center">
                         <img src={TimeIcon} className='img  h-[48px] object-cover mr-5  z-10' />
@@ -61,7 +62,7 @@ export const ContractCard = (props: any) => {
             }
 
             <div className="view-all-btn">
-                <span className='capitalize'>view all</span>
+                <span className='capitalize' onClick={handleViewAll}>view all</span>
             </div>
         </div>
     )
