@@ -1,10 +1,21 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import "../style";
+import PageHeader from '../../../components/PageHeader';
+import "../style.scss";
 
 const Intern = () => {
   return (
-    <p>I'm intern</p>
+    <>
+      <PageHeader
+        title={
+          <div className="font-medium">
+            It's good to have you back,&nbsp;
+            <span className="page-header-secondary-color">
+              Maria Sanoid
+            </span>
+          </div>
+        }
+      />
+    </>
   )
 }
 
