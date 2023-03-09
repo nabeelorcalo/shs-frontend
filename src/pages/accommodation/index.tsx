@@ -9,6 +9,7 @@ import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
 import { Form, Input,  Select, Slider, Space } from 'antd'
 import ExtendedButton from '../../components/ExtendedButton'
+import { CommonDatePicker } from "../../components";
 
 
 const Accommodation = () => {
@@ -56,6 +57,10 @@ const Accommodation = () => {
     setDrawerOpen(false)
   }
 
+  const onFinish = (values: any) => {
+    console.log('Received values of form: ', values);
+  };
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -94,7 +99,7 @@ const Accommodation = () => {
         onClose={closeDrawer}
       >
         <div className="shs-filter-form">
-          <Form layout="vertical">
+          <Form layout="vertical" name="availablePropertiesFilters" onFinish={onFinish}>
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
@@ -112,10 +117,11 @@ const Accommodation = () => {
             <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
                 <Form.Item name="moveInDate" label="Move in Date">
-                  
+                  <CommonDatePicker />
                 </Form.Item>
+                
                 <Form.Item name="moveOutDate" label="Move Out Date">
-                  
+                  <CommonDatePicker />
                 </Form.Item>
 
                 <Form.Item label="Username" name="username">
