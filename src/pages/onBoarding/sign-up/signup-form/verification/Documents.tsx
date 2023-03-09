@@ -32,14 +32,14 @@ const Documents = (props: any) => {
       <Row className="identity-style">
         <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={SHSLogo} alt="error" />
+           <SHSLogo/>
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 4 of 7</Typography>
               <div className="flex items-center">
                 <div>
-                  <img src={BackButton} alt="error" />
+                  <BackButton />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>

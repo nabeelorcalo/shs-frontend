@@ -52,17 +52,17 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 
 // export { ReactComponent as AppLogo } from './AppLogo.svg';
 
-export { default as ArrowDownDark } from "./dropdown-arrow-dark.svg";
+export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
 export { default as CalendarIcon } from "./calender-icon.png";
 export { default as CloseCircleIcon } from "./close-circle-icon.png";
 export { default as DownloadIcon } from "./download-icon.png";
 export { default as SearchIcon } from "./search-icon.png";
 
 //Onboarding Images
-export { default as BackButton } from "./login/BackLoginButton.svg";
-export { default as SHSLogo } from "./login/shslogo.svg";
-export { default as Round } from "./login/round.svg";
-export { default as DocumentUpload } from "./login/document-upload.svg";
+export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
+export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
+export { ReactComponent as Round } from "./login/round.svg";
+export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
 // Footer Icons
 
 export { ReactComponent as IconFacebook } from "./footer/icon-social-facebook.svg";
