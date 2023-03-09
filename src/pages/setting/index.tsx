@@ -8,9 +8,6 @@ import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar"
 const { Title } = Typography;
 
 const Setting = (props: any) => {
-  const [channels, setChannels]: any = useState("hidden");
-  const [time, setTime] = useState("hidden");
-
   return (
     <>
       <div className="flex ">
@@ -18,7 +15,9 @@ const Setting = (props: any) => {
         <span className="mx-2">
           <SettingHorizontalLine />
         </span>
-        <Title className="mt-0.5" level={4}>Setting </Title>
+        <Title className="mt-0.5" level={4}>
+          Setting{" "}
+        </Title>
       </div>
       <Row gutter={16} className="mt-5">
         <Col sm={10} md={8} lg={5}>
@@ -31,12 +30,14 @@ const Setting = (props: any) => {
               // padding: "30px 20px",
             }}
           >
-           <div className="rounded-lg"><SettingSidebar /></div> 
+            <div className="rounded-lg">
+              <SettingSidebar />
+            </div>
           </div>
         </Col>
         <Col span={19}>
-        {props.children}
-         
+          {props.children}
+
           <Outlet />
         </Col>
       </Row>

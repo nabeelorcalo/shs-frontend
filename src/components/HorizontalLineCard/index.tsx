@@ -17,13 +17,13 @@ export const HorizonalLineCard = (props: any) => {
     <>
       {arraydata.map((item: HorizonalLineCardProps, index: any) => {
         return (
-          <div className="horizontal-line-card flex flex-col rounded-2xl p-5 w-full my-3   ">
+          <div className="horizontal-line-card flex flex-col rounded-2xl  p-2 md:p-5 my-3  ">
             <span className=" md:font-medium text-lg md:text-xl dark-gray ">
               {item.title}
             </span>
 
-            <div className="w-full pl-3  py-3 flex">
-              <img src={item.icon} alt={item.alt}  height="60px" />
+            <div className=" md:pl-3  py-3 flex">
+              <img src={item.icon} alt={item.alt} height="60px" />
               <div className="flex flex-col px-5 w-full">
                 <span className="text-lg md:text-xl font-medium md:font-semibold dark-gray">
                   {item.subTitle}

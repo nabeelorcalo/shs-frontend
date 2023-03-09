@@ -22,6 +22,7 @@ import SettingTemplate from "./components/Setting/Templates/Templates";
 import SettingShifts from "./components/Setting/Shifts/Shifts";
 import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
 import SettingPayroll from "./components/Setting/Payroll/Payroll";
+import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 //
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -404,7 +405,22 @@ const companyAdminRoutes = [
             element:  <Setting title="Location" ><SettingLocation /> </Setting>,
             path: "location",
             index: true,
+
+            // children: [
+            //   {
+            //     key: `addLocation`,
+            //     element:  <AddLocation />,
+            //     path: "addLocation",
+            //     index: true,
+            //   },
+            // ]
           },
+          {
+            key: `add-location`,
+            element: <AddLocation/>,
+            path: "add-location",
+          },
+          
           {
             key: `department`,
             element: <Setting title="Department" ><SettingDepartment/> </Setting>,

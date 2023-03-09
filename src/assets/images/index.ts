@@ -110,3 +110,7 @@ export { ReactComponent as SettingDocument } from './setting/document.svg';
 export { ReactComponent as SettingShifts } from './setting/Shifts.svg';
 export { ReactComponent as SettingTimer } from './setting/timer.svg';
 export { ReactComponent as SettingHorizontalLine } from './setting/horizontal-line.svg';
+export { ReactComponent as Settinglocation } from './setting/locationWhiteIcon.svg';
+export { ReactComponent as LocationImage } from './setting/locationImage.svg';
+export { ReactComponent as LocationMore } from './setting/More.svg';
+export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
