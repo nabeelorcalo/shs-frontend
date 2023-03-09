@@ -12,10 +12,13 @@ const UploadDocument = () => {
 
   const handleDropped = (event: any) => {
     event.preventDefault()
-
     setFiles(Array.from(event.dataTransfer.files))
-
   }
+
+  const handleRemoveFile = ()=>{
+    
+  }
+
   console.log(files)
   return (
     <>

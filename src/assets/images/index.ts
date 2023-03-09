@@ -73,6 +73,12 @@ export { ReactComponent as DocumentUpload } from './leaves/document-upload.svg';
 // Uploads Icons
 export { ReactComponent as DocumentCardIcon  } from './uploads/Document-Card.svg';
 
+// Alert Icons
+export { ReactComponent as AlertIcon } from './alert/alertIcon.svg';
+export { ReactComponent as SuccessIcon } from './alert/successIcon.svg';
+export { ReactComponent as WarningIcon } from './alert/warningIcon.svg';
+
+
 // sickLeave-card icon 
 export { default as SickIcon } from './sick.png';
 export { default as CasualIcon } from './sick.png';
@@ -80,6 +86,11 @@ export { default as WFHIcon } from './sick.png';
 export { default as MedicalIcon } from './sick.png';
 
 // Rating Emojis
+export { ReactComponent as Sad } from './RatingEmojis/sad.svg';
+export { ReactComponent as Neutral } from './RatingEmojis/neutral.svg';
+export { ReactComponent as Happy } from './RatingEmojis/happy.svg';
+export { ReactComponent as Awesome } from './RatingEmojis/awesome.svg';
+export { ReactComponent as Terrible } from './RatingEmojis/terrible.svg';
 export { ReactComponent as Emoji1st } from './RatingEmojis/Emoji1st.svg';
 export { ReactComponent as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
 export { ReactComponent as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
