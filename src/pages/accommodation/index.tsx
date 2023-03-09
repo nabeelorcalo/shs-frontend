@@ -7,9 +7,11 @@ import ContentMenu from "../../components/ContentMenu";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
-import { Form, Input,  Select, Slider, Space } from 'antd'
+import { Form, Input,  Select, Slider, Space, DatePicker } from 'antd'
 import ExtendedButton from '../../components/ExtendedButton'
 import { CommonDatePicker } from "../../components";
+import dayjs from 'dayjs';
+import type { DatePickerProps } from 'antd';
 
 
 const Accommodation = () => {
@@ -59,6 +61,10 @@ const Accommodation = () => {
 
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+  };
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log('dfdfdsfsdfas::: ', date, dateString);
   };
 
 
@@ -117,16 +123,16 @@ const Accommodation = () => {
             <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
                 <Form.Item name="moveInDate" label="Move in Date">
-                  <CommonDatePicker />
+                  <DatePicker format='YYYY/MM/DD' onChange={onChange} />
                 </Form.Item>
                 
                 <Form.Item name="moveOutDate" label="Move Out Date">
-                  <CommonDatePicker />
+                  <DatePicker format='YYYY/MM/DD' onChange={onChange} />
                 </Form.Item>
 
-                <Form.Item label="Username" name="username">
+                {/* <Form.Item label="Username" name="username">
                   <Input placeholder="User anme" />
-                </Form.Item>
+                </Form.Item> */}
 
                 <Form.Item name="offer" label="Offer">
                   <Select placeholder="Select">
