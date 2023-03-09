@@ -13,6 +13,7 @@
   "dependencies": {
     "@ant-design/charts": "^1.4.2",
     "@ant-design/icons": "^5.0.1",
+    "@types/react-video-recorder": "^3.19.0",
     "@ant-design/plots": "^1.2.5",
     "antd": "^5.2.2",
     "clsx": "^1.2.1",
@@ -26,6 +27,7 @@
     "react-organizational-chart": "^2.2.0",
     "react-router-dom": "^6.8.2",
     "storybook": "^6.5.16",
+    "react-video-recorder": "^3.19.4",
     "vite-plugin-svgr": "^2.4.0"
   },
   "devDependencies": {
