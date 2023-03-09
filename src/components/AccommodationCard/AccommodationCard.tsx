@@ -39,7 +39,7 @@ const AccommodationCard = (props: Props) => {
     } = props;
     return (
 
-        <Card id={id} className='relative accommodation-card-wrapper h-full'
+        <Card id={id} className='relative accommodation-card-wrapper'
             style={{ maxWidth: maxWidth }}
             cover={
                 <img
