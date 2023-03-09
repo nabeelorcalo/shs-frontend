@@ -1,0 +1,38 @@
+.ant-drawer {
+  .ant-drawer-content.shs-drawer {
+    .ant-drawer-header {
+      padding: 30px 30px 15px;
+      border: none;
+      .ant-drawer-header-title {
+        flex-direction: row-reverse;
+
+        .ant-drawer-title {
+          color: #363565;
+          font-size: 24px;
+          font-weight: 600;
+          line-height: 1.333333;
+        }
+
+        .ant-drawer-close {
+          margin-right: 0;
+        }
+        
+      }
+    }
+    .ant-drawer-body {
+      padding: 15px 30px 30px;
+    }
+  }
+
+  &.ant-drawer-right {
+    .ant-drawer-content.shs-drawer {
+      border-radius: 12px 0 0 12px;
+    }
+  }
+  &.ant-drawer-left {
+    .ant-drawer-content.shs-drawer {
+      border-radius: 0 12px 12px 0;
+    }
+  }
+}
+

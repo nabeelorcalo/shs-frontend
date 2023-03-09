@@ -3,13 +3,14 @@ import './style.scss'
 import { Typography } from 'antd';
 
 interface PageHeaderProps {
-  title: React.ReactNode;
-  actions?: boolean;
-  children?: React.ReactNode 
+  title: React.ReactNode
+  actions?: boolean
+  children?: React.ReactNode
+  bordered?: boolean
 }
 
-const PageHeader: FC<PageHeaderProps> = ({ title, actions=false, children  }) => actions ?  (
-  <div className="shs-page-header">
+const PageHeader: FC<PageHeaderProps> = ({ title, actions=false, children, bordered  }) => actions ?  (
+  <div className={`shs-page-header ${bordered? 'bordered': ''}`}>
     <Typography.Title level={3}>
       {title}
     </Typography.Title>
@@ -18,7 +19,7 @@ const PageHeader: FC<PageHeaderProps> = ({ title, actions=false, children  }) =>
     </div>
   </div>
   ) : (
-    <div className="shs-page-header">
+    <div className={`shs-page-header ${bordered? 'bordered': ''}`}>
       <Typography.Title level={3}>
         {title}
       </Typography.Title>
