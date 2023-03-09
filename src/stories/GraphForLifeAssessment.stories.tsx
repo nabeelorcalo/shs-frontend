@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import LifeAssessmentGraph  from '../components/Graph/graphForLifeAssessment';
+import LifeAssessmentGraph  from '../components/Graph/graphForLifeAssessmentAndLifeBalance/lifeAssessment';
 
 export default  {
   title: 'Components/Graph/LifeAssessment',
