@@ -18,20 +18,17 @@ export const ColorfullIconsWithProgressbar = (props: any) => {
     <>
       {arraydata.map((item: ColorfullIconsWithProgressbarProps, index: any) => {
         return (
-          <div
-            key={index}
-            className="flex max-w-[250px]  colorfull-icon-progress-bar"
-          >
+          <div key={index} className="flex colorfull-icon-progress-bar w-full">
             <img src={item.icon} width="40px" />
-            <div className="sm:w-[200px] pl-3 ">
+            <div className="w-full pl-3 ">
               <div className="flex justify-between">
                 <span className="font-normal text-sm title">{item.title}</span>
-                <span className="font-normal text-sm storage">
+                <span className="font-normal text-sm storage-value">
                   {item.storage}
                 </span>
               </div>
 
-              <span className="sm:w-[200px]">
+              <span className="w-full pb-6">
                 <Progress
                   percent={item.progressbarValue}
                   showInfo={false}
