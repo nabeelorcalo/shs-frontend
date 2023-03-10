@@ -1,11 +1,11 @@
 .shs-page-header {
   padding-bottom: 30px;
-  margin-bottom: 30px;
   display: flex;
   align-items: center;
 
   &.bordered {
     border-bottom: 1px solid #D9DBE9;
+    margin-bottom: 30px;
   }
 
   .ant-typography {

@@ -14,7 +14,7 @@ import { ROUTES_CONSTANTS } from "./config/constants";
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
-//
+import TodayWeather from './components/todayWeather';
 import DemoCard from "./components/ContractCard/demoCard";
 // 
 
@@ -131,6 +131,11 @@ export const publicRoutes = [
     key: 'card',
     path: "/democards",
     element: <DemoCard />
+  },
+  {
+    key: 'todayWeather',
+    path: "/weather",
+    element: <TodayWeather />
   }
   // ------Remove till here------
 ];
