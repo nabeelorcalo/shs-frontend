@@ -1,8 +1,8 @@
 import { Badge, Dropdown, Pagination, Space, Table } from 'antd';
 import "./TablStyle.scss"
 interface TableProps {
-    columns: any[]
-    tableData: any[],
+    columns?: any[]
+    tableData?: any[],
     pagination?: boolean | any,
     bgWhiteTable?:boolean,
     expandable?: any;
@@ -15,7 +15,7 @@ const GlobalTable = (props: TableProps) => {
     return (
         <div className={`${bgWhiteTable? "whiteHeadTable":"primary_table_wrapper"}`}>
             <Table columns={columns} dataSource={tableData} pagination={pagination} scroll={{ x: 'scroll' }} {...rest}/>
-            {pagination && <span className='Counter'> Total:{tableData.length}</span>}
+            {pagination && <span className='Counter'> Total:{tableData?.length}</span>}
         </div>
 
     )
