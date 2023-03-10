@@ -14,6 +14,36 @@ img, svg {
   display: inline-block;
 }
 
+// 5 col grid
+.shs-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.shs-col-5 {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  flex: 0 0 auto;
+  width: 20%;
+  @media (max-width: 1600px) {
+    width: 25%;
+  }
+  @media (max-width: 1400px) {
+    width: 33.333333%;
+  }
+  @media (max-width: 1024px) {
+    width: 50%;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+
 // Buttons
 .ant-btn {
   min-width: 115px;

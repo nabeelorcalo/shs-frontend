@@ -17,7 +17,7 @@ const data = [
   {id: '05', coverPhoto: thumb5, discount: '0', autualPrice: '1200', discountPrice: '0', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
 ]
 
-const AvailableProperties = () => {
+const BookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
@@ -36,39 +36,16 @@ const AvailableProperties = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`)
 
 
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <div className="available-properties">
-      <div className="shs-row">
-        {data.map((property) => {
-          return (
-            <div className="shs-col-5">
-              <AccommodationCard
-                coverPhoto={property.coverPhoto}
-                discount={property.discount}
-                autualPrice={property.autualPrice}
-                withDiscountPrice={property.discountPrice}
-                propertyAvailableFor={property.propertyAvailableFor}
-                propertyType={property.propertyType}
-                totalBeds={property.totalBeds}
-                totalWashRoom={property.totalWashRoom}
-                tags={property.tags}
-                location={property.location}
-                handleSaveClick={() => console.log('handle clik')}
-                handleDetailClick={() => handleDetailClick(property.id)}
-                handleChatClick={() => console.log('chat')}
-              />
-            </div>
-          )
-        })}
-      </div>
+    <div className="booking-requests">
+      Booking Request
     </div>
   )
 }
 
-export default AvailableProperties
+export default BookingRequests

@@ -17,7 +17,7 @@ const data = [
   {id: '05', coverPhoto: thumb5, discount: '0', autualPrice: '1200', discountPrice: '0', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
 ]
 
-const AvailableProperties = () => {
+const SavedSearches = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
@@ -36,14 +36,13 @@ const AvailableProperties = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`)
 
 
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <div className="available-properties">
+    <div className="saved-searches">
       <div className="shs-row">
         {data.map((property) => {
           return (
@@ -60,15 +59,16 @@ const AvailableProperties = () => {
                 tags={property.tags}
                 location={property.location}
                 handleSaveClick={() => console.log('handle clik')}
-                handleDetailClick={() => handleDetailClick(property.id)}
+                handleDetailClick={() => console.log('handle clik')}
                 handleChatClick={() => console.log('chat')}
               />
             </div>
           )
         })}
+        
       </div>
     </div>
   )
 }
 
-export default AvailableProperties
+export default SavedSearches
