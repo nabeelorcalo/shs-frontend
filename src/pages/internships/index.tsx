@@ -8,7 +8,7 @@ import { FileAddFilled } from "@ant-design/icons";
 import GlobalTable from "../../components/Table/Table";
 import { Alert } from "../../components";
 import EmojiMoodRating from "../../components/EmojiMoodRating";
-
+import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
 const Internships = () => {
 
   const columns = [
@@ -67,7 +67,7 @@ const Internships = () => {
       posting_date: "01/07/2022",
       closing_date: "01/07/2022",
       location: "virtual",
-      status:"active",
+      status: "active",
 
     },
     {
@@ -80,6 +80,13 @@ const Internships = () => {
       natureOfWork: 'asduhfuiyasdg',
       no: '02',
       typeOfWork: 'New York No. 1 Lake Park'
+    }
+  ]
+
+  const emojiData = [
+    {
+
+      comp: Terrible
     }
   ]
   return (
@@ -119,10 +126,10 @@ const Internships = () => {
           }}
           tableData={tableData}
         />
-        <Alert showHide={true} type="warning"  okBtntxt="OK" cancelBtntxt="Cancel">
+        <Alert showHide={true} type="warning" okBtntxt="OK" cancelBtntxt="Cancel">
           <p>This is a placeholer text just to show the default size and weight for body text typography in a popup.</p>
         </Alert>
-        <EmojiMoodRating title='How are you feeling today?'/>
+        <EmojiMoodRating data={emojiData} />
       </div>
 
 

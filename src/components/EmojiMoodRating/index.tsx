@@ -1,47 +1,31 @@
 import React, { useState } from 'react';
 import { Rate } from 'antd';
+import './style.scss';
 import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
 
 
 
 
 
-const EmojiMoodRating = ({ title }) => {
+const EmojiMoodRating = ({ title, data }) => {
+    console.log(data)
     return (
         <div className="flex flex-col gap-2 w-full">
-            <p className="text-lg">{title}</p>
+            <h3>{title}</h3>
             <div>
                 <div className="flex flex-row justify-evenly">
-                    <a className='text-[#363565]'>
-                        <div className='flex flex-col gap-3 items-center'>
-                            <Terrible style={{fontSize:'56px'}}/>
-                            <p>Terrible</p>
-                        </div>
-                    </a>
-                    <a className='text-[#363565]'>
-                        <div className='flex flex-col gap-3 items-center'>
-                            <Sad />
-                            <p>Sad</p>
-                        </div>
-                    </a>
-                    <a className='text-[#363565]'>
-                        <div className='flex flex-col gap-3 items-center'>
-                            <Neutral/>
-                            <p>Neutral</p>
-                        </div>
-                    </a>
-                    <a className='text-[#363565]'>
-                        <div className='flex flex-col gap-3 items-center'>
-                            <Happy/>
-                            <p>Happy</p>
-                        </div>
-                    </a>
-                    <a className='text-[#363565]'> 
-                        <div className='flex flex-col gap-3 items-center'>
-                            <Awesome/>
-                            <p>Awesome</p>
-                        </div>
-                    </a>
+                    {
+                        data.map((item:any, idx:any) => {
+                            return (
+                                <div  className='text-[#363565]'>
+                                    <div key={idx} className='flex flex-col gap-2 items-center' onClick={()=>console.log(item.name)}>
+                                        {<item.comp className='svgIcon'/>}
+                                        <p>{item.name}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
 
                 </div>
 

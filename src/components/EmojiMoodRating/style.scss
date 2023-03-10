@@ -1,0 +1,9 @@
+@import "../../scss/colors";
+.svgIcon {
+    padding: 15px;
+    transition: padding 0.5s;
+}
+.svgIcon:hover{
+    padding: 0px;
+
+}
