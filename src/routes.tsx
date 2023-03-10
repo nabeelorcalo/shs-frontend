@@ -73,6 +73,7 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
+const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
 const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
@@ -485,6 +486,13 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
+  
+      
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        element: <ViewHistory/>,
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
@@ -536,6 +544,7 @@ const internRoutes = [
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
+
     ],
   },
   {
@@ -614,28 +623,28 @@ const studentRoutes = [
         children: [
           {
             key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <h1>Available Properties</h1>,
             index: true,
           },
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <Dashboard />,
+            element: <h1>SAVED_SEARCHES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <h1>RENTED_PROPERTIES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <Dashboard />,
+            element: <h1>BOOKING_REQUESTS</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <Dashboard />,
+            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
           },
         ]
       },

@@ -1,3 +1,25 @@
 .page-filterbar {
   margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+
+  .page-filterbar-left {
+    flex: 1;
+  }
+
+  .page-filterbar-right {
+    
+  }
+}
+
+.shs-filter-form {
+  .shs-form-group {
+    .form-group-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #14142A;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+  }
 }

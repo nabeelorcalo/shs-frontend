@@ -50,13 +50,6 @@ export { ReactComponent as IconDiscountShape } from "./sidebar/icon-discount-sha
 export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.svg";
 
 
-// export { ReactComponent as AppLogo } from './AppLogo.svg';
-
-export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
-export { default as CalendarIcon } from "./calender-icon.png";
-export { default as CloseCircleIcon } from "./close-circle-icon.png";
-export { default as DownloadIcon } from "./download-icon.png";
-export { default as SearchIcon } from "./search-icon.png";
 
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
@@ -82,18 +75,46 @@ export { ReactComponent as Family } from "./chart/Family.svg";
 export { ReactComponent as Social } from "./chart/Social.svg";
 export { ReactComponent as Recreation } from "./chart/Recreation.svg";
 
-// sickLeave-card icon
-export { default as SickIcon } from "./sick.png";
-export { default as CasualIcon } from "./sick.png";
-export { default as WFHIcon } from "./sick.png";
-export { default as MedicalIcon } from "./sick.png";
+
+
+// Uploads Icons
+export { ReactComponent as DocumentCardIcon  } from './uploads/Document-Card.svg';
+
+// sickLeave-card icon 
+export { default as SickIcon } from './sick.png';
+export { default as CasualIcon } from './sick.png';
+export { default as WFHIcon } from './sick.png';
+export { default as MedicalIcon } from './sick.png';
 
 // Rating Emojis
-export { ReactComponent as Emoji1st } from "./RatingEmojis/Emoji1st.svg";
-export { ReactComponent as Emoji2nd } from "./RatingEmojis/Emoji2nd.svg";
-export { ReactComponent as Emoji3rd } from "./RatingEmojis/Emoji3rd.svg";
-export { ReactComponent as Emoji4th } from "./RatingEmojis/Emoji4th.svg";
-export { ReactComponent as EmojiGray1st } from "./RatingEmojis/EmojiGray1st.svg";
-export { ReactComponent as EmojiGray2nd } from "./RatingEmojis/EmojiGray2nd.svg";
-export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg";
-export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
+export { ReactComponent as Emoji1st } from './RatingEmojis/Emoji1st.svg';
+export { ReactComponent as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
+export { ReactComponent as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
+export { ReactComponent as Emoji4th } from './RatingEmojis/Emoji4th.svg';
+export { ReactComponent as EmojiGray1st } from './RatingEmojis/EmojiGray1st.svg';
+export { ReactComponent as EmojiGray2nd } from './RatingEmojis/EmojiGray2nd.svg';
+export { ReactComponent as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg';
+export { ReactComponent as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
+
+// Callendar Icons
+export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';
+
+// Accommodation Icons
+export {ReactComponent as IconFilters} from "../images/icon-filters.svg";
+export {ReactComponent as IconFiltersAngle} from "../images/icon-filters-angle.svg";
+export {ReactComponent as IconCloseCircle} from "../images/icon-close-circle.svg";
+
+// Leave ModuleIcon
+export { ReactComponent as HeartIcon} from './leaves/Heart.svg';
+export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
+export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
+export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';
+export { ReactComponent as MoreIcon} from './leaves/MoreIcon.svg';
+export { ReactComponent as CalendarWhiteIcon} from './leaves/CalendarWhiteIcon.svg';
+export { ReactComponent as DownloadIconLeave} from './leaves/DownloadIconLeave.svg';
+export { ReactComponent as FilterIconLeave} from './leaves/FilterIconLeave.svg';
+export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';
