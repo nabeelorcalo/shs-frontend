@@ -4,23 +4,24 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { SettingHorizontalLine } from "../../assets/images";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
+import './style.scss'
 
 const { Title } = Typography;
 
 const Setting = (props: any) => {
   return (
-    <>
-      <div className="flex ">
+    <div className="setting">
+      <div className="flex">
         <Title level={3}>{props.title} </Title>
         <span className="mx-2">
           <SettingHorizontalLine />
         </span>
         <Title className="mt-0.5" level={4}>
-          Setting{" "}
+          Setting
         </Title>
       </div>
       <Row gutter={16} className="mt-5">
-        <Col sm={10} md={8} lg={5}>
+        <Col sm={10} md={8} lg={5} className="setting-sideba">
           <div
             style={{
               backgroundColor: "#fff",
@@ -28,9 +29,11 @@ const Setting = (props: any) => {
               height: "100%",
               textAlign: "left",
               // padding: "30px 20px",
+           
             }}
+         
           >
-            <div className="rounded-lg">
+            <div className="rounded-lg ">
               <SettingSidebar />
             </div>
           </div>
@@ -41,7 +44,7 @@ const Setting = (props: any) => {
           <Outlet />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

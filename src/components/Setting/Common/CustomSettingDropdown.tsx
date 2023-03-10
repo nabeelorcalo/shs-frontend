@@ -1,32 +1,37 @@
+
 import React, { useState } from "react";
-import { Space, Dropdown } from "antd";
-import "./CustomSettingDropdown.scss";
-import More from "../../../assets/images/setting/More.svg";
+import {  LocationMore } from "../../../assets/images";
+import {  Dropdown, Menu, } from "antd";
 
-const CustomSettingDropdown = (props: any) => {
-  const { menu1 } = props;
 
+
+const DropDownForSetting = (props: any) => {
   const [visible, setVisible] = useState(false);
 
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
+
+  console.log("props" , props)
+
   return (
-    <Space size="middle" className="float-right">
-      <Dropdown
-      
-        className="droup-down-main"
-        overlay={menu1}
-        visible={visible}
-        onVisibleChange={handleVisibleChange}
-        trigger={["click"]}
-      >
-        <div style={{ cursor: "pointer" }}>
-          <img className="float-right" src={More} alt="threedots" />
-        </div>
-      </Dropdown>
-    </Space>
+    <Dropdown
+      className="dropdown"
+      overlay={
+        <Menu>
+          <Menu.Item key="1"><span onClick={() => { props.setShowEditModal(!props.showEditModal), setVisible(false) }}>Edit</span></Menu.Item>
+          <Menu.Item key="2"><span onClick={() => { props.setShowDeleteModal(!props.showDeleteModal), setVisible(false) }} >Delete</span></Menu.Item>
+        </Menu>
+      }
+      visible={visible}
+      onVisibleChange={handleVisibleChange}
+      trigger={["click"]}
+    >
+      <div style={{ cursor: "pointer" }}>
+        <LocationMore width="24px" />
+      </div>
+    </Dropdown>
   );
 };
 
-export default CustomSettingDropdown;
+export default DropDownForSetting

@@ -1,6 +1,6 @@
 import React from "react";
-import { Divider, Typography } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { Divider,  } from "antd";
+import { NavLink,  } from "react-router-dom";
 import {
   SettingCalendarRemove,
   SettingChart,
@@ -9,7 +9,9 @@ import {
   SettingPeople,
   SettingShifts,
 } from "../../../assets/images";
-const { Title } = Typography;
+
+import './SettingSidebar.scss'
+
 
 const menuLinks = [
   {
@@ -66,12 +68,12 @@ const menuLinks = [
 
 const SettingSidebar: React.FC = () => {
   return (
-    <div>
+    <div className="setting-sidebar">
 
-      <div className="overflow-none ">
+      <div className="">
         {menuLinks.map((item, idx) => {
           return (
-            <>
+            <div >
               <NavLink
                 key={idx}
                 to={item.link}
@@ -101,7 +103,7 @@ const SettingSidebar: React.FC = () => {
               </NavLink>
               {/* <Divider /> */}
 
-            </>
+            </div>
           );
         })}
       </div>

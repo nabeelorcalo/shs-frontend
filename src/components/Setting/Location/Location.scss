@@ -1,7 +1,9 @@
-.boxwrapper{
+@import '../../../scss/colors';
+.setting-location{
+.location-box-wrapper{
     background-color: $white-bg-color;
     border-radius: 10px;
-    padding: 20px 20px;
+    padding: 10px;
     text-align: initial;
     max-height: -webkit-fill-available;
     box-shadow: 0px 2px 3px #E4E8F0;
@@ -9,4 +11,4 @@
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1)
     }
 
-}
+}}

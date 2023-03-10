@@ -1,28 +1,16 @@
-import { DownloadOutlined, DownOutlined } from "@ant-design/icons";
-
-import React from "react";
-import { Col, Row, Typography, Space, Dropdown, Menu } from "antd";
-import {
-  LocationImage,
-  LocationMore,
-  Settinglocation,
-  LocationPeople,
-} from "../../../assets/images";
-// import { Button } from "../../Button";
+import React, { useState } from "react";
+import { Col, Row, Typography, Space, Input } from "antd";
+import { Settinglocation, LocationPeople } from "../../../assets/images";
 import { SearchBar } from "../../SearchBar/SearchBar";
-import {BoxWrapper }from "../../BoxWrapper/boxWrapper";
 import cardImage from "../../../assets/images/setting/locationImage.svg";
-import { DropDown } from "../../Dropdown/DropDown";
 import { Button } from "../../Button";
 import { NavLink } from "react-router-dom";
-import { AddEventInCalendar } from "../../AddEventInCalendar";
+import DropDownForSetting from "../Common/CustomSettingDropdown";
+import { Alert } from "../../Alert";
+import "./Location.scss";
+const { TextArea } = Input;
 const { Title, Text } = Typography;
-const menu = (
-  <Menu>
-    <Menu.Item key="1">Edit</Menu.Item>
-    <Menu.Item key="2">Delete</Menu.Item>
-  </Menu>
-);
+
 let overview = [
   {
     name: "London",
@@ -48,9 +36,10 @@ let overview = [
 ];
 
 const SettingLocation: React.FC = () => {
-  const handleChange = () => { };
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const handleChange = () => {};
   return (
-    <div>
+    <div className="setting-location">
       <div className="flex justify-between">
         <SearchBar size="large" handleChange={handleChange} />
         <NavLink to="/settings/add-location">
@@ -58,20 +47,20 @@ const SettingLocation: React.FC = () => {
             color="#4a9d77"
             icon={<Settinglocation className="mx-2" />}
             label="Add Location"
-            onClick={() => { }}
+            onClick={() => {}}
             type="primary"
-            size="large"
+            size="middle"
           />
         </NavLink>
       </div>
-      <Row gutter={[10, 10]} className="mt-5">
+      <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
-              <BoxWrapper>
+              <div className="location-box-wrapper">
                 <div className="flex">
                   <img src={cardImage} />
-                  <div className="flex px-3 justify-between mt-2 w-full">
+                  <div className="flex px-3 justify-between mt-1 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
                       <Text> {data.content}</Text>
@@ -83,19 +72,30 @@ const SettingLocation: React.FC = () => {
                       </Space>
                     </div>
 
-                    <span className="float-right cursor-pointer">
-                      <Dropdown overlay={menu}  trigger={["click"]} placement="bottomRight">
-                        <LocationMore />
-                      </Dropdown>
+                    <span className="float-right cursor-pointer w-[40px]">
+                      <DropDownForSetting
+                        showDeleteModal={showDeleteModal}
+                        setShowDeleteModal={setShowDeleteModal}
+                      />
                     </span>
                   </div>
                 </div>
-              </BoxWrapper>
+              </div>
             </Col>
           );
         })}
       </Row>
-      
+
+      <Alert
+        cancelBtntxt="Cancel"
+        okBtntxt="Delete"
+        state={showDeleteModal}
+        setState={setShowDeleteModal}
+        type="error"
+        width={500}
+      >
+        <p>Are you sure you want to delete this location?</p>
+      </Alert>
     </div>
   );
 };

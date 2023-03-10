@@ -1,46 +1,20 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { DepartmentAddIcon, LocationMore } from "../../../assets/images";
-import { Col, Row, Typography, Space, Dropdown, Menu } from "antd";
+import { Col, Row, Typography, Space, Dropdown, Menu, Form, } from "antd";
 // import { Button } from "../../Button";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { BoxWrapper } from "../../BoxWrapper/boxWrapper";
 import "./Department.scss";
-import moreIcon from "../../../assets/images/setting/More.svg";
 import { PopUpModal } from "../../Model";
-import { DownloadOutlined } from "@ant-design/icons";
 import { Button } from "../../Button";
-import { boolean } from "yargs";
-import More from "../../../assets/images/setting/More.svg";
-
+import { Input } from "antd";
+import { Alert } from "../../Alert";
+import DropDownForSetting from "../Common/CustomSettingDropdown";
+const { TextArea } = Input;
 const { Title, Text } = Typography;
 
-const DropDownForLocation = (props:any) => {
-  const [visible, setVisible] = useState(false);
 
-  const handleVisibleChange = (visible: any) => {
-    setVisible(visible);
-  };
-
-  return (
-    <Dropdown
-      className="dropdown"
-      overlay={
-        <Menu>
-          <Menu.Item key="1"><span onClick={() => {props.setShowHide(!props.showHide) , setVisible(false)} }>Edit</span></Menu.Item>
-          <Menu.Item key="2">Delete</Menu.Item>
-        </Menu>
-      }
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
-      trigger={["click"]}
-    >
-      <div style={{ cursor: "pointer" }}>
-        <LocationMore width="24px" />
-      </div>
-    </Dropdown>
-  );
-};
 let overview = [
   {
     id: 0,
@@ -62,24 +36,25 @@ let overview = [
   },
 ];
 
+
+
 const SettingDepartment: React.FC = (props: any) => {
-  const [showHide, setShowHide] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState("0");
-  const handleChange = () => {};
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [formValues, setFormValues] = useState<any>({
+    departmentName: "",
+    Description: "",
+
+  });
+  const handleChange = (event: any) => {
+    const { name, value } = event.target;
+    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+  };
+
 
   return (
-    <div className="department">
-      <PopUpModal
-        cancelBtntxt="Cancel"
-        okBtntxt="Submit"
-        state={showHide}
-        setState={setShowHide}
-        title="Modal Title Customizable"
-        width={600}
-        // children= {<p>adsfasd</p>}
-      >
-        <p>Write your JSX here / Import Components</p>
-      </PopUpModal>
+    <div className="setting-department">
+     
       <div className="flex justify-between">
         <SearchBar size="large" handleChange={handleChange} />
 
@@ -87,7 +62,7 @@ const SettingDepartment: React.FC = (props: any) => {
           color="#4a9d77"
           icon={<DepartmentAddIcon className="mx-2" />}
           label="Add Department"
-          onClick={() => setShowHide(!showHide)}
+          onClick={() => setShowEditModal(!showEditModal)}
           type="primary"
           size="middle"
         />
@@ -95,31 +70,70 @@ const SettingDepartment: React.FC = (props: any) => {
         {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
           <span className="">  Add department</span> </Button> */}
       </div>
-      <Row gutter={[10, 10]} className="mt-5">
+      <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
-              <BoxWrapper>
+               <div className="department-box-wrapper">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
                       <Text className="text-sm font-normal">
-                        {" "}
+
                         {data.content}
                       </Text>
                     </div>
 
                     <span className="float-right cursor-pointer w-[40px]">
-                      <DropDownForLocation showHide={showHide} setShowHide={setShowHide} />
+                      <DropDownForSetting showEditModal={showEditModal} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} setShowEditModal={setShowEditModal} />
                     </span>
                   </div>
                 </div>
-              </BoxWrapper>
+              </div>
             </Col>
           );
         })}
       </Row>
+      <PopUpModal
+        cancelBtntxt="Cancel"
+        okBtntxt="Submit"
+        state={showEditModal}
+        setState={setShowEditModal}
+        title="Department"
+        width={600}
+      >
+        <Form layout="vertical">
+          <Form.Item
+            name="locationName"
+            rules={[
+              { required: true, message: "Please Enter your username!" },
+            ]}
+          >
+            <div className="d-flex w-full pl-1">
+              <p className="py-2">Recurrence</p>
+              <Input placeholder="Title" className="input-style" />
+            </div>
+          </Form.Item>
+          <div className="mt-3 flex flex-col">
+            <label className="pb-2">Description</label>
+            <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
+          </div>
+
+        </Form>
+      </PopUpModal>
+      <Alert
+        cancelBtntxt="Cancel"
+        okBtntxt="Delete"
+        state={showDeleteModal}
+        setState={setShowDeleteModal}
+        type="error"
+        width={500}
+      >
+        <p>
+          Are you sure you want to delete this item?
+        </p>
+      </Alert>
     </div>
   );
 };
