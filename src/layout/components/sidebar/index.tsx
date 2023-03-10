@@ -53,10 +53,10 @@ const AppSidebar: FC<SidebarProps> = ({
     if (role === "Student") {
       return itemsStudents;
     }
-    if (role === "intern") {
+    if (role === "Intern") {
       return itemsIntern;
     }
-    if (role === "manager") {
+    if (role === "Manager") {
       return itemsManager;
     }
     if (role === "CompanyAdmin") {

@@ -46,6 +46,23 @@ const contractSigned = [
   },
 ];
 
+const contractStatus = [
+  {
+    id: "1",
+    color: "#FFC15E",
+    status: "Received",
+  },
+  {
+    id: "2",
+    color: "#E94E5D",
+    status: "Rejected",
+  },
+  {
+    id: "3",
+    color: "#4A9D77",
+    status: "Signed",
+  },
+];
 
 const ContractsStudent = () => {
   const handleChange = () => {

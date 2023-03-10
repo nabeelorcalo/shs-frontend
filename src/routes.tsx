@@ -2,21 +2,37 @@ import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import Login from "./pages/onBoarding/login";
-import Signup from "./pages/onBoarding/signup";
-import ForgotPassword from "./pages/onBoarding/forgotPassword";
+import Login from "./pages/onBoarding/sign-in";
+import Signup from "./pages/onBoarding/sign-up";
+import ForgotPassword from "./pages/onBoarding/sign-in/reset-password";
 import AuthGuard from "./helpers/authGuard";
 import Layout from "./layout";
 import { ROUTES_CONSTANTS } from "./config/constants";
+import ResetLinkSent from "./pages/onBoarding/sign-in/reset-password/ResetLink";
+import CreatePassword from "./pages/onBoarding/sign-in/reset-password/create-password";
+import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-password/PasswordSuccess";
+import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
+import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
 // Remove it
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+//Setting Child Component
+import SettingPerformance from "./components/Setting/Performance/Performance";
+import SettingDepartment from "./components/Setting/Department/Department";
+import SettingLeaves from "./components/Setting/Leaves/Leaves";
+import SettingLocation from "./components/Setting/Location/Location";
+import SettingTemplate from "./components/Setting/Templates/Templates";
+import SettingShifts from "./components/Setting/Shifts/Shifts";
+import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
+import SettingPayroll from "./components/Setting/Payroll/Payroll";
+import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
+import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 //
 import DemoCard from "./components/ContractCard/demoCard";
-// 
+//
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -60,7 +76,9 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
+const AvailableProperties = Loadable(
+  lazy(() => import("./pages/accommodation/AvailableProperties"))
+);
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -73,7 +91,9 @@ const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
-const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
+const Charts = Loadable(
+  lazy(() => import("./components/ChartsOfGraphs/Charts"))
+);
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
@@ -105,24 +125,58 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
-    {
-      key: "candidates",
+  {
+    key: "candidates",
     path: `candidates`,
     element: <Candidates />,
-    
   },
   // Demo dropdowns
   {
-    key: 'dropdowndemo',
-    path: '/demodropdown',
-    element: <DropDownDemo />
+    key: "dropdowndemo",
+    path: "/demodropdown",
+    element: <DropDownDemo />,
   },
   {
-    key: 'card',
+    key: "charts",
+    path: "/charts",
+    element: <Charts />,
+  },
+  {
+    key: "candidates",
+    path: "/candidates",
+    element: <Candidates />,
+  },
+  {
+    key: "card",
     path: "/democards",
-    element: <DemoCard />
-  }
+    element: <DemoCard />,
+  },
   // ------Remove till here------
+  {
+    key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    element: <ResetLinkSent />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.CREATE_PASSWORD}`,
+    path: `${ROUTES_CONSTANTS.CREATE_PASSWORD}`,
+    element: <CreatePassword />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.SUCCESSFULLY_CREATE_PASSWORD}`,
+    path: `${ROUTES_CONSTANTS.SUCCESSFULLY_CREATE_PASSWORD}`,
+    element: <PasswordSuccess />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`,
+    path: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`,
+    element: <VerificationLinkSent />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
+    path: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
+    element: <VerificationSteps />,
+  },
 ];
 
 // Manager
@@ -307,6 +361,11 @@ const systemAdminRoutes = [
         element: <PropertyAgent />,
       },
       {
+        key: `propertyDetails`,
+        path: `property-agent/:id`,
+        element: <PropertyDetail />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.HELP_DESK}`,
         path: `${ROUTES_CONSTANTS.HELP_DESK}`,
         element: <HelpDesk />,
@@ -404,7 +463,101 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,
         path: `${ROUTES_CONSTANTS.SETTING}`,
-        element: <Setting />,
+        // element: <Setting />,
+        children: [
+          {
+            key: `location`,
+            element: (
+              <Setting title="Location">
+                <SettingLocation />{" "}
+              </Setting>
+            ),
+            path: "location",
+            index: true,
+
+            // children: [
+            //   {
+            //     key: `addLocation`,
+            //     element:  <AddLocation />,
+            //     path: "addLocation",
+            //     index: true,
+            //   },
+            // ]
+          },
+          {
+            key: `add-location`,
+            element: <AddLocation />,
+            path: "add-location",
+          },
+
+          {
+            key: `department`,
+            element: (
+              <Setting title="Department">
+                <SettingDepartment />{" "}
+              </Setting>
+            ),
+            path: "department",
+          },
+          {
+            key: `leaves`,
+            element: (
+              <Setting title="Leaves">
+                <SettingLeaves />
+              </Setting>
+            ),
+            path: "leaves",
+          },
+          {
+            key: `performance`,
+            path: `performance`,
+            element: (
+              <Setting title="Performance">
+                <SettingPerformance />
+              </Setting>
+            ),
+          },
+          {
+            key: `template`,
+            path: `template`,
+            element: (
+              <Setting title="Template">
+                {" "}
+                <SettingTemplate />
+              </Setting>
+            ),
+          },
+          {
+            key: `shifts`,
+            path: `shifts`,
+            element: (
+              <Setting title="Shifts">
+                {" "}
+                <SettingShifts />
+              </Setting>
+            ),
+          },
+          {
+            key: `timesheet`,
+            path: `timesheet`,
+            element: (
+              <Setting title="Timesheet">
+                {" "}
+                <SettingTimesheet />
+              </Setting>
+            ),
+          },
+          {
+            key: `payroll`,
+            path: `payroll`,
+            element: (
+              <Setting title="Payroll">
+                {" "}
+                <SettingPayroll />
+              </Setting>
+            ),
+          },
+        ],
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
@@ -464,7 +617,7 @@ const internRoutes = [
       {
         key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
         path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-        element: <ViewHistory/>,
+        element: <ViewHistory />,
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
