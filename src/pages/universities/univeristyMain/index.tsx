@@ -224,7 +224,7 @@ const UniveristyMain = () => {
             <GlobalTable
               tableData={tableData}
               columns={columns}
-              pagination={false}
+             
             />
           </div>
         </Col>
