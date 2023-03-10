@@ -137,7 +137,7 @@ export const publicRoutes = [
     key: 'card',
     path: "/democards",
     element: <DemoCard />
-  }
+  },
   // ------Remove till here------
   {
     key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
