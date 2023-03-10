@@ -32,7 +32,7 @@ const ResetLink = () => {
             <div>
               <Typography className="text-center mt-2 mb-2">
                 Back to &nbsp;
-                <a href="" className="a-tag-signup">
+                <a href="/login" className="a-tag-signup">
                   Login
                 </a>
               </Typography>

@@ -30,7 +30,8 @@ const ResetPasswordForm = () => {
               //htmlType="submit"
               className="login-form-button"
             >
-              Reset
+              <a href="/reset-link-sent">Reset</a>
+              
             </Button>
           </Form.Item>
           <div>
