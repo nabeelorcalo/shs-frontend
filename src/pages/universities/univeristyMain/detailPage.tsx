@@ -6,7 +6,12 @@ import iconEmail from "../../../assets/images/profile/student/email.png";
 import iconPhone from "../../../assets/images/profile/student/Phone.png";
 import iconLocation from "../../../assets/images/profile/student/location.png";
 
+
+
+const name = 'University';
+
 const commonObj = {
+  moduleName:"University of Lincoln",
   type: "Univesity",
   depName: "University of Lincoln",
   area: "Lincoln, United Kingdom",
@@ -44,29 +49,16 @@ const commonObj = {
   },
 };
 
-const items = [
-  {
-    title: "Home",
-  },
-  {
-    title: <a href="">Application Center</a>,
-  },
-  {
-    title: <a href="">Application List</a>,
-  },
-  {
-    title: "An Application",
-  },
-];
+
 
 const DetailPage = () => {
   return (
     <div className="detail-page">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <span className="font-semibold text-2xl text-[#363565]">University of Lincoln</span>
+                  <span className="font-semibold text-2xl text-[#363565]">{commonObj.moduleName}</span>
                   <Divider type="vertical" />
-                  <span className="font-semibold text-base text-[#4E4B66]">University of Lincoln</span>
+          <span className="font-semibold text-base text-[#4E4B66]">{ commonObj.type}</span>
         </Col>
       </Row>
       <Divider />
@@ -142,7 +134,7 @@ const DetailPage = () => {
                 <Row gutter={[5, 20]}>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
-                      University Name
+                      {name} Name
                     </Typography>
                     <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
                       {commonObj.basic.name}
@@ -222,7 +214,7 @@ const DetailPage = () => {
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <div>
                     <Typography className="pb-2 font-semibold text-xl text-[#14142A] font-[outfit]">
-                      About University
+                      About {name}
                     </Typography>
                     <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
                       {commonObj.about.description}
