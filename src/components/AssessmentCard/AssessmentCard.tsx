@@ -1,5 +1,5 @@
 import { AssessmentAproved, AssessmentDraft, AssessmentRejected, AssessmentSubmitted, ThreeDots } from '../../assets/images';
-import {BoxWrapper} from '../BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../BoxWrapper/BoxWrapper';
 import { Dropdown } from 'antd';
 import './AssessmentCard.scss';
 

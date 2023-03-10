@@ -1,5 +1,5 @@
 // import { Education1Icon, EducationIcon } from '../../assets/images';
-import { BoxWrapper } from "../BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import "./style.scss";
 import Education from "../../assets/images/digivault/education.png";
 import Education1 from "../../assets/images/digivault/education1.png";
@@ -15,7 +15,7 @@ const DigivaultCard = (props: any) => {
         <div className={`upper-part`}>
           <div className="bgImg">
             {/* <EducationIcon  /> */}
-            <TitleImg color={"red"} fill={"red"} />
+            <TitleImg />
           </div>
           {title === "Others" ? "" : <SubImg />}
         </div>

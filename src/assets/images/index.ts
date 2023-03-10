@@ -55,8 +55,6 @@ export { ReactComponent as IconClipboardText } from "./sidebar/icon-clipboard-te
 export { ReactComponent as IconDiscountShape } from "./sidebar/icon-discount-shape.svg";
 export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.svg";
 
-
-
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
@@ -89,36 +87,34 @@ export { default as FamilyIcon } from "./chart/Family.svg";
 export { default as SocialLifeIcon } from "./chart/Social.svg";
 export { default as RecreationIcon } from "./chart/Recreation.svg";
 
-
 // Uploads Icons
 export { ReactComponent as DocumentCardIcon } from "./uploads/Document-Card.svg";
 
 // Alert Icons
-export { ReactComponent as AlertIcon } from './alert/alertIcon.svg';
-export { ReactComponent as SuccessIcon } from './alert/successIcon.svg';
-export { ReactComponent as WarningIcon } from './alert/warningIcon.svg';
+export { ReactComponent as AlertIcon } from "./alert/alertIcon.svg";
+export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
+export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
 
-
-// sickLeave-card icon 
+// sickLeave-card icon
 export { default as SickIcon } from "./sick.png";
 export { default as CasualIcon } from "./sick.png";
 export { default as WFHIcon } from "./sick.png";
 export { default as MedicalIcon } from "./sick.png";
 
 // Rating Emojis
-export { ReactComponent as Sad } from './RatingEmojis/sad.svg';
-export { ReactComponent as Neutral } from './RatingEmojis/neutral.svg';
-export { ReactComponent as Happy } from './RatingEmojis/happy.svg';
-export { ReactComponent as Awesome } from './RatingEmojis/awesome.svg';
-export { ReactComponent as Terrible } from './RatingEmojis/terrible.svg';
-export { ReactComponent as Emoji1st } from './RatingEmojis/Emoji1st.svg';
-export { ReactComponent as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
-export { ReactComponent as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
-export { ReactComponent as Emoji4th } from './RatingEmojis/Emoji4th.svg';
-export { ReactComponent as EmojiGray1st } from './RatingEmojis/EmojiGray1st.svg';
-export { ReactComponent as EmojiGray2nd } from './RatingEmojis/EmojiGray2nd.svg';
-export { ReactComponent as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg';
-export { ReactComponent as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
+export { ReactComponent as Sad } from "./RatingEmojis/sad.svg";
+export { ReactComponent as Neutral } from "./RatingEmojis/neutral.svg";
+export { ReactComponent as Happy } from "./RatingEmojis/happy.svg";
+export { ReactComponent as Awesome } from "./RatingEmojis/awesome.svg";
+export { ReactComponent as Terrible } from "./RatingEmojis/terrible.svg";
+export { ReactComponent as Emoji1st } from "./RatingEmojis/Emoji1st.svg";
+export { ReactComponent as Emoji2nd } from "./RatingEmojis/Emoji2nd.svg";
+export { ReactComponent as Emoji3rd } from "./RatingEmojis/Emoji3rd.svg";
+export { ReactComponent as Emoji4th } from "./RatingEmojis/Emoji4th.svg";
+export { ReactComponent as EmojiGray1st } from "./RatingEmojis/EmojiGray1st.svg";
+export { ReactComponent as EmojiGray2nd } from "./RatingEmojis/EmojiGray2nd.svg";
+export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg";
+export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
 
 // Callendar Icons
 export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
@@ -138,7 +134,7 @@ export { ReactComponent as FilterIconLeave } from "./leaves/FilterIconLeave.svg"
 export { ReactComponent as ChevronRight } from "./leaves/ChevronRight.svg";
 
 // DigiVault CArd Img
-export { ReactComponent as EducationImg } from "./digivault/manageVault/bankingFolder.svg";
+export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
 export { ReactComponent as BAnkingImg } from "./digivault/manageVault/bankingFolder.svg";
 export { ReactComponent as BAnkingImgSub } from "./digivault/manageVault/ph_bank.svg";
@@ -150,29 +146,28 @@ export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
 
-
 // accomodation card icons
-export { ReactComponent as SaveIcon } from './SaveIcon.svg';
-export { ReactComponent as BathIcon } from './Baths.svg';
-export { ReactComponent as BedIcon } from './Bedrooms.svg';
+export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
+export { ReactComponent as BathIcon } from "./Baths.svg";
+export { ReactComponent as BedIcon } from "./Bedrooms.svg";
 
 // assessment icons
-export { ReactComponent as ThreeDots } from './three-dots.svg';
-export { ReactComponent as AssessmentDraft } from './assessment-draft.svg';
-export { ReactComponent as AssessmentSubmitted } from './assessment-submitted.svg';
-export { ReactComponent as AssessmentAproved } from './assessment-approved.svg';
-export { ReactComponent as AssessmentRejected } from './assessment-rejected.svg';
-export { default as UserAvatar } from './user-avatar.png';
+export { ReactComponent as ThreeDots } from "./three-dots.svg";
+export { ReactComponent as AssessmentDraft } from "./assessment-draft.svg";
+export { ReactComponent as AssessmentSubmitted } from "./assessment-submitted.svg";
+export { ReactComponent as AssessmentAproved } from "./assessment-approved.svg";
+export { ReactComponent as AssessmentRejected } from "./assessment-rejected.svg";
+export { default as UserAvatar } from "./user-avatar.png";
 
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "../images/icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "../images/icon-filters-angle.svg";
 export { ReactComponent as IconCloseCircle } from "../images/icon-close-circle.svg";
-export { ReactComponent as StructureCompanyAdminAvater } from './structure/avatar-img.svg';
-export { ReactComponent as StructureCompanyAdminDownward} from './structure/downward.svg';
-export { ReactComponent as StructureCompanyAdminProfile2user } from './structure/profile-2user.svg';
-export { ReactComponent as StructureMinus} from './structure/minus.svg';
-export { ReactComponent as StructureAdd } from './structure/add.svg';
+export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
+export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
+export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
+export { ReactComponent as StructureMinus } from "./structure/minus.svg";
+export { ReactComponent as StructureAdd } from "./structure/add.svg";
 
 //setting
 export { ReactComponent as SettingMap } from './setting/map.svg';
@@ -188,4 +183,5 @@ export { ReactComponent as LocationImage } from './setting/locationImage.svg';
 export { ReactComponent as LocationMore } from './setting/More.svg';
 export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
 
+// Intern Dashboard
 export {ReactComponent as SunIcon} from './dashboard/sun.svg';

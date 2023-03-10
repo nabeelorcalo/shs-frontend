@@ -68,6 +68,7 @@ export const ROUTES_CONSTANTS: any = {
   RENTED_PROPERTIES: "rented-properties",
   BOOKING_REQUESTS: "booking-requests",
   ACCOMMODATION_PAYMENTS: "payments",
+  PROPERTY_DETAIL: 'property',
   SEARCH_JOBS: "search-jobs",
   APPLICATION: "application",
   PROFILE: "profile",

@@ -1,6 +1,6 @@
 import { Column } from '@ant-design/plots';
 import { useEffect, useState } from 'react';
-import {BoxWrapper} from '../../BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../../BoxWrapper/BoxWrapper';
 import { perfomanceChart } from './MonthlyPerfomance';
 
 export const MonthlyPerfomanceChart = (props: any) => {
