@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import "./style.scss";
+import UniveristyMain from "./univeristyMain";
 
 const Universities = () => {
   return (
-    <p>universities</p>
+    <>
+      <UniveristyMain/>
+    </>
   )
 }
 
