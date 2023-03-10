@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import "./BoxWrapper.scss";
-
 interface Props {
   className?: string;
   children?: ReactNode;

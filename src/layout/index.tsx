@@ -16,11 +16,7 @@ function AppLayout() {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
+  useEffect(() => {}, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -33,6 +29,7 @@ function AppLayout() {
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
+
   return (
     <Layout>
 
@@ -58,7 +55,7 @@ function AppLayout() {
       <AppFooter />
 
     </Layout>
-  )
+  );
 }
 
-export default AppLayout
+export default AppLayout;

@@ -7,7 +7,6 @@ import { ErrorFallback } from "./pages/errors/errorBoundary";
 import constants from './config/constants';
 
 function App() {
-
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -33,11 +32,13 @@ function App() {
   //   }
   // }, [pathname]);
 
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      {pages}
-    </ErrorBoundary>
-  )
-}
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
 
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>{pages}</ErrorBoundary>
+  );
+}
 export default App;

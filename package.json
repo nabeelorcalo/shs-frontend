@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "@fullcalendar/interaction": "^6.1.4",
     "@fullcalendar/react": "^6.1.4",
     "@types/react-image-gallery": "^1.2.0",
+    "@types/react-video-recorder": "^3.19.0",
     "antd": "^5.2.2",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.7",
@@ -35,6 +36,7 @@
     "react-organizational-chart": "^2.2.0",
     "react-router-dom": "^6.8.2",
     "react-signature-canvas": "^1.0.6",
+    "react-video-recorder": "^3.19.4",
     "storybook": "^6.5.16",
     "vite-plugin-svgr": "^2.4.0"
   },
