@@ -1,14 +1,13 @@
-import { Button, Space } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import PageHeader from "../../components/PageHeader";
 import { SearchBar } from "../../components";
 import "./style.scss";
 import { FileAddFilled } from "@ant-design/icons";
 import GlobalTable from "../../components/Table/Table";
-import { Alert } from "../../components";
-import EmojiMoodRating from "../../components/EmojiMoodRating";
-import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
+import { Avatar, Button } from 'antd';
+import { More } from "../../assets/images"
+
+
 const Internships = () => {
   const [value, setValue] = useState("")
   const columns = [
@@ -67,44 +66,62 @@ const Internships = () => {
       posting_date: "01/07/2022",
       closing_date: "01/07/2022",
       location: "virtual",
-      status: "active",
+      status: 'Pending',
+      posted_by: 'T',
+      actions: <More />
 
     },
     {
-      Actions: 'fduhguisd',
-      Position: 'gjdifsdu',
-      Status: 'fjgvifd',
-      company: 'kljdasfhuasd',
-      dateApplied: '01/07 /2022',
-      internshipType: 'nice',
-      natureOfWork: 'asduhfuiyasdg',
-      no: '02',
-      typeOfWork: 'New York No. 1 Lake Park'
-    }
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'Active',
+      posted_by: 'U',
+      actions: <More />
+
+    },
+    {
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'Rejected',
+      posted_by: 'U',
+      actions: <More />
+
+    },
   ]
 
-  const emojiData = [
-    {
-      name: "Terrible",
-      comp: Terrible
-    },
-    {
-      name: "Sad",
-      comp: Sad
-    },
-    {
-      name: "Neutral",
-      comp: Neutral
-    },
-    {
-      name: "Happy",
-      comp: Happy
-    },
-    {
-      name: "Awesome",
-      comp: Awesome
-    }
-  ]
+  const newTableData = tableData.map((item, idx) => {
+    return (
+      {
+        no: item.no,
+        title: item.title,
+        department: item.department,
+        posting_date: item.posting_date,
+        closing_date: item.closing_date,
+        location: item.location,
+        status: <Button
+          size="small"
+          style={{
+            backgroundColor: item.status === "Active" ? '#4ED185' : item.status === "Pending" ? '#FFC15E' : item.status === "Closed" ? '#4783FF' : item.status === "Rejected" ? '#D83A52' : '#C4C4CA',
+            color: '#fff',
+            padding: "5px 20px"
+          }}
+        >
+          {item.status}
+        </Button>,
+        posted_by: <Avatar>{item.posted_by}</Avatar>,
+        actions: <More />
+      }
+    )
+  })
+
   console.log(value)
   return (
     <>
@@ -117,7 +134,7 @@ const Internships = () => {
           placeholder="search"
           size="large"
         />
-        <div>
+        <div className="flex flex-row gap-4">
           <Button
             label="Button"
             onClick={() => { }}
@@ -125,11 +142,10 @@ const Internships = () => {
           />
           <Button
             label="New Internshipsd"
-            color="#4a9d77"
+            color="#4ED185"
             icon={<FileAddFilled />}
             onClick={() => { }}
             size="middle"
-            type="primary"
           />
         </div>
 
@@ -141,12 +157,8 @@ const Internships = () => {
             expandedRowRender: () => { },
             rowExpandable: function noRefCheck() { }
           }}
-          tableData={tableData}
+          tableData={newTableData}
         />
-        <Alert showHide={true} type="warning" okBtntxt="OK" cancelBtntxt="Cancel">
-          <p>This is a placeholer text just to show the default size and weight for body text typography in a popup.</p>
-        </Alert>
-        <EmojiMoodRating title='Emoji Icon for mood' data={emojiData} setState={setValue} />
       </div>
 
 
