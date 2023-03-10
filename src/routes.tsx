@@ -1,7 +1,7 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import Login from "./pages/onBoarding/login";
 import Signup from "./pages/onBoarding/signup";
 import ForgotPassword from "./pages/onBoarding/forgotPassword";
@@ -11,22 +11,21 @@ import { ROUTES_CONSTANTS } from "./config/constants";
 
 // Remove it
 // dummy components
-import Graph from './components/Graph';
+import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+//
 import DemoCard from "./components/ContractCard/demoCard";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
-  <Suspense
-    fallback={
-      <Spin indicator={spinIcon} />
-    }
-  >
-    <Component {...props} />
-  </Suspense>
-);
+const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
+  (
+    <Suspense fallback={<Spin indicator={spinIcon} />}>
+      <Component {...props} />
+    </Suspense>
+  );
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -41,7 +40,9 @@ const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure")));
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
-const WithDrawalRequest = Loadable(lazy(() => import("./pages/withdrawalRequest")));
+const WithDrawalRequest = Loadable(
+  lazy(() => import("./pages/withdrawalRequest"))
+);
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
 const Universities = Loadable(lazy(() => import("./pages/universities")));
@@ -80,7 +81,7 @@ export const publicRoutes = [
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.LOGIN} />
+    element: <Navigate to={ROUTES_CONSTANTS.LOGIN} />,
   },
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
@@ -139,7 +140,7 @@ const managerRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -147,7 +148,7 @@ const managerRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -224,7 +225,7 @@ const delegateAgentRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -232,7 +233,7 @@ const delegateAgentRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -269,7 +270,7 @@ const systemAdminRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -277,7 +278,7 @@ const systemAdminRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -339,7 +340,7 @@ const companyAdminRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -347,7 +348,7 @@ const companyAdminRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -444,7 +445,7 @@ const internRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -452,7 +453,7 @@ const internRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -539,7 +540,7 @@ const studentRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -547,7 +548,7 @@ const studentRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -584,6 +585,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.DIGIVAULT}`,
         path: `${ROUTES_CONSTANTS.DIGIVAULT}`,
         element: <DigiVault />,
+      },
+      {
+        key: `manageVault`,
+        path: `digivault/:id`,
+        element: <ManageVault />,
       },
       {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
@@ -626,7 +632,7 @@ const studentRoutes = [
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             element: <h1>ACCOMMODATION_PAYMENTS</h1>,
           },
-        ]
+        ],
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,
@@ -651,7 +657,7 @@ const universityRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -659,7 +665,7 @@ const universityRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {
@@ -705,7 +711,7 @@ const agentRoutes = [
   {
     key: `${ROUTES_CONSTANTS.MAIN}`,
     path: "/",
-    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />
+    element: <Navigate to={ROUTES_CONSTANTS.DASHBOARD} />,
   },
   {
     key: `${ROUTES_CONSTANTS.MAIN_LAYOUT}`,
@@ -713,7 +719,7 @@ const agentRoutes = [
     element: (
       <AuthGuard>
         <Layout />
-      </AuthGuard >
+      </AuthGuard>
     ),
     children: [
       {

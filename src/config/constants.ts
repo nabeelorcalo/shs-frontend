@@ -6,18 +6,18 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Student"
-}
+  USER_ROLE: "Student",
+};
 
-  // Possibe string of roles:
-  // SystemAdmin,
-  // Manager,
-  // DelegateAgent,
-  // CompanyAdmin,
-  // Intern,
-  // Student,
-  // University,
-  // Agent,
+// Possibe string of roles:
+// SystemAdmin,
+// Manager,
+// DelegateAgent,
+// CompanyAdmin,
+// Intern,
+// Student,
+// University,
+// Agent,
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
@@ -31,7 +31,7 @@ export const ROUTES_CONSTANTS: any = {
   INTERNS: "interns",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
-  VIEWLEAVEHISTORY:"leaves/history",
+  VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
@@ -75,5 +75,5 @@ export const ROUTES_CONSTANTS: any = {
   SETTING: "settings",
   CERTIFICATES: "certificates",
   PAYROLL: "payroll",
-  PERSONALISATION: "personalisation"
+  PERSONALISATION: "personalisation",
 };
