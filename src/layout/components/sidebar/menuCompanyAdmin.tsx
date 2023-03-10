@@ -82,7 +82,7 @@ export const itemsCompanyAdmin: MenuProps['items'] = [
 
   // SETUP GROUP
   getItem('Setup', 'setup', null, [
-    getItem('Settings', `/${SETTING}`, <IconCalendar />),
+    getItem('Settings', `/${SETTING}/location`, <IconCalendar />),
     getItem('Personalisation', `/${PERSONALISATION}`, <IconCalendar />),
   ], 'group'),
 ]

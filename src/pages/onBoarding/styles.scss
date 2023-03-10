@@ -1,0 +1,94 @@
+@import "../../scss/_colors.scss";
+
+.signup-form {
+  .form-style {
+    display: flex !important;
+    justify-content: center;
+    margin-top: 4rem;
+  }
+  .form-inner-wrapper {
+    border: 1px solid #d9dbe9;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  // .ant-form-item .ant-form-item-control-input-content {
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .input-style {
+    background: #e6f4f9;
+    border-radius: 8px;
+    height: 48px;
+  }
+  .ant-input-affix-wrapper > input.ant-input {
+    background: #e6f4f9 !important;
+  }
+  .login-form-button {
+    padding: 10px 0px 30px 0px;
+    background-color: $primary-bg-color;
+    width: 100%;
+  }
+  .a-tag-signup {
+    color: #e95060;
+  }
+  .a-tag-signup:hover {
+    color: #e95060;
+  }
+  .login-form-forgot {
+    color: #363565;
+  }
+}
+
+.verfiction-link {
+  .verfiction-link-style {
+    display: flex !important;
+    justify-content: center;
+    margin-top: 6rem;
+  }
+  .logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .fly-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .form-inner-wrapper {
+    border: 1px solid #d9dbe9;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    .main-title {
+      color: #363565;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 40px;
+      font-family: Outfit;
+      text-align: center;
+    }
+    .secondary-title {
+      color: #4e4b66;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 40px;
+      font-family: Outfit;
+      text-align: center;
+    }
+  }
+  .a-tag-signup {
+    color: #e95060;
+  }
+  .a-tag-signup:hover {
+    color: #e95060;
+  }
+  .login-form-forgot {
+    color: #363565;
+  }
+}

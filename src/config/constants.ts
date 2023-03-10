@@ -6,7 +6,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Student",
+  USER_ROLE: "CompanyAdmin",
 };
 
 // Possibe string of roles:
@@ -23,6 +23,11 @@ export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
   SIGNUP: "signup",
   FORGOT_PASSWORD: "forgot-password",
+  RESET_LINK_SENT: "reset-link-sent",
+  CREATE_PASSWORD: "create-password",
+  SUCCESSFULLY_CREATE_PASSWORD: "create-password-success",
+  VERIFICATION_LINK_SENT: "verification-link-sent",
+  VERIFICATION_STEPS: "verification-steps",
   MAIN: "main",
   MAIN_LAYOUT: "main-layout",
   ERROR_PAGE: "error-page",

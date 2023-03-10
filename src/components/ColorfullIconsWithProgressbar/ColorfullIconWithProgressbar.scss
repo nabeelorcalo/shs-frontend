@@ -1,8 +1,11 @@
-.colorfull-icon-progress-bar {
-  .title {
-    color: #4e4b66;
-  }
-  .storage-value {
-    color: #a0a3bd;
-  }
+
+@import "../../scss/colors.scss";
+.colorfull-icon-progress-bar{
+    .content-title{
+        color: $text-secondary-body-color
+    }
+    .storage-value{
+        color: $text-success-placeholder-color
+
+    }
 }

@@ -1,0 +1,30 @@
+<svg width="100" height="100" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M35 59C48.2548 59 59 48.2548 59 35C59 21.7452 48.2548 11 35 11C21.7452 11 11 21.7452 11 35C11 48.2548 21.7452 59 35 59Z" fill="#F4BC1E"/>
+<path d="M35 59C48.2548 59 59 48.2548 59 35C59 21.7452 48.2548 11 35 11C21.7452 11 11 21.7452 11 35C11 48.2548 21.7452 59 35 59Z" fill="url(#paint0_linear_43105_12851)"/>
+<path d="M35 59C48.2548 59 59 48.2548 59 35C59 21.7452 48.2548 11 35 11C21.7452 11 11 21.7452 11 35C11 48.2548 21.7452 59 35 59Z" fill="url(#paint1_linear_43105_12851)"/>
+<path d="M41.8574 42.7213H28.1556C27.6756 42.7213 27.3047 42.3286 27.3047 41.8704C27.3047 41.3904 27.6974 41.0195 28.1556 41.0195H41.8792C42.3592 41.0195 42.7301 41.4123 42.7301 41.8704C42.7301 42.3286 42.3374 42.7213 41.8574 42.7213Z" fill="#1E1E1E"/>
+<path d="M41.8551 34.9974C43.747 34.9974 45.2806 32.6921 45.2806 29.8483C45.2806 27.0045 43.747 24.6992 41.8551 24.6992C39.9633 24.6992 38.4297 27.0045 38.4297 29.8483C38.4297 32.6921 39.9633 34.9974 41.8551 34.9974Z" fill="#1E1E1E"/>
+<path d="M28.152 34.9974C30.0438 34.9974 31.5775 32.6921 31.5775 29.8483C31.5775 27.0045 30.0438 24.6992 28.152 24.6992C26.2602 24.6992 24.7266 27.0045 24.7266 29.8483C24.7266 32.6921 26.2602 34.9974 28.152 34.9974Z" fill="#1E1E1E"/>
+<defs>
+<linearGradient id="paint0_linear_43105_12851" x1="18.068" y1="18.0647" x2="52.0089" y2="52.0055" gradientUnits="userSpaceOnUse">
+<stop offset="0.0219" stop-color="#F4BC1E" stop-opacity="0"/>
+<stop offset="0.0823" stop-color="#F4B71C" stop-opacity="0.082"/>
+<stop offset="0.2379" stop-color="#F3AA19" stop-opacity="0.269"/>
+<stop offset="0.3945" stop-color="#F2A016" stop-opacity="0.424"/>
+<stop offset="0.5497" stop-color="#F29713" stop-opacity="0.545"/>
+<stop offset="0.7033" stop-color="#F19211" stop-opacity="0.631"/>
+<stop offset="0.8543" stop-color="#F18E10" stop-opacity="0.683"/>
+<stop offset="1" stop-color="#F18D10" stop-opacity="0.7"/>
+</linearGradient>
+<linearGradient id="paint1_linear_43105_12851" x1="23.0344" y1="14.2479" x2="47.0378" y2="55.8223" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FFFFC5" stop-opacity="0.6"/>
+<stop offset="0.0135" stop-color="#FFFDC1" stop-opacity="0.584"/>
+<stop offset="0.1808" stop-color="#FBE98F" stop-opacity="0.407"/>
+<stop offset="0.3491" stop-color="#F9D966" stop-opacity="0.26"/>
+<stop offset="0.516" stop-color="#F7CC47" stop-opacity="0.147"/>
+<stop offset="0.681" stop-color="#F5C330" stop-opacity="0.065"/>
+<stop offset="0.8433" stop-color="#F4BE23" stop-opacity="0.016"/>
+<stop offset="1" stop-color="#F4BC1E" stop-opacity="0"/>
+</linearGradient>
+</defs>
+</svg>
