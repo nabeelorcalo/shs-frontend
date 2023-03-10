@@ -88,7 +88,7 @@ export { ReactComponent as DocumentUpload } from "./leaves/document-upload.svg";
 // Uploads Icons
 export { ReactComponent as DocumentCardIcon } from "./uploads/Document-Card.svg";
 
-// sickLeave-card icon
+// sickLeave-card icon 
 export { default as SickIcon } from "./sick.png";
 export { default as CasualIcon } from "./sick.png";
 export { default as WFHIcon } from "./sick.png";
@@ -134,6 +134,19 @@ export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
 
+
+// accomodation card icons
+export { ReactComponent as SaveIcon } from './SaveIcon.svg';
+export { ReactComponent as BathIcon } from './Baths.svg';
+export { ReactComponent as BedIcon } from './Bedrooms.svg';
+
+// assessment icons
+export { ReactComponent as ThreeDots } from './three-dots.svg';
+export { ReactComponent as AssessmentDraft } from './assessment-draft.svg';
+export { ReactComponent as AssessmentSubmitted } from './assessment-submitted.svg';
+export { ReactComponent as AssessmentAproved } from './assessment-approved.svg';
+export { ReactComponent as AssessmentRejected } from './assessment-rejected.svg';
+export { default as UserAvatar } from './user-avatar.png';
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "../images/icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "../images/icon-filters-angle.svg";
