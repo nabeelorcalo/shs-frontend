@@ -38,9 +38,14 @@ const ManagerMain = () => {
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />
                       </Button>
-                      <div className="bg-[#E6F4F9]">
-                          <img src={listView} alt="" />
+                      <div className="bg-[#E6F4F9] p-2 flex gap-2">
+                          <div className="bg-white p-1">
+                          <img src={listView} alt="" />  
+                          </div>
+                          <div  className="bg-white p-1">
+                              
                           <img src={gridview} alt="" />
+                       </div>
                       </div>
                       <div className="w-25">
               <DropDown

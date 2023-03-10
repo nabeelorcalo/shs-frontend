@@ -212,17 +212,16 @@ const AddManager = () => {
               Cancel
             </Button>
             <Button
-             
               htmlType="submit"
               style={{
                 backgroundColor: "#4a9d77",
                 color: "#fff",
                 border: "1px solid #4a9d77",
-                  padding: "0px 20px",
-                marginLeft:'20px'
+                padding: "0px 20px",
+                marginLeft: "20px",
               }}
             >
-              Submit
+              <a href="managers">Submit</a>
             </Button>
           </Form.Item>
         </Form>
