@@ -3,6 +3,7 @@ import { BoxWrapper } from "../BoxWrapper/boxWrapper";
 
 
 
+
 import './style.scss';
 interface LeaveCardProps {
     Icon?: any

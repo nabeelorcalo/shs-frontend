@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Typography, Row, Col, Divider, Form, TimePicker, } from "antd";
+import { Typography, Row, Col, Divider, Form, TimePicker, Select } from "antd";
 import { SettingHorizontalLine } from "../../../../assets/images";
-import {BoxWrapper} from "../../../BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../../../BoxWrapper/boxWrapper";
 import { Input } from "../../../Input/input";
 import { SearchBar } from "../../../SearchBar/SearchBar";
-import { RecipeCard } from "../../../RecipeCard";
-import icon from "../../../../assets/images/RecipeCard/recipeCard.png";
-import { Button } from "../../../Button";
+import './AddLocation.scss'
 import dayjs, { Dayjs } from "dayjs";
+import UploadDocument from "../../../UploadDocument";
+import { NavLink } from "react-router-dom";
 
 const { Title, Paragraph } = Typography;
 
@@ -19,6 +19,7 @@ const AddLocation: React.FC = () => {
     street: "",
     town: "",
     country: "",
+    countryCode:"",
     phoneNumber: "",
     email: "",
     uploadImage: "",
@@ -32,9 +33,9 @@ const AddLocation: React.FC = () => {
 
   console.log("formValues", formValues);
   return (
-    <div>
+    <div className="add-location">
+       {/*------------------------ Header----------------------------- */}
       <BoxWrapper>
-
         <div className="flex ">
           <Title level={3}>Add Location </Title>
           <span className="mx-2">
@@ -44,18 +45,20 @@ const AddLocation: React.FC = () => {
             Setting
           </Title>
           <span className="mx-2 mt-2">/</span>
-          <Title className="mt-0.5" level={4}>
+          <NavLink to="/settings/location">  <Title className="mt-0.5" level={4}>
             Location
           </Title>
+          </NavLink>
         </div>
       </BoxWrapper>
       <Divider className="mb-0 " />
       <BoxWrapper>
         <Form layout="vertical">
+              {/*------------------------ Office----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
-                Setting
+                Office
               </Title>
               <Paragraph>
                 Enter office details for different locations
@@ -63,10 +66,9 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                // label="Username"
                 name="locationName"
                 rules={[
-                  { required: true, message: "Please input your username!" },
+                  { required: true, message: "Please Enter your username!" },
                 ]}
               >
                 <Input
@@ -84,6 +86,7 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Divider />
+              {/*------------------------ Address----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
@@ -93,26 +96,226 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                label="Post C"
+                label="Post Code"
                 name="postCode"
                 rules={[{ message: "Please input your username!" }]}
               >
-                <SearchBar size="large" handleChange={handleChange} />
+                <SearchBar size="middle" handleChange={handleChange} />
               </Form.Item>
-              <Row>
-                <Col></Col>
-              </Row>
+              <div className="md:flex">
+                <Form.Item
+                  name="address"
+                  className="w-full"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter address line!",
+                    },
+                  ]}
+                >
+                  <Input
+                    className="input"
+                    handleChange={handleChange}
+                    id="address"
+                    label="Address"
+                    name="address"
+                    placeholder="Enter address line"
+                    size="small"
+                    type="text"
+                    value={formValues.address}
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="street"
+                  className="w-full pl-2"
+                  rules={[
+                    {
+                      required: true,
+                      message:"Please Enter street!",
+                    },
+                  ]}
+                >
+                  <Input
+                    className="input"
+                    handleChange={handleChange}
+                    id="street"
+                    label="Street"
+                    name="street"
+                    placeholder="Enter street or location"
+                    size="small"
+                    type="text"
+                    value={formValues.street}
+                  />
+                </Form.Item>
+              </div>
+              <div className="md:flex">
+                <Form.Item
+                  name="town"
+                  className="w-full"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Enter town!",
+                    },
+                  ]}
+                >
+                  <Input
+                    className="input"
+                    handleChange={handleChange}
+                    id="town"
+                    label="Town"
+                    name="town"
+                    placeholder="Enter town "
+                    size="small"
+                    type="text"
+                    value={formValues.town}
+                  />
+                </Form.Item>
+                <div className="w-full mt-1 pl-2">
+                <span className="label">Country<span className="text-[red]"></span></span>
+                
+                  <Select
+                  className="select"
+                  
+                    size="middle"
+                    style={{ width: "100%" }}
+                    placeholder="Select"
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? "").includes(input)
+                    }
+                    options={[
+                      {
+                        value: "1",
+                        label: "Pakistan",
+                      },
+                      {
+                        value: "2",
+                        label: "India",
+                      },
+                      {
+                        value: "3",
+                        label: "France",
+                      },
+                      {
+                        value: "4",
+                        label: "Canada",
+                      },
+                    ]}
+                  />
+                  </div>
+
+               
+              </div>
             </Col>
           </Row>
           <Divider />
+              {/*------------------------ Contact----------------------------- */}
+              <Row className="mt-5">
+            <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
+              <Title className="mt-0.5" level={4}>
+                Contact
+              </Title>
+              <Paragraph>
+                Enter contact information of office location
+              </Paragraph>
+            </Col>
+            <Col className="gutter-row" xs={24} md={12} xxl={8}>
+            <span className="label">Phone Number (optional)<span className="text-[red]"></span></span>
+            <div className="md:flex">
+       
+            <div className=" mt-1 ">
+                  <Select
+                  className="select"
+                  
+                    size="middle"
+                    style={{ width: "100%" }}
+                    placeholder="+92"
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? "").includes(input)
+                    }
+                    options={[
+                      {
+                        value: "1",
+                        label: "+92",
+                      },
+                      {
+                        value: "2",
+                        label: "+09",
+                      },
+                      {
+                        value: "3",
+                        label: "+88",
+                      },
+                      {
+                        value: "4",
+                        label: "+99",
+                      },
+                    ]}
+                  />
+                  </div>
+
+                <Form.Item
+                  name="street"
+                  className="w-full pl-2"
+                  rules={[
+                    {
+                      required: true,
+                      message:"Please Enter street!",
+                    },
+                  ]}
+                >
+                  <Input
+                    className="input"
+                    handleChange={handleChange}
+                    id="phoneNumber"
+                
+                    name="phoneNumber"
+                    placeholder="xxxx xxxxxx"
+                    size="small"
+                    type="text"
+                    value={formValues.phoneNumber}
+                  />
+                </Form.Item>
+              </div>
+              <Form.Item
+                name="email"
+             
+              >
+                <Input
+                  className="input"
+                  handleChange={handleChange}
+                  id="email"
+                  label="Email (option)"
+                  name="email"
+                  placeholder="Enter email"
+                  size="small"
+                  type="text"
+                  value={formValues.email}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider />
+               {/*------------------------ Upload Picture----------------------------- */}
+               <Row className="mt-5">
+            <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
+              <Title className="mt-0.5" level={4}>
+                Upload Picture
+              </Title>
+              <Paragraph>
+                Upload picture for your office location
+              </Paragraph>
+            </Col>
+            <Col className="gutter-row" xs={24} md={12} xxl={8}>
+           <UploadDocument/>
+            </Col>
+          </Row>
+          <Divider />
+             {/*------------------------ Add Interns----------------------------- */}
         </Form>
-        <div className="flex flex-col justify-between">
-              <label>Start Time</label>
-              <TimePicker
-                className="input-style md:w-[220px]"
-                defaultOpenValue={dayjs("00:00", "HH:mm")}
-              />
-            </div>
       </BoxWrapper>
     </div>
   );

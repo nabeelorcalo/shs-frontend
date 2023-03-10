@@ -176,3 +176,4 @@ export { ReactComponent as Settinglocation } from './setting/locationWhiteIcon.s
 export { ReactComponent as LocationImage } from './setting/locationImage.svg';
 export { ReactComponent as LocationMore } from './setting/More.svg';
 export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
+export { ReactComponent as DepartmentAddIcon } from './setting/addDepartment.svg';
