@@ -7,6 +7,8 @@ import { Button, Col, Divider, Row, Typography } from "antd";
 import React, { useState } from "react";
 import { DropDown, SearchBar } from "../../../components";
 import GlobalTable from "../../../components/Table/Table";
+import DetailPage from "./detailPage";
+
 const columns = [
   {
     dataIndex: "no",
@@ -174,7 +176,7 @@ const UniveristyMain = () => {
   const searchValue = () => {};
   return (
     <div className="univeristy-main">
-      <Row>
+      {/* <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
             <Typography className="text-[#363565] text-2xl font-semibold font-[outfit]">
@@ -226,7 +228,8 @@ const UniveristyMain = () => {
             />
           </div>
         </Col>
-      </Row>
+      </Row> */}
+          <DetailPage/>
     </div>
   );
 };
