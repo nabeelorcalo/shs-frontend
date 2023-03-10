@@ -7,13 +7,15 @@ import AssesmentModal from "../../components/AssesmentModal"
 import MyProfileDocUpload from "../../components/MyProfileDocUpload";
 import CreateFolderModal from "../../components/CreateFolderModal";
 import EditGoalTask from "../../components/EditGoalTask";
+import AddRequestMessage from "../../components/AddRequestMessage";
+import SetaGoal from "../../components/SetaGoal";
+import { PopUpModal } from "../../components/Model";
 
 const Calendar = () => {
   const name = "Calvin Grayson"
+
   return (
-
-      <p>Calendar </p>
-
+    <p>Calendar </p>
   )
 }
 

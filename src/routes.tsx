@@ -24,6 +24,8 @@ import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
 import SettingPayroll from "./components/Setting/Payroll/Payroll";
 import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 //
+import DemoCard from "./components/ContractCard/demoCard";
+// 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -67,6 +69,7 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -77,8 +80,9 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
+const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
-// const Location = Loadable(lazy(() => import("./pages/p")));
+const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
@@ -110,12 +114,33 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
+    {
+      key: "candidates",
+    path: `candidates`,
+    element: <Candidates />,
+    
+  },
   // Demo dropdowns
   {
-    key: "dropdowndemo",
-    path: "/demodropdown",
-    element: <DropDownDemo />,
+    key: 'dropdowndemo',
+    path: '/demodropdown',
+    element: <DropDownDemo />
   },
+  {
+    key: 'charts',
+    path: '/charts',
+    element: <Charts />
+  },
+  {
+    key: 'candidates',
+    path: '/candidates',
+    element: <Candidates />
+  },
+  {
+    key: 'card',
+    path: "/democards",
+    element: <DemoCard />
+  }
   // ------Remove till here------
 ];
 
@@ -514,6 +539,11 @@ const internRoutes = [
         element: <Leaves />,
       },
       {
+        key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        element: <ViewHistory/>,
+      },
+      {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
@@ -641,28 +671,28 @@ const studentRoutes = [
         children: [
           {
             key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <AvailableProperties />,
             index: true,
           },
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <Dashboard />,
+            element: <h1>SAVED_SEARCHES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <Dashboard />,
+            element: <h1>RENTED_PROPERTIES</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <Dashboard />,
+            element: <h1>BOOKING_REQUESTS</h1>,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <Dashboard />,
+            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
           },
         ],
       },

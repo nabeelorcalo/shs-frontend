@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Slider } from 'antd';
 import data from './data';
-import { Finance, Relationship, Health, Education, Development, Family, Social, Recreation } from '../../../assets/images';
 import constants from '../../../config/constants';
-import { Col, Row, Slider } from 'antd';
+import { Finance, Relationship, Health, Education, Development, Family, Social, Recreation } from '../../../assets/images';
 
 
 const Graph = ({monthName}: any) => {
-  const assessmentsName = ["Finance", "Relationships", "Health", "Education", "Development", "Family", "Social Life", "Recreation"];
+  const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "Social Life", "Recreation"];
   const filteredArray = data.filter(obj => obj.month === monthName);
 
   const renderIcon = (name: string) => {
     switch (name) {
       case 'Finance':
         return <Finance />;
-      case 'Relationships':
+      case 'Relationship':
         return <Relationship />;
       case 'Health':
         return <Health />;
@@ -32,6 +32,13 @@ const Graph = ({monthName}: any) => {
     }
   }
 
+  const sliderMoved = (data: any, sliderValue: any) => {
+    // it won't show changes in Life Balance graph.
+    // But when we implement recoil then
+    // we'll update the store data value
+    data.value = sliderValue;
+  }
+
   return (
     <>
       {assessmentsName.map((item, index) => (
@@ -46,14 +53,14 @@ const Graph = ({monthName}: any) => {
 
           <div className='flex-initial w-full'>
             <Slider
-              disabled
               min={1}
               max={5}
-              defaultValue={filteredArray[index].value}
               tooltip={{
                 open: true,
                 formatter: (value: any) => `0${value}`,
               }}
+              onAfterChange = {(val) => sliderMoved(filteredArray[index], val)}
+              defaultValue={filteredArray[index].value}
               trackStyle={{ background: 'transparent' }}
               className="life-assessment-slider"
             />
