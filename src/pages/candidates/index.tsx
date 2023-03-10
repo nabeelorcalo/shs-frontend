@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import { ContractCard, DropDown, SearchBar } from "../../components";
 import "./style.scss";
 import Table from "../../components/Noman/Table";
+import GlobalTable from "../../components/Table/Table";
+import CandidateTable from "./candidateTable";
 const Candidates = () => {
   return (
     <>
@@ -18,8 +20,8 @@ const Candidates = () => {
           <DropDown options={["pdf", "excel"]} requiredDownloadIcon />
         </Col>
       </Row>
-      <Table />
-     
+      <CandidateTable />
+
     </>
   )
 }
