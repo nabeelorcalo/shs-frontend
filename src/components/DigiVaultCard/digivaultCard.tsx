@@ -1,23 +1,30 @@
 // import { Education1Icon, EducationIcon } from '../../assets/images';
-import {BoxWrapper} from '../BoxWrapper/boxWrapper';
-import './style.scss';
-import Education from '../../assets/images/digivault/education.png'
-import Education1 from '../../assets/images/digivault/education1.png'
+import { BoxWrapper } from "../BoxWrapper/boxWrapper";
+import "./style.scss";
+import Education from "../../assets/images/digivault/education.png";
+import Education1 from "../../assets/images/digivault/education1.png";
 
-const DigivaultCard = () => {
-    return (
-        <BoxWrapper className='digivault-wrapper'>
-            <div className='upper-part'>
-                <div className='bgImg'>
-                   {/* <EducationIcon  /> */}
-                   <img src={Education} alt="icon" />
-                </div>
-                <img src={Education1} alt='icon' />
-            </div>
-            <h4>Education</h4>
-            <h6>Manage your educational documents</h6>
-        </BoxWrapper>
-    )
-}
+const DigivaultCard = (props: any) => {
+  const { onClick, TitleImg, SubImg, title, subTitle, bgColor, index } = props;
 
-export default DigivaultCard
+  console.log(bgColor);
+
+  return (
+    <div onClick={onClick}>
+      <BoxWrapper className={`hover-effect-${index}  digivault-wrapper`}>
+        <div className={`upper-part`}>
+          <div className="bgImg">
+            {/* <EducationIcon  /> */}
+            <TitleImg color={"red"} fill={"red"} />
+          </div>
+          {title === "Others" ? "" : <SubImg />}
+        </div>
+        <h4>{title}</h4>
+
+        <h6>{subTitle}</h6>
+      </BoxWrapper>
+    </div>
+  );
+};
+
+export default DigivaultCard;

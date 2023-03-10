@@ -1,0 +1,33 @@
+@import '../../scss/_colors.scss';
+
+.assessment-card-wrapper {
+    margin: 0;
+
+    .title,
+    .userName {
+        color: $text-primary-title-color;
+    }
+
+    .month-year {
+        color: $text-secondary-body-color;
+    }
+}
+
+.assessment-card-dropdown {
+    background: $white-bg-color;
+    border: 2px solid $text-error-line-color;
+    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
+    border-radius: 8px;
+
+    .ant-dropdown-menu {
+        padding: 20px;
+
+        .ant-dropdown-menu-item {
+            padding: 0;
+        }
+
+        .ant-dropdown-menu-item-active:hover {
+            background-color: transparent;
+        }
+    }
+}
