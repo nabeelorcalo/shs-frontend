@@ -84,7 +84,7 @@ const SettingLocation: React.FC = () => {
                     </div>
 
                     <span className="float-right cursor-pointer">
-                      <Dropdown overlay={menu} placement="bottomRight">
+                      <Dropdown overlay={menu}  trigger={["click"]} placement="bottomRight">
                         <LocationMore />
                       </Dropdown>
                     </span>
