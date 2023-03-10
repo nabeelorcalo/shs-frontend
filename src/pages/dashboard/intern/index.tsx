@@ -2,9 +2,35 @@ import { useState } from "react";
 import { Col, Row } from 'antd';
 import PageHeader from '../../../components/PageHeader';
 import TimeTracking from "../../../components/timeTRacking";
+import EmojiMoodRating from "../../../components/EmojiMoodRating";
+import TodayWeather from "../../../components/todayWeather";
+import { Terrible, Sad, Neutral, Happy, Awesome } from '../../../assets/images';
 import "../style.scss";
 
 const Intern = () => {
+  const emojiData = [
+    {
+      name: "Terrible",
+      comp: Terrible
+    },
+    {
+      name: "Sad",
+      comp: Sad
+    },
+    {
+      name: "Neutral",
+      comp: Neutral
+    },
+    {
+      name: "Happy",
+      comp: Happy
+    },
+    {
+      name: "Awesome",
+      comp: Awesome
+    }
+  ];
+
   return (
     <>
       <PageHeader
@@ -19,15 +45,18 @@ const Intern = () => {
       />
 
       <Row>
-        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+        <Col xs={24} sm={24} md={8} lg={8} xl={8} className='pr-4'>
           <TimeTracking />
         </Col>
-        {/* <Col xs={12} sm={16} md={12} lg={8} xl={4}>
-          Col
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} className='pr-4'>
+          <EmojiMoodRating
+            title='How are you feeling today?'
+            data={emojiData}
+          />
         </Col>
-        <Col xs={12} sm={4} md={6} lg={8} xl={10}>
-          Col
-        </Col> */}
+        <Col xs={24} sm={24} md={4} lg={4} xl={4} className=''>
+          <TodayWeather />
+        </Col>
       </Row>
     </>
   )

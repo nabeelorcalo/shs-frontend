@@ -1,0 +1,30 @@
+.top-section{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.top-section-col{
+    flex: 0 0 auto;
+    max-width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.top-section-col.timeTracking{
+    width: 30%;
+}
+
+.top-section-col.smiley{
+    width: 50%;
+}
+
+.top-section-col.weather{
+    width: 20%;
+}
+
+.today-weather-container{
+    background: linear-gradient(55.14deg, #61AACF 0%, #1C8DB4 98.62%);
+    color: white;
+}
