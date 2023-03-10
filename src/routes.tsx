@@ -33,6 +33,7 @@ import ActivityData from "./pages/propertyAgent/propertDahboard/Dashboard/activi
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 //
 import DemoCard from "./components/ContractCard/demoCard";
+import AddManager from "./pages/managers/managerMain/addManager";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -438,6 +439,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.MANAGERS}`,
         path: `${ROUTES_CONSTANTS.MANAGERS}`,
         element: <Managers />,
+      },
+      {
+        key: `addManager`,
+        path: `addManager`,
+        element: <AddManager />,
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
