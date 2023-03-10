@@ -15,7 +15,7 @@ const DigivaultCard = (props: any) => {
         <div className={`upper-part`}>
           <div className="bgImg">
             {/* <EducationIcon  /> */}
-            <TitleImg color={"red"} fill={"red"} />
+            <TitleImg />
           </div>
           {title === "Others" ? "" : <SubImg />}
         </div>

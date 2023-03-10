@@ -1,11 +1,9 @@
-
 @import "../../scss/colors.scss";
-.colorfull-icon-progress-bar{
-    .content-title{
-        color: $text-secondary-body-color
-    }
-    .storage-value{
-        color: $text-success-placeholder-color
-
-    }
+.colorfull-icon-progress-bar {
+  .content-title {
+    color: $text-secondary-body-color;
+  }
+  .storage-value {
+    color: $text-success-placeholder-color;
+  }
 }
