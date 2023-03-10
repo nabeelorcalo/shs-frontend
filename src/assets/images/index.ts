@@ -151,3 +151,7 @@ export { default as UserAvatar } from './user-avatar.png';
 export { ReactComponent as IconFilters } from "../images/icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "../images/icon-filters-angle.svg";
 export { ReactComponent as IconCloseCircle } from "../images/icon-close-circle.svg";
+
+// certificate icons
+export { ReactComponent as IssueCertificateIcon } from "../images/issue-certificate-icon.svg";
+
