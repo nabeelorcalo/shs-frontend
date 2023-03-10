@@ -1,9 +1,11 @@
 .time-tracking {
-  width: 300px;
   box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
   border-radius: 16px;
 
   .time-clock-in {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     -webkit-animation: glowing 0.4s ease-in-out infinite alternate;
     -moz-animation: glowing 0.4s ease-in-out infinite alternate;
     animation: glowing 0.4s ease-in-out infinite alternate;
@@ -17,6 +19,9 @@
     }
   }
   .time-clock-out {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     -webkit-animation: glowing1 0.4s ease-in-out infinite alternate;
     -moz-animation: glowing1 0.4s ease-in-out infinite alternate;
     animation: glowing1 0.4s ease-in-out infinite alternate;
@@ -32,10 +37,12 @@
 }
 
 .timeTrackig-horizontal {
-  width: 462px;
   box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
   border-radius: 16px;
   .time-clock-in {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     -webkit-animation: glowing 0.4s ease-in-out infinite alternate;
     -moz-animation: glowing 0.4s ease-in-out infinite alternate;
     animation: glowing 0.4s ease-in-out infinite alternate;
@@ -49,6 +56,9 @@
     }
   }
   .time-clock-out {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     -webkit-animation: glowing1 0.4s ease-in-out infinite alternate;
     -moz-animation: glowing1 0.4s ease-in-out infinite alternate;
     animation: glowing1 0.4s ease-in-out infinite alternate;
@@ -66,4 +76,5 @@
 .clock-time-main-horizontal {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }

@@ -18,6 +18,7 @@
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/interaction": "^6.1.4",
     "@fullcalendar/react": "^6.1.4",
+    "@types/react-video-recorder": "^3.19.0",
     "antd": "^5.2.2",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.7",
@@ -25,6 +26,7 @@
     "echarts-for-react": "^3.0.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^1.0.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
@@ -32,6 +34,7 @@
     "react-organizational-chart": "^2.2.0",
     "react-router-dom": "^6.8.2",
     "react-signature-canvas": "^1.0.6",
+    "react-video-recorder": "^3.19.4",
     "storybook": "^6.5.16",
     "vite-plugin-svgr": "^2.4.0"
   },

@@ -11,6 +11,8 @@ import constants from '../../config/constants';
 // import "./style.scss"
 // import BoxWrapper from '../BoxWrapper/BoxWrapper';
 
+
+
 const Graph = (props: any) => {
   return (
     <div className='p-4'>

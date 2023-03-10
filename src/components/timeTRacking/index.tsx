@@ -1,6 +1,6 @@
-import { Card } from "antd";
+import { Card, Row, Col } from "antd";
 import React, { useRef, useState } from "react";
-import "./TimeTracking.scss";
+import "./style.scss";
 import dayjs from "dayjs";
 
 const TimeTracking = (props: any) => {
@@ -49,8 +49,8 @@ const TimeTracking = (props: any) => {
       bordered={false}
     >
       <div className="time-tracking-body">
-        <div className="time-title">
-          <p className="font-medium text-lg" style={{ color: "#4E4B66" }}>
+        <div className={vartical ? "time-title" : "text-center sm:text-start"}>
+          <p className="font-medium text-lg text-[#4E4B66] mb-4">
             Time Tracking
           </p>
         </div>
@@ -68,22 +68,15 @@ const TimeTracking = (props: any) => {
             {!isRunning ? (
               <div
                 onClick={handleStart}
-                className="time-clock-in flex justify-center items-center cursor-pointer"
-                style={{
-                  background: "#66AC8B",
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "50%",
-                }}
+                className="time-clock-in flex justify-center items-center cursor-pointer bg-[#66AC8B]"
               >
                 <p className="font-medium text-base text-white"> Clock in</p>
               </div>
             ) : (
               <div
                 onClick={handleStop}
-                className="time-clock-out flex justify-center items-center cursor-pointer"
+                className="time-clock-out flex justify-center items-center cursor-pointer bg-[#E94E5D]"
                 style={{
-                  background: "#E94E5D",
                   width: "100px",
                   height: "100px",
                   borderRadius: "50%",
@@ -93,13 +86,13 @@ const TimeTracking = (props: any) => {
               </div>
             )}
           </div>
+
           <div
             className={
               vartical
                 ? "time font-medium text-4xl text-center mt-4"
-                : "time font-medium text-4xl text-center"
+                : "time font-medium text-4xl text-center text-[#4E4B66] mt-4 md:mt-0"
             }
-            style={{ color: "#4E4B66" }}
           >
             {formatTime(time)}
           </div>
@@ -109,7 +102,7 @@ const TimeTracking = (props: any) => {
           className={
             vartical
               ? "date text-sm font-medium text-center mt-4"
-              : "date text-sm font-medium text-end mt-4"
+              : "date text-sm font-medium sm:text-end text-center mt-2 sm:mt-0"
           }
         >
           {formattedDate}
@@ -117,39 +110,31 @@ const TimeTracking = (props: any) => {
 
         {vartical ? (
           <div
-            className="mt-4 p-4"
-            style={{ background: "#E6F4F9", borderRadius: "10px" }}
+            className="mt-4 p-4 bg-[#E6F4F9]"
+            style={{ borderRadius: "10px" }}
           >
             <div className="flex justify-between">
-              <div className="font-medium text-sm" style={{ color: "#A0A3BD" }}>
-                Clock In
-              </div>
-              <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
+              <div className="font-medium text-sm text-[#A0A3BD]">Clock In</div>
+              <div className="font-medium text-sm text-[#4E4B66]">
                 {clockInTime}
               </div>
             </div>
 
             <div className="flex justify-between mt-4">
-              <div
-                className="font-medium text-sm text-white"
-                style={{ color: "#A0A3BD" }}
-              >
+              <div className="font-medium text-sm  text-[#4E4B66]">
                 Clock Out
               </div>
-              <div className="font-medium text-sm" style={{ color: "#4E4B66" }}>
+              <div className="font-medium text-sm text-[#4E4B66]">
                 {clockOutTime}
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex justify-end mt-4">
-            <div
-              className="font-medium text-sm mr-4"
-              style={{ color: "#4E4B66" }}
-            >
+          <div className="flex justify-center sm:justify-end mt-4">
+            <div className="font-medium text-sm mr-4 text-[#4E4B66]">
               {clockInTime}
             </div>
-            <div className="font-medium text-sm " style={{ color: "#4E4B66" }}>
+            <div className="font-medium text-sm text-[#4E4B66]">
               {clockOutTime}
             </div>
           </div>
