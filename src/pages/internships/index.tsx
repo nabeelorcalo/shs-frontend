@@ -10,7 +10,7 @@ import { Alert } from "../../components";
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
 const Internships = () => {
-
+  const [value, setValue] = useState("")
   const columns = [
     {
       dataIndex: 'no',
@@ -85,10 +85,27 @@ const Internships = () => {
 
   const emojiData = [
     {
-
+      name: "Terrible",
       comp: Terrible
+    },
+    {
+      name: "Sad",
+      comp: Sad
+    },
+    {
+      name: "Neutral",
+      comp: Neutral
+    },
+    {
+      name: "Happy",
+      comp: Happy
+    },
+    {
+      name: "Awesome",
+      comp: Awesome
     }
   ]
+  console.log(value)
   return (
     <>
       <PageHeader title="Internships" />
@@ -129,7 +146,7 @@ const Internships = () => {
         <Alert showHide={true} type="warning" okBtntxt="OK" cancelBtntxt="Cancel">
           <p>This is a placeholer text just to show the default size and weight for body text typography in a popup.</p>
         </Alert>
-        <EmojiMoodRating data={emojiData} />
+        <EmojiMoodRating title='Emoji Icon for mood' data={emojiData} setState={setValue} />
       </div>
 
 

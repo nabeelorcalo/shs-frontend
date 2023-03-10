@@ -20,7 +20,7 @@ const EmojiMoodRating = ({ title, data }) => {
                                 <div  className='text-[#363565]'>
                                     <div key={idx} className='flex flex-col gap-2 items-center' onClick={()=>console.log(item.name)}>
                                         {<item.comp className='svgIcon'/>}
-                                        <p>{item.name}</p>
+                                        <p className='name-font-size'>{item.name}</p>
                                     </div>
                                 </div>
                             )

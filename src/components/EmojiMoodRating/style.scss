@@ -7,3 +7,9 @@
     padding: 0px;
 
 }
+.name-font-size {
+    font-size: 12px ;
+    @screen sm {
+        font-size: 16px ;
+    }
+}
