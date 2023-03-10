@@ -1,5 +1,5 @@
 import { Col, Rate, Row, Typography } from "antd";
-import BoxWrapper from "../BoxWrapper/BoxWrapper";
+import {BoxWrapper} from "../BoxWrapper/boxWrapper";
 import { Button } from "../Button";
 const { Paragraph } = Typography;
 import "./RecipeCard.scss";
@@ -18,7 +18,7 @@ export const RecipeCard = (props: any) => {
   const { arraydata } = props;
   return (
     <div className="recipe-card">
-      <Row>
+      <Row gutter={[10,10]}>
         {arraydata.map((item: RecipeCardProps, index: any) => {
           return (
 

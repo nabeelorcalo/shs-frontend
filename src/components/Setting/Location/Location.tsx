@@ -10,7 +10,7 @@ import {
 } from "../../../assets/images";
 // import { Button } from "../../Button";
 import { SearchBar } from "../../SearchBar/SearchBar";
-import BoxWrapper from "../../BoxWrapper/BoxWrapper";
+import {BoxWrapper }from "../../BoxWrapper/boxWrapper";
 import cardImage from "../../../assets/images/setting/locationImage.svg";
 import { DropDown } from "../../Dropdown/DropDown";
 import { Button } from "../../Button";
@@ -64,7 +64,7 @@ const SettingLocation: React.FC = () => {
           />
         </NavLink>
       </div>
-      <Row className="mt-5">
+      <Row gutter={[10, 10]} className="mt-5">
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
