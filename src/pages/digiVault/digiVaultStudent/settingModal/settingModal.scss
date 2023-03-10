@@ -1,0 +1,78 @@
+.setting-modal {
+  
+  .modal-header {
+    .modal-title {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      color: #14142a;
+    }
+
+    .modal-close {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0a3bd;
+      color: white;
+      padding-bottom: 3px;
+    }
+  }
+  .sub-title-modal {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #363565;
+  }
+
+  .modal-p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4e4b66;
+  }
+
+  .ant-switch {
+    height: 12px !important;
+    min-width: 40px;
+
+    .ant-switch-handle {
+      top: -4px;
+    }
+  }
+
+  .modal-body {
+    .ant-slider-horizontal .ant-slider-track {
+      width: 220px;
+      height: 10px;
+      background: #363565;
+      border-radius: 8px;
+    }
+    .ant-slider-horizontal .ant-slider-rail {
+      height: 10px !important;
+      background: #e6f4f9 !important;
+      border-radius: 8px;
+    }
+    .ant-slider .ant-slider-handle {
+      width: 22px;
+      height: 22px;
+      color: #363565;
+    }
+    .ant-slider-handle::after {
+      color: #363565;
+      width: 22px;
+      height: 22px;
+     
+      background-color: #363565;
+      box-shadow: none;
+    }
+  }
+
+  .modal-reset-pass {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: #363565;
+    cursor: pointer;
+  }
+}

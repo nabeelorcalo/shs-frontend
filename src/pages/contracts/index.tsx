@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import ContractsStudent from "./contractsStudent/contractsStudent";
 import "./style.scss";
 
 const Contracts = () => {
   return (
-    <p>Contracts</p>
-  )
-}
+    <div>
+      <ContractsStudent />
+    </div>
+  );
+};
 
-export default Contracts
+export default Contracts;
