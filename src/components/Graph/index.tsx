@@ -3,7 +3,8 @@ import GraphOne from './graphForRegisteredMembersAndFeedback';
 import GraphTwo from './graphForAttendanceAndListings';
 import GraphThree from './graphForRegisterAgentsAndRewards';
 import GraphFour from './graphForGrowthAnalytics';
-import GraphFive from './graphForLifeAssessment';
+import GraphFive from './graphForLifeAssessmentAndLifeBalance/lifeAssessment';
+import GraphSix from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
 import constants from '../../config/constants';
 import {BoxWrapper} from '../../components/BoxWrapper/boxWrapper';
 import "./style.scss"
@@ -15,42 +16,46 @@ const Graph = (props: any) => {
     <div className='p-4'>
 
       <BoxWrapper >
+        <GraphSix monthName="Jan" />
+      </BoxWrapper>
+
+      <BoxWrapper >
         <GraphFive monthName="Jan" />
       </BoxWrapper>
 
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphFour />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Register Member Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphOne graphName={constants.REGISTER_MEMBERS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Feedback Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphOne graphName={constants.FEEDBACk} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Attendance Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphTwo graphName={constants.ATTENDANCE} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Listings Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphTwo graphName={constants.LISTINGS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Register Agents Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphThree graphName={constants.REGISTER_AGENTS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Rewards Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphThree graphName={constants.REWARDS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
     </div>
   );
 };

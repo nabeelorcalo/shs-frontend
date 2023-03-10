@@ -16,9 +16,12 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 
 // Remove it
 // dummy components
-import Graph from './components/Graph';
+import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import PropertyDetail from './pages/propertyAgent/propertDahboard/Dashboard/propertyDetail';
+import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+//
+import DemoCard from "./components/ContractCard/demoCard";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -63,6 +66,7 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -107,6 +111,12 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
+    {
+      key: "candidates",
+    path: `candidates`,
+    element: <Candidates />,
+    
+  },
   // Demo dropdowns
   {
     key: 'dropdowndemo',
@@ -118,6 +128,16 @@ export const publicRoutes = [
     path: '/charts',
     element: <Charts />
   },
+  {
+    key: 'candidates',
+    path: '/candidates',
+    element: <Candidates />
+  },
+  {
+    key: 'card',
+    path: "/democards",
+    element: <DemoCard />
+  }
   // ------Remove till here------
   {
     key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
@@ -486,8 +506,6 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
-  
-      
       },
       {
         key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
@@ -544,7 +562,6 @@ const internRoutes = [
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
       },
-
     ],
   },
   {
@@ -606,6 +623,11 @@ const studentRoutes = [
         element: <DigiVault />,
       },
       {
+        key: `manageVault`,
+        path: `digivault/:id`,
+        element: <ManageVault />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
         path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
@@ -623,7 +645,7 @@ const studentRoutes = [
         children: [
           {
             key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
-            element: <h1>Available Properties</h1>,
+            element: <AvailableProperties />,
             index: true,
           },
           {
@@ -646,7 +668,7 @@ const studentRoutes = [
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             element: <h1>ACCOMMODATION_PAYMENTS</h1>,
           },
-        ]
+        ],
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

@@ -7,7 +7,8 @@ import ContentMenu from "../../components/ContentMenu";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
-import { Form, Input, Button, Slider } from 'antd'
+import { Form, Input,  Select, Slider, Space } from 'antd'
+import ExtendedButton from '../../components/ExtendedButton'
 
 
 const Accommodation = () => {
@@ -63,6 +64,7 @@ const Accommodation = () => {
       <div className="page-content">
         <PageHeader
           title="Accommodation"
+          bordered
         />
         <div className="page-filterbar">
           <div className="page-filterbar-left">
@@ -85,6 +87,7 @@ const Accommodation = () => {
           <Outlet />
       </div>
 
+      {/* Available Properties Drawer */}
       <Drawer
         title="Filters"
         open={drawerOpen}
@@ -114,7 +117,46 @@ const Accommodation = () => {
                 <Form.Item name="moveOutDate" label="Move Out Date">
                   
                 </Form.Item>
+
+                <Form.Item label="Username" name="username">
+                  <Input placeholder="User anme" />
+                </Form.Item>
+
+                <Form.Item name="offer" label="Offer">
+                  <Select placeholder="Select">
+                    <Select.Option value="discounts">Discounts</Select.Option>
+                    <Select.Option value="noDeposit">No Deposit</Select.Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item name="accomodationType" label="Accomodation Type">
+                  <Select placeholder="Select">
+                    <Select.Option value="privateRoom">Private Room</Select.Option>
+                    <Select.Option value="sharedRoom">Shared Room</Select.Option>
+                    <Select.Option value="apartment">Apartment</Select.Option>
+                    <Select.Option value="studio">Studio</Select.Option>
+                  </Select>
+                </Form.Item>
+
+                <Form.Item name="facilities" label="Facilities">
+                  <Select placeholder="Select">
+                    <Select.Option value="bills">Bills</Select.Option>
+                    <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                    <Select.Option value="laundary">Laundary</Select.Option>
+                    <Select.Option value="meals">Meals</Select.Option>
+                  </Select>
+                </Form.Item>
             </div>
+            <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
+              <Space align="end" size={20}>
+                <ExtendedButton customType="tertiary" ghost>
+                  Reset
+                </ExtendedButton>
+                <ExtendedButton customType="tertiary" htmlType="submit">
+                  Apply
+                </ExtendedButton>
+              </Space>
+            </Form.Item> 
           </Form>
         </div>
       </Drawer>
