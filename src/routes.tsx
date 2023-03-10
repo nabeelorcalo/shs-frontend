@@ -81,7 +81,7 @@ const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSea
 const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
 const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
 const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
-const PropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
+const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -746,7 +746,7 @@ const studentRoutes = [
       {
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
-        element: <PropertyDetail />,
+        element: <AccPropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

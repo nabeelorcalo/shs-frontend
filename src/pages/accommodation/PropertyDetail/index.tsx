@@ -21,7 +21,7 @@ const images = [
   },
 ];
 
-const PropertyDetail = () => {
+const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
@@ -60,4 +60,4 @@ const PropertyDetail = () => {
   )
 }
 
-export default PropertyDetail
+export default AccPropertyDetail
