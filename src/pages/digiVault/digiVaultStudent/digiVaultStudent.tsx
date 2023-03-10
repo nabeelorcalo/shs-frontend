@@ -41,6 +41,7 @@ import {
   Other,
 } from "../../../assets/images";
 import CustomDroupDown from "./droupDownCustom/CustomDroupDown";
+import { Alert } from "../../../components";
 
 const manageVaultArr = [
   {
@@ -166,6 +167,7 @@ const DigiVaultStudent = () => {
   });
   const [newPass, setNewPass] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
 
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
@@ -174,7 +176,14 @@ const DigiVaultStudent = () => {
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
-      <Menu.Item key="2">Delete</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
     </Menu>
   );
 
@@ -208,6 +217,15 @@ const DigiVaultStudent = () => {
 
   return (
     <div className="digivault">
+      <Alert
+        open={showDelete}
+        setOpen={setShowDelete}
+        type="error"
+        okBtntxt="Delete"
+        cancelBtntxt="Cancel"
+      >
+        <p>Are you sure you want to delete this?</p>
+      </Alert>
       <NewPasswordModal
         newPass={newPass}
         setNewPass={setNewPass}
@@ -245,14 +263,11 @@ const DigiVaultStudent = () => {
 
       <Row gutter={[20, 10]} className="">
         <Col xxl={18} xl={16} lg={16} md={24} sm={24} xs={24}>
-          <div className="manage-vault">
-            <div
-              style={{ color: "#363565" }}
-              className="text-2xl font-semibold"
-            >
+          <div className="manage-vault ">
+            <div className="text-2xl font-semibold text-[#363565]">
               Manage your vault
             </div>
-            <Row gutter={[8, 20]} className="p-2">
+            <Row gutter={[20, 25]} className="p-2">
               {manageVaultArr.map((item, index) => {
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -299,7 +314,7 @@ const DigiVaultStudent = () => {
               </Col>
             </Row>
 
-            <div className="pt-8">
+            <div className="pt-2">
               <ColorfullIconsWithProgressbar arraydata={arraydata} />
             </div>
           </div>
@@ -322,6 +337,7 @@ const DigiVaultStudent = () => {
           </div>
         </Col>
       </Row>
+      {/* <EducationImg  filter="red" /> */}
     </div>
   );
 };

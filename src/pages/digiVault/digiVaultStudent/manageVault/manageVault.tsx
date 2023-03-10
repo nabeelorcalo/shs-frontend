@@ -10,7 +10,7 @@ import {
   Space,
 } from "antd";
 import React, { useState } from "react";
-import { SearchBar, Input } from "../../../../components";
+import { SearchBar, Input, Alert } from "../../../../components";
 import "./manageVault.scss";
 import File from "../../../../assets/images/ColorfullIconsProgressbar/Upload.png";
 import GlobalTable from "../../../../components/Table/Table";
@@ -52,6 +52,7 @@ const ManageVault = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [upLoadFile, setUpLoadFile] = useState(false);
   const [upLoadFolder, setUpLoadFolder] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   const [toggleOperation, setToggleOperation] = useState({
     isOpen: true,
     id: "",
@@ -80,7 +81,7 @@ const ManageVault = (props: any) => {
       key: "Action",
       render: (_: any, data: any) => (
         <Space size="middle">
-          <CustomDroupDown menu1={menu1} />
+          <CustomDroupDown menu1={menu2} />
         </Space>
       ),
     },
@@ -117,6 +118,20 @@ const ManageVault = (props: any) => {
     </Menu>
   );
 
+  const menu2 = (
+    <Menu>
+      <Menu.Item key="1">View</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+
   const router = useNavigate();
   const location = useLocation();
 
@@ -124,6 +139,15 @@ const ManageVault = (props: any) => {
 
   return (
     <div className="manage-vault-main">
+      <Alert
+        open={showDelete}
+        setOpen={setShowDelete}
+        type="error"
+        okBtntxt="Delete"
+        cancelBtntxt="Cancel"
+      >
+        <p>Are you sure you want to delete this?</p>{" "}
+      </Alert>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">

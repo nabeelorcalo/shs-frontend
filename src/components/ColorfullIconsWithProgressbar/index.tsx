@@ -18,7 +18,7 @@ export const ColorfullIconsWithProgressbar = (props: any) => {
         return (
           <div
             key={index}
-            className="flex colorfull-icon-progress-bar w-full py-2"
+            className="flex colorfull-icon-progress-bar w-full py-0.5"
           >
             <img src={item.icon} width="40px" />
             <div className="w-full pl-3 ">
