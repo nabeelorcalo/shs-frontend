@@ -163,7 +163,27 @@ export { ReactComponent as AssessmentSubmitted } from './assessment-submitted.sv
 export { ReactComponent as AssessmentAproved } from './assessment-approved.svg';
 export { ReactComponent as AssessmentRejected } from './assessment-rejected.svg';
 export { default as UserAvatar } from './user-avatar.png';
+
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "../images/icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "../images/icon-filters-angle.svg";
 export { ReactComponent as IconCloseCircle } from "../images/icon-close-circle.svg";
+export { ReactComponent as StructureCompanyAdminAvater } from './structure/avatar-img.svg';
+export { ReactComponent as StructureCompanyAdminDownward} from './structure/downward.svg';
+export { ReactComponent as StructureCompanyAdminProfile2user } from './structure/profile-2user.svg';
+export { ReactComponent as StructureMinus} from './structure/minus.svg';
+export { ReactComponent as StructureAdd } from './structure/add.svg';
+
+//setting
+export { ReactComponent as SettingMap } from './setting/map.svg';
+export { ReactComponent as SettingPeople } from './setting/people.svg';
+export { ReactComponent as SettingCalendarRemove } from './setting/calendar-remove.svg';
+export { ReactComponent as SettingChart } from './setting/chart.svg';
+export { ReactComponent as SettingDocument } from './setting/document.svg';
+export { ReactComponent as SettingShifts } from './setting/Shifts.svg';
+export { ReactComponent as SettingTimer } from './setting/timer.svg';
+export { ReactComponent as SettingHorizontalLine } from './setting/horizontal-line.svg';
+export { ReactComponent as Settinglocation } from './setting/locationWhiteIcon.svg';
+export { ReactComponent as LocationImage } from './setting/locationImage.svg';
+export { ReactComponent as LocationMore } from './setting/More.svg';
+export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';

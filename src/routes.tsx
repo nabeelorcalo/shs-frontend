@@ -18,6 +18,16 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+//Setting Child Component
+import SettingPerformance from "./components/Setting/Performance/Performance";
+import SettingDepartment from "./components/Setting/Department/Department";
+import SettingLeaves from "./components/Setting/Leaves/Leaves";
+import SettingLocation from "./components/Setting/Location/Location";
+import SettingTemplate from "./components/Setting/Templates/Templates";
+import SettingShifts from "./components/Setting/Shifts/Shifts";
+import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
+import SettingPayroll from "./components/Setting/Payroll/Payroll";
+import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 import PropertyDetail from './pages/propertyAgent/propertDahboard/Dashboard/propertyDetail';
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 //
@@ -450,7 +460,65 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,
         path: `${ROUTES_CONSTANTS.SETTING}`,
-        element: <Setting />,
+        // element: <Setting />,
+        children: [
+          {
+            key: `location`,
+            element:  <Setting title="Location" ><SettingLocation /> </Setting>,
+            path: "location",
+            index: true,
+
+            // children: [
+            //   {
+            //     key: `addLocation`,
+            //     element:  <AddLocation />,
+            //     path: "addLocation",
+            //     index: true,
+            //   },
+            // ]
+          },
+          {
+            key: `add-location`,
+            element: <AddLocation/>,
+            path: "add-location",
+          },
+          
+          {
+            key: `department`,
+            element: <Setting title="Department" ><SettingDepartment/> </Setting>,
+            path: "department",
+          },
+          {
+            key: `leaves`,
+            element:<Setting title="Leaves" ><SettingLeaves/></Setting> ,
+            path: "leaves",
+          },
+          {
+            key: `performance`,
+            path: `performance`,
+          element:<Setting title="Performance" ><SettingPerformance/></Setting>  ,
+          },
+          {
+            key: `template`,
+            path: `template`,
+            element: <Setting title="Template" > <SettingTemplate /></Setting>,
+          },
+          {
+            key: `shifts`,
+            path: `shifts`,
+            element: <Setting title="Shifts" > <SettingShifts /></Setting>,
+          },
+          {
+            key: `timesheet`,
+            path: `timesheet`,
+            element: <Setting title="Timesheet" > <SettingTimesheet /></Setting>,
+          },
+          {
+            key: `payroll`,
+            path: `payroll`,
+            element:<Setting title="Payroll" >  <SettingPayroll /></Setting>,
+          },
+        ],
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
