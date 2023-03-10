@@ -1,5 +1,15 @@
 import { DownCircleOutlined, SettingFilled } from "@ant-design/icons";
-import { Button, Col, Divider, Progress, Row, Space, Switch } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Progress,
+  Row,
+  Space,
+  Switch,
+  Dropdown,
+  Menu,
+} from "antd";
 import React, { useState, useEffect } from "react";
 import AppTabs from "../../../components/Tabs";
 import "./digiVaultStudent.scss";
@@ -30,6 +40,7 @@ import {
   GovImgSub,
   Other,
 } from "../../../assets/images";
+import CustomDroupDown from "./droupDownCustom/CustomDroupDown";
 
 const manageVaultArr = [
   {
@@ -154,6 +165,18 @@ const DigiVaultStudent = () => {
     id: "",
   });
   const [newPass, setNewPass] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  const handleVisibleChange = (visible: any) => {
+    setVisible(visible);
+  };
+
+  const menu1 = (
+    <Menu>
+      <Menu.Item key="1">View</Menu.Item>
+      <Menu.Item key="2">Delete</Menu.Item>
+    </Menu>
+  );
 
   const navigate = useNavigate();
 
@@ -178,49 +201,8 @@ const DigiVaultStudent = () => {
     {
       title: "Action",
       key: "Action",
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <div
-            onClick={() => {
-              setToggleOperation({ isOpen: true, id: data.key });
-            }}
-            style={{ cursor: "pointer" }}
-          >
-            <img src={More} alt="threedots" />
-          </div>
-
-          {toggleOperation.isOpen && toggleOperation.id === data.key && (
-            <div className="table-droupdown z-10">
-              <p
-                onClick={() => {
-                  setToggleOperation({
-                    isOpen: false,
-                    id: data.key,
-                  });
-                }}
-                style={{
-                  cursor: "pointer",
-                  textAlign: "left",
-                  paddingBottom: "15px",
-                }}
-              >
-                View
-              </p>
-              <p
-                onClick={() => {
-                  setToggleOperation({
-                    isOpen: false,
-                    id: data.key,
-                  });
-                }}
-                style={{ cursor: "pointer", textAlign: "left" }}
-              >
-                Delete
-              </p>
-            </div>
-          )}
-        </Space>
-      ),
+      dataIndex: "Action",
+      render: (_: any, data: any) => <CustomDroupDown menu1={menu1} />,
     },
   ];
 
@@ -261,7 +243,7 @@ const DigiVaultStudent = () => {
       </Row>
       <Divider />
 
-      <Row gutter={[20,10]} className="">
+      <Row gutter={[20, 10]} className="">
         <Col xxl={18} xl={16} lg={16} md={24} sm={24} xs={24}>
           <div className="manage-vault">
             <div
@@ -293,7 +275,7 @@ const DigiVaultStudent = () => {
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
             <Row gutter={4} className="storage-bar-header">
-              <Col xxl={8} xl={10} lg={24} md={8} sm={8} xs={24}>
+              <Col xxl={10} xl={10} lg={24} md={8} sm={8} xs={24}>
                 <Progress
                   strokeWidth={12}
                   strokeColor={"#5D89F4"}

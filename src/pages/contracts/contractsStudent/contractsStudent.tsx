@@ -46,23 +46,6 @@ const contractSigned = [
   },
 ];
 
-const contractStatus = [
-  {
-    id: "1",
-    color: "#FFC15E",
-    status: "Received",
-  },
-  {
-    id: "2",
-    color: "#E94E5D",
-    status: "Rejected",
-  },
-  {
-    id: "3",
-    color: "#4A9D77",
-    status: "Signed",
-  },
-];
 
 const ContractsStudent = () => {
   const handleChange = () => {
@@ -71,59 +54,46 @@ const ContractsStudent = () => {
 
   return (
     <div className="contract-student">
-      <Row gutter={[0, 12]}>
+      <Row gutter={[10, 10]}>
         <Col>
           <div className="contract-student-title">Contracts</div>
         </Col>
         <Divider />
 
-        <Col className="mb-6" xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
+        <Col className="mb-6" xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
           <SearchBar size="large" handleChange={handleChange} />
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={[10, 4]}>
-            {contractStatus.length &&
-              contractStatus.map((item) => {
-                return (
-                  <Col
-                    key={item.id}
-                    xxl={8}
-                    xl={8}
-                    lg={8}
-                    md={8}
-                    sm={24}
-                    xs={24}
-                  >
-                    <div className="contract-status">
-                      <div
-                        style={{ backgroundColor: item.color }}
-                        className="status-box"
-                      ></div>
-                      <div className="status-box-text">{item.status}</div>
-                    </div>
-                  </Col>
-                );
-              })}
-          </Row>
-        </Col>
-
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={10}>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Row gutter={[20, 40]}>
+            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+              <div className="contract-status">
+                <div
+                  style={{ backgroundColor: "#FFC15E" }}
+                  className="status-box"
+                ></div>
+                <div className="status-box-text">Received</div>
+              </div>
               {contractReceived.map((item) => {
                 return (
                   <div>
-                  <ContractCard
-                    img={item.img}
-                    title={item.title}
-                    description={item.subTitle}
-                  />
+                    <ContractCard
+                      img={item.img}
+                      title={item.title}
+                      description={item.subTitle}
+                    />
                   </div>
                 );
               })}
             </Col>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+              <div className="contract-status">
+                <div
+                  style={{ backgroundColor: "#E94E5D" }}
+                  className="status-box"
+                ></div>
+                <div className="status-box-text">Rejected</div>
+              </div>
               {contractReject.map((item) => {
                 return (
                   <ContractCard
@@ -134,7 +104,14 @@ const ContractsStudent = () => {
                 );
               })}
             </Col>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+              <div className="contract-status">
+                <div
+                  style={{ backgroundColor: "#4A9D77" }}
+                  className="status-box"
+                ></div>
+                <div className="status-box-text">Signed</div>
+              </div>
               {contractSigned.map((item) => {
                 return (
                   <ContractCard
