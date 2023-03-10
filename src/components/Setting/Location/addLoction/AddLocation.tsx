@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Row, Col, Divider, Form, TimePicker, } from "antd";
 import { SettingHorizontalLine } from "../../../../assets/images";
-import {BoxWrapper} from "../../../BoxWrapper/boxWrapper";
+import {BoxWrapper} from "../../../BoxWrapper/BoxWrapper";
 import { Input } from "../../../Input/input";
 import { SearchBar } from "../../../SearchBar/SearchBar";
 import { RecipeCard } from "../../../RecipeCard";
