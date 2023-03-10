@@ -5,7 +5,9 @@ import "./studentSideBar.scss";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../assets/images/profile/student/vedio.png";
-const StudentSideBar = () => {
+const StudentSideBar = (props: any) => {
+  const { setShowSideViewType } = props;
+
   return (
     <div className="student-side-bar">
       <div className="main-student-side-bar">
@@ -73,12 +75,22 @@ const StudentSideBar = () => {
                   </Typography>
                 </div>
                 <center>
-                  <img src={video} alt="" />
-                  <Typography className="video-p">Add Video</Typography>
+                  <div
+                    onClick={() => {
+                      setShowSideViewType('add-video');
+                    }}
+                  >
+                    <img src={video} alt="" />
+                    <Typography className="video-p">Add Video</Typography>
+                  </div>
                 </center>
               </div>
               <Divider />
-              <a href="" className="a-tag-side">Change Password</a>
+              <p onClick={()=>{
+                setShowSideViewType('change-password')
+              }} className="a-tag-side">
+                Change Password
+              </p>
             </>
           );
         })}

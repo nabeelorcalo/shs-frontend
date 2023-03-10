@@ -11,7 +11,7 @@ import Documents from "./tabs/documents";
 import GeneralInformation from "./tabs/generalInformation";
 import ImmigrationStatus from "./tabs/immigrationStatus";
 import PersonalInformation from "./tabs/personalInformation";
-import CardTabs from './tabs/cards/index';
+import CardTabs from "./tabs/cards/index";
 
 const items = [
   {
@@ -31,7 +31,7 @@ const items = [
         <InfoCircleFilled /> General Information
       </span>
     ),
-    children: <GeneralInformation/>,
+    children: <GeneralInformation />,
   },
   {
     key: "3",
@@ -40,7 +40,7 @@ const items = [
         <FileFilled /> Documents
       </span>
     ),
-    children: <Documents/>,
+    children: <Documents />,
   },
   {
     key: "4",
@@ -49,7 +49,7 @@ const items = [
         <DribbbleSquareFilled /> Immigration Status
       </span>
     ),
-    children: <ImmigrationStatus/>,
+    children: <ImmigrationStatus />,
   },
   {
     key: "5",
@@ -58,7 +58,7 @@ const items = [
         <CreditCardFilled /> Cards
       </span>
     ),
-    children: <CardTabs/>,
+    children: <CardTabs />,
   },
 ];
 
@@ -70,9 +70,9 @@ const StudentsTabs = () => {
         boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
         borderRadius: "16px",
         padding: "1rem",
-        height: '80vh',
-    overflowY: 'scroll',
-    overflowX: 'hidden',
+        height: "80vh",
+        overflowY: "scroll",
+        overflowX: "hidden",
       }}
     >
       <AppTabs items={items} />

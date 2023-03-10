@@ -1,9 +1,11 @@
+
+@import "../../scss/colors.scss";
 .colorfull-icon-progress-bar{
-    .title{
-        color: #4E4B66 
+    .content-title{
+        color: $text-secondary-body-color
     }
-    .storage{
-        color: #A0A3BD
+    .storage-value{
+        color: $text-success-placeholder-color
 
     }
 }

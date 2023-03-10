@@ -41,5 +41,4 @@ function App() {
     <ErrorBoundary FallbackComponent={ErrorFallback}>{pages}</ErrorBoundary>
   );
 }
-
 export default App;

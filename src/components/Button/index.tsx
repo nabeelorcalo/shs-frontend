@@ -1,8 +1,8 @@
 import { Button as AntButton } from 'antd'
 
  interface ButtonProps {
-  label: string
-  type: 'primary' | 'dashed' | 'text' | 'default'
+  label?: string
+  type?: 'primary' | 'dashed' | 'text' | 'default'
   block?: boolean,
   size?: 'small' | 'middle' | 'large',
   color?: string,
@@ -10,8 +10,11 @@ import { Button as AntButton } from 'antd'
   shape?: 'default' | 'circle' | 'round'
   onClick?: () => void,
   disabled?: boolean,
+  className?:string,
+  upcomingIcon?:any,
   icon?: any
   style?: any
+  htmlType?:any
 }
 
 export const Button = ({ 
@@ -24,6 +27,8 @@ export const Button = ({
   shape = 'default',
   disabled = false,
   icon,
+  className,
+  upcomingIcon,
   ...props
 }: ButtonProps) => {
   return (
@@ -36,9 +41,10 @@ export const Button = ({
       shape={shape}
       disabled={disabled}
       icon={icon}
+      className={className}
       {...props}
     >
-      {label}
+      {label} {upcomingIcon}
     </AntButton>
   )
 }
