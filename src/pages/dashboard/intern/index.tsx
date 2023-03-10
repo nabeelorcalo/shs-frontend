@@ -44,7 +44,7 @@ const Intern = () => {
         }
       />
 
-      <Row>
+      <Row className="xs:gap-4 md:gap-0">
         <Col xs={24} sm={24} md={8} lg={8} xl={8} className='pr-4'>
           <TimeTracking />
         </Col>
