@@ -1,6 +1,6 @@
 import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
 import { useState } from "react";
 
 const onFinish = (values: any) => {
@@ -54,23 +54,32 @@ const SigninForm = () => {
               name="password"
             />
           </Form.Item>
-          <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+          <Row className="flex">
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24} className='text-center sm:text-start'>
+            <Form.Item name="remember" valuePropName="checked" noStyle className="text-center">
+              <Checkbox >Remember me</Checkbox>
             </Form.Item>
-
-            <a className="login-form-forgot " href="/forgot-password">
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+            <Form.Item >
+            <a className="login-form-forgot text-center md:text-end" href="/forgot-password">
               <Typography>Forgot password</Typography>
             </a>
           </Form.Item>
+            </Col>
+          </Row>
+         
+           
+          
 
           <Form.Item>
             <Button
               type="primary"
-              //htmlType="submit"
+            // htmlType="submit"
               className="login-form-button"
             >
-              Sign In
+              <a href="/" >Sign In</a>
+           
             </Button>
           </Form.Item>
           <div>
