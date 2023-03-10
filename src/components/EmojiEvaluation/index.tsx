@@ -51,7 +51,7 @@ const EmojiEvaluation = ({ title }: any) => {
               {
                 desc.map((item, idx) => {
                   return (
-                    <p className="flex gap-2 text-sm">{item.comp}<span>{item.title}</span></p>
+                    <p className="flex gap-2 text-sm items-center">{item.comp}<span>{item.title}</span></p>
                   )
                 })
               }
@@ -62,7 +62,7 @@ const EmojiEvaluation = ({ title }: any) => {
                 <p>74%</p>
 
               </div>
-              <div className="flex justify-between flex-wrap">
+              <div className="flex justify-between flex-wrap py-3">
                 <EmojiRating title="Works to full potential" />
                 <EmojiRating title="Quaiity of work" />
                 <EmojiRating title="Work consistency" />
@@ -76,7 +76,7 @@ const EmojiEvaluation = ({ title }: any) => {
                 <p>Disciplin</p>
                 <p>61%</p>
               </div>
-              <div className="flex justify-between flex-wrap">
+              <div className="flex justify-between flex-wrap py-3">
                 <EmojiRating title="Punctuality" />
                 <EmojiRating title="Attendance" />
                 <EmojiRating title="Coworker relationship" />
@@ -88,7 +88,7 @@ const EmojiEvaluation = ({ title }: any) => {
                 <p>Personal</p>
                 <p>91%</p>
               </div>
-              <div className="flex justify-between flex-wrap">
+              <div className="flex justify-between flex-wrap py-3">
                 <EmojiRating title="Creativity" />
                 <EmojiRating title="Honesty" />
                 <EmojiRating title="Integrity" />

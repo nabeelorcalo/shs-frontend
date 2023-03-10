@@ -10,7 +10,7 @@ const SignUp = () => {
       <Row className="form-style">
         <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-            <img src={SHSLogo} alt="error" />
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">

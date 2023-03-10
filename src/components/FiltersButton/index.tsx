@@ -1,17 +1,22 @@
 import React, { FC } from "react";
 import './style.scss'
 import { Button } from 'antd';
+import { IconFilters, IconFiltersAngle } from '../../assets/images'
 
 interface FiltersButtonProps {
-  title: React.ReactNode;
-  actions?: boolean;
-  children?: React.ReactNode 
+  label: React.ReactNode;
+  onClick: () => void;
 }
 
-const FiltersButton: FC<FiltersButtonProps> = ({ title, actions=false, children  }) => {
+const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
   return (
-    <Button>
-      
+    <Button
+      className="filter-button"
+      icon={<IconFilters />}
+      onClick={onClick}
+    >
+      {label}
+      <IconFiltersAngle />
     </Button>
   )
 }
