@@ -11,13 +11,13 @@ const offerLetterRecieved = [
   {
     id: "1",
     img: Recieved,
-    title: "Contract",
+    title: "Offer Letter",
     subTitle: "From PowerSource",
   },
   {
     id: "2",
     img: Recieved,
-    title: "Contract",
+    title: "Offer Letter",
     subTitle: "From PowerSource",
   },
 ];
@@ -26,13 +26,13 @@ const offerLetterRejected = [
   {
     id: "1",
     img: Rejected,
-    title: "Contract",
+    title: "Offer Letter",
     subTitle: "From PowerSource",
   },
   {
     id: "2",
     img: Rejected,
-    title: "Contract",
+    title: "Offer Letter",
     subTitle: "From PowerSource",
   },
 ];
@@ -41,13 +41,13 @@ const offerLetterSigned = [
   {
     id: "1",
     img: Signed,
-    title: "Contract",
+    title: "Offer Letter",
     subTitle: "From PowerSource",
   },
   {
     id: "2",
     img: Signed,
-    title: "Contract",
+    title: "Offer Letter",
     subTitle: "From PowerSource",
   },
 ];
