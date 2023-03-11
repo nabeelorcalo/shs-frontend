@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Rate } from 'antd';
 import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
 import './style.scss';
-import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
 
 const EmojiMoodRating = ({ title, data }: any) => {
-  console.log(data)
   return (
     <BoxWrapper>
       <div className="flex flex-col gap-2 w-full h-full">

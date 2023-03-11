@@ -18,7 +18,7 @@ const AnnouncementCard: any = (props: AnnouncementProps) => {
   const {text, author, avatar, dateTime} = props;
 
   return (
-    <Card className='flex flex-col rounded-2xl light-sky-blue-bg'>
+    <Card className='flex flex-col mb-4 rounded-2xl light-sky-blue-bg'>
       <p className='text-sm text-secondary-color '>
         {text}
       </p>
