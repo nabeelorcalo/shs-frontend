@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Col, Row, Typography, Divider } from "antd";
-import { BoxWrapper } from "../../BoxWrapper/boxWrapper";
 import { Input } from "antd";
-import DropDownForSetting from "../Common/CustomSettingDropdown";
+
 const { TextArea } = Input;
 const { Title, Text } = Typography;
 import "./Template.scss";

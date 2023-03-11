@@ -35,6 +35,8 @@ import DemoCard from "./components/ContractCard/demoCard";
 import TemplatesOfferLater from "./components/Setting/Templates/OfferLetter";
 import TemplatesContract from "./components/Setting/Templates/Contract";
 import TemplatesRejectionLetter from "./components/Setting/Templates/RejectionLetter";
+import TemplatesCertificateOfAppreciation from "./components/Setting/Templates/CertificateOfAppreciation";
+import TemplatesCertificateOfCompletion from "./components/Setting/Templates/CertificateOfCompletion";
 //
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -501,12 +503,12 @@ const companyAdminRoutes = [
           },
           {
             key: `template-certificate-of-appreciation`,
-            element: <TemplatesRejectionLetter />,
+            element: <TemplatesCertificateOfAppreciation />,
             path: "/settings/template/certificate-of-appreciation",
           },
           {
             key: `template-certificate-of-completion`,
-            element: <TemplatesRejectionLetter />,
+            element: <TemplatesCertificateOfCompletion />,
             path: "/settings/template/certificate-of-completion",
           },
 
