@@ -2,16 +2,8 @@ import React from 'react';
 import { Card, Typography } from 'antd';
 import { SunIcon, LocationIcon } from '../../assets/images';
 import './style.scss';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 
-interface CheckboxProps {
-  label: string
-  disabled?: boolean,
-  style?: any,
-  onChange?: () => void,
-}
-
-const TodayWeather: any = (props: CheckboxProps) => {
+const TodayWeather: any = () => {
   return (
     <Card className='w-full today-weather-container'>
       <Typography.Title level={4} className="text-white">

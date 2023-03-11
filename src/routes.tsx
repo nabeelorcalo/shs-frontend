@@ -18,6 +18,11 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+import TodayWeather from './components/todayWeather';
+import AnnouncementCard from "./components/AnnouncementCard";
+// remove til here
+
+
 //Setting Child Component
 import SettingPerformance from "./components/Setting/Performance/Performance";
 import SettingDepartment from "./components/Setting/Department/Department";
@@ -30,7 +35,6 @@ import SettingPayroll from "./components/Setting/Payroll/Payroll";
 import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
-import TodayWeather from './components/todayWeather';
 import DemoCard from "./components/ContractCard/demoCard";
 //
 
@@ -158,6 +162,11 @@ export const publicRoutes = [
     key: 'todayWeather',
     path: "/weather",
     element: <TodayWeather />
+  },
+  {
+    key: 'announcementCard',
+    path: "/announcement-card",
+    element: <AnnouncementCard />
   },
   // ------Remove till here------
   {
