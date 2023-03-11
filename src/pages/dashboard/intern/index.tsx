@@ -3,8 +3,7 @@ import { Col, Row } from 'antd';
 import PageHeader from '../../../components/PageHeader';
 import TimeTracking from "../../../components/timeTRacking";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
-import TodayWeather from "../../../components/todayWeather";
-import AnnouncementList from "../../../components/AnnouncementList";
+import { TodayWeather, AttendanceDetail, AnnouncementList } from "../../../components";
 import { Terrible, Sad, Neutral, Happy, Awesome } from '../../../assets/images';
 import CustomHook from '../actionHandler';
 import "../style.scss";
@@ -48,7 +47,7 @@ const Intern = () => {
         loading: !state.loading,
       };
     });
-    
+
     fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
       .then((res) => res.json())
       .then((body) => {
@@ -104,6 +103,32 @@ const Intern = () => {
             loading={state.loading}
             loadMoreData={loadMoreData}
           />
+        </Col>
+
+        <Col xs={24} sm={24} md={12} lg={12} xl={12} className='flex pr-4'>
+          <Col span={8} className='pr-4'>
+            <AttendanceDetail
+              label="Avg Clock In"
+              time="08:04am"
+              colorClass="clock-in"
+            />
+          </Col>
+
+          <Col span={8} className='pr-4'>
+            <AttendanceDetail
+              label="Avg Clock Out"
+              time="03:04pm"
+              colorClass="clock-out"
+            />
+          </Col>
+
+          <Col span={8} className='pr-4'>
+            <AttendanceDetail
+              label="Avg Hours"
+              time="05:48hrs"
+              colorClass="avg-hours"
+            />
+          </Col>
         </Col>
       </Row>
     </>

@@ -10,7 +10,7 @@ interface AnnouncementProps {
   loadMoreData: () => void;
 }
 
-const AnnouncementList: any = (props: AnnouncementProps) => {
+export const AnnouncementList: any = (props: AnnouncementProps) => {
   const { data, loading, loadMoreData } = props;
 
   return (
@@ -52,5 +52,3 @@ const AnnouncementList: any = (props: AnnouncementProps) => {
     </BoxWrapper>
   )
 }
-
-export default AnnouncementList;

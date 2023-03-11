@@ -3,7 +3,7 @@ import { Card, Typography } from 'antd';
 import { SunIcon, LocationIcon } from '../../assets/images';
 import './style.scss';
 
-const TodayWeather: any = () => {
+export const TodayWeather: any = () => {
   return (
     <Card className='w-full today-weather-container'>
       <Typography.Title level={4} className="text-white">
@@ -28,5 +28,3 @@ const TodayWeather: any = () => {
     </Card>
   );
 }
-
-export default TodayWeather

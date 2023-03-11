@@ -24,3 +24,5 @@ export * from "./ChartsOfGraphs/timesheetCategories/timesheetCategories"
 export * from "./ChartsOfGraphs/grievanceStats/GrievanceStatsData"
 export * from "./ChartsOfGraphs/intershipSummaryChart/internshipSummaryChart"
 export * from './todayWeather';
+export * from './AttendanceDetail';
+export * from './AnnouncementList';

@@ -186,3 +186,6 @@ export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
 // Intern Dashboard
 export {ReactComponent as SunIcon} from './dashboard/sun.svg';
 export {ReactComponent as LocationIcon} from './dashboard/location.svg';
+export {ReactComponent as ClockInIcon} from './dashboard/ClockIn.svg';
+export {ReactComponent as ClockOutIcon} from './dashboard/ClockOut.svg';
+export {ReactComponent as AvgHoursIcon} from './dashboard/AvgHours.svg';

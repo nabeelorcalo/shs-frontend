@@ -18,8 +18,6 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
-import TodayWeather from './components/todayWeather';
-import AnnouncementCard from "./components/AnnouncementCard";
 // remove til here
 
 
@@ -157,16 +155,6 @@ export const publicRoutes = [
     key: "card",
     path: "/democards",
     element: <DemoCard />,
-  },
-  {
-    key: 'todayWeather',
-    path: "/weather",
-    element: <TodayWeather />
-  },
-  {
-    key: 'announcementCard',
-    path: "/announcement-card",
-    element: <AnnouncementCard />
   },
   // ------Remove till here------
   {
