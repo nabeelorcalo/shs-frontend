@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Typography } from 'antd';
-import { SunIcon } from '../../assets/images';
+import { SunIcon, LocationIcon } from '../../assets/images';
+import './style.scss';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 interface CheckboxProps {
@@ -13,12 +14,25 @@ interface CheckboxProps {
 const TodayWeather: any = (props: CheckboxProps) => {
   return (
     <Card className='w-full today-weather-container'>
-      <Typography.Title level={4} className="text-white">Today's Weather</Typography.Title>
+      <Typography.Title level={4} className="text-white">
+        Today's Weather
+      </Typography.Title>
+
       <div className='flex flex-row items-center'>
         <SunIcon />
-        <p className='ml-4 xl:ml-4 my-[20px] text-[36px] lg:text-[22px]'>23° C</p>
+        <p className='ml-4 xl:ml-4 my-[20px] text-[36px] lg:text-[22px]'>
+          23° C
+        </p>
       </div>
-      <p>Card content</p>
+
+      <Typography.Title level={4} className="todayDateTxt">
+        Monday, 21 September
+      </Typography.Title>
+
+      <p className='flex'>
+        <LocationIcon className='mr-2'/>
+        London
+      </p>
     </Card>
   );
 }

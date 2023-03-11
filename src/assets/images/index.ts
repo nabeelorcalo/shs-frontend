@@ -185,3 +185,4 @@ export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
 
 // Intern Dashboard
 export {ReactComponent as SunIcon} from './dashboard/sun.svg';
+export {ReactComponent as LocationIcon} from './dashboard/location.svg';
