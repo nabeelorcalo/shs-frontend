@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import "./style.scss";
+import ActivityLogSystemAdmin from "./systemAdmin/activityLog"
 
 const ActivityLog = () => {
   return (
-    <p>ActivityLog</p>
+   <div>
+    <ActivityLogSystemAdmin/>
+   </div>
   )
 }
 
