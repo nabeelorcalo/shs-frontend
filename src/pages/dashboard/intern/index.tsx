@@ -8,9 +8,16 @@ import {
   AttendanceDetail,
   AnnouncementList,
   BirthdayWishes,
-  WorkingStatisticesChart
+  WorkingStatisticesChart,
+  LeaveDetails,
 } from "../../../components";
-import { Terrible, Sad, Neutral, Happy, Awesome } from '../../../assets/images';
+import {
+  Terrible,
+  Sad,
+  Neutral,
+  Happy,
+  Awesome,
+} from '../../../assets/images';
 import CustomHook from '../actionHandler';
 import "../style.scss";
 
@@ -151,7 +158,7 @@ const Intern = () => {
           </div>
 
           <WorkingStatisticesChart
-            heading = "Working Statistices"
+            heading="Working Statistices"
           />
         </Col>
 
@@ -160,6 +167,13 @@ const Intern = () => {
 
           <BirthdayWishes
             wishList={state.birthdayWishlist}
+          />
+
+          <LeaveDetails
+            sickLeaves="02"
+            casualLeaves="03"
+            medicalLeaves="04"
+            workFromHome="01"
           />
         </Col>
       </Row>

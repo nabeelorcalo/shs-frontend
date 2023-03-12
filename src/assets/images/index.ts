@@ -189,3 +189,7 @@ export {ReactComponent as LocationIcon} from './dashboard/location.svg';
 export {ReactComponent as ClockInIcon} from './dashboard/ClockIn.svg';
 export {ReactComponent as ClockOutIcon} from './dashboard/ClockOut.svg';
 export {ReactComponent as AvgHoursIcon} from './dashboard/AvgHours.svg';
+export {ReactComponent as PurpleRectangle} from './dashboard/purpleRectangle.svg';
+export {ReactComponent as PinkRectangle} from './dashboard/pinkRectangle.svg';
+export {ReactComponent as YellowRectangle} from './dashboard/yellowRectangle.svg';
+export {ReactComponent as BlueRectangle} from './dashboard/blueRectangle.svg';
