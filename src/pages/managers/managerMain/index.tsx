@@ -6,9 +6,15 @@ import listView from '../../../assets/images/profile/university/listview.svg';
 import gridview from '../../../assets/images/profile/university/gridview.svg'
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import ManagerInfo from "./managerInfo";
+import ManagerInfoTable from "./managerInfoTable";
+
+
 
 const ManagerMain = () => {
-    const [value, setValue] = useState("");
+  const [value, setValue] = useState("");
+  const [showGrid, setShowGrid] = useState(true);
+  const [showTable, setShowTable] = useState(false);
+  const [bgColor, setBgColor] = useState('#E6F4F9')
   const searchValue = () => {};
 
   return (
@@ -39,12 +45,21 @@ const ManagerMain = () => {
               <RightOutlined style={{ fontSize: "12px" }} />
                       </Button>
                       <div className="bg-[#E6F4F9] p-2 flex gap-2">
-                          <div className="bg-white p-1">
-                          <img src={listView} alt="" />  
+              <div style={{background:bgColor}} className=" p-1" onClick={() => {
+                setShowGrid(true);
+                setShowTable(false)
+                setBgColor("white")
+                          }}>
+                          <img src={listView} alt=""   />  
                           </div>
-                          <div  className="bg-white p-1">
+                          <div style={{background:bgColor}}  className=" p-1" onClick={() => {
+                setShowTable(true);
+                setShowGrid(false);
+                setBgColor("white")
+               
+                          }}>
                               
-                          <img src={gridview} alt="" />
+                          <img src={gridview} alt=""  />
                        </div>
                       </div>
                       <div className="w-25">
@@ -57,10 +72,16 @@ const ManagerMain = () => {
             </div>
           </div>
         </Col>
-          </Row>
-          <div>
-              <ManagerInfo/>
-          </div>
+      </Row>
+      {showGrid === true && (<div>
+        <ManagerInfo />
+      </div>)}
+      {showTable === true &&   (<div>
+        <ManagerInfoTable/>
+      </div>)}
+        
+      
+     
     </div>
   );
 };

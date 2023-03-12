@@ -1,5 +1,6 @@
 import { Button, Col, Row, Space, Typography } from "antd";
 import React from "react";
+import ManagerInfoTable from "./managerInfoTable";
 import { managerCar } from "./managerMock";
 
 const ManagerInfo = () => {
@@ -29,7 +30,8 @@ const ManagerInfo = () => {
                     </div>
                     <Space>
                       <Button className=" bg-[#33a5e51a] text-[#33A5E5] text-base font-semibold rounded-[8px]">
-                        Profile
+                        <a href="managerprofile">Profile</a>
+                        
                       </Button>
                       <Button className=" text-[#4A9D77] bg-[#4a9d771a] text-base font-semibold rounded-[8px]">
                         Reset
@@ -42,6 +44,7 @@ const ManagerInfo = () => {
           );
         })}
       </Row>
+   
     </div>
   );
 };

@@ -34,6 +34,7 @@ import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVa
 //
 import DemoCard from "./components/ContractCard/demoCard";
 import AddManager from "./pages/managers/managerMain/addManager";
+import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -444,6 +445,11 @@ const companyAdminRoutes = [
         key: `addManager`,
         path: `addManager`,
         element: <AddManager />,
+      },
+      {
+        key: `managerprofile`,
+        path: `managerprofile`,
+        element: <ManagerProfile />,
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
