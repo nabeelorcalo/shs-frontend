@@ -14,7 +14,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
   const { data, loading, loadMoreData } = props;
 
   return (
-    <BoxWrapper>
+    <BoxWrapper className='my-4'>
       <Typography.Title
         level={4}
         style={{ fontWeight: 500 }}

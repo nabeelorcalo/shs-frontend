@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import TodayWeather  from '../components/todayWeather';
+import { TodayWeather } from '../components';
 
 export default {
   title: 'Components/TodayWeather',

@@ -5,11 +5,11 @@ import './style.scss';
 
 const EmojiMoodRating = ({ title, data }: any) => {
   return (
-    <BoxWrapper>
+    <BoxWrapper className='my-2'>
       <div className="flex flex-col gap-2 w-full h-full">
         <h3>{title}</h3>
         <div>
-          <div className="flex flex-row justify-start xl:justify-center">
+          <div className="flex flex-row justify-center py-[33px]">
             {
               data.map((item: any, idx: any) => {
                 return (

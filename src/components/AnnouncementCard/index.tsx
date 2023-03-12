@@ -15,7 +15,7 @@ interface AnnouncementProps {
 dayjs.extend(relativeTime);
 
 const AnnouncementCard: any = (props: AnnouncementProps) => {
-  const {text, author, avatar, dateTime} = props;
+  const { text, author, avatar, dateTime } = props;
 
   return (
     <Card className='flex flex-col mb-4 rounded-2xl light-sky-blue-bg'>
@@ -25,8 +25,8 @@ const AnnouncementCard: any = (props: AnnouncementProps) => {
 
       <div className='flex flex-row items-center mt-4 gap-2'>
         <Avatar
-        size={32}
-        src={<img src={avatar} alt="avatar" />}
+          size={32}
+          src={<img src={avatar} alt="avatar" />}
         />
 
         <p className='light-grey-color text-[14px]'>

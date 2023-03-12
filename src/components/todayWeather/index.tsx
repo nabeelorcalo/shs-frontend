@@ -5,7 +5,7 @@ import './style.scss';
 
 export const TodayWeather: any = () => {
   return (
-    <Card className='w-full today-weather-container'>
+    <Card className='w-full my-2 today-weather-container'>
       <Typography.Title level={4} className="text-white">
         Today's Weather
       </Typography.Title>

@@ -26,3 +26,4 @@ export * from "./ChartsOfGraphs/intershipSummaryChart/internshipSummaryChart"
 export * from './todayWeather';
 export * from './AttendanceDetail';
 export * from './AnnouncementList';
+export * from './birthdayWishes';

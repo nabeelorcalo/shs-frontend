@@ -45,7 +45,7 @@ const TimeTracking = (props: any) => {
 
   return (
     <Card
-      className={vartical ? "time-tracking" : "timeTrackig-horizontal"}
+      className={vartical ? "time-tracking my-2" : "timeTrackig-horizontal my-2"}
       bordered={false}
     >
       <div className="time-tracking-body">
