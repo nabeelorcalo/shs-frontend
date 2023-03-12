@@ -43,7 +43,7 @@ let overview = [
 const SettingTemplate: React.FC = () => {
   return (
     <div className="template-setting cursor-pointer ">
-      <Row gutter={[10, 10]} className="mt-5">
+      <Row gutter={[10, 10]} >
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>

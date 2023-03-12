@@ -180,7 +180,7 @@ export { ReactComponent as SettingPeople } from './setting/people.svg';
 export { ReactComponent as SettingCalendarRemove } from './setting/calendar-remove.svg';
 export { ReactComponent as SettingChart } from './setting/chart.svg';
 export { ReactComponent as SettingDocument } from './setting/document.svg';
-export { ReactComponent as SettingShifts } from './setting/Shifts.svg';
+export { ReactComponent as SettingShifts } from './setting/shifts.svg';
 export { ReactComponent as SettingTimer } from './setting/timer.svg';
 export { ReactComponent as SettingHorizontalLine } from './setting/horizontal-line.svg';
 export { ReactComponent as Settinglocation } from './setting/locationWhiteIcon.svg';
@@ -188,3 +188,19 @@ export { ReactComponent as LocationImage } from './setting/locationImage.svg';
 export { ReactComponent as LocationMore } from './setting/More.svg';
 export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
 export { ReactComponent as DepartmentAddIcon } from './setting/addDepartment.svg';
+
+
+// setting Leaves
+export { ReactComponent as CasualLeave } from './setting/casual-leave.svg';
+export { ReactComponent as BereavementLeave } from './setting/bereavement.svg';
+export { ReactComponent as MaternityLeave } from './setting/maternity-leave.svg';
+export { ReactComponent as MatrimonialLeave } from './setting/matrimonial-leave.svg';
+export { ReactComponent as MedicalLeave } from './setting/medical-leave.svg';
+export { ReactComponent as PaternityLeave } from './setting/paternity-leave.svg';
+export { ReactComponent as SickLeave } from './setting/sick-leave.svg';
+export { ReactComponent as WorkFromHome } from './setting/work-from-home.svg';
+
+// setting performance
+export { ReactComponent as PerformancePlus } from './setting/plus.svg';
+export { ReactComponent as PerformanceMinus } from './setting/minus.svg';
+export { ReactComponent as Performanceinput } from './setting/performanceInput.svg';

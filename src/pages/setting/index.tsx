@@ -21,7 +21,7 @@ const Setting = (props: any) => {
         </Title>
       </div>
       <Row gutter={16} className="mt-5">
-        <Col sm={10} md={8} lg={5} className="setting-sideba">
+        <Col sm={24} md={8} lg={5} className="setting-sidebar flex flex-col">
           <div
             style={{
               backgroundColor: "#fff",
@@ -38,7 +38,7 @@ const Setting = (props: any) => {
             </div>
           </div>
         </Col>
-        <Col span={19}>
+        <Col sm={24} md={16} lg={19}>
           {props.children}
 
           <Outlet />
