@@ -17,7 +17,7 @@ const Profile = () => {
           <div className="title-bar">
             <Typography className="main-profile-title">My Profile</Typography>
           </div>
-          <Divider style={{ border: "1px solid #D9DBE9" }} />
+          <Divider className="border-0 border-solid border-[#D9DBE9]" />
         </Col>
 
         <Col xxl={6} xl={6} lg={10} md={24} sm={24} xs={24}>

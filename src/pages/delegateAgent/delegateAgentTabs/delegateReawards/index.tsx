@@ -59,7 +59,10 @@ const Rewards = () => {
             <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
               Cancel
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button
+              className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              htmlType="submit"
+            >
               Submit
             </Button>
           </Space>

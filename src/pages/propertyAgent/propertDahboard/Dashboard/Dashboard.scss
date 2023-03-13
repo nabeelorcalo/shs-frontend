@@ -71,6 +71,9 @@
     height: 50vh;
     overflow-y: scroll;
   }
+  .recent-card-listing::-webkit-scrollbar {
+    width: 0px;
+  }
   .inner-card {
     background: #ffffff;
     border: 1px solid #d9dbe9;
@@ -99,6 +102,8 @@
 .listing-details {
   height: 92vh;
   overflow-y: scroll;
+ 
+
   .listing-styles-main {
     font-family: "Outfit";
     font-style: normal;
@@ -168,3 +173,7 @@ color: #363565;
     padding: 10px;
   }
 }
+.listing-details::-webkit-scrollbar {
+  width: 0px;
+}
+

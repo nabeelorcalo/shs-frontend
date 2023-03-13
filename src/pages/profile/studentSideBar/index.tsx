@@ -4,7 +4,7 @@ import "./studentSideBar.scss";
 
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
-import video from "../../../assets/images/profile/student/vedio.png";
+import video from "../../../assets/images/profile/student/Vedio.svg";
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
 

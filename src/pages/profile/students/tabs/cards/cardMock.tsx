@@ -1,4 +1,4 @@
-import visa from '../../../../../assets/images/profile/student/visa.png'
+import visa from '../../../../../assets/images/profile/student/Visa.svg'
 
 export const cardArr = [
     {

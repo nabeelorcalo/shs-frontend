@@ -1,5 +1,5 @@
 import {
-  MoreOutlined,
+  EllipsisOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
@@ -86,7 +86,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </div>
     ),
     University: "University of Birmingham",
@@ -102,7 +102,7 @@ const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     University: "University of Birmingham",
@@ -119,7 +119,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
         {/* <div
             style={{
               border: "2px solid #D9DBE9",
@@ -144,7 +144,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
         {/* <div
             style={{
               border: "2px solid #D9DBE9",
@@ -190,21 +190,13 @@ const StudentMain = () => {
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
             <Button
-              style={{
-                background: "#E6F4F9",
-                borderRadius: "8px",
-                color: "#A0A3BD",
-                fontWeight: 400,
-                fontSize: "16px",
-                fontFamily: "Outfit",
-                margin: "12px",
-              }}
+            className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
-              <NodeExpandOutlined style={{ fontSize: "16px" }} />
+              <NodeExpandOutlined className="text-base"  />
               Filter
-              <RightOutlined style={{ fontSize: "12px" }} />
+              <RightOutlined className="text-xs" />
             </Button>
-            <div className="w-32">
+            <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}

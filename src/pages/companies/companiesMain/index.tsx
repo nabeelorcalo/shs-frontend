@@ -1,5 +1,5 @@
 import {
-  MoreOutlined,
+  EllipsisOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
@@ -69,11 +69,6 @@ const columns = [
 
   {
     dataIndex: "Actions",
-    // render: (_: any, data: any) => (
-    //     <div className='border-solid border-2 border-indigo-600'>
-    //       p
-    //     </div>
-    // ),
     key: "Actions",
     title: "Actions",
   },
@@ -82,7 +77,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </div>
     ),
     companyName: "University of Birmingham",
@@ -98,7 +93,7 @@ const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     companyName: "University of Birmingham",
@@ -113,7 +108,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </div>
     ),
     companyName: "University of Birmingham",
@@ -130,7 +125,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </div>
     ),
     companyName: "University of Birmingham",
@@ -168,22 +163,12 @@ const CompaniesMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
-            <Button
-              style={{
-                background: "#E6F4F9",
-                borderRadius: "8px",
-                color: "#A0A3BD",
-                fontWeight: 400,
-                fontSize: "16px",
-                fontFamily: "Outfit",
-                margin: "12px",
-              }}
-            >
+            <Button className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
               <NodeExpandOutlined style={{ fontSize: "16px" }} />
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />
             </Button>
-            <div className="w-32">
+            <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
@@ -197,11 +182,7 @@ const CompaniesMain = () => {
       <Row className="mt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-2 rounded-2xl">
-            <GlobalTable
-              tableData={tableData}
-              columns={columns}
-         
-            />
+            <GlobalTable tableData={tableData} columns={columns} />
           </div>
         </Col>
       </Row>

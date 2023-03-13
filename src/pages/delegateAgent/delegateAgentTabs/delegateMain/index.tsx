@@ -1,4 +1,4 @@
-import { MoreOutlined } from '@ant-design/icons'
+import { EllipsisOutlined, MoreOutlined } from '@ant-design/icons'
 import { Col, Row } from 'antd'
 import React, { useState } from 'react'
 import { DropDown, SearchBar } from '../../../../components'
@@ -77,7 +77,7 @@ const DelegateMain = () => {
       {
         Actions: (
           <span>
-            <MoreOutlined />
+            <EllipsisOutlined />
           </span>
         ),
         joiningdate: "£9,823",
@@ -92,7 +92,7 @@ const DelegateMain = () => {
       {
         Actions: (
           <span>
-            <MoreOutlined />
+            <EllipsisOutlined />
           </span>
         ),
         joiningdate: "£9,823",
@@ -108,7 +108,7 @@ const DelegateMain = () => {
       {
         Actions: (
           <div>
-            <MoreOutlined />
+            <EllipsisOutlined />
          
           </div>
         ),

@@ -6,8 +6,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  // USER_ROLE: "Student"
-  USER_ROLE: "CompanyAdmin"
+  USER_ROLE: "Student"
 }
 
 // Possibe string of roles:

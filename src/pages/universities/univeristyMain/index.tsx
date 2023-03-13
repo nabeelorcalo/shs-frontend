@@ -1,4 +1,5 @@
 import {
+  EllipsisOutlined,
   MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
@@ -88,7 +89,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </div>
     ),
     universityName: "University of Birmingham",
@@ -105,7 +106,7 @@ const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     universityName: "University of Birmingham",
@@ -122,7 +123,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
         {/* <div
               style={{
                 border: "2px solid #D9DBE9",
@@ -147,7 +148,7 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
+        <EllipsisOutlined />
         {/* <div
               style={{
                 border: "2px solid #D9DBE9",
@@ -176,7 +177,7 @@ const UniveristyMain = () => {
   const searchValue = () => {};
   return (
     <div className="univeristy-main">
-      {/* <Row>
+      <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
             <Typography className="text-[#363565] text-2xl font-semibold font-[outfit]">
@@ -193,21 +194,13 @@ const UniveristyMain = () => {
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
             <Button
-              style={{
-                background: "#E6F4F9",
-                borderRadius: "8px",
-                color: "#A0A3BD",
-                fontWeight: 400,
-                fontSize: "16px",
-                fontFamily: "Outfit",
-                margin: "12px",
-              }}
+             className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
               <NodeExpandOutlined style={{ fontSize: "16px" }} />
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />
             </Button>
-            <div className="w-32">
+            <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
@@ -228,8 +221,8 @@ const UniveristyMain = () => {
             />
           </div>
         </Col>
-      </Row> */}
-          <DetailPage/>
+      </Row>
+          {/* <DetailPage/> */}
     </div>
   );
 };

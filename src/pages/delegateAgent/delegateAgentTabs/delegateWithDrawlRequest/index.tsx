@@ -1,4 +1,4 @@
-import { MoreOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import { Col, Row } from "antd";
 import React, { useState } from "react";
 import { DropDown, SearchBar } from "../../../../components";
@@ -77,7 +77,7 @@ const WithDrawalRequest = () => {
     {
       Actions: (
         <span>
-          <MoreOutlined />
+          <EllipsisOutlined />
         </span>
       ),
       Fee: "£9,823",
@@ -91,7 +91,7 @@ const WithDrawalRequest = () => {
     {
       Actions: (
         <span>
-          <MoreOutlined />
+          <EllipsisOutlined />
         </span>
       ),
       Fee: "£9,823",
@@ -107,7 +107,7 @@ const WithDrawalRequest = () => {
     {
       Actions: (
         <div>
-          <MoreOutlined />
+          <EllipsisOutlined />
           {/* <div
                 style={{
                   border: "2px solid #D9DBE9",

@@ -11,9 +11,9 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import pf from "../../../assets/images/profile/university/pf.svg";
-import iconEmail from "../../../assets/images/profile/student/email.png";
-import iconPhone from "../../../assets/images/profile/student/Phone.png";
-import iconLocation from "../../../assets/images/profile/student/location.png";
+import iconEmail from "../../../assets/images/profile/student/email.svg";
+import iconPhone from "../../../assets/images/profile/student/Phone.svg";
+import iconLocation from "../../../assets/images/profile/student/location.svg";
 import { DropDown } from "../../../components";
 import { Option } from "antd/es/mentions";
 
@@ -139,12 +139,12 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="First Name" name="firstName">
-                    <Input />
+                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Last Name" name="lastName">
-                    <Input />
+                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -167,7 +167,7 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
-                    <Input />
+                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -213,7 +213,7 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Title" name="title">
-                    <Input />
+                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -234,12 +234,12 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Address" name="address">
-                    <Input />
+                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="City" name="City">
-                    <Input />
+                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -254,24 +254,12 @@ const ManagerProfile = () => {
                 </Col>
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button
-                  style={{
-                    border: "1px solid #4a9d77",
-                    color: "#4a9d77",
-                    padding: "0px 20px",
-                  }}
-                >
+                <Button className="border-1 border-solid border-[#4a9d77] text-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel
                 </Button>
                 <Button
                   htmlType="submit"
-                  style={{
-                    backgroundColor: "#4a9d77",
-                    color: "#fff",
-                    border: "1px solid #4a9d77",
-                    padding: "0px 20px",
-                    marginLeft: "20px",
-                  }}
+                  className="bg-[#4a9d77] text-white border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
                 >
                   <a href="managers">Submit</a>
                 </Button>

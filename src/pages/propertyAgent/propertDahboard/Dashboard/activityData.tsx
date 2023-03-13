@@ -123,7 +123,7 @@ const ActivityData = () => {
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />
                   </Button>
-                  <div className='w-32'>
+                  <div className='w-25'>
                   <DropDown
                     
                     requiredDownloadIcon

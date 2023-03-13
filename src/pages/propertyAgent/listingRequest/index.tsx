@@ -1,4 +1,5 @@
 import {
+  EllipsisOutlined,
   MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
@@ -87,7 +88,7 @@ const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     Rent: "£9,823",
@@ -101,7 +102,7 @@ const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     Rent: "£9,823",
@@ -117,15 +118,8 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
-        {/* <div
-          style={{
-            border: "2px solid #D9DBE9",
-            background: "#FFFFFF",
-            boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)",
-            borderRadius: "8px",
-          }}
-        ><Typography>View Details</Typography></div> */}
+        <EllipsisOutlined />
+       
       </div>
     ),
     Rent: "£7,823",
@@ -141,27 +135,16 @@ const tableData = [
 ];
 
 const ListingRequest = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   return (
     <div className="listing-request">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="flex justify-end gap-2 mb-3">
-            <Button
-              style={{
-                background: "#E6F4F9",
-                borderRadius: "8px",
-                color: "#A0A3BD",
-                fontWeight: 400,
-                fontSize: "16px",
-                fontFamily: "Outfit",
-                margin: "12px",
-            
-              }}
-            >
-              <NodeExpandOutlined style={{ fontSize: "16px" }}  />
+            <Button className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
+              <NodeExpandOutlined className="text-base" />
               Filter
-              <RightOutlined style={{ fontSize: "12px" }} />
+              <RightOutlined className="text-xs" />
             </Button>
             <DropDown
               requiredDownloadIcon

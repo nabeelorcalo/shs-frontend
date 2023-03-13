@@ -1,5 +1,6 @@
 import {
   CloseCircleFilled,
+  EllipsisOutlined,
   MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
@@ -99,7 +100,7 @@ const AdminManagement = () => {
     {
       Actions: (
         <span>
-          <MoreOutlined />
+          <EllipsisOutlined />
         </span>
       ),
       date: "23/09/2022",
@@ -113,7 +114,7 @@ const AdminManagement = () => {
     {
       Actions: (
         <span>
-          <MoreOutlined />
+          <EllipsisOutlined />
         </span>
       ),
       date: "23/09/2022",
@@ -129,7 +130,7 @@ const AdminManagement = () => {
     {
       Actions: (
         <div>
-          <MoreOutlined />
+          <EllipsisOutlined />
         </div>
       ),
       date: "23/09/2022",
@@ -162,21 +163,13 @@ const AdminManagement = () => {
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex justify-end items-center gap-3">
             <Button
-              style={{
-                background: "#E6F4F9",
-                borderRadius: "8px",
-                color: "#A0A3BD",
-                fontWeight: 400,
-                fontSize: "16px",
-                fontFamily: "Outfit",
-                margin: "12px",
-              }}
+            className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
               <NodeExpandOutlined style={{ fontSize: "16px" }} />
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />
             </Button>
-            <div className="w-32">
+            <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}

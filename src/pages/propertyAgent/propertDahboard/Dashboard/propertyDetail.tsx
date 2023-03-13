@@ -2,7 +2,7 @@ import { Col, Divider, Row, Typography } from "antd";
 import React from "react";
 import { useLocation } from "react-router-dom";
 import backButton from "../../../../assets/images/profile/propertyagent/BackLoginButton.svg";
-import pf from "../../../../assets/images/profile/propertyagent/pf.png";
+import pf from "../../../../assets/images/profile/propertyagent/pf.svg";
 import { propertDetailSide } from "./DashboardMock";
 import "./Dashboard.scss";
 import AppTabs from "../../../../components/Tabs";
@@ -18,7 +18,7 @@ const items = [
   {
     key: "2",
     label: "Documents",
-    children: <DocumentDetails/>,
+    children: <DocumentDetails />,
   },
 ];
 
@@ -66,14 +66,7 @@ const PropertyDetail = () => {
       <Divider />
       <Row gutter={15}>
         <Col xxl={6} xl={6} lg={7} md={6} sm={6} xs={24}>
-          <div
-            className="border-solid border-2 border-indigo-600"
-            style={{
-              background: "#FFFFFF",
-              boxShadow: " 0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "8px",
-            }}
-          >
+          <div className="bg-[#FFFFFF] shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg">
             {propertDetailSide.map((item, index) => {
               return (
                 <>
@@ -127,14 +120,7 @@ const PropertyDetail = () => {
           </div>
         </Col>
         <Col xxl={18} xl={18} lg={17} md={18} sm={18} xs={24}>
-          <div
-            style={{
-              border: "1px solid blue",
-              background: "#FFFFFF",
-              boxShadow: " 0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-              borderRadius: "8px",
-            }}
-            className="p-2"
+          <div className="bg-[#FFFFFF] shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg p-2"
           >
             <AppTabs items={items} />
           </div>
