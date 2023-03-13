@@ -4,8 +4,6 @@ import { Alert } from "../../Alert";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { Button } from "../../Button";
 import { DepartmentAddIcon } from "../../../assets/images";
-
-import TemplateCommonDropdown from "../Templates/Common/TemplateCommonDropdown";
 import { PopUpModal } from "../../Model";
 import DropDownForSetting from "../Common/CustomSettingDropdown";
 const { TextArea } = Input;
@@ -17,15 +15,15 @@ const { Title, Text } = Typography;
 let overview = [
   {
     name: "Designing",
-    content: "51 Employees",
+    content: "Producing consistently excellent visual work and  a host of ideas",
   },
   {
     name: "Coordination",
-    content: "44 Employees",
+    content: "The process of organizing people or groups so that they work together properly and well",
   },
   {
     name: "Training",
-    content: "44 Employees",
+    content: "Training has specific goals of improving one's capability, capacity, productivity and performance.",
   },
 ];
 
@@ -68,15 +66,10 @@ const SettingTimesheet = () => {
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
-                      <Text className="text-base font-medium">
+                      <Text className="text-base text-sm ">
                         {data.content}
                       </Text>
-                      <Text className="text-sm font-normal content-text">
-                        {data.time}
-                      </Text>
-                      <Text className="text-sm font-normal content-text">
-                        {data.duration}
-                      </Text>
+                    
                     </div>
 
                     <span className="float-right cursor-pointer w-[40px]">
