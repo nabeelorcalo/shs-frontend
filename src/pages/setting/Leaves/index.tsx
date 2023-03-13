@@ -1,54 +1,58 @@
-import React, { useState } from "react";
-import { Typography, Divider, Row, Col, Form, Input } from "antd";
-import { Alert } from "../../Alert";
-import { SearchBar } from "../../SearchBar/SearchBar";
-import { Button } from "../../Button";
-import { BereavementLeave, CasualLeave, DepartmentAddIcon, MaternityLeave, MatrimonialLeave, MedicalLeave, PaternityLeave, SickLeave, WorkFromHome } from "../../../assets/images";
-import { PopUpModal } from "../../Model";
-import DropDownForSetting from "../Common/CustomSettingDropdown";
+import { useState } from "react";
+import { Typography, Row, Col, Form, Input, Button } from "antd";
+import "./style.scss";
+import {
+  BereavementLeave,
+  CasualLeave,
+  DepartmentAddIcon,
+  SettingLeaves,
+  MaternityLeave,
+  MatrimonialLeave,
+  MedicalLeave,
+  PaternityLeave,
+  SickLeave,
+  WorkFromHome,
+} from "../../../assets/images";
+import { Alert, SearchBar } from "../../../components";
+import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
+import { PopUpModal } from "../../../components/Model";
+
 const { TextArea } = Input;
 const { Title, Text } = Typography;
-
 
 let overview = [
   {
     name: "Casual Leave",
-    image: <CasualLeave/>,
+    image: <CasualLeave />,
   },
   {
     name: "Sick Leave",
-    image: <SickLeave/>,
+    image: <SickLeave />,
   },
   {
     name: "Work Form Home",
-    image: <WorkFromHome/>,
+    image: <WorkFromHome />,
   },
   {
     name: "Medical Leave",
-    image: <MedicalLeave/>,
+    image: <MedicalLeave />,
   },
   {
     name: "Maternity Leave",
-    image: <MaternityLeave/>,
+    image: <MaternityLeave />,
   },
   {
     name: "Paternity Leave",
-    image: <PaternityLeave/>,
+    image: <PaternityLeave />,
   },
   {
     name: "Matrimonial Leave",
-    image: <MatrimonialLeave/>,
+    image: <MatrimonialLeave />,
   },
   {
     name: "Bereavement Leave",
-    image: <BereavementLeave/>,
+    image: <BereavementLeave />,
   },
-
- 
- 
-
-  
- 
 ];
 
 const SettingLeave = () => {
@@ -69,21 +73,18 @@ const SettingLeave = () => {
           <SearchBar size="large" handleChange={handleChange} />
 
           <Button
-            color="#4a9d77"
-            icon={<DepartmentAddIcon className="mx-2" />}
-            label="Add Policy"
-            type="primary"
             size="middle"
-          />
-
-          {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
-        <span className="">  Add department</span> </Button> */}
+            onClick={() => {}}
+            className="flex gap-2 setting-add-button white-color teriary-bg-color"
+          >
+            <SettingLeaves /> Add Policy
+          </Button>
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row  " xs={24} md={6} lg={8}>
+            <Col key={index} className="gutter-row" xs={24} md={6} lg={8}>
               <div className="setting-shift-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
@@ -94,9 +95,10 @@ const SettingLeave = () => {
                   />
                 </div>
                 <div className="flex ">
-                 <span> {data.image}</span>
-                  <Title level={5} className="pt-3 pl-2 m-0">{data.name}</Title>
-                 
+                  <span> {data.image}</span>
+                  <Title level={5} className="pt-3 pl-2 m-0">
+                    {data.name}
+                  </Title>
                 </div>
               </div>
             </Col>
@@ -134,6 +136,7 @@ const SettingLeave = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
+        title="error"
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

@@ -143,25 +143,22 @@ export default function Structure(props: any) {
   };
   return (
     <div className="w-[100%]">
-        <div className="flex flex-col justify-center w-[40px] h-[80px] white-bg-color zoom-button float-right ">
-          <div className="m-2">
-            <StructureAdd onClick={handleZoomIn} />
-          </div>
-          <div className="m-2">
-            <StructureMinus onClick={handleZoomOut} />
-          </div>
+      <div className="flex flex-col justify-center w-[40px] h-[80px] white-bg-color zoom-button float-right ">
+        <div className="m-2">
+          <StructureAdd onClick={handleZoomIn} />
         </div>
+        <div className="m-2">
+          <StructureMinus onClick={handleZoomOut} />
+        </div>
+      </div>
       <div className="structure h-[150vh] relative ">
         <div style={style}>
-         
           <DndProvider backend={HTML5Backend}>
             <div>
               <Node o={organization} />
             </div>
           </DndProvider>
         </div>
-
-      
       </div>
     </div>
   );

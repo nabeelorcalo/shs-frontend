@@ -1,33 +1,28 @@
 import React, { useState } from "react";
-import { Typography, Divider, Row, Col } from "antd";
-import { Alert } from "../../Alert";
-import { SearchBar } from "../../SearchBar/SearchBar";
-import { Button } from "../../Button";
-import { DepartmentAddIcon } from "../../../assets/images";
+import { Typography, Divider, Row, Col ,Button} from "antd";
+import { DepartmentAddIcon , SettingShift } from "../../../assets/images";
 import TemplateCommonDropdown from "../Templates/Common/TemplateCommonDropdown";
+import { Alert,  SearchBar } from "../../../components";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 
 const { Title, Text } = Typography;
 
 let overview = [
   {
-    name: "Payroll Cycle01",
+    name: "Morning",
     content: "51 Employees",
-    payrollCyle:"Payroll Cycle: jan,2023 (1 month)",
-    addedDate: "Added Date: 02/03/2023",
-    addedBy:"Added By: Avery Wyatt"
+    time:"Time: 08:00 to 02:00",
+    duration: "Duration 8 Hours"
   },
   {
-    name: "Payroll Cycle01",
-    content: "51 Employees",
-    payrollCyle:"Payroll Cycle: jan,2023 ( 1month)",
-    addedDate: "Added Date: 02/03/2023",
-    addedBy:"Added By: Avery Wyatt"
+    name: "Evening",
+    content: "44 Employees",
+    time:"Time: 08:00 to 02:00",
+    duration: "Duration 8 Hours"
   },
-  
- 
 
 ];
-const SettingPayroll: React.FC = () => {
+const SettingShifts: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const handleChange = () => {};
   return (
@@ -37,32 +32,30 @@ const SettingPayroll: React.FC = () => {
           <SearchBar size="large" handleChange={handleChange} />
 
           <Button
-            color="#4a9d77"
-            icon={<DepartmentAddIcon className="mx-2" />}
-            label="New Template"
-            type="primary"
             size="middle"
-          />
+            onClick={() => {}}
+            className="flex gap-2 setting-add-button white-color teriary-bg-color"
+          >
+            <SettingShift /> Add Shift
+          </Button>
 
-          {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
-        <span className="">  Add department</span> </Button> */}
+ 
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} md={6} lg={8} >
-              <div className="setting-shift-box-wrapper w-full">
+              <BoxWrapper className="setting-shift-box-wrapper w-full">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
-                      <Text className="text-base font-medium mb-1">
+                      <Text className="text-base font-medium">
                         {data.content}
                       </Text>
-                      <Text className="text-sm font-normal content-text">{data.payrollCyle}</Text>
-                      <Text className="text-sm font-normal content-text">{data.addedDate}</Text>
-                      <Text className="text-sm font-normal content-text">{data.addedBy}</Text>
+                      <Text className="text-sm font-normal content-text">{data.time}</Text>
+                      <Text className="text-sm font-normal content-text">{data.duration}</Text>
                     </div>
 
                     <span className="float-right cursor-pointer w-[40px]">
@@ -73,7 +66,7 @@ const SettingPayroll: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </BoxWrapper>
             </Col>
           );
         })}
@@ -85,6 +78,8 @@ const SettingPayroll: React.FC = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
+        title="error"
+       
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>
@@ -92,4 +87,4 @@ const SettingPayroll: React.FC = () => {
   );
 };
 
-export default SettingPayroll;
+export default SettingShifts;

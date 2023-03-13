@@ -1,17 +1,14 @@
 import { VideoCameraOutlined } from "@ant-design/icons";
-import { Button, Form, Modal, Radio, Select, Space, TimePicker } from "antd";
+import { Button, Form, Modal, Radio, Select, Space, TimePicker ,Input } from "antd";
 import { useState } from "react";
-import closeIcon from "../../assets/images/AddEventInCalendar/close-circle.svg";
-import "./AddEventInCalendar.scss";
-import { Tabs, TabsProps } from "antd";
-import { Input } from "antd";
-import dayjs, { Dayjs } from "dayjs";
+import "./style.scss";
+import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { CloseCircleFilled } from "@ant-design/icons/lib/icons";
 import AppTabs from "../Tabs";
 const { TextArea } = Input;
 dayjs.extend(customParseFormat);
-const format = 'HH:mm';
+const format = "HH:mm";
 
 interface AddEventInCalendarProps {
   title: string;
@@ -24,14 +21,14 @@ interface AddEventInCalendarProps {
   footer?: any;
 }
 
-export const AddEventInCalendar = ({
-  title,
-  closeFunction,
-  setOpen,
-  open,
-  width,
-  zoomVideoLink,
-}: AddEventInCalendarProps) => {
+export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
+  const {
+    title,
+    open,
+    closeFunction,
+    zoomVideoLink,
+    setOpen,
+  } = props;
   const onChange = (key: string) => {
     console.log(key);
   };
@@ -41,79 +38,87 @@ export const AddEventInCalendar = ({
     return (
       <div className="meeting h-[550px]">
         <Form layout="vertical">
-          <p>Title<span className="text-[red]">*</span></p>
+          <p>
+            Title<span className="text-[red]">*</span>
+          </p>
           <Input placeholder="Title" className="input-style" />{" "}
-
-
-          <p>Attendees<span className="text-[red]">*</span></p>
+          <p>
+            Attendees<span className="text-[red]">*</span>
+          </p>
           <Select
-
             size="large"
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Select"
-
             optionFilterProp="children"
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
             options={[
               {
-                value: '1',
-                label: 'Sick',
+                value: "1",
+                label: "Sick",
               },
               {
-                value: '2',
-                label: 'Casual',
+                value: "2",
+                label: "Casual",
               },
               {
-                value: '3',
-                label: 'Work From Home',
+                value: "3",
+                label: "Work From Home",
               },
               {
-                value: '4',
-                label: 'Medical',
+                value: "4",
+                label: "Medical",
               },
             ]}
           />
-          <p>Recurrence<span className="text-[red]">*</span></p>
+          <p>
+            Recurrence<span className="text-[red]">*</span>
+          </p>
           <Select
-
             size="large"
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Select"
-
             optionFilterProp="children"
-            filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            filterOption={(input, option) =>
+              (option?.label ?? "").includes(input)
+            }
             options={[
               {
-                value: '1',
-                label: 'Sick',
+                value: "1",
+                label: "Sick",
               },
               {
-                value: '2',
-                label: 'Casual',
+                value: "2",
+                label: "Casual",
               },
               {
-                value: '3',
-                label: 'Work From Home',
+                value: "3",
+                label: "Work From Home",
               },
               {
-                value: '4',
-                label: 'Medical',
+                value: "4",
+                label: "Medical",
               },
             ]}
           />
-
-
           <div className="flex flex-col md:flex-row justify-between w-full mt-5">
-
             <div className="flex flex-col justify-between w-full pr-2 ">
               <label>Start Time</label>
-              <TimePicker className="h-[45px]" defaultValue={dayjs('12:08', format)} format={format} />
+              <TimePicker
+                className="h-[45px]"
+                defaultValue={dayjs("12:08", format)}
+                format={format}
+              />
             </div>
             <div className="flex flex-col w-full pl-1">
-              <label >End Time</label>
-              <TimePicker className="h-[45px] mt-2" defaultValue={dayjs('12:08', format)} format={format} />
+              <label>End Time</label>
+              <TimePicker
+                className="h-[45px] mt-2"
+                defaultValue={dayjs("12:08", format)}
+                format={format}
+              />
             </div>
-
           </div>
           <div className="mt-3 flex flex-col">
             <label>Location</label>
@@ -129,7 +134,6 @@ export const AddEventInCalendar = ({
             placeholder={zoomVideoLink}
             prefix={<VideoCameraOutlined />}
           />
-
           <div className="mt-3 flex flex-col">
             <label>Description</label>
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
@@ -142,68 +146,41 @@ export const AddEventInCalendar = ({
     return (
       <div className="meeting h-[550px]">
         <Form layout="vertical">
-        <p>Title<span className="text-[red]">*</span></p>
+          <p>
+            Title<span className="text-[red]">*</span>
+          </p>
           <Input placeholder="Title" className="input-style" />{" "}
-
           <div className="flex flex-col md:flex-row justify-between pb-3">
-     
-            
-           <div className="d-flex w-full pr-1"><p>Attendees<span className="text-[red]">*</span></p>
+            <div className="d-flex w-full pr-1">
+              <p>
+                Attendees<span className="text-[red]">*</span>
+              </p>
               <Input placeholder="Title" className="input-style" />
-              </div> 
-           
+            </div>
 
-              <div className="d-flex w-full pl-1">
-                <p>Recurrence<span className="text-[red]">*</span></p>
+            <div className="d-flex w-full pl-1">
+              <p>
+                Recurrence<span className="text-[red]">*</span>
+              </p>
               <Input placeholder="Title" className="input-style" />
-              </div>
-          
+            </div>
           </div>
-
           <div className="flex flex-col justify-between py-3">
             <label> Time</label>
-            <TimePicker className="h-[45px] mt-2" defaultValue={dayjs('12:08', format)} format={format} />
+            <TimePicker
+              className="h-[45px] mt-2"
+              defaultValue={dayjs("12:08", format)}
+              format={format}
+            />
           </div>
-
           <div className="mt-3 flex flex-col">
             <label>Description</label>
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
-
-          {/* <div className="flex justify-end mt-5">
-            <Button
-              className="mx-2 mx--2 competitor-modal-cencel-btn"
-              style={{
-                height: "40px",
-                color: "#4a9d77 ",
-                border: "1px solid #4a9d77",
-              }}
-              onClick={() => setOpen(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="mx-2 "
-              style={{
-                height: "40px",
-                background: "#4a9d77",
-                color: "#FFFFFF",
-                width: "80px",
-              }}
-            >
-              Add
-            </Button>
-          </div> */}
         </Form>
       </div>
     );
   };
-
-  // const items: TabsProps["items"] = [
-  //   { key: "1", label: `Meeting`, children: <Meeting /> },
-  //   { key: "2", label: `Reminder`, children: <Reminder /> },
-  // ];
-
 
   return (
     <div className="add-event-in-calendar">
@@ -245,15 +222,14 @@ export const AddEventInCalendar = ({
             items={[
               {
                 children: <Meeting />,
-                key: '1',
-                label: 'Meeting'
+                key: "1",
+                label: "Meeting",
               },
               {
                 children: <Reminder />,
-                key: '2',
-                label: 'Reminder'
+                key: "2",
+                label: "Reminder",
               },
-
             ]}
           />
         </div>

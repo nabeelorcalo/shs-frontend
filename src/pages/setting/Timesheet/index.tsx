@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { Typography, Divider, Row, Col,Form ,Input} from "antd";
-import { Alert } from "../../Alert";
-import { SearchBar } from "../../SearchBar/SearchBar";
-import { Button } from "../../Button";
-import { DepartmentAddIcon } from "../../../assets/images";
-import { PopUpModal } from "../../Model";
-import DropDownForSetting from "../Common/CustomSettingDropdown";
+import { Typography, Divider, Row, Col,Form ,Input , Button} from "antd";
+import { DepartmentAddIcon, SettingTimesheetIcon , } from "../../../assets/images";
+import { Alert, SearchBar } from "../../../components";
+import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
+import { PopUpModal } from "../../../components/Model";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+
 const { TextArea } = Input;
 const { Title, Text } = Typography;
-
-
-
 
 let overview = [
   {
@@ -40,18 +37,17 @@ const SettingTimesheet = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
   return (
-    <div className="setting-shifts">
+    <div className="setting-time-sheet">
       <div>
         <div className="flex justify-between">
           <SearchBar size="large" handleChange={handleChange} />
-
           <Button
-            color="#4a9d77"
-            icon={<DepartmentAddIcon className="mx-2" />}
-            label="Add Category"
-            type="primary"
             size="middle"
-          />
+            onClick={() => {}}
+            className="flex gap-2 setting-add-button white-color teriary-bg-color"
+          >
+            <SettingTimesheetIcon /> Add Category
+          </Button>
 
           {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
         <span className="">  Add department</span> </Button> */}
@@ -61,7 +57,7 @@ const SettingTimesheet = () => {
         {overview.map((data: any, index: any) => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} md={6} lg={8}>
-              <div className="setting-shift-box-wrapper w-full">
+              <BoxWrapper className="w-full">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
@@ -77,7 +73,7 @@ const SettingTimesheet = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </BoxWrapper>
             </Col>
           );
         })}
@@ -116,6 +112,8 @@ const SettingTimesheet = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
+        title="error"
+        
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

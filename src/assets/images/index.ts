@@ -169,44 +169,58 @@ export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure
 export { ReactComponent as StructureMinus } from "./structure/minus.svg";
 export { ReactComponent as StructureAdd } from "./structure/add.svg";
 
-//setting
-export { ReactComponent as SettingMap } from './setting/map.svg';
-export { ReactComponent as SettingPeople } from './setting/people.svg';
-export { ReactComponent as SettingCalendarRemove } from './setting/calendar-remove.svg';
-export { ReactComponent as SettingChart } from './setting/chart.svg';
-export { ReactComponent as SettingDocument } from './setting/document.svg';
-export { ReactComponent as SettingShifts } from './setting/shifts.svg';
-export { ReactComponent as SettingTimer } from './setting/timer.svg';
-export { ReactComponent as SettingHorizontalLine } from './setting/horizontal-line.svg';
-export { ReactComponent as Settinglocation } from './setting/locationWhiteIcon.svg';
-export { ReactComponent as LocationImage } from './setting/locationImage.svg';
-export { ReactComponent as LocationMore } from './setting/More.svg';
-export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
-export { ReactComponent as DepartmentAddIcon } from './setting/addDepartment.svg';
+//Setting
+export { ReactComponent as SettingMap } from "./setting/map.svg";
+export { ReactComponent as SettingPeople } from "./setting/people.svg";
+export { ReactComponent as SettingCalendarRemove } from "./setting/calendar-remove.svg";
+export { ReactComponent as SettingChart } from "./setting/chart.svg";
+export { ReactComponent as SettingDocument } from "./setting/document.svg";
+export { ReactComponent as SettingShifts } from "./setting/shifts.svg";
+export { ReactComponent as SettingTimer } from "./setting/timer.svg";
+export { ReactComponent as SettingHorizontalLine } from "./setting/horizontal-line.svg";
+export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
+export { ReactComponent as LocationMore } from "./setting/More.svg";
+export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
+export { ReactComponent as SettingPayroll } from "./setting/payroll-setting.svg";
 
+// Setting Location
+export { ReactComponent as Settinglocation } from "./setting/locationWhiteIcon.svg";
+export { ReactComponent as CardLocation } from "./setting/cardImage.svg";
+//Setting Department
+export { ReactComponent as DepartmentAddIcon } from "./setting/addDepartment.svg";
+
+//Setting Shift
+export { ReactComponent as SettingShift } from "./setting/setting-shift.svg";
+
+//Setting Payroll
+export { ReactComponent as SettingPayrollAddIcon } from "./setting/setting-payroll.svg";
+
+//Setting Timesheet
+export { ReactComponent as SettingTimesheetIcon } from "./setting/setting-timesheet.svg";
 
 // setting Leaves
-export { ReactComponent as CasualLeave } from './setting/casual-leave.svg';
-export { ReactComponent as BereavementLeave } from './setting/bereavement.svg';
-export { ReactComponent as MaternityLeave } from './setting/maternity-leave.svg';
-export { ReactComponent as MatrimonialLeave } from './setting/matrimonial-leave.svg';
-export { ReactComponent as MedicalLeave } from './setting/medical-leave.svg';
-export { ReactComponent as PaternityLeave } from './setting/paternity-leave.svg';
-export { ReactComponent as SickLeave } from './setting/sick-leave.svg';
-export { ReactComponent as WorkFromHome } from './setting/work-from-home.svg';
+export { ReactComponent as SettingLeaves } from "./setting/setting-leaves.svg";
+export { ReactComponent as CasualLeave } from "./setting/casual-leave.svg";
+export { ReactComponent as BereavementLeave } from "./setting/bereavement.svg";
+export { ReactComponent as MaternityLeave } from "./setting/maternity-leave.svg";
+export { ReactComponent as MatrimonialLeave } from "./setting/matrimonial-leave.svg";
+export { ReactComponent as MedicalLeave } from "./setting/medical-leave.svg";
+export { ReactComponent as PaternityLeave } from "./setting/paternity-leave.svg";
+export { ReactComponent as SickLeave } from "./setting/sick-leave.svg";
+export { ReactComponent as WorkFromHome } from "./setting/work-from-home.svg";
 
 // setting performance
-export { ReactComponent as PerformancePlus } from './setting/plus.svg';
-export { ReactComponent as PerformanceMinus } from './setting/minus.svg';
-export { ReactComponent as Performanceinput } from './setting/performanceInput.svg';
+export { ReactComponent as PerformancePlus } from "./setting/plus.svg";
+export { ReactComponent as PerformanceMinus } from "./setting/minus.svg";
+export { ReactComponent as Performanceinput } from "./setting/performanceInput.svg";
 
 // Intern Dashboard
-export {ReactComponent as SunIcon} from './dashboard/sun.svg';
-export {ReactComponent as LocationIcon} from './dashboard/location.svg';
-export {ReactComponent as ClockInIcon} from './dashboard/ClockIn.svg';
-export {ReactComponent as ClockOutIcon} from './dashboard/ClockOut.svg';
-export {ReactComponent as AvgHoursIcon} from './dashboard/AvgHours.svg';
-export {ReactComponent as PurpleRectangle} from './dashboard/purpleRectangle.svg';
-export {ReactComponent as PinkRectangle} from './dashboard/pinkRectangle.svg';
-export {ReactComponent as YellowRectangle} from './dashboard/yellowRectangle.svg';
-export {ReactComponent as BlueRectangle} from './dashboard/blueRectangle.svg';
+export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
+export { ReactComponent as LocationIcon } from "./dashboard/location.svg";
+export { ReactComponent as ClockInIcon } from "./dashboard/ClockIn.svg";
+export { ReactComponent as ClockOutIcon } from "./dashboard/ClockOut.svg";
+export { ReactComponent as AvgHoursIcon } from "./dashboard/AvgHours.svg";
+export { ReactComponent as PurpleRectangle } from "./dashboard/purpleRectangle.svg";
+export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
+export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
+export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";

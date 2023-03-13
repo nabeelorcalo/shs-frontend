@@ -18,28 +18,16 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+import DemoCard from "./components/ContractCard/demoCard";
+import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
+import SettingLocation from "./pages/setting/Location";
+import AddLocation from "./pages/setting/Location/AddLocation";
+import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+
 // remove til here
 
 
-//Setting Child Component
-import SettingPerformance from "./components/Setting/Performance/Performance";
-import SettingDepartment from "./components/Setting/Department/Department";
-import SettingLeaves from "./components/Setting/Leaves/Leaves";
-import SettingLocation from "./components/Setting/Location/Location";
-import SettingTemplate from "./components/Setting/Templates/Templates";
-import SettingShifts from "./components/Setting/Shifts/Shifts";
-import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
-import SettingPayroll from "./components/Setting/Payroll/Payroll";
-import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
-import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
-import DemoCard from "./components/ContractCard/demoCard";
-import TemplatesOfferLater from "./components/Setting/Templates/OfferLetter";
-import TemplatesContract from "./components/Setting/Templates/Contract";
-import TemplatesRejectionLetter from "./components/Setting/Templates/RejectionLetter";
-import TemplatesCertificateOfAppreciation from "./components/Setting/Templates/CertificateOfAppreciation";
-import TemplatesCertificateOfCompletion from "./components/Setting/Templates/CertificateOfCompletion";
-//
+
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -101,6 +89,19 @@ const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
+const SettingPerformance= Loadable(lazy(()=>import("./pages/setting/Performance")))
+const SettingDepartment= Loadable(lazy(()=>import("./pages/setting/Department")))
+const SettingTemplate= Loadable(lazy(()=>import("./pages/setting/Templates")))
+const TemplatesOfferLater= Loadable(lazy(()=>import("./pages/setting/Templates/OfferLetter")))
+const TemplatesCertificateOfAppreciation= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfAppreciation")))
+const TemplatesCertificateOfCompletion= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfCompletion")))
+const TemplatesContract= Loadable(lazy(()=>import("./pages/setting/Templates/Contract")))
+const TemplatesRejectionLetter= Loadable(lazy(()=>import("./pages/setting/Templates/RejectionLetter")))
+const SettingLeaves= Loadable(lazy(()=>import("./pages/setting/Leaves")))
+const SettingShifts= Loadable(lazy(()=>import("./pages/setting/Shifts")))
+const SettingTimesheet= Loadable(lazy(()=>import("./pages/setting/Timesheet")))
+const SettingPayroll= Loadable(lazy(()=>import("./pages/setting/Payroll")))
+
 const Charts = Loadable(
   lazy(() => import("./components/ChartsOfGraphs/Charts"))
 );

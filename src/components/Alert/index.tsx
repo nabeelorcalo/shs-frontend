@@ -5,9 +5,24 @@ import { AlertIcon } from "../../assets/images";
 import { SuccessIcon } from "../../assets/images";
 import { WarningIcon } from "../../assets/images";
 
+interface IALEAR {
+    title:string
+    type:string
+    width:number
+    state:boolean
+    setState:React.Dispatch<React.SetStateAction<boolean>>
+    cancelBtntxt:string
+    okBtntxt:string
+    children:any
+    icon?:any
 
+  
+  
+  
+  
+  }
 
-export const Alert: React.FC = ({ title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, children }: any) => {
+export const Alert = ({ title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, children }:IALEAR) => {
     // const [open, setOpen] = useState(showHide);
     const alertColor = type === "error" ? "red" : type === "success" ? "green" : type === "warning" ? "orange" : "black"
     return (

@@ -2,8 +2,20 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons';
 
+interface IPOPUPMODAL {
+  title:string
+  width:number
+  state:boolean
+  setState:React.Dispatch<React.SetStateAction<boolean>>
+  cancelBtntxt:string
+  okBtntxt:string
+  children:any
 
-export const PopUpModal: React.FC = ({ title, width, state, setState, cancelBtntxt, okBtntxt, children }: any) => {
+
+}
+
+
+export const PopUpModal = ({ title, width, state, setState, cancelBtntxt, okBtntxt, children }: IPOPUPMODAL) => {
   // const [open, setOpen] = useState(showHide);
 
   return (

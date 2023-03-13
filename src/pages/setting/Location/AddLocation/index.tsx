@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { Typography, Row, Col, Divider, Form, TimePicker, Select } from "antd";
+import { Typography, Row, Col, Divider, Form, Radio , RadioChangeEvent, Select } from "antd";
 import { SettingHorizontalLine } from "../../../../assets/images";
-import {BoxWrapper} from "../../../BoxWrapper/BoxWrapper";
-import { Input } from "../../../Input/input";
-import { SearchBar } from "../../../SearchBar/SearchBar";
-import './AddLocation.scss'
+import './style.scss'
 import dayjs, { Dayjs } from "dayjs";
-import UploadDocument from "../../../UploadDocument";
 import { NavLink } from "react-router-dom";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
+import { Input, SearchBar } from "../../../../components";
+import UploadDocument from "../../../../components/UploadDocument";
 
 const { Title, Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
+  const [value, setValue] = useState(1);
   const [formValues, setFormValues] = useState<any>({
     locationName: "",
     postCode: "",
@@ -29,6 +29,11 @@ const AddLocation: React.FC = () => {
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+  };
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
   };
 
   console.log("formValues", formValues);
@@ -56,7 +61,7 @@ const AddLocation: React.FC = () => {
         <Form layout="vertical">
               {/*------------------------ Office----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Office
               </Title>
@@ -88,7 +93,7 @@ const AddLocation: React.FC = () => {
           <Divider />
               {/*------------------------ Address----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Address
               </Title>
@@ -102,7 +107,7 @@ const AddLocation: React.FC = () => {
               >
                 <SearchBar size="middle" handleChange={handleChange} />
               </Form.Item>
-              <div className="md:flex">
+              <div className="md:flex gap-2">
                 <Form.Item
                   name="address"
                   className="w-full"
@@ -128,7 +133,7 @@ const AddLocation: React.FC = () => {
 
                 <Form.Item
                   name="street"
-                  className="w-full pl-2"
+                  className="w-full "
                   rules={[
                     {
                       required: true,
@@ -149,7 +154,7 @@ const AddLocation: React.FC = () => {
                   />
                 </Form.Item>
               </div>
-              <div className="md:flex">
+              <div className="md:flex gap-2">
                 <Form.Item
                   name="town"
                   className="w-full"
@@ -172,7 +177,7 @@ const AddLocation: React.FC = () => {
                     value={formValues.town}
                   />
                 </Form.Item>
-                <div className="w-full mt-1 pl-2">
+                <div className="w-full mt-1 ">
                 <span className="label">Country<span className="text-[red]"></span></span>
                 
                   <Select
@@ -213,7 +218,7 @@ const AddLocation: React.FC = () => {
           <Divider />
               {/*------------------------ Contact----------------------------- */}
               <Row className="mt-5">
-            <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Contact
               </Title>
@@ -223,7 +228,7 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
             <span className="label">Phone Number (optional)<span className="text-[red]"></span></span>
-            <div className="md:flex">
+            <div className="flex">
        
             <div className=" mt-1 ">
                   <Select
@@ -259,7 +264,7 @@ const AddLocation: React.FC = () => {
 
                 <Form.Item
                   name="street"
-                  className="w-full pl-2"
+                  className="w-full md:pl-2"
                   rules={[
                     {
                       required: true,
@@ -301,7 +306,7 @@ const AddLocation: React.FC = () => {
           <Divider />
                {/*------------------------ Upload Picture----------------------------- */}
                <Row className="mt-5">
-            <Col className="gutter-row px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Upload Picture
               </Title>
@@ -315,6 +320,24 @@ const AddLocation: React.FC = () => {
           </Row>
           <Divider />
              {/*------------------------ Add Interns----------------------------- */}
+             <Row className="mt-5">
+            <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
+              <Title className="mt-0.5" level={4}>
+                Add Interns
+              </Title>
+              <Paragraph>
+                Select for this office location
+              </Paragraph>
+            </Col>
+            <Col className="gutter-row" xs={24} md={12} xxl={8}>
+
+            <Radio.Group onChange={onChange} value={value}>
+      <Radio value={1}>All interns</Radio>
+      <Radio value={2}>Select Interns</Radio>
+    </Radio.Group>
+    
+            </Col>
+          </Row>
         </Form>
       </BoxWrapper>
     </div>

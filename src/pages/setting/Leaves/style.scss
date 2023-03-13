@@ -1,9 +1,7 @@
 @import '../../../scss/colors';
 .setting-shifts{
-
-    .setting-shift-box-wrapper{
-
-        overflow: hidden;
+    .setting-shift-box-wrapper {
+        min-height: 125px !important;
         background-color: $white-bg-color;
         border-radius: 10px;
         padding: 10px;
@@ -13,13 +11,7 @@
         &:hover {
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1)
         }
-        .content-text{
-
-            color: $text-success-placeholder-color;
-
-        }
 
     }
-
 
 }

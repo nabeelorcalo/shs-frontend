@@ -1,35 +1,31 @@
 import React, { useState } from "react";
-import { Col, Row, Typography, Space, Input } from "antd";
-import { Settinglocation, LocationPeople } from "../../../assets/images";
-import { SearchBar } from "../../SearchBar/SearchBar";
-import {BoxWrapper }from "../../BoxWrapper/BoxWrapper";
-import cardImage from "../../../assets/images/setting/locationImage.svg";
-import { Button } from "../../Button";
+import { Col, Row, Typography, Space, Input, Button } from "antd";
+import { Settinglocation, LocationPeople, CardLocation } from "../../../assets/images";
 import { NavLink } from "react-router-dom";
-import DropDownForSetting from "../Common/CustomSettingDropdown";
-import { Alert } from "../../Alert";
-import "./Location.scss";
+import { Alert, SearchBar } from "../../../components";
+import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 const { TextArea } = Input;
 const { Title, Text } = Typography;
 
 let overview = [
   {
     name: "London",
-    cardImage: cardImage,
+    cardImage: <CardLocation/>,
     content: "United Kingdom",
     contentImage: <LocationPeople />,
     count: "15 Employees",
   },
   {
     name: "London",
-    cardImage: cardImage,
+    cardImage: <CardLocation/>,
     content: "United Kingdom",
     contentImage: <LocationPeople />,
     count: "15 Employees",
   },
   {
     name: "London",
-    cardImage: cardImage,
+    cardImage:<CardLocation/>,
     content: "United Kingdom",
     contentImage: <LocationPeople />,
     count: "15 Employees",
@@ -45,28 +41,27 @@ const SettingLocation: React.FC = () => {
         <SearchBar size="large" handleChange={handleChange} />
         <NavLink to="/settings/add-location">
           <Button
-            color="#4a9d77"
-            icon={<Settinglocation className="mx-2" />}
-            label="Add Location"
-            onClick={() => {}}
-            type="primary"
             size="middle"
-          />
+            onClick={() => {}}
+            className="flex gap-2 white-color teriary-bg-color hover:decoration-zinc-700 "
+          >
+            <Settinglocation /> Add Location
+          </Button>
         </NavLink>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className="location-box-wrapper">
+              <BoxWrapper className="location-box-wrapper">
                 <div className="flex">
-                  <img src={cardImage} />
+                  <Text>{data.cardImage}</Text> 
                   <div className="flex px-3 justify-between mt-1 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
                       <Text> {data.content}</Text>
                       <Space className="flex py-2">
-                        <Text className="">{data.contentImage}</Text>
+                      <Text>{data.contentImage}</Text>
                         <Text className="font-normal text-xs p-0 m-0">
                           {data.count}
                         </Text>
@@ -81,7 +76,7 @@ const SettingLocation: React.FC = () => {
                     </span>
                   </div>
                 </div>
-              </div>
+              </BoxWrapper>
             </Col>
           );
         })}
@@ -94,6 +89,7 @@ const SettingLocation: React.FC = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
+        title="error"
       >
         <p>Are you sure you want to delete this location?</p>
       </Alert>

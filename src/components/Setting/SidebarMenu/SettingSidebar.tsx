@@ -6,6 +6,7 @@ import {
   SettingChart,
   SettingDocument,
   SettingMap,
+  SettingPayroll,
   SettingPeople,
   SettingShifts,
 } from "../../../assets/images";
@@ -60,7 +61,7 @@ const menuLinks = [
   {
     title: "Payroll",
     link: "/settings/payroll",
-    icon: "icon",
+    icon: <SettingPayroll/>,
     description:
       "Add departments within your organisation for people management",
   },
