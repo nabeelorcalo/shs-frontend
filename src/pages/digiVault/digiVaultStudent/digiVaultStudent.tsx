@@ -9,7 +9,7 @@ import gallery from "../../../assets/images/ColorfullIconsProgressbar/media.svg"
 import Video from "../../../assets/images/ColorfullIconsProgressbar/video.svg";
 import Document from "../../../assets/images/ColorfullIconsProgressbar/doc.svg";
 import Folder from "../../../assets/images/ColorfullIconsProgressbar/file.svg";
-import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
+import DigivaultCard from "../../../components/DigiVaultCard";
 import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
 import { useNavigate } from "react-router-dom";
 import NewPasswordModal from "./newPasswordModal";

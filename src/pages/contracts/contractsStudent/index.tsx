@@ -86,8 +86,7 @@ const ContractsStudent = () => {
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="contract-status">
                 <div
-                  style={{ backgroundColor: "#FFC15E" }}
-                  className="status-box"
+                  className="status-box bg-[#FFC15E]"
                 ></div>
                 <div className="status-box-text">Received</div>
               </div>
@@ -106,8 +105,8 @@ const ContractsStudent = () => {
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="contract-status">
                 <div
-                  style={{ backgroundColor: "#E94E5D" }}
-                  className="status-box"
+                 
+                  className="status-box bg-[#E94E5D]"
                 ></div>
                 <div className="status-box-text">Rejected</div>
               </div>
@@ -124,8 +123,7 @@ const ContractsStudent = () => {
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="contract-status">
                 <div
-                  style={{ backgroundColor: "#4A9D77" }}
-                  className="status-box"
+                  className="status-box bg-[#4A9D77]"
                 ></div>
                 <div className="status-box-text">Signed</div>
               </div>

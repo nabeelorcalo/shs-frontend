@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import ContractsStudent from "./contractsStudent/contractsStudent";
+import ContractsStudent from "./contractsStudent";
 import "./style.scss";
 
 const Contracts = () => {
