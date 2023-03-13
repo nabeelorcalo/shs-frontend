@@ -1,16 +1,16 @@
 import { Space } from 'antd';
-import {BoxWrapper} from '../BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../BoxWrapper/BoxWrapper';
 import GlobalTable from '../Table/Table';
 interface DataType {
-    key: string,
-    dateApplied: string,
-    company: string,
-    typeOfWork: string,
-    internshipType: string,
-    natureOfWork: string,
-    Position: string,
-    Status: string,
-    Actions: string,
+    key?: string,
+    dateApplied?: string,
+    company?: string,
+    typeOfWork?: string,
+    internshipType?: string,
+    natureOfWork?: string,
+    Position?: string,
+    Status?: string,
+    Actions?: string,
     anyArray?: any,
 }
 const columns = [

@@ -1,5 +1,5 @@
 import React from "react";
-import ReactEcharts from "echarts-for-react";
+// import ReactEcharts from "echarts-for-react";
 import data from './data';
 import {
   FinanceIcon,
@@ -160,10 +160,10 @@ const Graph = ({ monthName }: any) => {
     ]
   };
 
-  return <ReactEcharts
-    option={option}
-    opts={{ renderer: "svg" }}
-    style={{ height: '600px' }}
-  />;
+  // return <ReactEcharts
+  //   option={option}
+  //   opts={{ renderer: "svg" }}
+  //   style={{ height: '600px' }}
+  // />;
 }
 export default Graph;

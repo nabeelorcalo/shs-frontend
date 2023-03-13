@@ -1,7 +1,7 @@
 import { Button, Col, Divider, Row, Typography } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard } from '../../../components'
-import {BoxWrapper} from '../../../components/BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../../../components/BoxWrapper/BoxWrapper';
 import Calendar from "./calendar/calendar"
 import action from "../actionHandler"
 import "./style.scss"

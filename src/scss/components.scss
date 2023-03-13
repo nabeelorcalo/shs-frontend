@@ -1,67 +1,67 @@
-@import "./colors";
-@import "./theme_variables.scss";
+// @import "./colors";
+// @import "./theme_variables.scss";
 
-// Button Component
-.btn-primary,
-.btn-deactive,
-.btn-cancel,
-.btn-danger,
-.btn-simple,
-.btn-secondary {
-  border: none;
-  color: $white-color;
-  padding: 6px 16px;
-  line-height: 20px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 6px;
-  box-shadow: none;
-  cursor: pointer;
-  transition: 0.3s;
+// // Button Component
+// .btn-primary,
+// .btn-deactive,
+// .btn-cancel,
+// .btn-danger,
+// .btn-simple,
+// .btn-secondary {
+//   border: none;
+//   color: $white-bg-color;
+//   padding: 6px 16px;
+//   line-height: 20px;
+//   font-size: 16px;
+//   font-weight: 500;
+//   border-radius: 6px;
+//   box-shadow: none;
+//   cursor: pointer;
+//   transition: 0.3s;
 
-  &:hover {
-    color: $white-color !important;
-  }
-}
+//   &:hover {
+//     color: $white-bg-color !important;
+//   }
+// }
 
-.btn-primary {
-  background-color: $primary-color;
-}
+// .btn-primary {
+//   background-color: $primary-bg-color;
+// }
 
-.btn-secondary {
-  background-color: $secondary-color;
-}
+// .btn-secondary {
+//   background-color: $secondary-color;
+// }
 
-.btn-deactive {
-  background-color: $progress-color;
+// .btn-deactive {
+//   background-color: $progress-color;
 
-  &:hover {
-    background-color: $danger-color;
-  }
-}
+//   &:hover {
+//     background-color: $danger-color;
+//   }
+// }
 
-.btn-danger {
-  background-color: $danger-color;
-}
+// .btn-danger {
+//   background-color: $danger-color;
+// }
 
-.btn-cancel {
-  color: $grey-color !important;
-  background-color: $white-color !important;
-  border: 1px solid $border-color;
+// .btn-cancel {
+//   color: $grey-color !important;
+//   background-color: $white-color !important;
+//   border: 1px solid $border-color;
 
-  &:hover {
-    border-color: $grey-color;
-    color: $grey-color !important;
-  }
-}
+//   &:hover {
+//     border-color: $grey-color;
+//     color: $grey-color !important;
+//   }
+// }
 
-.btn-simple {
-  color: $grey-color !important;
-  background-color: $white-color !important;
+// .btn-simple {
+//   color: $grey-color !important;
+//   background-color: $white-color !important;
 
-  &:hover {
-    color: $grey-color !important;
-  }
-}
+//   &:hover {
+//     color: $grey-color !important;
+//   }
+// }
 
-// Alert Copmonent
+// // Alert Copmonent
