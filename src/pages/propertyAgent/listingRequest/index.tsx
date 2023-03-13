@@ -6,8 +6,11 @@ import {
 } from "@ant-design/icons";
 import React, { useState } from "react";
 import GlobalTable from "../../../components/Table/Table";
-import { Button, Col, Row, Typography } from "antd";
+import { Button, Col, Row, Typography,Space,Form,Menu } from "antd";
 import { DropDown } from "../../../components";
+import Drawer from "../../../components/Drawer";
+import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+
 
 const columns = [
   {
@@ -47,6 +50,7 @@ const columns = [
           color: "#FFFFFF",
           padding: " 2px 3px 2px 3px",
           borderRadius: "4px",
+          textAlign:"center"
         }}
       >
         {data.status}
@@ -70,6 +74,7 @@ const columns = [
           color: "#FFFFFF",
           padding: " 2px 3px 2px 3px",
           borderRadius: "4px",
+          textAlign:"center"
         }}
       >
         {data.Verification}
@@ -79,11 +84,22 @@ const columns = [
     title: "Verification",
   },
   {
-    dataIndex: "Actions",
+    render: (_: any, data: any) => (
+      <span>
+        <CustomDroupDown menu1={menu2} />
+      </span>
+    ),
     key: "Actions",
     title: "Actions",
   },
 ];
+const menu2 = (
+  <Menu>
+     <Menu.Item key="1">View Details</Menu.Item>
+  
+   
+  </Menu>
+);
 const tableData = [
   {
     Actions: (
@@ -136,12 +152,47 @@ const tableData = [
 
 const ListingRequest = () => {
   const [value, setValue] = useState("");
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <div className="listing-request">
+      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
+      <Form layout="vertical">
+          <Form.Item label="Agent" name="agent">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+          <Form.Item label="Status" name="status">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+         
+          <div className="flex justify-center sm:justify-end">
+            <Space>
+              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+                Cancel
+              </Button>
+              <Button
+                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Apply
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="flex justify-end gap-2 mb-3">
-            <Button className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
+            <Button onClick={()=>setOpenDrawer(true)} className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
               <NodeExpandOutlined className="text-base" />
               Filter
               <RightOutlined className="text-xs" />

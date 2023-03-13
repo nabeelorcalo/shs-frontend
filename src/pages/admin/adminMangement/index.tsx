@@ -14,21 +14,27 @@ import {
   Divider,
   Form,
   Input,
+  Menu,
   Modal,
   Row,
   Select,
+  Space,
   Typography,
 } from "antd";
 import { Option } from "antd/es/mentions";
 import React, { useState } from "react";
-import { DropDown, SearchBar } from "../../../components";
+import { CalendarIcon } from "../../../assets/images";
+import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
+import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
+import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
 
 const AdminManagement = () => {
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
-    const [openC, setOpenC] = useState(false);
-    
+  const [openC, setOpenC] = useState(false);
+  const [isdate1, setIsDate1] = useState(false);
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -36,7 +42,7 @@ const AdminManagement = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
+  const [openDrawer, setOpenDrawer] = useState(false);
   const searchValue = () => {};
   const columns = [
     {
@@ -81,6 +87,7 @@ const AdminManagement = () => {
             color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
             borderRadius: "4px",
+            textAlign: "center",
           }}
         >
           {data.status}
@@ -91,18 +98,24 @@ const AdminManagement = () => {
     },
 
     {
-      dataIndex: "Actions",
+      render: (_: any, data: any) => (
+        <span>
+          <CustomDroupDown menu1={menu2} />
+        </span>
+      ),
       key: "Actions",
       title: "Actions",
     },
   ];
+  const menu2 = (
+    <Menu>
+      <Menu.Item key="2">Blocked</Menu.Item>
+      <Menu.Item key="3">Password Reset</Menu.Item>
+    </Menu>
+  );
   const tableData = [
     {
-      Actions: (
-        <span>
-          <EllipsisOutlined />
-        </span>
-      ),
+      Actions: "fffff",
       date: "23/09/2022",
       status: "Active",
 
@@ -112,11 +125,7 @@ const AdminManagement = () => {
       no: "01",
     },
     {
-      Actions: (
-        <span>
-          <EllipsisOutlined />
-        </span>
-      ),
+      Actions: "fffff",
       date: "23/09/2022",
 
       status: "Active",
@@ -146,6 +155,46 @@ const AdminManagement = () => {
   ];
   return (
     <div className="admin-management">
+      <Drawer
+        open={openDrawer}
+        title=" Filters"
+        onClose={() => setOpenDrawer(false)}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Status" name="status">
+          <CommonDatePicker
+                        requireAsButton
+                        btnIcon={CalendarIcon}
+                        btnClassName={'h-[48px]'}
+                        placement="bottomRight"
+                        open={isdate1}
+                        setOpen={setIsDate1}
+                        setValue={setValue}
+                    />
+          </Form.Item>
+          <Form.Item label="City" name="city">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+          <div className="flex justify-center sm:justify-end">
+            <Space>
+              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+                Cancel
+              </Button>
+              <Button
+                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
@@ -163,7 +212,8 @@ const AdminManagement = () => {
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex justify-end items-center gap-3">
             <Button
-            className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
+              onClick={() => setOpenDrawer(true)}
+              className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
               <NodeExpandOutlined style={{ fontSize: "16px" }} />
               Filter
@@ -302,8 +352,8 @@ const AdminManagement = () => {
               padding: "0px 20px",
             }}
             onClick={() => {
-                setOpenC(false);
-              }}
+              setOpenC(false);
+            }}
           >
             Cancel
           </Button>,
@@ -325,36 +375,47 @@ const AdminManagement = () => {
         title="Permission"
       >
         <Form
-          
           name="basic"
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+        >
+          <Row gutter={[5, 20]}>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+                All
+              </Checkbox>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Checkbox
+                checked
+                className="text-base font-normal text-[#A0A3BD]"
               >
-                  <Row gutter={[5,20]}>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Checkbox className="text-base font-normal text-[#A0A3BD]">All</Checkbox>
-                      </Col>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Checkbox checked className="text-base font-normal text-[#A0A3BD]">Dashboard</Checkbox>
-                      </Col>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Checkbox className="text-base font-normal text-[#A0A3BD]">User Management <RightOutlined style={{fontSize:"16px"}} /></Checkbox>
-                      </Col>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Checkbox className="text-base font-normal text-[#A0A3BD]">Agent Management</Checkbox>
-                      </Col>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Checkbox className="text-base font-normal text-[#A0A3BD]">Issue Management</Checkbox>
-                      </Col>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Checkbox className="text-base font-normal text-[#A0A3BD]">Setting</Checkbox>
-                      </Col>
-                  </Row>
-           
-        
-         
+                Dashboard
+              </Checkbox>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+                User Management <RightOutlined style={{ fontSize: "16px" }} />
+              </Checkbox>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+                Agent Management
+              </Checkbox>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+                Issue Management
+              </Checkbox>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+                Setting
+              </Checkbox>
+            </Col>
+          </Row>
         </Form>
       </Modal>
     </div>

@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, Typography } from "antd";
+import { Button, Col, Divider, Row, Typography, Form, Space } from 'antd';
 import React, { useState } from "react";
 import { DropDown, SearchBar } from "../../../components";
 import user from "../../../assets/images/profile/university/Managers.svg";
@@ -7,16 +7,55 @@ import gridview from "../../../assets/images/profile/university/gridview.svg";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import ManagerInfo from "./managerInfo";
 import ManagerInfoTable from "./managerInfoTable";
+import Drawer from "../../../components/Drawer";
 
 const ManagerMain = () => {
   const [value, setValue] = useState("");
   const [showGrid, setShowGrid] = useState(true);
   const [showTable, setShowTable] = useState(false);
-  const [bgColor, setBgColor] = useState("#E6F4F9");
-  const searchValue = () => {};
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [active, setActive] = useState(false);
 
+  const searchValue = () => {};
+  const handleClick = () => {
+    setActive(!active);
+  };
   return (
     <div className="manager-main">
+      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
+      <Form layout="vertical">
+         
+          <Form.Item label="Status" name="status">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+          <Form.Item label="Department" name="department">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+          <div className="flex justify-center sm:justify-end">
+            <Space>
+              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+                Reset
+              </Button>
+              <Button
+                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Apply
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
@@ -35,34 +74,33 @@ const ManagerMain = () => {
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
             <Button className="bg-[#4A9D77] text-white flex items-center ">
               <a href="addManager" className="flex items-center gap-3">
-                {" "}
                 <img src={user} alt="" /> New Manager
               </a>
             </Button>
-            <Button className="font-semibold text-base text-[#A0A3BD] rounded-[8px] m-[12px] bg-[#E6F4F9]">
+            <Button onClick={()=>setOpenDrawer(true)} className="font-semibold text-base text-[#A0A3BD] rounded-[8px] m-[12px] bg-[#E6F4F9]">
               <NodeExpandOutlined className="text-base" />
               Filter
               <RightOutlined className="text-xs" />
             </Button>
             <div className="bg-[#E6F4F9] p-2 flex gap-2">
               <div
-                style={{ background: bgColor }}
+                 style={{ backgroundColor: active ? "white" : "#E6F4F9" }}
                 className=" p-1 cursor-pointer"
                 onClick={() => {
                   setShowGrid(true);
                   setShowTable(false);
-                  setBgColor("white");
+                  handleClick();
                 }}
               >
                 <img src={listView} alt="" />
               </div>
               <div
-                style={{ background: bgColor }}
+                 style={{ backgroundColor: active ? "white" : "#E6F4F9" }}
                 className=" p-1 cursor-pointer"
                 onClick={() => {
                   setShowTable(true);
                   setShowGrid(false);
-                  setBgColor("white");
+                  handleClick();
                 }}
               >
                 <img src={gridview} alt="" />

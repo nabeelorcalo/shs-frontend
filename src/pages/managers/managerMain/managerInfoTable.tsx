@@ -2,6 +2,8 @@ import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import React from "react";
 import GlobalTable from "../../../components/Table/Table";
 import pf from "../../../assets/images/profile/university/small.svg";
+import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import { Menu } from "antd";
 
 const columns = [
   {
@@ -50,6 +52,7 @@ const columns = [
           color: "#FFFFFF",
           padding: " 2px 3px 2px 3px",
           borderRadius: "4px",
+          textAlign: "center",
         }}
       >
         {data.status}
@@ -60,12 +63,21 @@ const columns = [
   },
 
   {
-    dataIndex: "Actions",
-   
+    render: (_: any, data: any) => (
+      <span>
+        <CustomDroupDown menu1={menu2} />
+      </span>
+    ),
     key: "Actions",
     title: "Actions",
   },
 ];
+const menu2 = (
+  <Menu>
+    <Menu.Item key="1">Profile</Menu.Item>
+    <Menu.Item key="3">Password Reset</Menu.Item>
+  </Menu>
+);
 const tableData = [
   {
     Actions: (

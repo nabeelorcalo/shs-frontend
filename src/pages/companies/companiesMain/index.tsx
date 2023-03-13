@@ -3,83 +3,17 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Divider, Row, Typography } from "antd";
+import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import React, { useState } from "react";
 import { DropDown, SearchBar } from "../../../components";
+import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
+import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
 
-const columns = [
-  {
-    dataIndex: "no",
-    key: "no",
-    title: "Sr. No",
-  },
-  {
-    dataIndex: "companyName",
-    key: "companyName",
-    title: "Company Name",
-  },
-  {
-    dataIndex: "companyadmin",
-    key: "companyadmin",
-    title: "Company Admin",
-  },
-  {
-    dataIndex: "Email",
-    key: "Email",
-    title: "Email",
-  },
 
-  {
-    dataIndex: "PhoneNumber",
-    key: "PhoneNumber",
-    title: "Phone Number",
-  },
-  {
-    dataIndex: "address",
-    key: "address",
-    title: "Address",
-  },
-
-  {
-    dataIndex: "status",
-    render: (_: any, data: any) => (
-      <div
-        className="table-status-style"
-        style={{
-          backgroundColor:
-            data.status === "Pending"
-              ? "#FFC15D"
-              : data.status === "Active"
-              ? "#3DC475"
-              : data.status === "Blocked"
-              ? "#D83A52"
-              : "",
-          color: "#FFFFFF",
-          padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
-        }}
-      >
-        {data.status}
-      </div>
-    ),
-    key: "status",
-    title: "Status",
-  },
-
-  {
-    dataIndex: "Actions",
-    key: "Actions",
-    title: "Actions",
-  },
-];
 const tableData = [
   {
-    Actions: (
-      <div>
-        <EllipsisOutlined />
-      </div>
-    ),
+    Actions: "fffff",
     companyName: "University of Birmingham",
     status: "Active",
     address: "kljdasfhuasd",
@@ -88,14 +22,11 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     companyadmin: "Jenny Wilson",
     city: "London",
+    noOfInterns:"10",
     hired: "Yes",
   },
   {
-    Actions: (
-      <span>
-        <EllipsisOutlined />
-      </span>
-    ),
+    Actions: "fffff",
     companyName: "University of Birmingham",
 
     status: "Active",
@@ -104,37 +35,30 @@ const tableData = [
     Email: "jackson.graham@example.com",
     no: "02",
     companyadmin: "Jenny Wilson",
+    noOfInterns:"10",
   },
   {
-    Actions: (
-      <div>
-        <EllipsisOutlined />
-      </div>
-    ),
+    Actions: "fffff",
     companyName: "University of Birmingham",
-    status: "Blocked",
+    status: "Inactive",
     address: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "03",
-
+    noOfInterns:"10",
     companyadmin: "Jenny Wilson",
     city: "London",
     hired: "No",
   },
   {
-    Actions: (
-      <div>
-        <EllipsisOutlined />
-      </div>
-    ),
+    Actions: "fffff",
     companyName: "University of Birmingham",
-    status: "Blocked",
+    status: "Inactive",
     address: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "04",
-
+    noOfInterns:"10",
     companyadmin: "Jenny Wilson",
     city: "London",
     hired: "No",
@@ -143,9 +67,130 @@ const tableData = [
 
 const CompaniesMain = () => {
   const [value, setValue] = useState("");
-  const searchValue = () => {};
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const searchValue = () => { };
+  const columns = [
+    {
+      dataIndex: "no",
+      key: "no",
+      title: "Sr. No",
+    },
+    {
+      dataIndex: "companyName",
+      key: "companyName",
+      title: " University Name",
+    },
+    {
+      dataIndex: "companyadmin",
+      key: "companyadmin",
+      title: " Contact Person",
+    },
+    {
+      dataIndex: "Email",
+      key: "Email",
+      title: "Email",
+    },
+    {
+      dataIndex: "noOfInterns",
+      key: "noOfInterns",
+      title: "No.Of Interns",
+    },
+    {
+      dataIndex: "PhoneNumber",
+      key: "PhoneNumber",
+      title: "Phone Number",
+    },
+    {
+      dataIndex: "address",
+      key: "address",
+      title: "Address",
+    },
+    
+  
+    {
+      dataIndex: "status",
+      render: (_: any, data: any) => (
+        <div
+          className="table-status-style"
+          style={{
+            backgroundColor:
+              data.status === "Pending"
+                ? "#FFC15D"
+                : data.status === "Active"
+                ? "#3DC475"
+                : data.status === "Inactive"
+                ? "#D83A52"
+                : "",
+            color: "#FFFFFF",
+            padding: " 2px 3px 2px 3px",
+            borderRadius: "4px",
+            textAlign:"center",
+          }}
+        >
+          {data.status}
+        </div>
+      ),
+      key: "status",
+      title: "Status",
+    },
+  
+    {
+      render: (_: any, data: any) => (
+        <span>
+          <CustomDroupDown menu1={menu2} />
+        </span>
+      ),
+      key: "Actions",
+      title: "Actions",
+    },
+  ];
+  const menu2 = (
+    <Menu>
+       <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="2">Block</Menu.Item>
+      <Menu.Item key="3">Password Reset</Menu.Item>
+     
+    </Menu>
+  );
   return (
     <div className="company-main">
+       <Drawer
+        open={openDrawer}
+        title=" Filters"
+        onClose={() => setOpenDrawer(false)}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Status" name="status">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+          <Form.Item label="City" name="city">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+          <div className="flex justify-center sm:justify-end">
+            <Space>
+              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+                Cancel
+              </Button>
+              <Button
+                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
@@ -163,7 +208,7 @@ const CompaniesMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
-            <Button className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
+            <Button onClick={()=>setOpenDrawer(true)} className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
               <NodeExpandOutlined style={{ fontSize: "16px" }} />
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />
