@@ -2,7 +2,9 @@ import React from 'react'
 import { BoxWrapper } from '../../components/BoxWrapper/boxWrapper'
 import GlobalTable from '../../components/Table/Table';
 import { Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from '../../assets/images'
+import { ItemType } from 'antd/es/menu/hooks/useItems';
 const CandidateTable = () => {
 
     let ratingCount = [
@@ -24,6 +26,16 @@ const CandidateTable = () => {
             key: 'rating'
         },
 
+    ];
+
+    const ActionItems: any = [
+        {
+            label: <div>
+                <p>View Details</p>
+                <p>Reject</p>
+            </div>,
+            key: 'actions',
+        },
     ]
 
     const columns = [
@@ -90,7 +102,7 @@ const CandidateTable = () => {
             key: 'action',
             dataIndex: '',
             title: 'Action',
-            render: (_: any, data: any) => <Dropdown menu={{}} trigger={['click']}>
+            render: (_: any, data: any) => <Dropdown menu={ ActionItems } trigger={['click']}>
                 <ThreeDotsIcon />
             </Dropdown>
         },

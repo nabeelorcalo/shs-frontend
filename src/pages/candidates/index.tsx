@@ -6,6 +6,8 @@ import "./style.scss";
 import Table from "../../components/Noman/Table";
 import GlobalTable from "../../components/Table/Table";
 import CandidateTable from "./candidateTable";
+import Modal from "./Modal";
+
 const Candidates = () => {
   return (
     <>
@@ -21,7 +23,7 @@ const Candidates = () => {
         </Col>
       </Row>
       <CandidateTable />
-
+      <Modal />
     </>
   )
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Checkbox, Col, Row } from 'antd'
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { CommonDatePicker } from '../../calendars/CommonDatePicker';
+import { CommonDatePicker } from '../../calendars/CommonDatePicker/CommonDatePicker';
 import { Input } from '../../Input/input';
 import Model from '../model'
 
