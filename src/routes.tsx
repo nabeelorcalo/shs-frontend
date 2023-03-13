@@ -18,6 +18,9 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+// remove til here
+
+
 //Setting Child Component
 import SettingPerformance from "./components/Setting/Performance/Performance";
 import SettingDepartment from "./components/Setting/Department/Department";
@@ -30,7 +33,6 @@ import SettingPayroll from "./components/Setting/Payroll/Payroll";
 import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
-//
 import DemoCard from "./components/ContractCard/demoCard";
 import TemplatesOfferLater from "./components/Setting/Templates/OfferLetter";
 import TemplatesContract from "./components/Setting/Templates/Contract";
@@ -81,9 +83,12 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(
-  lazy(() => import("./pages/accommodation/AvailableProperties"))
-);
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
+const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
+const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
+const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
+const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
+const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -777,24 +782,29 @@ const studentRoutes = [
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <h1>SAVED_SEARCHES</h1>,
+            element: <SavedSearches />,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <h1>RENTED_PROPERTIES</h1>,
+            element: <RentedProperties />,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <h1>BOOKING_REQUESTS</h1>,
+            element: <BookingRequests />,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
+            element: <AccommodationPayments />,
           },
         ],
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        element: <AccPropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

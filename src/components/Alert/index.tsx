@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import { CloseCircleFilled } from '@ant-design/icons';
-import { AlertIcon } from '../../assets/images';
-import { SuccessIcon } from '../../assets/images';
-import { WarningIcon } from '../../assets/images';
+import React, { useState } from "react";
+import { Button, Modal } from "antd";
+import { CloseCircleFilled } from "@ant-design/icons";
+import { AlertIcon } from "../../assets/images";
+import { SuccessIcon } from "../../assets/images";
+import { WarningIcon } from "../../assets/images";
 
 
 
@@ -37,9 +37,7 @@ export const Alert: React.FC = ({ title, type, width, state, setState, icon, can
                     </div>
                     {children}
                 </div>
+</Modal>
+</>)
 
-            </Modal>
-
-        </>
-    );
 };

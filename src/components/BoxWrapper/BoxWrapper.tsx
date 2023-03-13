@@ -3,11 +3,9 @@ import "./BoxWrapper.scss";
 interface Props {
   className?: string;
   children?: ReactNode;
-  onClick?: () => void;
   boxShadow?: string;
   rest?: any;
 }
-
 export const BoxWrapper = (props: Props) => {
   const {
     className,
@@ -20,7 +18,6 @@ export const BoxWrapper = (props: Props) => {
       className={`${className} box-wrapper`}
       style={{ boxShadow: boxShadow }}
       {...rest}
-      
     >
       {children}
     </div>

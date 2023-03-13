@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Col, Row, Typography, Space, Input } from "antd";
 import { Settinglocation, LocationPeople } from "../../../assets/images";
 import { SearchBar } from "../../SearchBar/SearchBar";
+import {BoxWrapper }from "../../BoxWrapper/BoxWrapper";
 import cardImage from "../../../assets/images/setting/locationImage.svg";
 import { Button } from "../../Button";
 import { NavLink } from "react-router-dom";
