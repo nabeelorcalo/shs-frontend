@@ -8,18 +8,19 @@ import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import ManagerInfo from "./managerInfo";
 import ManagerInfoTable from "./managerInfoTable";
 import Drawer from "../../../components/Drawer";
+import '../style.scss';
 
 const ManagerMain = () => {
   const [value, setValue] = useState("");
   const [showGrid, setShowGrid] = useState(true);
   const [showTable, setShowTable] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [active, setActive] = useState(false);
+  const [activeButton, setActiveButton] = useState(0);
 
   const searchValue = () => {};
-  const handleClick = () => {
-    setActive(!active);
-  };
+  const handleClick = (buttonIndex:any) => {
+    setActiveButton(buttonIndex);
+  }
   return (
     <div className="manager-main">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
@@ -84,26 +85,26 @@ const ManagerMain = () => {
             </Button>
             <div className="bg-[#E6F4F9] p-2 flex gap-2">
               <div
-                 style={{ backgroundColor: active ? "white" : "#E6F4F9" }}
-                className=" p-1 cursor-pointer"
+               className={`button ${activeButton === 0 ? 'active' : ''}`}
+               
                 onClick={() => {
                   setShowGrid(true);
                   setShowTable(false);
-                  handleClick();
+                  handleClick(0);
                 }}
               >
-                <img src={listView} alt="" />
+                <img src={listView} alt="" className='img-style' />
               </div>
               <div
-                 style={{ backgroundColor: active ? "white" : "#E6F4F9" }}
-                className=" p-1 cursor-pointer"
+                  className={`button ${activeButton === 1 ? 'active' : ''}`}
+                 
                 onClick={() => {
                   setShowTable(true);
                   setShowGrid(false);
-                  handleClick();
+                  handleClick(1);
                 }}
               >
-                <img src={gridview} alt="" />
+                <img src={gridview} alt="" className='img-style' />
               </div>
             </div>
             <div className="w-25">

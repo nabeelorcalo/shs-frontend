@@ -1,15 +1,12 @@
+import React from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Form,
-  Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
-import React from "react";
 import "./Verification.scss";
 import {
   BackButton,
@@ -63,7 +60,7 @@ const DbsVerification = (props: any) => {
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                       <Typography className="dragger-title">
                         Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
+                        <span className="text-[#E95060]">Browse</span>
                       </Typography>
                       <Typography className="dragger-description">
                         Support jpeg,pdf and doc files

@@ -110,7 +110,9 @@ const AdminManagement = () => {
   const menu2 = (
     <Menu>
       <Menu.Item key="2">Blocked</Menu.Item>
-      <Menu.Item key="3">Password Reset</Menu.Item>
+      <Menu.Item key="3">
+        <a href="create-password">Password Reset</a>{" "}
+      </Menu.Item>
     </Menu>
   );
   const tableData = [
@@ -162,15 +164,15 @@ const AdminManagement = () => {
       >
         <Form layout="vertical">
           <Form.Item label="Status" name="status">
-          <CommonDatePicker
-                        requireAsButton
-                        btnIcon={CalendarIcon}
-                        btnClassName={'h-[48px]'}
-                        placement="bottomRight"
-                        open={isdate1}
-                        setOpen={setIsDate1}
-                        setValue={setValue}
-                    />
+            <CommonDatePicker
+              requireAsButton
+              btnIcon={CalendarIcon}
+              btnClassName={"h-[48px]"}
+              placement="bottomRight"
+              open={isdate1}
+              setOpen={setIsDate1}
+              setValue={setValue}
+            />
           </Form.Item>
           <Form.Item label="City" name="city">
             <DropDown
@@ -346,11 +348,8 @@ const AdminManagement = () => {
         footer={[
           <Button
             key="Cancel"
-            style={{
-              border: "1px solid #4a9d77",
-              color: "#4a9d77",
-              padding: "0px 20px",
-            }}
+            className=" border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 text-[#4a9d77]"
+           
             onClick={() => {
               setOpenC(false);
             }}
@@ -359,12 +358,7 @@ const AdminManagement = () => {
           </Button>,
           <Button
             key="submit"
-            style={{
-              backgroundColor: "#4a9d77",
-              border: "1px solid #4a9d77",
-              color: "#fff",
-              padding: "0px 20px",
-            }}
+            className="bg-[#4a9d77] border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5"
             onClick={() => {
               setOpenC(false);
             }}

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Button,
   DatePicker,
@@ -9,7 +10,6 @@ import {
   Space,
   Typography,
 } from "antd";
-import React, { useState } from "react";
 import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
@@ -20,23 +20,12 @@ import type { SelectProps } from "antd";
 import { DropDown } from "../../../../../components";
 
 const UniversityDetails = (props: any) => {
+
   const { currentStep, setCurrentStep } = props;
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
   const [searchValue, setSearchValue] = useState("");
 
-  const handleSearch = (newValue: string) => {
-    // if (newValue) {
-    //   fetch(newValue, setData);
-    // } else {
-    setData([]);
-    // }
-  };
-
-  const { RangePicker } = DatePicker;
-  const handleChange = (newValue: string) => {
-    setValue(newValue);
-  };
   return (
     <div className="university-detail">
       <Row className="university-detail-style">

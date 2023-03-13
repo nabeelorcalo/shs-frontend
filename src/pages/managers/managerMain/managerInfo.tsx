@@ -1,6 +1,5 @@
 import { Button, Col, Row, Space, Typography } from "antd";
 import React from "react";
-import ManagerInfoTable from "./managerInfoTable";
 import { managerCar } from "./managerMock";
 
 const ManagerInfo = () => {

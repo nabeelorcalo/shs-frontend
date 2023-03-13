@@ -1,8 +1,9 @@
-import { EllipsisOutlined, MoreOutlined } from '@ant-design/icons'
-import { Col, Row } from 'antd'
 import React, { useState } from 'react'
+import { EllipsisOutlined } from '@ant-design/icons'
+import { Col, Menu, Row } from 'antd'
 import { DropDown, SearchBar } from '../../../../components'
 import GlobalTable from '../../../../components/Table/Table'
+import CustomDroupDown from '../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown'
 
 const DelegateMain = () => {
     const [value, setValue] = useState("");
@@ -29,9 +30,7 @@ const DelegateMain = () => {
         dataIndex: "agenttype",
         key: "agenttype",
         title: "Agent Type",
-      },
-     
-     
+      }, 
       {
         dataIndex: "joiningdate",
         key: "joiningdate",
@@ -58,6 +57,7 @@ const DelegateMain = () => {
               color: "#FFFFFF",
               padding: " 2px 3px 2px 3px",
               borderRadius: "4px",
+              textAlign:"center",
             }}
           >
             {data.status}
@@ -68,11 +68,23 @@ const DelegateMain = () => {
       },
      
       {
-        dataIndex: "Actions",
+        render: (_: any, data: any) => (
+          <span>
+            <CustomDroupDown menu1={menu2} />
+          </span>
+        ),
         key: "Actions",
         title: "Actions",
       },
-    ];
+  ];
+  const menu2 = (
+    <Menu>
+       {/* <Menu.Item key="1">View Details</Menu.Item> */}
+      <Menu.Item key="2"  >Revoke Access</Menu.Item>
+      <Menu.Item key="3" ><a href="create-password">Password Reset</a> </Menu.Item>
+     
+    </Menu>
+  );
     const tableData = [
       {
         Actions: (
@@ -124,14 +136,13 @@ const DelegateMain = () => {
       },
     ];
   return (
-      <div className='delegate-main'>
-          
+      <div className='delegate-main'>  
           <Row>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex  justify-center md:justify-end gap-3 mt-3 md:mt-0">
+          <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0">
             <DropDown
               name="Status"
               value={value}

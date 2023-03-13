@@ -1,23 +1,21 @@
+import React from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
-import React from "react";
-
 import "./Verification.scss";
 import { BackButton } from "../../../../../assets/images";
 import { SHSLogo } from "../../../../../assets/images";
 
-const { Option } = Select;
+
 
 const IdentityVerification = (props: any) => {
+  const { Option } = Select;
   const { currentStep, setCurrentStep } = props;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>

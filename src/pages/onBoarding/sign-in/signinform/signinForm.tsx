@@ -1,11 +1,6 @@
 import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
 import { useState } from "react";
-
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
 
 const SigninForm = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +8,9 @@ const SigninForm = () => {
     password: "",
   });
 
+  const onFinish = (values: any) => {
+    console.log("Received values of form: ", values);
+  };
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -55,31 +53,43 @@ const SigninForm = () => {
             />
           </Form.Item>
           <Row className="flex">
-            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24} className='text-center sm:text-start'>
-            <Form.Item name="remember" valuePropName="checked" noStyle className="text-center">
-              <Checkbox >Remember me</Checkbox>
-            </Form.Item>
+            <Col
+              xxl={12}
+              xl={12}
+              lg={12}
+              md={12}
+              sm={24}
+              xs={24}
+              className="text-center sm:text-start"
+            >
+              <Form.Item
+                name="remember"
+                valuePropName="checked"
+                noStyle
+                className="text-center"
+              >
+                <Checkbox>Remember me</Checkbox>
+              </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-            <Form.Item >
-            <a className="login-form-forgot text-center md:text-end" href="/forgot-password">
-              <Typography>Forgot password</Typography>
-            </a>
-          </Form.Item>
+              <Form.Item>
+                <a
+                  className="login-form-forgot text-center md:text-end"
+                  href="/forgot-password"
+                >
+                  <Typography>Forgot password</Typography>
+                </a>
+              </Form.Item>
             </Col>
           </Row>
-         
-           
-          
 
           <Form.Item>
             <Button
               type="primary"
-            // htmlType="submit"
+              // htmlType="submit"
               className="login-form-button"
             >
-              <a href="/" >Sign In</a>
-           
+              <a href="/">Sign In</a>
             </Button>
           </Form.Item>
           <div>

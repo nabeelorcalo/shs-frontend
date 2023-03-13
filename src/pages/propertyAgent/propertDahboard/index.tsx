@@ -31,7 +31,7 @@ const PropertyDashboard = () => {
       <>
           <Row>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Typography>Property Agent</Typography>
+                  <Typography className="text-2xl font-semibold font-[Outfit] text-[#363565]">Property Agent</Typography>
               </Col>
               <Divider/>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>

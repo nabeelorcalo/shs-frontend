@@ -1,18 +1,8 @@
-import {
-  Button,
-  Upload,
-  Col,
-  Form,
-  Row,
-  Select,
-  Space,
-  Typography,
-} from "antd";
-import React, { useState } from "react";
+import React from "react";
+import { Button, Upload, Col, Form, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
 import { BackButton, Round } from "../../../../../assets/images";
-import VideoRecorderLocal from "./VideoRecorderLocal";
 
 const Video = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -28,7 +18,7 @@ const Video = (props: any) => {
       <Row className="university-detail-style">
         <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">

@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import {
-  EllipsisOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
@@ -14,7 +14,6 @@ import {
   Space,
   Menu,
 } from "antd";
-import React, { useState } from "react";
 import { DropDown, SearchBar } from "../../../components";
 import GlobalTable from "../../../components/Table/Table";
 import Drawer from "../../../components/Drawer";
@@ -156,8 +155,8 @@ const StudentMain = () => {
   const menu2 = (
     <Menu>
        <Menu.Item key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3">Password Reset</Menu.Item>
+      <Menu.Item key="2"  >Block</Menu.Item>
+      <Menu.Item key="3" ><a href="create-password">Password Reset</a> </Menu.Item>
      
     </Menu>
   );

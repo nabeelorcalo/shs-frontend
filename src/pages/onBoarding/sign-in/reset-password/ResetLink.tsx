@@ -1,5 +1,5 @@
-import { Button, Col, Row, Typography } from "antd";
 import React from "react";
+import { Button, Col, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../assets/images";
 import fly from "../../../../assets/images/login/fly.png";
 import "../../sign-in/signin.scss";

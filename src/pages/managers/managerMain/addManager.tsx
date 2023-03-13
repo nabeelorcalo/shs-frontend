@@ -75,7 +75,10 @@ const AddManager = () => {
                   { required: true, message: "Please input your firstname!" },
                 ]}
               >
-                <Input   className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"/>
+                <Input
+                  placeholder="Enter First Name"
+                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item
                 label="Last Name"
@@ -84,7 +87,10 @@ const AddManager = () => {
                   { required: true, message: "Please input your Last name!" },
                 ]}
               >
-                <Input  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"/>
+                <Input
+                  placeholder="Enter Last Name"
+                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item
                 label="Gender"
@@ -107,7 +113,10 @@ const AddManager = () => {
                   { required: true, message: "Please input your Email!" },
                 ]}
               >
-                <Input  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"/>
+                <Input
+                  placeholder="Enter Email"
+                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item label="Phone Number" name="phoneNumber">
                 <Input.Group compact>
@@ -142,7 +151,10 @@ const AddManager = () => {
                   { required: true, message: "Please input your Title!" },
                 ]}
               >
-                <Input  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"/>
+                <Input
+                  placeholder="Enter Title"
+                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item
                 label="Department"
@@ -185,10 +197,16 @@ const AddManager = () => {
                 />
               </Form.Item>
               <Form.Item label="Address" name="address">
-                <Input  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"/>
+                <Input
+                  placeholder="Enter Address"
+                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item label="City" name="city">
-                <Input  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"/>
+                <Input
+                  placeholder="Enter City"
+                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item label="Country" name="country">
                 <DropDown
@@ -202,16 +220,16 @@ const AddManager = () => {
           </Row>
 
           <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button className="border-1 border-solid border-[#4a9d77] text-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5">
-                  Cancel
-                </Button>
-                <Button
-                  htmlType="submit"
-                  className="bg-[#4a9d77] text-white border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
-                >
-                  <a href="managers">Submit</a>
-                </Button>
-              </Form.Item>
+            <Button className="border-1 border-solid border-[#4a9d77] text-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5">
+              Cancel
+            </Button>
+            <Button
+              htmlType="submit"
+              className="bg-[#4a9d77] text-white border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+            >
+              <a href="managers">Submit</a>
+            </Button>
+          </Form.Item>
         </Form>
       </div>
     </div>

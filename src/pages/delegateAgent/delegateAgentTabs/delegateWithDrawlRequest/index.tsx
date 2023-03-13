@@ -1,8 +1,9 @@
-import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
-import { Col, Row } from "antd";
 import React, { useState } from "react";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { Col, Row, Menu } from "antd";
 import { DropDown, SearchBar } from "../../../../components";
 import GlobalTable from "../../../../components/Table/Table";
+import CustomDroupDown from "../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
@@ -35,7 +36,7 @@ const WithDrawalRequest = () => {
       key: "amount",
       title: "Amount",
     },
-   
+
     {
       dataIndex: "Fee",
       key: "Fee",
@@ -58,6 +59,7 @@ const WithDrawalRequest = () => {
             color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
             borderRadius: "4px",
+            textAlign: "center",
           }}
         >
           {data.status}
@@ -66,13 +68,24 @@ const WithDrawalRequest = () => {
       key: "status",
       title: "Status",
     },
-   
+
     {
-      dataIndex: "Actions",
+      render: (_: any, data: any) => (
+        <span>
+          <CustomDroupDown menu1={menu2} />
+        </span>
+      ),
       key: "Actions",
       title: "Actions",
     },
   ];
+  const menu2 = (
+    <Menu>
+      <Menu.Item key="1">View Reciept</Menu.Item>
+      <Menu.Item key="2">Accept</Menu.Item>
+      {/* <Menu.Item key="3" ><a href="create-password">Password Reset</a> </Menu.Item> */}
+    </Menu>
+  );
   const tableData = [
     {
       Actions: (
@@ -85,8 +98,8 @@ const WithDrawalRequest = () => {
       amount: "20 GBP ",
       datetime: "Near Giga Mall, Islamabad",
       transactionId: "Single Room",
-          bankName: "Natwest Group",
-      no:"01",
+      bankName: "Natwest Group",
+      no: "01",
     },
     {
       Actions: (
@@ -100,8 +113,8 @@ const WithDrawalRequest = () => {
       amount: "100 GBP ",
       transactionId: "Single Room",
       datetime: "2 Woodhurst Crescent, Liverpool, L14 0BA",
-     
-      no:"02",
+
+      no: "02",
       bankName: "Natwest Group",
     },
     {
@@ -124,8 +137,8 @@ const WithDrawalRequest = () => {
       amount: "10 GBP ",
       transactionId: "Single Room",
       datetime: "2 Woodhurst Crescent, Liverpool, L14 0BA",
-  
-      no:"03",
+
+      no: "03",
       bankName: "Natwest Group",
     },
   ];

@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -9,7 +10,6 @@ import {
   Select,
   Typography,
 } from "antd";
-import React, { useState } from "react";
 import pf from "../../../assets/images/profile/university/pf.svg";
 import iconEmail from "../../../assets/images/profile/student/email.svg";
 import iconPhone from "../../../assets/images/profile/student/Phone.svg";
@@ -31,13 +31,6 @@ const commonObj = {
   email: "enquiries@lincoln.ac.uk",
   phone: "+44 7700 900077",
   location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-  //     breadCrumbs: {
-  //         [
-  //             {
-
-  //             },
-  //        ]`
-  //    },
   basic: {
     name: "University of Lincoln",
     email: "enquiries@lincoln.ac.uk",
@@ -139,12 +132,12 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="First Name" name="firstName">
-                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter First Name" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Last Name" name="lastName">
-                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Last Name" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -153,7 +146,7 @@ const ManagerProfile = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Please input your Last name!",
+                        message: "Please Select Your Gender!",
                       },
                     ]}
                   >
@@ -167,7 +160,7 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
-                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Email" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -213,7 +206,7 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Title" name="title">
-                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Title" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -234,12 +227,12 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Address" name="address">
-                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Address" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="City" name="City">
-                    <Input className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter City" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>

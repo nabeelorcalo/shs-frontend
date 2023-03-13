@@ -1,5 +1,5 @@
-import { Col, Row, Typography } from "antd";
 import React from "react";
+import { Col, Row, Typography } from "antd";
 import SignupForm from "./signup-form/SignupForm";
 import "../styles.scss";
 import { SHSLogo } from "../../../assets/images";

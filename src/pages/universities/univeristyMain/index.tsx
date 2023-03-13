@@ -1,11 +1,10 @@
+import React, { useState } from "react";
 import {
-  EllipsisOutlined,
   MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
-import React, { useState } from "react";
 import { DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
@@ -153,7 +152,7 @@ const UniveristyMain = () => {
     <Menu>
        <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3">Password Reset</Menu.Item>
+      <Menu.Item key="3"><a href="create-password">Password Reset</a> </Menu.Item>
      
     </Menu>
   );
