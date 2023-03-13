@@ -43,6 +43,7 @@
     "react-signature-canvas": "^1.0.6",
     "react-video-recorder": "^3.19.4",
     "recoil": "^0.7.7",
+    "recoil-persist": "^4.2.0",
     "storybook": "^6.5.16",
     "vite-plugin-svgr": "^2.4.0"
   },
