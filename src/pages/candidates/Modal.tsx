@@ -3,7 +3,6 @@ import { Button, FloatButton, Input, Modal } from 'antd';
 import { DropDown } from '../../components';
 import "./style.scss"
 import { CloseCircleIcon } from '../../assets/images';
-import ButtonGroup from 'antd/es/button/button-group';
 
 const App: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +25,12 @@ const App: React.FC = () => {
         Reject
       </Button>
       <div className='Modal'>
-        <Modal title="Reject" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={''}>
+        <Modal
+      closeIcon={<img src={CloseCircleIcon} />}
+
+        
+        
+        title="Reject" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={''} >
           <div className='title'><p>Template (optional)</p></div>
           <DropDown value={value} setValue={setValue} options={['Template 01', 'Template 02', 'Template 03']} name='Select' />
           <div className='title'><p>Subject</p></div>
