@@ -1,8 +1,21 @@
 import { Menu, Space, Tooltip } from "antd";
 import React from "react";
 import GlobalTable from "../../../../components/Table/Table";
-import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom/CustomDroupDown";
-import HelpDeskSelect from "../helpDeskSelect/helpDeskSelect";
+import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom";
+import HelpDeskSelect from "../helpDeskSelect";
+
+const priorityOption = [
+  { value: "High", label: "High" },
+  { value: "Highest", label: "Highest" },
+  { value: "Medium", label: "Medium" },
+  { value: "Low", label: "Low" },
+];
+
+const statusOption = [
+  { value: "Pendding", label: "Pendding" },
+  { value: "In progress", label: "In progress" },
+  { value: "resolved", label: "resolved" },
+];
 
 const tableData = [
   {
@@ -46,20 +59,7 @@ const tableData = [
   },
 ];
 
-const priorityOption = [
-  { value: "High", label: "High" },
-  { value: "Highest", label: "Highest" },
-  { value: "Medium", label: "Medium" },
-  { value: "Low", label: "Low" },
-];
-
-const statusOption = [
-  { value: "Pendding", label: "Pendding" },
-  { value: "In progress", label: "In progress" },
-  { value: "resolved", label: "resolved" },
-];
-
-const UnassignedData = () => {
+const ResolvedData = () => {
   const columns = [
     {
       title: "ID",
@@ -69,7 +69,6 @@ const UnassignedData = () => {
     },
     {
       title: "Subject",
-      dataIndex: "Subject",
       key: "Subject",
       minWidth: 300,
       render: (_: any, data: any) => (
@@ -138,11 +137,10 @@ const UnassignedData = () => {
     <Menu>
       <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Add Flag</Menu.Item>
-      <Menu.Item key="3">Unassign</Menu.Item>
+      <Menu.Item key="3">Re-open</Menu.Item>
       <Menu.Item key="4">History</Menu.Item>
     </Menu>
   );
-
   return (
     <div>
       <GlobalTable columns={columns} tableData={tableData} />
@@ -150,4 +148,4 @@ const UnassignedData = () => {
   );
 };
 
-export default UnassignedData;
+export default ResolvedData;

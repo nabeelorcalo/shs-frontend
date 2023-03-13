@@ -1,22 +1,8 @@
 import { Menu, Space, Tooltip } from "antd";
 import React from "react";
 import GlobalTable from "../../../../components/Table/Table";
-import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom/CustomDroupDown";
-import HelpDeskSelect from "../helpDeskSelect/helpDeskSelect";
-
-const priorityOption = [
-  { value: "High", label: "High" },
-  { value: "Highest", label: "Highest" },
-  { value: "Medium", label: "Medium" },
-  { value: "Low", label: "Low" },
-];
-
-const statusOption = [
-  { value: "Pendding", label: "Pendding" },
-  { value: "In progress", label: "In progress" },
-  { value: "resolved", label: "resolved" },
-];
-
+import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom";
+import HelpDeskSelect from "../helpDeskSelect";
 const tableData = [
   {
     key: "01",
@@ -59,7 +45,20 @@ const tableData = [
   },
 ];
 
-const ResolvedData = () => {
+const priorityOption = [
+  { value: "High", label: "High" },
+  { value: "Highest", label: "Highest" },
+  { value: "Medium", label: "Medium" },
+  { value: "Low", label: "Low" },
+];
+
+const statusOption = [
+  { value: "Pendding", label: "Pendding" },
+  { value: "In progress", label: "In progress" },
+  { value: "resolved", label: "resolved" },
+];
+
+const AssignedData = () => {
   const columns = [
     {
       title: "ID",
@@ -69,6 +68,7 @@ const ResolvedData = () => {
     },
     {
       title: "Subject",
+      dataIndex: "Subject",
       key: "Subject",
       minWidth: 300,
       render: (_: any, data: any) => (
@@ -136,11 +136,12 @@ const ResolvedData = () => {
   const menu2 = (
     <Menu>
       <Menu.Item key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Add Flag</Menu.Item>
-      <Menu.Item key="3">Re-open</Menu.Item>
+      <Menu.Item key="2">Remove Flag</Menu.Item>
+      <Menu.Item key="3">Unassign</Menu.Item>
       <Menu.Item key="4">History</Menu.Item>
     </Menu>
   );
+
   return (
     <div>
       <GlobalTable columns={columns} tableData={tableData} />
@@ -148,4 +149,4 @@ const ResolvedData = () => {
   );
 };
 
-export default ResolvedData;
+export default AssignedData;

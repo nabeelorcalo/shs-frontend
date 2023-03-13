@@ -29,7 +29,7 @@ import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
 import SettingPayroll from "./components/Setting/Payroll/Payroll";
 import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault";
 //
 import DemoCard from "./components/ContractCard/demoCard";
 //

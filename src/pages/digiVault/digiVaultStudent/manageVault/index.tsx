@@ -21,7 +21,7 @@ import MenuItem from "antd/es/menu/MenuItem";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import CustomDroupDown from "../dropDownCustom/CustomDroupDown";
+import CustomDroupDown from "../dropDownCustom";
 
 const tableData = [
   {
@@ -146,7 +146,7 @@ const ManageVault = (props: any) => {
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
       >
-        <p>Are you sure you want to delete this?</p>{" "}
+        <p>Are you sure you want to delete this?</p>
       </Alert>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -243,23 +243,20 @@ const ManageVault = (props: any) => {
         }
         footer={[
           <Button
+            className="text-[#4a9d77] pr-4"
             onClick={() => setISOpen(false)}
             key="Cancel"
             style={{
               border: "1px solid #4a9d77",
-              color: "#4a9d77",
-              padding: "0px 20px",
             }}
           >
             Cancel
           </Button>,
-          <Button
+
+          <Button className="bg-[#4a9d77] text-[#fff] pr-4"
             key="submit"
             style={{
-              backgroundColor: "#4a9d77",
               border: "1px solid #4a9d77",
-              color: "#fff",
-              padding: "0px 20px",
             }}
           >
             Submit
@@ -290,29 +287,24 @@ const ManageVault = (props: any) => {
           <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
         }
         footer={[
-          <Button
+          <Button className="text-[#4a9d77] pr-8"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
             key="Cancel"
             style={{
               border: "1px solid #4a9d77",
-              color: "#4a9d77",
-              padding: "0px 20px",
             }}
           >
             Cancel
           </Button>,
-          <Button
+          <Button className="text-[#fff] bg-[#4a9d77] pr-4"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
             key="submit"
             style={{
-              backgroundColor: "#4a9d77",
-              color: "#fff",
               border: "1px solid #4a9d77",
-              padding: "0px 20px",
             }}
           >
             Upload
@@ -330,32 +322,28 @@ const ManageVault = (props: any) => {
         }}
         maskClosable={false}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled className="text-[#A3AED0]" style={{ color: "#A3AED0", fontSize: "20px" }} />
         }
         footer={[
-          <Button
+          <Button className="text-[#4a9d77] pr-8"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
             key="Cancel"
             style={{
               border: "1px solid #4a9d77",
-              color: "#4a9d77",
-              padding: "0px 20px",
             }}
           >
             Cancel
           </Button>,
-          <Button
+
+          <Button className="text-[#fff] bg-[#4a9d77] pr-4"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
             key="Upload"
             style={{
-              backgroundColor: "#4a9d77",
-              color: "#fff",
               border: "1px solid #4a9d77",
-              padding: "0px 20px",
             }}
           >
             Upload

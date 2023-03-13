@@ -1,10 +1,10 @@
 import { Menu, Select, Space, Tooltip } from "antd";
 import React from "react";
 import GlobalTable from "../../../../components/Table/Table";
-import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom";
 import Vector from "../../../../assets/images/ColorfullIconsProgressbar/Vector.png";
 import { CaretDownFilled } from "@ant-design/icons";
-import HelpDeskSelect from "../helpDeskSelect/helpDeskSelect";
+import HelpDeskSelect from "../helpDeskSelect";
 
 const priorityOption = [
   { value: "High", label: "High" },
@@ -62,6 +62,7 @@ const tableData = [
 ];
 
 const AllData = () => {
+  
   const columns = [
     {
       title: "ID",

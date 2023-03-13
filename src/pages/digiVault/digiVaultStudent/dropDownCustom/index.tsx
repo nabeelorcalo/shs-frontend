@@ -20,7 +20,7 @@ const CustomDroupDown = (props: any) => {
         onVisibleChange={handleVisibleChange}
         trigger={["click"]}
       >
-        <div style={{ cursor: "pointer" }}>
+        <div className="cursor-pointer">
           <img src={More} alt="threedots" />
         </div>
       </Dropdown>

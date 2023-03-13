@@ -1,7 +1,7 @@
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import React, { useState } from "react";
 import "./digiVaultStudent.scss";
-import SettingModal from "./settingModal/settingModal";
+import SettingModal from "./settingModal";
 import GlobalTable from "../../../components/Table/Table";
 import "react-circular-progressbar/dist/styles.css";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
@@ -12,7 +12,7 @@ import Folder from "../../../assets/images/ColorfullIconsProgressbar/file.svg";
 import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
 import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
 import { useNavigate } from "react-router-dom";
-import NewPasswordModal from "./newPasswordModal/newPasswordModal";
+import NewPasswordModal from "./newPasswordModal";
 import {
   EducationImg,
   EducationImgSub,
@@ -26,7 +26,7 @@ import {
   GovImgSub,
   Other,
 } from "../../../assets/images";
- import CustomDroupDown from "./dropDownCustom/CustomDroupDown";
+ import CustomDroupDown from "./dropDownCustom";
  import { Alert } from "../../../components";
 
 const manageVaultArr = [

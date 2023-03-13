@@ -1,8 +1,9 @@
 import { Menu, Space, Tooltip } from "antd";
 import React from "react";
 import GlobalTable from "../../../../components/Table/Table";
-import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom/CustomDroupDown";
-import HelpDeskSelect from "../helpDeskSelect/helpDeskSelect";
+import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom";
+import HelpDeskSelect from "../helpDeskSelect";
+
 const tableData = [
   {
     key: "01",
@@ -58,7 +59,7 @@ const statusOption = [
   { value: "resolved", label: "resolved" },
 ];
 
-const AssignedData = () => {
+const UnassignedData = () => {
   const columns = [
     {
       title: "ID",
@@ -136,7 +137,7 @@ const AssignedData = () => {
   const menu2 = (
     <Menu>
       <Menu.Item key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Remove Flag</Menu.Item>
+      <Menu.Item key="2">Add Flag</Menu.Item>
       <Menu.Item key="3">Unassign</Menu.Item>
       <Menu.Item key="4">History</Menu.Item>
     </Menu>
@@ -149,4 +150,4 @@ const AssignedData = () => {
   );
 };
 
-export default AssignedData;
+export default UnassignedData;
