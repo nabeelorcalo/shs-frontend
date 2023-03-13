@@ -89,11 +89,11 @@ const SettingSidebar: React.FC = () => {
                     <div className="flex">
                       <span>{item.icon}</span>
 
-                      <span className="font-medium mx-3 text-base text-primary-color  ">
+                      <span className="font-medium mx-3 text-base text-primary-color hidden  ">
                         {item.title}
                       </span>
                     </div>
-                    <div>
+                    <div className="hidden">
                       <p className="font-normal text-sm pt-1 ">
                         {item.description}
                       </p>
@@ -102,7 +102,7 @@ const SettingSidebar: React.FC = () => {
                   <Divider className="mb-0 " />
                 </div>
               </NavLink>
-              {/* <Divider /> */}
+           
 
             </div>
           );
