@@ -1,4 +1,4 @@
-import { BoxWrapper } from "../../components/BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {

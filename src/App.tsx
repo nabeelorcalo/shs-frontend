@@ -5,6 +5,7 @@ import "./App.scss";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
 import constants from './config/constants';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   /* VARIABLE DECLARATION
@@ -18,7 +19,7 @@ function App() {
   let routes = getRoutes(user_role);
   routes = routes.concat(publicRoutes);
   const pages = useRoutes(routes);
-  
+
   /* HOOKS
   -------------------------------------------------------------------------------------*/
   // useEffect(() => {
@@ -38,7 +39,11 @@ function App() {
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>{pages}</ErrorBoundary>
+    <RecoilRoot>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        {pages}
+      </ErrorBoundary>
+    </RecoilRoot>
   );
 }
 export default App;

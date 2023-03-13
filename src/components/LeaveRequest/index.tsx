@@ -92,9 +92,7 @@ const LeaveRequest = ({ title }: any) => {
             <div className="flex flex-col gap-2 my-2">
               <p>attachement</p>
               <DragAndDropUpload />
-
             </div>
-
           </div>
         </Modal>
       </div>

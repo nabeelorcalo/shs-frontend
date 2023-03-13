@@ -1,5 +1,5 @@
 import { Col, Rate, Row, Typography } from "antd";
-import {BoxWrapper} from "../BoxWrapper/boxWrapper";
+import {BoxWrapper} from "../BoxWrapper/BoxWrapper";
 import { Button } from "../Button";
 const { Paragraph } = Typography;
 import "./RecipeCard.scss";
