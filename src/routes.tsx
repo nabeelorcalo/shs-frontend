@@ -371,8 +371,8 @@ const systemAdminRoutes = [
         element: <HelpDesk />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
-        path: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
+        key: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
+        path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
         element: <ActivityLog />,
       },
     ],

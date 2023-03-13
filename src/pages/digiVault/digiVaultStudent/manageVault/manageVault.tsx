@@ -21,7 +21,7 @@ import MenuItem from "antd/es/menu/MenuItem";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import CustomDroupDown from "../droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../dropDownCustom/CustomDroupDown";
 
 const tableData = [
   {
@@ -237,8 +237,8 @@ const ManageVault = (props: any) => {
         open={open}
         closeIcon={
           <CloseCircleFilled
+            className="text-[#A3AED0] "
             onClick={() => setISOpen(false)}
-            style={{ color: "#A3AED0", fontSize: "20px" }}
           />
         }
         footer={[

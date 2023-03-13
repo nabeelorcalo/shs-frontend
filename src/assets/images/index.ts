@@ -145,6 +145,10 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
+export { ReactComponent as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
+export { ReactComponent as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
+export { ReactComponent as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { ReactComponent as File } from "../images/ColorfullIconsProgressbar/file.svg";
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";

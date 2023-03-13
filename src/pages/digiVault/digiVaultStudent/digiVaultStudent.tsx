@@ -1,21 +1,8 @@
-import { DownCircleOutlined, SettingFilled } from "@ant-design/icons";
-import {
-  Button,
-  Col,
-  Divider,
-  Progress,
-  Row,
-  Space,
-  Switch,
-  Dropdown,
-  Menu,
-} from "antd";
-import React, { useState, useEffect } from "react";
-import AppTabs from "../../../components/Tabs";
+import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
+import React, { useState } from "react";
 import "./digiVaultStudent.scss";
 import SettingModal from "./settingModal/settingModal";
 import GlobalTable from "../../../components/Table/Table";
-
 import "react-circular-progressbar/dist/styles.css";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import gallery from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
@@ -24,7 +11,6 @@ import Document from "../../../assets/images/ColorfullIconsProgressbar/doc.svg";
 import Folder from "../../../assets/images/ColorfullIconsProgressbar/file.svg";
 import DigivaultCard from "../../../components/DigiVaultCard/digivaultCard";
 import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
-import More from "../../../assets/images/ColorfullIconsProgressbar/More.svg";
 import { useNavigate } from "react-router-dom";
 import NewPasswordModal from "./newPasswordModal/newPasswordModal";
 import {
@@ -40,8 +26,8 @@ import {
   GovImgSub,
   Other,
 } from "../../../assets/images";
-import CustomDroupDown from "./droupDownCustom/CustomDroupDown";
-import { Alert } from "../../../components";
+ import CustomDroupDown from "./dropDownCustom/CustomDroupDown";
+ import { Alert } from "../../../components";
 
 const manageVaultArr = [
   {
@@ -240,9 +226,7 @@ const DigiVaultStudent = () => {
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
             <div className="flex items-center">
-              <p style={{ color: "#6E7191" }} className="pr-2">
-                Lock
-              </p>
+              <p className="pr-2 text-[#6E7191]">Lock</p>
               <Switch
                 checked={isChecked}
                 onClick={() => {

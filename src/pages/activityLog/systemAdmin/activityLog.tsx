@@ -1,12 +1,12 @@
 import { Button, Col, Divider, Row } from "antd";
 import React, { useState } from "react";
-import { CommonDatePicker, SearchBar } from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
 import FiltersButton from "../../../components/FiltersButton";
 import DownloadIcon from "../../../assets/images/ColorfullIconsProgressbar/Downlaod.png";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components/BoxWrapper/boxWrapper";
 import GlobalTable from "../../../components/Table/Table";
-import "./activityLog.scss"
+import "./activityLog.scss";
 
 const columns = [
   {
@@ -89,9 +89,11 @@ const filterData = [
   },
 ];
 
+const options = ["pdf", "excel"];
+
 const ActivityLog = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [openDrawerDate, setOpenDrawerDate] = useState(false)
+  const [openDrawerDate, setOpenDrawerDate] = useState(false);
 
   const handleChange = () => {
     console.log("change");
@@ -110,7 +112,9 @@ const ActivityLog = () => {
         {filterData.map((item: any, index) => {
           return (
             <div key={index}>
-              <div className="mb-2 text-[#14142A] font-medium text-base">{item.title}</div>
+              <div className="mb-2 text-[#14142A] font-medium text-base">
+                {item.title}
+              </div>
               <div className="flex flex-wrap mb-6">
                 {item.userRole.map((items: any, index: any) => {
                   return (
@@ -124,13 +128,23 @@ const ActivityLog = () => {
           );
         })}
         <div>
-         <CommonDatePicker label="Date" setOpen={setOpenDrawerDate} open={openDrawerDate}/>
+          <CommonDatePicker
+            label="Date"
+            setOpen={setOpenDrawerDate}
+            open={openDrawerDate}
+          />
         </div>
+        
         <div className="mt-4 justify-end flex">
-          <Button className="activity-log-drawer-reset-btn text-[#4A9D77] hover:text-[#4A9D77] mr-4 w-28">Reset</Button>
-          <Button className="activity-log-drawer-apply-btn bg-[#4A9D77] hover:text-[#ffff] text-[#ffff] w-28">Apply</Button>
+          <Button className="activity-log-drawer-reset-btn text-[#4A9D77] hover:text-[#4A9D77] mr-4 w-28">
+            Reset
+          </Button>
+          <Button className="activity-log-drawer-apply-btn bg-[#4A9D77] hover:text-[#ffff] text-[#ffff] w-28">
+            Apply
+          </Button>
         </div>
       </Drawer>
+
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="text-2xl font-semibold text-[#363565]">
@@ -142,21 +156,19 @@ const ActivityLog = () => {
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[10, 10]}>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
+            <Col xxl={7} xl={8} lg={8} md={8} sm={12} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
             <Col xxl={14} xl={12} lg={8} md={8} sm={1} xs={1}></Col>
 
-            <Col xxl={2} xl={4} lg={8} md={8} sm={11} xs={24}>
+            <Col xxl={3} xl={4} lg={8} md={8} sm={11} xs={24}>
               <div className="flex">
                 <div className="mr-4">
                   <FiltersButton label="Filter" onClick={handleClick} />
                 </div>
 
                 <div>
-                  <Button className="flex justify-center items-center download-btn bg-[#E6F4F9] border-none hover:bg-[#ffff] hover:border-solid">
-                    <img src={DownloadIcon} alt="icon" />
-                  </Button>
+                  <DropDown requiredDownloadIcon={true} options={options} />
                 </div>
               </div>
             </Col>
