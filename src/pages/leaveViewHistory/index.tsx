@@ -1,7 +1,7 @@
 
 import { Col, Divider, Drawer, Dropdown, Form, Row, Select, Space } from "antd";
 import type { MenuProps } from 'antd';
-import { BoxWrapper } from "../../components/BoxWrapper/boxWrapper"
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import "./style.scss"
 import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../assets/images";
@@ -13,20 +13,6 @@ import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
 interface DataType {
   key: string,
-  // title:string,
-  // eventType: string,
-  // start: string,
-  // end: string,
-  // leaveTypeDay: string,
-  // dur:string,
-  // hours:string,
-  // img:any,
-  // name:string,
-  // designation:string,
-  // email:string,
-  // aprover:string,
-  // ApprovedBy:string,
-  // fulldescription:string,
   requestDate: string,
   dateFrom: string,
   dateTo: string,
@@ -65,36 +51,36 @@ const data: DataType[] = [
     status: "Pending",
     Actions: "fduhguisd",
   },
-  // {
-  //   key: '02',
-  //   requestDate: '01/07/2022',
-  //   dateFrom: '01/07/2022',
-  //   dateTo: '01/07/2022',
-  //   leaveType: 'Casual',
-  //   description: "High fever",
-  //   status: "Approved",
-  //   Actions: "fduhguisd",
-  // },
-  // {
-  //   key: '01',
-  //   requestDate: '01/07/2022',
-  //   dateFrom: '01/07/2022',
-  //   dateTo: '01/07/2022',
-  //   leaveType: 'Mediacal',
-  //   description: "High fever",
-  //   status: "Declined",
-  //   Actions: "fduhguisd",
-  // },
-  // {
-  //   key: '01',
-  //   requestDate: '01/07/2022',
-  //   dateFrom: '01/07/2022',
-  //   dateTo: '01/07/2022',
-  //   leaveType: 'Work From Home',
-  //   description: "High fever",
-  //   status: "Declined",
-  //   Actions: "fduhguisd",
-  // },
+  {
+    key: '02',
+    requestDate: '01/07/2022',
+    dateFrom: '01/07/2022',
+    dateTo: '01/07/2022',
+    leaveType: 'Casual',
+    description: "High fever",
+    status: "Approved",
+    Actions: "fduhguisd",
+  },
+  {
+    key: '01',
+    requestDate: '01/07/2022',
+    dateFrom: '01/07/2022',
+    dateTo: '01/07/2022',
+    leaveType: 'Mediacal',
+    description: "High fever",
+    status: "Declined",
+    Actions: "fduhguisd",
+  },
+  {
+    key: '01',
+    requestDate: '01/07/2022',
+    dateFrom: '01/07/2022',
+    dateTo: '01/07/2022',
+    leaveType: 'Work From Home',
+    description: "High fever",
+    status: "Declined",
+    Actions: "fduhguisd",
+  },
 ];
 
 const index = () => {
@@ -108,8 +94,8 @@ const index = () => {
     },
     {
       title: 'Request Date',
-      dataIndex: 'start',
-      key: 'start',
+      dataIndex: 'requestDate',
+      key: 'requestDate',
     },
     {
       title: 'Date From',
