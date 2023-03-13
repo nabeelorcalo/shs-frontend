@@ -160,9 +160,13 @@ export { ReactComponent as AssessmentRejected } from "./assessment-rejected.svg"
 export { default as UserAvatar } from "./user-avatar.png";
 
 // Accommodation Icons
-export { ReactComponent as IconFilters } from "../images/icon-filters.svg";
-export { ReactComponent as IconFiltersAngle } from "../images/icon-filters-angle.svg";
-export { ReactComponent as IconCloseCircle } from "../images/icon-close-circle.svg";
+export { ReactComponent as IconFilters } from "./icon-filters.svg";
+export { ReactComponent as IconFiltersAngle } from "./icon-filters-angle.svg";
+export { ReactComponent as IconCloseCircle } from "./icon-close-circle.svg";
+export { ReactComponent as IconWebLocation } from "./icon-web-location.svg";
+export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.svg";
+
+
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
