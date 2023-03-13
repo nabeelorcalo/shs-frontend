@@ -1,12 +1,7 @@
 @import '../../scss/_colors.scss';
 
-.certificate-wrapper {
-    .top-heading {
-        color: $primary-bg-color;
-        border-bottom: 1px solid $text-error-line-color;
-    }
-
-
+.certificate-wrapper,
+.certificate-detail-wrapper {
     .issue-certificate {
         background: $teriary-bg-color;
         border: 1px solid $teriary-bg-color;
@@ -18,12 +13,136 @@
             opacity: 0.8;
         }
     }
+}
+
+.certificate-wrapper {
+    .top-heading {
+        color: $primary-bg-color;
+        border-bottom: 1px solid $text-error-line-color;
+    }
 
     @media screen and (max-width:420px) {
 
         .right-side {
             flex-wrap: wrap;
             justify-content: start;
+        }
+    }
+
+    // table style
+    .box-wrapper {
+        .primary_table_wrapper {
+            .ant-table-content {
+
+                .ant-table-thead,
+                .ant-table-tbody {
+                    .ant-table-cell {
+                        text-align: start;
+                        text-transform: capitalize;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// table action style
+.certicate-action {
+    border: 2px solid $text-error-line-color;
+    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
+    border-radius: 8px;
+
+    .ant-dropdown-menu {
+        .ant-dropdown-menu-item {
+            p {
+                color: $text-secondary-body-color;
+            }
+        }
+
+        .ant-dropdown-menu-item-active:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+// certificate detail
+.certificate-detail-wrapper {
+    .top-heading {
+        color: $primary-bg-color;
+        border-bottom: 1px solid $text-error-line-color;
+    }
+
+    .seperator {
+        width: 1px;
+        height: 32px;
+        transform: translate(90deg);
+        background-color: $primary-bg-color;
+    }
+
+    .user-info {
+        .user-name {
+            color: $text-primary-title-color;
+        }
+
+        .department {
+            color: $text-secondary-body-color;
+        }
+
+        .view-profile-btn {
+            background-color: $text-input-bg-color;
+            color: $primary-light-bg-color;
+            border: none;
+
+            &:hover {
+                background-color: $primary-light-bg-color;
+                color: $white-bg-color;
+            }
+        }
+    }
+
+    .over-all-performance {
+        .box-wrapper {
+            box-shadow: 0px 0px 8px 1px $dropdown-overlay-shadow !important;
+
+            p:nth-child(1) {
+                margin-bottom: 30px;
+                margin-top: 0px;
+            }
+
+            p {
+                margin-top: 30px;
+            }
+        }
+    }
+
+    .total-certificates {
+        color: $text-primary-title-color;
+
+        .total-num {
+            color: $text-secondary-body-color;
+        }
+    }
+
+    .certificate-cards {
+        .title {
+            color: $text-secondary-body-color;
+        }
+    }
+}
+
+// certificate-card-dropdown
+.certificate-card-dropdown {
+    background: $white-bg-color;
+    border: 2px solid $text-error-line-color;
+    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
+    border-radius: 8px;
+    width: 130px;
+
+    .ant-dropdown-menu-item-active {
+        background-color: transparent !important;
+
+        .ant-dropdown-menu-title-content {
+            color: $text-secondary-body-color;
         }
     }
 }

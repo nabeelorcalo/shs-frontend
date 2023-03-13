@@ -12,7 +12,7 @@ export const OverAllPerfomance = (props: any) => {
           <Col key={i} lg={5} md={12} sm={24} xs={24} className="text-center">
             <Progress trailColor={trailColor}
               strokeWidth={strokeWidth} width={width}
-              type={type} percent={item.percent1}
+              type={type} percent={item.percent}
               strokeColor={item.strokeColor} />
             <p className='text-center text-base font-medium '>{item.title}</p>
           </Col>

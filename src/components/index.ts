@@ -23,3 +23,4 @@ export * from "./ChartsOfGraphs/workingStatisticesChart/workingStatisticesChart"
 export * from "./ChartsOfGraphs/timesheetCategories/timesheetCategories"
 export * from "./ChartsOfGraphs/grievanceStats/GrievanceStatsData"
 export * from "./ChartsOfGraphs/intershipSummaryChart/internshipSummaryChart"
+export * from './Select/Select';

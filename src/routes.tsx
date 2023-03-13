@@ -16,16 +16,18 @@ import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 //
 import DemoCard from "./components/ContractCard/demoCard";
+import Certificates from "./pages/certificate";
+import CertificateDetail from "./pages/certificate/certificateDetail";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense fallback={<Spin indicator={spinIcon} />}>
+    <Component {...props} />
+  </Suspense>
+);
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -105,11 +107,11 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
-    {
-      key: "candidates",
+  {
+    key: "candidates",
     path: `candidates`,
     element: <Candidates />,
-    
+
   },
   // Demo dropdowns
   {
@@ -131,7 +133,17 @@ export const publicRoutes = [
     key: 'card',
     path: "/democards",
     element: <DemoCard />
-  }
+  },
+  {
+    key: 'certificates',
+    path: "/certificates",
+    element: <Certificates />
+  },
+  {
+    key: 'certificatesDetail',
+    path: "/certificates/detail/:id",
+    element: <CertificateDetail />
+  },
   // ------Remove till here------
 ];
 
@@ -474,7 +486,7 @@ const internRoutes = [
       {
         key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
         path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-        element: <ViewHistory/>,
+        element: <ViewHistory />,
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,

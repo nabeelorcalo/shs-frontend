@@ -2,11 +2,19 @@ import { Row, Col, Button } from 'antd';
 import { useState } from 'react';
 import { IssueCertificateIcon } from '../../assets/images';
 import { DropDown, SearchBar } from '../../components';
+import IssueCertificateModal from './certificateModal/IssueCertificateModal';
+import PreviewModal from './certificateModal/PreviewModal';
+import SignatureModal from './certificateModal/SignatureModal';
+import CertificateTable from './certificateTable';
 import './style.scss';
 
 const Certificates = () => {
     const [searchVal, setSearchVal] = useState('');
     const [dropdownVal, setDropdownVal] = useState('');
+    const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
+    const [togglePreview, setTogglePreview] = useState(false);
+    const [opensignatureModal, setOpenSignatureModal] = useState(false);
+
     const dropdownData = ['design', 'research', 'management', 'development', 'business'];
 
     return (
@@ -28,7 +36,7 @@ const Certificates = () => {
                             <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
                         </Col>
                         <Col>
-                            <Button className=' issue-certificate flex items-center capitalize'> 
+                            <Button className=' issue-certificate flex items-center capitalize' onClick={() => setOpenIssueCertificate(!openIssueCertificate)}>
                                 <IssueCertificateIcon className='mr-[15px]' />
                                 <span className='text-base font-semibold text-white'>issue certificate</span>
                             </Button>
@@ -37,6 +45,22 @@ const Certificates = () => {
                 </Col>
 
             </Row>
+
+            <CertificateTable />
+
+            {openIssueCertificate &&
+                <IssueCertificateModal
+                    setOpen={setOpenIssueCertificate}
+                    open={openIssueCertificate}
+                    setTogglePreview={setTogglePreview}
+                    setOpenSignatureModal={setOpenSignatureModal}
+                />
+            }
+
+            {togglePreview && <PreviewModal open={togglePreview} setOpen={setTogglePreview} />}
+
+            {opensignatureModal && <SignatureModal open={opensignatureModal} setOpen={setOpenSignatureModal} />}
+
         </div>
     )
 }

@@ -1,0 +1,34 @@
+@import '../../scss/_colors.scss';
+
+
+.select-wrapper {
+    .label {
+        color: $text-teriary-label-color;
+    }
+
+    .select-comp {
+        &.ant-select-open {
+            border-color: inherit;
+        }
+
+        .ant-select-selector {
+            box-shadow: none !important;
+
+            &:hover {
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.select-popup-box {
+    .rc-virtual-list-holder-inner {}
+
+    .ant-select-item {
+        height: auto;
+
+        &.ant-select-item-option-active {
+            background-color: transparent;
+        }
+    }
+}
