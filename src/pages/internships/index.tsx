@@ -2,13 +2,20 @@ import { useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { SearchBar } from "../../components";
 import "./style.scss";
-import { FileAddFilled } from "@ant-design/icons";
+import { useNavigate } from 'react-router-dom';
 import GlobalTable from "../../components/Table/Table";
 import { Avatar, Button } from 'antd';
 import { More } from "../../assets/images"
+import { FilterIcon } from "../../assets/images";
+import { ArrowToRight } from "../../assets/images";
+import { InternshipsIcon } from "../../assets/images";
+
+
+
 
 
 const Internships = () => {
+  const navigate = useNavigate()
   const [value, setValue] = useState("")
   const columns = [
     {
@@ -95,6 +102,78 @@ const Internships = () => {
       actions: <More />
 
     },
+    {
+      no: "01",
+      title: "Research Analyst",
+      department: "Business Analyst",
+      posting_date: "01/07/2022",
+      closing_date: "01/07/2022",
+      location: "virtual",
+      status: 'Pending',
+      posted_by: 'T',
+      actions: <More />
+
+    },
+    {
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'Active',
+      posted_by: 'U',
+      actions: <More />
+
+    },
+    {
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'Rejected',
+      posted_by: 'U',
+      actions: <More />
+
+    },
+    {
+      no: "01",
+      title: "Research Analyst",
+      department: "Business Analyst",
+      posting_date: "01/07/2022",
+      closing_date: "01/07/2022",
+      location: "virtual",
+      status: 'Pending',
+      posted_by: 'T',
+      actions: <More />
+
+    },
+    {
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'Active',
+      posted_by: 'U',
+      actions: <More />
+
+    },
+    {
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'Rejected',
+      posted_by: 'U',
+      actions: <More />
+
+    }
   ]
 
   const newTableData = tableData.map((item, idx) => {
@@ -136,17 +215,23 @@ const Internships = () => {
         />
         <div className="flex flex-row gap-4">
           <Button
-            label="Button"
-            onClick={() => { }}
-            type="primary"
-          />
-          <Button
-            label="New Internshipsd"
-            color="#4ED185"
-            icon={<FileAddFilled />}
-            onClick={() => { }}
             size="middle"
-          />
+            onClick={() => { }}
+            className="flex gap-2 bg-[#E6F4F9]"
+            
+          >
+            <FilterIcon/>
+            Filters
+            <ArrowToRight/>
+          </Button>
+          <Button
+            size="middle"
+            className="flex gap-2 bg-[#4A9D77] text-[#fff]"
+          onClick={()=>{navigate("new-internship");}}
+          >
+            <InternshipsIcon />
+            New Internship
+          </Button>
         </div>
 
       </div>

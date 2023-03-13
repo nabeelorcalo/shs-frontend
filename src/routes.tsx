@@ -14,6 +14,9 @@ import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-pa
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
+//Internships Child Component
+import NewInternships from "./pages/internships/newInternships";
+
 // Remove it
 // dummy components
 import Graph from "./components/Graph";
@@ -412,6 +415,13 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         element: <Internships />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        element: <NewInternships />,
+      },
+
+      
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,

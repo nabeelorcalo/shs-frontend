@@ -190,3 +190,8 @@ export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
 
 // Colorfull icons
 export { ReactComponent as More } from './ColorfullIconsProgressBar/More.svg';
+
+// Icons for Buttons 
+export { ReactComponent as FilterIcon } from './ButtonIcons/FilterIcon.svg';
+export { ReactComponent as ArrowToRight } from './ButtonIcons/Arrowtoright.svg';
+export { ReactComponent as InternshipsIcon } from './ButtonIcons/InternshipsIcon.svg';

@@ -33,6 +33,7 @@ export const ROUTES_CONSTANTS: any = {
   ERROR_PAGE: "error-page",
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
+  NEW_INTERNSHIP: "internships/new-internship",
   INTERNS: "interns",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
