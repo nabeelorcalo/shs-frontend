@@ -79,7 +79,7 @@ const LeaveRequest = ({ title }: any) => {
               <div className="flex flex-col gap-2  w-1/3">
                 <p>Days</p>
                 <Input
-                  placeholder={0}
+                  placeholder="enter a number "
                   maxLength={16}
                   disabled
                 />

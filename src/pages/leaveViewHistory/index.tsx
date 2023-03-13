@@ -5,13 +5,33 @@ import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import "./style.scss"
 import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../assets/images";
-import { Button, SearchBar } from "../../components";
+import { Button, DropDown, SearchBar } from "../../components";
 import { useState } from "react";
 import { CloseCircleFilled } from "@ant-design/icons";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
+import FiltersButton from "../../components/FiltersButton";
 interface DataType {
+  // key: string,
+  // title: string,
+  // eventType: string,
+  // start: string,
+  // end: string,
+  // leaveTypeDay: string,
+  // dur: string,
+  // hours: string,
+  // img: any,
+  // name: string,
+  // designation: string,
+  // email: string,
+  // aprover: string,
+  // ApprovedBy: string,
+  // status: string,
+  // fulldescription: string
+
+
+
   key: string,
   requestDate: string,
   dateFrom: string,
@@ -21,8 +41,6 @@ interface DataType {
   status: string,
   Actions: string,
 }
-
-
 const data: DataType[] = [
   {
     // key: '01',
@@ -41,7 +59,7 @@ const data: DataType[] = [
     // ApprovedBy: "Amelia Clark",
     // status: "Pending",
     // fulldescription: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation."
-    
+
     key: '01',
     requestDate: '01/07/2022',
     dateFrom: '01/07/2022',
@@ -51,39 +69,57 @@ const data: DataType[] = [
     status: "Pending",
     Actions: "fduhguisd",
   },
-  {
-    key: '02',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Casual',
-    description: "High fever",
-    status: "Approved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: '01',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Mediacal',
-    description: "High fever",
-    status: "Declined",
-    Actions: "fduhguisd",
-  },
-  {
-    key: '01',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Work From Home',
-    description: "High fever",
-    status: "Declined",
-    Actions: "fduhguisd",
-  },
+  // {
+  //   key: '02',
+  //   requestDate: '01/07/2022',
+  //   dateFrom: '01/07/2022',
+  //   dateTo: '01/07/2022',
+  //   leaveType: 'Casual',
+  //   description: "High fever",
+  //   status: "Approved",
+  //   Actions: "fduhguisd",
+  // },
+  // {
+  //   key: '01',
+  //   requestDate: '01/07/2022',
+  //   dateFrom: '01/07/2022',
+  //   dateTo: '01/07/2022',
+  //   leaveType: 'Mediacal',
+  //   description: "High fever",
+  //   status: "Declined",
+  //   Actions: "fduhguisd",
+  // },
+  // {
+  //   key: '01',
+  //   requestDate: '01/07/2022',
+  //   dateFrom: '01/07/2022',
+  //   dateTo: '01/07/2022',
+  //   leaveType: 'Work From Home',
+  //   description: "High fever",
+  //   status: "Declined",
+  //   Actions: "fduhguisd",
+  // },
 ];
 
 const index = () => {
+  // const items: MenuProps['items'] = [
+  //   {
+  //     label: <p onClick={() => {
+  //       setActionType({ ...actionType, type: 'view detail' });
+  //       setOpenDrawer({ type: 'view detail', open: true })
+  //     }}
+  //     >View Details</p>,
+  //     key: '0',
+  //   },
+  //   {
+  //     label: <p onClick={() => setActionType({ ...actionType, type: 'edit' })}>Edit</p>,
+  //     key: '1',
+  //   },
+  //   {
+  //     label: <p onClick={() => setActionType({ ...actionType, type: 'cancel' })}>Cancel</p>,
+  //     key: '3',
+  //   },
+  // ];
   const [actionType, setActionType] = useState({ type: '', id: '' });
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const columns = [
@@ -143,7 +179,8 @@ const index = () => {
             backgroundColor: data.status === "Pending" ?
               "#FFC15E" : data.status === "Declined" ?
                 "#D83A52" : "#4ED185",
-            color: "#fff"
+            color: "#fff",
+            textAlign: "center",
           }}>
           {data.status}
         </div>
@@ -155,33 +192,27 @@ const index = () => {
       key: 'action',
       render: (_: any, data: any) => (
         <Space size="middle">
-          <Dropdown menu={{ items }} trigger={['click']} overlayClassName='menus_dropdown_main' placement="bottomRight">
+          <Dropdown
+            dropdownRender={(menu: any) => {
+              return <BoxWrapper className=" action_dropDown">
+                <p onClick={() => {
+                  setActionType({ ...actionType, type: 'view detail' });
+                  setOpenDrawer({ type: 'view detail', open: true })
+                }}
+                className="cursor-pointer"
+                >View Details</p>
+                <p onClick={() => setActionType({ ...actionType, type: 'edit' }) }  className="my-4 cursor-pointer">Edit</p>
+                <p onClick={() => setActionType({ ...actionType, type: 'cancel' })} className="cursor-pointer">Cancel</p>
+              </BoxWrapper>
+            }}
+            trigger={['click']} overlayClassName='menus_dropdown_main' placement="bottomRight" >
             <MoreIcon className=" cursor-pointer " onClick={() => setActionType({ ...actionType, id: data.key })} />
-          </Dropdown>
-          {/* <a onClick={() => alert(`Id For The Editabel record is  ${data.key} `)}></a> */}
-          {/* <a onClick={()=>alert(`deleted record id  ${data.key} `)}>Delete</a> */}
-        </Space>
+          </Dropdown >
+        </Space >
       ),
     },
   ];
-  const items: MenuProps['items'] = [
-    {
-      label: <p onClick={() => {
-        setActionType({ ...actionType, type: 'view detail' });
-        setOpenDrawer({ type: 'view detail', open: true })
-      }}
-      >View Details</p>,
-      key: '0',
-    },
-    {
-      label: <p onClick={() => setActionType({ ...actionType, type: 'edit' })}>Edit</p>,
-      key: '1',
-    },
-    {
-      label: <p onClick={() => setActionType({ ...actionType, type: 'cancel' })}>Cancel</p>,
-      key: '3',
-    },
-  ];
+
   console.log(actionType);
 
   // const [open, setOpen] = useState(false);
@@ -212,37 +243,32 @@ const index = () => {
         </Col>
         <Col xs={24} md={12} lg={12} >
           <div className='flex items-center justify-end view_history_button_wrapper'>
+            <div className="mr-4">
+              <FiltersButton
+                label="Filters"
+                onClick={() => setOpenDrawer({ type: 'filters', open: true })}
+              />
+
+            </div>
+            <div className="mr-4">
+              <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => { }}
+                value=""
+              />
+            </div>
             <Button
-              icon={<FilterIconLeave className="mr-2" />}
-              label="Filters"
-              upcomingIcon={<ChevronRight className="ml-2" />}
-              onClick={() => setOpenDrawer({ type: 'filters', open: true })}
-              shape="default"
-              size="large"
-              type="default"
-              style={{ color: "#A0A3BD", background: "#E6F4F9", display: "flex", alignItems: "center", }}
-              className="button_request_leave mr-5"
-            />
-            {/* <Dropdown menu={{ items }} trigger={['click']}> */}
-            <Button
-              icon={<DownloadIconLeave />}
-              onClick={() => { }}
-              shape="default"
-              size="large"
-              type="default"
-              className="button_request_leave mr-5"
-              style={{ background: "#E6F4F9", display: "flex", alignItems: "center", justifyContent: "center" }}
-            />
-            {/* </Dropdown> */}
-            <Button
+              color="red"
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
               onClick={() => { }}
-              shape="default"
-              size="large"
-              type="default"
+              size="middle"
               style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center" }}
-              className="button_request_leave"
+              className="Request_leave"
             />
           </div>
         </Col>
