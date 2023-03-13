@@ -5,6 +5,7 @@ import { Alert, SearchBar } from "../../../components";
 import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../components/Model";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import './style.scss'
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -40,7 +41,7 @@ const SettingTimesheet = () => {
     <div className="setting-time-sheet">
       <div>
         <div className="flex justify-between">
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={handleChange} />
           <Button
             size="middle"
             onClick={() => {}}
@@ -49,20 +50,19 @@ const SettingTimesheet = () => {
             <SettingTimesheetIcon /> Add Category
           </Button>
 
-          {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
-        <span className="">  Add department</span> </Button> */}
+        
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row flex" xs={24} md={6} lg={8}>
-              <BoxWrapper className="w-full">
+            <Col key={index} className="gutter-row flex" xs={24} md={12} lg={8}>
+              <div className="w-full setting-time-sheet-box-wrapper">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
-                      <Text className="text-base text-sm ">
+                      <Text className="text-base text-sm pb-1 ">
                         {data.content}
                       </Text>
                     
@@ -73,7 +73,7 @@ const SettingTimesheet = () => {
                     </span>
                   </div>
                 </div>
-              </BoxWrapper>
+              </div>
             </Col>
           );
         })}

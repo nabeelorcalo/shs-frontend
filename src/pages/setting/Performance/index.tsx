@@ -1,5 +1,5 @@
 import React from "react";
-import { Collapse, Space, Row , Col } from "antd";
+import { Collapse, Space, Row, Col } from "antd";
 import { SettingOutlined } from "@ant-design/icons/lib/icons";
 import {
   Performanceinput,
@@ -8,24 +8,29 @@ import {
 } from "../../../assets/images";
 import { Input } from "antd";
 import DropDownForPerformance from "./PerformanceDropdown";
-import inputIcon from '../../../assets/images/setting/performanceInput.svg'
+import inputIcon from "../../../assets/images/setting/performanceInput.svg";
 const { Panel } = Collapse;
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-const genExtra = () => (
-  <SettingOutlined
-    onClick={(event) => {
-      // If you don't want click extra trigger collapse, you can prevent this:
-      event.stopPropagation();
-    }}
-  />
-);
-
-
+const inputData = [
+  {
+    title: "Work with full potential",
+  },
+  {
+    title: "Quality of work",
+  },
+  {
+    title: "  Work consistency",
+  },
+  {
+    title: "  Independency in work",
+  },
+  {
+    title: "   Business Skills",
+  },
+  {
+    title: "   Technical skills",
+  },
+];
 
 const SettingPerformance: React.FC = () => {
   return (
@@ -40,36 +45,26 @@ const SettingPerformance: React.FC = () => {
           className="bg-white"
         >
           <Panel header="Learning Objective" key="1">
-           <Row >
-            <Col className="gutter-row" xs={24} md={12} xxl={12}>
-            <Input.Group compact className="w-full">
-          <span className="h-[42px]"><img src={inputIcon} height="42px"/></span>
+            <Row gutter={[20, 20]}>
+              {inputData.map((item)=>{
+              return(<Col className="gutter-row" xs={24} md={12} xxl={12}>
+                <Input.Group compact className="w-full">
+                  <span className="h-[42px]">
+                    <Performanceinput  style={{height:"42px"}} />
+                  </span>
 
-          <Input className="w-full"
-            suffix={<DropDownForPerformance />}
-            style={{ width: "70%" }}
-            value="ddd"
-            placeholder="Select Address"
-            size="small"
-          />
-        </Input.Group>
+                  <Input
+                    className="w-full"
+                    suffix={<DropDownForPerformance />}
+                    style={{ width: "90%" }}
+                    value={item.title}
+                    placeholder="Select Address"
+                    size="small"
+                  />
+                </Input.Group>
+              </Col>)})}
             
-            </Col>
-            <Col className="gutter-row flex" xs={24} md={12} xxl={12}>
-            <Input.Group compact>
-          <span className="h-[42px]"><img src={inputIcon} height="42px"/></span>
-
-          <Input
-            suffix={<DropDownForPerformance />}
-            style={{ width: "70%" }}
-            value="ddd"
-            placeholder="Select Address"
-            size="small"
-          />
-        </Input.Group>
-            
-            </Col>
-           </Row>
+            </Row>
           </Panel>
         </Collapse>
         <Collapse
@@ -81,7 +76,7 @@ const SettingPerformance: React.FC = () => {
           className="bg-white"
         >
           <Panel header="Discipline" key="1">
-            <p>{text}</p>
+            <p></p>
           </Panel>
         </Collapse>
         <Collapse
@@ -93,11 +88,9 @@ const SettingPerformance: React.FC = () => {
           className="bg-white"
         >
           <Panel header="Personal" key="1">
-            <p>{text}</p>
+            <p></p>
           </Panel>
         </Collapse>
-
-       
       </Space>
     </div>
   );

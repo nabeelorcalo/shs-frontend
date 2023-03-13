@@ -33,7 +33,7 @@ const SettingPayroll: React.FC = () => {
     <div className="setting-shifts">
       <div>
         <div className="flex justify-between">
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={handleChange} />
 
           <Button
             size="middle"
@@ -81,7 +81,7 @@ const SettingPayroll: React.FC = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
-        title="error"
+        title=""
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

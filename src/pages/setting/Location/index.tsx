@@ -38,12 +38,12 @@ const SettingLocation: React.FC = () => {
   return (
     <div className="setting-location">
       <div className="flex justify-between">
-        <SearchBar size="large" handleChange={handleChange} />
+        <SearchBar size="middle" handleChange={handleChange} />
         <NavLink to="/settings/add-location">
           <Button
             size="middle"
             onClick={() => {}}
-            className="flex gap-2 white-color teriary-bg-color hover:decoration-zinc-700 "
+            className="flex gap-2 setting-add-button white-color teriary-bg-color" 
           >
             <Settinglocation /> Add Location
           </Button>
@@ -52,7 +52,7 @@ const SettingLocation: React.FC = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
+            <Col key={index} className="gutter-row" xs={24} lg={12} xxl={8}>
               <BoxWrapper className="location-box-wrapper">
                 <div className="flex">
                   <Text>{data.cardImage}</Text> 
@@ -89,7 +89,7 @@ const SettingLocation: React.FC = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
-        title="error"
+        title=""
       >
         <p>Are you sure you want to delete this location?</p>
       </Alert>

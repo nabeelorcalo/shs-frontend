@@ -1,6 +1,5 @@
 import { Col, Row } from "antd";
 import { Typography } from "antd";
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { SettingHorizontalLine } from "../../assets/images";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
@@ -21,7 +20,7 @@ const Setting = (props: any) => {
         </Title>
       </div>
       <Row gutter={16} className="mt-5">
-        <Col sm={2} md={8} lg={5} className="setting-sidebar flex flex-col">
+        <Col span={3} sm={8} lg={5} className="setting-sidebar flex flex-col">
           <div
             style={{
               backgroundColor: "#fff",
@@ -38,7 +37,7 @@ const Setting = (props: any) => {
             </div>
           </div>
         </Col>
-        <Col sm={24} md={16} lg={19}>
+        <Col span={21} sm={16} lg={19}>
           {props.children}
 
           <Outlet />

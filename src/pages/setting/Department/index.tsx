@@ -57,26 +57,23 @@ const SettingDepartment: React.FC = (props: any) => {
   return (
     <div className="setting-department">
       <div className="flex justify-between">
-        <SearchBar size="large" handleChange={handleChange} />
+        <SearchBar size="middle" handleChange={handleChange} />
 
         <Button
           size="middle"
-          onClick={() => {}}
+          onClick={() => {setShowEditModal(!showDeleteModal)}}
           className="flex gap-2 setting-add-button white-color teriary-bg-color"
         >
           <DepartmentAddIcon /> Add Department
         </Button>
-
-        {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
-          <span className="">  Add department</span> </Button> */}
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className="department-box-wrapper">
+            <Col key={index} className="gutter-row" xs={24} lg={12} xxl={8}>
+              <div className="department-box-wrapper flex">
                 <div className="flex">
-                  <div className="flex px-3 justify-between mt-2 w-full">
+                  <div className="flex pl-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
                       <Text className="text-sm font-normal">
@@ -130,7 +127,7 @@ const SettingDepartment: React.FC = (props: any) => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
-        title="error"
+        title=""
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

@@ -1,7 +1,18 @@
 import React, { useState } from "react";
-import { Typography, Row, Col, Divider, Form, Radio , RadioChangeEvent, Select } from "antd";
+import {
+  Typography,
+  Row,
+  Col,
+  Divider,
+  Form,
+  Radio,
+  RadioChangeEvent,
+  Select,
+  Button,
+  Space,
+} from "antd";
 import { SettingHorizontalLine } from "../../../../assets/images";
-import './style.scss'
+import "./style.scss";
 import dayjs, { Dayjs } from "dayjs";
 import { NavLink } from "react-router-dom";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
@@ -19,7 +30,7 @@ const AddLocation: React.FC = () => {
     street: "",
     town: "",
     country: "",
-    countryCode:"",
+    countryCode: "",
     phoneNumber: "",
     email: "",
     uploadImage: "",
@@ -32,14 +43,14 @@ const AddLocation: React.FC = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
+    console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
 
   console.log("formValues", formValues);
   return (
     <div className="add-location">
-       {/*------------------------ Header----------------------------- */}
+      {/*------------------------ Header----------------------------- */}
       <BoxWrapper>
         <div className="flex ">
           <Title level={3}>Add Location </Title>
@@ -50,16 +61,18 @@ const AddLocation: React.FC = () => {
             Setting
           </Title>
           <span className="mx-2 mt-2">/</span>
-          <NavLink to="/settings/location">  <Title className="mt-0.5" level={4}>
-            Location
-          </Title>
+          <NavLink to="/settings/location">
+            {" "}
+            <Title className="mt-0.5" level={4}>
+              Location
+            </Title>
           </NavLink>
         </div>
       </BoxWrapper>
       <Divider className="mb-0 " />
       <BoxWrapper>
         <Form layout="vertical">
-              {/*------------------------ Office----------------------------- */}
+          {/*------------------------ Office----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
@@ -91,7 +104,7 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Divider />
-              {/*------------------------ Address----------------------------- */}
+          {/*------------------------ Address----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
@@ -137,7 +150,7 @@ const AddLocation: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message:"Please Enter street!",
+                      message: "Please Enter street!",
                     },
                   ]}
                 >
@@ -178,11 +191,12 @@ const AddLocation: React.FC = () => {
                   />
                 </Form.Item>
                 <div className="w-full mt-1 ">
-                <span className="label">Country<span className="text-[red]"></span></span>
-                
+                  <span className="label">
+                    Country<span className="text-[red]"></span>
+                  </span>
+
                   <Select
-                  className="select"
-                  
+                    className="select"
                     size="middle"
                     style={{ width: "100%" }}
                     placeholder="Select"
@@ -209,15 +223,13 @@ const AddLocation: React.FC = () => {
                       },
                     ]}
                   />
-                  </div>
-
-               
+                </div>
               </div>
             </Col>
           </Row>
           <Divider />
-              {/*------------------------ Contact----------------------------- */}
-              <Row className="mt-5">
+          {/*------------------------ Contact----------------------------- */}
+          <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Contact
@@ -227,13 +239,13 @@ const AddLocation: React.FC = () => {
               </Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-            <span className="label">Phone Number (optional)<span className="text-[red]"></span></span>
-            <div className="flex">
-       
-            <div className=" mt-1 ">
+              <span className="label">
+                Phone Number (optional)<span className="text-[red]"></span>
+              </span>
+              <div className="flex">
+                <div className=" mt-1 ">
                   <Select
-                  className="select"
-                  
+                    className="select"
                     size="middle"
                     style={{ width: "100%" }}
                     placeholder="+92"
@@ -260,7 +272,7 @@ const AddLocation: React.FC = () => {
                       },
                     ]}
                   />
-                  </div>
+                </div>
 
                 <Form.Item
                   name="street"
@@ -268,7 +280,7 @@ const AddLocation: React.FC = () => {
                   rules={[
                     {
                       required: true,
-                      message:"Please Enter street!",
+                      message: "Please Enter street!",
                     },
                   ]}
                 >
@@ -276,7 +288,6 @@ const AddLocation: React.FC = () => {
                     className="input"
                     handleChange={handleChange}
                     id="phoneNumber"
-                
                     name="phoneNumber"
                     placeholder="xxxx xxxxxx"
                     size="small"
@@ -285,10 +296,7 @@ const AddLocation: React.FC = () => {
                   />
                 </Form.Item>
               </div>
-              <Form.Item
-                name="email"
-             
-              >
+              <Form.Item name="email">
                 <Input
                   className="input"
                   handleChange={handleChange}
@@ -304,42 +312,40 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Divider />
-               {/*------------------------ Upload Picture----------------------------- */}
-               <Row className="mt-5">
+          {/*------------------------ Upload Picture----------------------------- */}
+          <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Upload Picture
               </Title>
-              <Paragraph>
-                Upload picture for your office location
-              </Paragraph>
+              <Paragraph>Upload picture for your office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-           <UploadDocument/>
+              <UploadDocument />
             </Col>
           </Row>
           <Divider />
-             {/*------------------------ Add Interns----------------------------- */}
-             <Row className="mt-5">
+          {/*------------------------ Add Interns----------------------------- */}
+          <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Add Interns
               </Title>
-              <Paragraph>
-                Select for this office location
-              </Paragraph>
+              <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-
-            <Radio.Group onChange={onChange} value={value}>
-      <Radio value={1}>All interns</Radio>
-      <Radio value={2}>Select Interns</Radio>
-    </Radio.Group>
-    
+              <Radio.Group onChange={onChange} value={value}>
+                <Radio value={1}>All interns</Radio>
+                <Radio value={2}>Select Interns</Radio>
+              </Radio.Group>
             </Col>
           </Row>
         </Form>
+        <Space className="flex justify-end" ><Button danger size="middle" type="primary">Cencal</Button><Button  size="middle" type="primary">Add</Button></Space>
+        <p></p>
       </BoxWrapper>
+
+     
     </div>
   );
 };

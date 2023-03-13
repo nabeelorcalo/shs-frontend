@@ -67,7 +67,7 @@ const SettingLeave = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
   return (
-    <div className="setting-shifts">
+    <div className="setting-leaves">
       <div>
         <div className="flex justify-between">
           <SearchBar size="large" handleChange={handleChange} />
@@ -84,8 +84,8 @@ const SettingLeave = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={6} lg={8}>
-              <div className="setting-shift-box-wrapper w-full flex flex-col">
+            <Col key={index} className="gutter-row" xs={24} md={12} lg={8}>
+              <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
                     // showEditModal={showEditModal}
@@ -136,7 +136,7 @@ const SettingLeave = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
-        title="error"
+        title=""
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

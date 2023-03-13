@@ -4,6 +4,7 @@ import { DepartmentAddIcon , SettingShift } from "../../../assets/images";
 import TemplateCommonDropdown from "../Templates/Common/TemplateCommonDropdown";
 import { Alert,  SearchBar } from "../../../components";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import './style.scss'
 
 const { Title, Text } = Typography;
 
@@ -29,7 +30,7 @@ const SettingShifts: React.FC = () => {
     <div className="setting-shifts">
       <div>
         <div className="flex justify-between">
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={handleChange} />
 
           <Button
             size="middle"
@@ -78,7 +79,7 @@ const SettingShifts: React.FC = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
-        title="error"
+        title=""
        
       >
         <p>Are you sure you want to delete this item?</p>
