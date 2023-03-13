@@ -84,6 +84,7 @@
     border: 1px solid #D9DBE9;
     border-radius: 8px;
 }
+
 .cancel {
     width: 122px !important;
     height: 48px !important;
@@ -104,3 +105,19 @@
     border: none;
 }
 
+.details-wrapper {
+
+    border-right: 1px solid #D9DBE9;
+    height: 100%;
+
+    .ant-dropdown-trigger:nth-child(1) {
+        width: 93px;
+        height: 40px;
+    }
+
+    .ant-dropdown-trigger:nth-child(2) {
+        width: 155px;
+        height: 40px;
+    }
+
+}

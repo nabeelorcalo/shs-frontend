@@ -1,12 +1,10 @@
 import { Col, Row } from "antd";
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import { ContractCard, DropDown, SearchBar } from "../../components";
+import { DropDown, SearchBar } from "../../components";
 import "./style.scss";
-import Table from "../../components/Noman/Table";
-import GlobalTable from "../../components/Table/Table";
 import CandidateTable from "./candidateTable";
 import Modal from "./Modal";
+import ViewDetails from './viewDetails';
+
 
 const Candidates = () => {
   return (
@@ -24,6 +22,7 @@ const Candidates = () => {
       </Row>
       <CandidateTable />
       <Modal />
+      <ViewDetails />
     </>
   )
 }

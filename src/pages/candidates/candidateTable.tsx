@@ -2,9 +2,8 @@ import React from 'react'
 import { BoxWrapper } from '../../components/BoxWrapper/boxWrapper'
 import GlobalTable from '../../components/Table/Table';
 import { Dropdown } from 'antd';
-import type { MenuProps } from 'antd';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from '../../assets/images'
-import { ItemType } from 'antd/es/menu/hooks/useItems';
+
 const CandidateTable = () => {
 
     let ratingCount = [

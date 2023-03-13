@@ -38,7 +38,7 @@ const App: React.FC = () => {
           <div className='title'><p>Reason</p></div>
           <textarea className='input' placeholder='Write your reason' />
           <div className='flex mt-3 justify-end gap-4'>
-        <button className='cancel'>Cancel</button>
+        <button className='cancel'>Cancel</button>                                                                              
         <button className='reject'>Reject</button>
         </div>
         </Modal>
