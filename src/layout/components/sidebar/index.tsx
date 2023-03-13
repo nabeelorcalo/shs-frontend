@@ -84,8 +84,6 @@ const AppSidebar: FC<SidebarProps> = ({
       collapsible
       collapsed={collapsed}
       width={250}
-      // collapsedWidth={94}
-      // style={{ backgroundColor: token.colorPrimary }}
       collapsedWidth={collapsedWidth}
       breakpoint="md"
       style={{ backgroundColor: token.colorPrimary }}

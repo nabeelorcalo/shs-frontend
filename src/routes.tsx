@@ -673,6 +673,38 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
+            element: <AvailableProperties />,
+            index: true,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            element: <SavedSearches />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            element: <RentedProperties />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            element: <BookingRequests />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            element: <AccommodationPayments />,
+          },
+        ],
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        element: <AccPropertyDetail />,
       },
     ],
   },
