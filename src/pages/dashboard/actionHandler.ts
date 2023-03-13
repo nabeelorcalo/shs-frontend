@@ -14,8 +14,20 @@ const useCustomHook = () => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
+  const loadMoreData = () => {
+    fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
+      .then((res) => res.json())
+      .then((body) => {
+        return body.results
+      })
+      .catch(() => {
+        
+      });
+  };
+
   return {
     getData,
+    loadMoreData
   };
 };
 

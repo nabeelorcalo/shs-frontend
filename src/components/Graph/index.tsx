@@ -7,7 +7,7 @@ import GraphFive from './graphForLifeAssessmentAndLifeBalance/lifeAssessment';
 import GraphSix from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
 import constants from '../../config/constants';
 
-// import {BoxWrapper} from '../../components/BoxWrapper/boxWrapper';
+// import {BoxWrapper} from '../../components/BoxWrapper/BoxWrapper';
 // import "./style.scss"
 // import BoxWrapper from '../BoxWrapper/BoxWrapper';
 

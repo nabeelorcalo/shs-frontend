@@ -1,5 +1,6 @@
+console.log("ENV: ", import.meta.env.VITE_APP_URL)
 export default {
-  // appUrl: process.env.REACT_APP_APP_URL || "http://localhost:8001",
+  appUrl: import.meta.env.APP_URL || "http://localhost:8001",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -68,6 +69,7 @@ export const ROUTES_CONSTANTS: any = {
   RENTED_PROPERTIES: "rented-properties",
   BOOKING_REQUESTS: "booking-requests",
   ACCOMMODATION_PAYMENTS: "payments",
+  PROPERTY_DETAIL: 'property',
   SEARCH_JOBS: "search-jobs",
   APPLICATION: "application",
   PROFILE: "profile",

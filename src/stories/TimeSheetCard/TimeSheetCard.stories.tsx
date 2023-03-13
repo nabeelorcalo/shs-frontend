@@ -1,4 +1,4 @@
-import { ContractCard } from "../../components";
+import { ContractCard } from "../../components/ContractCard/ContractCard";
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {

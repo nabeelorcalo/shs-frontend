@@ -1,5 +1,5 @@
 import { Space } from 'antd';
-import {BoxWrapper} from '../BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../BoxWrapper/BoxWrapper';
 import GlobalTable from '../Table/Table';
 interface DataType {
     key?: string,

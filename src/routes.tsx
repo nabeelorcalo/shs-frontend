@@ -18,6 +18,9 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+// remove til here
+
+
 //Setting Child Component
 import SettingPerformance from "./components/Setting/Performance/Performance";
 import SettingDepartment from "./components/Setting/Department/Department";
@@ -28,14 +31,14 @@ import SettingShifts from "./components/Setting/Shifts/Shifts";
 import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
 import SettingPayroll from "./components/Setting/Payroll/Payroll";
 import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
-import PropertyDetail from './pages/propertyAgent/propertDahboard/Dashboard/propertyDetail';
 import ActivityData from "./pages/propertyAgent/propertDahboard/Dashboard/activityData";
+import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
-//
 import DemoCard from "./components/ContractCard/demoCard";
 import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 // 
+//
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -80,6 +83,11 @@ const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
+const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
+const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
+const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
+const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
+const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -90,9 +98,11 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
-const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
+const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
-const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
+const Charts = Loadable(
+  lazy(() => import("./components/ChartsOfGraphs/Charts"))
+);
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
@@ -124,32 +134,31 @@ export const publicRoutes = [
     path: `graph`,
     element: <Graph />,
   },
-    {
-      key: "candidates",
+  {
+    key: "candidates",
     path: `candidates`,
     element: <Candidates />,
-    
   },
   // Demo dropdowns
   {
-    key: 'dropdowndemo',
-    path: '/demodropdown',
-    element: <DropDownDemo />
+    key: "dropdowndemo",
+    path: "/demodropdown",
+    element: <DropDownDemo />,
   },
   {
-    key: 'charts',
-    path: '/charts',
-    element: <Charts />
+    key: "charts",
+    path: "/charts",
+    element: <Charts />,
   },
   {
-    key: 'candidates',
-    path: '/candidates',
-    element: <Candidates />
+    key: "candidates",
+    path: "/candidates",
+    element: <Candidates />,
   },
   {
-    key: 'card',
+    key: "card",
     path: "/democards",
-    element: <DemoCard />
+    element: <DemoCard />,
   },
   // ------Remove till here------
   {
@@ -369,7 +378,7 @@ const systemAdminRoutes = [
       {
         key: `propertyDetails`,
         path: `property-agent/:id`,
-        element: <PropertyDetail/>,
+        element: <PropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.HELP_DESK}`,
@@ -483,7 +492,11 @@ const companyAdminRoutes = [
         children: [
           {
             key: `location`,
-            element:  <Setting title="Location" ><SettingLocation /> </Setting>,
+            element: (
+              <Setting title="Location">
+                <SettingLocation />{" "}
+              </Setting>
+            ),
             path: "location",
             index: true,
 
@@ -498,44 +511,76 @@ const companyAdminRoutes = [
           },
           {
             key: `add-location`,
-            element: <AddLocation/>,
+            element: <AddLocation />,
             path: "add-location",
           },
-          
+
           {
             key: `department`,
-            element: <Setting title="Department" ><SettingDepartment/> </Setting>,
+            element: (
+              <Setting title="Department">
+                <SettingDepartment />{" "}
+              </Setting>
+            ),
             path: "department",
           },
           {
             key: `leaves`,
-            element:<Setting title="Leaves" ><SettingLeaves/></Setting> ,
+            element: (
+              <Setting title="Leaves">
+                <SettingLeaves />
+              </Setting>
+            ),
             path: "leaves",
           },
           {
             key: `performance`,
             path: `performance`,
-          element:<Setting title="Performance" ><SettingPerformance/></Setting>  ,
+            element: (
+              <Setting title="Performance">
+                <SettingPerformance />
+              </Setting>
+            ),
           },
           {
             key: `template`,
             path: `template`,
-            element: <Setting title="Template" > <SettingTemplate /></Setting>,
+            element: (
+              <Setting title="Template">
+                {" "}
+                <SettingTemplate />
+              </Setting>
+            ),
           },
           {
             key: `shifts`,
             path: `shifts`,
-            element: <Setting title="Shifts" > <SettingShifts /></Setting>,
+            element: (
+              <Setting title="Shifts">
+                {" "}
+                <SettingShifts />
+              </Setting>
+            ),
           },
           {
             key: `timesheet`,
             path: `timesheet`,
-            element: <Setting title="Timesheet" > <SettingTimesheet /></Setting>,
+            element: (
+              <Setting title="Timesheet">
+                {" "}
+                <SettingTimesheet />
+              </Setting>
+            ),
           },
           {
             key: `payroll`,
             path: `payroll`,
-            element:<Setting title="Payroll" >  <SettingPayroll /></Setting>,
+            element: (
+              <Setting title="Payroll">
+                {" "}
+                <SettingPayroll />
+              </Setting>
+            ),
           },
         ],
       },
@@ -597,7 +642,7 @@ const internRoutes = [
       {
         key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
         path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
-        element: <ViewHistory/>,
+        element: <ViewHistory />,
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
@@ -738,24 +783,29 @@ const studentRoutes = [
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <h1>SAVED_SEARCHES</h1>,
+            element: <SavedSearches />,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <h1>RENTED_PROPERTIES</h1>,
+            element: <RentedProperties />,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <h1>BOOKING_REQUESTS</h1>,
+            element: <BookingRequests />,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
+            element: <AccommodationPayments />,
           },
         ],
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        element: <AccPropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

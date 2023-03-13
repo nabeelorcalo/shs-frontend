@@ -88,55 +88,64 @@ const OfferLetterStudent = () => {
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={10}>
-            {offerLetterStatus.map((item) => {
-              return (
-                <Col key={item.id} xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-                  <div className="offer-letter-status">
-                    <div
-                      style={{ backgroundColor: item.color }}
-                      className="status-box"
-                    ></div>
-                    <div className="status-box-text">{item.status}</div>
-                  </div>
-                </Col>
-              );
-            })}
-          </Row>
-        </Col>
-
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={10}>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Row gutter={[20, 40]}>
+            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+              <div className="offer-letter-status">
+                <div
+                  style={{ backgroundColor: "#FFC15E" }}
+                  className="status-box"
+                ></div>
+                <div className="status-box-text">Received</div>
+              </div>
               {offerLetterRecieved.map((item) => {
                 return (
-                  <ContractCard
-                    img={item.img}
-                    title={item.title}
-                    description={item.subTitle}
-                  />
+                  <React.Fragment key={item.id}>
+                    <ContractCard
+                      img={item.img}
+                      title={item.title}
+                      description={item.subTitle}
+                    />
+                  </React.Fragment>
                 );
               })}
             </Col>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+              <div className="offer-letter-status">
+                <div
+                  style={{ backgroundColor: "#E94E5D" }}
+                  className="status-box"
+                ></div>
+                <div className="status-box-text">Rejected</div>
+              </div>
               {offerLetterRejected.map((item) => {
                 return (
-                  <ContractCard
-                    img={item.img}
-                    title={item.title}
-                    description={item.subTitle}
-                  />
+                  <React.Fragment key={item.id}>
+                    <ContractCard
+                      img={item.img}
+                      title={item.title}
+                      description={item.subTitle}
+                    />
+                  </React.Fragment>
                 );
               })}
             </Col>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+              <div className="offer-letter-status">
+                <div
+                  style={{ backgroundColor: "#4A9D77" }}
+                  className="status-box"
+                ></div>
+                <div className="status-box-text">Signed</div>
+              </div>
               {offerLetterSigned.map((item) => {
                 return (
-                  <ContractCard
-                    img={item.img}
-                    title={item.title}
-                    description={item.subTitle}
-                  />
+                  <React.Fragment key={item.id}>
+                    <ContractCard
+                      img={item.img}
+                      title={item.title}
+                      description={item.subTitle}
+                    />
+                  </React.Fragment>
                 );
               })}
             </Col>
