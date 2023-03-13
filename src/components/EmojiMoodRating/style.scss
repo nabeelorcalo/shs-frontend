@@ -1,15 +1,20 @@
 @import "../../scss/colors";
-.svgIcon {
-    padding: 15px;
-    transition: padding 0.5s;
-}
-.svgIcon:hover{
-    padding: 0px;
 
+.svgIcon {
+  padding: 0 15px 0 15px;
+  transition: padding 0.2s ease-in-out;
 }
+
+.svgIcon:hover {
+  padding: 0 5px 0 5px;
+  cursor: pointer;
+}
+
 .name-font-size {
-    font-size: 12px ;
-    @screen sm {
-        font-size: 16px ;
-    }
+  font-size: 12px;
+  font-weight: 500;
+
+  @screen md {
+    font-size: 16px;
+  }
 }

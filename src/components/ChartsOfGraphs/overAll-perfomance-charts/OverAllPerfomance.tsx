@@ -1,5 +1,5 @@
 import { Col, Progress, Row } from 'antd';
-import {BoxWrapper} from '../../BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../../BoxWrapper/BoxWrapper';
 import "./OverAllPerfomance.scss"
 
 export const OverAllPerfomance = (props: any) => {

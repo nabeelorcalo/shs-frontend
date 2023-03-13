@@ -1,0 +1,20 @@
+@import '../../scss/colors';
+
+.attendance-card{
+  .ant-typography{
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+  
+  .clock-in{
+    color: $teriary-bg-color;
+  }
+
+  .clock-out{
+    color: $secondary-bg-color;
+  }
+
+  .avg-hours{
+    color: $text-info-color;
+  }
+}

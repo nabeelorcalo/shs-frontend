@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import { CloseCircleFilled } from '@ant-design/icons';
-import { AlertIcon } from '../../assets/images';
-import { SuccessIcon } from '../../assets/images';
-import { WarningIcon } from '../../assets/images';
+import React, { useState } from "react";
+import { Button, Modal } from "antd";
+import { CloseCircleFilled } from "@ant-design/icons";
+import { AlertIcon } from "../../assets/images";
+import { SuccessIcon } from "../../assets/images";
+import { WarningIcon } from "../../assets/images";
 
 export const Alert: React.FC = ({ title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, children }: any) => {
 
@@ -29,15 +29,14 @@ export const Alert: React.FC = ({ title, type, width, state, setState, icon, can
             >
                 <div className='h-[10rem] flex flex-col justify-center gap-3'>
                     <div className='flex flex-row items-center gap-3'>
-                        <div>{type === "error" ? <AlertIcon  /> : type === "success" ? <SuccessIcon /> : type === "warning" ? <WarningIcon /> : null}</div>
+                        <div>{type === "error" ? <AlertIcon /> : type === "success" ? <SuccessIcon /> : type === "warning" ? <WarningIcon /> : null}</div>
                         <div>{type === "error" ? <h2>Alert</h2> : type === "success" ? <h2>Success</h2> : type === "warning" ? <h2>Warning</h2> : null}</div>
-                        
+
                     </div>
                     {children}
                 </div>
-
-            </Modal>
-
-        </>
-    );
+                </Modal>
+            </>)
+  
+ 
 };

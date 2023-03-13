@@ -1,0 +1,13 @@
+@import '../../scss/colors';
+
+.leaves-detail{
+  .ant-typography{
+    font-weight: 500;
+  }
+  p{
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0 2px;
+    color: $text-primary-title-color;
+  }
+}

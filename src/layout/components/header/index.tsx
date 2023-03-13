@@ -106,7 +106,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <Header>
+    <Header style={{ position: 'sticky', top: 0, zIndex: 1, width: '100%' }}>
 
       <div className='ikd-logo'>
         <Link to="/">
