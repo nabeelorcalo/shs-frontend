@@ -58,16 +58,12 @@ const Video = (props: any) => {
                 getValueFromEvent={normFile}
                 className="flex justify-center mt-10"
               >
-                {/* <VideoRecorderLocal /> */}
+ 
                 <Upload name="logo" action="/upload.do" listType="picture">
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
-                        <img
-                          src={Round}
-                          alt="error"
-                          style={{ marginTop: "2px", marginLeft: "2px" }}
-                        />
+                       <Round/>
                       </div>
                     </div>
                   </div>
