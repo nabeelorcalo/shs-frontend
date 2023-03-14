@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Anchor, Collapse } from 'antd'
-import PageHeader from "../../../components/PageHeader";
+import {PageHeader} from "../../../components";
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
 import HowToBookPropperty from "./HowToBookPropperty";
