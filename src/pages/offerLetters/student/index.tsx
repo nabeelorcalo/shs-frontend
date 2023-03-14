@@ -3,18 +3,18 @@ import "./style.scss";
 import { Col, Divider, Row } from "antd";
 import { SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
-import { Rejected, Recieved, Signed } from "../../../assets/images";
+import { Rejected, Recevied, Signed } from "../../../assets/images";
 
 const offerLetterRecieved = [
   {
     id: "1",
-    img: Recieved,
+    img: Recevied,
     title: "Offer Letter",
     subTitle: "From PowerSource",
   },
   {
     id: "2",
-    img: Recieved,
+    img: Recevied,
     title: "Offer Letter",
     subTitle: "From PowerSource",
   },

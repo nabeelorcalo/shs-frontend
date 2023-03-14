@@ -1,3 +1,4 @@
+import { Default } from './../../stories/PageHeader.stories';
 /// <reference types="vite-plugin-svgr/client" />
 // Header Icons
 // export { default as AppLogo } from './AppLogo.svg';
@@ -217,3 +218,10 @@ export {ReactComponent as PinkRectangle} from './dashboard/pinkRectangle.svg';
 export {ReactComponent as YellowRectangle} from './dashboard/yellowRectangle.svg';
 export {ReactComponent as BlueRectangle} from './dashboard/blueRectangle.svg';
 export {default as WishesBox} from './dashboard/wishesBox.gif';
+
+
+// contract
+
+export {default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg"
+export {default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
+export {default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
