@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import PageHeader from '../../components/PageHeader'
 import { Button, Col, Divider, Row } from 'antd'
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
-import { Input } from '../../components'
+import { Input } from 'antd'
 import { DropDown } from '../../components'
-
+import { CheckBox } from '../../components/Checkbox'
+const { TextArea } = Input;
 const NewInternships = () => {
     const [showState, setshowState] = useState(false)
     const [alertState, setAlertState] = useState(false)
@@ -24,22 +25,72 @@ const NewInternships = () => {
                     <Col span={8} className="flex flex-col gap-4">
                         <div className='flex flex-col'>
                             <p>Title <span className='text-[#D83A52]'>*</span></p>
-                            <Input placeholder='Enter Title' />
+
+                            <Input
+                                className="input"
+                                handleChange={() => { }}
+                                id=""
+                                label="Title"
+                                name="name"
+                                required
+                                placeholder="placeholder"
+                                size="large"
+                                type="text"
+                                value="value"
+                            />
                         </div>
                         <div className='flex flex-col'>
                             <p>Department <span className='text-[#D83A52]'>*</span></p>
-                            <DropDown placeholder='Enter Title' />
+                            <Input
+                                className="input"
+                                handleChange={() => { }}
+                                id=""
+                                label="Title"
+                                name="name"
+                                required
+                                placeholder="placeholder"
+                                size="large"
+                                type="text"
+                                value="value"
+                            />
                         </div>
-
+                        <div className='flex flex-col'>
+                            <p>Discription <span className='text-[#D83A52]'>*</span></p>
+                            <TextArea
+                                rows={6}
+                                placeholder="maxLength is 6"
+                                maxLength={8}
+                            />
+                        </div>
                     </Col>
                     <Col span={8}></Col>
                 </Row>
+                <Divider />
                 <Row>
                     <Col span={8}>
                         <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Responsibilities and Requirements</h4>
                         <p>Briefly define the responsibilities and requirements of the internship</p>
                     </Col>
-                    <Col span={8}>Briefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internship</Col>
+                    <Col span={8}>
+                        <div className='flex flex-col gap-4"'>
+                            <div className='flex flex-col gap-2'>
+                                <p>Responsibilities <span className='text-[#D83A52]'>*</span></p>
+                                <TextArea
+                                    rows={6}
+                                    placeholder="maxLength is 6"
+                                    maxLength={8}
+                                />
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                                <p>Requirements <span className='text-[#D83A52]'>*</span></p>
+                                <TextArea
+                                    rows={6}
+                                    placeholder="maxLength is 6"
+                                    maxLength={8}
+                                />
+                            </div>
+                        </div>
+                    </Col>
                     <Col span={8}>col-8</Col>
                 </Row>
                 <Divider />
@@ -48,7 +99,44 @@ const NewInternships = () => {
                         <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>General</h4>
                         <p>Provide the details of internship</p>
                     </Col>
-                    <Col span={8}>Briefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internshipBriefly define the responsibilities and requirements of the internship</Col>
+                    <Col span={8}>
+                        <p>Type of work <span className='text-[#D83A52]'>*</span></p>
+                        <div className='flex flex-row gap-24 my-5'>
+                            <CheckBox
+                                label="Part Time"
+                                onChange={() => { }}
+                            />
+                            <CheckBox
+                                label="Full Time"
+                                onChange={() => { }}
+                            />
+                        </div>
+                        <div className='flex flex-row gap-24 my-5'>
+                            <CheckBox
+                                label="Unpaid"
+                                onChange={() => { }}
+                            />
+                            <CheckBox
+                                label="Paid"
+                                onChange={() => { }}
+                            />
+                        </div>
+                        <div className='flex flex-row gap-24 my-5'>
+                            <CheckBox
+                                label="Virtual"
+                                onChange={() => { }}
+                            />
+                            <CheckBox
+                                label="Onsite"
+                                onChange={() => { }}
+                            />
+                            <CheckBox
+                                label="Hybrid"
+                                onChange={() => { }}
+                            />
+                        </div>
+
+                    </Col>
                     <Col span={8}>col-8</Col>
                 </Row>
                 <Divider />
@@ -57,7 +145,56 @@ const NewInternships = () => {
                         <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Additional Information</h4>
                         <p>Enter the additional information related to internship</p>
                     </Col>
-                    <Col span={8}></Col>
+                    <Col span={8}>
+                        <div className='flex flex-col gap-3'>
+                            <p>Total positions <span className='text-[#D83A52]'>*</span></p>
+                            <div className='flex flex-col gap-5'>
+                                <Input
+                                    className="input"
+                                    handleChange={() => { }}
+                                    id=""
+                                    label="Title"
+                                    name="name"
+                                    required
+                                    placeholder="placeholder"
+                                    size="large"
+                                    type="text"
+                                    value="value"
+                                />
+                            </div>
+
+                            <p>Total positions <span className='text-[#D83A52]'>*</span></p>
+                            <div className='flex flex-col gap-5'>
+                                <Input
+                                    className="input"
+                                    handleChange={() => { }}
+                                    id=""
+                                    label="Title"
+                                    name="name"
+                                    required
+                                    placeholder="placeholder"
+                                    size="large"
+                                    type="text"
+                                    value="value"
+                                />
+                            </div>
+                            <p>Total positions <span className='text-[#D83A52]'>*</span></p>
+                            <div className='flex flex-col gap-5'>
+                                <Input
+                                    className="input"
+                                    handleChange={() => { }}
+                                    id=""
+                                    label="Title"
+                                    name="name"
+                                    required
+                                    placeholder="placeholder"
+                                    size="large"
+                                    type="text"
+                                    value="value"
+                                />
+                            </div>
+                        </div>
+                    </Col>
                     <Col span={8}></Col>
                 </Row>
                 <Row className="flex my-3 flex-row gap-5 justify-end">
@@ -74,7 +211,7 @@ const NewInternships = () => {
                         className="flex bg-[#fff] text-[#4A9D77]"
                         onClick={() => { }}
                     >
-                        Submit
+                        Cancel
                     </Button>
                     <Button
                         size="middle"

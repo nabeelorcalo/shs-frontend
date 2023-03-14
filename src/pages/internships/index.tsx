@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PageHeader from "../../components/PageHeader";
-import { SearchBar } from "../../components";
+import { DropDown, SearchBar } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import GlobalTable from "../../components/Table/Table";
@@ -267,25 +267,68 @@ const Internships = () => {
           <div className="flex flex-row gap-4">
             <FiltersButton
               label="Filters"
-              onClick={() => { setShowDrawer(true)}}
+              onClick={() => { setShowDrawer(true) }}
             />
 
             <Drawer
               closable
               open={showDrawer}
-              onClose={() => { setShowDrawer(false)}}
+              onClose={() => { setShowDrawer(false) }}
               title="Filters"
             >
               <React.Fragment key=".0">
-                <p>
-                  Some contents...
-                </p>
-                <p>
-                  Some contents...
-                </p>
-                <p>
-                  Some contents...
-                </p>
+                <div className="flex flex-col gap-12">
+                  <div className="flex flex-col gap-2">
+                    <p>Location</p>
+                    <DropDown
+                      name="name"
+                      options={[
+                        'EidinBurg',
+                        'Glasgow',
+                        'London',
+                        'Virtual'
+                      ]}
+                      setValue={() => { }}
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value=""
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <p>Department</p>
+                    <DropDown
+                      name="name"
+                      options={[
+                        'Business analyst',
+                        'Research analyst',
+                        'Accountant',
+                        'Administrator',
+                        'HR Cordinator'
+                      ]}
+                      setValue={() => { }}
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value=""
+                    />
+
+                  </div>
+                  <div className="flex flex-row gap-3 justify-end">
+                    <Button
+                      size="middle"
+                      className="flex gap-2 bg-[#fff] text-[#4A9D77]"
+                      onClick={() => { navigate("new-internship"); }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      size="middle"
+                      className="flex gap-2 bg-[#4A9D77] text-[#fff]"
+                      onClick={() => { navigate("new-internship"); }}
+                    >
+                      Apply
+                    </Button>
+                  </div>
+                </div>
               </React.Fragment>
             </Drawer>
             <Button

@@ -16,9 +16,11 @@ export const CustomModal = Template.bind({})
 CustomModal.args = {
   title: "Modal Title Customizable",
   width: 800,
-  showHide: true,
+  state: true,
+  setState: true,
   cancelBtntxt: "Cancel",
-  okBtntxt: "Submit"
+  okBtntxt: "Submit",
+  okBtnFunc: ()=>{},
 
 }
 
