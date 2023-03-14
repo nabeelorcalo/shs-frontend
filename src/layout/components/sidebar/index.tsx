@@ -18,15 +18,12 @@ const { Sider } = Layout;
 
 type SidebarProps = {
   collapsed: boolean;
-  sidebarToggler: () => void;
-  setCollapsed: any;
+  collapsedWidth: number;
+  onBreakpoint: any
+  
 };
 
-const AppSidebar: FC<SidebarProps> = ({
-  collapsed,
-  sidebarToggler,
-  setCollapsed,
-}) => {
+const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -34,7 +31,6 @@ const AppSidebar: FC<SidebarProps> = ({
   const { useToken } = theme;
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
-  const [collapsedWidth, setCollapsedWidth] = useState(94);
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -85,12 +81,9 @@ const AppSidebar: FC<SidebarProps> = ({
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      breakpoint="md"
       style={{ backgroundColor: token.colorPrimary }}
-      onBreakpoint={(broken) => {
-        setCollapsedWidth(broken ? 0 : 94);
-        setCollapsed(broken);
-      }}
+      breakpoint="md"
+      onBreakpoint={onBreakpoint}
     >
       <div className="sidebar-user-profile">
         <Avatar size={48} src={avatar} />

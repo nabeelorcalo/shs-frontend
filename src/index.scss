@@ -7,6 +7,9 @@ body {
   font-weight: 400;
   color: #4E4B66;
   margin: 0;
+  @media (min-width: 1200px) {
+    padding-bottom: 60px;
+  }
 }
 
 img, svg {

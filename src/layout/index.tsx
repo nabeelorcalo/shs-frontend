@@ -12,6 +12,7 @@ function AppLayout() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
+  const [collapsedWidth, setCollapsedWidth] = useState(94);
 
 
   /* EVENT LISTENERS
@@ -22,6 +23,11 @@ function AppLayout() {
   -------------------------------------------------------------------------------------*/
   const collapsedSidebar = () => {
     setCollapsed(!collapsed)
+  }
+
+  const onBreakPoint = (broken:any) => {
+    setCollapsedWidth(broken ? 0 : 94);
+    setCollapsed(broken);
   }
 
   
@@ -42,17 +48,20 @@ function AppLayout() {
 
         <AppSidebar
           collapsed={collapsed}
-          sidebarToggler={collapsedSidebar}
-          setCollapsed={setCollapsed}
+          onBreakpoint={onBreakPoint}
+          collapsedWidth={collapsedWidth}
         />
 
-        <Content>
+        <Content style={{marginLeft: collapsed ? collapsedWidth : '250px'}}>
           <Outlet />
         </Content>
 
       </Layout>
 
-      <AppFooter />
+      <AppFooter
+        collapsed={collapsed}
+        collapsedWidth={collapsedWidth}
+      />
 
     </Layout>
   );
