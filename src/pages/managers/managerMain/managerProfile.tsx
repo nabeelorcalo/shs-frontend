@@ -11,9 +11,11 @@ import {
   Typography,
 } from "antd";
 import pf from "../../../assets/images/profile/university/pf.svg";
-import iconEmail from "../../../assets/images/profile/student/email.svg";
-import iconPhone from "../../../assets/images/profile/student/Phone.svg";
-import iconLocation from "../../../assets/images/profile/student/location.svg";
+// import iconEmail from "../../../assets/images/profile/student/email.svg";
+// import iconPhone from "../../../assets/images/profile/student/Phone.svg";
+// import iconLocation from "../../../assets/images/profile/student/location.svg";
+
+import  {IconEmail , IconPhone ,IconLocation } from  "../../../assets/images"
 import { DropDown } from "../../../components";
 import { Option } from "antd/es/mentions";
 
@@ -25,9 +27,9 @@ const commonObj = {
   logo: pf,
   personName: "Arlene McCoy",
   // personImg: person,
-  iconEmail: iconEmail,
-  iconPhone: iconPhone,
-  iconLocation: iconLocation,
+  iconEmail: IconEmail,
+  iconPhone: IconPhone,
+  iconLocation: IconLocation,
   email: "enquiries@lincoln.ac.uk",
   phone: "+44 7700 900077",
   location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
@@ -95,19 +97,19 @@ const ManagerProfile = () => {
             <Divider />
             <div className="social-info">
               <div className="social-icon flex  items-center mt-3 ml-7">
-                <img src={commonObj.iconEmail} alt="" />
+                <IconEmail/>
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
-                <img src={commonObj.iconPhone} alt="" />
+                <IconPhone/>
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.phone}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
-                <img src={commonObj.iconLocation} alt="" />
+                <IconLocation />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.location}
                 </Typography>

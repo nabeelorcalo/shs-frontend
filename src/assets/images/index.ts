@@ -196,3 +196,8 @@ export { ReactComponent as PurpleRectangle } from "./dashboard/purpleRectangle.s
 export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
 export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
+
+//Company Admin  Managers
+export { ReactComponent as IconPhone } from "../images/profile/student/Phone.svg";
+export { ReactComponent as IconEmail } from "../images/profile/student/email.svg";
+export { ReactComponent as IconLocation } from "../images/profile/student/location.svg";
