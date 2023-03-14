@@ -14,6 +14,10 @@ const Certificates = () => {
     const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
     const [togglePreview, setTogglePreview] = useState(false);
     const [opensignatureModal, setOpenSignatureModal] = useState(false);
+    const [issuewNewCertificate, setIssuewNewCertificate] = useState({
+        name: '', type: '',
+        desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
+    });
 
     const dropdownData = ['design', 'research', 'management', 'development', 'business'];
 
@@ -51,10 +55,19 @@ const Certificates = () => {
                     open={openIssueCertificate}
                     setTogglePreview={setTogglePreview}
                     setOpenSignatureModal={setOpenSignatureModal}
+                    issuewNewCertificate={issuewNewCertificate}
+                    setIssuewNewCertificate={setIssuewNewCertificate}
                 />
             }
 
-            {togglePreview && <PreviewModal open={togglePreview} setOpen={setTogglePreview} />}
+            {togglePreview &&
+                <PreviewModal
+                    open={togglePreview}
+                    setOpen={setTogglePreview}
+                    name={issuewNewCertificate.name}
+                    type={issuewNewCertificate.type}
+                    desc={issuewNewCertificate.desc}
+                />}
 
             {opensignatureModal && <SignatureModal open={opensignatureModal} setOpen={setOpenSignatureModal} />}
         </div>

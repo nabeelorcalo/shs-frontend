@@ -1,6 +1,6 @@
 import { Button, Col, Row } from 'antd';
 import { useParams } from 'react-router-dom';
-import { BoxWrapper } from '../../components/BoxWrapper/boxWrapper';
+import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
 import { tableMockData } from './certificateTable/tableMock';
 import { OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
@@ -10,6 +10,7 @@ import IssueCertificate from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
 import SignatureModal from './certificateModal/SignatureModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
+import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 
 const CertificateDetail = () => {
   const { id } = useParams();
@@ -18,7 +19,13 @@ const CertificateDetail = () => {
   const [issueCertificateModal, setIssueCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   const [previewImg, setPreviewImg] = useState('');
-  const [signatureModal, setSignatureModal] = useState(false);
+  const [signatureModal, setSignatureModal] = useState(false); 
+
+  const [issuewNewCertificate, setIssuewNewCertificate] = useState({
+    name: findUser?.name, type: '',
+    desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
+  });
+  const [selectedCertificate, setSelectedCertificate] = useState<any>({});
 
   return (
     <div className='certificate-detail-wrapper'>
@@ -40,7 +47,7 @@ const CertificateDetail = () => {
           <OverAllPerfomance data={findUser?.performance} heading={'Overall Performance'} />
         </Col>
         <Col lg={6}>
-          <BoxWrapper></BoxWrapper>
+          <LeaveChart heading='Leaves' />
         </Col>
       </Row>
       <div className="flex items-center justify-between gap-3 flex-wrap my-[30px]">
@@ -61,7 +68,7 @@ const CertificateDetail = () => {
                 <div className="flex items-center justify-between mb-[30px]">
                   <p className='font-medium title text-xl'>Completion of <span className='capitalize'>{certificate?.certificateType}</span></p>
                   <DropDownNew items={[
-                    { label: <p onClick={() => setIssueCertificateModal(true)}>Edit</p>, key: 'edit' },
+                    { label: <p onClick={() => { setIssueCertificateModal(true); setSelectedCertificate(certificate) }}>Edit</p>, key: 'edit' },
                     { label: <p>Delete</p>, key: 'delete' },
                   ]} placement={'bottomRight'} overlayStyle={{ width: '100px' }}>
                     <ThreeDots className='cursor-pointer' />
@@ -88,8 +95,17 @@ const CertificateDetail = () => {
         setOpen={setIssueCertificateModal}
         setTogglePreview={setPreviewModal}
         setOpenSignatureModal={setSignatureModal}
+        issuewNewCertificate={issuewNewCertificate}
+        setIssuewNewCertificate={setIssuewNewCertificate}
+        actionType={'edit'}
       />}
-      {previewModal && <PreviewModal open={previewModal} setOpen={setPreviewModal} certificateImg={previewImg} />}
+      {previewModal && <PreviewModal
+        open={previewModal}
+        setOpen={setPreviewModal}
+        name={findUser?.name}
+        type={selectedCertificate?.certificateType}
+        desc={''}
+      />}
       {signatureModal && <SignatureModal open={signatureModal} setOpen={setSignatureModal} />}
     </div>
   )
