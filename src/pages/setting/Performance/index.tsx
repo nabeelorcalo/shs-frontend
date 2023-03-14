@@ -66,7 +66,7 @@ console.log(id);
               {inputData.map((item ,index) => {
                 return (
                   <Col key={index} className="gutter-row" xs={24} md={12} xxl={12}>
-                    <Input.Group compact className="w-full">
+                  {  <Input.Group compact className="w-full">
                       <span className="h-[42px]">
                         <Performanceinput style={{ height: "42px" }} />
                       </span>
@@ -79,7 +79,7 @@ console.log(id);
                         placeholder="Select Address"
                         size="small"
                       />
-                    </Input.Group>
+                    </Input.Group>}
 
                   {item.id === id && <div className="w-full flex">
                     <Input
@@ -109,7 +109,7 @@ console.log(id);
             </Row>
             <Row>
               <Col xs={24} md={12} xxl={11} className="my-3">
-                {!hideInputButton && (
+                {!hideButton && (
                   <Button
                     size="small"
                     onClick={() => {

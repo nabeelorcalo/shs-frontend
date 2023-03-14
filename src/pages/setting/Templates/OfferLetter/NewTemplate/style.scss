@@ -1,0 +1,11 @@
+@import '../../../../../scss/colors';
+.offer-letter-new-template{
+
+    .ant-form-item .ant-form-item-control-input-content {
+
+        .ant-input{
+            background: $text-input-bg-color;
+
+        }
+    }
+}

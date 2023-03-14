@@ -51,25 +51,24 @@ const AddLocation: React.FC = () => {
   return (
     <div className="add-location">
       {/*------------------------ Header----------------------------- */}
-      <BoxWrapper>
-        <div className="flex ">
-          <Title level={3}>Add Location </Title>
+
+        <div className="flex items-center">
+          <Title level={3} className="mt-2">Add Location </Title>
           <span className="mx-2">
             <SettingHorizontalLine />
           </span>
-          <Title className="mt-0.5" level={4}>
-            Setting
-          </Title>
-          <span className="mx-2 mt-2">/</span>
+          <span className=" text-base font-medium text-secondary-color">
+          Setting
+        </span>
+          <span className="mx-2">/</span>
           <NavLink to="/settings/location">
-            {" "}
-            <Title className="mt-0.5" level={4}>
-              Location
-            </Title>
+          <span className=" text-base font-medium text-secondary-color">
+          Location
+        </span>
           </NavLink>
         </div>
-      </BoxWrapper>
-      <Divider className="mb-0 " />
+   
+        <Divider className="my-1 mb-3" />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Office----------------------------- */}

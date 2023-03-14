@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { LocationMore } from "../../../../assets/images";
 import { Dropdown, Menu } from "antd";
+import { LocationMore } from "../../../assets/images";
 
 interface ITEMPLATEDROPDOWN {
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +28,7 @@ const TemplateCommonDropdown = ({
             //   props.setShowEditModal(!props.showEditModal), setVisible(false);
             // }}
             >
+              
               Edit
             </span>
           </Menu.Item>

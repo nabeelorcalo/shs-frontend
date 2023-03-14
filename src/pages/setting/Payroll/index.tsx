@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Typography, Divider, Row, Col , Button } from "antd";
 import { SettingPayrollAddIcon} from "../../../assets/images";
-import TemplateCommonDropdown from "../Templates/Common/TemplateCommonDropdown";
 import { Alert, SearchBar } from "../../../components";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import './style.scss'
+import TemplateCommonDropdown from "../../../components/Setting/Common/TemplateCommonDropdown";
+import { NavLink } from "react-router-dom";
+import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 
 const { Title, Text } = Typography;
 let overview = [
@@ -34,7 +36,8 @@ const SettingPayroll: React.FC = () => {
       <div>
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
-
+          
+          <NavLink to="/settings/payroll/add-category">
           <Button
             size="middle"
             onClick={() => {}}
@@ -42,6 +45,7 @@ const SettingPayroll: React.FC = () => {
           >
             <SettingPayrollAddIcon /> Add Category
           </Button>
+          </NavLink>
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
@@ -61,8 +65,9 @@ const SettingPayroll: React.FC = () => {
                       <Text className="text-sm font-normal content-text">{data.addedBy}</Text>
                     </div>
 
-                    <span className="float-right cursor-pointer w-[40px]">
-                      <TemplateCommonDropdown
+                    <span className="float-right cursor-pointer w-[10px]">
+                      <DropDownForSetting
+                      link={"/settings/payroll/add-category"}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Typography, Divider, Row, Col ,Button} from "antd";
 import { DepartmentAddIcon , SettingShift } from "../../../assets/images";
-import TemplateCommonDropdown from "../Templates/Common/TemplateCommonDropdown";
 import { Alert,  SearchBar } from "../../../components";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import './style.scss'
 import { NavLink } from "react-router-dom";
+import TemplateCommonDropdown from "../../../components/Setting/Common/TemplateCommonDropdown";
 
 const { Title, Text } = Typography;
 

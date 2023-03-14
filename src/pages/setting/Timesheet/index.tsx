@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Typography, Divider, Row, Col,Form ,Input , Button} from "antd";
-import { DepartmentAddIcon, SettingTimesheetIcon , } from "../../../assets/images";
+import { Typography, Divider, Row, Col, Form, Input, Button } from "antd";
+import {
+  DepartmentAddIcon,
+  SettingTimesheetIcon,
+} from "../../../assets/images";
 import { Alert, SearchBar } from "../../../components";
 import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../components/Model";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import './style.scss'
+import "./style.scss";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -13,15 +16,18 @@ const { Title, Text } = Typography;
 let overview = [
   {
     name: "Designing",
-    content: "Producing consistently excellent visual work and  a host of ideas",
+    content:
+      "Producing consistently excellent visual work and  a host of ideas",
   },
   {
     name: "Coordination",
-    content: "The process of organizing people or groups so that they work together properly and well",
+    content:
+      "The process of organizing people or groups so that they work together properly and well",
   },
   {
     name: "Training",
-    content: "Training has specific goals of improving one's capability, capacity, productivity and performance.",
+    content:
+      "Training has specific goals of improving one's capability, capacity, productivity and performance.",
   },
 ];
 
@@ -31,7 +37,6 @@ const SettingTimesheet = () => {
   const [formValues, setFormValues] = useState<any>({
     departmentName: "",
     Description: "",
-
   });
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -44,13 +49,11 @@ const SettingTimesheet = () => {
           <SearchBar size="middle" handleChange={handleChange} />
           <Button
             size="middle"
-            onClick={() => {}}
+            onClick={() => {setShowEditModal(!showEditModal)}}
             className="flex gap-2 setting-add-button white-color teriary-bg-color"
           >
             <SettingTimesheetIcon /> Add Category
           </Button>
-
-        
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
@@ -65,11 +68,15 @@ const SettingTimesheet = () => {
                       <Text className="text-base text-sm pb-1 ">
                         {data.content}
                       </Text>
-                    
                     </div>
 
                     <span className="float-right cursor-pointer w-[40px]">
-                    <DropDownForSetting showEditModal={showEditModal} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} setShowEditModal={setShowEditModal} />
+                      <DropDownForSetting
+                        showEditModal={showEditModal}
+                        showDeleteModal={showDeleteModal}
+                        setShowDeleteModal={setShowDeleteModal}
+                        setShowEditModal={setShowEditModal}
+                      />
                     </span>
                   </div>
                 </div>
@@ -89,9 +96,7 @@ const SettingTimesheet = () => {
         <Form layout="vertical">
           <Form.Item
             name="locationName"
-            rules={[
-              { required: true, message: "Please Enter your username!" },
-            ]}
+            rules={[{ required: true, message: "Please Enter your username!" }]}
           >
             <div className="d-flex w-full pl-1">
               <p className="py-2">Recurrence</p>
@@ -102,7 +107,6 @@ const SettingTimesheet = () => {
             <label className="pb-2">Description</label>
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
-
         </Form>
       </PopUpModal>
       <Alert
@@ -113,7 +117,6 @@ const SettingTimesheet = () => {
         type="error"
         width={500}
         title="error"
-        
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

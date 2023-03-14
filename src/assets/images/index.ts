@@ -198,6 +198,9 @@ export { ReactComponent as SettingPayrollAddIcon } from "./setting/setting-payro
 //Setting Timesheet
 export { ReactComponent as SettingTimesheetIcon } from "./setting/setting-timesheet.svg";
 
+//Setting Template
+export { ReactComponent as NewTemplate } from "./setting/new-template.svg";
+
 // setting Leaves
 export { ReactComponent as SettingLeaves } from "./setting/setting-leaves.svg";
 export { ReactComponent as CasualLeave } from "./setting/casual-leave.svg";

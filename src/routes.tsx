@@ -20,8 +20,6 @@ import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import DemoCard from "./components/ContractCard/demoCard";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-// import SettingLocation from "./pages/setting/Location";
-// import AddLocation from "./pages/setting/Location/AddLocation";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 
 // remove til here
@@ -95,9 +93,13 @@ const SettingLocation= Loadable(lazy(()=>import("./pages/setting/Location")))
 const AddLocation= Loadable(lazy(()=>import("./pages/setting/Location/AddLocation")))
 const SettingTemplate= Loadable(lazy(()=>import("./pages/setting/Templates")))
 const TemplatesOfferLater= Loadable(lazy(()=>import("./pages/setting/Templates/OfferLetter")))
+const OfferLaterNewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/OfferLetter/NewTemplate")))
 const TemplatesCertificateOfAppreciation= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfAppreciation")))
+const TCANewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfAppreciation/NewTemplate")))
 const TemplatesCertificateOfCompletion= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfCompletion")))
+const TCCNewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfCompletion/NewTemplate")))
 const TemplatesContract= Loadable(lazy(()=>import("./pages/setting/Templates/Contract")))
+const ContractNewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/Contract/NewTemplate")))
 const TemplatesRejectionLetter= Loadable(lazy(()=>import("./pages/setting/Templates/RejectionLetter")))
 const SettingLeaves= Loadable(lazy(()=>import("./pages/setting/Leaves")))
 const LeavesAddPolicy= Loadable(lazy(()=>import("./pages/setting/Leaves/AddPolicy")))
@@ -105,6 +107,7 @@ const SettingShifts= Loadable(lazy(()=>import("./pages/setting/Shifts")))
 const AddShift= Loadable(lazy(()=>import("./pages/setting/Shifts/AddShift")))
 const SettingTimesheet= Loadable(lazy(()=>import("./pages/setting/Timesheet")))
 const SettingPayroll= Loadable(lazy(()=>import("./pages/setting/Payroll")))
+const PayrollAddCategory= Loadable(lazy(()=>import("./pages/setting/Payroll/AddCategory")))
 
 const Charts = Loadable(
   lazy(() => import("./components/ChartsOfGraphs/Charts"))
@@ -495,6 +498,12 @@ const companyAdminRoutes = [
             element: <AddLocation />,
             path: "/settings/location/add-location",
           },
+          
+          {
+            key: `offer-letter-new-template`,
+            element: <OfferLaterNewTemplate />,
+            path: "/settings/template/offer-letters/new-template",
+          },
           {
                 
             key: `template-offer-letters`,
@@ -505,6 +514,12 @@ const companyAdminRoutes = [
             key: `template-contract`,
             element: <TemplatesContract />,
             path: "/settings/template/contract",
+          },
+          
+          {
+            key: `contract-new-template`,
+            element: <ContractNewTemplate />,
+            path: "/settings/template/contract/new-template",
           },
           {
             key: `template-rejection-letter`,
@@ -517,9 +532,21 @@ const companyAdminRoutes = [
             path: "/settings/template/certificate-of-appreciation",
           },
           {
+            key: `tca-new-template`,
+            element: <TCANewTemplate />,
+            path: "/settings/template/certificate-of-appreciation/new-template",
+          },
+          
+          {
             key: `template-certificate-of-completion`,
             element: <TemplatesCertificateOfCompletion />,
             path: "/settings/template/certificate-of-completion",
+          },
+          
+          {
+            key: `tcc-new-template`,
+            element: <TCCNewTemplate />,
+            path: "/settings/template/certificate-of-completion/new-template",
           },
 
           {
@@ -545,6 +572,8 @@ const companyAdminRoutes = [
             element: <LeavesAddPolicy/>,
             path: "leaves/add-policy",
           },
+         
+          
           {
             key: `performance`,
             path: `performance`,
@@ -595,6 +624,11 @@ const companyAdminRoutes = [
                 <SettingPayroll />
               </Setting>
             ),
+          },
+          {
+            key: `payroll-add-category`,
+            element: <PayrollAddCategory/>,
+            path: "/settings/payroll/add-category",
           },
         ],
       },

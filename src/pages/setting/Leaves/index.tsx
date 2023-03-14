@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
-import "./style.scss";
 import {
   BereavementLeave,
   CasualLeave,
-  DepartmentAddIcon,
   SettingLeaves,
   MaternityLeave,
   MatrimonialLeave,
@@ -17,6 +15,7 @@ import { Alert, SearchBar } from "../../../components";
 import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../components/Model";
 import { NavLink } from "react-router-dom";
+import "./style.scss";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;

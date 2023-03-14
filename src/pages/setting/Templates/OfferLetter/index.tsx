@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { Typography, Divider } from "antd";
-import { SearchBar } from "../../../SearchBar/SearchBar";
-
+import {  Divider , Button } from "antd";
 import {
-  DepartmentAddIcon,
-  SettingHorizontalLine,
+  NewTemplate,
 } from "../../../../assets/images";
-import { Button } from "../../../Button";
-import TemplatesCommonCard from "../Common/TemplatesCommonCard";
-import { Alert } from "../../../Alert";
-import TemplateCommonBreadcrumb from "../Common/TemplateCommonBreadcrumb";
+
+import { Alert,SearchBar } from "../../../../components";
+import { NavLink } from "react-router-dom";
+import TemplateCommonBreadcrumb from "../../../../components/Setting/Common/TemplateCommonBreadcrumb";
+import TemplatesCommonCard from "../../../../components/Setting/Common/TemplatesCommonCard";
 
 let overview = [
   {
@@ -35,20 +33,22 @@ const TemplatesOfferLater = () => {
       <div>
         <TemplateCommonBreadcrumb current="Offer Letter" />
 
-        <Divider className="my-1 mb-1" />
+        <Divider className="my-1 mb-3" />
         <div className="flex justify-between">
-          <SearchBar size="large" handleChange={handleChange} />
-
+         
+          
+          <SearchBar size="middle" handleChange={handleChange} />
+        <NavLink to="/settings/template/offer-letters/new-template">
           <Button
-            color="#4a9d77"
-            icon={<DepartmentAddIcon className="mx-2" />}
-            label="New Template"
-            type="primary"
             size="middle"
-          />
+            onClick={() => {}}
+            className="flex gap-2 setting-add-button white-color teriary-bg-color"
+          >
+            <NewTemplate/> New Template
+          </Button>
+        </NavLink>
 
-          {/* <Button type="primary" icon={<span><DepartmentAddIcon className="mx-2" /></span>} size="small">
-          <span className="">  Add department</span> </Button> */}
+          
         </div>
       </div>
       <TemplatesCommonCard
@@ -63,6 +63,7 @@ const TemplatesOfferLater = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
+        title=""
       >
         <p>Are you sure you want to delete this item?"</p>
       </Alert>

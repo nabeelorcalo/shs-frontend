@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { SettingHorizontalLine } from "../../../../assets/images";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import './style.scss'
+import "./style.scss";
 // import { Input, SearchBar } from "../../../../components";
 import {
   Typography,
@@ -16,7 +16,7 @@ import {
   Button,
   Space,
   Input,
-  Switch
+  Switch,
 } from "antd";
 import { CommonDatePicker, SearchBar } from "../../../../components";
 const { TextArea } = Input;
@@ -24,25 +24,21 @@ const { Title, Paragraph } = Typography;
 const LeavesAddPolicy = () => {
   const [value, setValue] = useState(1);
   const [formValues, setFormValues] = useState<any>({
-    locationName: "",
-    postCode: "",
-    address: "",
-    street: "",
-    town: "",
-    country: "",
-    countryCode: "",
-    phoneNumber: "",
-    email: "",
-    uploadImage: "",
-    addInterns: "",
+    policyName: "",
+    description: "",
+    assignedDate: "",
+    accrualFrequency: "",
+    entitlement: "",
+    maximumCarryForward: "",
+    carryForwardExpiration: "",
+    AllInterns: "",
+    switch: "",
+    
   });
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
-
-  
-  
   };
   const onChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
@@ -50,25 +46,25 @@ const LeavesAddPolicy = () => {
   };
   return (
     <div className="leaves-add-policy">
-      <BoxWrapper>
-        <div className="flex ">
-          <Title level={3}>Add Policy </Title>
-          <span className="mx-2">
-            <SettingHorizontalLine />
+      <div className="flex items-center ">
+        <Title level={3} className="mt-2">
+          Add Policy{" "}
+        </Title>
+        <span className="mx-2">
+          <SettingHorizontalLine />
+        </span>
+        <span className=" text-base font-medium text-secondary-color">
+          Setting
+        </span>
+        <span className="mx-2 ">/</span>
+        <NavLink to="/settings/leaves">
+          <span className=" text-base font-medium text-secondary-color">
+            Leaves
           </span>
-          <Title className="mt-0.5" level={4}>
-            Setting
-          </Title>
-          <span className="mx-2 mt-2">/</span>
-          <NavLink to="/settings/leaves">
-            {" "}
-            <Title className="mt-0.5" level={4}>
-              Leaves
-            </Title>
-          </NavLink>
-        </div>
-      </BoxWrapper>
-      <Divider className="mb-0 " />
+        </NavLink>
+      </div>
+
+      <Divider className="my-1 mb-3" />
 
       <BoxWrapper>
         <Form layout="vertical">
@@ -86,11 +82,12 @@ const LeavesAddPolicy = () => {
                 label="Policy Name"
                 rules={[{ message: "Please Enter your username!" }]}
               >
-                <Input placeholder="Basic usage" />
+                <Input placeholder="Enter name" />
               </Form.Item>
               <div className="mt-3 flex flex-col">
                 <label>Description (optional)</label>
                 <TextArea
+               className="text-input-bg-color"
                   rows={6}
                   placeholder="Write Something..."
                   maxLength={6}
@@ -148,7 +145,7 @@ const LeavesAddPolicy = () => {
               </div>
 
               <Form.Item
-                name="policyName"
+                name="entitlement"
                 label="Entitlement"
                 rules={[{ message: "Please Enter your username!" }]}
               >
@@ -203,7 +200,6 @@ const LeavesAddPolicy = () => {
 
                 <CommonDatePicker
                   onBtnClick={() => {}}
-                 
                   setOpen={function noRefCheck() {}}
                   setValue={function noRefCheck() {}}
                 />
@@ -212,8 +208,8 @@ const LeavesAddPolicy = () => {
           </Row>
           <Divider />
 
-           {/*------------------------ Add Interns----------------------------- */}
-           <Row className="mt-5">
+          {/*------------------------ Add Interns----------------------------- */}
+          <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Add Interns
@@ -225,20 +221,23 @@ const LeavesAddPolicy = () => {
                 <Radio value={1}>All interns</Radio>
                 <Radio value={2}>Select Interns</Radio>
               </Radio.Group>
-              <div className="my-3">
-              <Switch />
+              <div className="my-5">
+                <Switch />
+                <span className="px-3 ">Apply to all new hires</span>
               </div>
-              
             </Col>
           </Row>
           <Space className="flex justify-end">
-          <Button danger size="middle" type="primary">
-            Cencal
-          </Button>
-          <Button size="middle"  className="teriary-bg-color white-color add-button">
-            Add
-          </Button>
-        </Space>
+            <Button danger size="middle" type="primary">
+              Cencal
+            </Button>
+            <Button
+              size="middle"
+              className="teriary-bg-color white-color add-button"
+            >
+              Add
+            </Button>
+          </Space>
         </Form>
       </BoxWrapper>
     </div>

@@ -11,7 +11,6 @@ const DropDownForSetting = (props: any) => {
     setVisible(visible);
   };
 
-
   return (
     <Dropdown
       className="setting-custom-dropdown"
@@ -23,7 +22,12 @@ const DropDownForSetting = (props: any) => {
                 props.setShowEditModal(!props.showEditModal), setVisible(false);
               }}
             >
-              <NavLink className="text-[#454545] hover:text-[#454545]" to={props.link}> Edit</NavLink> 
+              <NavLink
+                className="text-[#454545] hover:text-[#454545]"
+                to={props?.link}
+              >
+                Edit
+              </NavLink>
             </span>
           </Menu.Item>
           <Menu.Item key="2">
