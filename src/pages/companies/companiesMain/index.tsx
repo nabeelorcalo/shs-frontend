@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
+import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
@@ -23,7 +23,6 @@ const tableData = [
   {
     Actions: "fffff",
     companyName: "University of Birmingham",
-
     status: "Active",
     address: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",

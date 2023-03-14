@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -9,9 +10,9 @@ import {
   Select,
   Typography,
 } from "antd";
-import { Option } from "antd/es/mentions";
-import React, { useState } from "react";
 import { DropDown } from "../../../components";
+
+import { Option } from "antd/es/mentions";
 
 const AddManager = () => {
   const [searchValue, setSearchValue] = useState("");

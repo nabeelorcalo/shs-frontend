@@ -21,12 +21,13 @@ import {
   Space,
   Typography,
 } from "antd";
-import { Option } from "antd/es/mentions";
 import { CalendarIcon } from "../../../assets/images";
 import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
 import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+
+import { Option } from "antd/es/mentions";
 
 const AdminManagement = () => {
   const [value, setValue] = useState("");
@@ -226,12 +227,12 @@ const AdminManagement = () => {
               />
             </div>
             <Button
-              className="teriary-bg-color text-white text-base font-semibold"
+              className="teriary-bg-color white-color text-base font-semibold"
               onClick={() => {
                 setOpen(true);
               }}
             >
-              <UserAddOutlined style={{ fontSize: "16px", fontWeight: 600 }} />{" "}
+              <UserAddOutlined className="text-base font-semibold"  />
               Add User
             </Button>
           </div>

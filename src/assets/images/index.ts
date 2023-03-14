@@ -201,3 +201,12 @@ export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
 export { ReactComponent as IconPhone } from "../images/profile/student/Phone.svg";
 export { ReactComponent as IconEmail } from "../images/profile/student/email.svg";
 export { ReactComponent as IconLocation } from "../images/profile/student/location.svg";
+export { ReactComponent as Pf } from '../images/profile/university/pf.svg';
+export { ReactComponent as User } from '../images/profile/university/Managers.svg';
+export { ReactComponent as Person } from '../images/profile/university/small.svg';
+export { ReactComponent as UniLogo } from '../images/profile/university/360.svg';
+
+//System Admin Delegate Dashboard
+
+export { ReactComponent as People } from '../images/profile/propertyagent/people.svg';
+

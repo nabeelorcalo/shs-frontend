@@ -1,14 +1,14 @@
+import React, { useMemo, useState } from 'react'
 import { InfoCircleFilled } from '@ant-design/icons';
 import { Col, Row, Tooltip, Typography } from 'antd'
-import React, { useMemo, useState } from 'react'
 import { BoxWrapper } from '../../../../components/BoxWrapper/boxWrapper';
-import Graph from '../../../../components/Graph';
 import GraphThree from '../../../../components/Graph/graphForRegisterAgentsAndRewards'
 import constants from '../../../../config/constants';
 import { cardDelegate } from './dalegateMock';
 
 const Dashboard = () => {
-  const [arrow, setArrow] = useState<any>('Show')
+  const [arrow, setArrow] = useState<any>('Show');
+
   const mergedArrow = useMemo(() => {
     if (arrow === 'Hide') {
       return false;
@@ -32,7 +32,7 @@ const Dashboard = () => {
                 <div className="card-main">
                   <div className='flex justify-end mr-2 mt-1'>
                   <Tooltip placement="bottom" title='Agents Data' >
-                      <InfoCircleFilled style={{ fontSize: "18px", color: "#4783FF" }} /> 
+                      <InfoCircleFilled className='text-lg text-info-color' /> 
                       </Tooltip>
                   </div>
                   <div className="flex  p-2">

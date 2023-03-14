@@ -1,26 +1,26 @@
-import { Breadcrumb, Col, Divider, Row, Typography } from "antd";
 import React from "react";
-import logo from "../../../assets/images/profile/university/360.svg";
-import person from "../../../assets/images/profile/university/small.svg";
-import iconEmail from "../../../assets/images/profile/student/email.svg";
-import iconPhone from "../../../assets/images/profile/student/Phone.svg";
-import iconLocation from "../../../assets/images/profile/student/location.svg";
+import { Col, Divider, Row, Typography } from "antd";
+import {
+  IconEmail,
+  IconLocation,
+  IconPhone,
+  Person,
+  UniLogo,
+} from "../../../assets/images";
 
-
-
-const name = 'University';
+const name = "University";
 
 const commonObj = {
-  moduleName:"University of Lincoln",
+  moduleName: "University of Lincoln",
   type: "Univesity",
   depName: "University of Lincoln",
   area: "Lincoln, United Kingdom",
-  logo: logo,
+  logo: UniLogo,
   personName: "Arlene McCoy",
-  personImg: person,
-  iconEmail: iconEmail,
-  iconPhone: iconPhone,
-  iconLocation: iconLocation,
+  personImg: Person,
+  iconEmail: IconEmail,
+  iconPhone: IconPhone,
+  iconLocation: IconLocation,
   email: "enquiries@lincoln.ac.uk",
   phone: "+44 7700 900077",
   location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
@@ -42,16 +42,18 @@ const commonObj = {
   },
 };
 
-
-
 const DetailPage = () => {
   return (
     <div className="detail-page">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <span className="font-semibold text-2xl dashboard-primary-color">{commonObj.moduleName}</span>
-                  <Divider type="vertical" />
-          <span className="font-semibold text-base text-secondary-color">{ commonObj.type}</span>
+          <span className="font-semibold text-2xl dashboard-primary-color">
+            {commonObj.moduleName}
+          </span>
+          <Divider type="vertical" />
+          <span className="font-semibold text-base text-secondary-color">
+            {commonObj.type}
+          </span>
         </Col>
       </Row>
       <Divider />
@@ -59,7 +61,7 @@ const DetailPage = () => {
         <Col xxl={6} xl={8} lg={24} md={24} sm={24} xs={24}>
           <div className="pt-10">
             <center>
-              <img src={commonObj.logo} alt="" />
+              <UniLogo />
               <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
                 {commonObj.depName}
               </Typography>
@@ -72,7 +74,7 @@ const DetailPage = () => {
               <span className="font-noraml text-[#A0A3BD] text-base font-[outfit]">
                 Contact Person
               </span>
-              <img src={commonObj.personImg} alt="" />
+              <Person />
               <span className="font-noraml text-secondary-color text-base font-[outfit]">
                 {commonObj.personName}
               </span>
@@ -80,19 +82,19 @@ const DetailPage = () => {
             <Divider />
             <div className="social-info ">
               <div className="social-icon flex  items-center mt-3 ml-7">
-                <img src={commonObj.iconEmail} alt="" />
+                <IconEmail />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
-                <img src={commonObj.iconPhone} alt="" />
+                <IconPhone />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color ml-4">
                   {commonObj.phone}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 mb-1 ml-6">
-                <img src={commonObj.iconLocation} alt="" />
+                <IconLocation />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color ml-4">
                   {commonObj.location}
                 </Typography>

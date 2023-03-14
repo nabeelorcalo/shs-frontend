@@ -1,9 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
-import "../../style.scss";
 import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
-import { useNavigate } from "react-router-dom";
+import "../../style.scss";
 
 const MainDashboard = () => {
   const nivagate = useNavigate();

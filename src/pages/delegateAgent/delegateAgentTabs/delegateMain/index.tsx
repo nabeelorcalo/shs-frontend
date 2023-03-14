@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { EllipsisOutlined } from '@ant-design/icons'
 import { Col, Menu, Row } from 'antd'
+import { EllipsisOutlined } from '@ant-design/icons'
 import { DropDown, SearchBar } from '../../../../components'
 import GlobalTable from '../../../../components/Table/Table'
 import CustomDroupDown from '../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown';
@@ -46,19 +46,15 @@ const DelegateMain = () => {
         dataIndex: "status",
         render: (_: any, data: any) => (
           <div
-            className="table-status-style"
+            className="table-status-style text-center white-color rounded"
             style={{
               backgroundColor:
-               
                   data.status === "Active"
                   ? "#3DC475"
                   : data.status === "Inactive"
                   ? "#D83A52"
                   : "",
-              color: "#FFFFFF",
               padding: " 2px 3px 2px 3px",
-              borderRadius: "4px",
-              textAlign:"center",
             }}
           >
             {data.status}
@@ -161,7 +157,7 @@ const DelegateMain = () => {
       </Row>
       <Row className="mt-2">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-2 rounded-2xl">
+          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable tableData={tableData} columns={columns} />
           </div>
         </Col>

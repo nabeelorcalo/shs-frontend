@@ -1,80 +1,11 @@
-import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import React from "react";
-import GlobalTable from "../../../components/Table/Table";
-import pf from "../../../assets/images/profile/university/small.svg";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
+import GlobalTable from "../../../components/Table/Table";
+import {Pf} from "../../../assets/images";
+import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
 
-const columns = [
-  {
-    dataIndex: "no",
-    key: "no",
-    title: "No",
-  },
-  {
-    dataIndex: "img",
-    key: "img",
-    title: "Avatar",
-  },
 
-  {
-    dataIndex: "name",
-    key: "name",
-    title: "Name",
-  },
-
-  {
-    dataIndex: "desgination",
-    key: "desgination",
-    title: "Desgination",
-  },
-
-  {
-    dataIndex: "noOfInterns",
-    key: "noOfInterns",
-    title: "Assigned Interns",
-  },
-
-  {
-    dataIndex: "status",
-    render: (_: any, data: any) => (
-      <div
-        className="table-status-style text-center rounded white-color"
-        style={{
-          backgroundColor:
-            data.status === "Pending"
-              ? "#FFC15D"
-              : data.status === "Approved"
-              ? "#3DC475"
-              : data.status === "Rejected"
-              ? "#D83A52"
-              : "",
-          padding: " 2px 3px 2px 3px", 
-        }}
-      >
-        {data.status}
-      </div>
-    ),
-    key: "status",
-    title: "Status",
-  },
-
-  {
-    render: (_: any, data: any) => (
-      <span>
-        <CustomDroupDown menu1={menu2} />
-      </span>
-    ),
-    key: "Actions",
-    title: "Actions",
-  },
-];
-const menu2 = (
-  <Menu>
-    <Menu.Item key="1">Profile</Menu.Item>
-    <Menu.Item key="3">Password Reset</Menu.Item>
-  </Menu>
-);
 const tableData = [
   {
     Actions: (
@@ -84,7 +15,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <img src={pf} alt="" />
+        <Pf/>
       </div>
     ),
     status: "Approved",
@@ -103,7 +34,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <img src={pf} alt="" />
+        <Pf/>
       </div>
     ),
     noOfInterns: "08",
@@ -122,7 +53,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <img src={pf} alt="" />
+        <Pf/>
       </div>
     ),
     status: "Rejected",
@@ -143,7 +74,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <img src={pf} alt="" />
+        <Pf/>
       </div>
     ),
     status: "Pending",
@@ -159,6 +90,76 @@ const tableData = [
 ];
 
 const ManagerInfoTable = () => {
+  const columns = [
+    {
+      dataIndex: "no",
+      key: "no",
+      title: "No",
+    },
+    {
+      dataIndex: "img",
+      key: "img",
+      title: "Avatar",
+    },
+  
+    {
+      dataIndex: "name",
+      key: "name",
+      title: "Name",
+    },
+  
+    {
+      dataIndex: "desgination",
+      key: "desgination",
+      title: "Desgination",
+    },
+  
+    {
+      dataIndex: "noOfInterns",
+      key: "noOfInterns",
+      title: "Assigned Interns",
+    },
+  
+    {
+      dataIndex: "status",
+      render: (_: any, data: any) => (
+        <div
+          className="table-status-style text-center rounded white-color"
+          style={{
+            backgroundColor:
+              data.status === "Pending"
+                ? "#FFC15D"
+                : data.status === "Approved"
+                ? "#3DC475"
+                : data.status === "Rejected"
+                ? "#D83A52"
+                : "",
+            padding: " 2px 3px 2px 3px", 
+          }}
+        >
+          {data.status}
+        </div>
+      ),
+      key: "status",
+      title: "Status",
+    },
+  
+    {
+      render: (_: any, data: any) => (
+        <span>
+          <CustomDroupDown menu1={menu2} />
+        </span>
+      ),
+      key: "Actions",
+      title: "Actions",
+    },
+  ];
+  const menu2 = (
+    <Menu>
+      <Menu.Item key="1">Profile</Menu.Item>
+      <Menu.Item key="3">Password Reset</Menu.Item>
+    </Menu>
+  );
   return (
     <div className="manager-info-table">
       <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">

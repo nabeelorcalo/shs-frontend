@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Row, Typography, Form, Space } from 'antd';
 import { DropDown, SearchBar } from "../../../components";
-import user from "../../../assets/images/profile/university/Managers.svg";
+import { User} from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
@@ -75,7 +75,7 @@ const ManagerMain = () => {
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
             <Button className="teriary-bg-color white-color flex items-center ">
               <a href="addManager" className="flex items-center gap-3">
-                <img src={user} alt="" /> New Manager
+                <User/> New Manager
               </a>
             </Button>
             <Button onClick={()=>setOpenDrawer(true)} className="font-semibold text-base text-[#A0A3BD] rounded-[8px] m-[12px] bg-[#E6F4F9]">

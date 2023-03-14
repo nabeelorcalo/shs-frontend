@@ -10,12 +10,7 @@ import {
   Select,
   Typography,
 } from "antd";
-import pf from "../../../assets/images/profile/university/pf.svg";
-// import iconEmail from "../../../assets/images/profile/student/email.svg";
-// import iconPhone from "../../../assets/images/profile/student/Phone.svg";
-// import iconLocation from "../../../assets/images/profile/student/location.svg";
-
-import  {IconEmail , IconPhone ,IconLocation } from  "../../../assets/images"
+import  {IconEmail , IconPhone ,IconLocation,Pf } from  "../../../assets/images"
 import { DropDown } from "../../../components";
 import { Option } from "antd/es/mentions";
 
@@ -24,9 +19,8 @@ const commonObj = {
   type: "Univesity",
   depName: "University of Lincoln",
   area: "Lincoln, United Kingdom",
-  logo: pf,
+  logo: Pf,
   personName: "Arlene McCoy",
-  // personImg: person,
   iconEmail: IconEmail,
   iconPhone: IconPhone,
   iconLocation: IconLocation,
@@ -83,7 +77,7 @@ const ManagerProfile = () => {
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
           <div className=" pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              <img src={pf} alt="" />
+              <Pf/>
               <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
                 {commonObj.personName}
               </Typography>

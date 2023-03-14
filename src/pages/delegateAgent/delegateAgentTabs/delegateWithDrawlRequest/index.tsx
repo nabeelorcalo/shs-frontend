@@ -80,7 +80,6 @@ const WithDrawalRequest = () => {
     <Menu>
       <Menu.Item key="1">View Reciept</Menu.Item>
       <Menu.Item key="2">Accept</Menu.Item>
-      
     </Menu>
   );
   const tableData = [
@@ -105,12 +104,10 @@ const WithDrawalRequest = () => {
         </span>
       ),
       Fee: "£9,823",
-
       status: "Completed",
       amount: "100 GBP ",
       transactionId: "Single Room",
       datetime: "2 Woodhurst Crescent, Liverpool, L14 0BA",
-
       no: "02",
       bankName: "Natwest Group",
     },
@@ -121,12 +118,10 @@ const WithDrawalRequest = () => {
         </div>
       ),
       Fee: "£7,823",
-
       status: "Rejected",
       amount: "10 GBP ",
       transactionId: "Single Room",
       datetime: "2 Woodhurst Crescent, Liverpool, L14 0BA",
-
       no: "03",
       bankName: "Natwest Group",
     },

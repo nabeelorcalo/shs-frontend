@@ -144,7 +144,7 @@ const UniveristyMain = () => {
       <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
-        <a href="create-password">Password Reset</a>{" "}
+        <a href="create-password">Password Reset</a>
       </Menu.Item>
     </Menu>
   );
