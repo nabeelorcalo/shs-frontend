@@ -3,31 +3,32 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import { Button, Modal } from 'antd'
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
-import AssesmentDragAndDrop from '../AssesmentDragAndDrop';
+import DragAndDropUpload from '../DragAndDropUpload';
 import DrawSignature from '../DrawSignature';
 import TypeSignature from '../TypeSignature';
+import { PopUpModal } from '../Model';
 
 const onChange = (key: string) => {
-    console.log(key);
-  };
-  
-  const items: TabsProps['items'] = [
-    {
-      key: '1',
-      label: `Draw`,
-      children: <DrawSignature />,
-    },
-    {
-      key: '2',
-      label: `Type`,
-      children: <TypeSignature />,
-    },
-    {
-      key: '3',
-      label: `Upload`,
-      children: <AssesmentDragAndDrop />,
-    },
-  ];
+  console.log(key);
+};
+
+const items: TabsProps['items'] = [
+  {
+    key: '1',
+    label: `Draw`,
+    children: <DrawSignature />,
+  },
+  {
+    key: '2',
+    label: `Type`,
+    children: <TypeSignature />,
+  },
+  {
+    key: '3',
+    label: `Upload`,
+    children: <DragAndDropUpload />,
+  },
+];
 
 const AssesmentModal = ({ title }: any) => {
   const [show, setShow] = useState(false)
@@ -36,7 +37,7 @@ const AssesmentModal = ({ title }: any) => {
     <>
       <Button onClick={() => { setShow(!show) }}>Assesment Upload, Sign</Button>
       <div>
-        <Modal
+        {/* <Modal
           title={title}
           open={show}
           onCancel={() => { setShow(!show) }}
@@ -53,7 +54,18 @@ const AssesmentModal = ({ title }: any) => {
           ]}
         >
           <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-        </Modal>
+        </Modal> */}
+        <PopUpModal
+        title={title}
+        state={show}
+        setState={setShow}
+        width={600}
+        okBtntxt="Upload"
+        cancelBtntxt="Cancel"
+
+        >
+          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+        </PopUpModal>
       </div>
     </>
   )

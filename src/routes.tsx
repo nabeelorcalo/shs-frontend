@@ -15,7 +15,7 @@ import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/Verific
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
 //Internships Child Component
-import NewInternships from "./pages/internships/newInternships";
+import NewInternships from "./pages/internships/NewInternships";
 
 // Remove it
 // dummy components
