@@ -75,7 +75,7 @@ const AdminManagement = () => {
       dataIndex: "status",
       render: (_: any, data: any) => (
         <div
-          className="table-status-style"
+          className="table-status-style text-center rounded white-color"
           style={{
             backgroundColor:
               data.status === "Active"
@@ -83,10 +83,7 @@ const AdminManagement = () => {
                 : data.status === "Inactive"
                 ? "#D83A52"
                 : "",
-            color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
-            borderRadius: "4px",
-            textAlign: "center",
           }}
         >
           {data.status}
@@ -110,7 +107,7 @@ const AdminManagement = () => {
     <Menu>
       <Menu.Item key="2">Blocked</Menu.Item>
       <Menu.Item key="3">
-        <a href="create-password">Password Reset</a>{" "}
+        <a href="create-password">Password Reset</a>
       </Menu.Item>
     </Menu>
   );
@@ -183,11 +180,11 @@ const AdminManagement = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
               </Button>
               <Button
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Submit
@@ -199,7 +196,7 @@ const AdminManagement = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="text-2xl font-semibold font-[Outfit] text-[#363565]">
+            <Typography className="text-2xl font-semibold font-[Outfit] primary-color">
               Admin Management
             </Typography>
           </div>
@@ -214,11 +211,11 @@ const AdminManagement = () => {
           <div className="flex justify-end items-center gap-3">
             <Button
               onClick={() => setOpenDrawer(true)}
-              className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
+              className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
-              <NodeExpandOutlined style={{ fontSize: "16px" }} />
+              <NodeExpandOutlined className="text-base" />
               Filter
-              <RightOutlined style={{ fontSize: "12px" }} />
+              <RightOutlined className="text-xs" />
             </Button>
             <div className="w-25">
               <DropDown
@@ -229,7 +226,7 @@ const AdminManagement = () => {
               />
             </div>
             <Button
-              className="bg-[#4A9D77] text-white text-base font-semibold"
+              className="teriary-bg-color text-white text-base font-semibold"
               onClick={() => {
                 setOpen(true);
               }}
@@ -248,28 +245,19 @@ const AdminManagement = () => {
       <Modal
         open={open}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled className="text-[#A3AED0] text-xl" />
         }
         footer={[
           <Button
             key="Cancel"
-            style={{
-              border: "1px solid #4a9d77",
-              color: "#4a9d77",
-              padding: "0px 20px",
-            }}
+            className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5"
             onClick={() => setOpen(false)}
           >
             Cancel
           </Button>,
           <Button
             key="submit"
-            style={{
-              backgroundColor: "#4a9d77",
-              border: "1px solid #4a9d77",
-              color: "#fff",
-              padding: "0px 20px",
-            }}
+            className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5"
             onClick={() => {
               setOpen(false);
               setOpenC(true);
@@ -294,7 +282,7 @@ const AdminManagement = () => {
                 <Input
                   placeholder="Enter First Name"
                   size="large"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-input-color pl-2 text-base"
                 />
               </Form.Item>
             </Col>
@@ -303,7 +291,7 @@ const AdminManagement = () => {
                 <Input
                   placeholder="Enter Last Name"
                   size="large"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-input-color pl-2 text-base"
                 />
               </Form.Item>
             </Col>
@@ -312,7 +300,7 @@ const AdminManagement = () => {
                 <Input
                   placeholder="Enter Email"
                   size="large"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-input-color pl-2 text-base"
                 />
               </Form.Item>
             </Col>
@@ -342,13 +330,12 @@ const AdminManagement = () => {
       <Modal
         open={openC}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled className="text-[#A3AED0] text-xl" />
         }
         footer={[
           <Button
             key="Cancel"
-            className=" border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 text-[#4a9d77]"
-           
+            className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5"
             onClick={() => {
               setOpenC(false);
             }}
@@ -357,7 +344,7 @@ const AdminManagement = () => {
           </Button>,
           <Button
             key="submit"
-            className="bg-[#4a9d77] border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5"
+            className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5"
             onClick={() => {
               setOpenC(false);
             }}
@@ -376,35 +363,35 @@ const AdminManagement = () => {
         >
           <Row gutter={[5, 20]}>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+              <Checkbox className="text-base font-normal primary-color">
                 All
               </Checkbox>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <Checkbox
                 checked
-                className="text-base font-normal text-[#A0A3BD]"
+                className="text-base font-normal primary-color"
               >
                 Dashboard
               </Checkbox>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal text-[#A0A3BD]">
-                User Management <RightOutlined style={{ fontSize: "16px" }} />
+              <Checkbox className="text-base font-normal primary-color">
+                User Management <RightOutlined className="text-base" />
               </Checkbox>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+              <Checkbox className="text-base font-normal primary-color">
                 Agent Management
               </Checkbox>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+              <Checkbox className="text-base font-normal primary-color">
                 Issue Management
               </Checkbox>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal text-[#A0A3BD]">
+              <Checkbox className="text-base font-normal primary-color">
                 Setting
               </Checkbox>
             </Col>

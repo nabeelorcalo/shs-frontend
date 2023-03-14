@@ -9,7 +9,7 @@ import { DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
 import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
-import "./propertAgent.scss";
+import "../style.scss";
 
 const columns = [
   {
@@ -41,7 +41,7 @@ const columns = [
     dataIndex: "status",
     render: (_: any, data: any) => (
       <div
-        className="table-status-style"
+        className="table-status-style text-center white-color rounded"
         style={{
           backgroundColor:
             data.status === "Pending"
@@ -51,10 +51,7 @@ const columns = [
               : data.status === "Inactive"
               ? "#D83A52"
               : "",
-          color: "#FFFFFF",
           padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
-          textAlign: "center",
         }}
       >
         {data.status}
@@ -162,7 +159,7 @@ const PropertyAgentTable = () => {
                 Cancel
               </Button>
               <Button
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Apply

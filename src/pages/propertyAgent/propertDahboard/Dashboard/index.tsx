@@ -1,5 +1,5 @@
-import { Col, Row, Typography } from "antd";
 import React from "react";
+import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
 import "../../style.scss";
 import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
@@ -92,22 +92,22 @@ const MainDashboard = () => {
                         <hr />
                         <Col xxl={16} xl={16} lg={15} md={18} sm={18} xs={15}>
                           <div className="ml-2">
-                            <Typography className="text-[#14142A] text-sm font-semibold font-[outfit]">
+                            <Typography className="text-primary-color text-sm font-semibold font-[outfit]">
                               {item.userStatus}
                             </Typography>
                             <div className="flex ">
                               <img src={item.img} alt="1" />
-                              <Typography className="text-[#6E7191] text-sm font-normal font-[outfit] mr-10 ml-3">
+                              <Typography className="text-teriary-color text-sm font-normal font-[outfit] mr-10 ml-3">
                                 {item.detail}
                               </Typography>
                             </div>
-                            <Typography className="text-[#6E7191] text-sm font-normal font-[outfit]">
+                            <Typography className="text-teriary-color text-sm font-normal font-[outfit]">
                               {item.time}
                             </Typography>
                           </div>
                         </Col>
                         <Col xxl={4} xl={4} lg={4} md={4} sm={24} xs={5}>
-                          <div className="bg-[#4783FF] p-1 text-white text-center rounded-lg">
+                          <div className="text-info-bg-color p-1 white-color text-center rounded-lg">
                             View
                           </div>
                         </Col>

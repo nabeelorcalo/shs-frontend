@@ -46,7 +46,7 @@ const WithDrawalRequest = () => {
       dataIndex: "status",
       render: (_: any, data: any) => (
         <div
-          className="table-status-style"
+          className="table-status-style text-center white-color rounded"
           style={{
             backgroundColor:
               data.status === "Pending"
@@ -56,10 +56,7 @@ const WithDrawalRequest = () => {
                 : data.status === "Rejected"
                 ? "#D83A52"
                 : "",
-            color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
-            borderRadius: "4px",
-            textAlign: "center",
           }}
         >
           {data.status}
@@ -83,7 +80,7 @@ const WithDrawalRequest = () => {
     <Menu>
       <Menu.Item key="1">View Reciept</Menu.Item>
       <Menu.Item key="2">Accept</Menu.Item>
-      {/* <Menu.Item key="3" ><a href="create-password">Password Reset</a> </Menu.Item> */}
+      
     </Menu>
   );
   const tableData = [
@@ -121,14 +118,6 @@ const WithDrawalRequest = () => {
       Actions: (
         <div>
           <EllipsisOutlined />
-          {/* <div
-                style={{
-                  border: "2px solid #D9DBE9",
-                  background: "#FFFFFF",
-                  boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)",
-                  borderRadius: "8px",
-                }}
-              ><Typography>View Details</Typography></div> */}
         </div>
       ),
       Fee: "£7,823",
@@ -168,7 +157,7 @@ const WithDrawalRequest = () => {
       </Row>
       <Row className="mt-2">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-2 rounded-2xl">
+          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable tableData={tableData} columns={columns} />
           </div>
         </Col>

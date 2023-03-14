@@ -1,5 +1,5 @@
-import { Col, Divider, Row, Typography } from 'antd'
 import React from 'react'
+import { Col, Divider, Row, Typography } from 'antd'
 import AppTabs from '../../../components/Tabs'
 import ListingRequest from '../listingRequest'
 import PropertyAgentTable from '../propertAgentTable'
@@ -25,8 +25,6 @@ const items = [
     },
 ]
 
-
-
 const PropertyDashboard = () => {
   return (
       <>
@@ -39,8 +37,6 @@ const PropertyDashboard = () => {
               <AppTabs items={items} />
               </Col>
           </Row>
-   
-      
       </>
   )
 }

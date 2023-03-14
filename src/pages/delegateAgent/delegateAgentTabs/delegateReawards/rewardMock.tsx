@@ -13,8 +13,8 @@ export const rewardForm = [
         lableOne: "Reward Amount",
         lableTwo: "Reward AmountT",
        
-        placeHolderOne:"PlaceHoderO",
-        placeHolderTwo:"PlaceHoderT",
+        placeHolderOne:"PlaceHolder",
+        placeHolderTwo:"PlaceHolder",
        
         
     },
@@ -23,8 +23,8 @@ export const rewardForm = [
         lableOne: "Reward Amount",
         lableTwo: "Reward AmountT",
        
-        placeHolderOne:"PlaceHoderO",
-        placeHolderTwo:"PlaceHoderT",
+        placeHolderOne:"PlaceHolder",
+        placeHolderTwo:"PlaceHolder",
        
         
     },
@@ -33,8 +33,8 @@ export const rewardForm = [
         lableOne: "Reward Amount",
         lableTwo: "Reward AmountT",
        
-        placeHolderOne:"PlaceHoderO",
-        placeHolderTwo:"PlaceHoderT",
+        placeHolderOne:"PlaceHolder",
+        placeHolderTwo:"PlaceHolder",
        
         
     },
@@ -43,8 +43,8 @@ export const rewardForm = [
         lableOne: "Reward Amount",
         lableTwo: "Reward AmountT",
        
-        placeHolderOne:"PlaceHoderO",
-        placeHolderTwo:"PlaceHoderT",
+        placeHolderOne:"PlaceHolder",
+        placeHolderTwo:"PlaceHolder",
        
         
     },
@@ -53,8 +53,8 @@ export const rewardForm = [
         lableOne: "Reward Amount",
         lableTwo: "Reward AmountT",
        
-        placeHolderOne:"PlaceHoderO",
-        placeHolderTwo:"PlaceHoderT",
+        placeHolderOne:"PlaceHolder",
+        placeHolderTwo:"PlaceHolder",
        
         
     },

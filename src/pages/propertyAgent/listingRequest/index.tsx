@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import {
   EllipsisOutlined,
-  MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
 import GlobalTable from "../../../components/Table/Table";
-import { Button, Col, Row, Typography,Space,Form,Menu } from "antd";
+import { Button, Col, Row,Space,Form,Menu } from "antd";
 import { DropDown } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import '../style.scss';
@@ -38,7 +37,7 @@ const columns = [
     dataIndex: "status",
     render: (_: any, data: any) => (
       <div
-        className="table-status-style"
+        className="table-status-style text-center white-color rounded"
         style={{
           backgroundColor:
             data.status === "Pending"
@@ -47,11 +46,8 @@ const columns = [
               ? "#3DC475"
               : data.status === "Rejected"
               ? "#D83A52"
-              : "",
-          color: "#FFFFFF",
+              : "",  
           padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
-          textAlign:"center"
         }}
       >
         {data.status}
@@ -95,8 +91,6 @@ const columns = [
 const menu2 = (
   <Menu>
      <Menu.Item key="1">View Details</Menu.Item>
-  
-   
   </Menu>
 );
 const tableData = [

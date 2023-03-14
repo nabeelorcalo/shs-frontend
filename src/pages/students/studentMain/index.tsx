@@ -22,7 +22,6 @@ const tableData = [
   {
     Actions: "fffff",
     University: "University of Birmingham",
-
     status: "Active",
     company: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",
@@ -40,7 +39,6 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "03",
-
     Name: "Jenny Wilson",
     city: "London",
     hired: "No",
@@ -53,7 +51,6 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "04",
-
     Name: "Jenny Wilson",
     city: "London",
     hired: "No",
@@ -184,7 +181,7 @@ const StudentMain = () => {
                 Cancel
               </Button>
               <Button
-                className="teriary-bg-color text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Apply

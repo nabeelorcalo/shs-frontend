@@ -105,7 +105,7 @@ const CompaniesMain = () => {
       dataIndex: "status",
       render: (_: any, data: any) => (
         <div
-          className="table-status-style"
+          className="table-status-style text-center white-color rounded"
           style={{
             backgroundColor:
               data.status === "Pending"
@@ -115,10 +115,8 @@ const CompaniesMain = () => {
                 : data.status === "Inactive"
                 ? "#D83A52"
                 : "",
-            color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
-            borderRadius: "4px",
-            textAlign: "center",
+
           }}
         >
           {data.status}
@@ -143,7 +141,7 @@ const CompaniesMain = () => {
       <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
-        <a href="create-password">Password Reset</a>{" "}
+        <a href="create-password">Password Reset</a>
       </Menu.Item>
     </Menu>
   );
@@ -173,11 +171,11 @@ const CompaniesMain = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
               </Button>
               <Button
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color  white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Submit
@@ -189,7 +187,7 @@ const CompaniesMain = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="font-semibold text-2xl text-[#363565] font-[outfit]">
+            <Typography className="font-semibold text-2xl primary-color font-[outfit]">
               Companies
             </Typography>
           </div>
@@ -205,11 +203,11 @@ const CompaniesMain = () => {
           <div className="flex justify-end items-center">
             <Button
               onClick={() => setOpenDrawer(true)}
-              className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
+              className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
-              <NodeExpandOutlined style={{ fontSize: "16px" }} />
+              <NodeExpandOutlined className="text-base"/>
               Filter
-              <RightOutlined style={{ fontSize: "12px" }} />
+              <RightOutlined className="text-xs" />
             </Button>
             <div className="w-25">
               <DropDown
@@ -224,7 +222,7 @@ const CompaniesMain = () => {
       </Row>
       <Row className="mt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-2 rounded-2xl">
+          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable tableData={tableData} columns={columns} />
           </div>
         </Col>

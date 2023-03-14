@@ -1,9 +1,11 @@
-import { Button, Col, Form, Input, Row, Space, Typography } from "antd";
 import React from "react";
+import { Button, Col, Form, Input, Row, Space, Typography } from "antd";
 import "../../style.scss";
 import { rewardForm } from "./rewardMock";
 
+
 const Rewards = () => {
+  
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
@@ -25,28 +27,28 @@ const Rewards = () => {
             <>
               <Row gutter={30} className="mb-7 mt-5">
                 <Col xxl={3} xl={4} lg={4} md={24} sm={24} xs={24}>
-                  <Typography className="text-xl font-medium font-outfit text-[#4e4b66]">
+                  <Typography className="text-xl font-medium font-outfit text-secondary-color">
                     {item.mainLable}
                   </Typography>
                 </Col>
                 <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
-                  <Typography className="text-base font-semibold font-outfit text-[#6e7191]">
+                  <Typography className="text-base font-semibold font-outfit text-teriary-color ">
                     {item.lableOne}
                   </Typography>
                   <Input
                     placeholder={item.placeHolderOne}
                     size="large"
-                    className="bg-[#E6F4F9] rounded-[8px]"
+                    className="text-input-bg-color rounded-[8px]"
                   />
                 </Col>
                 <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
-                  <Typography className="text-base font-semibold font-outfit text-[#6e7191]">
+                  <Typography className="text-base font-semibold font-outfit text-teriary-color ">
                     {item.lableTwo}
                   </Typography>
                   <Input
                     placeholder={item.placeHolderTwo}
                     size="large"
-                    className="bg-[#E6F4F9] rounded-[8px]"
+                    className="text-input-bg-color rounded-[8px]"
                   />
                 </Col>
               </Row>
@@ -56,11 +58,11 @@ const Rewards = () => {
 
         <Typography className="flex justify-center sm:justify-end">
           <Space>
-            <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+            <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
               Cancel
             </Button>
             <Button
-              className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
               htmlType="submit"
             >
               Submit
