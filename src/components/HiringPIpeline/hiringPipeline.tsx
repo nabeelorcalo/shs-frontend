@@ -60,17 +60,3 @@ const HiringPipeline = () => {
 
 export default HiringPipeline
 
-{/* <div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div>
-      <div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div> */}
