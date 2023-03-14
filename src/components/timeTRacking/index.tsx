@@ -62,7 +62,7 @@ const TimeTracking = (props: any) => {
         >
           <div
             className={
-              vartical ? "clock-time flex justify-center items-center" : "mr-4"
+              vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"
             }
           >
             {!isRunning ? (

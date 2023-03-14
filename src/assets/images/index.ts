@@ -203,3 +203,4 @@ export {ReactComponent as PurpleRectangle} from './dashboard/purpleRectangle.svg
 export {ReactComponent as PinkRectangle} from './dashboard/pinkRectangle.svg';
 export {ReactComponent as YellowRectangle} from './dashboard/yellowRectangle.svg';
 export {ReactComponent as BlueRectangle} from './dashboard/blueRectangle.svg';
+export {default as WishesBox} from './dashboard/wishesBox.gif';

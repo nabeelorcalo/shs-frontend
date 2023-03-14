@@ -2,6 +2,7 @@ import React from 'react';
 import { Carousel, Avatar, Image } from 'antd';
 import { Button } from '../Button';
 import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { WishesBox } from '../../assets/images';
 import './style.scss';
 
 interface BirthdayProps {
@@ -46,7 +47,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                   width={108}
                   height={108}
                   preview={false}
-                  src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/6b3fe963030867.5aa3707f0c627.gif"
+                  src={WishesBox}
                 />
               </div>
 
