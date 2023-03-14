@@ -79,3 +79,21 @@
         }
     }
 }
+
+// new dropdown style
+.drop_down_overlay_new {
+    background: $white-bg-color;
+    border: 2px solid $text-error-line-color;
+    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
+    border-radius: 8px;
+
+    .ant-dropdown-menu {
+        .ant-dropdown-menu-item {
+            text-transform: capitalize;
+        }
+
+        .ant-dropdown-menu-item-active {
+            background-color: transparent !important;
+        }
+    }
+}

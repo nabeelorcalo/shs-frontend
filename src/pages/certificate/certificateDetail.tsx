@@ -7,6 +7,7 @@ import { OverAllPerfomance } from '../../components';
 import { IssueCertificateIcon, ThreeDots } from '../../assets/images';
 import { useState } from 'react';
 import { EyeFilled } from '@ant-design/icons';
+import DropDownNew from '../../components/Dropdown/DropDownNew';
 
 const CertificateDetail = () => {
     const { id } = useParams();
@@ -77,6 +78,13 @@ const CertificateDetail = () => {
                         </Col>
                     ))}
                 </Row>
+                <DropDownNew items={[{ label: 'label', key: 'label' },{ label: 'label', key: 'label' }]}>
+                    <div>ddd</div>
+                </DropDownNew>
+
+                <DropDownNew items={[{ label: 'label', key: 'label' },{ label: 'label', key: 'label' }]}>
+                    <div>ddd</div>
+                </DropDownNew>
             </div>
 
         </div>
