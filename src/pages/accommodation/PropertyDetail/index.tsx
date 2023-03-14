@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
 import { Typography, Anchor } from 'antd'
 import "./style.scss";
 import { IconWebLocation, IconStatusCheck } from '../../../assets/images'
 import PageHeader from "../../../components/PageHeader";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import CancellationPolicy from "./CancellationPolicy";
+import HowToBookPropperty from "./HowToBookPropperty";
+import AgentDetail from "./AgentDetail";
+
+// Temporary
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import thumb2 from '../../../assets/images/gallery/thumb2.png'
 import thumb3 from '../../../assets/images/gallery/thumb3.png'
 import thumb4 from '../../../assets/images/gallery/thumb4.png'
 import thumb5 from '../../../assets/images/gallery/thumb5.png'
 import gal1 from '../../../assets/images/gallery/gal1.png'
-import CancellationPolicy from "./CancellationPolicy";
-import HowToBookPropperty from "./HowToBookPropperty";
-import AgentDetail from "./AgentDetail";
 
 const images = [
   {
@@ -42,9 +43,33 @@ const images = [
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const anchorItems = [
+    {
+      key: 'Overview',
+      href: '#Overview',
+      title: 'Overview',
+    },
+    {
+      key: 'Pricing',
+      href: '#Pricing',
+      title: 'Pricing',
+    },
+    {
+      key: 'Cancellation-Policy',
+      href: '#Cancellation-Policy',
+      title: 'Cancellation Policy',
+    },
+    {
+      key: 'HowtoBookThisProperty',
+      href: '#HowtoBookThisProperty',
+      title: 'How to Book This Property',
+    },
+    {
+      key: 'AgentDetail',
+      href: '#AgentDetail',
+      title: 'Agent Detail',
+    },
+  ]
 
 
 
@@ -110,33 +135,7 @@ const AccPropertyDetail = () => {
             <Anchor
               offsetTop={80}
               direction="horizontal"
-              items={[
-                {
-                  key: 'Overview',
-                  href: '#Overview',
-                  title: 'Overview',
-                },
-                {
-                  key: 'Pricing',
-                  href: '#Pricing',
-                  title: 'Pricing',
-                },
-                {
-                  key: 'Cancellation-Policy',
-                  href: '#Cancellation-Policy',
-                  title: 'Cancellation Policy',
-                },
-                {
-                  key: 'HowtoBookThisProperty',
-                  href: '#HowtoBookThisProperty',
-                  title: 'How to Book This Property',
-                },
-                {
-                  key: 'AgentDetail',
-                  href: '#AgentDetail',
-                  title: 'Agent Detail',
-                },
-              ]}
+              items={anchorItems}
             />
             <div id="Overview" className="property-card-section">
               <div className="section-content">

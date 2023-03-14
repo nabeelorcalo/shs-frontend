@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import './style.scss'
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, theme } from 'antd';
+import { IconArrowDown } from '../../../../assets/images'
 const { Panel } = Collapse;
 const text = `
   A dog is a type of domesticated animal.
@@ -22,21 +23,21 @@ const HowToBookPropperty = () => {
   return (
     <div className="book-property">
       <Collapse
-      bordered={false}
-      defaultActiveKey={['1']}
-      expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-      style={{ background: token.colorBgContainer }}
-    >
-      <Panel header="This is panel header 1" key="1" style={panelStyle}>
-        <p>{text}</p>
-      </Panel>
-      <Panel header="This is panel header 2" key="2" style={panelStyle}>
-        <p>{text}</p>
-      </Panel>
-      <Panel header="This is panel header 3" key="3" style={panelStyle}>
-        <p>{text}</p>
-      </Panel>
-    </Collapse>
+        accordion={true}
+        bordered={false}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+        style={{ background: token.colorBgContainer }}
+      >
+        <Panel header="This is panel header 1" key="1" style={panelStyle}>
+          <p>{text}</p>
+        </Panel>
+        <Panel header="This is panel header 2" key="2" style={panelStyle}>
+          <p>{text}</p>
+        </Panel>
+        <Panel header="This is panel header 3" key="3" style={panelStyle}>
+          <p>{text}</p>
+        </Panel>
+      </Collapse>
     </div>
   )
 }
