@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import TimeTracking from "../components/TimeTRacking";
+import TimeTracking from "../components/timeTRacking";
 
 export default {
   title: "Components/TimeTracking",

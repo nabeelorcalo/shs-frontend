@@ -10,7 +10,7 @@ import {
 } from "../../../assets/images";
 // import { Button } from "../../Button";
 import { SearchBar } from "../../SearchBar/SearchBar";
-import {BoxWrapper }from "../../BoxWrapper/boxWrapper";
+import {BoxWrapper }from "../../BoxWrapper/BoxWrapper";
 import cardImage from "../../../assets/images/setting/locationImage.svg";
 import { DropDown } from "../../Dropdown/DropDown";
 import { Button } from "../../Button";

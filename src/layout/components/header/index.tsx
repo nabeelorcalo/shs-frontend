@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react'
 import './style.scss'
-import { Button, MenuProps, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { 
   Logo,
@@ -14,7 +13,7 @@ import {
   IconProfile,
   IconCross
 } from '../../../assets/images'
-import { Layout, Input, Dropdown, Avatar, Drawer, List } from 'antd';
+import { Layout, Input, Dropdown, Avatar, Drawer, List, Button, MenuProps, Typography } from 'antd';
 const { Search } = Input;
 const { Header } = Layout;
 import organizationLogo from '../../../assets/images/header/organisation.svg'

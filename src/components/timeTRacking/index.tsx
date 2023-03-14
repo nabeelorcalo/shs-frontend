@@ -45,7 +45,7 @@ const TimeTracking = (props: any) => {
 
   return (
     <Card
-      className={vartical ? "time-tracking" : "timeTrackig-horizontal"}
+      className={vartical ? "time-tracking my-2" : "timeTrackig-horizontal my-2"}
       bordered={false}
     >
       <div className="time-tracking-body">
@@ -62,7 +62,7 @@ const TimeTracking = (props: any) => {
         >
           <div
             className={
-              vartical ? "clock-time flex justify-center items-center" : "mr-8"
+              vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"
             }
           >
             {!isRunning ? (
@@ -97,7 +97,7 @@ const TimeTracking = (props: any) => {
           className={
             vartical
               ? "date text-sm font-medium text-center mt-4"
-              : "date text-sm font-medium sm:text-end text-center mt-2 sm:mt-0"
+              : "date text-sm font-medium text-end mt-2 sm:mt-0"
           }
         >
           {formattedDate}

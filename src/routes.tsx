@@ -18,6 +18,9 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
+// remove til here
+
+
 //Setting Child Component
 import SettingPerformance from "./components/Setting/Performance/Performance";
 import SettingDepartment from "./components/Setting/Department/Department";
@@ -76,9 +79,12 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(
-  lazy(() => import("./pages/accommodation/AvailableProperties"))
-);
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
+const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
+const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
+const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
+const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
+const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -89,7 +95,7 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
-const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
+const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
 const Charts = Loadable(
   lazy(() => import("./components/ChartsOfGraphs/Charts"))
@@ -668,6 +674,38 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
+            element: <AvailableProperties />,
+            index: true,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            element: <SavedSearches />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            element: <RentedProperties />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            element: <BookingRequests />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            element: <AccommodationPayments />,
+          },
+        ],
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        element: <AccPropertyDetail />,
       },
     ],
   },
@@ -758,24 +796,29 @@ const studentRoutes = [
           {
             key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
             path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
-            element: <h1>SAVED_SEARCHES</h1>,
+            element: <SavedSearches />,
           },
           {
             key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
             path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
-            element: <h1>RENTED_PROPERTIES</h1>,
+            element: <RentedProperties />,
           },
           {
             key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
             path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
-            element: <h1>BOOKING_REQUESTS</h1>,
+            element: <BookingRequests />,
           },
           {
             key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
             path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
-            element: <h1>ACCOMMODATION_PAYMENTS</h1>,
+            element: <AccommodationPayments />,
           },
         ],
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        element: <AccPropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,

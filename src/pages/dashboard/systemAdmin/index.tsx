@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import "../style";
+import "../style.scss";
 
 const SystemAdmin = () => {
   return (
