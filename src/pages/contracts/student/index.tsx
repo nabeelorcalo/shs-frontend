@@ -1,11 +1,8 @@
+import "./style.scss";
 import { Col, Divider, Row } from "antd";
-import React from "react";
 import { SearchBar } from "../../../components";
-import "./contractStudent.scss";
-import Signed from "../../../assets/images/ColorfullIconsProgressbar/Signed.png";
-import Recieved from "../../../assets/images/ColorfullIconsProgressbar/recieved.png";
-import Rejected from "../../../assets/images/ColorfullIconsProgressbar/rejected.png";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
+import { Rejected, Recieved, Signed } from "../../../assets/images";
 
 const contractReceived = [
   {
@@ -46,24 +43,6 @@ const contractSigned = [
   },
 ];
 
-const contractStatus = [
-  {
-    id: "1",
-    color: "#FFC15E",
-    status: "Received",
-  },
-  {
-    id: "2",
-    color: "#E94E5D",
-    status: "Rejected",
-  },
-  {
-    id: "3",
-    color: "#4A9D77",
-    status: "Signed",
-  },
-];
-
 const ContractsStudent = () => {
   const handleChange = () => {
     console.log("clicks");
@@ -73,7 +52,9 @@ const ContractsStudent = () => {
     <div className="contract-student">
       <Row gutter={[10, 10]}>
         <Col>
-          <div className="contract-student-title">Contracts</div>
+          <div className="contract-student-title text-2xl font-semibold">
+            Contracts
+          </div>
         </Col>
         <Divider />
 
@@ -85,9 +66,7 @@ const ContractsStudent = () => {
           <Row gutter={[20, 40]}>
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="contract-status">
-                <div
-                  className="status-box bg-[#FFC15E]"
-                ></div>
+                <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
               </div>
               {contractReceived.map((item) => {
@@ -104,10 +83,7 @@ const ContractsStudent = () => {
             </Col>
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="contract-status">
-                <div
-                 
-                  className="status-box bg-[#E94E5D]"
-                ></div>
+                <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
               </div>
               {contractReject.map((item) => {
@@ -122,9 +98,7 @@ const ContractsStudent = () => {
             </Col>
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="contract-status">
-                <div
-                  className="status-box bg-[#4A9D77]"
-                ></div>
+                <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
               </div>
               {contractSigned.map((item) => {

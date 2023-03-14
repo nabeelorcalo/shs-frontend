@@ -1,11 +1,9 @@
-import { Col, Divider, Row } from "antd";
 import React from "react";
+import "./style.scss";
+import { Col, Divider, Row } from "antd";
 import { SearchBar } from "../../../components";
-import "./offerLettersStudent.scss";
-import Signed from "../../../assets/images/ColorfullIconsProgressbar/Signed.png";
-import Recieved from "../../../assets/images/ColorfullIconsProgressbar/recieved.png";
-import Rejected from "../../../assets/images/ColorfullIconsProgressbar/rejected.png";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
+import { Rejected, Recieved, Signed } from "../../../assets/images";
 
 const offerLetterRecieved = [
   {
@@ -52,24 +50,6 @@ const offerLetterSigned = [
   },
 ];
 
-const offerLetterStatus = [
-  {
-    id: "1",
-    color: "#FFC15E",
-    status: "Received",
-  },
-  {
-    id: "2",
-    color: "#E94E5D",
-    status: "Rejected",
-  },
-  {
-    id: "3",
-    color: "#4A9D77",
-    status: "Signed",
-  },
-];
-
 const OfferLetterStudent = () => {
   const handleChange = () => {
     console.log("click");
@@ -79,7 +59,9 @@ const OfferLetterStudent = () => {
     <div className="offer-latter-student">
       <Row gutter={[0, 12]}>
         <Col>
-          <div className="offer-latter-student-title">Offer Letters</div>
+          <div className="offer-latter-student-title text-2xl font-semibold">
+            Offer Letters
+          </div>
         </Col>
         <Divider />
 
@@ -91,10 +73,7 @@ const OfferLetterStudent = () => {
           <Row gutter={[20, 40]}>
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="offer-letter-status">
-                <div
-                  style={{ backgroundColor: "#FFC15E" }}
-                  className="status-box"
-                ></div>
+                <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
               </div>
               {offerLetterRecieved.map((item) => {
@@ -110,11 +89,8 @@ const OfferLetterStudent = () => {
               })}
             </Col>
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-              <div className="offer-letter-status">
-                <div
-                  style={{ backgroundColor: "#E94E5D" }}
-                  className="status-box"
-                ></div>
+              <div className="offer-letter-status ">
+                <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
               </div>
               {offerLetterRejected.map((item) => {
@@ -131,10 +107,7 @@ const OfferLetterStudent = () => {
             </Col>
             <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
               <div className="offer-letter-status">
-                <div
-                  style={{ backgroundColor: "#4A9D77" }}
-                  className="status-box"
-                ></div>
+                <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
               </div>
               {offerLetterSigned.map((item) => {

@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import OfferLetterStudent from "./offerLettersSudent";
 import "./style.scss";
+import Student from "./student";
 
 const OfferLetters = () => {
   return (
     <div>
-      <OfferLetterStudent />
+      <Student />
     </div>
   );
 };

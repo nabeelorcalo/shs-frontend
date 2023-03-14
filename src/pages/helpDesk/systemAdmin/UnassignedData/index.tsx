@@ -1,7 +1,7 @@
-import { Menu, Space, Tooltip } from "antd";
 import React from "react";
+import { Menu, Space, Tooltip } from "antd";
 import GlobalTable from "../../../../components/Table/Table";
-import CustomDroupDown from "../../../digiVault/digiVaultStudent/dropDownCustom";
+import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
 
 const tableData = [

@@ -136,7 +136,7 @@ export { ReactComponent as ChevronRight } from "./leaves/ChevronRight.svg";
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
-export { ReactComponent as BAnkingImg } from "./digivault/manageVault/bankingFolder.svg";
+export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
 export { ReactComponent as BAnkingImgSub } from "./digivault/manageVault/ph_bank.svg";
 export { ReactComponent as HealthImg } from "./digivault/manageVault/health.svg";
 export { ReactComponent as HealthImgSub } from "./digivault/manageVault/ic_outline-health-and-safety.svg";
@@ -145,10 +145,19 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
-export { ReactComponent as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
-export { ReactComponent as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
-export { ReactComponent as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
-export { ReactComponent as File } from "../images/ColorfullIconsProgressbar/file.svg";
+export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
+export { default as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
+export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { default as File } from "../images/ColorfullIconsProgressbar/file.svg";
+export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
+export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
+export { default as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
+export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
+export { ReactComponent as EducationWhite } from "../../assets/images/digivault/manageVault/white/educationWhite.svg";
+export { ReactComponent as EducationWhiteSub } from "../../assets/images/digivault/manageVault/white/educationSubWhite.svg";
+export { ReactComponent as BankingWhiteSub } from "../../assets/images/digivault/manageVault/white/bankSubWhite.svg";
+export { ReactComponent as HealthWhiteSub } from "../../assets/images/digivault/manageVault/white/healthSubWhite.svg";
+export { ReactComponent as TransWhiteSub } from "../../assets/images/digivault/manageVault/white/transWhite.svg";
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -186,3 +195,9 @@ export { ReactComponent as Settinglocation } from "./setting/locationWhiteIcon.s
 export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
 export { ReactComponent as LocationMore } from "./setting/More.svg";
 export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
+
+//contracts
+
+export { default as Rejected } from "../images/contract/rejected.svg";
+export { default as Signed } from "../images/contract/signed.svg";
+export { default as Recieved } from "../images/contract/recieved.svg";

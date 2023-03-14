@@ -1,16 +1,11 @@
-import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import React, { useState } from "react";
-import "./digiVaultStudent.scss";
+import "./style.scss";
+import "react-circular-progressbar/dist/styles.css";
+import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "./settingModal";
 import GlobalTable from "../../../components/Table/Table";
-import "react-circular-progressbar/dist/styles.css";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
-import gallery from "../../../assets/images/ColorfullIconsProgressbar/media.svg";
-import Video from "../../../assets/images/ColorfullIconsProgressbar/video.svg";
-import Document from "../../../assets/images/ColorfullIconsProgressbar/doc.svg";
-import Folder from "../../../assets/images/ColorfullIconsProgressbar/file.svg";
 import DigivaultCard from "../../../components/DigiVaultCard";
-import SettingIcon from "../../../assets/images/ColorfullIconsProgressbar/Settings.svg";
 import { useNavigate } from "react-router-dom";
 import NewPasswordModal from "./newPasswordModal";
 import {
@@ -25,9 +20,14 @@ import {
   GovImg,
   GovImgSub,
   Other,
+  Gallery,
+  Doc,
+  Video,
+  File,
+  SettingIcon,
 } from "../../../assets/images";
- import CustomDroupDown from "./dropDownCustom";
- import { Alert } from "../../../components";
+import CustomDroupDown from "./dropDownCustom";
+import { Alert } from "../../../components";
 
 const manageVaultArr = [
   {
@@ -87,7 +87,7 @@ const manageVaultArr = [
 
 const arraydata = [
   {
-    icon: gallery,
+    icon: Gallery,
     progressbarColor: "#4CA4FD",
     progressbarValue: 30,
     storage: "123GB",
@@ -101,14 +101,14 @@ const arraydata = [
     title: "Video",
   },
   {
-    icon: Document,
+    icon: Doc,
     progressbarColor: "#FFC15D",
     progressbarValue: 50,
     storage: "28GB",
     title: "Document",
   },
   {
-    icon: Folder,
+    icon: File,
     progressbarColor: "#6AAD8E",
     progressbarValue: 80,
     storage: "128GB",
@@ -145,19 +145,9 @@ const tableData = [
 
 const DigiVaultStudent = () => {
   const [modal2Open, setModal2Open] = useState(false);
-  const [percentage, setPercentage] = useState(68);
   const [isChecked, setIsChecked] = useState(false);
-  const [toggleOperation, setToggleOperation] = useState({
-    isOpen: true,
-    id: "",
-  });
   const [newPass, setNewPass] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-
-  const handleVisibleChange = (visible: any) => {
-    setVisible(visible);
-  };
 
   const menu1 = (
     <Menu>
@@ -220,13 +210,15 @@ const DigiVaultStudent = () => {
       <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-          <div className="digivault-title">DigiVault</div>
+          <div className="digivault-title text-2xl font-semibold">
+            DigiVault
+          </div>
         </Col>
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
             <div className="flex items-center">
-              <p className="pr-2 text-[#6E7191]">Lock</p>
+              <p className="pr-2 text-teriary-color">Lock</p>
               <Switch
                 checked={isChecked}
                 onClick={() => {
@@ -248,7 +240,7 @@ const DigiVaultStudent = () => {
       <Row gutter={[20, 10]} className="">
         <Col xxl={18} xl={16} lg={16} md={24} sm={24} xs={24}>
           <div className="manage-vault ">
-            <div className="text-2xl font-semibold text-[#363565]">
+            <div className="text-2xl font-semibold primary-color">
               Manage your vault
             </div>
             <Row gutter={[20, 25]} className="p-2">
@@ -321,7 +313,6 @@ const DigiVaultStudent = () => {
           </div>
         </Col>
       </Row>
-      {/* <EducationImg  filter="red" /> */}
     </div>
   );
 };

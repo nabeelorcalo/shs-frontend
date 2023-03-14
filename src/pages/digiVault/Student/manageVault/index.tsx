@@ -1,27 +1,14 @@
-import {
-  Button,
-  Col,
-  Divider,
-  Dropdown,
-  Menu,
-  Modal,
-  Row,
-  Select,
-  Space,
-} from "antd";
 import React, { useState } from "react";
+import "./style.scss";
+import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Input, Alert } from "../../../../components";
-import "./manageVault.scss";
-import File from "../../../../assets/images/ColorfullIconsProgressbar/Upload.png";
+
+import { Upload } from "../../../../assets/images";
 import GlobalTable from "../../../../components/Table/Table";
-import More from "../../../../assets/images/ColorfullIconsProgressbar/More.svg";
 import { CloseCircleFilled } from "@ant-design/icons";
-import MyProfileDocUpload from "../../../../components/MyProfileDocUpload";
-import MenuItem from "antd/es/menu/MenuItem";
 import UploadDocument from "../../../../components/UploadDocument";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import CustomDroupDown from "../dropDownCustom";
+import { useNavigate, useLocation } from "react-router-dom";
+import CustomDropDown from "../dropDownCustom";
 
 const tableData = [
   {
@@ -53,10 +40,6 @@ const ManageVault = (props: any) => {
   const [upLoadFile, setUpLoadFile] = useState(false);
   const [upLoadFolder, setUpLoadFolder] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const [toggleOperation, setToggleOperation] = useState({
-    isOpen: true,
-    id: "",
-  });
 
   const columns = [
     {
@@ -81,7 +64,7 @@ const ManageVault = (props: any) => {
       key: "Action",
       render: (_: any, data: any) => (
         <Space size="middle">
-          <CustomDroupDown menu1={menu2} />
+          <CustomDropDown menu1={menu2} />
         </Space>
       ),
     },
@@ -210,7 +193,7 @@ const ManageVault = (props: any) => {
                       <Space>
                         <img
                           className="flex items-center"
-                          src={File}
+                          src={Upload}
                           alt="fileIcon"
                         />
                         <span>Upload</span>
@@ -237,27 +220,22 @@ const ManageVault = (props: any) => {
         open={open}
         closeIcon={
           <CloseCircleFilled
-            className="text-[#A3AED0] "
+            className="text-[#A3AED0]"
             onClick={() => setISOpen(false)}
           />
         }
         footer={[
           <Button
-            className="text-[#4a9d77] pr-4"
+            className="teriary-color hover:teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => setISOpen(false)}
             key="Cancel"
-            style={{
-              border: "1px solid #4a9d77",
-            }}
           >
             Cancel
           </Button>,
 
-          <Button className="bg-[#4a9d77] text-[#fff] pr-4"
+          <Button
+            className="teriary-bg-color white-color pr-4 border-1 border-solid border-[#4a9d77] hover:border-[#4a9d77]"
             key="submit"
-            style={{
-              border: "1px solid #4a9d77",
-            }}
           >
             Submit
           </Button>,
@@ -266,7 +244,6 @@ const ManageVault = (props: any) => {
       >
         <div className="mt-8 mb-8">
           <label>Folder Name</label>
-          {/* <Input placeholder="Enter folder name" size="large" /> */}
           <Input
             type="input"
             handleChange={handleChange}
@@ -283,29 +260,23 @@ const ManageVault = (props: any) => {
         }}
         width={600}
         maskClosable={false}
-        closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
-        }
+        closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={[
-          <Button className="text-[#4a9d77] pr-8"
+          <Button
+            className="teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
             key="Cancel"
-            style={{
-              border: "1px solid #4a9d77",
-            }}
           >
             Cancel
           </Button>,
-          <Button className="text-[#fff] bg-[#4a9d77] pr-4"
+          <Button
+            className="white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
             key="submit"
-            style={{
-              border: "1px solid #4a9d77",
-            }}
           >
             Upload
           </Button>,
@@ -321,30 +292,24 @@ const ManageVault = (props: any) => {
           setUpLoadFolder(!upLoadFolder);
         }}
         maskClosable={false}
-        closeIcon={
-          <CloseCircleFilled className="text-[#A3AED0]" style={{ color: "#A3AED0", fontSize: "20px" }} />
-        }
+        closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={[
-          <Button className="text-[#4a9d77] pr-8"
+          <Button
+            className="teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
             key="Cancel"
-            style={{
-              border: "1px solid #4a9d77",
-            }}
           >
             Cancel
           </Button>,
 
-          <Button className="text-[#fff] bg-[#4a9d77] pr-4"
+          <Button
+            className="white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
             key="Upload"
-            style={{
-              border: "1px solid #4a9d77",
-            }}
           >
             Upload
           </Button>,

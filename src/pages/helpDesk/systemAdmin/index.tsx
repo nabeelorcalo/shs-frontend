@@ -1,7 +1,7 @@
-import { Button, Col, Divider, Row, Select, TabsProps } from "antd";
 import React, { useState } from "react";
+import "./style.scss";
+import { Button, Col, Divider, Row, Select, TabsProps } from "antd";
 import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
-import "./helpDesk.scss";
 import FiltersButton from "../../../components/FiltersButton";
 import AppTabs from "../../../components/Tabs";
 import { BoxWrapper } from "../../../components/BoxWrapper/boxWrapper";
@@ -10,8 +10,8 @@ import AllData from "./allData";
 import AssignedData from "./AssignedData";
 import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
-import Avatar from "../../../assets/images/ColorfullIconsProgressbar/Avatar.svg";
 import { CloseCircleFilled } from "@ant-design/icons";
+import { Avatar } from "../../../assets/images";
 
 const items: TabsProps["items"] = [
   {
@@ -85,8 +85,6 @@ const HelpDesk = () => {
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
 
-  console.log("==-=-=-=-", assignUser);
-
   const handleChange = () => {
     console.log("change");
   };
@@ -110,9 +108,6 @@ const HelpDesk = () => {
     if (!filtered) {
       setAssignUser([...assignUser, user]);
     }
-    //  else {
-    //   setAssignUser(assignUser.filter((u: any) => u.id !== user.id));
-    // }
   };
 
   return (
@@ -126,8 +121,8 @@ const HelpDesk = () => {
           <label>Issue Type</label>
           <div className="mt-2">
             <Select
+              className="w-[100%]"
               defaultValue="lucy"
-              style={{ width: "100%" }}
               onChange={handleChangeSelect}
               options={[
                 { value: "jack", label: "Jack" },
@@ -140,10 +135,10 @@ const HelpDesk = () => {
 
         <div className="mb-6">
           <label>Priority</label>
-          <div className="mt-2">
+          <div className="mt-2 ">
             <Select
+              className="w-[100%]"
               defaultValue="lucy"
-              style={{ width: "100%" }}
               onChange={handleChangeSelect}
               options={[
                 { value: "jack", label: "Jack" },
@@ -166,8 +161,8 @@ const HelpDesk = () => {
           <label>Status</label>
           <div className="mt-2">
             <Select
+              className="w-[100%]"
               defaultValue="lucy"
-              style={{ width: "100%" }}
               onChange={handleChangeSelect}
               options={[
                 { value: "jack", label: "Jack" },
@@ -182,13 +177,13 @@ const HelpDesk = () => {
           {filterData.map((item: any, index) => {
             return (
               <div key={index}>
-                <div className="mb-2 text-[#14142A] font-medium text-base">
+                <div className="mb-2 text-primary-color font-medium text-base">
                   {item.title}
                 </div>
                 <div className="flex flex-wrap mb-6">
                   {item.userRole.map((items: any, index: any) => {
                     return (
-                      <div className="bg-[#E6F4F9] rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
+                      <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
                         {items}
                       </div>
                     );
@@ -200,12 +195,12 @@ const HelpDesk = () => {
         </div>
 
         <div>
-          <div className="mb-2 text-[#14142A] font-medium text-base">
+          <div className="mb-2 text-teriary-color font-medium text-base">
             Assigned To
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             {assignUser.map((user) => (
-              <div className="flex items-center gap-2 p-2 pr-2 pl-2 bg-[#E6F4F9] rounded-[50px]">
+              <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
                 <span className="text-[#6E7191] font-normal text-xs">
                   {user.name}
                 </span>
@@ -229,13 +224,13 @@ const HelpDesk = () => {
                       <div className="mr-2">
                         <img src={item.avatar} alt="icon" />
                       </div>
-                      <div className="text-[#4E4B66] text-base font-normal">
+                      <div className="text-secondary-color text-base font-normal">
                         {item.name}
                       </div>
                     </div>
                     <div
                       onClick={() => handleAddUser(item)}
-                      className="cursor-pointer text-[#A0A3BD] font-normal text-xs"
+                      className="cursor-pointer text-success-color font-normal text-xs"
                     >
                       {item.btn}
                     </div>
@@ -247,10 +242,10 @@ const HelpDesk = () => {
         </div>
 
         <div className="mt-4 justify-end flex">
-          <Button className="activity-log-drawer-reset-btn text-[#4A9D77] hover:text-[#4A9D77] mr-4 w-28">
+          <Button className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button className="activity-log-drawer-apply-btn bg-[#4A9D77] hover:text-[#ffff] text-[#ffff] w-28">
+          <Button className="activity-log-drawer-apply-btn teriary-bg-color hover:teriary-color teriary-color w-28">
             Apply
           </Button>
         </div>
@@ -258,7 +253,7 @@ const HelpDesk = () => {
 
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="text-2xl font-semibold text-[#363565]">Help Desk</div>
+          <div className="text-2xl font-semibold primary-color">Help Desk</div>
         </Col>
 
         <Divider />

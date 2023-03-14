@@ -1,15 +1,12 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import ActivityLog from "../activityLog/systemAdmin/activityLog";
 import "./style.scss";
-import HelpDeskSystemAdmin from "./systemAdmin/helpDesk";
+import SystemAdmin from "./systemAdmin";
 
 const Withdrawals = () => {
   return (
-   <div>
-    <HelpDeskSystemAdmin/>
-   </div>
-  )
-}
+    <div>
+      <SystemAdmin />
+    </div>
+  );
+};
 
-export default Withdrawals
+export default Withdrawals;

@@ -1,12 +1,11 @@
-import { Button, Col, Divider, Row } from "antd";
 import React, { useState } from "react";
+import "./style.scss";
+import { Button, Col, Divider, Row } from "antd";
 import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
 import FiltersButton from "../../../components/FiltersButton";
-import DownloadIcon from "../../../assets/images/ColorfullIconsProgressbar/Downlaod.png";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components/BoxWrapper/boxWrapper";
 import GlobalTable from "../../../components/Table/Table";
-import "./activityLog.scss";
 
 const columns = [
   {
@@ -112,13 +111,13 @@ const ActivityLog = () => {
         {filterData.map((item: any, index) => {
           return (
             <div key={index}>
-              <div className="mb-2 text-[#14142A] font-medium text-base">
+              <div className="mb-2 text-primary-color font-medium text-base">
                 {item.title}
               </div>
               <div className="flex flex-wrap mb-6">
                 {item.userRole.map((items: any, index: any) => {
                   return (
-                    <div className="bg-[#E6F4F9] rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer">
+                    <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer">
                       {items}
                     </div>
                   );
@@ -134,12 +133,12 @@ const ActivityLog = () => {
             open={openDrawerDate}
           />
         </div>
-        
+
         <div className="mt-4 justify-end flex">
-          <Button className="activity-log-drawer-reset-btn text-[#4A9D77] hover:text-[#4A9D77] mr-4 w-28">
+          <Button className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button className="activity-log-drawer-apply-btn bg-[#4A9D77] hover:text-[#ffff] text-[#ffff] w-28">
+          <Button className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>

@@ -1,19 +1,20 @@
+@import "../../../../scss/colors";
+
 .setting-modal {
-  
   .modal-header {
     .modal-title {
       font-weight: 500;
       font-size: 20px;
       line-height: 28px;
-      color: #14142a;
+      color: $text-primary-title-color;
     }
 
     .modal-close {
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #a0a3bd;
-      color: white;
+      background: $text-success-placeholder-color;
+      color: $white-bg-color;
       padding-bottom: 3px;
     }
   }
@@ -21,14 +22,14 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
-    color: #363565;
+    color: $primary-bg-color;
   }
 
   .modal-p {
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
-    color: #4e4b66;
+    color: $text-secondary-body-color;
   }
 
   .ant-switch {
@@ -44,25 +45,25 @@
     .ant-slider-horizontal .ant-slider-track {
       width: 220px;
       height: 10px;
-      background: #363565;
+      background: $primary-bg-color;
       border-radius: 8px;
     }
     .ant-slider-horizontal .ant-slider-rail {
       height: 10px !important;
-      background: #e6f4f9 !important;
+      background: $text-input-bg-color !important;
       border-radius: 8px;
     }
     .ant-slider .ant-slider-handle {
       width: 22px;
       height: 22px;
-      color: #363565;
+      color: $primary-bg-color;
     }
     .ant-slider-handle::after {
-      color: #363565;
+      color: $primary-bg-color;
       width: 22px;
       height: 22px;
-     
-      background-color: #363565;
+
+      background-color: $primary-bg-color;
       box-shadow: none;
     }
   }
@@ -72,7 +73,7 @@
     font-size: 16px;
     line-height: 24px;
     text-decoration-line: underline;
-    color: #363565;
+    color: $primary-bg-color;
     cursor: pointer;
   }
 }

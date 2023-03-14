@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import ContractsStudent from "./contractsStudent";
 import "./style.scss";
+import Student from "./student";
 
 const Contracts = () => {
   return (
     <div>
-      <ContractsStudent />
+      <Student />
     </div>
   );
 };

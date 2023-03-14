@@ -1,5 +1,5 @@
+import "./style.scss";
 import { Col, Modal, Row, Slider, Switch } from "antd";
-import "./settingModal.scss";
 
 const SettingModal = (props: any) => {
   const { modal2Open, setModal2Open } = props;
@@ -20,30 +20,24 @@ const SettingModal = (props: any) => {
           x
         </div>
       </div>
+
       <div className="sub-title-modal mb-8">Security</div>
       <Row className="flex justify-between items-center">
         <Col>
           <div className="modal-p">
             Automatically lock application after
-            <span
-              style={{
-                color: "#E95060",
-                fontSize: "16px",
-                fontWeight: "500",
-                paddingLeft: "5px",
-              }}
-            >
+            <span className="text-[#E95060] pl-2 font-medium text-base">
               15 minutes
             </span>
           </div>
         </Col>
-        <Col className="flex items-center justify-between ">
-          <p style={{ color: "#6E7191" }} className="pr-2">
-            On
-          </p>
+
+        <Col className="flex items-center justify-between text-teriary-color">
+          <p className="pr-2">On</p>
           <Switch />
         </Col>
       </Row>
+
       <div className="modal-body mt-8">
         <div className="flex justify-between">
           <p>|</p>
