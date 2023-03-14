@@ -5,7 +5,7 @@ import {
   DocumentUpload,
   SHSLogo,
 } from "../../../../../assets/images";
-import "./Verification.scss";
+import "../../../styles.scss";
 import { BackButton } from "../../../../../assets/images";
 import { DropDown } from "../../../../../components";
 

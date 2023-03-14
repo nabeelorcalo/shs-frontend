@@ -1,6 +1,4 @@
-@import '../../../../scss/colors';
-
-
+@import "../../../../scss/colors";
 
 .personal-information {
   .title {
@@ -13,17 +11,17 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-  .input-style{
+  .input-style {
     height: 48px;
     border-radius: 8px;
-    background-color: #E6F4F9;
+    background-color: #e6f4f9;
   }
-  .text-area{
+  .text-area {
     border-radius: 8px;
-    background-color: #E6F4F9;
+    background-color: #e6f4f9;
   }
 }
-.general-information{
+.general-information {
   .title {
     font-family: "Outfit";
     font-style: normal;
@@ -34,110 +32,98 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
-  .input-style{
+  .input-style {
     height: 48px;
     border-radius: 8px;
-    background-color: #E6F4F9;
+    background-color: #e6f4f9;
   }
-  .text-area{
+  .text-area {
     border-radius: 8px;
-    background-color: #E6F4F9;
+    background-color: #e6f4f9;
   }
 }
-.immigration-status{
-  .status-card{
-    background: #FFFFFF;
-border: 1px solid #FFFFFF;
-box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
-border-radius: 16px;
-padding: 1rem;
-cursor: pointer;
+.immigration-status {
+  .status-card {
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 1rem;
+    cursor: pointer;
   }
-  .title{
-    font-family: 'Outfit';
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 24px;
-color: #4E4B66;
-margin-top: 1rem;
-margin-bottom: 1rem;
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #4e4b66;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.immigration-form {
+  .input-style {
+    background: #ffffff;
+    height: 48px;
 
-  }
- 
-}
-.immigration-form{
-  .input-style{
-    background: #FFFFFF;
-    height: 48px;
-    
     box-shadow: 0px 2px 48px rgba(0, 0, 0, 0.08);
     border-radius: 8px;
   }
 }
-.document-tabs{
-  .upload-button{
-    background: #4A9D77;
-border: 1px solid #4A9D77;
-box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
-border-radius: 8px;
-color: $white-bg-color;
+.document-tabs {
+  .upload-button {
+    background: #4a9d77;
+    border: 1px solid #4a9d77;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 8px;
+    color: $white-bg-color;
   }
-  .animate{
+  .animate {
     background: "#FFFFFF";
     border-radius: 8px;
-    padding:1rem;
+    padding: 1rem;
     margin-top: 20px;
-   
-  } 
-  .animate:hover {
-    background-color: #E6F4F9;
   }
-  
+  .animate:hover {
+    background-color: #e6f4f9;
+  }
+
   .animate:hover .button-ts {
     display: block;
-  display: flex;
-  gap: 10px;
+    display: flex;
+    gap: 10px;
   }
-  
+
   .animate .button-ts {
     display: none;
   }
-  
 }
-.card-tabs{
-  .upload-button{
-    background: #4A9D77;
-border: 1px solid #4A9D77;
-box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
-border-radius: 8px;
-color: $white-bg-color;
+.card-tabs {
+  .upload-button {
+    background: #4a9d77;
+    border: 1px solid #4a9d77;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 8px;
+    color: $white-bg-color;
   }
-  
-  
- 
 }
-.animate{
+.animate {
   background: "#FFFFFF";
   border-radius: 8px;
-  padding:1rem;
+  padding: 1rem;
   margin-top: 20px;
- 
-} 
+}
 .animate:hover {
-  background-color: #E6F4F9;
+  background-color: #e6f4f9;
 }
 
 .animate:hover .button-ts {
   display: block;
-display: flex;
-gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .animate .button-ts {
   display: none;
 }
-
- 
-
-

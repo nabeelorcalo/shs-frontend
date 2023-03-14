@@ -8,13 +8,11 @@ import {
   Select,
   Typography,
 } from "antd";
-import "./Verification.scss";
-import { BackButton } from "../../../../../assets/images";
-import { SHSLogo } from "../../../../../assets/images";
-
-
+import "../../../styles.scss";
+import { BackButton,SHSLogo  } from "../../../../../assets/images";
 
 const IdentityVerification = (props: any) => {
+
   const { Option } = Select;
   const { currentStep, setCurrentStep } = props;
   const prefixSelector = (
@@ -28,7 +26,7 @@ const IdentityVerification = (props: any) => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
            <SHSLogo/>
           </div>
@@ -54,7 +52,7 @@ const IdentityVerification = (props: any) => {
             <div className="sign-up-form-wrapper">
             
                 <Row gutter={20}>
-                  <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                     <Form.Item
                       label="First Name"
                       name="firstName"
@@ -106,7 +104,7 @@ const IdentityVerification = (props: any) => {
                   <Input placeholder="Document Type" className="input-style" />
                 </Form.Item>
 
-                <Row gutter={10}>
+                <Row gutter={[130,10]}>
                   <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
@@ -115,7 +113,7 @@ const IdentityVerification = (props: any) => {
                       Skip
                     </Button>
                   </Col>
-                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                  <Col xxl={18} xl={20} lg={20} md={24} sm={24} xs={24}>
                     <Form.Item>
                       <Button
                         onClick={() => {

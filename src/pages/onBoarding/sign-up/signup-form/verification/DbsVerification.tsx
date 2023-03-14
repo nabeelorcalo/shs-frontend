@@ -7,7 +7,7 @@ import {
   Select,
   Typography,
 } from "antd";
-import "./Verification.scss";
+import "../../../styles.scss";
 import {
   BackButton,
   DocumentUpload,

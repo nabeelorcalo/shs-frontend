@@ -11,13 +11,13 @@ import {
   Typography,
 } from "antd";
 import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
-import "./Verification.scss";
+import "../../../styles.scss";
 import { BackButton } from "../../../../../assets/images";
-
-const { Option } = Select;
-
 import type { SelectProps } from "antd";
 import { DropDown } from "../../../../../components";
+
+
+const { Option } = Select;
 
 const UniversityDetails = (props: any) => {
 

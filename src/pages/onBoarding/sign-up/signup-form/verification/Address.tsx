@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
 import { ArrowDownDark, DocumentUpload } from "../../../../../assets/images";
 import { SHSLogo } from "../../../../../assets/images";
-import "./Verification.scss";
+import "../../../styles.scss";
 import { BackButton } from "../../../../../assets/images";
 import { DropDown } from "../../../../../components";
 
