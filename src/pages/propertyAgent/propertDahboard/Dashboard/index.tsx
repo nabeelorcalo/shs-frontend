@@ -1,7 +1,7 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
 import { MonthlyPerfomanceChart } from "../../../../components";
-import "./Dashboard.scss";
+import "../../style.scss";
 import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
 import { useNavigate } from "react-router-dom";
 

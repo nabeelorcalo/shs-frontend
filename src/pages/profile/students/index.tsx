@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CreditCardFilled,
   DribbbleSquareFilled,
@@ -5,7 +6,6 @@ import {
   InfoCircleFilled,
   UserOutlined,
 } from "@ant-design/icons";
-import React from "react";
 import AppTabs from "../../../components/Tabs";
 import Documents from "./tabs/documents";
 import GeneralInformation from "./tabs/generalInformation";

@@ -1,14 +1,15 @@
+import React, { useState } from "react";
 import {
   EllipsisOutlined,
   MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
 import GlobalTable from "../../../components/Table/Table";
 import { Button, Col, Row, Typography,Space,Form,Menu } from "antd";
 import { DropDown } from "../../../components";
 import Drawer from "../../../components/Drawer";
+import '../style.scss';
 import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
 
 
@@ -63,7 +64,7 @@ const columns = [
     dataIndex: "Verification",
     render: (_: any, data: any) => (
       <div
-        className="table-status-style"
+        className="table-status-style text-center white-color rounded"
         style={{
           backgroundColor:
             data.Verification === "Checked"
@@ -71,10 +72,8 @@ const columns = [
               : data.Verification === "Unchecked"
               ? "#D83A52"
               : "",
-          color: "#FFFFFF",
           padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
-          textAlign:"center"
+        
         }}
       >
         {data.Verification}
@@ -176,11 +175,11 @@ const ListingRequest = () => {
          
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
               </Button>
               <Button
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Apply
@@ -192,7 +191,8 @@ const ListingRequest = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="flex justify-end gap-2 mb-3">
-            <Button onClick={()=>setOpenDrawer(true)} className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
+            <Button onClick={() => setOpenDrawer(true)}
+              className="text-input-bg-color rounded-lg text-success-color font-normal text-base font-[outfit] m-3">
               <NodeExpandOutlined className="text-base" />
               Filter
               <RightOutlined className="text-xs" />

@@ -1,12 +1,10 @@
-import { Button, Divider, Modal, Typography } from "antd";
 import React, { useState } from "react";
-import { DropDown } from "../../../../../components";
+import { Button, Divider, Modal, Typography } from "antd";
 import upload from "../../../../../assets/images/profile/student/upload.svg";
-import download from "../../../../../assets/images/download-icon.png";
-import "../Tabs.scss";
+import download from "../../../../../assets/images/profile/student/upload.svg";
+import '../../../style.scss';
 import { documentArr } from "./DocumentMock";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
-import UploadDocument from "../../../../../components/UploadDocument/index";
 import DragAndDropUpload from "../../../../../components/DragAndDrop";
 
 const Documents = () => {

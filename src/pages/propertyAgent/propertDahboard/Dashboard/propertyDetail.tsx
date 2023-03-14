@@ -1,10 +1,10 @@
-import { Col, Divider, Row, Typography } from "antd";
 import React from "react";
+import { Col, Divider, Row, Typography } from "antd";
 import { useLocation } from "react-router-dom";
 import backButton from "../../../../assets/images/profile/propertyagent/BackLoginButton.svg";
 import pf from "../../../../assets/images/profile/propertyagent/pf.svg";
 import { propertDetailSide } from "./DashboardMock";
-import "./Dashboard.scss";
+import "../../style.scss";
 import AppTabs from "../../../../components/Tabs";
 import ListingDetails from "./propertyTabs/listingDetails";
 import DocumentDetails from "./propertyTabs/documentDetails";
@@ -32,7 +32,9 @@ const PropertyDetail = () => {
       <Row>
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div>
-            <Typography>Property Details</Typography>
+            <Typography className="text-2xl font-semibold font-[Outfit] primary-color">
+              Property Details
+            </Typography>
           </div>
         </Col>
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -41,6 +43,7 @@ const PropertyDetail = () => {
             style={{ textTransform: "capitalize" }}
           >
             <Typography
+              className="text-center white-color rounded-lg"
               style={{
                 background:
                   status[2] === "published"
@@ -52,10 +55,7 @@ const PropertyDetail = () => {
                     : "",
 
                 width: "82px",
-                textAlign: "center",
-                color: "#FFFFFF",
                 padding: "2px 5px 5px 2px",
-                borderRadius: "8px",
               }}
             >
               {status[2]}
@@ -66,7 +66,7 @@ const PropertyDetail = () => {
       <Divider />
       <Row gutter={15}>
         <Col xxl={6} xl={6} lg={7} md={6} sm={6} xs={24}>
-          <div className="bg-[#FFFFFF] shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg">
+          <div className="white-bg-color shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg">
             {propertDetailSide.map((item, index) => {
               return (
                 <>
@@ -75,10 +75,14 @@ const PropertyDetail = () => {
                       <img src={backButton} alt="" />
                     </div>
 
-                    <div className="grid mx-auto">
+                    <div className="grid mx-auto justify-items-center">
                       <img src={pf} alt="" />
-                      <Typography>Darrell Steward</Typography>
-                      <Typography>Property Agent</Typography>
+                      <Typography className="primary-color text-xl font-semibold text-center">
+                        Darrell Steward
+                      </Typography>
+                      <Typography className="text-base font-medium text-secondary-color ">
+                        Property Agent
+                      </Typography>
                     </div>
                   </div>
                   <Divider />
@@ -120,8 +124,7 @@ const PropertyDetail = () => {
           </div>
         </Col>
         <Col xxl={18} xl={18} lg={17} md={18} sm={18} xs={24}>
-          <div className="bg-[#FFFFFF] shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg p-2"
-          >
+          <div className="white-bg-color shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg p-2">
             <AppTabs items={items} />
           </div>
         </Col>

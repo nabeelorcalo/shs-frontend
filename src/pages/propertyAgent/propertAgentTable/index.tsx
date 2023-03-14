@@ -158,7 +158,7 @@ const PropertyAgentTable = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
               </Button>
               <Button
@@ -182,7 +182,7 @@ const PropertyAgentTable = () => {
                 onClick={() => {
                   setOpenDrawer(true);
                 }}
-                className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
+                className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base font-[outfit] m-3"
               >
                 <NodeExpandOutlined className="text-base" />
                 Filter

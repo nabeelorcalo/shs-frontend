@@ -9,14 +9,16 @@ import {
   Radio,
   Row,
   Select,
+  Space,
   Typography,
 } from "antd";
-import "../Tabs.scss";
-
+import '../../../style.scss';
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
+
+
 import { Option } from "antd/es/mentions";
 
 const PersonalInformation = () => {
@@ -76,7 +78,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Last Name!" },
               ]}
             >
-              <Input className="input-style" />
+              <Input placeholder="Enter Last Name" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -88,7 +90,7 @@ const PersonalInformation = () => {
               ]}
             >
               <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -103,7 +105,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your POB!" },
               ]}
             >
-              <Input className="input-style" />
+              <Input placeholder="Enter your Birth Place" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -115,7 +117,7 @@ const PersonalInformation = () => {
               ]}
             >
               <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -148,7 +150,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Email!" },
               ]}
             >
-              <Input className="input-style" />
+              <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -181,7 +183,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your National Ensurace Number!" },
               ]}
             >
-              <Input placeholder="Enter Here" className="input-style" />
+              <Input placeholder="Enter Ensurance Number" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -193,7 +195,7 @@ const PersonalInformation = () => {
               ]}
             >
              <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -208,7 +210,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Delegate Refrence Number!" },
               ]}
             >
-              <Input className="input-style" />
+              <Input placeholder="Enter Refrence Number" className="input-style" />
             </Form.Item>
           </Col>
         </Row>
@@ -243,7 +245,7 @@ const PersonalInformation = () => {
               ]}
             >
              <DropDown
-                        name='drop down with search bar'
+                        name='Select'
                         value={value}
                         options={['search', 'item 1']}
                         setValue={setValue}
@@ -261,7 +263,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your House No!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder="Enter House Number" className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -272,7 +274,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Street!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder="Enter Street Number" className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -284,7 +286,7 @@ const PersonalInformation = () => {
               ]}
             >
                <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -299,7 +301,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input  placeholder="Enter City" className="input-style"/>
             </Form.Item>
           </Col>
         </Row>
@@ -316,12 +318,8 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Button
-                style={{
-                  background: "#e6f4f9",
-                  border: "none",
-                  borderRadius: "14.5PX",
-                }}
+              <Button className="text-input-bg-color border-0 rounded-[14.5px]"
+              
               >
                 <PlusOutlined /> Add
               </Button>
@@ -336,11 +334,7 @@ const PersonalInformation = () => {
               ]}
             >
               <Button
-                style={{
-                  background: "#e6f4f9",
-                  border: "none",
-                  borderRadius: "14.5PX",
-                }}
+               className="text-input-bg-color border-0 rounded-[14.5px]"
               >
                 <PlusOutlined /> Add
               </Button>
@@ -360,10 +354,6 @@ const PersonalInformation = () => {
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
               label="Do you have Dependies"
-              // name="username"
-              //   rules={[
-              //     { required: true, message: "Please input your username!" },
-              //   ]}
             >
               <Radio.Group
                 name="radiogroup"
@@ -387,7 +377,7 @@ const PersonalInformation = () => {
                   ]}
                 >
                   <div className="flex gap-4">
-                    <Input />{" "}
+                    <Input />
                     <div
                       onClick={() => {
                         const copyDependents = [...dependents];
@@ -396,7 +386,7 @@ const PersonalInformation = () => {
                       }}
                     >
                       add
-                    </div>{" "}
+                    </div>
                   </div>
 
                   {dependents.map((item: any, index: any) => (
@@ -409,7 +399,7 @@ const PersonalInformation = () => {
                           setDependents(copyDependents);
                         }}
                       >
-                        {" "}
+                        
                         remove
                       </div>
                     </div>
@@ -421,9 +411,20 @@ const PersonalInformation = () => {
         </Row>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
+        <div className="flex justify-center sm:justify-end">
+          <Space>
+            <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+              Cancel
+            </Button>
+              <Button
+                
+              className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Space>
+        </div>
         </Form.Item>
       </Form>
     </div>
