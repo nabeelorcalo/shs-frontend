@@ -66,11 +66,11 @@ const ManagerProfile = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <span className="font-semibold text-2xl text-[#363565]">
+            <span className="font-semibold text-2xl primary-color">
               {name}
             </span>
             <Divider type="vertical" />
-            <span className="font-semibold text-base text-[#4E4B66]">
+            <span className="font-semibold text-base text-secondary-color">
               {role}
             </span>
           </div>
@@ -79,16 +79,16 @@ const ManagerProfile = () => {
       <Divider />
       <Row gutter={[5, 10]}>
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
-          <div className=" pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-white rounded-2xl">
+          <div className=" pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
               <img src={pf} alt="" />
-              <Typography className="font-semibold text-xl text-[#14142A] font-[outfit]">
+              <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
                 {commonObj.personName}
               </Typography>
-              <Typography className="font-medium text-base text-[#4E4B66] font-[outfit]">
+              <Typography className="font-medium text-base text-secondary-color  font-[outfit]">
                 UI/UX Designer
               </Typography>
-              <Typography className="font-medium text-base text-[#4E4B66] font-[outfit]">
+              <Typography className="font-medium text-base text-secondary-color  font-[outfit]">
                 Design
               </Typography>
             </center>
@@ -96,19 +96,19 @@ const ManagerProfile = () => {
             <div className="social-info">
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <img src={commonObj.iconEmail} alt="" />
-                <Typography className=" font-[outfit] font-normal text-sm text-[#4E4B66] ml-4">
+                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <img src={commonObj.iconPhone} alt="" />
-                <Typography className=" font-[outfit] font-normal text-sm text-[#4E4B66] ml-4">
+                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.phone}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
                 <img src={commonObj.iconLocation} alt="" />
-                <Typography className=" font-[outfit] font-normal text-sm text-[#4E4B66] ml-4">
+                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.location}
                 </Typography>
               </div>

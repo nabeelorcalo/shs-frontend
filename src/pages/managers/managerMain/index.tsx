@@ -1,5 +1,5 @@
-import { Button, Col, Divider, Row, Typography, Form, Space } from 'antd';
 import React, { useState } from "react";
+import { Button, Col, Divider, Row, Typography, Form, Space } from 'antd';
 import { DropDown, SearchBar } from "../../../components";
 import user from "../../../assets/images/profile/university/Managers.svg";
 import listView from "../../../assets/images/profile/university/listview.svg";
@@ -44,11 +44,11 @@ const ManagerMain = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Reset
               </Button>
               <Button
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Apply
@@ -60,7 +60,7 @@ const ManagerMain = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="text-[#363565] text-2xl font-semibold font-[outfit]">
+            <Typography className="primary-color text-2xl font-semibold font-[outfit]">
               Managers
             </Typography>
           </div>
@@ -73,7 +73,7 @@ const ManagerMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
-            <Button className="bg-[#4A9D77] text-white flex items-center ">
+            <Button className="teriary-bg-color white-color flex items-center ">
               <a href="addManager" className="flex items-center gap-3">
                 <img src={user} alt="" /> New Manager
               </a>
@@ -83,7 +83,7 @@ const ManagerMain = () => {
               Filter
               <RightOutlined className="text-xs" />
             </Button>
-            <div className="bg-[#E6F4F9] p-2 flex gap-2">
+            <div className="text-input-bg-color p-2 flex gap-2">
               <div
                className={`button ${activeButton === 0 ? 'active' : ''}`}
                

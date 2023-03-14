@@ -39,7 +39,7 @@ const columns = [
     dataIndex: "status",
     render: (_: any, data: any) => (
       <div
-        className="table-status-style"
+        className="table-status-style text-center rounded white-color"
         style={{
           backgroundColor:
             data.status === "Pending"
@@ -49,10 +49,7 @@ const columns = [
               : data.status === "Rejected"
               ? "#D83A52"
               : "",
-          color: "#FFFFFF",
-          padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
-          textAlign: "center",
+          padding: " 2px 3px 2px 3px", 
         }}
       >
         {data.status}
@@ -164,7 +161,7 @@ const tableData = [
 const ManagerInfoTable = () => {
   return (
     <div className="manager-info-table">
-      <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-2 rounded-2xl">
+      <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
         <GlobalTable tableData={tableData} columns={columns} />
       </div>
     </div>

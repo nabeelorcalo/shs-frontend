@@ -1,7 +1,9 @@
+@import '../../scss/colors';
+
 .manager-main {
   .button {
-    background-color: #e6f4f9;
-    box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+    background-color: $text-input-bg-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
     width: 40px;
     height: 40px;
@@ -12,8 +14,8 @@
     
   }
   .active {
-    background-color: #ffffff;
-    box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+    background-color: $white-bg-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
     width: 40px;
     height: 40px;
