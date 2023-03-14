@@ -1,20 +1,13 @@
-import { useState } from 'react';
 import GlobalTable from '../../../components/Table/Table';
 import { BoxWrapper } from '../../../components/BoxWrapper/boxWrapper';
 import { ThreeDots } from '../../../assets/images';
 import { tableMockData } from './tableMock';
-import { Dropdown } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import DropDownNew from '../../../components/Dropdown/DropDownNew';
 
 const CertificateTable = () => {
     const navigate = useNavigate();
-    const [selected, setSelected] = useState('');
-    const items = [
-        {
-            label: <p onClick={() => navigate(`/certificates/detail/${selected}`)}>View Details</p>,
-            key: ''
-        }
-    ]
+
     const columns = [
         {
             title: 'No.',
@@ -53,9 +46,16 @@ const CertificateTable = () => {
         {
             title: 'Action',
             dataIndex: '',
-            render: (_: any, data: any) => <Dropdown placement='bottomRight' menu={{ items }} trigger={['click']} overlayClassName='certicate-action'>
-                <ThreeDots className='cursor-pointer' onClick={() => setSelected(data.no)} />
-            </Dropdown>
+            render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
+                items={[
+                    {
+                        label: <span onClick={() => navigate(`/certificates/detail/${data.no}`)}>
+                            View Details</span>,
+                        key: 'detail'
+                    }
+                ]}>
+                <ThreeDots className='cursor-pointer' />
+            </DropDownNew>
         },
     ]
 

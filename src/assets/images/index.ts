@@ -155,4 +155,5 @@ export { ReactComponent as IconCloseCircle } from "../images/icon-close-circle.s
 // certificate icons
 export { ReactComponent as IssueCertificateIcon } from "../images/issue-certificate-icon.svg";
 export { default as CertificateImg } from '../images/certificates-img/certificate-dummy.png';
+export { ReactComponent as CertificateEyeIcon } from '../images/certificates-img/eye-icon.svg';
 

@@ -1,11 +1,11 @@
-import { Row, Col, Button } from 'antd';
+import { Row, Col } from 'antd';
 import { useState } from 'react';
-import { IssueCertificateIcon } from '../../assets/images';
 import { DropDown, SearchBar } from '../../components';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
 import SignatureModal from './certificateModal/SignatureModal';
 import CertificateTable from './certificateTable';
+import IssueCertificateBtn from './issueCertificateBtn';
 import './style.scss';
 
 const Certificates = () => {
@@ -20,7 +20,7 @@ const Certificates = () => {
     return (
         <div className='certificate-wrapper'>
 
-            <div className="top-heading text-2xl font-semibold pb-[30px] mb-[30px]">
+            <div className="certificate-top-heading text-2xl font-semibold pb-[30px] mb-[30px]">
                 Certificate
             </div>
 
@@ -36,10 +36,7 @@ const Certificates = () => {
                             <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
                         </Col>
                         <Col>
-                            <Button className=' issue-certificate flex items-center capitalize' onClick={() => setOpenIssueCertificate(!openIssueCertificate)}>
-                                <IssueCertificateIcon className='mr-[15px]' />
-                                <span className='text-base font-semibold text-white'>issue certificate</span>
-                            </Button>
+                            <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} />
                         </Col>
                     </Row>
                 </Col>
@@ -60,7 +57,7 @@ const Certificates = () => {
             {togglePreview && <PreviewModal open={togglePreview} setOpen={setTogglePreview} />}
 
             {opensignatureModal && <SignatureModal open={opensignatureModal} setOpen={setOpenSignatureModal} />}
-
+            <DropDown requiredDownloadIcon />
         </div>
     )
 }

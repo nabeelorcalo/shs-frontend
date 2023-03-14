@@ -19,7 +19,7 @@ const IssueCertificate = (props: Props) => {
 
     const [selectType, setSelectType] = useState('');
     const [selectedUser, setSelectedUser] = useState('');
-    const [printOnCertificate, setPrintOnCertificate] = useState('Fo r being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.')
+    const [printOnCertificate, setPrintOnCertificate] = useState('For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.')
 
     const options = [
         {

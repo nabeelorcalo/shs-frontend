@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Checkbox, Dropdown as AntDropDown } from 'antd';
-import { ArrowDownDark, DownloadIcon } from '../../assets/images';
+import { ArrowDownDark, DownloadIcon, DownloadIconLeave } from '../../assets/images';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import { DropDownInterface } from './DropDown_interface';
@@ -87,7 +87,7 @@ export const DropDown = (props: DropDownInterface) => {
             trigger={['click']}
             open={visible}
             placement={placement}
-            className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'} `}
+            className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'}`}
             overlayClassName='drop-down-overlay'
             onOpenChange={setVisible}
             {...props}
@@ -97,8 +97,8 @@ export const DropDown = (props: DropDownInterface) => {
                     {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '20px' }} />}
                     {!requiredDownloadIcon && <span>{value ? value : name}</span>}
                 </p>
-                <EndIcon className='ml-[10px]' />
-                {/* <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ display: !endIcon ? 'none' : '', marginLeft: requiredDownloadIcon ? '1px' : '10px' }} /> */}
+                {!requiredDownloadIcon && <EndIcon className='ml-[10px]' />}
+                {requiredDownloadIcon && <div className='w-full flex items-center justify-center'><DownloadIconLeave /></div>}
             </div>
         </AntDropDown>
     )

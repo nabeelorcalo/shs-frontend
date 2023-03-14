@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 import { Dropdown as AntDropDown } from 'antd';
-
+import type { MenuProps } from 'antd';
 interface Props {
-  children?: any;
+  children?: ReactNode | ReactNode[];
   rest?: any;
-  items?: any;
+  items?: any | MenuProps['items'];
 }
 
 const DropDownNew = (props: Props) => {
