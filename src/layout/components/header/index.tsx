@@ -18,6 +18,7 @@ const { Search } = Input;
 const { Header } = Layout;
 import organizationLogo from '../../../assets/images/header/organisation.svg'
 import avatar from '../../../assets/images/header/avatar.svg'
+import ExtendedButton from '../../../components/ExtendedButton'
 
 type HeaderProps = {
   collapsed: boolean
@@ -165,16 +166,19 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
         </div>
 
         <div className='ikd-header-right'>
+
           <div className='ikd-header-message-notif'>
             <div className='message-notif-handler' onClick={() => navigateToInbox()}>
               <MessageNotif />
             </div>
           </div>
+
           <div className='ikd-header-notification'>
             <div className='notification-handler' onClick={() => showNotificationDrawer()}>
               <Notification />
             </div>
           </div>
+
           <div className='loggedin-user'>
             <Dropdown
               overlayClassName="user-dropdown"
@@ -193,7 +197,7 @@ const AppHeader:FC<HeaderProps> = ({collapsed, sidebarToggler}) => {
                   </div>
                   {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
                   <div className='user-dropdown-footer'>
-                    <Button type='primary' block>Switch to Intern</Button>
+                    <ExtendedButton customType='tertiary' block>Switch to Intern</ExtendedButton>
                   </div>
                 </div>
               )}

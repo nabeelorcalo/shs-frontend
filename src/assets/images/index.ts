@@ -155,6 +155,7 @@ export { ReactComponent as IconCloseCircle } from "./icon-close-circle.svg";
 export { ReactComponent as IconWebLocation } from "./icon-web-location.svg";
 export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.svg";
 export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down.svg";
+export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
 
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
