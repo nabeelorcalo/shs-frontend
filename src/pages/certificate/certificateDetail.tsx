@@ -17,6 +17,7 @@ const CertificateDetail = () => {
   const findUser = tableMockData.find(user => user.no === id);
   const [issueCertificateModal, setIssueCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
+  const [previewImg, setPreviewImg] = useState('');
   const [signatureModal, setSignatureModal] = useState(false);
 
   return (
@@ -69,7 +70,7 @@ const CertificateDetail = () => {
                 <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl">
                   <img src={certificate?.certificateImg} className='w-[90%] mx-auto block' />
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
-                    onClick={() => setPreviewModal(true)}
+                    onClick={() => { setPreviewModal(true); setPreviewImg(certificate?.certificateImg) }}
                   >
                     <CertificateEyeIcon className='eye-icon' height={70} width={70} />
                   </div>
@@ -88,7 +89,7 @@ const CertificateDetail = () => {
         setTogglePreview={setPreviewModal}
         setOpenSignatureModal={setSignatureModal}
       />}
-      {previewModal && <PreviewModal open={previewModal} setOpen={setPreviewModal} />}
+      {previewModal && <PreviewModal open={previewModal} setOpen={setPreviewModal} certificateImg={previewImg} />}
       {signatureModal && <SignatureModal open={signatureModal} setOpen={setSignatureModal} />}
     </div>
   )

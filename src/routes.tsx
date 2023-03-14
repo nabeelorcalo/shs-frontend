@@ -16,8 +16,6 @@ import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 //
 import DemoCard from "./components/ContractCard/demoCard";
-import Certificates from "./pages/certificate";
-import CertificateDetail from "./pages/certificate/certificateDetail";
 // 
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -78,6 +76,8 @@ const Setting = Loadable(lazy(() => import("./pages/setting")));
 const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
+const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
+const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
 
 export const publicRoutes = [
   {
@@ -133,16 +133,6 @@ export const publicRoutes = [
     key: 'card',
     path: "/democards",
     element: <DemoCard />
-  },
-  {
-    key: 'certificates',
-    path: "/certificates",
-    element: <Certificates />
-  },
-  {
-    key: 'certificatesDetail',
-    path: "/certificates/detail/:id",
-    element: <CertificateDetail />
   },
   // ------Remove till here------
 ];
@@ -442,6 +432,16 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         element: <Personalisation />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CERTIFICATES}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATES}`,
+        element: <Certificate />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        element: <CertificateDetail />,
       },
     ],
   },

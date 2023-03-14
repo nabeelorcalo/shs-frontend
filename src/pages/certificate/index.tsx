@@ -57,7 +57,6 @@ const Certificates = () => {
             {togglePreview && <PreviewModal open={togglePreview} setOpen={setTogglePreview} />}
 
             {opensignatureModal && <SignatureModal open={opensignatureModal} setOpen={setOpenSignatureModal} />}
-            <DropDown requiredDownloadIcon />
         </div>
     )
 }
