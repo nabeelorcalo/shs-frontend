@@ -16,6 +16,7 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verificati
 
 //Internships Child Component
 import NewInternships from "./pages/internships/NewInternships";
+import ViewInternshipDetails from "./pages/internships/ViewInternshipDetails";
 
 // Remove it
 // dummy components
@@ -428,7 +429,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
         element: <NewInternships />,
       },
-
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        element: <ViewInternshipDetails />,
+      },
       
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,

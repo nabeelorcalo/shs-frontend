@@ -1,0 +1,19 @@
+import React from 'react'
+import PageHeader from '../../components/PageHeader'
+import {Divider} from 'antd'
+import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
+
+const ViewInternshipDetails = () => {
+
+    return (
+        <>
+            <PageHeader title="UI / UX Designer" />
+            <Divider />
+            <BoxWrapper>
+                
+            </BoxWrapper>
+        </>
+    )
+}
+
+export default ViewInternshipDetails

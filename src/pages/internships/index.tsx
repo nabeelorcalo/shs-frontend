@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import { SearchBar } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import GlobalTable from "../../components/Table/Table";
-import { Avatar, Button } from 'antd';
+import { Avatar, Button, Popover, Divider } from 'antd';
 import { More } from "../../assets/images"
 import { FilterIcon } from "../../assets/images";
 import { ArrowToRight } from "../../assets/images";
@@ -19,14 +19,50 @@ import AddRequestMessage from "../../components/AddRequestMessage";
 import SetaGoal from "../../components/SetaGoal";
 import { PopUpModal } from "../../components/Model";
 import UploadDocument from "../../components/UploadDocument";
+import type { MenuProps } from 'antd';
+import { Dropdown, Space } from 'antd';
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
+import FiltersButton from "../../components/FiltersButton";
+import Drawer from "../../components/Drawer";
 
 
 
+const PopOver = () => {
+  const navigate = useNavigate()
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          View details
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          Duplicatedfadasd
+        </a>
+      ),
+    },
+  ];
+
+  return (
+    <Dropdown menu={{ items }} placement="bottom">
+      <More />
+    </Dropdown>
+  )
+}
 
 
 const Internships = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState("")
+  const [showDrawer, setShowDrawer] = useState(false)
+
+
+
   const columns = [
     {
       dataIndex: 'no',
@@ -206,7 +242,10 @@ const Internships = () => {
           {item.status}
         </Button>,
         posted_by: <Avatar>{item.posted_by}</Avatar>,
-        actions: <More />
+        actions: <PopOver />
+
+
+
       }
     )
   })
@@ -215,45 +254,63 @@ const Internships = () => {
   return (
     <>
       <PageHeader title="Internships" />
-      <div className="flex flex-row justify-between">
-        <SearchBar
-          className=""
-          handleChange={() => { }}
-          name="search bar"
-          placeholder="search"
-          size="large"
-        />
-        <div className="flex flex-row gap-4">
-          <Button
+      <Divider />
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-row justify-between">
+          <SearchBar
+            className=""
+            handleChange={() => { }}
+            name="search bar"
+            placeholder="search"
             size="middle"
-            onClick={() => { }}
-            className="flex gap-2 bg-[#E6F4F9]"
+          />
+          <div className="flex flex-row gap-4">
+            <FiltersButton
+              label="Filters"
+              onClick={() => { setShowDrawer(true)}}
+            />
 
-          >
-            <FilterIcon />
-            Filters
-            <ArrowToRight />
-          </Button>
-          <Button
-            size="middle"
-            className="flex gap-2 bg-[#4A9D77] text-[#fff]"
-            onClick={() => { navigate("new-internship"); }}
-          >
-            <InternshipsIcon />
-            New Internship
-          </Button>
+            <Drawer
+              closable
+              open={showDrawer}
+              onClose={() => { setShowDrawer(false)}}
+              title="Filters"
+            >
+              <React.Fragment key=".0">
+                <p>
+                  Some contents...
+                </p>
+                <p>
+                  Some contents...
+                </p>
+                <p>
+                  Some contents...
+                </p>
+              </React.Fragment>
+            </Drawer>
+            <Button
+              size="middle"
+              className="flex gap-2 bg-[#4A9D77] text-[#fff]"
+              onClick={() => { navigate("new-internship"); }}
+            >
+              <InternshipsIcon />
+              New Internship
+            </Button>
+          </div>
+
         </div>
-
-      </div>
-      <div className="pt-3">
-        <GlobalTable
-          columns={columns}
-          expandable={{
-            expandedRowRender: () => { },
-            rowExpandable: function noRefCheck() { }
-          }}
-          tableData={newTableData}
-        />
+        <BoxWrapper>
+          <div className="pt-3">
+            <GlobalTable
+              columns={columns}
+              expandable={{
+                expandedRowRender: () => { },
+                rowExpandable: function noRefCheck() { }
+              }}
+              tableData={newTableData}
+            />
+          </div>
+        </BoxWrapper>
       </div>
       <div className="flex gap-3 my-3">
         <LeaveRequest title="Leave Request" />
@@ -266,7 +323,7 @@ const Internships = () => {
         <SetaGoal title="Set a Goal" />
       </div>
       <div className="flex gap-3 my-3">
-        <PopUpModal title="Modal Title Customizable" width={800} showHide={true} cancelBtntxt="Cancel" okBtntxt="Submit">
+        <PopUpModal title="Modal Title Customizable" width={800} state={false} okBtnFunc={() => { console.log("call back function called") }} cancelBtntxt="Cancel" okBtntxt="Submit">
           <p>Write your JSX here / Import Components</p>
         </PopUpModal>
       </div>

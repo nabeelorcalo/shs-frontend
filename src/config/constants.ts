@@ -35,6 +35,7 @@ export const ROUTES_CONSTANTS: any = {
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
   NEW_INTERNSHIP: "internships/new-internship",
+  VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   INTERNS: "interns",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
