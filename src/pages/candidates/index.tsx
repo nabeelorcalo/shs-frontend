@@ -2,11 +2,17 @@ import { Col, Row } from "antd";
 import { DropDown, SearchBar } from "../../components";
 import "./style.scss";
 import CandidateTable from "./candidateTable";
-import Modal from "./Modal";
-import ViewDetails from './viewDetails';
+
+import DetailDrawer from "./viewDetails";
+import { useState } from "react";
+import RejectModal from "./RejectModal";
 
 
 const Candidates = () => {
+
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openRejectModal, setOpenRejectModal] = useState(false);
+
   return (
     <>
 
@@ -20,9 +26,11 @@ const Candidates = () => {
           <DropDown options={["pdf", "excel"]} requiredDownloadIcon />
         </Col>
       </Row>
-      <CandidateTable />
-      <Modal />
-      <ViewDetails />
+      <CandidateTable setOpenDrawer={setOpenDrawer} setOpenRejectModal={setOpenRejectModal}/>
+      {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} />}
+
+      {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} />}
+
     </>
   )
 }

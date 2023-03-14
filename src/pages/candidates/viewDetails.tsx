@@ -1,47 +1,33 @@
-import React, { useState } from 'react';
-import { Button, Col, Drawer, Row, Space } from 'antd';
-import type { DrawerProps } from 'antd/es/drawer';
+import { Drawer, Row, Col } from 'antd';
+import { ReactNode } from 'react';
 import IndividualDetails from './individualDetails';
 
-const App: React.FC = () => {
-    const [open, setOpen] = useState(false);
-    const [size, setSize] = useState<DrawerProps['size']>();
+interface Props {
+    open?: boolean;
+    setOpen?: any;
+    children?: ReactNode | ReactNode[];
+    rest?: any;
+}
 
-
-    const showLargeDrawer = () => {
-        setSize('large');
-        setOpen(true);
-    };
-
-    const onClose = () => {
-        setOpen(false);
-    };
+const DetailDrawer = (props: Props) => {
+    const { open, setOpen, children, ...rest } = props;
 
     return (
-        <>
-            <Space>
-
-                <Button type="primary" onClick={showLargeDrawer}>
-                    View Details
-                </Button>
-            </Space>
-            <Drawer
-
-                width={1283}
-                title={`${size} Drawer`}
-                placement="right"
-                size={size}
-                onClose={onClose}
-                open={open}
-            >
-                <Row >
-                    <Col lg={6}>
-                        <IndividualDetails />
-                    </Col>
-                </Row >
-            </Drawer>
-        </>
+        <Drawer
+            width={1283}
+            headerStyle={{ display: 'none' }}
+            placement="right"
+            onClose={() => setOpen(false)}
+            open={open}
+            {...rest}
+        >
+            <Row>
+                <Col lg={5}>
+                    <IndividualDetails />
+                </Col>
+            </Row>
+        </Drawer>
     );
 };
 
-export default App;
+export default DetailDrawer;

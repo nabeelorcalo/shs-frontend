@@ -3,8 +3,10 @@ import { BoxWrapper } from '../../components/BoxWrapper/boxWrapper'
 import GlobalTable from '../../components/Table/Table';
 import { Dropdown } from 'antd';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from '../../assets/images'
+import DropDownNew from '../../components/Dropdown/DropDownNew';
 
-const CandidateTable = () => {
+const CandidateTable = (props: any) => {
+    const { setOpenDrawer, setOpenRejectModal } = props;
 
     let ratingCount = [
         { title: 'exceptional', count: 5 },
@@ -18,7 +20,7 @@ const CandidateTable = () => {
         {
             label: <div>
                 {ratingCount.map((obj, i) => <div key={obj.count} className='flex items-center ratings'>
-                    <p className='title font-semibold text-base capitalize w-[120px]'>{obj.title}</p>
+                    <p className='title font-semibold text-base capitalize w-[120px] mb-[15px]'>{obj.title}</p>
                     {Array.from(Array(obj.count).keys()).map(num => <StarFilledIcon key={num} className='icons mx-[2px]' />)}
                 </div>)}
             </div>,
@@ -77,12 +79,12 @@ const CandidateTable = () => {
             dataIndex: 'rating',
             title: 'Rating',
             render: (_: any, data: any) =>
-                <Dropdown menu={{ items }} placement='bottomLeft' overlayClassName='candidate-rating' trigger={['click']} overlayStyle={{ border: '2px solid #D9DBE9', borderRadius: '8px' }}>
+                <DropDownNew items={items}>
                     <div className='flex items-center justify-center gap-2'>
                         {data.rating === 0 ? <StarOutlinedIcon cursor={'pointer'} /> : <StarFilledIcon cursor={'pointer'} />}
                         <span>{data.rating}</span>
                     </div>
-                </Dropdown>
+                </DropDownNew>
         },
         {
             key: 'stage',
@@ -101,9 +103,14 @@ const CandidateTable = () => {
             key: 'action',
             dataIndex: '',
             title: 'Action',
-            render: (_: any, data: any) => <Dropdown menu={ ActionItems } trigger={['click']}>
-                <ThreeDotsIcon />
-            </Dropdown>
+            render: (_: any, data: any) => <DropDownNew
+                items={[
+                    { label: <p onClick={() => setOpenDrawer(true)}>View Details</p>, key: 'detail' },
+                    { label: <p onClick={() => setOpenRejectModal(true)}>Reject</p>, key: 'reject' }
+                ]}
+            >
+                <ThreeDotsIcon className='cursor-pointer' />
+            </DropDownNew>
         },
 
 

@@ -121,3 +121,30 @@
     }
 
 }
+
+    .stage-apply {
+        color: $text-secondary-body-color;
+        font-size: 13px;
+        height: 25px;
+        align-items: center ;
+        background: $text-input-bg-color;
+        border-radius: 1px;
+        padding: 0px 20px;
+        margin: 0 1px;
+
+        &:first-child {
+            border-radius: 10px 1px 1px 10px;
+        }
+
+        &:last-child {
+            border-radius: 1px 10px 10px 1px;
+        }
+
+        &.applied {
+            &:nth-child(1) {
+                background-color: $dashboard-primary-bg-color;
+                color: $white-bg-color;
+            }
+        }
+    
+}
