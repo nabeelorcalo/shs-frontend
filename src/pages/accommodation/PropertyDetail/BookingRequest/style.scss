@@ -46,4 +46,37 @@
       }
     }
   }
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+  .booking-request-general-info {
+    padding: 20px 0 30px;
+    
+    .general-info-message {
+      display: flex;
+      align-items: center;
+      & > span {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.333333;
+        color: $text-teriary-label-color;
+      }
+      .general-info-popover {
+        margin-left: 12px;
+        cursor: pointer;
+        position: relative;
+      }
+      .disclaimer-modal {
+        margin-left: 12px;
+        cursor: pointer;
+      }
+    }
+    .general-info-text {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: $text-success-placeholder-color;
+      margin-top: 10px;
+    }
+  }
 }

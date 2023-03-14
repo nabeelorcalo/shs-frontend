@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Anchor } from 'antd'
-import "./style.scss";
-import { IconWebLocation } from '../../../assets/images'
+import { Typography, Anchor, Collapse } from 'antd'
 import PageHeader from "../../../components/PageHeader";
 import ImageGallery from 'react-image-gallery';
-import "react-image-gallery/styles/css/image-gallery.css";
 import CancellationPolicy from "./CancellationPolicy";
 import HowToBookPropperty from "./HowToBookPropperty";
 import AgentDetail from "./AgentDetail";
 import PropertyOverview from "./PropertyOverview";
 import PropertyPricing from "./PropertyPricing";
 import BookingRequest from "./BookingRequest";
+import { IconWebLocation, IconArrowDown } from '../../../assets/images'
+import "react-image-gallery/styles/css/image-gallery.css";
+import "./style.scss";
 
 // Temporary
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
@@ -197,6 +197,30 @@ const AccPropertyDetail = () => {
         </div>
         <div className="property-detail-content-right">
           <BookingRequest />
+
+          <div className="booking-request-faq">
+            <Collapse
+              accordion={true}
+              bordered={false}
+              expandIcon={({ isActive }) => <IconArrowDown rotate={isActive ? 90 : 0} />}
+              expandIconPosition="end"
+            >
+              <Collapse.Panel header="Verified landlord" key="1">
+                Private landlord, with us since 2022 and has had 1 happy tenants.
+              </Collapse.Panel>
+              <Collapse.Panel header="Property not verified" key="2">
+                We have not verified this property yet. You can check its availability and make a request for us to verify it soon. If you prefer, you can also book it directly.
+              </Collapse.Panel>
+              <Collapse.Panel header="Student help squad guarantee" key="3">
+                <div>If the landlord cancels your booking within 48 hours of your move in date, we will either,</div>
+                <div>1. Pay for a hotel and help you find somewhere new or,</div>
+                <div>2. Refund your money in full.</div>
+              </Collapse.Panel>
+              <Collapse.Panel header="Property ready for you" key="4">
+                Our check-in teams follows up with the property landlord to ensure you get no surprises upon your arrival.
+              </Collapse.Panel>
+            </Collapse>
+          </div>
         </div>
       </div>
     </div>

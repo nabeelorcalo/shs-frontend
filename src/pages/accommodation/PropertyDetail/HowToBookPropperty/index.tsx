@@ -4,22 +4,11 @@ import { CaretRightOutlined } from '@ant-design/icons';
 import { Collapse, theme } from 'antd';
 import { IconArrowDown } from '../../../../assets/images'
 const { Panel } = Collapse;
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+
 
 
 const HowToBookPropperty = () => {
-  const { token } = theme.useToken();
 
-  const panelStyle = {
-    marginBottom: 24,
-    background: token.colorFillAlter,
-    borderRadius: token.borderRadiusLG,
-    border: 'none',
-  };
   return (
     <div className="book-property">
       <Collapse
