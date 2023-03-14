@@ -22,7 +22,7 @@ const DetailDrawer = (props: Props) => {
             {...rest}
         >
             <Row>
-                <Col lg={5}>
+                <Col lg={6}>
                     <IndividualDetails />
                 </Col>
             </Row>

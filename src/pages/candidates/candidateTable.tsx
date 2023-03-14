@@ -1,7 +1,6 @@
 import React from 'react'
 import { BoxWrapper } from '../../components/BoxWrapper/boxWrapper'
 import GlobalTable from '../../components/Table/Table';
-import { Dropdown } from 'antd';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from '../../assets/images'
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 
