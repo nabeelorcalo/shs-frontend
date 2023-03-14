@@ -1,9 +1,11 @@
 import React from "react";
 import { Button, Upload, Col, Form, Row, Select, Typography } from "antd";
-import { SHSLogo, BackButton } from "../../../../../assets/images";
+import {
+  SHSLogo,
+  BackButton,
+  UploadUserProfile,
+} from "../../../../../assets/images";
 import "./Verification.scss";
-import uploadImage from "../../../../../assets/images/login/uploadimage.png";
-
 const { Option } = Select;
 
 const Photograph = (props: any) => {
@@ -69,7 +71,7 @@ const Photograph = (props: any) => {
                 className="flex justify-center mt-10"
               >
                 <Upload name="logo" action="/upload.do" listType="picture">
-                  <img src={uploadImage} alt="" />
+                  <UploadUserProfile />
                 </Upload>
               </Form.Item>
               <Row gutter={10}>

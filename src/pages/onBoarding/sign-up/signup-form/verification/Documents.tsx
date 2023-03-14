@@ -88,7 +88,7 @@ const Documents = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <img src={DocumentUpload} alt="error" />
+                      <DocumentUpload/>
                     </Col>
                   </Row>
                 </div>
@@ -124,7 +124,7 @@ const Documents = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <img src={DocumentUpload} alt="error" />
+                      <DocumentUpload/>
                     </Col>
                   </Row>
                 </div>
@@ -160,7 +160,7 @@ const Documents = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <img src={DocumentUpload} alt="error" />
+                      <DocumentUpload/>
                     </Col>
                   </Row>
                 </div>

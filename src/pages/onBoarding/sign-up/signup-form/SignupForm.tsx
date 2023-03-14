@@ -2,13 +2,11 @@ import React from "react";
 import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
 import { CommonDatePicker } from "../../../../components";
 
-
-
 const SignupForm = () => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
-  
+
   const { Option } = Select;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>

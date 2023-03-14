@@ -1,8 +1,7 @@
 import React from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
-import { SHSLogo } from "../../../../../assets/images";
 import "./Verification.scss";
-import { BackButton, Round } from "../../../../../assets/images";
+import { BackButton, SHSLogo, Round } from "../../../../../assets/images";
 
 const Video = (props: any) => {
   const { currentStep, setCurrentStep } = props;
