@@ -1,0 +1,62 @@
+.leave_modal_main {
+
+
+
+    .Leave_request_SubmitBtn {
+        background: #4A9D77;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+        border-radius: 8px;
+        color: #fff;
+        &:hover {
+            background-color: #4A9D77;
+            color: #fff;
+        }
+    }
+    
+    .Leave_request_Canclebtn {
+        background: #FFFFFF;
+        border: 1px solid #4A9D77;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+        color: #4A9D77;
+
+        &:hover {
+            background-color: #FFFFFF;
+            color: #4A9D77;
+        }
+    }
+
+    .ant-upload-wrapper {
+        .ant-upload-drag {
+            background: #E6F4F9;
+            border: 2px dashed #D9DBE9;
+            padding-left: 30px;
+            padding-right: 30px;
+
+            &:hover {
+                // box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+                border: 2px dashed rgba(90, 89, 128, 0.5);
+            }
+
+            .ant-upload-drag-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .File_info_wraper {
+                    .ant-upload-text {
+                        color: #363565;
+
+                        span {
+                            color: red;
+                        }
+                    }
+
+                    .ant-upload-hint {
+                        color: #A0A3BD;
+                    }
+                }
+            }
+
+        }
+    }
+}

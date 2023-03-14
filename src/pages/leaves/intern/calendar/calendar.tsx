@@ -5,8 +5,8 @@ import { useState } from "react";
 import './style.scss'
 import { LeaveProfileImg } from '../../../../assets/images'
 import CalendarDataDrawer from "./calendarDataDrawer";
-
-
+import LeaveRequest from "../../../../components/LeaveRequest";
+import { Form } from "antd";
 const calendarEventData = [
     {
         id: "1",
@@ -85,37 +85,20 @@ const Calendar = () => {
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
     const [eventData, setEventData] = useState({})
-    console.log('eventData', eventData);
+    // console.log('eventData', eventData);
+    const [form] = Form.useForm();
     // console.log('isEditModalOpen', isEditModalOpen);
     const handleEventContent = (eventInfo: any) => {
         const events = eventInfo?.event?._def?.extendedProps;
         const applyBg2 = document.getElementsByClassName('fc-daygrid-event-harness');
-        for (let index = 0; index < applyBg2.length; index++) {
-            const element = applyBg2[index].closest('.fc-daygrid-day-frame.fc-scrollgrid-sync-inner');
-            // const renderBg = element.closest('.fc-daygrid-day-frame.fc-scrollgrid-sync-inner')
-            // switch (eventType) {
-            //     case 'sick':
-            //         element.classList.add('sick');
-            //         break;
-            //     case 'casual':
-            //         element.classList.add('casual');
-            //         break;
-            //     case 'work from home':
-            //         element.classList.add('work-from-home');
-            //         break;
-            //     case 'medical':
-            //         element.classList.add('medical');
-            //         break;
+        // for (let index = 0; index < applyBg2.length; index++) {
+        //     const element = applyBg2[index].closest('.fc-daygrid-day-frame.fc-scrollgrid-sync-inner');
+        //     let e = events.eventType;
+        //     // console.log(e);
+        //     element?.classList.add(e === 'sick' ? 'sick' : e === 'casual' ? 'casual' : e === 'work from home' ? 'work-from-home' : e === 'medical' ? 'medical' : '');
+        //     // console.log(element);
 
-            //     default:
-            //         break;
-            // }
-            let e = events.eventType;
-            // console.log(e);
-            element?.classList.add(e === 'sick' ? 'sick' : e === 'casual' ? 'casual' : e === 'work from home' ? 'work-from-home' : e === 'medical' ? 'medical' : '');
-            // console.log(element);
-
-        }
+        // }
 
 
         const backgroundColor = events?.eventType === 'sick' ? 'rgba(76, 164, 253, 1)' : events?.eventType === 'casual' ? 'rgba(255, 193, 93, 1)' : events?.eventType === 'work from home' ? 'rgba(233, 111, 124, 1)' : 'rgba(74, 157, 119, 1)';
@@ -153,7 +136,7 @@ const Calendar = () => {
                     events={calendarEventData}
                     eventContent={handleEventContent}
                     eventClick={(e) => { setIsOpenCalendarDrawer(true); setEventData(e) }}
-                    dateClick={() => setIsAddModalOpen(true)}
+                    // dateClick={() => setIsAddModalOpen(true)}
                 />
             </div>
             <CalendarDataDrawer
@@ -161,6 +144,15 @@ const Calendar = () => {
                 setIsOpenCalendarDrawer={setIsOpenCalendarDrawer}
                 eventData={eventData}
                 isOpenCalendarDrawer={isOpenCalendarDrawer} />
+            <LeaveRequest
+                title="Leave Request"
+                open={isAddModalOpen}
+                setIsAddModalOpen={setIsAddModalOpen}
+                // onCancel={() => setIsAddModalOpen(false)}
+                // cancleLeavBtn={() => {setIsAddModalOpen(false)}}
+                subMitLeaveBtn={() => (alert("hello"))}
+                changeLeaveTyp={( ()=> (alert("iudhfisuadhfuyhdsa")))}
+            />
         </>
     )
 }
