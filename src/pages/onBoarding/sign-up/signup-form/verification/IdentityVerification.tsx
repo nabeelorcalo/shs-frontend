@@ -1,9 +1,18 @@
 import React from "react";
-import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
-import "./Verification.scss";
-import { SHSLogo, BackButton } from "../../../../../assets/images";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Typography,
+} from "antd";
+import "../../../styles.scss";
+import { BackButton,SHSLogo  } from "../../../../../assets/images";
 
 const IdentityVerification = (props: any) => {
+
   const { Option } = Select;
   const { currentStep, setCurrentStep } = props;
   const prefixSelector = (
@@ -17,7 +26,7 @@ const IdentityVerification = (props: any) => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
@@ -41,36 +50,37 @@ const IdentityVerification = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Row gutter={20}>
-                <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
-                  <Form.Item
-                    label="First Name"
-                    name="firstName"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your First Name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="First Name" className="input-style" />
-                  </Form.Item>
-                </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    label="Last Name"
-                    name="lastName"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Last Name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Last Name" className="input-style" />
-                  </Form.Item>
-                </Col>
-              </Row>
+            
+                <Row gutter={20}>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="First Name"
+                      name="firstName"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your First Name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="First Name" className="input-style" />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="Last Name"
+                      name="lastName"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input your Last Name!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Last Name" className="input-style" />
+                    </Form.Item>
+                  </Col>
+                </Row>
 
               <Form.Item
                 label="Country"
@@ -94,31 +104,31 @@ const IdentityVerification = (props: any) => {
                 <Input placeholder="Document Type" className="input-style" />
               </Form.Item>
 
-              <Row gutter={10}>
-                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
-                  <Form.Item>
+                <Row gutter={[130,10]}>
+                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        console.log("hello");
-                        setCurrentStep(2);
-                      }}
-                      type="primary"
+                      className="btn-cancel btn-cancel-verification"
                       //htmlType="submit"
-                      className="login-form-button"
                     >
-                      Next
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={20} lg={20} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        onClick={() => {
+                          console.log('hello')
+                          setCurrentStep(2);
+                        }}
+                        type="primary"
+                         //htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
 
               <div>
                 <Typography className="text-center">

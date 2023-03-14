@@ -24,13 +24,6 @@ const commonObj = {
   email: "enquiries@lincoln.ac.uk",
   phone: "+44 7700 900077",
   location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-  //     breadCrumbs: {
-  //         [
-  //             {
-
-  //             },
-  //        ]`
-  //    },
   basic: {
     name: "University of Lincoln",
     email: "enquiries@lincoln.ac.uk",
@@ -56,9 +49,9 @@ const DetailPage = () => {
     <div className="detail-page">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <span className="font-semibold text-2xl text-[#363565]">{commonObj.moduleName}</span>
+                  <span className="font-semibold text-2xl dashboard-primary-color">{commonObj.moduleName}</span>
                   <Divider type="vertical" />
-          <span className="font-semibold text-base text-[#4E4B66]">{ commonObj.type}</span>
+          <span className="font-semibold text-base text-secondary-color">{ commonObj.type}</span>
         </Col>
       </Row>
       <Divider />
@@ -67,10 +60,10 @@ const DetailPage = () => {
           <div className="pt-10">
             <center>
               <img src={commonObj.logo} alt="" />
-              <Typography className="font-semibold text-xl text-[#14142A] font-[outfit]">
+              <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
                 {commonObj.depName}
               </Typography>
-              <Typography className="font-medium text-base text-[#4E4B66] font-[outfit]">
+              <Typography className="font-medium text-base text-secondary-color font-[outfit]">
                 {commonObj.area}
               </Typography>
             </center>
@@ -80,7 +73,7 @@ const DetailPage = () => {
                 Contact Person
               </span>
               <img src={commonObj.personImg} alt="" />
-              <span className="font-noraml text-[#4E4B66] text-base font-[outfit]">
+              <span className="font-noraml text-secondary-color text-base font-[outfit]">
                 {commonObj.personName}
               </span>
             </div>
@@ -88,26 +81,26 @@ const DetailPage = () => {
             <div className="social-info ">
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <img src={commonObj.iconEmail} alt="" />
-                <Typography className=" font-[outfit] font-normal text-sm text-[#4E4B66] ml-4">
+                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <img src={commonObj.iconPhone} alt="" />
-                <Typography className=" font-[outfit] font-normal text-sm text-[#4E4B66] ml-4">
+                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color ml-4">
                   {commonObj.phone}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 mb-1 ml-6">
                 <img src={commonObj.iconLocation} alt="" />
-                <Typography className=" font-[outfit] font-normal text-sm text-[#4E4B66] ml-4">
+                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color ml-4">
                   {commonObj.location}
                 </Typography>
               </div>
             </div>
             <Divider />
             <div className="map ">
-              <Typography className="ml-4 font-[outfit] font-semibold text-xl text-[#14142A]">
+              <Typography className="ml-4 font-[outfit] font-semibold text-xl text-primary-color">
                 Location
               </Typography>
               <div className="mt-10">
@@ -127,40 +120,40 @@ const DetailPage = () => {
         <Col xxl={12} xl={16} lg={24} md={24} sm={24} xs={24}>
           <div>
             <div className="p-2">
-              <div className="pt-10 pb-2 font-semibold text-xl text-[#14142A] font-[outfit]">
+              <div className="pt-10 pb-2 font-semibold text-xl text-primary-color font-[outfit]">
                 Basic Information
               </div>
               <div className="pt-2">
                 <Row gutter={[5, 20]}>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       {name} Name
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.basic.name}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       Email
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.basic.email}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       Phone Number
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.basic.mobile}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       Registered Interns
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.basic.regIntern}
                     </Typography>
                   </Col>
@@ -168,40 +161,40 @@ const DetailPage = () => {
               </div>
             </div>
             <div className="p-2">
-              <div className="pt-5 pb-2 font-semibold text-xl text-[#14142A] font-[outfit]">
+              <div className="pt-5 pb-2 font-semibold text-xl text-primary-color font-[outfit]">
                 Address
               </div>
               <div className="pt-2">
                 <Row gutter={[5, 20]}>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       Post Code
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.address.postCode}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       Address
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.address.address}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       City
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.address.city}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <Typography className="font-medium text-base text-[#14142A] font-[outfit]">
+                    <Typography className="font-medium text-base text-primary-color font-[outfit]">
                       Country
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.address.country}
                     </Typography>
                   </Col>
@@ -213,10 +206,10 @@ const DetailPage = () => {
               <Row>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <div>
-                    <Typography className="pb-2 font-semibold text-xl text-[#14142A] font-[outfit]">
+                    <Typography className="pb-2 font-semibold text-xl text-primary-color font-[outfit]">
                       About {name}
                     </Typography>
-                    <Typography className="font-normal text-lg text-[#4E4B66] font-[outfit]">
+                    <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                       {commonObj.about.description}
                     </Typography>
                   </div>

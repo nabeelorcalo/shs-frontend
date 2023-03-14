@@ -1,7 +1,7 @@
+import React, { useState } from "react";
 import {
   CloseCircleFilled,
   EllipsisOutlined,
-  MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
   UserAddOutlined,
@@ -22,7 +22,6 @@ import {
   Typography,
 } from "antd";
 import { Option } from "antd/es/mentions";
-import React, { useState } from "react";
 import { CalendarIcon } from "../../../assets/images";
 import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";

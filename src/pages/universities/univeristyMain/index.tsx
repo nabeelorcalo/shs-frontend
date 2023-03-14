@@ -9,8 +9,6 @@ import { DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
 import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
-import DetailPage from "./detailPage";
-
 
 const tableData = [
   {
@@ -36,8 +34,6 @@ const tableData = [
     Email: "jackson.graham@example.com",
     no: "02",
     contactPerson: "Jenny Wilson",
-    
-  
   },
   {
     Actions: "fffff",
@@ -70,8 +66,8 @@ const tableData = [
 const UniveristyMain = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => { };
-  
+  const searchValue = () => {};
+
   const columns = [
     {
       dataIndex: "no",
@@ -108,13 +104,12 @@ const UniveristyMain = () => {
       key: "address",
       title: "Address",
     },
-    
-  
+
     {
       dataIndex: "status",
       render: (_: any, data: any) => (
         <div
-          className="table-status-style"
+          className="table-status-style text-center rounded white-color"
           style={{
             backgroundColor:
               data.status === "Pending"
@@ -124,10 +119,7 @@ const UniveristyMain = () => {
                 : data.status === "Inactive"
                 ? "#D83A52"
                 : "",
-            color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
-            borderRadius: "4px",
-            textAlign:"center",
           }}
         >
           {data.status}
@@ -136,7 +128,7 @@ const UniveristyMain = () => {
       key: "status",
       title: "Status",
     },
-  
+
     {
       render: (_: any, data: any) => (
         <span>
@@ -147,20 +139,20 @@ const UniveristyMain = () => {
       title: "Actions",
     },
   ];
-  
+
   const menu2 = (
     <Menu>
-       <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3"><a href="create-password">Password Reset</a> </Menu.Item>
-     
+      <Menu.Item key="3">
+        <a href="create-password">Password Reset</a>{" "}
+      </Menu.Item>
     </Menu>
   );
 
-
   return (
     <div className="univeristy-main">
-       <Drawer
+      <Drawer
         open={openDrawer}
         title=" Filters"
         onClose={() => setOpenDrawer(false)}
@@ -184,11 +176,11 @@ const UniveristyMain = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
               </Button>
               <Button
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Submit
@@ -200,7 +192,7 @@ const UniveristyMain = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="text-[#363565] text-2xl font-semibold font-[outfit]">
+            <Typography className="primary-color text-2xl font-semibold font-[outfit]">
               Universities
             </Typography>
           </div>
@@ -213,12 +205,13 @@ const UniveristyMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
-            <Button onClick={()=>setOpenDrawer(true)}
-             className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
+            <Button
+              onClick={() => setOpenDrawer(true)}
+              className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base font-[outfit] m-3"
             >
-              <NodeExpandOutlined style={{ fontSize: "16px" }} />
+              <NodeExpandOutlined className="text-base" />
               Filter
-              <RightOutlined style={{ fontSize: "12px" }} />
+              <RightOutlined className="text-xs" />
             </Button>
             <div className="w-25">
               <DropDown
@@ -233,16 +226,12 @@ const UniveristyMain = () => {
       </Row>
       <Row className="mt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-2 rounded-2xl">
-            <GlobalTable
-              tableData={tableData}
-              columns={columns}
-             
-            />
+          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
+            <GlobalTable tableData={tableData} columns={columns} />
           </div>
         </Col>
       </Row>
-          {/* <DetailPage/> */}
+      {/* <DetailPage/> */}
     </div>
   );
 };

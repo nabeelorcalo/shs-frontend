@@ -1,12 +1,8 @@
 import React from "react";
-import { Button, Upload, Col, Form, Row, Select, Typography } from "antd";
-import {
-  SHSLogo,
-  BackButton,
-  UploadUserProfile,
-} from "../../../../../assets/images";
-import "./Verification.scss";
-const { Option } = Select;
+import { Button, Upload, Col, Form, Row, Typography } from "antd";
+import { SHSLogo, BackButton ,  UploadUserProfile,} from "../../../../../assets/images";
+import "../../../styles.scss";
+
 
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;

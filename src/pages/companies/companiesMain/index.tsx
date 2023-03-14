@@ -1,15 +1,10 @@
-import {
-  EllipsisOutlined,
-  NodeExpandOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
-import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import React, { useState } from "react";
+import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
+import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import { DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import GlobalTable from "../../../components/Table/Table";
 import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
-
 
 const tableData = [
   {
@@ -22,7 +17,7 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     companyadmin: "Jenny Wilson",
     city: "London",
-    noOfInterns:"10",
+    noOfInterns: "10",
     hired: "Yes",
   },
   {
@@ -35,7 +30,7 @@ const tableData = [
     Email: "jackson.graham@example.com",
     no: "02",
     companyadmin: "Jenny Wilson",
-    noOfInterns:"10",
+    noOfInterns: "10",
   },
   {
     Actions: "fffff",
@@ -45,7 +40,7 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "03",
-    noOfInterns:"10",
+    noOfInterns: "10",
     companyadmin: "Jenny Wilson",
     city: "London",
     hired: "No",
@@ -58,7 +53,7 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "04",
-    noOfInterns:"10",
+    noOfInterns: "10",
     companyadmin: "Jenny Wilson",
     city: "London",
     hired: "No",
@@ -68,7 +63,7 @@ const tableData = [
 const CompaniesMain = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => { };
+  const searchValue = () => {};
   const columns = [
     {
       dataIndex: "no",
@@ -105,8 +100,7 @@ const CompaniesMain = () => {
       key: "address",
       title: "Address",
     },
-    
-  
+
     {
       dataIndex: "status",
       render: (_: any, data: any) => (
@@ -124,7 +118,7 @@ const CompaniesMain = () => {
             color: "#FFFFFF",
             padding: " 2px 3px 2px 3px",
             borderRadius: "4px",
-            textAlign:"center",
+            textAlign: "center",
           }}
         >
           {data.status}
@@ -133,7 +127,7 @@ const CompaniesMain = () => {
       key: "status",
       title: "Status",
     },
-  
+
     {
       render: (_: any, data: any) => (
         <span>
@@ -146,15 +140,16 @@ const CompaniesMain = () => {
   ];
   const menu2 = (
     <Menu>
-       <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3"><a href="create-password">Password Reset</a> </Menu.Item>
-     
+      <Menu.Item key="3">
+        <a href="create-password">Password Reset</a>{" "}
+      </Menu.Item>
     </Menu>
   );
   return (
     <div className="company-main">
-       <Drawer
+      <Drawer
         open={openDrawer}
         title=" Filters"
         onClose={() => setOpenDrawer(false)}
@@ -208,7 +203,10 @@ const CompaniesMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
-            <Button onClick={()=>setOpenDrawer(true)} className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3">
+            <Button
+              onClick={() => setOpenDrawer(true)}
+              className="bg-[#E6F4F9] rounded-lg color-[#A0A3BD] font-normal text-base font-[outfit] m-3"
+            >
               <NodeExpandOutlined style={{ fontSize: "16px" }} />
               Filter
               <RightOutlined style={{ fontSize: "12px" }} />

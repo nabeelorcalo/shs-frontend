@@ -1,7 +1,6 @@
-import { Button, Divider, Typography } from "antd";
 import React from "react";
-import "./studentSideBar.scss";
-
+import { Button, Divider, Typography } from "antd";
+import '../style.scss';
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../assets/images/profile/student/Vedio.svg";

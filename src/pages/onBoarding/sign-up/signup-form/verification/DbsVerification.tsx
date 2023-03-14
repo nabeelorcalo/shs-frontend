@@ -1,6 +1,13 @@
 import React from "react";
-import { Button, Col, Form, Row, Select, Typography } from "antd";
-import "./Verification.scss";
+import {
+  Button,
+  Col,
+  Form,
+  Row,
+  Select,
+  Typography,
+} from "antd";
+import "../../../styles.scss";
 import {
   BackButton,
   DocumentUpload,
