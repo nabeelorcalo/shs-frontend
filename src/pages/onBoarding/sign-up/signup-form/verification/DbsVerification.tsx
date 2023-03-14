@@ -23,7 +23,7 @@ const DbsVerification = (props: any) => {
       <Row className="identity-style">
         <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
@@ -75,7 +75,7 @@ const DbsVerification = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <img src={DocumentUpload} alt="error" />
+                      <DocumentUpload/>
                     </Col>
                   </Row>
                 </div>

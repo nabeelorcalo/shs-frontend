@@ -28,7 +28,7 @@ const IdentityVerification = (props: any) => {
       <Row className="identity-style">
         <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
@@ -82,27 +82,27 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
 
-                <Form.Item
-                  label="Country"
-                  name="Country"
-                  rules={[
-                    { required: true, message: "Please input your Country!" },
-                  ]}
-                >
-                  <Input placeholder="Country" className="input-style" />
-                </Form.Item>
-                <Form.Item
-                  label="Document Type"
-                  name="Document Type"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your Document Type!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Document Type" className="input-style" />
-                </Form.Item>
+              <Form.Item
+                label="Country"
+                name="Country"
+                rules={[
+                  { required: true, message: "Please input your Country!" },
+                ]}
+              >
+                <Input placeholder="Country" className="input-style" />
+              </Form.Item>
+              <Form.Item
+                label="Document Type"
+                name="Document Type"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Document Type!",
+                  },
+                ]}
+              >
+                <Input placeholder="Document Type" className="input-style" />
+              </Form.Item>
 
                 <Row gutter={[130,10]}>
                   <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
@@ -130,12 +130,11 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
 
-                <div>
-                  <Typography className="text-center">
-                    Why I need to verify myself?
-                  </Typography>
-                </div>
-             
+              <div>
+                <Typography className="text-center">
+                  Why I need to verify myself?
+                </Typography>
+              </div>
             </div>
           </div>
         </Col>

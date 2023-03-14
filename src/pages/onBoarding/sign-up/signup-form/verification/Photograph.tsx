@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
-import { SHSLogo, BackButton } from "../../../../../assets/images";
+import { SHSLogo, BackButton ,  UploadUserProfile,} from "../../../../../assets/images";
 import "../../../styles.scss";
-import uploadImage from "../../../../../assets/images/login/uploadimage.png";
+
 
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -67,7 +67,7 @@ const Photograph = (props: any) => {
                 className="flex justify-center mt-10"
               >
                 <Upload name="logo" action="/upload.do" listType="picture">
-                  <img src={uploadImage} alt="" />
+                  <UploadUserProfile />
                 </Upload>
               </Form.Item>
               <Row gutter={10}>
