@@ -58,5 +58,14 @@
             }
 
         }
+        .ant-upload-list-item{
+            background-color: #E6F4F9;
+            padding: 12px 10px;
+            border-radius: 6px;
+            height: unset;
+            &:hover{
+                background-color: #E6F4F9;
+            }
+        }
     }
 }

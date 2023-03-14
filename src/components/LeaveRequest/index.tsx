@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CloseCircleFilled, InboxOutlined } from '@ant-design/icons'
+import { CloseCircleFilled, InboxOutlined, UploadOutlined } from '@ant-design/icons'
 import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col } from 'antd'
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import { message, Upload } from 'antd';
@@ -29,16 +29,37 @@ const props: UploadProps = {
     console.log('Dropped files', e.dataTransfer.files);
   },
 };
+const leavRequestOptionDAta = [
+  {
+    value: '1',
+    label: 'Sick',
+  },
+  {
+    value: '2',
+    label: 'Casual',
+  },
+  {
+    value: '3',
+    label: 'Work From Home',
+  },
+  {
+    value: '4',
+    label: 'Medical',
+  },
+]
+const iconRender = (file: any, listType: any) => {
+  return <UploadOutlined />;
+};
 const LeaveRequest = (props: any) => {
   // const [show, setShow] = useState(false)
   const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [form] = Form.useForm();
-  const handleTimeChange = (time: any) => {
-    const selectedHour = dayjs(time).format('h');
-    console.log(selectedHour);
-  }
+  // const handleTimeChange = (time: any) => {
+  //   const selectedHour = dayjs(time).format('h');
+  //   console.log(selectedHour);
+  // }
   return (
     <Modal
       title={title}
@@ -46,7 +67,7 @@ const LeaveRequest = (props: any) => {
       onCancel={() => setIsAddModalOpen(false)}
       width={600}
       className="leave_modal_main"
-      maskClosable={false}
+      maskClosable={true}
       closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px' }} />}
       footer={false}
     >
@@ -64,24 +85,7 @@ const LeaveRequest = (props: any) => {
             placeholder="Select"
             // optionFilterProp="children"
             // filterOption={(input, option) => (option?.label ?? '').includes(input)}
-            options={[
-              {
-                value: '1',
-                label: 'Sick',
-              },
-              {
-                value: '2',
-                label: 'Casual',
-              },
-              {
-                value: '3',
-                label: 'Work From Home',
-              },
-              {
-                value: '4',
-                label: 'Medical',
-              },
-            ]}
+            options={leavRequestOptionDAta}
           />
         </Form.Item>
         <Form.Item
@@ -130,12 +134,20 @@ const LeaveRequest = (props: any) => {
           <Row gutter={[10, 10]}>
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true, message: " Please Select Start Time" }]}>
-                <TimePicker minuteStep={60} secondStep={60} onChange={handleTimeChange} />
+                <TimePicker
+                  minuteStep={60}
+                  secondStep={60}
+                  // onChange={handleTimeChange}
+                />
               </Form.Item>
             </Col>
             <Col lg={8}>
               <Form.Item name="timeTo" label="Time To" rules={[{ required: true, message: " Please Select End Time" }]}>
-                <TimePicker minuteStep={60} secondStep={60} onChange={handleTimeChange} />
+                <TimePicker
+                  minuteStep={60}
+                  secondStep={60}
+                  // onChange={handleTimeChange}
+                />
               </Form.Item>
             </Col>
             <Col lg={8}>
@@ -157,6 +169,7 @@ const LeaveRequest = (props: any) => {
             accept="application/pdf,image/jpeg,application/msword"
             beforeUpload={() => false}
             className="FileUploder"
+            // iconRender={iconRender}
             {...props}
           >
             <div className='File_info_wraper'  >

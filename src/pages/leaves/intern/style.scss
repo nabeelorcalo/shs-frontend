@@ -1,43 +1,46 @@
 .intrne_main {
     .view_history_button_wrapper {
         .button {
+            background: #FFFFFF;
             border: 1px solid #4A9D77;
             box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
             color: #4A9D77;
         }
     }
 
-    .left_upcoming_holiudays {
-        .upcomming_Holiday {
-            color: #4E4B66;
-        }
+    
 
-        .upcoming_holidayList {
-            &::-webkit-scrollbar {
-                width: 0;
-            }
+}
 
-            .List_item_wrapper {
-                .List_item_main {
-                    .left_side {
-                        .light_text {
-                            color: #A0A3BD;
-                        }
-
-                        .date_text {
-                            color: #14142A;
-                        }
-                    }
-
-                    .holiday_typeText {
-                        color: #14142A;
-
-                    }
-
-                }
-            }
-
-        }
+.left_upcoming_holiudays {
+    .upcomming_Holiday {
+        color: #4E4B66;
     }
 
+    .upcoming_holidayList {
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .List_item_wrapper {
+            .List_item_main {
+                .left_side {
+                    .light_text {
+                        color: #A0A3BD;
+                    }
+
+                    .date_text {
+                        color: #14142A;
+                    }
+                }
+
+                .holiday_typeText {
+                    color: #14142A;
+
+                }
+
+            }
+        }
+
+    }
 }
