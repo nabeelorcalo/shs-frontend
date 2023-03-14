@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import IdentityVerification from "./IdentityVerification";
 import Address from "./Address";
 import Documents from "./Documents";
@@ -6,7 +6,6 @@ import DbsVerification from "./DbsVerification";
 import UniversityDetails from "./UniversityDetails";
 import Photograph from "./Photograph";
 import Video from "./Video";
-import { useState } from "react";
 import {Form} from "antd";
 
 function VerificationSteps(props: any) {

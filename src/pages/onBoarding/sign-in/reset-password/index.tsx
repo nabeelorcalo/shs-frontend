@@ -1,8 +1,8 @@
 import { Col, Row, Typography } from "antd";
 import React from "react";
 import { SHSLogo } from "../../../../assets/images";
-import "../../sign-in/signin.scss";
 import ResetPasswordForm from "./ResetPasswordForm";
+import "../../sign-in/signin.scss";
 
 const ResetPassword = () => {
   return (

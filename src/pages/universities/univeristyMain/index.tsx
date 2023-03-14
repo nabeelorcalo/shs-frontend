@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  MoreOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";

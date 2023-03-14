@@ -8,8 +8,8 @@ import {
   Select,
   Typography,
 } from "antd";
-import "../../../styles.scss";
 import { BackButton,SHSLogo  } from "../../../../../assets/images";
+import "../../../styles.scss";
 
 const IdentityVerification = (props: any) => {
 

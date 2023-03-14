@@ -1,12 +1,11 @@
 import { Col, Divider, Row, Typography } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import AppTabs from "../../components/Tabs";
 import Rewards from "./delegateAgentTabs/delegateReawards";
 import WithDrawalRequest from "./delegateAgentTabs/delegateWithDrawlRequest";
 import Dashboard from "./delegateAgentTabs/delelgatedashboard";
-import "./style.scss";
 import DelegateMain from "./delegateAgentTabs/delegateMain";
+import "./style.scss";
 
 const items = [
   {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Form, Input, Row, Space, Typography } from "antd";
-import "../../style.scss";
 import { rewardForm } from "./rewardMock";
+import "../../style.scss";
 
 
 const Rewards = () => {

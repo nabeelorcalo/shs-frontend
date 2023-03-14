@@ -11,10 +11,10 @@ import {
   Typography,
 } from "antd";
 import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
-import "../../../styles.scss";
 import { BackButton } from "../../../../../assets/images";
 import type { SelectProps } from "antd";
 import { DropDown } from "../../../../../components";
+import "../../../styles.scss";
 
 
 const { Option } = Select;

@@ -7,12 +7,12 @@ import {
   Select,
   Typography,
 } from "antd";
-import "../../../styles.scss";
 import {
   BackButton,
   DocumentUpload,
   SHSLogo,
 } from "../../../../../assets/images";
+import "../../../styles.scss";
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;

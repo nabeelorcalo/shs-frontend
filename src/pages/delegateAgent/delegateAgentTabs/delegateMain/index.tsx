@@ -3,7 +3,8 @@ import { EllipsisOutlined } from '@ant-design/icons'
 import { Col, Menu, Row } from 'antd'
 import { DropDown, SearchBar } from '../../../../components'
 import GlobalTable from '../../../../components/Table/Table'
-import CustomDroupDown from '../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown'
+import CustomDroupDown from '../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown';
+import '../../style.scss';
 
 const DelegateMain = () => {
     const [value, setValue] = useState("");

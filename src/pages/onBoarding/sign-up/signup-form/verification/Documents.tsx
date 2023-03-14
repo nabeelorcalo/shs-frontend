@@ -5,9 +5,9 @@ import {
   DocumentUpload,
   SHSLogo,
 } from "../../../../../assets/images";
-import "../../../styles.scss";
 import { BackButton } from "../../../../../assets/images";
 import { DropDown } from "../../../../../components";
+import "../../../styles.scss";
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
