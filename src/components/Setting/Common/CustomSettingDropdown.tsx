@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { LocationMore } from "../../../assets/images";
 import { Dropdown, Menu } from "antd";
 import "./CustomSettingDropdown.scss";
+import { NavLink } from "react-router-dom";
 
 const DropDownForSetting = (props: any) => {
   const [visible, setVisible] = useState(false);
@@ -10,7 +11,6 @@ const DropDownForSetting = (props: any) => {
     setVisible(visible);
   };
 
-  console.log("props", props);
 
   return (
     <Dropdown
@@ -23,7 +23,7 @@ const DropDownForSetting = (props: any) => {
                 props.setShowEditModal(!props.showEditModal), setVisible(false);
               }}
             >
-              Edit
+              <NavLink className="text-[#454545] hover:text-[#454545]" to={props.link}> Edit</NavLink> 
             </span>
           </Menu.Item>
           <Menu.Item key="2">

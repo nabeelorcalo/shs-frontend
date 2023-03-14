@@ -208,6 +208,9 @@ export { ReactComponent as MedicalLeave } from "./setting/medical-leave.svg";
 export { ReactComponent as PaternityLeave } from "./setting/paternity-leave.svg";
 export { ReactComponent as SickLeave } from "./setting/sick-leave.svg";
 export { ReactComponent as WorkFromHome } from "./setting/work-from-home.svg";
+export { ReactComponent as AddNewQuestion } from "./setting/add.svg";
+export { ReactComponent as PerformanceTick } from "./setting/tick.svg";
+export { ReactComponent as PerformanceClose } from "./setting/close.svg";
 
 // setting performance
 export { ReactComponent as PerformancePlus } from "./setting/plus.svg";

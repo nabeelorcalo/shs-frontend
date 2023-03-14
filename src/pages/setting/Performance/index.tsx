@@ -1,40 +1,57 @@
-import React from "react";
-import { Collapse, Space, Row, Col } from "antd";
-import { SettingOutlined } from "@ant-design/icons/lib/icons";
+import React, { useState } from "react";
+import { Collapse, Space, Row, Col, Button, Input } from "antd";
 import {
+  AddNewQuestion,
+  PerformanceClose,
   Performanceinput,
   PerformanceMinus,
   PerformancePlus,
+  PerformanceTick,
 } from "../../../assets/images";
-import { Input } from "antd";
 import DropDownForPerformance from "./PerformanceDropdown";
-import inputIcon from "../../../assets/images/setting/performanceInput.svg";
+import "./style.scss";
+
 const { Panel } = Collapse;
 
 const inputData = [
   {
+    id: 1,
     title: "Work with full potential",
   },
   {
+     id: 2,
     title: "Quality of work",
   },
   {
+     id: 3,
     title: "  Work consistency",
   },
   {
+     id: 4,
     title: "  Independency in work",
   },
   {
+     id: 5,
     title: "   Business Skills",
   },
   {
+     id: 6,
     title: "   Technical skills",
   },
 ];
 
 const SettingPerformance: React.FC = () => {
+  const [hideButton, sethideButton] = useState<Boolean>(false);
+  const [hideInputButton, sethideInputButton] = useState<Boolean>(false);
+  const [id, setId] = useState<any>();
+
+  const hi = (id: any) => {
+    setId(id)
+console.log(id);
+
+  }
   return (
-    <div>
+    <div className="setting-performance">
       <Space direction="vertical" className="w-full">
         <Collapse
           expandIcon={({ isActive }) =>
@@ -46,24 +63,88 @@ const SettingPerformance: React.FC = () => {
         >
           <Panel header="Learning Objective" key="1">
             <Row gutter={[20, 20]}>
-              {inputData.map((item)=>{
-              return(<Col className="gutter-row" xs={24} md={12} xxl={12}>
-                <Input.Group compact className="w-full">
-                  <span className="h-[42px]">
-                    <Performanceinput  style={{height:"42px"}} />
-                  </span>
+              {inputData.map((item ,index) => {
+                return (
+                  <Col key={index} className="gutter-row" xs={24} md={12} xxl={12}>
+                    <Input.Group compact className="w-full">
+                      <span className="h-[42px]">
+                        <Performanceinput style={{ height: "42px" }} />
+                      </span>
 
-                  <Input
-                    className="w-full"
-                    suffix={<DropDownForPerformance />}
-                    style={{ width: "90%" }}
-                    value={item.title}
-                    placeholder="Select Address"
+                      <Input
+                        className="w-full "
+                        suffix={<DropDownForPerformance item={item} hi={hi}/>}
+                        style={{ width: "90%" }}
+                        value={item.title}
+                        placeholder="Select Address"
+                        size="small"
+                      />
+                    </Input.Group>
+
+                  {item.id === id && <div className="w-full flex">
+                    <Input
+                      placeholder="Enter text"
+                      className="w-full"
+                      size="small"
+                    />
+                    <Space className="ml-2">
+                      <PerformanceTick
+                        className="cursor-pointer"
+                        onClick={() => {
+                          sethideInputButton(!hideInputButton);
+                        }}
+                      />{" "}
+                      <PerformanceClose
+                        onClick={() => {
+                          sethideInputButton(!hideInputButton);
+                        }}
+                        className="cursor-pointer"
+                      />
+                    </Space>
+                  </div>}
+
+                  </Col>
+                );
+              })}
+            </Row>
+            <Row>
+              <Col xs={24} md={12} xxl={11} className="my-3">
+                {!hideInputButton && (
+                  <Button
                     size="small"
-                  />
-                </Input.Group>
-              </Col>)})}
-            
+                    onClick={() => {
+                      sethideButton(!hideButton);
+                    }}
+                    className="flex  gap-2 performance-add-button text-teriary-color  text-input-bg-color"
+                  >
+                    <AddNewQuestion /> Add New Question
+                  </Button>
+                )}
+
+                {hideButton && (
+                  <div className="w-full flex">
+                    <Input
+                      placeholder="Enter text"
+                      className="w-full"
+                      size="small"
+                    />
+                    <Space className="ml-2">
+                      <PerformanceTick
+                        className="cursor-pointer"
+                        onClick={() => {
+                          sethideButton(!hideButton);
+                        }}
+                      />{" "}
+                      <PerformanceClose
+                        onClick={() => {
+                          sethideButton(!hideButton);
+                        }}
+                        className="cursor-pointer"
+                      />
+                    </Space>
+                  </div>
+                )}
+              </Col>
             </Row>
           </Panel>
         </Collapse>

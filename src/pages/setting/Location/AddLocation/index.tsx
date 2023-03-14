@@ -340,12 +340,18 @@ const AddLocation: React.FC = () => {
               </Radio.Group>
             </Col>
           </Row>
+          <Space className="flex justify-end">
+          <Button danger size="middle" type="primary">
+            Cencal
+          </Button>
+          <Button size="middle"  className="teriary-bg-color white-color add-button">
+            Add
+          </Button>
+        </Space>
         </Form>
-        <Space className="flex justify-end" ><Button danger size="middle" type="primary">Cencal</Button><Button  size="middle" type="primary">Add</Button></Space>
+
         <p></p>
       </BoxWrapper>
-
-     
     </div>
   );
 };

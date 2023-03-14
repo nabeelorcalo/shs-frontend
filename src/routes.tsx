@@ -20,8 +20,8 @@ import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import DemoCard from "./components/ContractCard/demoCard";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import SettingLocation from "./pages/setting/Location";
-import AddLocation from "./pages/setting/Location/AddLocation";
+// import SettingLocation from "./pages/setting/Location";
+// import AddLocation from "./pages/setting/Location/AddLocation";
 import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 
 // remove til here
@@ -91,6 +91,8 @@ const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
 const SettingPerformance= Loadable(lazy(()=>import("./pages/setting/Performance")))
 const SettingDepartment= Loadable(lazy(()=>import("./pages/setting/Department")))
+const SettingLocation= Loadable(lazy(()=>import("./pages/setting/Location")))
+const AddLocation= Loadable(lazy(()=>import("./pages/setting/Location/AddLocation")))
 const SettingTemplate= Loadable(lazy(()=>import("./pages/setting/Templates")))
 const TemplatesOfferLater= Loadable(lazy(()=>import("./pages/setting/Templates/OfferLetter")))
 const TemplatesCertificateOfAppreciation= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfAppreciation")))
@@ -98,7 +100,9 @@ const TemplatesCertificateOfCompletion= Loadable(lazy(()=>import("./pages/settin
 const TemplatesContract= Loadable(lazy(()=>import("./pages/setting/Templates/Contract")))
 const TemplatesRejectionLetter= Loadable(lazy(()=>import("./pages/setting/Templates/RejectionLetter")))
 const SettingLeaves= Loadable(lazy(()=>import("./pages/setting/Leaves")))
+const LeavesAddPolicy= Loadable(lazy(()=>import("./pages/setting/Leaves/AddPolicy")))
 const SettingShifts= Loadable(lazy(()=>import("./pages/setting/Shifts")))
+const AddShift= Loadable(lazy(()=>import("./pages/setting/Shifts/AddShift")))
 const SettingTimesheet= Loadable(lazy(()=>import("./pages/setting/Timesheet")))
 const SettingPayroll= Loadable(lazy(()=>import("./pages/setting/Payroll")))
 
@@ -489,7 +493,7 @@ const companyAdminRoutes = [
           {
             key: `add-location`,
             element: <AddLocation />,
-            path: "add-location",
+            path: "/settings/location/add-location",
           },
           {
                 
@@ -537,6 +541,11 @@ const companyAdminRoutes = [
             path: "leaves",
           },
           {
+            key: `add-policy`,
+            element: <LeavesAddPolicy/>,
+            path: "leaves/add-policy",
+          },
+          {
             key: `performance`,
             path: `performance`,
             element: (
@@ -563,6 +572,11 @@ const companyAdminRoutes = [
                 <SettingShifts />
               </Setting>
             ),
+          },
+          {
+            key: `add-shift`,
+            element: <AddShift />,
+            path: "/settings/shifts/add-shift",
           },
           {
             key: `timesheet`,

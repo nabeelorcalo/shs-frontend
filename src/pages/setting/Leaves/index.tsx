@@ -16,6 +16,7 @@ import {
 import { Alert, SearchBar } from "../../../components";
 import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../components/Model";
+import { NavLink } from "react-router-dom";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -71,7 +72,7 @@ const SettingLeave = () => {
       <div>
         <div className="flex justify-between">
           <SearchBar size="large" handleChange={handleChange} />
-
+          <NavLink to="/settings/leaves/add-policy">
           <Button
             size="middle"
             onClick={() => {}}
@@ -79,6 +80,7 @@ const SettingLeave = () => {
           >
             <SettingLeaves /> Add Policy
           </Button>
+          </NavLink>
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
@@ -88,7 +90,7 @@ const SettingLeave = () => {
               <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
-                    // showEditModal={showEditModal}
+                     link={"/settings/leaves/add-policy"}
                     showDeleteModal={showDeleteModal}
                     setShowDeleteModal={setShowDeleteModal}
                     // setShowEditModal={setShowEditModal}

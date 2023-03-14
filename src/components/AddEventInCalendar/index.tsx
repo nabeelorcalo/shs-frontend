@@ -1,5 +1,14 @@
 import { VideoCameraOutlined } from "@ant-design/icons";
-import { Button, Form, Modal, Radio, Select, Space, TimePicker ,Input } from "antd";
+import {
+  Button,
+  Form,
+  Modal,
+  Radio,
+  Select,
+  Space,
+  TimePicker,
+  Input,
+} from "antd";
 import { useState } from "react";
 import "./style.scss";
 import dayjs from "dayjs";
@@ -22,13 +31,7 @@ interface AddEventInCalendarProps {
 }
 
 export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
-  const {
-    title,
-    open,
-    closeFunction,
-    zoomVideoLink,
-    setOpen,
-  } = props;
+  const { title, open, closeFunction, zoomVideoLink, setOpen } = props;
   const onChange = (key: string) => {
     console.log(key);
   };
@@ -183,37 +186,13 @@ export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
   };
 
   return (
-    <div className="add-event-in-calendar">
+    <div className="">
       <Modal
         open={open}
         centered
         onCancel={closeFunction}
-        closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
-        }
-        footer={[
-          <Button
-            key="Cancel"
-            style={{
-              border: "1px solid #4a9d77",
-              color: "#4a9d77",
-              padding: "0px 20px",
-            }}
-          >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            style={{
-              backgroundColor: "#4a9d77",
-              border: "1px solid #4a9d77",
-              color: "#fff",
-              padding: "0px 20px",
-            }}
-          >
-            Submit
-          </Button>,
-        ]}
+        footer={null}
+        closeIcon={<CloseCircleFilled className="text-xl text-[#A3AED0] add-event-in-calendar" />}
         title={title}
         width={720}
       >
@@ -233,6 +212,15 @@ export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
             ]}
           />
         </div>
+        <Space className="flex justify-end mt-5">
+          {" "}
+          <Button key="Cancel" className="footer-cancel-btn ">
+            Cancel
+          </Button>
+          <Button key="submit" className="footer-submit-btn ">
+            Submit
+          </Button>
+        </Space>
       </Modal>
     </div>
   );

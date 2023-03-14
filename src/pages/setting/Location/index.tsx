@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Col, Row, Typography, Space, Input, Button } from "antd";
-import { Settinglocation, LocationPeople, CardLocation } from "../../../assets/images";
+import {
+  Settinglocation,
+  LocationPeople,
+  CardLocation,
+} from "../../../assets/images";
 import { NavLink } from "react-router-dom";
 import { Alert, SearchBar } from "../../../components";
 import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
@@ -11,21 +15,21 @@ const { Title, Text } = Typography;
 let overview = [
   {
     name: "London",
-    cardImage: <CardLocation/>,
+    cardImage: <CardLocation />,
     content: "United Kingdom",
     contentImage: <LocationPeople />,
     count: "15 Employees",
   },
   {
     name: "London",
-    cardImage: <CardLocation/>,
+    cardImage: <CardLocation />,
     content: "United Kingdom",
     contentImage: <LocationPeople />,
     count: "15 Employees",
   },
   {
     name: "London",
-    cardImage:<CardLocation/>,
+    cardImage: <CardLocation />,
     content: "United Kingdom",
     contentImage: <LocationPeople />,
     count: "15 Employees",
@@ -39,11 +43,11 @@ const SettingLocation: React.FC = () => {
     <div className="setting-location">
       <div className="flex justify-between">
         <SearchBar size="middle" handleChange={handleChange} />
-        <NavLink to="/settings/add-location">
+        <NavLink to="/settings/location/add-location">
           <Button
             size="middle"
             onClick={() => {}}
-            className="flex gap-2 setting-add-button white-color teriary-bg-color" 
+            className="flex gap-2 setting-add-button white-color teriary-bg-color"
           >
             <Settinglocation /> Add Location
           </Button>
@@ -55,13 +59,13 @@ const SettingLocation: React.FC = () => {
             <Col key={index} className="gutter-row" xs={24} lg={12} xxl={8}>
               <BoxWrapper className="location-box-wrapper">
                 <div className="flex">
-                  <Text>{data.cardImage}</Text> 
+                  <Text>{data.cardImage}</Text>
                   <div className="flex px-3 justify-between mt-1 w-full">
                     <div className="flex flex-col">
                       <Title level={5}>{data.name}</Title>
                       <Text> {data.content}</Text>
                       <Space className="flex py-2">
-                      <Text>{data.contentImage}</Text>
+                        <Text>{data.contentImage}</Text>
                         <Text className="font-normal text-xs p-0 m-0">
                           {data.count}
                         </Text>
@@ -70,6 +74,7 @@ const SettingLocation: React.FC = () => {
 
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
+                      link={"/settings/location/add-location"}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />

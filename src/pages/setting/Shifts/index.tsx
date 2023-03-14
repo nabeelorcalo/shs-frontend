@@ -5,6 +5,7 @@ import TemplateCommonDropdown from "../Templates/Common/TemplateCommonDropdown";
 import { Alert,  SearchBar } from "../../../components";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import './style.scss'
+import { NavLink } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -31,7 +32,7 @@ const SettingShifts: React.FC = () => {
       <div>
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
-
+          <NavLink to="/settings/shifts/add-shift">
           <Button
             size="middle"
             onClick={() => {}}
@@ -39,6 +40,7 @@ const SettingShifts: React.FC = () => {
           >
             <SettingShift /> Add Shift
           </Button>
+          </NavLink>
 
  
         </div>
