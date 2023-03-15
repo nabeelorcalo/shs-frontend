@@ -16,7 +16,7 @@ const CommonHeader = () => {
   ]
 
   return (
-    <div className="common-header flex justify-between flex-wrap gap-3">
+    <div className="common-header flex justify-between flex-wrap gap-3 mb-[30px]">
       <SearchBar handleChange={() => { }} />
       <div className="flex items-center gap-3 flex-wrap">
         <DropDownNew placement={'bottomRight'} items={[

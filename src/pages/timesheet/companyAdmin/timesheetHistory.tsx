@@ -34,7 +34,7 @@ const TimeSheetHistory = () => {
           </div>
         </div>
         <div className='flex-1 text-end'>
-
+          
         </div>
       </div>
     )
@@ -53,7 +53,7 @@ const TimeSheetHistory = () => {
         <Collapse size='large'
           expandIcon={toggle.open && data.id === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
           onChange={(e: any) => setToggle({ open: true, id: e })}
-          className='mt-[30px] bg-white border-0 history-detail rounded-[16px]'
+          className={` bg-white border-0 history-detail rounded-[16px] mt-[10px]`}
         >
           <Panel header={
             <RenderPanel
