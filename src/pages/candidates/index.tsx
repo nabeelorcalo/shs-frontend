@@ -21,12 +21,14 @@ const Candidates = () => {
           <SearchBar size="large" handleChange={(e) => { }} />
         </Col>
         <Col className="flex justify-end gap-2">
-          <DropDown name="Time Frame" options={['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']} showDatePickerOnVal={'Date Range'} requireDatePicker placement="bottomLeft" />
+          <DropDown name="Time Frame" options={['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']}
+            showDatePickerOnVal={'Date Range'}
+            requireDatePicker placement="bottomLeft" />
           <DropDown name="Internship" options={['UI UX Designer', 'Business Analyst', 'Data Scientists', 'Product Manager', 'Human Resource']} />
           <DropDown options={["pdf", "excel"]} requiredDownloadIcon />
         </Col>
       </Row>
-      <CandidateTable setOpenDrawer={setOpenDrawer} setOpenRejectModal={setOpenRejectModal}/>
+      <CandidateTable setOpenDrawer={setOpenDrawer} setOpenRejectModal={setOpenRejectModal} />
       {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} />}
 
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} />}

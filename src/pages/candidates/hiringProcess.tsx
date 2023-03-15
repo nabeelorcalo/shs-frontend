@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { Col, Row } from 'antd/es/grid'
+import { Input } from 'antd'
 import HiringPipeline from '../../components/HiringPIpeline/hiringPipeline'
 import DocAvatar from "../../assets/images/doc-avatar.png"
-import { Col, Row } from 'antd/es/grid'
 import BtnIcon from "../../assets/images/Button-icon.png"
-import { Input } from 'antd'
-import RequestDocModel from './requestDocModel'
 import RejectModal from './RejectModal'
+
+
 const detailsData = [
   { title: 'Source', value: 'Career Website' },
   { title: 'Owner', value: 'David Miler', image: DocAvatar },
@@ -23,10 +24,10 @@ const HiringProcess = () => {
         </div>
         <div className="rej-mov mt-4 gap-2 flex">
 
-        <button onClick={() => setOpen(true)} className='rej-btn cursor-pointer'>
-        Reject
-      </button>
-      <RejectModal setOpen={setOpen} open={open} />
+          <button onClick={() => setOpen(true)} className='rej-btn cursor-pointer'>
+            Reject
+          </button>
+          <RejectModal setOpen={setOpen} open={open} />
           <button className='move-btn'>Move</button>
         </div>
       </div>
@@ -45,9 +46,9 @@ const HiringProcess = () => {
               <Col xl={8} lg={8} md={8} sm={12} xs={24} >
                 <div>
                   <h2 className='m-0 font-medium text-base title'>{item.title}</h2>
-                  <div className="flex">
-                    <img className='' src={item.image} alt="" />
-                    <p className=''>{item.value}</p>
+                  <div className={`flex ${item.title === 'Owner' ? 'gap-2' : ''}`}>
+                    <img src={item.image} alt="" />
+                    <p className='m-0'>{item.value}</p>
                   </div>
                 </div>
               </Col>
@@ -77,19 +78,20 @@ const HiringProcess = () => {
 
       </div>
 
-      <div className="cmnt-main gap-5 mt-6">
-        <div className="avatar mt-2">
-          <img src={DocAvatar} alt="" />
-        </div>
-        <div className="text flex gap-3">
-          <p className='font-medium'>Albert John</p>
-          <p className='mt-1 txt-p'>15.45 . 10 Nov 2022</p>
-        </div>
-        <div >
+      <div className="avatar flex items-center gap-3 mt-6">
+        <img src={DocAvatar} alt="" />
+        <div className="text ">
+          <div className='flex gap-3'>
+            <p className='font-medium'>Albert John</p>
+            <p className='mt-1 txt-p'>15.45 . 10 Nov 2022</p>
+          </div>
           <p>I have interviewed the candidate and I recommend her to be added as part of design team.</p>
         </div>
+        <div>
+
+        </div>
       </div>
-     
+
 
     </div>
   )

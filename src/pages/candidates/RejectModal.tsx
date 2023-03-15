@@ -12,10 +12,10 @@ const RejectModal = (props: any) => {
     <div className='Modal'>
       <Modal
         closeIcon={<img src={CloseCircleIcon} />}
-        title="Reject" 
-        open={open} 
+        title="Reject"
+        open={open}
         onCancel={() => setOpen(false)} footer={''} >
-          
+
         <div className='title'><p>Template (optional)</p></div>
         <DropDown value={value} setValue={setValue} options={['Template 01', 'Template 02', 'Template 03']} name='Select' />
         <div className='title'><p>Subject</p></div>

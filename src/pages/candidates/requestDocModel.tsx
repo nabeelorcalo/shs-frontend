@@ -13,17 +13,17 @@ const RequestDocModel = (props: any) => {
     <div className='Modal'>
       <Modal
         closeIcon={<img src={CloseCircleIcon} />}
-        title="Request Document" 
-        open={open} 
+        title="Request Document"
+        open={open}
         onCancel={() => setOpen(false)} footer={''} >
-          
+
         <div className='title'><p>Document Type</p></div>
         <DropDown value={value} setValue={setValue} options={['Template 01', 'Template 02', 'Template 03']} name='Select' />
         <div className='title'><p>Description</p></div>
         <textarea className='input' placeholder='Describe your problem' />
         <div className="checkbox flex gap-3 mt-2 items-center">
-        <CheckBox />
-        <p>Send email to candidate </p>
+          <CheckBox />
+          <p>Send email to candidate </p>
         </div>
         <div className='flex mt-3 justify-end gap-4'>
           <button onClick={() => setOpen(false)} className='reqCancelBtn'>Cancel</button>
