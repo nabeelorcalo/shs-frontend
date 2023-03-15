@@ -15,9 +15,9 @@ const SelectedUploadCard = ({ filename, filesize, idx, handleDelete }: any) => {
                         <div className="text-sm">{filesize} MB</div>
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <CloseCircleFilled onClick={()=>{handleDelete(idx)}} />
-                </div>
+                </div> */}
             </div>
         </div>
 

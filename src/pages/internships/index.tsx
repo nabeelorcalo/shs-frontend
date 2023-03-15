@@ -11,7 +11,7 @@ import { ArrowToRight } from "../../assets/images";
 import { InternshipsIcon } from "../../assets/images";
 import LeaveRequest from "../../components/LeaveRequest";
 import EmojiEvaluation from "../../components/EmojiEvaluation";
-import AssesmentModal from "../../components/AssesmentModal";
+import AssesmentModal from "../../components/SignatureAndUploadModal";
 import MyProfileDocUpload from "../../components/MyProfileDocUpload";
 import CreateFolderModal from "../../components/CreateFolderModal";
 import EditGoalTask from "../../components/EditGoalTask";
@@ -24,6 +24,7 @@ import { Dropdown, Space } from 'antd';
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
+import SignatureAndUploadModal from "../../components/SignatureAndUploadModal";
 
 
 
@@ -60,7 +61,7 @@ const Internships = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
-
+  const [state, setState] = useState(false)
 
 
   const columns = [
@@ -356,10 +357,9 @@ const Internships = () => {
         </BoxWrapper>
       </div>
       <div className="flex gap-3 my-3">
+        <SignatureAndUploadModal state={state} setState={setState} okBtntxt="Upload" cancelBtntxt="Cancel" />
         <LeaveRequest title="Leave Request" />
         <EmojiEvaluation title={`Performance Report - ${name}`} />
-        <AssesmentModal title="Signature" />
-        <MyProfileDocUpload title="Upload Documents" />
         <CreateFolderModal title="Create New Folder" />
         <EditGoalTask title="Edit Goal Task" />
         <AddRequestMessage title="Add Request Message" />
