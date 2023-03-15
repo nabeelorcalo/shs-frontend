@@ -158,7 +158,6 @@ export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down
 export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
 export { ReactComponent as IconInfoCircle } from "./accommodation/iocn-info-circle.svg";
 
-
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
@@ -166,40 +165,46 @@ export { ReactComponent as StructureMinus } from "./structure/minus.svg";
 export { ReactComponent as StructureAdd } from "./structure/add.svg";
 
 // Leave ModuleIcon
-export { ReactComponent as HeartIcon} from './leaves/Heart.svg';
-export { ReactComponent as LeavesIcon} from './leaves/LeavesIcon.svg';
-export { ReactComponent as MedicalHeart} from './leaves/MedicalHeart.svg';
-export { ReactComponent as WorkFromHom} from './leaves/WorkFromHom.svg';
-export { ReactComponent as MoreIcon} from './leaves/MoreIcon.svg';
-export { ReactComponent as CalendarWhiteIcon} from './leaves/CalendarWhiteIcon.svg';
-export { ReactComponent as DownloadIconLeave} from './leaves/DownloadIconLeave.svg';
-export { ReactComponent as FilterIconLeave} from './leaves/FilterIconLeave.svg';
-export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';
-export { default as LeaveProfileImg } from './leaves/images/ProfileImg.jpg';
-export { default as LeaveDocumentIcon } from './leaves/LeaveDocumentIcon.svg';
+export { ReactComponent as HeartIcon } from "./leaves/Heart.svg";
+export { ReactComponent as LeavesIcon } from "./leaves/LeavesIcon.svg";
+export { ReactComponent as MedicalHeart } from "./leaves/MedicalHeart.svg";
+export { ReactComponent as WorkFromHom } from "./leaves/WorkFromHom.svg";
+export { ReactComponent as MoreIcon } from "./leaves/MoreIcon.svg";
+export { ReactComponent as CalendarWhiteIcon } from "./leaves/CalendarWhiteIcon.svg";
+export { ReactComponent as DownloadIconLeave } from "./leaves/DownloadIconLeave.svg";
+export { ReactComponent as FilterIconLeave } from "./leaves/FilterIconLeave.svg";
+export { ReactComponent as ChevronRight } from "./leaves/ChevronRight.svg";
+export { default as LeaveProfileImg } from "./leaves/images/ProfileImg.jpg";
+export { default as LeaveDocumentIcon } from "./leaves/LeaveDocumentIcon.svg";
 
 //setting
-export { ReactComponent as SettingMap } from './setting/map.svg';
-export { ReactComponent as SettingPeople } from './setting/people.svg';
-export { ReactComponent as SettingCalendarRemove } from './setting/calendar-remove.svg';
-export { ReactComponent as SettingChart } from './setting/chart.svg';
-export { ReactComponent as SettingDocument } from './setting/document.svg';
-export { ReactComponent as SettingShifts } from './setting/Shifts.svg';
-export { ReactComponent as SettingTimer } from './setting/timer.svg';
-export { ReactComponent as SettingHorizontalLine } from './setting/horizontal-line.svg';
-export { ReactComponent as Settinglocation } from './setting/locationWhiteIcon.svg';
-export { ReactComponent as LocationImage } from './setting/locationImage.svg';
-export { ReactComponent as LocationMore } from './setting/More.svg';
-export { ReactComponent as LocationPeople } from './setting/locationPeople.svg';
+export { ReactComponent as SettingMap } from "./setting/map.svg";
+export { ReactComponent as SettingPeople } from "./setting/people.svg";
+export { ReactComponent as SettingCalendarRemove } from "./setting/calendar-remove.svg";
+export { ReactComponent as SettingChart } from "./setting/chart.svg";
+export { ReactComponent as SettingDocument } from "./setting/document.svg";
+export { ReactComponent as SettingShifts } from "./setting/Shifts.svg";
+export { ReactComponent as SettingTimer } from "./setting/timer.svg";
+export { ReactComponent as SettingHorizontalLine } from "./setting/horizontal-line.svg";
+export { ReactComponent as Settinglocation } from "./setting/locationWhiteIcon.svg";
+export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
+export { ReactComponent as LocationMore } from "./setting/More.svg";
+export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
 
 // Intern Dashboard
-export {ReactComponent as SunIcon} from './dashboard/sun.svg';
-export {ReactComponent as LocationIcon} from './dashboard/location.svg';
-export {ReactComponent as ClockInIcon} from './dashboard/ClockIn.svg';
-export {ReactComponent as ClockOutIcon} from './dashboard/ClockOut.svg';
-export {ReactComponent as AvgHoursIcon} from './dashboard/AvgHours.svg';
-export {ReactComponent as PurpleRectangle} from './dashboard/purpleRectangle.svg';
-export {ReactComponent as PinkRectangle} from './dashboard/pinkRectangle.svg';
-export {ReactComponent as YellowRectangle} from './dashboard/yellowRectangle.svg';
-export {ReactComponent as BlueRectangle} from './dashboard/blueRectangle.svg';
-export {default as WishesBox} from './dashboard/wishesBox.gif';
+export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
+export { ReactComponent as LocationIcon } from "./dashboard/location.svg";
+export { ReactComponent as ClockInIcon } from "./dashboard/ClockIn.svg";
+export { ReactComponent as ClockOutIcon } from "./dashboard/ClockOut.svg";
+export { ReactComponent as AvgHoursIcon } from "./dashboard/AvgHours.svg";
+export { ReactComponent as PurpleRectangle } from "./dashboard/purpleRectangle.svg";
+export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
+export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
+export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
+export { default as WishesBox } from "./dashboard/wishesBox.gif";
+
+// contract
+
+export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
+export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg";
+export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg";

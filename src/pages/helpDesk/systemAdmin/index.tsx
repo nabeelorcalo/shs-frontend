@@ -229,7 +229,7 @@ const HelpDesk = () => {
                     </div>
                     <div
                       onClick={() => handleAddUser(item)}
-                      className="cursor-pointer text-success-color font-normal text-xs"
+                      className="cursor-pointer text-[#A0A3BD] text-xs"
                     >
                       {item.btn}
                     </div>
@@ -244,7 +244,7 @@ const HelpDesk = () => {
           <Button className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button className="activity-log-drawer-apply-btn teriary-bg-color hover:teriary-color teriary-color w-28">
+          <Button className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>
