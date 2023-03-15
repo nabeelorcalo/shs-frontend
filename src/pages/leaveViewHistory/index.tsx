@@ -11,11 +11,9 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
-import FiltersButton from "../../components/FiltersButton";
-import LeaveRequest from "../../components/LeaveRequest";
+import {FiltersButton} from "../../components/" ;
+import { LeaveRequest } from "../../components";
 import { data } from "./LeaveMockData";
-
-
 const index = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

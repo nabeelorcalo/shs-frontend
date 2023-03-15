@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { CloseCircleFilled, InboxOutlined, UploadOutlined } from '@ant-design/icons'
-import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col } from 'antd'
+import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
-import { message, Upload } from 'antd';
 import "./style.scss"
 import dayjs from 'dayjs';
 import { DocumentUpload } from '../../assets/images';
 import { Button } from '../Button';
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
+import { AcceptedFileTyp } from '../../config/leaveRequestFileConstant';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -17,7 +18,7 @@ const props: UploadProps = {
   onChange(info) {
     const { status } = info.file;
     if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
+      // console.log(info.file, info.fileList);
     }
     if (status === 'done') {
       message.success(`${info.file.name} file uploaded successfully.`);
@@ -26,7 +27,7 @@ const props: UploadProps = {
     }
   },
   onDrop(e) {
-    console.log('Dropped files', e.dataTransfer.files);
+    // console.log('Dropped files', e.dataTransfer.files);
   },
 };
 const leavRequestOptionDAta = [
@@ -47,10 +48,10 @@ const leavRequestOptionDAta = [
     label: 'Medical',
   },
 ]
-const iconRender = (file: any, listType: any) => {
-  return <UploadOutlined />;
-};
-const LeaveRequest = (props: any) => {
+// const iconRender = (file: any, listType: any) => {
+//   return <UploadOutlined />;
+// };
+export const LeaveRequest = (props: any) => {
   // const [show, setShow] = useState(false)
   const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
@@ -74,7 +75,7 @@ const LeaveRequest = (props: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
   // }
-  console.log(formVal, 'from modal box');
+  // console.log(formVal, 'from modal box');
 
   return (
     <Modal
@@ -84,12 +85,13 @@ const LeaveRequest = (props: any) => {
       width={600}
       className="leave_modal_main"
       maskClosable={true}
-      closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px' }} />}
+      closeIcon={<CloseCircleFilled className=' text-xl text-[#A3AED0]' />}
       footer={false}
     >
       <Form
         layout='vertical'
         form={form}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
       >
         <Form.Item
           label="Leave Type"
@@ -114,7 +116,7 @@ const LeaveRequest = (props: any) => {
         </Form.Item>
         <Row gutter={[10, 10]}>
           <Col lg={8}>
-            <Form.Item name="datefrom" label="Date From" rules={[{ required: true, message: 'Please Select Start Date' }]}>
+            <Form.Item name="datefrom" label="Date From" rules={[{ required: true }]}>
               <CommonDatePicker
                 name="Date Picker1"
                 open={openStartDate}
@@ -125,7 +127,7 @@ const LeaveRequest = (props: any) => {
             </Form.Item>
           </Col>
           <Col lg={8}>
-            <Form.Item name="dateTo" label="Date To" rules={[{ required: true, message: 'Please Select End Date' }]} >
+            <Form.Item name="dateTo" label="Date To" rules={[{ required: true }]} >
               <CommonDatePicker
                 name="Date Picker"
                 open={openEndDate}
@@ -149,7 +151,7 @@ const LeaveRequest = (props: any) => {
         {
           <Row gutter={[10, 10]}>
             <Col lg={8}>
-              <Form.Item name="timeFrom" label="Time From" rules={[{ required: true, message: " Please Select Start Time" }]}>
+              <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
                 <TimePicker
                   minuteStep={60}
                   secondStep={60}
@@ -158,7 +160,7 @@ const LeaveRequest = (props: any) => {
               </Form.Item>
             </Col>
             <Col lg={8}>
-              <Form.Item name="timeTo" label="Time To" rules={[{ required: true, message: " Please Select End Time" }]}>
+              <Form.Item name="timeTo" label="Time To" rules={[{ required: true }]}>
                 <TimePicker
                   minuteStep={60}
                   secondStep={60}
@@ -177,12 +179,12 @@ const LeaveRequest = (props: any) => {
             </Col>
           </Row>
         }
-        <Form.Item name="reason" label='Reason' rules={[{ required: true, message: 'Please Select leavetype!' }]} >
+        <Form.Item name="reason" label='Reason' rules={[{ required: true }]} >
           <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
         </Form.Item>
         <Form.Item label="Attachment" name='attachment'>
           <Dragger
-            accept="application/pdf,image/jpeg,application/msword"
+            accept={AcceptedFileTyp}
             beforeUpload={() => false}
             className="FileUploder"
             // iconRender={iconRender}
@@ -219,4 +221,3 @@ const LeaveRequest = (props: any) => {
     </Modal>
   )
 }
-export default LeaveRequest

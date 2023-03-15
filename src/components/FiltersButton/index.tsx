@@ -8,7 +8,7 @@ interface FiltersButtonProps {
   onClick: () => void;
 }
 
-const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
+export  const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
   return (
     <Button
       className="filter-button"
@@ -20,5 +20,3 @@ const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
     </Button>
   )
 }
-
-export default FiltersButton;

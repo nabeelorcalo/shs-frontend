@@ -4,7 +4,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { useState } from "react";
 import './style.scss'
 import CalendarDataDrawer from "./calendarDataDrawer";
-import LeaveRequest from "../../../../components/LeaveRequest";
+import {LeaveRequest} from "../../../../components";
 import { Form } from "antd";
 import { calendarEventData } from "./calendarMockData";
 
