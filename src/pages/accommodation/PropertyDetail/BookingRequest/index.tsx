@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import type { DatePickerProps } from 'antd'
-import { Form, Button, Col, Row, Popover, Checkbox, Modal, Typography  } from 'antd'
+import { Form, Button, Col, Row, Popover, Checkbox, Modal, Typography, Input } from 'antd'
 import { SaveIcon, IconInfoCircle } from '../../../../assets/images'
 import { DatePicker, PopUpModal, ExtendedButton } from "../../../../components"
 import './style.scss'
@@ -51,6 +51,11 @@ const PropertyPricing = () => {
   }
 
   const closeModalAddRequestMessage = () => {
+    setModalAddRequestMessageOpen(false)
+  }
+
+  const submitAddRequestMessage = (values: any) => {
+    console.log('Form Values: ', values);
     setModalAddRequestMessageOpen(false)
   }
 
@@ -124,7 +129,7 @@ const PropertyPricing = () => {
             <Col xs={24}>
               {checkAvailability ? (
                 <Form.Item>
-                  <Button type="primary" block htmlType="submit">
+                  <Button type="primary" block onClick={openModalAddRequestMessage}>
                     Send Booking Request
                   </Button>
                 </Form.Item>
@@ -137,16 +142,32 @@ const PropertyPricing = () => {
           </Row>
         </Form>
       </div>
-
+      
+      {/* STARTS: MODAL ADD REQUEST MESSAGE 
+      *************************************************************************/}
       <PopUpModal
         title="Add Request Message"
         open={modalAddRequestMessageOpen}
         close={closeModalAddRequestMessage}
-        footer={[<ExtendedButton>dfd</ExtendedButton>]}
-        width={500}
+        footer={[
+          <ExtendedButton customType="tertiary" ghost onClick={closeModalAddRequestMessage}>Cancel</ExtendedButton>,
+          <ExtendedButton form="addRequestMessage" key="submit" htmlType="submit" customType="tertiary">
+            Next
+          </ExtendedButton>
+        ]}
+        width={700}
       >
-        <>dsds</>
+        <Form layout="vertical" name="addRequestMessage" onFinish={submitAddRequestMessage}>
+          <Form.Item name="moveInDate" label="Request Message">
+            <Input.TextArea 
+              placeholder="Type a message..."
+              autoSize={{ minRows: 6, maxRows: 6 }}
+            />
+          </Form.Item>
+        </Form>
       </PopUpModal>
+      {/* ENDS: MODAL ADD REQUEST MESSAGE 
+      *************************************************************************/}
 
       {/* MODAL DISCALIMER */}
       <Modal

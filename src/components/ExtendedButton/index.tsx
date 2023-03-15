@@ -4,7 +4,7 @@ import type { ButtonProps } from 'antd';
 import './style.scss'
 
 interface IButtonProps {
-  customType?: string
+  customType?: 'secondary' | 'tertiary'
   children?: React.ReactNode
 }
 
