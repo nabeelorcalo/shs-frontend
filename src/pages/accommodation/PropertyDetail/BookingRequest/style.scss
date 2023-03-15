@@ -1,0 +1,120 @@
+@import "../../../../scss/colors";
+.card-booking-request {
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+  padding: 30px;
+
+  .booking-request-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    .booking-request-header-title {
+      flex: 1;
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 1.333333;
+      color: $green-graph-tooltip-color;
+      & > span {
+        font-size: 18px;
+        font-weight: 400;
+      }
+    }
+    .request-available-from {
+      display: flex;
+      align-items: center;
+
+      .available-from-text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5714285;
+        color: $light-grey-color;
+        & > span {
+          color: $text-teriary-label-color;
+        }
+      }
+      .save-property-button {
+        background-color: $light-sky-blue;
+        border-radius: 6px;
+        height: 36px;
+        width: 36px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        margin-left: 6px;
+      }
+    }
+  }
+  .ant-form-item {
+    margin-bottom: 0;
+  }
+  .booking-request-general-info {
+    padding: 20px 0 30px;
+    
+    .general-info-message {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      & > span {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.333333;
+        color: $text-teriary-label-color;
+      }
+      .general-info-popover {
+        margin-left: 12px;
+        cursor: pointer;
+        position: relative;
+      }
+      .disclaimer-modal {
+        margin-left: 12px;
+        cursor: pointer;
+      }
+    }
+    .general-info-text {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: $text-success-placeholder-color;
+      max-width: 375px;
+    }
+
+    .ant-checkbox-wrapper {
+      font-weight: 500;
+      align-items: flex-start;
+
+      a {
+        text-decoration: underline;
+        color: $text-info-color;
+      }
+    }
+  }
+}
+.disclaimer-modal-container {
+  .ant-modal {
+    .ant-modal-content {
+      padding: 30px;
+      .ant-modal-body {
+        h5.ant-typography {
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.333333;
+          margin: 0;
+        }
+        span.ant-typography {
+          margin-top: 14px;
+          display: block;
+          font-size: 14px;
+          line-height: 1.5714285;
+        }
+
+        .cancellation-policy {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+  
+}

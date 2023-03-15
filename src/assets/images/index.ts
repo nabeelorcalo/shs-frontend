@@ -133,19 +133,6 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
-export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
-export { default as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
-export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
-export { default as File } from "../images/ColorfullIconsProgressbar/file.svg";
-export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
-export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
-export { default as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
-export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
-export { ReactComponent as EducationWhite } from "../../assets/images/digivault/manageVault/white/educationWhite.svg";
-export { ReactComponent as EducationWhiteSub } from "../../assets/images/digivault/manageVault/white/educationSubWhite.svg";
-export { ReactComponent as BankingWhiteSub } from "../../assets/images/digivault/manageVault/white/bankSubWhite.svg";
-export { ReactComponent as HealthWhiteSub } from "../../assets/images/digivault/manageVault/white/healthSubWhite.svg";
-export { ReactComponent as TransWhiteSub } from "../../assets/images/digivault/manageVault/white/transWhite.svg";
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -167,6 +154,8 @@ export { ReactComponent as IconCloseCircle } from "./icon-close-circle.svg";
 export { ReactComponent as IconWebLocation } from "./icon-web-location.svg";
 export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.svg";
 export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down.svg";
+export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
+export { ReactComponent as IconInfoCircle } from "./accommodation/iocn-info-circle.svg";
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";

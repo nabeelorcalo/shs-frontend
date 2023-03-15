@@ -26,8 +26,10 @@ import {
 } from "antd";
 const { Search } = Input;
 const { Header } = Layout;
-import organizationLogo from "../../../assets/images/header/organisation.svg";
-import avatar from "../../../assets/images/header/avatar.svg";
+import organizationLogo from '../../../assets/images/header/organisation.svg'
+import avatar from '../../../assets/images/header/avatar.svg'
+import ExtendedButton from '../../../components/ExtendedButton'
+
 
 type HeaderProps = {
   collapsed: boolean;
@@ -176,21 +178,21 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           {/* Global Search Ends */}
         </div>
 
-        <div className="ikd-header-right">
-          <div className="ikd-header-message-notif">
-            <div className="message-notif-handler" onClick={navigateToInbox}>
+        <div className='ikd-header-right'>
+
+          <div className='ikd-header-message-notif'>
+            <div className='message-notif-handler' onClick={() => navigateToInbox()}>
               <MessageNotif />
             </div>
           </div>
-          <div className="ikd-header-notification">
-            <div
-              className="notification-handler"
-              onClick={() => showNotificationDrawer()}
-            >
+
+          <div className='ikd-header-notification'>
+            <div className='notification-handler' onClick={() => showNotificationDrawer()}>
               <Notification />
             </div>
           </div>
-          <div className="loggedin-user">
+
+          <div className='loggedin-user'>
             <Dropdown
               overlayClassName="user-dropdown"
               menu={{ items }}
@@ -208,13 +210,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                       <div className="user-meta-role">Student</div>
                     </div>
                   </div>
-                  {React.cloneElement(menu as React.ReactElement, {
-                    style: menuStyle,
-                  })}
-                  <div className="user-dropdown-footer">
-                    <Button type="primary" block>
-                      Switch to Intern
-                    </Button>
+                  {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
+                  <div className='user-dropdown-footer'>
+                    <ExtendedButton customType='tertiary' block>Switch to Intern</ExtendedButton>
                   </div>
                 </div>
               )}
