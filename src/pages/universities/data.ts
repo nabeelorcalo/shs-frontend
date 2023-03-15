@@ -1,72 +1,78 @@
-export const UniversitesTablecolumn = 
-[
-  {
-    dataIndex: 'no',
-    key: 'no',
-    title: 'No'
-  },
-  {
-    dataIndex: 'logo',
-    key: 'logo',
-    title: 'Logo'
-  },
-  {
-    dataIndex: 'universityName',
-    key: 'universityName',
-    title: 'University Name'
-  },
-  {
-    dataIndex: 'universityRep',
-    key: 'universityRep',
-    title: 'UniversityRep'
-  },
-  {
-    dataIndex: 'email',
-    key: 'email',
-    title: 'Email'
-  },
-  {
-    dataIndex: 'Contact',
-    key: 'Contact',
-    title: 'contact'
-  },
-  {
-    dataIndex: 'city',
-    key: 'city',
-    title: 'City'
-  },
-  // {
-  //   title: "Action",
-  //   key: "Action",
-  //   render: (_: any, data: any) => (
-  //     <Space size="middle">
-  //       <CustomDroupDown menu1={menu2} />
-  //     </Space>
-  //   ),
-  // },
-]
+import  UniversitiesTableFlag  from "../../assets/images/universities/flag.svg";
+
 
 export const UniversitesTableData =  [
     {
-      Actions: 'fduhguisd',
-      Position: 'gjdifsdu',
-      Status: 'fjgvifd',
-      company: 'kljdasfhuasd',
-      dateApplied: '01/07 /2022',
-      internshipType: 'nice',
-      natureOfWork: 'asduhfuiyasdg',
       no: '01',
-      typeOfWork: 'New York No. 1 Lake Park'
+      // logo:UniversitiesTableFlag,
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      Contact: '+44 7700 900077',
+      natureOfWork: 'asduhfuiyasdg',
+      city:"Linclon",
+      Linclon: '01',
+
     },
     {
-      Actions: 'fduhguisd',
-      Position: 'gjdifsdu',
-      Status: 'fjgvifd',
-      company: 'kljdasfhuasd',
-      dateApplied: '01/07 /2022',
-      internshipType: 'nice',
-      natureOfWork: 'asduhfuiyasdg',
       no: '02',
-      typeOfWork: 'New York No. 1 Lake Park'
-    }
+      logo: 'logo',
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      Contact: '+44 7700 900077',
+      natureOfWork: 'asduhfuiyasdg',
+      Linclon: '01',
+      city:"Linclon",
+
+    },
+    {
+      no: '03',
+      logo: 'logo',
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      Contact: '+44 7700 900077',
+      natureOfWork: 'asduhfuiyasdg',
+      Linclon: '01',
+      city:"Linclon",
+
+    },
+    {
+      no: '04',
+      logo: 'logo',
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      Contact: '+44 7700 900077',
+      natureOfWork: 'asduhfuiyasdg',
+      Linclon: '01',
+      city:"Linclon",
+
+    },
+    {
+      no: '05',
+      logo: 'logo',
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      Contact: '+44 7700 900077',
+      natureOfWork: 'asduhfuiyasdg',
+      Linclon: '01',
+      city:"Linclon",
+
+    },
+    {
+      no: '06',
+      logo: 'logo',
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      Contact: '+44 7700 900077',
+      natureOfWork: 'asduhfuiyasdg',
+      Linclon: '01',
+      city:"Linclon",
+
+    },
+ 
   ]

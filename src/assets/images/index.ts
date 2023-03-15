@@ -225,6 +225,7 @@ export { ReactComponent as Performanceinput } from "./setting/performanceInput.s
 
 // Universities
 export { ReactComponent as  UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
+export { ReactComponent as  UniversitiesTableFlag } from "./universities/flag.svg";
 
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";

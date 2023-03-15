@@ -1,16 +1,72 @@
 import { useState } from "react";
 
-import { Row, Col, Divider, Select } from "antd";
+import { Row, Col, Divider, Select, Space } from "antd";
 import { DropDown, SearchBar } from "../../components";
 import "./style.scss";
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table";
-import { UniversitesTablecolumn, UniversitesTableData } from "./data";
+import { UniversitesTableData } from "./data";
+import CustomDroupDown from "../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import { UniversitiesTableFlag } from "../../assets/images";
 
 
 
+const menu2 ={
 
+}
 const Universities = () => {
+  const UniversitesTablecolumn = 
+[
+  {
+    dataIndex: 'no',
+    key: 'no',
+    title: 'No'
+  },
+  {
+    dataIndex: 'logo',
+    key: 'logo',
+    title: 'Logo',
+    render: (_: any, data: any) => (
+      <Space size="middle">
+        <UniversitiesTableFlag/>
+      </Space>
+    ),
+  },
+  {
+    dataIndex: 'universityName',
+    key: 'universityName',
+    title: 'University Name'
+  },
+  {
+    dataIndex: 'universityRep',
+    key: 'universityRep',
+    title: 'UniversityRep'
+  },
+  {
+    dataIndex: 'email',
+    key: 'email',
+    title: 'Email'
+  },
+  {
+    dataIndex: 'Contact',
+    key: 'Contact',
+    title: 'contact'
+  },
+  {
+    dataIndex: 'city',
+    key: 'city',
+    title: 'City'
+  },
+  {
+    title: "Action",
+    key: "Action",
+    render: (_: any, data: any) => (
+      <Space size="middle">
+        <CustomDroupDown menu1={menu2} />
+      </Space>
+    ),
+  },
+]
   const handleChange = () => {};
   return (
     <div className="universities">
@@ -19,6 +75,7 @@ const Universities = () => {
           Universities
         </span>
         <Row>
+        
           <Col span={12}>
             <Divider />
           </Col>
@@ -67,15 +124,12 @@ const Universities = () => {
         </div>
 
         <BoxWrapper className="mt-5">
-          
-<GlobalTable
-  columns={UniversitesTablecolumn}
-  pagination
-  tableData={UniversitesTableData
-   }
-/>
+          <GlobalTable
+            columns={UniversitesTablecolumn}
+            pagination
+            tableData={UniversitesTableData}
+          />
         </BoxWrapper>
-      
       </div>
     </div>
   );
