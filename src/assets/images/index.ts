@@ -213,3 +213,11 @@ export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.
 
 //Chat
 export { default as Filter } from "../images/chat/Filter.svg";
+export { default as Avatar } from "../images/chat/avatar.svg";
+export { default as Userimg } from "../images/chat/userImg.svg";
+export { default as EmailIcon } from "../images/chat/Email.svg";
+export { default as Location } from "../images/chat/location.svg";
+export { default as Phone } from "../images/chat/Phone.svg";
+export { default as Moreicon } from "../images/chat/MoreDots.svg";
+export { default as DocIcon } from "../images/chat/documentIcon.svg";
+
