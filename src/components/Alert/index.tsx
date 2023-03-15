@@ -15,7 +15,6 @@ interface Props{
   cancelBtntxt?:string;
   okBtntxt?:string;
   children?:any
-
 }
 
 export const Alert = (props: Props) => {
