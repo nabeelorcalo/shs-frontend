@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./style.scss";
-import type { MenuProps } from 'antd';
+import type { MenuProps, DatePickerProps } from 'antd';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import PageHeader from "../../components/PageHeader";
-import ContentMenu from "../../components/ContentMenu";
+import { PageHeader, ContentMenu } from "../../components";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
 import { Form, Input,  Select, Slider, Space, DatePicker } from 'antd'
 import ExtendedButton from '../../components/ExtendedButton'
-import type { DatePickerProps } from 'antd';
 import dayjs from 'dayjs';
 import { SearchBar } from "../../components";
 
