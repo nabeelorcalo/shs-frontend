@@ -63,10 +63,10 @@ const IssueCertificate = (props: Props) => {
             </SelectComp>
             <div className='select-type my-[30px]'>
                 <label className='block mb-[10px]'>Select Type</label>
-                <Radio.Group value={type} onChange={(e: RadioChangeEvent) => setIssuewNewCertificate((pre: any) => ({ ...pre, type: e.target.value }))}>
+                <Radio.Group value={type} defaultValue={type} onChange={(e: RadioChangeEvent) => setIssuewNewCertificate((pre: any) => ({ ...pre, type: e.target.value }))}>
                     <Space direction='vertical'>
-                        <Radio value={'Appreciation'} className={`select-type-radio ${type === 'Appreciation' && 'active'}`}>Certificate of Appreciation</Radio>
-                        <Radio value={'Completion'} className={`select-type-radio ${type === 'Completion' && 'active'}`}>Certificate of Completion</Radio>
+                        <Radio value={'appreciation'} className={`select-type-radio ${type === 'appreciation' && 'active'}`}>Certificate of Appreciation</Radio>
+                        <Radio value={'completion'} className={`select-type-radio ${type === 'completion' && 'active'}`}>Certificate of Completion</Radio>
                     </Space>
                 </Radio.Group>
             </div>

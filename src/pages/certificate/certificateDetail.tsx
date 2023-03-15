@@ -19,13 +19,12 @@ const CertificateDetail = () => {
   const [issueCertificateModal, setIssueCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
   const [previewImg, setPreviewImg] = useState('');
-  const [signatureModal, setSignatureModal] = useState(false); 
+  const [signatureModal, setSignatureModal] = useState(false);
 
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
     name: findUser?.name, type: '',
     desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
   });
-  const [selectedCertificate, setSelectedCertificate] = useState<any>({});
 
   return (
     <div className='certificate-detail-wrapper'>
@@ -34,8 +33,8 @@ const CertificateDetail = () => {
         <span className='seperator'></span>
         <span className='font-medium text-base'>Certificate</span>
       </div>
-      <Row gutter={[15, 15]}>
-        <Col lg={6}>
+      <Row gutter={[15, 15]} className='flex-wrap'>
+        <Col xl={6} lg={6} md={24} xs={24}>
           <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='user-info flex items-center justify-center flex-col'>
             <img src={findUser?.avatar} className='h-[100px] w-[100px] rounded-full object-cover' alt='avatar' />
             <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{findUser?.name}</p>
@@ -43,10 +42,12 @@ const CertificateDetail = () => {
             <Button className='mt-[30px] w-full view-profile-btn'>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col lg={12} className='over-all-performance'>
-          <OverAllPerfomance data={findUser?.performance} heading={'Overall Performance'} />
+        <Col xl={12} lg={18} md={24} xs={24} className='over-all-performance'>
+          <OverAllPerfomance
+            lg={5} md={12} xs={24}
+            data={findUser?.performance} heading={'Overall Performance'} />
         </Col>
-        <Col lg={6}>
+        <Col xl={6} lg={24} xs={24}>
           <LeaveChart heading='Leaves' />
         </Col>
       </Row>
@@ -63,15 +64,15 @@ const CertificateDetail = () => {
       <div className="certificate-cards">
         <Row gutter={[15, 15]}>
           {findUser?.certificates ? findUser?.certificates?.map((certificate: any, i: number) => (
-            <Col lg={6} key={i}>
+            <Col lg={6} md={8} sm={12} xs={24} key={i}>
               <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
                 <div className="flex items-center justify-between mb-[30px]">
-                  <p className='font-medium title text-xl'>Completion of <span className='capitalize'>{certificate?.certificateType}</span></p>
+                  <p className='font-medium title text-xl'>Certificate of <span className='capitalize'>{certificate?.certificateType}</span></p>
                   <DropDownNew items={[
-                    { label: <p onClick={() => { setIssueCertificateModal(true); setSelectedCertificate(certificate) }}>Edit</p>, key: 'edit' },
+                    { label: <p onClick={() => { setIssueCertificateModal(true) }}>Edit</p>, key: 'edit' },
                     { label: <p>Delete</p>, key: 'delete' },
                   ]} placement={'bottomRight'} overlayStyle={{ width: '100px' }}>
-                    <ThreeDots className='cursor-pointer' />
+                    <ThreeDots className='cursor-pointer' onClick={() => setIssuewNewCertificate({ name: findUser?.name, type: certificate?.certificateType, desc: certificate?.desc })} />
                   </DropDownNew>
                 </div>
                 <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl">
@@ -79,14 +80,14 @@ const CertificateDetail = () => {
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
                     onClick={() => { setPreviewModal(true); setPreviewImg(certificate?.certificateImg) }}
                   >
-                    <CertificateEyeIcon className='eye-icon' height={70} width={70} />
+                    <CertificateEyeIcon className='eye-icon' height={70} width={70} onClick={() => setIssuewNewCertificate({ name: findUser?.name, type: certificate?.certificateType, desc: certificate?.desc })} />
                   </div>
                 </div>
               </BoxWrapper>
             </Col>
           ))
             :
-            <p className='text-lg opacity-[0.7]'>No Certificates Found..</p>
+            <p className='text-lg opacity-[0.7]'>No Certificates Found...</p>
           }
         </Row>
       </div>
@@ -103,8 +104,8 @@ const CertificateDetail = () => {
         open={previewModal}
         setOpen={setPreviewModal}
         name={findUser?.name}
-        type={selectedCertificate?.certificateType}
-        desc={''}
+        type={issuewNewCertificate?.type}
+        desc={issuewNewCertificate?.desc}
       />}
       {signatureModal && <SignatureModal open={signatureModal} setOpen={setSignatureModal} />}
     </div>

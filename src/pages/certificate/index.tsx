@@ -1,4 +1,3 @@
-import { Row, Col } from 'antd';
 import { useState } from 'react';
 import { DropDown, SearchBar } from '../../components';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
@@ -23,32 +22,17 @@ const Certificates = () => {
 
     return (
         <div className='certificate-wrapper'>
-
             <div className="certificate-top-heading text-2xl font-semibold pb-[30px] mb-[30px]">
                 Certificate
             </div>
-
-            <Row className="justify-between gap-2">
-
-                <Col xl={7}>
-                    <SearchBar size='middle' handleChange={setSearchVal} value={searchVal} className='' />
-                </Col>
-
-                <Col xl={16}>
-                    <Row className='justify-end' gutter={[20, 10]}>
-                        <Col lg={5}>
-                            <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
-                        </Col>
-                        <Col>
-                            <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} />
-                        </Col>
-                    </Row>
-                </Col>
-
-            </Row>
-
+            <div className="flex items-center justify-between flex-wrap gap-4">
+                <SearchBar size='middle' handleChange={setSearchVal} value={searchVal} className='' />
+                <div className='flex gap-4 items-end justify-end flex-wrap'>
+                    <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
+                    <IssueCertificateBtn className='w-full' onClick={() => setOpenIssueCertificate(true)} />
+                </div>
+            </div>
             <CertificateTable />
-
             {openIssueCertificate &&
                 <IssueCertificateModal
                     setOpen={setOpenIssueCertificate}
@@ -59,7 +43,6 @@ const Certificates = () => {
                     setIssuewNewCertificate={setIssuewNewCertificate}
                 />
             }
-
             {togglePreview &&
                 <PreviewModal
                     open={togglePreview}
@@ -68,7 +51,6 @@ const Certificates = () => {
                     type={issuewNewCertificate.type}
                     desc={issuewNewCertificate.desc}
                 />}
-
             {opensignatureModal && <SignatureModal open={opensignatureModal} setOpen={setOpenSignatureModal} />}
         </div>
     )
