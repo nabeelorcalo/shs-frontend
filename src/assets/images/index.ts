@@ -182,6 +182,8 @@ export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
 export { ReactComponent as LocationMore } from "./setting/More.svg";
 export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
 export { ReactComponent as SettingPayroll } from "./setting/payroll-setting.svg";
+export { ReactComponent as SettingRightArrrow } from "./setting/right-arrow.svg";
+export { ReactComponent as SettingAvater } from "./setting/settingAvater.svg";
 
 // Setting Location
 export { ReactComponent as Settinglocation } from "./setting/locationWhiteIcon.svg";

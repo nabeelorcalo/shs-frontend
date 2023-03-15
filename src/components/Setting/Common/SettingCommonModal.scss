@@ -1,0 +1,16 @@
+@import "../../../scss/colors";
+.setting-common-modal{
+    .box-wrapper{
+        .box-wrapper-content{
+        overflow-y: scroll;
+      
+  &::-webkit-scrollbar {
+    background-color: $primary-bg-color;
+    border-radius: 1px;
+    width: 0px;
+  }
+       
+    }}
+
+
+}

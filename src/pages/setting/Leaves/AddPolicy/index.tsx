@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { SettingHorizontalLine } from "../../../../assets/images";
+import { SettingAvater, SettingHorizontalLine } from "../../../../assets/images";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import "./style.scss";
 // import { Input, SearchBar } from "../../../../components";
@@ -19,10 +19,43 @@ import {
   Switch,
 } from "antd";
 import { CommonDatePicker, SearchBar } from "../../../../components";
+import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
-const LeavesAddPolicy = () => {
+
+const LeavesAddPolicy:React.FC = () => {
+  const selectArray = [
+    {
+      name: "Eva Smith",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Martha Stewart",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Evelyn Josh",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Arthur Lewis",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Tom Edward",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Carisle Cullen",
+      image: <SettingAvater />,
+    },
+  ];
+
+  const deselectArray:any = [];
+
   const [value, setValue] = useState(1);
+  const [openDatePicker, setOpenDatePicker] = useState(false);
+  const [openModal, setOpenModal] = useState<any>(false);
   const [formValues, setFormValues] = useState<any>({
     policyName: "",
     description: "",
@@ -42,6 +75,9 @@ const LeavesAddPolicy = () => {
   };
   const onChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
+    if(e.target.value===2){
+      setOpenModal(!openModal);
+    }
     setValue(e.target.value);
   };
   return (
@@ -200,7 +236,8 @@ const LeavesAddPolicy = () => {
 
                 <CommonDatePicker
                   onBtnClick={() => {}}
-                  setOpen={function noRefCheck() {}}
+                  open={openDatePicker}
+                  setOpen={setOpenDatePicker}
                   setValue={function noRefCheck() {}}
                 />
               </div>
@@ -240,6 +277,12 @@ const LeavesAddPolicy = () => {
           </Space>
         </Form>
       </BoxWrapper>
+      <SettingCommonModal
+        selectArray={selectArray}
+        deselectArray={deselectArray}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
     </div>
   );
 };

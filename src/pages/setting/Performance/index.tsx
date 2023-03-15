@@ -19,23 +19,23 @@ const inputData = [
     title: "Work with full potential",
   },
   {
-     id: 2,
+    id: 2,
     title: "Quality of work",
   },
   {
-     id: 3,
+    id: 3,
     title: "  Work consistency",
   },
   {
-     id: 4,
+    id: 4,
     title: "  Independency in work",
   },
   {
-     id: 5,
+    id: 5,
     title: "   Business Skills",
   },
   {
-     id: 6,
+    id: 6,
     title: "   Technical skills",
   },
 ];
@@ -45,11 +45,10 @@ const SettingPerformance: React.FC = () => {
   const [hideInputButton, sethideInputButton] = useState<Boolean>(false);
   const [id, setId] = useState<any>();
 
-  const hi = (id: any) => {
-    setId(id)
-console.log(id);
-
-  }
+  const IdHandler = (id: any) => {
+    setId(id);
+    console.log(id);
+  };
   return (
     <div className="setting-performance">
       <Space direction="vertical" className="w-full">
@@ -63,46 +62,61 @@ console.log(id);
         >
           <Panel header="Learning Objective" key="1">
             <Row gutter={[20, 20]}>
-              {inputData.map((item ,index) => {
+              {inputData.map((item, index) => {
                 return (
-                  <Col key={index} className="gutter-row" xs={24} md={12} xxl={12}>
-                  {  <Input.Group compact className="w-full">
-                      <span className="h-[42px]">
-                        <Performanceinput style={{ height: "42px" }} />
-                      </span>
+                  <Col
+                    key={index}
+                    className="gutter-row"
+                    xs={24}
+                    md={12}
+                    xxl={12}
+                  >
+                    {
+                      <Input.Group compact className="w-full">
+                        <span className="h-[42px]">
+                          <Performanceinput style={{ height: "42px" }} />
+                        </span>
 
-                      <Input
-                        className="w-full "
-                        suffix={<DropDownForPerformance item={item} hi={hi}/>}
-                        style={{ width: "90%" }}
-                        value={item.title}
-                        placeholder="Select Address"
-                        size="small"
-                      />
-                    </Input.Group>}
+                        <Input
+                          className="w-full"
+                          suffix={
+                            <DropDownForPerformance
+                              item={item}
+                              IdHandler={IdHandler}
+                            />
+                          }
+                          style={{ width: "95%" }}
+                          value={item.title}
+                          placeholder="Select Address"
+                          size="small"
+                        />
+                      </Input.Group>
+                    }
 
-                  {item.id === id && <div className="w-full flex">
-                    <Input
-                      placeholder="Enter text"
-                      className="w-full"
-                      size="small"
-                    />
-                    <Space className="ml-2">
-                      <PerformanceTick
-                        className="cursor-pointer"
-                        onClick={() => {
-                          sethideInputButton(!hideInputButton);
-                        }}
-                      />{" "}
-                      <PerformanceClose
-                        onClick={() => {
-                          sethideInputButton(!hideInputButton);
-                        }}
-                        className="cursor-pointer"
-                      />
-                    </Space>
-                  </div>}
-
+                    {item.id === id && (
+                      <></>
+                      // <div className="w-full flex">
+                      //   <Input
+                      //     placeholder="Enter text"
+                      //     className="w-full"
+                      //     size="small"
+                      //   />
+                      //   <Space className="ml-2">
+                      //     <PerformanceTick
+                      //       className="cursor-pointer"
+                      //       onClick={() => {
+                      //         sethideInputButton(!hideInputButton);
+                      //       }}
+                      //     />
+                      //     <PerformanceClose
+                      //       onClick={() => {
+                      //         sethideInputButton(!hideInputButton);
+                      //       }}
+                      //       className="cursor-pointer"
+                      //     />
+                      //   </Space>
+                      // </div>
+                    )}
                   </Col>
                 );
               })}

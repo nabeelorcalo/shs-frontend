@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Typography, Divider, Row, Col ,Button} from "antd";
-import { DepartmentAddIcon , SettingShift } from "../../../assets/images";
+import { Typography,Row, Col ,Button} from "antd";
+import {  SettingShift } from "../../../assets/images";
 import { Alert,  SearchBar } from "../../../components";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import './style.scss'
 import { NavLink } from "react-router-dom";
-import TemplateCommonDropdown from "../../../components/Setting/Common/TemplateCommonDropdown";
+import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 
 const { Title, Text } = Typography;
 
@@ -62,7 +62,8 @@ const SettingShifts: React.FC = () => {
                     </div>
 
                     <span className="float-right cursor-pointer w-[40px]">
-                      <TemplateCommonDropdown
+                    <DropDownForSetting
+                      link={"/settings/shifts/add-shift"}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />

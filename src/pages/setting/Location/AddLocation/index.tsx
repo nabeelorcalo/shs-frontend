@@ -11,18 +11,51 @@ import {
   Button,
   Space,
 } from "antd";
-import { SettingHorizontalLine } from "../../../../assets/images";
+import {
+  SettingAvater,
+  SettingHorizontalLine,
+} from "../../../../assets/images";
 import "./style.scss";
 import dayjs, { Dayjs } from "dayjs";
 import { NavLink } from "react-router-dom";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import { Input, SearchBar } from "../../../../components";
 import UploadDocument from "../../../../components/UploadDocument";
+import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
 
 const { Title, Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
+  const selectArray = [
+    {
+      name: "Eva Smith",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Martha Stewart",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Evelyn Josh",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Arthur Lewis",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Tom Edward",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Carisle Cullen",
+      image: <SettingAvater />,
+    },
+  ];
+
+  const deselectArray:any = [];
   const [value, setValue] = useState(1);
+  const [openModal, setOpenModal] = useState<any>(false);
   const [formValues, setFormValues] = useState<any>({
     locationName: "",
     postCode: "",
@@ -43,7 +76,10 @@ const AddLocation: React.FC = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
+    if(e.target.value===2){
+      setOpenModal(!openModal);
+    }
+    
     setValue(e.target.value);
   };
 
@@ -52,23 +88,25 @@ const AddLocation: React.FC = () => {
     <div className="add-location">
       {/*------------------------ Header----------------------------- */}
 
-        <div className="flex items-center">
-          <Title level={3} className="mt-2">Add Location </Title>
-          <span className="mx-2">
-            <SettingHorizontalLine />
-          </span>
-          <span className=" text-base font-medium text-secondary-color">
+      <div className="flex items-center">
+        <Title level={3} className="mt-2">
+          Add Location{" "}
+        </Title>
+        <span className="mx-2">
+          <SettingHorizontalLine />
+        </span>
+        <span className=" text-base font-medium text-secondary-color">
           Setting
         </span>
-          <span className="mx-2">/</span>
-          <NavLink to="/settings/location">
+        <span className="mx-2">/</span>
+        <NavLink to="/settings/location">
           <span className=" text-base font-medium text-secondary-color">
-          Location
-        </span>
-          </NavLink>
-        </div>
-   
-        <Divider className="my-1 mb-3" />
+            Location
+          </span>
+        </NavLink>
+      </div>
+
+      <Divider className="my-1 mb-3" />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Office----------------------------- */}
@@ -340,17 +378,26 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-          <Button danger size="middle" type="primary">
-            Cencal
-          </Button>
-          <Button size="middle"  className="teriary-bg-color white-color add-button">
-            Add
-          </Button>
-        </Space>
+            <Button danger size="middle" type="primary">
+              Cencal
+            </Button>
+            <Button
+              size="middle"
+              className="teriary-bg-color white-color add-button"
+            >
+              Add
+            </Button>
+          </Space>
         </Form>
 
         <p></p>
       </BoxWrapper>
+      <SettingCommonModal
+        selectArray={selectArray}
+        deselectArray={deselectArray}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
     </div>
   );
 };

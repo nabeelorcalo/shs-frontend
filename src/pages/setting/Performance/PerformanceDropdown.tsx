@@ -1,29 +1,28 @@
-
 import React, { useState } from "react";
-import {  LocationMore } from "../../../assets/images";
-import {  Dropdown, Menu, } from "antd";
-
-
+import { LocationMore } from "../../../assets/images";
+import { Dropdown, Menu } from "antd";
 
 const DropDownForPerformance = (props: any) => {
-  const {item, hi } = props
+  const { item, IdHandler } = props;
   const [visible, setVisible] = useState(false);
 
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
 
-
-
-  console.log("props" , props)
+  console.log("props", props);
 
   return (
     <Dropdown
       className="dropdown"
       overlay={
         <Menu>
-          <Menu.Item key="1"><span onClick={() => hi(item.id)}>Edit</span></Menu.Item>
-          <Menu.Item key="2"><span onClick={() => {} }>Delete</span></Menu.Item>
+          <Menu.Item key="1">
+            <span onClick={() => {IdHandler(item.id) , setVisible(false)}} >Edit</span>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <span onClick={() => {}}>Delete</span>
+          </Menu.Item>
         </Menu>
       }
       visible={visible}
@@ -37,4 +36,4 @@ const DropDownForPerformance = (props: any) => {
   );
 };
 
-export default DropDownForPerformance
+export default DropDownForPerformance;

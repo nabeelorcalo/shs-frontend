@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { SettingHorizontalLine } from "../../../../assets/images";
+import { SettingAvater, SettingHorizontalLine } from "../../../../assets/images";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
@@ -22,13 +22,43 @@ import {
   Switch,
 } from "antd";
 import { CommonDatePicker, SearchBar } from "../../../../components";
+import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 dayjs.extend(customParseFormat);
 
-const AddShift = () => {
+const AddShift: React.FC = () => {
+  const selectArray = [
+    {
+      name: "Eva Smith",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Martha Stewart",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Evelyn Josh",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Arthur Lewis",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Tom Edward",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Carisle Cullen",
+      image: <SettingAvater />,
+    },
+  ];
+
+  const deselectArray:any = [];
   const format = "HH:mm";
   const [value, setValue] = useState(1);
+  const [openModal, setOpenModal] = useState<any>(false);
   const [formValues, setFormValues] = useState<any>({
     shiftName: "",
     timeForm: "",
@@ -45,7 +75,9 @@ const AddShift = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
+    if(e.target.value===2){
+      setOpenModal(!openModal);
+    }
     setValue(e.target.value);
   };
   return (
@@ -152,6 +184,12 @@ const AddShift = () => {
           </Space>
         </Form>
       </BoxWrapper>
+      <SettingCommonModal
+        selectArray={selectArray}
+        deselectArray={deselectArray}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
     </div>
   );
 };

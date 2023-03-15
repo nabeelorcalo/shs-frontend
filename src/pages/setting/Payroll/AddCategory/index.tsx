@@ -12,18 +12,51 @@ import {
   Input,
   Switch,
 } from "antd";
-import { SettingHorizontalLine } from "../../../../assets/images";
+import { SettingAvater, SettingHorizontalLine } from "../../../../assets/images";
 import "./style.scss";
 import dayjs, { Dayjs } from "dayjs";
 import { NavLink } from "react-router-dom";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import UploadDocument from "../../../../components/UploadDocument";
 import { CommonDatePicker } from "../../../../components";
+import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
 
 const { Title, Paragraph } = Typography;
 
 const PayrollAddCategory = () => {
+  const selectArray = [
+    {
+      name: "Eva Smith",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Martha Stewart",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Evelyn Josh",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Arthur Lewis",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Tom Edward",
+      image: <SettingAvater />,
+    },
+    {
+      name: "Carisle Cullen",
+      image: <SettingAvater />,
+    },
+  ];
+
+  const deselectArray:any = [];
+
   const [value, setValue] = useState(1);
+  const [openModal, setOpenModal] = useState<any>(false);
+  const [openDatePickerFrom, setOpenDatePickerFrom] = useState(false);
+  const [openDatePickerTo, setOpenDatePickerTo] = useState(false);
   const [formValues, setFormValues] = useState<any>({
     shiftName: "",
     formDate: "",
@@ -38,7 +71,9 @@ const PayrollAddCategory = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
+    if(e.target.value===2){
+      setOpenModal(!openModal);
+    }
     setValue(e.target.value);
   };
 
@@ -89,8 +124,9 @@ const PayrollAddCategory = () => {
                   <label>From</label>
                   <CommonDatePicker
                     name="Date Picker"
+                    open={openDatePickerFrom}
                     onBtnClick={() => {}}
-                    setOpen={function noRefCheck() {}}
+                    setOpen={setOpenDatePickerFrom}
                     setValue={function noRefCheck() {}}
                   />
                 </div>
@@ -98,8 +134,9 @@ const PayrollAddCategory = () => {
                   <label>To</label>
                   <CommonDatePicker
                     name="Date Picker"
+                    open={openDatePickerTo}
                     onBtnClick={() => {}}
-                    setOpen={function noRefCheck() {}}
+                    setOpen={setOpenDatePickerTo}
                     setValue={function noRefCheck() {}}
                   />
                 </div>
@@ -140,6 +177,12 @@ const PayrollAddCategory = () => {
           </Space>
         </Form>
       </BoxWrapper>
+      <SettingCommonModal
+        selectArray={selectArray}
+        deselectArray={deselectArray}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
     </div>
   );
 };
