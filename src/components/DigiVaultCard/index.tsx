@@ -23,8 +23,6 @@ const DigivaultCard = (props: any) => {
     setIsHovering(false);
   };
 
-  console.log(bgColor);
-
   return (
     <div onClick={onClick}>
       <div
