@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Input, Alert } from "../../../../components";
-
-// import { Upload } from "../../../../assets/images";
+import { Upload } from "../../../../assets/images";
 import GlobalTable from "../../../../components/Table/Table";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
@@ -191,11 +190,11 @@ const ManageVault = (props: any) => {
                   >
                     <Button className="manage-vault-btn flex items-center justify-center">
                       <Space>
-                        {/* <img
+                        <img
                           className="flex items-center"
                           src={Upload}
                           alt="fileIcon"
-                        /> */}
+                        />
                         <span>Upload</span>
                       </Space>
                     </Button>
