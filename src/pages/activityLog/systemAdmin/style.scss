@@ -1,0 +1,21 @@
+@import "../../../scss/colors";
+
+.activity-log-drawer-reset-btn {
+  border: 1px solid $teriary-bg-color;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+  &:hover {
+    border: 1px solid $teriary-bg-color !important;
+    color: $teriary-bg-color !important;
+  }
+}
+
+.activity-log-drawer-apply-btn {
+  background: $teriary-bg-color;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+  border-radius: 8px;
+  border: 1px solid $teriary-bg-color;
+  &:hover {
+    color: $white-bg-color !important;
+    border: 1px solid $teriary-bg-color !important;
+  }
+}

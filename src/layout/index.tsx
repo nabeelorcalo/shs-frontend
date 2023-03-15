@@ -12,15 +12,12 @@ function AppLayout() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
+  const [collapsedWidth, setCollapsedWidth] = useState(94);
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
+  useEffect(() => {}, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -28,11 +25,16 @@ function AppLayout() {
     setCollapsed(!collapsed)
   }
 
-  
+  const onBreakPoint = (broken:any) => {
+    setCollapsedWidth(broken ? 0 : 94);
+    setCollapsed(broken);
+  }
 
+  
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
+
   return (
     <Layout>
 
@@ -45,20 +47,23 @@ function AppLayout() {
 
         <AppSidebar
           collapsed={collapsed}
-          sidebarToggler={collapsedSidebar}
-          setCollapsed={setCollapsed}
+          onBreakpoint={onBreakPoint}
+          collapsedWidth={collapsedWidth}
         />
 
-        <Content>
+        <Content style={{marginLeft: collapsed ? collapsedWidth : '250px'}}>
           <Outlet />
         </Content>
 
       </Layout>
 
-      <AppFooter />
+      <AppFooter
+        collapsed={collapsed}
+        collapsedWidth={collapsedWidth}
+      />
 
     </Layout>
-  )
+  );
 }
 
-export default AppLayout
+export default AppLayout;

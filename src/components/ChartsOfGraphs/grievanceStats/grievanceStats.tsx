@@ -1,6 +1,6 @@
 import { Column } from '@ant-design/plots';
 import { useState } from 'react';
-import {BoxWrapper} from '../../BoxWrapper/boxWrapper';
+import {BoxWrapper} from '../../BoxWrapper/BoxWrapper';
 import { GrievanceStatsData } from './GrievanceStatsData';
 
 export const GrievanceStats = (props: any) => {

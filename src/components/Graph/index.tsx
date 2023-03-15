@@ -6,20 +6,25 @@ import GraphFour from './graphForGrowthAnalytics';
 import GraphFive from './graphForLifeAssessmentAndLifeBalance/lifeAssessment';
 import GraphSix from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
 import constants from '../../config/constants';
-import {BoxWrapper} from '../../components/BoxWrapper/boxWrapper';
-import "./style.scss"
+
+// import {BoxWrapper} from '../../components/BoxWrapper/BoxWrapper';
+// import "./style.scss"
+// import BoxWrapper from '../BoxWrapper/BoxWrapper';
+
+
 
 const Graph = (props: any) => {
   return (
     <div className='p-4'>
 
+      {/* <BoxWrapper >
       <BoxWrapper >
         <GraphSix monthName="Jan" />
       </BoxWrapper>
 
       <BoxWrapper >
         <GraphFive monthName="Jan" />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* <BoxWrapper >
         <GraphFour />

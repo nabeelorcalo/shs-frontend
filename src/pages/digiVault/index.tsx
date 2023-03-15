@@ -1,11 +1,10 @@
-import { useState } from "react";
-import DigiVaultStudent from "./digiVaultStudent/digiVaultStudent";
 import "./style.scss";
+import Student from "./Student";
 
 const DigiVault = () => {
   return (
     <div>
-      <DigiVaultStudent /> 
+      <Student />
     </div>
   );
 };

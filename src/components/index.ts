@@ -25,3 +25,8 @@ export * from "./ChartsOfGraphs/grievanceStats/GrievanceStatsData"
 export * from "./ChartsOfGraphs/intershipSummaryChart/internshipSummaryChart"
 export * from './ContractCard/index';
 export * from './Select/Select';
+export * from './todayWeather';
+export * from './AttendanceDetail';
+export * from './AnnouncementList';
+export * from './birthdayWishes';
+export * from './leavesDetailCard';

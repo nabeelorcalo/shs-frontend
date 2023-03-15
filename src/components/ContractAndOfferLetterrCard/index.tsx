@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from "@ant-design/icons/lib/icons";
 import { Progress } from "antd";
-import { BoxWrapper } from "../BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 // import TimeIcon from "../../assets/images/timesheetTime.png";
 // import Clock from "../../assets/images/Clock.png";
 import "./styles.scss";

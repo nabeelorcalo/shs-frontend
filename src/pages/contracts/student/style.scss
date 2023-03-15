@@ -1,0 +1,53 @@
+@import "../../../scss/colors";
+
+.contract-student {
+  .contract-student-title {
+    color: $dashboard-primary-bg-color;
+  }
+
+  .contract-status {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    background: $white-bg-color;
+    border: 1px solid #e6f4f9;
+    border-radius: 10px;
+  }
+
+  .status-box {
+    margin-right: 2rem;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+  }
+
+  .status-box-text {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: $text-primary-title-color;
+  }
+
+  .contract-status-recieved {
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    background: $white-bg-color;
+    border: 1px solid $text-input-bg-color;
+    border-radius: 10px;
+
+    .contract-status-recieved-title {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: $text-primary-title-color;
+    }
+
+    .contract-status-recieved-sub {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: $text-secondary-body-color;
+    }
+  }
+}

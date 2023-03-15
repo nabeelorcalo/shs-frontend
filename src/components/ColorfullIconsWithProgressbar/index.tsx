@@ -10,24 +10,26 @@ interface ColorfullIconsWithProgressbarProps {
   progressbarColor: string;
 }
 [];
-
 export const ColorfullIconsWithProgressbar = (props: any) => {
   const { arraydata } = props;
-
   return (
     <>
       {arraydata.map((item: ColorfullIconsWithProgressbarProps, index: any) => {
         return (
-          <div key={index} className="flex colorfull-icon-progress-bar w-full">
+          <div
+            key={index}
+            className="flex colorfull-icon-progress-bar w-full py-0.5"
+          >
             <img src={item.icon} width="40px" />
             <div className="w-full pl-3 ">
               <div className="flex justify-between">
-                <span className="font-normal text-sm title">{item.title}</span>
+                <span className="font-normal text-sm content-title">
+                  {item.title}
+                </span>
                 <span className="font-normal text-sm storage-value">
                   {item.storage}
                 </span>
               </div>
-
               <span className="w-full pb-6">
                 <Progress
                   percent={item.progressbarValue}

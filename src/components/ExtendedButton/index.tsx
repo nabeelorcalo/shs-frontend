@@ -13,9 +13,11 @@ const Button = ({
   children,
   ...rest
 }: IButtonProps & ButtonProps): JSX.Element => {
-  return <AntButton className={`${customType ? `button-${customType}` : ""}`} {...rest}>
-    {children}
-  </AntButton>
+  return (
+    <AntButton className={customType ? `button-${customType}` : ""} {...rest}>
+      {children}
+    </AntButton>
+  )
 };
 
 export default Button;
