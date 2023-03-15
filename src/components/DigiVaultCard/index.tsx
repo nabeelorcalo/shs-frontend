@@ -7,7 +7,6 @@ import {
   HealthWhiteSub,
   TransWhiteSub,
 } from "../../assets/images";
-import { BoxWrapper } from "../BoxWrapper/boxWrapper";
 import "./style.scss";
 
 const DigivaultCard = (props: any) => {
