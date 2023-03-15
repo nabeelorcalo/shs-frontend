@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons';
 
-export const PopUpModal: React.FC = ( {title, width, showHide, cancelBtntxt, okBtntxt, children}:any) => {
+export const PopUpModal = ( {title, width, showHide, cancelBtntxt, okBtntxt, children}:any) => {
   const [open, setOpen] = useState(showHide);
 
   return (

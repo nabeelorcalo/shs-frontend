@@ -81,13 +81,13 @@
 
 
 .drop-down-wrapper {
-    border: 1px solid #D9DBE9;
+    border: 1px solid $text-error-line-color;
     border-radius: 8px;
     padding: 8px, 16px, 8px, 16px;
     background-color: transparent;
 
     &:hover {
-        border: 1px solid #D9DBE9;
+        border: 1px solid $text-error-line-color;
     }
 }
 
@@ -109,33 +109,53 @@
     font-weight: 400;
     font-size: 16px;
     border: none;
-    border: 1px solid #D9DBE9;
+    border: 1px solid $text-error-line-color;
     border-radius: 8px;
 }
 
 .cancel {
     width: 122px !important;
     height: 48px !important;
-    background: #FFFFFF;
-    border: 1px solid #D83A52 !important;
+    background: $white-bg-color;
+    border: 1px solid $text-error-color !important;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
     border-radius: 8px;
-    color: #D83A52;
+    color: $text-error-color;
 }
 
 .reject {
-    width: 102px;
+    width: 124px;
     height: 48px;
-    background: #D83A52 !important;
+    background: $text-error-color !important;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
     border-radius: 8px;
     color: white;
     border: none;
 }
 
+.reqSubmitBtn {
+    width: 124px;
+    height: 48px;
+    background: $teriary-bg-color !important;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 8px;
+    color: white;
+    border: none;
+}
+
+.reqCancelBtn {
+    width: 122px !important;
+    height: 48px !important;
+    background: $white-bg-color;
+    border: 1px solid $teriary-bg-color !important;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+    border-radius: 8px;
+    color: $teriary-bg-color;
+}
+
 .details-wrapper {
 
-    border-right: 1px solid #D9DBE9;
+    border-right: 1px solid $text-error-line-color;
     height: 100%;
 
     .ant-dropdown-trigger:nth-child(1) {
@@ -260,7 +280,7 @@
 
     .plus {
         background-color: $text-success-placeholder-color;
-        color: white;
+        color: $white-bg-color;
         font-weight: 600;
         font-size: 14px;
     }
@@ -273,7 +293,7 @@
     }
 
     .skills-para {
-        background: #E6F4F9;
+        background: $text-input-bg-color;
         border-radius: 14.5px;
     }
 
@@ -296,6 +316,84 @@
 }
 
 .advance-dropdown {
-    border: 1px solid #D9DBE9;
+    border: 1px solid $text-error-line-color;
     border-radius: 100px
+}
+
+.heading {
+    font-weight: 500;
+    font-size: 16px;
+    color: $primary-bg-color;
+}
+
+.dropdown-inpp {
+    width: 93px;
+    border: 1px solid $text-error-line-color;
+    border-radius: 100px;
+}
+
+.advance-inp {
+    width: 155px !important;
+    border: 1px solid $text-error-line-color;
+    border-radius: 100px;
+    padding: 8px 0px;
+}
+
+///persnol-information
+
+.persnol-main {
+    .personal-information-wrap {
+        padding-bottom: 20px;
+
+        .title {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 24px;
+            color: $text-primary-title-color;
+        }
+    }
+
+    .persnol-para {
+        font-weight: 600;
+        font-size: 18px;
+        color: $text-primary-title-color;
+    }
+
+    .persnol-para-text {
+
+        font-weight: 400;
+        font-size: 14px;
+        color: $text-secondary-body-color;
+
+    }
+}
+
+///document
+
+
+.req-btn {
+    border: 1px solid black;
+    width: 211px;
+    height: 40px;
+    background: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 8px;
+    gap: 10px;
+
+    .btn-text {
+        color: $white-bg-color;
+        font-weight: 400;
+        font-size: 16px;
+    }
+}
+.files{
+    border-bottom: 1px solid $text-error-line-color;
+
+}
+.cv-heading {
+
+    font-weight: 600;
+    font-size: 16px;
+    color: $text-primary-title-color;
 }

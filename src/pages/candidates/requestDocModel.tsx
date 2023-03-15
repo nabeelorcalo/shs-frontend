@@ -3,8 +3,9 @@ import { Input, Modal } from 'antd';
 import { DropDown } from '../../components';
 import "./style.scss"
 import { CloseCircleIcon } from '../../assets/images';
+import { CheckBox } from '../../components/Checkbox';
 
-const RejectModal = (props: any) => {
+const RequestDocModel = (props: any) => {
   const { open, setOpen, handleReject, } = props;
   const [value, setValue] = useState('');
 
@@ -12,23 +13,25 @@ const RejectModal = (props: any) => {
     <div className='Modal'>
       <Modal
         closeIcon={<img src={CloseCircleIcon} />}
-        title="Reject" 
+        title="Request Document" 
         open={open} 
         onCancel={() => setOpen(false)} footer={''} >
           
-        <div className='title'><p>Template (optional)</p></div>
+        <div className='title'><p>Document Type</p></div>
         <DropDown value={value} setValue={setValue} options={['Template 01', 'Template 02', 'Template 03']} name='Select' />
-        <div className='title'><p>Subject</p></div>
-        <Input placeholder='Enter subject' />
-        <div className='title'><p>Reason</p></div>
-        <textarea className='input' placeholder='Write your reason' />
+        <div className='title'><p>Description</p></div>
+        <textarea className='input' placeholder='Describe your problem' />
+        <div className="checkbox flex gap-3 mt-2 items-center">
+        <CheckBox />
+        <p>Send email to candidate </p>
+        </div>
         <div className='flex mt-3 justify-end gap-4'>
-          <button onClick={() => setOpen(false)} className='cancel'>Cancel</button>
-          <button onClick={handleReject} className='reject'>Reject</button>
+          <button onClick={() => setOpen(false)} className='reqCancelBtn'>Cancel</button>
+          <button onClick={handleReject} className='reqSubmitBtn'>Submit</button>
         </div>
       </Modal>
     </div>
   );
 };
 
-export default RejectModal;
+export default RequestDocModel;

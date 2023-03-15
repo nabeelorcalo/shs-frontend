@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Avatar1 from '../../assets/images/avatar1.png'
-import { DropDown } from '../../components'
-import { StarFilledIcon } from '../../assets/images'
+import { ArrowDownDark, StarFilledIcon } from '../../assets/images'
 import "./style.scss"
 import Dot from "../../assets/images/dot.png"
 import Mail from "../../assets/images/mail.png"
@@ -10,16 +9,7 @@ import Loacation from "../../assets/images/location.png"
 import Intro from "../../assets/images/intro-pic.png"
 import PlayIcon from "../../assets/images/play-icon.png"
 import DropDownNew from '../../components/Dropdown/DropDownNew'
-import Applied from "../../assets/images/apllied-icon.png"
-import Interviewed from "../../assets/images/interviewed-icon.png"
-import Recommended from "../../assets/images/recommended.png"
-import OfferLetter from "../../assets/images/offer-leteer.png"
-import Contract from "../../assets/images/contract.png"
-import Rejected from "../../assets/images/rejected.png"
-
-
-
-
+import { Rate } from 'antd'
 
 const IndividualDetails = () => {
 
@@ -35,18 +25,18 @@ const IndividualDetails = () => {
 
     const dropdownData = [
         { heading: 'Current Stage' },
-        { title: 'Offer Letter', color: '' },
+        { title: 'Applied', color: '#363565' },
         { heading: 'Move to' },
-        { title: 'Interviewed', color: '' },
-        { title: 'Recommended', color: '' },
-        { title: 'OfferLetter', color: '' },
-        { title: 'Contract', color: '' },
-        { title: 'Rejected', color: '' },
+        { title: 'Interviewed', color: '#5879CE' },
+        { title: 'Recommended', color: '#CC7FD4' },
+        { title: 'OfferLetter', color: '#C0ACFF' },
+        { title: 'Contract', color: '#4A9D77' },
+        { title: 'Rejected', color: '#E94E5D' },
 
     ]
 
     return (
-        <div className='details-wrapper p-[5px] pr-[25px] '>
+        <div className='details-wrapper p-[5px] pr-[25px]'>
 
             <div className="user-info-main">
                 <div className="user-info">
@@ -58,10 +48,17 @@ const IndividualDetails = () => {
                     <div className="flex advance-dropdown ">
 
                         <DropDownNew items={[{
-                            label: <div>
-                            </div>, key: ''
+                            label: <div className='flex gap-4'>
+                                {/* {[1, 2, 3, 4, 5].map((num) => <StarFilledIcon />)} */}
+                                <Rate className='' style={{fontSize:"24px"}}/>
+                            </div>,
+                            key: ''
                         }]}>
-                            <div className='flex justify-center items-center'></div>
+                            <div className='flex justify-center gap-2 items-center dropdown-inpp cursor-pointer'>
+                                <StarFilledIcon />
+                                <p>4</p>
+                                <ArrowDownDark />
+                            </div>
                         </DropDownNew>
 
                     </div>
@@ -70,15 +67,20 @@ const IndividualDetails = () => {
                             label: <div>
                                 {dropdownData.map((data, i) => (
                                     <div key={i}>
-                                        {data.heading ? <p>{data.heading}</p> :
-                                            <p><span className='w-[10px] h-[10px] rounded-full' style={{ background: 'red' }}></span> {data.title}</p>
+                                        {data.heading ? <p className='heading'>{data.heading}</p> :
+                                            <p className='flex flex-wrap gap-5 h-10 mt-3' ><span style={{ backgroundColor: data?.color }} className='w-[10px] h-[10px] mt-2 rounded-full'  ></span>
+                                                <span className='flex mt-0'>{data.title}</span>
+                                            </p>
                                         }
                                     </div>
                                 ))
                                 }
                             </div>, key: ''
                         }]}>
-                            <div className='flex justify-center items-center'>Advance</div>
+                            <div className='flex justify-center items-center advance-inp cursor-pointer gap-3'>
+                                <span>Advance</span>
+                                <ArrowDownDark />
+                            </div>
                         </DropDownNew>
 
                     </div>

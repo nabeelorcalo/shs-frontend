@@ -28,16 +28,6 @@ const CandidateTable = (props: any) => {
 
     ];
 
-    const ActionItems: any = [
-        {
-            label: <div>
-                <p>View Details</p>
-                <p>Reject</p>
-            </div>,
-            key: 'actions',
-        },
-    ]
-
     const columns = [
         {
             key: 'no',

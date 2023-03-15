@@ -1,5 +1,6 @@
 import { Drawer, Row, Col } from 'antd';
 import { ReactNode } from 'react';
+import DrawerTabs from './drawerTabs';
 import IndividualDetails from './individualDetails';
 
 interface Props {
@@ -24,6 +25,9 @@ const DetailDrawer = (props: Props) => {
             <Row>
                 <Col lg={6}>
                     <IndividualDetails />
+                </Col>
+                <Col lg={18}>
+                    <DrawerTabs />
                 </Col>
             </Row>
         </Drawer>
