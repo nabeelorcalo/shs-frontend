@@ -52,14 +52,30 @@ const iconRender = (file: any, listType: any) => {
 };
 const LeaveRequest = (props: any) => {
   // const [show, setShow] = useState(false)
-  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp } = props;
+  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
+  const initailVal = {
+    leaveType: '',
+    leaveTypeDay: '',
+    start: '',
+    end: '',
+    days: '',
+    timeFrom: '',
+    timeTo: "",
+    hours: '',
+    reason: "",
+    attachment: ''
+
+  }
+  const [formVal, setFormVal] = useState(data ? data : initailVal)
   const [form] = Form.useForm();
   // const handleTimeChange = (time: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
   // }
+  console.log(formVal, 'from modal box');
+
   return (
     <Modal
       title={title}
@@ -137,7 +153,7 @@ const LeaveRequest = (props: any) => {
                 <TimePicker
                   minuteStep={60}
                   secondStep={60}
-                  // onChange={handleTimeChange}
+                // onChange={handleTimeChange}
                 />
               </Form.Item>
             </Col>
@@ -146,7 +162,7 @@ const LeaveRequest = (props: any) => {
                 <TimePicker
                   minuteStep={60}
                   secondStep={60}
-                  // onChange={handleTimeChange}
+                // onChange={handleTimeChange}
                 />
               </Form.Item>
             </Col>

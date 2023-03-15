@@ -5,7 +5,7 @@ import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import "./style.scss"
 import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../assets/images";
-import { Button, DropDown, SearchBar } from "../../components";
+import { Alert, Button, DropDown, SearchBar } from "../../components";
 import { useState } from "react";
 import { CloseCircleFilled } from "@ant-design/icons";
 import DrawerComp from "./DrawerComp";
@@ -149,7 +149,7 @@ const index = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
-  // const [openModal, setOpenModal] =useState()
+  const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const columns = [
     {
       title: 'No',
@@ -225,26 +225,22 @@ const index = () => {
             dropdownRender={(menu: any) => {
               return <BoxWrapper className=" action_dropDown">
                 <p onClick={() => {
-                  setActionType({ ...actionType, type: 'view detail' });
-                  setOpenDrawer({ type: 'view detail', open: true })
-                  setSelectedRow(data)
+                  setOpenDrawer({ open: true, type: 'viewDetail' })
+
                 }}
                   className="cursor-pointer"
                 >View Details</p>
                 {data.status === "Pending" &&
                   <>
                     <p onClick={() => {
-                      setActionType({ ...actionType, type: 'edit' });
-                      setOpenDrawer({ type: 'edit', open: true });
-                      setSelectedRow(data)
+                      setOpenModal({ open: true, type: 'edit' })
+
                     }}
                       className="my-4 cursor-pointer">
                       Edit
                     </p>
                     <p onClick={() => {
-                      setActionType({ ...actionType, type: 'cancel' });
-                      setOpenDrawer({ type: 'cancel', open: true });
-                      setSelectedRow(data)
+                      setOpenModal({ type: 'cancel', open: true });
                     }}
                       className="cursor-pointer">
                       Cancel
@@ -258,14 +254,14 @@ const index = () => {
             placement="bottomRight"
           // onOpenChange={setVisibale}
           >
-            <MoreIcon className=" cursor-pointer " onClick={() => setActionType({ ...actionType, id: data.key })} />
+            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
           </Dropdown >
         </Space >
       ),
     },
   ];
 
-  console.log(actionType);
+  console.log(selectedRow);
   return (
     <div className="main_view_detail">
       <Row className=' items-center'>
@@ -310,7 +306,7 @@ const index = () => {
         <GlobalTable columns={columns} tableData={data} pagination={true} />
       </BoxWrapper>
 
-      <DrawerComp
+      {openDrawer.open && <DrawerComp
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
         className={openDrawer.type === 'filters' ? "" : "Record_data"}
@@ -346,14 +342,24 @@ const index = () => {
             />
           }
         </div>
-      </DrawerComp>
-      <LeaveRequest
+      </DrawerComp>}
+
+      {openModal.open && openModal.type === 'edit' && <LeaveRequest
         title="Leave Request"
-        open={openDrawer.type === 'edit' && openDrawer.open}
+        open={openModal.open}
+        data={selectedRow}
         setIsAddModalOpen={setIsAddModalOpen}
         subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
         changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
-      />
+      />}
+      {openModal.open && openModal.type === 'cancel' && <Alert type='warning' open={openModal.open}
+        setOpen={() => setOpenModal({ ...openModal, open: !openModal.open })}
+        cancelBtntxt={"Cancle"}
+        okBtntxt={"Submit"}
+
+      >
+        <p>Are you sure you want to cancel this request?</p>
+      </Alert>}
     </div>
   )
 }

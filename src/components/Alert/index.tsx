@@ -5,17 +5,21 @@ import { AlertIcon } from "../../assets/images";
 import { SuccessIcon } from "../../assets/images";
 import { WarningIcon } from "../../assets/images";
 
-export const Alert: React.FC = ({
-  title,
-  type,
-  width,
-  open,
-  setOpen,
-  icon,
-  cancelBtntxt,
-  okBtntxt,
-  children,
-}: any) => {
+interface Props{
+  title?:string;
+  type?:string;
+  width?:any;
+  open?:any;
+  setOpen?:any;
+  icon?:any;
+  cancelBtntxt?:string;
+  okBtntxt?:string;
+  children?:any
+
+}
+
+export const Alert = (props: Props) => {
+  const {title,type,width,open,setOpen,icon,cancelBtntxt,okBtntxt,children}=props
   const alertColor =
     type === "error"
       ? "red"
