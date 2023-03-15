@@ -1,0 +1,67 @@
+@import "../../../../scss/colors";
+.cancellation-policy-content {
+  .canc-policy-inner {
+    .canc-policy-title {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.3333333;
+      color: $text-secondary-body-color;
+      margin-bottom: 10px;
+    }
+    padding-left: 40px;
+    .canc-policy-row {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 870px;
+
+      .standard-cancellation {
+        flex-shrink: 0;
+        max-width: 100%;
+        flex: 0 0 auto;
+        width: 60%;
+        box-sizing: border-box;
+        padding-right: 50px;
+
+        .ant-typography {
+          font-size: 16px;
+          color: $text-teriary-label-color;
+          font-weight: 400;
+          line-height: 1.5;
+          margin-bottom: 6px;
+        }
+        .canc-policy-list {
+          padding-left: 30px;
+          ul {
+            li {
+              font-size: 16px;
+              color: $text-teriary-label-color;
+              font-weight: 400;
+              line-height: 1.5;
+            }
+          }
+        }
+      }
+      .safeguard-cancellation {
+        flex-shrink: 0;
+        max-width: 100%;
+        flex: 0 0 auto;
+        width: 40%;
+        box-sizing: border-box;
+        padding-left: 50px;
+        border-left: 1px solid #D9DBE9;
+
+        .safeguard-candellation-desc {
+          .ant-typography {
+            font-size: 16px;
+            color: $text-teriary-label-color;
+            font-weight: 400;
+            line-height: 1.5;
+            span {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,15 +3,23 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-weight: 400;
-  color: #4E4B66;
+  color: #4e4b66;
   margin: 0;
+  @media (min-width: 1200px) {
+    padding-bottom: 60px;
+  }
+}
+.bank {
+  background-color: red;
 }
 
-img, svg {
+img,
+svg {
   max-width: 100%;
   display: inline-block;
+  vertical-align: middle;
 }
 
 // 5 col grid
@@ -49,30 +57,30 @@ img, svg {
   min-width: 115px;
 }
 .ant-btn-default.button-tertiary {
-  background-color: #4A9D77;
-  border-color: #4A9D77;
+  background-color: #4a9d77;
+  border-color: #4a9d77;
   color: #ffffff;
 }
 
 .ant-btn-default.button-tertiary:hover {
-  background-color: #4A9D77;
-  border-color: #4A9D77;
+  background-color: #4a9d77;
+  border-color: #4a9d77;
   color: #ffffff;
   box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
 }
 
 .ant-btn-default.button-tertiary.ant-btn-background-ghost {
   background-color: transparent;
-  color: #4A9D77;
+  color: #4a9d77;
 }
 
 // Form Inputs
-.ant-form-item  {
+.ant-form-item {
   margin-bottom: 30px;
   .ant-form-item-label {
     padding-bottom: 8px;
     & > label {
-      color: #6E7191;
+      color: #6e7191;
       font-size: 16px;
       font-weight: 400;
       line-height: 1.5;
@@ -80,16 +88,17 @@ img, svg {
   }
 }
 .ant-input {
-  border-color: #D9DBE9;
-  color: #14142A;
+  border-color: #d9dbe9;
+  color: #14142a;
   font-size: 16px;
   font-weight: 400;
 
   &::placeholder {
-    color: #A0A3BD;
+    color: #a0a3bd;
   }
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
     border-color: rgba(90, 89, 128, 0.5);
   }
@@ -97,12 +106,13 @@ img, svg {
 
 .ant-select {
   .ant-select-selector {
-    border-color: #D9DBE9;
-    color: #14142A;
+    border-color: #d9dbe9;
+    color: #14142a;
     font-size: 16px;
     font-weight: 400;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
       border-color: rgba(90, 89, 128, 0.5) !important;
     }
@@ -115,7 +125,7 @@ img, svg {
   }
   &:hover {
     .ant-select-selector {
-      border-color: #D9DBE9;
+      border-color: #d9dbe9;
     }
   }
   &.ant-select-focused {
@@ -126,7 +136,7 @@ img, svg {
   }
 }
 .ant-select-dropdown {
-  border: 2px solid #D9DBE9;
+  border: 2px solid #d9dbe9;
   box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
 }
 
