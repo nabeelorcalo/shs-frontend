@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Row, Select, TabsProps } from "antd";
-import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
-import FiltersButton from "../../../components/FiltersButton";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import { BoxWrapper } from "../../../components/BoxWrapper/boxWrapper";
 import ResolvedData from "./Resolved";

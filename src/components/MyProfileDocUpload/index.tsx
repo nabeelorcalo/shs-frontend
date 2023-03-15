@@ -7,7 +7,7 @@ const MyProfileDocUpload = ({ title, width, showHide, cancelBtntxt, okBtntxt, ch
   const [show, setShow] = useState(false)
 
   return (
-    <PopUpModal title={title} width={width} showHide={showHide} cancelBtntxt={cancelBtntxt} okBtntxt={okBtntxt}>
+    <PopUpModal title={title} width={width} open={show} close={() => setShow(false)}>
       {children}
     </PopUpModal>
   )

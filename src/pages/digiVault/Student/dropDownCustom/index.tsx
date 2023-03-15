@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Space, Dropdown } from "antd";
-import { More } from "../../../../assets/images";
+import { `More` } from "../../../../assets/images";
 
 const CustomDroupDown = (props: any) => {
   const { menu1 } = props;

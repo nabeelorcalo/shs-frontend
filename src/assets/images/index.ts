@@ -133,6 +133,7 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
+export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -177,9 +178,6 @@ export { ReactComponent as ChevronRight} from './leaves/ChevronRight.svg';
 export { default as LeaveProfileImg } from './leaves/images/ProfileImg.jpg';
 export { default as LeaveDocumentIcon } from './leaves/LeaveDocumentIcon.svg';
 
-
-
-
 //setting
 export { ReactComponent as SettingMap } from './setting/map.svg';
 export { ReactComponent as SettingPeople } from './setting/people.svg';
@@ -204,3 +202,4 @@ export {ReactComponent as PurpleRectangle} from './dashboard/purpleRectangle.svg
 export {ReactComponent as PinkRectangle} from './dashboard/pinkRectangle.svg';
 export {ReactComponent as YellowRectangle} from './dashboard/yellowRectangle.svg';
 export {ReactComponent as BlueRectangle} from './dashboard/blueRectangle.svg';
+export {default as WishesBox} from './dashboard/wishesBox.gif';

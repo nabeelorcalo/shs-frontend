@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { ComponentStory } from '@storybook/react'
-import { PopUpModal } from '../components/Model';
+import { PopUpModal } from '../components';
 
 export default {
   title: 'Components/Modal',

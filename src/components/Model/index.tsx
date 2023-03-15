@@ -4,12 +4,12 @@ import { IconCloseCircle } from '../../assets/images'
 
 interface ModalProps {
   title?: React.ReactNode
-  width: string | number
+  width?: string | number
   open: boolean
   close: () => void
   children?: React.ReactNode
-  footer: React.ReactNode
-  closable: boolean
+  footer?: React.ReactNode
+  closable?: boolean
   wrapClassName?: string
 }
 

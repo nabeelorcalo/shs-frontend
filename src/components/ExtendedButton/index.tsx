@@ -8,7 +8,7 @@ interface IButtonProps {
   children?: React.ReactNode
 }
 
-const Button = ({
+export const ExtendedButton = ({
   customType,
   children,
   ...rest
@@ -18,6 +18,4 @@ const Button = ({
       {children}
     </AntButton>
   )
-};
-
-export default Button;
+}

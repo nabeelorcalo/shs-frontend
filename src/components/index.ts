@@ -31,3 +31,6 @@ export * from './leavesDetailCard';
 export * from './DatePicker'
 export * from './PageHeader'
 export * from './ContentMenu'
+export * from './Model'
+export * from './ExtendedButton'
+export * from './FiltersButton'

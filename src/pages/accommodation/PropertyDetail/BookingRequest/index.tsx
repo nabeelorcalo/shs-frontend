@@ -1,17 +1,31 @@
-import React, { useState, FC } from "react"
+import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import type { DatePickerProps } from 'antd'
 import { Form, Button, Col, Row, Popover, Checkbox, Modal, Typography  } from 'antd'
 import { SaveIcon, IconInfoCircle } from '../../../../assets/images'
-import { DatePicker } from "../../../../components"
+import { DatePicker, PopUpModal, ExtendedButton } from "../../../../components"
 import './style.scss'
 
 
 const PropertyPricing = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
   const [checkAvailability, setCheckAvailability] = useState(false)
   const [modalDisclaimerOpen, setModalDisclaimerOpen] = useState(false)
+  const [modalAddRequestMessageOpen, setModalAddRequestMessageOpen] = useState(false)
 
 
+  
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+
+  }, [])
+
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   const onFinish = (values: any) => {
     console.log('Form Values: ', values);
   }
@@ -32,6 +46,18 @@ const PropertyPricing = () => {
     setModalDisclaimerOpen(false)
   }
 
+  const openModalAddRequestMessage = () => {
+    setModalAddRequestMessageOpen(true)
+  }
+
+  const closeModalAddRequestMessage = () => {
+    setModalAddRequestMessageOpen(false)
+  }
+
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <>
       <div className="card-booking-request">
@@ -111,6 +137,16 @@ const PropertyPricing = () => {
           </Row>
         </Form>
       </div>
+
+      <PopUpModal
+        title="Add Request Message"
+        open={modalAddRequestMessageOpen}
+        close={closeModalAddRequestMessage}
+        footer={[<ExtendedButton>dfd</ExtendedButton>]}
+        width={500}
+      >
+        <>dsds</>
+      </PopUpModal>
 
       {/* MODAL DISCALIMER */}
       <Modal
