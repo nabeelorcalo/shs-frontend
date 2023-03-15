@@ -7,6 +7,8 @@ import DocumentsIcon from "../../assets/images/documents.png";
 import HiringIcon from "../../assets/images/hiring.png";
 import InterviewIcon from "../../assets/images/interview.png";
 import DrawerDocuments from './drawerDocuments';
+import HiringProcess from './hiringProcess';
+import Interview from './interview';
 
 
 
@@ -35,14 +37,15 @@ const items: TabsProps['items'] = [
     label: <div className='flex gap-2'>
       <img src={HiringIcon} alt="" />
       <p>Hiring Process</p></div>,
-    children: `Content of Tab Pane 3`,
+    children: <HiringProcess />,
   },
   {
     key: '4',
     label: <div className='flex gap-2'>
       <img src={InterviewIcon} alt="" />
       <p>Interview</p></div>,
-    children: `Content of Tab Pane 3`,
+    children: <Interview />,
+
   },
 ];
 const DrawerTabs = () => {

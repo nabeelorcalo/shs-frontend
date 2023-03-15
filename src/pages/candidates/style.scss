@@ -215,7 +215,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: start;
+
         border-radius: 4px;
 
         .p {
@@ -372,7 +372,6 @@
 
 
 .req-btn {
-    border: 1px solid black;
     width: 211px;
     height: 40px;
     background: $teriary-bg-color;
@@ -387,13 +386,64 @@
         font-size: 16px;
     }
 }
-.files{
+
+.files {
     border-bottom: 1px solid $text-error-line-color;
 
 }
+
 .cv-heading {
 
     font-weight: 600;
     font-size: 16px;
     color: $text-primary-title-color;
+}
+
+.rej-btn {
+    width: 118px;
+    height: 40px;
+    background: $text-error-color;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+    color: $white-bg-color;
+    border-radius: 8px;
+    border: $text-error-color;
+}
+
+.move-btn {
+    width: 112px;
+    height: 40px;
+    background: $teriary-bg-color !important;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    border-radius: 8px;
+    border: none;
+    color: $white-bg-color;
+}
+
+.heading {
+    font-weight: 600;
+    font-size: 18px;
+    color: $text-primary-title-color;
+
+}
+
+.btn-icon {
+    border: none;
+}
+
+.ant-inp {
+    width: 739px;
+    height: 48px;
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    border: none;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+.txt-p {
+    font-weight: 400;
+    font-size: 14px;
+    color: $text-success-placeholder-color;
 }
