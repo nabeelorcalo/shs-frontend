@@ -363,7 +363,7 @@ const ManageVault = (props: any) => {
         ]}
       >
         <UploadDocument />
-      </Modal>
+      </Modal>  
     </div>
   );
 };

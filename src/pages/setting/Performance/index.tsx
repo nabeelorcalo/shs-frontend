@@ -28,15 +28,15 @@ const inputData = [
   },
   {
     id: 4,
-    title: "  Independency in work",
+    title: " Independency in work",
   },
   {
     id: 5,
-    title: "   Business Skills",
+    title: " Business Skills",
   },
   {
     id: 6,
-    title: "   Technical skills",
+    title: "  Technical skills",
   },
 ];
 
@@ -94,28 +94,27 @@ const SettingPerformance: React.FC = () => {
                     }
 
                     {item.id === id && (
-                      <></>
-                      // <div className="w-full flex">
-                      //   <Input
-                      //     placeholder="Enter text"
-                      //     className="w-full"
-                      //     size="small"
-                      //   />
-                      //   <Space className="ml-2">
-                      //     <PerformanceTick
-                      //       className="cursor-pointer"
-                      //       onClick={() => {
-                      //         sethideInputButton(!hideInputButton);
-                      //       }}
-                      //     />
-                      //     <PerformanceClose
-                      //       onClick={() => {
-                      //         sethideInputButton(!hideInputButton);
-                      //       }}
-                      //       className="cursor-pointer"
-                      //     />
-                      //   </Space>
-                      // </div>
+                      <div className="w-full flex">
+                        <Input
+                          placeholder="Enter text"
+                          className="w-full"
+                          size="small"
+                        />
+                        <Space className="ml-2">
+                          <PerformanceTick
+                            className="cursor-pointer"
+                            onClick={() => {
+                              sethideInputButton(!hideInputButton);
+                            }}
+                          />
+                          <PerformanceClose
+                            onClick={() => {
+                              sethideInputButton(!hideInputButton);
+                            }}
+                            className="cursor-pointer"
+                          />
+                        </Space>
+                      </div>
                     )}
                   </Col>
                 );

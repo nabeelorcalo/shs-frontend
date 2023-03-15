@@ -1,5 +1,5 @@
 import { Col, Row, Typography, Divider } from "antd";
-import {} from "antd";
+
 
 import { Outlet } from "react-router-dom";
 import { SettingHorizontalLine } from "../../assets/images";

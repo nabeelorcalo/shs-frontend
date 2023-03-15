@@ -188,6 +188,7 @@ export { ReactComponent as SettingAvater } from "./setting/settingAvater.svg";
 // Setting Location
 export { ReactComponent as Settinglocation } from "./setting/locationWhiteIcon.svg";
 export { ReactComponent as CardLocation } from "./setting/cardImage.svg";
+
 //Setting Department
 export { ReactComponent as DepartmentAddIcon } from "./setting/addDepartment.svg";
 
@@ -203,7 +204,7 @@ export { ReactComponent as SettingTimesheetIcon } from "./setting/setting-timesh
 //Setting Template
 export { ReactComponent as NewTemplate } from "./setting/new-template.svg";
 
-// setting Leaves
+// Setting Leaves
 export { ReactComponent as SettingLeaves } from "./setting/setting-leaves.svg";
 export { ReactComponent as CasualLeave } from "./setting/casual-leave.svg";
 export { ReactComponent as BereavementLeave } from "./setting/bereavement.svg";
@@ -217,10 +218,13 @@ export { ReactComponent as AddNewQuestion } from "./setting/add.svg";
 export { ReactComponent as PerformanceTick } from "./setting/tick.svg";
 export { ReactComponent as PerformanceClose } from "./setting/close.svg";
 
-// setting performance
+// Setting performance
 export { ReactComponent as PerformancePlus } from "./setting/plus.svg";
 export { ReactComponent as PerformanceMinus } from "./setting/minus.svg";
 export { ReactComponent as Performanceinput } from "./setting/performanceInput.svg";
+
+// Universities
+export { ReactComponent as  UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
 
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
