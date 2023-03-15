@@ -15,7 +15,7 @@ import {FiltersButton} from "../../components/" ;
 import { LeaveRequest } from "../../components";
 import { data } from "./LeaveMockData";
 const index = () => {
-  const [actionType, setActionType] = useState({ type: '', id: '' });
+  // const [actionType, setActionType] = useState({ type: '', id: '' });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
@@ -214,11 +214,12 @@ const index = () => {
         </div>
       </DrawerComp>}
 
-      {openModal.open && openModal.type === 'edit' && <LeaveRequest
+      {openModal.open && openModal.type === 'edit' && 
+      <LeaveRequest
         title="Leave Request"
-        open={openModal.open}
+        openModal={openModal}
         data={selectedRow}
-        setIsAddModalOpen={setIsAddModalOpen}
+        setIsAddModalOpen={setOpenModal}
         subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
         changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
       />}

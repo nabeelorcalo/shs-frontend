@@ -30,32 +30,20 @@ const props: UploadProps = {
     // console.log('Dropped files', e.dataTransfer.files);
   },
 };
+
+// Leave Request Form Select Oprion Array
 const leavRequestOptionDAta = [
-  {
-    value: '1',
-    label: 'Sick',
-  },
-  {
-    value: '2',
-    label: 'Casual',
-  },
-  {
-    value: '3',
-    label: 'Work From Home',
-  },
-  {
-    value: '4',
-    label: 'Medical',
-  },
+  { value: '1', label: 'Sick' },
+  { value: '2', label: 'Casual' },
+  { value: '3', label: 'Work From Home' },
+  { value: '4', label: 'Medical' },
 ]
+
+//  Function to Change Uploaded  File Icon inLeave Request Form  
 // const iconRender = (file: any, listType: any) => {
 //   return <UploadOutlined />;
 // };
 export const LeaveRequest = (props: any) => {
-  // const [show, setShow] = useState(false)
-  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
-  const [openStartDate, setOpenStartDate] = useState(false);
-  const [openEndDate, setOpenEndDate] = useState(false);
   const initailVal = {
     leaveType: '',
     leaveTypeDay: '',
@@ -69,6 +57,11 @@ export const LeaveRequest = (props: any) => {
     attachment: ''
 
   }
+  
+  const { title, openModal, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
+  console.log(openModal);
+  const [openStartDate, setOpenStartDate] = useState(false);
+  const [openEndDate, setOpenEndDate] = useState(false);
   const [formVal, setFormVal] = useState(data ? data : initailVal)
   const [form] = Form.useForm();
   // const handleTimeChange = (time: any) => {
@@ -80,8 +73,8 @@ export const LeaveRequest = (props: any) => {
   return (
     <Modal
       title={title}
-      open={open}
-      onCancel={() => setIsAddModalOpen(false)}
+      open={openModal.open}
+      onCancel={() => setIsAddModalOpen({...openModal,open:false})}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
@@ -203,7 +196,7 @@ export const LeaveRequest = (props: any) => {
 
               className='Leave_request_Canclebtn'
               label="Cancle"
-              onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
+              onClick={() => { setIsAddModalOpen({open:false}); form.resetFields() }}
               type="primary"
               htmlType="button"
             />
@@ -217,7 +210,6 @@ export const LeaveRequest = (props: any) => {
           </div>
         </Form.Item>
       </Form>
-
     </Modal>
   )
 }
