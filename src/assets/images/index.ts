@@ -122,6 +122,7 @@ export { default as CloseCircleIcon } from "./close-circle-icon.png";
 export { default as DownloadIcon } from "./download-icon.png";
 export { default as SearchIcon } from "./search-icon.png";
 // DigiVault CArd Img
+
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
 export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
@@ -133,6 +134,8 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
+export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
+export { ReactComponent as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -207,3 +210,6 @@ export { default as WishesBox } from "./dashboard/wishesBox.gif";
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg";
 export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg";
+
+//Chat
+export { default as Filter } from "../images/chat/Filter.svg";

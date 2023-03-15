@@ -273,6 +273,11 @@ const managerRoutes = [
         path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
+      },
     ],
   },
   {
@@ -592,6 +597,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         element: <Personalisation />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
+      },
     ],
   },
   {
@@ -718,6 +728,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
     ],
   },
