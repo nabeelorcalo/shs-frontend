@@ -1,0 +1,72 @@
+@import "../../../../scss/colors";
+.property-agent-detail {
+  border: 1px solid $text-input-bg-color;
+  border-radius: 10px;
+  padding: 44px 50px;
+  display: flex;
+  align-items: center;
+
+  .agent-profile-info {
+    display: flex;
+    align-items: center;
+    padding-right: 60px;
+    .ant-avatar {
+      margin-right: 20px;
+    }
+    .agent-info {
+      .ant-typography {
+        margin-bottom: 0;
+      }
+      .last-seen {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.5714285;
+        letter-spacing: 0.02em;
+        color: $text-teriary-label-color;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .agent-member-since {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 22px 60px;
+    border-left: 1px solid $text-input-bg-color;
+
+    .member-since-label {
+      color: $text-teriary-label-color;
+    }
+    .member-since-value {
+      color: $text-secondary-body-color;
+    }
+  }
+
+  .agent-detail-list {
+    padding-left: 60px;
+    padding-right: 60px;
+    border-left: 1px solid $text-input-bg-color;
+    flex: 1;
+    height: 100%;
+    li {
+      display: flex;
+      align-items: center;
+      .agent-detail-list-item-left {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: $text-teriary-label-color;
+      }
+      .agent-detail-list-item-right {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: $text-secondary-body-color;
+        margin-left: auto;
+        min-width: 50px;
+      }
+    }
+  }
+}

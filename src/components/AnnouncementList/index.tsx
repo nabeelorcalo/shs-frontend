@@ -3,6 +3,7 @@ import { List, Skeleton, Typography } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
 import AnnouncementCard from '../AnnouncementCard';
+import './style.scss';
 
 interface AnnouncementProps {
   data: any,
@@ -22,13 +23,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
         Announcements
       </Typography.Title>
 
-      <div
-        id="scrollableDiv"
-        style={{
-          height: 548,
-          overflow: 'auto',
-        }}
-      >
+      <div className="scrollableDiv">
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}

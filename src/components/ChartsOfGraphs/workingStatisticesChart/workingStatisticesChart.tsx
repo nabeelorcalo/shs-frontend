@@ -39,7 +39,11 @@ export const WorkingStatisticesChart = (props: any) => {
   return (
     <BoxWrapper className='my-4'>
       {heading && <p className='text-xl font-medium text-secondary-color'>{heading}</p>}
-      <Column {...config} maxColumnWidth={50} />
+      <Column
+        {...config}
+        height={336}
+        maxColumnWidth={50}
+      />
     </BoxWrapper>
   )
 
