@@ -1,7 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
+
 // Header Icons
-// export { default as AppLogo } from './AppLogo.svg';
-/// <reference types="vite-plugin-svgr/client" />
 export { default as ContractsRecieved } from "./contractsRecieved.png";
 export { default as ContractsRejected } from "./contractsRejected.png";
 export { default as ContractsSigned } from "./contractsSigned.png";
@@ -125,7 +124,7 @@ export { default as SearchIcon } from "./search-icon.png";
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
-export { ReactComponent as BAnkingImg } from "./digivault/manageVault/bankingFolder.svg";
+export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
 export { ReactComponent as BAnkingImgSub } from "./digivault/manageVault/ph_bank.svg";
 export { ReactComponent as HealthImg } from "./digivault/manageVault/health.svg";
 export { ReactComponent as HealthImgSub } from "./digivault/manageVault/ic_outline-health-and-safety.svg";

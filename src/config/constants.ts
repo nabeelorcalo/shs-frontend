@@ -83,4 +83,5 @@ export const ROUTES_CONSTANTS: any = {
   CERTIFICATES: "certificates",
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
+  CHAT:"chat",
 };
