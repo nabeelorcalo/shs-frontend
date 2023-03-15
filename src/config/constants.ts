@@ -39,6 +39,7 @@ export const ROUTES_CONSTANTS: any = {
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
+  TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
@@ -84,5 +85,5 @@ export const ROUTES_CONSTANTS: any = {
   CERTIFICATESDETAIL: 'certificates/detail/:id',
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
-  CHAT:"chat",
+  CHAT: "chat",
 };

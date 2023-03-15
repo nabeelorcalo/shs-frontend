@@ -95,10 +95,10 @@ export const DropDown = (props: DropDownInterface) => {
             <div className='flex items-center justify-between'>
                 <p className='flex items-center'>
                     {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '20px' }} />}
-                    {!requiredDownloadIcon && <span>{value ? value : name}</span>}
+                    {!requiredDownloadIcon && <span className='mr-[20px]'>{value ? value : name}</span>}
                 </p>
                 {!requiredDownloadIcon && <EndIcon className='ml-[10px]' />}
-                {requiredDownloadIcon && <div className='w-full flex items-center justify-center'><DownloadIconLeave /></div>}
+                {requiredDownloadIcon && <div className='mr-[-5px]'><DownloadIconLeave /></div>}
             </div>
         </AntDropDown>
     )

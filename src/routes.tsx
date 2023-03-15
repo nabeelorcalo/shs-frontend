@@ -57,7 +57,7 @@ const Grievances = Loadable(lazy(() => import("./pages/grievances")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure")));
-const Timesheet = Loadable(lazy(() => import("./pages/timesheet")));
+const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
 const WithDrawalRequest = Loadable(
   lazy(() => import("./pages/withdrawalRequest"))
@@ -116,6 +116,7 @@ const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
 const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
+const TimeSheetHistory = Loadable(lazy(() => import('./pages/timesheet/companyAdmin/timesheetHistory')));
 
 export const publicRoutes = [
   {
@@ -479,6 +480,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        element: <TimeSheetHistory />,
       },
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,

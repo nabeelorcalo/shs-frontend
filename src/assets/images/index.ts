@@ -1,4 +1,3 @@
-import { Default } from './../../stories/PageHeader.stories';
 /// <reference types="vite-plugin-svgr/client" />
 // Header Icons
 // export { default as AppLogo } from './AppLogo.svg';
@@ -230,3 +229,13 @@ export { default as WishesBox } from './dashboard/wishesBox.gif';
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg"
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
 export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
+
+
+export { ReactComponent as ArrowRightIcon } from '../images/ArrowRightIcon.svg';
+export { ReactComponent as CirclePlusIcon } from '../images/CirclePlusIcon.svg';
+export { ReactComponent as CircleMinusIcon } from '../images/CircleMinusIcon.svg';
+export { ReactComponent as TaskListIcon } from '../images/TaskListIcon.svg';
+export { ReactComponent as  ClockDarkIcon} from '../images/ClockDarkIcon.svg';
+export { ReactComponent as  TagPrimaryIcon} from '../images/TagPrimaryIcon.svg';
+export { ReactComponent as  TagSuccessIcon} from '../images/TagSuccessIcon.svg';
+export { ReactComponent as  TagWarningIcon} from '../images/TagWarningIcon.svg';
