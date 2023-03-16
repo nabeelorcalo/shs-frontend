@@ -1,31 +1,42 @@
 @import '../../scss/_colors.scss';
 
-.certificate-wrapper,
-.certificate-detail-wrapper {
-    .issue-certificate {
-        background: $teriary-bg-color;
-        border: 1px solid $teriary-bg-color;
-        border-radius: 8px;
+.issue-certificate {
+    background: $teriary-bg-color !important;
+    border: 1px solid $teriary-bg-color !important;
+    border-radius: 8px;
 
-        &:hover {
-            border: 1px solid $teriary-bg-color;
-            box-shadow: 0px 0px 5px 5px $certificate-btn-shadow;
-            opacity: 0.8;
-        }
+    &:hover {
+        border: 1px solid $teriary-bg-color;
+        box-shadow: 0px 0px 5px 5px $certificate-btn-shadow;
+        opacity: 0.8;
     }
 }
 
+.certificate-top-heading {
+    color: $primary-bg-color;
+    border-bottom: 1px solid $text-error-line-color;
+}
+
 .certificate-wrapper {
-    .top-heading {
-        color: $primary-bg-color;
-        border-bottom: 1px solid $text-error-line-color;
+    .input-wrapper {
+        width: 400px;
+
+        @media screen and (max-width:710px) {
+            width: 100%;
+        }
     }
 
-    @media screen and (max-width:420px) {
+    .drop-down-wrapper,
+    .issue-certificate {
+        @media screen and (max-width:420px) {
+            width: 100%;
+        }
+    }
 
-        .right-side {
-            flex-wrap: wrap;
-            justify-content: start;
+    .issue-certificate {
+        @media screen and (max-width:420px) {
+            display: flex;
+            justify-content: center;
         }
     }
 
@@ -46,31 +57,8 @@
     }
 }
 
-// table action style
-.certicate-action {
-    border: 2px solid $text-error-line-color;
-    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
-    border-radius: 8px;
-
-    .ant-dropdown-menu {
-        .ant-dropdown-menu-item {
-            p {
-                color: $text-secondary-body-color;
-            }
-        }
-
-        .ant-dropdown-menu-item-active:hover {
-            background-color: transparent;
-        }
-    }
-}
-
 // certificate detail
 .certificate-detail-wrapper {
-    .top-heading {
-        color: $primary-bg-color;
-        border-bottom: 1px solid $text-error-line-color;
-    }
 
     .seperator {
         width: 1px;
@@ -127,22 +115,21 @@
         .title {
             color: $text-secondary-body-color;
         }
-    }
-}
 
-// certificate-card-dropdown
-.certificate-card-dropdown {
-    background: $white-bg-color;
-    border: 2px solid $text-error-line-color;
-    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
-    border-radius: 8px;
-    width: 130px;
+        .img-overlay {
+            display: none;
+            transition: all 0.2s linear;
+        }
 
-    .ant-dropdown-menu-item-active {
-        background-color: transparent !important;
+        .img-wrapper:hover .img-overlay {
+            background-color: $certificate-card-overlay;
+            display: flex;
 
-        .ant-dropdown-menu-title-content {
-            color: $text-secondary-body-color;
+            .eye-icon {
+                path {
+                    fill: $white-bg-color;
+                }
+            }
         }
     }
 }

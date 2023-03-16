@@ -13,6 +13,24 @@
             margin-bottom: 30px;
         }
 
+        .user-select {
+            &.disabled {
+                .ant-select-selector {
+                    background-color: $certificate-textarea-bg;
+                    pointer-events: none;
+                    cursor: none;
+                }
+            }
+
+            &.active {
+                .ant-select-selector {
+                    background-color: $white-bg-color;
+                    pointer-events: initial;
+                }
+            }
+
+        }
+
         .select-type {
             color: $text-teriary-label-color;
 
@@ -27,6 +45,8 @@
 
         .print-on-certificate {
             &.disabled {
+                pointer-events: none;
+
                 .label {
                     color: $certificate-label-disabled;
                 }
@@ -38,6 +58,8 @@
             }
 
             &.active {
+                pointer-events: initial;
+
                 .label {
                     color: $text-primary-title-color;
                 }

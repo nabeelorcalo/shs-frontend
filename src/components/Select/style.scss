@@ -22,12 +22,12 @@
 }
 
 .select-popup-box {
-    .rc-virtual-list-holder-inner {}
 
     .ant-select-item {
         height: auto;
 
-        &.ant-select-item-option-active {
+        &.ant-select-item-option-active,
+        &.ant-select-item-option-selected {
             background-color: transparent;
         }
     }

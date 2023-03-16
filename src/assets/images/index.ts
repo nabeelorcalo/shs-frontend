@@ -157,12 +157,11 @@ export { ReactComponent as AssessmentAproved } from "./assessment-approved.svg";
 export { ReactComponent as AssessmentRejected } from "./assessment-rejected.svg";
 export { default as UserAvatar } from "./user-avatar.png";
 
-// Accommodation Icons
-
-
 // certificate icons
 export { ReactComponent as IssueCertificateIcon } from "../images/issue-certificate-icon.svg";
 export { default as CertificateImg } from '../images/certificates-img/certificate-dummy.png';
+export { ReactComponent as CertificateEyeIcon } from '../images/certificates-img/eye-icon.svg';
+export { default as CertificateLayout } from '../images/certificates-img/certificate-layout.png';
 
 export { ReactComponent as IconFilters } from "./icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "./icon-filters-angle.svg";
@@ -178,8 +177,6 @@ export { ReactComponent as StructureCompanyAdminDownward } from "./structure/dow
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
 export { ReactComponent as StructureMinus } from "./structure/minus.svg";
 export { ReactComponent as StructureAdd } from "./structure/add.svg";
-
-
 
 
 export { ReactComponent as HeartIcon } from "./leaves/Heart.svg";
@@ -227,6 +224,15 @@ export { default as Recevied } from "../images/ColorfullIconsProgressbar/receive
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
 export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
 
+
+export { ReactComponent as ArrowRightIcon } from '../images/ArrowRightIcon.svg';
+export { ReactComponent as CirclePlusIcon } from '../images/CirclePlusIcon.svg';
+export { ReactComponent as CircleMinusIcon } from '../images/CircleMinusIcon.svg';
+export { ReactComponent as TaskListIcon } from '../images/TaskListIcon.svg';
+export { ReactComponent as  ClockDarkIcon} from '../images/ClockDarkIcon.svg';
+export { ReactComponent as  TagPrimaryIcon} from '../images/TagPrimaryIcon.svg';
+export { ReactComponent as  TagSuccessIcon} from '../images/TagSuccessIcon.svg';
+export { ReactComponent as  TagWarningIcon} from '../images/TagWarningIcon.svg';
 // candidates
 
 export { ReactComponent as CvIcon } from './cvIcon.svg';
