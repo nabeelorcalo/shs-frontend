@@ -131,7 +131,7 @@ const index = () => {
     },
   ];
 
-  console.log(selectedRow);
+  // console.log(selectedRow);
   return (
     <div className="main_view_detail">
       <Row className=' items-center'>
