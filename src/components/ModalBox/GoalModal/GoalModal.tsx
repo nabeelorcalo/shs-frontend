@@ -1,17 +1,14 @@
 import { useState } from 'react';
 import { Checkbox, Col, Row } from 'antd'
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { CommonDatePicker } from '../../calendars/CommonDatePicker';
 import { Input } from '../../Input/input';
+import { CommonDatePicker } from '../../calendars/CommonDatePicker/CommonDatePicker';
 import Model from '../model'
 
 const GoalModal = ({ open, setOpen, onOk }: any) => {
 
     const [openStartDate, setOpenStartDate] = useState(false);
     const [openEndDate, setOpenEndDate] = useState(false);
-
     const [goalVal, setGoalVal] = useState({ goalName: '', startDate: "", endDate: "", isMainGoal: false });
-
 
     const handleChange = (val: string | boolean | any, type: string) => {
         switch (type) {

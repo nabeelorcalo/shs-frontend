@@ -128,25 +128,6 @@ const index = () => {
     },
   ];
 
-  // const generatePDF = (data) => {
-  //   const doc = new jsPDF();
-  
-  //   // Define the table columns
-  //   const columns = ['Column 1', 'Column 2', 'Column 3'];
-  
-  //   // Define the table rows
-  //   const rows = data.map((item) => [item.column1, item.column2, item.column3]);
-  
-  //   // Add the table to the PDF document
-  //   doc.autoTable({
-  //     head: [columns],
-  //     body: rows,
-  //   });
-  
-  //   // Save the PDF
-  //   doc.save('table.pdf');
-  // };
-
   // console.log(selectedRow);
   return (
     <div className="main_view_detail">

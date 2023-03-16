@@ -11,8 +11,8 @@
           border-bottom: unset;
           padding-top: 18px;
           padding-bottom: 18px;
-          &:last-child{
-            text-align: center;
+          &:first-child{
+            text-align: right;
           }
 
           &::before {
@@ -40,8 +40,8 @@
           font-weight: 400;
           font-size: 16px;
           line-height: 24px;
-          &:last-child{
-            text-align: center;
+          &:first-child{
+            text-align: right;
           }
         }
 
