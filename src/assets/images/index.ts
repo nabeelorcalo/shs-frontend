@@ -140,7 +140,7 @@ export { default as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
 export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
 export { default as File } from "../images/ColorfullIconsProgressbar/file.svg";
 export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
-export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
+//export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { default as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
 export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
 export { ReactComponent as EducationWhite } from "../../assets/images/digivault/manageVault/white/educationWhite.svg";

@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Modal } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { AlertIcon } from "../../assets/images";
 import { SuccessIcon } from "../../assets/images";
 import { WarningIcon } from "../../assets/images";
+import "./style.scss"
+import { STATUS_CONSTANTS } from "../../config/constants";
 
-export const Alert: React.FC = ({ title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children }: any) => {
+const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
 
+export const Alert: React.FC = (props: any) => {
+    const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children } = props
     const alertColor = type === "error" ? "#D83A52" : type === "success" ? "#4A9D77" : type === "warning" ? "#FFC15D" : "black"
     return (
         <>
@@ -17,12 +21,39 @@ export const Alert: React.FC = ({ title, type, width, state, setState, icon, can
                 onCancel={() => { setState(!state) }}
                 width={width}
                 maskClosable={true}
-                closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px' }} />}
+                closeIcon={
+                    <CloseCircleFilled
+                        className="text-[#A3AED0] text-[20px]"
+                    />}
                 footer={[
-                    <Button onClick={() => { setState(!state) }} key="Cancel" style={{ border: `1px solid ${alertColor}`, color: alertColor, padding: '0px 20px' }}>
+                    <Button
+                        onClick={() => { setState(!state) }}
+                        key="Cancel"
+                        className={
+                            type === ERROR ? "border-[#D83A52] text-[#D83A52]"
+                                :
+                                type === SUCCESS ? "border-[#4A9D77] text-[#4A9D77]"
+                                    :
+                                    type === WARNING ? "border-[#FFC15D] text-[#FFC15D]"
+                                        :
+                                        "border-[#4A9D77] text-[#4A9D77]"
+                        }
+                    >
                         {cancelBtntxt}
                     </Button>,
-                    <Button onClick={() => { okBtnFunc(type) }} key="submit" style={{ backgroundColor: alertColor, color: '#fff', border: `1px solid ${alertColor}`, padding: '0px 20px' }}>
+                    <Button
+                        onClick={() => { okBtnFunc(type) }}
+                        key="submit"
+                        className={
+                            type === ERROR ? "bg-[#D83A52] text-[#fff]"
+                                :
+                                type === SUCCESS ? "bg-[#4A9D77] text-[#fff]"
+                                    :
+                                    type === WARNING ? "bg-[#FFC15D] text-[#fff]"
+                                        :
+                                        "bg-[#4A9D77] text-[#4A9D77]"
+                        }
+                    >
                         {okBtntxt}
                     </Button>,
                 ]}
@@ -31,12 +62,10 @@ export const Alert: React.FC = ({ title, type, width, state, setState, icon, can
                     <div className='flex flex-row items-center gap-3'>
                         <div>{type === "error" ? <AlertIcon /> : type === "success" ? <SuccessIcon /> : type === "warning" ? <WarningIcon /> : null}</div>
                         <div>{type === "error" ? <h2>Alert</h2> : type === "success" ? <h2>Success</h2> : type === "warning" ? <h2>Warning</h2> : null}</div>
-
                     </div>
                     {children}
                 </div>
-                </Modal>
-            </>)
-  
- 
+            </Modal>
+        </>
+    )
 };

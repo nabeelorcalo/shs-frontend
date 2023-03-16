@@ -25,7 +25,6 @@ const NewInternships = () => {
                     <Col span={8} className="flex flex-col gap-4">
                         <div className='flex flex-col'>
                             <p>Title <span className='text-[#D83A52]'>*</span></p>
-
                             <Input
                                 className="input"
                                 handleChange={() => { }}
@@ -135,7 +134,6 @@ const NewInternships = () => {
                                 onChange={() => { }}
                             />
                         </div>
-
                     </Col>
                     <Col span={8}>col-8</Col>
                 </Row>
@@ -162,7 +160,6 @@ const NewInternships = () => {
                                     value="value"
                                 />
                             </div>
-
                             <p>Total positions <span className='text-[#D83A52]'>*</span></p>
                             <div className='flex flex-col gap-5'>
                                 <Input
@@ -221,7 +218,6 @@ const NewInternships = () => {
                         Submit
                     </Button>
                 </Row>
-
             </BoxWrapper>
         </>
     )

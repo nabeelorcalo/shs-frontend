@@ -1,15 +1,9 @@
-import { Button } from 'antd';
 import { ComponentStory } from '@storybook/react'
-import { CloseCircleFilled } from '@ant-design/icons';
 import { PopUpModal } from '../components/Model';
 import { object } from 'prop-types';
-import { useState } from 'react';
-
-
-
 
 export default {
-  title: 'Components/Modal',
+  title: 'Components/PopupModal',
   componenet: PopUpModal
 }
 
@@ -19,8 +13,8 @@ const okBtnFunc = ()=> {
 
 const Template: ComponentStory<typeof PopUpModal> = (args) => <PopUpModal {...args} ><p>Write your JSX here / Import Components</p></PopUpModal>
 
-export const CustomModal = Template.bind({})
-CustomModal.args = {
+export const CustomPopupModal = Template.bind({})
+CustomPopupModal.args = {
   title: "Modal Title Customizable",
   width: 800,
   state: true,

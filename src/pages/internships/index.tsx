@@ -6,27 +6,23 @@ import { useNavigate } from 'react-router-dom';
 import GlobalTable from "../../components/Table/Table";
 import { Avatar, Button, Popover, Divider } from 'antd';
 import { More } from "../../assets/images"
-import { FilterIcon } from "../../assets/images";
-import { ArrowToRight } from "../../assets/images";
 import { InternshipsIcon } from "../../assets/images";
 import LeaveRequest from "../../components/LeaveRequest";
 import EmojiEvaluation from "../../components/EmojiEvaluation";
-import AssesmentModal from "../../components/SignatureAndUploadModal";
-import MyProfileDocUpload from "../../components/MyProfileDocUpload";
 import CreateFolderModal from "../../components/CreateFolderModal";
 import EditGoalTask from "../../components/EditGoalTask";
 import AddRequestMessage from "../../components/AddRequestMessage";
 import SetaGoal from "../../components/SetaGoal";
 import { PopUpModal } from "../../components/Model";
-import UploadDocument from "../../components/UploadDocument";
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
 import SignatureAndUploadModal from "../../components/SignatureAndUploadModal";
+import { STATUS_CONSTANTS } from "../../config/constants";
 
-
+const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
 const PopOver = () => {
   const navigate = useNavigate()
@@ -43,26 +39,24 @@ const PopOver = () => {
       key: '2',
       label: (
         <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
-          Duplicatedfadasd
+          Duplicate
         </a>
       ),
     },
   ];
 
   return (
-    <Dropdown menu={{ items }} placement="bottom">
+    <Dropdown menu={{ items }} placement="bottomRight">
       <More />
     </Dropdown>
   )
 }
-
 
 const Internships = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
-
 
   const columns = [
     {
@@ -120,9 +114,8 @@ const Internships = () => {
       posting_date: "01/07/2022",
       closing_date: "01/07/2022",
       location: "virtual",
-      status: 'Pending',
+      status: 'pending',
       posted_by: 'T',
-      actions: <More />
 
     },
     {
@@ -132,9 +125,8 @@ const Internships = () => {
       posting_date: "01/07/2023",
       closing_date: "01/07/2021",
       location: "Onsite",
-      status: 'Active',
+      status: 'active',
       posted_by: 'U',
-      actions: <More />
 
     },
     {
@@ -144,81 +136,8 @@ const Internships = () => {
       posting_date: "01/07/2023",
       closing_date: "01/07/2021",
       location: "Onsite",
-      status: 'Rejected',
+      status: 'rejected',
       posted_by: 'U',
-      actions: <More />
-
-    },
-    {
-      no: "01",
-      title: "Research Analyst",
-      department: "Business Analyst",
-      posting_date: "01/07/2022",
-      closing_date: "01/07/2022",
-      location: "virtual",
-      status: 'Pending',
-      posted_by: 'T',
-      actions: <More />
-
-    },
-    {
-      no: "02",
-      title: "Business Analyst",
-      department: "Scientist Analyst",
-      posting_date: "01/07/2023",
-      closing_date: "01/07/2021",
-      location: "Onsite",
-      status: 'Active',
-      posted_by: 'U',
-      actions: <More />
-
-    },
-    {
-      no: "02",
-      title: "Business Analyst",
-      department: "Scientist Analyst",
-      posting_date: "01/07/2023",
-      closing_date: "01/07/2021",
-      location: "Onsite",
-      status: 'Rejected',
-      posted_by: 'U',
-      actions: <More />
-
-    },
-    {
-      no: "01",
-      title: "Research Analyst",
-      department: "Business Analyst",
-      posting_date: "01/07/2022",
-      closing_date: "01/07/2022",
-      location: "virtual",
-      status: 'Pending',
-      posted_by: 'T',
-      actions: <More />
-
-    },
-    {
-      no: "02",
-      title: "Business Analyst",
-      department: "Scientist Analyst",
-      posting_date: "01/07/2023",
-      closing_date: "01/07/2021",
-      location: "Onsite",
-      status: 'Active',
-      posted_by: 'U',
-      actions: <More />
-
-    },
-    {
-      no: "02",
-      title: "Business Analyst",
-      department: "Scientist Analyst",
-      posting_date: "01/07/2023",
-      closing_date: "01/07/2021",
-      location: "Onsite",
-      status: 'Rejected',
-      posted_by: 'U',
-      actions: <More />
 
     }
   ]
@@ -232,25 +151,18 @@ const Internships = () => {
         posting_date: item.posting_date,
         closing_date: item.closing_date,
         location: item.location,
-        status: <Button
-          size="small"
-          style={{
-            backgroundColor: item.status === "Active" ? '#4ED185' : item.status === "Pending" ? '#FFC15E' : item.status === "Closed" ? '#4783FF' : item.status === "Rejected" ? '#D83A52' : '#C4C4CA',
-            color: '#fff',
-            padding: "5px 20px"
-          }}
-        >
-          {item.status}
-        </Button>,
+        status:
+          <Button
+            size="small"
+            className={`${item.status === ACTIVE ? `bg-[#4ED185]` : item.status === PENDING ? `bg-[#FFC15E]` : item.status === CLOSED ? `bg-[#4783FF]` : item.status === REJECTED ? `bg-[#D83A52]` : null}  text-[#fff]`}
+          >
+            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+          </Button>,
         posted_by: <Avatar>{item.posted_by}</Avatar>,
         actions: <PopOver />
-
-
-
       }
     )
   })
-
   console.log(value)
   return (
     <>
@@ -270,7 +182,6 @@ const Internships = () => {
               label="Filters"
               onClick={() => { setShowDrawer(true) }}
             />
-
             <Drawer
               closable
               open={showDrawer}
@@ -311,7 +222,6 @@ const Internships = () => {
                       startIcon=""
                       value=""
                     />
-
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
@@ -341,7 +251,6 @@ const Internships = () => {
               New Internship
             </Button>
           </div>
-
         </div>
         <BoxWrapper>
           <div className="pt-3">
@@ -357,7 +266,7 @@ const Internships = () => {
         </BoxWrapper>
       </div>
       <div className="flex gap-3 my-3">
-        <SignatureAndUploadModal state={state} setState={setState} okBtntxt="Upload" cancelBtntxt="Cancel" />
+        <SignatureAndUploadModal state={state} setState={setState} okBtntxt="Upload" cancelBtntxt="Cancel" width={600} />
         <LeaveRequest title="Leave Request" />
         <EmojiEvaluation title={`Performance Report - ${name}`} />
         <CreateFolderModal title="Create New Folder" />
@@ -366,11 +275,17 @@ const Internships = () => {
         <SetaGoal title="Set a Goal" />
       </div>
       <div className="flex gap-3 my-3">
-        <PopUpModal title="Modal Title Customizable" width={800} state={false} okBtnFunc={() => { console.log("call back function called") }} cancelBtntxt="Cancel" okBtntxt="Submit">
+        <PopUpModal
+          title="Modal Title Customizable"
+          width={800}
+          state={false}
+          okBtnFunc={() => { console.log("call back function called") }}
+          cancelBtntxt="Cancel"
+          okBtntxt="Submit"
+        >
           <p>Write your JSX here / Import Components</p>
         </PopUpModal>
       </div>
-
     </>
   )
 }

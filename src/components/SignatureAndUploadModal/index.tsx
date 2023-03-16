@@ -11,7 +11,6 @@ import { PopUpModal } from '../Model';
 const onChange = (key: string) => {
   console.log(key);
 };
-
 const items: TabsProps['items'] = [
   {
     key: '1',
@@ -29,23 +28,20 @@ const items: TabsProps['items'] = [
     children: <DragAndDropUpload />,
   },
 ];
-
-const SignatureAndUploadModal = ({ state, setState, width, okBtntxt, cancelBtntxt, title, okBtnFunc }: any) => {
-
-
+const SignatureAndUploadModal = (props: any) => {
+  const { state, setState, width, okBtntxt, cancelBtntxt, title, okBtnFunc } = props
   return (
     <>
       <Button onClick={() => { setState(!state) }}>Signature & upload</Button>
       <div>
         <PopUpModal
-        title={title}
-        state={state}
-        setState={setState}
-        width={width}
-        okBtntxt={okBtntxt}
-        cancelBtntxt={cancelBtntxt}
-        okBtnFunc={okBtnFunc}
-
+          title={title}
+          state={state}
+          setState={setState}
+          width={width}
+          okBtntxt={okBtntxt}
+          cancelBtntxt={cancelBtntxt}
+          okBtnFunc={okBtnFunc}
         >
           <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
         </PopUpModal>
