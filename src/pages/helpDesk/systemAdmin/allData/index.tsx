@@ -1,21 +1,24 @@
-import React from "react";
-import { Menu, Space, Tooltip } from "antd";
+import React, { useState } from "react";
+import { Dropdown, Menu, Space, Tooltip } from "antd";
 import GlobalTable from "../../../../components/Table/Table";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
+import { DownOutlined } from "@ant-design/icons";
+import StatusDropdown from "../statusDropDown/statusDropdown";
+import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 
-const priorityOption = [
-  { value: "High", label: "High" },
-  { value: "Highest", label: "Highest" },
-  { value: "Medium", label: "Medium" },
-  { value: "Low", label: "Low" },
-];
+// const priorityOption = [
+//   { value: "High", label: "High" },
+//   { value: "Highest", label: "Highest" },
+//   { value: "Medium", label: "Medium" },
+//   { value: "Low", label: "Low" },
+// ];
 
-const statusOption = [
-  { value: "Pendding", label: "Pendding" },
-  { value: "In progress", label: "In progress" },
-  { value: "resolved", label: "resolved" },
-];
+// const statusOption = [
+//   { value: "Pendding", label: "Pendding" },
+//   { value: "In progress", label: "In progress" },
+//   { value: "resolved", label: "resolved" },
+// ];
 
 const tableData = [
   {
@@ -59,6 +62,40 @@ const tableData = [
   },
 ];
 
+const StatusOptions = [
+  {
+    key: "1",
+    value: "Pending",
+  },
+  {
+    key: "2",
+    value: "In Progress",
+  },
+  {
+    key: "3",
+    value: "Resolved",
+  },
+];
+
+const priorityOption = [
+  {
+    key: "1",
+    value: "Highest",
+  },
+  {
+    key: "2",
+    value: "High",
+  },
+  {
+    key: "3",
+    value: "Medium",
+  },
+  {
+    key: "4",
+    value: "Low",
+  },
+];
+
 const AllData = () => {
   const columns = [
     {
@@ -97,10 +134,9 @@ const AllData = () => {
       title: "Priority",
       key: "Priority",
       render: (_: any, data: any) => (
-        <HelpDeskSelect
-          handleChangePriority={handleChangePriority}
-          priorityOption={priorityOption}
-        />
+        <>
+          <PriorityDropDown priorityOptions={priorityOption} />
+        </>
       ),
     },
     {
@@ -117,10 +153,9 @@ const AllData = () => {
       title: "Status",
       key: "Status",
       render: (_: any, data: any) => (
-        <HelpDeskSelect
-          handleChangePriority={handleChangePriority}
-          priorityOption={statusOption}
-        />
+        <>
+          <StatusDropdown StatusOptions={StatusOptions} />
+        </>
       ),
     },
     {
@@ -142,10 +177,6 @@ const AllData = () => {
       <Menu.Item key="4">History</Menu.Item>
     </Menu>
   );
-
-  const handleChangePriority = (value: string) => {
-    console.log(`selected ${value}`);
-  };
 
   return (
     <div>

@@ -8,7 +8,7 @@ interface FiltersButtonProps {
   onClick: () => void;
 }
 
-export  const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
+export const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
   return (
     <Button
       className="filter-button"

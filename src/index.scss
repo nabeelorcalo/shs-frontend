@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import "./scss/colors";
 body {
   font-family: "Outfit", sans-serif;
   font-weight: 400;
@@ -56,22 +56,44 @@ svg {
 .ant-btn {
   min-width: 115px;
 }
+
+.ant-btn-primary {
+  box-shadow: none;
+  &:hover {
+    box-shadow: 0 0 0 4px rgba(54, 53, 101, 0.1);
+    background-color: $primary-light-bg-color;
+  }
+}
+
+.ant-btn-default.button-secondary {
+  background-color: #E94E5D;
+  border-color: #E94E5D;
+  color: #ffffff;
+  &:hover {
+    background-color: #E94E5D;
+  border-color: #E94E5D;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
+  }
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: #E94E5D;
+  }
+}
 .ant-btn-default.button-tertiary {
   background-color: #4a9d77;
   border-color: #4a9d77;
   color: #ffffff;
-}
-
-.ant-btn-default.button-tertiary:hover {
-  background-color: #4a9d77;
-  border-color: #4a9d77;
-  color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
-}
-
-.ant-btn-default.button-tertiary.ant-btn-background-ghost {
-  background-color: transparent;
-  color: #4a9d77;
+  &:hover {
+    background-color: #4A9D77;
+    border-color: #4A9D77;
+    color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
+  }
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: #4A9D77;
+  }
 }
 
 // Form Inputs

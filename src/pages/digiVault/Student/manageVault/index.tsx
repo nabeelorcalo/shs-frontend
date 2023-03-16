@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Input, Alert } from "../../../../components";
-
 import { Upload } from "../../../../assets/images";
 import GlobalTable from "../../../../components/Table/Table";
 import { CloseCircleFilled } from "@ant-design/icons";
