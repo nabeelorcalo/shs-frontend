@@ -5,12 +5,12 @@ import './style.scss';
 
 interface EvaluationStatProps {
   name: string,
-  percent: string,
+  percentage: number,
   color: any,
 }
 
 export const EvaluationStatsCard: any = (props: EvaluationStatProps) => {
-  const { name, percent, color } = props;
+  const { name, percentage, color } = props;
 
   return (
     <BoxWrapper className='mt-4'>
@@ -29,11 +29,12 @@ export const EvaluationStatsCard: any = (props: EvaluationStatProps) => {
             className="percentage-txt"
             style={{ color: color }}
           >
-            {percent}
+            {percentage}%
           </Typography.Title>
 
           <Progress
-            percent={30}
+            percent={percentage}
+            showInfo={false}
             strokeColor={color}
           />
         </div>
