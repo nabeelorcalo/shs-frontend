@@ -1,7 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
+
 // Header Icons
-// export { default as AppLogo } from './AppLogo.svg';
-/// <reference types="vite-plugin-svgr/client" />
 export { default as ContractsRecieved } from "./contractsRecieved.png";
 export { default as ContractsRejected } from "./contractsRejected.png";
 export { default as ContractsSigned } from "./contractsSigned.png";
@@ -77,7 +76,6 @@ export { ReactComponent as Development } from "./chart/Development.svg";
 export { ReactComponent as Family } from "./chart/Family.svg";
 export { ReactComponent as Social } from "./chart/Social.svg";
 export { ReactComponent as Recreation } from "./chart/Recreation.svg";
-
 export { default as FinanceIcon } from "./chart/financeIcon.svg";
 export { default as RelationshipIcon } from "./chart/Heart.svg";
 export { default as HealthIcon } from "./chart/healthIcon.svg";
@@ -117,26 +115,24 @@ export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg"
 export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
 
 // Callendar Icons
-export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
-export { default as CalendarIcon } from "./calender-icon.png";
-export { default as CloseCircleIcon } from "./close-circle-icon.png";
-export { default as DownloadIcon } from "./download-icon.png";
-export { default as SearchIcon } from "./search-icon.png";
-// Leave ModuleIcon
-export { ReactComponent as HeartIcon } from "./leaves/Heart.svg";
-export { ReactComponent as LeavesIcon } from "./leaves/LeavesIcon.svg";
-export { ReactComponent as MedicalHeart } from "./leaves/MedicalHeart.svg";
-export { ReactComponent as WorkFromHom } from "./leaves/WorkFromHom.svg";
-export { ReactComponent as MoreIcon } from "./leaves/MoreIcon.svg";
-export { ReactComponent as CalendarWhiteIcon } from "./leaves/CalendarWhiteIcon.svg";
-export { ReactComponent as DownloadIconLeave } from "./leaves/DownloadIconLeave.svg";
-export { ReactComponent as FilterIconLeave } from "./leaves/FilterIconLeave.svg";
-export { ReactComponent as ChevronRight } from "./leaves/ChevronRight.svg";
+export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';
+
+// star outline icon
+export { ReactComponent as StarOutlinedIcon } from './StarOutlined.svg';
+export { ReactComponent as StarFilledIcon } from './StarFilled.svg';
+
+// three dots icon
+export { ReactComponent as ThreeDotsIcon } from './MoreIcon.svg';
+
 
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
-export { ReactComponent as BAnkingImg } from "./digivault/manageVault/bankingFolder.svg";
+export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
 export { ReactComponent as BAnkingImgSub } from "./digivault/manageVault/ph_bank.svg";
 export { ReactComponent as HealthImg } from "./digivault/manageVault/health.svg";
 export { ReactComponent as HealthImgSub } from "./digivault/manageVault/ic_outline-health-and-safety.svg";
@@ -145,7 +141,14 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
-
+export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
+export { ReactComponent as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
+export { ReactComponent as EducationWhite } from "../../assets/images/digivault/manageVault/white/educationWhite.svg";
+export { ReactComponent as EducationWhiteSub } from "../../assets/images/digivault/manageVault/white/educationSubWhite.svg";
+export { ReactComponent as BankingWhiteSub } from "../../assets/images/digivault/manageVault/white/bankSubWhite.svg";
+export { ReactComponent as HealthWhiteSub } from "../../assets/images/digivault/manageVault/white/healthSubWhite.svg";
+export { ReactComponent as TransWhiteSub } from "../../assets/images/digivault/manageVault/white/transWhite.svg";
+export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
 export { ReactComponent as BathIcon } from "./Baths.svg";
@@ -160,16 +163,42 @@ export { ReactComponent as AssessmentRejected } from "./assessment-rejected.svg"
 export { default as UserAvatar } from "./user-avatar.png";
 
 // Accommodation Icons
-export { ReactComponent as IconFilters } from "../images/icon-filters.svg";
-export { ReactComponent as IconFiltersAngle } from "../images/icon-filters-angle.svg";
-export { ReactComponent as IconCloseCircle } from "../images/icon-close-circle.svg";
+
+
+// certificate icons
+export { ReactComponent as IssueCertificateIcon } from "../images/issue-certificate-icon.svg";
+export { default as CertificateImg } from '../images/certificates-img/certificate-dummy.png';
+
+export { ReactComponent as IconFilters } from "./icon-filters.svg";
+export { ReactComponent as IconFiltersAngle } from "./icon-filters-angle.svg";
+export { ReactComponent as IconCloseCircle } from "./icon-close-circle.svg";
+export { ReactComponent as IconWebLocation } from "./icon-web-location.svg";
+export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.svg";
+export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down.svg";
+export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
+export { ReactComponent as IconInfoCircle } from "./accommodation/iocn-info-circle.svg";
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
 export { ReactComponent as StructureMinus } from "./structure/minus.svg";
 export { ReactComponent as StructureAdd } from "./structure/add.svg";
 
-//Setting
+
+
+
+export { ReactComponent as HeartIcon } from "./leaves/Heart.svg";
+export { ReactComponent as LeavesIcon } from "./leaves/LeavesIcon.svg";
+export { ReactComponent as MedicalHeart } from "./leaves/MedicalHeart.svg";
+export { ReactComponent as WorkFromHom } from "./leaves/WorkFromHom.svg";
+export { ReactComponent as MoreIcon } from "./leaves/MoreIcon.svg";
+export { ReactComponent as CalendarWhiteIcon } from "./leaves/CalendarWhiteIcon.svg";
+export { ReactComponent as DownloadIconLeave } from "./leaves/DownloadIconLeave.svg";
+export { ReactComponent as FilterIconLeave } from "./leaves/FilterIconLeave.svg";
+export { ReactComponent as ChevronRight } from "./leaves/ChevronRight.svg";
+export { default as LeaveProfileImg } from "./leaves/images/ProfileImg.jpg";
+export { default as LeaveDocumentIcon } from "./leaves/LeaveDocumentIcon.svg";
+
+//CompanyAdmin setting
 export { ReactComponent as SettingMap } from "./setting/map.svg";
 export { ReactComponent as SettingPeople } from "./setting/people.svg";
 export { ReactComponent as SettingCalendarRemove } from "./setting/calendar-remove.svg";
@@ -184,27 +213,13 @@ export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
 export { ReactComponent as SettingPayroll } from "./setting/payroll-setting.svg";
 export { ReactComponent as SettingRightArrrow } from "./setting/right-arrow.svg";
 export { ReactComponent as SettingAvater } from "./setting/settingAvater.svg";
-
-// Setting Location
 export { ReactComponent as Settinglocation } from "./setting/locationWhiteIcon.svg";
 export { ReactComponent as CardLocation } from "./setting/cardImage.svg";
-
-//Setting Department
 export { ReactComponent as DepartmentAddIcon } from "./setting/addDepartment.svg";
-
-//Setting Shift
 export { ReactComponent as SettingShift } from "./setting/setting-shift.svg";
-
-//Setting Payroll
 export { ReactComponent as SettingPayrollAddIcon } from "./setting/setting-payroll.svg";
-
-//Setting Timesheet
 export { ReactComponent as SettingTimesheetIcon } from "./setting/setting-timesheet.svg";
-
-//Setting Template
 export { ReactComponent as NewTemplate } from "./setting/new-template.svg";
-
-// Setting Leaves
 export { ReactComponent as SettingLeaves } from "./setting/setting-leaves.svg";
 export { ReactComponent as CasualLeave } from "./setting/casual-leave.svg";
 export { ReactComponent as BereavementLeave } from "./setting/bereavement.svg";
@@ -217,8 +232,6 @@ export { ReactComponent as WorkFromHome } from "./setting/work-from-home.svg";
 export { ReactComponent as AddNewQuestion } from "./setting/add.svg";
 export { ReactComponent as PerformanceTick } from "./setting/tick.svg";
 export { ReactComponent as PerformanceClose } from "./setting/close.svg";
-
-// Setting performance
 export { ReactComponent as PerformancePlus } from "./setting/plus.svg";
 export { ReactComponent as PerformanceMinus } from "./setting/minus.svg";
 export { ReactComponent as Performanceinput } from "./setting/performanceInput.svg";
@@ -237,3 +250,43 @@ export { ReactComponent as PurpleRectangle } from "./dashboard/purpleRectangle.s
 export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
 export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
+export { default as WishesBox } from './dashboard/wishesBox.gif';
+
+
+
+
+// contract
+
+export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg"
+export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
+export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
+
+// candidates
+
+export { ReactComponent as CvIcon } from './cvIcon.svg';
+export { ReactComponent as DbsIcon } from './dbsIcon.svg';
+export { ReactComponent as UalIcon } from './ualIcon.svg';
+export { ReactComponent as PassportIcon } from './passportIcon.svg';
+export { ReactComponent as BrpIcon } from './brpIcon.svg';
+export { ReactComponent as PoaIcon } from './poaIcon.svg';
+
+
+export { ReactComponent as PersnolIcon } from './persnolIcon.svg';
+export { ReactComponent as DocumentsIcon } from './documentsIcon.svg';
+export { ReactComponent as HiringIcon } from './hiringIcon.svg';
+export { ReactComponent as InterviewIcon } from './interviewIcon.svg';
+export { ReactComponent as DocumentIconD } from './documentsIcondrawer.svg';
+export { ReactComponent as Schedule } from './schedule.svg';
+
+export { ReactComponent as Dot } from './dot.svg';
+export { ReactComponent as Mail } from './mail.svg';
+export { ReactComponent as Call } from './call.svg';
+export { ReactComponent as Location } from './location.svg';
+export { ReactComponent as Intro } from './Intro.svg';
+export { ReactComponent as PlayIcon } from './playIcon.svg';
+export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
+
+
+
+
+

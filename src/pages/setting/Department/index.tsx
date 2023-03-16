@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { DepartmentAddIcon, LocationMore } from "../../../assets/images";
-import {
-  Col,
-  Row,
-  Typography,
-  Space,
-  Dropdown,
-  Menu,
-  Button,
-  Form,
-} from "antd";
+import { Col, Row, Typography, Button, Form } from "antd";
 import "./style.scss";
 import { Input } from "antd";
 import { Alert, SearchBar } from "../../../components";
 import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../components/Model";
-
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -41,7 +30,6 @@ const overview = [
   },
 ];
 
-
 const SettingDepartment: React.FC = (props: any) => {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -54,6 +42,10 @@ const SettingDepartment: React.FC = (props: any) => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
 
+  const close = () => {
+    setShowEditModal(false);
+  };
+
   return (
     <div className="setting-department">
       <div className="flex justify-between">
@@ -61,7 +53,9 @@ const SettingDepartment: React.FC = (props: any) => {
 
         <Button
           size="middle"
-          onClick={() => {setShowEditModal(!showDeleteModal)}}
+          onClick={() => {
+            setShowEditModal(!showDeleteModal);
+          }}
           className="flex gap-2 setting-add-button white-color teriary-bg-color"
         >
           <DepartmentAddIcon /> Add Department
@@ -97,12 +91,19 @@ const SettingDepartment: React.FC = (props: any) => {
         })}
       </Row>
       <PopUpModal
-        cancelBtntxt="Cancel"
-        okBtntxt="Submit"
-        state={showEditModal}
-        setState={setShowEditModal}
+        open={showEditModal}
         title="Department"
         width={600}
+        close={close}
+        footer={
+          <div className="setting-department-footer"> <Button key="Cancel" className="footer-cancel-btn ">
+              Cancel
+            </Button>
+            <Button key="submit" className="footer-submit-btn ">
+              Submit
+            </Button>
+          </div>
+        }
       >
         <Form layout="vertical">
           <Form.Item

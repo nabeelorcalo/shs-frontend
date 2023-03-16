@@ -1,105 +1,215 @@
 import { useState } from 'react'
-import { CloseCircleFilled } from '@ant-design/icons'
-import { ArrowDownDark, DownloadIcon } from '../../assets/images';
-import DragAndDropUpload from '../DragAndDrop';
-import { Button, Modal, Select, Radio, DatePicker, Input } from 'antd'
+import { CloseCircleFilled, InboxOutlined, UploadOutlined } from '@ant-design/icons'
+import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
+import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
+import "./style.scss"
 import dayjs from 'dayjs';
-import { DropDown } from '../Dropdown/DropDown';
+import { DocumentUpload } from '../../assets/images';
+import { Button } from '../Button';
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
+import { AcceptedFileTyp } from '../../config/leaveRequestFileConstant';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-const dateFormat = 'YYYY/MM/DD';
-const LeaveRequest = ({ title }: any) => {
-  const [show, setShow] = useState(false)
+const { Dragger } = Upload;
+const props: UploadProps = {
+  name: 'file',
+  multiple: false,
+  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  onChange(info) {
+    const { status } = info.file;
+    if (status !== 'uploading') {
+      // console.log(info.file, info.fileList);
+    }
+    if (status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
+  onDrop(e) {
+    // console.log('Dropped files', e.dataTransfer.files);
+  },
+};
+
+// Leave Request Form Select Oprion Array
+const leavRequestOptionDAta = [
+  { value: '1', label: 'Sick' },
+  { value: '2', label: 'Casual' },
+  { value: '3', label: 'Work From Home' },
+  { value: '4', label: 'Medical' },
+]
+
+//  Function to Change Uploaded  File Icon inLeave Request Form  
+// const iconRender = (file: any, listType: any) => {
+//   return <UploadOutlined />;
+// };
+export const LeaveRequest = (props: any) => {
+  const initailVal = {
+    leaveType: '',
+    leaveTypeDay: '',
+    start: '',
+    end: '',
+    days: '',
+    timeFrom: '',
+    timeTo: "",
+    hours: '',
+    reason: "",
+    attachment: ''
+
+  }
+  
+  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
+  // console.log(openModal);
+  const [openStartDate, setOpenStartDate] = useState(false);
+  const [openEndDate, setOpenEndDate] = useState(false);
+  const [formVal, setFormVal] = useState(data ? data : initailVal)
+  const [form] = Form.useForm();
+  // const handleTimeChange = (time: any) => {
+  //   const selectedHour = dayjs(time).format('h');
+  //   console.log(selectedHour);
+  // }
+  console.log(formVal, 'from modal box');
 
   return (
-    <>
-      <Button onClick={() => { setShow(!show) }}>Leave request form</Button>
-      <div>
-        <Modal
-          title={title}
-          open={show}
-          onCancel={() => { setShow(!show) }}
-          width={600}
-          maskClosable={false}
-          closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px' }} />}
-          footer={[
-            <Button onClick={() => { setShow(!show) }} key="Cancel" style={{ border: '1px solid #4a9d77', color: '#4a9d77', padding: '0px 20px' }}>
-              Cancel
-            </Button>,
-            <Button onClick={() => { setShow(!show) }} key="submit" style={{ backgroundColor: '#4a9d77', color: '#fff', border: '1px solid #4a9d77', padding: '0px 20px' }}>
-              Submit
-            </Button>,
-          ]}
+    <Modal
+      title={title}
+      open={open}
+      onCancel={() => setIsAddModalOpen(false)}
+      width={600}
+      className="leave_modal_main"
+      maskClosable={true}
+      closeIcon={<CloseCircleFilled className=' text-xl text-[#A3AED0]' />}
+      footer={false}
+    >
+      <Form
+        layout='vertical'
+        form={form}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+      >
+        <Form.Item
+          label="Leave Type"
+          name="leavetype"
+          rules={[{ required: true }]}
         >
-          <div className="mt-8 flex flex-col gap-2 ">
+          <Select
+            showSearch
+            placeholder="Select"
+            // optionFilterProp="children"
+            // filterOption={(input, option) => (option?.label ?? '').includes(input)}
+            options={leavRequestOptionDAta}
+          />
+        </Form.Item>
+        <Form.Item
+          name="radio"
+        >
+          <Radio.Group onChange={changeLeaveTyp}>
+            <Radio value="FullDay">Full Day</Radio>
+            <Radio value="HalfDay">Half Day</Radio>
+          </Radio.Group>
+        </Form.Item>
+        <Row gutter={[10, 10]}>
+          <Col lg={8}>
+            <Form.Item name="datefrom" label="Date From" rules={[{ required: true }]}>
+              <CommonDatePicker
+                name="Date Picker1"
+                open={openStartDate}
+                setOpen={setOpenStartDate}
+                setValue={(e: any) => console.log(e)}
+                placement={'bottomLeft'}
+              />
+            </Form.Item>
+          </Col>
+          <Col lg={8}>
+            <Form.Item name="dateTo" label="Date To" rules={[{ required: true }]} >
+              <CommonDatePicker
+                name="Date Picker"
+                open={openEndDate}
+                setOpen={setOpenEndDate}
+                setValue={(e: any) => console.log(e)}
+                placement={'bottomLeft'}
+              />
+            </Form.Item>
+          </Col>
+          <Col lg={8}>
+            <Form.Item name="days" label="Days ">
+              <Input
+                placeholder="enter a number "
+                maxLength={16}
+                disabled
+              />
+            </Form.Item>
+          </Col>
 
-            <p>Leave Type<span className="text-[red]">*</span></p>
-            {/* <DropDown name="Select" endIcon options={['sick', 'casual', 'work from home', 'medical']} /> */}
-            <Select
-              showSearch
-              style={{ width: '100%' }}
-              placeholder="Select"
-              optionFilterProp="children"
-              filterOption={(input, option) => (option?.label ?? '').includes(input)}
-              options={[
-                {
-                  value: '1',
-                  label: 'Sick',
-                },
-                {
-                  value: '2',
-                  label: 'Casual',
-                },
-                {
-                  value: '3',
-                  label: 'Work From Home',
-                },
-                {
-                  value: '4',
-                  label: 'Medical',
-                },
-              ]}
-            />
-            <div className="my-2">
-              <Radio.Group onChange={() => { }} value={"FullDay"}>
-                <Radio value={"FullDay"}>Full Day</Radio>
-                <Radio value={"HalfDay"}>Half Day</Radio>
-
-              </Radio.Group>
-            </div>
-            <div className="my-2 flex gap-3">
-              <div className=" flex flex-col gap-2  w-1/3">
-                <p>Date From<span className="text-[red]">*</span></p>
-                <DatePicker onChange={() => { }} />
-              </div>
-              <div className=" flex flex-col gap-2  w-1/3">
-                <p>Date From<span className="text-[red]">*</span></p>
-                <DatePicker onChange={() => { }} />
-              </div>
-              <div className="flex flex-col gap-2  w-1/3">
-                <p>Days</p>
+        </Row>
+        {
+          <Row gutter={[10, 10]}>
+            <Col lg={8}>
+              <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
+                <TimePicker
+                  minuteStep={60}
+                  secondStep={60}
+                // onChange={handleTimeChange}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={8}>
+              <Form.Item name="timeTo" label="Time To" rules={[{ required: true }]}>
+                <TimePicker
+                  minuteStep={60}
+                  secondStep={60}
+                // onChange={handleTimeChange}
+                />
+              </Form.Item>
+            </Col>
+            <Col lg={8}>
+              <Form.Item name="hours" label="Hours">
                 <Input
-                  placeholder={0}
+                  placeholder="enter a number "
                   maxLength={16}
                   disabled
                 />
-              </div>
+              </Form.Item>
+            </Col>
+          </Row>
+        }
+        <Form.Item name="reason" label='Reason' rules={[{ required: true }]} >
+          <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
+        </Form.Item>
+        <Form.Item label="Attachment" name='attachment'>
+          <Dragger
+            accept={AcceptedFileTyp}
+            beforeUpload={() => false}
+            className="FileUploder"
+            // iconRender={iconRender}
+            {...props}
+          >
+            <div className='File_info_wraper'  >
+              <p className="ant-upload-text">Drag & drop files or <span>Browse</span> </p>
+              <p className="ant-upload-hint">Support jpeg,pdf and doc files</p>
             </div>
-            <div className="flex flex-col gap-2  my-2">
-              <p>Reason<span className="text-[red]">*</span></p>
-              <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
-            </div>
-            <div className="flex flex-col gap-2 my-2">
-              <p>attachement</p>
-              <DragAndDropUpload />
+            <p className="ant-upload-drag-icon"><DocumentUpload /></p>
+          </Dragger>
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 13, span: 11 }}>
+          <div className='flex items-center justify-between'>
+            <Button
 
-            </div>
-
+              className='Leave_request_Canclebtn'
+              label="Cancle"
+              onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
+              type="primary"
+              htmlType="button"
+            />
+            <Button
+              className='Leave_request_SubmitBtn'
+              label="Submit"
+              onClick={subMitLeaveBtn}
+              type="primary"
+              htmlType="submit"
+            />
           </div>
-        </Modal>
-      </div>
-    </>
+        </Form.Item>
+      </Form>
+    </Modal>
   )
 }
-
-export default LeaveRequest

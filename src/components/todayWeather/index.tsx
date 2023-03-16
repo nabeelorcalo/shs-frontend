@@ -12,7 +12,7 @@ export const TodayWeather: any = () => {
 
       <div className='flex flex-row items-center'>
         <SunIcon />
-        <p className='ml-4 xl:ml-4 my-[20px] text-[36px] lg:text-[22px]'>
+        <p className='ml-4 xl:ml-4 my-[16px] text-[22px] xl:text-[36px]'>
           23° C
         </p>
       </div>

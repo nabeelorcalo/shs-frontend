@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Row } from 'antd';
-import PageHeader from '../../../components/PageHeader';
+import {PageHeader} from '../../../components';
 import TimeTracking from "../../../components/timeTRacking";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
@@ -93,7 +93,6 @@ const Intern = () => {
         });
       })
       .catch(() => {
-
       });
   };
 

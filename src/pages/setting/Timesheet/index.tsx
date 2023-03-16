@@ -42,6 +42,9 @@ const SettingTimesheet = () => {
     const { name, value } = event.target;
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
+  const close = () => {
+    setShowEditModal(false);
+  };
   return (
     <div className="setting-time-sheet">
       <div>
@@ -86,12 +89,19 @@ const SettingTimesheet = () => {
         })}
       </Row>
       <PopUpModal
-        cancelBtntxt="Cancel"
-        okBtntxt="Submit"
-        state={showEditModal}
-        setState={setShowEditModal}
-        title="Edit Category"
+        open={showEditModal}
+        title="Add Category"
         width={600}
+        close={close}
+        footer={
+          <div className="timesheet-department-footer"> <Button key="Cancel" className="footer-cancel-btn ">
+              Cancel
+            </Button>
+            <Button key="submit" className="footer-submit-btn ">
+              Submit
+            </Button>
+          </div>
+        }
       >
         <Form layout="vertical">
           <Form.Item
@@ -99,12 +109,12 @@ const SettingTimesheet = () => {
             rules={[{ required: true, message: "Please Enter your username!" }]}
           >
             <div className="d-flex w-full pl-1">
-              <p className="py-2">Recurrence</p>
+              <p className="py-2">Category Name</p>
               <Input placeholder="Title" className="input-style" />
             </div>
           </Form.Item>
           <div className="mt-3 flex flex-col">
-            <label className="pb-2">Description</label>
+            <label className="pb-2">Description<span className="text-[red]">*</span></label>
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
         </Form>

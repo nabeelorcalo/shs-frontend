@@ -1,41 +1,34 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
-import { CloseCircleFilled } from '@ant-design/icons';
+import React, { FC } from 'react';
+import { Modal } from 'antd';
+import { IconCloseCircle } from '../../assets/images'
 
-interface IPOPUPMODAL {
-  title:string
-  width:number
-  state:boolean
-  setState:React.Dispatch<React.SetStateAction<boolean>>
-  cancelBtntxt:string
-  okBtntxt:string
-  children:any
-
-
+interface ModalProps {
+  title?: React.ReactNode
+  width?: string | number
+  open: boolean
+  close: () => void
+  children?: React.ReactNode
+  footer?: React.ReactNode
+  closable?: boolean
+  wrapClassName?: string
 }
 
+export const PopUpModal: FC<ModalProps> = ( props ) => {
 
-export const PopUpModal = ({ title, width, state, setState, cancelBtntxt, okBtntxt, children }: IPOPUPMODAL) => {
-  // const [open, setOpen] = useState(showHide);
+ const {title, width=700, open, close, children, footer=null, closable=true, wrapClassName } = props
 
   return (
     <>
       <Modal
         centered
         title={title}
-        open={state}
-        onCancel={() => { setState(!state) }}
+        open={open}
+        onCancel={close}
         width={width}
-        maskClosable={true}
-        closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px' }} />}
-        footer={[
-          <Button onClick={() => { setState(!state) }} key="Cancel" style={{ border: '1px solid #4a9d77', color: '#4a9d77', padding: '0px 20px' }}>
-            {cancelBtntxt}
-          </Button>,
-          <Button onClick={() => { setState(!state) }} key="submit" style={{ backgroundColor: '#4a9d77', color: '#fff', border: '1px solid #4a9d77', padding: '0px 20px' }}>
-            {okBtntxt}
-          </Button>,
-        ]}
+        closeIcon={<IconCloseCircle />}
+        closable={closable}
+        footer={footer}
+        wrapClassName={wrapClassName}
       >
         {children}
       </Modal>

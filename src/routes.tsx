@@ -20,12 +20,17 @@ import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import DemoCard from "./components/ContractCard/demoCard";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+// import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
 
 // remove til here
+// import ManageVault from "./pages/digiVault/Student/manageVault";
+//
 
-
-
+import Certificates from "./pages/certificate";
+import CertificateDetail from "./pages/certificate/certificateDetail";
+//
+import Chat from "./pages/chat";
+import ManageVault from "./pages/digiVault/Student/manageVault";
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -69,12 +74,24 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
-const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
-const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
-const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
-const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
-const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
+const AvailableProperties = Loadable(
+  lazy(() => import("./pages/accommodation/AvailableProperties"))
+);
+const SavedSearches = Loadable(
+  lazy(() => import("./pages/accommodation/SavedSearches"))
+);
+const RentedProperties = Loadable(
+  lazy(() => import("./pages/accommodation/RentedProperties"))
+);
+const BookingRequests = Loadable(
+  lazy(() => import("./pages/accommodation/BookingRequests"))
+);
+const AccommodationPayments = Loadable(
+  lazy(() => import("./pages/accommodation/Payments"))
+);
+const AccPropertyDetail = Loadable(
+  lazy(() => import("./pages/accommodation/PropertyDetail"))
+);
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -85,29 +102,71 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
-const ViewHistory = Loadable(lazy(() => import("./pages/viewHistory")));
+const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
-const SettingPerformance= Loadable(lazy(()=>import("./pages/setting/Performance")))
-const SettingDepartment= Loadable(lazy(()=>import("./pages/setting/Department")))
-const SettingLocation= Loadable(lazy(()=>import("./pages/setting/Location")))
-const AddLocation= Loadable(lazy(()=>import("./pages/setting/Location/AddLocation")))
-const SettingTemplate= Loadable(lazy(()=>import("./pages/setting/Templates")))
-const TemplatesOfferLater= Loadable(lazy(()=>import("./pages/setting/Templates/OfferLetter")))
-const OfferLaterNewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/OfferLetter/NewTemplate")))
-const TemplatesCertificateOfAppreciation= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfAppreciation")))
-const TCANewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfAppreciation/NewTemplate")))
-const TemplatesCertificateOfCompletion= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfCompletion")))
-const TCCNewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/CertificateOfCompletion/NewTemplate")))
-const TemplatesContract= Loadable(lazy(()=>import("./pages/setting/Templates/Contract")))
-const ContractNewTemplate= Loadable(lazy(()=>import("./pages/setting/Templates/Contract/NewTemplate")))
-const TemplatesRejectionLetter= Loadable(lazy(()=>import("./pages/setting/Templates/RejectionLetter")))
-const SettingLeaves= Loadable(lazy(()=>import("./pages/setting/Leaves")))
-const LeavesAddPolicy= Loadable(lazy(()=>import("./pages/setting/Leaves/AddPolicy")))
-const SettingShifts= Loadable(lazy(()=>import("./pages/setting/Shifts")))
-const AddShift= Loadable(lazy(()=>import("./pages/setting/Shifts/AddShift")))
-const SettingTimesheet= Loadable(lazy(()=>import("./pages/setting/Timesheet")))
-const SettingPayroll= Loadable(lazy(()=>import("./pages/setting/Payroll")))
-const PayrollAddCategory= Loadable(lazy(()=>import("./pages/setting/Payroll/AddCategory")))
+const SettingPerformance = Loadable(
+  lazy(() => import("./pages/setting/Performance"))
+);
+const SettingDepartment = Loadable(
+  lazy(() => import("./pages/setting/Department"))
+);
+const SettingLocation = Loadable(
+  lazy(() => import("./pages/setting/Location"))
+);
+const AddLocation = Loadable(
+  lazy(() => import("./pages/setting/Location/AddLocation"))
+);
+const SettingTemplate = Loadable(
+  lazy(() => import("./pages/setting/Templates"))
+);
+const TemplatesOfferLater = Loadable(
+  lazy(() => import("./pages/setting/Templates/OfferLetter"))
+);
+const OfferLaterNewTemplate = Loadable(
+  lazy(() => import("./pages/setting/Templates/OfferLetter/NewTemplate"))
+);
+const TemplatesCertificateOfAppreciation = Loadable(
+  lazy(() => import("./pages/setting/Templates/CertificateOfAppreciation"))
+);
+const TCANewTemplate = Loadable(
+  lazy(
+    () =>
+      import("./pages/setting/Templates/CertificateOfAppreciation/NewTemplate")
+  )
+);
+const TemplatesCertificateOfCompletion = Loadable(
+  lazy(() => import("./pages/setting/Templates/CertificateOfCompletion"))
+);
+const TCCNewTemplate = Loadable(
+  lazy(
+    () =>
+      import("./pages/setting/Templates/CertificateOfCompletion/NewTemplate")
+  )
+);
+const TemplatesContract = Loadable(
+  lazy(() => import("./pages/setting/Templates/Contract"))
+);
+const ContractNewTemplate = Loadable(
+  lazy(() => import("./pages/setting/Templates/Contract/NewTemplate"))
+);
+const TemplatesRejectionLetter = Loadable(
+  lazy(() => import("./pages/setting/Templates/RejectionLetter"))
+);
+const SettingLeaves = Loadable(lazy(() => import("./pages/setting/Leaves")));
+const LeavesAddPolicy = Loadable(
+  lazy(() => import("./pages/setting/Leaves/AddPolicy"))
+);
+const SettingShifts = Loadable(lazy(() => import("./pages/setting/Shifts")));
+const AddShift = Loadable(
+  lazy(() => import("./pages/setting/Shifts/AddShift"))
+);
+const SettingTimesheet = Loadable(
+  lazy(() => import("./pages/setting/Timesheet"))
+);
+const SettingPayroll = Loadable(lazy(() => import("./pages/setting/Payroll")));
+const PayrollAddCategory = Loadable(
+  lazy(() => import("./pages/setting/Payroll/AddCategory"))
+);
 
 const Charts = Loadable(
   lazy(() => import("./components/ChartsOfGraphs/Charts"))
@@ -389,8 +448,8 @@ const systemAdminRoutes = [
         element: <HelpDesk />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
-        path: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
+        key: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
+        path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
         element: <ActivityLog />,
       },
     ],
@@ -498,14 +557,13 @@ const companyAdminRoutes = [
             element: <AddLocation />,
             path: "/settings/location/add-location",
           },
-          
+
           {
             key: `offer-letter-new-template`,
             element: <OfferLaterNewTemplate />,
             path: "/settings/template/offer-letters/new-template",
           },
           {
-                
             key: `template-offer-letters`,
             element: <TemplatesOfferLater />,
             path: "/settings/template/template-offer-letters",
@@ -515,7 +573,7 @@ const companyAdminRoutes = [
             element: <TemplatesContract />,
             path: "/settings/template/contract",
           },
-          
+
           {
             key: `contract-new-template`,
             element: <ContractNewTemplate />,
@@ -536,13 +594,13 @@ const companyAdminRoutes = [
             element: <TCANewTemplate />,
             path: "/settings/template/certificate-of-appreciation/new-template",
           },
-          
+
           {
             key: `template-certificate-of-completion`,
             element: <TemplatesCertificateOfCompletion />,
             path: "/settings/template/certificate-of-completion",
           },
-          
+
           {
             key: `tcc-new-template`,
             element: <TCCNewTemplate />,
@@ -569,11 +627,10 @@ const companyAdminRoutes = [
           },
           {
             key: `add-policy`,
-            element: <LeavesAddPolicy/>,
+            element: <LeavesAddPolicy />,
             path: "leaves/add-policy",
           },
-         
-          
+
           {
             key: `performance`,
             path: `performance`,
@@ -627,7 +684,7 @@ const companyAdminRoutes = [
           },
           {
             key: `payroll-add-category`,
-            element: <PayrollAddCategory/>,
+            element: <PayrollAddCategory />,
             path: "/settings/payroll/add-category",
           },
         ],
@@ -741,6 +798,38 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
+        children: [
+          {
+            key: `${ROUTES_CONSTANTS.AVAILABLE_PROPERTIES}`,
+            element: <AvailableProperties />,
+            index: true,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            path: `${ROUTES_CONSTANTS.SAVED_SEARCHES}`,
+            element: <SavedSearches />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            path: `${ROUTES_CONSTANTS.RENTED_PROPERTIES}`,
+            element: <RentedProperties />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            path: `${ROUTES_CONSTANTS.BOOKING_REQUESTS}`,
+            element: <BookingRequests />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            path: `${ROUTES_CONSTANTS.ACCOMMODATION_PAYMENTS}`,
+            element: <AccommodationPayments />,
+          },
+        ],
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        element: <AccPropertyDetail />,
       },
     ],
   },
@@ -864,6 +953,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
     ],
   },

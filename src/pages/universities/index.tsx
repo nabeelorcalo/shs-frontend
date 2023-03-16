@@ -6,7 +6,7 @@ import "./style.scss";
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table";
 import { UniversitesTableData } from "./data";
-import CustomDroupDown from "../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+
 import { UniversitiesTableFlag } from "../../assets/images";
 
 
@@ -62,7 +62,7 @@ const Universities = () => {
     key: "Action",
     render: (_: any, data: any) => (
       <Space size="middle">
-        <CustomDroupDown menu1={menu2} />
+        {/* <CustomDroupDown menu1={menu2} /> */}
       </Space>
     ),
   },

@@ -1,7 +1,7 @@
 import { Button, Space } from "antd";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import PageHeader from "../../components/PageHeader";
+import {PageHeader} from "../../components/PageHeader";
 import { SearchBar } from "../../components";
 import "./style.scss";
 import { FileAddFilled } from "@ant-design/icons";

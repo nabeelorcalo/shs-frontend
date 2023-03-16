@@ -186,7 +186,7 @@ export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
   };
 
   return (
-    <div className="">
+    <div className="add-event-calendar">
       <Modal
         open={open}
         centered
@@ -213,7 +213,7 @@ export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
           />
         </div>
         <Space className="flex justify-end mt-5">
-          {" "}
+        
           <Button key="Cancel" className="footer-cancel-btn ">
             Cancel
           </Button>
