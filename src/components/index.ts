@@ -39,3 +39,6 @@ export * from './ContentMenu'
 export * from './Model'
 export * from './ExtendedButton'
 export * from './FiltersButton'
+export * from './IconButton'
+export * from './EvaluationPersonCard';
+export * from './EvaluationStats';

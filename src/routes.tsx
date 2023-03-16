@@ -116,6 +116,7 @@ const Charts = Loadable(
   lazy(() => import("./components/ChartsOfGraphs/Charts"))
 );
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
+const PerformanceEvaluationForm = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 
 export const publicRoutes = [
@@ -650,6 +651,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <PerformanceEvaluationForm />,
       },
       {
         key: `${ROUTES_CONSTANTS.STRUCTURE}`,

@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { Dropdown, MenuProps, Space, Avatar, Progress } from 'antd';
+import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from 'antd';
 // import all reusable componets from component/index.ts
 import { OverAllPerfomance, MonthlyPerfomanceChart } from "../../../components";
 import Table from "../../../components/Table/Table";
 import { PageHeader } from "../../../components/PageHeader";
 // end
 import { MoreIcon } from "../../../assets/images";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 
 const InternPerformance = () => {
   const performanceData = [
@@ -262,11 +263,16 @@ const InternPerformance = () => {
         </div>
 
         <div className="performance-right-subcontainer">
-          <Table
-            columns={evaluationHistoryColumnNames}
-            tableData={evaluationHistoryData}
-            pagination={false}
-          />
+          <BoxWrapper >
+            <Typography.Title level={4} >
+              Evaluation  History
+            </Typography.Title>
+            <Table
+              columns={evaluationHistoryColumnNames}
+              tableData={evaluationHistoryData}
+              pagination={false}
+            />
+          </BoxWrapper>
         </div>
       </div>
     </>

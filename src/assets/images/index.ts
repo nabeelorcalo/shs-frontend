@@ -252,7 +252,7 @@ export { ReactComponent as Intro } from './Intro.svg';
 export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
-
-
+// Performance
+export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
 
 

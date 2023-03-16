@@ -40,6 +40,7 @@ export const ROUTES_CONSTANTS: any = {
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
   PERFORMANCE: "performance",
+  EVALUATION_FORM: "evaluation-form",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",

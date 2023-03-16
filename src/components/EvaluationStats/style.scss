@@ -1,0 +1,15 @@
+.evaluation-stats-card {
+  .evaluation-stats-name {
+    margin-bottom: 0 !important;
+  }
+
+  .percentage-txt {
+    margin-left: auto;
+    margin-top: 0;
+  }
+
+  .ant-progress.ant-progress-show-info .ant-progress-outer {
+    margin-inline-end: 0;
+    padding-inline-end: 0;
+  }
+}
