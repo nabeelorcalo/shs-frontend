@@ -163,7 +163,7 @@ const ViewPerformance = () => {
         data.map((obj: any) => {
           return (
             <div className="flex flex-col flex-wrap">
-              <div key={obj.name} className="mt-8 mb-2">
+              <div key={obj.name} className="mt-6 mb-2">
                 <Typography.Title level={3} className="evaluation-heading">
                   {obj.name}
                 </Typography.Title>
@@ -185,6 +185,12 @@ const ViewPerformance = () => {
           )
         })
       }
+
+      <div className="my-4">
+        <Typography.Title level={3} className="evaluation-heading">
+          Comments
+        </Typography.Title>
+      </div>
     </div>
   )
 }
