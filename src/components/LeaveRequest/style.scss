@@ -1,0 +1,68 @@
+@import '../../scss/colors';
+.leave_modal_main {
+    .Leave_request_SubmitBtn {
+        background: $teriary-bg-color;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+        border-radius: 8px;
+        color: $white-bg-color;
+        &:hover {
+            background-color: $teriary-bg-color;
+            color: $white-bg-color;
+        }
+    }
+    
+    .Leave_request_Canclebtn {
+        background: $white-bg-color;
+        border: 1px solid $teriary-bg-color;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+        color: $teriary-bg-color;
+
+        &:hover {
+            background-color: $white-bg-color;
+            color: $teriary-bg-color;
+        }
+    }
+
+    .ant-upload-wrapper {
+        .ant-upload-drag {
+            background: $text-input-bg-color;
+            border: 2px dashed $text-error-line-color;
+            padding-left: 30px;
+            padding-right: 30px;
+
+            &:hover {
+                border: 2px dashed $input-hover-color;
+            }
+
+            .ant-upload-drag-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .File_info_wraper {
+                    .ant-upload-text {
+                        color: $primary-bg-color;
+
+                        span {
+                            color: $text-error-hover-color;
+                        }
+                    }
+
+                    .ant-upload-hint {
+                        color: $text-success-placeholder-color;
+                    }
+                }
+            }
+
+        }
+        .ant-upload-list-item{
+            background-color: $text-input-bg-color;
+            padding: 12px 10px;
+            border-radius: 6px;
+            height: unset;
+            &:hover{
+                background-color: $text-input-bg-color;
+            }
+        }
+    }
+}
