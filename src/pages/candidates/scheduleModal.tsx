@@ -64,6 +64,7 @@ const RequestDocModel = (props: any) => {
                 </div>,
                 key: 'users'
               }]}>
+
             <div className="drop-down-with-imgs flex items-center gap-3">
               <div className="flex items-center gap-3 mr-[40px]">
                 <p>{user.userName}</p>
@@ -82,6 +83,10 @@ const RequestDocModel = (props: any) => {
               <TimePicker className='time-p' />
             </div>
           </div>
+
+          <div className='title'><p>Description</p></div>
+          <textarea className='input' placeholder='Describe your problem' />
+
 
           <div className="location-wrapper">
             <p className='heading mt-7 '>Location</p>

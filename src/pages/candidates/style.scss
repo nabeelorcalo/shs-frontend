@@ -444,10 +444,7 @@
   color: $text-success-placeholder-color;
 }
 
-.main {
-  border-bottom: 1px solid $text-error-line-color;
 
-}
 
 .asignee-wrap {
 
@@ -513,4 +510,31 @@
   border: 1px solid $text-error-line-color;
   border-radius: 8px;
 
+}
+
+.edit-icon {
+  background-color: white;
+  border-radius: 8px;
+}
+
+.main-wrapperr {
+  border-bottom: 1px solid $text-error-line-color;
+}
+
+.main-wrapper :hover .hover-effect {
+  cursor: pointer;
+}
+
+.main-wrapperr:hover .interview-content {
+  background-color: #E6F4F9;
+  border-radius: 8px;
+}
+
+.main-wrapperr:hover .hover-effect {
+  display: block;
+}
+
+.hover-effect {
+  display: none;
+  
 }
