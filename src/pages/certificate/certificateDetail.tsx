@@ -35,8 +35,14 @@ const CertificateDetail = () => {
       </div>
       <Row gutter={[15, 15]} className='flex-wrap'>
         <Col xl={6} lg={6} md={24} xs={24}>
-          <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='user-info flex items-center justify-center flex-col'>
-            <img src={findUser?.avatar} className='h-[100px] w-[100px] rounded-full object-cover' alt='avatar' />
+          <BoxWrapper
+            boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
+            className='user-info flex items-center justify-center flex-col'>
+            <img
+              src={findUser?.avatar}
+              className='h-[100px] w-[100px] rounded-full object-cover'
+              alt='avatar'
+            />
             <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{findUser?.name}</p>
             <span className='department capitalize'>{findUser?.department}</span>
             <Button className='mt-[30px] w-full view-profile-btn'>View Profile</Button>
@@ -45,7 +51,9 @@ const CertificateDetail = () => {
         <Col xl={12} lg={18} md={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             lg={5} md={12} xs={24}
-            data={findUser?.performance} heading={'Overall Performance'} />
+            data={findUser?.performance}
+            heading={'Overall Performance'}
+          />
         </Col>
         <Col xl={6} lg={24} xs={24}>
           <LeaveChart heading='Leaves' />
@@ -53,8 +61,11 @@ const CertificateDetail = () => {
       </Row>
       <div className="flex items-center justify-between gap-3 flex-wrap my-[30px]">
         <p className='font-semibold text-base total-certificates'>
-          Total Certificates: <span className='total-num'>
-            {findUser?.certificates && findUser?.certificates?.length < 10 ? `0${findUser?.certificates?.length}` : findUser?.certificates?.length}
+          Total Certificates:
+          <span className='total-num'>
+            {findUser?.certificates && findUser?.certificates?.length < 10 ?
+              `0${findUser?.certificates?.length}` :
+              findUser?.certificates?.length}
             {!findUser?.certificates && '00'}
           </span>
         </p>
@@ -67,20 +78,51 @@ const CertificateDetail = () => {
             <Col lg={6} md={8} sm={12} xs={24} key={i}>
               <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
                 <div className="flex items-center justify-between mb-[30px]">
-                  <p className='font-medium title text-xl'>Certificate of <span className='capitalize'>{certificate?.certificateType}</span></p>
+                  <p className='font-medium title text-xl'>
+                    Certificate of
+                    <span className='capitalize'>{certificate?.certificateType}</span>
+                  </p>
                   <DropDownNew items={[
-                    { label: <p onClick={() => { setIssueCertificateModal(true) }}>Edit</p>, key: 'edit' },
+                    {
+                      label: <p onClick={() => { setIssueCertificateModal(true) }}>Edit</p>,
+                      key: 'edit'
+                    },
                     { label: <p>Delete</p>, key: 'delete' },
-                  ]} placement={'bottomRight'} overlayStyle={{ width: '100px' }}>
-                    <ThreeDots className='cursor-pointer' onClick={() => setIssuewNewCertificate({ name: findUser?.name, type: certificate?.certificateType, desc: certificate?.desc })} />
+                  ]}
+                    placement={'bottomRight'}
+                    overlayStyle={{ width: '100px' }}
+                  >
+                    <ThreeDots
+                      className='cursor-pointer'
+                      onClick={() => setIssuewNewCertificate({
+                        name: findUser?.name,
+                        type: certificate?.certificateType,
+                        desc: certificate?.desc
+                      })}
+                    />
                   </DropDownNew>
                 </div>
                 <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl">
-                  <img src={certificate?.certificateImg} className='w-[90%] mx-auto block' />
+                  <img
+                    src={certificate?.certificateImg}
+                    className='w-[90%] mx-auto block'
+                  />
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
-                    onClick={() => { setPreviewModal(true); setPreviewImg(certificate?.certificateImg) }}
+                    onClick={() => {
+                      setPreviewModal(true);
+                      setPreviewImg(certificate?.certificateImg)
+                    }}
                   >
-                    <CertificateEyeIcon className='eye-icon' height={70} width={70} onClick={() => setIssuewNewCertificate({ name: findUser?.name, type: certificate?.certificateType, desc: certificate?.desc })} />
+                    <CertificateEyeIcon
+                      className='eye-icon'
+                      height={70}
+                      width={70}
+                      onClick={() => setIssuewNewCertificate({
+                        name: findUser?.name,
+                        type: certificate?.certificateType,
+                        desc: certificate?.desc
+                      })}
+                    />
                   </div>
                 </div>
               </BoxWrapper>
