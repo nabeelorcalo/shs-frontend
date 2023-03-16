@@ -3,7 +3,7 @@ import { Dropdown, MenuProps, Space, Avatar, Progress } from 'antd';
 // import all reusable componets from component/index.ts
 import { OverAllPerfomance, MonthlyPerfomanceChart } from "../../../components";
 import Table from "../../../components/Table/Table";
-import PageHeader from "../../../components/PageHeader";
+import { PageHeader } from "../../../components/PageHeader";
 // end
 import { MoreIcon } from "../../../assets/images";
 
@@ -60,6 +60,11 @@ const InternPerformance = () => {
               size={[200, 13]}
               percent={data.performance}
               strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
+              format={(percent: any) =>
+                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                  {percent}%
+                </p>
+              }
             />
           </Space>
         )
