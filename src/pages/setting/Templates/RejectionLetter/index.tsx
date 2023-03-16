@@ -44,6 +44,7 @@ const TemplatesRejectionLetter = () => {
         </div>
       </div>
       <TemplatesCommonCard
+       link="/settings/template/rejection-letter/new-template"
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}

@@ -45,6 +45,7 @@ const TemplatesCertificateOfAppreciation = () => {
         </div>
       </div>
       <TemplatesCommonCard
+       link="/settings/template/certificate-of-appreciation/new-template"
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}

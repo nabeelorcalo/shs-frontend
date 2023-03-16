@@ -9,19 +9,22 @@ import {
   Input,
   Typography,
 } from "antd";
+import ReactQuill, { Quill } from "react-quill";
+import "quill/dist/quill.snow.css";
 import NewTemplateCommonBreadcrum from "../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
-import './style.scss'
+import "./style.scss";
+import { textEditorData } from "../../../../../components/Setting/Common/TextEditsdata";
 const { Title, Paragraph } = Typography;
-const { TextArea } = Input;
-const index = () => {
+
+const NewTemplateOfferLetter = () => {
   const [value, setValue] = useState();
   const [formValues, setFormValues] = useState<any>({
     templateName: "",
     subject: "",
     description: "",
-   
   });
+
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
@@ -36,7 +39,7 @@ const index = () => {
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
         <Form layout="vertical">
-          {/*------------------------ Policy Details----------------------------- */}
+          {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
@@ -47,10 +50,10 @@ const index = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
                 name="templateName"
-                label="Policy Name"
+                label="Template Name"
                 rules={[{ message: "Please Enter your username!" }]}
               >
-                <Input placeholder="Enter name"  className=""/>
+                <Input placeholder="Enter name" className="" />
               </Form.Item>
               <Form.Item
                 name="subject"
@@ -59,14 +62,10 @@ const index = () => {
               >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-              <div className="mt-3 flex flex-col">
-                <label>Description (optional)</label>
-                <TextArea
-                className="text-input-bg-color "
-                  rows={6}
-                  placeholder="Write Something..."
-                  maxLength={6}
-                />
+
+              <label className="text-teriary-color">Description (optional)</label>
+              <div className="text-input-bg-color rounded-lg  my-2">
+                <ReactQuill theme="snow" value={value} modules={textEditorData} />
               </div>
             </Col>
           </Row>
@@ -87,4 +86,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default NewTemplateOfferLetter;

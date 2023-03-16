@@ -35,11 +35,11 @@ import ManageVault from "./pages/digiVault/Student/manageVault";
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense fallback={<Spin indicator={spinIcon} />}>
+    <Component {...props} />
+  </Suspense>
+);
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -125,7 +125,7 @@ const TemplatesOfferLater = Loadable(
 const OfferLaterNewTemplate = Loadable(
   lazy(() => import("./pages/setting/Templates/OfferLetter/NewTemplate"))
 );
-const TemplatesCertificateOfAppreciation = Loadable(
+const TCA = Loadable(
   lazy(() => import("./pages/setting/Templates/CertificateOfAppreciation"))
 );
 const TCANewTemplate = Loadable(
@@ -151,6 +151,9 @@ const ContractNewTemplate = Loadable(
 );
 const TemplatesRejectionLetter = Loadable(
   lazy(() => import("./pages/setting/Templates/RejectionLetter"))
+);
+const RejectionLetterNewTemplate = Loadable(
+  lazy(() => import("./pages/setting/Templates/RejectionLetter/NewTemplate"))
 );
 const SettingLeaves = Loadable(lazy(() => import("./pages/setting/Leaves")));
 const LeavesAddPolicy = Loadable(
@@ -584,9 +587,15 @@ const companyAdminRoutes = [
             element: <TemplatesRejectionLetter />,
             path: "/settings/template/rejection-letter",
           },
+          
+          {
+            key: `rejection-letter-new-template`,
+            element: <RejectionLetterNewTemplate />,
+            path: "/settings/template/rejection-letter/new-template",
+          },
           {
             key: `template-certificate-of-appreciation`,
-            element: <TemplatesCertificateOfAppreciation />,
+            element: <TCA />,
             path: "/settings/template/certificate-of-appreciation",
           },
           {

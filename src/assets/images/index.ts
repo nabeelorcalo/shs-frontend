@@ -148,7 +148,13 @@ export { ReactComponent as EducationWhiteSub } from "../../assets/images/digivau
 export { ReactComponent as BankingWhiteSub } from "../../assets/images/digivault/manageVault/white/bankSubWhite.svg";
 export { ReactComponent as HealthWhiteSub } from "../../assets/images/digivault/manageVault/white/healthSubWhite.svg";
 export { ReactComponent as TransWhiteSub } from "../../assets/images/digivault/manageVault/white/transWhite.svg";
-export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
+export { ReactComponent as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
+export { ReactComponent as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
+export { ReactComponent as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
+export { ReactComponent as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { ReactComponent as File } from "../images/ColorfullIconsProgressbar/file.svg";
+export { ReactComponent as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
+
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
 export { ReactComponent as BathIcon } from "./Baths.svg";
@@ -182,10 +188,6 @@ export { ReactComponent as StructureCompanyAdminDownward } from "./structure/dow
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
 export { ReactComponent as StructureMinus } from "./structure/minus.svg";
 export { ReactComponent as StructureAdd } from "./structure/add.svg";
-
-
-
-
 export { ReactComponent as HeartIcon } from "./leaves/Heart.svg";
 export { ReactComponent as LeavesIcon } from "./leaves/LeavesIcon.svg";
 export { ReactComponent as MedicalHeart } from "./leaves/MedicalHeart.svg";
@@ -235,10 +237,11 @@ export { ReactComponent as PerformanceClose } from "./setting/close.svg";
 export { ReactComponent as PerformancePlus } from "./setting/plus.svg";
 export { ReactComponent as PerformanceMinus } from "./setting/minus.svg";
 export { ReactComponent as Performanceinput } from "./setting/performanceInput.svg";
+export { ReactComponent as TemplateCertificate } from "./setting/certificate.svg";
 
 // Universities
-export { ReactComponent as  UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
-export { ReactComponent as  UniversitiesTableFlag } from "./universities/flag.svg";
+export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
+export { ReactComponent as UniversitiesTableFlag } from "./universities/flag.svg";
 
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
@@ -251,8 +254,6 @@ export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
 export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
 export { default as WishesBox } from './dashboard/wishesBox.gif';
-
-
 
 
 // contract
@@ -269,15 +270,12 @@ export { ReactComponent as UalIcon } from './ualIcon.svg';
 export { ReactComponent as PassportIcon } from './passportIcon.svg';
 export { ReactComponent as BrpIcon } from './brpIcon.svg';
 export { ReactComponent as PoaIcon } from './poaIcon.svg';
-
-
 export { ReactComponent as PersnolIcon } from './persnolIcon.svg';
 export { ReactComponent as DocumentsIcon } from './documentsIcon.svg';
 export { ReactComponent as HiringIcon } from './hiringIcon.svg';
 export { ReactComponent as InterviewIcon } from './interviewIcon.svg';
 export { ReactComponent as DocumentIconD } from './documentsIcondrawer.svg';
 export { ReactComponent as Schedule } from './schedule.svg';
-
 export { ReactComponent as Dot } from './dot.svg';
 export { ReactComponent as Mail } from './mail.svg';
 export { ReactComponent as Call } from './call.svg';

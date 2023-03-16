@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Dropdown, Menu } from "antd";
 import { LocationMore } from "../../../assets/images";
+import { NavLink } from "react-router-dom";
 
 interface ITEMPLATEDROPDOWN {
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteModal: boolean;
+  link: string;
 }
 
-const TemplateCommonDropdown = ({
-  setShowDeleteModal,
-  showDeleteModal,
-}: ITEMPLATEDROPDOWN) => {
+const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
+  const { setShowDeleteModal, showDeleteModal, link } = props;
   const [visible, setVisible] = useState(false);
 
   const handleVisibleChange = (visible: any) => {
@@ -23,14 +23,7 @@ const TemplateCommonDropdown = ({
       overlay={
         <Menu>
           <Menu.Item key="1">
-            <span
-            // onClick={() => {
-            //   props.setShowEditModal(!props.showEditModal), setVisible(false);
-            // }}
-            >
-              
-              Edit
-            </span>
+            <NavLink to={link}>Edit</NavLink>
           </Menu.Item>
           <Menu.Item key="2">
             <span

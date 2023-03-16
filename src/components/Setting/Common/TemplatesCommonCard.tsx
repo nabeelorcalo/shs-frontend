@@ -9,14 +9,12 @@ interface ITEMPLATE {
   }[];
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteModal: boolean;
+  link: string;
 }
 
 const { Title, Text } = Typography;
-const TemplatesCommonCard = ({
-  overview,
-  showDeleteModal,
-  setShowDeleteModal,
-}: ITEMPLATE) => {
+const TemplatesCommonCard = (props: ITEMPLATE) => {
+  const { overview, showDeleteModal, setShowDeleteModal, link } = props;
   return (
     <div className="templates-common-card">
       <Row gutter={[20, 20]} className="mt-5">
@@ -35,6 +33,7 @@ const TemplatesCommonCard = ({
 
                     <span className="float-right cursor-pointer w-[40px]">
                       <TemplateCommonDropdown
+                         link={link}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />

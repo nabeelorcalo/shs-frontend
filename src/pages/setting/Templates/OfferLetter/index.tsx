@@ -52,6 +52,7 @@ const TemplatesOfferLater = () => {
         </div>
       </div>
       <TemplatesCommonCard
+       link="/settings/template/offer-letters/new-template"
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}

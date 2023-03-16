@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
-import { Avatar, Space } from "antd";
+import { Avatar, Button, Space } from "antd";
 import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
 import { SettingAvater, SettingRightArrrow } from "../../../assets/images";
 import "./SettingCommonModal.scss";
@@ -57,12 +57,21 @@ const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
     
 
       <PopUpModal
-        cancelBtntxt="Cancel"
-        okBtntxt="Submit"
-        state={openModal}
-        setState={setOpenModal}
+        open={openModal}
+        width={600}
+        close={()=>setOpenModal(false)}
         title="Select Interns"
-        width={800}
+        footer={
+          <div className="setting-common-modal-footer"> <Button key="Cancel" className="footer-cancel-btn ">
+              Cancel
+            </Button>
+            <Button key="submit" className="footer-submit-btn ">
+              Submit
+            </Button>
+          </div>
+        }
+        
+       
       >
         <div className="setting-common-modal">
           <SearchBar size="middle" handleChange={handleChange} />
