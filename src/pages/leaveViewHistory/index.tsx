@@ -6,7 +6,7 @@ import "./style.scss"
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
-import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest } from "../../components";
+import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../components";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
@@ -131,6 +131,11 @@ const index = () => {
   // console.log(selectedRow);
   return (
     <div className="main_view_detail">
+      <PageHeader
+        actions
+        bordered
+        title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
+      />
       <Row className=' items-center'>
         <Col xs={24} md={12} lg={12}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
