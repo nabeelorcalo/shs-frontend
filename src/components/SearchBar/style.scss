@@ -26,8 +26,9 @@
         .ant-input {
             background-color: transparent;
 
-            &:focus {
+            &:focus, &:hover {
                 outline: none;
+                box-shadow: none;
             }
         }
     }

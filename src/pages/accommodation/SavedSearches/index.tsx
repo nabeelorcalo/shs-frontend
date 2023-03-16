@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Form, Input,  Select, Button, Slider } from 'antd'
 import AccommodationCard from '../../../components/AccommodationCard/AccommodationCard'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
@@ -36,6 +35,7 @@ const SavedSearches = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
+  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`)
 
 
 
@@ -59,7 +59,7 @@ const SavedSearches = () => {
                 tags={property.tags}
                 location={property.location}
                 handleSaveClick={() => console.log('handle clik')}
-                handleDetailClick={() => console.log('handle clik')}
+                handleDetailClick={() => handleDetailClick(property.id)}
                 handleChatClick={() => console.log('chat')}
               />
             </div>

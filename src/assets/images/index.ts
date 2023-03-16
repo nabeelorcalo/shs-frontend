@@ -158,6 +158,10 @@ export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.sv
 export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down.svg";
 export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
 export { ReactComponent as IconInfoCircle } from "./accommodation/iocn-info-circle.svg";
+export { ReactComponent as IconMasterCard } from "./accommodation/icon-master-card.svg";
+export { ReactComponent as IconVisaCard } from "./accommodation/icon-visa-card.svg";
+export { ReactComponent as IconAddCircle } from "./accommodation/icon-add-circle.svg";
+export { ReactComponent as IconProfileCircleWhite } from "./accommodation/icon-profile-circle.svg";
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
