@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Anchor } from 'antd'
-import "./style.scss";
-import { IconWebLocation, IconStatusCheck } from '../../../assets/images'
-import PageHeader from "../../../components/PageHeader";
+import { Typography, Anchor, Collapse } from 'antd'
+import {PageHeader} from "../../../components";
 import ImageGallery from 'react-image-gallery';
-import "react-image-gallery/styles/css/image-gallery.css";
 import CancellationPolicy from "./CancellationPolicy";
 import HowToBookPropperty from "./HowToBookPropperty";
 import AgentDetail from "./AgentDetail";
+import PropertyOverview from "./PropertyOverview";
+import PropertyPricing from "./PropertyPricing";
+import BookingRequest from "./BookingRequest";
+import { IconWebLocation, IconArrowDown } from '../../../assets/images'
+import "react-image-gallery/styles/css/image-gallery.css";
+import "./style.scss";
 
 // Temporary
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
@@ -16,6 +19,8 @@ import thumb3 from '../../../assets/images/gallery/thumb3.png'
 import thumb4 from '../../../assets/images/gallery/thumb4.png'
 import thumb5 from '../../../assets/images/gallery/thumb5.png'
 import gal1 from '../../../assets/images/gallery/gal1.png'
+
+
 
 const images = [
   {
@@ -142,77 +147,7 @@ const AccPropertyDetail = () => {
                 <div className="card-section-title">
                   Overview
                 </div>
-                <div className="overview-content">
-                  <div className="overview-facilities">
-                    <div className="overview-section-label">Facilities</div>
-                    <ul className="overview-list facilities-list">
-                      <li>Living room</li>
-                      <li>Toilet</li>
-                      <li>Kitchen</li>
-                      <li>Basement</li>
-                      <li>Parking</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="overview-content">
-                  <div className="overview-amenities">
-                    <div className="overview-section-label">Amenities</div>
-                    <ul className="overview-list amenities-list">
-                      <li>WiFi</li>
-                      <li>Living Room Furniture</li>
-                      <li>Bed</li>
-                      <li>TV</li>
-                      <li>Private Kitchenware</li>
-                      <li>Washing machine</li>
-                      <li>Closet</li>
-                      <li>Central Heating</li>
-                      <li>Wood flooring</li>
-                      <li>Desk</li>
-                      <li>Air Conditioning</li>
-                      <li>Dryer</li>
-                      <li>Dishwasher</li>
-                      <li>Access Friendly</li>
-                      <li>Bedroom Lock</li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="overview-content">
-                  <div className="overview-amenities">
-                    <div className="overview-section-label">House Rules</div>
-                    <ul className="overview-list house-rules">
-                      <li>Playing Musical Instruments Negotiable</li>
-                      <li>Pets Not Allowed</li>
-                      <li>Smoking Not Allowed </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="overview-content">
-                  <div className="overview-amenities">
-                    <div className="overview-section-label">Preferred tenant</div>
-                    <ul className="overview-list preferred-tenant">
-                      <li>
-                        <span>Age</span>
-                        <span>No Preference</span>
-                      </li>
-                      <li>
-                        <span>Gender</span>
-                        <span>No Preference</span>
-                      </li>
-                      <li>
-                        <span>Tenant Type</span>
-                        <span>Working professionals only</span>
-                      </li>
-                      <li>
-                        <span>Suitable for couples</span>
-                        <span>Yes</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
+                <PropertyOverview />
               </div>
             </div>
 
@@ -221,103 +156,7 @@ const AccPropertyDetail = () => {
                 <div className="card-section-title">
                   Pricing
                 </div>
-
-                <div className="pricing-content">
-                  <div className="pricint-content-subtitle">
-                    Add your booking dates to see what you'll pay
-                  </div>
-                  <div className="pricing-content-card">
-                    <ul className="pricing-card-list">
-                      <li>
-                        <div className="pricing-item-title">Contract Type</div>
-                        <div className="pricing-item-value monthly">Monthly</div>
-                      </li>
-                      <li>
-                        <div className="pricing-item-title">Minimum stay</div>
-                        <div className="pricing-item-value monthly">3 months</div>
-                      </li>
-                      <li>
-                        <div className="pricing-item-title">Deposits</div>
-                        <div className="pricing-item-value monthly">£3000</div>
-                      </li>
-                      <li>
-                        <div className="pricing-item-title">During your stay</div>
-
-                        <div className="during-your-stay">
-                          <div className="during-your-stay-inner monthly-rent">
-                            <div className="during-your-stay-title">Rent</div>
-                            <div className="monthly-rent-row">
-                              <span className="monthly-rent-month">Monthly</span>
-                              <span className="monthly-rent-rent">£1990</span>
-                            </div>
-                          </div>
-
-                          <div className="during-your-stay-inner utilities">
-                            <div className="during-your-stay-title">Utilities</div>
-                            <ul className="utilities-list">
-                              <li>
-                                <div className="utilities-list-title">
-                                  Electricity
-                                </div>
-                                <div className="utilities-list-right">
-                                  <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                                  <div className="utilities-list-item-value">Included</div>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="utilities-list-title">
-                                  Water
-                                </div>
-                                <div className="utilities-list-right">
-                                  <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                                  <div className="utilities-list-item-value">Included</div>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="utilities-list-title">
-                                  Gas
-                                </div>
-                                <div className="utilities-list-right">
-                                  <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                                  <div className="utilities-list-item-value">Included</div>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="utilities-list-title">
-                                  Internet
-                                </div>
-                                <div className="utilities-list-right">
-                                  <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                                  <div className="utilities-list-item-value">Included</div>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="utilities-list-title">
-                                  Broadcasting fee
-                                </div>
-                                <div className="utilities-list-right">
-                                  <div className="utilities-list-item-value">£19 monthly(est.)</div>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="utilities-list-title">
-                                  Cleaning
-                                </div>
-                                <div className="utilities-list-right">
-                                  <div className="utilities-list-item-value">£100 at move-out</div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                        <div className="pricing-table-discount-offer">
-                        15 % off between 1 and 6 months Bookings
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
+                <PropertyPricing />
               </div>
             </div>
 
@@ -354,6 +193,33 @@ const AccPropertyDetail = () => {
               </div>
             </div>
 
+          </div>
+        </div>
+        <div className="property-detail-content-right">
+          <BookingRequest />
+
+          <div className="booking-request-faq">
+            <Collapse
+              accordion={true}
+              bordered={false}
+              expandIcon={({ isActive }) => <IconArrowDown rotate={isActive ? 90 : 0} />}
+              expandIconPosition="end"
+            >
+              <Collapse.Panel header="Verified landlord" key="1">
+                Private landlord, with us since 2022 and has had 1 happy tenants.
+              </Collapse.Panel>
+              <Collapse.Panel header="Property not verified" key="2">
+                We have not verified this property yet. You can check its availability and make a request for us to verify it soon. If you prefer, you can also book it directly.
+              </Collapse.Panel>
+              <Collapse.Panel header="Student help squad guarantee" key="3">
+                <div>If the landlord cancels your booking within 48 hours of your move in date, we will either,</div>
+                <div>1. Pay for a hotel and help you find somewhere new or,</div>
+                <div>2. Refund your money in full.</div>
+              </Collapse.Panel>
+              <Collapse.Panel header="Property ready for you" key="4">
+                Our check-in teams follows up with the property landlord to ensure you get no surprises upon your arrival.
+              </Collapse.Panel>
+            </Collapse>
           </div>
         </div>
       </div>

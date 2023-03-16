@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import PageHeader from '../components/PageHeader'
+import {PageHeader} from '../components'
 import { Space, Button } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons';
 

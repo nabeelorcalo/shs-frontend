@@ -20,7 +20,6 @@ import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 // remove til here
 
-
 //Setting Child Component
 import SettingPerformance from "./components/Setting/Performance/Performance";
 import SettingDepartment from "./components/Setting/Department/Department";
@@ -32,18 +31,23 @@ import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
 import SettingPayroll from "./components/Setting/Payroll/Payroll";
 import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
+import ManageVault from "./pages/digiVault/Student/manageVault";
+//
 import DemoCard from "./components/ContractCard/demoCard";
+import Certificates from "./pages/certificate";
+import CertificateDetail from "./pages/certificate/certificateDetail";
+// 
+import Chat from "./pages/chat";
 //
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense fallback={<Spin indicator={spinIcon} />}>
+    <Component {...props} />
+  </Suspense>
+);
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -78,12 +82,24 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
-const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
-const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
-const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
-const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
-const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
+const AvailableProperties = Loadable(
+  lazy(() => import("./pages/accommodation/AvailableProperties"))
+);
+const SavedSearches = Loadable(
+  lazy(() => import("./pages/accommodation/SavedSearches"))
+);
+const RentedProperties = Loadable(
+  lazy(() => import("./pages/accommodation/RentedProperties"))
+);
+const BookingRequests = Loadable(
+  lazy(() => import("./pages/accommodation/BookingRequests"))
+);
+const AccommodationPayments = Loadable(
+  lazy(() => import("./pages/accommodation/Payments"))
+);
+const AccPropertyDetail = Loadable(
+  lazy(() => import("./pages/accommodation/PropertyDetail"))
+);
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -134,6 +150,7 @@ export const publicRoutes = [
     key: "candidates",
     path: `candidates`,
     element: <Candidates />,
+
   },
   // Demo dropdowns
   {
@@ -376,8 +393,8 @@ const systemAdminRoutes = [
         element: <HelpDesk />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
-        path: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
+        key: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
+        path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
         element: <ActivityLog />,
       },
     ],
@@ -828,6 +845,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
     ],
   },

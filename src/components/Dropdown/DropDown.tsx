@@ -27,7 +27,7 @@ export const DropDown = (props: DropDownInterface) => {
         selectedList = [],
         setSelectedList,
         startIcon,
-        endIcon = ArrowDownDark,
+        endIcon: EndIcon = ArrowDownDark,
         requiredDownloadIcon,
     } = props;
 
@@ -92,12 +92,13 @@ export const DropDown = (props: DropDownInterface) => {
             onOpenChange={setVisible}
             {...props}
         >
-            <div>
+            <div className='flex items-center justify-between'>
                 <p className='flex items-center'>
                     {startIcon && <img src={startIcon} alt='icon' style={{ marginRight: '20px' }} />}
                     {!requiredDownloadIcon && <span>{value ? value : name}</span>}
                 </p>
-                <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ display: !endIcon ? 'none' : '', marginLeft: requiredDownloadIcon ? '1px' : '10px' }} />
+                <EndIcon className='ml-[10px]' />
+                {/* <img src={requiredDownloadIcon ? DownloadIcon : endIcon} alt='icon' style={{ display: !endIcon ? 'none' : '', marginLeft: requiredDownloadIcon ? '1px' : '10px' }} /> */}
             </div>
         </AntDropDown>
     )
