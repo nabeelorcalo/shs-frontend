@@ -11,11 +11,15 @@ const UploadDocument = () => {
   };
 
   const handleDropped = (event: any) => {
-    event.preventDefault();
+    event.preventDefault()
+    setFiles(Array.from(event.dataTransfer.files))
+  }
 
-    setFiles(Array.from(event.dataTransfer.files));
-  };
-  console.log(files);
+  const handleRemoveFile = ()=>{
+    
+  }
+
+  console.log(files)
   return (
     <div className="flex flex-col content-center items-center p-16 rounded border-dashed border-0.5 border-[#D9DBE9] bg-[#fff] hover:border-[#DDE2E5]">
       <DocumentUpload />

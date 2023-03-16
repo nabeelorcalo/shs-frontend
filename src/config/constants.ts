@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Student",
+  USER_ROLE: "Intern",
 };
 
 // Possibe string of roles:
@@ -34,11 +34,16 @@ export const ROUTES_CONSTANTS: any = {
   ERROR_PAGE: "error-page",
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
+  NEW_INTERNSHIP: "internships/new-internship",
+  VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   INTERNS: "interns",
+  INTERNS_PROFILE: "interns/profile",
+  INTERNS_CHAT:"interns/chat",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
+  TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
@@ -81,7 +86,18 @@ export const ROUTES_CONSTANTS: any = {
   RESERVATIONS: "reservations",
   SETTING: "settings",
   CERTIFICATES: "certificates",
+  CERTIFICATESDETAIL: 'certificates/detail/:id',
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
 };
+
+export const STATUS_CONSTANTS: any = {
+  ERROR: "error",
+  SUCCESS: "success",
+  WARNING: "warning",
+  ACTIVE: "active",
+  PENDING: "pending",
+  CLOSED: "closed",
+  REJECTED: "rejected"
+}
