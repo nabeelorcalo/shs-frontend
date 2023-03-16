@@ -1,12 +1,11 @@
-
 import { Divider } from "antd";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import "./style.scss";
 
-const UpcomingHolidayComp = (props:any) => {
+export const UpcomingHolidayComp = (props:any) => {
     const {upcomingHolidayData}=props
   return (
-    <BoxWrapper className="left_upcoming_holiudays">
+    <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="left_upcoming_holiudays">
     <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Upcoming Holidays</h4>
     <ul className='upcoming_holidayList p-0 m-0  list-none h-[470px] overflow-y-auto'>
       {upcomingHolidayData.map((data: any) => (
@@ -25,5 +24,3 @@ const UpcomingHolidayComp = (props:any) => {
   </BoxWrapper>
   )
 }
-
-export default UpcomingHolidayComp

@@ -1,15 +1,13 @@
 import { Button, Col, Divider, Row } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { LeaveCard, PageHeader } from '../../../components'
+import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 import Calendar from "./calendar/calendar"
 import action from "../actionHandler"
 import "./style.scss"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
-// import {LeaveRequest} from '../../../components';
 import { leaveCardData, upcomingHolidayData } from './internMockdata';
-import UpcomingHolidayComp from './upcomingHoliday';
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },

@@ -89,7 +89,7 @@ const index = () => {
         <Space size="middle">
           <Dropdown
             // open={visibale}
-            dropdownRender={(menu: any) => {
+            dropdownRender={() => {
               return <BoxWrapper className=" action_dropDown">
                 <p onClick={() => {
                   setOpenDrawer({ open: true, type: 'viewDetail' })
