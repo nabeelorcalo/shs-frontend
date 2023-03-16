@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import PageHeader from "../../components/PageHeader";
-import { DropDown, SearchBar } from "../../components";
+import { DropDown, SearchBar, PageHeader, FiltersButton, LeaveRequest } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import GlobalTable from "../../components/Table/Table";
 import { Avatar, Button, Popover, Divider } from 'antd';
 import { More } from "../../assets/images"
 import { InternshipsIcon } from "../../assets/images";
-import LeaveRequest from "../../components/LeaveRequest";
+// import LeaveRequest from "../../components/LeaveRequest";
 import EmojiEvaluation from "../../components/EmojiEvaluation";
 import CreateFolderModal from "../../components/CreateFolderModal";
 import EditGoalTask from "../../components/EditGoalTask";
@@ -17,7 +16,6 @@ import { PopUpModal } from "../../components/Model";
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
 import SignatureAndUploadModal from "../../components/SignatureAndUploadModal";
 import { STATUS_CONSTANTS } from "../../config/constants";

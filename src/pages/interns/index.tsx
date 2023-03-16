@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import PageHeader from "../../components/PageHeader";
-import { DropDown, SearchBar } from "../../components";
+import { DropDown, SearchBar, FiltersButton, PageHeader } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import GlobalTable from "../../components/Table/Table";
@@ -9,7 +8,6 @@ import { More } from "../../assets/images"
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import FiltersButton from "../../components/FiltersButton";
 import Drawer from "../../components/Drawer";
 
 const PopOver = () => {

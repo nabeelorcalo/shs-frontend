@@ -1,5 +1,5 @@
 import React from 'react'
-import PageHeader from '../../components/PageHeader'
+import {PageHeader} from '../../components'
 import { Divider } from 'antd'
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
 
