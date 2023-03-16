@@ -1,22 +1,19 @@
 
-import { Col, Divider, Drawer, Dropdown, Form, Row, Select, Space } from "antd";
-import type { MenuProps } from 'antd';
+import { useState } from "react";
+import { Col, Divider, Dropdown, Row, Space } from "antd";
+import { CloseCircleFilled } from "@ant-design/icons";
+import "./style.scss"
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
-import "./style.scss"
-import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../assets/images";
-import { Alert, Button, DropDown, SearchBar } from "../../components";
-import { useState } from "react";
-import { CloseCircleFilled } from "@ant-design/icons";
+import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
+import { Alert, Button, DropDown, SearchBar,FiltersButton,LeaveRequest } from "../../components";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
-import { FiltersButton } from "../../components/";
-import { LeaveRequest } from "../../components";
 import { data } from "./LeaveMockData";
 const index = () => {
   // const [actionType, setActionType] = useState({ type: '', id: '' });
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
@@ -130,6 +127,25 @@ const index = () => {
       ),
     },
   ];
+
+  // const generatePDF = (data) => {
+  //   const doc = new jsPDF();
+  
+  //   // Define the table columns
+  //   const columns = ['Column 1', 'Column 2', 'Column 3'];
+  
+  //   // Define the table rows
+  //   const rows = data.map((item) => [item.column1, item.column2, item.column3]);
+  
+  //   // Add the table to the PDF document
+  //   doc.autoTable({
+  //     head: [columns],
+  //     body: rows,
+  //   });
+  
+  //   // Save the PDF
+  //   doc.save('table.pdf');
+  // };
 
   // console.log(selectedRow);
   return (
