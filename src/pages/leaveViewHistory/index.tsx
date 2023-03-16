@@ -11,7 +11,7 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
-import {FiltersButton} from "../../components/" ;
+import { FiltersButton } from "../../components/";
 import { LeaveRequest } from "../../components";
 import { data } from "./LeaveMockData";
 const index = () => {
@@ -110,7 +110,7 @@ const index = () => {
                       Edit
                     </p>
                     <p onClick={() => {
-                      setOpenModal({ type: 'cancel', open: true });
+                      setOpenModal({ open: true, type: 'cancel' });
                     }}
                       className="cursor-pointer">
                       Cancel
@@ -162,9 +162,8 @@ const index = () => {
             <Button
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
-              onClick={() => setOpenModal({open:true, type:"addLeav"})}
+              onClick={() => setOpenModal({ open: true, type: "addLeav" })}
               size="middle"
-
               className="Request_leave"
             />
           </div>
@@ -213,23 +212,24 @@ const index = () => {
         </div>
       </DrawerComp>}
 
-      {openModal.open && openModal.type === 'edit' && 
-      <LeaveRequest
-        title="Leave Request"
-        open={openModal.open}
-        data={selectedRow}
-        setIsAddModalOpen={setOpenModal}
-        subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
-        changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
-      />}
-      {openModal.open && openModal.type === 'cancel' && <Alert type='warning' open={openModal.open}
-        setOpen={() => setOpenModal({ ...openModal, open: !openModal.open })}
-        cancelBtntxt={"Cancle"}
-        okBtntxt={"Submit"}
+      {openModal.open && openModal.type !== 'cancel' &&
+        <LeaveRequest
+          title="Leave Request"
+          open={openModal.open}
+          data={selectedRow}
+          setIsAddModalOpen={setOpenModal}
+          subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
+          changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
+        />}
+      {openModal.open && openModal.type === 'cancel' &&
+        <Alert type='warning' open={openModal.open}
+          setOpen={() => setOpenModal({ ...openModal, open: !openModal.open })}
+          cancelBtntxt={"Cancle"}
+          okBtntxt={"Submit"}
 
-      >
-        <p>Are you sure you want to cancel this request?</p>
-      </Alert>}
+        >
+          <p>Are you sure you want to cancel this request?</p>
+        </Alert>}
     </div>
   )
 }
