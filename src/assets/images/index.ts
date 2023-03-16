@@ -237,3 +237,6 @@ export { default as Audio } from "../images/chat/New folder/Audio.svg";
 export { default as ShapAudio } from "../images/chat/New folder/Shape.svg";
 export { default as PlayIcon } from "../images/chat/New folder/play.svg";
 export { default as DoubleTik } from "../images/chat/New folder/bluetik.svg";
+export { default as SendIcon} from "../images/chat/sendIcon.svg";
+export { default as PlusIcon} from "../images/chat/PlusIcon.svg";
+export { default as Addatech} from "../images/chat/Addatech.svg";

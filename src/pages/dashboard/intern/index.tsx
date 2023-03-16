@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Col, Row } from 'antd';
 import {PageHeader} from '../../../components';
-import TimeTracking from "../../../components/timeTRacking";
+import TimeTracking from "../../../components/TimeTracking";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
   TodayWeather,

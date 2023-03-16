@@ -18,6 +18,9 @@ import {
   ShapAudio,
   PlayIcon,
   DoubleTik,
+  SendIcon,
+  PlusIcon,
+  Addatech,
 } from "../../../assets/images";
 
 const { TextArea } = Input;
@@ -104,7 +107,7 @@ const index = () => {
           <BoxWrapper className="inbox-main">
             <div>
               <div>
-                <span className="text-[#4E4B66] text-2xl font-semibold mr-2">
+                <span className="text-secondary-color text-2xl font-semibold mr-2">
                   Index
                 </span>
 
@@ -236,7 +239,7 @@ const index = () => {
                 </Col>
               </Row>
 
-              <div>
+              <div className="relative">
                 <div>
                   <TextArea
                     value={value}
@@ -246,13 +249,24 @@ const index = () => {
                   ></TextArea>
                 </div>
 
-                <div className="">
-                  <div>
-                    <div>wefwef</div>
-                    <div>wefwef</div>
+                <div className="textarea-icon items-center bottom-[14px] absolute flex justify-between">
+                  <div className="flex ml-4">
+                    <div className="mr-4">
+                    <img src={Addatech} alt="sendicon"/>
+                    </div>
+                    <div>
+                    <img src={PlusIcon} alt="sendicon"/>
+                    </div>
                   </div>
-                  <div>abc</div>
+                 
+                  <div className="mr-4">
+                    <img src={SendIcon} alt="sendicon"/>
+                  </div>
+                  
                 </div>
+
+                
+
               </div>
             </div>
           </BoxWrapper>
