@@ -1,15 +1,7 @@
-import React, { useState } from 'react'
-import Avatar1 from '../../assets/images/avatar1.png'
-import { ArrowDownDark, StarFilledIcon } from '../../assets/images'
-import "./style.scss"
-import Dot from "../../assets/images/dot.png"
-import Mail from "../../assets/images/mail.png"
-import Call from "../../assets/images/call.png"
-import Loacation from "../../assets/images/location.png"
-import Intro from "../../assets/images/intro-pic.png"
-import PlayIcon from "../../assets/images/play-icon.png"
-import DropDownNew from '../../components/Dropdown/DropDownNew'
 import { Rate } from 'antd'
+import "./style.scss"
+import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Location, Intro, PlayIcon,DrawerIcon } from '../../assets/images'
+import DropDownNew from '../../components/Dropdown/DropDownNew'
 
 const IndividualDetails = () => {
 
@@ -26,7 +18,7 @@ const IndividualDetails = () => {
   const userinfoData = [
     { img: Mail, title: "phyliis@gmail.com" },
     { img: Call, title: "+44 7700 900077" },
-    { img: Loacation, title: "263 Eversholt St, London NW11NB UK" },
+    { img: Location, title: "263 Eversholt St, London NW11NB UK" },
   ]
 
   const dropdownData = [
@@ -46,7 +38,7 @@ const IndividualDetails = () => {
 
       <div className="user-info-main">
         <div className="user-info">
-          <img className='image' src={Avatar1} />
+          <DrawerIcon />
           <p className='user-name'>Phylis Godley</p>
         </div>
 
@@ -55,7 +47,6 @@ const IndividualDetails = () => {
 
             <DropDownNew items={[{
               label: <div className='flex gap-4'>
-                {/* {[1, 2, 3, 4, 5].map((num) => <StarFilledIcon />)} */}
                 <Rate className='' style={{ fontSize: "24px" }} />
               </div>,
               key: ''
@@ -99,7 +90,7 @@ const IndividualDetails = () => {
         <p className='heading'>Apllied For</p>
         <div className="details">
           <p className='p'>UI UX Designer</p>
-          <p className='p1'>Full Time <img src={Dot} alt="" /> 10 Nov 2022 </p>
+          <p className='p1'>Full Time <Dot /> 10 Nov 2022 </p>
         </div>
 
       </div>
@@ -116,7 +107,7 @@ const IndividualDetails = () => {
       <div className="contact pt-4">
         {userinfoData.map((info, i) => (
           <div className="message flex items-center gap-5 my-3" key={i}>
-            <div ><img src={info.img} alt="" width={24} /></div>
+            <div ><info.img width={24} /></div>
             <p className='m-0'>{info.title}</p>
           </div>
         ))}
@@ -136,9 +127,8 @@ const IndividualDetails = () => {
       <div className="intro">
         <p className='heading mt-8'>Intro</p>
         <div className="image mt-[10px] relative">
-          <img src={PlayIcon} className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]' alt="" />
-          <img src={Intro} alt=""
-          />
+          <PlayIcon className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]' />
+          <Intro />
         </div>
       </div>
     </div>

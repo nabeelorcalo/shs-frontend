@@ -242,6 +242,14 @@ export { ReactComponent as InterviewIcon } from './interviewIcon.svg';
 export { ReactComponent as DocumentIconD } from './documentsIcondrawer.svg';
 export { ReactComponent as Schedule } from './schedule.svg';
 
+export { ReactComponent as Dot } from './dot.svg';
+export { ReactComponent as Mail } from './mail.svg';
+export { ReactComponent as Call } from './call.svg';
+export { ReactComponent as Location } from './location.svg';
+export { ReactComponent as Intro } from './Intro.svg';
+export { ReactComponent as PlayIcon } from './playIcon.svg';
+export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
+
 
 
 
