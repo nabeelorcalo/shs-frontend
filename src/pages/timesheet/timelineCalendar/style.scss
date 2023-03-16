@@ -1,0 +1,136 @@
+@import '../../../scss/_colors.scss';
+
+.timeline-calendar-wrapper {
+  p {
+    color: $text-secondary-body-color;
+  }
+
+  .fc-header-toolbar {
+    flex-direction: row-reverse;
+
+    .fc-toolbar-chunk {
+
+      &:first-child,
+      &:nth-child(2) {
+        display: none;
+      }
+
+      &:last-child {
+        display: flex;
+        align-items: center;
+        margin-top: -25px;
+      }
+
+      .fc-toolbar-title {
+        font-size: 16px;
+        font-weight: 400;
+        color: $text-primary-title-color;
+        position: relative;
+        margin-right: 19px;
+
+        &::before {
+          position: absolute;
+          content: '';
+          top: 0;
+          left: -35px;
+          height: 24px;
+          width: 24px;
+          background-image: url('../../../assets/images/calender-icon.png');
+        }
+      }
+
+      .fc-prev-button,
+      .fc-next-button {
+        all: unset;
+        border: 1px solid $text-error-line-color;
+        border-radius: 4px;
+        background-color: $white-bg-color;
+        padding: 3px;
+        cursor: pointer;
+
+        &:active {
+          background-color: transparent;
+          border-color: $text-error-line-color;
+          color: $text-error-line-color;
+        }
+
+        &:focus {
+          box-shadow: none !important;
+        }
+
+        .fc-icon {
+          color: $text-error-line-color;
+        }
+      }
+
+      .fc-prev-button {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        border-right: 0px;
+      }
+
+      .fc-next-button {
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+      }
+    }
+
+  }
+
+  .fc-view-harness.fc-view-harness-active {
+    .fc-scrollgrid.fc-scrollgrid-liquid {
+      border: none;
+      overflow: scroll;
+
+      .fc-scrollgrid-section.fc-scrollgrid-section-body.fc-scrollgrid-section-liquid {
+        border: none;
+      }
+
+      .fc-scrollgrid-section.fc-scrollgrid-section-header {
+        .fc-scroller-harness {
+          .fc-timeline-header-row {
+            .fc-timeline-slot {
+             .fc-timeline-slot-frame{
+              justify-content: center;
+              a{
+                font-size: 14px;
+                font-weight: 600;
+                color: $light-grey-color;
+              }
+             }
+            }
+          }
+        }
+      }
+    }
+
+    .fc-resource-timeline-divider.fc-cell-shaded {
+      cursor: none !important;
+    }
+
+    .fc-resource-timeline-divider {
+      width: 0px !important;
+    }
+
+    height: 200px !important;
+  }
+
+  .fc-theme-standard td,
+  .fc-theme-standard th {
+    border: none;
+  }
+
+  .fc-timeline-body {
+    .fc-timeline-slots {
+      table {
+        tbody {
+          tr {
+            td.fc-timeline-slot {
+              border-left: 1px solid $text-input-bg-color !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

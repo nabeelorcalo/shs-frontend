@@ -2,7 +2,7 @@ import { Button, Col, Row } from 'antd';
 import { useParams } from 'react-router-dom';
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
 import { tableMockData } from './certificateTable/tableMock';
-import { OverAllPerfomance } from '../../components';
+import { Alert, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
 import { useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
@@ -18,8 +18,8 @@ const CertificateDetail = () => {
   const findUser = tableMockData.find(user => user.no === id);
   const [issueCertificateModal, setIssueCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
-  const [previewImg, setPreviewImg] = useState('');
   const [signatureModal, setSignatureModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
     name: findUser?.name, type: '',
@@ -84,10 +84,10 @@ const CertificateDetail = () => {
                   </p>
                   <DropDownNew items={[
                     {
-                      label: <p onClick={() => { setIssueCertificateModal(true) }}>Edit</p>,
+                      label: <p onClick={() => setIssueCertificateModal(true)}>Edit</p>,
                       key: 'edit'
                     },
-                    { label: <p>Delete</p>, key: 'delete' },
+                    { label: <p onClick={() => setDeleteModal(true)}>Delete</p>, key: 'delete' },
                   ]}
                     placement={'bottomRight'}
                     overlayStyle={{ width: '100px' }}
@@ -110,7 +110,6 @@ const CertificateDetail = () => {
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
                     onClick={() => {
                       setPreviewModal(true);
-                      setPreviewImg(certificate?.certificateImg)
                     }}
                   >
                     <CertificateEyeIcon
@@ -150,6 +149,20 @@ const CertificateDetail = () => {
         desc={issuewNewCertificate?.desc}
       />}
       {signatureModal && <SignatureModal open={signatureModal} setOpen={setSignatureModal} />}
+
+      {deleteModal &&
+        <Alert
+          type={'error'}
+          open={deleteModal}
+          setOpen={setDeleteModal}
+          icon={''}
+          cancelBtntxt={'Cancel'}
+          okBtntxt={'Delete'}
+        >
+          <p className='font-medium text-[#4E4B66]'>
+            Are you sure you want to delete thisw cetificate?
+          </p>
+        </Alert>}
     </div>
   )
 }

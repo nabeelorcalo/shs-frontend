@@ -5,29 +5,28 @@ import { AlertIcon } from "../../assets/images";
 import { SuccessIcon } from "../../assets/images";
 import { WarningIcon } from "../../assets/images";
 
-interface Props{
-  title?:string;
-  type?:string;
-  width?:any;
-  open?:any;
-  setOpen?:any;
-  icon?:any;
-  cancelBtntxt?:string;
-  okBtntxt?:string;
-  children?:any
+interface Props {
+  title?: string;
+  type?: string;
+  width?: any;
+  open?: any;
+  setOpen?: any;
+  icon?: any;
+  cancelBtntxt?: string;
+  okBtntxt?: string;
+  children?: any
 }
 
 export const Alert = (props: Props) => {
-  const {title,type,width,open,setOpen,icon,cancelBtntxt,okBtntxt,children}=props
+  const { title, type, width, open, setOpen, icon, cancelBtntxt, okBtntxt, children } = props
   const alertColor =
     type === "error"
       ? "red"
       : type === "success"
-      ? "green"
-      : type === "warning"
-      ? "orange"
-      : "black";
-  console.log("pkwpkpokpokp", open);
+        ? "green"
+        : type === "warning"
+          ? "orange"
+          : "black";
 
   return (
     <>
