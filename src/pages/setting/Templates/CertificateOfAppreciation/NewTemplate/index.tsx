@@ -15,11 +15,28 @@ import NewTemplateCommonBreadcrum from "../../../../../components/Setting/Common
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import "./style.scss";
 import { textEditorData } from "../../../../../components/Setting/Common/TextEditsdata";
-import { TemplateCertificate } from "../../../../../assets/images";
+import {
+  CertificateTickCircle,
+  TemplateCertificateLarger,
+  TemplateCertificateSmall,
+} from "../../../../../assets/images";
+import { EyeTwoTone } from "@ant-design/icons";
+import { EyeFilled } from "@ant-design/icons/lib/icons";
+import { PopUpModal } from "../../../../../components";
+import { color } from "echarts";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertificationOfAppreciation = () => {
   const [value, setValue] = useState();
+  const [borderColorfirst, setBorderColorfirst] = useState<any>({
+    color: "white",
+    toggle: false,
+  });
+  const [borderColorSecond, setBorderColorSecond] = useState<any>({
+    color: "white",
+    toggle: false,
+  });
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<any>({
     templateName: "",
     subject: "",
@@ -31,11 +48,28 @@ const NewTemplateCertificationOfAppreciation = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
 
+  const FirstBorderHandler = () => {
+    setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
+  };
+  const SecondBorderHandler = () => {
+    setBorderColorSecond({
+      color: "#3DC575",
+      toggle: !borderColorSecond.toggle,
+    });
+    console.log("ddd, ", borderColorSecond.toggle);
+  };
+  const NoBorderHandler = () => {
+    setBorderColorfirst({ color: "#FFFFFF" });
+  };
+  const NoBorderHandler1 = () => {
+    setBorderColorSecond({ color: "#FFFFFF" });
+  };
+
   return (
     <div className="certificate-of-appreciation-new-template">
       <NewTemplateCommonBreadcrum
-        perviousPageName="Offer Letter"
-        perviousPageLink="/settings/template/template-offer-letters"
+        currentPageName="Certification of Appreciation"
+        perviousPageLink="/settings/template/certificate-of-appreciation"
       />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
@@ -48,7 +82,7 @@ const NewTemplateCertificationOfAppreciation = () => {
               </Title>
               <Paragraph>Enter template details</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row" xs={24} lg={12} xxl={8}>
               <Form.Item
                 name="templateName"
                 label="Template Name"
@@ -64,9 +98,15 @@ const NewTemplateCertificationOfAppreciation = () => {
                 <Input placeholder="Enter subject" />
               </Form.Item>
 
-              <label className="text-teriary-color">Description (optional)</label>
+              <label className="text-teriary-color">
+                Description (optional)
+              </label>
               <div className="text-input-bg-color rounded-lg  my-2">
-                <ReactQuill theme="snow" value={value} modules={textEditorData} />
+                <ReactQuill
+                  theme="snow"
+                  value={value}
+                  modules={textEditorData}
+                />
               </div>
             </Col>
           </Row>
@@ -74,34 +114,88 @@ const NewTemplateCertificationOfAppreciation = () => {
           <Divider />
           {/*------------------------ Select Design----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} xl={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Select Design
               </Title>
               <Paragraph>Select the design of the certificate</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={12} xxl={12}>
-              <Row gutter={16}>
-                <Col className="gutter" xs={24} md={12} xxl={12}>
+            <Col className="gutter-row" xs={24} md={24} xl={12}>
+              <Row gutter={[16, 16]}>
+                <Col className="gutter relative" xs={24} xl={12}>
+                  <div
+                    style={{ border: `2px solid ${borderColorfirst.color}` }}
+                    className="cursor-pointer certificate-card "
+                  >
+                    {borderColorfirst.toggle && (
+                      <CertificateTickCircle className="absolute certificate-tick-circle" />
+                    )}
 
-                  <div className="cursor-pointer certificate-card">
-                    <span className="flex justify-center" >< TemplateCertificate />
-                    </span><Divider />
-                    <p className="text-center">Template 1</p>
-
-                  </ div>
+                    <div className="card-image-box ">
+                      <span className="flex justify-center p-5 image">
+                        <TemplateCertificateSmall className=" background-img" />
+                      </span>
+                      <div
+                        className="middle"
+                        onClick={() => {
+                          setShowEditModal(!showEditModal);
+                        }}
+                      >
+                        <EyeFilled className="text" />
+                      </div>
+                    </div>
+                    <Divider />
+                    <p
+                      className="text-center"
+                      onClick={
+                        borderColorfirst.toggle
+                          ? NoBorderHandler
+                          : FirstBorderHandler
+                      }
+                    >
+                     
+                      Template 1
+                    </p>
+                  </div>
                 </Col>
-                <Col xs={24} md={12} xxl={12}>     
-                  <BoxWrapper className="cursor-pointer">
-                  <span className="flex justify-center" >< TemplateCertificate />
-                  </span><Divider />
-                  <p className="text-center">Template 2</p>
+                <Col className="gutter relative" xs={24} xl={12}>
+                  <div
+                    style={{ border: `2px solid ${borderColorSecond.color}` }}
+                   
+                    className="cursor-pointer certificate-card "
+                  >
+                    {borderColorSecond.toggle && (
+                      <CertificateTickCircle className="absolute certificate-tick-circle" />
+                    )}
 
-                </BoxWrapper></Col>
+                    <div className="card-image-box ">
+                      <span className="flex justify-center p-5 image">
+                        <TemplateCertificateSmall className=" background-img" />
+                      </span>
+                      <div
+                        className="middle"
+                        onClick={() => {
+                          setShowEditModal(!showEditModal);
+                        }}
+                      >
+                        <EyeFilled className="text" />
+                      </div>
+                    </div>
+                    <Divider />
+                    <p
+                      className="text-center"
+                      onClick={
+                        borderColorSecond.toggle
+                          ? NoBorderHandler1
+                          : SecondBorderHandler
+                      }
+                    >
+                      {" "}
+                      Template 2
+                    </p>
+                  </div>
+                </Col>
               </Row>
-
-
-
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
@@ -117,6 +211,14 @@ const NewTemplateCertificationOfAppreciation = () => {
           </Space>
         </Form>
       </BoxWrapper>
+      <PopUpModal
+        open={showEditModal}
+        title="Preview"
+        width={900}
+        close={() => setShowEditModal(false)}
+      >
+        <TemplateCertificateLarger />
+      </PopUpModal>
     </div>
   );
 };

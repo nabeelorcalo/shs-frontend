@@ -33,8 +33,9 @@ const NewTemplateContract = () => {
   return (
     <div className="contract-new-template">
       <NewTemplateCommonBreadcrum
-        perviousPageName="Offer Letter"
-        perviousPageLink="/settings/template/template-offer-letters"
+        currentPageName="Contract"
+        perviousPageLink="/settings/template/contract"
+     
       />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>

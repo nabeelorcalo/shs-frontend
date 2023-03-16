@@ -5,12 +5,13 @@ import { SettingHorizontalLine } from "../../../assets/images";
 const { Title } = Typography;
 
 interface INEwTEMPLATEBREADCRUMB {
-  perviousPageName: string;
-  perviousPageLink: string;
+  currentPageName: string;
+  perviousPageLink:string
+  
 }
 
 const NewTemplateCommonBreadcrum = (props: INEwTEMPLATEBREADCRUMB) => {
-    const {perviousPageName,perviousPageLink} = props
+    const {currentPageName ,perviousPageLink} = props
   return (
     <div>
       <div className="flex mt-3 items-center ">
@@ -31,11 +32,12 @@ const NewTemplateCommonBreadcrum = (props: INEwTEMPLATEBREADCRUMB) => {
           </span>
         </NavLink>
         <span className="mx-2 mt-1">/</span>
-        <NavLink to={perviousPageLink}>
-          <span className="top-3 text-base font-medium text-secondary-color" >
-            {perviousPageName}
+        
+        <NavLink to ={perviousPageLink} ><span className="top-3 text-base font-medium text-secondary-color" >
+            {currentPageName}
           </span>
-        </NavLink>
+          </NavLink> 
+       
       </div>
     </div>
   );

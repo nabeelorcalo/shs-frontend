@@ -93,7 +93,7 @@ const PayrollAddCategory = () => {
           Setting
         </span>
         <span className="mx-2">/</span>
-        <NavLink to="/settings/location">
+        <NavLink to="/settings/payroll">
           <span className=" text-base font-medium text-secondary-color">
             Payroll
           </span>

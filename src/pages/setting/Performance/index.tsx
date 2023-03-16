@@ -42,7 +42,6 @@ const inputData = [
 
 const SettingPerformance: React.FC = () => {
   const [hideButton, sethideButton] = useState<Boolean>(false);
-  const [hideInputButton, sethideInputButton] = useState<Boolean>(false);
   const [id, setId] = useState<any>();
 
   const IdHandler = (id: any) => {
@@ -71,10 +70,10 @@ const SettingPerformance: React.FC = () => {
                     md={12}
                     xxl={12}
                   >
-                    {
+                    {item.id !== id &&
                       <Input.Group compact className="w-full">
-                        <span className="h-[42px]">
-                          <Performanceinput style={{ height: "42px" }} />
+                        <span className="h-[40px]">
+                          <Performanceinput style={{ height: "38px" }} />
                         </span>
 
                         <Input
@@ -104,12 +103,13 @@ const SettingPerformance: React.FC = () => {
                           <PerformanceTick
                             className="cursor-pointer"
                             onClick={() => {
-                              sethideInputButton(!hideInputButton);
+                              setId('')        
                             }}
+                           
                           />
                           <PerformanceClose
                             onClick={() => {
-                              sethideInputButton(!hideInputButton);
+                              setId('')
                             }}
                             className="cursor-pointer"
                           />

@@ -12,14 +12,14 @@ import {
   Space,
 } from "antd";
 import {
+  SearchInputIconSetting,
   SettingAvater,
   SettingHorizontalLine,
 } from "../../../../assets/images";
 import "./style.scss";
-import dayjs, { Dayjs } from "dayjs";
 import { NavLink } from "react-router-dom";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import { Input, SearchBar } from "../../../../components";
+import { DropDown, Input, SearchBar } from "../../../../components";
 import UploadDocument from "../../../../components/UploadDocument";
 import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
 
@@ -53,7 +53,7 @@ const AddLocation: React.FC = () => {
     },
   ];
 
-  const deselectArray:any = [];
+  const deselectArray: any = [];
   const [value, setValue] = useState(1);
   const [openModal, setOpenModal] = useState<any>(false);
   const [formValues, setFormValues] = useState<any>({
@@ -76,10 +76,10 @@ const AddLocation: React.FC = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    if(e.target.value===2){
+    if (e.target.value === 2) {
       setOpenModal(!openModal);
     }
-    
+
     setValue(e.target.value);
   };
 
@@ -87,7 +87,6 @@ const AddLocation: React.FC = () => {
   return (
     <div className="add-location">
       {/*------------------------ Header----------------------------- */}
-
       <div className="flex items-center">
         <Title level={3} className="mt-2">
           Add Location{" "}
@@ -151,11 +150,23 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                label="Post Code"
+                // label="Post Code"
                 name="postCode"
                 rules={[{ message: "Please input your username!" }]}
               >
-                <SearchBar size="middle" handleChange={handleChange} />
+                {/* <SearchBar size="middle" handleChange={handleChange} /> */}
+                <Input
+                  className="input"
+                  handleChange={handleChange}
+                  id="postCode"
+                  label="Post Code"
+                  name="postCode"
+                  placeholder="Enter Code"
+                  size="small"
+                  type="text"
+                  value={formValues.postCode}
+                //  prefix={<SearchInputIconSetting />} 
+                />
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
@@ -232,33 +243,11 @@ const AddLocation: React.FC = () => {
                     Country<span className="text-[red]"></span>
                   </span>
 
-                  <Select
-                    className="select"
-                    size="middle"
-                    style={{ width: "100%" }}
-                    placeholder="Select"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      (option?.label ?? "").includes(input)
-                    }
-                    options={[
-                      {
-                        value: "1",
-                        label: "Pakistan",
-                      },
-                      {
-                        value: "2",
-                        label: "India",
-                      },
-                      {
-                        value: "3",
-                        label: "France",
-                      },
-                      {
-                        value: "4",
-                        label: "Canada",
-                      },
-                    ]}
+                  <DropDown
+                    name="Select"
+                    options={["Pakistan", "India", "France"]}
+                    setValue={handleChange}
+                    value="country"
                   />
                 </div>
               </div>
@@ -281,33 +270,16 @@ const AddLocation: React.FC = () => {
               </span>
               <div className="flex">
                 <div className=" mt-1 ">
-                  <Select
-                    className="select"
-                    size="middle"
-                    style={{ width: "100%" }}
-                    placeholder="+92"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      (option?.label ?? "").includes(input)
-                    }
+
+                  <DropDown
+                    name="+92"
                     options={[
-                      {
-                        value: "1",
-                        label: "+92",
-                      },
-                      {
-                        value: "2",
-                        label: "+09",
-                      },
-                      {
-                        value: "3",
-                        label: "+88",
-                      },
-                      {
-                        value: "4",
-                        label: "+99",
-                      },
+                      '+92',
+                      '+93',
+                      '+94'
                     ]}
+                    setValue={() => { }}
+                    value=""
                   />
                 </div>
 

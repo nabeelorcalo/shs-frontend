@@ -2,28 +2,16 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { SettingAvater, SettingHorizontalLine } from "../../../../assets/images";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
-// import { Input, SearchBar } from "../../../../components";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Select,
-  Button,
-  Space,
-  Input,
-  Switch,
+  Typography, Row, Col, Divider, Form, Radio, RadioChangeEvent, Select, Button, Space, Input, Switch,
 } from "antd";
-import { CommonDatePicker, SearchBar } from "../../../../components";
+import { CommonDatePicker, DropDown, SearchBar } from "../../../../components";
 import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
+import "./style.scss";
 
-const LeavesAddPolicy:React.FC = () => {
+const LeavesAddPolicy: React.FC = () => {
   const selectArray = [
     {
       name: "Eva Smith",
@@ -51,7 +39,7 @@ const LeavesAddPolicy:React.FC = () => {
     },
   ];
 
-  const deselectArray:any = [];
+  const deselectArray: any = [];
 
   const [value, setValue] = useState(1);
   const [openDatePicker, setOpenDatePicker] = useState(false);
@@ -66,7 +54,7 @@ const LeavesAddPolicy:React.FC = () => {
     carryForwardExpiration: "",
     AllInterns: "",
     switch: "",
-    
+
   });
 
   const handleChange = (event: any) => {
@@ -75,7 +63,7 @@ const LeavesAddPolicy:React.FC = () => {
   };
   const onChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
-    if(e.target.value===2){
+    if (e.target.value === 2) {
       setOpenModal(!openModal);
     }
     setValue(e.target.value);
@@ -123,7 +111,7 @@ const LeavesAddPolicy:React.FC = () => {
               <div className="mt-3 flex flex-col">
                 <label>Description (optional)</label>
                 <TextArea
-               className="text-input-bg-color"
+                  className="text-input-bg-color"
                   rows={6}
                   placeholder="Write Something..."
                   maxLength={6}
@@ -142,41 +130,26 @@ const LeavesAddPolicy:React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <p>Assigned Date</p>
-              <Select
-                size="middle"
-                style={{ width: "100%" }}
-                placeholder="Select"
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option?.label ?? "").includes(input)
-                }
+
+              <DropDown
+                name="Select"
                 options={[
-                  {
-                    value: "1",
-                    label: "Joining Date",
-                  },
+                  'joining Date',
                 ]}
+                setValue={() => { }}
+                value=""
               />
               <div className="my-3">
                 <p>Accrual Frequency</p>
-                <Select
-                  size="middle"
-                  style={{ width: "100%" }}
-                  placeholder="Select"
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
+
+                <DropDown
+                  name="this month"
                   options={[
-                    {
-                      value: "1",
-                      label: "Monthly",
-                    },
-                    {
-                      value: "2",
-                      label: "Yearly",
-                    },
+                    'Monthly',
+                    'Yearly',
                   ]}
+                  setValue={() => { }}
+                  value=""
                 />
               </div>
 
@@ -203,42 +176,29 @@ const LeavesAddPolicy:React.FC = () => {
             <Col className="gutter-row " xs={24} md={12} xxl={8}>
               <div className="my-3">
                 <p>Maximum Carry Forward (Days Per Year)</p>
-                <Select
-                  size="middle"
-                  style={{ width: "100%" }}
-                  placeholder="Select"
-                  optionFilterProp="children"
-                  filterOption={(input, option) =>
-                    (option?.label ?? "").includes(input)
-                  }
+
+                <DropDown
+                  name="Selecy"
                   options={[
-                    {
-                      value: "1",
-                      label: "1",
-                    },
-                    {
-                      value: "2",
-                      label: "2",
-                    },
-                    {
-                      value: "3",
-                      label: "3",
-                    },
-                    {
-                      value: "4",
-                      label: "4",
-                    },
+                    '1',
+                    '2',
+                    '3',
+                    '4',
+                    '5',
+                    '6'
                   ]}
+                  setValue={() => { }}
+                  value=""
                 />
               </div>
               <div>
                 <p>Carry Forward Expiration</p>
 
                 <CommonDatePicker
-                  onBtnClick={() => {}}
+                  onBtnClick={() => { }}
                   open={openDatePicker}
                   setOpen={setOpenDatePicker}
-                  setValue={function noRefCheck() {}}
+                  setValue={function noRefCheck() { }}
                 />
               </div>
             </Col>

@@ -33,8 +33,9 @@ const NewTemplateRejectionLetter = () => {
   return (
     <div className="rejection-letter-new-template">
       <NewTemplateCommonBreadcrum
-        perviousPageName="Offer Letter"
-        perviousPageLink="/settings/template/template-offer-letters"
+        currentPageName="Rejection Letter"
+        perviousPageLink="/settings/template/rejection-letter"
+        
       />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>

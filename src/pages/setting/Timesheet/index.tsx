@@ -126,7 +126,7 @@ const SettingTimesheet = () => {
         setState={setShowDeleteModal}
         type="error"
         width={500}
-        title="error"
+        title=""
       >
         <p>Are you sure you want to delete this item?</p>
       </Alert>

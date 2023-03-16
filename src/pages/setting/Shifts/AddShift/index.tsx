@@ -92,7 +92,7 @@ const AddShift: React.FC = () => {
           Setting
         </span>
           <span className="mx-2">/</span>
-          <NavLink to="/settings/leaves">
+          <NavLink to="/settings/shifts">
           <span className=" text-base font-medium text-secondary-color">
           Shifts
         </span>

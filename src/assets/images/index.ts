@@ -237,7 +237,10 @@ export { ReactComponent as PerformanceClose } from "./setting/close.svg";
 export { ReactComponent as PerformancePlus } from "./setting/plus.svg";
 export { ReactComponent as PerformanceMinus } from "./setting/minus.svg";
 export { ReactComponent as Performanceinput } from "./setting/performanceInput.svg";
-export { ReactComponent as TemplateCertificate } from "./setting/certificate.svg";
+export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.svg";
+export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
+export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
+export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
 
 // Universities
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
