@@ -6,7 +6,7 @@ import "./style.scss"
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
-import { Alert, Button, DropDown, SearchBar,FiltersButton,LeaveRequest } from "../../components";
+import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest } from "../../components";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
