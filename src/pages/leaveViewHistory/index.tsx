@@ -5,87 +5,21 @@ import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import "./style.scss"
 import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../assets/images";
-import { Button, SearchBar } from "../../components";
+import { Alert, Button, DropDown, SearchBar } from "../../components";
 import { useState } from "react";
 import { CloseCircleFilled } from "@ant-design/icons";
 import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
-interface DataType {
-  key: string,
-  requestDate: string,
-  dateFrom: string,
-  dateTo: string,
-  leaveType: string,
-  description: string,
-  status: string,
-  Actions: string,
-}
-
-
-const data: DataType[] = [
-  {
-    // key: '01',
-    // title: "Sick",
-    // eventType: "sick",
-    // start: "2023-03-03T05:21:00",
-    // end: "2023-03-04T09:22:00",
-    // leaveTypeDay: "half day",
-    // dur: "01 day",
-    // hours: "04:00",
-    // img: LeaveProfileImg,
-    // name: "Maria Sanoid",
-    // designation: "UI UX Designer",
-    // email: "maria@Student Help Squad.com",
-    // aprover: "Amelia Clark",
-    // ApprovedBy: "Amelia Clark",
-    // status: "Pending",
-    // fulldescription: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation."
-    
-    key: '01',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Sick',
-    description: "High fever",
-    status: "Pending",
-    Actions: "fduhguisd",
-  },
-  {
-    key: '02',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Casual',
-    description: "High fever",
-    status: "Approved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: '01',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Mediacal',
-    description: "High fever",
-    status: "Declined",
-    Actions: "fduhguisd",
-  },
-  {
-    key: '01',
-    requestDate: '01/07/2022',
-    dateFrom: '01/07/2022',
-    dateTo: '01/07/2022',
-    leaveType: 'Work From Home',
-    description: "High fever",
-    status: "Declined",
-    Actions: "fduhguisd",
-  },
-];
-
+import { FiltersButton } from "../../components/";
+import { LeaveRequest } from "../../components";
+import { data } from "./LeaveMockData";
 const index = () => {
-  const [actionType, setActionType] = useState({ type: '', id: '' });
+  // const [actionType, setActionType] = useState({ type: '', id: '' });
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
+  const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const columns = [
     {
       title: 'No',
@@ -99,14 +33,14 @@ const index = () => {
     },
     {
       title: 'Date From',
-      dataIndex: 'dateFrom',
-      key: 'dateFrom',
+      dataIndex: 'start',
+      key: 'start',
 
     },
     {
       title: 'Date  To',
-      dataIndex: 'dateTo',
-      key: 'dateTo',
+      dataIndex: 'end',
+      key: 'end',
     },
     {
       title: 'Leave Type',
@@ -116,9 +50,9 @@ const index = () => {
         <div
           className="status_container px-[10px] py-[3px] relative text-left ">
           <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg " style={{
-            backgroundColor: data.leaveType === "Sick" ?
-              "#4CA4FD" : data.leaveType === "Casual" ?
-                "#FFC15D" : data.leaveType === "Work From Home" ? "#E96F7C" : "#6AAD8E",
+            backgroundColor: data.leaveType === "sick" ?
+              "#4CA4FD" : data.leaveType === "casual" ?
+                "#FFC15D" : data.leaveType === "work from home" ? "#E96F7C" : "#6AAD8E",
             color: "#fff"
           }}></span>
           {data.leaveType}
@@ -143,7 +77,8 @@ const index = () => {
             backgroundColor: data.status === "Pending" ?
               "#FFC15E" : data.status === "Declined" ?
                 "#D83A52" : "#4ED185",
-            color: "#fff"
+            color: "#fff",
+            textAlign: "center",
           }}>
           {data.status}
         </div>
@@ -155,53 +90,48 @@ const index = () => {
       key: 'action',
       render: (_: any, data: any) => (
         <Space size="middle">
-          <Dropdown menu={{ items }} trigger={['click']} overlayClassName='menus_dropdown_main' placement="bottomRight">
-            <MoreIcon className=" cursor-pointer " onClick={() => setActionType({ ...actionType, id: data.key })} />
-          </Dropdown>
-          {/* <a onClick={() => alert(`Id For The Editabel record is  ${data.key} `)}></a> */}
-          {/* <a onClick={()=>alert(`deleted record id  ${data.key} `)}>Delete</a> */}
-        </Space>
+          <Dropdown
+            // open={visibale}
+            dropdownRender={(menu: any) => {
+              return <BoxWrapper className=" action_dropDown">
+                <p onClick={() => {
+                  setOpenDrawer({ open: true, type: 'viewDetail' })
+
+                }}
+                  className="cursor-pointer"
+                >View Details</p>
+                {data.status === "Pending" &&
+                  <>
+                    <p onClick={() => {
+                      setOpenModal({ open: true, type: 'edit' })
+
+                    }}
+                      className="my-4 cursor-pointer">
+                      Edit
+                    </p>
+                    <p onClick={() => {
+                      setOpenModal({ open: true, type: 'cancel' });
+                    }}
+                      className="cursor-pointer">
+                      Cancel
+                    </p>
+                  </>
+                }
+              </BoxWrapper>
+            }}
+            trigger={['click']}
+            overlayClassName='menus_dropdown_main'
+            placement="bottomRight"
+          // onOpenChange={setVisibale}
+          >
+            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+          </Dropdown >
+        </Space >
       ),
     },
   ];
-  const items: MenuProps['items'] = [
-    {
-      label: <p onClick={() => {
-        setActionType({ ...actionType, type: 'view detail' });
-        setOpenDrawer({ type: 'view detail', open: true })
-      }}
-      >View Details</p>,
-      key: '0',
-    },
-    {
-      label: <p onClick={() => setActionType({ ...actionType, type: 'edit' })}>Edit</p>,
-      key: '1',
-    },
-    {
-      label: <p onClick={() => setActionType({ ...actionType, type: 'cancel' })}>Cancel</p>,
-      key: '3',
-    },
-  ];
-  console.log(actionType);
 
-  // const [open, setOpen] = useState(false);
-  // const showDrawer = () => {
-  //   setOpen(true);
-  // };
-
-  // const onClose = () => {
-  //   setOpen(false);
-  // };
-  // const onFinish = (values: any) => {
-  //   console.log('Success:', values);
-  // };
-
-  // const onFinishFailed = (errorInfo: any) => {
-  //   console.log('Failed:', errorInfo);
-  // };
-  // const handleChange = (value: string) => {
-  //   console.log(`selected ${value}`);
-  // };
+  // console.log(selectedRow);
   return (
     <div className="main_view_detail">
       <Row className=' items-center'>
@@ -212,37 +142,29 @@ const index = () => {
         </Col>
         <Col xs={24} md={12} lg={12} >
           <div className='flex items-center justify-end view_history_button_wrapper'>
-            <Button
-              icon={<FilterIconLeave className="mr-2" />}
-              label="Filters"
-              upcomingIcon={<ChevronRight className="ml-2" />}
-              onClick={() => setOpenDrawer({ type: 'filters', open: true })}
-              shape="default"
-              size="large"
-              type="default"
-              style={{ color: "#A0A3BD", background: "#E6F4F9", display: "flex", alignItems: "center", }}
-              className="button_request_leave mr-5"
-            />
-            {/* <Dropdown menu={{ items }} trigger={['click']}> */}
-            <Button
-              icon={<DownloadIconLeave />}
-              onClick={() => { }}
-              shape="default"
-              size="large"
-              type="default"
-              className="button_request_leave mr-5"
-              style={{ background: "#E6F4F9", display: "flex", alignItems: "center", justifyContent: "center" }}
-            />
-            {/* </Dropdown> */}
+            <div className="mr-4">
+              <FiltersButton
+                label="Filters"
+                onClick={() => setOpenDrawer({ type: 'filters', open: true })}
+              />
+            </div>
+            <div className="mr-4">
+              <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => { }}
+                value=""
+              />
+            </div>
             <Button
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
-              onClick={() => { }}
-              shape="default"
-              size="large"
-              type="default"
-              style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center" }}
-              className="button_request_leave"
+              onClick={() => setOpenModal({ open: true, type: "addLeav" })}
+              size="middle"
+              className="Request_leave"
             />
           </div>
         </Col>
@@ -251,44 +173,63 @@ const index = () => {
       <BoxWrapper>
         <GlobalTable columns={columns} tableData={data} pagination={true} />
       </BoxWrapper>
-      <DrawerComp
-        title={"Filters"}
+
+      {openDrawer.open && <DrawerComp
+        title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
-        closeIcon={<CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px', right: "0" }} />}
+        className={openDrawer.type === 'filters' ? "" : "Record_data"}
+        closeIcon={openDrawer.type === 'filters' ? <CloseCircleFilled style={{ color: "#A3AED0", fontSize: '20px', right: "0" }} /> : false}
         onClose={() => setOpenDrawer({ type: '', open: false })}
       >
         <div>
-          {openDrawer.type === 'filters' ? <FilterDrawerForm /> : "hello"
-            // <CalendarDrawerInner
-            //   img={extendedPropsData?.img}
-            //   name={extendedPropsData?.name}
-            //   designation={extendedPropsData?.designation}
-            //   email={extendedPropsData?.email}
-            //   requestedOn={eventRange?.start}
-            //   aprover={extendedPropsData?.aprover}
-            //   ApprovedBy={extendedPropsData?.ApprovedBy}
-            //   backgroundColor={events?.title === "Sick" ?
-            //     "rgba(76, 164, 253, 0.25)" : events?.title === "Casual" ?
-            //       "rgba(255, 193, 93, 0.25)" : events?.title === "Work from home" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
-            //   spanBG={events?.title === "Sick" ?
-            //     "rgba(76, 164, 253, 1)" : events?.title === "Casual" ?
-            //       "rgba(255, 193, 93, 1)" : events?.title === "Work from home" ? "rgba(233, 111, 124, 1)" : "rgba(106, 173, 142, 1)"}
-            //   title={events?.title}
-            //   dateFrom={eventRange?.start}
-            //   dateTo={eventRange?.end}
-            //   timeFrom={eventRange?.start}
-            //   timeTo={eventRange?.end}
-            //   leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}
-            //   hours={extendedPropsData?.hours}
-            //   dur={extendedPropsData?.dur}
-            //   reqStatus={extendedPropsData?.status}
-            //   description={extendedPropsData?.description}
-
-
-            // />
+          {openDrawer.type === 'filters' ? <FilterDrawerForm /> :
+            <CalendarDrawerInner
+              img={selectedRow?.img}
+              name={selectedRow?.name}
+              designation={selectedRow?.designation}
+              email={selectedRow?.email}
+              requestedOn={selectedRow?.requestDate}
+              aprover={selectedRow?.aprover}
+              ApprovedBy={selectedRow?.ApprovedBy}
+              backgroundColor={selectedRow?.title === "Sick" ?
+                "rgba(76, 164, 253, 0.25)" : selectedRow?.title === "Casual" ?
+                  "rgba(255, 193, 93, 0.25)" : selectedRow?.title === "Work from home" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
+              spanBG={data?.title === "Sick" ?
+                "rgba(76, 164, 253, 1)" : selectedRow?.title === "Casual" ?
+                  "rgba(255, 193, 93, 1)" : selectedRow?.title === "Work from home" ? "rgba(233, 111, 124, 1)" : "rgba(106, 173, 142, 1)"}
+              title={selectedRow?.title}
+              dateFrom={selectedRow?.start}
+              dateTo={selectedRow?.end}
+              timeFrom={selectedRow?.start}
+              timeTo={selectedRow?.end}
+              leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
+              hours={selectedRow?.hours}
+              dur={selectedRow?.dur}
+              reqStatus={selectedRow?.status}
+              description={selectedRow?.fulldescription}
+            />
           }
         </div>
-      </DrawerComp>
+      </DrawerComp>}
+
+      {openModal.open && openModal.type !== 'cancel' &&
+        <LeaveRequest
+          title="Leave Request"
+          open={openModal.open}
+          data={selectedRow}
+          setIsAddModalOpen={setOpenModal}
+          subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
+          changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
+        />}
+      {openModal.open && openModal.type === 'cancel' &&
+        <Alert type='warning' open={openModal.open}
+          setOpen={() => setOpenModal({ ...openModal, open: !openModal.open })}
+          cancelBtntxt={"Cancle"}
+          okBtntxt={"Submit"}
+
+        >
+          <p>Are you sure you want to cancel this request?</p>
+        </Alert>}
     </div>
   )
 }

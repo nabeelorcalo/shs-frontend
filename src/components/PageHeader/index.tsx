@@ -9,7 +9,7 @@ interface PageHeaderProps {
   bordered?: boolean
 }
 
-const PageHeader: FC<PageHeaderProps> = ({ title, actions=false, children, bordered  }) => actions ?  (
+export const PageHeader: FC<PageHeaderProps> = ({ title, actions=false, children, bordered  }) => actions ?  (
   <div className={`shs-page-header ${bordered? 'bordered': ''}`}>
     <Typography.Title level={3}>
       {title}
@@ -18,12 +18,10 @@ const PageHeader: FC<PageHeaderProps> = ({ title, actions=false, children, borde
       {children}
     </div>
   </div>
-  ) : (
-    <div className={`shs-page-header ${bordered? 'bordered': ''}`}>
-      <Typography.Title level={3}>
-        {title}
-      </Typography.Title>
-    </div>
-  )
-
-export default PageHeader;
+) : (
+  <div className={`shs-page-header ${bordered? 'bordered': ''}`}>
+    <Typography.Title level={3}>
+      {title}
+    </Typography.Title>
+  </div>
+)
