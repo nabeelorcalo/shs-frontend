@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import FiltersButton from '../components/FiltersButton'
+import { FiltersButton } from '../components'
 
 export default {
     title: 'Components/FiltersButton',

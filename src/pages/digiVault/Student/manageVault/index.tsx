@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Input, Alert } from "../../../../components";
-
-// import { Upload } from "../../../../assets/images";
+import { Upload } from "../../../../assets/images";
 import GlobalTable from "../../../../components/Table/Table";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
@@ -122,7 +121,7 @@ const ManageVault = (props: any) => {
 
   return (
     <div className="manage-vault-main">
-      <Alert
+      {/* <Alert
         open={showDelete}
         setOpen={setShowDelete}
         type="error"
@@ -130,7 +129,7 @@ const ManageVault = (props: any) => {
         cancelBtntxt="Cancel"
       >
         <p>Are you sure you want to delete this?</p>
-      </Alert>
+      </Alert> */}
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">

@@ -4,11 +4,11 @@ import type { ButtonProps } from 'antd';
 import './style.scss'
 
 interface IButtonProps {
-  customType?: string
+  customType?: 'secondary' | 'tertiary'
   children?: React.ReactNode
 }
 
-const Button = ({
+export const ExtendedButton = ({
   customType,
   children,
   ...rest
@@ -18,6 +18,4 @@ const Button = ({
       {children}
     </AntButton>
   )
-};
-
-export default Button;
+}
