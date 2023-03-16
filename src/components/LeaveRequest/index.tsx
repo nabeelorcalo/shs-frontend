@@ -58,8 +58,8 @@ export const LeaveRequest = (props: any) => {
 
   }
   
-  const { title, openModal, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
-  console.log(openModal);
+  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
+  // console.log(openModal);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [formVal, setFormVal] = useState(data ? data : initailVal)
@@ -68,13 +68,13 @@ export const LeaveRequest = (props: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
   // }
-  // console.log(formVal, 'from modal box');
+  console.log(formVal, 'from modal box');
 
   return (
     <Modal
       title={title}
-      open={openModal.open}
-      onCancel={() => setIsAddModalOpen({...openModal,open:false})}
+      open={open}
+      onCancel={() => setIsAddModalOpen(false)}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
@@ -196,7 +196,7 @@ export const LeaveRequest = (props: any) => {
 
               className='Leave_request_Canclebtn'
               label="Cancle"
-              onClick={() => { setIsAddModalOpen({open:false}); form.resetFields() }}
+              onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
               type="primary"
               htmlType="button"
             />

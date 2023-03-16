@@ -7,7 +7,7 @@ import action from "../actionHandler"
 import "./style.scss"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
-import LeaveRequest from '../../../components/LeaveRequest';
+// import {LeaveRequest} from '../../../components';
 import { leaveCardData, upcomingHolidayData } from './internMockdata';
 import UpcomingHolidayComp from './upcomingHoliday';
 const CardIcon = [

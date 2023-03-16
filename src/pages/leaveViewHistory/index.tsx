@@ -160,12 +160,11 @@ const index = () => {
               />
             </div>
             <Button
-              color="red"
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
-              onClick={() => setIsAddModalOpen(true)}
+              onClick={() => setOpenModal({open:true, type:"addLeav"})}
               size="middle"
-              style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center" }}
+
               className="Request_leave"
             />
           </div>
@@ -217,7 +216,7 @@ const index = () => {
       {openModal.open && openModal.type === 'edit' && 
       <LeaveRequest
         title="Leave Request"
-        openModal={openModal}
+        open={openModal.open}
         data={selectedRow}
         setIsAddModalOpen={setOpenModal}
         subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
