@@ -13,10 +13,10 @@ export const EvaluationStatsCard: any = (props: EvaluationStatProps) => {
   const { name, percentage, color } = props;
 
   return (
-    <BoxWrapper className='mt-4'>
-      <div className='flex flex-col gap-4 evaluation-stats-card'>
+    <BoxWrapper className={`evaluation-stats-card mt-4`}>
+      <div className='flex flex-col'>
 
-        <div className='flex flex-col gap-0'>
+        <div className='flex flex-col'>
           <Typography.Title
             level={4}
             className="evaluation-stats-name"
