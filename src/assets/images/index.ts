@@ -121,8 +121,8 @@ export { default as CalendarIcon } from "./calender-icon.png";
 export { default as CloseCircleIcon } from "./close-circle-icon.png";
 export { default as DownloadIcon } from "./download-icon.png";
 export { default as SearchIcon } from "./search-icon.png";
-// DigiVault CArd Img
 
+// DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
 export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
@@ -135,7 +135,17 @@ export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
 export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
+export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
+export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
+export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { ReactComponent as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
+export { ReactComponent as File } from "../images/ColorfullIconsProgressbar/file.svg";
 export { ReactComponent as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
+export { ReactComponent as BankingWhiteSub } from "../images/digivault/manageVault/white/bankSubWhite.svg";
+export { ReactComponent as EducationWhite } from "../images/digivault/manageVault/white/educationWhite.svg";
+export { ReactComponent as EducationWhiteSub } from "../images/digivault/manageVault/white/educationSubWhite.svg";
+export { ReactComponent as HealthWhiteSub } from "../images/digivault/manageVault/white/healthSubWhite.svg";
+export { ReactComponent as TransWhiteSub } from "../images/digivault/manageVault/white/transWhite.svg";
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -221,3 +231,9 @@ export { default as Phone } from "../images/chat/Phone.svg";
 export { default as Moreicon } from "../images/chat/MoreDots.svg";
 export { default as DocIcon } from "../images/chat/documentIcon.svg";
 
+export { default as DocImg1 } from "../images/chat/New folder/docimg1.svg";
+export { default as DocImg2 } from "../images/chat/New folder/docimg2.svg";
+export { default as Audio } from "../images/chat/New folder/Audio.svg";
+export { default as ShapAudio } from "../images/chat/New folder/Shape.svg";
+export { default as PlayIcon } from "../images/chat/New folder/play.svg";
+export { default as DoubleTik } from "../images/chat/New folder/bluetik.svg";

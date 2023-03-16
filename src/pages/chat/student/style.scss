@@ -1,0 +1,26 @@
+.chat-main {
+  .inbox-main {
+    height: 88vh;
+    overflow: scroll;
+  }
+
+  .incoming {
+    .incoming-message {
+      padding: 10px;
+      background: #fbfdff;
+      border: 1px solid #e9edf0;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+      border-radius: 12px 12px 12px 0px;
+      white-space: pre-wrap;
+    }
+  }
+
+  .outgoing-message {
+    padding: 10px;
+    background: #fbfdff;
+    border: 1px solid #e9edf0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+    border-radius: 12px 12px 12px 0px;
+    white-space: pre-wrap;
+  }
+}
