@@ -1,7 +1,7 @@
 import { Button, Col, Divider, Row } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { LeaveCard } from '../../../components'
-import {BoxWrapper} from '../../../components/BoxWrapper/BoxWrapper';
+import { LeaveCard, PageHeader } from '../../../components'
+import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 import Calendar from "./calendar/calendar"
 import action from "../actionHandler"
 import "./style.scss"
@@ -21,17 +21,15 @@ const index = () => {
 
   return (
     <div className='intrne_main'>
-      <Row className=' items-center'>
-        <Col xs={24} md={12} lg={12}>
-          <h3 className='m-0 font-semibold '>Leave</h3>
-        </Col>
-        <Col xs={24} md={12} lg={12} >
-          <div className='flex items-center justify-end view_history_button_wrapper'>
-            <Button className='button font-semibold' onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}>View History</Button>
-          </div>
-        </Col>
-        <Divider />
-      </Row>
+      <PageHeader
+        actions
+        bordered
+        title="Leave"
+      >
+        <div className='flex items-center justify-end view_history_button_wrapper'>
+          <Button className='button font-semibold' onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}>View History</Button>
+        </div>
+      </PageHeader>
       <Row gutter={[20, 20]} >
         {leaveCardData.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6} >
@@ -46,7 +44,7 @@ const index = () => {
           </BoxWrapper>
         </Col>
         <Col xs={24} md={12} xl={7} >
-         <UpcomingHolidayComp upcomingHolidayData={upcomingHolidayData}/>
+          <UpcomingHolidayComp upcomingHolidayData={upcomingHolidayData} />
         </Col>
       </Row>
     </div>

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+
 import "./style.scss";
 import Internee from "./intern/index"
 import CompanyAdmin from "./companyAdmin/index"
@@ -12,6 +11,8 @@ const Leaves = () => {
   const rederWthRole: any = {
     'CompanyAdmin': <CompanyAdmin />,
     'Intern': <Internee />,
+    'Student': <Student />,
+    'Manager': <Manger />,
   }
 
   return (
