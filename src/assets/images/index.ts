@@ -101,9 +101,13 @@ export { default as MedicalIcon } from "./sick.png";
 
 // Rating Emojis
 export { ReactComponent as Sad } from "./RatingEmojis/sad.svg";
+export { ReactComponent as SadColorLessEmoji } from "./RatingEmojis/SadColorLessEmoji.svg";
 export { ReactComponent as Neutral } from "./RatingEmojis/neutral.svg";
+export { ReactComponent as NeutralColorLessEmoji } from "./RatingEmojis/NeutralColorLessEmoji.svg";
 export { ReactComponent as Happy } from "./RatingEmojis/happy.svg";
+export { ReactComponent as HappyColorLessIcon } from "./RatingEmojis/HappyColorLessIcon.svg";
 export { ReactComponent as Awesome } from "./RatingEmojis/awesome.svg";
+export { ReactComponent as SatisfiedColorLessIcon } from "./RatingEmojis/SatisfiedColorLessIcon.svg";
 export { ReactComponent as Terrible } from "./RatingEmojis/terrible.svg";
 export { ReactComponent as Emoji1st } from "./RatingEmojis/Emoji1st.svg";
 export { ReactComponent as Emoji2nd } from "./RatingEmojis/Emoji2nd.svg";
@@ -260,5 +264,3 @@ export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
 // Performance
 export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
-
-

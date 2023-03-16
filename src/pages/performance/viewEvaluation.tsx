@@ -1,8 +1,25 @@
 import { useState } from "react";
-import { PageHeader, IconButton, EvaluationCard, EvaluationStatsCard } from "../../components";
-import { DownloadIconWithBg } from '../../assets/images';
+import { Typography } from "antd";
 import constants from "../../config/constants";
 import "./style.scss";
+import {
+  PageHeader,
+  IconButton,
+  EvaluationCard,
+  EvaluationStatsCard
+} from "../../components";
+import {
+  Sad,
+  SadColorLessEmoji,
+  Neutral,
+  NeutralColorLessEmoji,
+  Happy,
+  HappyColorLessIcon,
+  Awesome,
+  SatisfiedColorLessIcon,
+  DownloadIconWithBg,
+} from '../../assets/images';
+import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
 
@@ -14,6 +31,65 @@ const ViewPerformance = () => {
     discipline: '61',
     personal: '92',
   };
+
+  const data = [
+    {
+      id: 1,
+      name: "Learning Objectives",
+      values: [
+        { title: "Works to full potential", value: 1 },
+        { title: "Quality of work", value: 2 },
+        { title: "Work Consistency", value: 3 },
+        { title: "Independency in work", value: 4 },
+        { title: "Business skills", value: 2 },
+        { title: "Technical skills", value: 3 },
+      ]
+    },
+    {
+      id: 2,
+      name: "Discipline",
+      values: [
+        { title: "Punctuality", value: 4 },
+        { title: "Attendance", value: 3 },
+        { title: "Coworker relationship", value: 2 },
+        { title: "Team work", value: 1 }
+      ]
+    },
+    {
+      id: 3,
+      name: "Personal",
+      values: [
+        { title: "Creativity", value: 1 },
+        { title: "Honesty", value: 2 },
+        { title: "Integrity", value: 4 },
+        { title: "Communication skills", value: 1 },
+        { title: "Task Initiatives", value: 3 }
+      ]
+    }
+  ]
+
+  const emojiData = [
+    {
+      name: "Unsatisfactory",
+      comp: Sad,
+      colorLessComp: SadColorLessEmoji,
+    },
+    {
+      name: "Still Learning",
+      comp: Neutral,
+      colorLessComp: NeutralColorLessEmoji
+    },
+    {
+      name: "Meeting Expectations",
+      comp: Happy,
+      colorLessComp: HappyColorLessIcon
+    },
+    {
+      name: "Exceeding Expectations",
+      comp: Awesome,
+      colorLessComp: SatisfiedColorLessIcon
+    },
+  ];
 
   const downloadClick = () => {
     alert('download popup');
@@ -83,9 +159,32 @@ const ViewPerformance = () => {
         </div>
       </div>
 
-      <div className="flex  flex-wrap">
+      {
+        data.map((obj: any) => {
+          return (
+            <div className="flex flex-col flex-wrap">
+              <div key={obj.name} className="mt-8 mb-2">
+                <Typography.Title level={3} className="evaluation-heading">
+                  {obj.name}
+                </Typography.Title>
+              </div>
 
-      </div>
+              <div className="flex flex-row flex-wrap gap-4">
+                {obj.values.map((child: any, index: number) =>
+                  <div key={child.title} className="w-[32%]">
+                    <EmojiMoodRating
+                      size={5}
+                      data={emojiData}
+                      title={child.title}
+                      activeIconIndex={child.value}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })
+      }
     </div>
   )
 }
