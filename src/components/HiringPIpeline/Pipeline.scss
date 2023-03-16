@@ -4,9 +4,11 @@
 
 .hiringPipeline {
     text-align: center;
-    height: 80px;
-    margin-left: -40px;
-    width: 227px;
+    height: 40px;
+    margin-left: -33px;
+    color: white;
+    font-size: 12px;
+    width: 150px;
     clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
     background: #F4F5F7;
     border: 1px solid #D2D6DC;
@@ -21,8 +23,8 @@
 }
 
 .para {
-    margin: 0;
-    position: relative;
-    top: 28px;
-    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
 }

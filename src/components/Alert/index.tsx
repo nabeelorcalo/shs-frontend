@@ -8,10 +8,20 @@ import "./style.scss"
 import { STATUS_CONSTANTS } from "../../config/constants";
 
 const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
+interface Props {
+    title?: string;
+    type?: string;
+    width?: any;
+    open?: any;
+    setOpen?: any;
+    icon?: any;
+    cancelBtntxt?: string;
+    okBtntxt?: string;
+    children?: any
+}
 
 export const Alert: React.FC = (props: any) => {
     const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children } = props
-    const alertColor = type === "error" ? "#D83A52" : type === "success" ? "#4A9D77" : type === "warning" ? "#FFC15D" : "black"
     return (
         <>
             <Modal

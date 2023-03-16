@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import tick from '../../../../../assets/images/profile/student/Tick.svg'
 import cross from '../../../../../assets/images/profile/student/close-circle.svg'
 import '../Tabs.scss';
-import { PopupModal } from '../../../../../components/Model';
+import { PopUpModal } from '../../../../../components';
 import { CloseCircleFilled } from '@ant-design/icons';
 import ImmigrationStatusForm from './ImmigrationStatusForm';
 const ImmigrationStatus = () => {

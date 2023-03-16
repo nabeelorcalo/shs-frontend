@@ -1,4 +1,4 @@
-console.log("ENV: ", import.meta.env.VITE_APP_URL)
+console.log("ENV: ", import.meta.env.VITE_APP_URL);
 export default {
   appUrl: import.meta.env.APP_URL || "http://localhost:8001",
   ATTENDANCE: "attendance",
@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Student",
+  USER_ROLE: "Intern",
 };
 
 // Possibe string of roles:
@@ -43,6 +43,7 @@ export const ROUTES_CONSTANTS: any = {
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
+  TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
@@ -73,7 +74,7 @@ export const ROUTES_CONSTANTS: any = {
   RENTED_PROPERTIES: "rented-properties",
   BOOKING_REQUESTS: "booking-requests",
   ACCOMMODATION_PAYMENTS: "payments",
-  PROPERTY_DETAIL: 'property',
+  PROPERTY_DETAIL: "property",
   SEARCH_JOBS: "search-jobs",
   APPLICATION: "application",
   PROFILE: "profile",
@@ -85,9 +86,10 @@ export const ROUTES_CONSTANTS: any = {
   RESERVATIONS: "reservations",
   SETTING: "settings",
   CERTIFICATES: "certificates",
+  CERTIFICATESDETAIL: 'certificates/detail/:id',
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
-  CHAT:"chat",
+  CHAT: "chat",
 };
 
 export const STATUS_CONSTANTS: any = {

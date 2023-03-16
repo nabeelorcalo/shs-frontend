@@ -1,7 +1,5 @@
-import { Col, Row } from 'antd'
-import React from 'react'
 import { ContractsRecieved } from '../../assets/images'
-import { ContractCard } from './ContractCard'
+import { ContractCard } from '.'
 
 const DemoCard = () => {
     return (

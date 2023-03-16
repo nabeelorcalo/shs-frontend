@@ -48,11 +48,11 @@ import Chat from "./pages/chat";
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense fallback={<Spin indicator={spinIcon} />}>
+    <Component {...props} />
+  </Suspense>
+);
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -65,7 +65,7 @@ const Grievances = Loadable(lazy(() => import("./pages/grievances")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure")));
-const Timesheet = Loadable(lazy(() => import("./pages/timesheet")));
+const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
 const WithDrawalRequest = Loadable(
   lazy(() => import("./pages/withdrawalRequest"))
@@ -122,6 +122,9 @@ const Charts = Loadable(
 );
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
+const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
+const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
+const TimeSheetHistory = Loadable(lazy(() => import('./pages/timesheet/companyAdmin/timesheetHistory')));
 
 export const publicRoutes = [
   {
@@ -508,6 +511,11 @@ const companyAdminRoutes = [
         element: <Timesheet />,
       },
       {
+        key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        element: <TimeSheetHistory />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.SETTING}`,
         path: `${ROUTES_CONSTANTS.SETTING}`,
         // element: <Setting />,
@@ -620,6 +628,16 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         element: <Personalisation />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CERTIFICATES}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATES}`,
+        element: <Certificate />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        element: <CertificateDetail />,
       },
     ],
   },

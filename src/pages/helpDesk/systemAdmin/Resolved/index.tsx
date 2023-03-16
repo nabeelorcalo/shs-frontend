@@ -3,19 +3,8 @@ import { Menu, Space, Tooltip } from "antd";
 import GlobalTable from "../../../../components/Table/Table";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
-
-const priorityOption = [
-  { value: "High", label: "High" },
-  { value: "Highest", label: "Highest" },
-  { value: "Medium", label: "Medium" },
-  { value: "Low", label: "Low" },
-];
-
-const statusOption = [
-  { value: "Pendding", label: "Pendding" },
-  { value: "In progress", label: "In progress" },
-  { value: "resolved", label: "resolved" },
-];
+import PriorityDropDown from "../priorityDropDown/priorityDropDown";
+import StatusDropdown from "../statusDropDown/statusDropdown";
 
 const tableData = [
   {
@@ -59,6 +48,40 @@ const tableData = [
   },
 ];
 
+const StatusOptions = [
+  {
+    key: "1",
+    value: "Pending",
+  },
+  {
+    key: "2",
+    value: "In Progress",
+  },
+  {
+    key: "3",
+    value: "Resolved",
+  },
+];
+
+const priorityOption = [
+  {
+    key: "1",
+    value: "Highest",
+  },
+  {
+    key: "2",
+    value: "High",
+  },
+  {
+    key: "3",
+    value: "Medium",
+  },
+  {
+    key: "4",
+    value: "Low",
+  },
+];
+
 const ResolvedData = () => {
   const columns = [
     {
@@ -96,10 +119,9 @@ const ResolvedData = () => {
       title: "Priority",
       key: "Priority",
       render: (_: any, data: any) => (
-        <HelpDeskSelect
-          handleChangePriority={() => {}}
-          priorityOption={priorityOption}
-        />
+        <>
+          <PriorityDropDown priorityOptions={priorityOption} />
+        </>
       ),
     },
     {
@@ -116,10 +138,9 @@ const ResolvedData = () => {
       title: "Status",
       key: "Status",
       render: (_: any, data: any) => (
-        <HelpDeskSelect
-          handleChangePriority={() => {}}
-          priorityOption={statusOption}
-        />
+        <>
+          <StatusDropdown StatusOptions={StatusOptions} />
+        </>
       ),
     },
     {

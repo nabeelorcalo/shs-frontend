@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Space, Dropdown } from "antd";
-import { More } from "../../../../assets/images";
+import { ThreeDotsIcon } from "../../../../assets/images"
 
 const CustomDroupDown = (props: any) => {
   const { menu1 } = props;
@@ -20,7 +20,7 @@ const CustomDroupDown = (props: any) => {
         trigger={["click"]}
       >
         <div className="cursor-pointer">
-          <img src={More} alt="threedots" />
+          <ThreeDotsIcon />
         </div>
       </Dropdown>
     </Space>
