@@ -1,7 +1,10 @@
-import React from 'react'
-import { Schedule, DrawerIcon } from "../../assets/images/"
+import React, { useState } from 'react'
+import { Schedule, DrawerIcon, } from "../../assets/images/"
+import ScheduleModal from "./scheduleModal"
 
 const Interview = () => {
+  const [open, setOpen] = useState(false);
+
 
   const ReqDocData = [
     {
@@ -18,10 +21,11 @@ const Interview = () => {
   return (
     <div className=''>
       <div className="btn-wrap flex justify-end mt-3 ">
-        <button className='req-btn flex items-center justify-center cursor-pointer'>
-          <Schedule />
+      <button onClick={() => setOpen(true)} className='req-btn flex items-center justify-center cursor-pointer'>
+        <Schedule />
           <p className='btn-text'>Schedule</p>
         </button>
+        <ScheduleModal setOpen={setOpen} open={open} />
       </div>
 
         <div className="onTime mt-8 mb-5">21 November 2022</div>

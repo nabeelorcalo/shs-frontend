@@ -5,16 +5,40 @@ import HiringPipeline from '../../components/HiringPIpeline/hiringPipeline'
 import DocAvatar from "../../assets/images/doc-avatar.png"
 import BtnIcon from "../../assets/images/Button-icon.png"
 import RejectModal from './RejectModal'
-
+import DropDownNew from '../../components/Dropdown/DropDownNew'
+import { ArrowDownDark, UserAvatar } from '../../assets/images'
+import { SearchBar } from '../../components'
 
 const detailsData = [
   { title: 'Source', value: 'Career Website' },
   { title: 'Owner', value: 'David Miler', image: DocAvatar },
   { title: 'Internship Type', value: 'Paid' },
   { title: 'Applied Date', value: '04/12/1996' },
+  {
+    title: 'Assignee', userData: [
+      {
+        userImg: UserAvatar,
+        userName: 'john doe'
+      },
+      {
+        userImg: UserAvatar,
+        userName: 'mina marino'
+      },
+      {
+        userImg: UserAvatar,
+        userName: 'clark'
+      },
+      {
+        userImg: UserAvatar,
+        userName: 'sarah joe'
+      },
+    ]
+  }
+
 ]
 const HiringProcess = () => {
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState({ userImg: UserAvatar, userName: 'amelia clark' });
 
   return (
     <div className="hiring-wrapper">
@@ -44,12 +68,39 @@ const HiringProcess = () => {
           <Row gutter={[30, 35]}>
             {detailsData.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} >
-                <div>
+                <div className='asignee-wrap'>
                   <h2 className='m-0 font-medium text-base title'>{item.title}</h2>
-                  <div className={`flex ${item.title === 'Owner' ? 'gap-2' : ''}`}>
-                    <img src={item.image} alt="" />
-                    <p className='m-0'>{item.value}</p>
-                  </div>
+                  {item.title === 'Assignee' ? <DropDownNew
+                    placement={'bottomRight'}
+                    items={[
+                      { label: <SearchBar handleChange={() => { }} />, key: 'search' },
+                      {
+                        label: <div>{item.userData.map((users: any) => (
+                          <div className="flex items-center gap-3 mb-[20px]"
+                            onClick={() => setUser(users)}
+                          >
+                            <img src={users.userImg}
+                              className='h-[24px] w-[24px] rounded-full object-cover'
+                            />
+                            <p>{users.userName}</p>
+                          </div>))}
+                        </div>,
+                        key: 'users'
+                      }]}>
+                    <div className="drop-down-with-imgs flex items-center gap-3">
+                      <div className="flex items-center gap-3 mr-[40px]">
+                        <img src={user.userImg} />
+                        <p>{user.userName}</p>
+                      </div>
+                      <ArrowDownDark />
+                    </div>
+                  </DropDownNew>
+                    :
+                    <div className={`flex ${item.title === 'Owner' ? 'gap-2' : ''}`}>
+                      {item.image && <img src={item.image} alt="" />}
+                      <p className='m-0'>{item.value}</p>
+                    </div>
+                  }
                 </div>
               </Col>
             ))}
