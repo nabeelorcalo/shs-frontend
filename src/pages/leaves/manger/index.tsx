@@ -1,10 +1,10 @@
 import Button from 'antd/es/button'
 import { Col, Row } from 'antd/es/grid'
 import { useNavigate } from 'react-router-dom'
-import {LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
+import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { leaveCardDataManager, upcomingHolidayDataManager } from './managerMockData'
+import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
 // import Calendar from '../../calendar'
 import "./style.scss"
@@ -19,7 +19,7 @@ const index = () => {
   const navigate = useNavigate()
   return (
     <div className='manager_main'>
-    <PageHeader
+      <PageHeader
         actions
         bordered
         title="Leave"
@@ -38,6 +38,35 @@ const index = () => {
       <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
         <Col xs={24} md={12} xl={17}>
           <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='h-full'>
+            <div className='how_is_away'>
+              <h4 className='font-medium text-[28px] capitalize'>Who's Away</h4>
+              <Row>
+                <Col xs={14}>
+                  <p>{12} people are away this week</p>
+                </Col>
+                <Col xs={10}>
+
+                  <div className='statue_highligter flex items-center justify-between'>
+                    {LeaveTypeData.map((data: any) => {
+                      return (
+                        <div className='flex items-center'>
+                          <p className='w-[10px] h-[10px] rounded-full mr-[10px]'
+                            style={{
+                              backgroundColor: data === "Sick" ?
+                                "rgba(76, 164, 253, 1)" : data === "Casual" ?
+                                  "rgba(255, 193, 93, 1)" : data === "Medical" ?
+                                    "rgba(74, 157, 119, 1)" : "rgba(233, 111, 124, 1)"
+                            }}></p>
+                          <p>{data}</p>
+                        </div >
+                      )
+                    })}
+                  </div>
+                </Col>
+
+              </Row>
+            </div>
+
             <MAnagerCalendar />
           </BoxWrapper>
         </Col>

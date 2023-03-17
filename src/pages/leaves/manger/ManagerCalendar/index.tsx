@@ -1,43 +1,39 @@
 import FullCalendar from '@fullcalendar/react'
-import React from 'react';
+import React, { useState } from 'react';
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ResourcePlugin from "@fullcalendar/resource"
 import dayjs from 'dayjs';
-import { clientBookingCalendarData, clientBookingEventsData } from '../managerMockData';
+import { leaveCalendarResorceData, leaveCalendarEventsData } from '../managerMockData';
 import './style.scss';
 
 const MAnagerCalendar = () => {
+  const [isShowModalOpen, setIsShowModalOpen] = useState<boolean>(false);
+  const [showData, setShowData] = useState({});
+  console.log('isShowModalOpen', isShowModalOpen);
+  console.log('showData', showData);
+  
+  
   const handleEventContent = (eventInfo: any) => {
-    const events = eventInfo?.event?._def?.extendedProps
+    const title = eventInfo?.event?._def?.title;
+    const events = eventInfo?.event?._def?.extendedProps;
+    const backgroundColor = events?.eventType === 'sick' ?
+      'rgba(76, 164, 253, 1)' : events?.eventType === 'casual' ?
+        'rgba(255, 193, 93, 1)' : events?.eventType === 'work from home' ?
+          'rgba(233, 111, 124, 1)' : 'rgba(74, 157, 119, 1)';
     return (
-      <div className="care-booking-event-wrap">
-        <div className='event-icon d-flex align-center justify-between'>
-          {/* <img src={SunIcon} alt="" />
-          <img src={ActionIcon} alt="" /> */}
-        </div>
-        <div className='event-content d-flex align-center w-100 snow-white-color'>
-          <div className='d-flex flex-column' style={{ gap: "5px" }}>
-            <h2 className='fs-14 fw-600 m-0 line-height-18'>Total Shifts: <span className='fs-12 fw-400 m-0 line-height-18'>{events?.totalShift}</span></h2>
-            <h2 className='fs-14 fw-600 m-0 line-height-18'>Shifts Interval</h2>
-          </div>
-          <div className='d-flex flex-column' style={{ gap: "5px" }}>
-            <h2 className='fs-14 fw-600 m-0 line-height-18'>Total Shifts: <span className='fs-12 fw-400 m-0 line-height-18'>{events?.totalCarers}</span></h2>
-            <p className='fs-12 fw-400 m-0 line-height-18'>(1:00 am to 9:00 am)</p>
-          </div>
-        </div>
+      <div className="event_styling_wraper rounded-[14px]" style={{ background: backgroundColor }} >
+        <p className='m-0 px-3 py-1 text-base'>{title}</p>
       </div>)
   };
   const handleSlotContent = (slotEvent: any) => {
 
     return (
       <>
-        <div className="slot-event-wrapper">
-          <div className="d-flex align-center" style={{ gap: "5px" }}>
-            <span className="title-color m-0 font-extrabold">{dayjs(slotEvent?.date).format("ddd")}</span>
-            <p>{dayjs(slotEvent.date).format('DD')}</p>
-          </div>
+        <div className="slot_Top_wrapper">
+          <p className="_day font-medium  ">{dayjs(slotEvent?.date).format("ddd")}</p>
+          <p className='_date font-normal'>{dayjs(slotEvent.date).format('DD')}</p>
         </div>
       </>)
   }
@@ -48,13 +44,12 @@ const MAnagerCalendar = () => {
 
     return (
       <>
-        <div className="resource-render-wrapper flex items-center gap-2">
+        <div className="leave_profile_wrapper flex items-center gap-2">
           <div className='w-[48px] h-[48px] rounded-full '>
             <img src={resource?.extendedProps?.img} alt="Profile Image" className=' rounded-full w-full h-full object-cover' />
           </div>
-
-          <p className="title-color fs-14 fw-400 line-height-20 cursor-pointer m-0">{resource.title}</p>
-          <p className="title-color fs-14 fw-400 line-height-20 cursor-pointer m-0">{resource.extendedProps.designation}</p>
+          <p className="_name font-semibold">{resource.title}</p>
+          <p className="_designation font-normal">{resource.extendedProps.designation}</p>
 
         </div>
       </>)
@@ -79,19 +74,20 @@ const MAnagerCalendar = () => {
               day: 'numeric',
               weekday: 'short'
             }}
-            resources={clientBookingCalendarData}
-            events={clientBookingEventsData}
+            resources={leaveCalendarResorceData}
+            events={leaveCalendarEventsData}
+            eventContent={handleEventContent}
             slotLabelContent={handleSlotContent}
             resourceLabelContent={handleResourceRender}
-            editable={true}
-            droppable={true}
             slotMinWidth={100}
             resourceAreaWidth={300}
             eventMinWidth={100}
             resourceAreaHeaderContent={handleResourceAreaHeader}
             slotDuration="24:00:00"
+            height={'55vh'}
             // eventBorderColor=""
             // slotLabelInterval="02:00:00"
+            eventClick={(e:any) => {setIsShowModalOpen(true); setShowData(e)}}
             slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
           />
         </div>

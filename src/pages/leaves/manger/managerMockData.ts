@@ -1,7 +1,7 @@
 import { LeaveProfileImg } from "../../../assets/images";
 
 
-export const  upcomingHolidayDataManager: any = [
+export const upcomingHolidayDataManager: any = [
   { id: "1", day: "Monday", date: "1 january", holidayType: "New Year's Day" },
   { id: "2", day: "Monday", date: "2 january", holidayType: "New Year's Day" },
   { id: "3", day: "Monday", date: "3 january", holidayType: "New Year's Day" },
@@ -45,8 +45,9 @@ export const leaveCardDataManager: any = [
     declined: 5,
   },
 ]
+export const LeaveTypeData = ['Sick', 'Casual', 'Work From Home', 'Medical']
 
-export const clientBookingCalendarData = [
+export const leaveCalendarResorceData = [
   {
     id: "a",
     title: "Maria .S",
@@ -71,33 +72,108 @@ export const clientBookingCalendarData = [
     img: LeaveProfileImg,
     designation: "Ui Ux designer"
   },
+  {
+    id: "e",
+    title: "Maria .S",
+    img: LeaveProfileImg,
+    designation: "front end developer"
+  },
 ];
-export const clientBookingEventsData = [
+
+export const leaveCalendarEventsData = [
   {
     id: "1",
     resourceIds: ["a"],
-    title: "Morning",
-    start: "2023-03-14T06:00:00",
-    end: "2023-03-15T12:40:00",
-    totalShift: "9",
-    totalCarers: "9"
+    title: "Sick",
+    eventType: "sick",
+    start: "2023-03-13T05:21:00",
+    end: "2023-03-14T09:22:00",
+    leaveTypeDay: "half day",
+    dur: "01 day",
+    hours: "04:00",
+    img: LeaveProfileImg,
+    name: "Maria Sanoid",
+    designation: "UI UX Designer",
+    email: "maria@Student Help Squad.com",
+    aprover: "Amelia Clark",
+    ApprovedBy: "Amelia Clark",
+    status: "Pending",
+    description: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation."
   },
   {
     id: "2",
     resourceIds: ["b"],
-    title: "Morning",
-    start: "2023-03-15T09:00:00",
-    end: "2023-03-16T10:20:00",
-    totalShift: "9",
-    totalCarers: "9"
-  },
-  {
+    title: "Casual",
+    eventType: "casual",
+    start: "2023-03-14T01:21:00",
+    end: "2023-03-15T05:22:00",
+    leaveTypeDay: "full day",
+    dur: "01 day",
+    hours: "",
+    img: LeaveProfileImg,
+    name: "Maria Sanoid",
+    designation: "UI UX Designer",
+    email: "maria@Student Help Squad.com",
+    aprover: "Amelia Clark",
+    ApprovedBy: "Amelia Clark",
+    status: "Pending",
+    description: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation."
+},
+{
     id: "3",
     resourceIds: ["c"],
-    title: "Morning",
-    start: "2023-03-16T09:00:00",
-    end: "2023-03-17T10:20:00",
-    totalShift: "9",
-    totalCarers: "9"
-  },
+    title: "Work from home",
+    eventType: "work from home",
+    start: "2023-03-16T06:21:00",
+    end: "2023-03-17T07:22:00",
+    leaveTypeDay: "half day",
+    dur: "01 day",
+    hours: "04:00",
+    img: LeaveProfileImg,
+    name: "Maria Sanoid",
+    designation: "UI UX Designer",
+    email: "maria@Student Help Squad.com",
+    aprover: "Amelia Clark",
+    ApprovedBy: "Amelia Clark",
+    status: "Pending",
+    description: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation."
+},
+{
+    id: "4",
+    resourceIds: ["d"],
+    title: "Medical",
+    eventType: "medical",
+    start: "2023-03-15T09:21:00",
+    end: "2023-03-17T11:22:00",
+    leaveTypeDay: "full day",
+    dur: "01 day",
+    hours: "",
+    img: LeaveProfileImg,
+    name: "Maria Sanoid",
+    designation: "UI UX Designer",
+    email: "maria@Student Help Squad.com",
+    aprover: "Amelia Clark",
+    ApprovedBy: "Amelia Clark",
+    status: "Pending",
+    description: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation.",
+},
+{
+  id: "5",
+  resourceIds: ["e"],
+  title: "Medical",
+  eventType: "medical",
+  start: "2023-03-15T09:21:00",
+  end: "2023-03-17T11:22:00",
+  leaveTypeDay: "full day",
+  dur: "01 day",
+  hours: "",
+  img: LeaveProfileImg,
+  name: "Maria Sanoid",
+  designation: "UI UX Designer",
+  email: "maria@Student Help Squad.com",
+  aprover: "Amelia Clark",
+  ApprovedBy: "Amelia Clark",
+  status: "Pending",
+  description: "As you know I don't have a car, and as it was announced there will be a strike the entire day within the public Transportation.",
+}
 ];

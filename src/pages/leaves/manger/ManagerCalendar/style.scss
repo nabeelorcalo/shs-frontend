@@ -1,105 +1,65 @@
-.booking-calendar-wrap {
-  padding-top: 50px;
-  padding-bottom: 50px;
-
-  .fc-view-harness.fc-view-harness-active {
-    background: #fff !important;
-    box-shadow: 0px 0px 6px rgba(16, 24, 40, 0.1);
-    border-radius: 8px;
-    height: 100vh !important;
-  }
-
-  .fc-scrollgrid.fc-scrollgrid-liquid {
-    border-radius: 8px;
-  }
-
-  .fc .fc-resource-timeline-divider {
-    width: 1px !important;
-  }
-
-  .fc-h-event {
-    background: none !important;
-    border: none !important;
-  }
-
+@import "../../../../scss//colors";
+.manage_calendar_wrapper {
   .fc-timeline-slot-frame {
-    // width: 200px;
     display: flex;
     justify-content: center !important;
     align-items: center !important;
   }
 
-  .fc-resource-timeline-divider.fc-cell-shaded {
-    cursor: none !important;
-  }
-}
-
-.fc .fc-daygrid-day.fc-day-today {
-  background: none;
-}
-
-.fc-datagrid-cell-main {
-  display: flex;
-  height: 100%;
-  // margin-top: 25px;
-  padding-left: 15px;
-  color: #4E4B66;
-}
-
-.fc-datagrid-cell-frame,
-.fc-timeline-slot-frame{
-  height: 65px !important;
-}
-.fc-timeline-events.fc-scrollgrid-sync-inner {
-  height: 55px !important;
-  .fc-timeline-event-harness{
-    top: 50% !important;
-    transform: translateY(-50%);
-  }
-}
-
-
-.fc-theme-standard .fc-scrollgrid {
-  border: unset !important;
-  // border: none !important;
-}
-.fc-theme-standard td, .fc-theme-standard th {
-  border: unset !important;
-  border-bottom: 1px solid green !important;
-}
-.fc .fc-resource-timeline-divider {
-  width: 0px !important;
-}
-
-.fc-theme-standard td {
-  border: unset !important;
-  border-bottom: 1px solid red !important;
-}
-
-
-
-
-.resource-user {
-  padding-left: 25px;
-
-  h2 {
-    line-height: 11px;
-    text-align: left;
-  }
-}
-
-.care-booking-event-wrap {
-  background-color: #3DC563;
-  border-radius: 6px;
-
-  .event-icon {
-    padding: 5px 11px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 6px 6px 0 0;
+  .fc-theme-standard .fc-scrollgrid {
+    border: unset !important;
   }
 
-  .event-content {
-    gap: 30px;
-    padding: 10px 11px;
+  .fc-datagrid-cell-frame,
+  .fc-timeline-slot-frame {
+    height: 65px !important;
+  }
+
+  .fc-timeline-events.fc-scrollgrid-sync-inner {
+    height: 55px !important;
+
+    .fc-timeline-event-harness {
+      top: 50% !important;
+      transform: translateY(-50%);
+    }
+  }
+
+  .fc-h-event {
+    border: none !important;
+    background: none !important;
+  }
+
+
+  .fc-theme-standard th {
+    border: unset;
+    border-bottom: 1px solid $text-error-line-color !important ;
+}
+
+  .fc .fc-resource-timeline-divider {
+    width: 0px !important;
+  }
+
+  .fc-theme-standard td {
+    border: unset !important;
+    border-bottom: 1px solid $text-error-line-color !important;
+    // &:last-child{
+    //   border-bottom: unset !important;
+    // }
+  }
+}
+.slot_Top_wrapper{
+  ._day{
+    color: $text-primary-title-color;
+  }
+  ._date{
+    color:$text-primary-title-color;
+  }
+}
+.leave_profile_wrapper{
+  ._name{
+    color: $text-primary-title-color;
+  }
+  ._designation{
+    color: $text-secondary-body-color;
   }
 }
