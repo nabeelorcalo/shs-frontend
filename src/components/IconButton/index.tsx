@@ -4,6 +4,7 @@ import { Button } from 'antd';
 interface ButtonProps {
   icon: any,
   className: any,
+  name?: string,
   onClick?: () => void,
 }
 

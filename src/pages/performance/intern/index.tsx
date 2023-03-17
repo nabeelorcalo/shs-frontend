@@ -10,22 +10,22 @@ import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 const InternPerformance = () => {
   const performanceData = [
     {
-      percent1: '85',
+      percent: '85',
       strokeColor: '#4783FF',
       title: 'Overall'
     },
     {
-      percent1: '85',
+      percent: '85',
       strokeColor: '#9BD5E8',
       title: 'Learning'
     },
     {
-      percent1: '75',
+      percent: '75',
       strokeColor: '#F08D97',
       title: 'Discipline'
     },
     {
-      percent1: '68',
+      percent: '68',
       strokeColor: '#78DAAC',
       title: 'Personal'
     }

@@ -76,3 +76,27 @@
     font-weight: 500;
   }
 }
+
+.performance-history-btn{
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+}
+
+.company-admin-performance-container{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .performance-left-subcontainer{
+    width: 69%;
+  }
+
+  .performance-right-subcontainer{
+    width: 29%;
+  }
+
+  .overall-performance-txt{
+    margin-bottom: 16px;
+  }
+
+}

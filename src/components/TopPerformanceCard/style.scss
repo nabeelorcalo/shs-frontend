@@ -1,0 +1,10 @@
+@import '../../scss/colors.scss';
+
+.performance-card {
+  border-bottom: 1px solid #D9DBE9;
+  padding: 20px 0;
+}
+
+.performance-percentage-txt{
+  color: $light-grey-color !important;
+}
