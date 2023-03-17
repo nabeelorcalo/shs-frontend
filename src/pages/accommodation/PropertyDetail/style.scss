@@ -12,6 +12,9 @@
     padding-right: 20px;
     flex: 0 0 auto;
     width: 64%;
+    @media (max-width: 1400px) {
+      width: 100%;
+    }
 
     .property-gallery {
       padding-bottom: 15px;
@@ -182,6 +185,10 @@
     padding-right: 20px;
     flex: 0 0 auto;
     width: 36%;
+    @media (max-width: 1400px) {
+      width: 100%;
+      margin-top: 30px;
+    }
 
     .booking-request-faq {
       margin-top: 30px;

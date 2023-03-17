@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Modal } from 'antd';
-import { IconCloseCircle } from '../../assets/images'
+import { IconCloseModal } from '../../assets/images'
+import './style.scss'
 
 interface ModalProps {
   title?: React.ReactNode
@@ -21,7 +22,7 @@ export const PopUpModal: FC<ModalProps> = ( props ) => {
         centered
         title={title}
         maskClosable={true}
-        closeIcon={<IconCloseCircle/>}
+        closeIcon={<IconCloseModal />}
         open={open}
         onCancel={close}
         width={width}

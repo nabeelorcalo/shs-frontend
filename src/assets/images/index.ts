@@ -186,6 +186,9 @@ export { ReactComponent as IconMasterCard } from "./accommodation/icon-master-ca
 export { ReactComponent as IconVisaCard } from "./accommodation/icon-visa-card.svg";
 export { ReactComponent as IconAddCircle } from "./accommodation/icon-add-circle.svg";
 export { ReactComponent as IconProfileCircleWhite } from "./accommodation/icon-profile-circle.svg";
+export { ReactComponent as IconCloseModal } from "./accommodation/icon-close-circle.svg";
+
+
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";

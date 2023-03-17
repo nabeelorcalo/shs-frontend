@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Form, Input,  Select, Button, Slider } from 'antd'
-import AccommodationCard from '../../../components/AccommodationCard/AccommodationCard'
+import GlobalTable from '../../../components/Table/Table'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import thumb2 from '../../../assets/images/gallery/thumb2.png'
@@ -43,7 +43,37 @@ const BookingRequests = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="booking-requests">
-      Booking Request
+      <GlobalTable
+        columns={[{
+          title: 'Name',
+          dataIndex: 'name',
+          key: 'name',
+        },
+        {
+          title: 'Age',
+          dataIndex: 'age',
+          key: 'age',
+        },
+        {
+          title: 'Address',
+          dataIndex: 'address',
+          key: 'address',
+        },]}
+        tableData={[
+          {
+            key: '1',
+            name: 'Mike',
+            age: 32,
+            address: '10 Downing Street',
+          },
+          {
+            key: '2',
+            name: 'John',
+            age: 42,
+            address: '10 Downing Street',
+          },
+        ]}
+      />
     </div>
   )
 }
