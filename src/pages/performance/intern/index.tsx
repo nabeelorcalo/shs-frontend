@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Dropdown, MenuProps, Space, Avatar, Progress } from 'antd';
+import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from 'antd';
 // import all reusable componets from component/index.ts
-import { OverAllPerfomance, MonthlyPerfomanceChart } from "../../../components";
+import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader } from "../../../components";
 import Table from "../../../components/Table";
-import PageHeader from "../../../components/PageHeader";
 // end
 import { MoreIcon } from "../../../assets/images";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 
 const InternPerformance = () => {
   const performanceData = [
@@ -60,6 +60,11 @@ const InternPerformance = () => {
               size={[200, 13]}
               percent={data.performance}
               strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
+              format={(percent: any) =>
+                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                  {percent}%
+                </p>
+              }
             />
           </Space>
         )
@@ -257,11 +262,16 @@ const InternPerformance = () => {
         </div>
 
         <div className="performance-right-subcontainer">
-          <Table
-            columns={evaluationHistoryColumnNames}
-            tableData={evaluationHistoryData}
-            pagination={false}
-          />
+          <BoxWrapper >
+            <Typography.Title level={4} >
+              Evaluation  History
+            </Typography.Title>
+            <Table
+              columns={evaluationHistoryColumnNames}
+              tableData={evaluationHistoryData}
+              pagination={false}
+            />
+          </BoxWrapper>
         </div>
       </div>
     </>

@@ -226,11 +226,12 @@ const index = () => {
           changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
         />}
       {openModal.open && openModal.type === 'cancel' &&
-        <Alert type='warning' open={openModal.open}
-          setOpen={() => setOpenModal({ ...openModal, open: !openModal.open })}
+        <Alert
+          type='success'
+          state={openModal.open}
+          setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
           okBtntxt={"Submit"}
-
         >
           <p>Are you sure you want to cancel this request?</p>
         </Alert>}

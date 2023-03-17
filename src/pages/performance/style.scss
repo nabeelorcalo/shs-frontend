@@ -1,5 +1,62 @@
 @import '../../scss/_colors.scss';
 
+.view-evaluation {
+  .vertical-line {
+    border-left: 1px solid black;
+    font-size: 16px;
+    height: 70px;
+    padding: 4px 7px;
+    margin: 10px;
+  }
+
+  .evaluation-txt {
+    font-weight: 500;
+  }
+
+  .icon-btn {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    margin-left: auto;
+  }
+
+  .evaluation-heading {
+    color: $primary-bg-color;
+  }
+
+  .emoji-heading{
+    font-weight: 400;
+    color: $text-secondary-body-color;
+  }
+
+  .name-font-size {
+    position: relative;
+    top: -12px;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+    color: $text-teriary-label-color;
+  }
+
+  .emoji-wrapper{
+    padding: 0;
+  }
+
+  .emoji-container{
+    padding: 0 2px;
+  }
+
+  .ant-input[disabled]{
+    background-color: $light-blue-color;
+    color: $text-primary-title-color;
+  }
+}
+
 .performance-container {
   display: flex;
   flex-wrap: wrap;
@@ -10,8 +67,12 @@
     padding: 10px;
   }
 
-  .ant-progress-text{
+  .ant-progress-text {
     font-size: 16px;
+    font-weight: 500;
+  }
+
+  .ant-typography {
     font-weight: 500;
   }
 }

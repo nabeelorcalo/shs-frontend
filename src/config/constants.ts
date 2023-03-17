@@ -34,13 +34,18 @@ export const ROUTES_CONSTANTS: any = {
   ERROR_PAGE: "error-page",
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
+  NEW_INTERNSHIP: "internships/new-internship",
+  VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   INTERNS: "interns",
+  INTERNS_PROFILE: "interns/profile",
+  INTERNS_CHAT:"interns/chat",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
   TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
+  EVALUATION_FORM: "evaluation-form",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
@@ -87,3 +92,13 @@ export const ROUTES_CONSTANTS: any = {
   PERSONALISATION: "personalisation",
   CHAT: "chat",
 };
+
+export const STATUS_CONSTANTS: any = {
+  ERROR: "error",
+  SUCCESS: "success",
+  WARNING: "warning",
+  ACTIVE: "active",
+  PENDING: "pending",
+  CLOSED: "closed",
+  REJECTED: "rejected"
+}

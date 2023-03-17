@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps, DatePickerProps } from 'antd';
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
+import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import Drawer from "../../components/Drawer";
 import { Form, Input,  Select, Slider, Space, DatePicker } from 'antd'
@@ -96,7 +96,7 @@ const Accommodation = () => {
         />
         <div className="page-filterbar">
           <div className="page-filterbar-left">
-          {location.pathname === '/accommodation' &&
+            {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
                 <SearchBar handleChange={() => console.log('i am changed')}/>
               </div>
@@ -107,6 +107,11 @@ const Accommodation = () => {
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
+              <div className="searchbar-wrapper">
+                <SearchBar handleChange={() => console.log('i am changed')}/>
+              </div>
+            }
+            {location.pathname === '/accommodation/booking-requests' &&
               <div className="searchbar-wrapper">
                 <SearchBar handleChange={() => console.log('i am changed')}/>
               </div>
@@ -124,6 +129,14 @@ const Accommodation = () => {
                 label="Filters"
                 onClick={() => openSavedSearchesFilters()}
               />
+            }
+            {location.pathname === '/accommodation/booking-requests' &&
+              <div>
+                <DropDown
+                  requiredDownloadIcon={true}
+                  options={['pdf', 'excel']}
+                />
+              </div>
             }
           </div>
         </div>
@@ -172,10 +185,6 @@ const Accommodation = () => {
                 <Form.Item name="moveOutDate" label="Move Out Date">
                   <DatePicker format='YYYY/MM/DD' onChange={onChange} />
                 </Form.Item>
-
-                {/* <Form.Item label="Username" name="username">
-                  <Input placeholder="User anme" />
-                </Form.Item> */}
 
                 <Form.Item name="offer" label="Offer">
                   <Select placeholder="Select">
