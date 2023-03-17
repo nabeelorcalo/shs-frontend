@@ -5,6 +5,7 @@ import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
 import { TopPerformanceCard } from '../TopPerformanceCard';
+import { MonthChanger } from '../MonthChanger';
 import './style.scss';
 
 interface TopPerformanceProps {
@@ -114,19 +115,9 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
         </Typography.Title>
 
         <div className='flex items-center ml-auto'>
-          <p className='mx-2'>{state.selectedMonth}</p>
-          <IconButton
-            name="prev"
-            className="icon-btn left-radius"
-            icon={<ArrowToLeft />}
-            onClick={changeMonth}
-          />
-
-          <IconButton
-            name="next"
-            className="icon-btn right-radius"
-            icon={<ArrowToRight1 />}
-            onClick={changeMonth}
+          <MonthChanger 
+            month = {state.selectedMonth}
+            onClick = {changeMonth}
           />
         </div>
       </div>
