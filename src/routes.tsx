@@ -14,6 +14,14 @@ import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-pa
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
+//Internships Child Components
+import NewInternships from "./pages/internships/NewInternships";
+import ViewInternshipDetails from "./pages/internships/ViewInternshipDetails";
+
+//Interns Child Components
+import profile from "./pages/interns/profile";
+import chat from "./pages/interns/chat";
+
 // Remove it
 // dummy components
 import Graph from "./components/Graph";
@@ -233,6 +241,16 @@ const managerRoutes = [
         element: <Interns />,
       },
       {
+        key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
+        element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        element: <Chat />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
@@ -437,6 +455,17 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         element: <Internships />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        element: <NewInternships />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        element: <ViewInternshipDetails />,
+      },
+      
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,

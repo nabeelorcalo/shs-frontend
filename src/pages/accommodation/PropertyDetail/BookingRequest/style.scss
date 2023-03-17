@@ -92,6 +92,7 @@
     }
   }
 }
+
 .disclaimer-modal-container {
   .ant-modal {
     .ant-modal-content {
@@ -117,4 +118,277 @@
     }
   }
   
+}
+
+.payment-card-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .ant-radio-group {
+    display: block;
+  }
+
+  li {
+    padding: 30px 10px 20px;
+    border-bottom: 1px solid rgba(160, 163, 189, 0.4);
+    display: flex;
+    align-items: center;
+
+    &.add-new-card {
+      cursor: pointer;
+
+      .add-new-card-icon {
+        margin-right: 25px;
+      }
+
+      .add-new-card-text {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.333333;
+        color: $light-grey-color;
+      }
+    }
+
+    .payment-card {
+      flex: 1;
+      display: flex;
+      align-items: center;
+
+      .payment-card-icon {
+        margin-left: 28px;
+      }
+
+      .payment-card-detail {
+        margin-left: 25px;
+
+        .payment-card-title {
+          color: $text-secondary-body-color;
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.333333;
+        }
+
+        .payment-card-number {
+          color: $light-grey-color;
+          font-size: 16px;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
+
+.payable-amount-detail {
+  padding: 18px 30px;
+  box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+  border-radius: 10px;
+  margin-top: 40px;
+
+  .payable-amout-row {
+    display: flex;
+    flex-wrap: wrap;
+
+    .amount-col  {
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 100%;
+      flex: 0 0 auto;
+      width: 50%;
+
+      &.payable-amout-total {
+        text-align: right;
+        border-left: 1px solid $light-grey-color;
+      }
+    }
+  }
+  
+  .payable-amount-label {
+    color: $light-grey-color;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .payable-amount-number {
+    color: $text-secondary-body-color;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.333333;
+
+    & > span {
+      color: $light-grey-color;
+      font-size: 16px;
+      font-weight: 400;
+    }
+  }
+}
+
+.payment-verification-code {
+
+  .verification-code-wrap {
+    margin-top: 40px;
+    .verification-code-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: $text-primary-title-color;
+      line-height: 1.4;
+    }
+
+    .verification-code-message {
+      font-size: 16px;
+      color: $text-teriary-label-color;
+      margin-top: 36px;
+
+      & > span {
+        color: $primary-bg-color;
+      }
+    }
+
+    .boxes-wrapper {
+      max-width: 470px;
+      margin: 50px auto;
+
+      .verificatio-code-boxes {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -15px;
+        margin-right: -15px;
+        .input-box {
+          padding: 0 15px;
+          flex-shrink: 0;
+          width: 100%;
+          max-width: 100%;
+          flex: 0 0 auto;
+          width: 100px;
+
+          .ant-input {
+            height: 70px;
+            width: 70px;
+            text-align: center;
+            font-size: 38px;
+            font-weight: 500;
+            color: $text-primary-title-color;
+          }
+        }
+      }
+    }
+
+    .code-expire-text {
+      color: $light-grey-color;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .verification-code-submit {
+      margin-top: 30px;
+    }
+
+    .resend-code {
+      color: $text-teriary-label-color;
+      text-align: center;
+      margin-top: 30px;
+
+      & > span {
+        color: $text-secondary-body-color;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.payment-receipt-wrapper {
+  .payment-receipt-header {
+    text-align: center;
+
+    h3.ant-typography {
+      margin-bottom: 0;
+    }
+    span.ant-typography {
+      display: block;
+      color: $light-grey-color;
+      margin-top: 24px;
+    }
+  }
+
+  .paid-information {
+    display: flex;
+    margin-top: 30px;
+    padding: 0 20px;
+
+    .payment-date {
+      flex: 1;
+    }
+
+    .paid-amount {
+      .paid-amount-amount {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.333333;
+      }
+
+      .paid-amount-paid {
+        color: $text-success-color;
+        text-align: center;
+      }
+    }
+  }
+
+  .payment-details {
+    margin-top: 12px;
+
+    .payment-details-title {
+      color: $text-teriary-label-color;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .payment-details-list {
+      list-style: none;
+      margin: 0 20px;
+      padding: 0;
+
+      & > li {
+        display: flex;
+        justify-content: space-between;
+        color: $light-grey-color;
+        padding: 10px 0;
+      }
+    }
+  }
+
+  .need-help-card {
+    background-color: #fff;
+    box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    .need-help-card-content {
+      max-width: 310px;
+
+      .need-help-title {
+        color: $text-teriary-label-color;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+    }
+
+    .need-help-card-actions {
+      margin-left: auto;
+      .ant-btn {
+        height: 40px;
+        min-width: 150px;
+        text-align: left;
+        padding-left: 22px;
+
+        svg {
+          margin-right: 12px;
+        }
+      }
+    }
+  }
 }

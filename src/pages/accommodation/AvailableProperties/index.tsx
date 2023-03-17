@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Form, Input,  Select, Button, Slider } from 'antd'
 import AccommodationCard from '../../../components/AccommodationCard/AccommodationCard'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
