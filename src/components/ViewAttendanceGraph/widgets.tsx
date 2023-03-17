@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import React from 'react'
 import "./widgets.scss"
 import { ContractsRecieved, ContractsSigned, ContractsRejected } from '../../assets/images/index';
-import { ContractCard } from '../ContractCard/ContractCard';
+import { ContractCard } from '../ContractCard';
 
 interface Props {
   id?: string;

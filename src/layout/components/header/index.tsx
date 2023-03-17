@@ -20,7 +20,6 @@ import {
   Avatar,
   Drawer,
   List,
-  Button,
   MenuProps,
   Typography,
 } from "antd";
@@ -28,7 +27,7 @@ const { Search } = Input;
 const { Header } = Layout;
 import organizationLogo from '../../../assets/images/header/organisation.svg'
 import avatar from '../../../assets/images/header/avatar.svg'
-import ExtendedButton from '../../../components/ExtendedButton'
+import { ExtendedButton } from '../../../components'
 
 
 type HeaderProps = {
