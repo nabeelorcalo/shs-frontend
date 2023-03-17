@@ -15,7 +15,7 @@ const Template: ComponentStory<typeof AddEventInCalendar> = (args) => (
 export const Primary = Template.bind({});
 Primary.args = {
   open: false,
-  title: 'Customizable Modal',
+  title: 'Add Event',
   width: 720,
   closeIcon: <CloseCircleFilled style={{color: "#A3AED0",fontSize: '20px'}} />,
   footer:[
