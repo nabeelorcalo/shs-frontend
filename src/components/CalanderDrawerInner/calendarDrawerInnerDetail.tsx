@@ -1,6 +1,7 @@
-import { Col, Divider, Row } from 'antd'
+import { Col, Divider, Row } from 'antd';
 import dayjs from 'dayjs';
-const CalendarDrawerInner = (props: any) => {
+import './style.scss';
+const CalendarDrawerInnerDetail = (props: any) => {
     const {
         img,
         name,
@@ -119,4 +120,4 @@ const CalendarDrawerInner = (props: any) => {
     )
 }
 
-export default CalendarDrawerInner
+export default CalendarDrawerInnerDetail

@@ -1,6 +1,6 @@
 import "./style.scss"
-import DrawerComp from '../../../leaveViewHistory/DrawerComp'
-import CalendarDrawerInner from './CalendarDrawerInner'
+import DrawerComp from "../../../../components/DrawerComp/drawerCom";
+import CalendarDrawerInnerDetail from "../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 const CalendarDataDrawer = (props: any) => {
     const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer } = props;
     const events = eventData?.event?._def
@@ -16,7 +16,7 @@ const CalendarDataDrawer = (props: any) => {
             open={isOpenCalendarDrawer}
             closeIcon={false}
         >
-            <CalendarDrawerInner
+            <CalendarDrawerInnerDetail
                 img={extendedPropsData?.img}
                 name={extendedPropsData?.name}
                 designation={extendedPropsData?.designation}

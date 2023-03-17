@@ -8,13 +8,11 @@ import dayjs from 'dayjs';
 import { leaveCalendarResorceData, leaveCalendarEventsData } from '../managerMockData';
 import './style.scss';
 
-const MAnagerCalendar = () => {
+const ManagerCalendar = () => {
   const [isShowModalOpen, setIsShowModalOpen] = useState<boolean>(false);
   const [showData, setShowData] = useState({});
   console.log('isShowModalOpen', isShowModalOpen);
   console.log('showData', showData);
-  
-  
   const handleEventContent = (eventInfo: any) => {
     const title = eventInfo?.event?._def?.title;
     const events = eventInfo?.event?._def?.extendedProps;
@@ -85,15 +83,15 @@ const MAnagerCalendar = () => {
             resourceAreaHeaderContent={handleResourceAreaHeader}
             slotDuration="24:00:00"
             height={'55vh'}
-            // eventBorderColor=""
-            // slotLabelInterval="02:00:00"
-            eventClick={(e:any) => {setIsShowModalOpen(true); setShowData(e)}}
+            eventClick={(e: any) => { setIsShowModalOpen(true); setShowData(e) }}
             slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
           />
         </div>
       </div>
+
+      
     </>
   )
 }
 
-export default MAnagerCalendar
+export default ManagerCalendar

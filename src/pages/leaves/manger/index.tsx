@@ -1,14 +1,13 @@
 import Button from 'antd/es/button'
 import { Col, Row } from 'antd/es/grid'
 import { useNavigate } from 'react-router-dom'
+import "./style.scss"
 import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
-// import Calendar from '../../calendar'
-import "./style.scss"
-import MAnagerCalendar from './ManagerCalendar'
+import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
+import ManagerCalendar from './ManagerCalendar'
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
@@ -67,7 +66,7 @@ const index = () => {
               </Row>
             </div>
 
-            <MAnagerCalendar />
+            <ManagerCalendar />
           </BoxWrapper>
         </Col>
         <Col xs={24} md={12} xl={7} >

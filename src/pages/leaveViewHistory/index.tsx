@@ -7,10 +7,12 @@ import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import GlobalTable from "../../components/Table/Table"
 import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../components";
-import DrawerComp from "./DrawerComp";
+// import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
-import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
+// import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
 import { data } from "./LeaveMockData";
+import DrawerComp from "../../components/DrawerComp/drawerCom";
+import CalendarDrawerInnerDetail from "../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 const index = () => {
   // const [actionType, setActionType] = useState({ type: '', id: '' });
   // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -185,7 +187,7 @@ const index = () => {
       >
         <div>
           {openDrawer.type === 'filters' ? <FilterDrawerForm /> :
-            <CalendarDrawerInner
+            <CalendarDrawerInnerDetail
               img={selectedRow?.img}
               name={selectedRow?.name}
               designation={selectedRow?.designation}
