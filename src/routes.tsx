@@ -122,6 +122,7 @@ const Charts = Loadable(
 );
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const PerformanceEvaluationForm = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
+const CompanyAdminPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/history")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
 const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
@@ -619,6 +620,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
+        element: <CompanyAdminPerformanceHistory />
       },
       {
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,

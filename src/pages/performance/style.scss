@@ -1,5 +1,6 @@
 @import '../../scss/_colors.scss';
 
+// Interm/ViewEvaluation-page
 .view-evaluation {
   .vertical-line {
     border-left: 1px solid black;
@@ -26,7 +27,7 @@
     color: $primary-bg-color;
   }
 
-  .emoji-heading{
+  .emoji-heading {
     font-weight: 400;
     color: $text-secondary-body-color;
   }
@@ -43,20 +44,21 @@
     color: $text-teriary-label-color;
   }
 
-  .emoji-wrapper{
+  .emoji-wrapper {
     padding: 0;
   }
 
-  .emoji-container{
+  .emoji-container {
     padding: 0 2px;
   }
 
-  .ant-input[disabled]{
+  .ant-input[disabled] {
     background-color: $light-blue-color;
     color: $text-primary-title-color;
   }
 }
 
+// Interm/performance-page
 .performance-container {
   display: flex;
   flex-wrap: wrap;
@@ -77,25 +79,21 @@
   }
 }
 
-.performance-history-btn{
-  border-color: $teriary-bg-color;
-  color: $teriary-bg-color;
-}
-
-.company-admin-performance-container{
+// CompanyAdmin/Performance-page
+.company-admin-performance-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 
-  .performance-left-subcontainer{
+  .performance-left-subcontainer {
     width: 69%;
   }
 
-  .performance-right-subcontainer{
+  .performance-right-subcontainer {
     width: 29%;
   }
 
-  .overall-performance-txt{
+  .overall-performance-txt {
     margin-bottom: 16px;
   }
 
@@ -122,4 +120,63 @@
   .right-radius {
     border-radius: 0 4px 4px 0;
   }
+}
+
+// History button of page header
+.performance-history-btn {
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+}
+
+// Company Admin: performance/history
+.company-admin-performance-history {
+  .icon-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 38px !important;
+    height: 38px;
+    background-color: #E6F4F9;
+    margin: 0 8px;
+  }
+
+  .icon-btn:hover {
+    background-color: transparent;
+    border: 2px solid #A0A3BD;
+  }
+
+  .filter-button{
+    height: 37px;
+  }
+
+  .icon-btn:focus {
+    outline: none;
+  }
+
+  .performace-history-list{
+    margin: 20px 0;
+  }
+}
+
+// Sidebar
+.sidebar-label{
+  color: $text-teriary-label-color;
+  font-weight: 400;
+}
+
+.performance-filter-reset-btn{
+  width: 113px;
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+}
+
+.performance-filter-apply-btn{
+  width: 113px;
+  background-color: $teriary-bg-color;
+  color: white;
+}
+
+.performance-filter-apply-btn:hover{
+  background-color: $teriary-light-bg-color !important;
 }

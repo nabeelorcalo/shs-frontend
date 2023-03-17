@@ -127,7 +127,7 @@ const ViewPerformance = () => {
       </div>
 
       <div className="flex flex-row flex-wrap gap-4">
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationCard
             name={user.name}
             avatar={user.avatar}
@@ -135,7 +135,7 @@ const ViewPerformance = () => {
           />
         </div>
 
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationStatsCard
             name='Learning Objectives'
             percentage={user.learningObjectives}
@@ -143,7 +143,7 @@ const ViewPerformance = () => {
           />
         </div>
 
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationStatsCard
             name='Discipline'
             percentage={user.discipline}
@@ -151,7 +151,7 @@ const ViewPerformance = () => {
           />
         </div>
 
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationStatsCard
             name='Personal'
             percentage={user.personal}

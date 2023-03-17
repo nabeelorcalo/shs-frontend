@@ -5,6 +5,7 @@ interface ButtonProps {
   icon: any,
   className: any,
   name?: string,
+  type?: "primary" | "text" | "link",
   onClick?: () => void,
 }
 

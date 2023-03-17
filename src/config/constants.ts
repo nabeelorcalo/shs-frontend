@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Intern",
+  USER_ROLE: "CompanyAdmin",
 };
 
 // Possibe string of roles:
@@ -91,6 +91,7 @@ export const ROUTES_CONSTANTS: any = {
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
+  HISTORY: 'history',
 };
 
 export const STATUS_CONSTANTS: any = {
