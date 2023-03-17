@@ -7,12 +7,13 @@ import ResourcePlugin from "@fullcalendar/resource"
 import dayjs from 'dayjs';
 import { leaveCalendarResorceData, leaveCalendarEventsData } from '../managerMockData';
 import './style.scss';
+import ManagerCalanderDrawerData from './managerCalanderDrawerData';
 
 const ManagerCalendar = () => {
-  const [isShowModalOpen, setIsShowModalOpen] = useState<boolean>(false);
-  const [showData, setShowData] = useState({});
-  console.log('isShowModalOpen', isShowModalOpen);
-  console.log('showData', showData);
+  const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState<boolean>(false);
+  const [eventData, seteventData] = useState({});
+  console.log('isOpenCalendarDrawer', isOpenCalendarDrawer);
+  console.log('showData', eventData);
   const handleEventContent = (eventInfo: any) => {
     const title = eventInfo?.event?._def?.title;
     const events = eventInfo?.event?._def?.extendedProps;
@@ -83,13 +84,16 @@ const ManagerCalendar = () => {
             resourceAreaHeaderContent={handleResourceAreaHeader}
             slotDuration="24:00:00"
             height={'55vh'}
-            eventClick={(e: any) => { setIsShowModalOpen(true); setShowData(e) }}
+            eventClick={(e: any) => { setIsOpenCalendarDrawer(true); seteventData(e) }}
             slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
           />
         </div>
       </div>
-
-      
+       <ManagerCalanderDrawerData
+       // title={"hello"}
+       setIsOpenCalendarDrawer={setIsOpenCalendarDrawer}
+       eventData={eventData}
+       isOpenCalendarDrawer={isOpenCalendarDrawer} />
     </>
   )
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Dropdown, MenuProps, Space, Avatar, Progress } from 'antd';
 // import all reusable componets from component/index.ts
 import { OverAllPerfomance, MonthlyPerfomanceChart } from "../../../components";
-import Table from "../../../components/Table/Table";
+import Table from "../../../components/Table";
 import PageHeader from "../../../components/PageHeader";
 // end
 import { MoreIcon } from "../../../assets/images";

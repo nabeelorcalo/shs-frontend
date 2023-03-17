@@ -1,4 +1,5 @@
 @import "../../../../scss//colors";
+
 .manage_calendar_wrapper {
   .fc-timeline-slot-frame {
     display: flex;
@@ -32,8 +33,8 @@
 
   .fc-theme-standard th {
     border: unset;
-    border-bottom: 1px solid $text-error-line-color !important ;
-}
+    border-bottom: 1px solid $text-error-line-color !important;
+  }
 
   .fc .fc-resource-timeline-divider {
     width: 0px !important;
@@ -47,19 +48,36 @@
     // }
   }
 }
-.slot_Top_wrapper{
-  ._day{
+
+.slot_Top_wrapper {
+  ._day {
     color: $text-primary-title-color;
   }
-  ._date{
-    color:$text-primary-title-color;
+
+  ._date {
+    color: $text-primary-title-color;
   }
 }
-.leave_profile_wrapper{
-  ._name{
+
+.leave_profile_wrapper {
+  ._name {
     color: $text-primary-title-color;
   }
-  ._designation{
+
+  ._designation {
     color: $text-secondary-body-color;
   }
+}
+
+.drawar_main_calendar {
+  .ant-drawer-wrapper-body {
+    .ant-drawer-header {
+      padding: 0px;
+    }
+  }
+
+  .ant-drawer-body {
+    padding: 30px 20px;
+  }
+
 }

@@ -2,7 +2,7 @@ import { MoreOutlined, SearchOutlined } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import React, { useState } from 'react'
 import { DropDown, SearchBar } from '../../../components';
-import GlobalTable from '../../../components/Table/Table';
+import GlobalTable from '../../../components/Table';
 import './propertAgent.scss';
 
 

@@ -2,7 +2,7 @@
 import { Col, Divider, Drawer, Dropdown, Form, Row, Select, Space } from "antd";
 import type { MenuProps } from 'antd';
 import {BoxWrapper} from "../../components/BoxWrapper/BoxWrapper"
-import GlobalTable from "../../components/Table/Table"
+import GlobalTable from "../../components/Table"
 import "./style.scss"
 import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, MoreIcon } from "../../assets/images";
 import { Button, SearchBar } from "../../components";

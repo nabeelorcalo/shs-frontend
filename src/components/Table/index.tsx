@@ -1,5 +1,5 @@
 import { Badge, Dropdown, Pagination, Space, Table } from 'antd';
-import "./TablStyle.scss"
+import "./style.scss"
 interface TableProps {
     columns?: any[]
     tableData?: any[],

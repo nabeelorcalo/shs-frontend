@@ -2,7 +2,7 @@ import { Button, Col, Divider, Row } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
-import Calendar from "./calendar/calendar"
+import Calendar from "./calendar"
 import action from "../actionHandler"
 import "./style.scss"
 import { useNavigate } from 'react-router-dom';

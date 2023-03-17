@@ -4,14 +4,14 @@ import { Col, Divider, Dropdown, Row, Space } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "./style.scss"
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import GlobalTable from "../../components/Table/Table"
+import GlobalTable from "../../components/Table"
 import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../components";
 // import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
 // import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
 import { data } from "./LeaveMockData";
-import DrawerComp from "../../components/DrawerComp/drawerCom";
+import DrawerComp from "../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 const index = () => {
   // const [actionType, setActionType] = useState({ type: '', id: '' });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Drawer as AntDrawer } from 'antd';
-import { CloseCircleFilled } from '@ant-design/icons';
 import './style.scss';
  interface DrawerDataInterface {
     title?: string,

@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import GlobalTable from '../components/Table/Table'
+import GlobalTable from '../components/Table'
 
 
 export default {

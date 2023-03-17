@@ -1,5 +1,5 @@
 import "./style.scss"
-import DrawerComp from "../../../../components/DrawerComp/drawerCom";
+import DrawerComp from "../../../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 const CalendarDataDrawer = (props: any) => {
     const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer } = props;

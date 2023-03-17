@@ -4,7 +4,7 @@ import { Button, Col, Divider, Row } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components/BoxWrapper/boxWrapper";
-import GlobalTable from "../../../components/Table/Table";
+import GlobalTable from "../../../components/Table";
 
 const columns = [
   {

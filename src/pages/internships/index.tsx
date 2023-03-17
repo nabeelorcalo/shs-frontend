@@ -5,7 +5,7 @@ import PageHeader from "../../components/PageHeader";
 import { SearchBar } from "../../components";
 import "./style.scss";
 import { FileAddFilled } from "@ant-design/icons";
-import GlobalTable from "../../components/Table/Table";
+import GlobalTable from "../../components/Table";
 import { Alert } from "../../components";
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
