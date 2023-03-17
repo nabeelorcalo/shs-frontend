@@ -11,7 +11,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
   const {month, onClick} = props;
 
   return (
-    <div className='flex items-center'>
+    <div className='flex items-center ml-auto mb-4'>
       <p className='mx-2'>{month}</p>
       <IconButton
         name="prev"

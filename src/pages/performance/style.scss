@@ -99,4 +99,27 @@
     margin-bottom: 16px;
   }
 
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    width: 20px;
+    border: 1px solid $text-error-line-color;
+    border-radius: 0;
+    height: 28px;
+    width: 28px;
+  }
+
+  .left-radius {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .right-radius {
+    border-radius: 0 4px 4px 0;
+  }
 }

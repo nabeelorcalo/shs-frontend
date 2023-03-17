@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { Dropdown, MenuProps, Space, Avatar, Progress, Typography, Button } from 'antd';
+import { Button } from 'antd';
 // import all reusable componets from component/index.ts
 import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader } from "../../../components";
 import Table from "../../../components/Table/Table";
-// end
-import { MoreIcon } from "../../../assets/images";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import '../style.scss'
 import { TopPerformanceList } from "../../../components/TopPerformanceList";
+// end
+import data from './data';
+import '../style.scss';
 
 const CompanyAdminPerformance = () => {
   const performanceData = [
@@ -85,6 +84,18 @@ const CompanyAdminPerformance = () => {
             type="circle"
             width={100}
           />
+
+          <div className="my-4 h-[502px]">
+            <MonthlyPerfomanceChart
+              heading="Summary"
+              data={data}
+              XField="department"
+              columnWidthRatio={0.5}
+              isMonthNavigationPresent={true}
+              month='Jan'
+              changeMonth={() => console.log("Month Changed")}
+            />
+          </div>
         </div>
 
         <div className="performance-right-subcontainer ">
