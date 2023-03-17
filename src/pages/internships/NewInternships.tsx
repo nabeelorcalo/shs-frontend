@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import PageHeader from '../../components/PageHeader'
 import { Button, Col, Divider, Row } from 'antd'
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
 import { Input } from 'antd'
-import { DropDown } from '../../components'
+import { DropDown ,PageHeader} from '../../components'
 import { CheckBox } from '../../components/Checkbox'
 const { TextArea } = Input;
 const NewInternships = () => {

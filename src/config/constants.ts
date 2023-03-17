@@ -38,12 +38,12 @@ export const ROUTES_CONSTANTS: any = {
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   INTERNS: "interns",
   INTERNS_PROFILE: "interns/profile",
-  INTERNS_CHAT:"interns/chat",
+  INTERNS_CHAT: "interns/chat",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
-  TIMESHEETHISTORY: 'timesheet/history/:id',
+  TIMESHEETHISTORY: "timesheet/history/:id",
   PERFORMANCE: "performance",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
@@ -86,7 +86,7 @@ export const ROUTES_CONSTANTS: any = {
   RESERVATIONS: "reservations",
   SETTING: "settings",
   CERTIFICATES: "certificates",
-  CERTIFICATESDETAIL: 'certificates/detail/:id',
+  CERTIFICATESDETAIL: "certificates/detail/:id",
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
@@ -99,5 +99,5 @@ export const STATUS_CONSTANTS: any = {
   ACTIVE: "active",
   PENDING: "pending",
   CLOSED: "closed",
-  REJECTED: "rejected"
-}
+  REJECTED: "rejected",
+};

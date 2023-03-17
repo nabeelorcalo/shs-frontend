@@ -141,9 +141,9 @@ export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
 export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
-export { ReactComponent as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
-export { ReactComponent as File } from "../images/ColorfullIconsProgressbar/file.svg";
-export { ReactComponent as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
+export { default as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
+export { default as File } from "../images/ColorfullIconsProgressbar/file.svg";
+export { default as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
 export { ReactComponent as BankingWhiteSub } from "../images/digivault/manageVault/white/bankSubWhite.svg";
 export { ReactComponent as EducationWhite } from "../images/digivault/manageVault/white/educationWhite.svg";
 export { ReactComponent as EducationWhiteSub } from "../images/digivault/manageVault/white/educationSubWhite.svg";
@@ -249,7 +249,6 @@ export { default as Location } from "../images/chat/location.svg";
 export { default as Phone } from "../images/chat/Phone.svg";
 export { default as Moreicon } from "../images/chat/MoreDots.svg";
 export { default as DocIcon } from "../images/chat/documentIcon.svg";
-
 export { default as DocImg1 } from "../images/chat/New folder/docimg1.svg";
 export { default as DocImg2 } from "../images/chat/New folder/docimg2.svg";
 export { default as Audio } from "../images/chat/New folder/Audio.svg";
@@ -259,6 +258,10 @@ export { default as DoubleTik } from "../images/chat/New folder/bluetik.svg";
 export { default as SendIcon } from "../images/chat/sendIcon.svg";
 export { default as PlusIcon } from "../images/chat/PlusIcon.svg";
 export { default as Addatech } from "../images/chat/Addatech.svg";
+export { default as AudioPlayer } from "../images/chat/New folder/audioPlayer.svg";
+export { default as SeeAll } from "../images/chat/New folder/seeAll.svg";
+
+////////////////////////////////////////////////////////////////////////
 
 export { ReactComponent as ArrowRightIcon } from "../images/ArrowRightIcon.svg";
 export { ReactComponent as CirclePlusIcon } from "../images/CirclePlusIcon.svg";

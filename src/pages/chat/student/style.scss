@@ -1,7 +1,10 @@
 .chat-main {
   .inbox-main {
-    height: 88vh;
+    background: #ffffff;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
     overflow: scroll;
+    padding: 10px;
   }
 
   .incoming {
@@ -20,10 +23,10 @@
     background: #fbfdff;
     border: 1px solid #e9edf0;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-    border-radius: 12px 12px 12px 0px;
+    border-radius: 12px 12px 0px 12px;
     white-space: pre-wrap;
   }
-  .textarea-icon{
+  .textarea-icon {
     width: -webkit-fill-available;
   }
 }

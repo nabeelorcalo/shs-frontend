@@ -729,6 +729,11 @@ const internRoutes = [
         element: <DigiVault />,
       },
       {
+        key: `manageVault`,
+        path: `digivault/:id`,
+        element: <ManageVault />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
         path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,

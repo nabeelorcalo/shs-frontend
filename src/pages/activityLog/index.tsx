@@ -1,13 +1,9 @@
 import { useState } from "react";
 import "./style.scss";
-import SystemAdmin from "./systemAdmin";
+import SystemAdmin from "./SystemAdmin";
 
 const ActivityLog = () => {
-  return (
-    <div>
-      <SystemAdmin />
-    </div>
-  );
+  return <SystemAdmin />;
 };
 
 export default ActivityLog;

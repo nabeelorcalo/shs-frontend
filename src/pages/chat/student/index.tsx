@@ -5,7 +5,7 @@ import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import { SearchBar } from "../../../components";
 import {
   Filter,
-  Avatar,
+  AvatarIcon,
   Userimg,
   EmailIcon,
   Phone,
@@ -21,6 +21,8 @@ import {
   SendIcon,
   PlusIcon,
   Addatech,
+  AudioPlayer,
+  SeeAll,
 } from "../../../assets/images";
 
 const { TextArea } = Input;
@@ -28,7 +30,7 @@ const { TextArea } = Input;
 const inboxMessage = [
   {
     id: "1",
-    img: Avatar,
+    img: AvatarIcon,
     name: "Arthur Leo",
     time: "2m",
     text: " I need to solve my life",
@@ -36,7 +38,7 @@ const inboxMessage = [
   },
   {
     id: "2",
-    img: Avatar,
+    img: AvatarIcon,
     name: "Arthur Leo",
     time: "2m",
     text: " I need to solve my life",
@@ -44,7 +46,7 @@ const inboxMessage = [
   },
   {
     id: "3",
-    img: Avatar,
+    img: AvatarIcon,
     name: "Arthur Leo",
     time: "2m",
     text: " I need to solve my life",
@@ -52,7 +54,7 @@ const inboxMessage = [
   },
   {
     id: "4",
-    img: Avatar,
+    img: AvatarIcon,
     name: "Arthur Leo",
     time: "2m",
     text: " I need to solve my life",
@@ -102,21 +104,21 @@ const index = () => {
   const [value, setValue] = useState("");
   return (
     <div className="chat-main">
-      <Row gutter={20}>
-        <Col xxl={5} xl={6} lg={5} md={12} sm={12} xs={24}>
-          <BoxWrapper className="inbox-main">
+      <Row gutter={[20, 20]}>
+        <Col xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
+          <div className="inbox-main">
             <div>
               <div>
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
                   Index
                 </span>
 
-                <span className="text-sm text-[#6E7191]">
+                <span className="text-sm text-teriary-color">
                   (<span className="mr-1">98</span> message)
                 </span>
               </div>
 
-              <div className="flex items-center mt-4">
+              <div className="flex items-center justify-between mt-4">
                 <div className="">
                   <SearchBar handleChange={() => {}} />
                 </div>
@@ -138,10 +140,10 @@ const index = () => {
                       </div>
 
                       <div>
-                        <div className="text-[#4E4B66] text-base font-semibold">
+                        <div className="text-secondary-color text-base font-semibold">
                           {item.name}
                         </div>
-                        <div className="text-base text-[#6E7191] w-[11rem] text-ellipsis truncate">
+                        <div className="text-base text-teriary-color w-[11rem] text-ellipsis truncate">
                           {item.text}
                         </div>
                       </div>
@@ -152,7 +154,7 @@ const index = () => {
                         <div className="mb-2 text-sm font-normal text-[#A0A3BD]">
                           {item.time}
                         </div>
-                        <div className="flex text-xs font-normal items-center  rounded-[15px] bg-[#6E7191] p-2 h-[23px] text-[#ffff]">
+                        <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
                           {item.textNum}
                         </div>
                       </div>
@@ -161,30 +163,32 @@ const index = () => {
                 );
               })}
             </div>
-          </BoxWrapper>
+          </div>
         </Col>
-        <Col xxl={14} xl={12} lg={14} md={12} sm={12} xs={24}>
+        <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
           <BoxWrapper>
-            <div className="h-[84vh]">
+            <div className="">
               <div className="flex items-center">
                 <img src={Userimg} alt="userIcon" width="40px" height="40px" />
-                <span className="ml-4 text-[#363565] font-semibold text-lg">
+                <span className="ml-4 primary-color font-semibold text-lg">
                   Mino Marina
                 </span>
               </div>
+
               <Divider />
-              <Row>
+
+              <Row className="mb-12">
                 <Col>
-                  <div className="incoming">
+                  <div className="incoming mb-4">
                     {incomigMsg.length &&
                       incomigMsg.map((item) => {
                         return (
                           <div className="mb-4" key={item.id}>
-                            <div className="incoming-message text-base text-[#4E4B66] mb-2">
+                            <div className="incoming-message text-base text-secondary-color mb-2">
                               {item.text}
                             </div>
                             <div className="font-normal text-sm text-[#A0A3BD] mix-blend-normal">
-                              {item.time}{" "}
+                              {item.time}
                             </div>
                           </div>
                         );
@@ -200,25 +204,17 @@ const index = () => {
                       return (
                         <div key={item.id} className="mb-4">
                           <div className="outgoing-message  mb-2">
-                            <p className="text-base text-[#4E4B66]">
+                            <p className="text-base text-secondary-color mb-4">
                               {item.text}
                             </p>
                             {item.img2 && (
                               <div className="flex justify-center">
                                 <div className="mr-2">
-                                  <img
-                                    src={item.img1}
-                                    width={157}
-                                    height={140}
-                                  />
+                                  <img src={item.img1} />
                                 </div>
 
                                 <div>
-                                  <img
-                                    src={item.img2}
-                                    width={157}
-                                    height={140}
-                                  />
+                                  <img src={item.img2} />
                                 </div>
                               </div>
                             )}
@@ -252,27 +248,23 @@ const index = () => {
                 <div className="textarea-icon items-center bottom-[14px] absolute flex justify-between">
                   <div className="flex ml-4">
                     <div className="mr-4">
-                    <img src={Addatech} alt="sendicon"/>
+                      <img src={Addatech} alt="sendicon" />
                     </div>
                     <div>
-                    <img src={PlusIcon} alt="sendicon"/>
+                      <img src={PlusIcon} alt="sendicon" />
                     </div>
                   </div>
-                 
+
                   <div className="mr-4">
-                    <img src={SendIcon} alt="sendicon"/>
+                    <img src={SendIcon} alt="sendicon" />
                   </div>
-                  
                 </div>
-
-                
-
               </div>
             </div>
           </BoxWrapper>
         </Col>
 
-        <Col xxl={5} xl={6} lg={5} md={12} sm={12} xs={24}>
+        <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
           <BoxWrapper>
             <div>
               <div className="text-center">
@@ -316,45 +308,40 @@ const index = () => {
                 </div>
 
                 <div className="mt-1 p-2">
-                  <Row gutter={[0, 12]}>
-                    <Col xxl={12} xl={12} lg={12}>
-                      <div className="">
-                        <img src={DocImg1} alt="imgicon" />
-                      </div>
+                  <Row justify="center" gutter={[12, 12]}>
+                    <Col
+                      xxl={9}
+                      xl={12}
+                      lg={10}
+                      className="flex  lg:justify-end"
+                    >
+                      <img src={DocImg1} alt="imgicon" />
                     </Col>
-                    <Col xxl={12} xl={12} lg={12}>
-                      <div className="relative">
-                        <div>
-                          <img src={Audio} alt="imgicon" />
-                        </div>
-
-                        <div className="absolute bottom-[18px] left-[33px]">
-                          <img src={ShapAudio} alt="imgicon" />
-                          <div className="text-[#ffff]">Audio</div>
-                        </div>
-
-                        <div className="absolute z-10 bottom-[53px] left-[52px]">
-                          <img src={PlayIcon} alt="imgicon" />
-                        </div>
-                      </div>
+                    <Col
+                      xxl={9}
+                      xl={12}
+                      lg={10}
+                      className="flex lg:justify-start"
+                    >
+                      <img src={AudioPlayer} alt="imgicon" />
                     </Col>
-                    <Col xxl={12} xl={12} lg={12}>
+
+                    <Col
+                      xxl={9}
+                      xl={12}
+                      lg={10}
+                      className="flex  lg:justify-end"
+                    >
                       <img src={DocImg2} alt="imgicon" />
                     </Col>
-                    <Col xxl={12} xl={12} lg={12}>
-                      <div className="relative">
-                        <div className="">
-                          <img
-                            src={DocImg2}
-                            alt="imgicon"
-                            width={114}
-                            height={100}
-                          />
-                        </div>
-                        <div className="flex items-center justify-center absolute w-[114px] h-[100px] bg-[#363565] rounded z-10 opacity-[0.9] bottom-[1px]">
-                          <p className="text-[#ffff]">See All</p>
-                        </div>
-                      </div>
+
+                    <Col
+                      xxl={9}
+                      xl={12}
+                      lg={10}
+                      className="flex lg:justify-start"
+                    >
+                      <img src={SeeAll} alt="imgicon" />
                     </Col>
                   </Row>
                 </div>
@@ -363,7 +350,7 @@ const index = () => {
                   <div className="text-[#A0A3BD] text-sm font-medium">
                     Documents
                   </div>
-                  <div className="text-[#6E7191] font-normal text-base">
+                  <div className="text-teriary-color font-normal text-base">
                     Show all
                   </div>
                 </div>
@@ -375,7 +362,7 @@ const index = () => {
                         <img src={item.img} alt="fileIcon" />
                       </div>
                       <div className="ml-4">
-                        <div className="text-[#4E4B66] text-sm font-medium">
+                        <div className="text-secondary-color text-sm font-medium">
                           {item.docName}
                         </div>
                         <div className="text-[#A0A3BD] text-sm font-light">
