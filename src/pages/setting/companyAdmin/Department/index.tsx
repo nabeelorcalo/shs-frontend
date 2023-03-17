@@ -31,19 +31,18 @@ const overview = [
 ];
 
 const SettingDepartment: React.FC = (props: any) => {
+  const [form] = Form.useForm();
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [formValues, setFormValues] = useState<any>({
-    departmentName: "",
-    Description: "",
-  });
+ 
   const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+
   };
 
-  const close = () => {
-    setShowEditModal(false);
+  const handleSubmit = () => {
+    const values = form.getFieldsValue();
+    console.log(values);
+    
   };
 
   return (
@@ -94,30 +93,44 @@ const SettingDepartment: React.FC = (props: any) => {
         open={showEditModal}
         title="Department"
         width={600}
-        close={close}
-        footer={
-          <div className="setting-department-footer"> <Button key="Cancel" className="footer-cancel-btn ">
+        close={() => setShowEditModal(false)}
+        footer=""
+      >
+        <Form layout="vertical" form={form}>
+          <Form.Item
+            label="Department Name"
+            name="departmentName"
+          >
+            <Input
+              className="input"
+              id="departmentName"
+              name="departmentName"
+              placeholder="Enter department name "
+              size="small"
+              type="text"
+              defaultValue=""
+
+            />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="description"
+          >
+
+            <TextArea rows={6} placeholder="Write Something..." maxLength={6}
+              id="description"
+              name="description"
+              size="small"
+              defaultValue=""
+              />
+          </Form.Item>
+          <div className="setting-department-footer flex justify-end mt-4 gap-2">
+            <Button key="Cancel" className="footer-cancel-btn " onClick={() => { setShowEditModal(false) }}>
               Cancel
             </Button>
-            <Button key="submit" className="footer-submit-btn ">
+            <Button key="submit" className="footer-submit-btn" onClick={handleSubmit}>
               Submit
             </Button>
-          </div>
-        }
-      >
-        <Form layout="vertical">
-          <Form.Item
-            name="locationName"
-            rules={[{ required: true, message: "Please Enter your username!" }]}
-          >
-            <div className="d-flex w-full pl-1">
-              <p className="py-2">Recurrence</p>
-              <Input placeholder="Title" className="input-style" />
-            </div>
-          </Form.Item>
-          <div className="mt-3 flex flex-col">
-            <label className="pb-2">Description</label>
-            <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
         </Form>
       </PopUpModal>

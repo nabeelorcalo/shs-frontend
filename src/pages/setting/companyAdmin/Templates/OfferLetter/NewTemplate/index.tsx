@@ -18,28 +18,31 @@ import { textEditorData } from "../../../../../../components/Setting/Common/Text
 const { Title, Paragraph } = Typography;
 
 const NewTemplateOfferLetter = () => {
-  const [value, setValue] = useState();
-  const [formValues, setFormValues] = useState<any>({
-    templateName: "",
-    subject: "",
-    description: "",
-  });
+  const [form] = Form.useForm();
+  const [textEditorValue, setTextEditorValue] = useState();
+  const onChangeHandler = (e: any) => {
+    setTextEditorValue(e)
+  }
 
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+  const handleSubmit = () => {
+    const values = form.getFieldsValue();
+    const formData = { 
+      subject : values.subject,
+      templateName :values.templateName,
+      description:textEditorValue
+    }
+    console.log("value" , formData)
   };
 
   return (
     <div className="offer-letter-new-template">
       <NewTemplateCommonBreadcrum
-       currentPageName ="Offer Letter"
-       perviousPageLink="/settings/template/template-offer-letters"
-    
+        currentPageName="Rejection Letter"
+        perviousPageLink="/settings/template/rejection-letter"
       />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
-        <Form layout="vertical">
+        <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -50,24 +53,29 @@ const NewTemplateOfferLetter = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
+               required={false}
                 name="templateName"
                 label="Template Name"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
                 <Input placeholder="Enter name" className="" />
               </Form.Item>
               <Form.Item
+               required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-
-              <label className="text-teriary-color">Description (optional)</label>
-              <div className="text-input-bg-color rounded-lg  my-2">
-                <ReactQuill theme="snow" value={value} modules={textEditorData} />
-              </div>
+              <Form.Item
+                name="description"
+                label="Description (optional)"
+              >
+                <div className="text-input-bg-color rounded-lg  my-2 text-editor">
+                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+                </div>
+              </Form.Item>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
@@ -77,6 +85,7 @@ const NewTemplateOfferLetter = () => {
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
+              onClick={handleSubmit}
             >
               Add
             </Button>

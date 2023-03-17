@@ -59,6 +59,7 @@ const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
         width={600}
         close={()=>setOpenModal(false)}
         title="Select Interns"
+        footer=""
        
         
        

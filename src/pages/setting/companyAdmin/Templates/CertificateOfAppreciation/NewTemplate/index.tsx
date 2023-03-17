@@ -36,15 +36,18 @@ const NewTemplateCertificationOfAppreciation = () => {
     toggle: false,
   });
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [formValues, setFormValues] = useState<any>({
-    templateName: "",
-    subject: "",
-    description: "",
-  });
-
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+  const [form] = Form.useForm();
+  const [textEditorValue, setTextEditorValue] = useState();
+  const onChangeHandler = (e: any) => {
+    setTextEditorValue(e)
+  }
+  const handleSubmit = () => {
+    const values = form.getFieldsValue();
+    const formData = {
+      subject: values.subject,
+      templateName: values.templateName,
+      description: textEditorValue
+    }
   };
 
   const FirstBorderHandler = () => {
@@ -72,7 +75,7 @@ const NewTemplateCertificationOfAppreciation = () => {
       />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
-        <Form layout="vertical">
+        <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -81,32 +84,31 @@ const NewTemplateCertificationOfAppreciation = () => {
               </Title>
               <Paragraph>Enter template details</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} lg={12} xxl={8}>
+            <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
+                required={false}
                 name="templateName"
                 label="Template Name"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
                 <Input placeholder="Enter name" className="" />
               </Form.Item>
               <Form.Item
+                required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-
-              <label className="text-teriary-color">
-                Description (optional)
-              </label>
-              <div className="text-input-bg-color rounded-lg  my-2">
-                <ReactQuill
-                  theme="snow"
-                  value={value}
-                  modules={textEditorData}
-                />
-              </div>
+              <Form.Item
+                name="description"
+                label="Description (optional)"
+              >
+                <div className="text-input-bg-color rounded-lg text-editor my-2 ">
+                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+                </div>
+              </Form.Item>
             </Col>
           </Row>
 
@@ -152,7 +154,7 @@ const NewTemplateCertificationOfAppreciation = () => {
                           : FirstBorderHandler
                       }
                     >
-                     
+
                       Template 1
                     </p>
                   </div>
@@ -160,7 +162,7 @@ const NewTemplateCertificationOfAppreciation = () => {
                 <Col className="gutter relative" xs={24} xl={12}>
                   <div
                     style={{ border: `2px solid ${borderColorSecond.color}` }}
-                   
+
                     className="cursor-pointer certificate-card "
                   >
                     {borderColorSecond.toggle && (
@@ -189,7 +191,6 @@ const NewTemplateCertificationOfAppreciation = () => {
                           : SecondBorderHandler
                       }
                     >
-                      {" "}
                       Template 2
                     </p>
                   </div>
@@ -204,6 +205,7 @@ const NewTemplateCertificationOfAppreciation = () => {
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
+              onClick={handleSubmit}
             >
               Add
             </Button>
