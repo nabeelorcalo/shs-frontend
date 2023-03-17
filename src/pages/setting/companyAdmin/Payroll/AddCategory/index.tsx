@@ -12,14 +12,14 @@ import {
   Input,
   Switch,
 } from "antd";
-import { SettingAvater, SettingHorizontalLine } from "../../../../assets/images";
+import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
 import "./style.scss";
 import dayjs, { Dayjs } from "dayjs";
 import { NavLink } from "react-router-dom";
-import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import UploadDocument from "../../../../components/UploadDocument";
-import { CommonDatePicker } from "../../../../components";
-import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
+import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
+import UploadDocument from "../../../../../components/UploadDocument";
+import { CommonDatePicker } from "../../../../../components";
+import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 
 const { Title, Paragraph } = Typography;
 

@@ -9,8 +9,8 @@ export * from './SearchBar/SearchBar';
 export * from './calendars/CommonDatePicker/CommonDatePicker';
 export * from './Input/input';
 export * from './EmojiEvaluation';
-export * from './AssesmentModal';
-export * from './AssesmentDragAndDrop';
+export * from './SignatureAndUploadModal';
+export * from './DragAndDropUpload';
 export * from './DrawSignature';
 export * from './TypeSignature';
 export * from './UploadDocument'
@@ -25,6 +25,8 @@ export * from "./ChartsOfGraphs/workingStatisticesChart/workingStatisticesChart"
 export * from "./ChartsOfGraphs/timesheetCategories/timesheetCategories"
 export * from "./ChartsOfGraphs/grievanceStats/GrievanceStatsData"
 export * from "./ChartsOfGraphs/intershipSummaryChart/internshipSummaryChart"
+export * from './Select/Select';
+export * from './Dropdown/DropDownNew';
 export * from './ContractCard/index';
 export * from './Select/Select';
 export * from './todayWeather';

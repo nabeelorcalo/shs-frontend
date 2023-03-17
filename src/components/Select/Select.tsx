@@ -1,5 +1,5 @@
 import { Select as AntSelect } from 'antd';
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { ArrowDownDark } from '../../assets/images';
 import './style.scss';
 
@@ -12,14 +12,13 @@ interface Props {
   suffixIcon?: any;
   placeholder?: string;
   onChange?: any;
-  children?: ReactElement,
+  children?: ReactNode | ReactNode[],
 }
 
 const SelectComp = (props: Props) => {
   const {
     label,
     value,
-    options,
     className,
     popupClassName,
     suffixIcon = <ArrowDownDark />,

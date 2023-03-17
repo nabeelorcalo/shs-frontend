@@ -9,7 +9,7 @@ import {
   StructureCompanyAdminAvater,
   StructureCompanyAdminDownward,
   StructureCompanyAdminProfile2user,
-} from "../../assets/images";
+} from "../../../assets/images";
 
 function Organization ({ org, onCollapse, collapsed }: any) {
   const [iconChagne, setIconChagne] = useState<boolean>(true);

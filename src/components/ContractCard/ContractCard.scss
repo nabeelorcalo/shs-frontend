@@ -1,5 +1,7 @@
+@import '../../scss/_colors.scss';
+
 .contract-card {
-    border: 1px solid #ccc;
+    border: 1px solid $light-grey-thin;
     overflow: hidden;
     transition: all 0.2s ease-in-out;
     position: relative;
@@ -20,12 +22,26 @@
         transition: all 0.2s ease-in-out;
     }
 
+    .progress-bar {
+        width: 80%;
+    }
+
+    .total-hours {
+        p {
+            width: 100px;
+        }
+    }
+
     &:hover {
-        background-color: green;
+        background-color: $teriary-bg-color;
 
         .box-wrapper {
-            width: 95%;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            width: 92%;
+            box-shadow: 0 0 5px $shadow-shade-2;
+        }
+
+        .progress-bar {
+            width: 70%;
         }
 
         .view-all-btn {
@@ -33,7 +49,7 @@
             align-items: center;
             justify-content: center;
             padding: 10px 20px;
-            color: #fff;
+            color: $white-bg-color;
             cursor: pointer;
         }
     }
@@ -41,7 +57,7 @@
 }
 
 .contract-card-progress {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 4px $shadow-shade-2;
     border: none;
 
     .card-progress-box {
@@ -54,7 +70,7 @@
         }
 
         .user {
-            min-width: 300px;
+            min-width: 250px;
             width: auto;
 
             &::after {
@@ -64,7 +80,7 @@
                 right: 0;
                 height: 50px;
                 width: 2px;
-                background-color: #ccc;
+                background-color: $light-grey-thin;
             }
 
 

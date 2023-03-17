@@ -6,7 +6,7 @@ import organization from "./org.json";
 import {
   StructureMinus,
   StructureAdd,
-} from "../../assets/images";
+} from "../../../assets/images";
 import Node from "./Node";
 import "./style.scss";
 

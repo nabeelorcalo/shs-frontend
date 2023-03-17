@@ -14,23 +14,22 @@ import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-pa
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
+//Internships Child Components
+import NewInternships from "./pages/internships/NewInternships";
+import ViewInternshipDetails from "./pages/internships/ViewInternshipDetails";
+
+//Interns Child Components
+import profile from "./pages/interns/profile";
+import chat from "./pages/interns/chat";
+
 // Remove it
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import DemoCard from "./components/ContractCard/demoCard";
-import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-// import ManageVault from "./pages/digiVault/digiVaultStudent/manageVault/manageVault";
-
-// remove til here
-// import ManageVault from "./pages/digiVault/Student/manageVault";
-//
-
-import Certificates from "./pages/certificate";
-import CertificateDetail from "./pages/certificate/certificateDetail";
-//
 import Chat from "./pages/chat";
 import ManageVault from "./pages/digiVault/Student/manageVault";
+import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -52,7 +51,7 @@ const Grievances = Loadable(lazy(() => import("./pages/grievances")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure/companyAdmin")));
-const Timesheet = Loadable(lazy(() => import("./pages/timesheet")));
+const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
 const WithDrawalRequest = Loadable(
   lazy(() => import("./pages/withdrawalRequest"))
@@ -176,6 +175,9 @@ const Charts = Loadable(
 );
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
+const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
+const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
+const TimeSheetHistory = Loadable(lazy(() => import('./pages/timesheet/companyAdmin/timesheetHistory')));
 
 export const publicRoutes = [
   {
@@ -289,6 +291,16 @@ const managerRoutes = [
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
         element: <Interns />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
+        element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
@@ -496,6 +508,17 @@ const companyAdminRoutes = [
         element: <Internships />,
       },
       {
+        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        element: <NewInternships />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        element: <ViewInternshipDetails />,
+      },
+      
+      {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
@@ -539,6 +562,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        element: <TimeSheetHistory />,
       },
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,
@@ -712,6 +740,16 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         path: `${ROUTES_CONSTANTS.PERSONALISATION}`,
         element: <Personalisation />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CERTIFICATES}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATES}`,
+        element: <Certificate />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        element: <CertificateDetail />,
       },
     ],
   },

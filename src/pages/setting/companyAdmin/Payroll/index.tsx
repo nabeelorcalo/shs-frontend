@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Typography, Divider, Row, Col , Button } from "antd";
-import { SettingPayrollAddIcon} from "../../../assets/images";
-import { Alert, SearchBar } from "../../../components";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { SettingPayrollAddIcon} from "../../../../assets/images";
+import { Alert, SearchBar } from "../../../../components";
+import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import './style.scss'
-import TemplateCommonDropdown from "../../../components/Setting/Common/TemplateCommonDropdown";
+import TemplateCommonDropdown from "../../../../components/Setting/Common/TemplateCommonDropdown";
 import { NavLink } from "react-router-dom";
-import DropDownForSetting from "../../../components/Setting/Common/CustomSettingDropdown";
+import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 
 const { Title, Text } = Typography;
 let overview = [

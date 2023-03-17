@@ -141,19 +141,22 @@ export { ReactComponent as TransImgSub } from "./digivault/manageVault/material-
 export { ReactComponent as GovImg } from "./digivault/manageVault/gov.svg";
 export { ReactComponent as GovImgSub } from "./digivault/manageVault/fluent_building-government-24-regular.svg";
 export { ReactComponent as Other } from "./digivault/manageVault/others.svg";
-export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
+// export { ReactComponent as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { ReactComponent as Upload } from "../images/ColorfullIconsProgressbar/Upload.svg";
+export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
+export { default as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
+export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { default as File } from "../images/ColorfullIconsProgressbar/file.svg";
+export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
+//export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
+
+export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
 export { ReactComponent as EducationWhite } from "../../assets/images/digivault/manageVault/white/educationWhite.svg";
 export { ReactComponent as EducationWhiteSub } from "../../assets/images/digivault/manageVault/white/educationSubWhite.svg";
 export { ReactComponent as BankingWhiteSub } from "../../assets/images/digivault/manageVault/white/bankSubWhite.svg";
 export { ReactComponent as HealthWhiteSub } from "../../assets/images/digivault/manageVault/white/healthSubWhite.svg";
 export { ReactComponent as TransWhiteSub } from "../../assets/images/digivault/manageVault/white/transWhite.svg";
-export { ReactComponent as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
-export { ReactComponent as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
-export { ReactComponent as Doc } from "../images/ColorfullIconsProgressbar/doc.svg";
-export { ReactComponent as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
-export { ReactComponent as File } from "../images/ColorfullIconsProgressbar/file.svg";
-export { ReactComponent as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
+
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -168,12 +171,11 @@ export { ReactComponent as AssessmentAproved } from "./assessment-approved.svg";
 export { ReactComponent as AssessmentRejected } from "./assessment-rejected.svg";
 export { default as UserAvatar } from "./user-avatar.png";
 
-// Accommodation Icons
-
-
 // certificate icons
 export { ReactComponent as IssueCertificateIcon } from "../images/issue-certificate-icon.svg";
 export { default as CertificateImg } from '../images/certificates-img/certificate-dummy.png';
+export { ReactComponent as CertificateEyeIcon } from '../images/certificates-img/eye-icon.svg';
+export { default as CertificateLayout } from '../images/certificates-img/certificate-layout.png';
 
 export { ReactComponent as IconFilters } from "./icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "./icon-filters-angle.svg";
@@ -183,6 +185,10 @@ export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.sv
 export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down.svg";
 export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
 export { ReactComponent as IconInfoCircle } from "./accommodation/iocn-info-circle.svg";
+export { ReactComponent as IconMasterCard } from "./accommodation/icon-master-card.svg";
+export { ReactComponent as IconVisaCard } from "./accommodation/icon-visa-card.svg";
+export { ReactComponent as IconAddCircle } from "./accommodation/icon-add-circle.svg";
+export { ReactComponent as IconProfileCircleWhite } from "./accommodation/icon-profile-circle.svg";
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
@@ -246,6 +252,13 @@ export { ReactComponent as SearchInputIconSetting } from "./setting/search-norma
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
 export { ReactComponent as UniversitiesTableFlag } from "./universities/flag.svg";
 
+// Colorfull icons
+export { ReactComponent as More } from './ColorfullIconsProgressBar/More.svg';
+
+// Icons for Buttons 
+export { ReactComponent as FilterIcon } from './ButtonIcons/FilterIcon.svg';
+export { ReactComponent as ArrowToRight } from './ButtonIcons/Arrowtoright.svg';
+export { ReactComponent as InternshipsIcon } from './ButtonIcons/InternshipsIcon.svg';
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
 export { ReactComponent as LocationIcon } from "./dashboard/location.svg";
@@ -265,6 +278,15 @@ export { default as Recevied } from "../images/ColorfullIconsProgressbar/receive
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
 export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
 
+
+export { ReactComponent as ArrowRightIcon } from '../images/ArrowRightIcon.svg';
+export { ReactComponent as CirclePlusIcon } from '../images/CirclePlusIcon.svg';
+export { ReactComponent as CircleMinusIcon } from '../images/CircleMinusIcon.svg';
+export { ReactComponent as TaskListIcon } from '../images/TaskListIcon.svg';
+export { ReactComponent as  ClockDarkIcon} from '../images/ClockDarkIcon.svg';
+export { ReactComponent as  TagPrimaryIcon} from '../images/TagPrimaryIcon.svg';
+export { ReactComponent as  TagSuccessIcon} from '../images/TagSuccessIcon.svg';
+export { ReactComponent as  TagWarningIcon} from '../images/TagWarningIcon.svg';
 // candidates
 
 export { ReactComponent as CvIcon } from './cvIcon.svg';
