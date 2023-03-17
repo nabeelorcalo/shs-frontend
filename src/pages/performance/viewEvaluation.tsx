@@ -6,7 +6,8 @@ import {
   PageHeader,
   IconButton,
   EvaluationCard,
-  EvaluationStatsCard
+  EvaluationStatsCard,
+  TextArea,
 } from "../../components";
 import {
   Sad,
@@ -190,6 +191,14 @@ const ViewPerformance = () => {
         <Typography.Title level={3} className="evaluation-heading">
           Comments
         </Typography.Title>
+
+        <TextArea
+          disabled
+          rows = {6}
+          classNme='light-blue-bg-color text-primary-color'
+          placeholder = "placeholder"
+          defaultValue = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
+        />
       </div>
     </div>
   )

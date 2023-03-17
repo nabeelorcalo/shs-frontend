@@ -50,6 +50,11 @@
   .emoji-container{
     padding: 0 2px;
   }
+
+  .ant-input[disabled]{
+    background-color: $light-blue-color;
+    color: $text-primary-title-color;
+  }
 }
 
 .performance-container {

@@ -1,5 +1,3 @@
-import { from } from 'form-data';
-
 export * from './Button';
 export * from './Alert';
 export * from './LeaveCard';
@@ -44,3 +42,4 @@ export * from './FiltersButton'
 export * from './IconButton'
 export * from './EvaluationPersonCard';
 export * from './EvaluationStats';
+export * from './TextArea';
