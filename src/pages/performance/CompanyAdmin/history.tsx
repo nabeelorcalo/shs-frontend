@@ -97,6 +97,7 @@ const PerformanceHistory = () => {
   const evaluationHistoryData = [
     {
       id: 1,
+      no: 1,
       name: 'Mino Marina',
       department: 'UI UX Designer',
       evaluatedBy: 'Mino Marina',
@@ -107,6 +108,7 @@ const PerformanceHistory = () => {
     },
     {
       id: 2,
+      no: 2,
       name: 'Mino Marina',
       department: 'UI UX Designer',
       evaluatedBy: 'Mino Marina',
@@ -117,6 +119,7 @@ const PerformanceHistory = () => {
     },
     {
       id: 3,
+      no: 3,
       name: 'Mino Marina',
       department: 'UI UX Designer',
       evaluatedBy: 'Mino Marina',
@@ -127,6 +130,7 @@ const PerformanceHistory = () => {
     },
     {
       id: 4,
+      no: 4,
       name: 'Mino Marina',
       department: 'UI UX Designer',
       evaluatedBy: 'Mino Marina',
@@ -137,6 +141,7 @@ const PerformanceHistory = () => {
     },
     {
       id: 5,
+      no: 5,
       name: 'Mino Marina',
       department: 'UI UX Designer',
       evaluatedBy: 'Mino Marina',
@@ -201,7 +206,7 @@ const PerformanceHistory = () => {
           // setOpenDrawer({ type: 'view', open: true })
         }}
       >
-        View
+        View Details
       </p>,
       key: '0',
     },
@@ -209,10 +214,26 @@ const PerformanceHistory = () => {
       label: <p
         // onClick={() => setActionType({ ...actionType, type: 'download' })}
       >
-        Download
+        Evaluate
       </p>,
       key: '1',
-    }
+    },
+    {
+      label: <p
+        // onClick={() => setActionType({ ...actionType, type: 'download' })}
+      >
+        Appreciate
+      </p>,
+      key: '2',
+    },
+    {
+      label: <p
+        // onClick={() => setActionType({ ...actionType, type: 'download' })}
+      >
+        Warn
+      </p>,
+      key: '3',
+    },
   ];
 
   const [state, setState] = useState({
@@ -291,7 +312,7 @@ const PerformanceHistory = () => {
       />
 
       <div className="flex">
-        <div className="w-[37%]">
+        <div className="w-[33%]">
           <SearchBar
             className=""
             handleChange={() => { }}
