@@ -57,7 +57,7 @@ export const WarnModal: any = (props: WarnProps) => {
               type="default"
               onClick={onCancel}
               className="border-red-visible-btn mt-4"
-            />,
+            />
             <Button
               label="Issue"
               htmlType="submit"
