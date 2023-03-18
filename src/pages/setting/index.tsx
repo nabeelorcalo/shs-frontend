@@ -1,47 +1,42 @@
-import { Col, Row } from "antd";
-import { Typography } from "antd";
-import { useState } from "react";
+import { Col, Row, Typography, Divider } from "antd";
+
+
 import { Outlet } from "react-router-dom";
 import { SettingHorizontalLine } from "../../assets/images";
+import { PageHeader } from "../../components";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
+import "./style.scss";
 
 const { Title } = Typography;
 
 const Setting = (props: any) => {
   return (
-    <>
-      <div className="flex ">
-        <Title level={3}>{props.title} </Title>
-        <span className="mx-2">
+    <div className="setting">
+      {/* <div className="flex items-center ">
+        <Title className="mt-3" level={3}>{props.title} </Title>
+        <span className="mx-2 ">
           <SettingHorizontalLine />
         </span>
-        <Title className="mt-0.5" level={4}>
-          Setting{" "}
-        </Title>
-      </div>
+        <span className=" text-base font-medium text-secondary-color">
+          Setting
+        </span>
+      </div> */}
+      
+     <PageHeader title={<div> {props.title}  {<SettingHorizontalLine className=""/>} Setting </div>} />
+      <Divider className="my-1 mb-3" />
       <Row gutter={16} className="mt-5">
-        <Col sm={10} md={8} lg={5}>
-          <div
-            style={{
-              backgroundColor: "#fff",
-              borderRadius: "15px",
-              height: "100%",
-              textAlign: "left",
-              // padding: "30px 20px",
-            }}
-          >
-            <div className="rounded-lg">
-              <SettingSidebar />
-            </div>
+        <Col span={3} sm={8} lg={5} className="setting-sidebar flex flex-col">
+          <div className="rounded-lg ">
+            <SettingSidebar />
           </div>
         </Col>
-        <Col span={19}>
+        <Col span={21} sm={16} lg={19}>
           {props.children}
 
           <Outlet />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 

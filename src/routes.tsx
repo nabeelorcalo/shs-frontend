@@ -26,24 +26,10 @@ import chat from "./pages/interns/chat";
 // dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
-// remove til here
-
-//Setting Child Component
-import SettingPerformance from "./components/Setting/Performance/Performance";
-import SettingDepartment from "./components/Setting/Department/Department";
-import SettingLeaves from "./components/Setting/Leaves/Leaves";
-import SettingLocation from "./components/Setting/Location/Location";
-import SettingTemplate from "./components/Setting/Templates/Templates";
-import SettingShifts from "./components/Setting/Shifts/Shifts";
-import SettingTimesheet from "./components/Setting/Timesheet/Timesheet";
-import SettingPayroll from "./components/Setting/Payroll/Payroll";
-import AddLocation from "./components/Setting/Location/addLoction/AddLocation";
-import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ManageVault from "./pages/digiVault/Student/manageVault";
-//
 import DemoCard from "./components/ContractCard/demoCard";
 import Chat from "./pages/chat";
-//
+import ManageVault from "./pages/digiVault/Student/manageVault";
+import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -64,7 +50,7 @@ const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
-const Structure = Loadable(lazy(() => import("./pages/structure")));
+const Structure = Loadable(lazy(() => import("./pages/structure/companyAdmin")));
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
 const WithDrawalRequest = Loadable(
@@ -117,6 +103,73 @@ const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
+const SettingPerformance = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Performance"))
+);
+const SettingDepartment = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Department"))
+);
+const SettingLocation = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Location"))
+);
+const AddLocation = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Location/AddLocation"))
+);
+const SettingTemplate = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates"))
+);
+const TemplatesOfferLater = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/OfferLetter"))
+);
+const OfferLaterNewTemplate = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/OfferLetter/NewTemplate"))
+);
+const TCA = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/CertificateOfAppreciation"))
+);
+const TCANewTemplate = Loadable(
+  lazy(
+    () =>
+      import("./pages/setting/companyAdmin/Templates/CertificateOfAppreciation/NewTemplate")
+  )
+);
+const TemplatesCertificateOfCompletion = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/CertificateOfCompletion"))
+);
+const TCCNewTemplate = Loadable(
+  lazy(
+    () =>
+      import("./pages/setting/companyAdmin/Templates/CertificateOfCompletion/NewTemplate")
+  )
+);
+const TemplatesContract = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/Contract"))
+);
+const ContractNewTemplate = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/Contract/NewTemplate"))
+);
+const TemplatesRejectionLetter = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/RejectionLetter"))
+);
+const RejectionLetterNewTemplate = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Templates/RejectionLetter/NewTemplate"))
+);
+const SettingLeaves = Loadable(lazy(() => import("./pages/setting/companyAdmin/Leaves")));
+const LeavesAddPolicy = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Leaves/AddPolicy"))
+);
+const SettingShifts = Loadable(lazy(() => import("./pages/setting/companyAdmin/Shifts")));
+const AddShift = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Shifts/AddShift"))
+);
+const SettingTimesheet = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Timesheet"))
+);
+const SettingPayroll = Loadable(lazy(() => import("./pages/setting/companyAdmin/Payroll")));
+const PayrollAddCategory = Loadable(
+  lazy(() => import("./pages/setting/companyAdmin/Payroll/AddCategory"))
+);
+
 const Charts = Loadable(
   lazy(() => import("./components/ChartsOfGraphs/Charts"))
 );
@@ -532,20 +585,66 @@ const companyAdminRoutes = [
             ),
             path: "location",
             index: true,
-
-            // children: [
-            //   {
-            //     key: `addLocation`,
-            //     element:  <AddLocation />,
-            //     path: "addLocation",
-            //     index: true,
-            //   },
-            // ]
           },
           {
             key: `add-location`,
             element: <AddLocation />,
-            path: "add-location",
+            path: "/settings/location/add-location",
+          },
+
+          {
+            key: `offer-letter-new-template`,
+            element: <OfferLaterNewTemplate />,
+            path: "/settings/template/offer-letters/new-template",
+          },
+          {
+            key: `template-offer-letters`,
+            element: <TemplatesOfferLater />,
+            path: "/settings/template/template-offer-letters",
+          },
+          {
+            key: `template-contract`,
+            element: <TemplatesContract />,
+            path: "/settings/template/contract",
+          },
+
+          {
+            key: `contract-new-template`,
+            element: <ContractNewTemplate />,
+            path: "/settings/template/contract/new-template",
+          },
+          {
+            key: `template-rejection-letter`,
+            element: <TemplatesRejectionLetter />,
+            path: "/settings/template/rejection-letter",
+          },
+          
+          {
+            key: `rejection-letter-new-template`,
+            element: <RejectionLetterNewTemplate />,
+            path: "/settings/template/rejection-letter/new-template",
+          },
+          {
+            key: `template-certificate-of-appreciation`,
+            element: <TCA />,
+            path: "/settings/template/certificate-of-appreciation",
+          },
+          {
+            key: `tca-new-template`,
+            element: <TCANewTemplate />,
+            path: "/settings/template/certificate-of-appreciation/new-template",
+          },
+
+          {
+            key: `template-certificate-of-completion`,
+            element: <TemplatesCertificateOfCompletion />,
+            path: "/settings/template/certificate-of-completion",
+          },
+
+          {
+            key: `tcc-new-template`,
+            element: <TCCNewTemplate />,
+            path: "/settings/template/certificate-of-completion/new-template",
           },
 
           {
@@ -567,6 +666,12 @@ const companyAdminRoutes = [
             path: "leaves",
           },
           {
+            key: `add-policy`,
+            element: <LeavesAddPolicy />,
+            path: "leaves/add-policy",
+          },
+
+          {
             key: `performance`,
             path: `performance`,
             element: (
@@ -578,9 +683,9 @@ const companyAdminRoutes = [
           {
             key: `template`,
             path: `template`,
+
             element: (
               <Setting title="Template">
-                {" "}
                 <SettingTemplate />
               </Setting>
             ),
@@ -590,17 +695,20 @@ const companyAdminRoutes = [
             path: `shifts`,
             element: (
               <Setting title="Shifts">
-                {" "}
                 <SettingShifts />
               </Setting>
             ),
+          },
+          {
+            key: `add-shift`,
+            element: <AddShift />,
+            path: "/settings/shifts/add-shift",
           },
           {
             key: `timesheet`,
             path: `timesheet`,
             element: (
               <Setting title="Timesheet">
-                {" "}
                 <SettingTimesheet />
               </Setting>
             ),
@@ -610,10 +718,14 @@ const companyAdminRoutes = [
             path: `payroll`,
             element: (
               <Setting title="Payroll">
-                {" "}
                 <SettingPayroll />
               </Setting>
             ),
+          },
+          {
+            key: `payroll-add-category`,
+            element: <PayrollAddCategory />,
+            path: "/settings/payroll/add-category",
           },
         ],
       },
