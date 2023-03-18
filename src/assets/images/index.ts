@@ -262,6 +262,8 @@ export { ReactComponent as More } from './ColorfullIconsProgressbar/More.svg';
 // Icons for Buttons 
 export { ReactComponent as FilterIcon } from './buttonIcons/FilterIcon.svg';
 export { ReactComponent as ArrowToRight } from './buttonIcons/Arrowtoright.svg';
+export { ReactComponent as ArrowToLeft } from './buttonIcons/ArrowToLeft.svg';
+export { ReactComponent as ArrowToRight1 } from './buttonIcons/ArrowToRight1.svg';
 export { ReactComponent as InternshipsIcon } from './buttonIcons/InternshipsIcon.svg';
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
@@ -315,3 +317,7 @@ export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
 // Performance
 export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
+
+// Common Icons
+export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
+export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';

@@ -6,7 +6,11 @@ export const OverAllPerfomance = (props: any) => {
   const { lg, md, sm, xs, trailColor = "#E6F4F9", strokeWidth = 10, width = 140, type = "circle", data, heading } = props
   return (
     <BoxWrapper>
-      {heading && <p className='mb-14 font-medium text-xl text-secondary-color'>{heading}</p>}
+      {
+        heading && <p className='mb-14 font-medium text-xl text-secondary-color overall-performance-txt'>
+          {heading}
+        </p>
+      }
       <Row className='gap-5 justify-between'>
         {data.map((item: any, i: any) => (
           <Col key={i} lg={lg} md={md} sm={sm} xs={xs} className="text-center">

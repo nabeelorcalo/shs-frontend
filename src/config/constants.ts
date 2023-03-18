@@ -91,6 +91,7 @@ export const ROUTES_CONSTANTS: any = {
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
+  HISTORY: 'history',
 };
 
 export const STATUS_CONSTANTS: any = {
