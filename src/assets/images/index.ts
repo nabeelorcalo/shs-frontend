@@ -187,7 +187,10 @@ export { ReactComponent as IconVisaCard } from "./accommodation/icon-visa-card.s
 export { ReactComponent as IconAddCircle } from "./accommodation/icon-add-circle.svg";
 export { ReactComponent as IconProfileCircleWhite } from "./accommodation/icon-profile-circle.svg";
 export { ReactComponent as IconCloseModal } from "./accommodation/icon-close-circle.svg";
-
+export { ReactComponent as IconMore } from "./accommodation/icon-more.svg";
+export { ReactComponent as IconSignedDigitally } from "./accommodation/icon-signed-digitally.svg";
+export { ReactComponent as Documentcard } from "./accommodation/document-card.svg";
+export { ReactComponent as IconReceipt } from "./accommodation/icon-receipt.svg";
 
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";

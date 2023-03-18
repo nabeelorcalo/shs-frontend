@@ -127,6 +127,11 @@ const Accommodation = () => {
                 <SearchBar handleChange={() => console.log('i am changed')}/>
               </div>
             }
+            {location.pathname === '/accommodation/payments' &&
+              <div className="searchbar-wrapper">
+                <SearchBar handleChange={() => console.log('i am changed')}/>
+              </div>
+            }
           </div>
           <div className="page-filterbar-right">
             {location.pathname === '/accommodation' &&
@@ -153,7 +158,7 @@ const Accommodation = () => {
                   >
                     {agentOptions.map((option) => {
                       return (
-                        <Select.Option value={option.value}>
+                        <Select.Option value={option.value} key={option.value}>
                           <div className="agent-option">
                             <img src={avatar} />
                             {option.label}
@@ -164,12 +169,53 @@ const Accommodation = () => {
                   </Select>
                 </div>
                 <div className="requests-filterby-status">
-                <Select className="dropdown-filled " placeholder="Status" onChange={handleChangeStatus}>
-                  <Select.Option value="reserved">Reserved</Select.Option>
-                  <Select.Option value="pending">Pending</Select.Option>
-                  <Select.Option value="rejected">Rejected</Select.Option>
-                </Select>
+                  <Select className="dropdown-filled " placeholder="Time Frame" onChange={handleChangeStatus}>
+                    <Select.Option value="reserved">Reserved</Select.Option>
+                    <Select.Option value="pending">Pending</Select.Option>
+                    <Select.Option value="rejected">Rejected</Select.Option>
+                  </Select>
               </div>
+              <div className="dropdown-download">
+                <DropDown
+                  requiredDownloadIcon
+                />
+              </div>
+            </Space>
+            }
+            {location.pathname === '/accommodation/payments' &&
+            <Space>
+                <div className="requests-filterby-agent">
+                  <Select 
+                    className="dropdown-filled"
+                    placeholder="Agent"
+                    onChange={handleChangeStatus}
+                    popupClassName={'agents-dropdown'}
+                    placement="bottomRight"
+                  >
+                    {agentOptions.map((option) => {
+                      return (
+                        <Select.Option value={option.value} key={option.value}>
+                          <div className="agent-option">
+                            <img src={avatar} />
+                            {option.label}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
+                  </Select>
+                </div>
+                <div className="requests-filterby-status">
+                  <Select className="dropdown-filled " placeholder="Status" onChange={handleChangeStatus}>
+                    <Select.Option value="reserved">Reserved</Select.Option>
+                    <Select.Option value="pending">Pending</Select.Option>
+                    <Select.Option value="rejected">Rejected</Select.Option>
+                  </Select>
+                </div>
+                <div className="dropdown-download">
+                  <DropDown
+                    requiredDownloadIcon
+                  />
+                </div>
             </Space>
             }
           </div>

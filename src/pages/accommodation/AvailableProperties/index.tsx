@@ -44,9 +44,9 @@ const AvailableProperties = () => {
   return (
     <div className="available-properties">
       <div className="shs-row">
-        {data.map((property) => {
+        {data.map((property, index) => {
           return (
-            <div className="shs-col-5">
+            <div key={index} className="shs-col-5">
               <AccommodationCard
                 coverPhoto={property.coverPhoto}
                 discount={property.discount}

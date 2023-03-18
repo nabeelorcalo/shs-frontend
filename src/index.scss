@@ -246,3 +246,198 @@ svg {
     line-height: 1.5714285;
   }
 }
+
+// Table
+.shs-table-card {
+  border-radius: 16px;
+  box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+  // padding: 20px;
+}
+.shs-table {
+  .ant-table-wrapper {
+    .ant-table {
+      .ant-table-thead {
+        tr {
+          .ant-table-cell {
+            color: $text-primary-title-color;
+            font-weight: 400;
+            text-align: left;
+            background: $text-input-bg-color;
+            border-bottom: unset;
+            padding-top: 18px;
+            padding-bottom: 18px;
+  
+            &::before {
+              content: unset;
+            }
+          }
+        }
+      }
+
+      .ant-table-tbody {
+        background-color: $white-bg-color;
+  
+        .ant-table-row {
+          &:hover {
+            .ant-table-cell {
+              background: unset;
+              border-bottom: 1px solid $text-error-line-color;
+            }
+          }
+  
+          .ant-table-cell {
+            border-bottom: 1px solid $white-bg-color;
+            color: $text-secondary-body-color;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 1.5;
+          }
+        }
+  
+      }
+    }
+
+    .ant-pagination.ant-table-pagination {
+      padding: 0 20px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      .ant-pagination-total-text {
+        margin-right: auto;
+        color: $light-grey-color;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        & > span {
+          font-weight: 500;
+        }
+      }
+
+      .ant-pagination-item {
+        border: 1px solid $text-error-line-color;
+        height: 32px;
+        min-width: 32px;
+        line-height: 30px;
+  
+        &:not(.ant-pagination-item-active) {
+          &:hover {
+            background-color: $text-input-bg-color;
+          }
+        }
+
+        &.ant-pagination-item-active {
+          border: 1px solid $green-graph-tooltip-color;
+          background-color: $green-graph-tooltip-color;
+    
+          a {
+            color: $white-bg-color;
+          }
+        }
+      }
+      .ant-pagination-prev {
+        height: 32px;
+        min-width: 32px;
+        line-height: 30px;
+        background: $white-bg-color;
+        border: 1px solid $text-error-line-color;
+  
+        &:hover {
+          &:not(.ant-pagination-disabled) {
+            .ant-pagination-item-link {
+              background-color: $text-input-bg-color;
+            }
+          }
+        }
+  
+        .ant-pagination-item-link {
+          svg {
+            path {
+              fill: $text-success-placeholder-color;
+            }
+          }
+        }
+  
+        &.ant-pagination-disabled {
+          background-color: $text-primary-disabled-color;
+          border: unset;
+  
+          .ant-pagination-item-link {
+            svg {
+              path {
+                fill: $white-bg-color;
+              }
+            }
+          }
+        }
+      }
+  
+      .ant-pagination-next {
+        height: 32px;
+        min-width: 32px;
+        line-height: 30px;
+        background: $white-bg-color;
+        border: 1px solid $text-error-line-color;
+  
+        &:hover {
+          &:not(.ant-pagination-disabled) {
+            .ant-pagination-item-link {
+              background-color: $text-input-bg-color;
+            }
+          }
+        }
+
+        .ant-pagination-item-link {
+          svg {
+            path {
+              fill: $text-success-placeholder-color;
+            }
+          }
+        }
+  
+        &.ant-pagination-disabled {
+          background-color: $text-primary-disabled-color;
+          border: unset;
+  
+          .ant-pagination-item-link {
+            color: #ffffff;
+            svg {
+              path {
+                fill: $white-bg-color;
+              }
+            }
+          }
+        }
+      }  
+    }
+  }
+
+  .dropdown-button {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .table-cell-btn {
+    display: inline-block;
+    cursor: pointer;
+  }
+}
+
+.shs-status-badge {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.57142857;
+  padding: 2px 10px;
+  background-color: $light-sky-blue;
+  display: inline-block;
+  border-radius: 6px;
+
+  &.success {
+    background-color: $text-success-color;
+  }
+  &.rejected {
+    background-color: $accommodation-badge;
+  }
+  &.pending {
+    background-color: $text-warning-color;
+  }
+}

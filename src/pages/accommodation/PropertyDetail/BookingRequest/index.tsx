@@ -291,9 +291,9 @@ const PropertyPricing = () => {
 
             {cardList &&
               <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
-                {cardList.map((card) => {
+                {cardList.map((card, index) => {
                   return (
-                    <li>
+                    <li key={index}>
                       <div className="payment-card">
                         <div className="payment-card-select">
                           <Radio value={card.id} />
