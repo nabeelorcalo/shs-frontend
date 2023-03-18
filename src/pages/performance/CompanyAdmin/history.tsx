@@ -7,6 +7,8 @@ import Table from "../../../components/Table/Table";
 // end
 import { DownlaodFileIcon, GlassMagnifier, MoreIcon } from '../../../assets/images';
 import '../style.scss';
+import { Link } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const PerformanceHistory = () => {
   const columnNames = [
@@ -86,7 +88,7 @@ const PerformanceHistory = () => {
           >
             <MoreIcon
               className="cursor-pointer"
-              // onClick={() => setActionType({ ...actionType, id: data.key })}
+            // onClick={() => setActionType({ ...actionType, id: data.key })}
             />
           </Dropdown>
         </Space>
@@ -200,27 +202,28 @@ const PerformanceHistory = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: <p
-        onClick={() => {
-          // setActionType({ ...actionType, type: 'view' });
-          // setOpenDrawer({ type: 'view', open: true })
-        }}
-      >
-        View Details
-      </p>,
+      label:
+        < Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
+        >
+          View Details
+        </Link >,
       key: '0',
     },
     {
-      label: <p
-        // onClick={() => setActionType({ ...actionType, type: 'download' })}
-      >
-        Evaluate
-      </p>,
+      label:
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`}
+        >
+          Evaluate
+        </Link >,
       key: '1',
     },
     {
       label: <p
-        // onClick={() => setActionType({ ...actionType, type: 'download' })}
+      // onClick={() => setActionType({ ...actionType, type: 'download' })}
       >
         Appreciate
       </p>,
@@ -228,7 +231,7 @@ const PerformanceHistory = () => {
     },
     {
       label: <p
-        // onClick={() => setActionType({ ...actionType, type: 'download' })}
+      // onClick={() => setActionType({ ...actionType, type: 'download' })}
       >
         Warn
       </p>,
@@ -252,14 +255,6 @@ const PerformanceHistory = () => {
 
   const downloadClick = () => {
 
-  }
-
-  const sideBarContent = () => {
-    return (<>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-    </>)
   }
 
   const evaluatedBySelection = (event: any) => {
@@ -297,6 +292,33 @@ const PerformanceHistory = () => {
     alert('Reset Filter')
   }
 
+  const breadCrumbs = () => {
+    const role = constants.USER_ROLE;
+
+    switch (role) {
+      case 'Intern':
+        return (
+          <Link
+            className="bread-crumb"
+            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+          >
+            Performance
+          </Link>
+        );
+      case 'CompanyAdmin':
+        return (
+          <Link
+            className="bread-crumb"
+            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+          >
+            Performance
+          </Link>
+        );
+      default:
+        return <></>;
+    }
+  }
+
   return (
     <div className="company-admin-performance-history">
       <PageHeader
@@ -305,7 +327,7 @@ const PerformanceHistory = () => {
           <div className="font-medium">
             Performance History
             <span className="vertical-line">
-              Performance
+              {breadCrumbs()}
             </span>
           </div>
         }

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Button } from 'antd';
 // import all reusable componets from component/index.ts
 import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader } from "../../../components";
-import Table from "../../../components/Table/Table";
 import { TopPerformanceList } from "../../../components/TopPerformanceList";
 // end
 import data from './data';
 import '../style.scss';
+import { Link } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const CompanyAdminPerformance = () => {
   const performanceData = [
@@ -71,7 +71,11 @@ const CompanyAdminPerformance = () => {
         actions
         title="Performance"
       >
-        <Button className="performance-history-btn"> View History </Button>
+        <Link
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
+          className="performance-history-btn">
+          View History
+        </Link>
       </PageHeader>
 
       <div className="company-admin-performance-container gap-4">

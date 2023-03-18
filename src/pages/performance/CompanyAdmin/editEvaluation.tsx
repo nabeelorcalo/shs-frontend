@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Typography } from "antd";
 import { Link } from "react-router-dom";
-import constants, { ROUTES_CONSTANTS } from "../../config/constants";
-import "./style.scss";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import "../style.scss";
 import {
   PageHeader,
   IconButton,
   EvaluationCard,
   EvaluationStatsCard,
   TextArea,
-} from "../../components";
+  Button
+} from "../../../components";
 import {
   Sad,
   SadColorLessEmoji,
@@ -20,8 +21,8 @@ import {
   Awesome,
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
-} from '../../assets/images';
-import EmojiMoodRating from "../../components/EmojiMoodRating";
+} from '../../../assets/images';
+import EmojiMoodRating from "../../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
   const user = {
@@ -32,42 +33,6 @@ const ViewPerformance = () => {
     discipline: '61',
     personal: '92',
   };
-
-  const data = [
-    {
-      id: 1,
-      name: "Learning Objectives",
-      values: [
-        { title: "Works to full potential", value: 1 },
-        { title: "Quality of work", value: 2 },
-        { title: "Work Consistency", value: 3 },
-        { title: "Independency in work", value: 4 },
-        { title: "Business skills", value: 2 },
-        { title: "Technical skills", value: 3 },
-      ]
-    },
-    {
-      id: 2,
-      name: "Discipline",
-      values: [
-        { title: "Punctuality", value: 4 },
-        { title: "Attendance", value: 3 },
-        { title: "Coworker relationship", value: 2 },
-        { title: "Team work", value: 1 }
-      ]
-    },
-    {
-      id: 3,
-      name: "Personal",
-      values: [
-        { title: "Creativity", value: 1 },
-        { title: "Honesty", value: 2 },
-        { title: "Integrity", value: 4 },
-        { title: "Communication skills", value: 1 },
-        { title: "Task Initiatives", value: 3 }
-      ]
-    }
-  ]
 
   const emojiData = [
     {
@@ -91,6 +56,44 @@ const ViewPerformance = () => {
       colorLessComp: SatisfiedColorLessIcon
     },
   ];
+
+  const [state, setState] = useState({
+    data: [
+      {
+        id: 1,
+        name: "Learning Objectives",
+        values: [
+          { title: "Works to full potential", value: 1 },
+          { title: "Quality of work", value: 2 },
+          { title: "Work Consistency", value: 3 },
+          { title: "Independency in work", value: 4 },
+          { title: "Business skills", value: 2 },
+          { title: "Technical skills", value: 3 },
+        ]
+      },
+      {
+        id: 2,
+        name: "Discipline",
+        values: [
+          { title: "Punctuality", value: 4 },
+          { title: "Attendance", value: 3 },
+          { title: "Coworker relationship", value: 2 },
+          { title: "Team work", value: 1 }
+        ]
+      },
+      {
+        id: 3,
+        name: "Personal",
+        values: [
+          { title: "Creativity", value: 1 },
+          { title: "Honesty", value: 2 },
+          { title: "Integrity", value: 4 },
+          { title: "Communication skills", value: 1 },
+          { title: "Task Initiatives", value: 3 }
+        ]
+      },
+    ]
+  });
 
   const downloadClick = () => {
     alert('download popup');
@@ -130,6 +133,39 @@ const ViewPerformance = () => {
       default:
         return <></>;
     }
+  }
+
+  const onEmojiClick = (event: any) => {
+    const rootContainer = event.target.closest(".evaluation-container");
+    const rootContainerName = rootContainer.querySelector(".evaluation-heading").innerText;
+    const parentNode = event.target.closest(".emoji-mood-container");
+    const type = parentNode.querySelector(".emoji-heading").innerText;
+    const selectedEmoji = event.currentTarget.innerText;
+    const classList = event.currentTarget.classList;
+    const selectedEmojiIndex = classList[classList.length - 1];
+
+    var obj = state.data.find(function (obj) {
+      return obj.name === rootContainerName;
+    });
+
+    var childObj = obj?.values.find(function (obj) {
+      return obj.title === type;
+    });
+
+    // childObj.value = selectedEmojiIndex;
+
+    // setState(prevState => ({
+    //   ...prevState,
+    // }));
+
+  }
+
+  const onSaveClick = () => {
+    alert("Save");
+  }
+
+  const onCancelClick = () => {
+    alert("Cancel");
   }
 
   return (
@@ -197,9 +233,9 @@ const ViewPerformance = () => {
       </div>
 
       {
-        data.map((obj: any) => {
+        state.data.map((obj: any) => {
           return (
-            <div className="flex flex-col flex-wrap">
+            <div className="flex flex-col flex-wrap evaluation-container">
               <div key={obj.name} className="mt-6 mb-2">
                 <Typography.Title level={3} className="evaluation-heading">
                   {obj.name}
@@ -213,6 +249,7 @@ const ViewPerformance = () => {
                       size={5}
                       data={emojiData}
                       title={child.title}
+                      onClick={(event: any) => onEmojiClick(event)}
                       activeIconIndex={child.value}
                     />
                   </div>
@@ -234,6 +271,21 @@ const ViewPerformance = () => {
           classNme='light-blue-bg-color text-primary-color'
           placeholder="placeholder"
           defaultValue='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
+        />
+      </div>
+
+      <div className="flex justify-end gap-4 my-4">
+        <Button
+          label="Cancel"
+          type="default"
+          onClick={onCancelClick}
+          className="performance-filter-reset-btn"
+        />
+
+        <Button
+          label="Save"
+          onClick={onSaveClick}
+          className="performance-filter-apply-btn"
         />
       </div>
     </div>

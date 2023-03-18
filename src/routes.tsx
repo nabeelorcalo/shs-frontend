@@ -122,6 +122,7 @@ const Charts = Loadable(
 );
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const PerformanceEvaluationForm = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
+const EvaluatePerformance = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/editEvaluation")));
 const CompanyAdminPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/history")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
@@ -625,6 +626,16 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
         element: <CompanyAdminPerformanceHistory />
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <PerformanceEvaluationForm />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`,
+        element: <EvaluatePerformance />,
       },
       {
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,

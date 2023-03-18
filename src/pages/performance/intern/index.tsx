@@ -6,6 +6,8 @@ import Table from "../../../components/Table/Table";
 // end
 import { MoreIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { Link } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const InternPerformance = () => {
   const performanceData = [
@@ -218,14 +220,12 @@ const InternPerformance = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: <p
-        onClick={() => {
-          setActionType({ ...actionType, type: 'view' });
-          setOpenDrawer({ type: 'view', open: true })
-        }}
+      label: <Link
+        className="bread-crumb"
+        to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
       >
         View
-      </p>,
+      </Link>,
       key: '0',
     },
     {
