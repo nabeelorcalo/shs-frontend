@@ -227,3 +227,16 @@ svg {
   padding: 0 6px;
   color: $primary-bg-color !important;
 }
+
+.avatar-label{
+  color: $text-teriary-label-color;
+}
+
+.avatar-box{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid $light-grey-color;
+  border-radius: 4px;
+}

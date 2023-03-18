@@ -279,13 +279,13 @@ const ViewPerformance = () => {
           label="Cancel"
           type="default"
           onClick={onCancelClick}
-          className="performance-filter-reset-btn"
+          className="border-visible-btn"
         />
 
         <Button
           label="Save"
           onClick={onSaveClick}
-          className="performance-filter-apply-btn"
+          className="bg-visible-btn"
         />
       </div>
     </div>

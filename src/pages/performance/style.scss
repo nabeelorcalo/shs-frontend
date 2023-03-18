@@ -175,18 +175,34 @@
   font-weight: 400;
 }
 
-.performance-filter-reset-btn{
+.border-visible-btn{
   width: 113px;
   border-color: $teriary-bg-color;
   color: $teriary-bg-color;
 }
 
-.performance-filter-apply-btn{
+.bg-visible-btn{
   width: 113px;
   background-color: $teriary-bg-color;
   color: white;
 }
 
-.performance-filter-apply-btn:hover{
+.bg-visible-btn:hover{
   background-color: $teriary-light-bg-color !important;
+}
+
+// Performance modal
+.performance-modal{
+  .ant-modal-title{
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .ant-form-item-control-input{
+    min-height: 0;
+  }
+
+  .ant-form-item{
+    margin-bottom: 18px;
+  }
 }

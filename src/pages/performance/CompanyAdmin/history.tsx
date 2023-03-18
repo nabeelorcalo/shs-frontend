@@ -9,6 +9,7 @@ import { DownlaodFileIcon, GlassMagnifier, MoreIcon } from '../../../assets/imag
 import '../style.scss';
 import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import { AppreciationModal } from "./appreciationModal";
 
 const PerformanceHistory = () => {
   const columnNames = [
@@ -222,19 +223,31 @@ const PerformanceHistory = () => {
       key: '1',
     },
     {
-      label: <p
-      // onClick={() => setActionType({ ...actionType, type: 'download' })}
-      >
-        Appreciate
-      </p>,
+      label:
+        <p
+          onClick={() => {
+            setState(prevState => ({
+              ...prevState,
+              openAprreciationModal: !state.openAprreciationModal,
+            }));
+          }}
+        >
+          Appreciate
+        </p>,
       key: '2',
     },
     {
-      label: <p
-      // onClick={() => setActionType({ ...actionType, type: 'download' })}
-      >
-        Warn
-      </p>,
+      label:
+        <p
+          onClick={() => {
+            setState(prevState => ({
+              ...prevState,
+              openWarnModal: !state.openWarnModal,
+            }));
+          }}
+        >
+          Warn
+        </p>,
       key: '3',
     },
   ];
@@ -244,6 +257,8 @@ const PerformanceHistory = () => {
     timeFrameVal: 'Select',
     departmentVal: 'Select',
     evaluatedByVal: 'Select',
+    openAprreciationModal: false,
+    openWarnModal: false,
   });
 
   const handleSidebarClick = () => {
@@ -317,6 +332,14 @@ const PerformanceHistory = () => {
       default:
         return <></>;
     }
+  }
+
+  const onSubmitAppreciationForm = (values: any) => {
+    console.log("Form Data: ", values);
+    setState(prevState => ({
+      ...prevState,
+      openAprreciationModal: !state.openAprreciationModal,
+    }));
   }
 
   return (
@@ -399,13 +422,13 @@ const PerformanceHistory = () => {
                     label="Reset"
                     type="default"
                     onClick={onResetFilterClick}
-                    className="performance-filter-reset-btn"
+                    className="border-visible-btn"
                   />
 
                   <Button
                     label="Apply"
                     onClick={onApplyFilterClick}
-                    className="performance-filter-apply-btn"
+                    className="bg-visible-btn"
                   />
                 </div>
               </div>
@@ -421,6 +444,24 @@ const PerformanceHistory = () => {
           pagination={false}
         />
       </div>
+
+      <AppreciationModal
+        open={state.openAprreciationModal}
+        initialValues={
+          {
+            name: "Mino Marina",
+            description: "hello world",
+            avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+          }
+        }
+        onSave={onSubmitAppreciationForm}
+        onCancel={() => {
+          setState(prevState => ({
+            ...prevState,
+            openAprreciationModal: !state.openAprreciationModal,
+          }));
+        }}
+      />
     </div>
   )
 }
