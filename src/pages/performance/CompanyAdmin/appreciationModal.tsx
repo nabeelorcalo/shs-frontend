@@ -74,7 +74,8 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
               type="default"
               onClick={onCancel}
               className="border-visible-btn mt-4"
-            />,
+            />
+            
             <Button
               label="Send"
               htmlType="submit"
