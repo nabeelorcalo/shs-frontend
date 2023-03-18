@@ -10,6 +10,7 @@ import '../style.scss';
 import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { AppreciationModal } from "./appreciationModal";
+import { WarnModal } from "./warnModel";
 
 const PerformanceHistory = () => {
   const columnNames = [
@@ -342,6 +343,14 @@ const PerformanceHistory = () => {
     }));
   }
 
+  const onSubmitWarningForm = (values: any) => {
+    console.log("Form Data: ", values);
+    setState(prevState => ({
+      ...prevState,
+      openWarnModal: !state.openWarnModal,
+    }));
+  }
+
   return (
     <div className="company-admin-performance-history">
       <PageHeader
@@ -460,6 +469,21 @@ const PerformanceHistory = () => {
           setState(prevState => ({
             ...prevState,
             openAprreciationModal: !state.openAprreciationModal,
+          }));
+        }}
+      />
+
+      <WarnModal
+        open={state.openWarnModal}
+        title="Alert"
+        initialValues={
+          { description: "hello world", }
+        }
+        onIssue={onSubmitWarningForm}
+        onCancel={() => {
+          setState(prevState => ({
+            ...prevState,
+            openWarnModal: !state.openWarnModal,
           }));
         }}
       />

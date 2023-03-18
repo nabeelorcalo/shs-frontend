@@ -191,6 +191,22 @@
   background-color: $teriary-light-bg-color !important;
 }
 
+.border-red-visible-btn{
+  width: 113px;
+  border-color: $secondary-bg-color;
+  color: $secondary-bg-color;
+}
+
+.bg-red-visible-btn{
+  width: 113px;
+  background-color: $secondary-bg-color;
+  color: white;
+}
+
+.bg-red-visible-btn:hover{
+  background-color: $secondary-light-bg-color !important;
+}
+
 // Performance modal
 .performance-modal{
   .ant-modal-title{
