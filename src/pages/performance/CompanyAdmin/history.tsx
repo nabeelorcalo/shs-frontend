@@ -447,6 +447,7 @@ const PerformanceHistory = () => {
 
       <AppreciationModal
         open={state.openAprreciationModal}
+        title="Appreciation Email"
         initialValues={
           {
             name: "Mino Marina",
