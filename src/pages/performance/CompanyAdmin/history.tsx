@@ -309,30 +309,14 @@ const PerformanceHistory = () => {
   }
 
   const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
-
-    switch (role) {
-      case 'Intern':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-      case 'CompanyAdmin':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-      default:
-        return <></>;
-    }
+    return (
+      <Link
+        className="bread-crumb"
+        to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+      >
+        Performance
+      </Link>
+    )
   }
 
   const onSubmitAppreciationForm = (values: any) => {

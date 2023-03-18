@@ -45,6 +45,7 @@ export const ROUTES_CONSTANTS: any = {
   TIMESHEET: "timesheet",
   TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
+  VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
   EVALUATION_FORM: "evaluation-form",
   EVALUATE: "evaluate",
   DOCUMENTS: "documents",
