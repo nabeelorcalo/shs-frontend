@@ -7,6 +7,7 @@ import {
 } from "antd";
 import { CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 import "./style.scss";
@@ -72,7 +73,7 @@ const LeavesAddPolicy: React.FC = () => {
     <div className="leaves-add-policy">
       <div className="flex items-center ">
         <Title level={3} className="mt-2">
-          Add Policy{" "}
+          Add Policy
         </Title>
         <span className="mx-2">
           <SettingHorizontalLine />

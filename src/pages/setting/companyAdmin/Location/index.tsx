@@ -9,8 +9,7 @@ import { NavLink } from "react-router-dom";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
-const { TextArea } = Input;
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 const { Title, Text } = Typography;
 
 let overview = [
@@ -44,7 +43,7 @@ const SettingLocation: React.FC = () => {
     <div className="setting-location">
         <div className="flex justify-between">
         <SearchBar size="middle" handleChange={handleChange} />
-        <NavLink to="/settings/location/add-location">
+        <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
           <Button
             size="middle"
             onClick={() => {}}

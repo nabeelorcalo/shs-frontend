@@ -67,7 +67,7 @@ const SettingPerformance: React.FC = () => {
                     key={index}
                     className="gutter-row"
                     xs={24}
-                    md={12}
+                    lg={12}
                     xxl={12}
                   >
                     {item.id !== id &&
@@ -84,7 +84,7 @@ const SettingPerformance: React.FC = () => {
                               IdHandler={IdHandler}
                             />
                           }
-                          style={{ width: "95%" }}
+                          style={{ width: "90%" }}
                           value={item.title}
                           placeholder="Select Address"
                           size="small"
@@ -147,7 +147,7 @@ const SettingPerformance: React.FC = () => {
                         onClick={() => {
                           sethideButton(!hideButton);
                         }}
-                      />{" "}
+                      />
                       <PerformanceClose
                         onClick={() => {
                           sethideButton(!hideButton);

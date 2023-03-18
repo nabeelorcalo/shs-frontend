@@ -18,7 +18,7 @@ import "./style.scss";
 import { NavLink } from "react-router-dom";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import { DropDown, Input, SearchBar } from "../../../../../components";
-import UploadDocument from "../../../../../components/UploadDocument";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 const { Title, Paragraph } = Typography;
@@ -68,10 +68,9 @@ const AddLocation: React.FC = () => {
 
   return (
     <div className="add-location">
-      {/*------------------------ Header----------------------------- */}
       <div className="flex items-center">
         <Title level={3} className="mt-2">
-          Add Location{" "}
+          Add Location
         </Title>
         <span className="mx-2">
           <SettingHorizontalLine />
@@ -123,7 +122,7 @@ const AddLocation: React.FC = () => {
           <Divider />
           {/*------------------------ Address----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row " xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Address
               </Title>
@@ -222,9 +221,11 @@ const AddLocation: React.FC = () => {
                   label ="Country"
                   required={false}
                     name="county"
+                   
                     rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown
+                     
                       name="Select"
                       options={["Pakistan", "India", "France"]}
                       setDateValue={() => { }}
@@ -336,9 +337,10 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary">
+          <NavLink to="/settings/location">  <Button danger size="middle" type="primary">
               Cencal
             </Button>
+            </NavLink>
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"

@@ -70,7 +70,7 @@ const SettingLeave = () => {
     <div className="setting-leaves">
       <div>
         <div className="flex justify-between">
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={handleChange} />
           <NavLink to="/settings/leaves/add-policy">
           <Button
             size="middle"
@@ -106,30 +106,6 @@ const SettingLeave = () => {
           );
         })}
       </Row>
-      {/* <PopUpModal
-        // cancelBtntxt="Cancel"
-        okBtntxt="Submit"
-        state={showEditModal}
-        setState={setShowEditModal}
-        title="Edit Category"
-        width={600}
-      >
-        <Form layout="vertical">
-          <Form.Item
-            name="locationName"
-            rules={[{ required: true, message: "Please Enter your username!" }]}
-          >
-            <div className="d-flex w-full pl-1">
-              <p className="py-2">Recurrence</p>
-              <Input placeholder="Title" className="input-style" />
-            </div>
-          </Form.Item>
-          <div className="mt-3 flex flex-col">
-            <label className="pb-2">Description</label>
-            <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
-          </div>
-        </Form>
-      </PopUpModal> */}
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

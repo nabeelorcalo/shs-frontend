@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "CompanyAdmin",
+  USER_ROLE: "Manager",
 };
 
 // Possibe string of roles:
@@ -90,6 +90,31 @@ export const ROUTES_CONSTANTS: any = {
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
+  SETTING_LOCATION:"location",
+  SETTING_DEPARTMENT:"department",
+  SETTING_LEAVES:"leaves",
+  SETTING_PERFORMANCE:"performance",
+  SETTING_TEMPLATE:"template",
+  SETTING_SHIFTS:"shifts",
+  SETTING_TIMESHEET:"timesheet",
+  SETTING_PAYROLL:"payroll",
+  ADD_LOCATION:"/settings/location/add-location",
+  LEAVES_ADD_POLICY:"/settings/leaves/add-policy",
+  TEMPLATE_OFFER_LETTER:"/settings/template/template-offer-letters",
+  TEMPLATE_CONTRACT:"/settings/template/contract",
+  TEMPLATE_REJECTION_LETTER:"/settings/template/rejection-letter",
+  TEMPLATE_CERTIFICATE_APPRECIATION:"/settings/template/certificate-of-appreciation",
+  TEMPLATE_CERTIFICATION_COMPLETION:"/settings/template/certificate-of-completion",
+  OFFER_LETTER_NEW_TEMPLATE: "/settings/template/offer-letters/new-template",
+  CONTRACT_NEW_TEMPLATE:"/settings/template/contract/new-template",
+  REJECTION_LETTER_NEW_TEMPLATE:"/settings/template/rejection-letter/new-template",
+  TCA_NEW_TEMPLATE:"/settings/template/certificate-of-appreciation/new-template",
+  TCC_NEW_TEMPLATE:"/settings/template/certificate-of-completion/new-template",
+  ADD_SHIFT:"/settings/shifts/add-shift",
+  PAYROLL_ADD_CATEGORY:"/settings/payroll/add-category"
+
+
+  
 };
 
 export const STATUS_CONSTANTS: any = {

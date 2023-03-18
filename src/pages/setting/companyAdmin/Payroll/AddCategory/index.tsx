@@ -107,7 +107,7 @@ const PayrollAddCategory = () => {
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
               <Title className="mt-0.5" level={4}>
-                Shift
+                Payroll Details
               </Title>
               <Paragraph>Enter shift details here</Paragraph>
             </Col>

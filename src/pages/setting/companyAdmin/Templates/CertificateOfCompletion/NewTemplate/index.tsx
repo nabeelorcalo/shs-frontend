@@ -99,7 +99,7 @@ const NewTemplateCertiticationOfCompletion = () => {
               <label className="text-teriary-color">
                 Description (optional)
               </label>
-              <div className="text-input-bg-color rounded-lg  my-2">
+              <div className="text-input-bg-color rounded-lg text-editor my-2 ">
                 <ReactQuill
                   theme="snow"
                   value={value}
@@ -151,7 +151,6 @@ const NewTemplateCertiticationOfCompletion = () => {
                           : FirstBorderHandler
                       }
                     >
-                     
                       Template 1
                     </p>
                   </div>
@@ -159,7 +158,6 @@ const NewTemplateCertiticationOfCompletion = () => {
                 <Col className="gutter relative" xs={24} xl={12}>
                   <div
                     style={{ border: `2px solid ${borderColorSecond.color}` }}
-                   
                     className="cursor-pointer certificate-card "
                   >
                     {borderColorSecond.toggle && (
@@ -188,7 +186,6 @@ const NewTemplateCertiticationOfCompletion = () => {
                           : SecondBorderHandler
                       }
                     >
-                      {" "}
                       Template 2
                     </p>
                   </div>

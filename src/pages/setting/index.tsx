@@ -12,16 +12,7 @@ const { Title } = Typography;
 const Setting = (props: any) => {
   return (
     <div className="setting">
-      {/* <div className="flex items-center ">
-        <Title className="mt-3" level={3}>{props.title} </Title>
-        <span className="mx-2 ">
-          <SettingHorizontalLine />
-        </span>
-        <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-      </div> */}
-      
+  
      <PageHeader title={<div> {props.title}  {<SettingHorizontalLine className=""/>} Setting </div>} />
       <Divider className="my-1 mb-3" />
       <Row gutter={16} className="mt-5">

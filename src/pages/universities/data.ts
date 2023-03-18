@@ -4,7 +4,7 @@ import  UniversitiesTableFlag  from "../../assets/images/universities/flag.svg";
 export const UniversitesTableData =  [
     {
       no: '01',
-      // logo:UniversitiesTableFlag,
+      logo:UniversitiesTableFlag,
       universityName: 'University of Lincoln',
       universityRep: 'Mino Marina',
       email: 'enquiries@linclon.ac.uk',

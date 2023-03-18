@@ -309,6 +309,15 @@ export { ReactComponent as Intro } from './Intro.svg';
 export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
+//Grievances
+export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg';
+export { ReactComponent as InProgressGrievances } from './Grievances/in-progress-grievances.svg';
+export { ReactComponent as NewGrievances } from './Grievances/new-grievances.svg';
+export { ReactComponent as ResolevedGrievances } from './Grievances/resoleved-grievances.svg';
+export { ReactComponent as Clock24h  } from './Grievances/clock-24h.svg';
+export { ReactComponent as ClockGrievances  } from './Grievances/clock.svg';
+export { ReactComponent as LineGrievances  } from './Grievances/line.svg';
+export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
 
 
 
