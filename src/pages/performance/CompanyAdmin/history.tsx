@@ -17,45 +17,92 @@ const PerformanceHistory = () => {
     {
       title: 'No.',
       key: 'no',
-      dataIndex: 'no',
+      render: (_: any, data: any) => (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+        >
+          {data.no}
+        </Link >
+      ),
     },
     {
       title: 'Avatar',
       key: 'avatar',
       render: (_: any, data: any) => (
         <Space size="middle">
-          <Avatar
-            size={32}
-            alt="avatar"
-            src={<img src={data.src} />}
-          />
+          <Link
+            className="bread-crumb"
+            to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          >
+            <Avatar
+              size={32}
+              alt="avatar"
+              src={<img src={data.src} />}
+            />
+          </Link>
         </Space>
       ),
     },
     {
       title: 'Name',
       key: 'name',
-      dataIndex: 'name',
+      render: (_: any, data: any) => (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+        >
+          {data.name}
+        </Link >
+      ),
     },
     {
       title: 'Department',
       key: 'department',
-      dataIndex: 'department',
+      render: (_: any, data: any) => (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+        >
+          {data.department}
+        </Link >
+      ),
     },
     {
       title: 'Last Evaluation',
       key: 'date',
-      dataIndex: 'date',
+      render: (_: any, data: any) => (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+        >
+          {data.date}
+        </Link >
+      ),
     },
     {
       title: 'Evaluated By',
       key: 'evaluatedBy',
-      dataIndex: 'evaluatedBy',
+      render: (_: any, data: any) => (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+        >
+          {data.evaluatedBy}
+        </Link >
+      ),
     },
     {
       title: 'Total Evaluations',
       key: 'totalEvaluations',
-      dataIndex: 'totalEvaluations',
+      render: (_: any, data: any) => (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+        >
+          {data.totalEvaluations}
+        </Link >
+      ),
     },
     {
       title: 'Overall Performance',
@@ -63,16 +110,21 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => {
         return (
           <Space size="middle">
-            <Progress
-              size={[200, 13]}
-              percent={data.performance}
-              strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
-              format={(percent: any) =>
-                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
-                  {percent}%
-                </p>
-              }
-            />
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+            >
+              <Progress
+                size={[200, 13]}
+                percent={data.performance}
+                strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
+                format={(percent: any) =>
+                  <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                    {percent}%
+                  </p>
+                }
+              />
+            </Link >
           </Space>
         )
       },
@@ -308,17 +360,6 @@ const PerformanceHistory = () => {
     alert('Reset Filter')
   }
 
-  const breadCrumbs = () => {
-    return (
-      <Link
-        className="bread-crumb"
-        to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-      >
-        Performance
-      </Link>
-    )
-  }
-
   const onSubmitAppreciationForm = (values: any) => {
     console.log("Form Data: ", values);
     setState(prevState => ({
@@ -333,6 +374,17 @@ const PerformanceHistory = () => {
       ...prevState,
       openWarnModal: !state.openWarnModal,
     }));
+  }
+
+  const breadCrumbs = () => {
+    return (
+      <Link
+        className="bread-crumb"
+        to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+      >
+        Performance
+      </Link>
+    )
   }
 
   return (
