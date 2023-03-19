@@ -6,10 +6,12 @@ import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader } from "../../..
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import Table from "../../../components/Table/Table";
 // end
-import data from './data';
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { MoreIcon } from "../../../assets/images";
+import { ColorLessMedalIcon, MoreIcon } from "../../../assets/images";
+import { AppreciationModal } from "./appreciationModal";
+import { WarnModal } from "./warnModel";
 import '../style.scss';
+import data from './data';
 
 const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
@@ -119,23 +121,75 @@ const DetailHistory = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: <Link
-        className="bread-crumb"
-        to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
-      >
-        View
-      </Link>,
+      label:
+        < Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
+        >
+          View Details
+        </Link >,
       key: '0',
     },
     {
-      label: <p
-        onClick={() => setActionType({ ...actionType, type: 'download' })}
-      >
-        Download
-      </p>,
+      label:
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`}
+        >
+          Evaluate
+        </Link >,
       key: '1',
-    }
+    },
+    {
+      label:
+        <p
+          onClick={() => {
+            setState(prevState => ({
+              ...prevState,
+              openAprreciationModal: !state.openAprreciationModal,
+            }));
+          }}
+        >
+          Appreciate
+        </p>,
+      key: '2',
+    },
+    {
+      label:
+        <p
+          onClick={() => {
+            setState(prevState => ({
+              ...prevState,
+              openWarnModal: !state.openWarnModal,
+            }));
+          }}
+        >
+          Warn
+        </p>,
+      key: '3',
+    },
   ];
+
+  const [state, setState] = useState({
+    openAprreciationModal: false,
+    openWarnModal: false,
+  });
+
+  const onSubmitAppreciationForm = (values: any) => {
+    console.log("Form Data: ", values);
+    setState(prevState => ({
+      ...prevState,
+      openAprreciationModal: !state.openAprreciationModal,
+    }));
+  }
+
+  const onSubmitWarningForm = (values: any) => {
+    console.log("Form Data: ", values);
+    setState(prevState => ({
+      ...prevState,
+      openWarnModal: !state.openWarnModal,
+    }));
+  }
 
   const breadCrumbs = () => {
     const role = constants.USER_ROLE;
@@ -189,14 +243,31 @@ const DetailHistory = () => {
 
       <div className="company-admin-detail-history-container gap-4">
         <div className="performance-left-subcontainer ">
-          <BoxWrapper>
+          <BoxWrapper className="flex flex-col">
             <TopPerformanceCard
               id={1}
               name="Maria Sanoid"
+              nameClassName="text-2xl text-primary-color"
               profession="UI UX Designer"
-              percentage="95%"
+              className="bg-visible-btn evaluate-btn"
+              icon={<ColorLessMedalIcon />}
+              btnTxt='Evaluate'
+              size={64}
+              url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
               avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
             />
+
+            <p className="mt-4">Overall</p>
+            <Progress className="flex" percent={81} strokeColor="#4783FF" />
+
+            <p>Learning Objectives</p>
+            <Progress className="flex" percent={85} strokeColor="#A1D8EA" />
+
+            <p>Discipline</p>
+            <Progress className="flex" percent={75} strokeColor="#F08D97" />
+
+            <p>Personal</p>
+            <Progress className="flex" percent={68} strokeColor="#78DAAC" />
           </BoxWrapper>
 
           <div className="my-4 h-[502px]">
@@ -222,6 +293,40 @@ const DetailHistory = () => {
           </BoxWrapper>
         </div>
       </div>
+
+      <AppreciationModal
+        open={state.openAprreciationModal}
+        title="Appreciation Email"
+        initialValues={
+          {
+            name: "Mino Marina",
+            description: "hello world",
+            avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+          }
+        }
+        onSave={onSubmitAppreciationForm}
+        onCancel={() => {
+          setState(prevState => ({
+            ...prevState,
+            openAprreciationModal: !state.openAprreciationModal,
+          }));
+        }}
+      />
+
+      <WarnModal
+        open={state.openWarnModal}
+        title="Alert"
+        initialValues={
+          { description: "hello world", }
+        }
+        onIssue={onSubmitWarningForm}
+        onCancel={() => {
+          setState(prevState => ({
+            ...prevState,
+            openWarnModal: !state.openWarnModal,
+          }));
+        }}
+      />
     </>
   )
 }

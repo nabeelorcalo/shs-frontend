@@ -128,6 +128,7 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
             return <TopPerformanceCard
               avatar={item.avatar}
               name={item.name}
+              nameClassName="text-sm text-primary-color"
               profession={item.profession}
               percentage={item.percentage}
             />

@@ -156,7 +156,7 @@
     border: 2px solid #A0A3BD;
   }
 
-  .filter-button{
+  .filter-button {
     height: 37px;
   }
 
@@ -164,61 +164,61 @@
     outline: none;
   }
 
-  .performace-history-list{
+  .performace-history-list {
     margin: 20px 0;
   }
 }
 
 // Sidebar
-.sidebar-label{
+.sidebar-label {
   color: $text-teriary-label-color;
   font-weight: 400;
 }
 
-.border-visible-btn{
+.border-visible-btn {
   width: 113px;
   border-color: $teriary-bg-color;
   color: $teriary-bg-color;
 }
 
-.bg-visible-btn{
+.bg-visible-btn {
   width: 113px;
   background-color: $teriary-bg-color;
   color: white;
 }
 
-.bg-visible-btn:hover{
+.bg-visible-btn:hover {
   background-color: $teriary-light-bg-color !important;
 }
 
-.border-red-visible-btn{
+.border-red-visible-btn {
   width: 113px;
   border-color: $secondary-bg-color;
   color: $secondary-bg-color;
 }
 
-.bg-red-visible-btn{
+.bg-red-visible-btn {
   width: 113px;
   background-color: $secondary-bg-color;
   color: white;
 }
 
-.bg-red-visible-btn:hover{
+.bg-red-visible-btn:hover {
   background-color: $secondary-light-bg-color !important;
 }
 
 // Performance modal
-.performance-modal{
-  .ant-modal-title{
+.performance-modal {
+  .ant-modal-title {
     font-size: 20px;
     font-weight: 500;
   }
 
-  .ant-form-item-control-input{
+  .ant-form-item-control-input {
     min-height: 0;
   }
 
-  .ant-form-item{
+  .ant-form-item {
     margin-bottom: 18px;
   }
 }
@@ -237,31 +237,25 @@
     width: 49%;
   }
 
-  .overall-performance-txt {
-    margin-bottom: 16px;
-  }
-
-  .icon-btn {
+  .evaluate-btn {
+    height: 48px;
+    width: 148px;
+    margin-left: auto;
+    border-radius: 8px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    min-width: 0;
-    height: fit-content;
-    width: 20px;
-    border: 1px solid $text-error-line-color;
-    border-radius: 0;
-    height: 28px;
-    width: 28px;
+    align-items: center;
+    gap: 4px;
   }
 
-  .left-radius {
-    border-radius: 4px 0 0 4px;
+  .evaluate-btn:hover {
+    color: $white-bg-color;
   }
 
-  .right-radius {
-    border-radius: 0 4px 4px 0;
+  .ant-progress-text{
+    // font-size: 16px;
+    padding: 0 0 0 6px;
+    margin: auto;
+    color: $text-secondary-body-color;
   }
 }

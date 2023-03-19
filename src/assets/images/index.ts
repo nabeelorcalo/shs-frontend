@@ -317,6 +317,7 @@ export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
 // Performance
 export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
+export { ReactComponent as ColorLessMedalIcon } from './Performance/ColorlessMedalIcon.svg';
 
 // Common Icons
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
