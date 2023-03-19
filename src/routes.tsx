@@ -67,9 +67,7 @@ const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure")));
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
-const WithDrawalRequest = Loadable(
-  lazy(() => import("./pages/withdrawalRequest"))
-);
+const WithDrawalRequest = Loadable(lazy(() => import("./pages/withdrawalRequest")));
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
 const Universities = Loadable(lazy(() => import("./pages/universities")));
@@ -87,25 +85,14 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(
-  lazy(() => import("./pages/accommodation/AvailableProperties"))
-);
-const SavedSearches = Loadable(
-  lazy(() => import("./pages/accommodation/SavedSearches"))
-);
-const RentedProperties = Loadable(
-  lazy(() => import("./pages/accommodation/RentedProperties"))
-);
-const BookingRequests = Loadable(
-  lazy(() => import("./pages/accommodation/BookingRequests"))
-);
-const AccommodationPayments = Loadable(
-  lazy(() => import("./pages/accommodation/Payments"))
-);
-const AccPropertyDetail = Loadable(
-  lazy(() => import("./pages/accommodation/PropertyDetail"))
-);
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
+const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
+const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
+const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
+const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
+const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
+const RecipeDetails = Loadable(lazy(() => import("./pages/recipes/RecipeDetails")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const Report = Loadable(lazy(() => import("./pages/report")));
@@ -117,9 +104,7 @@ const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
-const Charts = Loadable(
-  lazy(() => import("./components/ChartsOfGraphs/Charts"))
-);
+const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
@@ -763,7 +748,7 @@ const internRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
       },
     ],
@@ -876,13 +861,18 @@ const studentRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,
         path: `${ROUTES_CONSTANTS.RECIPES}`,
         element: <Recipes />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        element: <RecipeDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,

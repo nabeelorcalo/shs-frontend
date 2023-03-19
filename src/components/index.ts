@@ -17,7 +17,6 @@ export * from './UploadDocument'
 export * from './LeaveCard/index';
 export * from './AccommodationCard/AccommodationCard';
 export * from './AssessmentCard/AssessmentCard';
-// export * from './LeaveCard/leaveCard';
 export * from "./ChartsOfGraphs/dashboard-chart/DashboardCharts"
 export * from "./ChartsOfGraphs/monthly-perfomance-chart/MonthlyPerfomanceChart"
 export * from "./ChartsOfGraphs/overAll-perfomance-charts/OverAllPerfomance"
@@ -41,3 +40,4 @@ export * from './ContentMenu'
 export * from './Model'
 export * from './ExtendedButton'
 export * from './FiltersButton'
+export * from './RecipeCard'

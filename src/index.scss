@@ -93,6 +93,11 @@ svg {
   background-color: $teriary-bg-color;
   border-color: $teriary-bg-color;
   color: #ffffff;
+
+  & > svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
   &:hover {
     background-color: $teriary-bg-color;
     border-color: $teriary-bg-color;
@@ -439,5 +444,23 @@ svg {
   }
   &.pending {
     background-color: $text-warning-color;
+  }
+}
+
+// Page Filterbar
+.page-filterbar {
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+
+  .page-filterbar-left {
+    flex: 1;
+    .searchbar-wrapper {
+      max-width: 375px;
+    }
+  }
+
+  .page-filterbar-right {
+    
   }
 }

@@ -286,7 +286,12 @@ export { ReactComponent as Intro } from './Intro.svg';
 export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
-
+// Recipes Icons
+export { ReactComponent as IconAddRecipe } from './recipes/icon-add-recipe.svg';
+export { ReactComponent as IconPreparationTime } from './recipes/icon-preparation-time.svg';
+export { ReactComponent as IconServing } from './recipes/icon-serving.svg';
+export { ReactComponent as IconEditRecipe } from './recipes/icon-edit.svg';
+export { ReactComponent as IconTrashRecipe } from './recipes/icon-trash.svg';
 
 
 
