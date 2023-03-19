@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { DepartmentAddIcon, LocationMore } from "../../../../assets/images";
 import { Col, Row, Typography, Button, Form } from "antd";
-import "./style.scss";
 import { Input } from "antd";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../../components/Model";
-
+import "./style.scss";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -35,22 +34,17 @@ const SettingDepartment: React.FC = (props: any) => {
   const [form] = Form.useForm();
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
- 
-  const handleChange = (event: any) => {
 
-  };
+  const handleChange = (event: any) => { };
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
-    console.log(values);
-    
   };
 
   return (
     <div className="setting-department">
       <div className="flex justify-between">
         <SearchBar size="middle" handleChange={handleChange} />
-
         <Button
           size="middle"
           onClick={() => {
@@ -74,7 +68,6 @@ const SettingDepartment: React.FC = (props: any) => {
                         {data.content}
                       </Text>
                     </div>
-
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                         showEditModal={showEditModal}
@@ -117,13 +110,12 @@ const SettingDepartment: React.FC = (props: any) => {
             label="Description"
             name="description"
           >
-
             <TextArea rows={6} placeholder="Write Something..." maxLength={6}
               id="description"
               name="description"
               size="small"
               defaultValue=""
-              />
+            />
           </Form.Item>
           <div className="setting-department-footer flex justify-end mt-4 gap-2">
             <Button key="Cancel" className="footer-cancel-btn " onClick={() => { setShowEditModal(false) }}>

@@ -49,7 +49,7 @@ const NewTemplateCertificationOfAppreciation = () => {
       description: textEditorValue
     }
   };
-
+  
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
   };
@@ -58,7 +58,6 @@ const NewTemplateCertificationOfAppreciation = () => {
       color: "#3DC575",
       toggle: !borderColorSecond.toggle,
     });
-    console.log("ddd, ", borderColorSecond.toggle);
   };
   const NoBorderHandler = () => {
     setBorderColorfirst({ color: "#FFFFFF" });
@@ -91,14 +90,13 @@ const NewTemplateCertificationOfAppreciation = () => {
                 label="Template Name"
                 rules={[{ required: true, message: "Please Enter your username!" }]}
               >
-                <Input placeholder="Enter name" className="" />
+                <Input placeholder="Enter name" />
               </Form.Item>
               <Form.Item
                 required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ required: true, message: "Please Enter your username!" }]}
-              >
+                rules={[{ required: true, message: "Please Enter your username!" }]}  >
                 <Input placeholder="Enter subject" />
               </Form.Item>
               <Form.Item
@@ -154,7 +152,6 @@ const NewTemplateCertificationOfAppreciation = () => {
                           : FirstBorderHandler
                       }
                     >
-
                       Template 1
                     </p>
                   </div>
@@ -168,7 +165,6 @@ const NewTemplateCertificationOfAppreciation = () => {
                     {borderColorSecond.toggle && (
                       <CertificateTickCircle className="absolute certificate-tick-circle" />
                     )}
-
                     <div className="card-image-box ">
                       <span className="flex justify-center p-5 image">
                         <TemplateCertificateSmall className=" background-img" />

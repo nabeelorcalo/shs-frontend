@@ -31,7 +31,6 @@ const NewTemplateOfferLetter = () => {
       templateName :values.templateName,
       description:textEditorValue
     }
-    console.log("value" , formData)
   };
 
   return (

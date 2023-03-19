@@ -5,7 +5,6 @@ import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
 import "./style.scss";
-// import { Input, SearchBar } from "../../../../components";
 import {
   Typography,
   Row,
@@ -15,15 +14,13 @@ import {
   Radio,
   TimePicker,
   RadioChangeEvent,
-  Select,
   Button,
   Space,
   Input,
   Switch,
 } from "antd";
-import { CommonDatePicker, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-const { TextArea } = Input;
+
 const { Title, Paragraph } = Typography;
 dayjs.extend(customParseFormat);
 
@@ -98,9 +95,7 @@ const AddShift: React.FC = () => {
         </span>
           </NavLink>
         </div>
-      
         <Divider className="my-1 mb-3" />
-
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
@@ -170,7 +165,6 @@ const AddShift: React.FC = () => {
               
             </Col>
           </Row>
-
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
               Cencal

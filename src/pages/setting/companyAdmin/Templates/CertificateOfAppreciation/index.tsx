@@ -5,7 +5,6 @@ import { Alert, SearchBar } from "../../../../../components";
 import { NavLink } from "react-router-dom";
 import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
-const { Title, Text } = Typography;
 
 let overview = [
   {
@@ -28,7 +27,7 @@ const TemplatesCertificateOfAppreciation = () => {
   const handleChange = () => {};
   return (
     <div className="template-contract">
-      <div>
+      <div className="header">
         <TemplateCommonBreadcrumb current="Certificate of Appreciation" />
         <Divider className="my-1 mb-3" />
         <div className="flex justify-between">
@@ -37,9 +36,9 @@ const TemplatesCertificateOfAppreciation = () => {
             <Button
               size="middle"
               onClick={() => {}}
-              className="flex gap-2 setting-add-button white-color teriary-bg-color"
-            >
-              <NewTemplate /> New Template
+              className="flex gap-2 setting-add-button white-color teriary-bg-color">
+              <NewTemplate />
+               New Template
             </Button>
           </NavLink>
         </div>

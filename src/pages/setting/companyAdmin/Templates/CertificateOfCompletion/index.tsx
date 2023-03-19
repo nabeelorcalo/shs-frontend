@@ -38,7 +38,8 @@ const TemplatesCertificateOfCompletion = () => {
               onClick={() => {}}
               className="flex gap-2 setting-add-button white-color teriary-bg-color"
             >
-              <NewTemplate /> New Template
+              <NewTemplate />
+               New Template
             </Button>
           </NavLink>
         </div>

@@ -12,7 +12,6 @@ import DropDownForPerformance from "./PerformanceDropdown";
 import "./style.scss";
 
 const { Panel } = Collapse;
-
 const inputData = [
   {
     id: 1,
@@ -103,9 +102,9 @@ const SettingPerformance: React.FC = () => {
                           <PerformanceTick
                             className="cursor-pointer"
                             onClick={() => {
-                              setId('')        
+                              setId('')
                             }}
-                           
+
                           />
                           <PerformanceClose
                             onClick={() => {
@@ -163,7 +162,8 @@ const SettingPerformance: React.FC = () => {
         </Collapse>
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ? <PerformanceMinus /> : <PerformancePlus />
+            isActive ? <PerformanceMinus />  : 
+            <PerformancePlus />
           }
           expandIconPosition="right"
           key={2}
@@ -175,7 +175,9 @@ const SettingPerformance: React.FC = () => {
         </Collapse>
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ? <PerformanceMinus /> : <PerformancePlus />
+            isActive ?
+              <PerformanceMinus /> :
+              <PerformancePlus />
           }
           expandIconPosition="right"
           key={3}

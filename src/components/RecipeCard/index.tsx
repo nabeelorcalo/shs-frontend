@@ -1,8 +1,7 @@
 import { Col, Rate, Row, Typography } from "antd";
 import {BoxWrapper} from "../BoxWrapper/BoxWrapper";
-import { Button } from "../Button";
 const { Paragraph } = Typography;
-import "./RecipeCard.scss";
+import "./style.scss";
 
 interface RecipeCardProps {
   image?: string;

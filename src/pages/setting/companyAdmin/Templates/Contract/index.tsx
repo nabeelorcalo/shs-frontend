@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
 import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";
 
-
 let overview = [
   {
     name: "Contract 01",

@@ -1,37 +1,40 @@
 import React, { useState } from "react";
-import { LocationMore } from "../../../../assets/images";
 import { Dropdown, Menu } from "antd";
+import { NavLink } from "react-router-dom";
+import { More } from "../../assets/images";
 
-const DropDownForPerformance = (props: any) => {
-  const { item, IdHandler } = props;
+const GrievanceDropdown = (props: any) => {
   const [visible, setVisible] = useState(false);
 
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
-
   return (
     <Dropdown
-      className="dropdown"
+      className="setting-custom-dropdown"
       overlay={
         <Menu>
           <Menu.Item key="1">
-            <span onClick={() => {IdHandler(item.id) , setVisible(false)}} >Edit</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <span onClick={() => {}}>Delete</span>
+            <NavLink
+              className="text-[#454545] hover:text-[#454545]"
+              to={props?.link}
+            >
+              View More
+            </NavLink>
           </Menu.Item>
         </Menu>
       }
+      placement="bottomRight"
       open={visible}
       onOpenChange={handleVisibleChange}
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>
-        <LocationMore width="24px" />
+        <More width="24px" />
       </div>
     </Dropdown>
   );
 };
 
-export default DropDownForPerformance;
+export default GrievanceDropdown;
+

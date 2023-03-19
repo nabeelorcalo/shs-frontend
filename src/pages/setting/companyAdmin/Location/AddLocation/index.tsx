@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Button,
-  Space,
+  Typography, Row, Col, Divider, Form,
+  Radio, RadioChangeEvent, Button, Space,
 } from "antd";
 import {
   SettingAvater,
@@ -18,7 +11,6 @@ import "./style.scss";
 import { NavLink } from "react-router-dom";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import { DropDown, Input, SearchBar } from "../../../../../components";
-import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 const { Title, Paragraph } = Typography;
@@ -218,14 +210,13 @@ const AddLocation: React.FC = () => {
                 </Form.Item>
                 <div className="w-full mt-1 ">
                   <Form.Item
-                  label ="Country"
-                  required={false}
+                    label="Country"
+                    required={false}
                     name="county"
-                   
+
                     rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown
-                     
                       name="Select"
                       options={["Pakistan", "India", "France"]}
                       setDateValue={() => { }}
@@ -252,24 +243,22 @@ const AddLocation: React.FC = () => {
               </span>
               <div className="flex">
                 <div className=" mt-1 ">
-                <Form.Item
-                
-                  required={false}
+                  <Form.Item
+
+                    required={false}
                     name="phoneCode"
                     rules={[{ required: true, message: "Please input post code!" }]}
                   >
-
-                  <DropDown
-                    name="+92"
-                    options={[
-                      '+92',
-                      '+93',
-                      '+94'
-                    ]}
-                  />
+                    <DropDown
+                      name="+92"
+                      options={[
+                        '+92',
+                        '+93',
+                        '+94'
+                      ]}
+                    />
                   </Form.Item>
                 </div>
-
                 <Form.Item
                   name="phoneNumber"
                   className="w-full md:pl-2"
@@ -288,7 +277,6 @@ const AddLocation: React.FC = () => {
                     size="small"
                     type="text"
                     handleChange={() => { }}
-
                   />
                 </Form.Item>
               </div>
@@ -337,7 +325,7 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-          <NavLink to="/settings/location">  <Button danger size="middle" type="primary">
+            <NavLink to="/settings/location">  <Button danger size="middle" type="primary">
               Cencal
             </Button>
             </NavLink>

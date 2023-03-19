@@ -48,7 +48,8 @@ const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/Grievances")));
-const AllGrievances = Loadable(lazy(() => import("./pages/Grievances/Manager/AddGrievance")));
+const AllGrievances = Loadable(lazy(() => import("./pages/Grievances/Manager/AllGrievance")));
+const GrievancesDetails = Loadable(lazy(() => import("./pages/Grievances/Manager/GrievanceDetails")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(
@@ -377,9 +378,14 @@ const managerRoutes = [
 
       },
       {
-        key: `add-grievance`,
-        path: "/grievances/add-grievance",
+        key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
+        path:`${ROUTES_CONSTANTS.ALL_GRIEVANCES}` ,
         element: <AllGrievances/>,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        path:`${ROUTES_CONSTANTS.GRIEVANCES_Details}` ,
+        element: <GrievancesDetails/>,
       },
       {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
@@ -610,16 +616,15 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,
         path: `${ROUTES_CONSTANTS.SETTING}`,
-        // element: <Setting />,
         children: [
           {
-            key: `location`,
+            key:`${ROUTES_CONSTANTS.SETTING_LOCATION}`,
+            path: `${ROUTES_CONSTANTS.SETTING_LOCATION}`,
             element: (
               <Setting title="Location">
-                <SettingLocation />{" "}
+                <SettingLocation />
               </Setting>
             ),
-            path: "location",
             index: true,
           },
           {

@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { Col, Row, Typography, Space, Input, Button } from "antd";
-import {
-  Settinglocation,
-  LocationPeople,
-  CardLocation,
-} from "../../../../assets/images";
+import {  Settinglocation,  LocationPeople,  CardLocation,} from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
@@ -71,7 +67,6 @@ const SettingLocation: React.FC = () => {
                         </Text>
                       </Space>
                     </div>
-
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                       link={"/settings/location/add-location"}
@@ -86,7 +81,6 @@ const SettingLocation: React.FC = () => {
           );
         })}
       </Row>
-
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

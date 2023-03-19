@@ -318,6 +318,9 @@ export { ReactComponent as Clock24h  } from './Grievances/clock-24h.svg';
 export { ReactComponent as ClockGrievances  } from './Grievances/clock.svg';
 export { ReactComponent as LineGrievances  } from './Grievances/line.svg';
 export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
+export { ReactComponent as GrievancesDocPDF  } from './Grievances/document-pdf.svg';
+export { ReactComponent as GrievancesDocJPG  } from './Grievances/document-jpg.svg';
+export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-download.svg';
 
 
 

@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Manager",
+  USER_ROLE: "CompanyAdmin",
 };
 
 // Possibe string of roles:
@@ -111,10 +111,9 @@ export const ROUTES_CONSTANTS: any = {
   TCA_NEW_TEMPLATE:"/settings/template/certificate-of-appreciation/new-template",
   TCC_NEW_TEMPLATE:"/settings/template/certificate-of-completion/new-template",
   ADD_SHIFT:"/settings/shifts/add-shift",
-  PAYROLL_ADD_CATEGORY:"/settings/payroll/add-category"
-
-
-  
+  PAYROLL_ADD_CATEGORY:"/settings/payroll/add-category",
+  ALL_GRIEVANCES:"/grievances/all-grievance",
+  GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
 };
 
 export const STATUS_CONSTANTS: any = {

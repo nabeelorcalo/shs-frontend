@@ -15,7 +15,10 @@ const index = () => {
   return (
     <div className='add-grievance'>
       <div className='header'>
-        <PageHeader title={<> All Grievances {<SettingHorizontalLine className="" />} <span className='text-base font-medium'>Grievances</span> </>} />
+        <PageHeader title={<> All Grievances {<SettingHorizontalLine className="mx-1" />}
+          <NavLink to="/grievances">
+            <span className='text-base font-medium dashboard-primary-color' >Grievances</span>
+          </NavLink>  </>} />
         <Divider className="my-1 mb-2" />
       </div>
       <div className="flex justify-between">
@@ -54,7 +57,7 @@ const index = () => {
               label: 'Escalated To Me'
             },
             {
-              children: <EscalatedByMe/>,
+              children: <EscalatedByMe />,
               key: '2',
               label: 'Escalated By Me'
             },

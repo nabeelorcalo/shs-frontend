@@ -1,9 +1,9 @@
 import React from 'react'
 import GlobalTable from '../../../../components/Table/Table'
-import CustomDroupDown from '../../../digiVault/Student/dropDownCustom'
 import {Space} from 'antd'
+import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
 
-const menu2:any = []
 const UniversitesTableData =  [
     {
       no: '01',
@@ -105,9 +105,8 @@ const UniversitesTableData =  [
       render: (_: any, data: any) => (
         
         <Space size="middle">
-          <CustomDroupDown menu1={menu2} />
+          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_Details} />
         </Space>
-     
       ),
     },
   ]
@@ -117,7 +116,6 @@ const EscalatedByMe = () => {
     columns={UniversitesTablecolumn}
     pagination
     tableData={UniversitesTableData}
-   
   />
   )
 }

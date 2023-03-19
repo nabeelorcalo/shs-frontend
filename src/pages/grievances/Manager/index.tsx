@@ -53,7 +53,7 @@ const index = () => {
       <div>
         <div className="flex justify-between">
           <PageHeader title="Grievances" />
-          <NavLink to="/grievances/add-grievance">
+          <NavLink to="/grievances/all-grievance">
             <Button className='teriary-color header-btn'>All Grievences</Button>
           </NavLink>
         </div>
