@@ -17,7 +17,18 @@ interface TopPerformanceProps {
 }
 
 export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
-  const { avatar, name, nameClassName, size = 32, profession, percentage, className, url, icon, btnTxt } = props;
+  const { 
+    avatar,
+    name,
+    nameClassName,
+    size = 32,
+    profession,
+    percentage,
+    className,
+    url,
+    icon,
+    btnTxt
+  } = props;
 
   return (
     <div className='flex flex-col top-performance-card-container'>
