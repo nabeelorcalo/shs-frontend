@@ -10,9 +10,8 @@ const Leaves = () => {
   const rederWthRole: any = {
     'CompanyAdmin': <CompanyAdmin />,
     'Intern': <Internee />,
-    'Manager': <Manger />,
+    'Manager': <Manger userRole={constants.USER_ROLE} />,
   }
-
   return (
     <>
       {rederWthRole[constants.USER_ROLE]}

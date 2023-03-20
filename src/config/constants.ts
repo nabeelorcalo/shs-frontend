@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Manager",
+  USER_ROLE: "Intern",
 };
 
 // Possibe string of roles:

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form, Select,} from "antd";
-import { Button } from '../../components';
-
+import { Button } from '../../../components';
 const FilterDrawerForm = (props:any) => {
     const {onFinish,onFinishFailed,handleChange,HandleCancel,Handlesubmit}= props;
     return (
@@ -38,13 +37,15 @@ const FilterDrawerForm = (props:any) => {
                         name="time frame"
                     >
                         <Select
-                            defaultValue="lucy"
+                            defaultValue="this week"
                             onChange={handleChange}
                             size="large"
                             options={[
-                                { value: 'jack', label: 'Jack' },
-                                { value: 'lucy', label: 'Lucy' },
-                                { value: 'Yiminghe', label: 'yiminghe' },
+                                { value: 'this week', label: 'This Week' },
+                                { value: 'last week', label: 'Last Week' },
+                                { value: 'this month', label: 'This Month' },
+                                { value: 'Last Month', label: 'Last Month' },
+                                { value: 'Date Range', label: 'Date Range' },
                             ]}
                         />
                     </Form.Item>
