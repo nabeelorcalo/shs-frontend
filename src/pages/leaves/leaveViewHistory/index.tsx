@@ -184,7 +184,7 @@ const index = () => {
                 value=""
               />
             </div>
-            {constants.USER_ROLE !== 'Manager' && <Button
+            {constants.USER_ROLE === 'Intern' && <Button
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
               onClick={() => setOpenModal({ open: true, type: "addLeav" })}
