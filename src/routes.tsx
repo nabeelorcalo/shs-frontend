@@ -115,9 +115,9 @@ const SettingTimesheet = Loadable(lazy(() => import("./pages/setting/companyAdmi
 const SettingPayroll = Loadable(lazy(() => import("./pages/setting/companyAdmin/Payroll")));
 const PayrollAddCategory = Loadable(lazy(() => import("./pages/setting/companyAdmin/Payroll/AddCategory")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
-const PerformanceEvaluationForm = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
-const EvaluatePerformance = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/editEvaluation")));
-const ViewPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/detailHistory")));
+const ViewPerformance = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
+const EditPerformance = Loadable(lazy(() => import("./pages/performance/editEvaluation")));
+const PerformanceDetail = Loadable(lazy(() => import("./pages/performance/detailHistory")));
 const CompanyAdminPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/history")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
@@ -271,6 +271,21 @@ const managerRoutes = [
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        path:`${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        element: <PerformanceDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        path:  `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        element: <EditPerformance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <ViewPerformance />,
       },
       {
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
@@ -687,19 +702,19 @@ const companyAdminRoutes = [
         element: <CompanyAdminPerformanceHistory />
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`,
-        path: `${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`,
-        element: <ViewPerformanceHistory />
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        path:`${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        element: <PerformanceDetail />
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        element: <PerformanceEvaluationForm />,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <ViewPerformance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`,
-        element: <EvaluatePerformance />,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        element: <EditPerformance />,
       },
       {
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
@@ -779,7 +794,7 @@ const internRoutes = [
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        element: <PerformanceEvaluationForm />,
+        element: <ViewPerformance />,
       },
       {
         key: `${ROUTES_CONSTANTS.STRUCTURE}`,

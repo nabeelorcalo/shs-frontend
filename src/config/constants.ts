@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Manager",
+  USER_ROLE: "CompanyAdmin",
 };
 
 // Possibe string of roles:
@@ -46,6 +46,7 @@ export const ROUTES_CONSTANTS: any = {
   TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
   VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
+  DETAIL: "detail",
   EVALUATION_FORM: "evaluation-form",
   EVALUATE: "evaluate",
   DOCUMENTS: "documents",
