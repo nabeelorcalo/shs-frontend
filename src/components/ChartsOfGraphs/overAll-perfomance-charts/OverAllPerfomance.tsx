@@ -1,15 +1,19 @@
 import { Col, Progress, Row } from 'antd';
-import {BoxWrapper} from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
 import "./OverAllPerfomance.scss"
 
 export const OverAllPerfomance = (props: any) => {
-  const { trailColor = "#E6F4F9", strokeWidth = 10, width = 140, type = "circle", data, heading } = props
+  const { lg, md, sm, xs, trailColor = "#E6F4F9", strokeWidth = 10, width = 140, type = "circle", data, heading } = props
   return (
     <BoxWrapper>
-      {heading && <p className='mb-14 font-medium text-xl text-secondary-color'>{heading}</p>}
+      {
+        heading && <p className='mb-14 font-medium text-xl text-secondary-color overall-performance-txt'>
+          {heading}
+        </p>
+      }
       <Row className='gap-5 justify-between'>
         {data.map((item: any, i: any) => (
-          <Col key={i} lg={5} md={12} sm={24} xs={24} className="text-center">
+          <Col key={i} lg={lg} md={md} sm={sm} xs={xs} className="text-center">
             <Progress trailColor={trailColor}
               strokeWidth={strokeWidth} width={width}
               type={type} percent={item.percent}

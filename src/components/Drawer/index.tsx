@@ -8,12 +8,12 @@ interface DrawerProps {
   placement?: "right" | "left"
   open: boolean
   onClose: () => void
-  children:React.ReactNode
+  children: React.ReactNode
   width?: number | string
   closable?: boolean
 }
 
-const Drawer: FC<DrawerProps> = ({ title, placement="right", open, onClose, children, width="380", closable=true }) => {
+const Drawer: any = ({ title, placement="right", open, onClose, children, width="380", closable=true }: any) => {
   return (
     <AntDrawer
       title={title}

@@ -1,31 +1,33 @@
 import { useState, useEffect } from "react";
-import { Dropdown, MenuProps, Space, Avatar, Progress } from 'antd';
+import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from 'antd';
 // import all reusable componets from component/index.ts
-import { OverAllPerfomance, MonthlyPerfomanceChart } from "../../../components";
-import Table from "../../../components/Table/Table";
-import PageHeader from "../../../components/PageHeader";
+import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader } from "../../../components";
+import Table from "../../../components/Table";
 // end
 import { MoreIcon } from "../../../assets/images";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { Link } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const InternPerformance = () => {
   const performanceData = [
     {
-      percent1: '85',
+      percent: '85',
       strokeColor: '#4783FF',
       title: 'Overall'
     },
     {
-      percent1: '85',
+      percent: '85',
       strokeColor: '#9BD5E8',
       title: 'Learning'
     },
     {
-      percent1: '75',
+      percent: '75',
       strokeColor: '#F08D97',
       title: 'Discipline'
     },
     {
-      percent1: '68',
+      percent: '68',
       strokeColor: '#78DAAC',
       title: 'Personal'
     }
@@ -60,6 +62,11 @@ const InternPerformance = () => {
               size={[200, 13]}
               percent={data.performance}
               strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
+              format={(percent: any) =>
+                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                  {percent}%
+                </p>
+              }
             />
           </Space>
         )
@@ -213,14 +220,12 @@ const InternPerformance = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: <p
-        onClick={() => {
-          setActionType({ ...actionType, type: 'view' });
-          setOpenDrawer({ type: 'view', open: true })
-        }}
+      label: <Link
+        className="bread-crumb"
+        to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
       >
         View
-      </p>,
+      </Link>,
       key: '0',
     },
     {
@@ -257,11 +262,16 @@ const InternPerformance = () => {
         </div>
 
         <div className="performance-right-subcontainer">
-          <Table
-            columns={evaluationHistoryColumnNames}
-            tableData={evaluationHistoryData}
-            pagination={false}
-          />
+          <BoxWrapper >
+            <Typography.Title level={4} >
+              Evaluation  History
+            </Typography.Title>
+            <Table
+              columns={evaluationHistoryColumnNames}
+              tableData={evaluationHistoryData}
+              pagination={false}
+            />
+          </BoxWrapper>
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import React, { useState } from "react";
-import GlobalTable from "../../../components/Table/Table";
+import {GlobalTable} from "../../../components";
 import { Button, Col, Row, Typography } from "antd";
 import { DropDown } from "../../../components";
 

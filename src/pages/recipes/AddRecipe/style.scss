@@ -1,0 +1,30 @@
+@import "../../../scss/colors";
+.add-new-recipe {
+  .shs-page-header {
+    .ant-typography {
+      span {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: $text-secondary-body-color;
+        padding-left: 10px;
+        margin-left: 10px;
+        position: relative;
+
+        &::before {
+          content: '';
+          height: 32px;
+          width: 1px;
+          background-color: $primary-bg-color;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          margin-top: -16px;
+        }
+      }
+    }
+  }
+}
+
+

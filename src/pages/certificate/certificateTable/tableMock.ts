@@ -37,9 +37,9 @@ export const tableMockData = [
             }
         ],
         certificates: [
-            { id: '1', certificateType: 'completion', certificateImg: CertificateImg },
-            { id: '2', certificateType: 'appreciation', certificateImg: CertificateImg },
-            { id: '3', certificateType: 'completion', certificateImg: CertificateImg },
+            { id: '1', certificateType: 'completion', certificateImg: CertificateImg, desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.' },
+            { id: '2', certificateType: 'appreciation', certificateImg: CertificateImg, desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.' },
+            { id: '3', certificateType: 'completion', certificateImg: CertificateImg, desc: "some descrioption" },
         ]
     },
     {
@@ -78,7 +78,7 @@ export const tableMockData = [
             }
         ],
         certificates: [
-            { id: '1', certificateType: 'completion', certificateImg: CertificateImg },
+            { id: '1', certificateType: 'completion', certificateImg: CertificateImg, desc: "some descrioption" },
         ]
     },
     {
@@ -117,8 +117,8 @@ export const tableMockData = [
             }
         ],
         certificates: [
-            { id: '1', certificateType: 'completion', certificateImg: CertificateImg },
-            { id: '2', certificateType: 'appreciation', certificateImg: CertificateImg },
+            { id: '1', certificateType: 'completion', certificateImg: CertificateImg, desc: "some descrioption" },
+            { id: '2', certificateType: 'appreciation', certificateImg: CertificateImg, desc: "some descrioption" },
         ]
     },
     {

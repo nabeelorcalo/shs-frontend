@@ -20,7 +20,7 @@ const PropertyOverview = () => {
         </div>
       </div>
 
-      <div className="overview-content">
+      <div className="overview-content amenities">
         <div className="overview-amenities">
           <div className="overview-section-label">Amenities</div>
           <ul className="overview-list amenities-list">

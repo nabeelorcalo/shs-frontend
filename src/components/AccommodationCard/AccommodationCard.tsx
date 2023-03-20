@@ -20,7 +20,7 @@ interface Props {
     handleChatClick?: () => void;
 }
 
-const AccommodationCard = (props: Props) => {
+export const AccommodationCard = (props: Props) => {
     const { maxWidth,
         coverPhoto,
         id,
@@ -94,5 +94,3 @@ const AccommodationCard = (props: Props) => {
 
     )
 }
-
-export default AccommodationCard

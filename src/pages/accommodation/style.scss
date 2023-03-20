@@ -1,20 +1,3 @@
-.page-filterbar {
-  margin-bottom: 50px;
-  display: flex;
-  align-items: center;
-
-  .page-filterbar-left {
-    flex: 1;
-    .searchbar-wrapper {
-      max-width: 375px;
-    }
-  }
-
-  .page-filterbar-right {
-    
-  }
-}
-
 .shs-filter-form {
   .shs-form-group {
     .form-group-title {
@@ -24,5 +7,28 @@
       line-height: 1.5;
       margin-bottom: 10px;
     }
+  }
+}
+
+.requests-filterby-status, .requests-filterby-agent {
+  .ant-select {
+    .ant-select-selector {
+      min-width: 170px;
+    }
+  }
+}
+
+.agents-dropdown.ant-select-dropdown {
+  min-width: 205px !important;
+}
+
+.agent-option {
+  display: flex;
+  align-items: center;
+
+  & > img {
+    height: 24px;
+    width: 24px;
+    margin-right: 16px;
   }
 }

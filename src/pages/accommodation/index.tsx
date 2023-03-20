@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps, DatePickerProps } from 'antd';
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
+import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import Drawer from "../../components/Drawer";
-import { Form, Input,  Select, Slider, Space, DatePicker } from 'antd'
+import { Form, Select, Slider, Space, DatePicker } from 'antd'
+import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
+
+// Temporary
+const agentOptions = [
+  {label: 'Maria Sanoid', value: 'Maria Sanoid', thumb: "s"},
+  {label: 'Janete Samson', value: 'Janete Samson', thumb: "s"},
+]
 
 
 
@@ -84,6 +91,10 @@ const Accommodation = () => {
     console.log('dfdfdsfsdfas::: ', date, dateString);
   }
 
+  const handleChangeStatus = (value: string) => {
+    console.log(`selected ${value}`);
+  }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -96,7 +107,7 @@ const Accommodation = () => {
         />
         <div className="page-filterbar">
           <div className="page-filterbar-left">
-          {location.pathname === '/accommodation' &&
+            {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
                 <SearchBar handleChange={() => console.log('i am changed')}/>
               </div>
@@ -107,6 +118,16 @@ const Accommodation = () => {
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
+              <div className="searchbar-wrapper">
+                <SearchBar handleChange={() => console.log('i am changed')}/>
+              </div>
+            }
+            {location.pathname === '/accommodation/booking-requests' &&
+              <div className="searchbar-wrapper">
+                <SearchBar handleChange={() => console.log('i am changed')}/>
+              </div>
+            }
+            {location.pathname === '/accommodation/payments' &&
               <div className="searchbar-wrapper">
                 <SearchBar handleChange={() => console.log('i am changed')}/>
               </div>
@@ -124,6 +145,78 @@ const Accommodation = () => {
                 label="Filters"
                 onClick={() => openSavedSearchesFilters()}
               />
+            }
+            {location.pathname === '/accommodation/booking-requests' &&
+            <Space>
+                <div className="requests-filterby-agent">
+                  <Select 
+                    className="dropdown-filled"
+                    placeholder="Agent"
+                    onChange={handleChangeStatus}
+                    popupClassName={'agents-dropdown'}
+                    placement="bottomRight"
+                  >
+                    {agentOptions.map((option) => {
+                      return (
+                        <Select.Option value={option.value} key={option.value}>
+                          <div className="agent-option">
+                            <img src={avatar} />
+                            {option.label}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
+                  </Select>
+                </div>
+                <div className="requests-filterby-status">
+                  <Select className="dropdown-filled " placeholder="Time Frame" onChange={handleChangeStatus}>
+                    <Select.Option value="reserved">Reserved</Select.Option>
+                    <Select.Option value="pending">Pending</Select.Option>
+                    <Select.Option value="rejected">Rejected</Select.Option>
+                  </Select>
+              </div>
+              <div className="dropdown-download">
+                <DropDown
+                  requiredDownloadIcon
+                />
+              </div>
+            </Space>
+            }
+            {location.pathname === '/accommodation/payments' &&
+            <Space>
+                <div className="requests-filterby-agent">
+                  <Select 
+                    className="dropdown-filled"
+                    placeholder="Agent"
+                    onChange={handleChangeStatus}
+                    popupClassName={'agents-dropdown'}
+                    placement="bottomRight"
+                  >
+                    {agentOptions.map((option) => {
+                      return (
+                        <Select.Option value={option.value} key={option.value}>
+                          <div className="agent-option">
+                            <img src={avatar} />
+                            {option.label}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
+                  </Select>
+                </div>
+                <div className="requests-filterby-status">
+                  <Select className="dropdown-filled " placeholder="Status" onChange={handleChangeStatus}>
+                    <Select.Option value="reserved">Reserved</Select.Option>
+                    <Select.Option value="pending">Pending</Select.Option>
+                    <Select.Option value="rejected">Rejected</Select.Option>
+                  </Select>
+                </div>
+                <div className="dropdown-download">
+                  <DropDown
+                    requiredDownloadIcon
+                  />
+                </div>
+            </Space>
             }
           </div>
         </div>
@@ -172,10 +265,6 @@ const Accommodation = () => {
                 <Form.Item name="moveOutDate" label="Move Out Date">
                   <DatePicker format='YYYY/MM/DD' onChange={onChange} />
                 </Form.Item>
-
-                {/* <Form.Item label="Username" name="username">
-                  <Input placeholder="User anme" />
-                </Form.Item> */}
 
                 <Form.Item name="offer" label="Offer">
                   <Select placeholder="Select">

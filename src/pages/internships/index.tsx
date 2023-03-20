@@ -1,16 +1,61 @@
-import { Button, Space } from "antd";
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import PageHeader from "../../components/PageHeader";
-import { SearchBar } from "../../components";
+import React, { useState } from "react";
+import { DropDown, SearchBar, PageHeader, FiltersButton, LeaveRequest } from "../../components";
 import "./style.scss";
-import { FileAddFilled } from "@ant-design/icons";
-import GlobalTable from "../../components/Table/Table";
-import { Alert } from "../../components";
-import EmojiMoodRating from "../../components/EmojiMoodRating";
-import { Terrible, Sad, Neutral, Happy, Awesome } from '../../assets/images';
+import { useNavigate } from 'react-router-dom';
+import {GlobalTable} from "../../components";
+import { Avatar, Button, Popover, Divider } from 'antd';
+import { More } from "../../assets/images"
+import { InternshipsIcon } from "../../assets/images";
+// import LeaveRequest from "../../components/LeaveRequest";
+import EmojiEvaluation from "../../components/EmojiEvaluation";
+import CreateFolderModal from "../../components/CreateFolderModal";
+import EditGoalTask from "../../components/EditGoalTask";
+import AddRequestMessage from "../../components/AddRequestMessage";
+import SetaGoal from "../../components/SetaGoal";
+import { PopUpModal } from "../../components/Model";
+import type { MenuProps } from 'antd';
+import { Dropdown, Space } from 'antd';
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
+import Drawer from "../../components/Drawer";
+import SignatureAndUploadModal from "../../components/SignatureAndUploadModal";
+import { STATUS_CONSTANTS } from "../../config/constants";
+
+const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
+
+const PopOver = () => {
+  const navigate = useNavigate()
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          View details
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          Duplicate
+        </a>
+      ),
+    },
+  ];
+
+  return (
+    <Dropdown menu={{ items }} placement="bottomRight">
+      <More />
+    </Dropdown>
+  )
+}
+
 const Internships = () => {
+  const navigate = useNavigate()
   const [value, setValue] = useState("")
+  const [showDrawer, setShowDrawer] = useState(false)
+  const [state, setState] = useState(false)
+
   const columns = [
     {
       dataIndex: 'no',
@@ -67,89 +112,178 @@ const Internships = () => {
       posting_date: "01/07/2022",
       closing_date: "01/07/2022",
       location: "virtual",
-      status: "active",
+      status: 'pending',
+      posted_by: 'T',
 
     },
     {
-      Actions: 'fduhguisd',
-      Position: 'gjdifsdu',
-      Status: 'fjgvifd',
-      company: 'kljdasfhuasd',
-      dateApplied: '01/07 /2022',
-      internshipType: 'nice',
-      natureOfWork: 'asduhfuiyasdg',
-      no: '02',
-      typeOfWork: 'New York No. 1 Lake Park'
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'active',
+      posted_by: 'U',
+
+    },
+    {
+      no: "02",
+      title: "Business Analyst",
+      department: "Scientist Analyst",
+      posting_date: "01/07/2023",
+      closing_date: "01/07/2021",
+      location: "Onsite",
+      status: 'rejected',
+      posted_by: 'U',
+
     }
   ]
 
-  const emojiData = [
-    {
-      name: "Terrible",
-      comp: Terrible
-    },
-    {
-      name: "Sad",
-      comp: Sad
-    },
-    {
-      name: "Neutral",
-      comp: Neutral
-    },
-    {
-      name: "Happy",
-      comp: Happy
-    },
-    {
-      name: "Awesome",
-      comp: Awesome
-    }
-  ]
+  const newTableData = tableData.map((item, idx) => {
+    return (
+      {
+        no: item.no,
+        title: item.title,
+        department: item.department,
+        posting_date: item.posting_date,
+        closing_date: item.closing_date,
+        location: item.location,
+        status:
+          <Button
+            size="small"
+            className={`${item.status === ACTIVE ? `bg-[#4ED185]` : item.status === PENDING ? `bg-[#FFC15E]` : item.status === CLOSED ? `bg-[#4783FF]` : item.status === REJECTED ? `bg-[#D83A52]` : null}  text-[#fff]`}
+          >
+            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+          </Button>,
+        posted_by: <Avatar>{item.posted_by}</Avatar>,
+        actions: <PopOver />
+      }
+    )
+  })
   console.log(value)
   return (
     <>
       <PageHeader title="Internships" />
-      <div className="flex flex-row justify-between">
-        <SearchBar
-          className=""
-          handleChange={() => { }}
-          name="search bar"
-          placeholder="search"
-          size="large"
-        />
-        <div>
-          <Button
-            label="Button"
-            onClick={() => { }}
-            type="primary"
-          />
-          <Button
-            label="New Internshipsd"
-            color="#4a9d77"
-            icon={<FileAddFilled />}
-            onClick={() => { }}
+      <Divider />
+      <div className="flex flex-col gap-5">
+        <div className="flex flex-row justify-between">
+          <SearchBar
+            className=""
+            handleChange={() => { }}
+            name="search bar"
+            placeholder="search"
             size="middle"
-            type="primary"
           />
+          <div className="flex flex-row gap-4">
+            <FiltersButton
+              label="Filters"
+              onClick={() => { setShowDrawer(true) }}
+            />
+            <Drawer
+              closable
+              open={showDrawer}
+              onClose={() => { setShowDrawer(false) }}
+              title="Filters"
+            >
+              <React.Fragment key=".0">
+                <div className="flex flex-col gap-12">
+                  <div className="flex flex-col gap-2">
+                    <p>Location</p>
+                    <DropDown
+                      name="name"
+                      options={[
+                        'EidinBurg',
+                        'Glasgow',
+                        'London',
+                        'Virtual'
+                      ]}
+                      setValue={() => { }}
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value=""
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <p>Department</p>
+                    <DropDown
+                      name="name"
+                      options={[
+                        'Business analyst',
+                        'Research analyst',
+                        'Accountant',
+                        'Administrator',
+                        'HR Cordinator'
+                      ]}
+                      setValue={() => { }}
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value=""
+                    />
+                  </div>
+                  <div className="flex flex-row gap-3 justify-end">
+                    <Button
+                      size="middle"
+                      className="flex gap-2 bg-[#fff] text-[#4A9D77]"
+                      onClick={() => { navigate("new-internship"); }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      size="middle"
+                      className="flex gap-2 bg-[#4A9D77] text-[#fff]"
+                      onClick={() => { navigate("new-internship"); }}
+                    >
+                      Apply
+                    </Button>
+                  </div>
+                </div>
+              </React.Fragment>
+            </Drawer>
+            <Button
+              size="middle"
+              className="flex gap-2 bg-[#4A9D77] text-[#fff]"
+              onClick={() => { navigate("new-internship"); }}
+            >
+              <InternshipsIcon />
+              New Internship
+            </Button>
+          </div>
         </div>
-
+        <BoxWrapper>
+          <div className="pt-3">
+            <GlobalTable
+              columns={columns}
+              expandable={{
+                expandedRowRender: () => { },
+                rowExpandable: function noRefCheck() { }
+              }}
+              tableData={newTableData}
+            />
+          </div>
+        </BoxWrapper>
       </div>
-      <div className="pt-3">
-        <GlobalTable
-          columns={columns}
-          expandable={{
-            expandedRowRender: () => { },
-            rowExpandable: function noRefCheck() { }
-          }}
-          tableData={tableData}
-        />
-        <Alert showHide={true} type="warning" okBtntxt="OK" cancelBtntxt="Cancel">
-          <p>This is a placeholer text just to show the default size and weight for body text typography in a popup.</p>
-        </Alert>
-        <EmojiMoodRating title='Emoji Icon for mood' data={emojiData} setState={setValue} />
+      <div className="flex gap-3 my-3">
+        <SignatureAndUploadModal state={state} setState={setState} okBtntxt="Upload" cancelBtntxt="Cancel" width={600} />
+        <LeaveRequest title="Leave Request" />
+        <EmojiEvaluation title={`Performance Report - ${name}`} />
+        <CreateFolderModal title="Create New Folder" />
+        <EditGoalTask title="Edit Goal Task" />
+        <AddRequestMessage title="Add Request Message" />
+        <SetaGoal title="Set a Goal" />
       </div>
-
-
+      <div className="flex gap-3 my-3">
+        <PopUpModal
+          title="Modal Title Customizable"
+          width={800}
+          state={false}
+          okBtnFunc={() => { console.log("call back function called") }}
+          cancelBtntxt="Cancel"
+          okBtntxt="Submit"
+        >
+          <p>Write your JSX here / Import Components</p>
+        </PopUpModal>
+      </div>
     </>
   )
 }

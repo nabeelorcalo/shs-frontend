@@ -5,7 +5,13 @@
 
 ::-webkit-scrollbar {
   width: 0;
+  height: 8px;
   /* Remove scrollbar space */
   background: transparent;
   /* Optional: just make scrollbar invisible */
+}
+
+::-webkit-scrollbar-thumb:horizontal{
+  background: #000;
+  border-radius: 10px;
 }

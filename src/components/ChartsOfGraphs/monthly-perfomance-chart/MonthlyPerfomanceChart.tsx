@@ -1,16 +1,28 @@
 import { Column } from '@ant-design/plots';
 import { useEffect, useState } from 'react';
-import {BoxWrapper} from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { MonthChanger } from '../../MonthChanger';
 import { perfomanceChart } from './MonthlyPerfomance';
 
 export const MonthlyPerfomanceChart = (props: any) => {
-  const { XField = "city", YField = "value", seriesField = "type", isGroup = true,
+  const {
+    XField = "city",
+    YField = "value",
+    seriesField = "type",
+    isGroup = true,
     columnStyle = { radius: [20, 20, 0, 0] },
-    color = ['#9BD5E8', '#F08D97', '#78DAAC'], marginRatio = ".5", heading,
+    color = ['#9BD5E8', '#F08D97', '#78DAAC'],
+    marginRatio = ".5",
+    heading,
     columnWidthRatio = .2,
-    textColor = "#4E4B66", fontSize = "20px", fontWeight = "500",
-    data = { perfomanceChart }
-  } = props
+    textColor = "#4E4B66",
+    fontSize = "20px",
+    fontWeight = "500",
+    data = { perfomanceChart },
+    isMonthNavigationPresent = false,
+    month = '',
+    changeMonth = () => {}
+  } = props;
 
   const [chartData] = useState(data);
   const config: any = {
@@ -29,9 +41,24 @@ export const MonthlyPerfomanceChart = (props: any) => {
   };
   return (
     <BoxWrapper>
-      {heading && <p style={{ fontSize: fontSize, color: textColor, fontWeight: fontWeight }}>{heading}</p>}
+      {
+        heading &&
+        <div className='flex'>
+          <p style={{ fontSize: fontSize, color: textColor, fontWeight: fontWeight }}>
+            {heading}
+          </p>
+          {
+            isMonthNavigationPresent &&
+            <MonthChanger
+              month={month}
+              onClick={changeMonth}
+            />
+          }
+        </div>
+      }
       <Column
-        marginRatio={marginRatio} {...config} />
+        marginRatio={marginRatio} {...config}
+      />
     </BoxWrapper>
   )
 }

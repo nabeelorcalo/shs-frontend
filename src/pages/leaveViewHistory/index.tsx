@@ -1,22 +1,21 @@
 
-import { Col, Divider, Drawer, Dropdown, Form, Row, Select, Space } from "antd";
-import type { MenuProps } from 'antd';
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import GlobalTable from "../../components/Table/Table"
-import "./style.scss"
-import { CalendarWhiteIcon, ChevronRight, DownloadIconLeave, FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../assets/images";
-import { Alert, Button, DropDown, SearchBar } from "../../components";
 import { useState } from "react";
+import { Col, Divider, Dropdown, Row, Space } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
-import DrawerComp from "./DrawerComp";
+import "./style.scss"
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
+import {GlobalTable} from "../../components"
+import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
+import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../components";
+// import DrawerComp from "./DrawerComp";
 import FilterDrawerForm from "./FilterDrawerForm";
-import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
-import { FiltersButton } from "../../components/";
-import { LeaveRequest } from "../../components";
+// import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
 import { data } from "./LeaveMockData";
+import DrawerComp from "../../components/DrawerComp";
+import CalendarDrawerInnerDetail from "../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 const index = () => {
   // const [actionType, setActionType] = useState({ type: '', id: '' });
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
@@ -92,7 +91,7 @@ const index = () => {
         <Space size="middle">
           <Dropdown
             // open={visibale}
-            dropdownRender={(menu: any) => {
+            dropdownRender={() => {
               return <BoxWrapper className=" action_dropDown">
                 <p onClick={() => {
                   setOpenDrawer({ open: true, type: 'viewDetail' })
@@ -134,6 +133,11 @@ const index = () => {
   // console.log(selectedRow);
   return (
     <div className="main_view_detail">
+      <PageHeader
+        actions
+        bordered
+        title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
+      />
       <Row className=' items-center'>
         <Col xs={24} md={12} lg={12}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
@@ -183,7 +187,7 @@ const index = () => {
       >
         <div>
           {openDrawer.type === 'filters' ? <FilterDrawerForm /> :
-            <CalendarDrawerInner
+            <CalendarDrawerInnerDetail
               img={selectedRow?.img}
               name={selectedRow?.name}
               designation={selectedRow?.designation}
@@ -222,11 +226,12 @@ const index = () => {
           changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
         />}
       {openModal.open && openModal.type === 'cancel' &&
-        <Alert type='warning' open={openModal.open}
-          setOpen={() => setOpenModal({ ...openModal, open: !openModal.open })}
+        <Alert
+          type='success'
+          state={openModal.open}
+          setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
           okBtntxt={"Submit"}
-
         >
           <p>Are you sure you want to cancel this request?</p>
         </Alert>}
