@@ -2,7 +2,7 @@ import { CheckOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/ic
 import { Col, Divider, Form, Row, Typography, Input, Dropdown, MenuProps, Space } from 'antd'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { GrievancesAvater, GrievancesDocDownload, GrievancesDocPDF, SettingHorizontalLine, } from '../../../../assets/images'
+import { GrievancesAvater, GrievancesDocDownload, GrievancesDocPDF, GrievancesSidebarAvater, SettingHorizontalLine, } from '../../../../assets/images'
 import { Alert, Button, PageHeader } from '../../../../components'
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
@@ -151,12 +151,18 @@ const index = () => {
                 </Space>
               </Dropdown>
             </div>
-            <Divider className='mt-2 mb-1' />
+           
           </BoxWrapper>
          
-          <BoxWrapper>
+          <BoxWrapper className='my-2'>
           <Text className='text-xl font-medium'>Escalated By</Text>
-          <div></div>
+          <div className='flex items-center flex-col'>
+           <span><GrievancesSidebarAvater/></span> 
+            <Text className='text-xl font-semibold'>Maria Sanoid</Text>
+            <Text className='font-medium text-base'>UI UX Designer</Text>
+            <Text className='text-base font-normal'>Design</Text>
+          </div>
+          <Divider className='mt-2 mb-1' />
 
           </BoxWrapper>
         </Col>

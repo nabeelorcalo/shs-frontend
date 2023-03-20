@@ -334,6 +334,9 @@ export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-downl
 export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
 export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
 export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesInbox  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesCall  } from './Grievances/avater-img.svg';
+export { ReactComponent as Grievances  } from './Grievances/avater-img.svg';
 export { ReactComponent as GrievancesSidebarAvater } from './Grievances/grievance-sidebar-avater.svg';
 
 // Recipes Icons

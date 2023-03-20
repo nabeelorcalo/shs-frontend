@@ -76,24 +76,12 @@ const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
-const AvailableProperties = Loadable(
-  lazy(() => import("./pages/accommodation/AvailableProperties"))
-);
-const SavedSearches = Loadable(
-  lazy(() => import("./pages/accommodation/SavedSearches"))
-);
-const RentedProperties = Loadable(
-  lazy(() => import("./pages/accommodation/RentedProperties"))
-);
-const BookingRequests = Loadable(
-  lazy(() => import("./pages/accommodation/BookingRequests"))
-);
-const AccommodationPayments = Loadable(
-  lazy(() => import("./pages/accommodation/Payments"))
-);
-const AccPropertyDetail = Loadable(
-  lazy(() => import("./pages/accommodation/PropertyDetail"))
-);
+const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
+const SavedSearches = Loadable( lazy(() => import("./pages/accommodation/SavedSearches")));
+const RentedProperties = Loadable( lazy(() => import("./pages/accommodation/RentedProperties")));
+const BookingRequests = Loadable(  lazy(() => import("./pages/accommodation/BookingRequests")));
+const AccommodationPayments = Loadable( lazy(() => import("./pages/accommodation/Payments")));
+const AccPropertyDetail = Loadable(  lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
@@ -105,112 +93,35 @@ const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
-const Setting = Loadable(lazy(() => import("./pages/Setting")));
-const SettingPerformance = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Performance"))
-);
-const SettingDepartment = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Department"))
-);
-const SettingLocation = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Location"))
-);
-const AddLocation = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Location/AddLocation"))
-);
-const SettingTemplate = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Templates"))
-);
-const TemplatesOfferLater = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Templates/OfferLetter"))
-);
-const OfferLaterNewTemplate = Loadable(
-  lazy(
-    () =>
-      import("./pages/Setting/CompanyAdmin/Templates/OfferLetter/NewTemplate")
-  )
-);
-const TCA = Loadable(
-  lazy(
-    () =>
-      import("./pages/Setting/CompanyAdmin/Templates/CertificateOfAppreciation")
-  )
-);
-const TCANewTemplate = Loadable(
-  lazy(
-    () =>
-      import(
-        "./pages/Setting/CompanyAdmin/Templates/CertificateOfAppreciation/NewTemplate"
-      )
-  )
-);
-const TemplatesCertificateOfCompletion = Loadable(
-  lazy(
-    () =>
-      import("./pages/Setting/CompanyAdmin/Templates/CertificateOfCompletion")
-  )
-);
-const TCCNewTemplate = Loadable(
-  lazy(
-    () =>
-      import(
-        "./pages/Setting/CompanyAdmin/Templates/CertificateOfCompletion/NewTemplate"
-      )
-  )
-);
-const TemplatesContract = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Templates/Contract"))
-);
-const ContractNewTemplate = Loadable(
-  lazy(
-    () => import("./pages/Setting/CompanyAdmin/Templates/Contract/NewTemplate")
-  )
-);
-const TemplatesRejectionLetter = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Templates/RejectionLetter"))
-);
-const RejectionLetterNewTemplate = Loadable(
-  lazy(
-    () =>
-      import(
-        "./pages/Setting/CompanyAdmin/Templates/RejectionLetter/NewTemplate"
-      )
-  )
-);
-const SettingLeaves = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Leaves"))
-);
-const LeavesAddPolicy = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Leaves/AddPolicy"))
-);
-const SettingShifts = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Shifts"))
-);
-const AddShift = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Shifts/AddShift"))
-);
-const SettingTimesheet = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Timesheet"))
-);
-const SettingPayroll = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Payroll"))
-);
-const PayrollAddCategory = Loadable(
-  lazy(() => import("./pages/Setting/CompanyAdmin/Payroll/AddCategory"))
-);
-
-const Charts = Loadable(
-  lazy(() => import("./components/ChartsOfGraphs/Charts"))
-);
+const Setting = Loadable(lazy(() => import("./pages/setting")));
+const SettingPerformance = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Performance")));
+const SettingDepartment = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Department")));
+const SettingLocation = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Location")));
+const AddLocation = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Location/AddLocation")));
+const SettingTemplate = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Templates")));
+const TemplatesOfferLater = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Templates/OfferLetter")));
+const OfferLaterNewTemplate = Loadable(lazy( () =>   import("./pages/setting/CompanyAdmin/Templates/OfferLetter/NewTemplate")));
+const TCA = Loadable( lazy( () =>  import("./pages/setting/CompanyAdmin/Templates/CertificateOfAppreciation")));
+const TCANewTemplate = Loadable(lazy(() =>  import(    "./pages/setting/CompanyAdmin/Templates/CertificateOfAppreciation/NewTemplate"  )));
+const TemplatesCertificateOfCompletion = Loadable(lazy( () =>   import("./pages/setting/CompanyAdmin/Templates/CertificateOfCompletion") ));
+const TCCNewTemplate = Loadable( lazy( () =>import(  "./pages/setting/CompanyAdmin/Templates/CertificateOfCompletion/NewTemplate"    ) ));
+const TemplatesContract = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Templates/Contract")));
+const ContractNewTemplate = Loadable(lazy(() => import("./pages/setting/CompanyAdmin/Templates/Contract/NewTemplate") ));
+const TemplatesRejectionLetter = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Templates/RejectionLetter")));
+const RejectionLetterNewTemplate = Loadable(lazy(() => import( "./pages/setting/CompanyAdmin/Templates/RejectionLetter/NewTemplate" )));
+const SettingLeaves = Loadable(lazy(() => import("./pages/setting/CompanyAdmin/Leaves")));
+const LeavesAddPolicy = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Leaves/AddPolicy")));
+const SettingShifts = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Shifts")));
+const AddShift = Loadable(  lazy(() => import("./pages/setting/CompanyAdmin/Shifts/AddShift")));
+const SettingTimesheet = Loadable(  lazy(() => import("./pages/setting/CompanyAdmin/Timesheet")));
+const SettingPayroll = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Payroll")));
+const PayrollAddCategory = Loadable( lazy(() => import("./pages/setting/CompanyAdmin/Payroll/AddCategory")));
+const Charts = Loadable( lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import("./pages/certificate/index")));
-const CertificateDetail = Loadable(
-  lazy(() => import("./pages/certificate/certificateDetail"))
-);
-const TimeSheetHistory = Loadable(
-  lazy(() => import("./pages/timesheet/companyAdmin/timesheetHistory"))
-);
+const CertificateDetail = Loadable( lazy(() => import("./pages/certificate/certificateDetail")));
+const TimeSheetHistory = Loadable(lazy(() => import("./pages/timesheet/companyAdmin/timesheetHistory")));
 
 export const publicRoutes = [
   {
