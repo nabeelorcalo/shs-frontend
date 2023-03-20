@@ -334,6 +334,8 @@ export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-downl
 export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
 export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
 export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesSidebarAvater } from './Grievances/grievance-sidebar-avater.svg';
+
 // Recipes Icons
 export { ReactComponent as IconAddRecipe } from './recipes/icon-add-recipe.svg';
 export { ReactComponent as IconPreparationTime } from './recipes/icon-preparation-time.svg';
@@ -348,3 +350,4 @@ export { ReactComponent as ColorLessMedalIcon } from './Performance/ColorlessMed
 // Common Icons
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
 export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';
+

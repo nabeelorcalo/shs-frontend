@@ -1,21 +1,40 @@
-import { CheckOutlined, ClockCircleOutlined } from '@ant-design/icons'
-import { Col, Divider, Form, Row, Typography, Input, } from 'antd'
+import { CheckOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/icons'
+import { Col, Divider, Form, Row, Typography, Input, Dropdown, MenuProps, Space } from 'antd'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { GrievancesDocDownload, GrievancesDocPDF, SettingHorizontalLine, SettingTimesheetIcon } from '../../../../assets/images'
-import { Alert, Button, DropDown, PageHeader } from '../../../../components'
+import { GrievancesAvater, GrievancesDocDownload, GrievancesDocPDF, SettingHorizontalLine, } from '../../../../assets/images'
+import { Alert, Button, PageHeader } from '../../../../components'
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import './style.scss';
 const { Text } = Typography;
 const { TextArea } = Input;
 
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    label: (
+      <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>
+    ),
+  },
+  {
+    key: '2',
+    label: (
+      <><GrievancesAvater className='w-[48px] px-2' />  <span>Mino Marina</span></>
+    ),
+  },
+  {
+    key: '3',
+    label: (
+      <><GrievancesAvater className='w-[48px] px-2' />  <span>Maria Sanoid</span></>
+    ),
+  },
+];
+
 const index = () => {
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   return (
     <div className='grievance-details'>
-
-
       <PageHeader title={<>Grievances Details{<SettingHorizontalLine className="mx-2" />}
         <span className='text-base font-medium '>
           <NavLink to="/grievances">
@@ -85,9 +104,6 @@ const index = () => {
                 </Col>
               </Row>
             </Row>
-
-
-
           </BoxWrapper>
           <BoxWrapper className='mt-5'>
             <Text className='text-xl font-medium'>Reply To Grievance</Text>
@@ -108,6 +124,7 @@ const index = () => {
           </BoxWrapper>
         </Col>
         <Col lg={6}>
+        
           <BoxWrapper>
             <Text className='text-xl font-medium'>Grievance Information</Text>
             <div className='flex justify-between font-normal py-2'>
@@ -125,22 +142,21 @@ const index = () => {
               <Text className='bg-[#FF6F31] rounded-md px-3 white-color '>New</Text>
             </div>
             <Divider className='mt-2 mb-1' />
-            <div className='flex justify-between font-normal py-2'>
-              <Text >Escalated To</Text>
-
-              <DropDown
-                name="this month"
-                options={[
-                  'search',
-                  'item 1',
-                  'item 2'
-                ]}
-                setValue={() => { }}
-                value=""
-              />
+            <div className='flex justify-between font-normal'>
+              <Text className='pt-2' >Escalated To</Text>
+              <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
+                <Space>
+                  <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>
+                  <DownOutlined />
+                </Space>
+              </Dropdown>
             </div>
             <Divider className='mt-2 mb-1' />
-
+          </BoxWrapper>
+         
+          <BoxWrapper>
+          <Text className='text-xl font-medium'>Escalated By</Text>
+          <div></div>
 
           </BoxWrapper>
         </Col>

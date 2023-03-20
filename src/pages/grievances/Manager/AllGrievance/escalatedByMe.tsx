@@ -1,8 +1,8 @@
 import React from 'react'
-import GlobalTable from '../../../../components/Table/Table'
 import {Space} from 'antd'
 import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import { GlobalTable } from '../../../../components'
 
 const UniversitesTableData =  [
     {

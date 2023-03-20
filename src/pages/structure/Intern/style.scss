@@ -1,0 +1,35 @@
+@import "../../../scss/colors.scss";
+.structure {
+  overflow-x: scroll;
+  &::-webkit-scrollbar {
+    background-color: $primary-bg-color;
+    border-radius: 10px;
+    border: 3px solid $white-bg-color;
+  }
+}
+.struture-card {
+  .card {
+    text-align: center;
+    .borderLeft {
+      border: 1px solid $secondary-light-bg-color;
+      left: 20%;
+      z-index: 0;
+    }
+    .avater-content {
+      bottom: 70px;
+    }
+    .content {
+      .avater {
+        z-index: 2000;
+      }
+    }
+    .card-footer {
+      bottom: -10px;
+      left: 32%;
+      border: 1px solid $text-error-line-color;
+      span {
+        color: $text-success-placeholder-color;
+      }
+    }
+  }
+}

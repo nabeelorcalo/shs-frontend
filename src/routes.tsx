@@ -39,7 +39,6 @@ const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
       <Component {...props} />
     </Suspense>
   );
-
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
@@ -53,7 +52,7 @@ const GrievancesDetails = Loadable(lazy(() => import("./pages/Grievances/Manager
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(
-  lazy(() => import("./pages/Structure/companyAdmin"))
+  lazy(() => import("./pages/Structure/index"))
 );
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));

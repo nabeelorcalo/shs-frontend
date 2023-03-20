@@ -1,9 +1,9 @@
 import React from 'react';
 import { Col, Row, Button, Typography } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { PageHeader, SearchBar } from '../../../components';
+import { PageHeader } from '../../../components';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
-const { Title, Text } = Typography;
+const { Text } = Typography;
 import './style.scss';
 import {
   AllGrievances,
@@ -19,6 +19,7 @@ import {
 } from '../../../assets/images';
 import Graph from '../../../components/Graph';
 import { GrievanceStats } from '../../../components/ChartsOfGraphs/grievanceStats/grievanceStats';
+import { ArrowRightOutlined } from '@ant-design/icons/lib/icons';
 
 const index = () => {
   let overview = [
@@ -124,12 +125,15 @@ const index = () => {
                   </div>
                 </div>
                 <div className=' gap-2'>
-                  <span>Grievances Type:</span><span className='px-2'>Attendance Log Issue</span>
+                  <span>Grievances Type:</span><span className='px-2 text-[#F08D97]'>Attendance Log Issue</span>
                 </div>
               </div>
 
-              <div className="view-all-btn">
-                <span className='capitalize' >view all</span>
+              <div className="view-all-btn ">
+               <NavLink to="/grievances/all-grievance/grievance-detials">
+                <span className='capitalize mx-2 white-color' >view all</span >
+                <span  className='capitalize mx-2 white-color'><ArrowRightOutlined /></span> 
+                </NavLink> 
               </div>
 
             </BoxWrapper>
@@ -150,11 +154,11 @@ const index = () => {
           </BoxWrapper>
         </Col>
         <Col xs={24} md={24} lg={12}>
-          <div className=''>
+          <BoxWrapper className='px-5' >
+            <div className='rievance Stats'>
             <div className='flex justify-between'>
-              <Text className='text-xl font-medium'>Resolution Feedback </Text>
+              <Text className='text-xl font-medium'>Grievance Stats</Text>
               <div className='flex justify-between lg:w-[35%]'>
-
               </div>
             </div>
             <GrievanceStats
@@ -176,7 +180,8 @@ const index = () => {
               xField="product_type"
               yField="order_amt"
             />
-          </div>
+         </div>
+          </BoxWrapper>
         </Col>
       </Row>
     </div>
