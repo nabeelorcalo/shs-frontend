@@ -131,7 +131,6 @@ export { ReactComponent as StarFilledIcon } from './StarFilled.svg';
 // three dots icon
 export { ReactComponent as ThreeDotsIcon } from './MoreIcon.svg';
 
-
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
@@ -222,7 +221,7 @@ export { ReactComponent as SettingPeople } from "./setting/people.svg";
 export { ReactComponent as SettingCalendarRemove } from "./setting/calendar-remove.svg";
 export { ReactComponent as SettingChart } from "./setting/chart.svg";
 export { ReactComponent as SettingDocument } from "./setting/document.svg";
-export { ReactComponent as SettingShifts } from "./setting/Shifts.svg";
+export { ReactComponent as SettingShifts } from "./setting/shifts.svg";
 export { ReactComponent as SettingTimer } from "./setting/timer.svg";
 export { ReactComponent as SettingHorizontalLine } from "./setting/horizontal-line.svg";
 export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
@@ -284,7 +283,6 @@ export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.s
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
 export { default as WishesBox } from './dashboard/wishesBox.gif';
 
-
 // contract
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg"
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
@@ -321,6 +319,26 @@ export { ReactComponent as Intro } from './Intro.svg';
 export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
 
+//Grievances
+export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg';
+export { ReactComponent as InProgressGrievances } from './Grievances/in-progress-grievances.svg';
+export { ReactComponent as NewGrievances } from './Grievances/new-grievances.svg';
+export { ReactComponent as ResolevedGrievances } from './Grievances/resoleved-grievances.svg';
+export { ReactComponent as Clock24h  } from './Grievances/clock-24h.svg';
+export { ReactComponent as ClockGrievances  } from './Grievances/clock.svg';
+export { ReactComponent as LineGrievances  } from './Grievances/line.svg';
+export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
+export { ReactComponent as GrievancesDocPDF  } from './Grievances/document-pdf.svg';
+export { ReactComponent as GrievancesDocJPG  } from './Grievances/document-jpg.svg';
+export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-download.svg';
+export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
+export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
+export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesInbox  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesCall  } from './Grievances/avater-img.svg';
+export { ReactComponent as Grievances  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesSidebarAvater } from './Grievances/grievance-sidebar-avater.svg';
+
 // Recipes Icons
 export { ReactComponent as IconAddRecipe } from './recipes/icon-add-recipe.svg';
 export { ReactComponent as IconPreparationTime } from './recipes/icon-preparation-time.svg';
@@ -335,3 +353,4 @@ export { ReactComponent as ColorLessMedalIcon } from './Performance/ColorlessMed
 // Common Icons
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
 export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';
+

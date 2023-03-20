@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import { Typography, Divider, Row, Col, Form, Input, Button } from "antd";
-import {
-  DepartmentAddIcon,
-  SettingTimesheetIcon,
-} from "../../../../assets/images";
+import { Typography, Row, Col, Form, Input, Button } from "antd";
+import { SettingTimesheetIcon,} from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../../components/Model";
-import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import "./style.scss";
 
 const { TextArea } = Input;
@@ -52,7 +48,7 @@ const SettingTimesheet = () => {
           <SearchBar size="middle" handleChange={handleChange} />
           <Button
             size="middle"
-            onClick={() => {setShowEditModal(!showEditModal)}}
+            onClick={() => { setShowEditModal(!showEditModal) }}
             className="flex gap-2 setting-add-button white-color teriary-bg-color"
           >
             <SettingTimesheetIcon /> Add Category
@@ -72,7 +68,6 @@ const SettingTimesheet = () => {
                         {data.content}
                       </Text>
                     </div>
-
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                         showEditModal={showEditModal}
@@ -95,8 +90,8 @@ const SettingTimesheet = () => {
         close={close}
         footer={
           <div className="timesheet-department-footer"> <Button key="Cancel" className="footer-cancel-btn ">
-              Cancel
-            </Button>
+            Cancel
+          </Button>
             <Button key="submit" className="footer-submit-btn ">
               Submit
             </Button>
@@ -114,7 +109,10 @@ const SettingTimesheet = () => {
             </div>
           </Form.Item>
           <div className="mt-3 flex flex-col">
-            <label className="pb-2">Description<span className="text-[red]">*</span></label>
+            <label className="pb-2">
+              Description
+              <span className="text-[red]">*</span>
+            </label>
             <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
           </div>
         </Form>

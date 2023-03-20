@@ -1,6 +1,6 @@
 import { Progress } from "antd";
-import "./HorizontalLineCard.scss";
-import { theme } from "../../theme";
+import "./style.scss";
+
 interface HorizonalLineCardProps {
   icon?: string;
   title: string;

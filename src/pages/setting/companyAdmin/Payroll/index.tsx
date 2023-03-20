@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Typography, Divider, Row, Col , Button } from "antd";
+import { Typography, Row, Col , Button } from "antd";
 import { SettingPayrollAddIcon} from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import './style.scss'
-import TemplateCommonDropdown from "../../../../components/Setting/Common/TemplateCommonDropdown";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
+import './style.scss'
 
 const { Title, Text } = Typography;
 let overview = [
@@ -24,10 +23,8 @@ let overview = [
     addedDate: "Added Date: 02/03/2023",
     addedBy:"Added By: Avery Wyatt"
   },
-  
- 
-
 ];
+
 const SettingPayroll: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const handleChange = () => {};
@@ -36,7 +33,6 @@ const SettingPayroll: React.FC = () => {
       <div>
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
-          
           <NavLink to="/settings/payroll/add-category">
           <Button
             size="middle"
