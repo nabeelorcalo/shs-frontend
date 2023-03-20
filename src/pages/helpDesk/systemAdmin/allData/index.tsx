@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown, Menu, Space, Tooltip } from "antd";
-import GlobalTable from "../../../../components/Table/Table";
+import {GlobalTable} from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
 import { DownOutlined } from "@ant-design/icons";

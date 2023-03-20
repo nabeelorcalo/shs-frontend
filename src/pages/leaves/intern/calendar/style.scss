@@ -139,44 +139,7 @@
     .ant-drawer-body {
         padding: 30px 20px;
 
-        .main_calender_drawer_data_wrapper {
-            .user_profile {
-                .profilData_wrapper {
-                    .details {
-                        .name_of_person {
-                            color: #14142B;
-                        }
-
-                        .designation {
-                            color: $text-secondary-body-color;
-                        }
-
-                        .email {
-                            color: $text-secondary-body-color;
-                        }
-
-                    }
-                }
-
-                .request_data, .File_wrapper{
-                    h4 {
-                        color: #14142B;
-                    }
-
-                    p {
-                        color: $text-secondary-body-color;
-                    }
-                }
-            }
-            .leaveType{
-                color: #363565;
-            }
-            .File_wrapper{
-                background-color: $text-input-bg-color;
-
-            }
-
-        }
+        
     }
 
 }

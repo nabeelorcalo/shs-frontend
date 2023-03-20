@@ -10,8 +10,6 @@ const DropDownForPerformance = (props: any) => {
     setVisible(visible);
   };
 
-  console.log("props", props);
-
   return (
     <Dropdown
       className="dropdown"
@@ -25,8 +23,8 @@ const DropDownForPerformance = (props: any) => {
           </Menu.Item>
         </Menu>
       }
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
+      open={visible}
+      onOpenChange={handleVisibleChange}
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>

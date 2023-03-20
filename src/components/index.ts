@@ -36,6 +36,7 @@ export * from './ColorfullIconsWithProgressbar';
 export * from './HorizontalLineCard';
 export * from './RecipeCard';
 export * from './LeaveRequest'
+export * from './UpComingHoliday'
 export * from './DatePicker'
 export * from './PageHeader'
 export * from './ContentMenu'
@@ -47,6 +48,7 @@ export * from './IconButton'
 export * from './EvaluationPersonCard';
 export * from './EvaluationStats';
 export * from './TextArea';
+export * from './Table';
 export * from './TopPerformanceList';
 export * from './TopPerformanceCard';
 export * from './MonthChanger';

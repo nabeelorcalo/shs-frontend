@@ -1,4 +1,12 @@
+@import "../../../../../../scss/colors";
 .contract-new-template {
+  .text-editor{
+    border: 2px solid $white-bg-color;
+    &:hover{
+      background-color: $white-bg-color;
+      border: 2px solid $input-hover-color;
+    }
+  }
   .ql-container {
     min-height: 10rem;
     height: 100%;

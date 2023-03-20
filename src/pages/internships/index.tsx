@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DropDown, SearchBar, PageHeader, FiltersButton, LeaveRequest } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import GlobalTable from "../../components/Table/Table";
+import {GlobalTable} from "../../components";
 import { Avatar, Button, Popover, Divider } from 'antd';
 import { More } from "../../assets/images"
 import { InternshipsIcon } from "../../assets/images";

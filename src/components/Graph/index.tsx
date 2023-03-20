@@ -35,9 +35,9 @@ const Graph = (props: any) => {
       </BoxWrapper> */}
 
       {/* Feedback Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper > */}
         <GraphOne graphName={constants.FEEDBACk} />
-      </BoxWrapper>
+      {/* </BoxWrapper> */}
 
       {/* Attendance Graph */}
       {/* <BoxWrapper >

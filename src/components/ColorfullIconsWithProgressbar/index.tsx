@@ -1,6 +1,6 @@
 import { Progress } from "antd";
-import "./ColorfullIconWithProgressbar.scss";
-import icon from "../../assets/images/ColorfullIconsProgressbar/media.svg";
+import "./style.scss";
+
 interface ColorfullIconsWithProgressbarProps {
   icon?: string;
   title: string;
@@ -8,8 +8,8 @@ interface ColorfullIconsWithProgressbarProps {
   alt?: string;
   progressbarValue: number;
   progressbarColor: string;
-}
-[];
+}[];
+
 export const ColorfullIconsWithProgressbar = (props: any) => {
   const { arraydata } = props;
   return (

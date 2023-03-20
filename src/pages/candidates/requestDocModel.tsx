@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Modal } from 'antd';
+import { Modal } from 'antd';
 import { DropDown } from '../../components';
 import "./style.scss"
 import { CloseCircleIcon } from '../../assets/images';
