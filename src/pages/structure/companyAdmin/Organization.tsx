@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { Avatar, Button } from "antd";
+import { Avatar} from "antd";
 import { UpOutlined } from "@ant-design/icons/lib/icons";
 import "./style.scss";
-import organization from "./org.json";
+
 
 import {
   StructureCompanyAdminAvater,

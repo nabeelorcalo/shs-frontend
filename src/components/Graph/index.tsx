@@ -7,7 +7,7 @@ import GraphFive from './graphForLifeAssessmentAndLifeBalance/lifeAssessment';
 import GraphSix from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
 import constants from '../../config/constants';
 
-// import {BoxWrapper} from '../../components/BoxWrapper/BoxWrapper';
+import {BoxWrapper} from '../../components/BoxWrapper/BoxWrapper';
 // import "./style.scss"
 // import BoxWrapper from '../BoxWrapper/BoxWrapper';
 
@@ -18,11 +18,10 @@ const Graph = (props: any) => {
     <div className='p-4'>
 
       {/* <BoxWrapper >
-      <BoxWrapper >
         <GraphSix monthName="Jan" />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <GraphFive monthName="Jan" />
       </BoxWrapper> */}
 
@@ -36,9 +35,9 @@ const Graph = (props: any) => {
       </BoxWrapper> */}
 
       {/* Feedback Graph */}
-      {/* <BoxWrapper >
+      {/* <BoxWrapper > */}
         <GraphOne graphName={constants.FEEDBACk} />
-      </BoxWrapper> */}
+      {/* </BoxWrapper> */}
 
       {/* Attendance Graph */}
       {/* <BoxWrapper >

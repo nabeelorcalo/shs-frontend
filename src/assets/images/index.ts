@@ -128,7 +128,6 @@ export { ReactComponent as StarFilledIcon } from './StarFilled.svg';
 // three dots icon
 export { ReactComponent as ThreeDotsIcon } from './MoreIcon.svg';
 
-
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
@@ -156,7 +155,6 @@ export { ReactComponent as EducationWhiteSub } from "../../assets/images/digivau
 export { ReactComponent as BankingWhiteSub } from "../../assets/images/digivault/manageVault/white/bankSubWhite.svg";
 export { ReactComponent as HealthWhiteSub } from "../../assets/images/digivault/manageVault/white/healthSubWhite.svg";
 export { ReactComponent as TransWhiteSub } from "../../assets/images/digivault/manageVault/white/transWhite.svg";
-
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./SaveIcon.svg";
@@ -271,9 +269,7 @@ export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.s
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
 export { default as WishesBox } from './dashboard/wishesBox.gif';
 
-
 // contract
-
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg"
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
 export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
@@ -287,8 +283,8 @@ export { ReactComponent as  ClockDarkIcon} from '../images/ClockDarkIcon.svg';
 export { ReactComponent as  TagPrimaryIcon} from '../images/TagPrimaryIcon.svg';
 export { ReactComponent as  TagSuccessIcon} from '../images/TagSuccessIcon.svg';
 export { ReactComponent as  TagWarningIcon} from '../images/TagWarningIcon.svg';
-// candidates
 
+// candidates
 export { ReactComponent as CvIcon } from './cvIcon.svg';
 export { ReactComponent as DbsIcon } from './dbsIcon.svg';
 export { ReactComponent as UalIcon } from './ualIcon.svg';
@@ -321,6 +317,9 @@ export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
 export { ReactComponent as GrievancesDocPDF  } from './Grievances/document-pdf.svg';
 export { ReactComponent as GrievancesDocJPG  } from './Grievances/document-jpg.svg';
 export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-download.svg';
+export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
+export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
+export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
 
 
 

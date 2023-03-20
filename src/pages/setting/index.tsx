@@ -1,18 +1,13 @@
-import { Col, Row, Typography, Divider } from "antd";
-
-
+import { Col, Row, Divider } from "antd";
 import { Outlet } from "react-router-dom";
 import { SettingHorizontalLine } from "../../assets/images";
 import { PageHeader } from "../../components";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
 import "./style.scss";
 
-const { Title } = Typography;
-
 const Setting = (props: any) => {
   return (
     <div className="setting">
-  
      <PageHeader title={<div> {props.title}  {<SettingHorizontalLine className=""/>} Setting </div>} />
       <Divider className="my-1 mb-3" />
       <Row gutter={16} className="mt-5">
@@ -23,7 +18,6 @@ const Setting = (props: any) => {
         </Col>
         <Col span={21} sm={16} lg={19}>
           {props.children}
-
           <Outlet />
         </Col>
       </Row>

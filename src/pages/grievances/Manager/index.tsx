@@ -5,7 +5,9 @@ import { PageHeader, SearchBar } from '../../../components';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 const { Title, Text } = Typography;
 import './style.scss';
-import { AllGrievances, Clock24h, ClockGrievances, InProgressGrievances, LineGrievances, NewGrievances, ResolevedGrievances } from '../../../assets/images';
+import { AllGrievances, Clock24h, ClockGrievances, GrievancesAvater, GrievancesDisLike, GrievancesLike, InProgressGrievances, LineGrievances, NewGrievances, ResolevedGrievances } from '../../../assets/images';
+import Graph from '../../../components/Graph';
+import { GrievanceStats } from '../../../components/ChartsOfGraphs/grievanceStats/grievanceStats';
 
 const index = () => {
   let overview = [
@@ -33,18 +35,6 @@ const index = () => {
       icon: <ResolevedGrievances />
     },
   ];
-  let timeData = [
-    {
-      title: "Avg Resolution Time",
-      icon: <Clock24h />,
-      time: "20:20"
-    },
-    {
-      title: "Avg ResponseTime",
-      icon: <ClockGrievances />,
-      time: "20:20"
-    },
-  ]
 
   const handleChange = () => {
   }
@@ -93,7 +83,7 @@ const index = () => {
                     </Text>
                   </div>
                 </div>
-                <LineGrievances className='ml-5'/>
+                <LineGrievances className='ml-5' />
               </div>
               <div className='flex flex-row  w-full'>
                 <div className='flex flex-row'>
@@ -111,11 +101,73 @@ const index = () => {
             </div>
           </BoxWrapper>
         </Col>
+        <Col className="gutter-row" xs={24} md={24} lg={12}>
+          <div className='grievance-card relative flex items-center overflow-hidden rounded-lg w-full'>
+            <BoxWrapper className='card-progress-box flex   flex-wrap'>
+              <div className="total-hours flex items-center justify-between flex-1 gap-10">
+                <div className='flex items-center'>
+                  <GrievancesAvater />
+                  <div className='flex flex-col mx-2'>
+                    <Text className='text-sm font-normal'>Darlene Robertson</Text>
+                    <Text className='text-sm font-normal'>UI UX Designer</Text>
+                  </div>
+                </div>
+                <div className=' gap-2'>
+                  <span>Grievances Type:</span><span className='px-2'>Attendance Log Issue</span>
+                </div>
+              </div>
 
+              <div className="view-all-btn">
+                <span className='capitalize' >view all</span>
+              </div>
 
+            </BoxWrapper>
+          </div>
+        </Col>
       </Row>
-
-
+      <Row gutter={[10, 10]} className="mt-5">
+        <Col xs={24} md={24} lg={12}>
+          <BoxWrapper>
+            <div className='flex justify-between'>
+              <Text className='text-xl font-medium'>Resolution Feedback </Text>
+              <div className='flex justify-between lg:w-[35%]'>
+                <div > <GrievancesLike /><span className='text-sm teriary-color '> 71% Positive</span></div>
+                <div ><GrievancesDisLike /><span className='text-sm secondary-color'> 29% Negative</span></div>
+              </div>
+            </div>
+            <Graph graphName="feedback" />
+          </BoxWrapper>
+        </Col>
+        <Col xs={24} md={24} lg={12}>
+          <div className=''>
+          <div className='flex justify-between'>
+              <Text className='text-xl font-medium'>Resolution Feedback </Text>
+              <div className='flex justify-between lg:w-[35%]'>
+              
+              </div>
+            </div>
+          <GrievanceStats
+            color={[
+              '#9BD5E8',
+              '#F08D97',
+              '#78DAAC',
+              '#FFC15D'
+            ]}
+            groupField="month"
+            isGroup
+            isStack
+            legend={{
+              layout: 'horizontal',
+              position: 'top-right'
+            }}
+            seriesField="product_sub_type"
+            statsHeading=""
+            xField="product_type"
+            yField="order_amt"
+          />
+          </div>
+        </Col>
+      </Row>
     </div>
   )
 }

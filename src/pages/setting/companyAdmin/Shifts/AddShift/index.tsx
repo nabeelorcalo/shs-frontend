@@ -129,14 +129,14 @@ const AddShift: React.FC = () => {
                 </div>
               </div>
               <Form.Item
-                name="policyName"
+                name="shiftDuration"
                 label="Shift Duration"
                 rules={[{ message: "Please Enter your username!" }]}
               >
                 <Input placeholder="0" />
               </Form.Item>
               <Form.Item
-                name="policyName"
+                name="roundOffCap"
                 label="Round Off Cap"
                 rules={[{ message: "Please Enter your username!" }]}
               >

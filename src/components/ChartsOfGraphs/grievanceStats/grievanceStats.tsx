@@ -26,9 +26,11 @@ export const GrievanceStats = (props: any) => {
         legend: legend
     };
     return (
-        <BoxWrapper>
-            {statsHeading && <p className='text-secondary-color font-medium text-xl'>{statsHeading}</p>}
+        // <BoxWrapper>
+        <>
+        {statsHeading && <p className='text-secondary-color font-medium text-xl'>{statsHeading}</p>}
             <Column {...config} columnWidthRatio={.3} />
-        </BoxWrapper>
+            </>    
+        // </BoxWrapper>
     )
 }

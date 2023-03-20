@@ -9,7 +9,7 @@ import {
   Input,
   Typography,
 } from "antd";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
 import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";

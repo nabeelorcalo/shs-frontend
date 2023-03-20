@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
-import {
-
-  SettingTimesheetIcon,
-} from "../../../../assets/images";
+import { SettingTimesheetIcon,} from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../../components/Model";
-
 import "./style.scss";
 
 const { TextArea } = Input;

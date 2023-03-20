@@ -20,7 +20,6 @@ import {
   TemplateCertificateLarger,
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
-import { EyeTwoTone } from "@ant-design/icons";
 import { EyeFilled } from "@ant-design/icons/lib/icons";
 import { PopUpModal } from "../../../../../../components";
 const { Title, Paragraph } = Typography;
