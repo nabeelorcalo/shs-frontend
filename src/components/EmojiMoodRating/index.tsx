@@ -12,11 +12,11 @@ interface EmojiProps {
 }
 
 const EmojiMoodRating = (props: EmojiProps) => {
-  const { title, data, size = 3, activeIconIndex = -1 } = props;
+  const { title, data, size = 3, activeIconIndex = -1, onClick } = props;
 
   return (
     <BoxWrapper className='my-2'>
-      <div className="flex flex-col gap-2 w-full h-full">
+      <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
         <Typography.Title className='emoji-heading' level={size}>
           {title}
         </Typography.Title>
@@ -28,11 +28,11 @@ const EmojiMoodRating = (props: EmojiProps) => {
                   <div className='emoji-container text-[#363565]'>
                     <div
                       key={idx}
-                      className='flex flex-col items-center'
-                      onClick={() => console.log(item.name)}
+                      className={`flex flex-col items-center ${idx}`}
+                      onClick={onClick}
                     >
                       {
-                        activeIconIndex === idx +1 || activeIconIndex === -1 ?
+                        activeIconIndex === idx + 1 || activeIconIndex === -1 ?
                           <item.comp className='svgIcon' />
                           :
                           <item.colorLessComp className='svgIcon' />

@@ -1,4 +1,4 @@
-import AccommodationCard from '../../components/AccommodationCard/AccommodationCard';
+import {AccommodationCard} from '../../components';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {

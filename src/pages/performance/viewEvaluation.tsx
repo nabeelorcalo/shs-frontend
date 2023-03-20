@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Typography } from "antd";
-import constants from "../../config/constants";
+import { Link } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import {
   PageHeader,
@@ -23,7 +24,6 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
-
   const user = {
     name: 'Calvin Grayson',
     profession: 'Manager',
@@ -96,6 +96,42 @@ const ViewPerformance = () => {
     alert('download popup');
   }
 
+  const breadCrumbs = () => {
+    const role = constants.USER_ROLE;
+
+    switch (role) {
+      case 'Intern':
+        return (
+          <Link
+            className="bread-crumb"
+            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+          >
+            Performance
+          </Link>
+        );
+      case 'CompanyAdmin':
+        return (
+          <>
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+            >
+              Performance
+            </Link>
+            /
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
+            >
+              Performance History
+            </Link>
+          </>
+        );
+      default:
+        return <></>;
+    }
+  }
+
   return (
     <div className="view-evaluation">
       <PageHeader
@@ -104,7 +140,7 @@ const ViewPerformance = () => {
           <div className="font-medium">
             Evaluation Form
             <span className="vertical-line">
-              Performance
+              {breadCrumbs()}
             </span>
           </div>
         }
@@ -127,7 +163,7 @@ const ViewPerformance = () => {
       </div>
 
       <div className="flex flex-row flex-wrap gap-4">
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationCard
             name={user.name}
             avatar={user.avatar}
@@ -135,7 +171,7 @@ const ViewPerformance = () => {
           />
         </div>
 
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationStatsCard
             name='Learning Objectives'
             percentage={user.learningObjectives}
@@ -143,7 +179,7 @@ const ViewPerformance = () => {
           />
         </div>
 
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationStatsCard
             name='Discipline'
             percentage={user.discipline}
@@ -151,7 +187,7 @@ const ViewPerformance = () => {
           />
         </div>
 
-        <div className="w-[24%]">
+        <div className="w-[23%]">
           <EvaluationStatsCard
             name='Personal'
             percentage={user.personal}
@@ -194,10 +230,10 @@ const ViewPerformance = () => {
 
         <TextArea
           disabled
-          rows = {6}
+          rows={6}
           classNme='light-blue-bg-color text-primary-color'
-          placeholder = "placeholder"
-          defaultValue = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
+          placeholder="placeholder"
+          defaultValue='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
         />
       </div>
     </div>

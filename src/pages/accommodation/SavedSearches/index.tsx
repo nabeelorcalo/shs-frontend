@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import AccommodationCard from '../../../components/AccommodationCard/AccommodationCard'
+import { AccommodationCard } from '../../../components'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import thumb2 from '../../../assets/images/gallery/thumb2.png'
@@ -44,9 +44,9 @@ const SavedSearches = () => {
   return (
     <div className="saved-searches">
       <div className="shs-row">
-        {data.map((property) => {
+        {data.map((property, index) => {
           return (
-            <div className="shs-col-5">
+            <div key={index} className="shs-col-5">
               <AccommodationCard
                 coverPhoto={property.coverPhoto}
                 discount={property.discount}

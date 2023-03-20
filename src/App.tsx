@@ -1,11 +1,13 @@
 import React, { FC, useEffect } from 'react'
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
-import { getRoutes } from "./routes";
-import "./App.scss";
+import { useRecoilState } from 'recoil';
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
+import { getRoutes } from "./routes";
+import "./App.scss";
 import constants from './config/constants';
-import { RecoilRoot } from 'recoil';
+import { ConfigProvider } from "antd";
+import { themeState } from './store';
 
 function App() {
   /* VARIABLE DECLARATION
@@ -13,6 +15,8 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const userData: any = JSON.parse(localStorage.getItem("UserData") || "{}");
+  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+
   // const user_role = userData.role; // Uncomment it when login implemented
   const user_role = userData.role || constants.USER_ROLE;
   const publicRoutes = getRoutes('Public');
@@ -39,11 +43,11 @@ function App() {
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <RecoilRoot>
+    <ConfigProvider theme={currentTheme}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
         {pages}
       </ErrorBoundary>
-    </RecoilRoot>
+    </ConfigProvider>
   );
 }
 export default App;
