@@ -5,8 +5,8 @@ import { DropDown, BoxWrapper, SimpleTimer } from "../../../components";
 import TimelineCalendar from "../timelineCalendar";
 import InternTable from "./internTable";
 import TaskDetails from "./taskDetails";
-import './style.scss';
 import { useNavigate } from "react-router-dom";
+import './style.scss';
 
 const Intern = () => {
 
@@ -26,7 +26,7 @@ const Intern = () => {
         </Button>
       </div>
       <Row gutter={[25, 25]}>
-        <Col xl={16}>
+        <Col xl={16} xs={24}>
           <BoxWrapper boxShadow={boxShadow} className="add-new-wrapper flex items-center justify-between flex-wrap gap-4">
             <div className="add-new-task flex items-center gap-3 cursor-pointer">
               <AddIcon />
@@ -47,7 +47,7 @@ const Intern = () => {
           <TimelineCalendar />
           <InternTable />
         </Col>
-        <Col xl={8}>
+        <Col xl={8} xs={24}>
           <TaskDetails />
         </Col>
       </Row>
