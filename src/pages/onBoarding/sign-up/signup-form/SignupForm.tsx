@@ -9,7 +9,7 @@ const SignupForm = () => {
   const navigate = useNavigate(); 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
-    navigate('/login');
+    navigate('/verification-steps');
   };
 
   const { Option } = Select;
