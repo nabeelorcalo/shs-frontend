@@ -56,7 +56,9 @@ const Recipes = () => {
           </div>
         </div>
         <div className="page-filterbar-right">
-          <ExtendedButton customType="tertiary" icon={<IconAddRecipe />}>Add New Recipe</ExtendedButton>
+          <ExtendedButton onClick={() => navigate('/add-recipe')} customType="tertiary" icon={<IconAddRecipe />}>
+            Add New Recipe
+          </ExtendedButton>
         </div>
       </div>
 

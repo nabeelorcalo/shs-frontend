@@ -80,6 +80,7 @@ export const ROUTES_CONSTANTS: any = {
   PROFILE: "profile",
   RECIPES: "recipes",
   RECIPE_DETAILS: "recipe/:recipeId",
+  ADD_RECIPE: "add-recipe",
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
   LISTINGS: "listings",
