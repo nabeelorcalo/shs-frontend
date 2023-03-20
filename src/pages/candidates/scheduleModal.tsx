@@ -3,7 +3,7 @@ import { Modal, TimePicker } from 'antd';
 import "./style.scss"
 import { ArrowDownDark, CloseCircleIcon, UserAvatar } from '../../assets/images';
 import DateAndTimePicker from '../../components/DateAndTimePicker/DateAndTimePicker';
-import { SearchBar } from '../../components';
+import { CommonDatePicker, DatePicker, SearchBar } from '../../components';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import { CheckBox } from '../../components/Checkbox';
 
@@ -11,6 +11,8 @@ const RequestDocModel = (props: any) => {
 
   const { open, setOpen, handleReject, } = props;
   const [user, setUser] = useState({ userName: 'Select' });
+  const [isOpenDate, setIsOpenDate] = useState(false);
+  const [dateTimeVal, setDateTimeVal] = useState('');
 
   const userData = [
     {
@@ -41,7 +43,11 @@ const RequestDocModel = (props: any) => {
         <div className='title'><p>Date</p></div>
         <div className='dateAndTime'>
 
-          <DateAndTimePicker size={"middle"} label={""} />
+          <CommonDatePicker open={isOpenDate}
+            name={'Date Picker'}
+            setOpen={setIsOpenDate}
+            setValue={setDateTimeVal}
+          />
         </div>
 
         <div className='asignee-wrapper mt-7'>

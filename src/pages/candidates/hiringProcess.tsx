@@ -57,7 +57,7 @@ const HiringProcess = () => {
       </div>
 
       <div className="pipeline mt-10 ml-8">
-        <HiringPipeline />
+        <HiringPipeline hiringList={['applied']} />
       </div>
 
       <div className="details mt-7 ">
