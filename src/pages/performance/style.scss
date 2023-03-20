@@ -167,6 +167,16 @@
   .performace-history-list {
     margin: 20px 0;
   }
+
+  .ant-progress-text {
+    font-size: 16px;
+    padding: 0 0 0 8px;
+    margin: auto;
+
+    p {
+      color: $text-secondary-body-color !important;
+    }
+  }
 }
 
 // Sidebar
@@ -252,9 +262,9 @@
     color: $white-bg-color;
   }
 
-  .ant-progress-text{
-    // font-size: 16px;
-    padding: 0 0 0 6px;
+  .ant-progress-text {
+    font-size: 16px;
+    padding: 0 0 0 8px;
     margin: auto;
     color: $text-secondary-body-color;
   }

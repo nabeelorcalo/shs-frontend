@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from 'antd';
-// import all reusable componets from component/index.ts
-import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader } from "../../../components";
-import Table from "../../../components/Table";
-// end
+import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader, GlobalTable } from "../../../components";
 import { MoreIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import { Link } from "react-router-dom";
@@ -266,7 +263,7 @@ const InternPerformance = () => {
             <Typography.Title level={4} >
               Evaluation  History
             </Typography.Title>
-            <Table
+            <GlobalTable
               columns={evaluationHistoryColumnNames}
               tableData={evaluationHistoryData}
               pagination={false}
