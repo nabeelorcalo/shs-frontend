@@ -159,7 +159,7 @@ const index = () => {
         bordered
         title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
       />
-      <Row className=' items-center'>
+      <Row className=' items-center' gutter={[10,10]}>
         <Col xs={24} md={12} lg={12}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
             console.log(e);
@@ -248,7 +248,7 @@ const index = () => {
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-          type='success'
+          type='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
