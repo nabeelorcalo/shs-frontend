@@ -80,6 +80,7 @@ const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/Prop
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const RecipeDetails = Loadable(lazy(() => import("./pages/recipes/RecipeDetails")));
 const AddRecipe = Loadable(lazy(() => import("./pages/recipes/AddRecipe")));
+const EditRecipe = Loadable(lazy(() => import("./pages/recipes/EditRecipe")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const Report = Loadable(lazy(() => import("./pages/report")));
@@ -972,9 +973,14 @@ const studentRoutes = [
         element: <RecipeDetails />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ADD_RECIPE}`,
-        path: `${ROUTES_CONSTANTS.ADD_RECIPE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
         element: <AddRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        element: <EditRecipe />,
       },
       {
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,

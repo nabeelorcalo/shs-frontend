@@ -197,6 +197,9 @@ export { ReactComponent as IconMore } from "./accommodation/icon-more.svg";
 export { ReactComponent as IconSignedDigitally } from "./accommodation/icon-signed-digitally.svg";
 export { ReactComponent as Documentcard } from "./accommodation/document-card.svg";
 export { ReactComponent as IconReceipt } from "./accommodation/icon-receipt.svg";
+export { ReactComponent as IconAngleDown } from "./accommodation/icon-angle-down.svg";
+export { ReactComponent as IconDocumentDownload } from "./accommodation/icon-document-download.svg";
+
 
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
@@ -327,6 +330,8 @@ export { ReactComponent as IconPreparationTime } from './recipes/icon-preparatio
 export { ReactComponent as IconServing } from './recipes/icon-serving.svg';
 export { ReactComponent as IconEditRecipe } from './recipes/icon-edit.svg';
 export { ReactComponent as IconTrashRecipe } from './recipes/icon-trash.svg';
+export { ReactComponent as IconUploadLg } from './recipes/icon-upload-lg.svg';
+
 
 // Performance
 export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
