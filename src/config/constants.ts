@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Manager",
+  USER_ROLE: "CompanyAdmin",
 };
 
 // Possibe string of roles:
@@ -45,6 +45,9 @@ export const ROUTES_CONSTANTS: any = {
   TIMESHEET: "timesheet",
   TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
+  VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
+  EVALUATION_FORM: "evaluation-form",
+  EVALUATE: "evaluate",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
@@ -74,11 +77,13 @@ export const ROUTES_CONSTANTS: any = {
   RENTED_PROPERTIES: "rented-properties",
   BOOKING_REQUESTS: "booking-requests",
   ACCOMMODATION_PAYMENTS: "payments",
-  PROPERTY_DETAIL: "property",
+  PROPERTY_DETAIL: "property/:propertyId",
   SEARCH_JOBS: "search-jobs",
   APPLICATION: "application",
   PROFILE: "profile",
   RECIPES: "recipes",
+  RECIPE_DETAILS: "recipe/:recipeId",
+  ADD_RECIPE: "add-recipe",
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
   LISTINGS: "listings",
@@ -114,6 +119,7 @@ export const ROUTES_CONSTANTS: any = {
   PAYROLL_ADD_CATEGORY:"/settings/payroll/add-category",
   ALL_GRIEVANCES:"/grievances/all-grievance",
   GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
+  HISTORY: 'history',
 };
 
 export const STATUS_CONSTANTS: any = {

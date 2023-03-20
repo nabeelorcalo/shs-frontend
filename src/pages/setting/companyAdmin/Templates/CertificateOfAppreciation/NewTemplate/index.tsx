@@ -158,7 +158,6 @@ const NewTemplateCertificationOfAppreciation = () => {
                 <Col className="gutter relative" xs={24} xl={12}>
                   <div
                     style={{ border: `2px solid ${borderColorSecond.color}` }}
-
                     className="cursor-pointer certificate-card "
                   >
                     {borderColorSecond.toggle && (

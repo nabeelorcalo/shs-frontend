@@ -1,0 +1,16 @@
+.evaluation-stats-card {
+  padding: 4px 20px !important;
+  
+  .evaluation-stats-name {
+    margin-bottom: 0 !important;
+  }
+
+  .percentage-txt {
+    margin: 0 0 0 auto !important;
+  }
+
+  .ant-progress.ant-progress-show-info .ant-progress-outer {
+    margin-inline-end: 0;
+    padding-inline-end: 0;
+  }
+}

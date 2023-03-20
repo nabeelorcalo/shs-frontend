@@ -4,7 +4,6 @@ import { Avatar} from "antd";
 import { UpOutlined } from "@ant-design/icons/lib/icons";
 import "./style.scss";
 
-
 import {
   StructureCompanyAdminAvater,
   StructureCompanyAdminDownward,

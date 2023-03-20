@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react"
 import { Link } from 'react-router-dom'
 import type { DatePickerProps, RadioChangeEvent  } from 'antd'
-import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input } from 'antd'
-// import {Collapse} from 'react-collapse';
-import { SaveIcon, IconInfoCircle, IconMasterCard, IconVisaCard, IconAddCircle, IconProfileCircleWhite } from '../../../../assets/images'
+import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space } from 'antd'
+import useCollapse from 'react-collapsed';
 import { DatePicker, PopUpModal, ExtendedButton } from "../../../../components"
+import {
+  SaveIcon,
+  IconInfoCircle,
+  IconMasterCard,
+  IconVisaCard,
+  IconAddCircle,
+  IconProfileCircleWhite 
+} from '../../../../assets/images'
 import './style.scss'
 
 // Temporary
@@ -23,8 +30,10 @@ const PropertyPricing = () => {
   const [modalAddPaymentOpen, setModalAddPaymentOpen] = useState(false)
   const [modalAddCardOpen, setModalAddCardOpen] = useState(false)
   const [paymentMethodValue, setPaymentMethodValue] = useState()
-  const [verificationCode, setVerificationCode] = useState(false)
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false)
+  const [ isExpanded, setExpanded ] = useState(false);
+  const { getCollapseProps, getToggleProps } = useCollapse({isExpanded});
+  const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
 
 
   
@@ -38,10 +47,6 @@ const PropertyPricing = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const onFinish = (values: any) => {
-    console.log('Form Values: ', values);
-  }
-
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log('DatePickerProps::: ', date, dateString);
   }
@@ -66,6 +71,15 @@ const PropertyPricing = () => {
     setModalAddRequestMessageOpen(false)
   }
 
+  const onCheckboxChange = (e: { target: { checked: boolean } }) => {
+    setIsAcceptPolicy(e.target.checked);
+  }
+
+  const submitBookingRequest = (values: any) => {
+    console.log('Form Values: ', values);
+    openModalAddRequestMessage()
+  }
+
   const submitAddRequestMessage = (values: any) => {
     console.log('Form Values: ', values);
     setModalAddRequestMessageOpen(false)
@@ -78,6 +92,7 @@ const PropertyPricing = () => {
 
   const closeModalAddPayment = () => {
     setModalAddPaymentOpen(false)
+    setExpanded(false)
   }
 
   const openModalAddCard = () => {
@@ -111,6 +126,16 @@ const PropertyPricing = () => {
     // } 
   }
 
+  const handleVerificationCodeExpand = () => {
+    setExpanded(!isExpanded)
+  }
+
+  const submitAddPayment = (values: any) => {
+    console.log('Add payment submit: ', values);
+    closeModalAddPayment();
+    openModalPaymentReceipt();
+  }
+
 
   
   /* RENDER APP
@@ -130,7 +155,7 @@ const PropertyPricing = () => {
           </div>
         </div>
 
-        <Form layout="vertical" name="bookingRequest" onFinish={onFinish}>
+        <Form layout="vertical" name="bookingRequest" onFinish={submitBookingRequest}>
           <Row gutter={20}>
             <Col xs={12}>
               <Form.Item name="moveInDate" label="Move-in Date">
@@ -166,8 +191,8 @@ const PropertyPricing = () => {
                 </div>
                 
                 {checkAvailability ? (
-                  <Form.Item>
-                    <Checkbox>
+                  <Form.Item name="acceptPolicy">
+                    <Checkbox checked={isAcceptPolicy} onChange={onCheckboxChange}>
                       I accept that I have read and understand the information given in <Link to="">disclaimer</Link> and <Link to="">cancelation policy</Link> .
                     </Checkbox>
                   </Form.Item>
@@ -181,7 +206,7 @@ const PropertyPricing = () => {
             <Col xs={24}>
               {checkAvailability ? (
                 <Form.Item>
-                  <Button type="primary" block onClick={openModalAddRequestMessage}>
+                  <Button type="primary" block htmlType="submit" disabled={!isAcceptPolicy}>
                     Send Booking Request
                   </Button>
                 </Form.Item>
@@ -254,53 +279,56 @@ const PropertyPricing = () => {
         open={modalAddPaymentOpen}
         close={closeModalAddPayment}
         width={700}
-        footer={[
-          <ExtendedButton customType="tertiary" ghost onClick={closeModalAddPayment}>Cancel</ExtendedButton>,
-          <ExtendedButton customType="tertiary" onClick={() => setVerificationCode(!verificationCode)}>Pay</ExtendedButton>
+        footer={isExpanded ? null : [
+          <Space>
+            <ExtendedButton customType="tertiary" ghost onClick={closeModalAddPayment}>Cancel</ExtendedButton>
+            <div {...getToggleProps({onClick: handleVerificationCodeExpand})}><ExtendedButton customType="tertiary">Pay</ExtendedButton></div>
+          </Space> 
         ]}
       >
-        <ul className="payment-card-list">
+        <Form layout="vertical" name="addPayment" onFinish={submitAddPayment}>
+          <ul className="payment-card-list">
 
-          {cardList &&
-            <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
-              {cardList.map((card) => {
-                return (
-                  <li>
-                    <div className="payment-card">
-                      <div className="payment-card-select">
-                        <Radio value={card.id} />
+            {cardList &&
+              <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
+                {cardList.map((card, index) => {
+                  return (
+                    <li key={index}>
+                      <div className="payment-card">
+                        <div className="payment-card-select">
+                          <Radio value={card.id} />
+                        </div>
+                        <div className="payment-card-icon">
+                          {card.type === 'master' &&
+                            <IconMasterCard />
+                          }
+                          {card.type === 'visa' &&
+                            <IconVisaCard />
+                          }
+                        </div>
+                        <div className="payment-card-detail">
+                          <div className="payment-card-title">{card.title}</div>
+                          <div className="payment-card-number">{card.number}</div>
+                        </div>
                       </div>
-                      <div className="payment-card-icon">
-                        {card.type === 'master' &&
-                          <IconMasterCard />
-                        }
-                        {card.type === 'visa' &&
-                          <IconVisaCard />
-                        }
+                      <div className="payment-card-actions">
+                        <Button type="text" danger>Remove</Button>
                       </div>
-                      <div className="payment-card-detail">
-                        <div className="payment-card-title">{card.title}</div>
-                        <div className="payment-card-number">{card.number}</div>
-                      </div>
-                    </div>
-                    <div className="payment-card-actions">
-                      <Button type="text" danger>Remove</Button>
-                    </div>
-                  </li> 
-                )
-              })}
-            </Radio.Group>
-          }
-          
-          <li className="add-new-card" onClick={openModalAddCard}>
-            <div className="add-new-card-icon">
-              <IconAddCircle />
-            </div>
-            <div className="add-new-card-text">
-              Add New Card
-            </div>
-          </li>
-
+                    </li> 
+                  )
+                })}
+              </Radio.Group>
+            }
+            
+            <li className="add-new-card" onClick={openModalAddCard}>
+              <div className="add-new-card-icon">
+                <IconAddCircle />
+              </div>
+              <div className="add-new-card-text">
+                Add New Card
+              </div>
+            </li>
+          </ul>
           <div className="payable-amount-detail">
             <div className="payable-amout-row">
               <div className="amount-col payable-amout-installment">
@@ -314,7 +342,7 @@ const PropertyPricing = () => {
             </div>
           </div>
 
-          <div className="payment-verification-code">
+          <div className="payment-verification-code" {...getCollapseProps()}>
             <div className="verification-code-wrap">
               <div className="verification-code-title">Verification Code</div>
               <div className="verification-code-message">
@@ -341,15 +369,14 @@ const PropertyPricing = () => {
               </div>
               <div className="code-expire-text">Code expire in 15:00</div>
               <div className="verification-code-submit">
-                <ExtendedButton block customType="tertiary">Submit</ExtendedButton>
+                <ExtendedButton block customType="tertiary" htmlType="submit">Submit</ExtendedButton>
               </div>
               <div className="resend-code">
                 Didn’t get a code? <span>Resend</span>
               </div>
             </div>
           </div>
-
-        </ul>
+        </Form>
       </PopUpModal>
       {/* ENDS: MODAL ADD PAYMENT
       *************************************************************************/}
@@ -387,6 +414,7 @@ const PropertyPricing = () => {
         open={modalPaymentReceiptOpen}
         close={closeModalPaymentReceipt}
         width={700}
+        footer={null}
       >
         <div className="payment-receipt-wrapper">
           <div className="payment-receipt-header">
@@ -444,7 +472,7 @@ const PropertyPricing = () => {
             </div>
           </div>
 
-          <ExtendedButton block customType="tertiary">Print Receipt</ExtendedButton>
+          <ExtendedButton block customType="tertiary" onClick={closeModalPaymentReceipt}>Print Receipt</ExtendedButton>
 
         </div>
       </PopUpModal>

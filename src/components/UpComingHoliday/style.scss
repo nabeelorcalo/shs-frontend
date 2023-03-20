@@ -1,0 +1,34 @@
+@import "../../scss/colors";
+
+.left_upcoming_holiudays {
+  .upcomming_Holiday {
+    color: $text-secondary-body-color;
+  }
+
+  .upcoming_holidayList {
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .List_item_wrapper {
+      .List_item_main {
+        .left_side {
+          .light_text {
+            color: $text-success-placeholder-color;
+          }
+
+          .date_text {
+            color: $text-primary-title-color;
+          }
+        }
+
+        .holiday_typeText {
+          color: $text-primary-title-color;
+
+        }
+
+      }
+    }
+
+  }
+}

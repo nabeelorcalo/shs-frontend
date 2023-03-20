@@ -5,7 +5,18 @@ import { PageHeader, SearchBar } from '../../../components';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 const { Title, Text } = Typography;
 import './style.scss';
-import { AllGrievances, Clock24h, ClockGrievances, GrievancesAvater, GrievancesDisLike, GrievancesLike, InProgressGrievances, LineGrievances, NewGrievances, ResolevedGrievances } from '../../../assets/images';
+import {
+  AllGrievances,
+  Clock24h,
+  ClockGrievances,
+  GrievancesAvater,
+  GrievancesDisLike,
+  GrievancesLike,
+  InProgressGrievances,
+  LineGrievances,
+  NewGrievances,
+  ResolevedGrievances
+} from '../../../assets/images';
 import Graph from '../../../components/Graph';
 import { GrievanceStats } from '../../../components/ChartsOfGraphs/grievanceStats/grievanceStats';
 
@@ -140,31 +151,31 @@ const index = () => {
         </Col>
         <Col xs={24} md={24} lg={12}>
           <div className=''>
-          <div className='flex justify-between'>
+            <div className='flex justify-between'>
               <Text className='text-xl font-medium'>Resolution Feedback </Text>
               <div className='flex justify-between lg:w-[35%]'>
-              
+
               </div>
             </div>
-          <GrievanceStats
-            color={[
-              '#9BD5E8',
-              '#F08D97',
-              '#78DAAC',
-              '#FFC15D'
-            ]}
-            groupField="month"
-            isGroup
-            isStack
-            legend={{
-              layout: 'horizontal',
-              position: 'top-right'
-            }}
-            seriesField="product_sub_type"
-            statsHeading=""
-            xField="product_type"
-            yField="order_amt"
-          />
+            <GrievanceStats
+              color={[
+                '#9BD5E8',
+                '#F08D97',
+                '#78DAAC',
+                '#FFC15D'
+              ]}
+              groupField="month"
+              isGroup
+              isStack
+              legend={{
+                layout: 'horizontal',
+                position: 'top-right'
+              }}
+              seriesField="product_sub_type"
+              statsHeading=""
+              xField="product_type"
+              yField="order_amt"
+            />
           </div>
         </Col>
       </Row>

@@ -53,7 +53,7 @@ const GrievancesDetails = Loadable(lazy(() => import("./pages/Grievances/Manager
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(
-  lazy(() => import("./pages/structure/companyAdmin"))
+  lazy(() => import("./pages/Structure/companyAdmin"))
 );
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
@@ -62,7 +62,7 @@ const WithDrawalRequest = Loadable(
 );
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
-const Universities = Loadable(lazy(() => import("./pages/universities")));
+const Universities = Loadable(lazy(() => import("./pages/Universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
 const DelegateAgent = Loadable(lazy(() => import("./pages/delegateAgent")));
@@ -106,98 +106,98 @@ const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
-const Setting = Loadable(lazy(() => import("./pages/setting")));
+const Setting = Loadable(lazy(() => import("./pages/Setting")));
 const SettingPerformance = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Performance"))
+  lazy(() => import("./pages/Setting/companyAdmin/Performance"))
 );
 const SettingDepartment = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Department"))
+  lazy(() => import("./pages/Setting/companyAdmin/Department"))
 );
 const SettingLocation = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Location"))
+  lazy(() => import("./pages/Setting/companyAdmin/Location"))
 );
 const AddLocation = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Location/AddLocation"))
+  lazy(() => import("./pages/Setting/companyAdmin/Location/AddLocation"))
 );
 const SettingTemplate = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Templates"))
+  lazy(() => import("./pages/Setting/companyAdmin/Templates"))
 );
 const TemplatesOfferLater = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Templates/OfferLetter"))
+  lazy(() => import("./pages/Setting/companyAdmin/Templates/OfferLetter"))
 );
 const OfferLaterNewTemplate = Loadable(
   lazy(
     () =>
-      import("./pages/setting/companyAdmin/Templates/OfferLetter/NewTemplate")
+      import("./pages/Setting/companyAdmin/Templates/OfferLetter/NewTemplate")
   )
 );
 const TCA = Loadable(
   lazy(
     () =>
-      import("./pages/setting/companyAdmin/Templates/CertificateOfAppreciation")
+      import("./pages/Setting/companyAdmin/Templates/CertificateOfAppreciation")
   )
 );
 const TCANewTemplate = Loadable(
   lazy(
     () =>
       import(
-        "./pages/setting/companyAdmin/Templates/CertificateOfAppreciation/NewTemplate"
+        "./pages/Setting/companyAdmin/Templates/CertificateOfAppreciation/NewTemplate"
       )
   )
 );
 const TemplatesCertificateOfCompletion = Loadable(
   lazy(
     () =>
-      import("./pages/setting/companyAdmin/Templates/CertificateOfCompletion")
+      import("./pages/Setting/companyAdmin/Templates/CertificateOfCompletion")
   )
 );
 const TCCNewTemplate = Loadable(
   lazy(
     () =>
       import(
-        "./pages/setting/companyAdmin/Templates/CertificateOfCompletion/NewTemplate"
+        "./pages/Setting/companyAdmin/Templates/CertificateOfCompletion/NewTemplate"
       )
   )
 );
 const TemplatesContract = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Templates/Contract"))
+  lazy(() => import("./pages/Setting/companyAdmin/Templates/Contract"))
 );
 const ContractNewTemplate = Loadable(
   lazy(
-    () => import("./pages/setting/companyAdmin/Templates/Contract/NewTemplate")
+    () => import("./pages/Setting/companyAdmin/Templates/Contract/NewTemplate")
   )
 );
 const TemplatesRejectionLetter = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Templates/RejectionLetter"))
+  lazy(() => import("./pages/Setting/companyAdmin/Templates/RejectionLetter"))
 );
 const RejectionLetterNewTemplate = Loadable(
   lazy(
     () =>
       import(
-        "./pages/setting/companyAdmin/Templates/RejectionLetter/NewTemplate"
+        "./pages/Setting/companyAdmin/Templates/RejectionLetter/NewTemplate"
       )
   )
 );
 const SettingLeaves = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Leaves"))
+  lazy(() => import("./pages/Setting/companyAdmin/Leaves"))
 );
 const LeavesAddPolicy = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Leaves/AddPolicy"))
+  lazy(() => import("./pages/Setting/companyAdmin/Leaves/AddPolicy"))
 );
 const SettingShifts = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Shifts"))
+  lazy(() => import("./pages/Setting/companyAdmin/Shifts"))
 );
 const AddShift = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Shifts/AddShift"))
+  lazy(() => import("./pages/Setting/companyAdmin/Shifts/AddShift"))
 );
 const SettingTimesheet = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Timesheet"))
+  lazy(() => import("./pages/Setting/companyAdmin/Timesheet"))
 );
 const SettingPayroll = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Payroll"))
+  lazy(() => import("./pages/Setting/companyAdmin/Payroll"))
 );
 const PayrollAddCategory = Loadable(
-  lazy(() => import("./pages/setting/companyAdmin/Payroll/AddCategory"))
+  lazy(() => import("./pages/Setting/companyAdmin/Payroll/AddCategory"))
 );
 
 const Charts = Loadable(

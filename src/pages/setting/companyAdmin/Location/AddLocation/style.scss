@@ -1,5 +1,4 @@
 @import "../../../../../scss/_colors.scss";
-
 .add-location {
   .ant-form-item .ant-form-item-control-input-content {
     .ant-input {
@@ -22,7 +21,6 @@
       }
     }
   }
-
   .label {
     display: block;
     font-size: 16px;
@@ -48,7 +46,6 @@
       border: 2px solid $input-hover-color;
     }
   }
-
   .add-button {
     &:hover {
       opacity: 75%;

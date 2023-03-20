@@ -3,9 +3,8 @@ import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { Avatar, Button, Space } from "antd";
 import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
-import {  SettingRightArrrow } from "../../../assets/images";
+import { SettingRightArrrow } from "../../../assets/images";
 import "./SettingCommonModal.scss";
-
 interface ISETTINGCOMMONARRAY {
   selectArray: any;
   deselectArray: any;
@@ -52,17 +51,12 @@ const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
 
   return (
     <div>
-    
-
       <PopUpModal
         open={openModal}
         width={600}
-        close={()=>setOpenModal(false)}
+        close={() => setOpenModal(false)}
         title="Select Interns"
         footer=""
-       
-        
-       
       >
         <div className="setting-common-modal">
           <SearchBar size="middle" handleChange={handleChange} />
@@ -102,7 +96,6 @@ const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                 </div>
 
                 <span className="absolute bottom-[5px]">
-                  {" "}
                   Total : {selectArrayData.length}
                 </span>
               </div>
@@ -150,7 +143,7 @@ const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
             </BoxWrapper>
           </div>
           <div className="setting-common-modal-footer gap-2 flex justify-end">
-             <Button key="Cancel" className="footer-cancel-btn " onClick={()=>setOpenModal(false)}>
+            <Button key="Cancel" className="footer-cancel-btn " onClick={() => setOpenModal(false)}>
               Cancel
             </Button>
             <Button key="submit" className="footer-submit-btn ">

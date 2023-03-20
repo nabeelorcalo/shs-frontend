@@ -128,7 +128,6 @@ const AddLocation: React.FC = () => {
                 {/* <SearchBar size="middle" handleChange={handleChange} /> */}
                 <Input
                   className="input"
-
                   id="postCode"
                   label="Post Code"
                   name="postCode"
