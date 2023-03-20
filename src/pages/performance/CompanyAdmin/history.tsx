@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
 // import all reusable componets from component/index.ts
-import { PageHeader, SearchBar, FiltersButton, IconButton, DropDown, Button } from "../../../components";
+import { PageHeader, SearchBar, FiltersButton, IconButton, DropDown, Button, GlobalTable } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import Table from "../../../components/Table/Table";
 // end
 import { DownlaodFileIcon, GlassMagnifier, MoreIcon } from '../../../assets/images';
 import '../style.scss';
@@ -483,7 +482,7 @@ const PerformanceHistory = () => {
       </div>
 
       <div className="performace-history-list">
-        <Table
+        <GlobalTable
           columns={columnNames}
           tableData={evaluationHistoryData}
           pagination={false}
