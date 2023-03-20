@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
 
-export const SimpleTimer = () => {
+export const SimpleTimer = (props: any) => {
+    const { hideCounter, iconHiehgt = '50px', iconWidth = '51px' } = props;
 
     const [isRunning, setIsRunning] = useState(false);
     const [time, setTime] = useState(0);
@@ -20,15 +21,16 @@ export const SimpleTimer = () => {
 
     return (
         <div className="simple-tracker-wrapper flex items-center gap-3">
-            <p className="timer text-3xl font-medium text-[#4E4B66] flex items-center">
+            {!hideCounter && <p className="timer text-3xl font-medium text-[#4E4B66] flex items-center">
                 {hours.toString().padStart(2, '0')}
                 &nbsp;<span className="mt-[-7px]">:</span>&nbsp;
                 {minutes.toString().padStart(2, '0')}
                 &nbsp;<span className="mt-[-7px]">:</span>&nbsp;
                 {seconds.toString().padStart(2, '0')}
-            </p>
+            </p>}
             <span onClick={() => setIsRunning(!isRunning)}
-                className='cursor-pointer h-[50px] w-[51px] rounded-full bg-[#E9F8E7] flex items-center justify-center'>
+                style={{ height: iconHiehgt, width: iconWidth }}
+                className={`cursor-pointer rounded-full bg-[#E9F8E7] flex items-center justify-center`}>
                 {!isRunning ? <TimerPlayIcon className="h-[40px] w-[40px]" /> :
                     <TimerPauseIcon className="h-[40px] w-[40px]" />}
             </span>

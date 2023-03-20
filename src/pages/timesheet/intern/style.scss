@@ -42,4 +42,65 @@
             color: $text-secondary-body-color;
         }
     }
+
+    .intern-table {
+        .day-selection {
+            color: $light-grey-color;
+        }
+
+        .clock-time {
+            color: $text-primary-title-color;
+        }
+    }
+
+    .intern-task-detail {
+        .task-heading {
+            color: $text-secondary-body-color;
+        }
+
+        .task-name,
+        .task-date-picker,
+        .drop-down-wrapper {
+            background-color: $text-input-bg-color;
+            border: none;
+            color: $text-primary-title-color;
+        }
+
+        .drop-down-wrapper {
+            margin-bottom: 30px;
+        }
+
+        .task-date-picker input {
+            color: $text-primary-title-color;
+        }
+
+
+        .task-name {
+            &:hover {
+                border: none;
+                box-shadow: none;
+            }
+        }
+
+        .task-categories {
+            .task-category-title {
+                color: $text-secondary-body-color;
+            }
+
+            .task-category-hours {
+                color: $text-teriary-label-color;
+            }
+        }
+        .load-more{
+            &:hover{
+                background-color: $text-input-bg-color;
+                color: $light-grey-color;
+            }
+        }
+        .box-wrapper{
+            padding: 0;
+            margin: 0;
+            box-shadow: none !important;
+        }
+    }
 }

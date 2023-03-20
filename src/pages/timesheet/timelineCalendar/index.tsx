@@ -6,38 +6,62 @@ import FullCalendar from '@fullcalendar/react';
 import { BoxWrapper } from "../../../components";
 import './style.scss';
 import dayjs from "dayjs";
+import { renderBg } from "../actionHandler";
 
 const RenderLabelContent = (labelContent: any) => {
-
   return (
     <div>{dayjs(labelContent.date).format('HH:MM')}</div>
   )
 }
 
 const events = [
- {
+  {
     id: "1",
     resourceIds: ["a"],
-    title: "Morning",
-    start: "2023-03-14T08:00:00",
-    end: "2023-03-16T10:40:00",
+    title: "designing",
+    start: "2023-03-20T01:39:00",
+    end: "2023-03-22T03:30:00",
+    desc: 'rtgferter',
+    type: 'design task',
+  },
+  {
+    id: "2",
+    resourceIds: ["a"],
+    title: "Design System Figma",
+    start: "2023-03-18T04:00:00",
+    end: "2023-03-20T09:00:00",
+    desc: 'rtgferter',
+    type: 'research',
+  },
+  {
+    id: "3",
+    resourceIds: ["a"],
+    title: "Testing Design",
+    start: "2023-03-18T07:00:00",
+    end: "2023-03-21T09:00:00",
+    desc: 'rtgferter',
+    type: 'outdoor activities',
   },
 ]
 
 const resource = [
   {
     id: "a",
-    title: "hassan",
+    title: "work",
 
   }
 ]
 
 const RenderEventContent = (events: any) => {
-  const eventInfo = events?._def
-  console.log(eventInfo);
-
+  const { publicId, title, extendedProps } = events?.event?._def;
+  const { type } = extendedProps;
   return (
-    <div>{eventInfo}</div>
+    <div style={{ background: renderBg[type], width: 'max-content' }}
+      id={publicId}
+      className='text-white capitalize rounded-[4px] px-[10px] py-[4px] text-sm'
+    >
+      {title}
+    </div>
   )
 }
 

@@ -3,18 +3,27 @@ import { useState } from "react";
 import { AddIcon } from "../../../assets/images";
 import { DropDown, BoxWrapper, SimpleTimer } from "../../../components";
 import TimelineCalendar from "../timelineCalendar";
+import InternTable from "./internTable";
+import TaskDetails from "./taskDetails";
 import './style.scss';
+import { useNavigate } from "react-router-dom";
 
 const Intern = () => {
 
   const boxShadow = '0px 0px 8px 1px rgba(9, 161, 218, 0.1)';
   const [category, setCategory] = useState('');
+  const id = '1';
+  const navigate = useNavigate();
 
   return (
     <div className="time-sheet-intern">
       <div className="timesheet-top-heading text-2xl flex items-center justify-between gap-3 font-semibold pb-[30px] mb-[30px] capitalize">
         TimeSheet
-        <Button className="view-history text-base font-semibold">View History</Button>
+        <Button
+          className="view-history text-base font-semibold"
+          onClick={() => navigate(`/timesheet/view-history/${id}`)}
+        >View History
+        </Button>
       </div>
       <Row gutter={[25, 25]}>
         <Col xl={16}>
@@ -36,10 +45,10 @@ const Intern = () => {
             </div>
           </BoxWrapper>
           <TimelineCalendar />
-          <BoxWrapper boxShadow={boxShadow}></BoxWrapper>
+          <InternTable />
         </Col>
         <Col xl={8}>
-          <BoxWrapper boxShadow={boxShadow}></BoxWrapper>
+          <TaskDetails />
         </Col>
       </Row>
     </div>

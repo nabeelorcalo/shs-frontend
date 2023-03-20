@@ -78,9 +78,26 @@
   }
 
   .fc-view-harness.fc-view-harness-active {
+    .fc-resourceTimelineWeek-view {
+      .fc-scrollgrid.fc-scrollgrid-liquid {
+        .fc-scroller-harness.fc-scroller-harness-liquid {
+          .fc-scroller.fc-scroller-liquid-absolute {
+            &::-webkit-scrollbar {
+              width: 5px;
+              height: 10px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background-color: $light-grey-thin;
+              border-radius: 10px;
+            }
+          }
+        }
+      }
+    }
+
     .fc-scrollgrid.fc-scrollgrid-liquid {
       border: none;
-      overflow: scroll;
 
       .fc-scrollgrid-section.fc-scrollgrid-section-body.fc-scrollgrid-section-liquid {
         border: none;
@@ -90,14 +107,15 @@
         .fc-scroller-harness {
           .fc-timeline-header-row {
             .fc-timeline-slot {
-             .fc-timeline-slot-frame{
-              justify-content: center;
-              a{
-                font-size: 14px;
-                font-weight: 600;
-                color: $light-grey-color;
+              .fc-timeline-slot-frame {
+                justify-content: center;
+
+                a {
+                  font-size: 14px;
+                  font-weight: 600;
+                  color: $light-grey-color;
+                }
               }
-             }
             }
           }
         }
@@ -120,6 +138,11 @@
     border: none;
   }
 
+  .fc-h-event {
+    background: none;
+    border: none;
+  }
+
   .fc-timeline-body {
     .fc-timeline-slots {
       table {
@@ -128,6 +151,16 @@
             td.fc-timeline-slot {
               border-left: 1px solid $text-input-bg-color !important;
             }
+          }
+        }
+      }
+    }
+
+    .fc-scrollgrid-sync-table {
+      .fc-timeline-event-harness {
+        .fc-event {
+          &::before {
+            border: none !important;
           }
         }
       }

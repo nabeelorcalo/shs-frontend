@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
-import { timesheetMock } from "./mockData";
+import { timesheetMock } from "../mockData";
 import "./style.scss";
 
 const CompanyAdmin = () => {
