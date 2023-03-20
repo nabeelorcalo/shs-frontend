@@ -1,6 +1,6 @@
+import React, { useState } from 'react'
 import { DeleteFilled } from '@ant-design/icons';
 import { Col, Row } from 'antd';
-import React, { useState } from 'react'
 import { Schedule, DrawerIcon, IconEdit, } from "../../assets/images/"
 import { Alert } from '../../components';
 import ScheduleModal from "./scheduleModal"
