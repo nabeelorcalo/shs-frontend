@@ -11,8 +11,8 @@
           border-bottom: unset;
           padding-top: 18px;
           padding-bottom: 18px;
-          &:first-child{
-            text-align: right;
+          &:last-child{
+            text-align: center;
           }
 
           &::before {
@@ -40,8 +40,8 @@
           font-weight: 400;
           font-size: 16px;
           line-height: 24px;
-          &:first-child{
-            text-align: right;
+          &:last-child{
+            text-align: center;
           }
         }
 
@@ -155,7 +155,7 @@
         .ant-pagination-item-link {
           svg {
             path {
-              fill: $text-primary-disabled-color;
+              fill: $white-bg-color;
             }
           }
         }
