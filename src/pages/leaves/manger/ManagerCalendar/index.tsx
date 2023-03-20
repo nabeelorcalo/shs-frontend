@@ -8,10 +8,7 @@ import dayjs from 'dayjs';
 import { leaveCalendarResorceData, leaveCalendarEventsData } from '../managerMockData';
 import './style.scss';
 import ManagerCalanderDrawerData from './managerCalanderDrawerData';
-
 const formatDate=(time:any,format:string)=> dayjs(time).format(format)  
-
-
 const ManagerCalendar = () => {
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState<boolean>(false);
   const [eventData, seteventData] = useState({});
@@ -59,7 +56,7 @@ const ManagerCalendar = () => {
 
   const handleResourceAreaHeader = (info: any) => {
     return (
-      <div className=''>{formatDate("",'MMMM')}</div>
+      <div className=''>{dayjs().format('MMMM')}</div>
     )
   }
 
