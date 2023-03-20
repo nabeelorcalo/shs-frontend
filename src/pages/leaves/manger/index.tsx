@@ -8,6 +8,7 @@ import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../asset
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
 import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
 import ManagerCalendar from './ManagerCalendar'
+// import ManagerCalendar from './ManagerCalendar'
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },

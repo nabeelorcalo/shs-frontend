@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Progress, Space, Typography, Dropdown, MenuProps } from "antd";
 // import all reusable componets from component/index.ts
-import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader } from "../../../components";
+import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable } from "../../../components";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import Table from "../../../components/Table/Table";
 // end
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { ColorLessMedalIcon, MoreIcon } from "../../../assets/images";
@@ -285,7 +284,7 @@ const DetailHistory = () => {
             <Typography.Title level={4} >
               Evaluation  History
             </Typography.Title>
-            <Table
+            <GlobalTable
               columns={evaluationHistoryColumnNames}
               tableData={evaluationHistoryData}
               pagination={false}
