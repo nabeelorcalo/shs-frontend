@@ -17,7 +17,7 @@ interface LeaveCardProps {
 export const LeaveCard = (props: LeaveCardProps) => {
     const { title, total, pending, approved, declined, Icon,bg } = props
     return (
-        <BoxWrapper className="leave-card-wrapper">
+        <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="leave-card-wrapper">
             <div className="upper_part flex items-center justify-between">
                 <div className="upper_part_1 flex items-center">
                     <div className="imgBg rounded-lg flex items-center justify-center w-[60px] h-[60px]" style={{background: `${bg}`}}>

@@ -1,4 +1,4 @@
-import GlobalTable from '../../../components/Table/Table';
+import {GlobalTable} from '../../../components';
 import { TagWarningIcon, TagSuccessIcon, TagPrimaryIcon } from '../../../assets/images';
 
 const TimesheetTable = (props: any) => {

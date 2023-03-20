@@ -12,15 +12,16 @@ interface Props {
     title?: string;
     type?: string;
     width?: any;
-    open?: any;
-    setOpen?: any;
+    state?: any;
+    setState?: any;
     icon?: any;
     cancelBtntxt?: string;
     okBtntxt?: string;
+    okBtnFunc?:any
     children?: any
 }
 
-export const Alert: React.FC = (props: any) => {
+export const Alert: React.FC = (props: Props) => {
     const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children } = props
     return (
         <>

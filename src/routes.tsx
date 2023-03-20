@@ -258,6 +258,11 @@ const managerRoutes = [
         element: <Leaves />,
       },
       {
+        key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        element: <ViewHistory />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
