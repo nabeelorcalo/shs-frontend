@@ -1,8 +1,12 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
-import { useState } from "react";
+import {  useNavigate } from "react-router-dom";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
-const SigninForm = () => {
+
+const SigninForm = (props: any) => {
+  const navigate = useNavigate(); 
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -10,6 +14,10 @@ const SigninForm = () => {
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
+    navigate('/dashboard');
+
+    console.log(navigate,'log')
+    
   };
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -25,12 +33,13 @@ const SigninForm = () => {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
         >
           <Form.Item
             label="Email"
             name="Email"
-            rules={[{ required: true, message: "Please input your Email!" }]}
+            rules={[{ required: true }, { type: "email" }]}
           >
             <Input
               placeholder="Email"
@@ -42,7 +51,7 @@ const SigninForm = () => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[{ required: true }, { min: 8 }]}
           >
             <Input.Password
               type="password"
@@ -86,10 +95,10 @@ const SigninForm = () => {
           <Form.Item>
             <Button
               type="primary"
-              // htmlType="submit"
+              htmlType="submit"
               className="login-form-button"
             >
-              <a href="/">Sign In</a>
+             Sign In
             </Button>
           </Form.Item>
           <div>
