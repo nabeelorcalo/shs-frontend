@@ -464,3 +464,38 @@ svg {
     
   }
 }
+// For page header | Vertical line
+.vertical-line {
+  border-left: 1px solid black;
+  font-size: 16px;
+  height: 70px;
+  padding: 4px 7px;
+  margin: 10px;
+}
+
+.icon-btn {
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-width: 0;
+  height: fit-content;
+  margin-left: auto;
+}
+
+.bread-crumb{
+  padding: 0 6px;
+  color: $primary-bg-color !important;
+}
+
+.avatar-label{
+  color: $text-teriary-label-color;
+}
+
+.avatar-box{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid $light-grey-color;
+  border-radius: 4px;
+}

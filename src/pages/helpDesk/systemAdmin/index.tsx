@@ -3,7 +3,6 @@ import "./style.scss";
 import { Button, Col, Divider, Row, Select, TabsProps } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import AppTabs from "../../../components/Tabs";
-import { BoxWrapper } from "../../../components/BoxWrapper/boxWrapper";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
 import AssignedData from "./AssignedData";
@@ -11,6 +10,7 @@ import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Avatar } from "../../../assets/images";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 
 const items: TabsProps["items"] = [
   {

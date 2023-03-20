@@ -41,6 +41,7 @@
     "react-image-gallery": "^1.2.11",
     "react-infinite-scroll-component": "^6.1.0",
     "react-organizational-chart": "^2.2.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.8.2",
     "react-signature-canvas": "^1.0.6",
     "react-slick": "^0.29.0",

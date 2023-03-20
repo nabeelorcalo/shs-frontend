@@ -45,6 +45,9 @@ export const ROUTES_CONSTANTS: any = {
   TIMESHEET: "timesheet",
   TIMESHEETHISTORY: 'timesheet/history/:id',
   PERFORMANCE: "performance",
+  VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
+  EVALUATION_FORM: "evaluation-form",
+  EVALUATE: "evaluate",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
@@ -92,6 +95,7 @@ export const ROUTES_CONSTANTS: any = {
   PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
+  HISTORY: 'history',
 };
 
 export const STATUS_CONSTANTS: any = {
