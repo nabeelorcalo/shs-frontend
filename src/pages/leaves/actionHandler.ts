@@ -13,10 +13,18 @@ const useCustomHook = () => {
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
-
-
+  // Submit Leave Request Function For Intrnee
+  const submitLeaveRequest = ()=>{
+    alert("Submit Leave Function goes here");
+  }
+  // const SelectLeaveTypeVlaue =(e:any)=>{
+  //   console.log(e.target.value, "value  of checkbox");
+    
+  // }
   return {
     getData,
+    submitLeaveRequest,
+    // SelectLeaveTypeVlaue,
     
   };
 };

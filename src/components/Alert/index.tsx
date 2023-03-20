@@ -17,11 +17,11 @@ interface Props {
     icon?: any;
     cancelBtntxt?: string;
     okBtntxt?: string;
-    okBtnFunc?:any
-    children?: any
+    okBtnFunc?:any;
+    children?: any;
 }
 
-export const Alert: React.FC = (props: Props) => {
+export const Alert = (props: Props) => {
     const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children } = props
     return (
         <>
