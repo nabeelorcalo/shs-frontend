@@ -23,6 +23,7 @@ const CalendarDrawerInnerDetail = (props: any) => {
         reqStatus,
         description
     } = props;
+    const formatDate=(time:any,format:string)=> dayjs(time).format(format)  
     return (
         <div className='main_calender_drawer_data_wrapper'>
             <div className='user_profile  '>
@@ -43,7 +44,7 @@ const CalendarDrawerInnerDetail = (props: any) => {
                     <Col lg={12}>
                         <div className='request_data'>
                             <h4 className=' font-medium text-base  '>Requested on</h4>
-                            <p className=' text-base font-normal  '>{dayjs(requestedOn).format('DD-MM-YYYY')}</p>
+                            <p className=' text-base font-normal  '>{formatDate(requestedOn,'DD-MM-YYYY')}</p>
                         </div>
                     </Col>
                     <Col lg={12}>
@@ -68,13 +69,13 @@ const CalendarDrawerInnerDetail = (props: any) => {
                     <Col lg={12}>
                         <div className='request_data'>
                             <h4 className=' font-medium text-base  '>Date From</h4>
-                            <p className=' text-base font-normal  '>{dayjs(dateFrom).format("DD-MM-YYYY")}</p>
+                            <p className=' text-base font-normal  '>{formatDate(dateFrom,'DD-MM-YYYY')}</p>
                         </div>
                     </Col>
                     <Col lg={12}>
                         <div className='request_data'>
                             <h4 className=' font-medium text-base  '>Date To </h4>
-                            <p className=' text-base font-normal  '>{dayjs(dateTo).format("DD-MM-YYYY")}</p>
+                            <p className=' text-base font-normal  '>{formatDate(dateTo,'DD-MM-YYYY')}</p>
                         </div>
                     </Col>
                     {leaveTypeDay &&
@@ -82,13 +83,13 @@ const CalendarDrawerInnerDetail = (props: any) => {
                             <Col lg={12}>
                                 <div className='request_data'>
                                     <h4 className=' font-medium text-base  '>Time From </h4>
-                                    <p className=' text-base font-normal  '>{dayjs(timeFrom).format("hh:mm a")}</p>
+                                    <p className=' text-base font-normal  '>{formatDate(timeFrom,'hh:mm a')}</p>
                                 </div>
                             </Col>
                             <Col lg={12}>
                                 <div className='request_data'>
                                     <h4 className=' font-medium text-base  '>Time To</h4>
-                                    <p className=' text-base font-normal  '>{dayjs(timeTo).format("hh:mm a")}</p>
+                                    <p className=' text-base font-normal  '>{formatDate(timeTo, "hh:mm a")}</p>
                                 </div>
                             </Col> </>
                     }

@@ -60,9 +60,13 @@
 }
 
 .leave_profile_wrapper {
+  .profile_wrapper{
+    flex: 0 0 48px;
+  }
   ._name {
     color: $text-primary-title-color;
   }
+
 
   ._designation {
     color: $text-secondary-body-color;

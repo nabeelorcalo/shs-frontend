@@ -48,3 +48,4 @@ export * from './IconButton'
 export * from './EvaluationPersonCard';
 export * from './EvaluationStats';
 export * from './TextArea';
+export * from './Table';

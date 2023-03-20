@@ -1,6 +1,6 @@
 import { Menu, Space, Tooltip } from "antd";
 import React from "react";
-import GlobalTable from "../../../../components/Table";
+import {GlobalTable} from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";

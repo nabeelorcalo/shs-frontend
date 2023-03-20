@@ -39,13 +39,13 @@ const index = () => {
           <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='h-full'>
             <div className='how_is_away'>
               <h4 className='font-medium text-[28px] capitalize'>Who's Away</h4>
-              <Row>
-                <Col xs={14}>
+              <Row gutter={[10,10]}>
+                <Col xs={24} xxl={14}>
                   <p>{12} people are away this week</p>
                 </Col>
-                <Col xs={10}>
+                <Col xs={24} xxl={10}>
 
-                  <div className='statue_highligter flex items-center justify-between'>
+                  <div className='statue_highligter flex items-center justify-between flex-wrap'>
                     {LeaveTypeData.map((data: any) => {
                       return (
                         <div className='flex items-center'>
@@ -62,10 +62,8 @@ const index = () => {
                     })}
                   </div>
                 </Col>
-
               </Row>
             </div>
-
             <ManagerCalendar />
           </BoxWrapper>
         </Col>

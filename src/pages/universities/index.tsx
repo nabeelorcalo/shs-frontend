@@ -4,7 +4,7 @@ import { Row, Col, Divider, Select, Space } from "antd";
 import { DropDown, SearchBar } from "../../components";
 import "./style.scss";
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import GlobalTable from "../../components/Table/Table";
+import {GlobalTable} from "../../components";
 import { UniversitesTableData } from "./data";
 
 import { UniversitiesTableFlag } from "../../assets/images";

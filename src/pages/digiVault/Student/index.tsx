@@ -3,7 +3,7 @@ import "./style.scss";
 import "react-circular-progressbar/dist/styles.css";
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "./settingModal";
-import GlobalTable from "../../../components/Table";
+import {GlobalTable} from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";

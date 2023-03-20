@@ -4,7 +4,7 @@ import { Col, Divider, Dropdown, Row, Space } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "./style.scss"
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import GlobalTable from "../../components/Table"
+import {GlobalTable} from "../../components"
 import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../components";
 // import DrawerComp from "./DrawerComp";

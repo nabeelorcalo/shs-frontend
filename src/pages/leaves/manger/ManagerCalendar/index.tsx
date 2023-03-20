@@ -44,7 +44,7 @@ const ManagerCalendar = () => {
     return (
       <>
         <div className="leave_profile_wrapper flex items-center gap-2">
-          <div className='w-[48px] h-[48px] rounded-full '>
+          <div className='w-[48px] h-[48px] rounded-full profile_wrapper  '>
             <img src={resource?.extendedProps?.img} alt="Profile Image" className=' rounded-full w-full h-full object-cover' />
           </div>
           <p className="_name font-semibold">{resource.title}</p>
@@ -73,17 +73,22 @@ const ManagerCalendar = () => {
               day: 'numeric',
               weekday: 'short'
             }}
+            headerToolbar={{
+              start: '',
+              center: 'prev "" next',
+              end: 'myCustomButton'
+          }}
             resources={leaveCalendarResorceData}
             events={leaveCalendarEventsData}
             eventContent={handleEventContent}
             slotLabelContent={handleSlotContent}
             resourceLabelContent={handleResourceRender}
             slotMinWidth={100}
-            resourceAreaWidth={300}
+            resourceAreaWidth={260}
             eventMinWidth={100}
             resourceAreaHeaderContent={handleResourceAreaHeader}
             slotDuration="24:00:00"
-            height={'55vh'}
+            height={'60vh'}
             eventClick={(e: any) => { setIsOpenCalendarDrawer(true); seteventData(e) }}
             slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
           />
