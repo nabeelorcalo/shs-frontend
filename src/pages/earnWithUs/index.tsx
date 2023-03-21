@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import PageHeader from "../../components/PageHeader";
+import {PageHeader} from "../../components/PageHeader";
 import AppTabs from "../../components/Tabs";
 import WithDrawalRequest from "./studentWithDrawalRequest";
 import "./style.scss";

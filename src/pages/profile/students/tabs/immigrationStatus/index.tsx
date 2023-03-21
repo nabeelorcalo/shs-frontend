@@ -15,7 +15,6 @@ import cross from "../../../../../assets/images/profile/student/close-circle.svg
 import "../../../style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
 import ImmigrationStatusForm from "./ImmigrationStatusForm";
-import '../Tabs.scss';
 
 const ImmigrationStatus = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -106,18 +105,18 @@ const ImmigrationStatus = () => {
         }
         footer={[
           <div className="flex justify-center sm:justify-end">
-          <Space>
-            <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
-              Cancel
-            </Button>
-            <Button
-              className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Space>
-        </div>
+            <Space>
+              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+                Cancel
+              </Button>
+              <Button
+                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Space>
+          </div>
         ]}
         title="Tell us about Immigration Status"
         width={720}

@@ -5,7 +5,7 @@ import "./style.scss";
 
 const WithdrawalRequest = () => {
   return (
-    <p><WithDrawalRequest/></p>
+    <div><WithDrawalRequest/></div>
   )
 }
 
