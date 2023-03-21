@@ -359,3 +359,5 @@ export { ReactComponent as ColorLessMedalIcon } from './Performance/ColorlessMed
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
 export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';
 
+// Listings Icons
+export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
