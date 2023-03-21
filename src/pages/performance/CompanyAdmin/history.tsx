@@ -215,7 +215,7 @@ const PerformanceHistory = () => {
     },
   ];
 
-  const evaluatedByOptions = [
+  const evaluatedByOptions: any = [
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -225,6 +225,7 @@ const PerformanceHistory = () => {
         Maria Sanoid
       </p>
     </div>,
+
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -234,6 +235,7 @@ const PerformanceHistory = () => {
         Janete Samson
       </p>
     </div>,
+    
     <div className="flex items-center">
       <Avatar
         size={24}

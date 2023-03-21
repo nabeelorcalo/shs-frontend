@@ -1,5 +1,5 @@
 import React from "react";
-import SignatureCanvas from 'react-signature-canvas'
+import SignatureCanvas from 'react-signature-canvas';
 
 const DrawSignature = () => {
   return (

@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import { Rate } from 'antd';
 import { Emoji1st, Emoji2nd, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray2nd, EmojiGray3rd, EmojiGray4th } from '../../assets/images';
 
-
-
-
-
-const EmojiRating = ({title}) => {
+const EmojiRating = ({title}: any) => {
     const [hover1, setHover1] = useState(false)
     const [hover2, setHover2] = useState(false)
     const [hover3, setHover3] = useState(false)

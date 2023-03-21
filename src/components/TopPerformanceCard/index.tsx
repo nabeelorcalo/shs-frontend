@@ -25,7 +25,7 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
     profession,
     percentage,
     className,
-    url,
+    url='',
     icon,
     btnTxt
   } = props;
