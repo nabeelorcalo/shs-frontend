@@ -7,7 +7,7 @@ interface Props {
   items?: any | MenuProps['items'];
 }
 
-const DropDownNew = (props: Props) => {
+const DropDownNew = (props: Props | any) => {
   const { items, children, ...rest } = props;
   const [visible, setVisible] = useState(false);
   return (

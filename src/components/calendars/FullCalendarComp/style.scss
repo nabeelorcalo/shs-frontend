@@ -1,0 +1,50 @@
+@import '../../../scss/_colors.scss';
+
+.role-calendar-wrapper {
+  .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+    background-color: $white-bg-color;
+
+    .fc-scrollgrid.fc-scrollgrid-liquid {
+      border: none;
+    }
+
+  }
+
+  .fc-theme-standard td,
+  .fc-theme-standard th {
+    border: none;
+  }
+
+  .fc-timegrid-slot-lane,
+  .fc-timegrid-col {
+    border: 1px solid #D9DBE9 !important;
+  }
+
+  .fc-timegrid-slots {
+    table {
+      border-top: 1px solid #D9DBE9 !important;
+    }
+  }
+
+  .fc .fc-timegrid-col.fc-day-today {
+    background: transparent !important;
+  }
+
+  .fc-v-event {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .event-content {
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  .fc-timegrid-slots {
+    tbody {
+      tr {
+        border: 1px solid #D9DBE9 !important;
+        height: 74px !important;
+      }
+    }
+  }
+}

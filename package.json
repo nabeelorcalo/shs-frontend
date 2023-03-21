@@ -20,6 +20,7 @@
     "@fullcalendar/react": "^6.1.4",
     "@fullcalendar/resource": "^6.1.4",
     "@fullcalendar/resource-timeline": "^6.1.4",
+    "@fullcalendar/timegrid": "^6.1.4",
     "@types/react-image-gallery": "^1.2.0",
     "@types/react-slick": "^0.23.10",
     "@types/react-video-recorder": "^3.19.0",

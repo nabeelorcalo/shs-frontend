@@ -153,8 +153,8 @@ const CertificateDetail = () => {
       {deleteModal &&
         <Alert
           type={'error'}
-          open={deleteModal}
-          setOpen={setDeleteModal}
+          state={deleteModal}
+          setState={setDeleteModal}
           icon={''}
           cancelBtntxt={'Cancel'}
           okBtntxt={'Delete'}
