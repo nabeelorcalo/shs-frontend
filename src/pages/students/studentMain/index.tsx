@@ -3,7 +3,7 @@ import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Row, Typography, Space, Menu } from "antd";
 import { DropDown, SearchBar, GlobalTable } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import CustomDroupDown from "import CustomDroupDown from "../../digiVault/Student/dropDownCustom"";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
 const tableData = [
   {
