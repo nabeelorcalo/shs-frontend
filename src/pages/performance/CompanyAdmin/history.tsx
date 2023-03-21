@@ -4,7 +4,7 @@ import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
 import { PageHeader, SearchBar, FiltersButton, IconButton, DropDown, Button, GlobalTable } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
-import { DownlaodFileIcon, GlassMagnifier, MoreIcon } from '../../../assets/images';
+import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -112,7 +112,7 @@ const PerformanceHistory = () => {
         return (
           <Space size="middle">
             <Link
-              className="bread-crumb"
+              className="flex gap-2 bread-crumb"
               to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
             >
               <Progress
@@ -125,6 +125,7 @@ const PerformanceHistory = () => {
                   </p>
                 }
               />
+              {data.isBadge ? <TalentBadge /> : ''}
             </Link >
           </Space>
         )
@@ -162,6 +163,7 @@ const PerformanceHistory = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 40,
+      isBadge: true,
     },
     {
       id: 2,
@@ -173,6 +175,7 @@ const PerformanceHistory = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 80,
+      isBadge: false,
     },
     {
       id: 3,
@@ -184,6 +187,7 @@ const PerformanceHistory = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 50,
+      isBadge: true,
     },
     {
       id: 4,
@@ -195,6 +199,7 @@ const PerformanceHistory = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 30,
+      isBadge: false,
     },
     {
       id: 5,
@@ -206,6 +211,7 @@ const PerformanceHistory = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 100,
+      isBadge: true,
     },
   ];
 
