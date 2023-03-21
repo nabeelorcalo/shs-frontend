@@ -1,0 +1,1 @@
+export const AcceptedFileTyp = 'application/pdf,image/jpeg,application/msword'

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Col, Row, Menu } from "antd";
-import { DropDown, SearchBar } from "../../../../components";
-import GlobalTable from "../../../../components/Table/Table";
-import CustomDroupDown from "../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import { DropDown, SearchBar, GlobalTable } from "../../../../components";
+import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");

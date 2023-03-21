@@ -1,0 +1,79 @@
+@import "../../../../scss/colors";
+.overview-content + .overview-content {
+  margin-top: 30px;
+}
+.overview-content {
+  max-width: 540px;
+  padding-left: 20px;
+
+  &.amenities {
+    max-width: 660px;
+  }
+
+  .overview-section-label {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.333333;
+    color: $text-secondary-body-color;
+    margin-bottom: 17px;
+  }
+
+  .overview-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    & > li {
+      color: $text-teriary-label-color;
+      font-size: 16px;
+      line-height: 1.5;
+      padding: 3px 0 3px 18px;
+      position: relative;
+      flex-shrink: 0;
+      max-width: 100%;
+      flex: 0 0 auto;
+      width: 33.333333%;
+      &::before {
+        content: '';
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        background-color:$accommodation-btn-info;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin-top: -4px;
+      }
+    }
+    &.amenities-list {
+      & > li {
+        &::before {
+          background-color: #78DAAC;
+        }
+      }
+    }
+    &.house-rules {
+      & > li {
+        width: 100%;
+      }
+    }
+    &.preferred-tenant {
+      & > li {
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        &::before {
+          background-color: #FFBB33;
+          height: 3px;
+          width: 10px;
+          border-radius: 2px;
+          margin-top: -1.5px;
+        }
+        span {
+          flex: 1 0 0%;
+        }
+      }
+    }
+  }
+}

@@ -4,11 +4,11 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
+import {GlobalTable} from "../../../components";
 import { Button, Col, Row,Space,Form,Menu } from "antd";
-import GlobalTable from "../../../components/Table/Table";
 import { DropDown } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import '../style.scss';
 
 

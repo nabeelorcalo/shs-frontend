@@ -1,7 +1,6 @@
 import { UpCircleOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
-import React from "react";
-import "./Tabs.scss";
+import "./style.scss";
 
 interface TabProps {
   items: any;

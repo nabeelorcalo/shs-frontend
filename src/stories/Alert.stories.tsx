@@ -7,36 +7,42 @@ export default {
   componenet: Alert
 }
 
+const okBtnFunc = (type)=>{
+    console.log( type + " Alert submit button clicked")
+}
+
 const Template: ComponentStory<typeof Alert> = (args) => <Alert {...args} ><p>This is a placeholer text just to show the default size and weight for body text typography in a popup.</p></Alert>
 
 export const errorAlert = Template.bind({})
 errorAlert.args = {
   
-    showHide:true ,
+    state:true ,
     type:"error" ,
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-
+    okBtnFunc: okBtnFunc
 }
 
 
 export const successAlert = Template.bind({})
 successAlert.args = {
-    showHide:true ,
+    state:true ,
     type:"success" ,
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
+    okBtnFunc: okBtnFunc
 
 }
 
 export const warningAlert = Template.bind({})
 warningAlert.args = {
-    showHide:true ,
+    state:true ,
     type:"warning" ,
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
+    okBtnFunc: okBtnFunc
 
 }

@@ -9,7 +9,7 @@ interface ContentMenuProps {
   selectedKey: string
 }
 
-const ContentMenu: FC<ContentMenuProps> = ({items, handleMenuClick, selectedKey}) => {
+export const ContentMenu: FC<ContentMenuProps> = ({items, handleMenuClick, selectedKey}) => {
 
   return (
     <div className="shs-content-menu">
@@ -22,5 +22,3 @@ const ContentMenu: FC<ContentMenuProps> = ({items, handleMenuClick, selectedKey}
     </div>
   )
 }
-
-export default ContentMenu;

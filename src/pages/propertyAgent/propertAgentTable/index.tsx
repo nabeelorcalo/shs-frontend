@@ -5,10 +5,9 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Row, Menu, Form, Space } from "antd";
-import { DropDown, SearchBar } from "../../../components";
+import { DropDown, SearchBar, GlobalTable } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import GlobalTable from "../../../components/Table/Table";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
 
 const columns = [
@@ -74,7 +73,10 @@ const columns = [
 const menu2 = (
   <Menu>
     <Menu.Item key="2">Block</Menu.Item>
-    <Menu.Item key="3"> <a href="create-password">Password Reset</a> </Menu.Item>
+    <Menu.Item key="3">
+      {" "}
+      <a href="create-password">Password Reset</a>{" "}
+    </Menu.Item>
   </Menu>
 );
 const tableData = [
@@ -136,7 +138,6 @@ const PropertyAgentTable = () => {
         onClose={() => setOpenDrawer(false)}
       >
         <Form layout="vertical">
-        
           <Form.Item label="Status" name="status">
             <DropDown
               name="Select"

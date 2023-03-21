@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import "./style.scss";
-import UniveristyMain from "./univeristyMain";
+import UniveristyMain from "./univeristyMain"
 
 const Universities = () => {
   return (
@@ -10,5 +9,4 @@ const Universities = () => {
     </>
   )
 }
-
 export default Universities

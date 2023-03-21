@@ -1,0 +1,10 @@
+.ant-picker {
+  width: 100%;
+  &:hover {
+    border-color: rgba(90, 89, 128, 0.5);
+  }
+}
+.ant-picker-focused {
+  box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+  border-color: rgba(90, 89, 128, 0.5);
+}

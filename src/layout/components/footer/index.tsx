@@ -5,8 +5,13 @@ import { IconFacebook, IconYoutube, IconLinkedin, IconInstagram, IconTwitter } f
 import { Layout } from 'antd';
 const { Footer } = Layout;
 
+type FooterProps = {
+  collapsed: boolean;
+  collapsedWidth: number;
+};
 
-const AppFooter:FC = () => {
+
+const AppFooter:FC<FooterProps> = ({collapsed, collapsedWidth}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
 

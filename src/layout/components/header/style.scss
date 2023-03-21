@@ -5,7 +5,11 @@
   padding: 10px 0;
   height: 80px;
   display: flex;
-  position: relative;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+
   @media (max-width: 991px) {
     height: 70px;
   }
