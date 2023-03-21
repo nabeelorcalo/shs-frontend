@@ -1,7 +1,8 @@
+@import "../../../../scss/colors";
 .calander_main_wrapper {
     .fc-media-screen {
         .fc-header-toolbar {
-            border-bottom: 1px solid #D9DBE9;
+            border-bottom: 1px solid $text-error-line-color;
             padding-bottom: 10px;
 
             .fc-toolbar-chunk {
@@ -16,7 +17,7 @@
 
                     .fc-icon-chevron-left,
                     .fc-icon-chevron-right {
-                        color: #4E4B66;
+                        color: $text-secondary-body-color;
                     }
                 }
 
@@ -28,7 +29,7 @@
                     font-weight: 400;
                     font-size: 16px;
                     line-height: 24px;
-                    color: #14142A;
+                    color: $text-primary-title-color;
                 }
             }
 
@@ -36,18 +37,18 @@
     }
 
     .fc .fc-button-primary {
-        background-color: #4A9D77;
+        background-color: $teriary-bg-color;
         border: unset;
 
         &:hover {
-            background-color: #4A9D77;
+            background-color: $teriary-bg-color;
         }
         &:focus{
             box-shadow: none !important;
         }
         &:not(:disabled){
             &:active{
-                background-color: #4A9D77;
+                background-color: $teriary-bg-color;
             }
 
         }
@@ -62,7 +63,7 @@
             justify-content: start;
 
             a {
-                color: #4E4B66;
+                color: $text-secondary-body-color;
             }
         }
         
@@ -90,7 +91,7 @@
         font-weight: 500;
         font-size: 20px;
         line-height: 28px;
-        color: #6E7191;
+        color: $text-teriary-label-color;
     }
 
     .fc-scrollgrid-sync-inner {
@@ -138,44 +139,7 @@
     .ant-drawer-body {
         padding: 30px 20px;
 
-        .main_calender_drawer_data_wrapper {
-            .user_profile {
-                .profilData_wrapper {
-                    .details {
-                        .name_of_person {
-                            color: #14142B;
-                        }
-
-                        .designation {
-                            color: #4E4B66;
-                        }
-
-                        .email {
-                            color: #4E4B66;
-                        }
-
-                    }
-                }
-
-                .request_data, .File_wrapper{
-                    h4 {
-                        color: #14142B;
-                    }
-
-                    p {
-                        color: #4E4B66;
-                    }
-                }
-            }
-            .leaveType{
-                color: #363565;
-            }
-            .File_wrapper{
-                background-color: #E6F4F9;
-
-            }
-
-        }
+        
     }
 
 }

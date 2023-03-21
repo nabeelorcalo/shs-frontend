@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import { Row, Col, Button, Menu } from 'antd';
-
-import { DropDown, SearchBar } from '../../../components';
-import GlobalTable from '../../../components/Table/Table';
-import CustomDroupDown from '../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown';
-
+import { DropDown, SearchBar, GlobalTable } from '../../../components';
+import CustomDroupDown from '../../digiVault/Student/dropDownCustom';
 
 const tableData = [
     {

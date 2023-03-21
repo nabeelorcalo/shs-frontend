@@ -1,0 +1,271 @@
+@import '../../scss/_colors.scss';
+
+// Interm/ViewEvaluation-page
+.view-evaluation {
+  .vertical-line {
+    border-left: 1px solid black;
+    font-size: 16px;
+    height: 70px;
+    padding: 4px 7px;
+    margin: 10px;
+  }
+
+  .evaluation-txt {
+    font-weight: 500;
+  }
+
+  .icon-btn {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    margin-left: auto;
+  }
+
+  .evaluation-heading {
+    color: $primary-bg-color;
+  }
+
+  .emoji-heading {
+    font-weight: 400;
+    color: $text-secondary-body-color;
+  }
+
+  .name-font-size {
+    position: relative;
+    top: -12px;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    width: min-content;
+    margin-left: auto;
+    margin-right: auto;
+    color: $text-teriary-label-color;
+  }
+
+  .emoji-wrapper {
+    padding: 0;
+  }
+
+  .emoji-container {
+    padding: 0 2px;
+  }
+
+  .ant-input[disabled] {
+    background-color: $light-blue-color;
+    color: $text-primary-title-color;
+  }
+}
+
+// Interm/performance-page
+.performance-container {
+  display: flex;
+  flex-wrap: wrap;
+
+  .performance-left-subcontainer,
+  .performance-right-subcontainer {
+    width: 50%;
+    padding: 10px;
+  }
+
+  .ant-progress-text {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .ant-typography {
+    font-weight: 500;
+  }
+}
+
+// CompanyAdmin/Performance-page
+.company-admin-performance-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .performance-left-subcontainer {
+    width: 69%;
+  }
+
+  .performance-right-subcontainer {
+    width: 29%;
+  }
+
+  .overall-performance-txt {
+    margin-bottom: 16px;
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    width: 20px;
+    border: 1px solid $text-error-line-color;
+    border-radius: 0;
+    height: 28px;
+    width: 28px;
+  }
+
+  .left-radius {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .right-radius {
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+// History button of page header
+.performance-history-btn {
+  display: flex;
+  justify-content: center;
+  padding: 12px;
+  width: 154px;
+  border-radius: 8px;
+  color: $teriary-bg-color;
+  border: 1px solid $teriary-bg-color;
+}
+
+.performance-history-btn:hover {
+  color: $teriary-light-bg-color;
+  border: 1px solid $teriary-light-bg-color;
+}
+
+// Company Admin: performance/history
+.company-admin-performance-history {
+  .icon-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 38px !important;
+    height: 38px;
+    background-color: #E6F4F9;
+    margin: 0 8px;
+  }
+
+  .icon-btn:hover {
+    background-color: transparent;
+    border: 2px solid #A0A3BD;
+  }
+
+  .filter-button {
+    height: 37px;
+  }
+
+  .icon-btn:focus {
+    outline: none;
+  }
+
+  .performace-history-list {
+    margin: 20px 0;
+  }
+
+  .ant-progress-text {
+    font-size: 16px;
+    padding: 0 0 0 8px;
+    margin: auto;
+
+    p {
+      color: $text-secondary-body-color !important;
+    }
+  }
+}
+
+// Sidebar
+.sidebar-label {
+  color: $text-teriary-label-color;
+  font-weight: 400;
+}
+
+.border-visible-btn {
+  width: 113px;
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+}
+
+.bg-visible-btn {
+  width: 113px;
+  background-color: $teriary-bg-color;
+  color: white;
+}
+
+.bg-visible-btn:hover {
+  background-color: $teriary-light-bg-color !important;
+}
+
+.border-red-visible-btn {
+  width: 113px;
+  border-color: $secondary-bg-color;
+  color: $secondary-bg-color;
+}
+
+.bg-red-visible-btn {
+  width: 113px;
+  background-color: $secondary-bg-color;
+  color: white;
+}
+
+.bg-red-visible-btn:hover {
+  background-color: $secondary-light-bg-color !important;
+}
+
+// Performance modal
+.performance-modal {
+  .ant-modal-title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .ant-form-item-control-input {
+    min-height: 0;
+  }
+
+  .ant-form-item {
+    margin-bottom: 18px;
+  }
+}
+
+// Detail History
+.company-admin-detail-history-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .performance-left-subcontainer {
+    width: 49%;
+  }
+
+  .performance-right-subcontainer {
+    width: 49%;
+  }
+
+  .evaluate-btn {
+    height: 48px;
+    width: 148px;
+    margin-left: auto;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .evaluate-btn:hover {
+    color: $white-bg-color;
+  }
+
+  .ant-progress-text {
+    font-size: 16px;
+    padding: 0 0 0 8px;
+    margin: auto;
+    color: $text-secondary-body-color;
+  }
+}

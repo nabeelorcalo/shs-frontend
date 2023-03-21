@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Row, Typography, Space, Menu } from "antd";
-import { DropDown, SearchBar } from "../../../components";
-import GlobalTable from "../../../components/Table/Table";
+import { DropDown, SearchBar, GlobalTable } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
 const tableData = [
   {

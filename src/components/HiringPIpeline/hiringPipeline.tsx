@@ -1,57 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Pipeline.scss"
 
 const Array = [
     {
-        title: "Applied",
+        title: "applied",
         value: "0",
         color: "#363565"
     }, {
-        title: "Interviewed",
+        title: "interviewed",
         value: "0",
-        color: "#5879CE"
+        color: "#D2D6DC"
 
 
     }, {
-        title: "Recommended",
+        title: "recommended",
         value: "0",
-        color: "#CC7FD4"
+        color: "#D2D6DC"
 
 
     }, {
-        title: "Offer Letter",
+        title: "offer letter",
         value: "0",
-        color: "#C0ACFF"
+        color: "#D2D6DC"
 
     }, {
-        title: "Contract",
+        title: "contract",
         value: "0",
-        color: "#9FBC95"
+        color: "#D2D6DC"
 
     }, {
-        title: "Hired",
+        title: "hired",
         value: "0",
-        color: "#4A9D77"
+        color: "#D2D6DC"
 
     }, {
-        title: "Rejected",
+        title: "rejected",
         value: "0",
-        color: "#E94E5D"
+        color: "#D2D6DC"
 
     }
 ]
-const HiringPipeline = () => {
+const HiringPipeline = (props: any) => {
+    const { hiringList } = props;
 
     return (
 
         <div className='pipeline-wrapper'>
             {Array.map((item: any) => (
-                <>
-                    <div style={{ backgroundColor: item.color }} className={`${item?.title === "Applied" ? "hiringPipeline " : "hiringPipeline2 hiringPipeline"} `}>
-                        <p className='para'>{item.title}</p>
-
-                    </div>
-                </>
+                <div style={{
+                    backgroundColor: hiringList.includes(item?.title) ? '#363565' : '#D2D6DC',
+                    color: hiringList.includes(item?.title) ? '#fff' : ''
+                }}
+                    className={`pipline-content capitalize`}>
+                    {item.title}
+                </div>
             ))
             }
         </div >
@@ -60,17 +62,3 @@ const HiringPipeline = () => {
 
 export default HiringPipeline
 
-{/* <div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div>
-      <div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div><div className="hiringPipeline hiringPipeline2 ">
-        <p className='para para2'>12 Applied</p>
-      </div> */}

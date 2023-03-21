@@ -1,9 +1,9 @@
 import React from "react";
 import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-import GlobalTable from "../../../components/Table/Table";
+import {GlobalTable} from "../../../components";
 import {Pf} from "../../../assets/images";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
 
 const tableData = [

@@ -4,10 +4,9 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
-import { DropDown, SearchBar } from "../../../components";
+import { DropDown, SearchBar, GlobalTable } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import GlobalTable from "../../../components";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
 const tableData = [
   {

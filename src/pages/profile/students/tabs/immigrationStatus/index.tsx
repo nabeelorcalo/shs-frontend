@@ -15,6 +15,7 @@ import cross from "../../../../../assets/images/profile/student/close-circle.svg
 import "../../../style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
 import ImmigrationStatusForm from "./ImmigrationStatusForm";
+import '../Tabs.scss';
 
 const ImmigrationStatus = () => {
   const [isOpen, setIsOpen] = useState(false);

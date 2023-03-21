@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Col, Menu, Row } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
-import { DropDown, SearchBar } from '../../../../components'
-import GlobalTable from '../../../../components/Table/Table'
-import CustomDroupDown from '../../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown';
+import { DropDown, SearchBar, GlobalTable } from '../../../../components'
+import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 
 const DelegateMain = () => {

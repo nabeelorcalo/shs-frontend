@@ -22,10 +22,9 @@ import {
   Typography,
 } from "antd";
 import { CalendarIcon } from "../../../assets/images";
-import { CommonDatePicker, DropDown, SearchBar } from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar ,GlobalTable} from "../../../components";
 import Drawer from "../../../components/Drawer";
-import GlobalTable from "../../../components/Table/Table";
-import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
 import { Option } from "antd/es/mentions";
 
