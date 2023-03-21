@@ -33,6 +33,7 @@ import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/prop
 import ActivityData from './pages/propertyAgent/propertDahboard/Dashboard/activityData'
 import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
+import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
 // Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -473,6 +474,11 @@ const delegateAgentRoutes = [
         key: `${ROUTES_CONSTANTS.WITHDRAWAL_REQUEST}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWAL_REQUEST}`,
         element: <WithDrawalRequest />,
+      },
+      {
+        key: `link-account`,
+        path: `link-account`,
+        element: <LinkAccount />,
       },
       {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,

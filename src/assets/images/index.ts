@@ -294,6 +294,8 @@ export { ReactComponent as Pf } from '../images/profile/university/pf.svg';
 export { ReactComponent as User } from '../images/profile/university/Managers.svg';
 export { ReactComponent as Person } from '../images/profile/university/small.svg';
 export { ReactComponent as UniLogo } from '../images/profile/university/360.svg';
+export { ReactComponent as Check } from '../images/profile/delegateagent/check.svg';
+export {ReactComponent as Bank} from '../images/profile/delegateagent/bankh.svg'
 
 //System Admin Delegate Dashboard
 
