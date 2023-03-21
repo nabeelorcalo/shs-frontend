@@ -1,9 +1,12 @@
 import React from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
+import { useNavigate } from "react-router-dom";
 import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
 import "../../../styles.scss";
 
+
 const Video = (props: any) => {
+  const navigate = useNavigate();
   const { currentStep, setCurrentStep } = props;
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -69,7 +72,7 @@ const Video = (props: any) => {
                   </div>
                 </Upload>
               </Form.Item>
-              <Row gutter={10}>
+              <Row gutter={[10,20]}>
                 <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
@@ -81,7 +84,9 @@ const Video = (props: any) => {
                 <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
                   <Form.Item>
                     <Button
-                      onClick={() => setCurrentStep(1)}
+                      onClick={() => {
+                        navigate('/')
+                      }}
                       type="primary"
                       htmlType="submit"
                       className="login-form-button"

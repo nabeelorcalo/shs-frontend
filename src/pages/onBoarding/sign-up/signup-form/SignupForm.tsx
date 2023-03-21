@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Col, Form, Input, Row, Select, Space, Typography } from "antd";
 import { CommonDatePicker } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -16,7 +16,7 @@ const SignupForm = () => {
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
+      <Select style={{ width: 100 }}>
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
@@ -28,7 +28,7 @@ const SignupForm = () => {
         layout="vertical"
         name="normal_login"
         className="login-form"
-        initialValues={{ remember: true }}
+        initialValues={{ remember: false }}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
       >
@@ -78,7 +78,7 @@ const SignupForm = () => {
             <Form.Item
               label="Date of Birth"
               name="dob"
-              rules={[{ required: true }, { type: "date" }]}
+              rules={[{ required: false }, { type: "date" }]}
             >
               <CommonDatePicker />
             </Form.Item>
@@ -87,7 +87,7 @@ const SignupForm = () => {
         <Form.Item
           name="phone"
           label="Phone Number"
-          rules={[{ required: true }, { type: "number" }]}
+          // rules={[{ required: false }, { type: "number" }]}
         >
           <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
         </Form.Item>

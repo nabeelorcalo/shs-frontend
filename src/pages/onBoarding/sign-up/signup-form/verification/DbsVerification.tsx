@@ -13,6 +13,7 @@ import {
   SHSLogo,
 } from "../../../../../assets/images";
 import "../../../styles.scss";
+import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -58,6 +59,7 @@ const DbsVerification = (props: any) => {
                 <div className="dragger">
                   <Row className="p-3">
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                      {/* <DragAndDropUpload/> */}
                       <Typography className="dragger-title">
                         Drag & drop files or
                         <span className="text-[#E95060]">Browse</span>

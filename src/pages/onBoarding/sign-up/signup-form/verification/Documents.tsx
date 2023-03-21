@@ -69,7 +69,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row className="p-3">
+                  <Row gutter={[10,50]} className="p-3">
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                       <Typography className="dragger-title">
                         Drag & drop files or
@@ -166,8 +166,8 @@ const Documents = (props: any) => {
                 </div>
               </Form.Item>
 
-              <Row gutter={10}>
-                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+              <Row gutter={[20,10]}>
+                <Col xxl={4} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
                     //htmlType="submit"
@@ -175,7 +175,7 @@ const Documents = (props: any) => {
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                <Col xxl={20} xl={18} lg={18} md={24} sm={24} xs={24}>
                   <Form.Item>
                     <Button
                       type="primary"

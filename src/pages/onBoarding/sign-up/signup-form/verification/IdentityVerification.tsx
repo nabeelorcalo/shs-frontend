@@ -105,7 +105,7 @@ const IdentityVerification = (props: any) => {
               </Form.Item>
 
                 <Row gutter={[130,10]}>
-                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                  <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
                       //htmlType="submit"
@@ -113,7 +113,7 @@ const IdentityVerification = (props: any) => {
                       Skip
                     </Button>
                   </Col>
-                  <Col xxl={18} xl={20} lg={20} md={24} sm={24} xs={24}>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                     <Form.Item>
                       <Button
                         onClick={() => {
