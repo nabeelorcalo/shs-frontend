@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Typography } from "antd";
 import { Link } from "react-router-dom";
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import "../style.scss";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import "./style.scss";
 import {
   PageHeader,
   IconButton,
@@ -10,7 +10,7 @@ import {
   EvaluationStatsCard,
   TextArea,
   Button
-} from "../../../components";
+} from "../../components";
 import {
   Sad,
   SadColorLessEmoji,
@@ -21,8 +21,8 @@ import {
   Awesome,
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
-} from '../../../assets/images';
-import EmojiMoodRating from "../../../components/EmojiMoodRating";
+} from '../../assets/images';
+import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
   const user = {
@@ -127,6 +127,24 @@ const ViewPerformance = () => {
               to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
             >
               Performance History
+            </Link>
+          </>
+        );
+        case 'Manager':
+        return (
+          <>
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+            >
+              Performance
+            </Link>
+            /
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.DETAIL}`}
+            >
+              Mino Marina
             </Link>
           </>
         );

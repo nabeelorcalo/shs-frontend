@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { Row, Col } from 'antd'
 import { PageHeader, RecipeCard, ExtendedButton, SearchBar } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
+import { ROUTES_CONSTANTS } from '../../config/constants'
 import "./style.scss";
 
 // Temporary data
@@ -56,7 +57,7 @@ const Recipes = () => {
           </div>
         </div>
         <div className="page-filterbar-right">
-          <ExtendedButton onClick={() => navigate('/add-recipe')} customType="tertiary" icon={<IconAddRecipe />}>
+          <ExtendedButton onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_ADD}`)} customType="tertiary" icon={<IconAddRecipe />}>
             Add New Recipe
           </ExtendedButton>
         </div>

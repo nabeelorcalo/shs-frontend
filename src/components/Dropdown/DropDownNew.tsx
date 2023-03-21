@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 import { Dropdown as AntDropDown } from 'antd';
 import type { MenuProps } from 'antd';
 interface Props {
+  placement?: any,
   children?: ReactNode | ReactNode[];
   rest?: any;
   items?: any | MenuProps['items'];

@@ -83,6 +83,9 @@ const BookingRequests = Loadable(  lazy(() => import("./pages/accommodation/Book
 const AccommodationPayments = Loadable( lazy(() => import("./pages/accommodation/Payments")));
 const AccPropertyDetail = Loadable(  lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
+const RecipeDetails = Loadable(lazy(() => import("./pages/recipes/RecipeDetails")));
+const AddRecipe = Loadable(lazy(() => import("./pages/recipes/AddRecipe")));
+const EditRecipe = Loadable(lazy(() => import("./pages/recipes/EditRecipe")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const Report = Loadable(lazy(() => import("./pages/report")));
@@ -118,6 +121,10 @@ const SettingPayroll = Loadable( lazy(() => import("./pages/setting/companyAdmin
 const PayrollAddCategory = Loadable( lazy(() => import("./pages/setting/companyAdmin/Payroll/AddCategory")));
 const Charts = Loadable( lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
+const ViewPerformance = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
+const EditPerformance = Loadable(lazy(() => import("./pages/performance/editEvaluation")));
+const PerformanceDetail = Loadable(lazy(() => import("./pages/performance/detailHistory")));
+const CompanyAdminPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/history")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
 const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
 const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
@@ -271,6 +278,21 @@ const managerRoutes = [
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        path:`${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        element: <PerformanceDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        path:  `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        element: <EditPerformance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <ViewPerformance />,
       },
       {
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
@@ -457,6 +479,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `graphs`,
+        path:`graphs`,
+        element: <Graph />,
       },
       {
         key: `${ROUTES_CONSTANTS.CANDIDATES}`,
@@ -690,6 +717,26 @@ const companyAdminRoutes = [
         element: <Performance />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
+        element: <CompanyAdminPerformanceHistory />
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        path:`${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        element: <PerformanceDetail />
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <ViewPerformance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        element: <EditPerformance />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         path: `${ROUTES_CONSTANTS.DOCUMENTS}`,
         element: <Documents />,
@@ -765,6 +812,11 @@ const internRoutes = [
         element: <Performance />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <ViewPerformance />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.STRUCTURE}`,
         path: `${ROUTES_CONSTANTS.STRUCTURE}`,
         element: <Structure />,
@@ -833,7 +885,7 @@ const internRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
       },
       {
@@ -951,13 +1003,28 @@ const studentRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.RECIPES}`,
         path: `${ROUTES_CONSTANTS.RECIPES}`,
         element: <Recipes />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        element: <RecipeDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        element: <AddRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        element: <EditRecipe />,
       },
       {
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,

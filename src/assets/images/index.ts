@@ -56,8 +56,8 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
-export { ReactComponent as Round } from "./login/round.svg";
-export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
+export { default as Round } from "./login/round.svg";
+export { default as DocumentUpload } from "./login/document-upload.svg";
 // Footer Icons
 export { ReactComponent as IconFacebook } from "./footer/icon-social-facebook.svg";
 export { ReactComponent as IconTwitter } from "./footer/icon-social-twitter.svg";
@@ -196,6 +196,9 @@ export { ReactComponent as IconMore } from "./accommodation/icon-more.svg";
 export { ReactComponent as IconSignedDigitally } from "./accommodation/icon-signed-digitally.svg";
 export { ReactComponent as Documentcard } from "./accommodation/document-card.svg";
 export { ReactComponent as IconReceipt } from "./accommodation/icon-receipt.svg";
+export { ReactComponent as IconAngleDown } from "./accommodation/icon-angle-down.svg";
+export { ReactComponent as IconDocumentDownload } from "./accommodation/icon-document-download.svg";
+
 
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
@@ -349,6 +352,8 @@ export { ReactComponent as IconPreparationTime } from './recipes/icon-preparatio
 export { ReactComponent as IconServing } from './recipes/icon-serving.svg';
 export { ReactComponent as IconEditRecipe } from './recipes/icon-edit.svg';
 export { ReactComponent as IconTrashRecipe } from './recipes/icon-trash.svg';
+export { ReactComponent as IconUploadLg } from './recipes/icon-upload-lg.svg';
+
 
 // Performance
 export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
@@ -358,3 +363,5 @@ export { ReactComponent as ColorLessMedalIcon } from './Performance/ColorlessMed
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
 export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';
 
+// Listings Icons
+export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';

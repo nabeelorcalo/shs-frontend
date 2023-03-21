@@ -14,7 +14,7 @@ const Graph = ({ graphName }: any) => {
   //   );
   // };
 
-  const config = {
+  const config: any = {
     data: [data, data],
     xField: 'month',
     yField: yFields,

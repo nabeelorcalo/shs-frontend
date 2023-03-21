@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { Typography, Avatar, Rate, Space } from 'antd'
-import {PageHeader, Alert} from "../../../components";
+import {PageHeader, Alert} from "../../../components"
+import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images'
 import "./style.scss";
 import Slider from 'react-slick';
@@ -26,6 +28,8 @@ const data = [
 const RecipeDetails = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate()
+  const { recipeId } = useParams() 
   const settings = {
     arrows: false,
     dots: false,
@@ -76,7 +80,10 @@ const RecipeDetails = () => {
                 </Typography.Title>
                 <div className="recipe-hero-actions">
                   <Space size={20}>
-                    <div className="recipe-action update-recipe">
+                    <div
+                      className="recipe-action update-recipe"
+                      onClick={() => navigate(`/recipe-update/${recipeId}`)}
+                    >
                       <IconEditRecipe />
                     </div>
                     <div className="recipe-action update-recipe" onClick={openModalRecipeDelete}>

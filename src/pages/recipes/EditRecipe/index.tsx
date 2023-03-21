@@ -7,7 +7,7 @@ import "./style.scss";
 
 // Temporary
 
-const AddRecipe = () => {
+const EditRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
@@ -24,7 +24,7 @@ const AddRecipe = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function submitNewRecipe() {
+  function submitUpdatedRecipe() {
     console.log('Form Submit')
   }
 
@@ -44,7 +44,7 @@ const AddRecipe = () => {
     <>
       <div className="add-new-recipe">
         <PageHeader
-          title={<>Add New Recipe <span>Recipes</span></>}
+          title={<>Update Recipe <span>Sticky Orange Chicken</span></>}
           bordered
         />
 
@@ -54,7 +54,7 @@ const AddRecipe = () => {
             <Typography.Paragraph>Set of instructions that will describe about your recipe to other people.</Typography.Paragraph>
           </div>
         
-          <Form layout="vertical" name="addNewRecipe" onFinish={submitNewRecipe}>
+          <Form layout="vertical" name="addNewRecipe" onFinish={submitUpdatedRecipe}>
             <div className="add-recipe-form-section">
               <div className="form-section-header">
                 <div className="form-section-header-inner">
@@ -186,4 +186,4 @@ const AddRecipe = () => {
   )
 }
 
-export default AddRecipe
+export default EditRecipe

@@ -2,7 +2,7 @@ import CalendarComp from '../../components/calendars/FullCalendarComp/index';
 
 const Index = () => {
   return (
-      <CalendarComp />
+    <CalendarComp />
   )
 }
 

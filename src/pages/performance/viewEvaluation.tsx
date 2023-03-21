@@ -109,6 +109,7 @@ const ViewPerformance = () => {
             Performance
           </Link>
         );
+
       case 'CompanyAdmin':
         return (
           <>
@@ -124,6 +125,25 @@ const ViewPerformance = () => {
               to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
             >
               Performance History
+            </Link>
+          </>
+        );
+
+      case 'Manager':
+        return (
+          <>
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+            >
+              Performance
+            </Link>
+            /
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.DETAIL}`}
+            >
+              Mino Marina
             </Link>
           </>
         );

@@ -7,7 +7,7 @@ export default {
   componenet: Alert
 }
 
-const okBtnFunc = (type)=>{
+const okBtnFunc = (type: any)=>{
     console.log( type + " Alert submit button clicked")
 }
 
@@ -15,7 +15,6 @@ const Template: ComponentStory<typeof Alert> = (args) => <Alert {...args} ><p>Th
 
 export const errorAlert = Template.bind({})
 errorAlert.args = {
-  
     state:true ,
     type:"error" ,
     width:500 ,

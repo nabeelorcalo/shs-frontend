@@ -29,6 +29,7 @@ svg {
   margin-left: -15px;
   margin-right: -15px;
 }
+
 .shs-col-5 {
   flex-shrink: 0;
   width: 100%;
@@ -55,6 +56,10 @@ svg {
 // Buttons
 .ant-btn {
   min-width: 115px;
+
+  & > span + svg {
+    margin-left: 12px;
+  }
 }
 
 .ant-btn-primary {
@@ -74,7 +79,7 @@ svg {
   }
 }
 
-.ant-btn-default.button-secondary {
+.ant-btn.button-secondary {
   background-color: $page-header-secondary;
   border-color: $page-header-secondary;
   color: #ffffff;
@@ -89,7 +94,7 @@ svg {
     color: $page-header-secondary;
   }
 }
-.ant-btn-default.button-tertiary {
+.ant-btn.button-tertiary {
   background-color: $teriary-bg-color;
   border-color: $teriary-bg-color;
   color: #ffffff;
@@ -108,11 +113,59 @@ svg {
     background-color: transparent;
     color: $teriary-bg-color;
   }
+
+  &.ant-btn-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $teriary-bg-color;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.ant-btn.button-sky-blue {
+  min-width: 48px;
+  background-color: $text-input-bg-color;
+  border-color: $text-input-bg-color;
+  color: $text-success-placeholder-color;
+
+  &:hover {
+    background-color: #ffffff;
+    border-color: rgba(90, 89, 128, 0.5);
+    box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+  }
+}
+
+// Dropdown
+.ant-dropdown.shs-dropdown {
+
+  & > ul.ant-dropdown-menu {
+    border: 2px solid $text-error-line-color;
+    box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    min-width: 160px;
+    padding: 10px 16px;
+
+    .ant-dropdown-menu-item {
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+
+      &:hover {
+        background-color: #ffffff;
+      }
+    }
+  }
 }
 
 // Form Inputs
 .ant-form-item {
   margin-bottom: 30px;
+
   .ant-form-item-label {
     padding-bottom: 8px;
     & > label {
@@ -138,9 +191,25 @@ svg {
     box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
     border-color: rgba(90, 89, 128, 0.5);
   }
+
+  &.filled {
+    background-color: $text-input-bg-color;
+    border-color: $text-input-bg-color;
+
+    &:hover,
+    &:focus {
+    background-color: #ffffff;
+    border-color: rgba(90, 89, 128, 0.5);
+  }
+  }
 }
 
 .ant-select {
+  &:hover {
+    .ant-select-selector {
+      border-color: $text-error-line-color !important;
+    }
+  }
   .ant-select-selector {
     border-color: $text-error-line-color;
     color: $text-primary-title-color;
@@ -170,11 +239,39 @@ svg {
       border-color: rgba(90, 89, 128, 0.5) !important;
     }
   }
+  &.filled {
+    &:hover {
+      .ant-select-selector {
+        border-color: $text-input-bg-color !important;
+      }
+    }
+    .ant-select-selector {
+      background-color: $text-input-bg-color;
+      border-color: $text-input-bg-color;
+  
+      &:hover,
+      &:focus {
+        background-color: #ffffff;
+        border-color: rgba(90, 89, 128, 0.5);
+      }
+    }
+
+    &.ant-select-open {
+      .ant-select-selector {
+        box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5) !important;
+        border-color: rgba(90, 89, 128, 0.5) !important;
+        background-color: #ffffff;
+      }
+    }
+  }
 }
+
 .ant-select-dropdown {
   border: 2px solid $text-error-line-color;
   box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
-  padding: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 10px 16px;
 
   .ant-select-item {
     color: $text-secondary-body-color;
@@ -184,7 +281,7 @@ svg {
     min-height: 40px;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.02);
+      background-color: #ffffff;
     }
 
     &.ant-select-item-option-selected {
@@ -194,18 +291,51 @@ svg {
   }
 }
 
-.ant-select.dropdown-filled {
-  .ant-select-selector {
-    background-color: $light-sky-blue;
-    border-color: $light-sky-blue;
+.ant-upload-wrapper.filled {
+  .ant-upload-drag {
+    text-align: left;
+    background-color: $text-input-bg-color;
+    border: 2px dashed $text-error-line-color;
+    border-radius: 8px;
 
     &:hover {
-      background-color: #ffffff;
+      border-color: rgba(90, 89, 128, 0.5);
     }
 
-    &::placeholder {
-      color: $light-grey-color;
+    .ant-upload-btn {
+      padding: 15px 30px;
     }
+  }
+}
+
+.shs-drag-drop {
+  display: flex;
+  align-items: center;
+
+  .shs-upload-content {
+    flex: 1;
+
+    .shs-upload-text {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: $primary-bg-color;
+
+      & > span {
+        color: $secondary-bg-color;
+      }
+    }
+
+    .shs-upload-hint {
+      color: $light-grey-color;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5714285;
+    }
+  }
+
+  .shs-upload-icon {
+
   }
 }
 
@@ -256,7 +386,7 @@ svg {
 .shs-table-card {
   border-radius: 16px;
   box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
-  // padding: 20px;
+  padding: 20px;
 }
 .shs-table {
   .ant-table-wrapper {
@@ -439,7 +569,7 @@ svg {
   &.success {
     background-color: $text-success-color;
   }
-  &.rejected {
+  &.rejected, &.error {
     background-color: $accommodation-badge;
   }
   &.pending {
@@ -498,4 +628,90 @@ svg {
   padding: 8px;
   border: 1px solid $light-grey-color;
   border-radius: 4px;
+}
+
+// Ant Picker / DatePicker
+.ant-picker {
+  border-color: $text-error-line-color;
+  color: $text-primary-title-color;
+  font-size: 16px;
+  font-weight: 400;
+
+  &.filled {
+    background-color: $text-input-bg-color;
+    border-color: $text-input-bg-color;
+    
+    &:hover {
+      background-color: #fff;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+    border-color: rgba(90, 89, 128, 0.5);
+  }
+}
+
+// Ant Picker Dropdown
+.ant-picker-dropdown {
+  .ant-picker-header {
+    border-color: $date-picker-border-color;
+
+    .ant-picker-header-view {
+      .ant-picker-month-btn, .ant-picker-year-btn {
+        color: #0F2552;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .ant-picker-panel-container {
+    border: 2px solid $text-error-line-color;
+    box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+
+    .ant-picker-panel-layout {
+
+    }
+
+    .ant-picker-panel {
+      border: none;
+
+      .ant-picker-date-panel {
+        width: auto;
+
+        .ant-picker-body {
+          padding: 20px 24px;
+
+          .ant-picker-content {
+            width: auto;
+
+            th {
+              height: 20px;
+              width: 32px;
+              color: $light-grey-color;
+              font-size: 10px;
+              font-weight: 500;
+              text-transform: uppercase;
+            }
+
+            td {
+              min-width: 24px;
+              color: $text-primary-title-color;
+              font-size: 14px;
+              font-weight: 400;
+              padding: 8px 0;
+              
+              .ant-picker-cell-inner {
+                min-width: 24px;
+                height: 24px;
+                line-height: 24px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
