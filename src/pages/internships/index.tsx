@@ -266,7 +266,7 @@ const Internships = () => {
         <Alert
           alertType="error"
           width={600}
-          state={true}
+          state={false}
           okBtntxt="Ok"
           cancelBtntxt="cancel"
           children={<p>hello</p>}
