@@ -349,3 +349,8 @@ export { ReactComponent as DrawerIcon } from "./drawerIcon.svg";
 // Common Icons
 export { ReactComponent as GlassMagnifier } from "./Common/GlassMagnifier.svg";
 export { ReactComponent as DownlaodFileIcon } from "./Common/DownlaodFileIcon.svg";
+
+//Offers
+export { default as Offerimg1 } from "./offers/offerImg1.svg";
+export { default as Offerimg2 } from "./offers/offerImg2.svg";
+export { default as Offerimg3 } from "./offers/offerImg3.svg";
