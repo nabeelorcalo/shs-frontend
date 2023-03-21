@@ -5,8 +5,8 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
-import './style.scss';
 import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import './style.scss';
 
 const Index = () => {
   const events = [
