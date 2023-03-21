@@ -209,7 +209,7 @@ const PerformanceHistory = () => {
     },
   ];
 
-  const evaluatedByOptions = [
+  const evaluatedByOptions: any = [
     <div className="flex items-center">
       <Avatar
         size={24}
