@@ -36,8 +36,8 @@ const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
           </Menu.Item>
         </Menu>
       }
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
+      open={visible}
+      onOpenChange={handleVisibleChange}
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>

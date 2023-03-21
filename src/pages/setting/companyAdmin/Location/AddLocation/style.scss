@@ -4,22 +4,23 @@
     .ant-input {
       background: $text-input-bg-color;
 
-      &:hover{
+      &:hover {
         background: $white-bg-color;
 
       }
     }
   }
+
   .ant-select-single {
     .ant-select-selector {
       background: $text-input-bg-color;
-      &:hover{
+
+      &:hover {
         background: $white-bg-color;
 
       }
     }
   }
-  
   .label {
     display: block;
     font-size: 16px;

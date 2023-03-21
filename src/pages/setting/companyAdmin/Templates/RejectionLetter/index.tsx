@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {  Divider, Button } from "antd";
 import { NewTemplate } from "../../../../../assets/images";
-
 import { Alert, SearchBar } from "../../../../../components";
 import { NavLink } from "react-router-dom";
 import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";

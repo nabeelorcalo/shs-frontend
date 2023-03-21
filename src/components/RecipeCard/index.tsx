@@ -1,7 +1,7 @@
-import { FC } from 'react'
-import { Rate, Typography } from "antd";
+import { Col, Rate, Row, Typography } from "antd";
+import {BoxWrapper} from "../BoxWrapper/BoxWrapper";
 const { Paragraph } = Typography;
-import "./RecipeCard.scss";
+import "./style.scss";
 
 interface RecipeCardProps {
   title: string;
@@ -13,7 +13,8 @@ interface RecipeCardProps {
   onRateChange: (value: number) => void
 }
 
-export const RecipeCard: FC<RecipeCardProps> = ({title, thumb, description, rating, status, onCardClick, onRateChange}) => {
+export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
+  const {title, thumb, description, rating, status, onCardClick, onRateChange} = props
   return (
     <div className="recipe-card">
       <div className='recipe-card-body' onClick={onCardClick}>

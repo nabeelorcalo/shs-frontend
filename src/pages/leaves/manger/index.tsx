@@ -8,13 +8,15 @@ import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../asset
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
 import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
 import ManagerCalendar from './ManagerCalendar'
+// import ManagerCalendar from './ManagerCalendar'
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
   { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" },
   { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
 ]
-const index = () => {
+const index = (props: any) => {
+  const { userRole ,hideTopBar} = props;
   const navigate = useNavigate()
   return (
     <div className='manager_main'>
@@ -39,7 +41,7 @@ const index = () => {
           <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='h-full'>
             <div className='how_is_away'>
               <h4 className='font-medium text-[28px] capitalize'>Who's Away</h4>
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xs={24} xxl={14}>
                   <p>{12} people are away this week</p>
                 </Col>

@@ -3,16 +3,18 @@ import { useState } from "react";
 import { Col, Divider, Dropdown, Row, Space } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "./style.scss"
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import {GlobalTable} from "../../components"
-import { CalendarWhiteIcon, MoreIcon } from "../../assets/images";
-import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../components";
-// import DrawerComp from "./DrawerComp";
+import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { GlobalTable } from "../../../components"
+import { CalendarWhiteIcon, MoreIcon } from "../../../assets/images";
+import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
-// import CalendarDrawerInner from "../leaves/intern/calendar/CalendarDrawerInner";
 import { data } from "./LeaveMockData";
-import DrawerComp from "../../components/DrawerComp";
-import CalendarDrawerInnerDetail from "../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
+import DrawerComp from "../../../components/DrawerComp";
+import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
+import constants from "../../../config/constants";
+import dayjs from "dayjs";
+
+const formatDate=(time:any,format:string)=> dayjs(time).format(format)  
 const index = () => {
   // const [actionType, setActionType] = useState({ type: '', id: '' });
   // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -29,17 +31,36 @@ const index = () => {
       title: 'Request Date',
       dataIndex: 'requestDate',
       key: 'requestDate',
+      render: (_: any, data: any) => (
+        <div
+          className="status_container">
+            {formatDate(data.requestDate,"DD/MM/YYYY")}
+        </div>
+      ),
+      
     },
     {
       title: 'Date From',
       dataIndex: 'start',
       key: 'start',
+      render: (_: any, data: any) => (
+        <div
+          className="status_container">
+            {formatDate(data.start,"DD/MM/YYYY")}
+        </div>
+      ),
 
     },
     {
       title: 'Date  To',
-      dataIndex: 'end',
+      dataIndex: "end",
       key: 'end',
+      render: (_: any, data: any) => (
+        <div
+          className="status_container">
+            {formatDate(data.end,"DD/MM/YYYY")}
+        </div>
+      ),
     },
     {
       title: 'Leave Type',
@@ -138,7 +159,7 @@ const index = () => {
         bordered
         title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
       />
-      <Row className=' items-center'>
+      <Row className=' items-center' gutter={[10,10]}>
         <Col xs={24} md={12} lg={12}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
             console.log(e);
@@ -163,13 +184,13 @@ const index = () => {
                 value=""
               />
             </div>
-            <Button
+            {constants.USER_ROLE === 'Intern' && <Button
               icon={<CalendarWhiteIcon className="mr-1" />}
               label="Request Leave"
               onClick={() => setOpenModal({ open: true, type: "addLeav" })}
               size="middle"
               className="Request_leave"
-            />
+            />}
           </div>
         </Col>
         <Divider />
@@ -227,7 +248,7 @@ const index = () => {
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-          type='success'
+          type='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}

@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import { Col, Row, Typography, Space, Input, Button } from "antd";
-import {
-  Settinglocation,
-  LocationPeople,
-  CardLocation,
-} from "../../../../assets/images";
+import {  Settinglocation,  LocationPeople,  CardLocation,} from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
-const { TextArea } = Input;
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 const { Title, Text } = Typography;
 
 let overview = [
@@ -44,7 +39,7 @@ const SettingLocation: React.FC = () => {
     <div className="setting-location">
         <div className="flex justify-between">
         <SearchBar size="middle" handleChange={handleChange} />
-        <NavLink to="/settings/location/add-location">
+        <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
           <Button
             size="middle"
             onClick={() => {}}
@@ -72,7 +67,6 @@ const SettingLocation: React.FC = () => {
                         </Text>
                       </Space>
                     </div>
-
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                       link={"/settings/location/add-location"}
@@ -87,7 +81,6 @@ const SettingLocation: React.FC = () => {
           );
         })}
       </Row>
-
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

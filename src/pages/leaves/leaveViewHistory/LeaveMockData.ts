@@ -1,4 +1,4 @@
-import { LeaveProfileImg } from "../../assets/images";
+import { LeaveProfileImg } from "../../../assets/images";
 
 interface DataType {
     key: string,

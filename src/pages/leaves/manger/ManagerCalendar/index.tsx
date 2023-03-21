@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { leaveCalendarResorceData, leaveCalendarEventsData } from '../managerMockData';
 import './style.scss';
 import ManagerCalanderDrawerData from './managerCalanderDrawerData';
-
+const formatDate=(time:any,format:string)=> dayjs(time).format(format)  
 const ManagerCalendar = () => {
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState<boolean>(false);
   const [eventData, seteventData] = useState({});
@@ -31,8 +31,8 @@ const ManagerCalendar = () => {
     return (
       <>
         <div className="slot_Top_wrapper">
-          <p className="_day font-medium  ">{dayjs(slotEvent?.date).format("ddd")}</p>
-          <p className='_date font-normal'>{dayjs(slotEvent.date).format('DD')}</p>
+          <p className="_day font-medium  ">{formatDate(slotEvent?.date,"ddd")}</p>
+          <p className='_date font-normal'>{formatDate(slotEvent.date,'DD')}</p>
         </div>
       </>)
   }
@@ -69,15 +69,16 @@ const ManagerCalendar = () => {
             plugins={[resourceTimelinePlugin, interactionPlugin, dayGridPlugin, ResourcePlugin]}
             initialView="resourceTimelineWeek"
             titleFormat={{
-              month: 'short',
+              month: 'long',
+              year: 'numeric',
               day: 'numeric',
-              weekday: 'short'
+              // weekday: 'long'
             }}
             headerToolbar={{
               start: '',
-              center: 'prev "" next',
-              end: 'myCustomButton'
-          }}
+              center: 'title prev next',
+              end: ''
+            }}
             resources={leaveCalendarResorceData}
             events={leaveCalendarEventsData}
             eventContent={handleEventContent}
@@ -94,11 +95,11 @@ const ManagerCalendar = () => {
           />
         </div>
       </div>
-       <ManagerCalanderDrawerData
-       // title={"hello"}
-       setIsOpenCalendarDrawer={setIsOpenCalendarDrawer}
-       eventData={eventData}
-       isOpenCalendarDrawer={isOpenCalendarDrawer} />
+      <ManagerCalanderDrawerData
+        // title={"hello"}
+        setIsOpenCalendarDrawer={setIsOpenCalendarDrawer}
+        eventData={eventData}
+        isOpenCalendarDrawer={isOpenCalendarDrawer} />
     </>
   )
 }

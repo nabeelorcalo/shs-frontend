@@ -3,15 +3,27 @@
   .ant-form-item .ant-form-item-control-input-content {
     .ant-input {
       background: $text-input-bg-color;
+      &:hover{
+        background: $white-bg-color;
+
+      }
     }
   }
 
   .ant-picker {
     background: $text-input-bg-color !important;
+    &:hover{
+      background: $white-bg-color !important;
+
+    }
   }
   .ant-select-single {
     .ant-select-selector {
-      background: $text-input-bg-color;
+      // background: $text-input-bg-color;
+      &:hover{
+        background: $white-bg-color !important;
+
+      }
     }
   }
   .label {

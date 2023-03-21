@@ -3,7 +3,8 @@ import { NavLink } from "react-router-dom";
 import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import {
-  Typography, Row, Col, Divider, Form, Radio, RadioChangeEvent,Button, Space, Input, Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
 import { CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
@@ -40,7 +41,7 @@ const LeavesAddPolicy: React.FC = () => {
   ];
 
   const deselectArray: any = [];
-
+  const dropdownValues = ['1', '2', '3', '4', '5', '6']
   const [value, setValue] = useState(1);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [openModal, setOpenModal] = useState<any>(false);
@@ -72,7 +73,7 @@ const LeavesAddPolicy: React.FC = () => {
     <div className="leaves-add-policy">
       <div className="flex items-center ">
         <Title level={3} className="mt-2">
-          Add Policy{" "}
+          Add Policy
         </Title>
         <span className="mx-2">
           <SettingHorizontalLine />
@@ -178,22 +179,14 @@ const LeavesAddPolicy: React.FC = () => {
                 <p>Maximum Carry Forward (Days Per Year)</p>
 
                 <DropDown
-                  name="Selecy"
-                  options={[
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5',
-                    '6'
-                  ]}
+                  name="Select"
+                  options={dropdownValues}
                   setValue={() => { }}
                   value=""
                 />
               </div>
               <div>
                 <p>Carry Forward Expiration</p>
-
                 <CommonDatePicker
                   onBtnClick={() => { }}
                   open={openDatePicker}

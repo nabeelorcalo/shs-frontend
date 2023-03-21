@@ -34,12 +34,11 @@ import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/prop
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-(
-  <Suspense fallback={<Spin indicator={spinIcon} />}>
-    <Component {...props} />
-  </Suspense>
-);
-
+  (
+    <Suspense fallback={<Spin indicator={spinIcon} />}>
+      <Component {...props} />
+    </Suspense>
+  );
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
@@ -48,12 +47,18 @@ const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
+const AllGrievances = Loadable(lazy(() => import("./pages/grievances/Manager/AllGrievance")));
+const GrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Manager/GrievanceDetails")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
-const Structure = Loadable(lazy(() => import("./pages/structure/companyAdmin")));
+const Structure = Loadable(
+  lazy(() => import("./pages/structure/index"))
+);
 const Timesheet = Loadable(lazy(() => import("./pages/timesheet/index")));
 const DelegateMembers = Loadable(lazy(() => import("./pages/delegateMembers")));
-const WithDrawalRequest = Loadable(lazy(() => import("./pages/withdrawalRequest")));
+const WithDrawalRequest = Loadable(
+  lazy(() => import("./pages/withdrawalRequest"))
+);
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
 const Universities = Loadable(lazy(() => import("./pages/universities")));
@@ -72,14 +77,15 @@ const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(lazy(() => import("./pages/accommodation/AvailableProperties")));
-const SavedSearches = Loadable(lazy(() => import("./pages/accommodation/SavedSearches")));
-const RentedProperties = Loadable(lazy(() => import("./pages/accommodation/RentedProperties")));
-const BookingRequests = Loadable(lazy(() => import("./pages/accommodation/BookingRequests")));
-const AccommodationPayments = Loadable(lazy(() => import("./pages/accommodation/Payments")));
-const AccPropertyDetail = Loadable(lazy(() => import("./pages/accommodation/PropertyDetail")));
+const SavedSearches = Loadable( lazy(() => import("./pages/accommodation/SavedSearches")));
+const RentedProperties = Loadable( lazy(() => import("./pages/accommodation/RentedProperties")));
+const BookingRequests = Loadable(  lazy(() => import("./pages/accommodation/BookingRequests")));
+const AccommodationPayments = Loadable( lazy(() => import("./pages/accommodation/Payments")));
+const AccPropertyDetail = Loadable(  lazy(() => import("./pages/accommodation/PropertyDetail")));
 const Recipes = Loadable(lazy(() => import("./pages/recipes")));
 const RecipeDetails = Loadable(lazy(() => import("./pages/recipes/RecipeDetails")));
 const AddRecipe = Loadable(lazy(() => import("./pages/recipes/AddRecipe")));
+const EditRecipe = Loadable(lazy(() => import("./pages/recipes/EditRecipe")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const Report = Loadable(lazy(() => import("./pages/report")));
@@ -89,40 +95,40 @@ const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
-const ViewHistory = Loadable(lazy(() => import("./pages/leaveViewHistory")));
+const ViewHistory = Loadable(lazy(() => import("./pages/leaves/leaveViewHistory")));
 const Setting = Loadable(lazy(() => import("./pages/setting")));
-const Charts = Loadable(lazy(() => import("./components/ChartsOfGraphs/Charts")));
-const SettingPerformance = Loadable(lazy(() => import("./pages/setting/companyAdmin/Performance")));
-const SettingDepartment = Loadable(lazy(() => import("./pages/setting/companyAdmin/Department")));
-const SettingLocation = Loadable(lazy(() => import("./pages/setting/companyAdmin/Location")));
-const AddLocation = Loadable(lazy(() => import("./pages/setting/companyAdmin/Location/AddLocation")));
-const SettingTemplate = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates")));
-const TemplatesOfferLater = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/OfferLetter")));
-const OfferLaterNewTemplate = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/OfferLetter/NewTemplate")));
-const TCA = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/CertificateOfAppreciation")));
-const TCANewTemplate = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/CertificateOfAppreciation/NewTemplate")));
-const TemplatesCertificateOfCompletion = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/CertificateOfCompletion")));
-const TCCNewTemplate = Loadable(lazy( () =>import("./pages/setting/companyAdmin/Templates/CertificateOfCompletion/NewTemplate")));
-const TemplatesContract = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/Contract")));
-const ContractNewTemplate = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/Contract/NewTemplate")));
-const TemplatesRejectionLetter = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/RejectionLetter")));
-const RejectionLetterNewTemplate = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/RejectionLetter/NewTemplate")));
+const SettingPerformance = Loadable( lazy(() => import("./pages/setting/companyAdmin/Performance")));
+const SettingDepartment = Loadable( lazy(() => import("./pages/setting/companyAdmin/Department")));
+const SettingLocation = Loadable( lazy(() => import("./pages/setting/companyAdmin/Location")));
+const AddLocation = Loadable( lazy(() => import("./pages/setting/companyAdmin/Location/AddLocation")));
+const SettingTemplate = Loadable( lazy(() => import("./pages/setting/companyAdmin/Templates")));
+const TemplatesOfferLater = Loadable( lazy(() => import("./pages/setting/companyAdmin/Templates/OfferLetter")));
+const OfferLaterNewTemplate = Loadable(lazy( () =>   import("./pages/setting/companyAdmin/Templates/OfferLetter/NewTemplate")));
+const TCA = Loadable( lazy( () =>  import("./pages/setting/companyAdmin/Templates/CertificateOfAppreciation")));
+const TCANewTemplate = Loadable(lazy(() =>  import(    "./pages/setting/companyAdmin/Templates/CertificateOfAppreciation/NewTemplate"  )));
+const TemplatesCertificateOfCompletion = Loadable(lazy( () =>   import("./pages/setting/companyAdmin/Templates/CertificateOfCompletion") ));
+const TCCNewTemplate = Loadable( lazy( () =>import(  "./pages/setting/companyAdmin/Templates/CertificateOfCompletion/NewTemplate"    ) ));
+const TemplatesContract = Loadable( lazy(() => import("./pages/setting/companyAdmin/Templates/Contract")));
+const ContractNewTemplate = Loadable(lazy(() => import("./pages/setting/companyAdmin/Templates/Contract/NewTemplate") ));
+const TemplatesRejectionLetter = Loadable( lazy(() => import("./pages/setting/companyAdmin/Templates/RejectionLetter")));
+const RejectionLetterNewTemplate = Loadable(lazy(() => import( "./pages/setting/companyAdmin/Templates/RejectionLetter/NewTemplate")));
 const SettingLeaves = Loadable(lazy(() => import("./pages/setting/companyAdmin/Leaves")));
-const LeavesAddPolicy = Loadable(lazy(() => import("./pages/setting/companyAdmin/Leaves/AddPolicy")));
-const SettingShifts = Loadable(lazy(() => import("./pages/setting/companyAdmin/Shifts")));
-const AddShift = Loadable(lazy(() => import("./pages/setting/companyAdmin/Shifts/AddShift")));
-const SettingTimesheet = Loadable(lazy(() => import("./pages/setting/companyAdmin/Timesheet")));
-const SettingPayroll = Loadable(lazy(() => import("./pages/setting/companyAdmin/Payroll")));
-const PayrollAddCategory = Loadable(lazy(() => import("./pages/setting/companyAdmin/Payroll/AddCategory")));
+const LeavesAddPolicy = Loadable( lazy(() => import("./pages/setting/companyAdmin/Leaves/AddPolicy")));
+const SettingShifts = Loadable( lazy(() => import("./pages/setting/companyAdmin/Shifts")));
+const AddShift = Loadable(  lazy(() => import("./pages/setting/companyAdmin/Shifts/AddShift")));
+const SettingTimesheet = Loadable(  lazy(() => import("./pages/setting/companyAdmin/Timesheet")));
+const SettingPayroll = Loadable( lazy(() => import("./pages/setting/companyAdmin/Payroll")));
+const PayrollAddCategory = Loadable( lazy(() => import("./pages/setting/companyAdmin/Payroll/AddCategory")));
+const Charts = Loadable( lazy(() => import("./components/ChartsOfGraphs/Charts")));
 const Personalisation = Loadable(lazy(() => import("./pages/personalisation")));
 const ViewPerformance = Loadable(lazy(() => import("./pages/performance/viewEvaluation")));
 const EditPerformance = Loadable(lazy(() => import("./pages/performance/editEvaluation")));
 const PerformanceDetail = Loadable(lazy(() => import("./pages/performance/detailHistory")));
 const CompanyAdminPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/history")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
-const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
-const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
-const TimeSheetHistory = Loadable(lazy(() => import('./pages/timesheet/companyAdmin/timesheetHistory')));
+const Certificate = Loadable(lazy(() => import("./pages/certificate/index")));
+const CertificateDetail = Loadable( lazy(() => import("./pages/certificate/certificateDetail")));
+const TimeSheetHistory = Loadable(lazy(() => import("./pages/timesheet/companyAdmin/timesheetHistory")));
 
 export const publicRoutes = [
   {
@@ -306,6 +312,17 @@ const managerRoutes = [
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
+
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
+        path:`${ROUTES_CONSTANTS.ALL_GRIEVANCES}` ,
+        element: <AllGrievances/>,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        path:`${ROUTES_CONSTANTS.GRIEVANCES_Details}` ,
+        element: <GrievancesDetails/>,
       },
       {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
@@ -482,7 +499,7 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
-      
+
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
@@ -524,6 +541,11 @@ const companyAdminRoutes = [
         element: <Leaves />,
       },
       {
+        key: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        path: `${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`,
+        element: <ViewHistory />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.TIMESHEET}`,
         path: `${ROUTES_CONSTANTS.TIMESHEET}`,
         element: <Timesheet />,
@@ -536,106 +558,99 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.SETTING}`,
         path: `${ROUTES_CONSTANTS.SETTING}`,
-        // element: <Setting />,
         children: [
           {
-            key: `location`,
+            key:`${ROUTES_CONSTANTS.SETTING_LOCATION}`,
+            path: `${ROUTES_CONSTANTS.SETTING_LOCATION}`,
             element: (
               <Setting title="Location">
-                <SettingLocation />{" "}
+                <SettingLocation />
               </Setting>
             ),
-            path: "location",
             index: true,
           },
           {
-            key: `add-location`,
+            key: `${ROUTES_CONSTANTS.ADD_LOCATION}`,
+            path: `${ROUTES_CONSTANTS.ADD_LOCATION}`,
             element: <AddLocation />,
-            path: "/settings/location/add-location",
-          },
-
-          {
-            key: `offer-letter-new-template`,
-            element: <OfferLaterNewTemplate />,
-            path: "/settings/template/offer-letters/new-template",
           },
           {
-            key: `template-offer-letters`,
+            key: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`,
+            path: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`,
             element: <TemplatesOfferLater />,
-            path: "/settings/template/template-offer-letters",
           },
           {
-            key: `template-contract`,
+            key: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}`,
+            path: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}`,
             element: <TemplatesContract />,
-            path: "/settings/template/contract",
-          },
-
-          {
-            key: `contract-new-template`,
-            element: <ContractNewTemplate />,
-            path: "/settings/template/contract/new-template",
           },
           {
-            key: `template-rejection-letter`,
+            key: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}`,
+            path: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}`,
             element: <TemplatesRejectionLetter />,
-            path: "/settings/template/rejection-letter",
-          },
-          
-          {
-            key: `rejection-letter-new-template`,
-            element: <RejectionLetterNewTemplate />,
-            path: "/settings/template/rejection-letter/new-template",
           },
           {
-            key: `template-certificate-of-appreciation`,
+            key: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`,
+            path: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`,
             element: <TCA />,
-            path: "/settings/template/certificate-of-appreciation",
           },
           {
-            key: `tca-new-template`,
-            element: <TCANewTemplate />,
-            path: "/settings/template/certificate-of-appreciation/new-template",
-          },
-
-          {
-            key: `template-certificate-of-completion`,
+            key: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`,
+            path: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`,
             element: <TemplatesCertificateOfCompletion />,
-            path: "/settings/template/certificate-of-completion",
           },
-
           {
-            key: `tcc-new-template`,
+            key: `${ROUTES_CONSTANTS.CONTRACT_NEW_TEMPLATE}`,
+            path: `${ROUTES_CONSTANTS.CONTRACT_NEW_TEMPLATE}`,
+            element: <ContractNewTemplate />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}`,
+            path: `${ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}`,
+            element: <OfferLaterNewTemplate />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}`,
+            path: `${ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}`,
+            element: <RejectionLetterNewTemplate />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}`,
+            path: `${ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}`,
+            element: <TCANewTemplate />,
+          },
+          {
+            key: `${ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}`,
+            path: `${ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}`,
             element: <TCCNewTemplate />,
-            path: "/settings/template/certificate-of-completion/new-template",
           },
-
           {
-            key: `department`,
+            key: `${ROUTES_CONSTANTS.SETTING_DEPARTMENT}`,
+            path: `${ROUTES_CONSTANTS.SETTING_DEPARTMENT}`,
             element: (
               <Setting title="Department">
-                <SettingDepartment />{" "}
+                <SettingDepartment />
               </Setting>
             ),
-            path: "department",
           },
           {
-            key: `leaves`,
+            key: `${ROUTES_CONSTANTS.SETTING_LEAVES}`,
+            path: `${ROUTES_CONSTANTS.SETTING_LEAVES}`,
             element: (
-              <Setting title="Leaves">
+              <Setting title="leaves">
                 <SettingLeaves />
               </Setting>
             ),
-            path: "leaves",
           },
           {
-            key: `add-policy`,
+            key: `${ROUTES_CONSTANTS.LEAVES_ADD_POLICY}`,
+            path: `${ROUTES_CONSTANTS.LEAVES_ADD_POLICY}`,
             element: <LeavesAddPolicy />,
-            path: "leaves/add-policy",
           },
 
           {
-            key: `performance`,
-            path: `performance`,
+            key: `${ROUTES_CONSTANTS.SETTING_PERFORMANCE}`,
+            path: `${ROUTES_CONSTANTS.SETTING_PERFORMANCE}`,
             element: (
               <Setting title="Performance">
                 <SettingPerformance />
@@ -643,9 +658,8 @@ const companyAdminRoutes = [
             ),
           },
           {
-            key: `template`,
-            path: `template`,
-
+            key: `${ROUTES_CONSTANTS.SETTING_TEMPLATE}`,
+            path: `${ROUTES_CONSTANTS.SETTING_TEMPLATE}`,
             element: (
               <Setting title="Template">
                 <SettingTemplate />
@@ -653,8 +667,8 @@ const companyAdminRoutes = [
             ),
           },
           {
-            key: `shifts`,
-            path: `shifts`,
+            key: `${ROUTES_CONSTANTS.SETTING_SHIFTS}`,
+            path: `${ROUTES_CONSTANTS.SETTING_SHIFTS}`,
             element: (
               <Setting title="Shifts">
                 <SettingShifts />
@@ -662,13 +676,13 @@ const companyAdminRoutes = [
             ),
           },
           {
-            key: `add-shift`,
+            key: `${ROUTES_CONSTANTS.ADD_SHIFT}`,
+            path: `${ROUTES_CONSTANTS.ADD_SHIFT}`,
             element: <AddShift />,
-            path: "/settings/shifts/add-shift",
           },
           {
-            key: `timesheet`,
-            path: `timesheet`,
+            key: `${ROUTES_CONSTANTS.SETTING_TIMESHEET}`,
+            path: `${ROUTES_CONSTANTS.SETTING_TIMESHEET}`,
             element: (
               <Setting title="Timesheet">
                 <SettingTimesheet />
@@ -676,8 +690,8 @@ const companyAdminRoutes = [
             ),
           },
           {
-            key: `payroll`,
-            path: `payroll`,
+            key: `${ROUTES_CONSTANTS.SETTING_PAYROLL}`,
+            path: `${ROUTES_CONSTANTS.SETTING_PAYROLL}`,
             element: (
               <Setting title="Payroll">
                 <SettingPayroll />
@@ -685,9 +699,9 @@ const companyAdminRoutes = [
             ),
           },
           {
-            key: `payroll-add-category`,
+            key: `${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`,
+            path: `${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`,
             element: <PayrollAddCategory />,
-            path: "/settings/payroll/add-category",
           },
         ],
       },
@@ -992,9 +1006,14 @@ const studentRoutes = [
         element: <RecipeDetails />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ADD_RECIPE}`,
-        path: `${ROUTES_CONSTANTS.ADD_RECIPE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
         element: <AddRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        element: <EditRecipe />,
       },
       {
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,

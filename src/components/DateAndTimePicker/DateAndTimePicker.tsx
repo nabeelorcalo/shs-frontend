@@ -3,7 +3,7 @@ import type { DatePickerProps } from 'antd';
 import { DatePicker } from 'antd';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import "./style.scss"
+// import "./style.scss"
 
 interface Props {
   label: string;
@@ -25,6 +25,7 @@ const customWeekStartEndFormat: DatePickerProps['format'] = (value) =>
   .endOf('week')
   .format(weekFormat)}`
   
+  
   const DateAndTimePicker = (props:Props) => {
     const { label,size } = props 
     return (
@@ -35,5 +36,4 @@ const customWeekStartEndFormat: DatePickerProps['format'] = (value) =>
     </div>
     )
 }
-
 export default DateAndTimePicker

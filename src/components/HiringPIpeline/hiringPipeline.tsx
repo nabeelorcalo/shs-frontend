@@ -1,56 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Pipeline.scss"
 
 const Array = [
     {
-        title: "Applied",
+        title: "applied",
         value: "0",
         color: "#363565"
     }, {
-        title: "Interviewed",
+        title: "interviewed",
         value: "0",
         color: "#D2D6DC"
 
 
     }, {
-        title: "Recommended",
+        title: "recommended",
         value: "0",
         color: "#D2D6DC"
 
 
     }, {
-        title: "Offer Letter",
+        title: "offer letter",
         value: "0",
         color: "#D2D6DC"
 
     }, {
-        title: "Contract",
+        title: "contract",
         value: "0",
         color: "#D2D6DC"
 
     }, {
-        title: "Hired",
+        title: "hired",
         value: "0",
         color: "#D2D6DC"
 
     }, {
-        title: "Rejected",
+        title: "rejected",
         value: "0",
         color: "#D2D6DC"
 
     }
 ]
-const HiringPipeline = () => {
+const HiringPipeline = (props: any) => {
+    const { hiringList } = props;
 
     return (
 
         <div className='pipeline-wrapper'>
             {Array.map((item: any) => (
-                <>
-                    <div  style={{ backgroundColor: item.color }} className={` para  ${item?.title === "Applied" ? "hiringPipeline " : "hiringPipeline2 hiringPipeline"} `}>
-                        <span >{item.title}</span>
-                    </div>
-                </>
+                <div style={{
+                    backgroundColor: hiringList.includes(item?.title) ? '#363565' : '#D2D6DC',
+                    color: hiringList.includes(item?.title) ? '#fff' : ''
+                }}
+                    className={`pipline-content capitalize`}>
+                    {item.title}
+                </div>
             ))
             }
         </div >

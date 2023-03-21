@@ -5,8 +5,17 @@
 
         .ant-input{
             background: $text-input-bg-color;
-
+            &:hover{
+              background: $white-bg-color;
+            }
         }
+    }
+    .text-editor{
+      border: 2px solid $white-bg-color;
+      &:hover{
+        background-color: $white-bg-color;
+        border: 2px solid $input-hover-color;
+      }
     }
     .ql-container {
         min-height: 10rem;
