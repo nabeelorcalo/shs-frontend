@@ -1,8 +1,8 @@
 import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-import api from "../../api";
-import constants from "../../config/constants";
+import api from "../../../api";
+import constants from "../../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {

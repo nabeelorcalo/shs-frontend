@@ -12,6 +12,8 @@ import { AppreciationModal } from "./appreciationModal";
 import { WarnModal } from "./warnModel";
 
 const PerformanceHistory = () => {
+  const id = 1;
+
   const columnNames = [
     {
       title: 'No.',
@@ -19,7 +21,7 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.no}
         </Link >
@@ -32,7 +34,7 @@ const PerformanceHistory = () => {
         <Space size="middle">
           <Link
             className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+            to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
           >
             <Avatar
               size={32}
@@ -49,7 +51,7 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.name}
         </Link >
@@ -61,7 +63,7 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.department}
         </Link >
@@ -73,7 +75,7 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.date}
         </Link >
@@ -85,7 +87,7 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.evaluatedBy}
         </Link >
@@ -97,7 +99,7 @@ const PerformanceHistory = () => {
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.totalEvaluations}
         </Link >
@@ -111,7 +113,7 @@ const PerformanceHistory = () => {
           <Space size="middle">
             <Link
               className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.VIEW_PERFORMANCE_HISTORY}`}
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
             >
               <Progress
                 size={[200, 13]}
@@ -207,7 +209,7 @@ const PerformanceHistory = () => {
     },
   ];
 
-  const evaluatedByOptions = [
+  const evaluatedByOptions: any = [
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -217,6 +219,7 @@ const PerformanceHistory = () => {
         Maria Sanoid
       </p>
     </div>,
+
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -226,6 +229,7 @@ const PerformanceHistory = () => {
         Janete Samson
       </p>
     </div>,
+    
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -258,7 +262,7 @@ const PerformanceHistory = () => {
       label:
         < Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
         >
           View Details
         </Link >,
@@ -268,7 +272,7 @@ const PerformanceHistory = () => {
       label:
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
         >
           Evaluate
         </Link >,

@@ -56,8 +56,8 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
-export { ReactComponent as Round } from "./login/round.svg";
-export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
+export { default as Round } from "./login/round.svg";
+export { default as DocumentUpload } from "./login/document-upload.svg";
 // Footer Icons
 export { ReactComponent as IconFacebook } from "./footer/icon-social-facebook.svg";
 export { ReactComponent as IconTwitter } from "./footer/icon-social-twitter.svg";

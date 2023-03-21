@@ -18,11 +18,12 @@ interface Props {
     cancelBtntxt?: string;
     okBtntxt?: string;
     okBtnFunc?:any
-    children?: any
+    children?: any,
+    open?: any,
 }
 
 export const Alert: React.FC = (props: Props) => {
-    const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children } = props
+    const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children = '' } = props
     return (
         <>
             <Modal

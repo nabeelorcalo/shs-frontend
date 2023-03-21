@@ -29,7 +29,7 @@ const EditGoalTask = ({ title }: any) => {
                 >
                     <div className="my-8">
                         <p>Task Name</p>
-                        <Input rows={4} placeholder="Select a step to start with tommorow" maxLength={6} />
+                        <Input.TextArea rows={4} placeholder="Select a step to start with tommorow" maxLength={6} />
 
                     </div>
                     <div className="my-8">
