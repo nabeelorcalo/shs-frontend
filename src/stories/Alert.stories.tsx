@@ -1,5 +1,6 @@
 import { ComponentStory } from '@storybook/react'
 import { object } from 'prop-types';
+import { Children } from 'react';
 import { Alert } from '../components';
 
 export default {
@@ -20,7 +21,8 @@ errorAlert.args = {
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-    okBtnFunc: okBtnFunc
+    okBtnFunc: okBtnFunc,
+    children: <p>children JSX</p>
 }
 
 
@@ -31,7 +33,8 @@ successAlert.args = {
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-    okBtnFunc: okBtnFunc
+    okBtnFunc: okBtnFunc,
+    children: <p>children JSX</p>
 
 }
 
@@ -42,6 +45,7 @@ warningAlert.args = {
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-    okBtnFunc: okBtnFunc
+    okBtnFunc: okBtnFunc,
+    children: <p>children JSX</p>
 
 }

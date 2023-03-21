@@ -135,9 +135,8 @@ const SettingDepartment: React.FC = (props: any) => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };
