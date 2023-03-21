@@ -96,7 +96,7 @@ const ActivityData = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
-            <Button className="text-input-bg-color rounded-lg text-success-color font-normal text-base font-[outfit] m-3">
+            <Button className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base font-[outfit] m-3">
               <NodeExpandOutlined className="text-base" />
               Filter
               <RightOutlined className="text-xs" />

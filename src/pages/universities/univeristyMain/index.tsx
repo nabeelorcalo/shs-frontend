@@ -6,7 +6,7 @@ import {
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import { DropDown, SearchBar } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import GlobalTable from "../../../components/Table/Table";
+import GlobalTable from "../../../components";
 import CustomDroupDown from "../../digiVault/digiVaultStudent/droupDownCustom/CustomDroupDown";
 
 const tableData = [
