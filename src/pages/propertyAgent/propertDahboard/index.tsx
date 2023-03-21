@@ -5,6 +5,7 @@ import ListingRequest from '../listingRequest'
 import PropertyAgentTable from '../propertAgentTable'
 import MainDashboard from './Dashboard'
 import '../style.scss';
+import { PageHeader } from '../../../components'
 
 
 const items = [
@@ -30,9 +31,9 @@ const PropertyDashboard = () => {
       <>
           <Row>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Typography className="text-2xl font-semibold font-[Outfit] primary-color">Property Agent</Typography>
+              <PageHeader title='Property Agent' bordered={true}/>
               </Col>
-              <Divider/>
+             
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <AppTabs items={items} />
               </Col>

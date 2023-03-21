@@ -1,6 +1,7 @@
 import { Col, Divider, Row, Typography } from "antd";
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { PageHeader } from "../../components";
 import StudentsTabs from "./students";
 import AddVideo from "./students/addVideo";
 import ChangePassword from "./students/changePassword";
@@ -15,11 +16,10 @@ const Profile = () => {
       <Row gutter={10}>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="title-bar">
-            <Typography className="main-profile-title">My Profile</Typography>
+            <PageHeader title='My Profile' bordered={true} />
+        
           </div>
-          <Divider/>
         </Col>
-
         <Col xxl={6} xl={6} lg={10} md={24} sm={24} xs={24}>
           <StudentSideBar setShowSideViewType={setShowSideViewType} />
         </Col>

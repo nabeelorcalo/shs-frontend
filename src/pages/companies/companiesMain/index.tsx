@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
-import { DropDown, SearchBar, GlobalTable } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, PageHeader } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -185,14 +185,11 @@ const CompaniesMain = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="font-semibold text-2xl primary-color font-[outfit]">
-              Companies
-            </Typography>
+            <PageHeader title='Companies' bordered={true} />
           </div>
         </Col>
       </Row>
-      <Divider />
-
+    
       <Row className="m-2">
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />

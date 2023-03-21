@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Row, Typography, Space, Menu } from "antd";
-import { DropDown, SearchBar, GlobalTable } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, PageHeader } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -192,13 +192,10 @@ const StudentMain = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="primary-color text-2xl font-semibold font-[outfit]">
-              Students
-            </Typography>
+            <PageHeader title='Student' bordered={true} />
           </div>
         </Col>
       </Row>
-      <Divider />
       <Row className="m-2">
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />

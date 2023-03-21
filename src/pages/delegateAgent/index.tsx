@@ -6,6 +6,7 @@ import WithDrawalRequest from "./delegateAgentTabs/delegateWithDrawlRequest";
 import Dashboard from "./delegateAgentTabs/delelgatedashboard";
 import DelegateMain from "./delegateAgentTabs/delegateMain";
 import "./style.scss";
+import { PageHeader } from "../../components";
 
 const items = [
   {
@@ -42,11 +43,12 @@ const DelegateAgent = () => {
     <div className="delegate-agent">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Typography className="main-title">
-            {currentKey === "1" ? "Delegate Agent" : "Agent Management"}
-          </Typography>
+     
+          <div>
+            {currentKey === "1" ? <PageHeader title='Delegate Agent' bordered={true}/> :      <PageHeader title="Agent Management" bordered={true}/>}
+          </div>
         </Col>
-        <Divider />
+      
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <AppTabs items={items} onChange={onTabChange} />
         </Col>

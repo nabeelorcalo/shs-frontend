@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Row, Typography, Form, Space } from 'antd';
-import { DropDown, SearchBar } from "../../../components";
+import { DropDown, PageHeader, SearchBar } from "../../../components";
 import { User} from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
@@ -59,14 +59,10 @@ const ManagerMain = () => {
       </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div>
-            <Typography className="primary-color text-2xl font-semibold font-[outfit]">
-              Managers
-            </Typography>
-          </div>
+          <PageHeader title='Managers' bordered={ true} />
         </Col>
       </Row>
-      <Divider />
+     
       <Row gutter={[5, 10]} className="flex items-center ">
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />

@@ -22,7 +22,7 @@ import {
   Typography,
 } from "antd";
 import { CalendarIcon } from "../../../assets/images";
-import { CommonDatePicker, DropDown, SearchBar ,GlobalTable} from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar ,GlobalTable, PageHeader} from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -196,13 +196,12 @@ const AdminManagement = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <Typography className="text-2xl font-semibold font-[Outfit] primary-color">
-              Admin Management
-            </Typography>
+            <PageHeader title='Admin Management' bordered={true}/>
+          
           </div>
         </Col>
       </Row>
-      <Divider />
+     
       <Row gutter={10}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
@@ -226,7 +225,7 @@ const AdminManagement = () => {
               />
             </div>
             <Button
-              className="teriary-bg-color white-color text-base font-semibold"
+              className="teriary-bg-color white-color text-base font-semibold flex items-center"
               onClick={() => {
                 setOpen(true);
               }}
