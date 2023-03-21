@@ -2,9 +2,11 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { MenuProps } from 'antd'
-import { Button, Table, Dropdown, Modal, Space, Steps } from 'antd'
+import { Button, Table, Dropdown, Modal, Space, Steps,
+  Form, Input, Row, Col, Typography, Radio, Select, Checkbox, Upload, 
+} from 'antd'
 import { PageHeader, SearchBar } from '../../components'
-import { IconAddListings, Documentcard, IconMore } from '../../assets/images'
+import { IconAddListings, IconAngleDown, IconMore } from '../../assets/images'
 import "./style.scss";
 interface DataType {
   key: React.Key;
@@ -229,20 +231,264 @@ const Listings = () => {
   }
 
 
-  /* STEPS
+  /* ADD LISTING STEPS
   -------------------------------------------------------------------------------------*/
+  function StepLocation() {
+    return (
+      <div className="step-location">
+        <div className="step-content-header">
+          <div className="step-content-header-title">Location</div>
+          <Typography.Title level={2}>Make sure your property is in our supported area & furnished</Typography.Title>
+          <Typography.Title level={3}>What's the address?</Typography.Title>
+        </div>
+        <Row gutter={30}>
+          <Col xs={24}>
+            <Form.Item name="address" label="Address">
+              <Input placeholder="Placeholder" />
+            </Form.Item>
+          </Col>
+          <Col xs={12}>
+            <Form.Item name="address2" label="Address  Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
+              <Input placeholder="Placeholder" />
+            </Form.Item>
+          </Col>
+          <Col xs={12}>
+            <Form.Item name="postcode" label="Postcode">
+              <Input placeholder="Placeholder" />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="isFurnished" label="Is it furnished?">
+              <Radio.Group>
+                <Row gutter={30}>
+                  <Col xs={12}>
+                    <Radio value="yes">Yes</Radio>
+                  </Col>
+                  <Col xs={12}>
+                    <Radio value="no">No</Radio>
+                  </Col>
+                </Row>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
+
+  function StepPropertyDetails() {
+    return (
+      <div className="step-property-detail">
+        <div className="step-content-header">
+          <div className="step-content-header-title">Property Details</div>
+          <Typography.Title level={2}>How would you like to rent out your place?</Typography.Title>
+        </div>
+        <Row gutter={30}>
+          <Col xs={24}>
+            <Form.Item name="propertyType" label="How will you rent your property?">
+              <Radio.Group>
+                <Row gutter={[30, 30]}>
+                  <Col xs={24}>
+                    <Radio value="entireProperty">Entire Property</Radio>
+                  </Col>
+                  <Col xs={24}>
+                    <Radio value="studio">Studio</Radio>
+                  </Col>
+                  <Col xs={24}>
+                    <Radio value="sharedProperty">Rooms in shared property</Radio>
+                  </Col>
+                </Row>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="airConditioning" label="Does it have air conditioning?">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="notAvailable">Not available</Select.Option>
+                <Select.Option value="central">Central</Select.Option>
+                <Select.Option value="indvidualUnits">Indvidual units</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="heating" label="Heating">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="heatingNotAvailable">Not available</Select.Option>
+                <Select.Option value="centralProperty">Central Property</Select.Option>
+                <Select.Option value="centralBuilding">Central building</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="heatedWaterSystem" label="Does it have heated water system?">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="heatedWaterSystemNo">No</Select.Option>
+                <Select.Option value="naturalGas">Natural gas</Select.Option>
+                <Select.Option value="heatedWaterSystemElectric">Electric</Select.Option>
+                <Select.Option value="heatedWaterSystemCenteral">Centeral property</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <div className="step-form-fields-title">
+              The building has:
+            </div>
+            <Form.Item name="buildingHas">
+              <Checkbox.Group>
+                <Row gutter={30}>
+                  <Col xs={6}>
+                    <Checkbox value="buildingElevator">Elevator</Checkbox>
+                  </Col>
+                  <Col xs={6}>
+                    <Checkbox value="buildingParking">Parking</Checkbox>
+                  </Col>
+                  <Col xs={6}>
+                    <Checkbox value="buildingPoolAccess">Pool Access</Checkbox>
+                  </Col>
+                  <Col xs={6}>
+                    <Checkbox value="buildingGYM">GYM</Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <div className="step-form-fields-title">
+              The property has:
+            </div>
+            <Form.Item name="PropertyHas">
+              <Checkbox.Group>
+                <Row gutter={[30, 30]}>
+                  <Col xs={8}>
+                    <Checkbox value="propertyBalcony">Balcony</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="propertyEquippedKitchen">Equipped Kitchen</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="propertyClothesDryer">Clothes Dryer</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="propertyDishWasher">Dish Washer</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="propertyOven">Oven</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="propertyWashingMachine">Washing machine</Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="properySize" label="Property Size(optional)">
+              <Input placeholder="Placeholder" />
+            </Form.Item>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
+
+  function StepBedroomDetails() {
+    return (
+      <div className="step-property-detail">
+        <div className="step-content-header">
+          <div className="step-content-header-title">Bedroom Details</div>
+          <Typography.Title level={2}>Lets begin with bedroom 1</Typography.Title>
+        </div>
+        <Row gutter={30}>
+          <Col xs={24}>
+            <div className="bedromm-count">Bedroom 1</div>
+            <div className="add-bedroom-photos-holder">
+              <div className="add-bedroom-photos-label">Add photos of general view of the room .</div>
+              <div className="add-bedroom-photos">
+                <Form.Item name="bedType">
+                
+                </Form.Item>
+              </div>
+            </div>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="bedType" label="Bed Type">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="typeFuton">Futon</Select.Option>
+                <Select.Option value="typeAirbed">Airbed</Select.Option>
+                <Select.Option value="typeWaterbed">Waterbed</Select.Option>
+                <Select.Option value="typeQueenBed">Queen bed</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="allowedTwoPeople" label="Are two people allowed to live in this bedroom">
+              <Radio.Group>
+                <Row gutter={30}>
+                  <Col xs={12}>
+                    <Radio value="allowedYes">Yes</Radio>
+                  </Col>
+                  <Col xs={12}>
+                    <Radio value="allowedNo">No</Radio>
+                  </Col>
+                </Row>
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="kindOfAmenities" label="What kind of amenities does bedroom 1 have? ">
+              <Checkbox.Group>
+                <Row gutter={[30, 30]}>
+                  <Col xs={8}>
+                    <Checkbox value="ChestOfDrawers">Chest of drawers</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="desk">Desk</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="rivateBathroom">Private Bathroom</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="keyLocker">Key or Locker</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="Wardrobe">Wardrobe</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="Shelving">Shelving</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="TV">TV</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="Wi-fi">Wi-fi</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="carpetedFloors">Carpeted Floors</Checkbox>
+                  </Col>
+                  <Col xs={8}>
+                    <Checkbox value="Other">Other</Checkbox>
+                  </Col>
+                </Row>
+              </Checkbox.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
+
   const steps = [
     {
       title: 'Step 1',
-      content: 'First-content',
+      content: <StepLocation />,
     },
     {
       title: 'Step 2',
-      content: 'Second-content',
+      content: <StepPropertyDetails />,
     },
     {
       title: 'Step 3',
-      content: 'Last-content',
+      content: <StepBedroomDetails />,
     },
     {
       title: 'Step 4',
@@ -257,6 +503,7 @@ const Listings = () => {
       content: 'Second-content',
     },
   ];
+
   const stepItems = steps.map((item) => ({ key: item.title, title: item.title }));
 
   function next() {
@@ -318,7 +565,7 @@ const Listings = () => {
         mask={false}
         maskClosable={false}
       >
-        <div className="modal-add-listing-content">
+        <Form className="modal-add-listing-content" layout="vertical" name="addListing">
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">
               <Steps
@@ -345,7 +592,7 @@ const Listings = () => {
               <Button className="button-tertiary" ghost onClick={next}>Next</Button>
             </Space>
           </div>
-        </div>
+        </Form>
       </Modal>
 
       {/* ENDS MODAL: ADD LISTING 
