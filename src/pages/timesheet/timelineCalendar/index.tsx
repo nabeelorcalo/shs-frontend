@@ -35,7 +35,7 @@ const events = [
   },
   {
     id: "3",
-    resourceIds: ["a"],
+    resourceIds: ["b"],
     title: "Testing Design",
     start: "2023-03-18T07:00:00",
     end: "2023-03-21T09:00:00",
@@ -48,7 +48,10 @@ const resource = [
   {
     id: "a",
     title: "work",
-
+  },
+  {
+    id: "b",
+    title: "work",
   }
 ]
 

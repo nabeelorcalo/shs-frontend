@@ -1,8 +1,8 @@
-@import "../_colors.scss" ;
+@import "../_colors.scss";
+
 .primary-bg-color {
     background-color: $primary-bg-color;
 }
-
 
 .primary-color {
     color: $primary-bg-color;
@@ -192,26 +192,38 @@
     color: $text-info-color;
 }
 
-.red-graph-tooltip-bg{
+.red-graph-tooltip-bg {
     background-color: $red-graph-tooltip-color;
 }
 
-.green-graph-tooltip-bg{
+.green-graph-tooltip-bg {
     background-color: $green-graph-tooltip-color;
 }
 
-.page-header-secondary-bg-color{
+.page-header-secondary-bg-color {
     background-color: $page-header-secondary;
 }
 
-.page-header-secondary-color{
+.page-header-secondary-color {
     color: $page-header-secondary;
 }
 
-.light-sky-blue-bg{
+.light-sky-blue-bg {
     background-color: $light-sky-blue;
 }
 
-.light-grey-color{
+.light-grey-color {
     color: $light-grey-color;
+}
+
+.sky-blue-color-bg {
+    background-color: $sky-blue-color;
+}
+
+.sky-blue-color {
+    color: $sky-blue-color;
+}
+
+.light-blue-bg-color {
+    background-color: $light-blue-color;
 }

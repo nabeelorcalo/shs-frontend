@@ -6,6 +6,10 @@
   max-width: 540px;
   padding-left: 20px;
 
+  &.amenities {
+    max-width: 660px;
+  }
+
   .overview-section-label {
     font-size: 18px;
     font-weight: 500;

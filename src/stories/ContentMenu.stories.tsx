@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import type { MenuProps } from 'antd';
-import ContentMenu from '../components/ContentMenu'
+import {ContentMenu} from '../components'
 import { DownloadOutlined } from '@ant-design/icons';
 
 let current = "item-1";

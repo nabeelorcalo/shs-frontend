@@ -1,7 +1,6 @@
 import { ClockDarkIcon } from '../../../assets/images'
-import { BoxWrapper, SimpleTimer } from '../../../components';
+import { GlobalTable, BoxWrapper, SimpleTimer } from '../../../components';
 import { Divider } from 'antd';
-import GlobalTable from '../../../components/Table/Table';
 
 const InternTable = () => {
 

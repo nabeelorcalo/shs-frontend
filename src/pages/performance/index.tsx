@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Intern from "./intern";
+import CompanyAdmin from './CompanyAdmin';
 import constants from "../../config/constants";
 import "./style.scss";
 
@@ -8,6 +9,8 @@ const Performance = () => {
     switch (role) {
       case 'Intern':
         return <Intern />;
+      case 'CompanyAdmin':
+        return <CompanyAdmin />;
       default:
         return <></>;
     }

@@ -1,48 +1,41 @@
 import { Col, Rate, Row, Typography } from "antd";
 import {BoxWrapper} from "../BoxWrapper/BoxWrapper";
-import { Button } from "../Button";
 const { Paragraph } = Typography;
-import "./RecipeCard.scss";
+import "./style.scss";
 
 interface RecipeCardProps {
-  image?: string;
-  alt?: string;
   title: string;
+  thumb: string;
   description: string;
-  ratingValue: number;
-  button?: any
-  onClick?: () => void;
+  rating: number;
+  status: string;
+  onCardClick: () => void
+  onRateChange: (value: number) => void
 }
 
-export const RecipeCard = (props: any) => {
-  const { arraydata } = props;
+export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
+  const {title, thumb, description, rating, status, onCardClick, onRateChange} = props
   return (
     <div className="recipe-card">
-      <Row gutter={[10,10]}>
-        {arraydata.map((item: RecipeCardProps, index: any) => {
-          return (
-
-            <Col key={index} className="gutter-row" xs={24} xl={12} xxl={6} >
-              <BoxWrapper className=" boxwrapper">
-                <div className={` flex flex-col sm  cursor-pointer `}>
-                  <img src={item.image} alt={item.alt} width="100%" />
-                  <div className="flex justify-between"><Typography.Title level={5} className="px-2 my-1 font-medium">
-                    {item.title}
-                  </Typography.Title>
-                    {item?.button}
-                  </div>
-                  <Paragraph className="w-full font-normal text-sm md:text-base">{item.description}</Paragraph>
-                  <Rate disabled defaultValue={item.ratingValue} className="px-2" />
-                </div>
-              </BoxWrapper>
-            </Col>
-
-
-          )
-        })}
-      </Row>
-
-
+      <div className='recipe-card-body' onClick={onCardClick}>
+        <div className='recipe-card-thumb'>
+          <img src={thumb} alt={title} />
+        </div>
+        <div className='recipe-card-header'>
+          <Typography.Title level={4}>
+            {title}
+          </Typography.Title>
+          <div className={`recipe-card-status ${status === 'published'? 'published' : 'draft'}`}>
+            {status === 'published'? 'Published': 'Draft'}
+          </div>
+        </div>
+        <div className='recipe-card-description'>
+          <Paragraph>{description}</Paragraph>
+        </div>
+      </div>
+      <div className='recipe-card-footer'>
+        <Rate value={rating} onChange={onRateChange} />
+      </div>
     </div>
   );
 };

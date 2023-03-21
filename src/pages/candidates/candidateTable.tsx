@@ -1,6 +1,6 @@
 import React from 'react'
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
-import GlobalTable from '../../components/Table/Table';
+import {GlobalTable} from '../../components';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from "../../assets/images";
 
 import DropDownNew from '../../components/Dropdown/DropDownNew';
@@ -80,12 +80,14 @@ const CandidateTable = (props: any) => {
       key: 'stage',
       dataIndex: 'stage',
       title: 'Stage',
-      render: (_: any, data: any) => <div>
+      render: (_: any, data: any) => <div className='flex' >
+        <div className="flex flex-col">
         <p className='capitalize'>{data.stage}</p>
-        <div className='flex items-center justify-center rounded-full overflow-hidden'>
+        <div className='flex items-center justify-center rounded-full overflow-hidden mt-[10px]'>
           {[1, 2, 3, 4, 5, 6].map((val) => (
             <p key={val} className={`stage-apply ${data.stage}`}>{val}</p>
           ))}
+          </div>
         </div>
       </div>
     },

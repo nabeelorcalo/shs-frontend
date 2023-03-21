@@ -128,6 +128,7 @@ const Intern = () => {
           <EmojiMoodRating
             title='How are you feeling today?'
             data={emojiData}
+            activeIconIndex={-1}
           />
 
           <div className="flex my-4">
