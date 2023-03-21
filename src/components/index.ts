@@ -43,3 +43,4 @@ export * from "./ExtendedButton";
 export * from "./FiltersButton";
 export * from "./Tabs";
 export * from "./TimeTracking";
+export * from "./Table";

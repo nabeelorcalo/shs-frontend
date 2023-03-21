@@ -129,7 +129,7 @@ export { ReactComponent as StarOutlinedIcon } from "./StarOutlined.svg";
 export { ReactComponent as StarFilledIcon } from "./StarFilled.svg";
 
 // three dots icon
-export { ReactComponent as ThreeDotsIcon } from './MoreIcon.svg';
+export { ReactComponent as ThreeDotsIcon } from "./MoreIcon.svg";
 
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
@@ -199,8 +199,6 @@ export { ReactComponent as IconReceipt } from "./accommodation/icon-receipt.svg"
 export { ReactComponent as IconAngleDown } from "./accommodation/icon-angle-down.svg";
 export { ReactComponent as IconDocumentDownload } from "./accommodation/icon-document-download.svg";
 
-
-
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
 export { ReactComponent as StructureCompanyAdminDownward } from "./structure/downward.svg";
 export { ReactComponent as StructureCompanyAdminProfile2user } from "./structure/profile-2user.svg";
@@ -267,12 +265,12 @@ export { ReactComponent as UniversitiesTableFlag } from "./universities/flag.svg
 // Colorfull icons
 // export { ReactComponent as More } from './ColorfullIconsProgressbar/More.svg';
 
-// Icons for Buttons 
-export { ReactComponent as FilterIcon } from './buttonIcons/FilterIcon.svg';
-export { ReactComponent as ArrowToRight } from './buttonIcons/Arrowtoright.svg';
-export { ReactComponent as ArrowToLeft } from './buttonIcons/ArrowToLeft.svg';
-export { ReactComponent as ArrowToRight1 } from './buttonIcons/ArrowToRight1.svg';
-export { ReactComponent as InternshipsIcon } from './buttonIcons/InternshipsIcon.svg';
+// Icons for Buttons
+export { ReactComponent as FilterIcon } from "./buttonIcons/FilterIcon.svg";
+export { ReactComponent as ArrowToRight } from "./buttonIcons/Arrowtoright.svg";
+export { ReactComponent as ArrowToLeft } from "./buttonIcons/ArrowToLeft.svg";
+export { ReactComponent as ArrowToRight1 } from "./buttonIcons/ArrowToRight1.svg";
+export { ReactComponent as InternshipsIcon } from "./buttonIcons/InternshipsIcon.svg";
 
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
@@ -284,12 +282,12 @@ export { ReactComponent as PurpleRectangle } from "./dashboard/purpleRectangle.s
 export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
 export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
-export { default as WishesBox } from './dashboard/wishesBox.gif';
+export { default as WishesBox } from "./dashboard/wishesBox.gif";
 
 // contract
-export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg"
-export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg"
-export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg"
+export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
+export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg";
+export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg";
 
 //Chat
 export { default as Filter } from "../images/chat/Filter.svg";
@@ -341,7 +339,13 @@ export { ReactComponent as Schedule } from "./schedule.svg";
 export { ReactComponent as Dot } from "./dot.svg";
 export { ReactComponent as Mail } from "./mail.svg";
 export { ReactComponent as Call } from "./call.svg";
+
 // export { ReactComponent as Location } from './location.svg';
 export { ReactComponent as Intro } from "./Intro.svg";
+
 // export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from "./drawerIcon.svg";
+
+// Common Icons
+export { ReactComponent as GlassMagnifier } from "./Common/GlassMagnifier.svg";
+export { ReactComponent as DownlaodFileIcon } from "./Common/DownlaodFileIcon.svg";

@@ -235,9 +235,11 @@ const index = () => {
                 </Col>
               </Row>
 
-              <div className="relative">
+              <div className="border-1 border-solid border-[#E6F4F9] rounded-[12px] p-3">
                 <div>
                   <TextArea
+                    className="chat-textarea"
+                    bordered={false}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Type a messages…"
@@ -245,17 +247,18 @@ const index = () => {
                   ></TextArea>
                 </div>
 
-                <div className="textarea-icon items-center bottom-[14px] absolute flex justify-between">
+                <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
                   <div className="flex ml-4">
-                    <div className="mr-4">
+                    <div className="mr-4 cursor-pointer">
                       <img src={Addatech} alt="sendicon" />
                     </div>
-                    <div>
-                      <img src={PlusIcon} alt="sendicon" />
+
+                    <div className="cursor-pointer">
+                      <img src={PlusIcon} alt="sendicon " />
                     </div>
                   </div>
 
-                  <div className="mr-4">
+                  <div className="mr-4 cursor-pointer">
                     <img src={SendIcon} alt="sendicon" />
                   </div>
                 </div>
@@ -358,7 +361,7 @@ const index = () => {
                 {DocData.map((item) => {
                   return (
                     <div key={item.id} className="flex h-[34px] mb-4">
-                      <div className="flex justify-center items-center bg-[#363565] p-2 rounded-[20px]">
+                      <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
                         <img src={item.img} alt="fileIcon" />
                       </div>
                       <div className="ml-4">
