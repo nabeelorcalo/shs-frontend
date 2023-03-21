@@ -9,4 +9,31 @@
             color: $teriary-bg-color;
         }
     }
+    .LeaveRequest_card_main{
+            // .user_intro{
+        
+            // }
+            .about_leave_info{
+                border: 1px solid #D9DBE9;
+                .info_inner{
+                    .Name_of_cat{
+                        color: #A0A3BD;
+                    }
+                    .count_of_cat{
+                        color: #4E4B66;
+                    }
+                }
+            }
+            .LeaveAplicationCardBtns_wraper{
+                .Declin_btn{
+                    background-color: rgba(216, 58, 82, 0.1);
+                    color:  #D83A52
+                }
+                .Approve_btn{
+                    background-color: #E6F4F9;
+                    color: #4A9D77;
+        
+                }
+            }
+        }
 }
