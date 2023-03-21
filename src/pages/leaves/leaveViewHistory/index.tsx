@@ -16,7 +16,7 @@ import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
 
- 
+
 const index = () => {
   const action = useCustomHook();
   // const [actionType, setActionType] = useState({ type: '', id: '' });
@@ -24,7 +24,7 @@ const index = () => {
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
-  
+
 
   // console.log(selectedRow);
   return (
@@ -34,7 +34,7 @@ const index = () => {
         bordered
         title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
       />
-      <Row className=' items-center' gutter={[10,10]}>
+      <Row className=' items-center' gutter={[10, 10]}>
         <Col xs={24} md={12} lg={12}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
             console.log(e);
@@ -55,8 +55,7 @@ const index = () => {
                   'excel'
                 ]}
                 requiredDownloadIcon
-                setValue={() => { }}
-                value=""
+                setValue={action.handleDownloadPdfExcel}
               />
             </div>
             {constants.USER_ROLE === 'Intern' && <Button
@@ -71,9 +70,8 @@ const index = () => {
         <Divider />
       </Row>
       <BoxWrapper>
-      <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow} />
+        <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow} id="LeaveHistoryTable" />
       </BoxWrapper>
-
       {openDrawer.open && <DrawerComp
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
@@ -111,7 +109,6 @@ const index = () => {
           }
         </div>
       </DrawerComp>}
-
       {openModal.open && openModal.type !== 'cancel' &&
         <LeaveRequest
           title="Leave Request"
@@ -134,5 +131,4 @@ const index = () => {
     </div>
   )
 }
-
 export default index

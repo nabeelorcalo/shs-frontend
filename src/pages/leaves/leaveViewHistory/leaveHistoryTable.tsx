@@ -9,7 +9,7 @@ import constants from '../../../config/constants';
 
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
-  const { setOpenDrawer, setOpenModal, setSelectedRow } = props
+  const { setOpenDrawer, setOpenModal, setSelectedRow,id } = props
   const intrneeColumData = [
     {
       title: 'No',
@@ -250,11 +250,11 @@ const LeaveHistoryTable = (props: any) => {
 
                 {data.status === "Pending" &&
                   <>
-                    <p onClick={() => setOpenModal({ open: true, type: 'edit' })}
+                    <p onClick={() => alert("Approve Function Goes Here")}
                       className=" cursor-pointer">
                       Approve
                     </p>
-                    <p onClick={() => setOpenModal({ open: true, type: 'cancel' })}
+                    <p onClick={() => alert("Decline Function Goes Here ")}
                       className="cursor-pointer my-4">
                       Decline
                     </p>
@@ -278,7 +278,7 @@ const LeaveHistoryTable = (props: any) => {
   ];
 
   return (
-    <GlobalTable columns={constants.USER_ROLE === 'Intern' ? intrneeColumData : managerColumData} tableData={data} pagination={true} />
+    <GlobalTable columns={constants.USER_ROLE === 'Intern' ? intrneeColumData : managerColumData} tableData={data} pagination={true} id={id} />
   )
 }
 

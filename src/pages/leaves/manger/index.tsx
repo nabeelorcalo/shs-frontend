@@ -37,7 +37,7 @@ const index = (props: any) => {
         ))}
       </Row>
       <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
-        <Col xs={24} md={12} xl={17}>
+        <Col xs={24} md={24} lg={16} xl={17}>
           <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='h-full'>
             <div className='how_is_away'>
               <h4 className='font-medium text-[28px] capitalize'>Who's Away</h4>
@@ -69,7 +69,7 @@ const index = (props: any) => {
             <ManagerCalendar />
           </BoxWrapper>
         </Col>
-        <Col xs={24} md={12} xl={7} >
+        <Col xs={24} md={24} lg={8}  xl={7} >
           <UpcomingHolidayComp upcomingHolidayData={upcomingHolidayDataManager} />
         </Col>
       </Row>
