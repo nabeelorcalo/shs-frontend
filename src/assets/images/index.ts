@@ -296,10 +296,11 @@ export { ReactComponent as ArrowRightIcon } from '../images/ArrowRightIcon.svg';
 export { ReactComponent as CirclePlusIcon } from '../images/CirclePlusIcon.svg';
 export { ReactComponent as CircleMinusIcon } from '../images/CircleMinusIcon.svg';
 export { ReactComponent as TaskListIcon } from '../images/TaskListIcon.svg';
-export { ReactComponent as  ClockDarkIcon} from '../images/ClockDarkIcon.svg';
-export { ReactComponent as  TagPrimaryIcon} from '../images/TagPrimaryIcon.svg';
-export { ReactComponent as  TagSuccessIcon} from '../images/TagSuccessIcon.svg';
-export { ReactComponent as  TagWarningIcon} from '../images/TagWarningIcon.svg';
+export { ReactComponent as ClockDarkIcon } from '../images/ClockDarkIcon.svg';
+export { ReactComponent as TagPrimaryIcon } from '../images/TagPrimaryIcon.svg';
+export { ReactComponent as TagSuccessIcon } from '../images/TagSuccessIcon.svg';
+export { ReactComponent as TagWarningIcon } from '../images/TagWarningIcon.svg';
+// candidates
 
 // candidates
 export { ReactComponent as CvIcon } from './cvIcon.svg';
@@ -321,6 +322,9 @@ export { ReactComponent as Location } from './location.svg';
 export { ReactComponent as Intro } from './Intro.svg';
 export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
+export { ReactComponent as AddIcon } from './AddIcon.svg';
+export { ReactComponent as TimerPlayIcon } from '../images/TimePlayIcon.svg';
+export { ReactComponent as TimerPauseIcon } from '../images/TimePauseIcon.svg';
 
 //Grievances
 export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg';
