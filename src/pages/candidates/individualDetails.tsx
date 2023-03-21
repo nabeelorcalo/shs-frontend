@@ -1,9 +1,12 @@
 import { Rate } from 'antd'
 import "./style.scss"
-import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Location, Intro, PlayIcon,DrawerIcon } from '../../assets/images'
+import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Location, Intro, PlayIcon, DrawerIcon, StarOutlinedIcon } from '../../assets/images'
 import DropDownNew from '../../components/Dropdown/DropDownNew'
+import { useState } from 'react'
 
 const IndividualDetails = () => {
+
+  const [rate, setRate] = useState(0);
 
   const skillsData = [
     'User Interface Design',
@@ -47,13 +50,16 @@ const IndividualDetails = () => {
 
             <DropDownNew items={[{
               label: <div className='flex gap-4'>
-                <Rate className='' style={{ fontSize: "24px" }} />
+                {[1, 2, 3, 4, 5].map((val) => rate === val ?
+                  <StarFilledIcon key={val} /> :
+                  <StarOutlinedIcon key={val} onClick={() => setRate(val)} />
+                )}
               </div>,
               key: ''
             }]}>
               <div className='flex justify-center gap-2 items-center dropdown-inpp cursor-pointer'>
                 <StarFilledIcon />
-                <p>4</p>
+                <p>{rate}</p>
                 <ArrowDownDark />
               </div>
             </DropDownNew>

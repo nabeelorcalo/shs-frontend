@@ -3,7 +3,7 @@ import "./style.scss";
 import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Input, Alert } from "../../../../components";
 import { Upload } from "../../../../assets/images";
-import GlobalTable from "../../../../components/Table/Table";
+import {GlobalTable} from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -318,7 +318,7 @@ const ManageVault = (props: any) => {
         ]}
       >
         <UploadDocument />
-      </Modal>
+      </Modal>  
     </div>
   );
 };

@@ -1,0 +1,9 @@
+@import "../../../../scss/colors";
+.grievance-details{
+
+.attandance-button{
+color: $text-success-placeholder-color !important;
+&:hover{
+  border: 1px solid $text-success-hover-color;
+}
+}}

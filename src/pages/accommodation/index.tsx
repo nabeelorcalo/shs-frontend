@@ -3,10 +3,18 @@ import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps, DatePickerProps } from 'antd';
 import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
 import {ROUTES_CONSTANTS} from "../../config/constants";
+import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import { Form, Input,  Select, Slider, Space, DatePicker } from 'antd'
+import { Form, Select, Slider, Space, DatePicker, Dropdown, Button } from 'antd'
+import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
+
+// Temporary
+const agentOptions = [
+  {label: 'Maria Sanoid', value: 'Maria Sanoid', thumb: "s"},
+  {label: 'Janete Samson', value: 'Janete Samson', thumb: "s"},
+]
 
 
 
@@ -41,6 +49,47 @@ const Accommodation = () => {
       key: `/accommodation/${ACCOMMODATION_PAYMENTS}`,
     },
   ]
+
+  const downloadItems: MenuProps['items'] = [
+    {
+      key: 'pdf',
+      label: "PDF"
+    },
+    {
+      key: 'excel',
+      label: "Excel"
+    },
+  ];
+
+  const statusItems: MenuProps['items'] = [
+    {
+      key: 'reserved',
+      label: 'Reserved'
+    },
+    {
+      key: 'pending',
+      label: 'Pending'
+    },
+    {
+      key: 'rejected',
+      label: 'Rejected'
+    },
+  ];
+
+  const agentItems: MenuProps['items'] = [
+    {
+      key: 'reserved',
+      label: 'Reserved'
+    },
+    {
+      key: 'pending',
+      label: 'Pending'
+    },
+    {
+      key: 'rejected',
+      label: 'Rejected'
+    },
+  ];
 
 
   /* EVENT LISTENERS
@@ -84,6 +133,10 @@ const Accommodation = () => {
     console.log('dfdfdsfsdfas::: ', date, dateString);
   }
 
+  const handleChangeStatus = (value: string) => {
+    console.log(`selected ${value}`);
+  }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -96,19 +149,29 @@ const Accommodation = () => {
         />
         <div className="page-filterbar">
           <div className="page-filterbar-left">
-          {location.pathname === '/accommodation' &&
+            {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('i am changed')}/>
+                <SearchBar handleChange={() => console.log('Search')}/>
               </div>
             }
             {location.pathname === '/accommodation/rented-properties' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('i am changed')}/>
+                <SearchBar handleChange={() => console.log('Search')}/>
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('i am changed')}/>
+                <SearchBar handleChange={() => console.log('Search')}/>
+              </div>
+            }
+            {location.pathname === '/accommodation/booking-requests' &&
+              <div className="searchbar-wrapper">
+                <SearchBar handleChange={() => console.log('Search')}/>
+              </div>
+            }
+            {location.pathname === '/accommodation/payments' &&
+              <div className="searchbar-wrapper">
+                <SearchBar handleChange={() => console.log('Search')}/>
               </div>
             }
           </div>
@@ -124,6 +187,79 @@ const Accommodation = () => {
                 label="Filters"
                 onClick={() => openSavedSearchesFilters()}
               />
+            }
+            {location.pathname === '/accommodation/booking-requests' &&
+            <Space size={20}>
+              <div className="requests-filterby-agent">
+                <Select 
+                  className="filled"
+                  placeholder="Agent"
+                  onChange={handleChangeStatus}
+                  popupClassName={'agents-dropdown'}
+                  placement="bottomRight"
+                  suffixIcon={<IconAngleDown />}
+                >
+                  {agentOptions.map((option) => {
+                    return (
+                      <Select.Option value={option.value} key={option.value}>
+                        <div className="agent-option">
+                          <img src={avatar} />
+                          {option.label}
+                        </div>
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              </div>
+
+              <div className="requests-filterby-status">
+                <Dropdown menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
+                  <Button className="button-sky-blue">Status<IconAngleDown /></Button>
+                </Dropdown>
+              </div>
+              <div className="dropdown-download">
+                <Dropdown menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                  <Button className="button-sky-blue"><IconDocumentDownload /></Button>
+                </Dropdown>
+              </div>
+            </Space>
+            }
+            {location.pathname === '/accommodation/payments' &&
+            <Space>
+                <div className="requests-filterby-agent">
+                <Select 
+                  className="filled"
+                  placeholder="Agent"
+                  onChange={handleChangeStatus}
+                  popupClassName={'agents-dropdown'}
+                  placement="bottomRight"
+                  suffixIcon={<IconAngleDown />}
+                >
+                  {agentOptions.map((option) => {
+                    return (
+                      <Select.Option value={option.value} key={option.value}>
+                        <div className="agent-option">
+                          <img src={avatar} />
+                          {option.label}
+                        </div>
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              </div>
+                
+              <div className="dropdown-time-frame">
+                <Dropdown menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                  <Button className="button-sky-blue">Time Frame <IconAngleDown /></Button>
+                </Dropdown>
+              </div>
+
+              <div className="dropdown-download">
+                <Dropdown menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                  <Button className="button-sky-blue"><IconDocumentDownload /></Button>
+                </Dropdown>
+              </div>
+            </Space>
             }
           </div>
         </div>
@@ -164,43 +300,53 @@ const Accommodation = () => {
               </Form.Item>
             </div>
             <div className="shs-form-group">
+
               <div className="form-group-title">Availability</div>
-                <Form.Item name="moveInDate" label="Move in Date">
-                  <DatePicker format='YYYY/MM/DD' onChange={onChange} />
-                </Form.Item>
-                
-                <Form.Item name="moveOutDate" label="Move Out Date">
-                  <DatePicker format='YYYY/MM/DD' onChange={onChange} />
-                </Form.Item>
 
-                {/* <Form.Item label="Username" name="username">
-                  <Input placeholder="User anme" />
-                </Form.Item> */}
+              <Form.Item name="moveInDate" label="Move in Date">
+                <DatePicker
+                  className="filled"
+                  suffixIcon={<IconDatePicker />}
+                  format='YYYY/MM/DD'
+                  onChange={onChange}
+                  showToday={false}
+                />
+              </Form.Item>
+              
+              <Form.Item name="moveOutDate" label="Move Out Date">
+                <DatePicker
+                  className="filled"
+                  suffixIcon={<IconDatePicker />}
+                  format='YYYY/MM/DD'
+                  onChange={onChange}
+                  showToday={false}
+                />
+              </Form.Item>
 
-                <Form.Item name="offer" label="Offer">
-                  <Select placeholder="Select">
-                    <Select.Option value="discounts">Discounts</Select.Option>
-                    <Select.Option value="noDeposit">No Deposit</Select.Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="offer" label="Offer">
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                  <Select.Option value="discounts">Discounts</Select.Option>
+                  <Select.Option value="noDeposit">No Deposit</Select.Option>
+                </Select>
+              </Form.Item>
 
-                <Form.Item name="accomodationType" label="Accomodation Type">
-                  <Select placeholder="Select">
-                    <Select.Option value="privateRoom">Private Room</Select.Option>
-                    <Select.Option value="sharedRoom">Shared Room</Select.Option>
-                    <Select.Option value="apartment">Apartment</Select.Option>
-                    <Select.Option value="studio">Studio</Select.Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="accomodationType" label="Accomodation Type">
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                  <Select.Option value="privateRoom">Private Room</Select.Option>
+                  <Select.Option value="sharedRoom">Shared Room</Select.Option>
+                  <Select.Option value="apartment">Apartment</Select.Option>
+                  <Select.Option value="studio">Studio</Select.Option>
+                </Select>
+              </Form.Item>
 
-                <Form.Item name="facilities" label="Facilities">
-                  <Select placeholder="Select">
-                    <Select.Option value="bills">Bills</Select.Option>
-                    <Select.Option value="Wi-fi">Wi-fi</Select.Option>
-                    <Select.Option value="laundary">Laundary</Select.Option>
-                    <Select.Option value="meals">Meals</Select.Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="facilities" label="Facilities">
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                  <Select.Option value="bills">Bills</Select.Option>
+                  <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                  <Select.Option value="laundary">Laundary</Select.Option>
+                  <Select.Option value="meals">Meals</Select.Option>
+                </Select>
+              </Form.Item>
             </div>
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
@@ -227,6 +373,7 @@ const Accommodation = () => {
           <Form layout="vertical" name="sevedSearchesFilters" onFinish={onFinish}>
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
+
               <Form.Item name="priceRange">
                 <Slider
                   min={0}
@@ -241,38 +388,51 @@ const Accommodation = () => {
             </div>
             <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
-                <Form.Item name="moveInDate" label="Move in Date">
-                  <DatePicker format='YYYY/MM/DD' onChange={onChange} />
-                </Form.Item>
-                
-                <Form.Item name="moveOutDate" label="Move Out Date">
-                  <DatePicker format='YYYY/MM/DD' onChange={onChange} />
-                </Form.Item>
 
-                <Form.Item name="offer" label="Offer">
-                  <Select placeholder="Select">
-                    <Select.Option value="discounts">Discounts</Select.Option>
-                    <Select.Option value="noDeposit">No Deposit</Select.Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="moveInDate" label="Move in Date">
+                <DatePicker
+                  className="filled"
+                  suffixIcon={<IconDatePicker />}
+                  format='YYYY/MM/DD'
+                  onChange={onChange}
+                  showToday={false}
+                />
+              </Form.Item>
+              
+              <Form.Item name="moveOutDate" label="Move Out Date">
+                <DatePicker
+                  className="filled"
+                  suffixIcon={<IconDatePicker />}
+                  format='YYYY/MM/DD'
+                  onChange={onChange}
+                  showToday={false}
+                />
+              </Form.Item>
 
-                <Form.Item name="accomodationType" label="Accomodation Type">
-                  <Select placeholder="Select">
-                    <Select.Option value="privateRoom">Private Room</Select.Option>
-                    <Select.Option value="sharedRoom">Shared Room</Select.Option>
-                    <Select.Option value="apartment">Apartment</Select.Option>
-                    <Select.Option value="studio">Studio</Select.Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="offer" label="Offer">
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                  <Select.Option value="discounts">Discounts</Select.Option>
+                  <Select.Option value="noDeposit">No Deposit</Select.Option>
+                </Select>
+              </Form.Item>
 
-                <Form.Item name="facilities" label="Facilities">
-                  <Select placeholder="Select">
-                    <Select.Option value="bills">Bills</Select.Option>
-                    <Select.Option value="Wi-fi">Wi-fi</Select.Option>
-                    <Select.Option value="laundary">Laundary</Select.Option>
-                    <Select.Option value="meals">Meals</Select.Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="accomodationType" label="Accomodation Type">
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                  <Select.Option value="privateRoom">Private Room</Select.Option>
+                  <Select.Option value="sharedRoom">Shared Room</Select.Option>
+                  <Select.Option value="apartment">Apartment</Select.Option>
+                  <Select.Option value="studio">Studio</Select.Option>
+                </Select>
+              </Form.Item>
+
+              <Form.Item name="facilities" label="Facilities">
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                  <Select.Option value="bills">Bills</Select.Option>
+                  <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                  <Select.Option value="laundary">Laundary</Select.Option>
+                  <Select.Option value="meals">Meals</Select.Option>
+                </Select>
+              </Form.Item>
             </div>
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>

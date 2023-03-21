@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { PageHeader, FiltersButton } from "../../components";
-import { DropDown, SearchBar } from "../../components";
+import { DropDown, SearchBar, FiltersButton, PageHeader } from "../../components";
 import "./style.scss";
-import { useNavigate } from "react-router-dom";
-import GlobalTable from "../../components/Table/Table";
-import { Avatar, Button, Popover, Divider } from "antd";
-import { More } from "../../assets/images";
-import type { MenuProps } from "antd";
-import { Dropdown, Space } from "antd";
+import { useNavigate } from 'react-router-dom';
+// import {GlobalTable} from "../../components";
+import { Avatar, Button, Popover, Divider } from 'antd';
+import { More } from "../../assets/images"
+import type { MenuProps } from 'antd';
+import { Dropdown, Space } from 'antd';
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 import Drawer from "../../components/Drawer";
 
@@ -159,14 +158,14 @@ const Interns = () => {
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable
+            {/* <GlobalTable
               columns={columns}
               expandable={{
                 expandedRowRender: () => {},
                 rowExpandable: function noRefCheck() {},
               }}
               tableData={newTableData}
-            />
+            /> */}
           </div>
         </BoxWrapper>
       </div>

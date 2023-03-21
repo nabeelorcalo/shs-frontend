@@ -1,5 +1,5 @@
 import { Input as AntInput } from 'antd';
-import { SearchIcon } from '../../assets/images';
+import { GlassMagnifier } from '../../assets/images';
 
 import './style.scss';
 
@@ -13,7 +13,7 @@ interface Props {
     handleChange({ }): void;
 }
 
-export const SearchBar = ({ size, placeholder = 'Search', icon = SearchIcon, name, value, className, handleChange, ...rest }: Props) => {
+export const SearchBar = ({ size, placeholder = 'Search', icon = GlassMagnifier, name, value, className, handleChange, ...rest }: Props) => {
     return (
         <div className='input-wrapper'>
             <AntInput
@@ -22,7 +22,7 @@ export const SearchBar = ({ size, placeholder = 'Search', icon = SearchIcon, nam
                 size={size}
                 name={name}
                 placeholder={placeholder}
-                prefix={<img src={icon} />}
+                prefix={icon}
                 onChange={(e) => handleChange(e.target.value)}
                 {...rest}
             />

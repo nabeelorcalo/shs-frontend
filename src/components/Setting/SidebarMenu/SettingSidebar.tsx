@@ -1,15 +1,18 @@
 import React from "react";
-import { Divider, Typography } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { Divider,  } from "antd";
+import { NavLink,  } from "react-router-dom";
 import {
   SettingCalendarRemove,
   SettingChart,
   SettingDocument,
   SettingMap,
+  SettingPayroll,
   SettingPeople,
   SettingShifts,
 } from "../../../assets/images";
-const { Title } = Typography;
+
+import './SettingSidebar.scss'
+
 
 const menuLinks = [
   {
@@ -58,7 +61,7 @@ const menuLinks = [
   {
     title: "Payroll",
     link: "/settings/payroll",
-    icon: "icon",
+    icon: <SettingPayroll/>,
     description:
       "Add departments within your organisation for people management",
   },
@@ -66,12 +69,12 @@ const menuLinks = [
 
 const SettingSidebar: React.FC = () => {
   return (
-    <div>
+    <div className="setting-sidebar">
 
-      <div className="overflow-none ">
+      <div className="">
         {menuLinks.map((item, idx) => {
           return (
-            <>
+            <div >
               <NavLink
                 key={idx}
                 to={item.link}
@@ -86,11 +89,11 @@ const SettingSidebar: React.FC = () => {
                     <div className="flex">
                       <span>{item.icon}</span>
 
-                      <span className="font-medium mx-3 text-base text-primary-color  ">
+                      <span className="font-medium mx-3 text-base text-primary-color hidden sm:block">
                         {item.title}
                       </span>
                     </div>
-                    <div>
+                    <div className="hidden sm:block">
                       <p className="font-normal text-sm pt-1 ">
                         {item.description}
                       </p>
@@ -99,9 +102,9 @@ const SettingSidebar: React.FC = () => {
                   <Divider className="mb-0 " />
                 </div>
               </NavLink>
-              {/* <Divider /> */}
+           
 
-            </>
+            </div>
           );
         })}
       </div>

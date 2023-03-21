@@ -22,7 +22,7 @@ export const TodayWeather: any = () => {
       </Typography.Title>
 
       <p className='flex'>
-        <LocationIcon className='mr-2'/>
+        {/* <LocationIcon className='mr-2'/> */}
         London
       </p>
     </Card>

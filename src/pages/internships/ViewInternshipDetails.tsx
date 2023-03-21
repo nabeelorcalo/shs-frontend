@@ -1,7 +1,7 @@
-import React from "react";
-import { PageHeader } from "../../components";
-import { Divider } from "antd";
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
+import React from 'react'
+import {PageHeader} from '../../components'
+import { Divider } from 'antd'
+import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
 
 const ViewInternshipDetails = () => {
   return (

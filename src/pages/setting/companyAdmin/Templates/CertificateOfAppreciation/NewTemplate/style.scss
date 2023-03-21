@@ -1,0 +1,91 @@
+@import "../../../../../../scss/colors";
+.certificate-of-appreciation-new-template {
+  .ant-form-item .ant-form-item-control-input-content {
+    .ant-input {
+      background: $text-input-bg-color;
+
+      &:hover{
+        background: $white-bg-color;
+
+      }
+    }
+  }
+  .certificate-card {
+    background-color: $white-bg-color;
+    border-radius: 10px;
+    padding: 20px 20px;
+    text-align: initial;
+    max-height: -webkit-fill-available;
+    box-shadow: 0px 2px 3px $white-bg-color;
+    border: 2px solid $white-bg-color;
+
+    .certificate-tick-circle{
+      top: -16px;
+      right: 0;
+
+    }
+
+    &:hover {
+      border: 2px solid $text-primary-disabled-color;
+    }
+    .card-image-box {
+      &:hover .image {
+        opacity: 1;
+        background: rgba($color: #424141, $alpha: 1);
+        border-radius: 8px;
+      }
+      &:hover .background-img {
+        opacity: 0.5;
+        background: rgba($color: #424141, $alpha: 1);
+        border-radius: 8px;
+      }
+
+      &:hover .middle {
+        opacity: 100%;
+      }
+      .text {
+        font-size: 40px;
+        color: $white-bg-color;
+      }
+
+      .image {
+        opacity: 1;
+        width: 100%;
+        height: auto;
+        transition: 0.5s ease;
+        backface-visibility: hidden;
+      }
+      .middle {
+        transition: 0.5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+      }
+    }
+    
+  }
+  .text-editor{
+    border: 2px solid $white-bg-color;
+    &:hover{
+      background-color: $white-bg-color;
+      border: 2px solid $input-hover-color;
+    }
+  }
+  .ql-container {
+    min-height: 10rem;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px 0px 8px 8px;
+    border: none;
+  }
+  .ql-toolbar.ql-snow {
+    border-radius: 8px 8px 0px 0px;
+    border: none;
+  }
+}

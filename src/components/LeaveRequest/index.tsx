@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CloseCircleFilled, InboxOutlined, UploadOutlined } from '@ant-design/icons'
+import { CloseCircleFilled } from '@ant-design/icons'
 import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import "./style.scss"

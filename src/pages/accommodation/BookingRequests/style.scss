@@ -1,25 +1,95 @@
-.page-filterbar {
-  margin-bottom: 50px;
-  display: flex;
-  align-items: center;
+@import "../../../scss/colors";
 
-  .page-filterbar-left {
-    flex: 1;
-  }
+.info-card {
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid $text-error-line-color;
 
-  .page-filterbar-right {
-    
+  .info-card-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+    & > li {
+      flex-shrink: 0;
+      max-width: 100%;
+      flex: 0 0 auto;
+      width: 50%;
+
+      &:last-child {
+        margin-top: 12px;
+      }
+
+      .info-card-item-label {
+        color: $light-grey-color;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+
+      .info-card-item-value {
+        color: $text-secondary-body-color;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.3636364;
+      }
+    }
   }
 }
 
-.shs-filter-form {
-  .shs-form-group {
-    .form-group-title {
-      font-size: 16px;
-      font-weight: 500;
-      color: #14142A;
-      line-height: 1.5;
-      margin-bottom: 10px;
+.contact-letter {
+  & > .ant-typography {
+    display: block;
+    font-size: 12px;
+    line-height: 1.25;
+    color: $text-secondary-body-color;
+    margin-top: 20px;
+  }
+}
+
+.digitally-signed-card {
+  margin-top: 22px;
+  border-radius: 6px;
+  border: 1px solid $text-error-line-color;
+
+  .signed-card-list {
+    list-style: none;
+    padding: 8px;
+    margin: 0;
+
+    & > li {
+
+      &:not(:first-child) {
+        margin-top: 12px;
+      }
+
+      .signed-card-item-label {
+        color: $light-grey-color;
+        font-size: 10px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .signed-card-item-value {
+        color: $text-secondary-body-color;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 1.3636364;
+      }
+    }
+  }
+
+  .signed-card-footer {
+    font-size: 11px;
+    padding: 6px 16px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(74, 157, 119, 0.25);
+    color: $teriary-bg-color;
+
+    .signed-card-footer-logo {
+      margin-right: 12px;
     }
   }
 }

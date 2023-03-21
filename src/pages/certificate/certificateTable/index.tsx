@@ -1,4 +1,4 @@
-import GlobalTable from '../../../components/Table/Table';
+import {GlobalTable} from '../../../components';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 import { ThreeDots } from '../../../assets/images';
 import { tableMockData } from './tableMock';
