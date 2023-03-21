@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
-import { PageHeader, SearchBar, FiltersButton, IconButton, GlobalTable } from "../../../components";
+import { PageHeader, SearchBar, FiltersButton, IconButton, GlobalTable, DropDown } from "../../../components";
 import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -270,10 +270,12 @@ const ManagerPerformance = () => {
           />
         </div>
 
-        <div className="flex justify-center ml-auto">
-          <FiltersButton
-            label="Filters"
-            onClick={handleSidebarClick}
+        <div className="flex justify-center ml-auto hehe">
+          <DropDown
+            name="Time Frame"
+            options={timeFrameOptions}
+            setValue={() => timeFrameSelection(event)}
+            value={state.timeFrameVal}
           />
 
           <IconButton
