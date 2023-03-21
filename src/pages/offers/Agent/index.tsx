@@ -129,9 +129,10 @@ const OffersAgent = () => {
           </div>
         </Form>
       </PopUpModal>
+
       <PageHeader title="Offers" bordered={true} />
 
-      {offersCardData.length === 0 && (
+      {offersCardData.length === 0 ? (
         <div className="offers-agent-body flex justify-center items-center flex-col h-[50vh] text-center">
           <div className="font-medium text-4xl text-[#14142A] mb-4">
             No Offers Yet
@@ -159,55 +160,55 @@ const OffersAgent = () => {
             </Button>
           </div>
         </div>
-      )}
+      ) : (
+        <div className="offers-main">
+          <div className="flex justify-end mb-4">
+            <Button
+              onClick={() => setISOpen(true)}
+              className="add-offers-btn flex items-center"
+            >
+              <PlusCircleFilled
+                width={22}
+                height={22}
+                style={{
+                  color: "white",
+                  background: "#4a9d77",
+                  borderRadius: "80%",
+                }}
+              />
 
-      <div className="offers-main">
-        <div className="flex justify-end mb-4">
-          <Button
-            onClick={() => setISOpen(true)}
-            className="add-offers-btn flex items-center"
-          >
-            <PlusCircleFilled
-              width={22}
-              height={22}
-              style={{
-                color: "white",
-                background: "#4a9d77",
-                borderRadius: "80%",
-              }}
-            />
+              <span className="text-[white]">Add New Offer</span>
+            </Button>
+          </div>
 
-            <span className="text-[white]">Add New Offer</span>
-          </Button>
+          <Row gutter={[20, 20]}>
+            {offersCardData.map((item) => {
+              return (
+                <Col xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
+                  <Card
+                    key={item.id}
+                    className="offer-card"
+                    cover={<img alt="img" src={item.img} height={195} />}
+                  >
+                    <div className="offer-card-body">
+                      <div className="text-[#363565] font-semibold text-xl pb-4">
+                        {item.title}
+                      </div>
+                      <div className="text-[#363565] font-normal text-sm pb-4">
+                        {item.disc}
+                      </div>
+
+                      <div className="w-[100%] inline-grid">
+                        <Button onClick={() => {}} className="offer-card-btn">Edit</Button>
+                      </div>
+                    </div>
+                  </Card>
+                </Col>
+              );
+            })}
+          </Row>
         </div>
-
-        <Row gutter={[20, 20]}>
-          {offersCardData.map((item) => {
-            return (
-              <Col xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
-                <Card
-                  key={item.id}
-                  className="offer-card"
-                  cover={<img alt="img" src={item.img} height={195} />}
-                >
-                  <div className="offer-card-body">
-                    <div className="text-[#363565] font-semibold text-xl pb-4">
-                      {item.title}
-                    </div>
-                    <div className="text-[#363565] font-normal text-sm pb-4">
-                      {item.disc}
-                    </div>
-
-                    <div className="w-[100%] inline-grid">
-                      <Button className="offer-card-btn">Edit</Button>
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </div>
+      )}
     </div>
   );
 };
