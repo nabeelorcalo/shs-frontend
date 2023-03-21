@@ -2,6 +2,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { RecipeCard } from "../components/RecipeCard";
 import icon from "../assets/images/RecipeCard/recipeCard.png";
 import { Button } from "../components";
+
 const arraydata = [
   {
     image: icon,
