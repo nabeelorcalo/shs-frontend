@@ -186,7 +186,7 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <Dropdown menu={{ items, onClick: ({key}) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
+          <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({key}) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
             <div className="dropdown-button">
               <IconMore />
             </div>
