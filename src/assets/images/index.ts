@@ -360,3 +360,5 @@ export { ReactComponent as TalentBadge } from './Performance/TalentBadge.svg';
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
 export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';
 
+// Listings Icons
+export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';

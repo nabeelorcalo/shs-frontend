@@ -29,6 +29,7 @@ svg {
   margin-left: -15px;
   margin-right: -15px;
 }
+
 .shs-col-5 {
   flex-shrink: 0;
   width: 100%;
@@ -138,7 +139,8 @@ svg {
 }
 
 // Dropdown
-.ant-dropdown {
+.ant-dropdown.shs-dropdown {
+
   & > ul.ant-dropdown-menu {
     border: 2px solid $text-error-line-color;
     box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
@@ -384,7 +386,7 @@ svg {
 .shs-table-card {
   border-radius: 16px;
   box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
-  // padding: 20px;
+  padding: 20px;
 }
 .shs-table {
   .ant-table-wrapper {
@@ -567,7 +569,7 @@ svg {
   &.success {
     background-color: $text-success-color;
   }
-  &.rejected {
+  &.rejected, &.error {
     background-color: $accommodation-badge;
   }
   &.pending {
