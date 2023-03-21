@@ -17,47 +17,47 @@ const Graph = (props: any) => {
   return (
     <div className='p-4'>
 
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphSix monthName="Jan" />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphFive monthName="Jan" />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphFour />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
       {/* Register Member Graph */}
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphOne graphName={constants.REGISTER_MEMBERS} />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
       {/* Feedback Graph */}
-      {/* <BoxWrapper > */}
+      <BoxWrapper >
         <GraphOne graphName={constants.FEEDBACk} />
-      {/* </BoxWrapper> */}
+      </BoxWrapper>
 
       {/* Attendance Graph */}
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphTwo graphName={constants.ATTENDANCE} />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
       {/* Listings Graph */}
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphTwo graphName={constants.LISTINGS} />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
       {/* Register Agents Graph */}
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphThree graphName={constants.REGISTER_AGENTS} />
-      </BoxWrapper> */}
+      </BoxWrapper>
 
       {/* Rewards Graph */}
-      {/* <BoxWrapper >
+      <BoxWrapper >
         <GraphThree graphName={constants.REWARDS} />
-      </BoxWrapper> */}
+      </BoxWrapper>
     </div>
   );
 };

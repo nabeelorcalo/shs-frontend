@@ -31,7 +31,7 @@ const SetaGoal = ({ title }: any) => {
 
                     <div className="flex flex-col gap-3 my-8">
                         <p>Goal Name</p>
-                        <Input rows={4} placeholder="Enter Goal Name" maxLength={6} />
+                        <Input.TextArea rows={4} placeholder="Enter Goal Name" maxLength={6} />
 
                     </div>
                     <div className="my-2 flex flex-row gap-3">

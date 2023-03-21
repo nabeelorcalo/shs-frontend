@@ -8,7 +8,7 @@ interface EmojiProps {
   data: any,
   size?: any,
   activeIconIndex?: number,
-  onClick?: () => void,
+  onClick?: any,
 }
 
 const EmojiMoodRating = (props: EmojiProps) => {

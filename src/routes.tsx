@@ -480,6 +480,11 @@ const companyAdminRoutes = [
         element: <Dashboard />,
       },
       {
+        key: `graphs`,
+        path:`graphs`,
+        element: <Graph />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.CANDIDATES}`,
         path: `${ROUTES_CONSTANTS.CANDIDATES}`,
         element: <Candidates />,
