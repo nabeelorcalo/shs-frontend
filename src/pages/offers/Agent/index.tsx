@@ -46,7 +46,7 @@ const OffersAgent = () => {
             <label>Select your property</label>
             <Select
               defaultValue="Select"
-              // onChange={handleChange}
+              onChange={(value) => value}
               options={[
                 { value: "Boston Heights", label: "Boston Heights" },
                 {
@@ -66,7 +66,7 @@ const OffersAgent = () => {
             <label>Minimum stay to qualify for offer</label>
             <Select
               defaultValue="Select"
-              // onChange={handleChange}
+              onChange={(value) => value}
               options={[
                 { value: "1 months", label: "1 months" },
                 {
@@ -86,7 +86,7 @@ const OffersAgent = () => {
             <label>Maximum stay to qualify for offer (optional)</label>
             <Select
               defaultValue="Select"
-              // onChange={handleChange}
+              onChange={(value) => value}
               options={[
                 { value: "1 months", label: "1 months" },
                 {
@@ -105,11 +105,12 @@ const OffersAgent = () => {
           <Form.Item className="flex flex-col">
             <label>Monthly discount</label>
             <InputNumber
+              name="dicount"
               style={{ width: "100%" }}
               defaultValue={1}
               formatter={(value) => `${value}%`}
               parser={(value: any) => value!.replace("%", "")}
-              // onChange={onChange}
+              onChange={(value) => value}
             />
           </Form.Item>
           <div className="flex justify-end gap-4">
@@ -199,7 +200,9 @@ const OffersAgent = () => {
                       </div>
 
                       <div className="w-[100%] inline-grid">
-                        <Button onClick={() => {}} className="offer-card-btn">Edit</Button>
+                        <Button onClick={() => {}} className="offer-card-btn">
+                          Edit
+                        </Button>
                       </div>
                     </div>
                   </Card>
