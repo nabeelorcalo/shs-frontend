@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from 'antd';
-// import all reusable componets from component/index.ts
-// end
 import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader, GlobalTable } from "../../../components";
 import { MoreIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
