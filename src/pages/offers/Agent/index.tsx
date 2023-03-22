@@ -4,33 +4,32 @@ import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form, Input } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { Offerimg1, Offerimg3 } from "../../../assets/images";
+import { cardData } from "../../propertyAgent/propertDahboard/Dashboard/DashboardMock";
 
-const offersCardData = [
-  {
-    id: "1",
-    img: Offerimg1,
-    title: "Boston heights",
-    disc: "15% off-between 1 and 6 months bookings",
-  },
-  {
-    id: "2",
-    img: Offerimg1,
-    title: "Gregory Maxwell Hall",
-    disc: "15% off-between 1 and 6 months bookings",
-  },
-  {
-    id: "3",
-    img: Offerimg1,
-    title: "8th Sapphire Avenue",
-    disc: "15% off-between 1 and 6 months bookings",
-  },
-];
+
 
 const OffersAgent = () => {
-  const [isOpen, setISOpen] = useState(false);
+  const [isOpen, setISOpen] = useState<any>(false);
+  const [offersCardData , setData] = useState<any>(
+    [
+     
+    ]
+  )
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    const copyCardData = [...offersCardData]
+    copyCardData.push(
+      {
+      
+        img: Offerimg1,
+        title: values.select,
+        disc: `${values.discount}%off-between 1 and 6 months bookings`,
+      }
+
+    )
+    setData(copyCardData)
+    setISOpen(false)
   };
 
   return (
@@ -41,12 +40,11 @@ const OffersAgent = () => {
         close={() => setISOpen(false)}
         footer={false}
       >
-        <Form name="basic" onFinish={onFinish}>
-          <Form.Item className="flex flex-col mb-8">
-            <label>Select your property</label>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item label="Select your property"  name="select" className="flex flex-col mb-8">
             <Select
               defaultValue="Select"
-              onChange={(value) => value}
+              // onChange={(value) => value}
               options={[
                 { value: "Boston Heights", label: "Boston Heights" },
                 {
@@ -62,11 +60,10 @@ const OffersAgent = () => {
             />
           </Form.Item>
 
-          <Form.Item className="flex flex-col mb-8">
-            <label>Minimum stay to qualify for offer</label>
+          <Form.Item label="Minimum stay to qualify for offer" name="offer" className="flex flex-col mb-8">
             <Select
               defaultValue="Select"
-              onChange={(value) => value}
+              // onChange={(value) => value}
               options={[
                 { value: "1 months", label: "1 months" },
                 {
@@ -82,11 +79,10 @@ const OffersAgent = () => {
             />
           </Form.Item>
 
-          <Form.Item className="flex flex-col mb-8">
-            <label>Maximum stay to qualify for offer (optional)</label>
+          <Form.Item label="Maximum stay to qualify for offer (optional)" name="qualify" className="flex flex-col mb-8">
             <Select
               defaultValue="Select"
-              onChange={(value) => value}
+              // onChange={(value) => value}
               options={[
                 { value: "1 months", label: "1 months" },
                 {
@@ -102,15 +98,13 @@ const OffersAgent = () => {
             />
           </Form.Item>
 
-          <Form.Item className="flex flex-col">
-            <label>Monthly discount</label>
+          <Form.Item label="Monthly discount" name="discount" className="flex flex-col">
             <InputNumber
-              name="dicount"
               style={{ width: "100%" }}
               defaultValue={1}
               formatter={(value) => `${value}%`}
               parser={(value: any) => value!.replace("%", "")}
-              onChange={(value) => value}
+              // onChange={(value) => value}
             />
           </Form.Item>
           <div className="flex justify-end gap-4">
@@ -123,7 +117,7 @@ const OffersAgent = () => {
               </Button>
             </div>
             <div>
-              <Button htmlType="submit" className="bg-[#4A9D77] text-[white] ">
+              <Button htmlType="submit" className="bg-[#4A9D77] text-[white]">
                 Save & Close
               </Button>
             </div>
@@ -183,9 +177,9 @@ const OffersAgent = () => {
           </div>
 
           <Row gutter={[20, 20]}>
-            {offersCardData.map((item) => {
+            {offersCardData.map((item:any , index:any) => {
               return (
-                <Col xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
+                <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
                   <Card
                     key={item.id}
                     className="offer-card"
@@ -200,7 +194,7 @@ const OffersAgent = () => {
                       </div>
 
                       <div className="w-[100%] inline-grid">
-                        <Button onClick={() => {}} className="offer-card-btn">
+                        <Button onClick={() => setISOpen(true)} className="offer-card-btn">
                           Edit
                         </Button>
                       </div>

@@ -389,5 +389,8 @@ export { ReactComponent as DownlaodFileIcon } from "./Common/DownlaodFileIcon.sv
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";
 export { default as Offerimg3 } from "./offers/offerImg3.svg";
+export { ReactComponent as DocumentIcon } from "./offers/documentIcon.svg";
+export {ReactComponent as DocTabsIcon} from "./offers/DocumentsTabs.svg";
+export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
 // Listings Icons
 export { ReactComponent as IconAddListings } from "./listings/icon-add-listings.svg";

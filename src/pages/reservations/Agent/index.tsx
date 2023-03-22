@@ -6,7 +6,7 @@ import type { ColumnsType } from "antd/es/table";
 import "./style.scss";
 import { EyeFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import BookingModal from "./BookingModal/bookingModal";
+import BookingModal from "./BookingModal";
 
 interface DataType {
   key: React.Key;
@@ -49,7 +49,7 @@ const tableData = [
 ];
 
 const ReservationsAgent = () => {
-  const [isOpen, setISOpen] = useState(true);
+  const [isOpen, setISOpen] = useState(false);
 
   const tableColumns: ColumnsType<DataType> = [
     {
@@ -117,12 +117,12 @@ const ReservationsAgent = () => {
 
   const statusItems: MenuProps["items"] = [
     {
-      key: "reserved",
-      label: "Reserved",
-    },
-    {
       key: "pending",
       label: "Pending",
+    },
+    {
+      key: "reserved",
+      label: "Reserved",
     },
     {
       key: "rejected",
@@ -139,7 +139,7 @@ const ReservationsAgent = () => {
           <SearchBar handleChange={() => {}} />
         </Col>
 
-        <Col xxl={1} xl={3} lg={4} md={5} sm={4} xs={24}>
+        <Col xxl={2} xl={3} lg={4} md={5} sm={4} xs={24}>
           <Dropdown
             menu={{ items: statusItems }}
             trigger={["click"]}
