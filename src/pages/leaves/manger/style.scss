@@ -1,39 +1,54 @@
 @import "../../../scss/colors";
 
 .manager_main {
-    .view_history_button_wrapper {
-        .button {
-            background: $white-bg-color;
-            border: 1px solid $teriary-bg-color;
-            box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
-            color: $teriary-bg-color;
-        }
+  .view_history_button_wrapper {
+    .button {
+      background: $white-bg-color;
+      border: 1px solid $teriary-bg-color;
+      box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+      color: $teriary-bg-color;
     }
-    .LeaveRequest_card_main{
-            // .user_intro{
-        
-            // }
-            .about_leave_info{
-                border: 1px solid #D9DBE9;
-                .info_inner{
-                    .Name_of_cat{
-                        color: #A0A3BD;
-                    }
-                    .count_of_cat{
-                        color: #4E4B66;
-                    }
-                }
-            }
-            .LeaveAplicationCardBtns_wraper{
-                .Declin_btn{
-                    background-color: rgba(216, 58, 82, 0.1);
-                    color:  #D83A52
-                }
-                .Approve_btn{
-                    background-color: #E6F4F9;
-                    color: #4A9D77;
-        
-                }
-            }
+  }
+
+  .LeaveRequest_card_main {
+    // .user_intro{
+
+    // }
+    .about_leave_info {
+      border: 1px solid $text-error-line-color;
+
+      .info_inner {
+        .Name_of_cat {
+          color: $light-grey-color;
         }
+
+        .count_of_cat {
+          color: $text-secondary-body-color;
+        }
+      }
+    }
+
+    .LeaveAplicationCardBtns_wraper {
+      .Declin_btn {
+        background-color: rgba(216, 58, 82, 0.1);
+        color: $text-error-color;
+
+        &:hover {
+          background-color: $text-error-color;
+          color: $white-bg-color;
+        }
+      }
+
+      .Approve_btn {
+        background-color: $text-input-bg-color;
+        color: $teriary-bg-color;
+
+        &:hover {
+          background-color: $teriary-bg-color;
+          color: $white-bg-color;
+        }
+
+      }
+    }
+  }
 }
