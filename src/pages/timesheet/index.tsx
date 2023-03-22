@@ -8,7 +8,7 @@ const Index = () => {
         'CompanyAdmin': <CompanyAdmin />,
         'Intern': <Intern />
     }
-
+    
     return (
         <>
             {renderRoleBasedTimeSheet[constants.USER_ROLE]}

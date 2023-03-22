@@ -28,7 +28,7 @@ export const Input = (props: Props) => {
                 name={name}
                 value={value}
                 placeholder={placeholder}
-                className={`input ${{ className }}`}
+                className={`input ${className}`}
                 onChange={handleChange}
                 size={size}
                 {...rest}

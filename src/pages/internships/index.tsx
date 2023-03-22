@@ -5,10 +5,11 @@ import {
   PageHeader,
   FiltersButton,
   LeaveRequest,
+  Alert,
+  GlobalTable,
 } from "../../components";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
-// import { GlobalTable } from "../../components";
 import { Avatar, Button, Popover, Divider } from "antd";
 import { More } from "../../assets/images";
 import { InternshipsIcon } from "../../assets/images";
@@ -291,31 +292,14 @@ const Internships = () => {
         </BoxWrapper>
       </div>
       <div className="flex gap-3 my-3">
-        <SignatureAndUploadModal
-          state={state}
-          setState={setState}
-          okBtntxt="Upload"
-          cancelBtntxt="Cancel"
+        <Alert
+          alertType="error"
           width={600}
-        />
-        <LeaveRequest title="Leave Request" />
-        <EmojiEvaluation title={`Performance Report - ${name}`} />
-        <CreateFolderModal title="Create New Folder" />
-        <EditGoalTask title="Edit Goal Task" />
-        <AddRequestMessage title="Add Request Message" />
-        <SetaGoal title="Set a Goal" />
-      </div>
-      <div className="flex gap-3 my-3">
-        {/* <PopUpModal
-          title="Modal Title Customizable"
-          width={800}
           state={false}
-          okBtnFunc={() => { console.log("call back function called") }}
-          cancelBtntxt="Cancel"
-          okBtntxt="Submit"
-        >
-          <p>Write your JSX here / Import Components</p>
-        </PopUpModal> */}
+          okBtntxt="Ok"
+          cancelBtntxt="cancel"
+          children={<p>hello</p>}
+        />
       </div>
     </>
   );

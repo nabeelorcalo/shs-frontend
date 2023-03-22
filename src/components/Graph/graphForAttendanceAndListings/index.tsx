@@ -24,7 +24,7 @@ const Graph = ({ graphName }: any) => {
       "Vacant": "#FFC15D"
     };
 
-  const config = {
+  const config: any = {
     data,
     xField: 'month',
     yField: 'value',
@@ -100,8 +100,7 @@ const Graph = ({ graphName }: any) => {
     delete config.tooltip;
   }
 
-  return <Line {...config
-  } />;
+  return <Line {...config} />;
 };
 
 export default Graph;

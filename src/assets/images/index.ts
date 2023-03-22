@@ -56,8 +56,8 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
-export { ReactComponent as Round } from "./login/round.svg";
-export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
+export { default as Round } from "./login/round.svg";
+export { default as DocumentUpload } from "./login/document-upload.svg";
 // Footer Icons
 export { ReactComponent as IconFacebook } from "./footer/icon-social-facebook.svg";
 export { ReactComponent as IconTwitter } from "./footer/icon-social-twitter.svg";
@@ -310,7 +310,7 @@ export { default as Addatech } from "../images/chat/Addatech.svg";
 export { default as AudioPlayer } from "../images/chat/New folder/audioPlayer.svg";
 export { default as SeeAll } from "../images/chat/New folder/seeAll.svg";
 
-////////////////////////////////////////////////////////////////////////
+// candidates
 
 export { ReactComponent as ArrowRightIcon } from "../images/ArrowRightIcon.svg";
 export { ReactComponent as CirclePlusIcon } from "../images/CirclePlusIcon.svg";
@@ -354,3 +354,5 @@ export { ReactComponent as DownlaodFileIcon } from "./Common/DownlaodFileIcon.sv
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";
 export { default as Offerimg3 } from "./offers/offerImg3.svg";
+// Listings Icons
+export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';

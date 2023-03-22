@@ -213,12 +213,12 @@ const Accommodation = () => {
               </div>
 
               <div className="requests-filterby-status">
-                <Dropdown menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
                   <Button className="button-sky-blue">Status<IconAngleDown /></Button>
                 </Dropdown>
               </div>
               <div className="dropdown-download">
-                <Dropdown menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
                 </Dropdown>
               </div>
@@ -249,13 +249,13 @@ const Accommodation = () => {
               </div>
                 
               <div className="dropdown-time-frame">
-                <Dropdown menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
                   <Button className="button-sky-blue">Time Frame <IconAngleDown /></Button>
                 </Dropdown>
               </div>
 
               <div className="dropdown-download">
-                <Dropdown menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
                 </Dropdown>
               </div>

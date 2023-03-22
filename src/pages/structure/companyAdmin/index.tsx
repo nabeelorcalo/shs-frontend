@@ -6,7 +6,7 @@ import {
   StructureMinus,
   StructureAdd,
 } from "../../../assets/images";
-import Node from "./node";
+import Node from "./Node";
 import "./style.scss";
 
 export default function Structure(props: any) {

@@ -27,17 +27,17 @@ const SettingShifts: React.FC = () => {
   const handleChange = () => { };
   return (
     <div className="setting-shifts">
-        <div className="flex justify-between">
-          <SearchBar size="middle" handleChange={handleChange} />
-          <NavLink to="/settings/shifts/add-shift">
-            <Button
-              size="middle"
-              onClick={() => { }}
-              className="flex gap-2 setting-add-button white-color teriary-bg-color"  >
-              <SettingShift />
-               Add Shift
-            </Button>
-          </NavLink>
+      <div className="flex justify-between">
+        <SearchBar size="middle" handleChange={handleChange} />
+        <NavLink to="/settings/shifts/add-shift">
+          <Button
+            size="middle"
+            onClick={() => { }}
+            className="flex gap-2 setting-add-button white-color teriary-bg-color"  >
+            <SettingShift />
+            Add Shift
+          </Button>
+        </NavLink>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
@@ -82,9 +82,8 @@ const SettingShifts: React.FC = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

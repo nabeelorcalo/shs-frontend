@@ -39,9 +39,7 @@ const NewInternships = () => {
               </p>
               <Input
                 className="input"
-                handleChange={() => {}}
                 id=""
-                label="Title"
                 name="name"
                 required
                 placeholder="placeholder"
@@ -56,9 +54,7 @@ const NewInternships = () => {
               </p>
               <Input
                 className="input"
-                handleChange={() => {}}
                 id=""
-                label="Title"
                 name="name"
                 required
                 placeholder="placeholder"
@@ -149,9 +145,7 @@ const NewInternships = () => {
               <div className="flex flex-col gap-5">
                 <Input
                   className="input"
-                  handleChange={() => {}}
                   id=""
-                  label="Title"
                   name="name"
                   required
                   placeholder="placeholder"
@@ -166,9 +160,7 @@ const NewInternships = () => {
               <div className="flex flex-col gap-5">
                 <Input
                   className="input"
-                  handleChange={() => {}}
                   id=""
-                  label="Title"
                   name="name"
                   required
                   placeholder="placeholder"
@@ -183,9 +175,7 @@ const NewInternships = () => {
               <div className="flex flex-col gap-5">
                 <Input
                   className="input"
-                  handleChange={() => {}}
                   id=""
-                  label="Title"
                   name="name"
                   required
                   placeholder="placeholder"

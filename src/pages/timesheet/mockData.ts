@@ -1,4 +1,4 @@
-import { UserAvatar } from "../../../assets/images";
+import { UserAvatar } from "../../assets/images";
 
 export const timesheetMock = [
   {
@@ -9,6 +9,7 @@ export const timesheetMock = [
     totalHours: '35h',
     progess: 20,
     workedHours: '27h 52m',
+    category: 'design task',
     history: [
       {
         id: '1', dateTime: 'thu, 29 september 2023', totalTasks: 3, totalTime: '05:30:15',
@@ -38,6 +39,7 @@ export const timesheetMock = [
     totalHours: '35h',
     progess: 50,
     workedHours: '27h 52m',
+    category: 'outdoor activities',
     history: [
       {
         id: '1', dateTime: 'mon, 29 september 2023', totalTasks: 3, totalTime: '02:30:15',
@@ -67,6 +69,7 @@ export const timesheetMock = [
     totalHours: '35h',
     progess: 70,
     workedHours: '27h 52m',
+    category: 'research',
     history: [
       {
         id: '1', dateTime: 'wed, 29 september 2023', totalTasks: 3, totalTime: '05:30:15',
@@ -96,5 +99,6 @@ export const timesheetMock = [
     totalHours: '35h',
     progess: 30,
     workedHours: '27h 52m',
+    category:'design task',
   },
 ]

@@ -5,15 +5,11 @@ export const TimeSheetCategoriesData = [
     },
     {
         type: 'Outdoor Activities',
-        value: 10,
+        value: 20,
     },
     {
         type: 'Research',
         value: 40,
-    },
-    {
-        type: 'yellow',
-        value: 15,
     },
 
 ];

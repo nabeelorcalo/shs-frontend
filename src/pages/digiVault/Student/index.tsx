@@ -199,9 +199,9 @@ const DigiVaultStudent = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-      >
-        <p>Are you sure you want to delete this?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
+      
       <NewPasswordModal
         newPass={newPass}
         setNewPass={setNewPass}
