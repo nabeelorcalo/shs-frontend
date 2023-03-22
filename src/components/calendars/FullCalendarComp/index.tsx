@@ -5,26 +5,22 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
-import './style.scss';
 import { Button } from "antd";
+import './style.scss';
 
 const Index = () => {
+
+  const [openModal, setOpenModal] = useState(false);
+
   const events = [
-    {
-      id: "1",
-      title: "Post UI UX Meeting",
-      start: "2023-03-21T01:51:00",
-      end: "2023-03-21T02:51:00",
-      category: "meeting",
-    },
     {
       id: "2",
       title: "UI UX post oppertunity",
-      start: "2023-03-21T03:00:00",
-      end: "2023-03-21T04:05:00",
+      start: "2023-03-21T01:30:00",
+      end: "2023-03-21T02:00:00",
       category: "interview"
     },
+
     {
       id: "3",
       title: "annual fee submission",
@@ -36,8 +32,15 @@ const Index = () => {
       id: "4",
       title: "Post UI UX Meeting",
       start: "2023-03-25T01:51:00",
-      end: "2023-03-25T01:51:00",
-    }
+      end: "2023-03-25T02:51:00",
+    },
+    {
+      id: "5",
+      title: "UI UX post oppertunity",
+      start: "2023-03-22T01:30:00",
+      end: "2023-03-22T02:00:00",
+      category: "interview"
+    },
   ];
 
   const renderEventColor: any = {
@@ -48,14 +51,16 @@ const Index = () => {
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
-    const { start, end } = info?.event?._instance?.range;
     const category = events?.extendedProps?.category;
     return (
       <div className="event-content"
         style={{ borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : '#4E4B66'}` }}
       >
-        <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
-        <p className="duration text-[14px] mt-[5px]">{dayjs(start).format('HH:MM')} - {dayjs(end).format('HH:MM')}</p>
+        <div className="content">
+          <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
+          <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
+          <p className="duration text-[14px] mt-[5px]">{dayjs().format('DD:MM:YYYY')}</p>
+        </div>
         <div className="event-btn gap-3">
           <Button size="small" className={`btn capitalize btn-primary`}>
             edit
@@ -74,30 +79,50 @@ const Index = () => {
 
       <PageHeader title={'Calendar'} bordered />
 
-      <BoxWrapper boxShadow="0px 0px 8px 2px rgba(9, 161, 218, 0.1)" className="rounded-[10px]">
-        <FullCalendar
-          initialView="timeGridWeek"
-          headerToolbar={{ left: "title prev next", right: "timeGridWeek timeGridDay" }}
-          plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
-          allDaySlot={false}
-          height="63vh"
-          slotDuration="00:60:00"
-          eventContent={handleEventContent}
-          events={events}
-          views={{
-            week: {
-              dayHeaderContent: (args) => {
-                return (
-                  <div className="mb-[20px]">
-                    <p className="pb-2 text-[#14142A] text-base font-semibold">{dayjs(args.date).format('ddd')}</p>
-                    <p className="text-[#4E4B66] text-base font-semibold">{dayjs(args.date).format('D')}</p>
-                  </div>
-                )
-              }
+      <div className="flex justify-center gap-7">
+        {['meeting', 'interview', 'event'].map((name: string) => <p className="flex items-center gap-3">
+          <span className="h-[12px] w-[12px] rounded-[4px] inline-block" style={{ background: renderEventColor[name] }}></span>
+          <span className="capitalize text-sm text-[#4E4B66]">{name}</span>
+        </p>)}
+      </div>
+      <FullCalendar
+        initialView={'timeGridWeek'}
+        customButtons={{
+          myCustomBtn: {
+            text: 'Add Event',
+            click: () => setOpenModal(!openModal)
+          }
+        }}
+        headerToolbar={{ left: "title prev next", right: "myCustomBtn timeGridWeek timeGridDay" }}
+        plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
+        allDaySlot={false}
+        height="63vh"
+        slotDuration="00:60:00"
+        eventContent={handleEventContent}
+        events={events}
+        views={{
+          week: {
+            dayHeaderContent: (args) => {
+              return (
+                <div className="mb-[20px]">
+                  <p className="pb-2 text-[#14142A] text-base font-semibold">{dayjs(args.date).format('ddd')}</p>
+                  <p className="text-[#4E4B66] text-base font-semibold">{dayjs(args.date).format('D')}</p>
+                </div>
+              )
             }
-          }}
-        />
-      </BoxWrapper>
+          },
+          day: {
+            dayHeaderContent: (args) => {
+              return (
+                <div className="mb-[20px] text-base font-semibold text-[#14142A]">
+                  <p>{dayjs(args.date).format('ddd')}</p>
+                  <p>{dayjs(args.date).format('D')}</p>
+                </div>
+              )
+            }
+          }
+        }}
+      />
     </div>
   )
 }

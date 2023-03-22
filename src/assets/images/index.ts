@@ -123,6 +123,7 @@ export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
+export {ReactComponent as CalendarAddNewIcon} from './CalendarIconWhite.svg';
 
 // star outline icon
 export { ReactComponent as StarOutlinedIcon } from './StarOutlined.svg';
