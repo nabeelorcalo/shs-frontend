@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import "./style.scss";
 import dayjs from "dayjs";
 
-const TimeTracking = (props: any) => {
+export const TimeTracking = (props: any) => {
   const { vartical } = props;
 
   const [time, setTime] = useState<number>(0);
@@ -45,7 +45,9 @@ const TimeTracking = (props: any) => {
 
   return (
     <Card
-      className={vartical ? "time-tracking my-2" : "timeTrackig-horizontal my-2"}
+      className={
+        vartical ? "time-tracking my-2" : "timeTrackig-horizontal my-2"
+      }
       bordered={false}
     >
       <div className="time-tracking-body">
@@ -62,7 +64,9 @@ const TimeTracking = (props: any) => {
         >
           <div
             className={
-              vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"
+              vartical
+                ? "clock-time flex justify-center items-center"
+                : "mr-4 xl:mr-14"
             }
           >
             {!isRunning ? (
@@ -106,7 +110,9 @@ const TimeTracking = (props: any) => {
         {vartical ? (
           <div className="mt-4 p-4 bg-[#E6F4F9] rounded-[10px]">
             <div className="flex justify-between">
-              <div className="font-medium text-sm text-success-color">Clock In</div>
+              <div className="font-medium text-sm text-success-color">
+                Clock In
+              </div>
               <div className="font-medium text-sm text-secondary-color">
                 {clockInTime}
               </div>
@@ -134,6 +140,4 @@ const TimeTracking = (props: any) => {
       </div>
     </Card>
   );
-};
-
-export default TimeTracking;
+}; 

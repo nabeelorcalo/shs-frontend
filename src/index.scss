@@ -175,6 +175,13 @@ svg {
       line-height: 1.5;
     }
   }
+
+  .ant-form-item-explain {
+    color: $certificate-label-disabled;
+    font-size: 14px;
+    line-height: 1.214285;
+    padding-top: 4px;
+  }
 }
 .ant-input {
   border-color: $text-error-line-color;

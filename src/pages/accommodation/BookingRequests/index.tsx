@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Table, Dropdown, Typography, Row, Col } from 'antd'
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images'
-import { PopUpModal } from "../../../components"
+import { PopUpModal } from "../../../components";
 import "./style.scss";
 interface DataType {
   key: React.Key;
