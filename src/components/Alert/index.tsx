@@ -10,19 +10,20 @@ import { STATUS_CONSTANTS } from "../../config/constants";
 const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
 interface Props {
     title?: string;
-    type?: string;
+    alertType?: any;
     width?: any;
     state?: any;
     setState?: any;
     icon?: any;
     cancelBtntxt?: string;
     okBtntxt?: string;
-    okBtnFunc?:any;
-    children?: any;
+    okBtnFunc?:any
+    children?: any,
+    open?: any,
 }
 
-export const Alert = (props: Props) => {
-    const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children } = props
+export const Alert: any = (props: Props) => {
+    const { title, alertType, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children }= props 
     return (
         <>
             <Modal
@@ -41,11 +42,11 @@ export const Alert = (props: Props) => {
                         onClick={() => { setState(!state) }}
                         key="Cancel"
                         className={
-                            type === ERROR ? "border-[#D83A52] text-[#D83A52]"
+                            alertType === ERROR ? "border-[#D83A52] text-[#D83A52]"
                                 :
-                                type === SUCCESS ? "border-[#4A9D77] text-[#4A9D77]"
+                                alertType === SUCCESS ? "border-[#4A9D77] text-[#4A9D77]"
                                     :
-                                    type === WARNING ? "border-[#FFC15D] text-[#FFC15D]"
+                                    alertType === WARNING ? "border-[#FFC15D] text-[#FFC15D]"
                                         :
                                         "border-[#4A9D77] text-[#4A9D77]"
                         }
@@ -53,14 +54,14 @@ export const Alert = (props: Props) => {
                         {cancelBtntxt}
                     </Button>,
                     <Button
-                        onClick={() => { okBtnFunc(type) }}
+                        onClick={() => { okBtnFunc(alertType) }}
                         key="submit"
                         className={
-                            type === ERROR ? "bg-[#D83A52] text-[#fff]"
+                            alertType === ERROR ? "bg-[#D83A52] text-[#fff]"
                                 :
-                                type === SUCCESS ? "bg-[#4A9D77] text-[#fff]"
+                                alertType === SUCCESS ? "bg-[#4A9D77] text-[#fff]"
                                     :
-                                    type === WARNING ? "bg-[#FFC15D] text-[#fff]"
+                                    alertType === WARNING ? "bg-[#FFC15D] text-[#fff]"
                                         :
                                         "bg-[#4A9D77] text-[#4A9D77]"
                         }
@@ -71,8 +72,8 @@ export const Alert = (props: Props) => {
             >
                 <div className='h-[10rem] flex flex-col justify-center gap-3'>
                     <div className='flex flex-row items-center gap-3'>
-                        <div>{type === "error" ? <AlertIcon /> : type === "success" ? <SuccessIcon /> : type === "warning" ? <WarningIcon /> : null}</div>
-                        <div>{type === "error" ? <h2>Alert</h2> : type === "success" ? <h2>Success</h2> : type === "warning" ? <h2>Warning</h2> : null}</div>
+                        <div>{alertType === "error" ? <AlertIcon /> : alertType === "success" ? <SuccessIcon /> : alertType === "warning" ? <WarningIcon /> : null}</div>
+                        <div>{alertType === "error" ? <h2>Alert</h2> : alertType === "success" ? <h2>Success</h2> : alertType === "warning" ? <h2>Warning</h2> : null}</div>
                     </div>
                     {children}
                 </div>

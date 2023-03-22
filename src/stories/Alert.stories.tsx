@@ -1,5 +1,6 @@
 import { ComponentStory } from '@storybook/react'
 import { object } from 'prop-types';
+import { Children } from 'react';
 import { Alert } from '../components';
 
 export default {
@@ -7,7 +8,7 @@ export default {
   componenet: Alert
 }
 
-const okBtnFunc = (type)=>{
+const okBtnFunc = (type: any)=>{
     console.log( type + " Alert submit button clicked")
 }
 
@@ -15,13 +16,13 @@ const Template: ComponentStory<typeof Alert> = (args) => <Alert {...args} ><p>Th
 
 export const errorAlert = Template.bind({})
 errorAlert.args = {
-  
     state:true ,
     type:"error" ,
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-    okBtnFunc: okBtnFunc
+    okBtnFunc: okBtnFunc,
+    children: <p>children JSX</p>
 }
 
 
@@ -32,7 +33,8 @@ successAlert.args = {
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-    okBtnFunc: okBtnFunc
+    okBtnFunc: okBtnFunc,
+    children: <p>children JSX</p>
 
 }
 
@@ -43,6 +45,7 @@ warningAlert.args = {
     width:500 ,
     okBtntxt:"Delete" ,
     cancelBtntxt:"Cancel",
-    okBtnFunc: okBtnFunc
+    okBtnFunc: okBtnFunc,
+    children: <p>children JSX</p>
 
 }

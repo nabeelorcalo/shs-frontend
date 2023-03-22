@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Progress, Space, Typography, Dropdown, MenuProps } from "antd";
 // import all reusable componets from component/index.ts
-import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable } from "../../../components";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable } from "../../components";
+import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 // end
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { ColorLessMedalIcon, MoreIcon } from "../../../assets/images";
-import { AppreciationModal } from "./appreciationModal";
-import { WarnModal } from "./warnModel";
-import '../style.scss';
-import data from './data';
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import { ColorLessMedalIcon, MoreIcon } from "../../assets/images";
+import { AppreciationModal } from "./CompanyAdmin/appreciationModal";
+import { WarnModal } from "./CompanyAdmin/warnModel";
+import './style.scss';
+import data from './CompanyAdmin/data';
 
 const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
@@ -118,25 +118,33 @@ const DetailHistory = () => {
     },
   ];
 
-  const items: MenuProps['items'] = [
+  let items: MenuProps['items'] = [
     {
       label:
         < Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
+          to={ `/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
         >
-          View Details
+          {constants.USER_ROLE === "CompanyAdmin" ? "View Details" : "View"}
         </Link >,
       key: '0',
     },
     {
-      label:
+      label: constants.USER_ROLE === "CompanyAdmin" ?
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}/${ROUTES_CONSTANTS.EVALUATE}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
         >
           Evaluate
-        </Link >,
+        </Link >
+        :
+        <p
+          onClick={() => {
+            alert('download')
+          }}
+        >
+          Download
+        </p>,
       key: '1',
     },
     {
@@ -169,6 +177,11 @@ const DetailHistory = () => {
     },
   ];
 
+  // remove last two items if role is of Manager
+  if (constants.USER_ROLE === "Manager" && items.length > 2) {
+    items = items.slice(0, -2)
+  }
+
   const [state, setState] = useState({
     openAprreciationModal: false,
     openWarnModal: false,
@@ -195,6 +208,7 @@ const DetailHistory = () => {
 
     switch (role) {
       case 'Intern':
+      case 'Manager':
         return (
           <Link
             className="bread-crumb"
@@ -252,7 +266,7 @@ const DetailHistory = () => {
               icon={<ColorLessMedalIcon />}
               btnTxt='Evaluate'
               size={64}
-              url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
+              url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
               avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
             />
 
@@ -282,7 +296,7 @@ const DetailHistory = () => {
         <div className="performance-right-subcontainer ">
           <BoxWrapper >
             <Typography.Title level={4} >
-              Evaluation  History
+              Evaluation History
             </Typography.Title>
             <GlobalTable
               columns={evaluationHistoryColumnNames}

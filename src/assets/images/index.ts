@@ -56,8 +56,8 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
-export { ReactComponent as Round } from "./login/round.svg";
-export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
+export { default as Round } from "./login/round.svg";
+export { default as DocumentUpload } from "./login/document-upload.svg";
 // Footer Icons
 export { ReactComponent as IconFacebook } from "./footer/icon-social-facebook.svg";
 export { ReactComponent as IconTwitter } from "./footer/icon-social-twitter.svg";
@@ -196,6 +196,9 @@ export { ReactComponent as IconMore } from "./accommodation/icon-more.svg";
 export { ReactComponent as IconSignedDigitally } from "./accommodation/icon-signed-digitally.svg";
 export { ReactComponent as Documentcard } from "./accommodation/document-card.svg";
 export { ReactComponent as IconReceipt } from "./accommodation/icon-receipt.svg";
+export { ReactComponent as IconAngleDown } from "./accommodation/icon-angle-down.svg";
+export { ReactComponent as IconDocumentDownload } from "./accommodation/icon-document-download.svg";
+
 
 
 export { ReactComponent as StructureCompanyAdminAvater } from "./structure/avatar-img.svg";
@@ -293,10 +296,11 @@ export { ReactComponent as ArrowRightIcon } from '../images/ArrowRightIcon.svg';
 export { ReactComponent as CirclePlusIcon } from '../images/CirclePlusIcon.svg';
 export { ReactComponent as CircleMinusIcon } from '../images/CircleMinusIcon.svg';
 export { ReactComponent as TaskListIcon } from '../images/TaskListIcon.svg';
-export { ReactComponent as  ClockDarkIcon} from '../images/ClockDarkIcon.svg';
-export { ReactComponent as  TagPrimaryIcon} from '../images/TagPrimaryIcon.svg';
-export { ReactComponent as  TagSuccessIcon} from '../images/TagSuccessIcon.svg';
-export { ReactComponent as  TagWarningIcon} from '../images/TagWarningIcon.svg';
+export { ReactComponent as ClockDarkIcon } from '../images/ClockDarkIcon.svg';
+export { ReactComponent as TagPrimaryIcon } from '../images/TagPrimaryIcon.svg';
+export { ReactComponent as TagSuccessIcon } from '../images/TagSuccessIcon.svg';
+export { ReactComponent as TagWarningIcon } from '../images/TagWarningIcon.svg';
+// candidates
 
 // candidates
 export { ReactComponent as CvIcon } from './cvIcon.svg';
@@ -318,6 +322,9 @@ export { ReactComponent as Location } from './location.svg';
 export { ReactComponent as Intro } from './Intro.svg';
 export { ReactComponent as PlayIcon } from './playIcon.svg';
 export { ReactComponent as DrawerIcon } from './drawerIcon.svg';
+export { ReactComponent as AddIcon } from './AddIcon.svg';
+export { ReactComponent as TimerPlayIcon } from '../images/TimePlayIcon.svg';
+export { ReactComponent as TimerPauseIcon } from '../images/TimePauseIcon.svg';
 
 //Grievances
 export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg';
@@ -345,6 +352,8 @@ export { ReactComponent as IconPreparationTime } from './recipes/icon-preparatio
 export { ReactComponent as IconServing } from './recipes/icon-serving.svg';
 export { ReactComponent as IconEditRecipe } from './recipes/icon-edit.svg';
 export { ReactComponent as IconTrashRecipe } from './recipes/icon-trash.svg';
+export { ReactComponent as IconUploadLg } from './recipes/icon-upload-lg.svg';
+
 
 // Performance
 export { ReactComponent as DownloadIconWithBg } from './Performance/DownloadFile.svg';
@@ -354,3 +363,5 @@ export { ReactComponent as ColorLessMedalIcon } from './Performance/ColorlessMed
 export { ReactComponent as GlassMagnifier } from './Common/GlassMagnifier.svg';
 export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.svg';
 
+// Listings Icons
+export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';

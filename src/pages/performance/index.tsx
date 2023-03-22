@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Intern from "./intern";
 import CompanyAdmin from './CompanyAdmin';
+import ManagerPerformance from "./Manager";
 import constants from "../../config/constants";
 import "./style.scss";
 
@@ -11,6 +12,8 @@ const Performance = () => {
         return <Intern />;
       case 'CompanyAdmin':
         return <CompanyAdmin />;
+      case 'Manager':
+        return <ManagerPerformance />;
       default:
         return <></>;
     }

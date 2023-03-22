@@ -4,7 +4,6 @@ import { Col, Divider, Row } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "./style.scss"
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-// import { GlobalTable } from "../../../components"
 import { CalendarWhiteIcon } from "../../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
@@ -12,21 +11,15 @@ import { data } from "./LeaveMockData";
 import DrawerComp from "../../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 import constants from "../../../config/constants";
-// import dayjs from "dayjs";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
 
 
 const index = () => {
   const action = useCustomHook();
-  // const [actionType, setActionType] = useState({ type: '', id: '' });
-  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
-
-
-  // console.log(selectedRow);
   return (
     <div className="main_view_detail">
       <PageHeader
@@ -120,14 +113,13 @@ const index = () => {
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-          type='warning'
+        alertType='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
           okBtntxt={"Submit"}
-        >
-          <p>Are you sure you want to cancel this request?</p>
-        </Alert>}
+          children={<p>Are you sure you want to delete this?</p>}
+        />}
     </div>
   )
 }

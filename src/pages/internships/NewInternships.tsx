@@ -26,9 +26,9 @@ const NewInternships = () => {
                             <p>Title <span className='text-[#D83A52]'>*</span></p>
                             <Input
                                 className="input"
-                                handleChange={() => { }}
+                                onChange={() => { }}
                                 id=""
-                                label="Title"
+                                // label="Title"
                                 name="name"
                                 required
                                 placeholder="placeholder"
@@ -41,9 +41,9 @@ const NewInternships = () => {
                             <p>Department <span className='text-[#D83A52]'>*</span></p>
                             <Input
                                 className="input"
-                                handleChange={() => { }}
+                                onChange={() => { }}
                                 id=""
-                                label="Title"
+                                // label="Title"
                                 name="name"
                                 required
                                 placeholder="placeholder"
@@ -148,9 +148,9 @@ const NewInternships = () => {
                             <div className='flex flex-col gap-5'>
                                 <Input
                                     className="input"
-                                    handleChange={() => { }}
+                                    onChange={() => { }}
                                     id=""
-                                    label="Title"
+                                    // label="Title"
                                     name="name"
                                     required
                                     placeholder="placeholder"
@@ -163,9 +163,9 @@ const NewInternships = () => {
                             <div className='flex flex-col gap-5'>
                                 <Input
                                     className="input"
-                                    handleChange={() => { }}
+                                    onChange={() => { }}
                                     id=""
-                                    label="Title"
+                                    // label="Title"
                                     name="name"
                                     required
                                     placeholder="placeholder"
@@ -178,9 +178,9 @@ const NewInternships = () => {
                             <div className='flex flex-col gap-5'>
                                 <Input
                                     className="input"
-                                    handleChange={() => { }}
+                                    onChange={() => { }}
                                     id=""
-                                    label="Title"
+                                    // label="Title"
                                     name="name"
                                     required
                                     placeholder="placeholder"

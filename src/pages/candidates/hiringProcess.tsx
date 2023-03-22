@@ -70,7 +70,8 @@ const HiringProcess = () => {
               <Col xl={8} lg={8} md={8} sm={12} xs={24} >
                 <div className='asignee-wrap'>
                   <h2 className='m-0 font-medium text-base title'>{item.title}</h2>
-                  {item.title === 'Assignee' ? <DropDownNew
+                  {item.title === 'Assignee' ? 
+                  <DropDownNew
                     placement={'bottomRight'}
                     items={[
                       { label: <SearchBar handleChange={() => { }} />, key: 'search' },

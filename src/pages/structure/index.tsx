@@ -1,5 +1,5 @@
 import Manager from "./Manager/index"
-import CompanyAdmin from "./CompanyAdmin/index"
+import CompanyAdmin from "./companyAdmin/index"
 import constants from "../../config/constants";
 const Structure = () => {
 
