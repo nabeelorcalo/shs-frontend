@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import "./style.scss";
 import dayjs from "dayjs";
 
-const TimeTracking = (props: any) => {
+export const TimeTracking = (props: any) => {
   const { vartical } = props;
 
   const [time, setTime] = useState<number>(0);
@@ -140,6 +140,4 @@ const TimeTracking = (props: any) => {
       </div>
     </Card>
   );
-};
-
-export default TimeTracking;
+}; 

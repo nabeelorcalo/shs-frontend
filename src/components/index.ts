@@ -43,7 +43,7 @@ export * from './ContentMenu'
 export * from './Model'
 export * from './ExtendedButton'
 export * from './FiltersButton'
-export * from './timeTRacking/simpleTimer';
+export * from './TimeTracking';
 export * from './BoxWrapper/BoxWrapper';
 export * from './RecipeCard'
 export * from './IconButton'
@@ -55,3 +55,4 @@ export * from './TopPerformanceList';
 export * from './TopPerformanceCard';
 export * from './MonthChanger';
 export * from './AvatarBox';
+export * from './TimeTracking/simpleTimer';
