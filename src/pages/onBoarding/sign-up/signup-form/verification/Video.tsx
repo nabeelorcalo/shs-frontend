@@ -25,7 +25,7 @@ const Video = (props: any) => {
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 7 of 7</Typography>
-              <div className="flex items-center">
+              <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton />
                 </div>
@@ -72,8 +72,8 @@ const Video = (props: any) => {
                   </div>
                 </Upload>
               </Form.Item>
-              <Row gutter={[10,20]}>
-                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+              <Row gutter={[10,10]}>
+                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
                     //htmlType="submit"
@@ -81,7 +81,7 @@ const Video = (props: any) => {
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                   <Form.Item>
                     <Button
                       onClick={() => {

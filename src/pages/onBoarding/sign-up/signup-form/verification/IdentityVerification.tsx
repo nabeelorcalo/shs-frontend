@@ -33,9 +33,11 @@ const IdentityVerification = (props: any) => {
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 7</Typography>
-              <div className="flex items-center">
+              <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton
+                  //style={{ fill: '#363565', stroke: 'white', color: 'red' }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>

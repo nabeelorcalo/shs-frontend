@@ -86,6 +86,7 @@ const LinkAccount = () => {
                         className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5"
                         onClick={() => {
                             setAddNew(false);
+                            
                         }}
                     >
                         Link Account

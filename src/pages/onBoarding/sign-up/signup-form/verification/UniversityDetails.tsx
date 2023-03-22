@@ -36,7 +36,7 @@ const UniversityDetails = (props: any) => {
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 3 of 7</Typography>
-              <div className="flex items-center">
+              <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton />
                 </div>
@@ -164,24 +164,30 @@ const UniversityDetails = (props: any) => {
                   </Row>
                 </div>
               </Form.Item>
-
-              <Space>
-                <Button className="btn-cancel" 
-                //htmlType="submit"
-                >
-                  Skip
-                </Button>
-                <Button
-                  type="primary"
-                  //htmlType="submit"
-                  className="btn-primary"
-                  onClick={() => {
-                    setCurrentStep(4);
-                  }}
-                >
-                  Next
-                </Button>
-              </Space>
+              <Row gutter={[10,10]}>
+                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+                  <Button
+                    className="btn-cancel btn-cancel-verification"
+                    //htmlType="submit"
+                  >
+                    Skip
+                  </Button>
+                </Col>
+                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                  <Form.Item>
+                    <Button
+                      onClick={() => {
+                        setCurrentStep(4);
+                      }}
+                      type="primary"
+                      //htmlType="submit"
+                      className="login-form-button"
+                    >
+                      Next
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
             </div>
           </div>
         </Col>
