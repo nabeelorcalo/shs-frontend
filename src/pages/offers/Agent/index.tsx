@@ -10,9 +10,13 @@ import { cardData } from "../../propertyAgent/propertDahboard/Dashboard/Dashboar
 
 const OffersAgent = () => {
   const [isOpen, setISOpen] = useState<any>(false);
-  const [offersCardData , setData] = useState<any>(
+  const [offersCardData, setData] = useState<any>(
     [
-     
+      {
+        img: Offerimg1,
+        title: "Boston Heights",
+        disc: "15% off-between 1 and 6 months bookings",
+      },
     ]
   )
 
@@ -21,10 +25,9 @@ const OffersAgent = () => {
     const copyCardData = [...offersCardData]
     copyCardData.push(
       {
-      
         img: Offerimg1,
         title: values.select,
-        disc: `${values.discount}%off-between 1 and 6 months bookings`,
+        disc: `${values.discount}%off-between ${values.offer} and ${values.qualify} bookings`,
       }
 
     )
@@ -41,7 +44,7 @@ const OffersAgent = () => {
         footer={false}
       >
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item label="Select your property"  name="select" className="flex flex-col mb-8">
+          <Form.Item label="Select your property" name="select" className="flex flex-col mb-8">
             <Select
               defaultValue="Select"
               // onChange={(value) => value}
@@ -70,7 +73,7 @@ const OffersAgent = () => {
                   value: "2months",
                   label: "2months",
                 },
-                { value: "3months", label: "3months" },
+                { value: "3months", label: "3 months" },
                 {
                   value: "4 months",
                   label: "4 months",
@@ -89,7 +92,7 @@ const OffersAgent = () => {
                   value: "2months",
                   label: "2months",
                 },
-                { value: "3months", label: "3months" },
+                { value: "3months", label: "3 months" },
                 {
                   value: "4 months",
                   label: "4 months",
@@ -104,7 +107,7 @@ const OffersAgent = () => {
               defaultValue={1}
               formatter={(value) => `${value}%`}
               parser={(value: any) => value!.replace("%", "")}
-              // onChange={(value) => value}
+            // onChange={(value) => value}
             />
           </Form.Item>
           <div className="flex justify-end gap-4">
@@ -177,7 +180,7 @@ const OffersAgent = () => {
           </div>
 
           <Row gutter={[20, 20]}>
-            {offersCardData.map((item:any , index:any) => {
+            {offersCardData.map((item: any, index: any) => {
               return (
                 <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
                   <Card
