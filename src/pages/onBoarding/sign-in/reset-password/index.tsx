@@ -13,7 +13,7 @@ const ResetPassword = () => {
             <SHSLogo />
           </div>
           <div
-            className="border-1 border-solid border-[#D9DBE9] shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg padding-4">
+            className="border-1 border-solid border-[#D9DBE9] card-style p-4">
             <div className="main-title-wrapper">
               <Typography.Title level={2}>Reset Password</Typography.Title>
               <Typography.Title level={3}>

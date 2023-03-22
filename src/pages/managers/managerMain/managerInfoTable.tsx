@@ -1,10 +1,9 @@
 import React from "react";
 import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
-import {GlobalTable} from "../../../components";
-import {Pf} from "../../../assets/images";
+import { GlobalTable } from "../../../components";
+import { Pf } from "../../../assets/images";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
-
 
 const tableData = [
   {
@@ -15,7 +14,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <Pf/>
+        <Pf />
       </div>
     ),
     status: "Approved",
@@ -34,7 +33,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <Pf/>
+        <Pf />
       </div>
     ),
     noOfInterns: "08",
@@ -53,7 +52,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <Pf/>
+        <Pf />
       </div>
     ),
     status: "Rejected",
@@ -74,7 +73,7 @@ const tableData = [
     ),
     img: (
       <div>
-        <Pf/>
+        <Pf />
       </div>
     ),
     status: "Pending",
@@ -101,25 +100,25 @@ const ManagerInfoTable = () => {
       key: "img",
       title: "Avatar",
     },
-  
+
     {
       dataIndex: "name",
       key: "name",
       title: "Name",
     },
-  
+
     {
       dataIndex: "desgination",
       key: "desgination",
       title: "Desgination",
     },
-  
+
     {
       dataIndex: "noOfInterns",
       key: "noOfInterns",
       title: "Assigned Interns",
     },
-  
+
     {
       dataIndex: "status",
       render: (_: any, data: any) => (
@@ -130,11 +129,11 @@ const ManagerInfoTable = () => {
               data.status === "Pending"
                 ? "#FFC15D"
                 : data.status === "Approved"
-                ? "#3DC475"
-                : data.status === "Rejected"
-                ? "#D83A52"
-                : "",
-            padding: " 2px 3px 2px 3px", 
+                  ? "#3DC475"
+                  : data.status === "Rejected"
+                    ? "#D83A52"
+                    : "",
+            padding: " 2px 3px 2px 3px",
           }}
         >
           {data.status}
@@ -143,7 +142,7 @@ const ManagerInfoTable = () => {
       key: "status",
       title: "Status",
     },
-  
+
     {
       render: (_: any, data: any) => (
         <span>
@@ -162,7 +161,7 @@ const ManagerInfoTable = () => {
   );
   return (
     <div className="manager-info-table">
-      <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
+      <div className="card-style p-2">
         <GlobalTable tableData={tableData} columns={columns} />
       </div>
     </div>

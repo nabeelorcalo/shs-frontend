@@ -20,7 +20,7 @@ const ManagerInfo = () => {
                       {item.desgination}
                     </Typography>
                     <div className="border border-solid m-5 rounded-[8px]">
-                      <Typography className="text-sm text-[#A0A3BD] font-normal">
+                      <Typography className="text-sm light-grey-color font-normal">
                         Assigned Interns
                       </Typography>
                       <Typography className="text-sm text-secondary-color font-normal">
@@ -28,11 +28,11 @@ const ManagerInfo = () => {
                       </Typography>
                     </div>
                     <Space>
-                      <Button className=" bg-[#33a5e51a] text-[#33A5E5] text-base font-semibold rounded-[8px]">
+                      <Button className="info-dark-bg-color  text-info-color-dark text-base font-semibold rounded-[8px]">
                         <a href="managerprofile">Profile</a>
                         
                       </Button>
-                      <Button className=" text-[#4A9D77] bg-[#4a9d771a] text-base font-semibold rounded-[8px]">
+                      <Button className="text-green-color reset-bg-color text-base font-semibold rounded-[8px]">
                         Reset
                       </Button>
                     </Space>

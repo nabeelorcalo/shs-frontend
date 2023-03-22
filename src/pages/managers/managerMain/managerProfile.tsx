@@ -112,7 +112,7 @@ const ManagerProfile = () => {
           </div>
         </Col>
         <Col xxl={16} xl={16} lg={14} md={24} sm={24} xs={24}>
-          <div className="pl-4 pr-4 pt-6 pb-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-white rounded-2xl">
+          <div className="pl-4 pr-4 pt-6 pb-6 card-style">
             <Form
               layout="vertical"
               initialValues={{ remember: true }}
@@ -122,18 +122,18 @@ const ManagerProfile = () => {
             >
               <Row gutter={[10, 15]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Typography className="text-xl font-semibold text-[#14142A]">
+                  <Typography className="text-xl font-semibold text-primary-color ">
                     Personal Details
                   </Typography>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="First Name" name="firstName">
-                    <Input placeholder="Enter First Name" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter First Name" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Last Name" name="lastName">
-                    <Input placeholder="Enter Last Name" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Last Name" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -156,7 +156,7 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
-                    <Input placeholder="Enter Email" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Email" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -178,7 +178,7 @@ const ManagerProfile = () => {
               <Divider />
               <Row gutter={[10, 15]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Typography className="text-xl font-semibold text-[#14142A]">
+                  <Typography className="text-xl font-semibold text-primary-color ">
                     GeneralInformation
                   </Typography>
                 </Col>
@@ -202,7 +202,7 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Title" name="title">
-                    <Input placeholder="Enter Title" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Title" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -223,12 +223,12 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Address" name="address">
-                    <Input placeholder="Enter Address" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter Address" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="City" name="City">
-                    <Input placeholder="Enter City" className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base" />
+                    <Input placeholder="Enter City" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -243,12 +243,12 @@ const ManagerProfile = () => {
                 </Col>
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button className="border-1 border-solid border-[#4a9d77] text-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5">
+                <Button className="border-1 border-solid border-[#4a9d77] text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel
                 </Button>
                 <Button
                   htmlType="submit"
-                  className="bg-[#4a9d77] text-white border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+                  className="teriary-bg-color  white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
                 >
                   <a href="managers">Submit</a>
                 </Button>

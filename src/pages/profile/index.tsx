@@ -1,6 +1,5 @@
-import { Col, Divider, Row, Typography } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Col, Row } from "antd";
 import { PageHeader } from "../../components";
 import StudentsTabs from "./students";
 import AddVideo from "./students/addVideo";
@@ -17,7 +16,7 @@ const Profile = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="title-bar">
             <PageHeader title='My Profile' bordered={true} />
-        
+
           </div>
         </Col>
         <Col xxl={6} xl={6} lg={10} md={24} sm={24} xs={24}>
