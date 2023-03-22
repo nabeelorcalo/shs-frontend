@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
-import { SettingTimesheetIcon,} from "../../../../assets/images";
+import { SettingTimesheetIcon, } from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../../components/Model";
@@ -125,9 +125,8 @@ const SettingTimesheet = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

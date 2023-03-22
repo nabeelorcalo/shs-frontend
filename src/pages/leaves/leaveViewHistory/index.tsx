@@ -14,7 +14,7 @@ import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/c
 import constants from "../../../config/constants";
 import dayjs from "dayjs";
 
-const formatDate=(time:any,format:string)=> dayjs(time).format(format)  
+const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const index = () => {
   // const [actionType, setActionType] = useState({ type: '', id: '' });
   // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -34,10 +34,10 @@ const index = () => {
       render: (_: any, data: any) => (
         <div
           className="status_container">
-            {formatDate(data.requestDate,"DD/MM/YYYY")}
+          {formatDate(data.requestDate, "DD/MM/YYYY")}
         </div>
       ),
-      
+
     },
     {
       title: 'Date From',
@@ -46,7 +46,7 @@ const index = () => {
       render: (_: any, data: any) => (
         <div
           className="status_container">
-            {formatDate(data.start,"DD/MM/YYYY")}
+          {formatDate(data.start, "DD/MM/YYYY")}
         </div>
       ),
 
@@ -58,7 +58,7 @@ const index = () => {
       render: (_: any, data: any) => (
         <div
           className="status_container">
-            {formatDate(data.end,"DD/MM/YYYY")}
+          {formatDate(data.end, "DD/MM/YYYY")}
         </div>
       ),
     },
@@ -159,7 +159,7 @@ const index = () => {
         bordered
         title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
       />
-      <Row className=' items-center' gutter={[10,10]}>
+      <Row className=' items-center' gutter={[10, 10]}>
         <Col xs={24} md={12} lg={12}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
             console.log(e);
@@ -253,9 +253,8 @@ const index = () => {
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
           okBtntxt={"Submit"}
-        >
-          <p>Are you sure you want to cancel this request?</p>
-        </Alert>}
+          children={<p>Are you sure you want to delete this?</p>}
+        />}
     </div>
   )
 }

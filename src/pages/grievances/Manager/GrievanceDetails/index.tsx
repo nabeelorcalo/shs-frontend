@@ -124,7 +124,7 @@ const index = () => {
           </BoxWrapper>
         </Col>
         <Col lg={6}>
-        
+
           <BoxWrapper>
             <Text className='text-xl font-medium'>Grievance Information</Text>
             <div className='flex justify-between font-normal py-2'>
@@ -151,18 +151,18 @@ const index = () => {
                 </Space>
               </Dropdown>
             </div>
-           
+
           </BoxWrapper>
-         
+
           <BoxWrapper className='my-2'>
-          <Text className='text-xl font-medium'>Escalated By</Text>
-          <div className='flex items-center flex-col'>
-           <span><GrievancesSidebarAvater/></span> 
-            <Text className='text-xl font-semibold'>Maria Sanoid</Text>
-            <Text className='font-medium text-base'>UI UX Designer</Text>
-            <Text className='text-base font-normal'>Design</Text>
-          </div>
-          <Divider className='mt-2 mb-1' />
+            <Text className='text-xl font-medium'>Escalated By</Text>
+            <div className='flex items-center flex-col'>
+              <span><GrievancesSidebarAvater /></span>
+              <Text className='text-xl font-semibold'>Maria Sanoid</Text>
+              <Text className='font-medium text-base'>UI UX Designer</Text>
+              <Text className='text-base font-normal'>Design</Text>
+            </div>
+            <Divider className='mt-2 mb-1' />
 
           </BoxWrapper>
         </Col>
@@ -176,9 +176,8 @@ const index = () => {
         type="success"
         width={500}
         title=""
-      >
-        <p>Do you want to mark this grievance as mark as resolved</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
 
     </div>
   )
