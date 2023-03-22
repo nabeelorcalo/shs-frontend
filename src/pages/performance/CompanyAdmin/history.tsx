@@ -235,7 +235,7 @@ const PerformanceHistory = () => {
         Janete Samson
       </p>
     </div>,
-    
+
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -458,6 +458,9 @@ const PerformanceHistory = () => {
                     options={timeFrameOptions}
                     setValue={() => timeFrameSelection(event)}
                     value={state.timeFrameVal}
+                    showDatePickerOnVal='Date Range'
+                    requireDatePicker
+                    placement='topLeft'
                   />
                 </div>
 

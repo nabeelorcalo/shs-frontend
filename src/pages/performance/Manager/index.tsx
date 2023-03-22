@@ -178,7 +178,7 @@ const ManagerPerformance = () => {
     'Date Range'
   ];
 
-  const departmentOptions = [
+  const professionOptions = [
     'Design',
     'Business Analyst',
     'Data Scientist',
@@ -211,23 +211,9 @@ const ManagerPerformance = () => {
 
   const [state, setState] = useState({
     openSidebar: false,
-    timeFrameVal: 'Select',
-    departmentVal: 'Select',
-    evaluatedByVal: 'Select',
-    openAprreciationModal: false,
-    openWarnModal: false,
+    timeFrameVal: 'Time Frame',
+    professionVal: 'Status',
   });
-
-  const handleSidebarClick = () => {
-    setState(prevState => ({
-      ...prevState,
-      openSidebar: !state.openSidebar,
-    }));
-  }
-
-  const downloadClick = () => {
-
-  }
 
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
@@ -238,17 +224,17 @@ const ManagerPerformance = () => {
     }));
   }
 
-  const departmentSelection = (event: any) => {
+  const professionSelection = (event: any) => {
     const value = event.target.innerText;
 
     setState(prevState => ({
       ...prevState,
-      departmentVal: value,
+      professionVal: value,
     }));
   }
 
   return (
-    <div className="company-admin-performance-history">
+    <div className="manager-performance-history">
       <PageHeader
         bordered
         title={
@@ -270,19 +256,22 @@ const ManagerPerformance = () => {
           />
         </div>
 
-        <div className="flex justify-center ml-auto hehe">
+        <div className="flex justify-center ml-auto gap-4 manager-dropdowns-container">
           <DropDown
-            name="Time Frame"
+            name="time-frame"
             options={timeFrameOptions}
             setValue={() => timeFrameSelection(event)}
             value={state.timeFrameVal}
+            showDatePickerOnVal='Date Range'
+            requireDatePicker
+            placement='topLeft'
           />
 
-          <IconButton
-            size='large'
-            className='icon-btn'
-            onClick={downloadClick}
-            icon={<DownlaodFileIcon />}
+          <DropDown
+            name="profession"
+            options={professionOptions}
+            setValue={() => professionSelection(event)}
+            value={state.professionVal}
           />
         </div>
       </div>
