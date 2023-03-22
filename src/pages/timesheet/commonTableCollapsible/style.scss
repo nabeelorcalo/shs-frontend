@@ -1,0 +1,15 @@
+@import '../../../scss/_colors.scss';
+
+.history-detail {
+    border: none;
+    box-shadow: $shadow-shade-1 !important;
+
+    .ant-collapse-item {
+        border-bottom: none;
+    }
+
+    .ant-collapse-content {
+        border-top: 1px px solid $text-error-line-color;
+        margin: 0 20px;
+    }
+}

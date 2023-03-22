@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  Divider, Button } from "antd";
+import { Divider, Button } from "antd";
 import { NewTemplate } from "../../../../../assets/images";
 import { Alert, SearchBar } from "../../../../../components";
 import { NavLink } from "react-router-dom";
@@ -21,7 +21,7 @@ let overview = [
   },
 ];
 
-const handleChange = () => {};
+const handleChange = () => { };
 const TemplatesRejectionLetter = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   return (
@@ -34,7 +34,7 @@ const TemplatesRejectionLetter = () => {
           <NavLink to="/settings/template/rejection-letter/new-template">
             <Button
               size="middle"
-              onClick={() => {}}
+              onClick={() => { }}
               className="flex gap-2 setting-add-button white-color teriary-bg-color"
             >
               <NewTemplate /> New Template
@@ -43,7 +43,7 @@ const TemplatesRejectionLetter = () => {
         </div>
       </div>
       <TemplatesCommonCard
-       link="/settings/template/rejection-letter/new-template"
+        link="/settings/template/rejection-letter/new-template"
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}
@@ -56,9 +56,8 @@ const TemplatesRejectionLetter = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this location?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

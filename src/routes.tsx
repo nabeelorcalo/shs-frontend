@@ -126,9 +126,10 @@ const EditPerformance = Loadable(lazy(() => import("./pages/performance/editEval
 const PerformanceDetail = Loadable(lazy(() => import("./pages/performance/detailHistory")));
 const CompanyAdminPerformanceHistory = Loadable(lazy(() => import("./pages/performance/CompanyAdmin/history")));
 const Error = Loadable(lazy(() => import("./pages/errors/404"))); // error page
-const Certificate = Loadable(lazy(() => import("./pages/certificate/index")));
-const CertificateDetail = Loadable( lazy(() => import("./pages/certificate/certificateDetail")));
-const TimeSheetHistory = Loadable(lazy(() => import("./pages/timesheet/companyAdmin/timesheetHistory")));
+const Certificate = Loadable(lazy(() => import('./pages/certificate/index')));
+const CertificateDetail = Loadable(lazy(() => import('./pages/certificate/certificateDetail')));
+const TimeSheetHistory = Loadable(lazy(() => import('./pages/timesheet/companyAdmin/timesheetHistory')));
+const InternTimeSheetHistory = Loadable(lazy(() => import('./pages/timesheet/intern/viewHistory')));
 
 export const publicRoutes = [
   {
@@ -886,6 +887,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`,
+        element: <InternTimeSheetHistory />,
       },
     ],
   },
