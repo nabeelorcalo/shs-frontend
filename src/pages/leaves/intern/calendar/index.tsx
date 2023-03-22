@@ -7,8 +7,10 @@ import CalendarDataDrawer from "./calendarDataDrawer";
 import {LeaveRequest} from "../../../../components";
 import { Form } from "antd";
 import { calendarEventData } from "./calendarMockData";
+import useCustomHook from "../../actionHandler";
 
 const Calendar = () => {
+    const action = useCustomHook();
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
     const [eventData, setEventData] = useState({})
@@ -65,8 +67,7 @@ const Calendar = () => {
                 title="Leave Request"
                 open={isAddModalOpen}
                 setIsAddModalOpen={setIsAddModalOpen}
-                subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
-                changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
+                subMitLeaveBtn={action.submitLeaveRequest}
             />
         </>
     )
