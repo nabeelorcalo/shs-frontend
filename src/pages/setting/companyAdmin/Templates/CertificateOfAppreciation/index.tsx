@@ -24,8 +24,8 @@ let overview = [
 const TemplatesCertificateOfAppreciation = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const handleChange = () => {};
-  
+  const handleChange = () => { };
+
   return (
     <div className="template-contract">
       <div className="header">
@@ -36,16 +36,16 @@ const TemplatesCertificateOfAppreciation = () => {
           <NavLink to="/settings/template/certificate-of-appreciation/new-template">
             <Button
               size="middle"
-              onClick={() => {}}
+              onClick={() => { }}
               className="flex gap-2 setting-add-button white-color teriary-bg-color">
               <NewTemplate />
-               New Template
+              New Template
             </Button>
           </NavLink>
         </div>
       </div>
       <TemplatesCommonCard
-       link="/settings/template/certificate-of-appreciation/new-template"
+        link="/settings/template/certificate-of-appreciation/new-template"
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}
@@ -58,9 +58,8 @@ const TemplatesCertificateOfAppreciation = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

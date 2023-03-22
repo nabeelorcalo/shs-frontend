@@ -1,5 +1,5 @@
-import AssessmentCard from '../../components/AccommodationCard/AccommodationCard';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import AssessmentCard from '../../components/AssessmentCard/AssessmentCard';
 
 export default {
     title: 'Components/AssessmentCard/AssessmentCard',

@@ -3,7 +3,8 @@ import { ArrowDownDark, UserAvatar } from "../../../assets/images";
 import { DropDown, SearchBar } from "../../../components"
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 
-const CommonHeader = () => {
+const CommonHeader = (props: any) => {
+  const { hideUser } = props;
   const [dateRange, setDateRange] = useState('');
   const [download, setDownload] = useState('');
   const [user, setUser] = useState({ userImg: UserAvatar, userName: 'amelia clark' });
@@ -19,7 +20,7 @@ const CommonHeader = () => {
     <div className="common-header flex justify-between flex-wrap gap-3 mb-[30px]">
       <SearchBar handleChange={() => { }} />
       <div className="flex items-center gap-3 flex-wrap">
-        <DropDownNew placement={'bottomRight'} items={[
+        {!hideUser && <DropDownNew placement={'bottomRight'} items={[
           {
             label: <SearchBar handleChange={() => { }} />, key: 'search'
           },
@@ -41,7 +42,7 @@ const CommonHeader = () => {
             </div>
             <ArrowDownDark />
           </div>
-        </DropDownNew>
+        </DropDownNew>}
         <DropDown name="This Week"
           options={['this week', 'last week', 'this month', 'last month', 'date range']}
           requireDatePicker showDatePickerOnVal="date range"

@@ -5,8 +5,6 @@ import { ArrowDownDark, CalendarIcon } from '../../../assets/images';
 import { DatePickerInterface } from './Calendar_interface';
 import './common-date-picker.scss';
 
-
-
 export const CommonDatePicker = (props: DatePickerInterface) => {
     const {
         name = 'This Month',

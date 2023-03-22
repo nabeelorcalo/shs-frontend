@@ -1,7 +1,7 @@
 import React from "react";
 import { Tree, TreeNode } from "react-organizational-chart";
 import _ from "lodash";
-import Organization from "./organization";
+import Organization from "./Organization";
 import "./style.scss";
 
 function Node({ o, parent }: any) {

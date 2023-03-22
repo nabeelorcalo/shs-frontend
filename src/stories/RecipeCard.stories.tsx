@@ -2,7 +2,7 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { RecipeCard } from "../components/RecipeCard";
 import icon from "../assets/images/RecipeCard/recipeCard.png";
 import { Button } from "../components";
-const arraydata = [
+const arraydata: any = [
   {
     image: icon,
     title: "Sticky Orange Chicken",
@@ -53,11 +53,11 @@ const Template: ComponentStory<typeof RecipeCard> = (args) => (
 
 export const Primary = Template.bind({});
 Primary.args = {
-  arraydata: arraydata,
-  onClick: () => console.log("ok"),
+  // arraydata: arraydata,
+  // onClick: () => console.log("ok"),
 };
 export const Secondary = Template.bind({});
 Secondary.args = {
-  arraydata: arraydata1,
-  onClick: () => console.log("ok"),
+  // arraydata: arraydata1,
+  // onClick: () => console.log("ok"),
 };

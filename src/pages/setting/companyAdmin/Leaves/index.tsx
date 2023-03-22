@@ -72,13 +72,13 @@ const SettingLeave = () => {
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
           <NavLink to="/settings/leaves/add-policy">
-          <Button
-            size="middle"
-            onClick={() => {}}
-            className="flex gap-2 setting-add-button white-color teriary-bg-color"
-          >
-            <SettingLeaves /> Add Policy
-          </Button>
+            <Button
+              size="middle"
+              onClick={() => { }}
+              className="flex gap-2 setting-add-button white-color teriary-bg-color"
+            >
+              <SettingLeaves /> Add Policy
+            </Button>
           </NavLink>
         </div>
       </div>
@@ -89,10 +89,10 @@ const SettingLeave = () => {
               <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
-                     link={"/settings/leaves/add-policy"}
+                    link={"/settings/leaves/add-policy"}
                     showDeleteModal={showDeleteModal}
                     setShowDeleteModal={setShowDeleteModal}
-                    // setShowEditModal={setShowEditModal}
+                  // setShowEditModal={setShowEditModal}
                   />
                 </div>
                 <div className="flex ">
@@ -114,9 +114,8 @@ const SettingLeave = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };
