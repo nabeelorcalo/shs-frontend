@@ -110,5 +110,5 @@ interface DataType {
       leaveType: 'medical',
       description: "medical leave",
       Actions: "",
-    }
+    }, 
   ];

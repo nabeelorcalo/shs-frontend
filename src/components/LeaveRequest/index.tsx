@@ -30,7 +30,6 @@ const props: UploadProps = {
     // console.log('Dropped files', e.dataTransfer.files);
   },
 };
-
 // Leave Request Form Select Oprion Array
 const leavRequestOptionDAta = [
   { value: '1', label: 'Sick' },
@@ -58,7 +57,7 @@ export const LeaveRequest = (props: any) => {
 
   }
   
-  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
+  const { title, open, setIsAddModalOpen, subMitLeaveBtn, data } = props;
   // console.log(openModal);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
@@ -68,7 +67,8 @@ export const LeaveRequest = (props: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
   // }
-  console.log(formVal, 'from modal box');
+  const [requestLeave, setRequestLeave] = useState('');
+  console.log(requestLeave, 'from modal box');
 
   return (
     <Modal
@@ -80,6 +80,7 @@ export const LeaveRequest = (props: any) => {
       maskClosable={true}
       closeIcon={<CloseCircleFilled className=' text-xl text-[#A3AED0]' />}
       footer={false}
+      centered
     >
       <Form
         layout='vertical'
@@ -102,7 +103,7 @@ export const LeaveRequest = (props: any) => {
         <Form.Item
           name="radio"
         >
-          <Radio.Group onChange={changeLeaveTyp}>
+          <Radio.Group onChange={(e:any) => setRequestLeave(e.target.value)} defaultValue= "FullDay">
             <Radio value="FullDay">Full Day</Radio>
             <Radio value="HalfDay">Half Day</Radio>
           </Radio.Group>
@@ -139,9 +140,8 @@ export const LeaveRequest = (props: any) => {
               />
             </Form.Item>
           </Col>
-
         </Row>
-        {
+        {requestLeave === "HalfDay" && 
           <Row gutter={[10, 10]}>
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>

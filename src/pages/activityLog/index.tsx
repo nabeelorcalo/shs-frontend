@@ -3,11 +3,7 @@ import "./style.scss";
 import SystemAdmin from "./systemAdmin";
 
 const ActivityLog = () => {
-  return (
-    <div>
-      <SystemAdmin />
-    </div>
-  );
+  return <SystemAdmin />;
 };
 
 export default ActivityLog;

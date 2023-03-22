@@ -1,157 +1,25 @@
 
 import { useState } from "react";
-import { Col, Divider, Dropdown, Row, Space } from "antd";
+import { Col, Divider, Row } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "./style.scss"
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import { GlobalTable } from "../../../components"
-import { CalendarWhiteIcon, MoreIcon } from "../../../assets/images";
+import { CalendarWhiteIcon } from "../../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
 import DrawerComp from "../../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 import constants from "../../../config/constants";
-import dayjs from "dayjs";
+import useCustomHook from "../actionHandler";
+import LeaveHistoryTable from "./leaveHistoryTable";
 
-const formatDate = (time: any, format: string) => dayjs(time).format(format)
+
 const index = () => {
-  // const [actionType, setActionType] = useState({ type: '', id: '' });
-  // const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const action = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
-  const columns = [
-    {
-      title: 'No',
-      dataIndex: 'key',
-      key: 'key',
-    },
-    {
-      title: 'Request Date',
-      dataIndex: 'requestDate',
-      key: 'requestDate',
-      render: (_: any, data: any) => (
-        <div
-          className="status_container">
-          {formatDate(data.requestDate, "DD/MM/YYYY")}
-        </div>
-      ),
-
-    },
-    {
-      title: 'Date From',
-      dataIndex: 'start',
-      key: 'start',
-      render: (_: any, data: any) => (
-        <div
-          className="status_container">
-          {formatDate(data.start, "DD/MM/YYYY")}
-        </div>
-      ),
-
-    },
-    {
-      title: 'Date  To',
-      dataIndex: "end",
-      key: 'end',
-      render: (_: any, data: any) => (
-        <div
-          className="status_container">
-          {formatDate(data.end, "DD/MM/YYYY")}
-        </div>
-      ),
-    },
-    {
-      title: 'Leave Type',
-      width: 180,
-      dataIndex: 'leaveType',
-      render: (_: any, data: any) => (
-        <div
-          className="status_container px-[10px] py-[3px] relative text-left ">
-          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg " style={{
-            backgroundColor: data.leaveType === "sick" ?
-              "#4CA4FD" : data.leaveType === "casual" ?
-                "#FFC15D" : data.leaveType === "work from home" ? "#E96F7C" : "#6AAD8E",
-            color: "#fff"
-          }}></span>
-          {data.leaveType}
-        </div>
-      ),
-
-      key: 'leaveType',
-    },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      width: 80,
-      render: (_: any, data: any) => (
-        <div
-          className="status_container px-[10px] py-[3px] rounded-lg "
-          style={{
-            backgroundColor: data.status === "Pending" ?
-              "#FFC15E" : data.status === "Declined" ?
-                "#D83A52" : "#4ED185",
-            color: "#fff",
-            textAlign: "center",
-          }}>
-          {data.status}
-        </div>
-      ),
-      key: 'status',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <Dropdown
-            // open={visibale}
-            dropdownRender={() => {
-              return <BoxWrapper className=" action_dropDown">
-                <p onClick={() => {
-                  setOpenDrawer({ open: true, type: 'viewDetail' })
-
-                }}
-                  className="cursor-pointer"
-                >View Details</p>
-                {data.status === "Pending" &&
-                  <>
-                    <p onClick={() => {
-                      setOpenModal({ open: true, type: 'edit' })
-
-                    }}
-                      className="my-4 cursor-pointer">
-                      Edit
-                    </p>
-                    <p onClick={() => {
-                      setOpenModal({ open: true, type: 'cancel' });
-                    }}
-                      className="cursor-pointer">
-                      Cancel
-                    </p>
-                  </>
-                }
-              </BoxWrapper>
-            }}
-            trigger={['click']}
-            overlayClassName='menus_dropdown_main'
-            placement="bottomRight"
-          // onOpenChange={setVisibale}
-          >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-          </Dropdown >
-        </Space >
-      ),
-    },
-  ];
-
-  // console.log(selectedRow);
   return (
     <div className="main_view_detail">
       <PageHeader
@@ -180,8 +48,7 @@ const index = () => {
                   'excel'
                 ]}
                 requiredDownloadIcon
-                setValue={() => { }}
-                value=""
+                setValue={action.handleDownloadPdfExcel}
               />
             </div>
             {constants.USER_ROLE === 'Intern' && <Button
@@ -196,9 +63,8 @@ const index = () => {
         <Divider />
       </Row>
       <BoxWrapper>
-        <GlobalTable columns={columns} tableData={data} pagination={true} />
+        <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow} id="LeaveHistoryTable" />
       </BoxWrapper>
-
       {openDrawer.open && <DrawerComp
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
@@ -236,19 +102,18 @@ const index = () => {
           }
         </div>
       </DrawerComp>}
-
       {openModal.open && openModal.type !== 'cancel' &&
         <LeaveRequest
           title="Leave Request"
           open={openModal.open}
           data={selectedRow}
           setIsAddModalOpen={setOpenModal}
-          subMitLeaveBtn={() => (alert("Submit Leave Function goes here"))}
+          subMitLeaveBtn={action.submitLeaveRequest}
           changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-          type='warning'
+        alertType='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
@@ -258,5 +123,4 @@ const index = () => {
     </div>
   )
 }
-
 export default index
