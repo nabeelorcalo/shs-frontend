@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style.scss";
-import SystemAdmin from "./SystemAdmin";
+import SystemAdmin from "./systemAdmin";
 
 const ActivityLog = () => {
   return <SystemAdmin />;
