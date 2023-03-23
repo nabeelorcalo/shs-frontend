@@ -5,7 +5,8 @@ import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
-  TopPerformanceList
+  TopPerformanceList,
+  MonthChanger
 } from "../../../components";
 import data from './data';
 import '../style.scss';
@@ -165,15 +166,18 @@ const CompanyAdminPerformance = () => {
               data={data}
               XField="department"
               columnWidthRatio={0.5}
-              isMonthNavigationPresent={true}
-              month='Jan'
-              changeMonth={() => console.log("Month Changed")}
+              children={
+                <MonthChanger
+                  month='Jan'
+                  onClick={() => console.log("Month Changed")}
+                />
+              }
             />
           </div>
         </div>
 
         <div className="performance-right-subcontainer ">
-          <TopPerformanceList 
+          <TopPerformanceList
             heading="Top Performers"
             data={state.topPerformanceList}
             action={true}
