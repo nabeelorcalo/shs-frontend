@@ -389,5 +389,12 @@ export { ReactComponent as DownlaodFileIcon } from "./Common/DownlaodFileIcon.sv
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";
 export { default as Offerimg3 } from "./offers/offerImg3.svg";
+
 // Listings Icons
 export { ReactComponent as IconAddListings } from "./listings/icon-add-listings.svg";
+
+// Attendance Icons
+export { ReactComponent as Absent } from "./Attendance/Absent.svg";
+export { ReactComponent as AbsentIntern } from "./Attendance/AbsentInterns.svg";
+export { ReactComponent as PeopleIcon } from "./Attendance/PeopleIcon.svg";
+export { ReactComponent as PresentInterns } from "./Attendance/PresentInterns.svg";
