@@ -2,7 +2,7 @@ import { Button, Divider, Modal, Switch, Typography } from 'antd';
 import {  Col, Form, Input, Row } from 'antd'
 import React from 'react'
 import '../Tabs.scss';
-import upload from '../../../../../assets/images/profile/student/upload.svg';
+import upload from '../../../../../assets/images/profile/student/Upload.svg';
 import { cardArr } from './cardMock';
 import {useState} from 'react';
 import { CloseCircleFilled } from '@ant-design/icons';

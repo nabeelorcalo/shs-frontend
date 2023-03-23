@@ -398,3 +398,5 @@ export { ReactComponent as Absent } from "./Attendance/Absent.svg";
 export { ReactComponent as AbsentIntern } from "./Attendance/AbsentInterns.svg";
 export { ReactComponent as PeopleIcon } from "./Attendance/PeopleIcon.svg";
 export { ReactComponent as PresentInterns } from "./Attendance/PresentInterns.svg";
+export { ReactComponent as ClockInImg } from "./Attendance/ClockInIcon.svg";
+export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.svg";
