@@ -154,7 +154,7 @@ export { ReactComponent as EducationWhiteSub } from "../images/digivault/manageV
 export { ReactComponent as HealthWhiteSub } from "../images/digivault/manageVault/white/healthSubWhite.svg";
 export { ReactComponent as TransWhiteSub } from "../images/digivault/manageVault/white/transWhite.svg";
 export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
-export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { default as Video } from "../images/ColorfullIconsProgressbar/video.svg";
 export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
 //export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";

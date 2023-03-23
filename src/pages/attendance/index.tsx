@@ -1,28 +1,25 @@
-import { Button } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import useThemeHook from '../../theme';
+import { Button } from "antd";
+import CompanyAdminPerformance from "../attendance/CompanyAdmin";
+import constants from "../../config/constants";
 import "./style.scss";
 
 const Attendance = () => {
-  const action = useThemeHook();
-  const primaryColor = {colorPrimary: "green", colorPrimaryHover: "green"};
-  const secondaryColor = {colorPrimary: "green", colorPrimaryHover: "green"};
-
+  const renderPage = () => {
+    switch (constants.USER_ROLE) {
+      case 'CompanyAdmin':
+        return <CompanyAdminPerformance />;
+      case 'Intern':
+        // return <CompanyAdmin />;
+      case 'Manager':
+        // return <ManagerPerformance />;
+      default:
+        return <></>;
+    }
+  }
+  
   return (
-    <>
-      <Button type="primary" className="" onClick={() => action.updateTheme(primaryColor)}>
-        Primary Button
-      </Button>
-
-      <Button className="" type="default" onClick={() => action.updateTheme(primaryColor)}>
-        Default Button
-      </Button>
-
-      <Button className="secondary-color-btn" type="default" onClick={() => action.updateTheme(primaryColor)}>
-        Secondary Button
-      </Button>
-    </>
+    renderPage()
   )
 }
 
