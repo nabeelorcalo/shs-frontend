@@ -1,10 +1,13 @@
 import "./style.scss";
 import Student from "./student";
+import CompanyAdmin from "./CompanyAdmin";
+
 
 const Contracts = () => {
   return (
     <div>
-      <Student />
+      {/* <Student /> */}
+      <CompanyAdmin/>
     </div>
   );
 };

@@ -288,6 +288,10 @@ export { default as WishesBox } from "./dashboard/wishesBox.gif";
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg";
 export { default as Signed } from "../images/ColorfullIconsProgressbar/assigned.svg";
+export { ReactComponent as SignedImg } from "../images/contract/signedImg.svg";
+export { ReactComponent as RejectedImg } from "../images/contract/rejectedImg.svg";
+export { ReactComponent as PendingImg } from "../images/contract/pendingimg.svg";
+export { ReactComponent as NewImg } from "../images/contract/newImg.svg";
 
 //Chat
 export { default as Filter } from "../images/chat/Filter.svg";
