@@ -1,31 +1,53 @@
 import React from 'react';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
+import { DatePicker } from 'antd';
 
 interface MonthChangerProps {
-  month: string,
-  onClick?: () => void
+  month: any,
+  hasDatePicker?: boolean,
+  datePickerClassName?: string,
+  datePickerDefaultVal?: any,
+  onClick?: () => void,
 }
 
 export const MonthChanger: any = (props: MonthChangerProps) => {
-  const {month, onClick} = props;
+  const {
+    month,
+    onClick,
+    hasDatePicker = false,
+    datePickerDefaultVal,
+    datePickerClassName
+  } = props;
 
   return (
-    <div className='flex items-center ml-auto mb-4'>
-      <p className='mx-2'>{month}</p>
-      <IconButton
-        name="prev"
-        className="icon-btn left-radius"
-        icon={<ArrowToLeft />}
-        onClick={onClick}
-      />
+    <div className='flex items-center ml-auto mb-4 month-changer'>
+      {
+        hasDatePicker &&
+        <DatePicker
+          placeholder=""
+          bordered={false}
+          className={datePickerClassName}
+        />
+      }
 
-      <IconButton
-        name="next"
-        className="icon-btn right-radius"
-        icon={<ArrowToRight1 />}
-        onClick={onClick}
-      />
+      <p className='min-w-fit mx-2'>{month}</p>
+
+      <div className='flex flex-row'>
+        <IconButton
+          name="prev"
+          className="icon-btn left-radius"
+          icon={<ArrowToLeft />}
+          onClick={onClick}
+        />
+
+        <IconButton
+          name="next"
+          className="icon-btn right-radius"
+          icon={<ArrowToRight1 />}
+          onClick={onClick}
+        />
+      </div>
     </div>
   )
 }

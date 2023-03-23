@@ -179,15 +179,6 @@ const CompanyAdminAttendance = () => {
             title="Attendance Overview"
             graphName="attendance"
             level={4}
-          // action={true}
-          // childrens={
-          //   <DropDown
-          //     name="Select"
-          //     options={months}
-          //     setValue={() => onMonthChange(event)}
-          //     value={state.graphSelectedMonth}
-          //   />
-          // }
           />
 
           <MonthlyPerfomanceChart

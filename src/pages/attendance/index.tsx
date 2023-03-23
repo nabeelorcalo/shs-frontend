@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "antd";
 import CompanyAdminPerformance from "../attendance/CompanyAdmin";
 import constants from "../../config/constants";
 import "./style.scss";
@@ -23,4 +22,4 @@ const Attendance = () => {
   )
 }
 
-export default Attendance
+export default Attendance;

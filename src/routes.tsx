@@ -43,6 +43,7 @@ const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
 const Attendance = Loadable(lazy(() => import("./pages/attendance")));
+const AttendanceDetail = Loadable(lazy(() => import("./pages/attendance/detailPage")));
 const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const Documents = Loadable(lazy(() => import("./pages/documents")));
@@ -648,6 +649,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`,
+        element: <AttendanceDetail />,
       },
       {
         key: `${ROUTES_CONSTANTS.LEAVES}`,
