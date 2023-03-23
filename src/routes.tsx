@@ -34,6 +34,7 @@ import ActivityData from './pages/propertyAgent/propertDahboard/Dashboard/activi
 import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
+import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
 // Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -319,6 +320,11 @@ export const publicRoutes = [
     key: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
     path: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
     element: <VerificationSteps />,
+  },
+  {
+    key: `company-admin-verification`,
+    path: `company-admin-verification`,
+    element: <CompanyAdminVerification />,
   },
 ];
 
