@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react'
 import { InfoCircleFilled } from '@ant-design/icons';
 import { Col, Row, Tooltip, Typography } from 'antd'
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper';
-import GraphThree from '../../../../components/Graph/graphForRegisterAgentsAndRewards'
+import {RegisterAgentsAndRewardGraph} from '../../../../components';
 import constants from '../../../../config/constants';
 import { cardDelegate } from './dalegateMock';
 
@@ -59,12 +59,12 @@ const Dashboard = () => {
       <Row gutter={[10,10]} className='mt-2'>
         <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
         <BoxWrapper >
-        <GraphThree graphName={constants.REGISTER_AGENTS} />
+        <RegisterAgentsAndRewardGraph graphName={constants.REGISTER_AGENTS} />
       </BoxWrapper>
         </Col>
         <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
         <BoxWrapper >
-        <GraphThree graphName={constants.REWARDS} />
+        <RegisterAgentsAndRewardGraph graphName={constants.REWARDS} />
       </BoxWrapper>
         </Col>
       </Row>
