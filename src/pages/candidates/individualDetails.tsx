@@ -133,7 +133,7 @@ const IndividualDetails = () => {
       <div className="intro">
         <p className='heading mt-8'>Intro</p>
         <div className="image mt-[10px] relative">
-          <PlayIcon className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]' />
+          <PlayIcon />
           <Intro />
         </div>
       </div>

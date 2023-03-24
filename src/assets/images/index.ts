@@ -56,9 +56,11 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
-export { default as Round } from "./login/round.svg";
-export { default as DocumentUpload } from "./login/document-upload.svg";
-// Footer Icons
+export { ReactComponent as Round } from "./login/round.svg";
+export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
+export { ReactComponent as UploadUserProfile } from "./login/uploadUserImage.svg";
+
+// Footer IconsIcons
 export { ReactComponent as IconFacebook } from "./footer/icon-social-facebook.svg";
 export { ReactComponent as IconTwitter } from "./footer/icon-social-twitter.svg";
 export { ReactComponent as IconInstagram } from "./footer/icon-social-instagram.svg";
@@ -154,7 +156,7 @@ export { ReactComponent as EducationWhiteSub } from "../images/digivault/manageV
 export { ReactComponent as HealthWhiteSub } from "../images/digivault/manageVault/white/healthSubWhite.svg";
 export { ReactComponent as TransWhiteSub } from "../images/digivault/manageVault/white/transWhite.svg";
 export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
-export { default as Video } from "../images/ColorfullIconsProgressbar/Video.svg";
+export { default as Video } from "../images/ColorfullIconsProgressbar/video.svg";
 export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
 //export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
@@ -282,6 +284,22 @@ export { ReactComponent as PurpleRectangle } from "./dashboard/purpleRectangle.s
 export { ReactComponent as PinkRectangle } from "./dashboard/pinkRectangle.svg";
 export { ReactComponent as YellowRectangle } from "./dashboard/yellowRectangle.svg";
 export { ReactComponent as BlueRectangle } from "./dashboard/blueRectangle.svg";
+
+//Company Admin  Managers
+export { ReactComponent as IconPhone } from "../images/profile/student/Phone.svg";
+export { ReactComponent as IconEmail } from "../images/profile/student/email.svg";
+export { ReactComponent as IconLocation } from "../images/profile/student/location.svg";
+export { ReactComponent as Pf } from "../images/profile/university/pf.svg";
+export { ReactComponent as User } from "../images/profile/university/Managers.svg";
+export { ReactComponent as Person } from "../images/profile/university/small.svg";
+export { ReactComponent as UniLogo } from "../images/profile/university/360.svg";
+export { ReactComponent as Check } from "../images/profile/delegateagent/check.svg";
+export { ReactComponent as Bank } from "../images/profile/delegateagent/bankh.svg";
+export { ReactComponent as Edit } from "../images/profile/delegateagent/Edit.svg";
+
+//System Admin Delegate Dashboard
+
+export { ReactComponent as People } from "../images/profile/propertyagent/people.svg";
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
 
 // contract
@@ -339,7 +357,6 @@ export { ReactComponent as UalIcon } from "./ualIcon.svg";
 export { ReactComponent as PassportIcon } from "./passportIcon.svg";
 export { ReactComponent as BrpIcon } from "./brpIcon.svg";
 export { ReactComponent as PoaIcon } from "./poaIcon.svg";
-
 export { ReactComponent as PersnolIcon } from "./persnolIcon.svg";
 export { ReactComponent as DocumentsIcon } from "./documentsIcon.svg";
 export { ReactComponent as HiringIcon } from "./hiringIcon.svg";
@@ -405,3 +422,11 @@ export {ReactComponent as DocTabsIcon} from "./offers/DocumentsTabs.svg";
 export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
 // Listings Icons
 export { ReactComponent as IconAddListings } from "./listings/icon-add-listings.svg";
+
+// Attendance Icons
+export { ReactComponent as Absent } from "./Attendance/Absent.svg";
+export { ReactComponent as AbsentIntern } from "./Attendance/AbsentInterns.svg";
+export { ReactComponent as PeopleIcon } from "./Attendance/PeopleIcon.svg";
+export { ReactComponent as PresentInterns } from "./Attendance/PresentInterns.svg";
+export { ReactComponent as ClockInImg } from "./Attendance/ClockInIcon.svg";
+export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.svg";

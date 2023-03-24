@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   AutoComplete,
     Button,
@@ -5,15 +6,14 @@ import {
     Divider,
     Form,
     Input,
-    Radio,
     Row,
     Select,
+    Space,
     Typography,
   } from "antd";
 import { Option } from "antd/es/mentions";
-import React, { useState } from 'react'
 import { CommonDatePicker, DropDown } from "../../../../../components";
-import '../Tabs.scss';
+import '../../../style.scss';
 
 const GeneralInformation = () => {
     const [value, setValue] = useState('');
@@ -55,7 +55,7 @@ const GeneralInformation = () => {
               ]}
             >
                <DropDown
-                        name='drop down with search bar'
+                        name='Select'
                         value={value}
                         options={['search', 'item 1']}
                         setValue={setValue}
@@ -74,7 +74,7 @@ const GeneralInformation = () => {
               ]}
             >
                <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -89,7 +89,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your email!" },
               ]}
             >
-              <Input className="input-style" />
+              <Input placeholder='Enter Email' className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -101,7 +101,7 @@ const GeneralInformation = () => {
               ]}
             >
               <DropDown
-                        name='drop down with search bar'
+                        name='Select'
                         value={value}
                         options={['search', 'item 1']}
                         setValue={setValue}
@@ -119,7 +119,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Address!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Address' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -130,7 +130,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter City' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -142,7 +142,7 @@ const GeneralInformation = () => {
               ]}
             >
               <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -157,7 +157,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your University Contact Name!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Contact Number' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -190,7 +190,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Graduate Year!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Graduation Year' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -224,7 +224,7 @@ const GeneralInformation = () => {
               ]}
             >
                <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -240,7 +240,7 @@ const GeneralInformation = () => {
               ]}
             >
               <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -255,7 +255,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Company Name!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Company Name' className="input-style"/>
             </Form.Item>
           </Col>
         </Row>
@@ -272,7 +272,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Name' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -306,7 +306,7 @@ const GeneralInformation = () => {
               ]}
             >
               <DropDown
-                 name='simple drop down'
+                 name='Select'
                  value={value}
                  options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
@@ -322,7 +322,7 @@ const GeneralInformation = () => {
               ]}
             >
            <DropDown
-                        name='drop down with search bar'
+                        name='Select'
                         value={value}
                         options={['search', 'item 1','item 2']}
                         setValue={setValue}
@@ -340,7 +340,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Address!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Address' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -351,7 +351,7 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter City' className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
@@ -362,14 +362,25 @@ const GeneralInformation = () => {
                 { required: true, message: "Please input your Country!" },
               ]}
             >
-              <Input className="input-style"/>
+              <Input placeholder='Enter Country' className="input-style"/>
             </Form.Item>
           </Col>
               </Row>
               <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
+              <div className="flex justify-center sm:justify-end">
+          <Space>
+            <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+              Cancel
+            </Button>
+              <Button
+               
+               className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              htmlType="submit"
+            >
+              Submit
+            </Button>
+          </Space>
+        </div>
         </Form.Item>
       </Form>
     </div>

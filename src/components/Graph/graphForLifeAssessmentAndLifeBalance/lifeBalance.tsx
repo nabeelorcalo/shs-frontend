@@ -12,7 +12,7 @@ import {
   SocialLifeIcon
 } from "../../../assets/images";
 
-const Graph = ({ monthName }: any) => {
+export const LifeBalanceGraph = ({ monthName }: any) => {
   const assessmentsName = [
     { name: "Finance", color: "#D36DF6", secondaryColor: '#D36DF61A' },
     { name: "Relationship", color: "#6986BF", secondaryColor: '#6986BF1A' },
@@ -166,4 +166,3 @@ const Graph = ({ monthName }: any) => {
     style={{ height: '600px' }}
   />;
 }
-export default Graph;

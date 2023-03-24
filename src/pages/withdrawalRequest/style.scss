@@ -1,0 +1,37 @@
+@import "../../scss/colors";
+
+.with-drawal-details {
+  .card-style {
+    background: $white-bg-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 16px;
+    padding: 10px;
+  }
+  .details {
+    background: #e6f4f9;
+    border-radius: 8px 8px 0px 0px;
+    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+  }
+}
+.link-account{
+    .card-style {
+        background: $white-bg-color;
+        box-shadow: $accommodation-card-shadow;
+        border-radius: 16px;
+        padding: 10px;
+      } 
+      .details {
+        background: #e6f4f9;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+      }
+}

@@ -31,7 +31,7 @@ const ListingDetails = () => {
           </div>
         </Col>
         <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-          <div className="border-solid border-1 ">
+          <div className=" rounded-lg ">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7050661.956303704!2d69.34807160000001!3d30.3593034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1678279846720!5m2!1sen!2s"
               // width="365"

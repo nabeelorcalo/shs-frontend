@@ -1,16 +1,23 @@
 import React from "react";
-import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
+import { Button, Col, Form, Input, Row, Select, Space, Typography } from "antd";
 import { CommonDatePicker } from "../../../../components";
-
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
-const { Option } = Select;
+import "../../styles.scss";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
+  const navigate = useNavigate(); 
+  const onFinish = (values: any) => {
+    console.log("Received values of form: ", values);
+    // navigate('/verification-steps');
+    navigate('/company-admin-verification');
+  };
+
+  const { Option } = Select;
+
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
+      <Select style={{ width: 100 }}>
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
@@ -22,7 +29,8 @@ const SignupForm = () => {
         layout="vertical"
         name="normal_login"
         className="login-form"
-        initialValues={{ remember: true }}
+        initialValues={{ remember: false }}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
       >
         <Row gutter={20}>
@@ -30,9 +38,7 @@ const SignupForm = () => {
             <Form.Item
               label="First Name"
               name="firstName"
-              rules={[
-                { required: true, message: "Please input your First Name!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="First Name" className="input-style" />
             </Form.Item>
@@ -41,9 +47,7 @@ const SignupForm = () => {
             <Form.Item
               label="Last Name"
               name="lastName"
-              rules={[
-                { required: true, message: "Please input your Last Name!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Last Name" className="input-style" />
             </Form.Item>
@@ -53,7 +57,7 @@ const SignupForm = () => {
         <Form.Item
           label="Email"
           name="Email"
-          rules={[{ required: true, message: "Please input your Email!" }]}
+          rules={[{ required: true }, { type: "email" }]}
         >
           <Input placeholder="Email" className="input-style" />
         </Form.Item>
@@ -61,13 +65,8 @@ const SignupForm = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item
               label="Reference Number (optional)"
-              name="firstName"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Reference Number (optional)!",
-                },
-              ]}
+              name="refrenceNumber"
+              rules={[{ required: true }, { type: "string" }]}
               style={{ width: "100%" }}
             >
               <Input
@@ -80,9 +79,7 @@ const SignupForm = () => {
             <Form.Item
               label="Date of Birth"
               name="dob"
-              rules={[
-                { required: true, message: "Please input your Date of Birth!" },
-              ]}
+              rules={[{ required: false }, { type: "date" }]}
             >
               <CommonDatePicker />
             </Form.Item>
@@ -91,9 +88,7 @@ const SignupForm = () => {
         <Form.Item
           name="phone"
           label="Phone Number"
-          rules={[
-            { required: true, message: "Please input your phone number!" },
-          ]}
+          // rules={[{ required: false }, { type: "number" }]}
         >
           <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
         </Form.Item>
@@ -102,9 +97,7 @@ const SignupForm = () => {
             <Form.Item
               label="Password"
               name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              rules={[{ required: true }, { min: 8 }]}
             >
               <Input.Password
                 type="password"
@@ -117,12 +110,7 @@ const SignupForm = () => {
             <Form.Item
               label="Conifirm Password"
               name="confirmpassword"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Confirm password!",
-                },
-              ]}
+              rules={[{ required: true }, { min: 8 }]}
             >
               <Input.Password
                 type="confirmpassword"
@@ -136,7 +124,7 @@ const SignupForm = () => {
         <Form.Item>
           <Button
             type="primary"
-            // htmlType="submit"
+            htmlType="submit"
             className="login-form-button"
           >
             Sign Up

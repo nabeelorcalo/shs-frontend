@@ -3,8 +3,9 @@ import { Line } from '@ant-design/plots';
 import growthAnalyticsData from './data';
 import '../style.scss';
 
-const Graph = ({ graphName }: any) => {
+export const GrowthAnalyticsGraph = ({ graphName }: any) => {
   const data = growthAnalyticsData;
+  
   const attributeColors: any = {
     "Interns": "#363565",
     "Universities": "#E94E5D",
@@ -64,5 +65,3 @@ const Graph = ({ graphName }: any) => {
 
   return <Line {...config} />;
 };
-
-export default Graph;

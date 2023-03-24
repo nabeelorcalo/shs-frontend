@@ -1,8 +1,7 @@
-import { Col, Row, Typography } from "antd";
 import React from "react";
+import { Col, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../assets/images";
 import fly from "../../../../assets/images/login/fly.png";
-
 import "../../styles.scss";
 
 const VerificationLink = () => {
@@ -33,7 +32,7 @@ const VerificationLink = () => {
             <div>
               <Typography className="text-center mt-2 mb-2">
                 Back to &nbsp;
-                <a href="" className="a-tag-signup">
+                <a href="/login" className="a-tag-signup">
                   Login
                 </a>
               </Typography>
