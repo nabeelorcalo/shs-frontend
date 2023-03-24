@@ -1,12 +1,12 @@
 @import '../../scss/_colors.scss';
 
-.attendance-detail-container{
+.attendance-detail-container {
   .shs-page-header {
     padding-bottom: 0;
     display: flex;
     align-items: flex-start;
   }
-  
+
   .icon-btn {
     display: flex;
     align-items: center;
@@ -23,6 +23,16 @@
     width: 28px;
   }
 
+  .download-btn {
+    border: none;
+    margin: auto;
+    width: 48px;
+    padding: 12px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: $text-input-bg-color;
+  }
+
   .left-radius {
     border-radius: 4px 0 0 4px;
   }
@@ -31,14 +41,69 @@
     border-radius: 0 4px 4px 0;
   }
 
-  .ant-picker-input input{
+  .ant-picker-input input {
     visibility: hidden;
     width: 0;
   }
 
-  .month-changer{
-    .ant-picker-borderless{
+  .month-changer {
+    .ant-picker-borderless {
       padding-right: 0;
     }
   }
+
+  .toggler-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 88px;
+    height: 48px;
+    padding: 0 2px;
+    gap: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: $text-input-bg-color;
+  }
+
+  .active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    height: 40px;
+    width: 40px;
+    border-radius: 8px;
+    padding: 2px;
+  }
+
+  .shs-row {
+    margin: 12px 0;
+  }
+
+  .ant-typography{
+    margin-bottom: 0;
+  }
+}
+
+// Sidebar styling
+.sidebar-label {
+  color: $text-teriary-label-color;
+  font-weight: 400;
+}
+
+.border-visible-btn {
+  width: 113px;
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+}
+
+.bg-visible-btn {
+  width: 113px;
+  background-color: $teriary-bg-color;
+  color: white;
+}
+
+.bg-visible-btn:hover {
+  background-color: $teriary-light-bg-color !important;
 }

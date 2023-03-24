@@ -400,3 +400,5 @@ export { ReactComponent as PeopleIcon } from "./Attendance/PeopleIcon.svg";
 export { ReactComponent as PresentInterns } from "./Attendance/PresentInterns.svg";
 export { ReactComponent as ClockInImg } from "./Attendance/ClockInIcon.svg";
 export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.svg";
+export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
+export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";

@@ -63,3 +63,4 @@ export * from './MonthChanger';
 export * from './AvatarBox';
 export * from './timeTRacking/simpleTimer';
 export * from './AttendanceCard';
+export * from './AttendanceCardDetail';

@@ -7,7 +7,6 @@ interface MonthChangerProps {
   month: any,
   hasDatePicker?: boolean,
   datePickerClassName?: string,
-  datePickerDefaultVal?: any,
   onClick?: () => void,
 }
 
@@ -16,7 +15,6 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
     month,
     onClick,
     hasDatePicker = false,
-    datePickerDefaultVal,
     datePickerClassName
   } = props;
 
@@ -28,6 +26,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
           placeholder=""
           bordered={false}
           className={datePickerClassName}
+          placement="bottomRight"
         />
       }
 
