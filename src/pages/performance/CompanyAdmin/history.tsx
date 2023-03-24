@@ -1,7 +1,21 @@
 import { useState, useEffect } from "react";
-import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
+import {
+  Avatar,
+  Dropdown,
+  Progress,
+  Space,
+  MenuProps
+} from 'antd';
 // import all reusable componets from component/index.ts
-import { PageHeader, SearchBar, FiltersButton, IconButton, DropDown, Button, GlobalTable } from "../../../components";
+import {
+  PageHeader,
+  SearchBar,
+  FiltersButton,
+  IconButton,
+  DropDown,
+  Button,
+  GlobalTable
+} from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
 import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
