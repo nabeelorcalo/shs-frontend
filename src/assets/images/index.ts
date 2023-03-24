@@ -292,6 +292,13 @@ export { ReactComponent as SignedImg } from "../images/contract/signedImg.svg";
 export { ReactComponent as RejectedImg } from "../images/contract/rejectedImg.svg";
 export { ReactComponent as PendingImg } from "../images/contract/pendingimg.svg";
 export { ReactComponent as NewImg } from "../images/contract/newImg.svg";
+export { ReactComponent as GreyEye } from "../images/contract/grayeye.svg";
+export { ReactComponent as GreyLock } from "../images/contract/graylock.svg";
+export { ReactComponent as GreenErrow } from "../images/contract/greenerrow.svg";
+export { ReactComponent as GreenEye } from "../images/contract/greeneye.svg";
+export { ReactComponent as GreenLock} from "../images/contract/greenlock.svg";
+export { ReactComponent as RedLock} from "../images/contract/redlock.svg";
+
 
 //Chat
 export { default as Filter } from "../images/chat/Filter.svg";

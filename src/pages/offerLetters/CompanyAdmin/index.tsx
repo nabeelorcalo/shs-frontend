@@ -105,10 +105,11 @@ const CompanyAdmin = () => {
                   (<img src={Recevied} alt="img" width={40} height={40} />)
             }
             <div className="text-start pl-4">
-              <div className="text-base">Contract</div>
+              <div className="text-base">Offer Letter</div>
               <div className="text-sm text-[#A0A3BD]">From Power Source</div>
             </div>
           </div>
+
         );
       },
     },
@@ -259,82 +260,82 @@ const CompanyAdmin = () => {
     },
   ];
   return (
-    <div className="contract-company-admin">
-      <Alert
-        state={showDelete}
-        setState={setShowDelete}
-        type="error"
-        okBtntxt="Delete"
-        cancelBtntxt="Cancel"
-      >
-        <p>Are you sure you want to delete this?</p>
-      </Alert>
-      <PageHeader title="Contracts" />
-      <Row gutter={[20, 20]}>
-        {
-          ContractsCard.map((item) => {
-            return (
-              <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                <BoxWrapper>
-                  <div>
-                    <div className="flex">
+    <div className="offer-letter-company-admin">
+    <Alert
+      state={showDelete}
+      setState={setShowDelete}
+      type="error"
+      okBtntxt="Delete"
+      cancelBtntxt="Cancel"
+    >
+      <p>Are you sure you want to delete this?</p>
+    </Alert>
+    <PageHeader title="Offer Letters" />
+    <Row gutter={[20, 20]}>
+      {
+        ContractsCard.map((item) => {
+          return (
+            <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+              <BoxWrapper>
+                <div>
+                  <div className="flex">
 
-                      {item.img}
-                      <div className="flex flex-col items-center pl-4">
-                        <p className=" text-xl font-semibold mt-2">{item.title}</p>
-                        <div className="text-4xl font-medium mt-4">{item.num}</div>
-                      </div>
-
+                    {item.img}
+                    <div className="flex flex-col items-center pl-4">
+                      <p className=" text-xl font-semibold mt-2">{item.title}</p>
+                      <div className="text-4xl font-medium mt-4">{item.num}</div>
                     </div>
+
                   </div>
+                </div>
 
-                </BoxWrapper>
-              </Col>
-            )
-          })
-        }
-      </Row>
+              </BoxWrapper>
+            </Col>
+          )
+        })
+      }
 
-      <Row className="mt-8" gutter={[0, 20]} justify={"space-between"}>
-        <Col xxl={6} xl={6} lg={8} md={9} sm={10} xs={24}>
-          <SearchBar handleChange={() => { }} />
-        </Col>
+    </Row>
 
-        <Col className="flex" xxl={5} xl={8} lg={11} md={12} sm={24} xs={24}>
-          <Dropdown className="mr-12"
-            menu={{ items: TimeFrameItems }}
-            trigger={["click"]}
-            placement="bottomRight"
-          >
-            <Button className="button-sky-blue">
-              Time Frame
-              <IconAngleDown />
-            </Button>
-          </Dropdown>
+    <Row className="mt-8" gutter={[0, 20]} justify={"space-between"}>
+      <Col xxl={6} xl={6} lg={8} md={9} sm={10} xs={24}>
+        <SearchBar handleChange={() => { }} />
+      </Col>
 
-          <Dropdown
-            menu={{ items: statusItems }}
-            trigger={["click"]}
-            placement="bottomRight"
-          >
-            <Button className="button-sky-blue">
-              Status
-              <IconAngleDown />
-            </Button>
-          </Dropdown>
-        </Col>
-      </Row>
+      <Col className="flex" xxl={5} xl={8} lg={11} md={12} sm={24} xs={24}>
+        <Dropdown className="mr-12"
+          menu={{ items: TimeFrameItems }}
+          trigger={["click"]}
+          placement="bottomRight"
+        >
+          <Button className="button-sky-blue">
+            Time Frame
+            <IconAngleDown />
+          </Button>
+        </Dropdown>
 
-      <div className="mt-4">
-        <BoxWrapper>
-          <GlobalTable
-            columns={tableColumns}
-            tableData={tableData}
-          />
-        </BoxWrapper>
-      </div>
+        <Dropdown
+          menu={{ items: statusItems }}
+          trigger={["click"]}
+          placement="bottomRight"
+        >
+          <Button className="button-sky-blue">
+            Status
+            <IconAngleDown />
+          </Button>
+        </Dropdown>
+      </Col>
+    </Row>
+
+    <div className="mt-4">
+      <BoxWrapper>
+        <GlobalTable
+          columns={tableColumns}
+          tableData={tableData}
+        />
+      </BoxWrapper>
     </div>
-  );
-};
-
-export default CompanyAdmin;
+  </div>
+  )
+}
+export default CompanyAdmin

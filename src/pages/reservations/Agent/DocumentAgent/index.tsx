@@ -48,7 +48,7 @@ const DocData = [
 const DocumentsAgent = () => {
   return (
     <div>
-      <div className="font-semibold text-[28px] text-[#14142A] pb-4">
+      <div className="font-semibold text-[28px] text-secondary-color pb-4">
         Documents
       </div>
 {
@@ -62,8 +62,8 @@ const DocumentsAgent = () => {
           </div>
 
           <div>
-            <p className="text-[#14142A] text-base font-medium">{item.docName}</p>
-            <p className="text-[#4E4B66] text-base font-normal">{item.fileName}</p>
+            <p className="text-secondary-color text-base font-medium">{item.docName}</p>
+            <p className="text-secondary-color text-base font-normal">{item.fileName}</p>
           </div>
         </div>
 

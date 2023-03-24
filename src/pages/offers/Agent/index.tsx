@@ -120,7 +120,7 @@ const OffersAgent = () => {
               </Button>
             </div>
             <div>
-              <Button htmlType="submit" className="bg-[#4A9D77] text-[white]">
+              <Button htmlType="submit" className="green-graph-tooltip-bg white-color">
                 Save & Close
               </Button>
             </div>
@@ -132,10 +132,10 @@ const OffersAgent = () => {
 
       {offersCardData.length === 0 ? (
         <div className="offers-agent-body flex justify-center items-center flex-col h-[50vh] text-center">
-          <div className="font-medium text-4xl text-[#14142A] mb-4">
+          <div className="font-medium text-4xl text-primary-color mb-4">
             No Offers Yet
           </div>
-          <div className="font-normal text-base text-[#14142A] mb-8">
+          <div className="font-normal text-base text-primary-color mb-8">
             Create your first offer and draw attention to your properties!
           </div>
 
@@ -144,17 +144,11 @@ const OffersAgent = () => {
               onClick={() => setISOpen(true)}
               className="add-offers-btn flex items-center"
             >
-              <PlusCircleFilled
+              <PlusCircleFilled className="white-color green-graph-tooltip-bg rounded-[80%]"
                 width={22}
                 height={22}
-                style={{
-                  color: "white",
-                  background: "#4a9d77",
-                  borderRadius: "80%",
-                }}
               />
-
-              <span className="text-[white]">Add New Offer</span>
+              <span className="white-color">Add New Offer</span>
             </Button>
           </div>
         </div>
@@ -165,17 +159,11 @@ const OffersAgent = () => {
               onClick={() => setISOpen(true)}
               className="add-offers-btn flex items-center"
             >
-              <PlusCircleFilled
+              <PlusCircleFilled className="white-color green-graph-tooltip-bg rounded-[80%]"
                 width={22}
                 height={22}
-                style={{
-                  color: "white",
-                  background: "#4a9d77",
-                  borderRadius: "80%",
-                }}
               />
-
-              <span className="text-[white]">Add New Offer</span>
+              <span className="white-color">Add New Offer</span>
             </Button>
           </div>
 
@@ -189,10 +177,10 @@ const OffersAgent = () => {
                     cover={<img alt="img" src={item.img} height={195} />}
                   >
                     <div className="offer-card-body">
-                      <div className="text-[#363565] font-semibold text-xl pb-4">
+                      <div className="dashboard-primary-color font-semibold text-xl pb-4">
                         {item.title}
                       </div>
-                      <div className="text-[#363565] font-normal text-sm pb-4">
+                      <div className="dashboard-primary-color font-normal text-sm pb-4">
                         {item.disc}
                       </div>
 

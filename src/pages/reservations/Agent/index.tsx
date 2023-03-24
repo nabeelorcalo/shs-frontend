@@ -106,8 +106,7 @@ const ReservationsAgent = () => {
       render: (_, row, index) => {
         return (
           <div onClick={() => setISOpen(true)}>
-            <EyeFilled
-              style={{ color: "#A0A3BD", fontSize: "24px", cursor: "pointer" }}
+            <EyeFilled className=" cursor-pointer text-2xl text-[#A0A3BD]"
             />
           </div>
         );
