@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Row, Typography, Form, Space } from 'antd';
-import { DropDown, PageHeader, SearchBar } from "../../../components";
+import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
 import { User} from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
@@ -70,15 +70,11 @@ const ManagerMain = () => {
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
             <Button className="teriary-bg-color white-color flex items-center ">
-              <a href="addManager" className="flex items-center gap-3">
+              <a href="addManager" className="flex items-center gap-3 mb-3">
                 <User/> New Manager
               </a>
             </Button>
-            <Button onClick={()=>setOpenDrawer(true)} className="font-semibold text-base text-[#A0A3BD] rounded-[8px] m-[12px] bg-[#E6F4F9]">
-              <NodeExpandOutlined className="text-base" />
-              Filter
-              <RightOutlined className="text-xs" />
-            </Button>
+            <FiltersButton label='Filter' onClick={()=>setOpenDrawer(true)}/> 
             <div className="text-input-bg-color p-2 flex gap-2">
               <div
                className={`button ${activeButton === 0 ? 'active' : ''}`}

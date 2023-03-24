@@ -4,7 +4,7 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import {GlobalTable} from "../../../components";
+import {FiltersButton, GlobalTable} from "../../../components";
 import { Button, Col, Row,Space,Form,Menu } from "antd";
 import { DropDown } from "../../../components";
 import Drawer from "../../../components/Drawer";
@@ -173,7 +173,7 @@ const ListingRequest = () => {
                 Cancel
               </Button>
               <Button
-                className="teriary-bg-color text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Apply
@@ -184,19 +184,16 @@ const ListingRequest = () => {
       </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="flex justify-end gap-2 mb-3">
-            <Button onClick={() => setOpenDrawer(true)}
-              className="text-input-bg-color rounded-lg text-success-color font-normal text-base font-[outfit] m-3">
-              <NodeExpandOutlined className="text-base" />
-              Filter
-              <RightOutlined className="text-xs" />
-            </Button>
-            <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              value={value}
-              setValue={setValue}
-            />
+          <div className="flex justify-end gap-2 mb-4">
+          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
+          <div className="w-25">
+              <DropDown
+                requiredDownloadIcon
+                options={["pdf", "excel"]}
+                value={value}
+                setValue={setValue}
+              />
+            </div>
           </div>
         </Col>
       </Row>

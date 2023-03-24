@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
-import { DropDown, SearchBar, GlobalTable, PageHeader } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -195,15 +195,8 @@ const CompaniesMain = () => {
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-          <div className="flex justify-end items-center">
-            <Button
-              onClick={() => setOpenDrawer(true)}
-              className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base font-[outfit] m-3"
-            >
-              <NodeExpandOutlined className="text-base"/>
-              Filter
-              <RightOutlined className="text-xs" />
-            </Button>
+          <div className="flex justify-end items-center gap-3">
+          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon
