@@ -1,13 +1,13 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import RegisteredMembersAndFeedback  from '../components/Graph/graphForRegisteredMembersAndFeedback';
+import {RegisterMemberAndFeddbackGraph}  from '../components';
 
 export default {
   title: 'Components/Graph/RegisteredMembersAndFeedback',
-  component: RegisteredMembersAndFeedback,
-} as ComponentMeta<typeof RegisteredMembersAndFeedback>;
+  component: RegisterMemberAndFeddbackGraph,
+} as ComponentMeta<typeof RegisterMemberAndFeddbackGraph>;
 
-const Template: ComponentStory<typeof RegisteredMembersAndFeedback> = (args) => <RegisteredMembersAndFeedback {...args} />
+const Template: ComponentStory<typeof RegisterMemberAndFeddbackGraph> = (args) => <RegisterMemberAndFeddbackGraph {...args} />
 
 export const Primary = Template.bind({})
 Primary.args = { 

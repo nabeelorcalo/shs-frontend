@@ -4,7 +4,7 @@ import { registerMemeberData, resolutionFeedbackData } from './data';
 import { IconLikeShapes } from '../../../assets/images';
 import constants from '../../../config/constants';
 
-const Graph = ({ graphName }: any) => {
+export const RegisterMemberAndFeddbackGraph = ({ graphName }: any) => {
   const data = graphName === constants.REGISTER_MEMBERS ? registerMemeberData : resolutionFeedbackData;
   const yFields = graphName === constants.REGISTER_MEMBERS ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
 
@@ -126,5 +126,3 @@ const Graph = ({ graphName }: any) => {
     <DualAxes {...config} />
   );
 };
-
-export default Graph;

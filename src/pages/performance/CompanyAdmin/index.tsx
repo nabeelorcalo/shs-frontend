@@ -1,14 +1,84 @@
 import { useState, useEffect } from "react";
-// import all reusable componets from component/index.ts
-import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader } from "../../../components";
-import { TopPerformanceList } from "../../../components/TopPerformanceList";
-// end
-import data from './data';
-import '../style.scss';
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import {
+  OverAllPerfomance,
+  MonthlyPerfomanceChart,
+  PageHeader,
+  TopPerformanceList
+} from "../../../components";
+import data from './data';
+import '../style.scss';
 
 const CompanyAdminPerformance = () => {
+  const [state, setState] = useState({
+    topPerformanceList: [
+      {
+        id: 0,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 1,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 2,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 3,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 4,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 5,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 6,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 7,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+      {
+        id: 8,
+        name: "Maria Sanoid",
+        profession: "UI UX Designer",
+        percentage: "95%",
+        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      },
+    ],
+  });
+
   const performanceData = [
     {
       percent: '85',
@@ -103,7 +173,11 @@ const CompanyAdminPerformance = () => {
         </div>
 
         <div className="performance-right-subcontainer ">
-          <TopPerformanceList />
+          <TopPerformanceList 
+            heading="Top Performers"
+            data={state.topPerformanceList}
+            action={true}
+          />
         </div>
       </div>
     </>

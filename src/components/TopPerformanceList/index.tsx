@@ -9,82 +9,18 @@ import { MonthChanger } from '../MonthChanger';
 import './style.scss';
 
 interface TopPerformanceProps {
-  avatar: string
-  name: string,
-  profession?: string,
-  percentage: string,
+  heading: string,
   data: any,
+  action?: boolean,
 }
 
 export const TopPerformanceList: any = (props: TopPerformanceProps) => {
+  const { heading, data, action = false } = props;
+
   const [state, setState] = useState({
     currentMonthIndex: dayjs().month(),
     selectedMonth: dayjs().format("MMM"),
-    data: [
-      {
-        id: 0,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 1,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 2,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 3,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 4,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 5,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 6,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 7,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 8,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-    ],
+    data: data
   });
 
   useEffect(() => {
@@ -109,17 +45,20 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
 
   return (
     <BoxWrapper className='top-performance-list flex flex-col'>
-      <div className='flex flex-row justify-center'>
+      <div className='flex flex-row h-[40px]'>
         <Typography.Title level={4}>
-          Top Performance
+          {heading}
         </Typography.Title>
 
-        <div className='flex items-center ml-auto'>
-          <MonthChanger 
-            month = {state.selectedMonth}
-            onClick = {changeMonth}
-          />
-        </div>
+        {
+          action &&
+          <div className='flex items-center ml-auto'>
+            <MonthChanger
+              month={state.selectedMonth}
+              onClick={changeMonth}
+            />
+          </div>
+        }
       </div>
 
       <div className='performance-cards'>
@@ -131,6 +70,8 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
               nameClassName="text-sm text-primary-color"
               profession={item.profession}
               percentage={item.percentage}
+              isLate={item.isLate}
+              checkInTime={item.checkInTime}
             />
           })
         }

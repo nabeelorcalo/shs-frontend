@@ -139,7 +139,8 @@
 }
 
 // Company Admin: performance/history
-.company-admin-performance-history {
+.company-admin-performance-history,
+.manager-performance-history {
   .icon-btn {
     display: flex;
     justify-content: center;
@@ -175,6 +176,12 @@
 
     p {
       color: $text-secondary-body-color !important;
+    }
+  }
+
+  .manager-dropdowns-container{
+    div{
+      min-width: 170px;
     }
   }
 }

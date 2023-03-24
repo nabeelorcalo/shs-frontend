@@ -57,7 +57,8 @@ export const MonthlyPerfomanceChart = (props: any) => {
         </div>
       }
       <Column
-        marginRatio={marginRatio} {...config}
+        {...config}
+        marginRatio={marginRatio}
       />
     </BoxWrapper>
   )
