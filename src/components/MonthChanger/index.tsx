@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton } from '../IconButton';
-import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
+import { ArrowToLeft, ArrowToRight1, CalendarPickerIcon } from '../../assets/images';
 import { DatePicker } from 'antd';
 
 interface MonthChangerProps {
@@ -27,6 +27,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
           bordered={false}
           className={datePickerClassName}
           placement="bottomRight"
+          suffixIcon={<CalendarPickerIcon />}
         />
       }
 

@@ -190,14 +190,14 @@ const Detail = () => {
       />
 
       <div className="flex">
-        <div className="w-[23%]">
+        <div className="w-[28%]">
           <SearchBar
             className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="search"
-            size="small"
+            size="middle"
           />
         </div>
 

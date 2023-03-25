@@ -432,3 +432,4 @@ export { ReactComponent as ClockInImg } from "./Attendance/ClockInIcon.svg";
 export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.svg";
 export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
+export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
