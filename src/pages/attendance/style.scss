@@ -56,6 +56,10 @@
     margin: 12px 0;
   }
 
+  .card:hover{
+    border: 2px solid $text-input-bg-color;
+  }
+
   .ant-typography {
     margin-bottom: 0;
   }

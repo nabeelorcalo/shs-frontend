@@ -14,7 +14,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
   const {avatar, name, profession, status} = item;
 
   return (
-    <BoxWrapper key={index} className="shs-col-5">
+    <BoxWrapper key={index} className="shs-col-5 card">
       <div className="flex flex-row justify-center relative my-2">
         <Avatar
           size={64}
