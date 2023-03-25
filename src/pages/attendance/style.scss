@@ -101,6 +101,8 @@
     // flex-wrap: wrap;
 
     .left-container {
+      display: flex;
+      height: fit-content;
       width: 30%;
 
       .user-detail {
@@ -127,6 +129,8 @@
     }
 
     &.right-container {
+      display: flex;
+      flex-direction: column;
       width: 70%;
     }
   }

@@ -15,7 +15,12 @@
 }
 
 .toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
+  height: 48px;
+  width: 40px;
 }
 
 .animate {

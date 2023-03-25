@@ -1,4 +1,4 @@
-import { Avatar, Typography } from "antd";
+import { Avatar, Space, Typography } from "antd";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -16,7 +16,8 @@ import {
   DropDown,
   IconButton,
   PageHeader,
-  AttendanceTimeCard
+  AttendanceTimeCard,
+  GlobalTable
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -30,6 +31,78 @@ const Detail = () => {
     'Last Month',
     'Date Range'
   ];
+
+  const tableColumns = [
+    {
+      title: 'Date',
+      key: 'date',
+      dataIndex: 'date',
+    },
+    {
+      title: 'Mood',
+      key: 'mood',
+      render: (_: any, data: any) => {
+        return (
+          <Space size="middle">
+            
+          </Space>
+        )
+      },
+    },
+    {
+      title: 'Clock In',
+      key: 'clockIn',
+      dataIndex: 'clockIn',
+    },
+    {
+      title: 'Clock Out',
+      key: 'clockOut',
+      dataIndex: 'clockOut',
+    },
+    {
+      title: 'Total Hours',
+      key: 'totalHours',
+      dataIndex: 'totalHours',
+    }
+  ];
+
+  const tableData = [
+    {
+      date: "Thu, 29 September 2022",
+      mood: 1,
+      clockIn: "09:01",
+      clockOut: "17:23",
+      totalHours: "8:20 hr",
+    },
+    {
+      date: "Thu, 29 September 2022",
+      mood: 1,
+      clockIn: "09:01",
+      clockOut: "17:23",
+      totalHours: "8:20 hr",
+    },
+    {
+      date: "Thu, 29 September 2022",
+      mood: 1,
+      clockIn: "09:01",
+      clockOut: "17:23",
+      totalHours: "8:20 hr",
+    },
+    {
+      date: "Thu, 29 September 2022",
+      mood: 1,
+      clockIn: "09:01",
+      clockOut: "17:23",
+      totalHours: "8:20 hr",
+    },
+    {
+      date: "Thu, 29 September 2022",
+      mood: 1,
+      clockIn: "09:01",
+      clockOut: "17:23",
+      totalHours: "8:20 hr",
+    },
+  ]
 
   const [state, setState] = useState({
     timeFrameVal: 'This Month',
@@ -99,19 +172,19 @@ const Detail = () => {
       case 'Avg Clock In':
         color = "#4A9D77";
         icon = <ClockInCommon />
-        return {color, icon};
+        return { color, icon };
       case 'Avg Clock Out':
         color = "#E95060";
         icon = <ClockOutCommon />
-        return {color, icon};
+        return { color, icon };
       case 'Avg Hours':
         color = "#4783FF";
         icon = <AvgHoursCommon />
-        return {color, icon};
+        return { color, icon };
       case 'Working Days':
         color = "#FFC15D";
         icon = <WorkingDaysCommon />
-        return {color, icon};
+        return { color, icon };
       default:
         return '';
     }
@@ -137,7 +210,7 @@ const Detail = () => {
               value={state.timeFrameVal}
               showDatePickerOnVal='Date Range'
               requireDatePicker
-              placement='topLeft'
+              placement='bottomRight'
             />
 
             <IconButton
@@ -207,10 +280,10 @@ const Detail = () => {
         </div>
 
         <div className="right-conainer">
-          <BoxWrapper className="flex">
+          <BoxWrapper className="flex mb-6">
             {
               state.timeData.map((item: any, index) => {
-                const {color, icon}: any = getColorAndIcon(item.heading);
+                const { color, icon }: any = getColorAndIcon(item.heading);
 
                 return (
                   <AttendanceTimeCard
@@ -223,6 +296,18 @@ const Detail = () => {
                 )
               })
             }
+          </BoxWrapper>
+
+          <BoxWrapper>
+            <GlobalTable
+              pagination={false}
+              columns={tableColumns}
+              tableData={tableData}
+              expandable={{
+                expandedRowRender: () => { },
+                rowExpandable: function noRefCheck() { }
+              }}
+            />
           </BoxWrapper>
         </div>
       </div>
