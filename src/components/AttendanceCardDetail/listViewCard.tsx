@@ -12,9 +12,26 @@ interface AttendanceProps {
 export const AttendanceListViewCard: any = (props: AttendanceProps) => {
   const { index, item, menu } = props;
   const { avatar, name, profession, status } = item;
+  
+  const getColor = (name: string) => {
+    switch (name) {
+      case 'present':
+        return "#3dc575";
+      case 'absent':
+        return "#d83a52";
+      case 'leave':
+        return "#ffc15d";
+      default:
+        return 'transparent';
+    }
+  }
 
   return (
-    <BoxWrapper key={index} className="flex flex-row items-center">
+    <BoxWrapper
+      key={index}
+      className="flex flex-row items-center card"
+      borderLeft={`4px solid ${getColor(status)}`}
+    >
       <div className="flex items-center gap-4 w-[30%]">
         <Avatar
           size={48}
@@ -41,7 +58,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
 
         <Avatar
           size={40}
-          className={`${status === 'absent' ? 'text-error-bg-color ' : 'text-input-bg-color'} align-middle`}
+          className={`${status === 'absent' ? 'text-error-bg-color' : 'text-input-bg-color'} align-middle`}
         >
           A
         </Avatar>

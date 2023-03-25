@@ -56,8 +56,12 @@
     margin: 12px 0;
   }
 
+  .card{
+    border: 3px solid transparent;
+  }
+
   .card:hover{
-    border: 2px solid $text-input-bg-color;
+    border: 3px solid $text-input-bg-color;
   }
 
   .ant-typography {

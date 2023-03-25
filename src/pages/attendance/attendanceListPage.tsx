@@ -285,7 +285,7 @@ const Detail = () => {
         className={
           `attendance-card
           ${state.isToggle ?
-            'flex flex-col gap-2'
+            'flex flex-col gap-4'
             :
             'shs-row'
           }`
