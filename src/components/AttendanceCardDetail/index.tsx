@@ -42,30 +42,21 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
       <div className="flex flex-row justify-around mt-6">
         <Avatar
           size={40}
-          style={{
-            backgroundColor: status === "present" ? '#3DC575' : '#E6F4F9',
-            verticalAlign: 'middle'
-          }}
+          className={`${status === 'present'? 'text-success-bg-color' : 'text-input-bg-color'} align-middle`}
         >
           P
         </Avatar>
 
         <Avatar
           size={40}
-          style={{
-            backgroundColor: status === "absent" ? '#D83A52' : '#E6F4F9',
-            verticalAlign: 'middle'
-          }}
+          className={`${status === 'absent'? 'text-error-bg-color ' : 'text-input-bg-color'} align-middle`}
         >
           A
         </Avatar>
 
         <Avatar
           size={40}
-          style={{
-            backgroundColor: status === "leave" ? '#FFC15D' : '#E6F4F9',
-            verticalAlign: 'middle'
-          }}
+          className={`${status === 'leave'? 'text-warning-bg-color' : 'text-input-bg-color'} align-middle`}
         >
           L
         </Avatar>
