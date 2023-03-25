@@ -52,36 +52,54 @@
     }
   }
 
+  .selected-btn path {
+    fill: $text-primary-title-color;
+  }
+
+  .blur-btn path {
+    fill: $light-grey-color;
+  }
+
   .toggler-container {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
     width: 88px;
     height: 48px;
-    padding: 0 2px;
+    padding: 0 6px;
     gap: 8px;
     border-radius: 8px;
     cursor: pointer;
     background-color: $text-input-bg-color;
   }
 
-  .active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .card-view-btn,
+  .list-view-btn {
+    z-index: 1;
+  }
+
+  .animate {
+    transition: transform 0.5s ease;
+    position: absolute;
+    left: 3px;
+    top: -16px;
     background-color: white;
     height: 40px;
     width: 40px;
     border-radius: 8px;
-    padding: 2px;
+  }
+  
+  .animate.right {
+    transform: translateX(42px);
   }
 
   .shs-row {
     margin: 12px 0;
   }
 
-  .ant-typography{
+  .ant-typography {
     margin-bottom: 0;
   }
 }

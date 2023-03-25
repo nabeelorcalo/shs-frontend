@@ -10,7 +10,8 @@ import {
   MonthChanger,
   PageHeader,
   SearchBar,
-  AttendanceCardDetail
+  AttendanceCardDetail,
+  AttendanceListViewCard
 } from "../../components";
 import {
   CardViewIcon,
@@ -79,7 +80,7 @@ const Detail = () => {
     status: 'Select',
     timeFrameVal: 'Select',
     departmentVal: 'Select',
-    activeElement: 'card-view-btn',
+    isAnimating: false,
   });
 
   const breadCrumbs = () => {
@@ -159,12 +160,9 @@ const Detail = () => {
   }
 
   const togglerClick = (event: any) => {
-    let customClasses = event.target.closest('div').classList.value.split(' ');
-    let targetName = customClasses[0];
-
     setState(prevState => ({
       ...prevState,
-      activeElement: targetName,
+      isAnimating: !state.isAnimating,
     }));
   }
 
@@ -267,17 +265,23 @@ const Detail = () => {
           />
 
           <div className="toggler-container">
+            <div className={`animate ${state.isAnimating ? "right" : ""}`} />
+
             <div
-              className={`card-view-btn ${state.activeElement === "card-view-btn" ? 'active' : ''}`}
+              className='card-view-btn'
               onClick={togglerClick}
             >
-              <CardViewIcon />
+              <CardViewIcon
+                className={`${!state.isAnimating ? 'selected-btn' : 'blur-btn'}`}
+              />
             </div>
             <div
-              className={`list-view-btn ${state.activeElement === "list-view-btn" ? 'active' : ''}`}
+              className='list-view-btn'
               onClick={togglerClick}
             >
-              <TableViewIcon />
+              <TableViewIcon
+              className={`${state.isAnimating ? 'selected-btn' : 'blur-btn'}`}
+              />
             </div>
           </div>
 
@@ -290,14 +294,26 @@ const Detail = () => {
         </div>
       </div>
 
-      <div className="shs-row attendance-card">
+      <div
+        className={
+          `attendance-card
+          ${state.isAnimating ?
+            'flex flex-col gap-2'
+            :
+            'shs-row'
+          }`
+        }
+      >
         {dummyData.map((item, index) => {
           return (
-            <AttendanceCardDetail item={item} index={index} menu={menu} />
+            state.isAnimating ?
+              <AttendanceListViewCard item={item} index={index} menu={menu} />
+              :
+              <AttendanceCardDetail item={item} index={index} menu={menu} />
           )
         })}
       </div>
-    </div>
+    </div >
   )
 }
 
