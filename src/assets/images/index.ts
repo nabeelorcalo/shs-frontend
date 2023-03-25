@@ -412,6 +412,13 @@ export { ReactComponent as DrawerIcon } from "./drawerIcon.svg";
 // Common Icons
 export { ReactComponent as GlassMagnifier } from "./Common/GlassMagnifier.svg";
 export { ReactComponent as DownlaodFileIcon } from "./Common/DownlaodFileIcon.svg";
+export { ReactComponent as EmailImg } from "./Common/Email.svg";
+export { ReactComponent as PhoneIcon } from "./Common/Phone.svg";
+export { ReactComponent as LocationImg } from "./Common/Location.svg";
+export { ReactComponent as ClockInCommon } from "./Common/ClockIn.svg";
+export { ReactComponent as ClockOutCommon } from "./Common/ClockOut.svg";
+export { ReactComponent as AvgHoursCommon } from "./Common/AvgHours.svg";
+export { ReactComponent as WorkingDaysCommon } from "./Common/WorkingDays.svg";
 
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";

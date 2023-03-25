@@ -52,14 +52,83 @@
     }
   }
 
-
-
   .shs-row {
     margin: 12px 0;
   }
 
   .ant-typography {
     margin-bottom: 0;
+  }
+}
+
+.company-admin-detail-container {
+  .shs-page-header {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    width: 20px;
+    border: 1px solid $text-error-line-color;
+    border-radius: 0;
+    height: 28px;
+    width: 28px;
+  }
+
+  .download-btn {
+    border: none;
+    margin: auto;
+    width: 48px !important;
+    padding: 12px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: $text-input-bg-color;
+  }
+
+  .attendance-content {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    // flex-wrap: wrap;
+
+    .left-container {
+      width: 30%;
+
+      .user-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 30px 0;
+      }
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        border-radius: 8px;
+        color: $primary-light-bg-color;
+        background-color: $text-input-bg-color;
+      }
+
+      a:hover {
+        color: $white-bg-color;
+        background-color: $primary-light-bg-color;
+      }
+    }
+
+    &.right-container {
+      width: 70%;
+    }
   }
 }
 
