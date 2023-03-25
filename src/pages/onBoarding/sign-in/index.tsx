@@ -1,9 +1,8 @@
-import { Col, Row, Typography } from "antd";
-
-import "./signin.scss";
 import React from "react";
-import SigninForm from "./signin-form/SigninForm";
+import { Col, Row, Typography } from "antd";
+import SigninForm from "./signinform/signinForm";
 import { SHSLogo } from "../../../assets/images";
+import "./signin.scss";
 
 const role: string = "Student";
 const SignIn = () => {

@@ -22,14 +22,20 @@ import ViewInternshipDetails from "./pages/internships/ViewInternshipDetails";
 import profile from "./pages/interns/profile";
 import chat from "./pages/interns/chat";
 
-// Remove it
-// dummy components
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
 import DemoCard from "./components/ContractCard/demoCard";
+
+// Lazy load required start
 import Chat from "./pages/chat";
 import ManageVault from "./pages/digiVault/Student/manageVault";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
+import ActivityData from './pages/propertyAgent/propertDahboard/Dashboard/activityData'
+import AddManager from "./pages/managers/managerMain/addManager";
+import ManagerProfile from "./pages/managers/managerMain/managerProfile";
+import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
+import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
+// Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -316,6 +322,11 @@ export const publicRoutes = [
     path: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
     element: <VerificationSteps />,
   },
+  {
+    key: `company-admin-verification`,
+    path: `company-admin-verification`,
+    element: <CompanyAdminVerification />,
+  },
 ];
 
 // Manager
@@ -480,6 +491,11 @@ const delegateAgentRoutes = [
         element: <WithDrawalRequest />,
       },
       {
+        key: `link-account`,
+        path: `link-account`,
+        element: <LinkAccount />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         element: <WithDrawals />,
@@ -544,6 +560,12 @@ const systemAdminRoutes = [
         path: `${ROUTES_CONSTANTS.PROPERTY_AGENT}`,
         element: <PropertyAgent />,
       },
+      {
+        key: `activityData`,
+        path: `activityData`,
+        element: <ActivityData />,
+      },
+
       {
         key: `propertyDetails`,
         path: `property-agent/:id`,
@@ -634,6 +656,16 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.MANAGERS}`,
         path: `${ROUTES_CONSTANTS.MANAGERS}`,
         element: <Managers />,
+      },
+      {
+        key: `addManager`,
+        path: `addManager`,
+        element: <AddManager />,
+      },
+      {
+        key: `managerprofile`,
+        path: `managerprofile`,
+        element: <ManagerProfile />,
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,

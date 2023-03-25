@@ -91,7 +91,7 @@ export const RegisterAgentsAndRewardGraph = ({ graphName }: any) => {
     )
   }
 
-  const CutomTooltip = (props: any) => {
+ const CutomTooltip = (props: any) => {
     return (
       <>
         {

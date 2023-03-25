@@ -38,17 +38,17 @@ const PersonalInfo = (props: any) => {
     const {open, setOpen} = props
   return (
     <div>
-      <div className="font-semibold text-[28px] text-[#14142A] pb-2">
+      <div className="font-semibold text-[28px] text-primary-color pb-2">
         Personal Information
       </div>
 
       {personalInfoData.map((item) => {
         return (
           <div className="pb-4" key={item.id}>
-            <div className="text-[#14142A] text-base font-medium">
+            <div className="text-primary-color text-base font-medium">
               {item.title}
             </div>
-            <div className="text-[#14142A] text-base font-normal">
+            <div className="text-primary-color text-base font-normal">
               {item.disc}
             </div>
           </div>
@@ -58,8 +58,8 @@ const PersonalInfo = (props: any) => {
 
       <div>
         <div className="font-semibold text-xl pb-2">Message Details</div>
-        <div className="text-base font-normal text-[#6E7191] pb-2">Message</div>
-        <div className="bg-[#E6F4F9] rounded-[8px] p-4">
+        <div className="text-base font-normal text-teriary-color pb-2">Message</div>
+        <div className="text-input-bg-color rounded-[8px] p-4">
           Hi all, I wonder if anyone knows (and can advice how to prevent) why
           paragraphs in XD expand as a single line text box in Figma, when
           copying as SVG? Thanks!
@@ -70,13 +70,13 @@ const PersonalInfo = (props: any) => {
         <div>
           <Button
             onClick={() => setOpen(false)}
-            className="text-[white] bg-[#E94E5D]"
+            className="white-color page-header-secondary-bg-color"
           >
             Reject
           </Button>
         </div>
         <div>
-          <Button htmlType="submit" className="bg-[#4A9D77] text-[white] ">
+          <Button htmlType="submit" className="green-graph-tooltip-bg white-color ">
             Accept
           </Button>
         </div>
