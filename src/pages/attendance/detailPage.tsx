@@ -11,7 +11,8 @@ import {
   PageHeader,
   SearchBar,
   AttendanceCardDetail,
-  AttendanceListViewCard
+  AttendanceListViewCard,
+  ToggleButton
 } from "../../components";
 import {
   CardViewIcon,
@@ -80,7 +81,7 @@ const Detail = () => {
     status: 'Select',
     timeFrameVal: 'Select',
     departmentVal: 'Select',
-    isAnimating: false,
+    isToggle: false,
   });
 
   const breadCrumbs = () => {
@@ -162,7 +163,7 @@ const Detail = () => {
   const togglerClick = (event: any) => {
     setState(prevState => ({
       ...prevState,
-      isAnimating: !state.isAnimating,
+      isToggle: !state.isToggle,
     }));
   }
 
@@ -264,26 +265,13 @@ const Detail = () => {
             }
           />
 
-          <div className="toggler-container">
-            <div className={`animate ${state.isAnimating ? "right" : ""}`} />
-
-            <div
-              className='card-view-btn'
-              onClick={togglerClick}
-            >
-              <CardViewIcon
-                className={`${!state.isAnimating ? 'selected-btn' : 'blur-btn'}`}
-              />
-            </div>
-            <div
-              className='list-view-btn'
-              onClick={togglerClick}
-            >
-              <TableViewIcon
-              className={`${state.isAnimating ? 'selected-btn' : 'blur-btn'}`}
-              />
-            </div>
-          </div>
+          <ToggleButton 
+            isToggle = {state.isToggle}
+            onTogglerClick={togglerClick}
+            FirstIcon={CardViewIcon}
+            LastIcon={TableViewIcon}
+            className="w-[88px]"
+          />
 
           <IconButton
             size='large'
@@ -297,7 +285,7 @@ const Detail = () => {
       <div
         className={
           `attendance-card
-          ${state.isAnimating ?
+          ${state.isToggle ?
             'flex flex-col gap-2'
             :
             'shs-row'
@@ -306,7 +294,7 @@ const Detail = () => {
       >
         {dummyData.map((item, index) => {
           return (
-            state.isAnimating ?
+            state.isToggle ?
               <AttendanceListViewCard item={item} index={index} menu={menu} />
               :
               <AttendanceCardDetail item={item} index={index} menu={menu} />

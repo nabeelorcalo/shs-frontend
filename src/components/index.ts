@@ -65,3 +65,4 @@ export * from './timeTRacking/simpleTimer';
 export * from './AttendanceCard';
 export * from './AttendanceCardDetail/gridViewCard';
 export * from './AttendanceCardDetail/listViewCard';
+export * from './ToggleButton';

@@ -1,0 +1,50 @@
+@import '../../scss/_colors.scss';
+
+.toggler-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 48px;
+  padding: 0 6px;
+  gap: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: $text-input-bg-color;
+}
+
+.toggle-btn {
+  z-index: 1;
+}
+
+.animate {
+  transition: transform 0.5s ease;
+  position: absolute;
+  left: 3px;
+  top: -16px;
+  background-color: $white-bg-color !important;
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+}
+
+.animate :hover{
+  background-color: $white-bg-color !important;
+}
+
+.animate :hover {
+  background-color: $white-bg-color;
+}
+
+.animate.right {
+  transform: translateX(42px);
+}
+
+.selected-btn path {
+  fill: $text-primary-title-color;
+}
+
+.blur-btn path {
+  fill: $light-grey-color;
+}
