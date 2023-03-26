@@ -20,7 +20,7 @@ import {
   GlassMagnifier,
   TableViewIcon,
 } from "../../assets/images";
-import { ROUTES_CONSTANTS } from "../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
 import "./style.scss";
 
@@ -172,10 +172,20 @@ const Detail = () => {
         bordered
         title={
           <div className="font-medium">
-            Attendance Detail
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
+            {
+              constants.USER_ROLE === "CompanyAdmin" ?
+                'Attendance Detail'
+                :
+                'Attendance'
+            }
+            {
+              constants.USER_ROLE === "CompanyAdmin" ?
+                <span className="vertical-line">
+                  {breadCrumbs()}
+                </span>
+                :
+                <></>
+            }
           </div>
         }
         actions
@@ -264,8 +274,8 @@ const Detail = () => {
             }
           />
 
-          <ToggleButton 
-            isToggle = {state.isToggle}
+          <ToggleButton
+            isToggle={state.isToggle}
             onTogglerClick={togglerClick}
             FirstIcon={CardViewIcon}
             LastIcon={TableViewIcon}

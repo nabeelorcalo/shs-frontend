@@ -1,5 +1,6 @@
 import { useState } from "react";
-import CompanyAdminPerformance from "../attendance/CompanyAdmin";
+import CompanyAdminAttendance from "../attendance/CompanyAdmin";
+import ManagerAttendance from "../attendance/Manager";
 import constants from "../../config/constants";
 import "./style.scss";
 
@@ -7,11 +8,11 @@ const Attendance = () => {
   const renderPage = () => {
     switch (constants.USER_ROLE) {
       case 'CompanyAdmin':
-        return <CompanyAdminPerformance />;
+        return <CompanyAdminAttendance />;
       case 'Intern':
-        // return <CompanyAdmin />;
+        // return <InternAttendance />;
       case 'Manager':
-        // return <ManagerPerformance />;
+        return <ManagerAttendance />;
       default:
         return <></>;
     }
