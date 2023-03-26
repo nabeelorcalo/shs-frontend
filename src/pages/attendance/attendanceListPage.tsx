@@ -283,7 +283,7 @@ const Detail = () => {
 
       <div
         className={
-          `attendance-card
+          `attendance-card my-4
           ${state.isToggle ?
             'flex flex-col gap-4'
             :
