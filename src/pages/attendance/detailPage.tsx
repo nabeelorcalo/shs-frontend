@@ -17,7 +17,8 @@ import {
   IconButton,
   PageHeader,
   AttendanceTimeCard,
-  GlobalTable
+  GlobalTable,
+  ProfileCard
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -237,56 +238,14 @@ const Detail = () => {
 
       <div className="attendance-content">
         <div className="left-container">
-          <BoxWrapper className="flex flex-col w-full">
-            <Avatar
-              size={64}
-              className="m-auto"
-              src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-            />
-
-            <Typography.Title
-              className="name"
-              level={3}
-            >
-              Mino Marina
-            </Typography.Title>
-
-            <Typography.Text
-              className="m-auto"
-            >
-              Data Researcher
-            </Typography.Text>
-
-            <div className="user-detail">
-              <div className="flex flex-row gap-4">
-                <EmailImg />
-                <p className="text-sm">
-                  minomarina@gmail.com
-                </p>
-              </div>
-
-              <div className="flex flex-row gap-4">
-                <PhoneIcon />
-                <p className="text-sm">
-                  +44 7700 900077
-                </p>
-              </div>
-
-              <div className="flex flex-row gap-4">
-                <LocationImg />
-                <p className="text-sm">
-                  263 Eversholt St, London NW11NB, UK
-                </p>
-              </div>
-            </div>
-
-            <Link
-              to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-              className="profile-btn"
-            >
-              View Profile
-            </Link>
-          </BoxWrapper>
+          <ProfileCard
+            name="Mino Marina"
+            profession="Data Researcher"
+            email="minomarina@gmail.com"
+            phone="+44 7700 900077"
+            address="263 Eversholt St, London NW11NB, UK"
+            avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+          />
         </div>
 
         <div className="right-conainer">

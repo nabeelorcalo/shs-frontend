@@ -67,3 +67,4 @@ export * from './AttendanceCardDetail/gridViewCard';
 export * from './AttendanceCardDetail/listViewCard';
 export * from './ToggleButton';
 export * from './AttendanceTimeCard';
+export * from './ProfileCard';
