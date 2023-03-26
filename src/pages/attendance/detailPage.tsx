@@ -44,7 +44,7 @@ const Detail = () => {
       render: (_: any, data: any) => {
         return (
           <Space size="middle">
-            
+
           </Space>
         )
       },
@@ -118,7 +118,6 @@ const Detail = () => {
     const role = constants.USER_ROLE;
 
     switch (role) {
-      case 'Intern':
       case 'Manager':
         return (
           <Link
@@ -195,12 +194,23 @@ const Detail = () => {
       <PageHeader
         title={
           <div className="font-medium">
-            Mino Marina
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
+            {
+              constants.USER_ROLE === "Intern" ?
+                "Attendance"
+                :
+                "Mino Marina"
+            }
+            {
+              constants.USER_ROLE === "Intern" ?
+                <></>
+                :
+                <span className="vertical-line">
+                  {breadCrumbs()}
+                </span>
+            }
           </div>
         }
+        
         children={
           <div className="flex flex-row gap-4">
             <DropDown

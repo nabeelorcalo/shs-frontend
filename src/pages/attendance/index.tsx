@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CompanyAdminAttendance from "../attendance/CompanyAdmin";
 import ManagerAttendance from "../attendance/Manager";
+import InternAttendance from "../attendance/Intern";
 import constants from "../../config/constants";
 import "./style.scss";
 
@@ -10,7 +11,7 @@ const Attendance = () => {
       case 'CompanyAdmin':
         return <CompanyAdminAttendance />;
       case 'Intern':
-        // return <InternAttendance />;
+        return <InternAttendance />;
       case 'Manager':
         return <ManagerAttendance />;
       default:
