@@ -46,7 +46,7 @@ export const TimeTracking = (props: any) => {
   return (
     <Card
       className={
-        vartical ? "time-tracking my-2" : "timeTrackig-horizontal my-2"
+        vartical ? "time-tracking w-full my-2" : "timeTrackig-horizontal my-2"
       }
       bordered={false}
     >
@@ -110,7 +110,7 @@ export const TimeTracking = (props: any) => {
         {vartical ? (
           <div className="mt-4 p-4 bg-[#E6F4F9] rounded-[10px]">
             <div className="flex justify-between">
-              <div className="font-medium text-sm text-success-color">
+              <div className="font-medium text-sm light-grey-color">
                 Clock In
               </div>
               <div className="font-medium text-sm text-secondary-color">
@@ -119,7 +119,7 @@ export const TimeTracking = (props: any) => {
             </div>
 
             <div className="flex justify-between mt-4">
-              <div className="font-medium text-sm  text-secondary-color">
+              <div className="font-medium text-sm  light-grey-color">
                 Clock Out
               </div>
               <div className="font-medium text-sm text-secondary-color">

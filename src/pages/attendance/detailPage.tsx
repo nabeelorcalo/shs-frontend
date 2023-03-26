@@ -7,9 +7,6 @@ import {
   AvgHoursCommon,
   WorkingDaysCommon,
   DownlaodFileIcon,
-  EmailImg,
-  LocationImg,
-  PhoneIcon
 } from "../../assets/images";
 import {
   BoxWrapper,
@@ -18,7 +15,8 @@ import {
   PageHeader,
   AttendanceTimeCard,
   GlobalTable,
-  ProfileCard
+  ProfileCard,
+  TimeTracking
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -238,14 +236,19 @@ const Detail = () => {
 
       <div className="attendance-content">
         <div className="left-container">
-          <ProfileCard
-            name="Mino Marina"
-            profession="Data Researcher"
-            email="minomarina@gmail.com"
-            phone="+44 7700 900077"
-            address="263 Eversholt St, London NW11NB, UK"
-            avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-          />
+          {
+            constants.USER_ROLE === "Intern" ?
+              <TimeTracking vartical />
+              :
+              <ProfileCard
+                name="Mino Marina"
+                profession="Data Researcher"
+                email="minomarina@gmail.com"
+                phone="+44 7700 900077"
+                address="263 Eversholt St, London NW11NB, UK"
+                avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+              />
+          }
         </div>
 
         <div className="right-conainer">
