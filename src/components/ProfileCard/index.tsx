@@ -4,6 +4,7 @@ import { Avatar, Typography } from 'antd';
 import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
 import { EmailImg, LocationImg, PhoneIcon } from '../../assets/images';
 import { ROUTES_CONSTANTS } from '../../config/constants';
+import './style.scss';
 
 interface ProfileProps {
   avatar: string
@@ -20,7 +21,7 @@ export const ProfileCard: any = (props: ProfileProps) => {
   const {avatar, size=64, name, profession, email, phone, address, className=''} = props;
 
   return (
-    <BoxWrapper className={`flex flex-col w-full ${className}`} >
+    <BoxWrapper className={`flex flex-col w-full profile-card ${className}`} >
       <Avatar
         size={size}
         className="m-auto"
@@ -41,27 +42,30 @@ export const ProfileCard: any = (props: ProfileProps) => {
       </Typography.Text>
 
       <div className="user-detail">
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row items-center gap-4">
           <EmailImg />
           <p className="text-sm">
             {email}
           </p>
         </div>
 
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row items-center gap-4">
           <PhoneIcon />
           <p className="text-sm">
             {phone}
           </p>
         </div>
 
-        <div className="flex flex-row gap-4">
+        <div className="flex flex-row items-center gap-4">
           <LocationImg />
           <p className="text-sm">
             {address}
           </p>
         </div>
       </div>
+
+      {/* STORYBOOK IS CRASHING ON BELOW CODE */}
+      {/* BUT WORKING FINE IN THE REUSABLE COMPONENT */}
 
       <Link
         to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
