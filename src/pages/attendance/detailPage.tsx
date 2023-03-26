@@ -123,9 +123,9 @@ const Detail = () => {
         return (
           <Link
             className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+            to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
           >
-            Performance
+            Attendance
           </Link>
         );
       case 'CompanyAdmin':
@@ -235,7 +235,7 @@ const Detail = () => {
             />
 
             <Typography.Title
-              className="m-auto"
+              className="name"
               level={3}
             >
               Mino Marina

@@ -113,6 +113,10 @@
       height: fit-content;
       width: 30%;
 
+      .name {
+        margin: 12px auto 0 auto;
+      }
+
       .user-detail {
         display: flex;
         flex-direction: column;

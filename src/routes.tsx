@@ -377,6 +377,11 @@ const managerRoutes = [
         element: <Attendance />,
       },
       {
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}/:id`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}/:id`,
+        element: <AttendanceDetail />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.LEAVES}`,
         path: `${ROUTES_CONSTANTS.LEAVES}`,
         element: <Leaves />,
