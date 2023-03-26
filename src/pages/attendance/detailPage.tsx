@@ -1,5 +1,5 @@
-import { Avatar, Space, Typography } from "antd";
 import { useState } from "react";
+import { Avatar, Space, Typography } from "antd";
 import { Link } from "react-router-dom";
 import {
   ClockInCommon,
@@ -210,7 +210,7 @@ const Detail = () => {
             }
           </div>
         }
-        
+
         children={
           <div className="flex flex-row gap-4">
             <DropDown
