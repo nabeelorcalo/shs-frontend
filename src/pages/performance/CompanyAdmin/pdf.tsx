@@ -23,7 +23,7 @@ const TableWithPagination = () => {
     doc.setFontSize(15);
     const title = 'Table with Pagination';
     const body = data.map(({ name, age, city }: any) => [name, age, city]);
-    debugger
+
     doc.text(title, marginLeft, 40);
     doc.autoTable({
       head: header,
