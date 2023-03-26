@@ -20,13 +20,16 @@ import Drawer from "../../../components/Drawer";
 // end
 import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
-import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { AppreciationModal } from "./appreciationModal";
 import { WarnModal } from "./warnModel";
+import useCustomHook from '../actionHandler';
+import {header, tableData} from './pdfData';
+import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
   const id = 1;
+  const action = useCustomHook();
 
   const columnNames = [
     {
@@ -53,7 +56,7 @@ const PerformanceHistory = () => {
             <Avatar
               size={32}
               alt="avatar"
-              src={<img src={data.src} />}
+              src={<img src={data.avatar} />}
             />
           </Link>
         </Space>
@@ -175,7 +178,7 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 40,
       isBadge: true,
     },
@@ -187,7 +190,7 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 80,
       isBadge: false,
     },
@@ -199,7 +202,7 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 50,
       isBadge: true,
     },
@@ -211,7 +214,7 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 30,
       isBadge: false,
     },
@@ -223,7 +226,7 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 100,
       isBadge: true,
     },
@@ -445,7 +448,7 @@ const PerformanceHistory = () => {
           <IconButton
             size='large'
             className='icon-btn'
-            onClick={downloadClick}
+            onClick={() => action.downloadPdf(header, tableData)}
             icon={<DownlaodFileIcon />}
           />
 
