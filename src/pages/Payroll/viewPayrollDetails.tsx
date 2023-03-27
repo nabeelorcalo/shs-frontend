@@ -74,7 +74,7 @@ const tableData = [
     total_payment: "$1,100",
   },
 ]
-const Payments = () => {
+const ViewPayrollDetails = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState("")
   const [showDatePicker, setShowDatePicker] = useState(false)
@@ -88,7 +88,7 @@ const Payments = () => {
         key: '1',
         label: (
           <a rel="noopener noreferrer" onClick={() => { navigate("view-payment-details") }}>
-            View details
+            Salary Slip
           </a>
         ),
       },
@@ -114,7 +114,7 @@ const Payments = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate("") }}>
             PDF
           </a>
         ),
@@ -234,4 +234,4 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default ViewPayrollDetails;

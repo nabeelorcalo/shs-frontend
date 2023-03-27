@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "CompanyAdmin",
+  USER_ROLE: "Intern",
 };
 
 // Possibe string of roles:
@@ -38,6 +38,7 @@ export const ROUTES_CONSTANTS: any = {
   NEW_INTERNSHIP: "internships/new-internship",
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   PAYROLL: "payroll",
+  PAYROLL_DETAILS: "payroll/payroll-details",
   INTERNS: "interns",
   COMPLETE_INTERNS: "interns/complete",
   INTERNS_PROFILE: "interns/profile",
@@ -77,6 +78,7 @@ export const ROUTES_CONSTANTS: any = {
   DIGIVAULT: "digivault",
   DREAM_UP: "dream-up",
   PAYMENTS: "payments",
+  VIEW_PAYMENT_DETAILS:"payments/view-payment-details",
   ACCOMMODATION: "accommodation",
   SAVED_SEARCHES: "saved-searches",
   RENTED_PROPERTIES: "rented-properties",

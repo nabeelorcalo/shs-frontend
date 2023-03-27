@@ -51,10 +51,13 @@ const ViewInternshipDetails = Loadable(lazy(() => import("./pages/internships/Vi
 const CMInternships = Loadable(lazy(() => import("./pages/internships/cmInternships")));
 const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/internshipPipeLine")));
 const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
+const ViewPayrollDetails = Loadable(lazy(() => import("./pages/Payroll/viewPayrollDetails")));
+
 
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
+const ViewPaymentDetails = Loadable(lazy(() => import("./pages/payments/viewPaymentDetails")));
 
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
@@ -675,6 +678,11 @@ const companyAdminRoutes = [
         element: <Payroll />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+        element: <ViewPayrollDetails />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         element: <OfferLetters />,
@@ -1058,6 +1066,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PAYMENTS}`,
         path: `${ROUTES_CONSTANTS.PAYMENTS}`,
         element: <Payments />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_PAYMENT_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.VIEW_PAYMENT_DETAILS}`,
+        element: <ViewPaymentDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,

@@ -27,7 +27,7 @@ const PopOver = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("profile");
+            navigate("payroll-details");
           }}
         >
           View Details
@@ -230,7 +230,7 @@ const Payroll = () => {
                 <div className="flex flex-col gap-2">
                     <p>Department</p>
                     <DropDown
-                      name="name"
+                      name="select"
                       options={[
                         "Business analyst",
                         "Research analyst",
@@ -247,7 +247,7 @@ const Payroll = () => {
                   <div className="flex flex-col gap-2">
                     <p>Time Frame</p>
                     <DropDown
-                      name="name"
+                      name="select"
                       options={["This Week", "Last Week" ,"This Month", "Last Month", "Date Range"]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
@@ -258,7 +258,7 @@ const Payroll = () => {
                   <div className="flex flex-col gap-2">
                     <p>Payroll Cycle</p>
                     <DropDown
-                      name="name"
+                      name="select"
                       options={["3 Months", "6 Months" ,"9 Months", "12 Months"]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
