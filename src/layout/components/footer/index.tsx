@@ -27,7 +27,9 @@ const AppFooter:FC<FooterProps> = ({collapsed, collapsedWidth}) => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  
+  function currentYear() {
+    return new Date().getFullYear();
+  }
 
 
   /* RENDER APP
@@ -49,7 +51,7 @@ const AppFooter:FC<FooterProps> = ({collapsed, collapsedWidth}) => {
         </ul>
       </div>
       <div className='footer-copyright'>
-        Copyrights &copy; 2022 All Rights Reserved by <span>Student Help Squad</span>
+        Copyrights &copy; {currentYear()} All Rights Reserved by <span>Student Help Squad</span>
       </div>
     </Footer>
   )
