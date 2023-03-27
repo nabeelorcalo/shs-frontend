@@ -251,7 +251,7 @@ const Detail = () => {
           }
         </div>
 
-        <div className="right-conainer">
+        <div className="right-container">
           <BoxWrapper className="flex mb-6">
             {
               state.timeData.map((item: any, index) => {
