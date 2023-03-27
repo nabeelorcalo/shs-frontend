@@ -1,3 +1,4 @@
+@import '../../scss/colors';
 body {
   background:#f7f6f6;
 }
@@ -37,26 +38,26 @@ body {
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   
   &.applied {
-    background: #363565;
+    background: $dashboard-primary-bg-color;
   }
   
   &.interviewed {
-    background: #5879CE;
+    background: $accommodation-tag;
   }
   &.recommended {
-    background: #CC7FD4;
+    background: $light-orange-color;
   }
   &.offerletter {
-    background: #C0ACFF;
+    background: $text-success-placeholder-color;
   }
   &.contract {
-    background: #9FBC95;
+    background: $teriary-light-bg-color;
   }
   &.hired {
-    background: #4A9D77;
+    background: $teriary-bg-color;
   }
   &.reject {
-    background: #E94E5D;
+    background: $page-header-secondary;
   }
   
   &:first-child {
