@@ -1,0 +1,25 @@
+@import "../../../scss/colors";
+.Dram_upMain {
+
+  .SearchBar {
+    max-width: 375px;
+  }
+  .Life_balanceGraph{
+    h4{
+      color: $text-secondary-body-color;
+    }
+    .echarts-for-react {
+      height: 380px !important;
+
+    }
+
+  }
+  .Life_assesment{
+    .lifeAssesment_main{
+      margin: 25px 0;
+
+    }
+
+  }
+
+}
