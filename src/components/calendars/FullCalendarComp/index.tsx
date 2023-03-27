@@ -7,6 +7,8 @@ import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
 import { Button } from "antd";
 import './style.scss';
+import Drawer from "../../Drawer";
+import CalendarModalBox from "./modalBox";
 
 const Index = () => {
 
@@ -123,6 +125,11 @@ const Index = () => {
           }
         }}
       />
+      <Drawer open={false} width={'500px'} title='interview detail'>
+
+      </Drawer>
+
+      <CalendarModalBox open={openModal} setOpen={setOpenModal} />
     </div>
   )
 }
