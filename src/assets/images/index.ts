@@ -440,3 +440,12 @@ export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.sv
 export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
+
+// Help Desk Icons 
+export { ReactComponent as EditHistoryIcon} from "./helpDesk/EditHistoryIcon.svg";
+export { ReactComponent as ReTime} from "./helpDesk/retime.svg";
+export { ReactComponent as UserAddIcon} from "./helpDesk/userAddIcon.svg";
+export { ReactComponent as MessageGreen} from "./helpDesk/messageGreen.svg";
+export { ReactComponent as YellowErrow} from "./helpDesk/yelowErrow.svg";
+export { ReactComponent as RestartRed} from "./helpDesk/restart.svg";
+

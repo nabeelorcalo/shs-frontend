@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu, Space, Tooltip } from "antd";
 import {GlobalTable} from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import StatusDropdown from "../statusDropDown/statusDropdown";
+import HistoryModal from "../HistoryModal";
 
 const tableData = [
   {
@@ -83,6 +84,8 @@ const priorityOption = [
 ];
 
 const UnassignedData = () => {
+  const [history, setHistory] = useState<any>(false)
+
   const columns = [
     {
       title: "ID",
@@ -160,12 +163,13 @@ const UnassignedData = () => {
       <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Add Flag</Menu.Item>
       <Menu.Item key="3">Unassign</Menu.Item>
-      <Menu.Item key="4">History</Menu.Item>
+      <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
     </Menu>
   );
 
   return (
     <div>
+       <HistoryModal history={history} setHistory={setHistory} />
       <GlobalTable columns={columns} tableData={tableData} />
     </div>
   );

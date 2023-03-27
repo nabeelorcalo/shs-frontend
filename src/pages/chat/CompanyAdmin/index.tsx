@@ -1,10 +1,10 @@
 import React from 'react'
 import ChatMain from "../ChatMain"
 
-const Student = () => {
+const CompanyAdmin = () => {
   return (
     <ChatMain />
   )
 }
 
-export default Student
+export default CompanyAdmin
