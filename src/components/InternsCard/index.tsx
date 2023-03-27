@@ -8,7 +8,7 @@ export const InternsCard = () => {
     <div className='w-80'>
       <BoxWrapper>
         <div className='flex flex-col gap-3 items-center  border border-[#243c5a]'>
-          <Avatar src="https://joesch.moe/api/v1/random?key=1" />
+          <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
           <div className='flex flex-col items-center'>
             <p className='text-lg'>Andrea Hiyahiya</p>
             <p className='text-sm'>Business Analyst</p>

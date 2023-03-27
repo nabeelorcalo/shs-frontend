@@ -134,7 +134,7 @@ const Interns = () => {
         no: item.no,
         posted_by:
           <Avatar
-            src={`https://joesch.moe/api/v1/random?key=${idx}`}
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
           />,
         title: item.title,
         department: item.department,

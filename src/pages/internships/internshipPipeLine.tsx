@@ -38,14 +38,11 @@ const statusArray = [
   }
 ]
 
-
 const InternshipPipeLine = () => {
   const navigate = useNavigate()
-
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
-
   return (
     <>
       <PageHeader title="Internships Pipeline" />
@@ -112,7 +109,6 @@ const InternshipPipeLine = () => {
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
-
                     {
                       Array(item.no).fill(item.no).map((items, idx) => {
                         return (

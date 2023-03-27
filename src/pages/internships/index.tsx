@@ -164,7 +164,7 @@ const Internships = () => {
             {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
           </Button>,
         posted_by: <Avatar
-          src={`https://joesch.moe/api/v1/random?key=${idx}`}
+          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
         />,
         actions: <PopOver />
       }
