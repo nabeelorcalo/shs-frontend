@@ -50,6 +50,7 @@ const ViewInternshipDetails = Loadable(lazy(() => import("./pages/internships/Vi
 //Company admin Internships
 const CMInternships = Loadable(lazy(() => import("./pages/internships/cmInternships")));
 const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/internshipPipeLine")));
+const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
 
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
@@ -667,6 +668,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PAYROLL}`,
+        path: `${ROUTES_CONSTANTS.PAYROLL}`,
+        element: <Payroll />,
       },
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,

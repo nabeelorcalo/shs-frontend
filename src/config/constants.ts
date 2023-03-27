@@ -37,6 +37,7 @@ export const ROUTES_CONSTANTS: any = {
   INTERNSHIP_PIPELINE: 'internships/pipeline',
   NEW_INTERNSHIP: "internships/new-internship",
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
+  PAYROLL: "payroll",
   INTERNS: "interns",
   COMPLETE_INTERNS: "interns/complete",
   INTERNS_PROFILE: "interns/profile",
