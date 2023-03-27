@@ -8,7 +8,7 @@ export const InternshipPipeLineCard = () => {
         <Avatar src={<img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} alt="avatar" />} />
         <div className='flex flex-col gap-2 justify-center'>
           <p>Jane Cooper</p>
-          <p className='p-1 bg-[#f3f1e3] rounded-lg'>Pending</p>
+          <p className='p-1 text-primary-disabled-bg-color rounded-lg'>Pending</p>
         </div>
       </div>
       <Divider />

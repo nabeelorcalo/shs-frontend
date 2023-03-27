@@ -3,6 +3,7 @@ import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { STATUS_CONSTANTS } from '../../config/constants';
 import { Link, useNavigate } from 'react-router-dom';
+import '../../scss/global-color/Global-colors.scss'
 
 const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
@@ -100,7 +101,7 @@ export const InternshipProgressCard = () => {
         </div>
         <Button
           size="small"
-          className={`${ACTIVE ? `bg-[#4ED185]` : PENDING ? `bg-[#FFC15E]` : CLOSED ? `bg-[#4783FF]` : REJECTED ? `bg-[#D83A52]` : null}  text-[#fff]`}
+          className={`${ACTIVE ? `text-success-bg-color` : PENDING ? `text-warning-bg-color` : CLOSED ? `text-info-bg-color` : REJECTED ? `text-error-bg-color` : null}  white-color`}
         >
           Pending
         </Button>
