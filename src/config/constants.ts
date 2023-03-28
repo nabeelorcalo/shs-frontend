@@ -73,6 +73,7 @@ export const ROUTES_CONSTANTS: any = {
   SELF_ASSESSMENT: "self-assessment",
   DIGIVAULT: "digivault",
   DREAM_UP: "dream-up",
+  ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
   ACCOMMODATION: "accommodation",
   SAVED_SEARCHES: "saved-searches",

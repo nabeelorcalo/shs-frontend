@@ -112,6 +112,7 @@ const AddRecipe = Loadable(lazy(() => import("./pages/recipes/AddRecipe")));
 const EditRecipe = Loadable(lazy(() => import("./pages/recipes/EditRecipe")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
+const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
@@ -1007,6 +1008,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
         path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        path: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        element: <AllGoals />,
       },
       {
         key: `${ROUTES_CONSTANTS.PAYMENTS}`,

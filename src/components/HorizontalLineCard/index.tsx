@@ -5,6 +5,7 @@ import "./style.scss";
 interface HorizonalLineCardProps {
   icon?: string;
   title: string;
+  lastAchivmentTime:string;
   subTitle: string;
   content: string;
   alt?: string;
@@ -23,7 +24,7 @@ export const HorizonalLineCard = (props: any) => {
               <span className=" md:font-medium text-lg md:text-xl dark-gray ">
                 {item.title}
               </span>
-              {/* <span>hello</span> */}
+              <span>{item.lastAchivmentTime}</span>
             </div>
             <div className=" md:pl-3  py-3 flex">
               <img src={item.icon} alt={item.alt} height="60px" />

@@ -1,0 +1,93 @@
+@import "../../../scss/colors";
+
+.allGoals_main {
+  .SearchBar {
+    max-width: 375px;
+  }
+
+  .view_history_button_wrapper {
+    .Request_leave {
+      box-shadow: none !important;
+      color: $white-bg-color;
+      background: $green-graph-tooltip-color;
+
+      &:hover {
+        background: $green-graph-tooltip-color;
+      }
+    }
+  }
+
+  .Add_new_task {
+    .Request_leave {
+      box-shadow: none !important;
+      color: $text-teriary-label-color;
+      background: $text-input-bg-color;
+
+      &:hover {
+        background: $text-input-bg-color;
+      }
+    }
+
+  }
+
+  .Goals_tab {
+    .Goals_tab_no_task {
+      p {
+        color: $light-grey-color;
+      }
+    }
+
+    .goals_main_wrapper {
+      max-height: 95%;
+
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+
+      .goal_card {
+        background-color: $text-input-bg-color;
+
+        .date_status {
+          .date {
+            color: $light-grey-color;
+          }
+
+          .status_wraper {
+            color: $white-bg-color;
+          }
+        }
+
+        .Goal_name {
+          color: $text-primary-title-color;
+        }
+      }
+    }
+  }
+
+  .Goals_tab_details {
+    .Goals_tab_details_no_task {
+      p.main {
+        color: $text-secondary-body-color;
+      }
+
+      p {
+        color: $light-grey-color
+      }
+    }
+
+    .collaps_main.ant-collapse {
+      background-color: $text-primary-disabled-color;
+      .ant-collapse-header-text{
+        .goals_task_Accordion {
+          span{
+            color:$text-primary-title-color;
+          }
+        }
+
+      }
+
+    }
+  }
+}
+
+.AddGoalModals {}
