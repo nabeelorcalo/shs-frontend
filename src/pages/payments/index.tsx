@@ -8,10 +8,11 @@ import {
   FiltersButton,
   CommonDatePicker
 } from "../../components";
+import { openNotification } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
 import { Button, Dropdown, Space } from "antd";
-import { DownloadDocumentIcon, InternshipsIcon, More } from "../../assets/images";
+import { DownloadDocumentIcon, InternshipsIcon, More, Success } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useNavigate, Link } from "react-router-dom";
 
@@ -95,7 +96,7 @@ const Payments = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => { openNotification({ title: "Success", description: "File downloaded", icon: <Success />, })}}>
             Download
           </a>
         ),
