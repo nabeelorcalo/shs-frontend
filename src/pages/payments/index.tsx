@@ -6,9 +6,10 @@ import {
   PageHeader,
   BoxWrapper,
   FiltersButton,
-  CommonDatePicker
+  CommonDatePicker,
+  SalarySlip,
+  openNotification
 } from "../../components";
-import { openNotification } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
 import { Button, Dropdown, Space } from "antd";
@@ -96,7 +97,7 @@ const Payments = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { openNotification({ title: "Success", description: "File downloaded", icon: <Success />, })}}>
+          <a rel="noopener noreferrer" onClick={() => { openNotification({ title: "Success", description: "File downloaded", icon: <Success />, }) }}>
             Download
           </a>
         ),
@@ -115,7 +116,7 @@ const Payments = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          <a rel="noopener noreferrer" onClick={() => { }}>
             PDF
           </a>
         ),

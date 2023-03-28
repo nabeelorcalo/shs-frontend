@@ -7,7 +7,6 @@ import {
   DownlaodFileIcon,
 } from "../../assets/images";
 import { IconButton } from "../IconButton";
-import { PopUpModal } from "../Model";
 import SalarySlipTable from "./salarySlipTable";
 import "./style.scss";
 
@@ -37,6 +36,12 @@ export const SalarySlip = () => {
 
   return (
     <div className="salarySlip-main-wrapper">
+      <IconButton
+        size="large"
+        className="icon-btn download-btn"
+        onClick={downloadClick}
+        icon={<DownlaodFileIcon />}
+      />
       <Card className="mt-5">
         <div className="flex justify-between items-center max-sm:flex-col md:flex-row gap-3">
           <div className="w-52 flex justify-center">

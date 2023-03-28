@@ -156,7 +156,7 @@ const Payroll = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          <a rel="noopener noreferrer" onClick={() => { }}>
             PDF
           </a>
         ),
