@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Input } from '../../../Input/input'
 import { Col, Form, Row, Radio, Button } from 'antd';
 import DropDownNew from '../../../Dropdown/DropDownNew';
-import { ArrowDownDark, UserAvatar } from '../../../../assets/images';
+import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from '../../../../assets/images';
 import { SearchBar } from '../../../SearchBar/SearchBar';
 import { DropDown } from '../../../Dropdown/DropDown';
 import { CommonDatePicker } from '../../CommonDatePicker/CommonDatePicker';
@@ -15,26 +15,31 @@ const Meeting = () => {
     title: '',
     attendees: '',
     recurrence: '',
+    date: '',
     dateFrom: '',
     dateTo: '',
     startTime: '',
     endTime: '',
-    location: '',
+    location: 'virtual',
   });
 
-  const [openDate, setOpenDate] = useState({ from: false, to: false });
+  const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
   const [openTime, setOpenTime] = useState({ start: false, end: false });
-  const [activeDay, setActiveDay] = useState('');
+  const [activeDay, setActiveDay] = useState<string[]>([]);
 
   const recurrenceData = ['does not repeat', 'every weekday (mon-fri)', 'daily', 'weekly'];
   const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
   console.log(formValues);
 
+  const handleSubmitForm = (e: any) => {
+    console.log(e);
+
+  }
 
   return (
     <div className='meeting-wrapper'>
-      <Form>
-        <Form.Item required>
+      <Form onFinish={handleSubmitForm}>
+        <Form.Item name={'title'} rules={[{ required: true, }]}>
           <Input
             label='Title'
             value={formValues.title}
@@ -44,7 +49,7 @@ const Meeting = () => {
             placeholder='Select'
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })} />
         </Form.Item>
-        <Form.Item required className='attendees'>
+        <Form.Item name={'attendees'} rules={[{ required: true, }]} className='attendees'>
           <label className='label'>Attendees <span className='text-[#E95060]'>*</span></label>
           <DropDownNew items={[
             { key: '1', label: <SearchBar handleChange={(e) => { }} /> },
@@ -68,7 +73,7 @@ const Meeting = () => {
           </DropDownNew>
         </Form.Item>
 
-        <Form.Item required className='recurrence'>
+        <Form.Item name={'recurrence'} rules={[{ required: true, }]} className='recurrence'>
           <label className='label'>Recurrence <span className='text-[#E95060]'>*</span></label>
           <DropDown
             value={formValues.recurrence}
@@ -77,6 +82,16 @@ const Meeting = () => {
             name='Select'
           />
         </Form.Item>
+        {
+          formValues.recurrence === 'does not repeat' &&
+          <Form.Item className='date-from'>
+            <CommonDatePicker
+              label='Date'
+              open={openDate.date}
+              setOpen={() => setOpenDate({ from: false, to: false, date: !openDate.date })}
+            />
+          </Form.Item>
+        }
         {formValues.recurrence !== '' &&
           <Row gutter={[15, 15]}>
             <Col xs={12}>
@@ -84,7 +99,7 @@ const Meeting = () => {
                 <CommonDatePicker
                   label='Date From'
                   open={openDate.from}
-                  setOpen={() => setOpenDate({ from: !openDate.from, to: false })}
+                  setOpen={() => setOpenDate({ from: !openDate.from, to: false, date: false })}
                 />
               </Form.Item>
             </Col>
@@ -93,7 +108,7 @@ const Meeting = () => {
                 <CommonDatePicker
                   label='Date To'
                   open={openDate.to}
-                  setOpen={() => setOpenDate({ from: false, to: !openDate.to })}
+                  setOpen={() => setOpenDate({ from: false, to: !openDate.to, date: false })}
                 />
               </Form.Item>
             </Col>
@@ -110,9 +125,12 @@ const Meeting = () => {
                 <p className='weeks'>Week(s)</p>
               </div>
               <div className="flex items-center gap-3 mt-3">
-                {days.map(day => <p onClick={() => setActiveDay(day)}
+                {days.map(day => <p key={day} onClick={() => {
+                  !activeDay.includes(day) ? setActiveDay([...activeDay, day]) :
+                    setActiveDay(activeDay.filter(active => active !== day))
+                }}
                   className={`day capitalize rounded-full cursor-pointer flex items-center justify-center 
-                  ${activeDay === day ? 'active' : ''}
+                  ${activeDay.includes(day) ? 'active' : ''}
                   `}
                 >{day.substring(0, 1)}</p>)}
               </div>
@@ -154,16 +172,26 @@ const Meeting = () => {
             <Radio value={'virtual'} className='mr-[20px]'>Virtual</Radio>
             <Radio value={'on site'}>On Site</Radio>
           </Radio.Group>
-          <div className='location-link'>
-          </div>
+          {formValues?.location === "virtual" ? <div className='virtual-link mt-[20px] rounded-lg p-[15px]'>
+            <VideoRecoder className='mr-[15px]' />
+            <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
+              https://zoom.com/call/0234
+            </a>
+          </div> :
+            <div className='on-site-address mt-[20px] rounded-lg p-[15px] flex items-center'>
+              <LocationDarkIcon className='mr-[20px]' />
+              <p className='break-words'>6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
+            </div>}
         </Form.Item>
+
         <Form.Item>
           <label className="label">Description (Optional)</label>
           <TextArea rows={5} />
         </Form.Item>
+
         <div className="flex gap-4 justify-end">
           <Button className='cancel-btn'>Cancel</Button>
-          <Button className='add-btn green-graph-tooltip-bg text-white'>Add</Button>
+          <Button htmlType='submit' className='add-btn green-graph-tooltip-bg text-white'>Add</Button>
         </div>
       </Form>
     </div>

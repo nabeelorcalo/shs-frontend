@@ -123,7 +123,7 @@ export { default as CalendarIcon } from './calender-icon.png';
 export { default as CloseCircleIcon } from './close-circle-icon.png';
 export { default as DownloadIcon } from './download-icon.png';
 export { default as SearchIcon } from './search-icon.png';
-export {ReactComponent as CalendarAddNewIcon} from './CalendarIconWhite.svg';
+export { ReactComponent as CalendarAddNewIcon } from './CalendarIconWhite.svg';
 
 // star outline icon
 export { ReactComponent as StarOutlinedIcon } from './StarOutlined.svg';
@@ -332,19 +332,19 @@ export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg
 export { ReactComponent as InProgressGrievances } from './Grievances/in-progress-grievances.svg';
 export { ReactComponent as NewGrievances } from './Grievances/new-grievances.svg';
 export { ReactComponent as ResolevedGrievances } from './Grievances/resoleved-grievances.svg';
-export { ReactComponent as Clock24h  } from './Grievances/clock-24h.svg';
-export { ReactComponent as ClockGrievances  } from './Grievances/clock.svg';
-export { ReactComponent as LineGrievances  } from './Grievances/line.svg';
-export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
-export { ReactComponent as GrievancesDocPDF  } from './Grievances/document-pdf.svg';
-export { ReactComponent as GrievancesDocJPG  } from './Grievances/document-jpg.svg';
-export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-download.svg';
-export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
-export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
-export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
-export { ReactComponent as GrievancesInbox  } from './Grievances/avater-img.svg';
-export { ReactComponent as GrievancesCall  } from './Grievances/avater-img.svg';
-export { ReactComponent as Grievances  } from './Grievances/avater-img.svg';
+export { ReactComponent as Clock24h } from './Grievances/clock-24h.svg';
+export { ReactComponent as ClockGrievances } from './Grievances/clock.svg';
+export { ReactComponent as LineGrievances } from './Grievances/line.svg';
+export { ReactComponent as BlowWistle } from './Grievances/blow-whistle.svg';
+export { ReactComponent as GrievancesDocPDF } from './Grievances/document-pdf.svg';
+export { ReactComponent as GrievancesDocJPG } from './Grievances/document-jpg.svg';
+export { ReactComponent as GrievancesDocDownload } from './Grievances/doc-download.svg';
+export { ReactComponent as GrievancesLike } from './Grievances/like.svg';
+export { ReactComponent as GrievancesDisLike } from './Grievances/dislike.svg';
+export { ReactComponent as GrievancesAvater } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesInbox } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesCall } from './Grievances/avater-img.svg';
+export { ReactComponent as Grievances } from './Grievances/avater-img.svg';
 export { ReactComponent as GrievancesSidebarAvater } from './Grievances/grievance-sidebar-avater.svg';
 
 // Recipes Icons
@@ -366,3 +366,7 @@ export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.sv
 
 // Listings Icons
 export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
+export { ReactComponent as VideoRecoder } from './VideoRecoder.svg';
+export { ReactComponent as LocationDarkIcon } from './LocationDarkIcon.svg';
+
+
