@@ -1,12 +1,19 @@
-import { Button, Col, Divider, Input, Row, Select } from 'antd'
-import React, { useState } from 'react'
-import { ArchiveFilledIcon, ArchiveIcon, AttachmentIcon, Avatar, EmojiIcon } from '../../../../assets/images'
-import { PopUpModal, SearchBar, TextArea } from '../../../../components'
-import SelectComp from '../../../../components/Select/Select'
-import Comments from '../../../dashboard/systemAdmin/Comments'
-import CommentCard from '../../../dashboard/systemAdmin/Comments/CommentCard'
-import PriorityDropDown from '../priorityDropDown/priorityDropDown'
-import StatusDropdown from '../statusDropDown/statusDropdown'
+import { Button, Col, Divider, Input, Row, Select, Space } from "antd";
+import React, { useState } from "react";
+import {
+  ArchiveFilledIcon,
+  ArchiveIcon,
+  AttachmentIcon,
+  Avatar,
+  EmojiIcon,
+} from "../../../../assets/images";
+import { PopUpModal, SearchBar, TextArea } from "../../../../components";
+import SelectComp from "../../../../components/Select/Select";
+import Comments from "../../../dashboard/systemAdmin/Comments";
+import CommentCard from "../../../dashboard/systemAdmin/Comments/CommentCard";
+import PriorityDropDown from "../priorityDropDown/priorityDropDown";
+import StatusDropdown from "../statusDropDown/statusDropdown";
+import "./style.scss";
 const Options = Select;
 
 const StatusOptions = [
@@ -51,9 +58,8 @@ const drawerAssignToData = [
   },
 ];
 
-
 const AttendaceLog = (props: any) => {
-  const { open, setOpen } = props
+  const { open, setOpen } = props;
 
   const [isArchive, setIsArchive] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
@@ -71,12 +77,30 @@ const AttendaceLog = (props: any) => {
     }
   };
 
+  const handleChange = (value: string[]) => {
+    console.log(`selected ${value}`);
+  };
+
+  function tagRender(props: any) {
+    const { label, value, closable, onClose } = props;
+    return (
+      <span key={value} onClick={() => onClose(value)}>
+        {label}
+      </span>
+    );
+  }
 
   return (
-    <PopUpModal width={1000} title="" footer={false} close={() => setOpen(false)} open={open}>
-      <Row gutter={[20, 20]}>
+    <PopUpModal
+      width={1000}
+      title=""
+      footer={false}
+      close={() => setOpen(false)}
+      open={open}
+    >
+      <Row className="attendance" gutter={[20, 20]}>
         <Col xs={24} xxl={16}>
-          <Row className='mb-12'>
+          <Row className="mb-12">
             <Col xxl={18} xs={24}>
               <Row align="middle" className="gap-3">
                 <div
@@ -94,6 +118,7 @@ const AttendaceLog = (props: any) => {
               <StatusDropdown StatusOptions={StatusOptions} />
             </Col>
           </Row>
+
           <Row
             gutter={[30, 20]}
             style={{ maxHeight: 550, overflowY: "scroll" }}
@@ -105,7 +130,7 @@ const AttendaceLog = (props: any) => {
                 <Input
                   className="input"
                   disabled
-                  onChange={() => { }}
+                  onChange={() => {}}
                   id=""
                   name="user"
                   placeholder="placeholder"
@@ -114,7 +139,6 @@ const AttendaceLog = (props: any) => {
                   value=""
                 />
               </div>
-
             </Col>
             <Col xs={24} xxl={12}>
               <div>
@@ -122,7 +146,7 @@ const AttendaceLog = (props: any) => {
                 <Input
                   className="input"
                   disabled
-                  onChange={() => { }}
+                  onChange={() => {}}
                   id=""
                   name="userRole"
                   placeholder="placeholder"
@@ -131,13 +155,12 @@ const AttendaceLog = (props: any) => {
                   value=""
                 />
               </div>
-
             </Col>
             <Col xs={24}>
               <SelectComp
                 className=""
                 label="Issue Type"
-                onChange={() => { }}
+                onChange={() => {}}
                 placeholder="Select"
                 popupClassName=""
                 value=""
@@ -150,7 +173,7 @@ const AttendaceLog = (props: any) => {
               <SelectComp
                 className=""
                 label="Priority"
-                onChange={() => { }}
+                onChange={() => {}}
                 placeholder="Select"
                 popupClassName=""
                 value=""
@@ -167,29 +190,25 @@ const AttendaceLog = (props: any) => {
               <div>
                 <label>Assign</label>
                 <Select
-                  style={{ width: '100%' }}
+                  showArrow
+                  showSearch={false}
                   mode="multiple"
-                  allowClear
-                  className=""
-                  onChange={() => { }}
-                  placeholder="Select"
-                  popupClassName=""
-                  value="">
-                  <Options>
-                    <SearchBar size="small" handleChange={() => { }} />
-                  </Options>
-
+                  style={{ width: "100%" }}
+                  placeholder="select one country"
+                  onChange={handleChange}
+                  optionLabelProp="label"
+                 
+                >
+                 
                   {drawerAssignToData.map((item: any, index: any) => {
                     return (
-                      <Options>
+                      <Options value={item.name}>
                         <div className="flex justify-between mb-8 ">
                           <div key={index} className="flex">
                             <div className="mr-2">
                               <img src={item.avatar} alt="icon" />
                             </div>
-                            <div className="text-secondary-color text-base font-normal">
-                              {item.name}
-                            </div>
+                            <div>{item.name}</div>
                           </div>
                           <div
                             onClick={() => handleAddUser(item)}
@@ -203,17 +222,17 @@ const AttendaceLog = (props: any) => {
                   })}
                 </Select>
               </div>
+              
             </Col>
             <Col xs={24}>
               <label>Log Time</label>
               <Row gutter={16}>
                 <Col xs={24} xxl={8}>
                   <div>
-
                     <Input
                       className="input"
                       disabled
-                      onChange={() => { }}
+                      onChange={() => {}}
                       id=""
                       name="hours"
                       placeholder="Hours"
@@ -222,17 +241,14 @@ const AttendaceLog = (props: any) => {
                       value=""
                     />
                   </div>
-
                 </Col>
 
                 <Col xs={24} xxl={8}>
-
                   <Input
                     className="input"
                     disabled
-                    onChange={() => { }}
+                    onChange={() => {}}
                     id=""
-
                     name="minutes"
                     placeholder="Minutes"
                     size="large"
@@ -244,7 +260,7 @@ const AttendaceLog = (props: any) => {
                   <Input
                     className="input"
                     disabled
-                    onChange={() => { }}
+                    onChange={() => {}}
                     id=""
                     name="seconds"
                     placeholder="Seconds"
@@ -263,7 +279,7 @@ const AttendaceLog = (props: any) => {
                     <Input
                       className="input"
                       disabled
-                      onChange={() => { }}
+                      onChange={() => {}}
                       id=""
                       name="hours"
                       placeholder="placeholder"
@@ -272,7 +288,6 @@ const AttendaceLog = (props: any) => {
                       value=""
                     />
                   </div>
-
                 </Col>
                 <Col xs={24} xxl={12}>
                   <div>
@@ -280,7 +295,7 @@ const AttendaceLog = (props: any) => {
                     <Input
                       className="input"
                       disabled
-                      onChange={() => { }}
+                      onChange={() => {}}
                       id=""
                       name="minutes"
                       placeholder="placeholder"
@@ -302,7 +317,6 @@ const AttendaceLog = (props: any) => {
                   disabled
                 />
               </div>
-
             </Col>
             <Col xs={24}>
               <label>Attachment (Optional)</label>
@@ -333,31 +347,30 @@ const AttendaceLog = (props: any) => {
           </Col>
         </Col>
 
-        <Col className='flex flex-col justify-between' xs={24} xxl={8}>
-
-          <div className='pr-2 pl-6'>
-            <div className='mb-16 text-xl font-medium text-[#14142A]'>Comments</div>
-            {
-              [1, 2].map((item) => {
-                return (
-                  <>
-                    <div>
-                      <CommentCard
-                        name={"Maude Hall"}
-                        image={""}
-                        content="That's a fantastic new app feature. You and your team did an excellent job of incorporating user testing feedback."
-                        time={"14 min"}
-                        likes={"5"}
-                      />
-                    </div>
-                    <Divider />
-                  </>
-                )
-              })
-            }
+        <Col className="flex flex-col justify-between" xs={24} xxl={8}>
+          <div className="pr-2 pl-6">
+            <div className="mb-16 text-xl font-medium text-[#14142A]">
+              Comments
+            </div>
+            {[1, 2].map((item) => {
+              return (
+                <>
+                  <div>
+                    <CommentCard
+                      name={"Maude Hall"}
+                      image={""}
+                      content="That's a fantastic new app feature. You and your team did an excellent job of incorporating user testing feedback."
+                      time={"14 min"}
+                      likes={"5"}
+                    />
+                  </div>
+                  <Divider />
+                </>
+              );
+            })}
           </div>
 
-          <div className='ml-3 '>
+          <div className="ml-3 ">
             <div className=" mt-2 p-2 rounded-lg border border-solid border-[#D9DBE9]">
               <textarea
                 placeholder="Comment here"
@@ -396,14 +409,10 @@ const AttendaceLog = (props: any) => {
               </Row>
             </div>
           </div>
-
-
-
-
         </Col>
       </Row>
     </PopUpModal>
-  )
-}
+  );
+};
 
-export default AttendaceLog
+export default AttendaceLog;
