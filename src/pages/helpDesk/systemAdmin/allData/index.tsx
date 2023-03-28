@@ -7,7 +7,7 @@ import { DownOutlined } from "@ant-design/icons";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import HistoryModal from "../HistoryModal";
-
+import AttendaceLog from "../AttendanceLogModal";
 
 const tableData = [
   {
@@ -87,6 +87,8 @@ const priorityOption = [
 
 const AllData = () => {
   const [history, setHistory] = useState<any>(false)
+  const [openModal, setOpenModal] = useState<any>(false)
+
   const columns = [
     {
       title: "ID",
@@ -161,7 +163,7 @@ const AllData = () => {
 
   const menu2 = (
     <Menu>
-      <Menu.Item key="1" >View Details</Menu.Item>
+      <Menu.Item key="1" onClick={() => setOpenModal(true)} >View Details</Menu.Item>
       <Menu.Item key="2">Add Flag</Menu.Item>
       <Menu.Item key="3">Unassign</Menu.Item>
       <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
@@ -171,6 +173,7 @@ const AllData = () => {
   return (
     <div>
       <HistoryModal history={history} setHistory={setHistory} />
+      <AttendaceLog open={openModal} setOpen={setOpenModal} />
       <div>
         <GlobalTable columns={columns} tableData={tableData} />
       </div>
