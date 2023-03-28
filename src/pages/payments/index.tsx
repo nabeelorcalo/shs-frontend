@@ -193,22 +193,24 @@ const Payments = () => {
         bordered
       />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar
+              className=""
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="search"
+              size="middle"
+            />
+          </div>
           <div className="flex flex-row gap-4">
             <CommonDatePicker
-               name="name"
-               open={false}
-               onBtnClick={() => {setShowDatePicker(!showDatePicker)}}
-               picker="month"
-               setOpen={function noRefCheck() {}}
-               setValue={function noRefCheck() {}}
+              name="name"
+              open={false}
+              onBtnClick={() => { setShowDatePicker(!showDatePicker) }}
+              picker="month"
+              setOpen={function noRefCheck() { }}
+              setValue={function noRefCheck() { }}
             />
             <Space wrap>
               <div className='p-2  border-solid border-2 bg-[#E6F4F9] border-[#E6F4F9] rounded-lg hover:border-2 hover:border-[#e2e2e2]'>

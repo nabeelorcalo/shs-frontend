@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Intern",
+  USER_ROLE: "Manager",
 };
 
 // Possibe string of roles:
@@ -39,6 +39,7 @@ export const ROUTES_CONSTANTS: any = {
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   PAYROLL: "payroll",
   PAYROLL_DETAILS: "payroll/payroll-details",
+  VIEW_PAYROLL_SALARY_SLIP: "payroll/payroll-details/view-payroll-details",
   INTERNS: "interns",
   COMPLETE_INTERNS: "interns/complete",
   INTERNS_PROFILE: "interns/profile",

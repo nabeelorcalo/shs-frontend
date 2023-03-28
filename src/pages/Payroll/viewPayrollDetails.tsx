@@ -87,7 +87,7 @@ const ViewPayrollDetails = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-payment-details") }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate("view-payroll-details") }}>
             Salary Slip
           </a>
         ),
@@ -189,11 +189,12 @@ const ViewPayrollDetails = () => {
   return (
     <>
       <PageHeader
-        title="Payments"
+        title="Mino Marina Payments"
         bordered
       />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
           <SearchBar
             className=""
             handleChange={() => { }}
@@ -201,6 +202,7 @@ const ViewPayrollDetails = () => {
             placeholder="search"
             size="middle"
           />
+          </div>
           <div className="flex flex-row gap-4">
             <CommonDatePicker
                name="name"

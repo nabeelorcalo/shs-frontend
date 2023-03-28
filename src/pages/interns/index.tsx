@@ -6,12 +6,13 @@ import {
   PageHeader,
   BoxWrapper,
   InternsCard,
-  Alert
+  Alert,
+  ToggleButton
 } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import { More } from "../../assets/images"
-import type { MenuProps } from 'antd';
+import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
+import { MenuProps, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 
 const PopOver = () => {
@@ -59,6 +60,8 @@ const Interns = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const [isToggle, setIsToggle] = useState(false)
+  console.log(isToggle)
   const columns = [
     {
       dataIndex: "no",
@@ -150,17 +153,27 @@ const Interns = () => {
     <>
       <PageHeader title="Interns" />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
-
-          <div className="flex flex-row gap-4" onClick={() => { setListandgrid(!listandgrid) }}>
-            <ListAndGridViewButton />
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar
+              className=""
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="search"
+              size="middle"
+            />
+          </div>
+          <div className="flex flex-row gap-4">
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
+            <div className='p-2  border-solid border-2 bg-[#E6F4F9] border-[#E6F4F9] rounded-lg hover:border-2 hover:border-[#e2e2e2]'>
+            <DownloadDocumentIcon />
+            </div>
           </div>
         </div>
         <BoxWrapper>
@@ -168,8 +181,8 @@ const Interns = () => {
             {
               listandgrid ? <div className="flex flex-row flex-wrap gap-6">
                 {
-                  cardDummyArray.map((items: any, idx: any)=>{
-                    return(
+                  cardDummyArray.map((items: any, idx: any) => {
+                    return (
                       <InternsCard />
                     )
                   })

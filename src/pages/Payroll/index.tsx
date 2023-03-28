@@ -9,13 +9,14 @@ import {
   ToggleButton,
   FiltersButton,
   Alert,
-  DropDown
+  DropDown,
+  AttendanceCardDetail
 } from "../../components";
 import "./style.scss";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, MenuProps, Space } from 'antd';
+import { Button, Menu, MenuProps, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 
 const PopOver = () => {
@@ -42,7 +43,7 @@ const PopOver = () => {
   );
 };
 
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7]
 
 const Payroll = () => {
   const navigate = useNavigate()
@@ -193,25 +194,29 @@ const Payroll = () => {
     )
   })
   console.log(listandgrid)
-  const isToggle = true
+
+  const [isToggle, setIsToggle] = useState(false)
+  console.log(isToggle)
   return (
-    <>
+    <div className="payroll-wrapper-main">
       <PageHeader
         title="Payroll"
         bordered
       />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar
+              className=""
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="search"
+              size="middle"
+            />
+          </div>
 
-          <div className="flex flex-row gap-4">
-          <FiltersButton
+          <div className="flex flex-row gap-4 flex-wrap">
+            <FiltersButton
               label="Filters"
               onClick={() => {
                 setShowDrawer(true);
@@ -227,7 +232,7 @@ const Payroll = () => {
             >
               <React.Fragment key=".0">
                 <div className="flex flex-col gap-12">
-                <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2">
                     <p>Department</p>
                     <DropDown
                       name="select"
@@ -248,7 +253,7 @@ const Payroll = () => {
                     <p>Time Frame</p>
                     <DropDown
                       name="select"
-                      options={["This Week", "Last Week" ,"This Month", "Last Month", "Date Range"]}
+                      options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -259,7 +264,7 @@ const Payroll = () => {
                     <p>Payroll Cycle</p>
                     <DropDown
                       name="select"
-                      options={["3 Months", "6 Months" ,"9 Months", "12 Months"]}
+                      options={["3 Months", "6 Months", "9 Months", "12 Months"]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -289,7 +294,9 @@ const Payroll = () => {
                 </div>
               </React.Fragment>
             </Drawer>
-            <ToggleButton isToggle={isToggle} onTogglerClick={(isToggle: any) => { isToggle = !isToggle; }}
+            <ToggleButton
+              isToggle={isToggle}
+              onTogglerClick={() => { setIsToggle(!isToggle) }}
               FirstIcon={CardViewIcon}
               LastIcon={TableViewIcon}
               className='w-[88px]'
@@ -302,19 +309,31 @@ const Payroll = () => {
           </div>
 
         </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {
-                  cardDummyArray.map((items: any, idx: any) => {
-                    return (
-                      <InternsCard />
-                    )
-                  })
-                }
-              </div>
-                :
+
+        <div className="pt-3">
+          {
+            isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+              {
+                cardDummyArray.map((items: any, idx: any) => {
+                  return (
+                    <AttendanceCardDetail
+                      index={1}
+                      item={{
+                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+                        id: 1,
+                        name: 'Mino Marina',
+                        profession: 'Data Researcher',
+
+                      }}
+                      payrollCycle="Jun-Sept"
+                      menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
+                    />
+                  )
+                })
+              }
+            </div>
+              :
+              <BoxWrapper>
                 <GlobalTable
                   columns={columns}
                   expandable={{
@@ -323,11 +342,11 @@ const Payroll = () => {
                   }}
                   tableData={newTableData}
                 />
-            }
-          </div>
-        </BoxWrapper>
+              </BoxWrapper>
+          }
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

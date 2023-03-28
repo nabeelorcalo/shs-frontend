@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { DownlaodFileIcon } from '../../assets/images'
 import { IconButton, PageHeader, PopUpModal, SalarySlip } from '../../components'
 import './style.scss'
-const ViewPaymentDetails = () => {
+const ViewPayrollSalarySlip = () => {
   const [modalShow, setModalShow] = useState(false)
   const downloadClick = () => { setModalShow(true)};
   return (
@@ -41,4 +41,4 @@ const ViewPaymentDetails = () => {
   )
 }
 
-export default ViewPaymentDetails
+export default ViewPayrollSalarySlip

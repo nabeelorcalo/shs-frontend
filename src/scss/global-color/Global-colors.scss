@@ -230,6 +230,21 @@
 .light-blue-bg-color {
   background-color: $light-blue-color;
 }
+.light-blue-color {
+  color: $light-blue-color
+}
+.light-green-bg-color {
+  background-color: $light-green-color;
+}
+.light-green-color {
+  color: $light-green-color;
+}
+.wrapper-shadow {
+  box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+}
+.light-orange-color {
+  color: $light-orange-color;
+}
 
 .info-dark-bg-color {
   background-color: $manager-btn-info;
