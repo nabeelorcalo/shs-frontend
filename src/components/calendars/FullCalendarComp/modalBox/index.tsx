@@ -12,12 +12,12 @@ const CalendarModalBox = (props: any) => {
     {
       key: '1',
       label: 'Meeting',
-      children: <Meeting />
+      children: <Meeting onClose={setOpen} />
     },
     {
       key: '2',
       label: 'Reminder',
-      children: <Reminder />
+      children: <Reminder onClose={setOpen} />
     },
   ]
 

@@ -7,68 +7,48 @@ import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
 import { Button } from "antd";
 import './style.scss';
-import Drawer from "../../Drawer";
 import CalendarModalBox from "./modalBox";
+import CalendarDrawer from './drawerComp/index'
+import { eventsMockData } from "./mockData";
 
 const Index = () => {
 
   const [openModal, setOpenModal] = useState(false);
 
-  const events = [
-    {
-      id: "2",
-      title: "UI UX post oppertunity",
-      start: "2023-03-21T01:30:00",
-      end: "2023-03-21T02:00:00",
-      category: "interview"
-    },
-
-    {
-      id: "3",
-      title: "annual fee submission",
-      start: "2023-03-24T03:51:00",
-      end: "2023-03-24T06:51:00",
-      category: "event"
-    },
-    {
-      id: "4",
-      title: "Post UI UX Meeting",
-      start: "2023-03-25T01:51:00",
-      end: "2023-03-25T02:51:00",
-    },
-    {
-      id: "5",
-      title: "UI UX post oppertunity",
-      start: "2023-03-22T01:30:00",
-      end: "2023-03-22T02:00:00",
-      category: "interview"
-    },
-  ];
+  const [openDrawer, setOpenDrawer] = useState<any>({ open: false, type: '', eventId: '' });
 
   const renderEventColor: any = {
     'meeting': '#E94E5D',
     'interview': '#5879CE',
     'event': '#FFC15D',
+  };
+  const handleEventClick = (id: string, type: string) => {
+    setOpenDrawer({ open: !openDrawer.open, type: 'eventDetail', eventId: id })
   }
+
+  const handleEditClick = (id: string, type: string) => { }
+
+  const handleCancelClick = (id: string, type: string) => { }
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
     const category = events?.extendedProps?.category;
+
     return (
       <div className="event-content"
         style={{ borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : '#4E4B66'}` }}
       >
-        <div className="content">
+        <div className="content" onClick={() => handleEventClick(events?.publicId, '')}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
           <p className="duration text-[14px] mt-[5px]">{dayjs().format('DD:MM:YYYY')}</p>
         </div>
         <div className="event-btn gap-3">
-          <Button size="small" className={`btn capitalize btn-primary`}>
+          <Button size="small" className={`btn capitalize btn-primary`} onClick={() => handleEditClick(events?.publicId, '')}>
             edit
           </Button>
 
-          <Button size="small" className={`btn capitalize`}>
+          <Button size="small" className={`btn capitalize`} onClick={() => handleCancelClick(events?.publicId, '')}>
             cancel
           </Button>
         </div>
@@ -101,7 +81,7 @@ const Index = () => {
         height="63vh"
         slotDuration="00:60:00"
         eventContent={handleEventContent}
-        events={events}
+        events={eventsMockData}
         views={{
           week: {
             dayHeaderContent: (args) => {
@@ -125,10 +105,12 @@ const Index = () => {
           }
         }}
       />
-      <Drawer open={false} width={'500px'} title='interview detail'>
-
-      </Drawer>
-
+      <CalendarDrawer
+        open={openDrawer.open}
+        type={openDrawer.type}
+        setOpen={setOpenDrawer}
+        eventId={openDrawer.eventId}
+      />
       <CalendarModalBox open={openModal} setOpen={setOpenModal} />
     </div>
   )

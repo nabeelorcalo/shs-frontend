@@ -1,0 +1,23 @@
+@import '../../../../scss/_colors.scss';
+
+.calendar-drawer-wrapper {
+    .ant-drawer-header {
+        padding: 20px !important;
+    }
+
+    .event-detail-wrapper {
+        .event-detail {
+            padding-top: 25px;
+            border-top: 1px solid $text-error-line-color;
+
+            .event-title {
+                color: $text-primary-title-color;
+            }
+
+            .event-info {
+                color: $text-secondary-body-color;
+            }
+
+        }
+    }
+}

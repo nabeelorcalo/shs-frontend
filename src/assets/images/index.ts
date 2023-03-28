@@ -368,5 +368,6 @@ export { ReactComponent as DownlaodFileIcon } from './Common/DownlaodFileIcon.sv
 export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
 export { ReactComponent as VideoRecoder } from './VideoRecoder.svg';
 export { ReactComponent as LocationDarkIcon } from './LocationDarkIcon.svg';
+export { ReactComponent as EditIcon } from './EditIcon.svg';
 
 

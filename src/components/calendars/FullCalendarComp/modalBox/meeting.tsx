@@ -9,7 +9,8 @@ import { CommonDatePicker } from '../../CommonDatePicker/CommonDatePicker';
 import TimePickerComp from '../../TimePicker/timePicker';
 import { TextArea } from '../../../TextArea';
 
-const Meeting = () => {
+const Meeting = (props: any) => {
+  const { onClose } = props;
 
   const [formValues, setFormValues] = useState({
     title: '',
@@ -21,6 +22,7 @@ const Meeting = () => {
     startTime: '',
     endTime: '',
     location: 'virtual',
+    description: '',
   });
 
   const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
@@ -33,7 +35,6 @@ const Meeting = () => {
 
   const handleSubmitForm = (e: any) => {
     console.log(e);
-
   }
 
   return (
@@ -186,11 +187,15 @@ const Meeting = () => {
 
         <Form.Item>
           <label className="label">Description (Optional)</label>
-          <TextArea rows={5} />
+          <TextArea
+            rows={5}
+            placeholder='Write Something...'
+            onChange={(e: any) => setFormValues({ ...formValues, description: e.target.value })}
+          />
         </Form.Item>
 
         <div className="flex gap-4 justify-end">
-          <Button className='cancel-btn'>Cancel</Button>
+          <Button className='cancel-btn' onClick={() => onClose(false)}>Cancel</Button>
           <Button htmlType='submit' className='add-btn green-graph-tooltip-bg text-white'>Add</Button>
         </div>
       </Form>
