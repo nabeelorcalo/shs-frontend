@@ -18,10 +18,17 @@ const InvitationModal: FC<{ isShowModal: boolean; close: () => void }> = (
       close={close}
       footer={false}
     >
-      <Row align='middle' justify="center" className="flex-col">
+      <Row align="middle" justify="center" className="flex-col">
         <SHSLogo />
-        <p className="font-medium text-base text-black text-center pt-2 pb-[30px]">
-          Share Link
+        <p className="font-medium text-base text-black text-center pt-[34px] pb-[6px]">
+          Invitation Sent!
+        </p>
+        <p className="font-normal text-[14px] leading-[22px] text-secondary-color max-w-[312px] text-center pb-[30px]">
+          We have sent an invitation to “johndoemail.com” to join Internship
+          Ken.
+        </p>
+        <p className="font-normal text-[14px] leading-[22px] text-primary-color max-w-[312px] text-center">
+          If an email is not received, contact our support team.
         </p>
       </Row>
     </PopUpModal>
