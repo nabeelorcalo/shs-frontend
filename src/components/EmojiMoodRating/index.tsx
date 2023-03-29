@@ -15,13 +15,13 @@ const EmojiMoodRating = (props: EmojiProps) => {
   const { title, data, size = 3, activeIconIndex = -1, onClick } = props;
 
   return (
-    <BoxWrapper className='my-2'>
+    <BoxWrapper className=''>
       <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
         <Typography.Title className='emoji-heading' level={size}>
           {title}
         </Typography.Title>
         <div>
-          <div className="flex flex-row justify-around py-[20px] emoji-wrapper">
+          <div className="flex flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
             {
               data.map((item: any, idx: any) => {
                 return (
