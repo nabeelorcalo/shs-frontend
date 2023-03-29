@@ -1,19 +1,20 @@
-import { Button, Col, Divider, Input, Row, Select, Space } from "antd";
+import { Button, Col, Divider, Input, Row, Select, Space, Dropdown, Menu } from "antd";
 import React, { useState } from "react";
 import {
-  ArchiveFilledIcon,
-  ArchiveIcon,
-  AttachmentIcon,
+  // ArchiveFilledIcon,
+  // ArchiveIcon,
+  // AttachmentIcon,
   Avatar,
-  EmojiIcon,
+  // EmojiIcon,
 } from "../../../../assets/images";
 import { PopUpModal, SearchBar, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
-import Comments from "../../../dashboard/systemAdmin/Comments";
-import CommentCard from "../../../dashboard/systemAdmin/Comments/CommentCard";
+import CommentCard from "../CommentCard";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import "./style.scss";
+import { DownOutlined, CloseCircleFilled } from "@ant-design/icons";
+
 const Options = Select;
 
 const StatusOptions = [
@@ -63,6 +64,10 @@ const AttendaceLog = (props: any) => {
 
   const [isArchive, setIsArchive] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
+  const [visible, setVisible] = useState(false);
+  const handleVisibleChange = (visible: any) => {
+    setVisible(visible);
+  };
 
   const handleRemoveUser = (id: string) => {
     setAssignUser(assignUser.filter((user: any) => user.id !== id));
@@ -90,6 +95,36 @@ const AttendaceLog = (props: any) => {
     );
   }
 
+  const opriorityOption = (
+    <Menu>
+      <div className="mt-2 ml-2 mr-2">
+        <SearchBar handleChange={() => { }} />
+      </div>
+      {
+        drawerAssignToData.map((item) => {
+          return (
+            <Menu.Item key={item.id}>
+              <div className="flex justify-between ">
+                <div className="flex">
+                  <div className="mr-2">
+                    <img src={item.avatar} alt="icon" />
+                  </div>
+                  <div>{item.name}</div>
+                </div>
+                <div
+                  className="cursor-pointer text-[#A0A3BD] text-xs"
+                  onClick={() => handleAddUser(item)}
+                >
+                  {item.btn}
+                </div>
+              </div>
+            </Menu.Item>
+          )
+        })
+      }
+    </Menu>
+  );
+
   return (
     <PopUpModal
       width={1000}
@@ -107,7 +142,7 @@ const AttendaceLog = (props: any) => {
                   className="cursor-pointer"
                   onClick={() => setIsArchive(!isArchive)}
                 >
-                  {isArchive ? <ArchiveFilledIcon /> : <ArchiveIcon />}
+                  {/* {isArchive ? <ArchiveFilledIcon /> : <ArchiveIcon />} */}
                 </div>
                 <p className="font-semibold text-[20px] leading-[28px] capitalize">
                   Attendance Log Issue
@@ -188,40 +223,40 @@ const AttendaceLog = (props: any) => {
 
             <Col xs={24}>
               <div>
-                <label>Assign</label>
-                <Select
-                  showArrow
-                  showSearch={false}
-                  mode="multiple"
-                  style={{ width: "100%" }}
-                  placeholder="select one country"
-                  onChange={handleChange}
-                  optionLabelProp="label"
-
+                <Dropdown
+                  placement="bottomRight"
+                  overlay={opriorityOption}
+                  visible={visible}
+                  onVisibleChange={handleVisibleChange}
+                  trigger={["click"]}
+                  arrow={true}
                 >
+                  <div>
+                    <label>Assign</label>
+                    <div className="border-[1px] border-solid border-[#DDE2E6] h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
+                      <div>
 
-                  {drawerAssignToData.map((item: any, index: any) => {
-                    return (
-                      <Options value={item.name}>
-                        <div className="flex justify-between mb-8 ">
-                          <div key={index} className="flex">
-                            <div className="mr-2">
-                              <img src={item.avatar} alt="icon" />
+                        <div className="flex items-center gap-2 flex-wrap">
+                          {assignUser.map((user) => (
+                            <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
+                              <span className="text-[#6E7191] font-normal text-xs">
+                                {user.name}
+                              </span>
+                              <CloseCircleFilled
+                                style={{ color: "#A3AED0", fontSize: "20px" }}
+                                onClick={() => handleRemoveUser(user.id)}
+                              />
                             </div>
-                            <div>{item.name}</div>
-                          </div>
-                          <div
-                            onClick={() => handleAddUser(item)}
-                            className="cursor-pointer text-[#A0A3BD] text-xs"
-                          >
-                            {item.btn}
-                          </div>
+                          ))}
                         </div>
-                      </Options>
-                    );
-                  })}
-                </Select>
+                      </div>
+                      <DownOutlined className="text-sm ml-2" />
+
+                    </div>
+                  </div>
+                </Dropdown>
               </div>
+
 
             </Col>
             <Col xs={24}>
@@ -385,10 +420,11 @@ const AttendaceLog = (props: any) => {
                 <Col>
                   <Row className="gap-[10px]">
                     <p className="text-[16px] font-medium leading-[14px]">B</p>
-                    <EmojiIcon />
-                    <AttachmentIcon />
+                    {/* <EmojiIcon />
+                    <AttachmentIcon /> */}
                   </Row>
                 </Col>
+
                 <Col>
                   <button
                     className="
