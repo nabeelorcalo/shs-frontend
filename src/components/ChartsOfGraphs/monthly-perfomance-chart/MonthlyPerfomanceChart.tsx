@@ -39,7 +39,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     }
   };
   return (
-    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
+    <div>
       {
         heading &&
         <div className='flex items-center my-2'>
