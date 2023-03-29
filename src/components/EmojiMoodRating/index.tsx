@@ -15,7 +15,7 @@ const EmojiMoodRating = (props: EmojiProps) => {
   const { title, data, size = 3, activeIconIndex = -1, onClick } = props;
 
   return (
-    <BoxWrapper className=''>
+    <BoxWrapper className='wrapper-shadow'>
       <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
         <Typography.Title className='emoji-heading' level={size}>
           {title}

@@ -46,7 +46,7 @@ export const TimeTracking = (props: any) => {
   return (
     <Card
       className={
-        vartical ? "time-tracking w-full" : "timeTrackig-horizontal min-h-[240px]"
+        vartical ? "time-tracking w-full" : "timeTrackig-horizontal min-h-[240px] wrapper-shadow"
       }
       bordered={false}
     >
