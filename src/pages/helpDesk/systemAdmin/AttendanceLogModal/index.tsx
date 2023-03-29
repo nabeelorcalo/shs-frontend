@@ -134,9 +134,9 @@ const AttendaceLog = (props: any) => {
       open={open}
     >
       <Row className="attendance" gutter={[20, 20]}>
-        <Col xs={24} xxl={16}>
+        <Col xs={24} xxl={16} xl={16} lg={16}>
           <Row className="mb-12">
-            <Col xxl={18} xs={24}>
+            <Col xxl={18} xl={18} lg={18} md={8} xs={24}>
               <Row align="middle" className="gap-3">
                 <div
                   className="cursor-pointer"
@@ -149,7 +149,7 @@ const AttendaceLog = (props: any) => {
                 </p>
               </Row>
             </Col>
-            <Col xxl={6} xs={24}>
+            <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
               <StatusDropdown StatusOptions={StatusOptions} />
             </Col>
           </Row>
@@ -159,7 +159,7 @@ const AttendaceLog = (props: any) => {
             style={{ maxHeight: 550, overflowY: "scroll" }}
             className="attendance-log-content"
           >
-            <Col xs={24} xxl={12}>
+            <Col xs={24} xxl={12} xl={12} lg={12}>
               <div>
                 <label>User</label>
                 <Input
@@ -175,7 +175,7 @@ const AttendaceLog = (props: any) => {
                 />
               </div>
             </Col>
-            <Col xs={24} xxl={12}>
+            <Col xs={24} xxl={12} xl={12} lg={12}>
               <div>
                 <label>User Role</label>
                 <Input
@@ -191,6 +191,7 @@ const AttendaceLog = (props: any) => {
                 />
               </div>
             </Col>
+
             <Col xs={24}>
               <SelectComp
                 className=""
@@ -261,8 +262,8 @@ const AttendaceLog = (props: any) => {
             </Col>
             <Col xs={24}>
               <label>Log Time</label>
-              <Row gutter={16}>
-                <Col xs={24} xxl={8}>
+              <Row gutter={[16,20]}>
+                <Col xs={24} xxl={8} xl={8} lg={8}>
                   <div>
                     <Input
                       className="input"
@@ -278,7 +279,7 @@ const AttendaceLog = (props: any) => {
                   </div>
                 </Col>
 
-                <Col xs={24} xxl={8}>
+                <Col xs={24} xxl={8} xl={8} lg={8}>
                   <Input
                     className="input"
                     disabled
@@ -291,7 +292,7 @@ const AttendaceLog = (props: any) => {
                     value=""
                   />
                 </Col>
-                <Col xs={24} xxl={8}>
+                <Col xs={24} xxl={8} xl={8} lg={8}>
                   <Input
                     className="input"
                     disabled
@@ -307,7 +308,7 @@ const AttendaceLog = (props: any) => {
               </Row>
             </Col>
             <Col xs={24}>
-              <Row gutter={16}>
+              <Row gutter={[16,20]}>
                 <Col xs={24} xxl={12}>
                   <div>
                     <label>Date</label>
@@ -342,6 +343,7 @@ const AttendaceLog = (props: any) => {
                 </Col>
               </Row>
             </Col>
+
             <Col xs={24}>
               <div>
                 <label>Description</label>
@@ -357,7 +359,7 @@ const AttendaceLog = (props: any) => {
               <label>Attachment (Optional)</label>
               <Row gutter={[20, 20]} className="pt-3">
                 {[""]?.map((img) => (
-                  <Col xs={24} xxl={12}>
+                  <Col xs={24} xxl={12} xl={12} lg={12} md={12}>
                     <img
                       className="w-full"
                       src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
@@ -383,7 +385,7 @@ const AttendaceLog = (props: any) => {
           </Col>
         </Col>
 
-        <Col className="flex flex-col justify-between" xs={24} xxl={8}>
+        <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
           <div className="pr-2 pl-6">
             <div className="mb-16 text-xl font-medium text-[#14142A]">
               Comments
