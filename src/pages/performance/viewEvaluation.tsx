@@ -9,6 +9,7 @@ import {
   EvaluationCard,
   EvaluationStatsCard,
   TextArea,
+  Breadcrumb,
 } from "../../components";
 import {
   Sad,
@@ -24,6 +25,14 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
+  const tempArray = [
+    { name: "Evaluation Form " },
+    { name: " Performance ", onClickNavigateTo: "/performance" },
+    { name: "/"},
+    { name: " View History ", onClickNavigateTo: "/performance/history" },
+    { name: "/"},
+    { name: "Mino Marina", onClickNavigateTo: "/performance/1/detail" },
+  ];
   const user = {
     name: 'Calvin Grayson',
     profession: 'Manager',
@@ -157,12 +166,13 @@ const ViewPerformance = () => {
       <PageHeader
         bordered
         title={
-          <div className="font-medium">
-            Evaluation Form
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
-          </div>
+          // <div className="font-medium">
+          //   Evaluation Formss
+          //   <span className="vertical-line">
+          //     {breadCrumbs()}
+          //   </span>
+          // </div>
+          <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
         }
       />
 

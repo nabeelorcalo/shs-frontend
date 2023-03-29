@@ -1,11 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  Avatar,
-  Dropdown,
-  Progress,
-  Space,
-  MenuProps
-} from 'antd';
+import { Avatar, Dropdown, Progress, Space, MenuProps } from "antd";
 // import all reusable componets from component/index.ts
 import {
   PageHeader,
@@ -14,117 +8,124 @@ import {
   IconButton,
   DropDown,
   Button,
-  GlobalTable
+  GlobalTable,
+  Breadcrumb,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
-import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
-import '../style.scss';
+import {
+  DownlaodFileIcon,
+  GlassMagnifier,
+  MoreIcon,
+  TalentBadge,
+} from "../../../assets/images";
+import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { AppreciationModal } from "./appreciationModal";
 import { WarnModal } from "./warnModel";
-import useCustomHook from '../actionHandler';
-import {header, tableData} from './pdfData';
+import useCustomHook from "../actionHandler";
+import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
+  const role = constants.USER_ROLE;
+  const tempArray = [
+    { name: "View History" },
+    { name: " Performance ", onClickNavigateTo: "/performance" },
+  ];
   const id = 1;
   const action = useCustomHook();
 
   const columnNames = [
     {
-      title: 'No.',
-      key: 'no',
+      title: "No.",
+      key: "no",
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.no}
-        </Link >
+        </Link>
       ),
     },
     {
-      title: 'Avatar',
-      key: 'avatar',
+      title: "Avatar",
+      key: "avatar",
       render: (_: any, data: any) => (
         <Space size="middle">
           <Link
             className="bread-crumb"
             to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
           >
-            <Avatar
-              size={32}
-              alt="avatar"
-              src={<img src={data.avatar} />}
-            />
+            <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
           </Link>
         </Space>
       ),
     },
     {
-      title: 'Name',
-      key: 'name',
+      title: "Name",
+      key: "name",
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.name}
-        </Link >
+        </Link>
       ),
     },
     {
-      title: 'Department',
-      key: 'department',
+      title: "Department",
+      key: "department",
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.department}
-        </Link >
+        </Link>
       ),
     },
     {
-      title: 'Last Evaluation',
-      key: 'date',
+      title: "Last Evaluation",
+      key: "date",
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.date}
-        </Link >
+        </Link>
       ),
     },
     {
-      title: 'Evaluated By',
-      key: 'evaluatedBy',
+      title: "Evaluated By",
+      key: "evaluatedBy",
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.evaluatedBy}
-        </Link >
+        </Link>
       ),
     },
     {
-      title: 'Total Evaluations',
-      key: 'totalEvaluations',
+      title: "Total Evaluations",
+      key: "totalEvaluations",
       render: (_: any, data: any) => (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.totalEvaluations}
-        </Link >
+        </Link>
       ),
     },
     {
-      title: 'Overall Performance',
-      key: 'overallPerformance',
+      title: "Overall Performance",
+      key: "overallPerformance",
       render: (_: any, data: any) => {
         return (
           <Space size="middle">
@@ -135,33 +136,38 @@ const PerformanceHistory = () => {
               <Progress
                 size={[200, 13]}
                 percent={data.performance}
-                strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
-                format={(percent: any) =>
-                  <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                strokeColor={data.performance < 50 ? "#E95060" : "#4A9D77"}
+                format={(percent: any) => (
+                  <p
+                    className={
+                      "myClass " +
+                      (percent < 50 ? "secondary-color" : "teriary-color")
+                    }
+                  >
                     {percent}%
                   </p>
-                }
+                )}
               />
-              {data.isBadge ? <TalentBadge /> : ''}
-            </Link >
+              {data.isBadge ? <TalentBadge /> : ""}
+            </Link>
           </Space>
-        )
+        );
       },
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (_: any, data: any) => (
         <Space size="middle">
           <Dropdown
             menu={{ items }}
-            trigger={['click']}
+            trigger={["click"]}
             placement="bottomRight"
-            overlayClassName='menus_dropdown_main'
+            overlayClassName="menus_dropdown_main"
           >
             <MoreIcon
               className="cursor-pointer"
-            // onClick={() => setActionType({ ...actionType, id: data.key })}
+              // onClick={() => setActionType({ ...actionType, id: data.key })}
             />
           </Dropdown>
         </Space>
@@ -173,60 +179,65 @@ const PerformanceHistory = () => {
     {
       id: 1,
       no: 1,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      evaluatedBy: 'Mino Marina',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      name: "Mino Marina",
+      department: "UI UX Designer",
+      evaluatedBy: "Mino Marina",
+      date: "22/09/2022",
+      totalEvaluations: "08",
+      avatar:
+        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       performance: 40,
       isBadge: true,
     },
     {
       id: 2,
       no: 2,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      evaluatedBy: 'Mino Marina',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      name: "Mino Marina",
+      department: "UI UX Designer",
+      evaluatedBy: "Mino Marina",
+      date: "22/09/2022",
+      totalEvaluations: "08",
+      avatar:
+        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       performance: 80,
       isBadge: false,
     },
     {
       id: 3,
       no: 3,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      evaluatedBy: 'Mino Marina',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      name: "Mino Marina",
+      department: "UI UX Designer",
+      evaluatedBy: "Mino Marina",
+      date: "22/09/2022",
+      totalEvaluations: "08",
+      avatar:
+        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       performance: 50,
       isBadge: true,
     },
     {
       id: 4,
       no: 4,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      evaluatedBy: 'Mino Marina',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      name: "Mino Marina",
+      department: "UI UX Designer",
+      evaluatedBy: "Mino Marina",
+      date: "22/09/2022",
+      totalEvaluations: "08",
+      avatar:
+        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       performance: 30,
       isBadge: false,
     },
     {
       id: 5,
       no: 5,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      evaluatedBy: 'Mino Marina',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      name: "Mino Marina",
+      department: "UI UX Designer",
+      evaluatedBy: "Mino Marina",
+      date: "22/09/2022",
+      totalEvaluations: "08",
+      avatar:
+        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       performance: 100,
       isBadge: true,
     },
@@ -238,9 +249,7 @@ const PerformanceHistory = () => {
         size={24}
         src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
       />
-      <p className="mx-2">
-        Maria Sanoid
-      </p>
+      <p className="mx-2">Maria Sanoid</p>
     </div>,
 
     <div className="flex items-center">
@@ -248,9 +257,7 @@ const PerformanceHistory = () => {
         size={24}
         src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
       />
-      <p className="mx-2">
-        Janete Samson
-      </p>
+      <p className="mx-2">Janete Samson</p>
     </div>,
 
     <div className="flex items-center">
@@ -258,180 +265,176 @@ const PerformanceHistory = () => {
         size={24}
         src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
       />
-      <p className="mx-2">
-        Alen Juliet
-      </p>
+      <p className="mx-2">Alen Juliet</p>
     </div>,
   ];
 
   const timeFrameOptions = [
-    'This Week',
-    'Last Week',
-    'This Month',
-    'Last Month',
-    'Date Range'
+    "This Week",
+    "Last Week",
+    "This Month",
+    "Last Month",
+    "Date Range",
   ];
 
   const departmentOptions = [
-    'Design',
-    'Business Analyst',
-    'Data Scientist',
-    'Product Manager',
-    'Developer'
+    "Design",
+    "Business Analyst",
+    "Data Scientist",
+    "Product Manager",
+    "Developer",
   ];
-
-  const items: MenuProps['items'] = [
+  const items: MenuProps["items"] = [
     {
-      label:
-        < Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
-        >
-          View Details
-        </Link >,
-      key: '0',
-    },
-    {
-      label:
+      label: (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${role !== "University" ?
+            ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL
+          }`}
         >
-          Evaluate
-        </Link >,
-      key: '1',
+          View Details
+        </Link>
+      ),
+      key: "0",
     },
     {
-      label:
+      label: role !== "University" && (
+        <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${
+            ROUTES_CONSTANTS.EVALUATE
+          }`}
+        >
+          Evaluate
+        </Link>
+      ),
+      key: "1",
+    },
+    {
+      label: role !== "University" && (
         <p
           onClick={() => {
-            setState(prevState => ({
+            setState((prevState) => ({
               ...prevState,
               openAprreciationModal: !state.openAprreciationModal,
             }));
           }}
         >
           Appreciate
-        </p>,
-      key: '2',
+        </p>
+      ),
+      key: "2",
     },
     {
-      label:
+      label: role !== "University" && (
         <p
           onClick={() => {
-            setState(prevState => ({
+            setState((prevState) => ({
               ...prevState,
               openWarnModal: !state.openWarnModal,
             }));
           }}
         >
           Warn
-        </p>,
-      key: '3',
+        </p>
+      ),
+      key: "3",
     },
   ];
 
   const [state, setState] = useState({
     openSidebar: false,
-    timeFrameVal: 'Select',
-    departmentVal: 'Select',
-    evaluatedByVal: 'Select',
+    timeFrameVal: "Select",
+    departmentVal: "Select",
+    evaluatedByVal: "Select",
     openAprreciationModal: false,
     openWarnModal: false,
   });
 
   const handleSidebarClick = () => {
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       openSidebar: !state.openSidebar,
     }));
-  }
+  };
 
-  const downloadClick = () => {
-
-  }
+  const downloadClick = () => {};
 
   const evaluatedBySelection = (event: any) => {
     const value = event.target.innerText;
 
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       evaluatedByVal: value,
     }));
-  }
+  };
 
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
 
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       timeFrameVal: value,
     }));
-  }
+  };
 
   const departmentSelection = (event: any) => {
     const value = event.target.innerText;
 
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       departmentVal: value,
     }));
-  }
+  };
 
   const onApplyFilterClick = () => {
-    alert('Apply Filter')
-  }
+    alert("Apply Filter");
+  };
 
   const onResetFilterClick = () => {
-    alert('Reset Filter')
-  }
+    alert("Reset Filter");
+  };
 
   const onSubmitAppreciationForm = (values: any) => {
     console.log("Form Data: ", values);
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       openAprreciationModal: !state.openAprreciationModal,
     }));
-  }
+  };
 
   const onSubmitWarningForm = (values: any) => {
     console.log("Form Data: ", values);
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       openWarnModal: !state.openWarnModal,
     }));
-  }
+  };
 
-  const breadCrumbs = () => {
-    return (
-      <Link
-        className="bread-crumb"
-        to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-      >
-        Performance
-      </Link>
-    )
-  }
+  // const breadCrumbs = () => {
+  //   return (
+  //     <Link
+  //       className="bread-crumb"
+  //       to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
+  //     >
+  //       Performance
+  //     </Link>
+  //   )
+  // }
 
   return (
     <div className="company-admin-performance-history">
       <PageHeader
         bordered
-        title={
-          <div className="font-medium">
-            Performance History
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
-          </div>
-        }
+        title={<Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />}
       />
 
       <div className="flex">
         <div className="w-[33%]">
           <SearchBar
             className=""
-            handleChange={() => { }}
+            handleChange={() => {}}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="search"
@@ -440,14 +443,11 @@ const PerformanceHistory = () => {
         </div>
 
         <div className="flex justify-center ml-auto">
-          <FiltersButton
-            label="Filters"
-            onClick={handleSidebarClick}
-          />
+          <FiltersButton label="Filters" onClick={handleSidebarClick} />
 
           <IconButton
-            size='large'
-            className='icon-btn'
+            size="large"
+            className="icon-btn"
             onClick={() => action.downloadPdf(header, tableData)}
             icon={<DownlaodFileIcon />}
           />
@@ -475,9 +475,9 @@ const PerformanceHistory = () => {
                     options={timeFrameOptions}
                     setValue={() => timeFrameSelection(event)}
                     value={state.timeFrameVal}
-                    showDatePickerOnVal='Date Range'
+                    showDatePickerOnVal="Date Range"
                     requireDatePicker
-                    placement='topLeft'
+                    placement="topLeft"
                   />
                 </div>
 
@@ -522,16 +522,15 @@ const PerformanceHistory = () => {
       <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"
-        initialValues={
-          {
-            name: "Mino Marina",
-            description: "hello world",
-            avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-          }
-        }
+        initialValues={{
+          name: "Mino Marina",
+          description: "hello world",
+          avatar:
+            "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+        }}
         onSave={onSubmitAppreciationForm}
         onCancel={() => {
-          setState(prevState => ({
+          setState((prevState) => ({
             ...prevState,
             openAprreciationModal: !state.openAprreciationModal,
           }));
@@ -541,19 +540,17 @@ const PerformanceHistory = () => {
       <WarnModal
         open={state.openWarnModal}
         title="Alert"
-        initialValues={
-          { description: "hello world", }
-        }
+        initialValues={{ description: "hello world" }}
         onIssue={onSubmitWarningForm}
         onCancel={() => {
-          setState(prevState => ({
+          setState((prevState) => ({
             ...prevState,
             openWarnModal: !state.openWarnModal,
           }));
         }}
       />
     </div>
-  )
-}
+  );
+};
 
 export default PerformanceHistory;

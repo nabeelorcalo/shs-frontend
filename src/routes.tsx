@@ -1258,6 +1258,31 @@ const universityRoutes = [
         element: <Performance />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`,
+        element: <CompanyAdminPerformanceHistory />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        element: <PerformanceDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        element: <PerformanceDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        element: <ViewPerformance />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        element: <EditPerformance />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.REPORT}`,
         path: `${ROUTES_CONSTANTS.REPORT}`,
         element: <Report />,
