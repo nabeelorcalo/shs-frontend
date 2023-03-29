@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom';
 import { IconFacebook, IconYoutube, IconLinkedin, IconInstagram, IconTwitter } from '../../../assets/images'
@@ -11,7 +11,7 @@ type FooterProps = {
 };
 
 
-const AppFooter:FC<FooterProps> = ({collapsed, collapsedWidth}) => {
+const AppFooter: FC<FooterProps> = ({ collapsed, collapsedWidth }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
 
