@@ -1,6 +1,7 @@
 /// <reference types="vite-plugin-svgr/client" />
-
 // Header Icons
+// export { default as AppLogo } from './AppLogo.svg';
+/// <reference types="vite-plugin-svgr/client" />
 export { default as ContractsRecieved } from "./contractsRecieved.png";
 export { default as ContractsRejected } from "./contractsRejected.png";
 export { default as ContractsSigned } from "./contractsSigned.png";
@@ -56,6 +57,9 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
+export { ReactComponent as DocumentUploadIcon } from "./login/document-upload.svg";
+
+// Footer Icons
 export { ReactComponent as Round } from "./login/round.svg";
 export { ReactComponent as DocumentUpload } from "./login/document-upload.svg";
 export { ReactComponent as UploadUserProfile } from "./login/uploadUserImage.svg";
@@ -95,7 +99,7 @@ export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
 export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
 
 // sickLeave-card icon
-export { default as SickIcon } from "./sick.png";
+export { default as SickIcon } from "../images/sick.png";
 export { default as CasualIcon } from "./sick.png";
 export { default as WFHIcon } from "./sick.png";
 export { default as MedicalIcon } from "./sick.png";
@@ -136,7 +140,7 @@ export { ReactComponent as ThreeDotsIcon } from "./MoreIcon.svg";
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
-export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
+export { ReactComponent as BAnkingImg } from "./digivault/manageVault/bankingFolder.svg";
 export { ReactComponent as BAnkingImgSub } from "./digivault/manageVault/ph_bank.svg";
 export { ReactComponent as HealthImg } from "./digivault/manageVault/health.svg";
 export { ReactComponent as HealthImgSub } from "./digivault/manageVault/ic_outline-health-and-safety.svg";
@@ -263,6 +267,7 @@ export { ReactComponent as SearchInputIconSetting } from "./setting/search-norma
 // Universities
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
 export { ReactComponent as UniversitiesTableFlag } from "./universities/flag.svg";
+export { ReactComponent as InternCardLine } from "./universities/line.svg";
 
 // Colorfull icons
 // export { ReactComponent as More } from './ColorfullIconsProgressbar/More.svg';
@@ -301,6 +306,37 @@ export { ReactComponent as Edit } from "../images/profile/delegateagent/Edit.svg
 
 export { ReactComponent as People } from "../images/profile/propertyagent/people.svg";
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
+
+// Manager Dashboard
+export { ReactComponent as RoundedAddIcon } from './dashboard/addIcon.svg';
+// export { ReactComponent as PeopleIcon } from './dashboard/people.svg';
+export { ReactComponent as ProfileTick } from './dashboard/profile-tick.svg';
+export { ReactComponent as ProfileTwouserIcon } from './dashboard/profile-2user.svg';
+export { ReactComponent as ProfileRemoveIcon } from './dashboard/profile-remove@2x.svg';
+export { ReactComponent as TopPerformerImage } from './dashboard/Image.svg';
+// export { default as UniLogo } from './dashboard/UniLogo.svg';
+// Company Admin Dashboard
+export { ReactComponent as UniversityIcon } from './dashboard/Universities.svg';
+export { ReactComponent as TotalManagersIcon } from './dashboard/TotalManagers.svg';
+// Agent Dashboard
+export { ReactComponent as ListingIcon } from './dashboard/ListingIcon.svg';
+export { ReactComponent as PropertiesIcon } from './dashboard/propertiesIcon.svg';
+export { ReactComponent as ReservedProperties } from './dashboard/ReservedProperties.svg';
+export { ReactComponent as VacantProperties } from './dashboard/VacantProperties.svg';
+export { ReactComponent as EyeIcon } from './dashboard/ic_outline-remove-red-eye.svg';
+export { ReactComponent as MDIHeartIcon } from './dashboard/mdi_heart-outline.svg';
+// delegate agent dashboard
+export { ReactComponent as InactiveMembersIcon } from './dashboard/inactiveMembers.svg';
+export { ReactComponent as CardRemoveIcon } from './dashboard/card-remove.svg';
+export { ReactComponent as WalletMoneyIcon } from './dashboard/wallet-money.svg';
+//system admin
+export { ReactComponent as EyeActionIcon } from './dashboard/eye-icon.svg';
+export { ReactComponent as ArchiveIcon } from './dashboard/archive.svg';
+export { ReactComponent as ArchiveFilledIcon } from './dashboard/archive-filled.svg';
+export { ReactComponent as LikeIcon } from './dashboard/likeIcon.svg';
+export { ReactComponent as FilledLikeIcon } from './dashboard/likeIconFilled.svg';
+export { ReactComponent as AttachmentIcon } from './dashboard/attachment.svg';
+export { ReactComponent as EmojiIcon } from './dashboard/emoji.svg';
 
 // contract
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
@@ -371,24 +407,28 @@ export { ReactComponent as TimerPlayIcon } from "../images/TimePlayIcon.svg";
 export { ReactComponent as TimerPauseIcon } from "../images/TimePauseIcon.svg";
 
 //Grievances
-export { ReactComponent as AllGrievances } from "./Grievances/all-grievances.svg";
-export { ReactComponent as InProgressGrievances } from "./Grievances/in-progress-grievances.svg";
-export { ReactComponent as NewGrievances } from "./Grievances/new-grievances.svg";
-export { ReactComponent as ResolevedGrievances } from "./Grievances/resoleved-grievances.svg";
-export { ReactComponent as Clock24h } from "./Grievances/clock-24h.svg";
-export { ReactComponent as ClockGrievances } from "./Grievances/clock.svg";
-export { ReactComponent as LineGrievances } from "./Grievances/line.svg";
-export { ReactComponent as BlowWistle } from "./Grievances/blow-whistle.svg";
-export { ReactComponent as GrievancesDocPDF } from "./Grievances/document-pdf.svg";
-export { ReactComponent as GrievancesDocJPG } from "./Grievances/document-jpg.svg";
-export { ReactComponent as GrievancesDocDownload } from "./Grievances/doc-download.svg";
-export { ReactComponent as GrievancesLike } from "./Grievances/like.svg";
-export { ReactComponent as GrievancesDisLike } from "./Grievances/dislike.svg";
-export { ReactComponent as GrievancesAvater } from "./Grievances/avater-img.svg";
-export { ReactComponent as GrievancesInbox } from "./Grievances/avater-img.svg";
-export { ReactComponent as GrievancesCall } from "./Grievances/avater-img.svg";
-export { ReactComponent as Grievances } from "./Grievances/avater-img.svg";
-export { ReactComponent as GrievancesSidebarAvater } from "./Grievances/grievance-sidebar-avater.svg";
+export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg';
+export { ReactComponent as InProgressGrievances } from './Grievances/in-progress-grievances.svg';
+export { ReactComponent as NewGrievances } from './Grievances/new-grievances.svg';
+export { ReactComponent as ResolevedGrievances } from './Grievances/resoleved-grievances.svg';
+export { ReactComponent as Clock24h  } from './Grievances/clock-24h.svg';
+export { ReactComponent as ClockGrievances  } from './Grievances/clock.svg';
+export { ReactComponent as LineGrievances  } from './Grievances/line.svg';
+export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
+export { ReactComponent as GrievancesDocPDF  } from './Grievances/document-pdf.svg';
+export { ReactComponent as GrievancesDocJPG  } from './Grievances/document-jpg.svg';
+export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-download.svg';
+export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
+export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
+export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesInbox  } from './Grievances/inbox.svg';
+export { ReactComponent as GrievancesCall  } from './Grievances/call.svg';
+export { ReactComponent as GrievancesLocation  } from './Grievances/location.svg';
+export { ReactComponent as GrievancesSidebarAvater } from './Grievances/grievance-sidebar-avater.svg';
+export { ReactComponent as GrievancesAvater1 } from './Grievances/avater-1.svg';
+export { ReactComponent as GrievancesAvater2 } from './Grievances/avater-2.svg';
+export { ReactComponent as GrievancesAvater3 } from './Grievances/avater-3.svg';
+export { ReactComponent as GrievancesAvater4 } from './Grievances/avater-4.svg';
 
 // Recipes Icons
 export { ReactComponent as IconAddRecipe } from "./recipes/icon-add-recipe.svg";

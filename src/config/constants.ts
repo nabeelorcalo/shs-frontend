@@ -1,13 +1,14 @@
-console.log("ENV: ", import.meta.env.VITE_APP_URL);
+console.log("ENV: ",import.meta.env.VITE_APP_URL);
+
 export default {
-  appUrl: import.meta.env.APP_URL || "http://localhost:8001",
+  appUrl: import.meta.env.VITE_APP_URL || "http://localhost:8001",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "CompanyAdmin",
+  USER_ROLE: "Manager",
 };
 
 // Possibe string of roles:
@@ -53,6 +54,7 @@ export const ROUTES_CONSTANTS: any = {
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
+  CASE_STUDIES_ASSESSMENT_FORM:"case-studies/assessment-form/:id",
   GRIEVANCES: "grievances",
   CALENDAR: "calendar",
   DELEGATE_MEMEBERS: "delegate-members",
@@ -90,6 +92,7 @@ export const ROUTES_CONSTANTS: any = {
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
   LISTINGS: "listings",
+  LISTING_EDIT: "edit-listing/:listingId",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
   SETTING: "settings",
@@ -123,6 +126,8 @@ export const ROUTES_CONSTANTS: any = {
   ALL_GRIEVANCES:"/grievances/all-grievance",
   GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
+  UNIVERSITIES_INTERNS:"universities/interns",
+  UNIVERSITIES_PROFILE:"universities/Profile"
 };
 
 export const STATUS_CONSTANTS: any = {

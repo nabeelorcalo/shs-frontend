@@ -1,21 +1,27 @@
 import { Button, Divider } from 'antd'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { BlowWistle, SettingHorizontalLine, Settinglocation } from '../../../../assets/images'
-import { DropDown, FiltersButton, PageHeader, SearchBar } from '../../../../components'
+import { BlowWistle, SettingHorizontalLine, } from '../../../../assets/images'
+import { DropDown, FiltersButton,  PageHeader,  PopUpModal, SearchBar } from '../../../../components'
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
+import Drawer from '../../../../components/Drawer'
 import AppTabs from '../../../../components/Tabs'
-import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import BlowWhistleForm from './blowWhistleForm'
 import EscalatedByMe from './escalatedByMe'
+import EscalatedToMe from './escalatedToMe'
+import Filters from './filters'
 import './style.scss'
 
 const index = () => {
+  const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
+  const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const handleChange = () => {
 
   }
   return (
     <div className='add-grievance'>
       <div className='header'>
-        <PageHeader title={<> All Grievances {<SettingHorizontalLine className="mx-1" />}
+        <PageHeader title={<> All Grievances {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
           <NavLink to="/grievances">
             <span className='text-base font-medium dashboard-primary-color' >Grievances</span>
           </NavLink>  </>} />
@@ -24,18 +30,19 @@ const index = () => {
       <div className="flex justify-between">
         <div><SearchBar size="middle" handleChange={handleChange} /></div>
         <div className='flex  gap-2' >
-          <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
-            <Button
-              size="middle"
-              onClick={() => { }}
-              className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
-            >
-              <BlowWistle /> Blow a Whistle
-            </Button>
-          </NavLink>
+          <Button
+            size="middle"
+            onClick={() => {
+              setShowBlowWhistleModal(!showBlowWhistleModal);
+            }}
+            className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
+          >
+            <BlowWistle /> Blow a Whistle
+          </Button>
+
           <FiltersButton
             label="Filters"
-            onClick={() => { }}
+            onClick={() => { setShowDrawer(!showDrawer) }}
           />
           <DropDown
             options={[
@@ -52,7 +59,7 @@ const index = () => {
         <AppTabs
           items={[
             {
-              children: 'Components1',
+              children: <EscalatedToMe />,
               key: '1',
               label: 'Escalated To Me'
             },
@@ -65,8 +72,27 @@ const index = () => {
           ]}
         />
 
-
       </BoxWrapper>
+      <PopUpModal
+        open={showBlowWhistleModal}
+        title="Blow a Whistle"
+        width={600}
+        close={() => setShowBlowWhistleModal(false)}
+        footer=""
+      >
+        <BlowWhistleForm setState={setShowBlowWhistleModal} />
+      </PopUpModal>
+      <Drawer
+        closable={() => setShowDrawer(false)}
+        onClose={() => setShowDrawer(false)}
+        title="Filters"
+        open={showDrawer}
+      >
+        <React.Fragment key=".0">
+          <Filters  />
+        </React.Fragment>
+      </Drawer>
+
     </div>
   )
 }
