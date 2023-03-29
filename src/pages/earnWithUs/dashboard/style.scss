@@ -1,0 +1,64 @@
+@import "../../../scss/colors";
+
+.earn-with-us-dashboard {
+  padding-top: 14px;
+}
+
+.earn-with-card {
+  border-radius: 16px;
+  box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+  background-color: #ffffff;
+  padding: 30px;
+
+  &.top {
+    padding: 23px 0;
+
+    .earn-card-inner {
+      padding: 0 30px;
+      border-color: $text-error-line-color;
+
+      &.with-divider {
+        border-left: 1px solid $text-error-line-color;
+      }
+
+      .user-welcome-text {
+        color: $primary-bg-color;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 1.333333;
+
+        & > span {
+          color: $page-header-secondary;
+        }
+      }
+    }
+  }
+
+  .earn-card-inner {
+    display: flex;
+
+    .earn-card-icon {
+      width: 60px;
+      margin-right: 20px;
+    }
+
+    .earn-card-body {
+      flex: 1;
+
+      .earn-card-title {
+        color: $primary-bg-color;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+
+      .earn-card-value {
+        color: $teriary-bg-color;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.333333;
+        margin-top: 10px;
+      }
+    }
+  }
+}

@@ -490,3 +490,7 @@ export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.sv
 export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
+
+// Earn With Us Icons
+export { ReactComponent as IconWalletMoney } from "./earnWithUs/icon-wallet-money.svg";
+export { ReactComponent as IconInactiveMember } from "./earnWithUs/icon-inactive-member-balance.svg";

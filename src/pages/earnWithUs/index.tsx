@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import {PageHeader} from "../../components/PageHeader";
 import AppTabs from "../../components/Tabs";
 import WithDrawalRequest from "./studentWithDrawalRequest";
+import Dashboard from "./dashboard";
 import "./style.scss";
 
 
@@ -10,7 +11,7 @@ const items = [
   {
     key: "1",
     label: "Dashboard",
-    children:"working"
+    children: <Dashboard />
   },
   {
     key: "2",
