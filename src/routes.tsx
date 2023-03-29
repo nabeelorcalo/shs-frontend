@@ -1253,6 +1253,11 @@ const universityRoutes = [
         element: <Attendance />,
       },
       {
+        key: `${ROUTES_CONSTANTS.ATTENDANCE}/:id`,
+        path: `${ROUTES_CONSTANTS.ATTENDANCE}/:id`,
+        element: <AttendanceDetail />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         path: `${ROUTES_CONSTANTS.PERFORMANCE}`,
         element: <Performance />,
