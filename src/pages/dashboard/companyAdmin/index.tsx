@@ -118,7 +118,7 @@ const CompanyAdmin = () => {
             }}
             xField="name"
             yField="star"
-            height={340}
+            height={315}
           />
         </Col>
         <Col xs={24}>

@@ -157,18 +157,17 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
           <Select
             className="min-w-[170px] text-input-bg-color rounded-xl"
             size="small"
-            defaultValue="Design"
             placeholder="Select"
             style={{ width: 120 }}
             onChange={(e) => handleSelect(e)}
             options={[
               { value: "design", label: "Design" },
-              { value: "jack", label: "Business Analysis" },
-              { value: "lucy", label: "Research" },
-              { value: "Yiminghe", label: "Accounting" },
-              { value: "Yiminghe", label: "Human Resources" },
-              { value: "Yiminghe", label: "Administration" },
-              { value: "Yiminghe", label: "Project Management" },
+              { value: "Business Analysis", label: "Business Analysis" },
+              { value: "Research", label: "Research" },
+              { value: "Accounting", label: "Accounting" },
+              { value: "Human Resources", label: "Human Resources" },
+              { value: "Administration", label: "Administration" },
+              { value: "Project Management", label: "Project Management" },
             ]}
           />
         </Row>
