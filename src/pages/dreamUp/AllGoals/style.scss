@@ -79,30 +79,29 @@
     // Collaps Style Starts here
     .collaps_main.ant-collapse {
       background-color: transparent;
-      .ant-collapse-item{
-        .ant-collapse-header{
+
+      .ant-collapse-item {
+        .ant-collapse-header {
           background-color: $light-gray-tertiary;
           border-radius: 16px;
           align-items: center;
         }
-        .ant-collapse-expand-icon{
 
-        }
-        .ant-collapse-header-text{
-          .goals_task_Accordion{
-            .heading_date{
-              .Heading{
+        // .ant-collapse-expand-icon{
+
+        // }
+        .ant-collapse-header-text {
+          .goals_task_Accordion {
+            .heading_date {
+              .Heading {
                 color: $text-primary-title-color;
               }
-              .date{
+
+              .date {
                 color: $light-grey-color;
               }
-              
-
             }
-
           }
-
         }
       }
 
