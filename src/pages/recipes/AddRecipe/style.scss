@@ -59,6 +59,9 @@
       padding-right: 15px;
       flex: 0 0 auto;
       width: 35%;
+      @media only  screen and (max-width:960px) {
+        width: 100%;
+      }
 
       .form-section-header-inner {
         max-width: 440px;
@@ -81,6 +84,9 @@
       max-width: 100%;
       flex: 0 0 auto;
       width: 65%;
+      @media only  screen and (max-width:960px) {
+        width: 100%;
+      }
 
       .form-fields-container {
         max-width: 500px;
@@ -90,7 +96,12 @@
 
   .add-recipe-form-footer {
     display: flex;
+    gap: 20px;
     justify-content: flex-end;
+    @media only screen and (max-width:768px) {
+      flex-direction: column !important;
+      justify-content: center;
+    }
   }
 }
 
