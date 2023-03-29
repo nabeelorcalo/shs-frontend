@@ -9,7 +9,7 @@ import {
 import Node from "./node";
 import "./style.scss";
 
-export default function Structure(props: any) {
+export default function ManagerStructure(props: any) {
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
