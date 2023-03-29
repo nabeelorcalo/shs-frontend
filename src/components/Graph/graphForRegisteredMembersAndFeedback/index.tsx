@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { DualAxes } from '@ant-design/plots';
 import { registerMemeberData, resolutionFeedbackData } from './data';
 import { IconLikeShapes } from '../../../assets/images';
 import constants from '../../../config/constants';
 
-export const RegisterMemberAndFeddbackGraph = ({ graphName }: any) => {
+export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: any }> = (props) => {
+  const { graphName, styling } = props;
   const data = graphName === constants.REGISTER_MEMBERS ? registerMemeberData : resolutionFeedbackData;
   const yFields = graphName === constants.REGISTER_MEMBERS ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
-
-  // const legendMarker = (iconName: string) => {
-  //   return (
-  //     <IconLikeShapes />
-  //   );
-  // };
 
   const config: any = {
     data: [data, data],
@@ -123,6 +118,6 @@ export const RegisterMemberAndFeddbackGraph = ({ graphName }: any) => {
   };
 
   return (
-    <DualAxes {...config} />
+    <DualAxes style={styling} {...config} />
   );
 };

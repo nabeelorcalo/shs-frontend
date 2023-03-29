@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Agent from "./agent";
 import CompanyAdmin from "./companyAdmin";
-import DelegateAgent from "../delegateAgent";
+import DelegateAgent from "./delegateAgent";
 import Intern from "./intern";
 import Manager from "./manager";
 import Student from "./student";
