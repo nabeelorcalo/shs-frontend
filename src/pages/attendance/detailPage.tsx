@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar, Space, Typography } from "antd";
+import { Space, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import {
   ClockInCommon,
@@ -22,58 +22,53 @@ import {
   AttendanceTimeCard,
   GlobalTable,
   ProfileCard,
-  TimeTracking
+  TimeTracking,
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Detail = () => {
-
   const timeFrameOptions = [
-    'This Week',
-    'Last Week',
-    'This Month',
-    'Last Month',
-    'Date Range'
+    "This Week",
+    "Last Week",
+    "This Month",
+    "Last Month",
+    "Date Range",
   ];
 
   const tableColumns = [
     {
-      title: 'Date',
-      key: 'date',
-      dataIndex: 'date',
+      title: "Date",
+      key: "date",
+      dataIndex: "date",
     },
     {
-      title: 'Mood',
-      key: 'mood',
+      title: "Mood",
+      key: "mood",
       render: (_: any, data: any) => {
-        return (
-          <Space size="middle">
-            {data.mood}
-          </Space>
-        )
+        return <Space size="middle">{data.mood}</Space>;
       },
     },
     {
-      title: 'Clock In',
-      key: 'clockIn',
-      dataIndex: 'clockIn',
+      title: "Clock In",
+      key: "clockIn",
+      dataIndex: "clockIn",
     },
     {
-      title: 'Clock Out',
-      key: 'clockOut',
-      dataIndex: 'clockOut',
+      title: "Clock Out",
+      key: "clockOut",
+      dataIndex: "clockOut",
     },
     {
-      title: 'Total Hours',
-      key: 'totalHours',
-      dataIndex: 'totalHours',
-    }
+      title: "Total Hours",
+      key: "totalHours",
+      dataIndex: "totalHours",
+    },
   ];
 
   const tableData = [
     {
-      key: '1',
+      key: "1",
       date: "Thu, 29 September 2022",
       mood: <Emoji1st />,
       clockIn: "09:01",
@@ -81,7 +76,7 @@ const Detail = () => {
       totalHours: "8:20 hr",
     },
     {
-      key: '2',
+      key: "2",
       date: "Thu, 29 September 2022",
       mood: <Emoji2nd />,
       clockIn: "09:01",
@@ -92,10 +87,10 @@ const Detail = () => {
           clockIn: "09:01",
           clockOut: "17:23",
         },
-      ]
+      ],
     },
     {
-      key: '3',
+      key: "3",
       date: "Thu, 29 September 2022",
       mood: <Emoji3rd />,
       clockIn: "09:01",
@@ -103,7 +98,7 @@ const Detail = () => {
       totalHours: "8:20 hr",
     },
     {
-      key: '4',
+      key: "4",
       date: "Thu, 29 September 2022",
       mood: <Emoji4th />,
       clockIn: "09:01",
@@ -111,39 +106,36 @@ const Detail = () => {
       totalHours: "8:20 hr",
     },
     {
-      key: '5',
+      key: "5",
       date: "Thu, 29 September 2022",
       mood: <Emoji1st />,
       clockIn: "09:01",
       clockOut: "17:23",
       totalHours: "8:20 hr",
     },
-  ]
+  ];
 
   const [state, setState] = useState({
-    timeFrameVal: 'This Month',
+    timeFrameVal: "This Month",
     timeData: [
       { id: 0, heading: "Avg Clock In", time: "08:04am" },
       { id: 1, heading: "Avg Clock Out", time: "03:04pm" },
       { id: 2, heading: "Avg Hours", time: "05:48hrs" },
       { id: 3, heading: "Working Days", time: "24" },
-    ]
+    ],
   });
 
   const breadCrumbs = () => {
     const role = constants.USER_ROLE;
 
     switch (role) {
-      case 'Manager':
+      case "Manager":
         return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-          >
+          <Link className="bread-crumb" to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}>
             Attendance
           </Link>
         );
-      case 'CompanyAdmin':
+      case "CompanyAdmin":
         return (
           <>
             <Link
@@ -164,44 +156,42 @@ const Detail = () => {
       default:
         return <></>;
     }
-  }
+  };
 
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
 
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
       timeFrameVal: value,
     }));
-  }
+  };
 
-  const downloadClick = () => {
-
-  }
+  const downloadClick = () => {};
 
   const getColorAndIcon = (name: string) => {
     let color: string;
     let icon: any;
 
     switch (name) {
-      case 'Avg Clock In':
+      case "Avg Clock In":
         color = "#4A9D77";
-        icon = <ClockInCommon />
+        icon = <ClockInCommon />;
         return { color, icon };
-      case 'Avg Clock Out':
+      case "Avg Clock Out":
         color = "#E95060";
-        icon = <ClockOutCommon />
+        icon = <ClockOutCommon />;
         return { color, icon };
-      case 'Avg Hours':
+      case "Avg Hours":
         color = "#4783FF";
-        icon = <AvgHoursCommon />
+        icon = <AvgHoursCommon />;
         return { color, icon };
-      case 'Working Days':
+      case "Working Days":
         color = "#FFC15D";
-        icon = <WorkingDaysCommon />
+        icon = <WorkingDaysCommon />;
         return { color, icon };
       default:
-        return '';
+        return "";
     }
   }
 
@@ -219,23 +209,14 @@ const Detail = () => {
       <PageHeader
         title={
           <div className="font-medium">
-            {
-              constants.USER_ROLE === "Intern" ?
-                "Attendance"
-                :
-                "Mino Marina"
-            }
-            {
-              constants.USER_ROLE === "Intern" ?
-                <></>
-                :
-                <span className="vertical-line">
-                  {breadCrumbs()}
-                </span>
-            }
+            {constants.USER_ROLE === "Intern" ? "Attendance" : "Mino Marina"}
+            {constants.USER_ROLE === "Intern" ? (
+              <></>
+            ) : (
+              <span className="vertical-line">{breadCrumbs()}</span>
+            )}
           </div>
         }
-
         children={
           <div className="flex flex-row gap-4">
             <DropDown
@@ -243,14 +224,14 @@ const Detail = () => {
               options={timeFrameOptions}
               setValue={() => timeFrameSelection(event)}
               value={state.timeFrameVal}
-              showDatePickerOnVal='Date Range'
+              showDatePickerOnVal="Date Range"
               requireDatePicker
-              placement='bottomRight'
+              placement="bottomRight"
             />
 
             <IconButton
-              size='large'
-              className='icon-btn download-btn'
+              size="large"
+              className="icon-btn download-btn"
               onClick={downloadClick}
               icon={<DownlaodFileIcon />}
             />
@@ -259,8 +240,60 @@ const Detail = () => {
         actions
         bordered
       />
+      <Row gutter={[20, 20]}>
+        <Col xxl={7} xl={10} md={24} xs={24}>
+          <div className="left-container">
+            {constants.USER_ROLE === "Intern" ? (
+              <TimeTracking vartical />
+            ) : (
+              <ProfileCard
+                name="Mino Marina"
+                profession="Data Researcher"
+                email="minomarina@gmail.com"
+                phone="+44 7700 900077"
+                address="263 Eversholt St, London NW11NB, UK"
+                avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+              />
+            )}
+          </div>
+        </Col>
+        <Col xxl={17} xl={14} md={24} xs={24}>
+          <Row gutter={[10, 0]}>
+            <Col xxl={24} md={24} xs={24}>
+              <BoxWrapper className="flex mb-6 main-cards">
+                {state.timeData.map((item: any, index) => {
+                  const { color, icon }: any = getColorAndIcon(item.heading);
 
-      <div className="attendance-content">
+                  return (
+                    <AttendanceTimeCard
+                      Icon={icon}
+                      heading={item.heading}
+                      time={item.time}
+                      colorClass={color}
+                      isLast={index === state.timeData.length - 1}
+                    />
+                  );
+                })}
+              </BoxWrapper>
+            </Col>
+            <Col xxl={24} md={24}>
+              <BoxWrapper>
+                <GlobalTable
+                  pagination={false}
+                  columns={tableColumns}
+                  tableData={tableData}
+                  // expandable={{
+                  //   defaultExpandAllRows: false,
+                  //   expandedRowKeys,
+                  //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
+                  // }}
+                />
+              </BoxWrapper>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      {/* <div className="attendance-content">
         <div className="left-container">
           {
             constants.USER_ROLE === "Intern" ?
@@ -276,7 +309,6 @@ const Detail = () => {
               />
           }
         </div>
-
         <div className="right-container">
           <BoxWrapper className="flex mb-6">
             {
@@ -295,7 +327,6 @@ const Detail = () => {
               })
             }
           </BoxWrapper>
-
           <BoxWrapper>
             <GlobalTable
               pagination={false}
@@ -308,9 +339,9 @@ const Detail = () => {
             />
           </BoxWrapper>
         </div>
-      </div>
+      </div> */}
     </div>
-  )
-}
+  );
+};
 
 export default Detail;
