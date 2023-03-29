@@ -11,12 +11,7 @@ import MembersDetails from "./MembersDetails";
 import "../style.scss";
 import ShareModal from "../../../components/ShareModal";
 import InvitationModal from "../../../components/InvitationModal";
-
-// gutter for spacing in dashboard items
-const gutter: any = [
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-];
+import { gutter } from "..";
 
 const DelegateAgent = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);

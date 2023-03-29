@@ -14,12 +14,7 @@ import {
 import { Terrible, Sad, Neutral, Happy, Awesome } from "../../../assets/images";
 import CustomHook from "../actionHandler";
 import "../style.scss";
-
-// gutter for spacing in dashboard items
-const gutter: any = [
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-];
+import { gutter } from "..";
 
 const Intern = () => {
   const action = CustomHook;

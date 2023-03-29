@@ -14,12 +14,7 @@ import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
 import { useState } from "react";
-
-// gutter for spacing in dashboard items
-const gutter: any = [
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-];
+import { gutter } from "..";
 
 const SystemAdmin = () => {
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false)

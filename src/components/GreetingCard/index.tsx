@@ -13,7 +13,7 @@ export const GreetingCard: FC<IGreetingCard> = (props) => {
   return (
     <Row
       align="middle" justify='space-between'
-      className="bg-[#4A9D77] wrapper-shadow rounded-2xl greating-card gap-4"
+      className="bg-[#4A9D77] wrapper-shadow rounded-2xl greating-card gap-4 flex-nowrap "
     >
       <Row
         align="middle"

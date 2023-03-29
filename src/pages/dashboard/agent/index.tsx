@@ -8,12 +8,7 @@ import {
 } from "../../../components";
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
-
-// gutter for spacing in dashboard items
-const gutter: any = [
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-];
+import { gutter } from "..";
 
 const Agent = () => {
   const [state, setState] = useState({

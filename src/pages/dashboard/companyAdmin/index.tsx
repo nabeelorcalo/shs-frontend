@@ -1,5 +1,6 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
+import { gutter } from "..";
 import {
   AnnouncementList,
   BirthdayWishes,
@@ -21,12 +22,6 @@ import {
   universityList,
 } from "./mockData";
 import PiplineTable from "./PiplineTable";
-
-// gutter for spacing in dashboard items
-const gutter: any = [
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-];
 
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);

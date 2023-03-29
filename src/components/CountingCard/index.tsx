@@ -183,7 +183,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     <Row
       className={`${
         isSeprate
-          ? `xs:gap-[8px] sm:gap-[16px] lg:gap-[20px] 2xl:gap-[30px]`
+          ? `xs:gap-[16px] lg:gap-[20px] 2xl:gap-[30px]`
           : `max-w-[510px]`
       } counting-card`}
     >

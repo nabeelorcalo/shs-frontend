@@ -10,6 +10,12 @@ import University from "./university";
 import constants from "../../config/constants";
 import "./style.scss";
 
+// gutter for spacing in dashboard items
+export const gutter: any = [
+  { xs: 16, sm: 16, lg: 20, xxl: 30 },
+  { xs: 16, sm: 16, lg: 20, xxl: 30 },
+];
+
 const Dashboard = () => {
 
   const renderRoleBasedDashboard = (role: string) => {

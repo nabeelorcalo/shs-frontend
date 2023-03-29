@@ -19,12 +19,7 @@ import {
   universityList,
 } from "./mockData";
 import "../style.scss";
-
-// gutter for spacing in dashboard items
-const gutter: any = [
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-  { xs: 8, sm: 16, lg: 20, xxl: 30 },
-];
+import { gutter } from "..";
 
 const Manager = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
