@@ -369,5 +369,8 @@ export { ReactComponent as IconAddListings } from './listings/icon-add-listings.
 export { ReactComponent as VideoRecoder } from './VideoRecoder.svg';
 export { ReactComponent as LocationDarkIcon } from './LocationDarkIcon.svg';
 export { ReactComponent as EditIcon } from './EditIcon.svg';
+export { ReactComponent as CalUserIcon } from './CalUserIcon.svg';
+export { ReactComponent as CalendarSearch } from './CalendarSearch.svg';
+export { ReactComponent as CopyPasteIcon } from './CopyPasteIcon.svg';
 
 
