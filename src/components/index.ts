@@ -70,3 +70,6 @@ export * from './AttendanceTimeCard';
 export * from './ProfileCard';
 export * from './CountingCard';
 export * from './FavouritesViewCard';
+export * from './TopPerformers';
+export * from './AnnouncementModal';
+export * from './UniversityCard';

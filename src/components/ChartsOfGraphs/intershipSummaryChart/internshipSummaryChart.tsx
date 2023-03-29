@@ -17,6 +17,7 @@ export const InternshipSummaryChart = (props: any) => {
         intervalPadding = 9.1,
         xAxis = { label: null },
         heading,
+        height
     } = props
 
     const [data] = useState(InterShipData);
@@ -52,7 +53,7 @@ export const InternshipSummaryChart = (props: any) => {
         <BoxWrapper>
             {heading && <p className="text-secondary-color font-medium text-xl">{heading}</p>}
             <RadialBar
-                style={{ height: "300px", marginTop: "-15px" }}
+                style={{ height: height??"300px", marginTop: "-15px" }}
                 tooltip={false}
                 {...config}
                 className="transition-from-right"

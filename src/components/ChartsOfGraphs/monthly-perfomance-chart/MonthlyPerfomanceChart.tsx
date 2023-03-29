@@ -19,7 +19,8 @@ export const MonthlyPerfomanceChart = (props: any) => {
     fontSize = "20px",
     fontWeight = "500",
     data = { perfomanceChart },
-    children = <></>
+    children = <></>,
+    style,
   } = props;
 
   const [chartData] = useState(data);
@@ -38,7 +39,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     }
   };
   return (
-    <BoxWrapper>
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       {
         heading &&
         <div className='flex items-center my-2'>
@@ -50,9 +51,10 @@ export const MonthlyPerfomanceChart = (props: any) => {
       }
 
       <Column
+      style={style}
         {...config}
         marginRatio={marginRatio}
       />
-    </BoxWrapper>
+    </div>
   )
 }

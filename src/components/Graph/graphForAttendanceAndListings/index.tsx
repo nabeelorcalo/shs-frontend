@@ -113,7 +113,7 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
   }
 
   return (
-    <BoxWrapper>
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       <div className='flex flex-row'>
         <Typography.Title level={level} >
           {title}
@@ -127,6 +127,6 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
         }
       </div>
       <Line style={styling} {...config} />
-    </BoxWrapper>
+    </div>
   )
 };
