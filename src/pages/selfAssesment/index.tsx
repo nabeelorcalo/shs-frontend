@@ -1,10 +1,15 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import constants from "../../config/constants";
+import Internee from "./Intrnee";
 import "./style.scss";
 
 const SelfAssesment = () => {
+  const rederWthRole: any = {
+    'Intern': <Internee />,
+  }
   return (
-    <p>SelfAssesment</p>
+    <>
+      {rederWthRole[constants.USER_ROLE]}
+    </>
   )
 }
 

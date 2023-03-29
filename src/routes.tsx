@@ -118,6 +118,7 @@ const Listings = Loadable(lazy(() => import("./pages/listings")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
+const AssesmentForm = Loadable(lazy(() => import("./pages/selfAssesment/AssesmentFormPage")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(
@@ -988,6 +989,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.SELF_ASSESSMENT}`,
         path: `${ROUTES_CONSTANTS.SELF_ASSESSMENT}`,
         element: <SelfAssesment />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`,
+        path: `${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`,
+        element: <AssesmentForm />,
       },
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
