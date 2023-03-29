@@ -465,4 +465,7 @@ export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.sv
 export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
-export { ReactComponent as Success } from "./Notification/successMessageIcon.svg";
+
+// payment icons
+export { ReactComponent as UserIcon } from "./payments/user.svg";
+export { ReactComponent as Success } from "./payments/success.svg";
