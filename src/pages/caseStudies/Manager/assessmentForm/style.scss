@@ -1,0 +1,21 @@
+@import '../../../../scss/colors';
+.assessment-form-image-container{
+  &:hover{
+    transform: scale(1.3);
+  }
+
+}
+.manager-assessment-form{
+  .sign-box{
+    border: 1px solid #e3e4ef;
+    height: 150px;
+  }
+.ant-input{
+  background-color: $text-input-bg-color;
+  &:hover{
+    background-color: $white-bg-color;
+  }
+}
+
+
+}

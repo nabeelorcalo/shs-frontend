@@ -6,7 +6,6 @@ import Organization from "./Organization";
 
 function Node({ o, parent }: any) {
     const [collapsed, setCollapsed] = React.useState(!o.collapsed);
-    
     const T = parent
     ? TreeNode
     : (props: any) => (

@@ -8,6 +8,7 @@ import {
 } from "../../../assets/images";
 
 import "./style.scss";
+
 import Node from "./Node";
 
 export default function Structure(props: any) {
