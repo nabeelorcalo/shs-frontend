@@ -15,12 +15,8 @@ const EventDetail = (props: any) => {
         return dayjs(value).format(format);
     }
 
-    const hourDiff = (startTime: string, endTime: string) => {
-        const start = dayjs(startTime);
-        const end = dayjs(endTime);
-        console.log(dayjs(end).diff(dayjs(start), "hour", true));
-
-        // return start.diff(dayjs(end), 'hour', true);
+    const hourDiff = (startTime: string | any, endTime: string | any) => {
+        return dayjs(endTime).diff(dayjs(startTime), 'hour', true)
     }
 
     return (
@@ -43,7 +39,7 @@ const EventDetail = (props: any) => {
                         &nbsp;-&nbsp;
                         {formatTimeDate(selectedEvent?.end, 'HH:MM A')}
                         &nbsp;
-                        {/* {`(${hourDiff(selectedEvent?.start, selectedEvent?.end)})`} */}
+                        {`(${hourDiff(selectedEvent?.start, selectedEvent?.end)} hour) `}
                     </p>
                 </div>
             </div>

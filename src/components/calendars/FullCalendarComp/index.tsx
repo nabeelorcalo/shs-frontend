@@ -22,7 +22,7 @@ const Index = () => {
     'interview': '#5879CE',
     'event': '#FFC15D',
   };
-  const handleEventClick = (id: string, type: string) => {
+  const handleEventClick = (id: string) => {
     setOpenDrawer({ open: !openDrawer.open, type: 'eventDetail', eventId: id })
   }
 
@@ -38,7 +38,7 @@ const Index = () => {
       <div className="event-content"
         style={{ borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : '#4E4B66'}` }}
       >
-        <div className="content" onClick={() => handleEventClick(events?.publicId, '')}>
+        <div className="content" onClick={() => handleEventClick(events?.publicId)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
           <p className="duration text-[14px] mt-[5px]">{dayjs().format('DD:MM:YYYY')}</p>
