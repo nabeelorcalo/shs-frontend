@@ -277,3 +277,17 @@
     @include Counter;
   }
 }
+
+//scrollbar styling
+.ant-table-body {
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(242, 242, 242);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: gainsboro;
+    border-radius: 20px;
+  }
+}

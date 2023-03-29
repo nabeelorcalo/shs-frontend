@@ -73,3 +73,7 @@ export * from './FavouritesViewCard';
 export * from './TopPerformers';
 export * from './AnnouncementModal';
 export * from './UniversityCard';
+export * from './UserAnalytics';
+export * from './RegionCard';
+export * from './Graph/FunnelChart';
+export * from './Graph/GaugePlot';
