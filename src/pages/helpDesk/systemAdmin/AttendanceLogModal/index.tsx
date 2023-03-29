@@ -130,7 +130,7 @@ const AttendaceLog = (props: any) => {
                 <Input
                   className="input"
                   disabled
-                  onChange={() => {}}
+                  onChange={() => { }}
                   id=""
                   name="user"
                   placeholder="placeholder"
@@ -146,7 +146,7 @@ const AttendaceLog = (props: any) => {
                 <Input
                   className="input"
                   disabled
-                  onChange={() => {}}
+                  onChange={() => { }}
                   id=""
                   name="userRole"
                   placeholder="placeholder"
@@ -160,7 +160,7 @@ const AttendaceLog = (props: any) => {
               <SelectComp
                 className=""
                 label="Issue Type"
-                onChange={() => {}}
+                onChange={() => { }}
                 placeholder="Select"
                 popupClassName=""
                 value=""
@@ -173,7 +173,7 @@ const AttendaceLog = (props: any) => {
               <SelectComp
                 className=""
                 label="Priority"
-                onChange={() => {}}
+                onChange={() => { }}
                 placeholder="Select"
                 popupClassName=""
                 value=""
@@ -197,9 +197,9 @@ const AttendaceLog = (props: any) => {
                   placeholder="select one country"
                   onChange={handleChange}
                   optionLabelProp="label"
-                 
+
                 >
-                 
+
                   {drawerAssignToData.map((item: any, index: any) => {
                     return (
                       <Options value={item.name}>
@@ -222,7 +222,7 @@ const AttendaceLog = (props: any) => {
                   })}
                 </Select>
               </div>
-              
+
             </Col>
             <Col xs={24}>
               <label>Log Time</label>
@@ -232,7 +232,7 @@ const AttendaceLog = (props: any) => {
                     <Input
                       className="input"
                       disabled
-                      onChange={() => {}}
+                      onChange={() => { }}
                       id=""
                       name="hours"
                       placeholder="Hours"
@@ -247,7 +247,7 @@ const AttendaceLog = (props: any) => {
                   <Input
                     className="input"
                     disabled
-                    onChange={() => {}}
+                    onChange={() => { }}
                     id=""
                     name="minutes"
                     placeholder="Minutes"
@@ -260,7 +260,7 @@ const AttendaceLog = (props: any) => {
                   <Input
                     className="input"
                     disabled
-                    onChange={() => {}}
+                    onChange={() => { }}
                     id=""
                     name="seconds"
                     placeholder="Seconds"
@@ -279,7 +279,7 @@ const AttendaceLog = (props: any) => {
                     <Input
                       className="input"
                       disabled
-                      onChange={() => {}}
+                      onChange={() => { }}
                       id=""
                       name="hours"
                       placeholder="placeholder"
@@ -295,7 +295,7 @@ const AttendaceLog = (props: any) => {
                     <Input
                       className="input"
                       disabled
-                      onChange={() => {}}
+                      onChange={() => { }}
                       id=""
                       name="minutes"
                       placeholder="placeholder"
@@ -333,10 +333,11 @@ const AttendaceLog = (props: any) => {
               </Row>
             </Col>
           </Row>
+
           <Col xs={24} className="pt-8">
             <Row justify="end" gutter={20}>
               <Col>
-                <Button>cancel</Button>
+                <Button onClick={() => setOpen(false)}>cancel</Button>
               </Col>
               <Col>
                 <Button className="teriary-bg-color text-white capitalize font-semibold	text-base">

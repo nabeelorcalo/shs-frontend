@@ -6,6 +6,7 @@ import HelpDeskSelect from "../helpDeskSelect";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import HistoryModal from "../HistoryModal";
+import AttendaceLog from "../AttendanceLogModal";
 
 const tableData = [
   {
@@ -85,6 +86,7 @@ const priorityOption = [
 
 const UnassignedData = () => {
   const [history, setHistory] = useState<any>(false)
+  const [openModal, setOpenModal] = useState<any>(false)
 
   const columns = [
     {
@@ -160,7 +162,7 @@ const UnassignedData = () => {
 
   const menu2 = (
     <Menu>
-      <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="1" onClick={() => setOpenModal(true)}>View Details</Menu.Item>
       <Menu.Item key="2">Add Flag</Menu.Item>
       <Menu.Item key="3">Unassign</Menu.Item>
       <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
@@ -169,6 +171,7 @@ const UnassignedData = () => {
 
   return (
     <div>
+      <AttendaceLog open={openModal} setOpen={setOpenModal} />
        <HistoryModal history={history} setHistory={setHistory} />
       <GlobalTable columns={columns} tableData={tableData} />
     </div>
