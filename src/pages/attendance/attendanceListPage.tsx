@@ -20,11 +20,13 @@ import {
   GlassMagnifier,
   TableViewIcon,
 } from "../../assets/images";
+import useCustomHook from './actionHandler';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
 import "./style.scss";
 
 const Detail = () => {
+  const action = useCustomHook();
 
   const statusOption: any = [
     "All",
@@ -282,11 +284,13 @@ const Detail = () => {
             className="w-[88px]"
           />
 
-          <IconButton
-            size='large'
-            className='icon-btn download-btn'
-            onClick={downloadClick}
-            icon={<DownlaodFileIcon />}
+          <DropDown
+            options={[
+              'pdf',
+              'excel'
+            ]}
+            requiredDownloadIcon
+            setValue={() => action.downloadPdfOrExcel(event, "header", "data")}
           />
         </div>
       </div>
