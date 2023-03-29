@@ -1,0 +1,24 @@
+.type-signature-wrapper {
+  .signature-input {
+    .text-poppins {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .text-montserrat {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .text-roboto {
+      font-family: 'Roboto', sans-serif;
+    }
+    .text-size-lg {
+      font-size: 32px;
+    }
+    .input-no-border {
+      border: none;
+      &:hover {
+        border: none;
+      }
+    }
+  }
+}
