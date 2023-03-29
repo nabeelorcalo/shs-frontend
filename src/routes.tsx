@@ -114,6 +114,7 @@ const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const Report = Loadable(lazy(() => import("./pages/report")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
+const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
@@ -1295,6 +1296,11 @@ const agentRoutes = [
         key: `${ROUTES_CONSTANTS.LISTINGS}`,
         path: `${ROUTES_CONSTANTS.LISTINGS}`,
         element: <Listings />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.LISTING_EDIT}`,
+        path: `${ROUTES_CONSTANTS.LISTING_EDIT}`,
+        element: <ListingUpdate />,
       },
       {
         key: `${ROUTES_CONSTANTS.OFFERS}`,

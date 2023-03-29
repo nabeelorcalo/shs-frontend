@@ -7,7 +7,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "CompanyAdmin",
+  USER_ROLE: "Agent",
 };
 
 // Possibe string of roles:
@@ -90,6 +90,7 @@ export const ROUTES_CONSTANTS: any = {
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
   LISTINGS: "listings",
+  LISTING_EDIT: "edit-listing/:listingId",
   OFFERS: "offers",
   RESERVATIONS: "reservations",
   SETTING: "settings",

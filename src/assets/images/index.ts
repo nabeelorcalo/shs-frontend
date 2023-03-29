@@ -136,7 +136,7 @@ export { ReactComponent as ThreeDotsIcon } from "./MoreIcon.svg";
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
 export { ReactComponent as EducationImgSub } from "./digivault/manageVault/cil_education.svg";
-export { ReactComponent as BAnkingImg } from "./digivault/manageVault/banking.svg";
+export { ReactComponent as BAnkingImg } from "./digivault/manageVault/bankingFolder.svg";
 export { ReactComponent as BAnkingImgSub } from "./digivault/manageVault/ph_bank.svg";
 export { ReactComponent as HealthImg } from "./digivault/manageVault/health.svg";
 export { ReactComponent as HealthImgSub } from "./digivault/manageVault/ic_outline-health-and-safety.svg";
@@ -302,6 +302,37 @@ export { ReactComponent as Edit } from "../images/profile/delegateagent/Edit.svg
 export { ReactComponent as People } from "../images/profile/propertyagent/people.svg";
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
 
+// Manager Dashboard
+export { ReactComponent as RoundedAddIcon } from './dashboard/addIcon.svg';
+// export { ReactComponent as PeopleIcon } from './dashboard/people.svg';
+export { ReactComponent as ProfileTick } from './dashboard/profile-tick.svg';
+export { ReactComponent as ProfileTwouserIcon } from './dashboard/profile-2user.svg';
+export { ReactComponent as ProfileRemoveIcon } from './dashboard/profile-remove@2x.svg';
+export { ReactComponent as TopPerformerImage } from './dashboard/Image.svg';
+// export { default as UniLogo } from './dashboard/UniLogo.svg';
+// Company Admin Dashboard
+export { ReactComponent as UniversityIcon } from './dashboard/Universities.svg';
+export { ReactComponent as TotalManagersIcon } from './dashboard/TotalManagers.svg';
+// Agent Dashboard
+export { ReactComponent as ListingIcon } from './dashboard/ListingIcon.svg';
+export { ReactComponent as PropertiesIcon } from './dashboard/propertiesIcon.svg';
+export { ReactComponent as ReservedProperties } from './dashboard/ReservedProperties.svg';
+export { ReactComponent as VacantProperties } from './dashboard/VacantProperties.svg';
+export { ReactComponent as EyeIcon } from './dashboard/ic_outline-remove-red-eye.svg';
+export { ReactComponent as MDIHeartIcon } from './dashboard/mdi_heart-outline.svg';
+// delegate agent dashboard
+export { ReactComponent as InactiveMembersIcon } from './dashboard/inactiveMembers.svg';
+export { ReactComponent as CardRemoveIcon } from './dashboard/card-remove.svg';
+export { ReactComponent as WalletMoneyIcon } from './dashboard/wallet-money.svg';
+//system admin
+export { ReactComponent as EyeActionIcon } from './dashboard/eye-icon.svg';
+export { ReactComponent as ArchiveIcon } from './dashboard/archive.svg';
+export { ReactComponent as ArchiveFilledIcon } from './dashboard/archive-filled.svg';
+export { ReactComponent as LikeIcon } from './dashboard/likeIcon.svg';
+export { ReactComponent as FilledLikeIcon } from './dashboard/likeIconFilled.svg';
+export { ReactComponent as AttachmentIcon } from './dashboard/attachment.svg';
+export { ReactComponent as EmojiIcon } from './dashboard/emoji.svg';
+
 // contract
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
 export { default as Rejected } from "../images/ColorfullIconsProgressbar/rejected.svg";
@@ -429,7 +460,7 @@ export {ReactComponent as DocTabsIcon} from "./offers/DocumentsTabs.svg";
 export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
 
 // Listings Icons
-export { ReactComponent as IconAddListings } from "./listings/icon-add-listings.svg";
+export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
 export { ReactComponent as IconLink } from './listings/icon-link.svg';
 export { ReactComponent as IconAddUpload } from './listings/icon-add-upload.svg';
 export { ReactComponent as IconLocations } from './listings/icon-locations.svg';
@@ -438,6 +469,7 @@ export { ReactComponent as IconBedroomDetail } from './listings/icon-bedroom-det
 export { ReactComponent as IconRentBilling } from './listings/icon-rent-billing.svg';
 export { ReactComponent as IconRulesRef } from './listings/icon-rules-ref.svg';
 export { ReactComponent as IconRentalConditon } from './listings/icon-rental-condition.svg';
+export { ReactComponent as IconRemoveAttachment } from './listings/icon-remove-attachment.svg';
 
 // Attendance Icons
 export { ReactComponent as Absent } from "./Attendance/Absent.svg";
