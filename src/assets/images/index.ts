@@ -443,8 +443,17 @@ export { default as Offerimg3 } from "./offers/offerImg3.svg";
 export { ReactComponent as DocumentIcon } from "./offers/documentIcon.svg";
 export {ReactComponent as DocTabsIcon} from "./offers/DocumentsTabs.svg";
 export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
+
 // Listings Icons
 export { ReactComponent as IconAddListings } from "./listings/icon-add-listings.svg";
+export { ReactComponent as IconLink } from './listings/icon-link.svg';
+export { ReactComponent as IconAddUpload } from './listings/icon-add-upload.svg';
+export { ReactComponent as IconLocations } from './listings/icon-locations.svg';
+export { ReactComponent as IconPropertyDetail } from './listings/icon-property-detail.svg';
+export { ReactComponent as IconBedroomDetail } from './listings/icon-bedroom-details.svg';
+export { ReactComponent as IconRentBilling } from './listings/icon-rent-billing.svg';
+export { ReactComponent as IconRulesRef } from './listings/icon-rules-ref.svg';
+export { ReactComponent as IconRentalConditon } from './listings/icon-rental-condition.svg';
 
 // Attendance Icons
 export { ReactComponent as Absent } from "./Attendance/Absent.svg";

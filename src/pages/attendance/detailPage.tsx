@@ -7,7 +7,13 @@ import {
   AvgHoursCommon,
   WorkingDaysCommon,
   DownlaodFileIcon,
+  Emoji1st,
+  Emoji2nd,
+  Emoji3rd,
+  Emoji4th,
+  EmojiGray1st
 } from "../../assets/images";
+
 import {
   BoxWrapper,
   DropDown,
@@ -43,7 +49,7 @@ const Detail = () => {
       render: (_: any, data: any) => {
         return (
           <Space size="middle">
-
+            {data.mood}
           </Space>
         )
       },
@@ -67,36 +73,47 @@ const Detail = () => {
 
   const tableData = [
     {
+      key: '1',
       date: "Thu, 29 September 2022",
-      mood: 1,
+      mood: <Emoji1st />,
       clockIn: "09:01",
       clockOut: "17:23",
       totalHours: "8:20 hr",
     },
     {
+      key: '2',
       date: "Thu, 29 September 2022",
-      mood: 1,
+      mood: <Emoji2nd />,
+      clockIn: "09:01",
+      clockOut: "17:23",
+      totalHours: "8:20 hr",
+      children: [
+        {
+          clockIn: "09:01",
+          clockOut: "17:23",
+        },
+      ]
+    },
+    {
+      key: '3',
+      date: "Thu, 29 September 2022",
+      mood: <Emoji3rd />,
       clockIn: "09:01",
       clockOut: "17:23",
       totalHours: "8:20 hr",
     },
     {
+      key: '4',
       date: "Thu, 29 September 2022",
-      mood: 1,
+      mood: <Emoji4th />,
       clockIn: "09:01",
       clockOut: "17:23",
       totalHours: "8:20 hr",
     },
     {
+      key: '5',
       date: "Thu, 29 September 2022",
-      mood: 1,
-      clockIn: "09:01",
-      clockOut: "17:23",
-      totalHours: "8:20 hr",
-    },
-    {
-      date: "Thu, 29 September 2022",
-      mood: 1,
+      mood: <Emoji1st />,
       clockIn: "09:01",
       clockOut: "17:23",
       totalHours: "8:20 hr",
@@ -188,6 +205,15 @@ const Detail = () => {
     }
   }
 
+  // const [expandedRowKeys, setExpandedRowKeys] = useState<any>([]);
+  // const handleExpand = (expanded: any, record: any) => {
+  //   if (expanded) {
+  //     setExpandedRowKeys([record.key]);
+  //   } else {
+  //     setExpandedRowKeys([]);
+  //   }
+  // };
+
   return (
     <div className="company-admin-detail-container">
       <PageHeader
@@ -275,10 +301,10 @@ const Detail = () => {
               pagination={false}
               columns={tableColumns}
               tableData={tableData}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { }
-              }}
+            // expandable={{
+            //   defaultExpandAllRows: false,              //   expandedRowKeys,
+            //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
+            // }}
             />
           </BoxWrapper>
         </div>
