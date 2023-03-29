@@ -194,7 +194,6 @@ const Detail = () => {
         return "";
     }
   }
-
   // const [expandedRowKeys, setExpandedRowKeys] = useState<any>([]);
   // const handleExpand = (expanded: any, record: any) => {
   //   if (expanded) {
