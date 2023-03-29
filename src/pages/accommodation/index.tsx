@@ -189,7 +189,7 @@ const Accommodation = () => {
               />
             }
             {location.pathname === '/accommodation/booking-requests' &&
-            <Space size={20}>
+            <Space size={20} className="main-filter-btns">
               <div className="requests-filterby-agent">
                 <Select 
                   className="filled"

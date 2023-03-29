@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   AutoComplete,
     Button,
@@ -46,7 +46,7 @@ const GeneralInformation = () => {
           <Typography className="title">Personal Details</Typography>
               </div>
               <Row gutter={20}>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University"
               name="univerisity"
@@ -65,7 +65,7 @@ const GeneralInformation = () => {
                     />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Course"
               name="course"
@@ -81,7 +81,7 @@ const GeneralInformation = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University Email"
               name="email"
@@ -92,7 +92,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter Email' className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Post Code"
               name="postcode"
@@ -111,7 +111,7 @@ const GeneralInformation = () => {
                     />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Address"
               name="address"
@@ -122,7 +122,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter Address' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="City"
               name="city"
@@ -133,7 +133,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter City' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Country"
               name="country"
@@ -149,7 +149,7 @@ const GeneralInformation = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University Contact Name"
               name="ucn"
@@ -160,7 +160,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter Contact Number' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
           <Form.Item
         name="phone"
         label="Phone Number"
@@ -182,7 +182,7 @@ const GeneralInformation = () => {
 
       </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Graduate Year"
               name="graduateyear"
@@ -193,7 +193,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter Graduation Year' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Internship Start Date"
               name="startDate"
@@ -204,7 +204,7 @@ const GeneralInformation = () => {
               <CommonDatePicker/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Internship End Date"
               name="endDate"
@@ -215,7 +215,7 @@ const GeneralInformation = () => {
               <CommonDatePicker/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
             <Form.Item
               label="Internship Duration"
               name="duration"
@@ -231,7 +231,7 @@ const GeneralInformation = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
             <Form.Item
               label="Have you ever worked in any orgnization?"
               name="username"
@@ -247,7 +247,7 @@ const GeneralInformation = () => {
               /> 
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
             <Form.Item
               label="Company Name"
               name="companyName"
@@ -264,7 +264,7 @@ const GeneralInformation = () => {
           <Typography className="title">Emergency Contact</Typography>
               </div>
               <Row gutter={20}>
-              <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+              <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Name"
               name="name"
@@ -275,7 +275,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter Name' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
           <Form.Item
         name="phone"
         label="Phone Number"
@@ -297,7 +297,7 @@ const GeneralInformation = () => {
 
       </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Relationship"
               name="relationship"
@@ -313,7 +313,7 @@ const GeneralInformation = () => {
               /> 
             </Form.Item>
           </Col>
-              <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+              <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Post Code"
               name="postCode"
@@ -332,7 +332,7 @@ const GeneralInformation = () => {
                     />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Address"
               name="address"
@@ -343,7 +343,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter Address' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="City"
               name="city"
@@ -354,7 +354,7 @@ const GeneralInformation = () => {
               <Input placeholder='Enter City' className="input-style"/>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Country"
               name="country"
