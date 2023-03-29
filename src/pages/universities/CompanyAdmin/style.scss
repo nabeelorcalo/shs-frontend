@@ -1,0 +1,9 @@
+@import '../../../scss/colors';
+.company-university{
+  .ant-select-selector{
+    background: $text-input-bg-color !important;
+    &:hover{
+        background: $white-bg-color !important;
+    }
+  }
+}
