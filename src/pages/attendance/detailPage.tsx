@@ -167,7 +167,7 @@ const Detail = () => {
     }));
   };
 
-  const downloadClick = () => {};
+  const downloadClick = () => { };
 
   const getColorAndIcon = (name: string) => {
     let color: string;
@@ -282,11 +282,11 @@ const Detail = () => {
                   pagination={false}
                   columns={tableColumns}
                   tableData={tableData}
-                  // expandable={{
-                  //   defaultExpandAllRows: false,
-                  //   expandedRowKeys,
-                  //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
-                  // }}
+                // expandable={{
+                //   defaultExpandAllRows: false,
+                //   expandedRowKeys,
+                //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
+                // }}
                 />
               </BoxWrapper>
             </Col>
