@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import ActivityLog from "./SystemAdmin"
+import ActivityLog from "./systemAdmin";
 import "./style.scss";
 
 
