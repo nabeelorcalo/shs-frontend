@@ -1,4 +1,5 @@
 @import "../../../scss/colors";
+// #EFEEF2
 
 .allGoals_main {
   .SearchBar {
@@ -75,19 +76,72 @@
       }
     }
 
+    // Collaps Style Starts here
     .collaps_main.ant-collapse {
-      background-color: $text-primary-disabled-color;
-      .ant-collapse-header-text{
-        .goals_task_Accordion {
-          span{
-            color:$text-primary-title-color;
-          }
+      background-color: transparent;
+      .ant-collapse-item{
+        .ant-collapse-header{
+          background-color: $light-gray-tertiary;
+          border-radius: 16px;
+          align-items: center;
         }
+        .ant-collapse-expand-icon{
 
+        }
+        .ant-collapse-header-text{
+          .goals_task_Accordion{
+            .heading_date{
+              .Heading{
+                color: $text-primary-title-color;
+              }
+              .date{
+                color: $light-grey-color;
+              }
+              
+
+            }
+
+          }
+
+        }
       }
+
+      // background-color: $light-gray-tertiary;
+      // border: unset;
+
+      // .ant-collapse-header-text {
+      //   .goals_task_Accordion {
+      //     span {
+      //       color: $text-primary-title-color;
+      //     }
+      //   }
+      // }
+
+      // .ant-collapse-header{
+      //   .ant-collapse-expand-icon{
+      //     padding: 0;
+      //     border: 1px solid red;
+      //     width: 24px;
+      //     height: 24px;
+      //     border-radius: 5px;
+      //     margin-right: 10px;
+
+      //   }
+
+      // }
+
+      // .ant-collapse-item{
+      //   border-bottom: unset;
+      // }
+      // .ant-collapse-content{
+      //   &.ant-collapse-content-active{
+      //     border-top: unset;
+      //   }
+
+      // }
 
     }
   }
 }
 
-.AddGoalModals {}
+// .AddGoalModals {}

@@ -9,6 +9,7 @@ import { SetGoal } from './addGoalModal';
 import { goalsData } from './allGoalMockData';
 import "./style.scss";
 import { Collapse, Divider } from 'antd';
+import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
 const { Panel } = Collapse;
 const text = `
   A dog is a type of domesticated animal.
@@ -20,6 +21,12 @@ const text = `
 const AllGoals = () => {
   const action = useCustomHook();
   const [openAdGoal, setOpenAddGoal] = useState(false);
+
+  const customExpandIcon = ({ isActive }: any) => {
+    const icon = isActive ? <CaretDownOutlined /> : <CaretRightOutlined />;
+    return <span className="custom-expand-icon">{icon}</span>;
+  };
+
   return (
     <>
       <div className='allGoals_main'>
@@ -91,8 +98,16 @@ const AllGoals = () => {
                   className="Request_leave flex items-center justify-center"
                 />
               </div>
-              <Collapse className='collaps_main' >
-                <Panel header={<div className='goals_task_Accordion flex items-center justify-between'><span>heloo</span> <span onClick={() => { alert("hello") }}>yes im here</span></div>} key="1" className='mb-5'>
+              <Collapse className='collaps_main' expandIcon={customExpandIcon} bordered={false} >
+                <Panel
+                  header={<div className='goals_task_Accordion flex items-center justify-between'>
+                    <span className='heading_date flex flex-col'>
+                      <span className='Heading'>Select a step to start with tomorrow</span>
+                      <span className='date text-sm'>12/12/2023</span>
+                    </span>
+                    <span onClick={() => { alert("hello") }}>yes im here</span>
+                  </div>
+                  } key="1" className='mb-5'>
                   <p>{text}</p>
                 </Panel>
               </Collapse>
