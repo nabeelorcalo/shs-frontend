@@ -1,6 +1,6 @@
 console.log("ENV: ", import.meta.env.VITE_APP_URL);
 export default {
-  appUrl: import.meta.env.APP_URL || "http://localhost:8001",
+  // appUrl: process.env.REACT_APP_APP_URL || "http://localhost:8001",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -34,9 +34,11 @@ export const ROUTES_CONSTANTS: any = {
   ERROR_PAGE: "error-page",
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
+  INTERNSHIP_PIPELINE: 'internships/pipeline',
   NEW_INTERNSHIP: "internships/new-internship",
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   INTERNS: "interns",
+  COMPLETE_INTERNS: "interns/complete",
   INTERNS_PROFILE: "interns/profile",
   INTERNS_CHAT:"interns/chat",
   ATTENDANCE: "attendance",

@@ -119,6 +119,8 @@ export { ReactComponent as EmojiGray2nd } from "./RatingEmojis/EmojiGray2nd.svg"
 export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg";
 export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
 
+
+
 // Callendar Icons
 export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
 export { default as CalendarIcon } from "./calender-icon.png";
@@ -267,12 +269,15 @@ export { ReactComponent as UniversitiesTableFlag } from "./universities/flag.svg
 // Colorfull icons
 // export { ReactComponent as More } from './ColorfullIconsProgressbar/More.svg';
 
-// Icons for Buttons
-export { ReactComponent as FilterIcon } from "./buttonIcons/FilterIcon.svg";
-export { ReactComponent as ArrowToRight } from "./buttonIcons/Arrowtoright.svg";
-export { ReactComponent as ArrowToLeft } from "./buttonIcons/ArrowToLeft.svg";
-export { ReactComponent as ArrowToRight1 } from "./buttonIcons/ArrowToRight1.svg";
-export { ReactComponent as InternshipsIcon } from "./buttonIcons/InternshipsIcon.svg";
+// Icons for Buttons 
+export { ReactComponent as FilterIcon } from './ButtonIcons/FilterIcon.svg';
+export { ReactComponent as ArrowToRight } from './ButtonIcons/Arrowtoright.svg';
+export { ReactComponent as InternshipsIcon } from './ButtonIcons/InternshipsIcon.svg';
+export { ReactComponent as ListViewIcon } from './ButtonIcons/ListViewIcon.svg';
+export { ReactComponent as ArrowToLeft } from './buttonIcons/ArrowToLeft.svg';
+export { ReactComponent as ArrowToRight1 } from './buttonIcons/ArrowToRight1.svg';
+
+
 
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
@@ -420,6 +425,17 @@ export { ReactComponent as ClockOutCommon } from "./Common/ClockOut.svg";
 export { ReactComponent as AvgHoursCommon } from "./Common/AvgHours.svg";
 export { ReactComponent as WorkingDaysCommon } from "./Common/WorkingDays.svg";
 
+// View applicantion icons
+export { ReactComponent as HiredIcon } from './ViewInternship/HiredIcon.svg';
+export { ReactComponent as RejectedApplicantIcon } from './ViewInternship/RejectedApplicantIcon.svg';
+export { ReactComponent as TotalApplicantIcon } from './ViewInternship/TotalApplicantIcon.svg';
+export { ReactComponent as DownloadDocumentIcon } from './ViewInternship/DownloadIcon.svg';
+
+// Company Admin Internships Progress Card Icon
+export { ReactComponent as DepartmentIcon } from './ViewInternship/DepartmentIcon.svg';
+export { ReactComponent as JobTimeIcon } from './ViewInternship/JobTimeIcon.svg';
+export { ReactComponent as LocationIconCm } from './ViewInternship/LocationIconCm.svg';
+export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.svg';
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";

@@ -1,0 +1,71 @@
+body {
+  background:#f7f6f6;
+}
+
+.stepper {
+  display: flex;
+  margin: 10px 20px 10px 20px;
+  padding: 0;
+  width: 95%;
+  list-style: none;
+  position: relative;
+  
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    content: "";
+    width: calc(100% - 20px);
+    background: #e7e7e7;
+  }
+}
+
+.stepper__item {
+  flex: 100%;
+  color:#fff;
+  text-align: center;
+  padding: 30px 10px 30px 10px;
+  background: repeating-linear-gradient(
+				-65deg,
+				#fcfcfc,
+				#fcfcfc 20px,
+				#f4faf7 20px,
+				#f4faf7 40px
+			);
+  margin: 0 0 0 -15px;
+  -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  
+  &.applied {
+    background: #363565;
+  }
+  
+  &.interviewed {
+    background: #5879CE;
+  }
+  &.recommended {
+    background: #CC7FD4;
+  }
+  &.offerletter {
+    background: #C0ACFF;
+  }
+  &.contract {
+    background: #9FBC95;
+  }
+  &.hired {
+    background: #4A9D77;
+  }
+  &.reject {
+    background: #E94E5D;
+  }
+  
+  &:first-child {
+    padding: 30px 10px ;
+    -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  }
+  
+  &:last-child {
+    // -webkit-clip-path: polygon(20px 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    -webkit-clip-path: polygon(20px 50%, 0% 0%, 100%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  }
+}

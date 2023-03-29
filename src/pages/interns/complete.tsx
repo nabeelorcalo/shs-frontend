@@ -1,44 +1,33 @@
 import React, { useState } from "react";
 import {
-  GlobalTable,
   SearchBar,
-  ListAndGridViewButton,
   PageHeader,
+  GlobalTable,
   BoxWrapper,
   InternsCard,
-  Alert
+  ListAndGridViewButton
 } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
+import { Avatar, Button, Dropdown, Space} from 'antd';
 import { More } from "../../assets/images"
 import type { MenuProps } from 'antd';
-import { Dropdown, Avatar } from 'antd';
 
 const PopOver = () => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
+  const navigate = useNavigate()
+  const items: MenuProps['items'] = [
     {
-      key: "1",
+      key: '1',
       label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("profile");
-          }}
-        >
+        <a rel="noopener noreferrer" onClick={() => { navigate("profile") }}>
           Profile
         </a>
       ),
     },
     {
-      key: "2",
+      key: '2',
       label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("chat");
-          }}
-        >
+        <a rel="noopener noreferrer" onClick={() => { navigate("chat") }}>
           Chat
         </a>
       ),
@@ -48,54 +37,53 @@ const PopOver = () => {
     <Dropdown menu={{ items }} placement="bottomRight">
       <More />
     </Dropdown>
-  );
-};
+  )
+}
 
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-const Interns = () => {
-  const navigate = useNavigate()
-  const [value, setValue] = useState("")
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+const Complete = () => {
   const [listandgrid, setListandgrid] = useState(false)
   const columns = [
     {
-      dataIndex: "no",
-      key: "no",
-      title: "No.",
+      dataIndex: 'no',
+      key: 'no',
+      title: 'No.'
     },
     {
-      dataIndex: "posted_by",
-      key: "posted_by",
-      title: "Posted By",
+      dataIndex: 'posted_by',
+      key: 'posted_by',
+      title: 'Posted By'
     },
     {
-      dataIndex: "title",
-      key: "title",
-      title: "Title",
+      dataIndex: 'title',
+      key: 'title',
+      title: 'Title'
     },
     {
-      dataIndex: "department",
-      key: "department",
-      title: "Department",
+      dataIndex: 'department',
+      key: 'department',
+      title: 'Department'
     },
     {
-      dataIndex: "joining_date",
-      key: "joining_date",
-      title: "Joining Date",
+      dataIndex: 'joining_date',
+      key: 'joining_date',
+      title: 'Joining Date'
     },
     {
-      dataIndex: "date_of_birth",
-      key: "date_of_birth",
-      title: "Date of Birth",
+      dataIndex: 'date_of_birth',
+      key: 'date_of_birth',
+      title: 'Date of Birth'
     },
     {
-      dataIndex: "actions",
-      key: "actions",
-      title: "Actions",
+      dataIndex: 'status',
+      key: 'status',
+      title: 'Status'
     },
-  ];
+    {
+      dataIndex: 'actions',
+      key: 'actions',
+      title: 'Actions'
+    }
+  ]
   const tableData = [
     {
       no: "01",
@@ -104,8 +92,8 @@ const Interns = () => {
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
       location: "virtual",
-      status: "Pending",
-      posted_by: "T",
+      status: 'Completed',
+      posted_by: 'T',
     },
     {
       no: "02",
@@ -114,8 +102,8 @@ const Interns = () => {
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
       location: "Onsite",
-      status: "Active",
-      posted_by: "U",
+      status: 'Completed',
+      posted_by: 'U',
     },
     {
       no: "02",
@@ -124,10 +112,10 @@ const Interns = () => {
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
       location: "Onsite",
-      status: "Rejected",
-      posted_by: "U",
-    },
-  ];
+      status: 'Completed',
+      posted_by: 'U',
+    }
+  ]
   const newTableData = tableData.map((item, idx) => {
     return (
       {
@@ -140,7 +128,12 @@ const Interns = () => {
         department: item.department,
         joining_date: item.joining_date,
         date_of_birth: item.date_of_birth,
-        location: item.location,
+        status: <Button
+          size="small"
+          className="bg-[#e2e2e2]"
+        >
+          {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+        </Button>,
         actions: <PopOver />
       }
     )
@@ -167,13 +160,11 @@ const Interns = () => {
           <div className="pt-3">
             {
               listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {
-                  cardDummyArray.map((items: any, idx: any)=>{
-                    return(
-                      <InternsCard />
-                    )
-                  })
-                }
+                {Array(5).map((item, idx) => {
+                  return (
+                    <InternsCard />
+                  )
+                })}
               </div>
                 :
                 <GlobalTable
@@ -189,7 +180,7 @@ const Interns = () => {
         </BoxWrapper>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Interns;
+export default Complete
