@@ -5,9 +5,11 @@ import {
   IconLocation,
   UserIcon,
   DownlaodFileIcon,
+  Success,
 } from "../../assets/images";
 import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
+import { openNotification } from "../../components";
 import "./style.scss";
 
 export const SalarySlip = () => {
@@ -33,7 +35,9 @@ export const SalarySlip = () => {
     },
   ];
 
-
+  const downloadClick = () => {
+    window.print();
+  };
   return (
     <div className="salarySlip-main-wrapper">
       <IconButton
@@ -44,7 +48,16 @@ export const SalarySlip = () => {
       />
       <Card className="mt-5">
         <div className="flex justify-between items-center max-sm:flex-col md:flex-row gap-3">
-          <div className="w-52 flex justify-center">
+          <div
+            className="w-52 flex justify-center"
+            onClick={() =>
+              openNotification({
+                title: "Success",
+                description: "File downloaded",
+                icon: <Success />,
+              })
+            }
+          >
             <Logo className="logo" />
           </div>
           <div className="details flex flex-col gap-2">
@@ -93,6 +106,9 @@ export const SalarySlip = () => {
         {/* salary slip table */}
         <div className="mt-10">
           <SalarySlipTable />
+          {/* {isShowNotification && (
+            <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
+          )} */}
         </div>
       </Card>
     </div>

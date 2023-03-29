@@ -73,3 +73,5 @@ export * from './InternsCard';
 export * from './InternshipProgressCard';
 export * from './InternshipPipeLineCard';
 export * from './InternshipProgressStepper';
+export * from './Notification';
+export * from './SalarySlip';

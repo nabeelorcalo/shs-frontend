@@ -101,7 +101,6 @@ export const ROUTES_CONSTANTS: any = {
   SETTING: "settings",
   CERTIFICATES: "certificates",
   CERTIFICATESDETAIL: 'certificates/detail/:id',
-  PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
   SETTING_LOCATION:"location",
