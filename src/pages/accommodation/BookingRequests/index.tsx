@@ -229,6 +229,7 @@ const BookingRequests = () => {
         <div className="shs-table-card">
           <div className="shs-table">
             <Table
+              scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={tableData}
               pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
