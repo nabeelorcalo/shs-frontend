@@ -467,8 +467,9 @@ export { default as Offerimg3 } from "./offers/offerImg3.svg";
 export { ReactComponent as DocumentIcon } from "./offers/documentIcon.svg";
 export {ReactComponent as DocTabsIcon} from "./offers/DocumentsTabs.svg";
 export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
+
 // Listings Icons
-export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
+export { ReactComponent as IconAddListings } from "./listings/icon-add-listings.svg";
 export { ReactComponent as IconLink } from './listings/icon-link.svg';
 export { ReactComponent as IconAddUpload } from './listings/icon-add-upload.svg';
 export { ReactComponent as IconLocations } from './listings/icon-locations.svg';
