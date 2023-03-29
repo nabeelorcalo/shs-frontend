@@ -1,0 +1,17 @@
+.greating-card{
+  transition: ease 0.5s;
+  .share-wrapper{
+    display: none;
+  }
+  .greeting-card-wrapper{
+    width: 100%;
+  }
+  &:hover{
+    .greeting-card-wrapper {
+      width: 85%;
+    }
+    .share-wrapper{
+      display: flex;
+    }
+  }
+}
