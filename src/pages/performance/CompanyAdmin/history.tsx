@@ -1,18 +1,35 @@
 import { useState, useEffect } from "react";
-import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
+import {
+  Avatar,
+  Dropdown,
+  Progress,
+  Space,
+  MenuProps
+} from 'antd';
 // import all reusable componets from component/index.ts
-import { PageHeader, SearchBar, FiltersButton, IconButton, DropDown, Button, GlobalTable } from "../../../components";
+import {
+  PageHeader,
+  SearchBar,
+  FiltersButton,
+  IconButton,
+  DropDown,
+  Button,
+  GlobalTable
+} from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
-import { DownlaodFileIcon, GlassMagnifier, MoreIcon } from '../../../assets/images';
+import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
-import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { AppreciationModal } from "./appreciationModal";
 import { WarnModal } from "./warnModel";
+import useCustomHook from '../actionHandler';
+import {header, tableData} from './pdfData';
+import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
   const id = 1;
+  const action = useCustomHook();
 
   const columnNames = [
     {
@@ -39,7 +56,7 @@ const PerformanceHistory = () => {
             <Avatar
               size={32}
               alt="avatar"
-              src={<img src={data.src} />}
+              src={<img src={data.avatar} />}
             />
           </Link>
         </Space>
@@ -112,7 +129,7 @@ const PerformanceHistory = () => {
         return (
           <Space size="middle">
             <Link
-              className="bread-crumb"
+              className="flex gap-2 bread-crumb"
               to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
             >
               <Progress
@@ -125,6 +142,7 @@ const PerformanceHistory = () => {
                   </p>
                 }
               />
+              {data.isBadge ? <TalentBadge /> : ''}
             </Link >
           </Space>
         )
@@ -160,8 +178,9 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 40,
+      isBadge: true,
     },
     {
       id: 2,
@@ -171,8 +190,9 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 80,
+      isBadge: false,
     },
     {
       id: 3,
@@ -182,8 +202,9 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 50,
+      isBadge: true,
     },
     {
       id: 4,
@@ -193,8 +214,9 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 30,
+      isBadge: false,
     },
     {
       id: 5,
@@ -204,8 +226,9 @@ const PerformanceHistory = () => {
       evaluatedBy: 'Mino Marina',
       date: '22/09/2022',
       totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+      avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 100,
+      isBadge: true,
     },
   ];
 
@@ -229,7 +252,7 @@ const PerformanceHistory = () => {
         Janete Samson
       </p>
     </div>,
-    
+
     <div className="flex items-center">
       <Avatar
         size={24}
@@ -425,7 +448,7 @@ const PerformanceHistory = () => {
           <IconButton
             size='large'
             className='icon-btn'
-            onClick={downloadClick}
+            onClick={() => action.downloadPdf(header, tableData)}
             icon={<DownlaodFileIcon />}
           />
 
@@ -452,6 +475,9 @@ const PerformanceHistory = () => {
                     options={timeFrameOptions}
                     setValue={() => timeFrameSelection(event)}
                     value={state.timeFrameVal}
+                    showDatePickerOnVal='Date Range'
+                    requireDatePicker
+                    placement='topLeft'
                   />
                 </div>
 

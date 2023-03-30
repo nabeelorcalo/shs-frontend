@@ -1,229 +1,248 @@
 @import "../_colors.scss";
 
 .primary-bg-color {
-    background-color: $primary-bg-color;
+  background-color: $primary-bg-color;
 }
 
 .primary-color {
-    color: $primary-bg-color;
+  color: $primary-bg-color;
 }
 
 .primary-light-bg-color {
-    background-color: $primary-light-bg-color;
+  background-color: $primary-light-bg-color;
 }
 
 .primary-light-color {
-    color: $primary-light-bg-color;
+  color: $primary-light-bg-color;
 }
 
 .secondary-bg-color {
-    background-color: $secondary-bg-color;
+  background-color: $secondary-bg-color;
 }
 
 .secondary-color {
-    color: $secondary-bg-color;
+  color: $secondary-bg-color;
 }
 
 .secondary-light-bg-color {
-    background-color: $secondary-light-bg-color;
+  background-color: $secondary-light-bg-color;
 }
 
 .secondary-light-color {
-    color: $secondary-light-bg-color;
+  color: $secondary-light-bg-color;
 }
 
 .teriary-bg-color {
-    background-color: $teriary-bg-color;
+  background-color: $teriary-bg-color;
 }
 
 .teriary-color {
-    color: $teriary-bg-color;
+  color: $teriary-bg-color;
 }
 
 .teriary-light-bg-color {
-    background-color: $teriary-light-bg-color;
+  background-color: $teriary-light-bg-color;
 }
 
 .teriary-light-color {
-    color: $teriary-light-bg-color;
+  color: $teriary-light-bg-color;
 }
 
 .white-bg-color {
-    background-color: $white-bg-color;
+  background-color: $white-bg-color;
 }
 
 .white-color {
-    color: $white-bg-color;
+  color: $white-bg-color;
 }
 
 .dashboard-primary-bg-color {
-    background-color: $dashboard-primary-bg-color;
+  background-color: $dashboard-primary-bg-color;
 }
 
 .dashboard-primary-color {
-    color: $dashboard-primary-bg-color;
+  color: $dashboard-primary-bg-color;
 }
 
 .dashboard-hover-bg-color {
-    background-color: $dashboard-hover-bg-color;
+  background-color: $dashboard-hover-bg-color;
 }
 
 .dashboard-hover-color {
-    color: $dashboard-hover-bg-color;
+  color: $dashboard-hover-bg-color;
 }
 
 .text-primary-bg-color {
-    background-color: $text-primary-title-color;
+  background-color: $text-primary-title-color;
 }
 
 .text-primary-color {
-    color: $text-primary-title-color;
+  color: $text-primary-title-color;
 }
 
 .text-secondary-bg-color {
-    background-color: $text-secondary-body-color;
+  background-color: $text-secondary-body-color;
 }
 
 .text-secondary-color {
-    color: $text-secondary-body-color;
+  color: $text-secondary-body-color;
 }
 
 .text-teriary-bg-color {
-    background-color: $text-teriary-label-color;
+  background-color: $text-teriary-label-color;
 }
 
 .text-teriary-color {
-    color: $text-teriary-label-color;
+  color: $text-teriary-label-color;
 }
 
 .text-success-bg-color {
-    background-color: $text-success-placeholder-color;
+  background-color: $text-success-placeholder-color;
 }
 
 .text-success-color {
-    color: $text-success-placeholder-color;
+  color: $text-success-placeholder-color;
 }
 
 .text-primary-disabled-bg-color {
-    background-color: $text-primary-disabled-color;
+  background-color: $text-primary-disabled-color;
 }
 
 .text-primary-disabled-color {
-    color: $text-primary-disabled-color;
+  color: $text-primary-disabled-color;
 }
 
 .text-error-bg-color {
-    background-color: $text-error-line-color;
+  background-color: $text-error-line-color;
 }
 
 .text-error-line-color {
-    color: $text-error-line-color;
+  color: $text-error-line-color;
 }
 
 .text-link-bg-color {
-    background-color: $text-link-color;
+  background-color: $text-link-color;
 }
 
 .text-link-color {
-    color: $text-link-color;
+  color: $text-link-color;
 }
 
 .text-off-white-bg-color {
-    background-color: $text-off-white-color;
+  background-color: $text-off-white-color;
 }
 
 .text-off-white-color {
-    color: $text-off-white-color;
+  color: $text-off-white-color;
 }
 
 .text-input-bg-color {
-    background-color: $text-input-bg-color;
+  background-color: $text-input-bg-color;
 }
 
 .text-input-color {
-    color: $text-input-bg-color;
+  color: $text-input-bg-color;
 }
 
 .text-success-bg-color {
-    background-color: $text-success-color;
+  background-color: $text-success-color;
 }
 
 .text-success-color {
-    color: $text-success-color;
+  color: $text-success-color;
 }
 
 .text-success-hover-bg-color {
-    background-color: $text-success-hover-color;
+  background-color: $text-success-hover-color;
 }
 
 .text-success-hover-color {
-    color: $text-success-hover-color;
+  color: $text-success-hover-color;
 }
 
 .text-error-bg-color {
-    background-color: $text-error-color;
+  background-color: $text-error-color;
 }
 
 .text-error-color {
-    color: $text-error-color;
+  color: $text-error-color;
 }
 
 .text-error-hover-bg-color {
-    background-color: $text-error-hover-color;
+  background-color: $text-error-hover-color;
 }
 
 .text-error-hover-color {
-    color: $text-error-hover-color;
+  color: $text-error-hover-color;
 }
 
 .text-warning-bg-color {
-    background-color: $text-warning-color;
+  background-color: $text-warning-color;
 }
 
 .text-warning-color {
-    color: $text-warning-color;
+  color: $text-warning-color;
 }
 
 .text-info-bg-color {
-    background-color: $text-info-color;
+  background-color: $text-info-color;
 }
 
 .text-info-color {
-    color: $text-info-color;
+  color: $text-info-color;
+}
+.text-info-color-dark {
+  color: $text-info-color-dark;
 }
 
 .red-graph-tooltip-bg {
-    background-color: $red-graph-tooltip-color;
+  background-color: $red-graph-tooltip-color;
 }
 
 .green-graph-tooltip-bg {
-    background-color: $green-graph-tooltip-color;
+  background-color: $green-graph-tooltip-color;
 }
 
 .page-header-secondary-bg-color {
-    background-color: $page-header-secondary;
+  background-color: $page-header-secondary;
 }
 
 .page-header-secondary-color {
-    color: $page-header-secondary;
+  color: $page-header-secondary;
 }
 
 .light-sky-blue-bg {
-    background-color: $light-sky-blue;
+  background-color: $light-sky-blue;
 }
 
 .light-grey-color {
-    color: $light-grey-color;
+  color: $light-grey-color;
 }
 
 .sky-blue-color-bg {
-    background-color: $sky-blue-color;
+  background-color: $sky-blue-color;
 }
 
 .sky-blue-color {
-    color: $sky-blue-color;
+  color: $sky-blue-color;
 }
 
 .light-blue-bg-color {
-    background-color: $light-blue-color;
+  background-color: $light-blue-color;
+}
+
+.info-dark-bg-color {
+  background-color: $manager-btn-info;
+}
+
+.text-green-color {
+  color: $green-graph-tooltip-color;
+}
+
+.reset-bg-color {
+  background-color: $reset-bg-color;
+}
+
+.teriary-light {
+    color: $teriary-light; 
 }

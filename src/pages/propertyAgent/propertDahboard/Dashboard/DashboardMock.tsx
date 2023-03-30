@@ -2,12 +2,13 @@ import people from '../../../../assets/images/profile/propertyagent/people.svg'
 import clip from '../../../../assets/images/profile/propertyagent/clip.svg';
 import uilcalender from '../../../../assets/images/profile/propertyagent/uilcalender.svg';
 import aproved from '../../../../assets/images/profile/propertyagent/aproved.svg'
-import iconEmail from '../../../../assets/images/profile/student/email.png'
-import iconLocation from '../../../../assets/images/profile/student/location.png'
-import iconPhone from '../../../../assets/images/profile/student/Phone.png'
-import profile from '../../../../assets/images/profile/propertyagent/pf.png';
-import bed from '../../../../assets/images/profile/propertyagent/bed.png';
-import sofa from '../../../../assets/images/profile/propertyagent/sofa.png';
+import iconEmail from '../../../../assets/images/profile/student/email.svg'
+import iconLocation from '../../../../assets/images/profile/student/location.svg'
+import iconPhone from '../../../../assets/images/profile/student/Phone.svg'
+import profile from '../../../../assets/images/profile/propertyagent/pf.svg';
+import bed from '../../../../assets/images/profile/propertyagent/bed.svg';
+import sofa from '../../../../assets/images/profile/propertyagent/sofa.svg'
+import small from '../../../../assets/images/profile/university/small.svg'
 
 
 export const cardData = [
@@ -374,7 +375,7 @@ export const activityData = [
     {
         date: "11 Nov",
         userStatus: "New User Created",
-        img: "",
+        img: small,
         detail: "Albert added as a new agent",
         time:"02:53 pm "
         
@@ -382,11 +383,28 @@ export const activityData = [
     {
         date: "11 Nov",
         userStatus: "New User Created",
-        img: "",
+        img: small,
         detail: "Albert added as a new agent",
         time:"02:53 pm "
         
     },
+    {
+        date: "11 Nov",
+        userStatus: "New User Created",
+        img: small,
+        detail: "Albert added as a new agent",
+        time:"02:53 pm "
+        
+    },
+    {
+        date: "11 Nov",
+        userStatus: "New User Created",
+        img: small,
+        detail: "Albert added as a new agent",
+        time:"03:53 pm "
+        
+    },
+   
 ]
 
 

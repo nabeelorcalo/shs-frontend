@@ -1,3 +1,5 @@
+@import '../../scss/_colors.scss';
+
 .scrollableDiv {
   height: 500px;
   overflow: auto;
@@ -18,5 +20,6 @@
 
 ::-webkit-scrollbar-thumb:horizontal{
   background: #000;
+  // background: $text-input-bg-color;
   border-radius: 10px;
 }

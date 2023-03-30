@@ -19,9 +19,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     fontSize = "20px",
     fontWeight = "500",
     data = { perfomanceChart },
-    isMonthNavigationPresent = false,
-    month = '',
-    changeMonth = () => {}
+    children = <></>
   } = props;
 
   const [chartData] = useState(data);
@@ -43,21 +41,17 @@ export const MonthlyPerfomanceChart = (props: any) => {
     <BoxWrapper>
       {
         heading &&
-        <div className='flex'>
+        <div className='flex items-center my-2'>
           <p style={{ fontSize: fontSize, color: textColor, fontWeight: fontWeight }}>
             {heading}
           </p>
-          {
-            isMonthNavigationPresent &&
-            <MonthChanger
-              month={month}
-              onClick={changeMonth}
-            />
-          }
+          { children }
         </div>
       }
+
       <Column
-        marginRatio={marginRatio} {...config}
+        {...config}
+        marginRatio={marginRatio}
       />
     </BoxWrapper>
   )

@@ -194,14 +194,14 @@ const DigiVaultStudent = () => {
   return (
     <div className="digivault">
       <Alert
-        open={showDelete}
-        setOpen={setShowDelete}
+        state={showDelete}
+        setState={setShowDelete}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-      >
-        <p>Are you sure you want to delete this?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
+      
       <NewPasswordModal
         newPass={newPass}
         setNewPass={setNewPass}

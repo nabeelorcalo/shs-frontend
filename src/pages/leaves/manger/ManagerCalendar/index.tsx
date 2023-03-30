@@ -27,7 +27,6 @@ const ManagerCalendar = () => {
       </div>)
   };
   const handleSlotContent = (slotEvent: any) => {
-
     return (
       <>
         <div className="slot_Top_wrapper">
@@ -36,11 +35,9 @@ const ManagerCalendar = () => {
         </div>
       </>)
   }
-
   const handleResourceRender = (info: any) => {
     const resource = info?.resource?._resource;
     console.log('resource', resource);
-
     return (
       <>
         <div className="leave_profile_wrapper flex items-center gap-2">
@@ -53,13 +50,11 @@ const ManagerCalendar = () => {
         </div>
       </>)
   }
-
   const handleResourceAreaHeader = (info: any) => {
     return (
       <div className=''>{dayjs().format('MMMM')}</div>
     )
   }
-
   return (
     <>
       <div className='manage_calendar_wrapper bg-white p-4'>
@@ -85,7 +80,7 @@ const ManagerCalendar = () => {
             slotLabelContent={handleSlotContent}
             resourceLabelContent={handleResourceRender}
             slotMinWidth={100}
-            resourceAreaWidth={260}
+            // resourceAreaWidth={260}
             eventMinWidth={100}
             resourceAreaHeaderContent={handleResourceAreaHeader}
             slotDuration="24:00:00"

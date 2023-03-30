@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Col, Row, Typography, Space, Input, Button } from "antd";
-import {  Settinglocation,  LocationPeople,  CardLocation,} from "../../../../assets/images";
+import { Settinglocation, LocationPeople, CardLocation, } from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
@@ -34,15 +34,15 @@ let overview = [
 
 const SettingLocation: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const handleChange = () => {};
+  const handleChange = () => { };
   return (
     <div className="setting-location">
-        <div className="flex justify-between">
+      <div className="flex justify-between">
         <SearchBar size="middle" handleChange={handleChange} />
         <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
           <Button
             size="middle"
-            onClick={() => {}}
+            onClick={() => { }}
             className="flex gap-2 setting-add-button white-color teriary-bg-color"
           >
             <Settinglocation /> Add Location
@@ -69,7 +69,7 @@ const SettingLocation: React.FC = () => {
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
-                      link={"/settings/location/add-location"}
+                        link={"/settings/location/add-location"}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />
@@ -89,9 +89,8 @@ const SettingLocation: React.FC = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this location?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

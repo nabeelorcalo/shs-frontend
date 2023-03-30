@@ -1,3 +1,4 @@
+import React from "react";
 import {
   CreditCardFilled,
   DribbbleSquareFilled,
@@ -5,13 +6,13 @@ import {
   InfoCircleFilled,
   UserOutlined,
 } from "@ant-design/icons";
-import React from "react";
 import AppTabs from "../../../components/Tabs";
 import Documents from "./tabs/documents";
 import GeneralInformation from "./tabs/generalInformation";
 import ImmigrationStatus from "./tabs/immigrationStatus";
 import PersonalInformation from "./tabs/personalInformation";
 import CardTabs from "./tabs/cards/index";
+import '../style.scss';
 
 const items = [
   {
@@ -64,17 +65,7 @@ const items = [
 
 const StudentsTabs = () => {
   return (
-    <div
-      style={{
-        background: "#FFFFFF",
-        boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-        borderRadius: "16px",
-        padding: "1rem",
-        height: "80vh",
-        overflowY: "scroll",
-        overflowX: "hidden",
-      }}
-    >
+    <div className="studdnt-dash">
       <AppTabs items={items} />
     </div>
   );

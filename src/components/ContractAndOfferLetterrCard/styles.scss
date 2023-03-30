@@ -22,15 +22,15 @@
   }
 
   &:hover {
-    background-color: #4A9D77;
+    background-color: #4a9d77;
 
     .box-wrapper {
-      width: 78%;
+      width: 76%;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
 
     .view-all-btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       padding: 10px 20px;

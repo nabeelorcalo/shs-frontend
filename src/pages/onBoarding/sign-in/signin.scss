@@ -16,12 +16,12 @@
     margin-bottom: 1rem;
   }
   .input-style {
-    background: #e6f4f9;
+    background: $text-input-bg-color;
     border-radius: 8px;
     height: 48px;
   }
   .ant-input-affix-wrapper > input.ant-input {
-    background: #e6f4f9 !important;
+    background: $text-input-bg-color !important;
   }
   .login-form-button {
     padding: 10px 0px 30px 0px;
@@ -29,30 +29,36 @@
     width: 100%;
   }
   .form-inner-wrapper {
-    border: 1px solid #d9dbe9;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border: 1px solid $text-error-line-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
   .a-tag-signup {
-    color: #e95060;
+    color: $secondary-bg-color;
   }
   .a-tag-signup:hover {
-    color: #e95060;
+    color: $secondary-bg-color;
   }
   .login-form-forgot {
-    color: #363565;
+    color: $primary-bg-color;
   }
 }
 
 .reset-form {
+  .card-style {
+    background: $white-bg-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 8px;
+  }
+
   .reset-form-style {
     display: flex !important;
     justify-content: center;
     margin-top: 6rem;
   }
   .input-style {
-    background: #e6f4f9;
+    background: $text-input-bg-color;
     border-radius: 8px;
     height: 48px;
   }
@@ -67,10 +73,10 @@
     margin-bottom: 1rem;
   }
   .a-tag-signup {
-    color: #e95060;
+    color: $secondary-bg-color;
   }
   .a-tag-signup:hover {
-    color: #e95060;
+    color: $secondary-bg-color;
   }
 }
 
@@ -90,13 +96,13 @@
     justify-content: center;
   }
   .form-inner-wrapper {
-    border: 1px solid #d9dbe9;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border: 1px solid $text-error-line-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
   .main-title {
-    color: #363565;
+    color: $primary-bg-color;
     font-size: 30px;
     font-weight: 500;
     line-height: 40px;
@@ -104,7 +110,7 @@
     text-align: center;
   }
   .secondary-title {
-    color: #4e4b66;
+    color: $text-secondary-body-color;
     font-size: 16px;
     font-weight: 400;
     line-height: 40px;
@@ -112,10 +118,10 @@
     text-align: center;
   }
   .a-tag-signup {
-    color: #e95060;
+    color: $secondary-bg-color;
   }
   .a-tag-signup:hover {
-    color: #e95060;
+    color: $secondary-bg-color;
   }
 }
 
@@ -131,14 +137,17 @@
     margin-bottom: 1rem;
   }
   .form-inner-wrapper {
-    border: 1px solid #d9dbe9;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border: 1px solid $text-error-line-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
+
+
 }
 
 .password-success {
+
   .password-success-style {
     display: flex !important;
     justify-content: center;
@@ -154,9 +163,10 @@
     justify-content: center;
   }
   .form-inner-wrapper {
-    border: 1px solid #d9dbe9;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border: 1px solid $text-error-line-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
+
 }

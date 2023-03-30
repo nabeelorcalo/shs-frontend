@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Table, Dropdown, Typography, Row, Col } from 'antd'
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images'
-import { PopUpModal } from "../../../components"
+import { PopUpModal } from "../../../components";
 import "./style.scss";
 interface DataType {
   key: React.Key;
@@ -229,6 +229,7 @@ const BookingRequests = () => {
         <div className="shs-table-card">
           <div className="shs-table">
             <Table
+              scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={tableData}
               pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}

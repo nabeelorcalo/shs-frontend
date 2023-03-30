@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
-// import all reusable componets from component/index.ts
-import { PageHeader, SearchBar, FiltersButton, IconButton, DropDown, Button, GlobalTable } from "../../../components";
-// end
-import { DownlaodFileIcon, GlassMagnifier, MoreIcon } from '../../../assets/images';
+import { PageHeader, SearchBar, FiltersButton, IconButton, GlobalTable, DropDown, BoxWrapper } from "../../../components";
+import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 
@@ -27,12 +25,12 @@ const ManagerPerformance = () => {
       key: 'avatar',
       render: (_: any, data: any) => (
         <Space size="middle">
-          
-            <Avatar
-              size={32}
-              alt="avatar"
-              src={<img src={data.src} />}
-            />
+
+          <Avatar
+            size={32}
+            alt="avatar"
+            src={<img src={data.src} />}
+          />
         </Space>
       ),
     },
@@ -77,19 +75,18 @@ const ManagerPerformance = () => {
       key: 'overallPerformance',
       render: (_: any, data: any) => {
         return (
-          <Space size="middle">
-            <p>
-              <Progress
-                size={[200, 13]}
-                percent={data.performance}
-                strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
-                format={(percent: any) =>
-                  <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
-                    {percent}%
-                  </p>
-                }
-              />
-            </p>
+          <Space size="middle" className="flex">
+            <Progress
+              size={[200, 13]}
+              percent={data.performance}
+              strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
+              format={(percent: any) =>
+                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                  {percent}%
+                </p>
+              }
+            />
+            {data.isBadged ? <TalentBadge /> : ''}
           </Space>
         )
       },
@@ -125,6 +122,7 @@ const ManagerPerformance = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 40,
+      isBadged: true,
     },
     {
       id: 2,
@@ -135,6 +133,7 @@ const ManagerPerformance = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 80,
+      isBadged: false,
     },
     {
       id: 3,
@@ -145,6 +144,7 @@ const ManagerPerformance = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 50,
+      isBadged: true,
     },
     {
       id: 4,
@@ -155,6 +155,7 @@ const ManagerPerformance = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 30,
+      isBadged: false,
     },
     {
       id: 5,
@@ -165,6 +166,7 @@ const ManagerPerformance = () => {
       totalEvaluations: '08',
       src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
       performance: 100,
+      isBadged: true,
     },
   ];
 
@@ -176,7 +178,7 @@ const ManagerPerformance = () => {
     'Date Range'
   ];
 
-  const departmentOptions = [
+  const professionOptions = [
     'Design',
     'Business Analyst',
     'Data Scientist',
@@ -209,23 +211,9 @@ const ManagerPerformance = () => {
 
   const [state, setState] = useState({
     openSidebar: false,
-    timeFrameVal: 'Select',
-    departmentVal: 'Select',
-    evaluatedByVal: 'Select',
-    openAprreciationModal: false,
-    openWarnModal: false,
+    timeFrameVal: 'Time Frame',
+    professionVal: 'Status',
   });
-
-  const handleSidebarClick = () => {
-    setState(prevState => ({
-      ...prevState,
-      openSidebar: !state.openSidebar,
-    }));
-  }
-
-  const downloadClick = () => {
-
-  }
 
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
@@ -236,17 +224,17 @@ const ManagerPerformance = () => {
     }));
   }
 
-  const departmentSelection = (event: any) => {
+  const professionSelection = (event: any) => {
     const value = event.target.innerText;
 
     setState(prevState => ({
       ...prevState,
-      departmentVal: value,
+      professionVal: value,
     }));
   }
 
   return (
-    <div className="company-admin-performance-history">
+    <div className="manager-performance-history">
       <PageHeader
         bordered
         title={
@@ -255,41 +243,46 @@ const ManagerPerformance = () => {
           </div>
         }
       />
-
-      <div className="flex">
-        <div className="w-[30%]">
+      <div className="flex performance-header">
+        <div className="w-[30%] performance-search-bar">
           <SearchBar
             className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
-            placeholder="search"
-            size="small"
+            placeholder="Search"
           />
         </div>
 
-        <div className="flex justify-center ml-auto">
-          <FiltersButton
-            label="Filters"
-            onClick={handleSidebarClick}
+        <div className="flex justify-center ml-auto gap-4 manager-dropdowns-container">
+          <DropDown
+            name="time-frame"
+            options={timeFrameOptions}
+            setValue={() => timeFrameSelection(event)}
+            value={state.timeFrameVal}
+            showDatePickerOnVal='Date Range'
+            requireDatePicker
+            placement='topLeft'
           />
 
-          <IconButton
-            size='large'
-            className='icon-btn'
-            onClick={downloadClick}
-            icon={<DownlaodFileIcon />}
+          <DropDown
+            name="profession"
+            options={professionOptions}
+            setValue={() => professionSelection(event)}
+            value={state.professionVal}
           />
         </div>
       </div>
+      <BoxWrapper>
+        <div className="performace-history-list">
+          <GlobalTable
+            columns={columnNames}
+            tableData={evaluationHistoryData}
+            pagination={false}
+          />
+        </div>
+      </BoxWrapper>
 
-      <div className="performace-history-list">
-        <GlobalTable
-          columns={columnNames}
-          tableData={evaluationHistoryData}
-          pagination={false}
-        />
-      </div>
     </div>
   )
 }
