@@ -490,3 +490,7 @@ export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.sv
 export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
+export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
+export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";
+export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
+export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
