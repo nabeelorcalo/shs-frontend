@@ -83,3 +83,5 @@ export * from './GreetingCard';
 export * from './SalarySlip';
 export * from './ListAndGridViewButton';
 export * from './InternsCard';
+export * from './InternshipProgressCard';
+export * from './InternshipPipeLineCard';
