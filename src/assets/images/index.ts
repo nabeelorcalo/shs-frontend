@@ -351,8 +351,8 @@ export { ReactComponent as GreyEye } from "../images/contract/grayeye.svg";
 export { ReactComponent as GreyLock } from "../images/contract/graylock.svg";
 export { ReactComponent as GreenErrow } from "../images/contract/greenerrow.svg";
 export { ReactComponent as GreenEye } from "../images/contract/greeneye.svg";
-export { ReactComponent as GreenLock} from "../images/contract/greenlock.svg";
-export { ReactComponent as RedLock} from "../images/contract/redlock.svg";
+export { ReactComponent as GreenLock } from "../images/contract/greenlock.svg";
+export { ReactComponent as RedLock } from "../images/contract/redlock.svg";
 
 
 //Chat
@@ -412,19 +412,19 @@ export { ReactComponent as AllGrievances } from './Grievances/all-grievances.svg
 export { ReactComponent as InProgressGrievances } from './Grievances/in-progress-grievances.svg';
 export { ReactComponent as NewGrievances } from './Grievances/new-grievances.svg';
 export { ReactComponent as ResolevedGrievances } from './Grievances/resoleved-grievances.svg';
-export { ReactComponent as Clock24h  } from './Grievances/clock-24h.svg';
-export { ReactComponent as ClockGrievances  } from './Grievances/clock.svg';
-export { ReactComponent as LineGrievances  } from './Grievances/line.svg';
-export { ReactComponent as BlowWistle  } from './Grievances/blow-whistle.svg';
-export { ReactComponent as GrievancesDocPDF  } from './Grievances/document-pdf.svg';
-export { ReactComponent as GrievancesDocJPG  } from './Grievances/document-jpg.svg';
-export { ReactComponent as GrievancesDocDownload  } from './Grievances/doc-download.svg';
-export { ReactComponent as GrievancesLike  } from './Grievances/like.svg';
-export { ReactComponent as GrievancesDisLike  } from './Grievances/dislike.svg';
-export { ReactComponent as GrievancesAvater  } from './Grievances/avater-img.svg';
-export { ReactComponent as GrievancesInbox  } from './Grievances/inbox.svg';
-export { ReactComponent as GrievancesCall  } from './Grievances/call.svg';
-export { ReactComponent as GrievancesLocation  } from './Grievances/location.svg';
+export { ReactComponent as Clock24h } from './Grievances/clock-24h.svg';
+export { ReactComponent as ClockGrievances } from './Grievances/clock.svg';
+export { ReactComponent as LineGrievances } from './Grievances/line.svg';
+export { ReactComponent as BlowWistle } from './Grievances/blow-whistle.svg';
+export { ReactComponent as GrievancesDocPDF } from './Grievances/document-pdf.svg';
+export { ReactComponent as GrievancesDocJPG } from './Grievances/document-jpg.svg';
+export { ReactComponent as GrievancesDocDownload } from './Grievances/doc-download.svg';
+export { ReactComponent as GrievancesLike } from './Grievances/like.svg';
+export { ReactComponent as GrievancesDisLike } from './Grievances/dislike.svg';
+export { ReactComponent as GrievancesAvater } from './Grievances/avater-img.svg';
+export { ReactComponent as GrievancesInbox } from './Grievances/inbox.svg';
+export { ReactComponent as GrievancesCall } from './Grievances/call.svg';
+export { ReactComponent as GrievancesLocation } from './Grievances/location.svg';
 export { ReactComponent as GrievancesSidebarAvater } from './Grievances/grievance-sidebar-avater.svg';
 export { ReactComponent as GrievancesAvater1 } from './Grievances/avater-1.svg';
 export { ReactComponent as GrievancesAvater2 } from './Grievances/avater-2.svg';
@@ -466,8 +466,8 @@ export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";
 export { default as Offerimg3 } from "./offers/offerImg3.svg";
 export { ReactComponent as DocumentIcon } from "./offers/documentIcon.svg";
-export {ReactComponent as DocTabsIcon} from "./offers/DocumentsTabs.svg";
-export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
+export { ReactComponent as DocTabsIcon } from "./offers/DocumentsTabs.svg";
+export { ReactComponent as UserTabsIcon } from "./offers/UserTabs.svg"
 
 // Listings Icons
 export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
@@ -503,3 +503,7 @@ export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
 export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
 export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
+
+
+
+export { ReactComponent as VideoRecorder } from './VideoRecorder.svg';

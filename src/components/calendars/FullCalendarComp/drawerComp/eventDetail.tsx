@@ -1,5 +1,5 @@
-import { CalendarIcon, CalendarSearch, CalUserIcon, ClockDarkIcon, CopyPasteIcon, LocationDarkIcon } from '../../../../assets/images';
-import { eventsMockData } from '../mockData';
+import { CalendarIcon, CalendarSearch, CalUserIcon, ClockDarkIcon, CopyPasteIcon, LocationDarkIcon, VideoRecorder } from '../../../../assets/images';
+import { calendarMockData } from '../mockData';
 import { Button } from 'antd';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
@@ -8,9 +8,9 @@ const EventDetail = (props: any) => {
 
   dayjs.extend(weekOfYear);
 
-  const { eventId } = props;
+  const { eventId, eventCategory, eventStatus } = props;
 
-  const selectedEvent = eventsMockData.find(event => event.id === eventId);
+  const selectedEvent = calendarMockData.find(event => event.id === eventId);
 
   const formatTimeDate = (value: string | any, format: string) => {
     return dayjs(value).format(format);
@@ -28,34 +28,39 @@ const EventDetail = (props: any) => {
   return (
     <div className='event-detail-wrapper'>
       <div className='event-detail'>
-        <p className='font-medium text-xl heading mb-[16px]'>{selectedEvent?.title}</p>
+        <p className='font-medium text-xl heading mb-[16px] capitalize'>{selectedEvent?.title}</p>
 
         <div className="flex items-center gap-3">
           <img src={CalendarIcon} />
-          <p className='event-info'>
+          {eventCategory !== 'reminder' ? <p className='event-info'>
             {formatTimeDate(selectedEvent?.start, 'dddd, MM MMM YYYY')}
             &nbsp;-&nbsp;
             {formatTimeDate(selectedEvent?.end, 'dddd, MM MMM YYYY')}
           </p>
+            :
+            <p>{formatTimeDate(selectedEvent?.end, 'dddd, MM MMM YYYY')}</p>
+          }
         </div>
         <div className="flex items-center gap-3 my-[20px]">
           <ClockDarkIcon />
-          <p className='event-info'>
-            {formatTimeDate(selectedEvent?.start, 'HH:MM A')}
-            &nbsp;-&nbsp;
-            {formatTimeDate(selectedEvent?.end, 'HH:MM A')}
-            &nbsp;
-            {`(${hourDiff(selectedEvent?.start, selectedEvent?.end)} hours) `}
-          </p>
+          {eventCategory === 'reminder' ? <p>{formatTimeDate(selectedEvent?.end, 'HH:MM A')}</p> :
+            <p className='event-info'>
+              {formatTimeDate(selectedEvent?.start, 'HH:MM A')}
+              &nbsp;-&nbsp;
+              {formatTimeDate(selectedEvent?.end, 'HH:MM A')}
+              &nbsp;
+              {`(${hourDiff(selectedEvent?.start, selectedEvent?.end)} hours) `}
+            </p>
+          }
         </div>
 
-        <div className="flex items-center gap-3 my-[20px]">
+        {selectedEvent?.userName && <div className="flex items-center gap-3 my-[20px]">
           <CalUserIcon />
           <p className='capitalize'>
             {selectedEvent?.userName}
             <span className='user-role'>&nbsp;(organizer)</span>
           </p>
-        </div>
+        </div>}
       </div>
       <div className="event-type">
         <p className='font-medium text-xl heading mb-[16px]'>Event Type</p>
@@ -64,15 +69,30 @@ const EventDetail = (props: any) => {
           <p className='capitalize'>{selectedEvent?.category}</p>
         </div>
       </div>
-      <div className="onsite">
-        <p className='font-medium text-xl heading mb-[16px]'>Onsite</p>
-        <div className="flex items-center justify-between gap-3 rounded-lg my-[20px]">
-          <LocationDarkIcon />
-          <p className='capitalize'>{selectedEvent?.siteAddress}</p>
-          <CopyPasteIcon />
-        </div>
-      </div>
-      <div className="attendees">
+      {
+        selectedEvent?.location.type === 'virtual' ?
+          <div className="virtual">
+            <p className='font-medium text-xl heading'>Virtual</p>
+            <div className="flex items-center gap-3">
+              <div className="link flex flex-1 items-center justify-between gap-3 rounded-lg my-[20px]">
+                <VideoRecorder />
+                <p>{selectedEvent?.location?.link}</p>
+                <CopyPasteIcon />
+              </div>
+              <Button className='primary-btn rounded-lg green-graph-tooltip-bg'>Join Call</Button>
+            </div>
+          </div>
+          :
+          <div className="onsite">
+            <p className='font-medium text-xl heading mb-[16px]'>Onsite</p>
+            <div className="flex items-center justify-between gap-3 rounded-lg my-[20px]">
+              <LocationDarkIcon />
+              <p className='capitalize'>{selectedEvent?.location?.link}</p>
+              <CopyPasteIcon />
+            </div>
+          </div>
+      }
+      {selectedEvent?.attendees && <div className="attendees">
         <p className='font-medium text-xl heading'>Attendees</p>
         <div className="user-list">
           {selectedEvent?.attendees?.map((users, i) => (
@@ -85,14 +105,28 @@ const EventDetail = (props: any) => {
             </div>
           ))}
         </div>
-      </div>
+      </div>}
       <div className="description">
         <p className='font-medium text-xl heading mb-[16px]'>Description</p>
         <p className='font-normal text-sm'>{selectedEvent?.description}</p>
       </div>
       <div className="flex justify-end gap-3 mt-[20px] event-actions">
-        <Button className='outlined-btn rounded-lg'>Cancel Meeting</Button>
-        <Button className='primary-btn rounded-lg green-graph-tooltip-bg'>Notify Attendees</Button>
+
+        {eventCategory === 'reminder' ? <Button className='outlined-btn rounded-lg'>Delete Reminder</Button> :
+
+          eventCategory === 'meeting' ? <>
+            <Button className='outlined-btn rounded-lg capitalize'>
+              {eventStatus === 'pending' ? 'cancel meeting' : 'decline'}
+            </Button>
+            <Button className='primary-btn rounded-lg green-graph-tooltip-bg capitalize'>
+              {eventStatus === 'pending' ? 'notify attendees' : eventStatus === 'accept' ? 'accept' : 'accepted'}
+            </Button>
+          </> :
+            <>
+              <Button className='outlined-btn rounded-lg capitalize'>Decline</Button>
+              <Button className='primary-btn rounded-lg green-graph-tooltip-bg capitalize'>Accept</Button>
+            </>
+        }
       </div>
     </div>
   )
