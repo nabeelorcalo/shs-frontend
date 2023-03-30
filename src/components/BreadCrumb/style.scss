@@ -1,4 +1,6 @@
-.BreadCrum_main {
+@import "../../scss/_colors.scss";
+
+.breadCrumb-main {
   margin-bottom: 25px;
 
   span {
@@ -7,7 +9,7 @@
     &:nth-child(3),
     &:nth-child(4),
     &:nth-child(5) {
-      color: #363565;
+      color: $primary-bg-color;
     }
 
     &:nth-child(1) {
@@ -18,7 +20,7 @@
     }
 
     &:nth-child(2) {
-      border-left: 1px solid #363565;
+      border-left: 1px solid $primary-bg-color;
       padding-left: 10px;
       font-weight: 500;
       font-size: 16px;

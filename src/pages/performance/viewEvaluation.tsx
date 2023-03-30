@@ -105,62 +105,6 @@ const ViewPerformance = () => {
     alert('download popup');
   }
 
-  const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
-
-    switch (role) {
-      case 'Intern':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-
-      case 'CompanyAdmin':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              Performance History
-            </Link>
-          </>
-        );
-
-      case 'Manager':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.DETAIL}`}
-            >
-              Mino Marina
-            </Link>
-          </>
-        );
-      default:
-        return <></>;
-    }
-  }
-
   return (
     <div className="view-evaluation">
       <PageHeader

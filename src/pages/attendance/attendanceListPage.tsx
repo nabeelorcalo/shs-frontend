@@ -149,14 +149,6 @@ const Detail = () => {
     isToggle: false,
   });
 
-  const breadCrumbs = () => {
-    return (
-      <Link className="bread-crumb" to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}>
-        Attendance
-      </Link>
-    );
-  };
-
   const changeMonth = (event: any) => {
     let newDate: any;
     let btn = event.target.parentElement.name
@@ -235,7 +227,7 @@ const Detail = () => {
               (role === "University" || role === "Manager") ?
                 <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
-                <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+                <Breadcrumb breadCrumbData={tempArray} />
             }
           </div>
         }

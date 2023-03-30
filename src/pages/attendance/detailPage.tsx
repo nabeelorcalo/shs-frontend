@@ -131,42 +131,6 @@ const Detail = () => {
     ],
   });
 
-  // const breadCrumbs = () => {
-  //   const role = constants.USER_ROLE;
-
-  //   switch (role) {
-  //     case 'Manager':
-  //       return (
-  //         <Link
-  //           className="bread-crumb"
-  //           to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-  //         >
-  //           Attendance
-  //         </Link>
-  //       );
-  //     case 'CompanyAdmin':
-  //       return (
-  //         <>
-  //           <Link
-  //             className="bread-crumb"
-  //             to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-  //           >
-  //             Attendance
-  //           </Link>
-  //           /
-  //           <Link
-  //             className="bread-crumb"
-  //             to={`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`}
-  //           >
-  //             Attendance Details
-  //           </Link>
-  //         </>
-  //       );
-  //     default:
-  //       return <></>;
-  //   }
-  // }
-
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -203,14 +167,6 @@ const Detail = () => {
         return "";
     }
   }
-  // const [expandedRowKeys, setExpandedRowKeys] = useState<any>([]);
-  // const handleExpand = (expanded: any, record: any) => {
-  //   if (expanded) {
-  //     setExpandedRowKeys([record.key]);
-  //   } else {
-  //     setExpandedRowKeys([]);
-  //   }
-  // };
 
   return (
     <div className="company-admin-detail-container">
@@ -221,7 +177,7 @@ const Detail = () => {
               constants.USER_ROLE === "Intern" ?
                 <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
-                <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+                <Breadcrumb breadCrumbData={tempArray} />
             }
           </div>
         }
@@ -290,11 +246,6 @@ const Detail = () => {
                   pagination={false}
                   columns={tableColumns}
                   tableData={tableData}
-                // expandable={{
-                //   defaultExpandAllRows: false,
-                //   expandedRowKeys,
-                //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
-                // }}
                 />
               </BoxWrapper>
             </Col>

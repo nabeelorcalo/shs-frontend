@@ -26,6 +26,12 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
+  const tempArray = [
+    { name: "Evaluation Form " },
+    { name: "Performance", onClickNavigateTo: "/performance" },
+    { name: "/" },
+    { name: 'Performance History', onClickNavigateTo: "/performance/history" }
+  ];
   const user = {
     name: 'Calvin Grayson',
     profession: 'Manager',
@@ -100,85 +106,6 @@ const ViewPerformance = () => {
     alert('download popup');
   }
 
-  const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
-
-    switch (role) {
-      case 'Intern':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-      case 'CompanyAdmin':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              Performance History
-            </Link>
-          </>
-        );
-        case 'Manager':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.DETAIL}`}
-            >
-              Mino Marina
-            </Link>
-          </>
-        );
-      default:
-        return <></>;
-    }
-  }
-
-  const onEmojiClick = (event: any) => {
-    const rootContainer = event.target.closest(".evaluation-container");
-    const rootContainerName = rootContainer.querySelector(".evaluation-heading").innerText;
-    const parentNode = event.target.closest(".emoji-mood-container");
-    const type = parentNode.querySelector(".emoji-heading").innerText;
-    const selectedEmoji = event.currentTarget.innerText;
-    const classList = event.currentTarget.classList;
-    const selectedEmojiIndex = classList[classList.length - 1];
-
-    var obj = state.data.find(function (obj) {
-      return obj.name === rootContainerName;
-    });
-
-    var childObj = obj?.values.find(function (obj) {
-      return obj.title === type;
-    });
-
-    // childObj.value = selectedEmojiIndex;
-
-    // setState(prevState => ({
-    //   ...prevState,
-    // }));
-
-  }
-
   const onSaveClick = () => {
     alert("Save");
   }
@@ -186,12 +113,6 @@ const ViewPerformance = () => {
   const onCancelClick = () => {
     alert("Cancel");
   }
-  const tempArray = [
-    { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: "/performance" },
-    { name: "/" },
-    { name: 'Performance History', onClickNavigateTo: "/performance/history" }
-  ];
   return (
     <div className="view-evaluation">
       <PageHeader
