@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Col, Row, Menu } from "antd";
-import { DropDown, SearchBar, GlobalTable } from "../../../../components";
+import { DropDown, SearchBar, GlobalTable, BoxWrapper } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
 
-  const searchValue = () => {};
+  const searchValue = () => { };
 
   const columns = [
     {
@@ -51,10 +51,10 @@ const WithDrawalRequest = () => {
               data.status === "Pending"
                 ? "#FFC15D"
                 : data.status === "Completed"
-                ? "#3DC475"
-                : data.status === "Rejected"
-                ? "#D83A52"
-                : "",
+                  ? "#3DC475"
+                  : data.status === "Rejected"
+                    ? "#D83A52"
+                    : "",
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -128,12 +128,12 @@ const WithDrawalRequest = () => {
 
   return (
     <div className="with-drawal-request">
-      <Row>
+      <Row gutter={[20,20]}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex  justify-center md:justify-end gap-3 mt-3 md:mt-0">
+          <div className="flex  justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
             <DropDown
               name="Status"
               value={value}
@@ -148,14 +148,16 @@ const WithDrawalRequest = () => {
             />
           </div>
         </Col>
-      </Row>
-      <Row className="mt-2">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-            <GlobalTable tableData={tableData} columns={columns} />
-          </div>
+          <BoxWrapper>
+            <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
+              <GlobalTable tableData={tableData} columns={columns} />
+            </div>
+          </BoxWrapper>
         </Col>
       </Row>
+
+
     </div>
   );
 };
