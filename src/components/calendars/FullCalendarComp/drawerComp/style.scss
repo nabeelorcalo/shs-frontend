@@ -13,6 +13,7 @@
     .event-detail,
     .event-type,
     .onsite,
+    .virtual,
     .attendees {
       border-bottom: 1px solid $text-error-line-color;
       margin-bottom: 20px;
@@ -32,12 +33,11 @@
 
     }
 
-    .onsite {
-      .flex {
-        border: 1px solid $dark-grey-color;
-        padding: 8px 16px;
-        cursor: pointer;
-      }
+    .onsite .flex,
+    .virtual .link {
+      border: 1px solid $dark-grey-color;
+      padding: 8px 16px;
+      cursor: pointer;
     }
 
     .attendees .user-list {

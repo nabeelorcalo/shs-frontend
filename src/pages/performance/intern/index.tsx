@@ -4,6 +4,7 @@ import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
+  GlobalTable,
 } from "../../../components";
 import { MoreIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
@@ -55,7 +56,7 @@ const InternPerformance = () => {
       render: (_: any, data: any) => {
         return (
           <Space size="middle">
-            {/* <Progress
+            <Progress
               size={[200, 13]}
               percent={data.performance}
               strokeColor={data.performance < 50 ? "#E95060" : "#4A9D77"}
@@ -69,7 +70,7 @@ const InternPerformance = () => {
                   {percent}%
                 </p>
               )}
-            /> */}
+            />
           </Space>
         );
       },
@@ -268,11 +269,11 @@ const InternPerformance = () => {
         <div className="performance-right-subcontainer">
           <BoxWrapper>
             <Typography.Title level={4}>Evaluation History</Typography.Title>
-            {/* <GlobalTable
+            <GlobalTable
               columns={evaluationHistoryColumnNames}
               tableData={evaluationHistoryData}
               pagination={false}
-            /> */}
+            />
           </BoxWrapper>
         </div>
       </div>

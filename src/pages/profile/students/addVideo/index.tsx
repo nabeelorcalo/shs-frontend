@@ -39,7 +39,7 @@ function AddVideo() {
           </li>
         </ul>
         <Button
-        //   className='btn-secondary'
+          //   className='btn-secondary'
           label="Add Video"
           type="primary"
           size="large"
@@ -48,7 +48,7 @@ function AddVideo() {
           shape="default" // | 'circle' | 'round'
           onClick={() => {}}
           disabled={false}
-          style={{ marginTop: "2rem"}}
+          style={{ marginTop: "2rem" }}
         />
       </div>
     </div>

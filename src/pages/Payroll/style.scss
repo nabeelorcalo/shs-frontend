@@ -1,0 +1,21 @@
+.payroll-wrapper-main {
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    width: 48px;
+    background-color: #e6f4f9;
+    border-radius: 8px;
+  }
+
+  .payroll-card {
+    border: 1px solid #E6F4F9;
+    box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+    border-radius: 10px;
+    &:hover{
+      box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.3)!important;
+    }
+  }
+  
+}

@@ -45,7 +45,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "interviewed",
     key: "interviewed",
     render: (text) => (
-      <div className="bg-[#5879CE]  mx-[-11px] my-[-8px] p-2">
+      <div className="light-blue-bg mx-[-11px] my-[-8px] p-2">
         <span className="font-bold text-white">{text}</span>
         <span className="text-white"> Candidates</span>
       </div>
@@ -56,7 +56,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "recommended",
     key: "recommended",
     render: (text) => (
-      <div className="bg-[#CC7FD4]  mx-[-11px] my-[-8px] p-2 min-w-[131px]">
+      <div className="purple-bg mx-[-11px] my-[-8px] p-2 min-w-[131px]">
         <span className="font-bold text-white">{text}</span>
         <span className="text-white"> Candidates</span>
       </div>
@@ -67,7 +67,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "offerLetter",
     key: "offerLetter",
     render: (text) => (
-      <div className="bg-[#C0ACFF]  mx-[-11px] my-[-8px] p-2">
+      <div className="light-purple-bg mx-[-11px] my-[-8px] p-2">
         <span className="font-bold text-white">{text}</span>
         <span className="text-white"> Candidates</span>
       </div>
@@ -78,7 +78,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "contract",
     key: "contract",
     render: (text) => (
-      <div className="bg-[#9FBC95]  mx-[-11px] my-[-8px] p-2">
+      <div className="line-bg  mx-[-11px] my-[-8px] p-2">
         <span className="font-bold text-white">{text}</span>
         <span className="text-white"> Candidates</span>
       </div>
@@ -89,7 +89,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "hired",
     key: "hired",
     render: (text) => (
-      <div className="bg-[#4A9D77]  mx-[-11px] my-[-8px] p-2">
+      <div className="teriary-bg-color mx-[-11px] my-[-8px] p-2">
         <span className="font-bold text-white">{text}</span>
         <span className="text-white"> Candidates</span>
       </div>
@@ -100,7 +100,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "rejected",
     key: "rejected",
     render: (text) => (
-      <div className="bg-[#E94E5D]  mx-[-11px] my-[-8px] p-2">
+      <div className="page-header-secondary-bg-color  mx-[-11px] my-[-8px] p-2">
         <span className="font-bold text-white">{text}</span>
         <span className="text-white"> Candidates</span>
       </div>
@@ -150,7 +150,7 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
   const navigate = useNavigate();
   
   return (
-    <div className="bg-white xs:p-2 md:p-3 lg:p-5 rounded-2xl wrapper-shadow">
+    <div className="bg-white p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle" justify="space-between">
         <Row className="gap-5" align="middle">
           <p className="text-[20px] leading-[28px] text-secondary-color font-medium">Pipeline</p>
