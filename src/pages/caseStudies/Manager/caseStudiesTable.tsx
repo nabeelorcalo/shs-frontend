@@ -1,14 +1,15 @@
-import React from 'react'
-import { GlobalTable } from '../../../components'
+import React, { useState } from 'react'
+import { Alert, GlobalTable } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
-import DropDownNew from '../../../components/Dropdown/DropDownNew'
-import { useNavigate } from 'react-router'
-import { ThreeDots } from '../../../assets/images'
 import './style.scss'
+import CustomDropDown from './customDropDown'
+import CustomDropDownCaseStudies from './customDropDown'
 
 const CaseStudiesTable = () => {
+  const [openWarningModal, setOpenWarningModal] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState(false)
 
-  const navigate = useNavigate();
+ 
   const escalatedByMeTableData = [
     {
       no: '01',
@@ -137,32 +138,29 @@ const CaseStudiesTable = () => {
       {
         title: 'Action',
         dataIndex: '',
-        render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
-          items={[
-            {
-              label: <span onClick={() => navigate(`/case-studies/assessment-form/${data.no}`)}>
-                Give Feedback</span>,
-              key: 'feedback'
-            },
-            {
-              label: <span onClick={()=> navigate(`/univecase-studies/assessment-form`)}>
-                Reject
-              </span>,
-              key: 'reject'
-            },
-           
-          ]}>
-          <ThreeDots className='cursor-pointer' />
-        </DropDownNew>
+        render: (_: any, data: any) => <CustomDropDownCaseStudies setState={setOpenDropdown}
+         state={openDropdown} data={data.no} openWarningModal={openWarningModal} setOpenWarningModal={setOpenWarningModal}/>
       },
     ]
 
   return (
+    <>
     <GlobalTable
       columns={escalatedByMeTableColumns}
       pagination
       tableData={escalatedByMeTableData}
     />
+    <Alert
+    cancelBtntxt="Cancel"
+    okBtntxt="Continue"
+    state={openWarningModal}
+    setState={setOpenWarningModal}
+    type="WARNING"
+    width={500}
+    title="Warning"
+    children={<p>Are you sure you want to reject this case study?</p>}
+  />
+  </>
   )
 }
 
