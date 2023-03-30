@@ -1,5 +1,5 @@
 import React from "react";
-import Student from "./Student";
+import Student from "./student";
 import Intern from "./Intern";
 import CompanyAdmin from "./CompanyAdmin";
 import Manager from "./Manager";
