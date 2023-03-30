@@ -80,3 +80,4 @@ export * from './RegionCard';
 export * from './Graph/FunnelChart';
 export * from './Graph/GaugePlot';
 export * from './GreetingCard';
+export * from './SalarySlip';
