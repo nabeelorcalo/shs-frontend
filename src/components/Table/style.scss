@@ -11,7 +11,7 @@
           border-bottom: unset;
           padding-top: 18px;
           padding-bottom: 18px;
-          &:last-child{
+          &:last-child {
             text-align: center;
           }
 
@@ -40,44 +40,44 @@
           font-weight: 400;
           font-size: 16px;
           line-height: 24px;
-          &:last-child{
+          &:last-child {
             text-align: center;
           }
         }
 
         // .ant-table-row-expand-icon-cell {
-          .ant-table-row-expand-icon {
-            padding: 1px;
-            border: 2px solid $light-grey-color;
+        .ant-table-row-expand-icon {
+          padding: 1px;
+          border: 2px solid $light-grey-color;
 
-            &::before {
-              color: $light-grey-color;
-              top: 50%;
-            }
-
-            &::after {
-              color: $light-grey-color;
-              left: 50%;
-              bottom: 2.5px;
-              transform: translateX(-50%) rotate(0deg);
-            }
+          &::before {
+            color: $light-grey-color;
+            top: 50%;
           }
 
-          .ant-table-row-expand-icon-expanded {
-            background-color: $light-grey-color !important;
-
-            &::before {
-              color: $white-bg-color;
-              top: 50%;
-            }
-
-            &::after {
-              color: $white-bg-color;
-              top: unset;
-              transform: translateX(-50%) rotate(90deg);
-              inset-inline-start: 50%;
-            }
+          &::after {
+            color: $light-grey-color;
+            left: 50%;
+            bottom: 2.5px;
+            transform: translateX(-50%) rotate(0deg);
           }
+        }
+
+        .ant-table-row-expand-icon-expanded {
+          background-color: $light-grey-color !important;
+
+          &::before {
+            color: $white-bg-color;
+            top: 50%;
+          }
+
+          &::after {
+            color: $white-bg-color;
+            top: unset;
+            transform: translateX(-50%) rotate(90deg);
+            inset-inline-start: 50%;
+          }
+        }
         // }
       }
 
@@ -275,5 +275,20 @@
 
   .Counter {
     @include Counter;
+  }
+}
+
+//scrollbar styling
+.ant-table-body {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(242, 242, 242);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: gainsboro;
+    border-radius: 20px;
   }
 }

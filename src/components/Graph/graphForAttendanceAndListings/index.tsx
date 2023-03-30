@@ -11,10 +11,11 @@ interface GraphProps {
   level: any
   action?: boolean
   childrens?: any
+  styling?:any
 }
 
 export const AttendanceAndListingGraph = (props: GraphProps) => {
-  const { title, graphName, level, action = false, childrens } = props;
+  const { title, graphName, level, action = false, childrens,styling } = props;
   const data = graphName === constants.ATTENDANCE ? attendanceData : listingsData;
   const maxValue = graphName === constants.ATTENDANCE ? 30 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
@@ -112,7 +113,7 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
   }
 
   return (
-    <BoxWrapper>
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       <div className='flex flex-row'>
         <Typography.Title level={level} >
           {title}
@@ -125,7 +126,7 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
           </div>
         }
       </div>
-      <Line {...config} />
-    </BoxWrapper>
+      <Line style={styling} {...config} />
+    </div>
   )
 };
