@@ -509,6 +509,10 @@ export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
 
+// payments
+export { ReactComponent as UserIcon } from "./payments/userIcon.svg";
+export { ReactComponent as Success } from "./payments/success.svg";
+export { ReactComponent as Message } from "./payments/message.svg";
 // Help Desk Icons 
 export { ReactComponent as EditHistoryIcon} from "./helpDesk/EditHistoryIcon.svg";
 export { ReactComponent as ReTime} from "./helpDesk/retime.svg";
