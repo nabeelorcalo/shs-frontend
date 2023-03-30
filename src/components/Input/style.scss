@@ -19,6 +19,7 @@
 
         &:hover {
             border: 2px solid $input-hover-color;
+            box-shadow: none;
         }
 
         &:focus {

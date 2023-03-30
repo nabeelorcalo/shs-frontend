@@ -126,11 +126,12 @@ export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg"
 
 
 // Callendar Icons
-export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
-export { default as CalendarIcon } from "./calender-icon.png";
-export { default as CloseCircleIcon } from "./close-circle-icon.png";
-export { default as DownloadIcon } from "./download-icon.png";
-export { default as SearchIcon } from "./search-icon.png";
+export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';
+export { ReactComponent as CalendarAddNewIcon } from './CalendarIconWhite.svg';
 
 // star outline icon
 export { ReactComponent as StarOutlinedIcon } from "./StarOutlined.svg";
@@ -486,6 +487,14 @@ export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
 
 // Listings Icons
 export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
+export { ReactComponent as VideoRecoder } from './VideoRecoder.svg';
+export { ReactComponent as LocationDarkIcon } from './LocationDarkIcon.svg';
+export { ReactComponent as EditIcon } from './EditIcon.svg';
+export { ReactComponent as CalUserIcon } from './CalUserIcon.svg';
+export { ReactComponent as CalendarSearch } from './CalendarSearch.svg';
+export { ReactComponent as CopyPasteIcon } from './CopyPasteIcon.svg';
+
+
 export { ReactComponent as IconLink } from './listings/icon-link.svg';
 export { ReactComponent as IconAddUpload } from './listings/icon-add-upload.svg';
 export { ReactComponent as IconLocations } from './listings/icon-locations.svg';
