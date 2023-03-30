@@ -1,14 +1,14 @@
 import  { useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import {Divider}from 'antd'
 import organization from "./org.json";
 import {
   StructureMinus,
   StructureAdd,
 } from "../../../assets/images";
-
 import "./style.scss";
-
+import { PageHeader } from "../../../components";
 import Node from "./Node";
 
 export default function Structure(props: any) {
@@ -26,8 +26,11 @@ export default function Structure(props: any) {
   }
 
   return (
-    <div className="w-[100%]">
-      <div className="flex flex-col justify-center w-[40px] h-[80px] white-bg-color zoom-button float-right ">
+    <div>   
+   <PageHeader title="Struture" />
+    <Divider/>
+    <div className="w-[100%] struture-wrapper ">
+      <div className="flex flex-col justify-center w-[40px] h-[80px] white-bg-color float-right ml-5 ">
         <div className="m-2">
           <StructureAdd onClick={handleZoomIn} />
         </div>
@@ -44,6 +47,7 @@ export default function Structure(props: any) {
           </DndProvider>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,16 +1,15 @@
 import Manager from "./Manager/index"
-
 import constants from "../../config/constants";
-import Structure from "./CompanyAdmin";
 import ManagerStructure from "./Manager/index";
 import InternStructure from "./Intern";
+import Structure from "./companyAdmin";
+
 const index = () => {
 
   const rederWthRole: any = {
     'CompanyAdmin': <Structure />,
     'Manager': <ManagerStructure />,
     'Intern': <InternStructure />,
-
   }
   return (
     <>

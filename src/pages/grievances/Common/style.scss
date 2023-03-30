@@ -20,14 +20,12 @@
         &:hover {
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1)
         }
-
     }
     .grievance-card{
         box-shadow: 0px 2px 3px #E4E8F0;
         overflow: hidden;
         transition: all 0.2s ease-in-out;
-        position: relative;
-     
+        position: relative;    
         &:hover {
             background-color: $text-success-hover-color;
     
@@ -41,7 +39,7 @@
                 align-items: center;
                 justify-content: center;
                 padding: 10px 20px;
-                color: #fff;
+                color: $white-bg-color;
                 cursor: pointer;
             }
         }
@@ -66,9 +64,21 @@
         height: 450px;
         padding:20px
     }
-
 }
 .grievance-details{
+  .replay-btn{
+    &:hover{
+      background: $teriary-bg-color;
+
+    }
+  }
+
+  .ant-select-selector{
+    border: none !important;
+    &:hover{
+      border: none !important;
+    }
+  }
   .attandance-button{
   color: $text-success-placeholder-color !important;
   &:hover{
@@ -94,5 +104,9 @@
       border: 1px solid $teriary-bg-color;
       color: #fff;
       padding: 0px 20px;
+      &:hover{
+        color: $white-bg-color;
+
+      }
     }
   }

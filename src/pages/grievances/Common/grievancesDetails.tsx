@@ -104,7 +104,7 @@ const GrievancesDetails = () => {
            <DragAndDropWide/>
               </Form.Item>
               <div className='flex justify-end'>
-                <Button className=' teriary-bg-color'
+                <Button className='teriary-bg-color replay-btn'
                   label="Replay"
                   onClick={() => { }}
                   type="primary"

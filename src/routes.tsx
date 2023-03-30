@@ -62,7 +62,7 @@ const CompanyAdminAllGrievances = Loadable(lazy(() => import("./pages/grievances
 const InternAllGrievances = Loadable(lazy(() => import("./pages/grievances/Intern/AllGrievance")));
 const ManagerGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Manager/GrievanceDetails")));
 const CompanyAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails")));
-const InternAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern")));
+const InternGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern/GrievanceDetails")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure/index")));
@@ -1054,7 +1054,7 @@ const internRoutes = [
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        element: <InternAdminGrievancesDetails />,
+        element: <InternGrievancesDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.DIGIVAULT}`,

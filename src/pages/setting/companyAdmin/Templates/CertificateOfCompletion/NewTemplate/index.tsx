@@ -40,6 +40,10 @@ const NewTemplateCertiticationOfCompletion = () => {
     subject: "",
     description: "",
   });
+  const [textEditorValue, setTextEditorValue] = useState();
+  const onChangeHandler = (e: any) => {
+    setTextEditorValue(e)
+  }
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -63,6 +67,16 @@ const NewTemplateCertiticationOfCompletion = () => {
     setBorderColorSecond({ color: "#FFFFFF" });
   };
 
+  const [form] = Form.useForm();
+  const handleSubmit = () => {
+    const values = form.getFieldsValue();
+    const formData = {
+      subject: values.subject,
+      templateName: values.templateName,
+      description: textEditorValue
+    }
+  };
+
   return (
     <div className="certificate-of-appreciation-new-template">
       <NewTemplateCommonBreadcrum
@@ -71,7 +85,7 @@ const NewTemplateCertiticationOfCompletion = () => {
       />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
-        <Form layout="vertical">
+      <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -80,32 +94,30 @@ const NewTemplateCertiticationOfCompletion = () => {
               </Title>
               <Paragraph>Enter template details</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} lg={12} xxl={8}>
+            <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
+                required={false}
                 name="templateName"
                 label="Template Name"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
-                <Input placeholder="Enter name" className="" />
+                <Input placeholder="Enter name" />
               </Form.Item>
               <Form.Item
+                required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ message: "Please Enter your username!" }]}
-              >
+                rules={[{ required: true, message: "Please Enter your username!" }]}  >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-
-              <label className="text-teriary-color">
-                Description (optional)
-              </label>
-              <div className="text-input-bg-color rounded-lg text-editor my-2 ">
-                <ReactQuill
-                  theme="snow"
-                  value={value}
-                  modules={textEditorData}
-                />
-              </div>
+              <Form.Item
+                name="description"
+                label="Description (optional)"
+              >
+                <div className="text-input-bg-color rounded-lg text-editor my-2 ">
+                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+                </div>
+              </Form.Item>
             </Col>
           </Row>
 
@@ -163,7 +175,6 @@ const NewTemplateCertiticationOfCompletion = () => {
                     {borderColorSecond.toggle && (
                       <CertificateTickCircle className="absolute certificate-tick-circle" />
                     )}
-
                     <div className="card-image-box ">
                       <span className="flex justify-center p-5 image">
                         <TemplateCertificateSmall className=" background-img" />
@@ -200,6 +211,7 @@ const NewTemplateCertiticationOfCompletion = () => {
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
+              onClick={handleSubmit}
             >
               Add
             </Button>

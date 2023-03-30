@@ -6,6 +6,7 @@ import Organization from "./Organization";
 
 function Node({ o, parent }: any) {
     const [collapsed, setCollapsed] = React.useState(!o.collapsed);
+    
     const T = parent
     ? TreeNode
     : (props: any) => (
@@ -27,7 +28,6 @@ function Node({ o, parent }: any) {
     const handleCollapse = () => {
       setCollapsed(!collapsed);
     };
-   
    
     return collapsed ? (
       <T
@@ -57,4 +57,3 @@ function Node({ o, parent }: any) {
   }
 
   export default Node
-  
