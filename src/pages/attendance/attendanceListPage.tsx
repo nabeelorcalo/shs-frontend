@@ -16,7 +16,6 @@ import {
 } from "../../components";
 import {
   CardViewIcon,
-  DownlaodFileIcon,
   GlassMagnifier,
   TableViewIcon,
 } from "../../assets/images";
@@ -51,6 +50,14 @@ const Detail = () => {
     'Developer'
   ];
 
+  const tableColumns = [
+    { header: 'Id', dataKey: 'id' },
+    { header: 'Name', dataKey: 'name' },
+    { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
+    { header: 'Profession', dataKey: 'profession' },
+    { header: 'Status', dataKey: 'status' },
+  ];
+
   const dummyData = [
     { id: 1, name: 'Mino Marina', avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png', profession: 'Data Researcher', status: 'present' },
     { id: 2, name: 'Mino Marina', avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png', profession: 'Designer', status: 'leave' },
@@ -74,7 +81,6 @@ const Detail = () => {
       </Menu.Item>
     </Menu>
   );
-
 
   const [state, setState] = useState({
     currentDate: dayjs().locale('en'),
@@ -122,10 +128,6 @@ const Detail = () => {
     }));
   }
 
-  const downloadClick = () => {
-
-  }
-
   const statusSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -166,6 +168,14 @@ const Detail = () => {
       ...prevState,
       isToggle: !state.isToggle,
     }));
+  }
+
+  function renderAvatar(cellDataKey: any, cellOptions: any) {
+    const img = new Image();
+    img.src = cellDataKey;
+    img.width = cellOptions.row.raw.avatarWidth;
+    img.height = cellOptions.row.raw.avatarHeight;
+    return img;
   }
 
   return (
@@ -272,12 +282,7 @@ const Detail = () => {
               </div>
             }
           />
-          <IconButton
-            size='large'
-            className='icon-btn download-btn'
-            onClick={downloadClick}
-            icon={<DownlaodFileIcon />}
-          />
+
           <ToggleButton
             isToggle={state.isToggle}
             onTogglerClick={togglerClick}
@@ -292,7 +297,7 @@ const Detail = () => {
               'excel'
             ]}
             requiredDownloadIcon
-            setValue={() => action.downloadPdfOrExcel(event, "header", "data")}
+            setValue={() => action.downloadPdfOrExcel(event, tableColumns, dummyData, "Attendance Detail")}
           />
         </div>
       </div>
