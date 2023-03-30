@@ -1,6 +1,5 @@
 @import "../_colors.scss";
 
-
 .primary-bg-color {
   background-color: $primary-bg-color;
 }
@@ -117,7 +116,7 @@
   background-color: $text-error-line-color;
 }
 
-.text-error-line-color {
+.gray-color {
   color: $text-error-line-color;
 }
 
@@ -245,8 +244,32 @@
 }
 
 .teriary-light {
-    color: $teriary-light; 
+  color: $teriary-light;
 }
 .wrapper-shadow {
   box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+}
+.active-bg {
+  background-color: $active-color;
+}
+.line-bg {
+  background-color: $line-color;
+}
+.light-purple-bg {
+  background-color: $light-purple-color;
+}
+.purple-bg {
+  background-color: $purple-color;
+}
+.light-blue-bg {
+  background-color: $light-blue-color;
+}
+.light-gray-color {
+  color: $light-gray-color;
+}
+.gray-color {
+  color: $gray-color;
+}
+.off-white-color{
+background-color: $off-white-color;
 }
