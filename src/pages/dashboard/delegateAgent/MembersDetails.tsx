@@ -41,7 +41,7 @@ const columns: ColumnsType<DataType> = [
     render: (text) => (
       <p
         className={`text-white text-sm font-normal text-center rounded-lg px-[10px] py-[2px]
-     ${text.toLowerCase() === "active" ? "bg-[#4ED185]" : "bg-[#D83A52]"} `}
+     ${text.toLowerCase() === "active" ? "active-bg" : "text-error-bg-color"} `}
       >
         {text}
       </p>
