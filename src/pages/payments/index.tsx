@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { SalarySlip } from "../../components/SalarySlip";
 import "./style.scss";
 
 const Payments = () => {
   return (
-    <p>payments</p>
-  )
-}
+    <>
+      <p>payment</p>
+      <SalarySlip />
+    </>
+  );
+};
 
-export default Payments
+export default Payments;

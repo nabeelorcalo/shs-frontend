@@ -68,6 +68,8 @@ export * from './AttendanceCardDetail/listViewCard';
 export * from './ToggleButton';
 export * from './AttendanceTimeCard';
 export * from './ProfileCard';
+export * from './BreadCrumb/breadCrumb';
+export * from './Notification';
 export * from './CountingCard';
 export * from './FavouritesViewCard';
 export * from './TopPerformers';

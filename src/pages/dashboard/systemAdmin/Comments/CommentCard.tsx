@@ -24,7 +24,7 @@ const index = (props: any) => {
       <Row className="gap-[10px]" align="middle">
         <Avatar src={image} alt="" size={23} />
         <p className="text-xs font-normal">{name}</p>
-        <p className="pl-4 text-[#B4BBC6] text-[10px]">{time}</p>
+        <p className="pl-4 light-gray-color text-[10px]">{time}</p>
       </Row>
       <div className="pt-[10px] pb-[16px] text-xs">{content}</div>
       <Row justify="space-between" align="middle">
@@ -36,11 +36,11 @@ const index = (props: any) => {
             >
               {/* {isLike ? <FilledLikeIcon /> : <LikeIcon />} */}
             </span>
-            <span className="text-[#8991A0]">{likes ?? 0} likes</span>
+            <span className="gray-color">{likes ?? 0} likes</span>
           </Row>
         </Col>
         <p
-          className="text-[#8991A0] cursor-pointer"
+          className="gray-color cursor-pointer"
           onClick={() => setIsReply(!isReply)}
         >
           Reply
@@ -56,7 +56,7 @@ const index = (props: any) => {
           <Row
             justify="space-between"
             align="middle"
-            className="bg-[#F8F8F8] px-[10px] py-[6px] rounded-md"
+            className="off-white-bg px-[10px] py-[6px] rounded-md"
           >
             <Col>
               <Row className="gap-[10px]">
