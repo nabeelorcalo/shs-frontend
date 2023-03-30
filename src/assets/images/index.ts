@@ -321,9 +321,11 @@ export { ReactComponent as ProfileTwouserIcon } from './dashboard/profile-2user.
 export { ReactComponent as ProfileRemoveIcon } from './dashboard/profile-remove@2x.svg';
 export { ReactComponent as TopPerformerImage } from './dashboard/Image.svg';
 // export { default as UniLogo } from './dashboard/UniLogo.svg';
+
 // Company Admin Dashboard
 export { ReactComponent as UniversityIcon } from './dashboard/Universities.svg';
 export { ReactComponent as TotalManagersIcon } from './dashboard/TotalManagers.svg';
+
 // Agent Dashboard
 export { ReactComponent as ListingIcon } from './dashboard/ListingIcon.svg';
 export { ReactComponent as PropertiesIcon } from './dashboard/propertiesIcon.svg';
@@ -335,6 +337,12 @@ export { ReactComponent as MDIHeartIcon } from './dashboard/mdi_heart-outline.sv
 export { ReactComponent as InactiveMembersIcon } from './dashboard/inactiveMembers.svg';
 export { ReactComponent as CardRemoveIcon } from './dashboard/card-remove.svg';
 export { ReactComponent as WalletMoneyIcon } from './dashboard/wallet-money.svg';
+export { ReactComponent as ShareIcon } from './dashboard/Share.svg';
+export { ReactComponent as DocumentCopyIcon } from './dashboard/document-copy.svg';
+export { ReactComponent as FacebookIcon } from './dashboard/Facebook.svg';
+export { ReactComponent as TwitterIcon } from './dashboard/Twitter.svg';
+export { ReactComponent as WhatsAppIcon } from './dashboard/WhatsApp.svg';
+
 //system admin
 export { ReactComponent as EyeActionIcon } from './dashboard/eye-icon.svg';
 export { ReactComponent as ArchiveIcon } from './dashboard/archive.svg';
@@ -343,6 +351,7 @@ export { ReactComponent as LikeIcon } from './dashboard/likeIcon.svg';
 export { ReactComponent as FilledLikeIcon } from './dashboard/likeIconFilled.svg';
 export { ReactComponent as AttachmentIcon } from './dashboard/attachment.svg';
 export { ReactComponent as EmojiIcon } from './dashboard/emoji.svg';
+export { ReactComponent as InformationIcon } from "./dashboard/info-icon.svg";
 
 // contract
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";
@@ -516,9 +525,10 @@ export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
 
-// payment icons
-export { ReactComponent as UserIcon } from "./payments/user.svg";
+// payments
+export { ReactComponent as UserIcon } from "./payments/userIcon.svg";
 export { ReactComponent as Success } from "./payments/success.svg";
+export { ReactComponent as Message } from "./payments/message.svg";
 // Help Desk Icons 
 export { ReactComponent as EditHistoryIcon} from "./helpDesk/EditHistoryIcon.svg";
 export { ReactComponent as ReTime} from "./helpDesk/retime.svg";

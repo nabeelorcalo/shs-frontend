@@ -9,10 +9,14 @@ import {
 } from "../../assets/images";
 import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
-import { openNotification } from "../../components";
+import { Breadcrumb, openNotification } from "../../components";
 import "./style.scss";
 
 export const SalarySlip = () => {
+  const tempArray = [
+    { name: "Salary Slip" },
+    { name: " Payments ", onClickNavigateTo: "/payments" },
+  ];
   const userDetail = [
     {
       title: "33 The Orchards,Grantham, England United Kingdom",
@@ -40,6 +44,8 @@ export const SalarySlip = () => {
   };
   return (
     <div className="salarySlip-main-wrapper">
+      <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+      <Divider style={{background:'#D9DBE9'}} />
       <IconButton
         size="large"
         className="icon-btn download-btn"

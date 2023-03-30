@@ -27,10 +27,10 @@ export const AttendanceDetail: any = (props: AttendanceProps) => {
   }
 
   return (
-    <BoxWrapper className='flex flex-col attendance-card'>
+    <BoxWrapper className='flex flex-col attendance-card min-w-[232px] min-h-[182px] wrapper-shadow'>
       {renderIcon(label)}
 
-      <p className='mt-4 light-grey-color'>
+      <p className='mt-10 light-grey-color'>
         {label}
       </p>
 

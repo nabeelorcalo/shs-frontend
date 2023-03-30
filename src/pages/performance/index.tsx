@@ -4,8 +4,10 @@ import CompanyAdmin from './CompanyAdmin';
 import ManagerPerformance from "./Manager";
 import constants from "../../config/constants";
 import "./style.scss";
+import UniversityPerformance from "./UniversityRep";
 
 const Performance = () => {
+  
   const renderPage = (role: string) => {
     switch (role) {
       case 'Intern':
@@ -14,6 +16,8 @@ const Performance = () => {
         return <CompanyAdmin />;
       case 'Manager':
         return <ManagerPerformance />;
+        case 'University':
+        return <UniversityPerformance />;
       default:
         return <></>;
     }

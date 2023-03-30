@@ -7,7 +7,6 @@ import {
   BoxWrapper,
   FiltersButton,
   CommonDatePicker,
-  SalarySlip,
   openNotification
 } from "../../components";
 import "./style.scss";
