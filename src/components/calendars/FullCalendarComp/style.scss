@@ -1,13 +1,156 @@
 @import '../../../scss/_colors.scss';
 
 .role-calendar-wrapper {
+
   .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+    margin-top: 40px;
     background-color: $white-bg-color;
 
-    .fc-scrollgrid.fc-scrollgrid-liquid {
-      border: none;
+    .fc-header-toolbar {
+      .fc-toolbar-chunk:first-child {
+        display: flex;
+        align-items: center;
+
+        .fc-toolbar-title {
+          font-size: 20px;
+          font-weight: 500;
+          color: $text-primary-title-color;
+          margin: 0px 30px;
+          position: relative;
+
+          &::before {
+            position: absolute;
+            content: '';
+            background-image: url('../../../assets/images/calender-icon.png');
+            background-repeat: no-repeat;
+            width: 30px;
+            height: 30px;
+            left: -30px;
+            top: 1px;
+          }
+        }
+
+        .fc-button {
+          all: unset;
+          cursor: pointer;
+          background: $white-bg-color;
+          border: 1px solid $text-error-line-color;
+          color: $text-error-line-color;
+          border-radius: 4px;
+          height: 30px;
+          width: 28px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.fc-prev-button {
+            border-right: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+          }
+
+          &.fc-next-button {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+          }
+
+          &:hover {
+            background-color: $light-blue-color;
+          }
+        }
+      }
+
+      .fc-toolbar-chunk:nth-child(3) {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        flex-direction: row-reverse;
+
+        .fc-button {
+          all: unset;
+          position: relative;
+          background-color: transparent;
+          cursor: pointer;
+          padding: 8px;
+          color: $light-grey-color;
+          text-transform: capitalize;
+          transition: all 0.2s ease-in-out;
+          z-index: 1;
+
+          &.fc-button-active {
+            background: $white-bg-color;
+            color: $text-primary-title-color;
+            box-shadow: $accommodation-card-shadow;
+            border-radius: 8px;
+          }
+
+          &.fc-myCustomBtn-button {
+            width: 100px;
+            margin-left: 30px;
+            padding: 13px 20px;
+            background: $teriary-bg-color;
+            box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+            border-radius: 8px;
+            display: flex;
+            justify-content: end;
+            color: $white-bg-color;
+            font-size: 16px;
+            font-weight: 600;
+
+            &::before {
+              position: absolute;
+              content: '';
+              background-image: url('../../../assets/images/CalendarIconWhite.svg');
+              background-repeat: no-repeat;
+              top: 10px;
+              left: 10px;
+              height: 24px;
+              width: 24px;
+            }
+          }
+        }
+      }
     }
 
+    .fc-view-harness.fc-view-harness-active {
+      box-shadow: $accommodation-card-shadow;
+      border-radius: 10px;
+
+      .fc-timegrid {
+        padding: 20px;
+
+        .fc-scrollgrid.fc-scrollgrid-liquid {
+          border: none;
+        }
+      }
+    }
+
+    .fc-timeGridDay-view {
+      .event-content {
+        min-width: 100% !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 50px;
+
+        .event-btn {
+          display: flex;
+          border: none;
+          flex-direction: row-reverse;
+          width: max-content !important;
+
+          .btn {
+            min-width: 150px !important;
+          }
+        }
+
+        &:hover {
+          display: flex;
+        }
+      }
+    }
   }
 
   .fc-theme-standard td,
@@ -17,12 +160,12 @@
 
   .fc-timegrid-slot-lane,
   .fc-timegrid-col {
-    border: 1px solid #D9DBE9 !important;
+    border: 1px solid $text-error-line-color !important;
   }
 
   .fc-timegrid-slots {
     table {
-      border-top: 1px solid #D9DBE9 !important;
+      border-top: 1px solid $text-error-line-color !important;
     }
   }
 
@@ -35,14 +178,73 @@
     border: none !important;
   }
 
+  .fc-timeGridWeek-view {
+    .event-content {
+      max-width: 210px;
+    }
+  }
+
   .event-content {
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+    background: $white-bg-color;
+    padding: 10px 20px;
+    transition: display 0.2s linear;
+    z-index: 100 !important;
+
+    .title {
+      color: $text-primary-title-color;
+    }
+
+    .duration {
+      color: $text-secondary-body-color;
+    }
+
+    .event-btn {
+      border-top: 1px solid $text-error-line-color;
+      padding-top: 10px;
+      margin-top: 10px;
+      display: none;
+      width: 100%;
+      transition: display 0.3s linear;
+
+      .btn {
+        padding: 4px 10px;
+        border-radius: 4px;
+        min-width: 45% !important;
+        color: $text-error-color;
+        border: 1px solid $text-error-color;
+
+        &:hover {
+          border: 1px solid $text-error-color;
+        }
+
+        &.btn-primary {
+          background-color: $green-graph-tooltip-color;
+          color: $white-bg-color !important;
+          border: none;
+        }
+      }
+    }
+
+    &:hover {
+      .event-btn {
+        display: flex;
+      }
+    }
+  }
+
+  .fc-timegrid-event-harness.fc-timegrid-event-harness-inset {
+    width: 100% !important;
+  }
+
+  .fc-timegrid-event-harness.fc-timegrid-event-harness-inset:hover {
+    z-index: 10 !important;
   }
 
   .fc-timegrid-slots {
     tbody {
       tr {
-        border: 1px solid #D9DBE9 !important;
+        border: 1px solid $text-error-line-color !important;
         height: 74px !important;
       }
     }
