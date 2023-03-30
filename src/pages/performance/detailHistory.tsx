@@ -17,9 +17,9 @@ const DetailHistory = () => {
   const role = constants.USER_ROLE;
   const tempArray = [
     { name: "Mino Marina" },
-    { name: " Performance ", onClickNavigateTo: "/performance" },
+    { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: role !== 'Manager' && "/" },
-    { name: role === 'University' ?  "View History" : role === 'Manager' ? '' : 'Performance History', onClickNavigateTo: "/performance/history" },
+    { name: role === 'University' ?  "View History" : role === 'Manager' ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const performanceData = [
     {

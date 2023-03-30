@@ -29,8 +29,8 @@ const Detail = () => {
   const role = constants.USER_ROLE;
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
   const tempArray = [
-    { name: role === "CompanyAdmin" ? "Attendance Details": "Attendance" },
-    { name: role === "CompanyAdmin" && "Attendance ", onClickNavigateTo: "/attendance" },
+    { name: "Attendance Details"},
+    { name: role === "CompanyAdmin" && "Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
   ];
   const timeFrameOptions = [
     "This Week",

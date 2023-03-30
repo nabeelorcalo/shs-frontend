@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from "antd";
 // import all reusable componets from component/index.ts
 import {
@@ -31,7 +31,7 @@ const PerformanceHistory = () => {
   const role = constants.USER_ROLE;
   const tempArray = [
     { name: role === 'CompanyAdmin' ? 'Performance History' :  "View History" },
-    { name: " Performance ", onClickNavigateTo: "/performance" },
+    { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
   const action = useCustomHook();

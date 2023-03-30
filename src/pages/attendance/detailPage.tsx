@@ -30,9 +30,9 @@ const Detail = () => {
   const role = constants.USER_ROLE;
   const tempArray = [
     { name: "Mino Marina" },
-    { name: " Attendance ", onClickNavigateTo: "/attendance" },
+    { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
     { name: role !== 'University' && "/" },
-    { name: role !== 'University' && "Attendance Details", onClickNavigateTo: "/attendance/detail" },
+    { name: role !== 'University' && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const timeFrameOptions = [
     "This Week",

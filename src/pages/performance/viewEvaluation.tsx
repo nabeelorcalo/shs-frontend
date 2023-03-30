@@ -27,11 +27,11 @@ const ViewPerformance = () => {
   const role = constants.USER_ROLE
   const tempArray = [
     { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: "/performance" },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`},
     { name: (role === 'University' || role === 'CompanyAdmin') && "/" },
-    { name: role === 'University' ? "View History" : (role === 'Intern' || role === 'Manager') ? '' : 'Performance History', onClickNavigateTo: "/performance/history" },
+    { name: role === 'University' ? "View History" : (role === 'Intern' || role === 'Manager') ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
     { name: (role === 'University' || role === 'Manager') && "/" },
-    { name: (role === 'University' || role === 'Manager') && " Mino Marina", onClickNavigateTo: "/performance/1/detail" },
+    { name: (role === 'University' || role === 'Manager') && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const user = {
     name: 'Calvin Grayson',

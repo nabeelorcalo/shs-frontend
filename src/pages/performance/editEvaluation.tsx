@@ -28,9 +28,9 @@ import EmojiMoodRating from "../../components/EmojiMoodRating";
 const ViewPerformance = () => {
   const tempArray = [
     { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: "/performance" },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: "/" },
-    { name: 'Performance History', onClickNavigateTo: "/performance/history" }
+    { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
   const user = {
     name: 'Calvin Grayson',
