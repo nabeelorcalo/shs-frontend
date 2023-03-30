@@ -124,11 +124,12 @@ export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg"
 export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
 
 // Callendar Icons
-export { ReactComponent as ArrowDownDark } from "./dropdown-arrow-dark.svg";
-export { default as CalendarIcon } from "./calender-icon.png";
-export { default as CloseCircleIcon } from "./close-circle-icon.png";
-export { default as DownloadIcon } from "./download-icon.png";
-export { default as SearchIcon } from "./search-icon.png";
+export { ReactComponent as ArrowDownDark } from './dropdown-arrow-dark.svg';
+export { default as CalendarIcon } from './calender-icon.png';
+export { default as CloseCircleIcon } from './close-circle-icon.png';
+export { default as DownloadIcon } from './download-icon.png';
+export { default as SearchIcon } from './search-icon.png';
+export { ReactComponent as CalendarAddNewIcon } from './CalendarIconWhite.svg';
 
 // star outline icon
 export { ReactComponent as StarOutlinedIcon } from "./StarOutlined.svg";
@@ -470,6 +471,14 @@ export {ReactComponent as UserTabsIcon} from "./offers/UserTabs.svg"
 
 // Listings Icons
 export { ReactComponent as IconAddListings } from './listings/icon-add-listings.svg';
+export { ReactComponent as VideoRecoder } from './VideoRecoder.svg';
+export { ReactComponent as LocationDarkIcon } from './LocationDarkIcon.svg';
+export { ReactComponent as EditIcon } from './EditIcon.svg';
+export { ReactComponent as CalUserIcon } from './CalUserIcon.svg';
+export { ReactComponent as CalendarSearch } from './CalendarSearch.svg';
+export { ReactComponent as CopyPasteIcon } from './CopyPasteIcon.svg';
+
+
 export { ReactComponent as IconLink } from './listings/icon-link.svg';
 export { ReactComponent as IconAddUpload } from './listings/icon-add-upload.svg';
 export { ReactComponent as IconLocations } from './listings/icon-locations.svg';
@@ -490,6 +499,14 @@ export { ReactComponent as LateComingIcon } from "./Attendance/LateComingIcon.sv
 export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
+// Help Desk Icons 
+export { ReactComponent as EditHistoryIcon} from "./helpDesk/EditHistoryIcon.svg";
+export { ReactComponent as ReTime} from "./helpDesk/retime.svg";
+export { ReactComponent as UserAddIcon} from "./helpDesk/userAddIcon.svg";
+export { ReactComponent as MessageGreen} from "./helpDesk/messageGreen.svg";
+export { ReactComponent as YellowErrow} from "./helpDesk/yelowErrow.svg";
+export { ReactComponent as RestartRed} from "./helpDesk/restart.svg";
+
 export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
 export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';

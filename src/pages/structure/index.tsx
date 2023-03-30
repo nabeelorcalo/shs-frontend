@@ -1,7 +1,7 @@
 import Manager from "./Manager/index"
 
 import constants from "../../config/constants";
-import Structure from "./CompanyAdmin";
+import Structure from "./companyAdmin";
 import ManagerStructure from "./Manager/index";
 import InternStructure from "./Intern";
 const index = () => {
