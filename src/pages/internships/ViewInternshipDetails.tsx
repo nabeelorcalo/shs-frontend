@@ -4,6 +4,8 @@ import {
     BoxWrapper
 } from '../../components'
 import { Space } from 'antd'
+import './style.scss'
+import '../../scss/global-color/Global-colors.scss'
 import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, DownloadDocumentIcon } from '../../assets/images'
 
 const ViewInternshipDetails = () => {
@@ -15,7 +17,7 @@ const ViewInternshipDetails = () => {
                 title="UI/UX Designer"
             >
                 <Space wrap>
-                    <div className='p-2  border-solid border-2 bg-[#E6F4F9] border-[#E6F4F9] rounded-lg hover:border-2 hover:border-[#e2e2e2]'>
+                    <div className='p-2 download-icon-style text-input-bg-color'>
                         <DownloadDocumentIcon />
                     </div>
                 </Space>

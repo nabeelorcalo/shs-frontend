@@ -1,4 +1,14 @@
+@import '../../scss/_colors.scss';
+
 .type-signature-wrapper {
+  border: 1px dashed $text-error-line-color;
+  background-color: $text-input-bg-color;
+  border-radius: 5px;
+
+  &:hover {
+    border: 1px dashed $select-disabled;
+  }
+
   .signature-input {
     .text-poppins {
       font-family: 'Poppins', sans-serif;
@@ -11,11 +21,14 @@
     .text-roboto {
       font-family: 'Roboto', sans-serif;
     }
+
     .text-size-lg {
       font-size: 32px;
     }
+
     .input-no-border {
       border: none;
+
       &:hover {
         border: none;
       }

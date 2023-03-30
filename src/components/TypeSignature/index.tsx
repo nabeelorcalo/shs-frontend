@@ -13,7 +13,7 @@ const TypeSignature = () => {
   })
   console.log(fontFamily)
   return (
-    <div className="flex flex-col justify-between h-80 pb-5 rounded border-dashed border-2 border-[#D9DBE9] bg-[#E6F4F9] hover:border-[#DDE2E5] type-signature-wrapper">
+    <div className="flex flex-col justify-between h-80 pb-5 type-signature-wrapper">
       <Select
         defaultValue="Select Typeface"
         className='w-1/3 border-b-4 border-indigo-500'

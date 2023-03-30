@@ -7,8 +7,54 @@ import {
     BoxWrapper,
 } from '../../components'
 import type { RadioChangeEvent } from 'antd';
-
 const { TextArea } = Input;
+const departmentOptions =[
+    'search',
+    'Bussiness Analyst',
+    'Research',
+    'Accounting',
+    'Human Resources',
+    'Administration',
+    'Project Management'
+]
+const amountOptions =[
+    {
+        value: 'GBP',
+        label: 'GBP',
+    },
+    {
+        value: 'USD',
+        label: 'USD',
+    },
+]
+const locationOptions = [
+    'Eidinburg',
+    'Glasgow',
+    'London',
+]
+const durationOptions = [
+    '1 month',
+    '2 months',
+    '3 months',
+    '4 months',
+    '5 months',
+    '6 months',
+    '7 months',
+    '8 months',
+    '9 months',
+    '10 months',
+    '11 months',
+    '12 months'
+]
+const frequencyOptions = [
+    'Hourly',
+    'Daily',
+    'Weekly',
+    'Monthly',
+    'Quarterly',
+    'Annually'
+]
+
 const NewInternships = () => {
     const [showState, setshowState] = useState(false)
     const [alertState, setAlertState] = useState(false)
@@ -60,11 +106,7 @@ const NewInternships = () => {
                             <p>Department <span className='text-error-color'>*</span></p>
                             <DropDown
                                 name="Select"
-                                options={[
-                                    'search',
-                                    'item 1',
-                                    'item 2'
-                                ]}
+                                options={departmentOptions}
                                 setValue={() => { }}
                                 value=""
                             />
@@ -132,14 +174,7 @@ const NewInternships = () => {
                                 <p>Frequency <span className='text-error-color'>*</span></p>
                                 <DropDown
                                     name="Select"
-                                    options={[
-                                        'Hourly',
-                                        'Daily',
-                                        'Weekly',
-                                        'Monthly',
-                                        'Quarterly',
-                                        'Annually'
-                                    ]}
+                                    options={frequencyOptions}
                                     setValue={() => { }}
                                     value=""
                                 />
@@ -153,16 +188,7 @@ const NewInternships = () => {
                                 <Space.Compact>
                                     <Select
                                         defaultValue="GBP"
-                                        options={[
-                                            {
-                                                value: 'GBP',
-                                                label: 'GBP',
-                                            },
-                                            {
-                                                value: 'USD',
-                                                label: 'USD',
-                                            },
-                                        ]} />
+                                        options={amountOptions} />
                                     <Input defaultValue="0.00" />
                                 </Space.Compact>
                             </div>
@@ -182,11 +208,7 @@ const NewInternships = () => {
                                 <p>Location <span className='text-error-color'>*</span></p>
                                 <DropDown
                                     name="Select"
-                                    options={[
-                                        'Eidinburg',
-                                        'Glasgow',
-                                        'London',
-                                    ]}
+                                    options={locationOptions}
                                     setValue={() => { }}
                                     value=""
                                 />
@@ -233,20 +255,7 @@ const NewInternships = () => {
                         <div className='flex flex-col gap-5'>
                             <DropDown
                                 name="Select"
-                                options={[
-                                    '1 month',
-                                    '2 months',
-                                    '3 months',
-                                    '4 months',
-                                    '5 months',
-                                    '6 months',
-                                    '7 months',
-                                    '8 months',
-                                    '9 months',
-                                    '10 months',
-                                    '11 months',
-                                    '12 months'
-                                ]}
+                                options={durationOptions}
                                 setValue={() => { }}
                                 value=""
                             />

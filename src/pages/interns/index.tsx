@@ -171,7 +171,7 @@ const Interns = () => {
               LastIcon={TableViewIcon}
               className='w-[88px]'
             />
-            <div className='p-2  border-solid border-2 bg-[#E6F4F9] border-[#E6F4F9] rounded-lg hover:border-2 hover:border-[#e2e2e2]'>
+            <div className='p-2 download-icon-style'>
             <DownloadDocumentIcon />
             </div>
           </div>

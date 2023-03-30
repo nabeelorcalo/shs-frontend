@@ -99,7 +99,7 @@ const InternshipPipeLine = () => {
             statusArray.map((item, idx) => {
               return (
                 <div className="w-full flex flex-col gap-3">
-                  <div key={idx} className="flex flex-row justify-between white-bg-color border-2 border-solid border-[#e2e2e2] p-2 rounded-lg">
+                  <div key={idx} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
                       <div className="h-5 w-5 rounded text-off-white-bg-color"></div>
                       <p>{item.status}</p>

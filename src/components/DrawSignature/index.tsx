@@ -1,9 +1,10 @@
 import React from "react";
 import SignatureCanvas from 'react-signature-canvas';
+import './style.scss'
 
 const DrawSignature = () => {
   return (
-    <div className="flex flex-col justify-end h-80 pb-5 rounded border-dashed border-2 border-[#D9DBE9] bg-[#E6F4F9] hover:border-[#DDE2E5]">
+    <div className="flex flex-col justify-end h-80 pb-5 draw-signature-style ">
       <div className="p-2 flex flex-row justify-center">
       <SignatureCanvas
         penColor='black'

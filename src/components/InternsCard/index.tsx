@@ -9,13 +9,13 @@ export const InternsCard = () => {
   return (
     <div className='interns-card-main w-70'>
       <BoxWrapper className='interns-card'>
-        <div className='flex flex-col gap-4 items-center'>
+        <div className='flex flex-col gap-4 items-center main-card-jsx'>
           <div className='flex flex-col gap-2 items-center'>
             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
             <p className='text-lg font-[700]'>Andrea Hiyahiya</p>
             <p className='text-sm'>Business Analyst</p>
           </div>
-          <div className='flex flex-row gap-3 items-center p-3 rounded-md border-2 border-solid border-[#e2e2e2]'>
+          <div className='flex flex-row gap-3 items-center p-3 rounded-md join-dob-card-style'>
             <div className='flex flex-col gap-2 items-center'>
               <p>Joining</p>
               <p>01/07/2023</p>

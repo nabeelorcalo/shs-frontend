@@ -44,6 +44,16 @@ const PopOver = () => {
 };
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7]
+const departmentOptions = [
+  "Business analyst",
+  "Research analyst",
+  "Accountant",
+  "Administrator",
+  "HR Cordinator",
+]
+const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"]
+
+const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
 
 const Payroll = () => {
   const navigate = useNavigate()
@@ -236,13 +246,7 @@ const Payroll = () => {
                     <p>Department</p>
                     <DropDown
                       name="select"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                      ]}
+                      options={departmentOptions}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -253,7 +257,7 @@ const Payroll = () => {
                     <p>Time Frame</p>
                     <DropDown
                       name="select"
-                      options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                      options={timeframeOptions}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -264,7 +268,7 @@ const Payroll = () => {
                     <p>Payroll Cycle</p>
                     <DropDown
                       name="select"
-                      options={["3 Months", "6 Months", "9 Months", "12 Months"]}
+                      options={payrollCycleOptions}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -302,7 +306,7 @@ const Payroll = () => {
               className='w-[88px]'
             />
             <Space wrap>
-              <div className='p-2  border-solid border-2 bg-[#E6F4F9] border-[#E6F4F9] rounded-lg hover:border-2 hover:border-[#e2e2e2]'>
+              <div className='p-2 download-icon-style'>
                 <DownloadPopOver />
               </div>
             </Space>

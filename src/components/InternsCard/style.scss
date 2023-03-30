@@ -1,5 +1,11 @@
+@import '../../scss/_colors.scss';
 .interns-card-main {
   .interns-card {
     background-color: #fff;
+    .main-card-jsx{
+      .join-dob-card-style{
+        border: 1px solid $text-input-bg-color;
+      }
+    }
   }
 }

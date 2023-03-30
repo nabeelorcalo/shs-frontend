@@ -1,9 +1,10 @@
 import React from 'react'
 import { Avatar, Divider, Rate } from 'antd';
+import './style.scss'
 
 export const InternshipPipeLineCard = () => {
   return (
-    <div className='border-2 border-solid border-[#e2e2e2] rounded-lg p-2'>
+    <div className='rounded-lg p-2 pipeline-card-wrapper'>
       <div className='flex flex-row items-center gap-3'>
         <Avatar src={<img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} alt="avatar" />} />
         <div className='flex flex-col gap-2 justify-center'>

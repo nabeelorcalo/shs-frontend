@@ -1,3 +1,4 @@
+@import "../../scss/colors";
 .icon-btn {
   display: flex;
   align-items: center;
@@ -6,4 +7,11 @@
   width: 48px;
   background-color: #e6f4f9;
   border-radius: 8px;
+}
+.download-icon-style{
+  border: 2px solid $text-input-bg-color;
+  &:hover {
+    border: 2px solid $text-error-line-color;
+  }
+  border-radius: 5px;
 }

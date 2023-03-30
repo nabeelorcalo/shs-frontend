@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { DocumentUpload } from '../../assets/images'
 import SelectedUploadCard from '../SelectedUploadCard'
+import './style.scss'
 
 const DragAndDropUpload = () => {
     const [files, setFiles] = useState([])
@@ -16,7 +17,7 @@ const DragAndDropUpload = () => {
     }
     return (
         <>
-            <div onDragOver={handleDragOver} onDrop={handleDropped} className="flex flex-col items-stretch justify-center gap-4 content-center items-center h-80 rounded border-dashed border-2 border-[#D9DBE9] bg-[#E6F4F9] hover:border-[#DDE2E5]">
+            <div onDragOver={handleDragOver} onDrop={handleDropped} className="flex flex-col items-stretch justify-center gap-4 content-center items-center h-80  drag-drop-upload-style">
                 <div className='self-center '>
   
                     <DocumentUpload />
