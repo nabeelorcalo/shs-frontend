@@ -6,8 +6,9 @@ import {
   StructureMinus,
   StructureAdd,
 } from "../../../assets/images";
-import Node from "./Node";
+
 import "./style.scss";
+import Node from "./Node";
 
 export default function Structure(props: any) {
   const [scale, setScale] = useState(1);

@@ -1,41 +1,26 @@
 import { CheckOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/icons'
-import { Col, Divider, Form, Row, Typography, Input, Dropdown, MenuProps, Space } from 'antd'
+import { Col, Divider, Form, Row, Typography, Input, Select } from 'antd'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { GrievancesAvater, GrievancesDocDownload, GrievancesDocPDF, GrievancesSidebarAvater, SettingHorizontalLine, } from '../../../../assets/images'
+import { GrievancesAvater, GrievancesCall, GrievancesDocDownload, GrievancesDocJPG, GrievancesDocPDF, GrievancesInbox, GrievancesLocation, GrievancesSidebarAvater, SettingHorizontalLine, } from '../../../../assets/images'
 import { Alert, Button, PageHeader } from '../../../../components'
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
+import DragAndDropWide from '../../../../components/DragAndDrop'
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import './style.scss';
+
 const { Text } = Typography;
 const { TextArea } = Input;
 
-const items: MenuProps['items'] = [
-  {
-    key: '1',
-    label: (
-      <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>
-    ),
-  },
-  {
-    key: '2',
-    label: (
-      <><GrievancesAvater className='w-[48px] px-2' />  <span>Mino Marina</span></>
-    ),
-  },
-  {
-    key: '3',
-    label: (
-      <><GrievancesAvater className='w-[48px] px-2' />  <span>Maria Sanoid</span></>
-    ),
-  },
-];
+function handleChange(value: any) {
+  console.log(`selected ${value}`);
+}
 
 const index = () => {
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   return (
     <div className='grievance-details'>
-      <PageHeader title={<>Grievances Details{<SettingHorizontalLine className="mx-2" />}
+      <PageHeader title={<>Grievances Details{<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
         <span className='text-base font-medium '>
           <NavLink to="/grievances">
             <span className='dashboard-primary-color'>
@@ -50,7 +35,7 @@ const index = () => {
       </>} />
       <Divider className="my-1 mb-2" />
       <Row gutter={[16, 16]}>
-        <Col lg={18}>
+        <Col sm={24} md={24} lg={16} xl={16} xxl={18}>
           <BoxWrapper>
             <div className='flex justify-between'>
               <Text className='text-xl font-medium'>Attendance Log Issue</Text>
@@ -69,38 +54,33 @@ const index = () => {
                   <Text className='text-base text-lg text-teriary-color'>Attachments</Text>
                 </div>
               </Col>
-              <Row gutter={[16, 16]} className="w-full">
-                <Col lg={8} className="gutter-row text-input-bg-color mx-2">
-                  <div className='flex py-2'>
-                    <GrievancesDocPDF className='mt-1' />
-                    <div className='flex '>
+              <Row gutter={[16, 16]} className="w-full gap-2">
+                <Col sm={12} md={10} lg={10} xl={10} xxl={6} className=" gutter-row text-input-bg-color">
+                  <div className='flex justify-between py-2'>
+                    <div className='flex flex-row'><GrievancesDocPDF className='mt-1' />
                       <div className='flex flex-col px-1'>
                         <Text className='text-sm font-normal'>Document0023.pdf</Text>
                         <Text className='text-xs font-normal'>2 MB</Text>
-
                       </div>
-                      <span className='ml-5'> <GrievancesDocDownload /></span>
-
                     </div>
-
+                    <div className='float-right'>
+                      <span className='ml-5'> <GrievancesDocDownload /></span>
+                    </div>
                   </div>
-
                 </Col>
-                <Col lg={8} className=" gutter-row text-input-bg-color">
-                  <div className='flex py-2'>
-                    <GrievancesDocPDF className='mt-1' />
-                    <div className='flex '>
+                <Col sm={12} md={10} lg={10} xl={10} xxl={6} className="gutter-row text-input-bg-color">
+                  <div className='flex justify-between py-2'>
+                    <div className='flex flex-row'><GrievancesDocJPG className='mt-1' />
                       <div className='flex flex-col px-1'>
                         <Text className='text-sm font-normal'>Document0023.pdf</Text>
                         <Text className='text-xs font-normal'>2 MB</Text>
-
                       </div>
-                      <span className='ml-5'> <GrievancesDocDownload /></span>
-
                     </div>
 
+                    <div className='float-right'>
+                      <span className='ml-5'> <GrievancesDocDownload /></span>
+                    </div>
                   </div>
-
                 </Col>
               </Row>
             </Row>
@@ -114,16 +94,23 @@ const index = () => {
               >
                 <TextArea className='text-input-bg-color' rows={6} placeholder="Write Something..." maxLength={6} />
               </Form.Item>
-              <div className='flex justify-end'>    <Button className=' teriary-bg-color'
-                label="Replay"
-                onClick={() => { }}
-                type="primary"
-              /></div>
+              <Form.Item
+                className="mt-3"
+                name="description"
+              >
+           <DragAndDropWide/>
+              </Form.Item>
+              <div className='flex justify-end'>
+                <Button className=' teriary-bg-color'
+                  label="Replay"
+                  onClick={() => { }}
+                  type="primary"
+                /></div>
 
             </Form>
           </BoxWrapper>
         </Col>
-        <Col lg={6}>
+        <Col span={24} md={24} lg={8} xl={8} xxl={6}>
 
           <BoxWrapper>
             <Text className='text-xl font-medium'>Grievance Information</Text>
@@ -143,18 +130,18 @@ const index = () => {
             </div>
             <Divider className='mt-2 mb-1' />
             <div className='flex justify-between font-normal'>
-              <Text className='pt-2' >Escalated To</Text>
-              <Dropdown menu={{ items }} placement="bottom" trigger={['click']}>
-                <Space>
-                  <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>
-                  <DownOutlined />
-                </Space>
-              </Dropdown>
+              <Text className='pt-2 w-[130px]' >Escalated To</Text>
+
+              <Select defaultValue="Jessica Alba" className='w-full lg:w-[200px] border-none' onChange={handleChange}
+                options={[{
+                  value: "Gregory Maxwell Hall", label:
+                    <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>,
+                },
+                { value: <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>, label: <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>, },]} />
             </div>
 
           </BoxWrapper>
-
-          <BoxWrapper className='my-2'>
+          <BoxWrapper className='my-2 pb-0'>
             <Text className='text-xl font-medium'>Escalated By</Text>
             <div className='flex items-center flex-col'>
               <span><GrievancesSidebarAvater /></span>
@@ -163,7 +150,17 @@ const index = () => {
               <Text className='text-base font-normal'>Design</Text>
             </div>
             <Divider className='mt-2 mb-1' />
-
+            <div className='flex flex-col'>
+              <span className='p-3'><GrievancesInbox />
+                <span className='text-sm px-3 font-normal'>maria@Student Help Squad.com</span>
+              </span>
+              <span className='p-3'> <GrievancesCall />
+                <span className='text-sm px-3 font-normal'>+44 7700 900077</span>
+              </span>
+              <span className='p-3'>  <GrievancesLocation />
+                <span className='text-sm px-3 font-normal'>263 Eversholt St, London NW11NB, UK</span>
+              </span>
+            </div>
           </BoxWrapper>
         </Col>
 
@@ -173,7 +170,7 @@ const index = () => {
         okBtntxt="Proceed"
         state={showSuccess}
         setState={setShowSuccess}
-        type="success"
+        alertType="success"
         width={500}
         title=""
         children={<p>Are you sure you want to delete this?</p>}
