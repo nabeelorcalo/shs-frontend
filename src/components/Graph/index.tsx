@@ -21,7 +21,7 @@ const Graph = (props: any) => {
       </BoxWrapper>
 
       <BoxWrapper >
-        <GrowthAnalyticsGraph />
+        {/* <GrowthAnalyticsGraph /> */}
       </BoxWrapper>
 
       {/* Register Member Graph */}
