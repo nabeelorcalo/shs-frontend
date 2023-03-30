@@ -11,7 +11,8 @@ interface AttendanceProps {
 
 export const AttendanceCardDetail: any = (props: AttendanceProps) => {
   const { index, item, menu } = props;
-  const { avatar, name, profession, status } = item;
+  const { avatar, name, profession, status,company } = item;
+  
 
   return (
     <div className='shs-col-5'>
@@ -38,6 +39,9 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
 
         <Typography.Text className='flex justify-center'>
           {profession}
+        </Typography.Text>
+        <Typography.Text className='flex justify-center'>
+          {company}
         </Typography.Text>
 
         <div className="flex flex-row justify-around mt-6">

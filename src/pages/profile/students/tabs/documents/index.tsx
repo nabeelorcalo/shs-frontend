@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Divider, Modal, Typography } from "antd";
-import upload from "../../../../../assets/images/profile/student/Upload.svg";
-import download from "../../../../../assets/images/profile/student/Upload.svg";
+import upload from "../../../../../assets/images/profile/student/upload.svg";
+import download from "../../../../../assets/images/profile/student/upload.svg";
 import '../../../style.scss';
 import { documentArr } from "./DocumentMock";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";

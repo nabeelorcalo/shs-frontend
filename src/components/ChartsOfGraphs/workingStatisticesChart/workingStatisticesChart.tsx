@@ -5,7 +5,7 @@ import { statisticesData } from './workingChart';
 
 
 export const WorkingStatisticesChart = (props: any) => {
-  const { isStack = true, xField = "days", yField = "value", seriesField = "type",
+  const { styling, isStack = true, xField = "days", yField = "value", seriesField = "type",
     heading, legend = { layout: "horizontal", position: 'top-right' } } = props
   const [data] = useState<any>(statisticesData);
 
@@ -37,14 +37,14 @@ export const WorkingStatisticesChart = (props: any) => {
     }
   };
   return (
-    <BoxWrapper className='my-4'>
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       {heading && <p className='text-xl font-medium text-secondary-color'>{heading}</p>}
       <Column
         {...config}
-        height={336}
+        style={styling}
         maxColumnWidth={50}
       />
-    </BoxWrapper>
+    </div>
   )
 
 }
