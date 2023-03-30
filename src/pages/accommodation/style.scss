@@ -32,3 +32,18 @@
     margin-right: 16px;
   }
 }
+
+.page-filterbar{
+  @media only screen and (max-width:1060px) {
+    display: block;
+    .page-filterbar-right{
+      margin-top: 20px;
+    }
+    .main-filter-btns{
+      @media  only screen and (max-width:400px) {
+       flex-direction: column;
+       width: 100%;
+      }
+    }
+    }
+  }
