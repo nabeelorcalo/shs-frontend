@@ -200,25 +200,22 @@ const Detail = () => {
           />
         }
       />
-
-      <div className="flex">
-        <div className="w-[28%]">
+      <div className="flex attendance-main-header">
+        <div className="w-[28%] search-bar" >
           <SearchBar
-            className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
-            placeholder="search"
-            size="middle"
+            placeholder="Search"
           />
         </div>
-
-        <div className="flex justify-center ml-auto gap-4">
-          <FiltersButton
-            label="Filters"
-            onClick={handleSidebarClick}
-          />
-
+        <div className="flex attendance-filter-section  ml-auto gap-4">
+          <div className="filter-btn">
+            <FiltersButton
+              label="Filters"
+              onClick={handleSidebarClick}
+            />
+          </div>
           <Drawer
             title="Filters"
             open={state.openSidebar}
@@ -275,7 +272,12 @@ const Detail = () => {
               </div>
             }
           />
-
+          <IconButton
+            size='large'
+            className='icon-btn download-btn'
+            onClick={downloadClick}
+            icon={<DownlaodFileIcon />}
+          />
           <ToggleButton
             isToggle={state.isToggle}
             onTogglerClick={togglerClick}

@@ -1,25 +1,14 @@
-@import '../../scss/_colors.scss';
+.announcements-wrapper {
 
-.scrollableDiv {
-  height: 500px;
-  overflow: auto;
-}
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-.scrollableDiv {
-  height: 500px;
-  overflow: auto;
-}
-
-::-webkit-scrollbar {
-  width: 0;
-  height: 8px;
-  /* Remove scrollbar space */
-  background: transparent;
-  /* Optional: just make scrollbar invisible */
-}
-
-::-webkit-scrollbar-thumb:horizontal{
-  background: #000;
-  // background: $text-input-bg-color;
-  border-radius: 10px;
+  /* Hide scrollbar for IE, Edge add Firefox */
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    /* Firefox */
+  }
 }

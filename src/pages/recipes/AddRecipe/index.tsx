@@ -131,12 +131,12 @@ const AddRecipe = () => {
               <div className="form-section-fields">
                 <div className="form-fields-container">
                   <Row gutter={20}>
-                    <Col xs={12}>
+                    <Col xs={24} md={12}>
                       <Form.Item name="prepHours" label="Hours">
                         <Input className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
-                    <Col xs={12}>
+                    <Col xs={24} md={12}>
                       <Form.Item name="prepMinutes" label="Minutes">
                         <Input className="filled" placeholder="Minutes 0" />
                       </Form.Item>
@@ -156,12 +156,12 @@ const AddRecipe = () => {
               <div className="form-section-fields">
                 <div className="form-fields-container">
                   <Row gutter={20}>
-                    <Col xs={12}>
+                    <Col xs={24} md={12}>
                       <Form.Item name="cookTimeHours" label="Hours">
                         <Input className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
-                    <Col xs={12}>
+                    <Col xs={24} md={12}>
                       <Form.Item name="cookTimeMinutes" label="Minutes">
                         <Input className="filled" placeholder="Minutes 0" />
                       </Form.Item>
@@ -172,11 +172,11 @@ const AddRecipe = () => {
             </div>
 
             <div className="add-recipe-form-footer">
-              <Space size={20}>
+              {/* <Space size={20}> */}
                 <ExtendedButton customType="tertiary" type="link">Save Draft</ExtendedButton>
                 <ExtendedButton customType="tertiary" ghost>Cancel</ExtendedButton>
                 <ExtendedButton customType="tertiary">Publish</ExtendedButton>
-              </Space>
+              {/* </Space> */}
             </div>
           </Form>
         </div>

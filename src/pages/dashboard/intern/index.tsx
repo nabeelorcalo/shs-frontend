@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Row } from "antd";
-import { PageHeader, TimeTracking } from "../../../components";
+import { TimeTracking } from "../../../components";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
   TodayWeather,
@@ -9,10 +9,12 @@ import {
   BirthdayWishes,
   WorkingStatisticesChart,
   LeaveDetails,
+  PageHeader,
 } from "../../../components";
 import { Terrible, Sad, Neutral, Happy, Awesome } from "../../../assets/images";
 import CustomHook from "../actionHandler";
 import "../style.scss";
+import { gutter } from "..";
 
 const Intern = () => {
   const action = CustomHook;
@@ -108,64 +110,85 @@ const Intern = () => {
         }
       />
 
-      <Row className="xs:gap-4 md:gap-0">
-        <Col xs={24} sm={24} md={8} lg={8} xl={8} className="pr-4">
-          <TimeTracking />
-
-          <AnnouncementList
-            data={state.list}
-            loading={state.loading}
-            loadMoreData={loadMoreData}
-          />
+      <Row gutter={gutter}>
+        <Col xs={24}>
+          <Row gutter={gutter}>
+            <Col xs={24} xl={12} xxl={7} className="xs:order-1">
+              <TimeTracking />
+            </Col>
+            <Col xs={24} xxl={12} className="xs:order-3 2xl:order-2">
+              <EmojiMoodRating
+                title="How are you feeling today?"
+                data={emojiData}
+                activeIconIndex={-1}
+              />
+            </Col>
+            <Col xs={24} xl={12} xxl={5} className="xs:order-2 2xl:order-3" >
+              <TodayWeather />
+            </Col>
+          </Row>
         </Col>
-
-        <Col xs={24} sm={24} md={12} lg={12} xl={12} className="pr-4">
-          <EmojiMoodRating
-            title="How are you feeling today?"
-            data={emojiData}
-            activeIconIndex={-1}
-          />
-
-          <div className="flex my-4">
-            <Col span={8} className="pr-4">
-              <AttendanceDetail
-                label="Avg Clock In"
-                time="08:04am"
-                colorClass="clock-in"
+        <Col xs={24}>
+          <Row gutter={gutter}>
+            <Col xs={24} xxl={7}>
+              <AnnouncementList
+                data={state.list}
+                loading={state.loading}
+                loadMoreData={loadMoreData}
+                height={460.74}
               />
             </Col>
+            <Col xs={24} xxl={12}>
+              <Row gutter={gutter}>
+                <Col xs={24} xxl={24}>
+                  <Row gutter={gutter}>
+                    <Col flex={1} className="">
+                      <AttendanceDetail
+                        label="Avg Clock In"
+                        time="08:04am"
+                        colorClass="clock-in"
+                      />
+                    </Col>
 
-            <Col span={8} className="pr-4">
-              <AttendanceDetail
-                label="Avg Clock Out"
-                time="03:04pm"
-                colorClass="clock-out"
-              />
+                    <Col flex={1} className="">
+                      <AttendanceDetail
+                        label="Avg Clock Out"
+                        time="03:04pm"
+                        colorClass="clock-out"
+                      />
+                    </Col>
+
+                    <Col flex={1}>
+                      <AttendanceDetail
+                        label="Avg Hours"
+                        time="05:48hrs"
+                        colorClass="avg-hours"
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={24} xxl={24}>
+                  <WorkingStatisticesChart heading="Working Statistices" styling={{height:268}} />
+                </Col>
+              </Row>
             </Col>
-
-            <Col span={8}>
-              <AttendanceDetail
-                label="Avg Hours"
-                time="05:48hrs"
-                colorClass="avg-hours"
-              />
+            <Col xs={24} xxl={5}>
+              <Row gutter={gutter}>
+                <Col xs={24} xl={12} xxl={24}>
+                  <BirthdayWishes wishList={state.birthdayWishlist} user="Intern" />
+                </Col>
+                <Col xs={24} xl={12} xxl={24}>
+                  <LeaveDetails
+                    sickLeaves="02"
+                    casualLeaves="03"
+                    medicalLeaves="04"
+                    workFromHome="01"
+                    user="Intern"
+                  />
+                </Col>
+              </Row>
             </Col>
-          </div>
-
-          <WorkingStatisticesChart heading="Working Statistices" />
-        </Col>
-
-        <Col xs={24} sm={24} md={4} lg={4} xl={4}>
-          <TodayWeather />
-
-          <BirthdayWishes wishList={state.birthdayWishlist} />
-
-          <LeaveDetails
-            sickLeaves="02"
-            casualLeaves="03"
-            medicalLeaves="04"
-            workFromHome="01"
-          />
+          </Row>
         </Col>
       </Row>
     </>
