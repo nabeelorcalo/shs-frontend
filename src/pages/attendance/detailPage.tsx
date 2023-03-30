@@ -11,7 +11,6 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
-  EmojiGray1st
 } from "../../assets/images";
 
 import {
@@ -194,7 +193,6 @@ const Detail = () => {
         return "";
     }
   }
-
   // const [expandedRowKeys, setExpandedRowKeys] = useState<any>([]);
   // const handleExpand = (expanded: any, record: any) => {
   //   if (expanded) {
@@ -241,7 +239,7 @@ const Detail = () => {
         bordered
       />
       <Row gutter={[20, 20]}>
-        <Col xxl={7} xl={10} md={24} xs={24}>
+        <Col xxl={7} xl={10} md={24} xs={24} className="attendance-content">
           <div className="left-container">
             {constants.USER_ROLE === "Intern" ? (
               <TimeTracking vartical />
@@ -298,7 +296,7 @@ const Detail = () => {
           {
             constants.USER_ROLE === "Intern" ?
               <TimeTracking vartical />
-              :
+            ) : (
               <ProfileCard
                 name="Mino Marina"
                 profession="Data Researcher"

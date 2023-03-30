@@ -510,3 +510,7 @@ export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPicke
 // payment icons
 export { ReactComponent as UserIcon } from "./payments/user.svg";
 export { ReactComponent as Success } from "./payments/success.svg";
+export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
+export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";
+export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
+export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';

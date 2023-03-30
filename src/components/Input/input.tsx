@@ -16,8 +16,8 @@ interface Props {
 
 }
 
-export const Input = (props: Props) => {
-    const { required, id, size, label, name, value, type, placeholder, className, handleChange, ...rest } = props
+export const Input = (props: any) => {
+  const { required, id, size, label, name, value, type, placeholder, className, disabled, handleChange, ...rest } = props;
 
     return (
         <div className='input-wrapper'>

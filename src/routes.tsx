@@ -130,12 +130,14 @@ const AddRecipe = Loadable(lazy(() => import("./pages/recipes/AddRecipe")));
 const EditRecipe = Loadable(lazy(() => import("./pages/recipes/EditRecipe")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
+const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
 const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
+const AssesmentForm = Loadable(lazy(() => import("./pages/selfAssesment/AssesmentFormPage")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(
@@ -1092,6 +1094,11 @@ const internRoutes = [
         element: <SelfAssesment />,
       },
       {
+        key: `${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`,
+        path: `${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`,
+        element: <AssesmentForm />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
@@ -1120,6 +1127,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
         path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        path: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        element: <AllGoals />,
       },
       {
         key: `${ROUTES_CONSTANTS.PAYMENTS}`,
