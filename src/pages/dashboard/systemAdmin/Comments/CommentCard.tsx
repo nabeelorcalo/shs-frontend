@@ -6,6 +6,7 @@ import {
   FilledLikeIcon,
   LikeIcon,
 } from "../../../../assets/images";
+
 interface ICommentCard {
   name: string;
   image: string;
@@ -13,17 +14,17 @@ interface ICommentCard {
   time: string;
   likes: number | string;
 }
-const CommentCard: FC<ICommentCard> = (props) => {
+
+const index = (props: any) => {
   const { name, image, content, time, likes } = props;
   const [isLike, setIsLike] = useState(false);
   const [isReply, setIsReply] = useState(false);
-
   return (
     <div>
       <Row className="gap-[10px]" align="middle">
         <Avatar src={image} alt="" size={23} />
         <p className="text-xs font-normal">{name}</p>
-        <p className="pl-4 light-gray-color text-[10px]">{time}</p>
+        <p className="pl-4 text-[#B4BBC6] text-[10px]">{time}</p>
       </Row>
       <div className="pt-[10px] pb-[16px] text-xs">{content}</div>
       <Row justify="space-between" align="middle">
@@ -33,13 +34,13 @@ const CommentCard: FC<ICommentCard> = (props) => {
               className="cursor-pointer w-6 h-6"
               onClick={() => setIsLike(!isLike)}
             >
-              {isLike ? <FilledLikeIcon /> : <LikeIcon />}
+              {/* {isLike ? <FilledLikeIcon /> : <LikeIcon />} */}
             </span>
-            <span className="gray-color">{likes ?? 0} likes</span>
+            <span className="text-[#8991A0]">{likes ?? 0} likes</span>
           </Row>
         </Col>
         <p
-          className="gray-color cursor-pointer"
+          className="text-[#8991A0] cursor-pointer"
           onClick={() => setIsReply(!isReply)}
         >
           Reply
@@ -55,7 +56,7 @@ const CommentCard: FC<ICommentCard> = (props) => {
           <Row
             justify="space-between"
             align="middle"
-            className="off-white-bg px-[10px] py-[6px] rounded-md"
+            className="bg-[#F8F8F8] px-[10px] py-[6px] rounded-md"
           >
             <Col>
               <Row className="gap-[10px]">
@@ -88,5 +89,4 @@ const CommentCard: FC<ICommentCard> = (props) => {
     </div>
   );
 };
-
-export default CommentCard;
+export default index;
