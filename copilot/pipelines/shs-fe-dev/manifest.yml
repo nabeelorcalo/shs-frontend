@@ -17,7 +17,8 @@ source:
   properties:
     branch: dev
     repository: https://eu-west-2.console.aws.amazon.com/codesuite/codecommit/repositories/SHS-FE/browse
-
+build:
+image: aws/codebuild/amazonlinux2-aarch64-standard:2.0
 # This section defines the order of the environments your pipeline will deploy to.
 stages:
   - # The name of the environment.
