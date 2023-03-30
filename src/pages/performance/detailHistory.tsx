@@ -184,7 +184,7 @@ const DetailHistory = () => {
   ];
 
   // remove last two items if role is of Manager
-  if (constants.USER_ROLE === "Manager" && items.length > 2) {
+  if (constants.USER_ROLE === "Manager" || constants.USER_ROLE === "University" && items.length > 2) {
     items = items.slice(0, -2)
   }
 

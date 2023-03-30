@@ -284,7 +284,7 @@ const PerformanceHistory = () => {
     "Product Manager",
     "Developer",
   ];
-  const items: MenuProps["items"] = [
+  let items: MenuProps["items"] = [
     {
       label: (
         <Link
@@ -342,6 +342,9 @@ const PerformanceHistory = () => {
       key: "3",
     },
   ];
+  if (role === "University" && items.length > 2) {
+    items = items.slice(0, -3)
+  }
 
   const [state, setState] = useState({
     openSidebar: false,
