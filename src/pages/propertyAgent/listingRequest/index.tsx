@@ -4,8 +4,8 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import {FiltersButton, GlobalTable} from "../../../components";
-import { Button, Col, Row,Space,Form,Menu } from "antd";
+import { BoxWrapper, FiltersButton, GlobalTable } from "../../../components";
+import { Button, Col, Row, Space, Form, Menu } from "antd";
 import { DropDown } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -43,10 +43,10 @@ const columns = [
             data.status === "Pending"
               ? "#FFC15D"
               : data.status === "Published"
-              ? "#3DC475"
-              : data.status === "Rejected"
-              ? "#D83A52"
-              : "",  
+                ? "#3DC475"
+                : data.status === "Rejected"
+                  ? "#D83A52"
+                  : "",
           padding: " 2px 3px 2px 3px",
         }}
       >
@@ -66,10 +66,10 @@ const columns = [
             data.Verification === "Checked"
               ? "#3DC575"
               : data.Verification === "Unchecked"
-              ? "#D83A52"
-              : "",
+                ? "#D83A52"
+                : "",
           padding: " 2px 3px 2px 3px",
-        
+
         }}
       >
         {data.Verification}
@@ -90,7 +90,7 @@ const columns = [
 ];
 const menu2 = (
   <Menu>
-     <Menu.Item key="1">View Details</Menu.Item>
+    <Menu.Item key="1">View Details</Menu.Item>
   </Menu>
 );
 const tableData = [
@@ -128,7 +128,7 @@ const tableData = [
     Actions: (
       <div>
         <EllipsisOutlined />
-       
+
       </div>
     ),
     Rent: "£7,823",
@@ -149,7 +149,7 @@ const ListingRequest = () => {
   return (
     <div className="listing-request">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
-      <Form layout="vertical">
+        <Form layout="vertical">
           <Form.Item label="Agent" name="agent">
             <DropDown
               name="Select"
@@ -166,7 +166,7 @@ const ListingRequest = () => {
               setValue={setValue}
             />
           </Form.Item>
-         
+
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -182,22 +182,27 @@ const ListingRequest = () => {
           </div>
         </Form>
       </Drawer>
-      <Row>
+      <Row gutter={[20,10]}>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="flex justify-end gap-2 mb-4">
-          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
-          <div className="w-25">
+            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+            {/* <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
                 value={value}
                 setValue={setValue}
               />
-            </div>
+            </div> */}
           </div>
         </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <GlobalTable tableData={tableData} columns={columns} />
+          </BoxWrapper>
+        </Col>
       </Row>
-      <GlobalTable tableData={tableData} columns={columns} />
+
     </div>
   );
 };

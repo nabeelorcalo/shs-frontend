@@ -1,5 +1,15 @@
 @import '../../scss/colors';
 .delegate-agent {
+  .delegate-right-menu{
+    flex-wrap: wrap;
+    @media only screen and (max-width:992px) {
+      margin: 10px 0px;
+      justify-content: start;
+    }
+    @media only screen and (max-width:575px) {
+      flex-direction: column;
+    }
+  }
   .main-title {
     font-family: "Outfit";
     font-style: normal;

@@ -30,7 +30,7 @@ const columns: ColumnsType<DataType> = [
     title: "Issue Id ",
     dataIndex: "issueId",
     key: "issueId",
-    render: (text) => <p className="break-keep min-w-[60px]">{text}</p>
+    render: (text) => <p className="break-keep min-w-[60px]">{text}</p>,
   },
   {
     title: "Reported By",
@@ -65,7 +65,11 @@ const columns: ColumnsType<DataType> = [
     title: "Action",
     dataIndex: "action",
     key: "index",
-    render: (action) => <div className="min-w-[50px]"><LogIssueModal /></div>,
+    render: (action) => (
+      <div className="min-w-[50px]">
+        <LogIssueModal />
+      </div>
+    ),
   },
 ];
 
@@ -100,7 +104,6 @@ const data: DataType[] = [
 ];
 
 const RecentIssuesTable: FC<{}> = () => {
-  
   return (
     <div className="bg-white xs:p-2 md:p-3 lg:p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle">

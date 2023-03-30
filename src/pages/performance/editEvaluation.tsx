@@ -9,7 +9,8 @@ import {
   EvaluationCard,
   EvaluationStatsCard,
   TextArea,
-  Button
+  Button,
+  Breadcrumb
 } from "../../components";
 import {
   Sad,
@@ -185,18 +186,18 @@ const ViewPerformance = () => {
   const onCancelClick = () => {
     alert("Cancel");
   }
-
+  const tempArray = [
+    { name: "Evaluation Form " },
+    { name: "Performance", onClickNavigateTo: "/performance" },
+    { name: "/" },
+    { name: 'Performance History', onClickNavigateTo: "/performance/history" }
+  ];
   return (
     <div className="view-evaluation">
       <PageHeader
         bordered
         title={
-          <div className="font-medium">
-            Evaluation Form
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
-          </div>
+          <Breadcrumb breadCrumbData={tempArray} />
         }
       />
 
