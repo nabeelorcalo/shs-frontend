@@ -46,7 +46,7 @@ const Agent = () => {
 
   return (
     <>
-      <PageHeader bordered title="Dashboard" />
+      {/* <PageHeader bordered title="Dashboard" />
       <Row gutter={gutter}>
         <Col xs={24}>
           <CountingCard
@@ -76,7 +76,7 @@ const Agent = () => {
         <Col xs={24} xl={12}>
           <ReservationsTable />
         </Col>
-      </Row>
+      </Row> */}
     </>
   );
 };

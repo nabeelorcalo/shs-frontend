@@ -1,7 +1,7 @@
-import { Divider, Row, Select } from "antd";
+import { Row } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { FC } from "react";
-import { GlobalTable } from "../../../components";
+import { GlobalTable } from "../../../../components";
 
 interface DataType {
   key: string;

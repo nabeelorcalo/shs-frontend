@@ -5,12 +5,12 @@ import {
   FavouritesViewCard,
   GreetingCard,
   RegisterMemberAndFeddbackGraph,
-} from "../../../components";
+} from "../../../../components";
 // import Graph from "../../../components/Graph/graphForRegisteredMembersAndFeedback";
 import MembersDetails from "./MembersDetails";
 import "../style.scss";
-import ShareModal from "../../../components/ShareModal";
-import InvitationModal from "../../../components/InvitationModal";
+import ShareModal from "../../../../components/ShareModal";
+import InvitationModal from "../../../../components/InvitationModal";
 
 // gutter for spacing in dashboard items
 const gutter: any = [
