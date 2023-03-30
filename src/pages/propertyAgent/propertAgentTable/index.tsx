@@ -175,7 +175,7 @@ const PropertyAgentTable = () => {
             <SearchBar handleChange={searchValue} />
           </Col>
           <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-            <div className="flex justify-end items-center gap-3">
+            <div className="flex justify-end items-center gap-3 agent-right-menu">
             <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
               <div className="w-25">
                 <DropDown
