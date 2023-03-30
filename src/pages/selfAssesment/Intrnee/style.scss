@@ -1,0 +1,47 @@
+@import '../../../scss/colors';
+
+.self_assesment_main {
+  .SearchBar {
+    max-width: 375px;
+  }
+
+  .self_assesment {
+    box-shadow: none !important;
+    color: $white-bg-color;
+    background: $green-graph-tooltip-color;
+    display: flex;
+    align-items: "center";
+    justify-content: center;
+
+    &:hover {
+      background: $green-graph-tooltip-color;
+    }
+  }
+}
+
+.filter_form_main {
+  .data_container {
+    .drop-down-wrapper,
+    .user_select {
+      border: 1px solid $text-error-line-color;
+      background-color: transparent;
+      &:hover {
+        outline: 2px solid $input-hover-color;
+      }
+    }
+  }
+
+  .filter_btn_wrapper {
+    .apply_btn {
+      color: $white-bg-color;
+      background: $green-graph-tooltip-color;
+      border: 1px solid $green-graph-tooltip-color;
+    }
+
+    .reset_btn {
+      color: $green-graph-tooltip-color;
+      background: $white-bg-color;
+      border: 1px solid $green-graph-tooltip-color;
+    }
+  }
+}

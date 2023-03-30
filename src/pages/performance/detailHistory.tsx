@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Progress, Space, Typography, Dropdown, MenuProps } from "antd";
+import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
 import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable } from "../../components";
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
@@ -254,7 +254,8 @@ const DetailHistory = () => {
         }
       />
 
-      <div className="company-admin-detail-history-container gap-4">
+      <Row gutter={[20,20]} className="company-admin-detail-history-container">
+        <Col xs={24} md={24} xl={12}>
         <div className="performance-left-subcontainer ">
           <BoxWrapper className="flex flex-col">
             <TopPerformanceCard
@@ -292,7 +293,8 @@ const DetailHistory = () => {
             />
           </div>
         </div>
-
+        </Col>
+        <Col xs={24} md={24} xl={12}>
         <div className="performance-right-subcontainer ">
           <BoxWrapper >
             <Typography.Title level={4} >
@@ -305,7 +307,60 @@ const DetailHistory = () => {
             />
           </BoxWrapper>
         </div>
-      </div>
+        </Col>
+      </Row>
+
+      {/* <div className="company-admin-detail-history-container gap-4">
+        <div className="performance-left-subcontainer ">
+          <BoxWrapper className="flex flex-col">
+            <TopPerformanceCard
+              id={1}
+              name="Maria Sanoid"
+              nameClassName="text-2xl text-primary-color"
+              profession="UI UX Designer"
+              className="bg-visible-btn evaluate-btn"
+              icon={<ColorLessMedalIcon />}
+              btnTxt='Evaluate'
+              size={64}
+              url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
+              avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+            />
+
+            <p className="mt-4">Overall</p>
+            <Progress className="flex" percent={81} strokeColor="#4783FF" />
+
+            <p>Learning Objectives</p>
+            <Progress className="flex" percent={85} strokeColor="#A1D8EA" />
+
+            <p>Discipline</p>
+            <Progress className="flex" percent={75} strokeColor="#F08D97" />
+
+            <p>Personal</p>
+            <Progress className="flex" percent={68} strokeColor="#78DAAC" />
+          </BoxWrapper>
+
+          <div className="my-4 h-[502px]">
+            <MonthlyPerfomanceChart
+              heading="Summary"
+              data={data}
+              XField="department"
+              columnWidthRatio={0.5}
+            />
+          </div>
+        </div>
+        <div className="performance-right-subcontainer ">
+          <BoxWrapper >
+            <Typography.Title level={4} >
+              Evaluation History
+            </Typography.Title>
+            <GlobalTable
+              columns={evaluationHistoryColumnNames}
+              tableData={evaluationHistoryData}
+              pagination={false}
+            />
+          </BoxWrapper>
+        </div>
+      </div> */}
 
       <AppreciationModal
         open={state.openAprreciationModal}

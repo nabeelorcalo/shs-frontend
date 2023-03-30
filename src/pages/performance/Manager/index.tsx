@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
-import { PageHeader, SearchBar, FiltersButton, IconButton, GlobalTable, DropDown } from "../../../components";
+import { PageHeader, SearchBar, FiltersButton, IconButton, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -243,16 +243,14 @@ const ManagerPerformance = () => {
           </div>
         }
       />
-
-      <div className="flex">
-        <div className="w-[30%]">
+      <div className="flex performance-header">
+        <div className="w-[30%] performance-search-bar">
           <SearchBar
             className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
-            placeholder="search"
-            size="small"
+            placeholder="Search"
           />
         </div>
 
@@ -275,14 +273,16 @@ const ManagerPerformance = () => {
           />
         </div>
       </div>
+      <BoxWrapper>
+        <div className="performace-history-list">
+          <GlobalTable
+            columns={columnNames}
+            tableData={evaluationHistoryData}
+            pagination={false}
+          />
+        </div>
+      </BoxWrapper>
 
-      <div className="performace-history-list">
-        <GlobalTable
-          columns={columnNames}
-          tableData={evaluationHistoryData}
-          pagination={false}
-        />
-      </div>
     </div>
   )
 }

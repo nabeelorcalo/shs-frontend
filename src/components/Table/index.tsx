@@ -13,7 +13,7 @@ interface TableProps {
 }
 export const GlobalTable = (props: TableProps) => {
   let { columns, tableData, pagination = true, bgWhiteTable,id, ...rest } = props
-  console.log(id,"idddi");
+  // console.log(id,"idddi");
   
   return (
     <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>

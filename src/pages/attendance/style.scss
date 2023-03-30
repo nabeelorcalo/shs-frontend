@@ -1,11 +1,36 @@
 @import '../../scss/_colors.scss';
 
 .attendance-detail-container {
+  .attendance-main-header{
+    .search-bar{
+      height: 48px;
+    }
+    @media only screen and (max-width:575px) {
+      display: block;
+      .search-bar{
+        width: 100% !important;
+      }
+      .attendance-filter-section{
+        flex-wrap: wrap;
+        margin: 10px 0px;
+        .download-btn{
+          margin: 0px
+        }
+        @media only screen and (max-width:375px) {
+          flex-basis: 50%;
+        }
+      }
+    }
+  }
+  
   .shs-page-header {
     padding-bottom: 0;
     display: flex;
     align-items: flex-start;
-    
+  
+    @media only screen and (max-width:500px) {
+      flex-direction: column;
+    }
   }
 
   .icon-btn {
@@ -73,10 +98,10 @@
 
 .company-admin-detail-container {
   .main-cards{
+    flex-wrap: wrap;
     @media only screen and (max-width:1125px) {
       flex-direction: column;   
       gap: 20px;   
-      flex-wrap: wrap;
     }
   }
   .shs-page-header {
@@ -84,6 +109,9 @@
     display: flex;
     align-items: center;
     @media only screen and (max-width:768px) {
+      .shs-page-header-actions{
+        margin-top: 20px;
+      }
       flex-direction: column;
       align-items: flex-start;
     }
@@ -116,16 +144,7 @@
   }
 
   .attendance-content {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    // flex-wrap: wrap;
-
     .left-container {
-      display: flex;
-      height: fit-content;
-      width: 30%;
-
       a {
         display: flex;
         justify-content: center;
