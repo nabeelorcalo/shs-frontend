@@ -2,8 +2,8 @@ import { Divider } from 'antd'
 import React, { useState } from 'react'
 import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import Drawer from '../../../components/Drawer';
-import CaseStudiesTable from './caseStudiesTable';
-import Filters from './filter';
+import CaseStudiesTable from '../Common/caseStudiesTable';
+import Filters from '../Common/filter';
 import './style.scss'
 
 const index = () => {

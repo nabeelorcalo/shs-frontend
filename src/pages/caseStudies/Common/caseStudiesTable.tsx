@@ -123,7 +123,7 @@ const CaseStudiesTable = () => {
       render: (text: string) => {
         return {
           children: (
-            <div>
+            <div className='case-studies-table'>
                  <span
                 className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'Pending'? 'pending':
                  text === 'Approved'? 'approved':text === 'Rejected'?'rejected' : ''} `}

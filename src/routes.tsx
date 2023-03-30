@@ -54,6 +54,7 @@ const AttendanceDetail = Loadable(lazy(() => import("./pages/attendance/detailPa
 const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const ManagerCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/Manager/assessmentForm")));
+const CompanyAdminCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm")));
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
 const ManagerAllGrievances = Loadable(lazy(() => import("./pages/grievances/Manager/AllGrievance")));
@@ -724,6 +725,16 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.STRUCTURE}`,
         path: `${ROUTES_CONSTANTS.STRUCTURE}`,
         element: <Structure />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES}`,
+        element: <CaseStudies />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        element: <CompanyAdminCaseStudiesAssessment />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,

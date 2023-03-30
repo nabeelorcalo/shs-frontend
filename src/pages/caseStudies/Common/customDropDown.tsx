@@ -30,7 +30,7 @@ const CustomDropDownCaseStudies = (props:any) => {
   };
   return (
     <Dropdown
-    className="setting-custom-dropdown"
+    className=""
     menu={{ items }}
     open={visible}
     onOpenChange={handleVisibleChange}

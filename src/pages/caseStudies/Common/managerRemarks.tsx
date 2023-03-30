@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Emoji1st, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray3rd, EmojiGray4th } from '../../../../../src/assets/images';
+import { Emoji1st, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray3rd, EmojiGray4th } from '../../../assets/images';
 const ManagerRemarks = () => {
   const [hover1, setHover1] = useState(false)
   const [hover2, setHover2] = useState(false)

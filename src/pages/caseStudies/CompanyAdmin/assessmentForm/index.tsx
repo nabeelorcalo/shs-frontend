@@ -4,9 +4,9 @@ import { Divider, Button, Typography, Form, Input } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { SettingHorizontalLine } from '../../../../assets/images'
 const { TextArea } = Input;
-import './style.scss'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
 import ManagerRemarks from '../../Common/managerRemarks'
+import './style.scss'
 
 const index = () => {
   const [form] = Form.useForm();
@@ -45,7 +45,7 @@ const index = () => {
 
   ]
   return (
-    <div className='manager-assessment-form'>
+    <div className='company-admin-assessment-form'>
       <PageHeader title={<> Assessment Form {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
         <NavLink to="/case-studies">
           <span className='text-base font-medium dashboard-primary-color' >Case Studies</span>
