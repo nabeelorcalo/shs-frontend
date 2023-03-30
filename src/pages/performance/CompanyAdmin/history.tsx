@@ -415,17 +415,6 @@ const PerformanceHistory = () => {
     }));
   };
 
-  // const breadCrumbs = () => {
-  //   return (
-  //     <Link
-  //       className="bread-crumb"
-  //       to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-  //     >
-  //       Performance
-  //     </Link>
-  //   )
-  // }
-
   return (
     <div className="company-admin-performance-history">
       <PageHeader

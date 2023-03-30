@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Space, Row, Col } from "antd";
-import { Link } from "react-router-dom";
 import {
   ClockInCommon,
   ClockOutCommon,
@@ -28,9 +27,12 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Detail = () => {
+  const role = constants.USER_ROLE;
   const tempArray = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo: "/attendance" },
+    { name: role !== 'University' && "/" },
+    { name: role !== 'University' && "Attendance Details", onClickNavigateTo: "/attendance/detail" },
   ];
   const timeFrameOptions = [
     "This Week",
@@ -217,7 +219,7 @@ const Detail = () => {
           <div className="font-medium">
             {
               constants.USER_ROLE === "Intern" ?
-                <></>
+                <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
                 <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
             }

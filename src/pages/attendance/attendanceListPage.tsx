@@ -13,6 +13,7 @@ import {
   AttendanceCardDetail,
   AttendanceListViewCard,
   ToggleButton,
+  Breadcrumb,
 } from "../../components";
 import {
   CardViewIcon,
@@ -27,7 +28,10 @@ import "./style.scss";
 const Detail = () => {
   const role = constants.USER_ROLE;
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
-
+  const tempArray = [
+    { name: role === "CompanyAdmin" ? "Attendance Details": "Attendance" },
+    { name: role === "CompanyAdmin" && "Attendance ", onClickNavigateTo: "/attendance" },
+  ];
   const timeFrameOptions = [
     "This Week",
     "Last Week",
@@ -227,14 +231,12 @@ const Detail = () => {
         bordered
         title={
           <div className="font-medium">
-            {constants.USER_ROLE === "CompanyAdmin"
-              ? "Attendance Detail"
-              : "Attendance"}
-            {constants.USER_ROLE === "CompanyAdmin" ? (
-              <span className="vertical-line">{breadCrumbs()}</span>
-            ) : (
-              <></>
-            )}
+            {
+              (role === "University" || role === "Manager") ?
+                <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
+                :
+                <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+            }
           </div>
         }
         actions
