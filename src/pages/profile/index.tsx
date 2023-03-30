@@ -1,6 +1,5 @@
-import { Col, Divider, Row, Typography } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Col, Divider, Row, Typography } from "antd";
 import { PageHeader } from "../../components";
 import StudentsTabs from "./students";
 import AddVideo from "./students/addVideo";

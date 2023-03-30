@@ -1,5 +1,4 @@
 import Manager from "./Manager/index"
-
 import constants from "../../config/constants";
 import Structure from "./companyAdmin";
 import ManagerStructure from "./Manager/index";

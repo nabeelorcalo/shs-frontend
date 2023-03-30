@@ -14,9 +14,7 @@ import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-pa
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
-//Internships Child Components
-import NewInternships from "./pages/internships/NewInternships";
-import ViewInternshipDetails from "./pages/internships/ViewInternshipDetails";
+
 
 //Interns Child Components
 import profile from "./pages/interns/profile";
@@ -45,6 +43,25 @@ const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
     <Component {...props} />
   </Suspense>
 );
+//Internships Child Components
+const NewInternships = Loadable(lazy(() => import("./pages/internships/NewInternships")));
+const ViewInternshipDetails = Loadable(lazy(() => import("./pages/internships/ViewInternshipDetails")));
+
+//Company admin Internships
+const CMInternships = Loadable(lazy(() => import("./pages/internships/cmInternships")));
+const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/internshipPipeLine")));
+
+//Company admin payroll
+const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
+const ViewPayrollDetails = Loadable(lazy(() => import("./pages/Payroll/viewPayrollDetails")));
+const ViewPayrollSalarySlip = Loadable(lazy(() => import("./pages/Payroll/viewPayrollSalarySlip")));
+
+//Interns Child Components
+const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
+const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
+const ViewPaymentDetails = Loadable(lazy(() => import("./pages/payments/viewPaymentDetails")));
+
+
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
@@ -367,6 +384,16 @@ const managerRoutes = [
         element: <Internships />,
       },
       {
+        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        element: <NewInternships />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        element: <ViewInternshipDetails />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
         element: <Interns />,
@@ -645,7 +672,12 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
-        element: <Internships />,
+        element: <CMInternships />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,
+        element: <InternshipPipeLine />,
       },
       {
         key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
@@ -657,7 +689,21 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
-
+      {
+        key: `${ROUTES_CONSTANTS.PAYROLL}`,
+        path: `${ROUTES_CONSTANTS.PAYROLL}`,
+        element: <Payroll />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+        element: <ViewPayrollDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
+        path: `${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
+        element: <ViewPayrollSalarySlip />,
+      },
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
         path: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
@@ -672,6 +718,21 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
         element: <Interns />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
+        element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        element: <Chat />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPLETE_INTERNS}`,
+        path: `${ROUTES_CONSTANTS.COMPLETE_INTERNS}`,
+        element: <Complete />,
       },
       {
         key: `${ROUTES_CONSTANTS.MANAGERS}`,
@@ -1076,6 +1137,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PAYMENTS}`,
         path: `${ROUTES_CONSTANTS.PAYMENTS}`,
         element: <Payments />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.VIEW_PAYMENT_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.VIEW_PAYMENT_DETAILS}`,
+        element: <ViewPaymentDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
