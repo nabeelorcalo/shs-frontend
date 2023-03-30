@@ -504,6 +504,14 @@ export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPicke
 export { ReactComponent as UserIcon } from "./payments/userIcon.svg";
 export { ReactComponent as Success } from "./payments/success.svg";
 export { ReactComponent as Message } from "./payments/message.svg";
+// Help Desk Icons 
+export { ReactComponent as EditHistoryIcon} from "./helpDesk/EditHistoryIcon.svg";
+export { ReactComponent as ReTime} from "./helpDesk/retime.svg";
+export { ReactComponent as UserAddIcon} from "./helpDesk/userAddIcon.svg";
+export { ReactComponent as MessageGreen} from "./helpDesk/messageGreen.svg";
+export { ReactComponent as YellowErrow} from "./helpDesk/yelowErrow.svg";
+export { ReactComponent as RestartRed} from "./helpDesk/restart.svg";
+
 export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
 export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';

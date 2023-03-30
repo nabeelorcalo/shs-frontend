@@ -1,12 +1,12 @@
 import "./style.scss";
-import SystemAdmin from "./systemAdmin";
+import HelpDesk from "./systemAdmin";
 
 const Withdrawals = () => {
   return (
-    <div>
-      <SystemAdmin />
-    </div>
-  );
-};
+    <p>
+      <HelpDesk/>
+    </p>
+  )
+}
 
 export default Withdrawals;
