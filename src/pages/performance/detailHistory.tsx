@@ -18,8 +18,8 @@ const DetailHistory = () => {
   const tempArray = [
     { name: "Mino Marina" },
     { name: " Performance ", onClickNavigateTo: "/performance" },
-    { name: "/" },
-    { name: " View History ", onClickNavigateTo: "/performance/history" },
+    { name: role !== 'Manager' && "/" },
+    { name: role === 'University' ?  "View History" : role === 'Manager' ? '' : 'Performance History', onClickNavigateTo: "/performance/history" },
   ];
   const performanceData = [
     {
@@ -257,7 +257,7 @@ const DetailHistory = () => {
           //     {breadCrumbs()}
           //   </span>
           // </div>
-          <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+          <Breadcrumb breadCrumbData={tempArray} />
         }
       />
 

@@ -24,13 +24,14 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
+  const role = constants.USER_ROLE
   const tempArray = [
     { name: "Evaluation Form " },
-    { name: " Performance ", onClickNavigateTo: "/performance" },
-    { name: "/"},
-    { name: " View History ", onClickNavigateTo: "/performance/history" },
-    { name: "/"},
-    { name: "Mino Marina", onClickNavigateTo: "/performance/1/detail" },
+    { name: "Performance", onClickNavigateTo: "/performance" },
+    { name: (role === 'University' || role === 'CompanyAdmin') && "/" },
+    { name: role === 'University' ? "View History" : (role === 'Intern' || role === 'Manager') ? '' : 'Performance History', onClickNavigateTo: "/performance/history" },
+    { name: (role === 'University' || role === 'Manager') && "/" },
+    { name: (role === 'University' || role === 'Manager') && " Mino Marina", onClickNavigateTo: "/performance/1/detail" },
   ];
   const user = {
     name: 'Calvin Grayson',
@@ -165,13 +166,7 @@ const ViewPerformance = () => {
       <PageHeader
         bordered
         title={
-          // <div className="font-medium">
-          //   Evaluation Formss
-          //   <span className="vertical-line">
-          //     {breadCrumbs()}
-          //   </span>
-          // </div>
-          <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+          <Breadcrumb breadCrumbData={tempArray} />
         }
       />
 
@@ -223,7 +218,7 @@ const ViewPerformance = () => {
       {
         data.map((obj: any) => {
           return (
-            <Row gutter={[20,10]}>
+            <Row gutter={[20, 10]}>
               <Col xs={24}>
                 <div key={obj.name} className="mt-6 mb-2">
                   <Typography.Title level={3} className="evaluation-heading">

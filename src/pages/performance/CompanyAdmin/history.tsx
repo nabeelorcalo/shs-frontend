@@ -30,7 +30,7 @@ import { Link } from "react-router-dom";
 const PerformanceHistory = () => {
   const role = constants.USER_ROLE;
   const tempArray = [
-    { name: "View History" },
+    { name: role === 'CompanyAdmin' ? 'Performance History' :  "View History" },
     { name: " Performance ", onClickNavigateTo: "/performance" },
   ];
   const id = 1;
@@ -430,7 +430,7 @@ const PerformanceHistory = () => {
     <div className="company-admin-performance-history">
       <PageHeader
         bordered
-        title={<Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />}
+        title={<Breadcrumb breadCrumbData={tempArray} />}
       />
 
       <div className="flex">
