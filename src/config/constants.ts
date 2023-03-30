@@ -8,10 +8,12 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Agent",
+  USER_ROLE: JSON.parse(
+    localStorage.getItem("UserData") || JSON.stringify({ role: "" })
+  )?.role,
 };
 
-// Possibe string of roles:
+// Possible string of roles:
 // SystemAdmin,
 // Manager,
 // DelegateAgent,

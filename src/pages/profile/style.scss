@@ -241,3 +241,13 @@
   display: none;
 }
 
+.title {
+  font-family: "Outfit";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  color: $text-primary-title-color;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
