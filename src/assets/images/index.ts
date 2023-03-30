@@ -493,4 +493,12 @@ export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPicke
 
 // Earn With Us Icons
 export { ReactComponent as IconWalletMoney } from "./earnWithUs/icon-wallet-money.svg";
-export { ReactComponent as IconInactiveMember } from "./earnWithUs/icon-inactive-member-balance.svg";
+export { ReactComponent as IconInactiveMemberBal } from "./earnWithUs/icon-inactive-member-balance.svg";
+export { ReactComponent as IconTotalMember } from "./earnWithUs/icon-totlal-member.svg";
+export { ReactComponent as IconActiveMember } from "./earnWithUs/icon-active-member.svg";
+export { ReactComponent as IconInactiveMember } from "./earnWithUs/icon-inactive-member.svg";
+export { ReactComponent as IconShare } from "./earnWithUs/icon-share.svg";
+export { ReactComponent as FacebookCircle } from "./earnWithUs/facebook-circle.svg";
+export { ReactComponent as TwitterCircle } from "./earnWithUs/twitter-circle.svg";
+export { ReactComponent as WhatsAppCircle } from "./earnWithUs/WhatsAppCircle.svg";
+

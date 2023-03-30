@@ -1,63 +1,262 @@
 @import "../../../scss/colors";
+.earnwith-topcards {
+  & > .ant-row {
+    & > .ant-col {
+      margin-bottom: 30px;
+    }
+  }
 
-.earn-with-us-dashboard {
-  padding-top: 14px;
-}
+  .card-share-wrapper {
+    position: relative;
+    height: 100%;
+    border-radius: 16px;
 
-.earn-with-card {
-  border-radius: 16px;
-  box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
-  background-color: #ffffff;
-  padding: 30px;
+    .card-share {
+      background-color: $teriary-bg-color;
+      border-radius: 16px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 1px;
+      bottom: 0;
+      right: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 18px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+    }
 
-  &.top {
-    padding: 23px 0;
-
-    .earn-card-inner {
-      padding: 0 30px;
-      border-color: $text-error-line-color;
-
-      &.with-divider {
-        border-left: 1px solid $text-error-line-color;
-      }
-
-      .user-welcome-text {
-        color: $primary-bg-color;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 1.333333;
-
-        & > span {
-          color: $page-header-secondary;
-        }
+    &:hover {
+    & > .top-card {
+        width: calc(100% - 116px);
       }
     }
   }
 
-  .earn-card-inner {
-    display: flex;
+  
+}
 
-    .earn-card-icon {
-      width: 60px;
-      margin-right: 20px;
+.top-card {
+  border-radius: 16px;
+  box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+  background-color: #ffffff;
+  padding: 23px 0;
+
+  .top-card-inner {
+    display: flex;
+    padding: 0 30px;
+    border-color: $text-error-line-color;
+
+    &.with-divider {
+      border-left: 1px solid $text-error-line-color;
     }
 
-    .earn-card-body {
+    .top-card-icon {
+      width: 60px;
+      min-width: 60px;
+      height: 60px;
+      margin-right: 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.balance {
+        background-color: $reset-bg-color;
+      }
+
+      &.inactive {
+        background-color: #E96F7C1a;
+      }
+    }
+
+    .top-card-body {
       flex: 1;
 
-      .earn-card-title {
+      .top-card-title {
         color: $primary-bg-color;
         font-size: 16px;
         font-weight: 400;
         line-height: 1.5;
       }
 
-      .earn-card-value {
+      .top-card-value {
         color: $teriary-bg-color;
         font-size: 18px;
         font-weight: 600;
         line-height: 1.333333;
         margin-top: 10px;
+      }
+    }
+  }
+
+  &.card-user-welcome {
+    height: 100%;
+    position: relative;
+    transition: all 0.5s;
+
+    & > .ant-row {
+      height: 100%;
+
+      .top-card-inner {
+        height: 100%;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+
+        .user-welcome-text {
+          color: $primary-bg-color;
+          font-size: 18px;
+          font-weight: 400;
+          line-height: 1.333333;
+  
+          & > span {
+            color: $page-header-secondary;
+          }
+        }
+
+        .user-reference-no {
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1.5714285;
+          color: $text-secondary-body-color;
+
+          & > span {
+            color: #F08D97;
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 500;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+  }
+}
+
+.members-cards {
+
+  .member-card {
+    border-radius: 16px;
+    box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+    background-color: #ffffff;
+    padding: 30px;
+    margin-bottom: 30px;
+    display: flex;
+
+    .member-card-icon {
+      width: 60px;
+      min-width: 60px;
+      height: 60px;
+      margin-right: 30px;
+    }
+
+    .member-card-body {
+      flex: 1;
+
+      .member-card-title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1.4;
+        color: $text-secondary-body-color;
+      }
+
+      .member-card-value {
+        font-size: 38px;
+        font-weight: 500;
+        line-height: 1.2105;
+        color: $text-secondary-body-color;
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+.registered-members {
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+  background-color: #ffffff;
+  position: relative;
+
+  h4.ant-typography {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+}
+
+.table-members-detail {
+  h4.ant-typography {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+  }
+
+  .shs-table {
+    .shs-status-badge {
+      font-weight: 400;
+      width: 92px;
+    }
+  }
+}
+
+.modal-share-link {
+  .ant-modal-content {
+    .ant-modal-body {
+      .modal-share-link-title {
+        color: #000;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 1.333333;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+    }
+
+    .invite-email {
+      display: flex;
+      align-items: flex-end;
+
+      .invite-email-field {
+        flex: 1;
+      }
+
+      .invite-email-submit {
+        margin-left: 30px;
+        width: 150px;
+      }
+    }
+
+    .share-links-cont {
+      text-align: center;
+
+      .share-link-label {
+        color: #000;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .share-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 16px;
+
+        .share-link-item {
+          margin: 0 9px;
+        }
       }
     }
   }

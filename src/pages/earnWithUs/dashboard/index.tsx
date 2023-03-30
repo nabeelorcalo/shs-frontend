@@ -1,17 +1,28 @@
 import React, { useState, useEffect } from "react"
+import { Link } from "react-router-dom";
 import type { ColumnsType } from 'antd/es/table'
-import { Table, Typography, Row, Col } from 'antd'
-import { IconWalletMoney, IconInactiveMember, Documentcard } from '../../../assets/images'
-import { PopUpModal } from "../../../components";
+import { Table, Typography, Row, Col, Form, Input, Button } from 'antd'
+import {
+  IconWalletMoney,
+  IconInactiveMemberBal,
+  Documentcard,
+  IconTotalMember,
+  IconActiveMember,
+  IconInactiveMember,
+  IconShare,
+  FacebookCircle,
+  TwitterCircle,
+  WhatsAppCircle
+} from '../../../assets/images'
+import { RegisterMemberAndFeddbackGraph, PopUpModal } from "../../../components";
 import "./style.scss";
+
 
 interface DataType {
   key: React.Key;
-  agentTitle: string;
-  address: string;
-  durationBooking: string;
-  rent: string;
-  contracts: any;
+  name: string;
+  delegateAmount: string;
+  member: string;
   status: string;
 }
 
@@ -20,84 +31,38 @@ interface DataType {
 const tableData = [
   {
     key: '1',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'pending'
+    name: 'Ana Black',
+    delegateAmount: '£15',
+    member: 'University',
+    status: 'active'
   },
   {
     key: '2',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'success'
+    name: 'James',
+    delegateAmount: '£3',
+    member: 'Student',
+    status: 'inactive'
   },
   {
     key: '3',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'rejected'
+    name: 'Elijah',
+    delegateAmount: '£5',
+    member: 'Intern',
+    status: 'active'
   },
   {
     key: '4',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'pending'
+    name: 'Ana Black',
+    delegateAmount: '£15',
+    member: 'University',
+    status: 'active'
   },
   {
     key: '5',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'success'
-  },
-  {
-    key: '6',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'rejected'
-  },
-  {
-    key: '7',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'pending'
-  },
-  {
-    key: '8',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'success'
-  },
-  {
-    key: '9',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'rejected'
+    name: 'James',
+    delegateAmount: '£3',
+    member: 'Student',
+    status: 'inactive'
   },
 ];
 
@@ -106,8 +71,12 @@ const tableData = [
 const Dashboard = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-
-  
+  const [form] = Form.useForm();
+  const [modalShareLinkOpen, setModalShareLinkOpen] = useState(false)
+  const [initValues,  setInitValues] = useState({
+    "delegateLink": "htttp://delegate_and_earn08765808.com",
+    "email": "",
+  })
   const tableColumns: ColumnsType<DataType> = [
   {
     title: 'No',
@@ -115,31 +84,21 @@ const Dashboard = () => {
     align: 'center',
     render: (_, row, index) => {
       return (
-        <>{index + 1}</>
+        <>{index < 9?0 : null}{index + 1}</>
       );
     },
   },
   {
-    title: 'Agent Name',
-    dataIndex: 'agentTitle',
+    title: 'Name',
+    dataIndex: 'name',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'Delegate Amount',
+    dataIndex: 'delegateAmount',
   },
   {
-    title: 'Booking Duration',
-    dataIndex: 'durationBooking',
-  },
-  {
-    title: 'Rent',
-    dataIndex: 'rent',
-  },
-  {
-    title: 'Contracts',
-    dataIndex: 'contracts',
-    align: 'center',
-    render: (_, row, index) => row.contracts ? <Documentcard /> : '-'
+    title: 'Member',
+    dataIndex: 'member',
   },
   {
     title: 'Status',
@@ -147,16 +106,11 @@ const Dashboard = () => {
     align: 'center',
     render: (_, row, index) => {
       return (
-        <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': 'success'}`}>
-          {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Success'}
+        <div className={`shs-status-badge ${row.status === 'inactive'? 'error' : 'success'}`}>
+          {row.status === 'inactive'? 'Inactive': 'Active'}
         </div>
       );
     },
-  },
-  {
-    title: 'Actions',
-    dataIndex: 'actions',
-    align: 'center',
   },
 ];
 
@@ -172,6 +126,17 @@ const Dashboard = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
+  function openModalShareLink() {
+    setModalShareLinkOpen(true)
+  }
+
+  function closeModalShareLink() {
+    setModalShareLinkOpen(false)
+  }
+
+  function submitShareLink(values: any) {
+    console.log('Success:', values);
+  }
 
 
 
@@ -180,65 +145,175 @@ const Dashboard = () => {
   return (
     <>
       <div className="earn-with-us-dashboard">
-        <Row gutter={30}>
-          <Col xs={12}>
-            <div className="earn-with-card top">
-              <Row gutter={15}>
-                <Col xs={12}>
-                  <div className="earn-card-inner">
-                    <div className="earn-card-icon">
-                      <IconWalletMoney />
+        <div className="earnwith-topcards">
+          <Row gutter={30}>
+            <Col xs={24} sm={24} md={12}>
+              <div className="top-card">
+                <Row gutter={15}>
+                  <Col xs={12}>
+                    <div className="top-card-inner">
+                      <div className="top-card-icon balance">
+                        <IconWalletMoney />
+                      </div>
+                      <div className="top-card-body">
+                        <div className="top-card-title">Current Balance</div>
+                        <div className="top-card-value">£ 6371.3</div>
+                      </div>
                     </div>
-                    <div className="earn-card-body">
-                      <div className="earn-card-title">Current Balance</div>
-                      <div className="earn-card-value">£ 6371.3</div>
+                  </Col>
+                  <Col xs={12}>
+                    <div className="top-card-inner with-divider">
+                      <div className="top-card-icon inactive">
+                        <IconInactiveMemberBal />
+                      </div>
+                      <div className="top-card-body">
+                        <div className="top-card-title">Inactive Members Balance</div>
+                        <div className="top-card-value">£ 562</div>
+                      </div>
                     </div>
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={12}>
+                <div className="card-share-wrapper">
+                  <div className="card-share" onClick={openModalShareLink}>
+                    <div>Share <IconShare /></div>
                   </div>
-                </Col>
-                <Col xs={12}>
-                  <div className="earn-card-inner with-divider">
-                    <div className="earn-card-icon">
-                      <IconInactiveMember />
-                    </div>
-                    <div className="earn-card-body">
-                      <div className="earn-card-title">Inactive Members Balance</div>
-                      <div className="earn-card-value">£ 562</div>
-                    </div>
+                  <div className="top-card card-user-welcome">
+                    <Row gutter={15}>
+                      <Col xs={12}>
+                        <div className="top-card-inner">
+                          <div className="user-welcome-text">Welcome Back, <span>Stephen!</span></div>
+                        </div>
+                      </Col>
+                      <Col xs={12}>
+                        <div className="top-card-inner">
+                          <div className="user-reference-no">Reference Number: <span>DF41331056</span></div>
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
-                </Col>
-              </Row>
-            </div>
-          </Col>
-          <Col xs={12}>
-            <div className="earn-with-card card-user-welcome top">
-              <Row gutter={15}>
-                <Col xs={12}>
-                  <div className="earn-card-inner">
-                    <div className="user-welcome-text">Welcome Back, <span>Stephen!</span></div>
-                  </div>
-                </Col>
-                <Col xs={12}>
-                  <div className="earn-card-inner with-divider">
-                    
-                  </div>
-                </Col>
-              </Row>
-            </div>
-          </Col>
-        </Row>
-
-        <div className="shs-table-card">
-          <div className="shs-table">
-            <Table
-              scroll={{ x: "max-content" }}
-              columns={tableColumns}
-              dataSource={tableData}
-              pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
-            />
-          </div>
+                </div>
+            </Col>
+          </Row>
         </div>
+
+        <div className="members-cards">
+          <Row gutter={30}>
+            <Col md={24} lg={8}>
+              <div className="member-card">
+                <div className="member-card-icon">
+                  <IconTotalMember />
+                </div>
+                <div className="member-card-body">
+                  <div className="member-card-title">Total Members</div>
+                  <div className="member-card-value">10</div>
+                </div>
+              </div>
+            </Col>
+            <Col md={24} lg={8}>
+              <div className="member-card">
+                <div className="member-card-icon">
+                  <IconActiveMember />
+                </div>
+                <div className="member-card-body">
+                  <div className="member-card-title">Active Members</div>
+                  <div className="member-card-value">11</div>
+                </div>
+              </div>
+            </Col>
+            <Col md={24} lg={8}>
+              <div className="member-card">
+                <div className="member-card-icon">
+                  <IconInactiveMember />
+                </div>
+                <div className="member-card-body">
+                  <div className="member-card-title">Inactive Members</div>
+                  <div className="member-card-value">01</div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        <div className="earnwith-bottom-content">
+          <Row gutter={[30, 30]}>
+            <Col md={24} lg={12}>
+              <div className="registered-members">
+                <Typography.Title level={4}>Registered Members</Typography.Title>
+                <RegisterMemberAndFeddbackGraph  graphName='registerMember' />
+              </div>
+              
+            </Col>
+            <Col md={24} lg={12}>
+              <div className="shs-table-card table-members-detail">
+                <Typography.Title level={4}>Members Details</Typography.Title>
+                <div className="shs-table">
+                  <Table
+                    scroll={{ x: "max-content" }}
+                    columns={tableColumns}
+                    dataSource={tableData}
+                    pagination={false}
+                  />
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        
       </div>
 
+      {/* STARTS: MODAL VIEW CONTRACT
+      *************************************************************************/}
+      <PopUpModal
+        open={modalShareLinkOpen}
+        close={closeModalShareLink}
+        footer={null}
+        width={560}
+        wrapClassName="modal-share-link"
+      >
+        <div className="modal-share-link-title">Share Link</div>
+        <Form
+            form={form}
+            layout="vertical"
+            name="updateListing"
+            initialValues={initValues}
+            onValuesChange={(_, values) => {
+              setInitValues(prevState => ({...prevState, ...values}))
+              console.log('init:: ', values)
+            }}
+            onFinish={submitShareLink}
+          >
+            <Form.Item name="delegateLink" label="Delegate Link">
+              <Input placeholder="Placeholder" />
+            </Form.Item>
+            <div className="invite-email">
+              <div className="invite-email-field">
+                <Form.Item name="email" label="Email">
+                  <Input placeholder="Placeholder" />
+                </Form.Item>
+              </div>
+              <div className="invite-email-submit">
+                <Form.Item>
+                  <Button className="button-tertiary" block>Invite</Button>
+                </Form.Item>
+              </div>
+            </div>
+          </Form>
+          <div className="share-links-cont">
+            <div className="share-link-label">Share this link via:</div>
+            <div className="share-links">
+              <Link className="share-link-item" to={''}><FacebookCircle /></Link>
+              <Link className="share-link-item" to={''}><TwitterCircle /></Link>
+              <Link className="share-link-item" to={''}><WhatsAppCircle /></Link>
+              
+            </div>
+          </div>
+      </PopUpModal>
+      {/* ENDS: MODAL VIEW CONTRACT
+      *************************************************************************/}
     </>
   )
 }
