@@ -1,33 +1,36 @@
-// import Collapse from 'antd/es/collapse';
-// import Divider from 'antd/es/divider';
+
 import { Col, Row } from 'antd/es/grid';
 import { useState } from 'react'
-import { AddGoalIcon, AddGoalPlusIcon, MoreIcon } from '../../../assets/images';
-import { BoxWrapper, Button, PageHeader, PopUpModal, SearchBar } from '../../../components'
+import { AddGoalIcon, AddGoalPlusIcon, CircleMinusIcon, CirclePlusIcon, MoreIcon } from '../../../assets/images';
+import { BoxWrapper, Button, PageHeader, SearchBar } from '../../../components'
 import useCustomHook from '../actionHandler';
 import { SetGoal } from './addGoalModal';
 import { goalsData } from './allGoalMockData';
 import "./style.scss";
-import { Collapse, Divider } from 'antd';
-import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { Collapse, Divider, Dropdown, MenuProps } from 'antd';
 const { Panel } = Collapse;
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
-
 const AllGoals = () => {
   const action = useCustomHook();
   const [openAdGoal, setOpenAddGoal] = useState(false);
-
   const [selectedGoal, setSelectedGoal] = useState<any>(goalsData[0]?.details);
-
   const customExpandIcon = ({ isActive }: any) => {
-    const icon = isActive ? <CaretDownOutlined /> : <CaretRightOutlined />;
+    const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
     return <span className="custom-expand-icon">{icon}</span>;
   };
+  const items: MenuProps['items'] = [
+    {
+      label: <a>Mark as Completed</a>,
+      key: '0',
+    },
+    {
+      label: <a>Edit</a>,
+      key: '1',
+    },
+    {
+      label: <a>Delete</a>,
+      key: '3',
+    },
+  ];
 
   return (
     <>
@@ -71,7 +74,7 @@ const AllGoals = () => {
                         <span className='date text-sm'>{data.date}</span>
                         <span className='status_wraper px-3 py-1 rounded-lg capitalize ' style={{ backgroundColor: data.status === "Active" ? "#4783FF" : "#4ED185" }}>{data.status}</span>
                       </div>
-                      <p className='Goal_name mt-2'>{data.goalName}</p>
+                      <p className='Goal_name mt-[]'>{data.goalName}</p>
                     </div>
                   ))}
                 </div>
@@ -80,6 +83,7 @@ const AllGoals = () => {
           </Col>
           <Col lg={17}>
             <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab_details h-screen'>
+              <Divider />
               <div className='flex items-center justify-end Add_new_task mb-5'>
                 <Button
                   icon={<AddGoalPlusIcon className="mr-1" />}
@@ -89,7 +93,6 @@ const AllGoals = () => {
                   className="Request_leave flex items-center justify-center"
                 />
               </div>
-              <Divider />
               {selectedGoal?.length === 0 ?
                 <>
                   <h1 className='font-medium text-xl '>hello</h1>
@@ -103,28 +106,27 @@ const AllGoals = () => {
                 :
 
                 <>
-                  {
-                    selectedGoal?.map((goalDetail: any, i: number) => (
-                      <Collapse key={i} className='collaps_main' expandIcon={customExpandIcon} bordered={false} collapsible={'icon'}>
-                        <Panel
+                  <Collapse accordion className='collaps_main' expandIcon={customExpandIcon} bordered={false} collapsible={'icon'}>
+                    {
+                      selectedGoal?.map((goalDetail: any, i: number) => (
+                        <Panel key={i}
                           header={<div className='goals_task_Accordion flex items-center justify-between'>
                             <span className='heading_date flex flex-col'>
                               <span className='Heading'>{goalDetail?.title}</span>
                               <span className='date text-sm'>{goalDetail?.date}</span>
                             </span>
-                            <span
-                              className=" cursor-pointer "
-                              onClick={(e) => { e.preventDefault(); alert("hello") }}
-                            >
-                              <MoreIcon className='' />
-                            </span>
+                            <Dropdown menu={{ items }} trigger={['click']}>
+                              <a onClick={(e) => e.preventDefault()}>
+                                <MoreIcon className='' style={{ transform: 'rotate(90deg)' }} />
+                              </a>
+                            </Dropdown>
                           </div>
-                          } key="1" className='mb-5'>
+                          } className='mb-5'>
                           <p>{goalDetail?.description}</p>
                         </Panel>
-                      </Collapse>
-                    ))
-                  }
+                      ))
+                    }
+                  </Collapse>
                 </>
               }
 
