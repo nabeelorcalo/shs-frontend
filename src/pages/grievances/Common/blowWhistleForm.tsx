@@ -1,8 +1,8 @@
 import React from 'react'
 import { Select, Button, Form } from "antd";
 import { Input } from "antd";
-import { GrievancesAvater, IconAngleDown } from '../../../../assets/images';
-import DragAndDropWide from '../../../../components/DragAndDrop';
+import { GrievancesAvater, IconAngleDown } from '../../../assets/images';
+import DragAndDropWide from '../../../components/DragAndDrop';
 import './style.scss'
 
 const { TextArea } = Input;
@@ -65,7 +65,7 @@ const BlowWhistleForm = (props: any) => {
       <Form.Item name="mySelect" label="Escalate To">
         <DragAndDropWide />
       </Form.Item>
-      <div className="manager-blow-whistle-footer flex justify-end mt-4 gap-2">
+      <div className="blow-whistle-footer flex justify-end mt-4 gap-2">
         <Button key="Cancel" className="footer-cancel-btn " onClick={() => { setState(false) }}>
           Cancel
         </Button>

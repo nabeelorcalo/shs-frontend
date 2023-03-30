@@ -5,10 +5,10 @@ import { DropDown, FiltersButton, PageHeader, PopUpModal, SearchBar } from '../.
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
 import Drawer from '../../../../components/Drawer'
 import AppTabs from '../../../../components/Tabs'
+import Filters from '../../Common/filters'
 import BlowWhistleForm from '../blowWhistleForm'
 import EscalatedByMe from './escalatedByMe'
 import EscalatedToMe from './escalatedToMe'
-import Filters from './filter'
 import './style.scss'
 
 const index = () => {

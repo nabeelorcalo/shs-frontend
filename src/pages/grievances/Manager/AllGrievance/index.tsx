@@ -6,10 +6,10 @@ import { DropDown, FiltersButton,  PageHeader,  PopUpModal, SearchBar } from '..
 import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
 import Drawer from '../../../../components/Drawer'
 import AppTabs from '../../../../components/Tabs'
-import BlowWhistleForm from './blowWhistleForm'
+import BlowWhistleForm from '../../Common/blowWhistleForm'
 import EscalatedByMe from './escalatedByMe'
 import EscalatedToMe from './escalatedToMe'
-import Filters from './filters'
+import Filters from '../../Common/filters'
 import './style.scss'
 
 const index = () => {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Select, Button, Form } from "antd";
-import { GrievancesAvater, IconAngleDown } from '../../../../assets/images';
-import { DropDown } from '../../../../components';
-const { Option } = Select;
+import { GrievancesAvater, IconAngleDown } from '../../../assets/images';
 import './style.scss'
+import { DropDown } from '../../../components';
+const { Option } = Select;
 
 const Filters: React.FC = (props: any) => {
   const [form] = Form.useForm();
@@ -73,7 +73,8 @@ const Filters: React.FC = (props: any) => {
             <Select.Option value="Other">Other</Select.Option>
           </Select>
         </Form.Item>
-        <div className="company-admin-blow-whistle-footer flex justify-end mt-4 gap-2">
+
+        <div className="whistle-footer flex justify-end mt-4 gap-2">
           <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
           </Button>
@@ -81,6 +82,7 @@ const Filters: React.FC = (props: any) => {
             Apply
           </Button>
         </div>
+
       </Form>
     </div>
   )
