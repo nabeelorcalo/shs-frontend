@@ -75,6 +75,7 @@ const DelegateAgent = () => {
             <RegisterMemberAndFeddbackGraph
               styling={{ height: 493 }}
               graphName="registerMember"
+              title="Registered Members"
             />
           </div>
         </Col>
