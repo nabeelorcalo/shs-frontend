@@ -141,6 +141,22 @@
 // Company Admin: performance/history
 .company-admin-performance-history,
 .manager-performance-history {
+  .performance-header{
+    margin-bottom:20px ;
+    @media only screen and (max-width:768px)  {
+      flex-direction: column;
+      .performance-search-bar{
+        width: 100%;
+    }
+    .manager-dropdowns-container{
+      margin: 10px 0px;
+      justify-content: start;
+      @media only screen and (max-width:420px)  {
+      flex-direction: column;
+      }
+    }
+
+  }}
   .icon-btn {
     display: flex;
     justify-content: center;
@@ -242,18 +258,6 @@
 
 // Detail History
 .company-admin-detail-history-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  .performance-left-subcontainer {
-    width: 49%;
-  }
-
-  .performance-right-subcontainer {
-    width: 49%;
-  }
-
   .evaluate-btn {
     height: 48px;
     width: 148px;

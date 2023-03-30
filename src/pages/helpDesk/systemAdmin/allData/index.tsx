@@ -1,24 +1,13 @@
 import React, { useState } from "react";
 import { Dropdown, Menu, Space, Tooltip } from "antd";
-import {GlobalTable} from "../../../../components";
+import { GlobalTable } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import HelpDeskSelect from "../helpDeskSelect";
 import { DownOutlined } from "@ant-design/icons";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";
-
-// const priorityOption = [
-//   { value: "High", label: "High" },
-//   { value: "Highest", label: "Highest" },
-//   { value: "Medium", label: "Medium" },
-//   { value: "Low", label: "Low" },
-// ];
-
-// const statusOption = [
-//   { value: "Pendding", label: "Pendding" },
-//   { value: "In progress", label: "In progress" },
-//   { value: "resolved", label: "resolved" },
-// ];
+import HistoryModal from "../HistoryModal";
+import AttendaceLog from "../AttendanceLogModal";
 
 const tableData = [
   {
@@ -97,6 +86,9 @@ const priorityOption = [
 ];
 
 const AllData = () => {
+  const [history, setHistory] = useState<any>(false)
+  const [openModal, setOpenModal] = useState<any>(false)
+
   const columns = [
     {
       title: "ID",
@@ -171,15 +163,17 @@ const AllData = () => {
 
   const menu2 = (
     <Menu>
-      <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="1" onClick={() => setOpenModal(true)} >View Details</Menu.Item>
       <Menu.Item key="2">Add Flag</Menu.Item>
       <Menu.Item key="3">Unassign</Menu.Item>
-      <Menu.Item key="4">History</Menu.Item>
+      <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
     </Menu>
   );
 
   return (
     <div>
+      <HistoryModal history={history} setHistory={setHistory} />
+      <AttendaceLog open={openModal} setOpen={setOpenModal} />
       <div>
         <GlobalTable columns={columns} tableData={tableData} />
       </div>

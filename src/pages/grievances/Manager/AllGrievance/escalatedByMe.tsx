@@ -1,5 +1,5 @@
 import React from 'react'
-import {Space} from 'antd'
+import {Space } from 'antd'
 import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
@@ -15,16 +15,16 @@ const UniversitesTableData =  [
     },
     {
       no: '02',
-      subject:'Attendance Log Issue',
-      type: 'Others',
+      subject:'Working conditions',
+      type: 'Discipline',
       date: '22/09/2022',
       escalatedTo: 'Maria Sanoid',
       status: 'In Progess',
     },
     {
       no: '03',
-      subject:'Attendance Log Issue',
-      type: 'Others',
+      subject:'Bullying',
+      type: 'Personal',
       date: '22/09/2022',
       escalatedTo: 'Maria Sanoid',
       status: 'Re-Opened',
@@ -32,12 +32,11 @@ const UniversitesTableData =  [
     {
       no: '04',
       subject:'Attendance Log Issue',
-      type: 'Others',
+      type: 'Work',
       date: '22/09/2022',
       escalatedTo: 'Maria Sanoid',
       status: 'Resolved',
     },
-
  
   ]
   const UniversitesTablecolumn = 
@@ -77,19 +76,8 @@ const UniversitesTableData =  [
           children: (
             <div>
               <span
-                className="rounded-md px-2 py-1 text-white text-xs font-medium "
-                style={{
-                  background:
-                    text === "New"
-                      ? "#FF6F31"
-                      : text === "In Progess"
-                      ? "#128AF9"
-                      : text === "Re-Opened"
-                      ? "#1FBEC8"
-                      : text === "Resolved"
-                      ? "#3DC575"
-                      : "",
-                }}
+                className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'New'? 'new':
+                 text === 'In Progess'? 'in-progress':text === 'Re-Opened'?'re-opened': text === 'Resolved' ? 'resolved' : ''} `}
               >
                 {text}
               </span>
@@ -103,7 +91,6 @@ const UniversitesTableData =  [
       title: "Action",
       key: "Action",
       render: (_: any, data: any) => (
-        
         <Space size="middle">
           <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_Details} />
         </Space>

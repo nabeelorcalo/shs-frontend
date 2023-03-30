@@ -40,11 +40,11 @@ import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/com
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense fallback={<Spin indicator={spinIcon} />}>
+    <Component {...props} />
+  </Suspense>
+);
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
@@ -53,14 +53,15 @@ const AttendanceList = Loadable(lazy(() => import("./pages/attendance/attendance
 const AttendanceDetail = Loadable(lazy(() => import("./pages/attendance/detailPage")));
 const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
+const ManagerCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/Manager/assessmentForm")));
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
-const AllGrievances = Loadable(
-  lazy(() => import("./pages/grievances/Manager/AllGrievance"))
-);
-const GrievancesDetails = Loadable(
-  lazy(() => import("./pages/grievances/Manager/GrievanceDetails"))
-);
+const ManagerAllGrievances = Loadable(lazy(() => import("./pages/grievances/Manager/AllGrievance")));
+const CompanyAdminAllGrievances = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/AllGrievance")));
+const InternAllGrievances = Loadable(lazy(() => import("./pages/grievances/Intern/AllGrievance")));
+const ManagerGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Manager/GrievanceDetails")));
+const CompanyAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails")));
+const InternAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure/index")));
@@ -112,11 +113,14 @@ const AddRecipe = Loadable(lazy(() => import("./pages/recipes/AddRecipe")));
 const EditRecipe = Loadable(lazy(() => import("./pages/recipes/EditRecipe")));
 const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
+const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
+const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
+const AssesmentForm = Loadable(lazy(() => import("./pages/selfAssesment/AssesmentFormPage")));
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(
@@ -241,6 +245,12 @@ const TimeSheetHistory = Loadable(
 );
 const InternTimeSheetHistory = Loadable(
   lazy(() => import("./pages/timesheet/intern/viewHistory"))
+);
+const UniversitesInterns = Loadable(
+  lazy(() => import("./pages/universities/CompanyAdmin/Interns"))
+);
+const UniversitesProfile = Loadable(
+  lazy(() => import("./pages/universities/CompanyAdmin/Profile"))
 );
 
 export const publicRoutes = [
@@ -432,6 +442,11 @@ const managerRoutes = [
         element: <CaseStudies />,
       },
       {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        element: <ManagerCaseStudiesAssessment />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
@@ -439,12 +454,12 @@ const managerRoutes = [
       {
         key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
-        element: <AllGrievances />,
+        element: <ManagerAllGrievances />,
       },
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        element: <GrievancesDetails />,
+        element: <ManagerGrievancesDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
@@ -583,8 +598,8 @@ const systemAdminRoutes = [
         element: <HelpDesk />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
-        path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
+        key: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
+        path: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
         element: <ActivityLog />,
       },
     ],
@@ -676,7 +691,36 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
-        element: <Universities />,
+        element: <Universities/>
+      },
+
+      {
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
+        element: <UniversitesInterns />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        element: <UniversitesProfile />,
+      },
+
+
+      {
+        key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
+        element: <Grievances />,
+
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
+        path: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
+        element: <CompanyAdminAllGrievances />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        element: <CompanyAdminGrievancesDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.STRUCTURE}`,
@@ -989,9 +1033,24 @@ const internRoutes = [
         element: <SelfAssesment />,
       },
       {
+        key: `${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`,
+        path: `${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`,
+        element: <AssesmentForm />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
+        path: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
+        element: <InternAllGrievances />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        element: <InternAdminGrievancesDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.DIGIVAULT}`,
@@ -1007,6 +1066,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
         path: `${ROUTES_CONSTANTS.DREAM_UP}`,
         element: <DreamUp />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        path: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        element: <AllGoals />,
       },
       {
         key: `${ROUTES_CONSTANTS.PAYMENTS}`,
@@ -1203,11 +1267,6 @@ const studentRoutes = [
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
       },
-      {
-        key: `${ROUTES_CONSTANTS.CHAT}`,
-        path: `${ROUTES_CONSTANTS.CHAT}`,
-        element: <Chat />,
-      },
     ],
   },
   {
@@ -1295,6 +1354,11 @@ const agentRoutes = [
         key: `${ROUTES_CONSTANTS.LISTINGS}`,
         path: `${ROUTES_CONSTANTS.LISTINGS}`,
         element: <Listings />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.LISTING_EDIT}`,
+        path: `${ROUTES_CONSTANTS.LISTING_EDIT}`,
+        element: <ListingUpdate />,
       },
       {
         key: `${ROUTES_CONSTANTS.OFFERS}`,
