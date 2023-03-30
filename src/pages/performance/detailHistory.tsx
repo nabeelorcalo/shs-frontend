@@ -154,7 +154,7 @@ const DetailHistory = () => {
       key: '1',
     },
     {
-      label: role !== 'University' &&
+      label:
         <p
           onClick={() => {
             setState(prevState => ({
@@ -168,7 +168,7 @@ const DetailHistory = () => {
       key: '2',
     },
     {
-      label: role !== 'University' &&
+      label:
         <p
           onClick={() => {
             setState(prevState => ({
