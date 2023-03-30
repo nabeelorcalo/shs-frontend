@@ -1,4 +1,3 @@
-import React from 'react';
 import { Avatar, Dropdown, Typography } from 'antd';
 import { BoxWrapper, } from '../BoxWrapper/BoxWrapper';
 import { ThreeDots } from '../../assets/images';

@@ -42,7 +42,7 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
   return (
     <>
       {assessmentsName.map((item, index) => (
-        <div className="flex items-center">
+        <div className="flex items-center lifeAssesment_main">
           <div className='flex-none w-[120px]'>
             {item}
           </div>

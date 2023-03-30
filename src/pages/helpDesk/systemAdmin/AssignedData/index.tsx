@@ -1,8 +1,10 @@
 import { Menu, Space, Tooltip } from "antd";
-import React from "react";
-import {GlobalTable} from "../../../../components";
+import React, { useState } from "react";
+import { GlobalTable } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
+import AttendaceLog from "../AttendanceLogModal";
 import HelpDeskSelect from "../helpDeskSelect";
+import HistoryModal from "../HistoryModal";
 import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 const tableData = [
@@ -82,6 +84,9 @@ const priorityOption = [
 ];
 
 const AssignedData = () => {
+  const [history, setHistory] = useState<any>(false)
+  const [openModal, setOpenModal] = useState<any>(false)
+
   const columns = [
     {
       title: "ID",
@@ -156,15 +161,17 @@ const AssignedData = () => {
 
   const menu2 = (
     <Menu>
-      <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="1" onClick={() => setOpenModal(true)}>View Details</Menu.Item>
       <Menu.Item key="2">Remove Flag</Menu.Item>
       <Menu.Item key="3">Unassign</Menu.Item>
-      <Menu.Item key="4">History</Menu.Item>
+      <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
     </Menu>
   );
 
   return (
     <div>
+       <AttendaceLog open={openModal} setOpen={setOpenModal} />
+      <HistoryModal history={history} setHistory={setHistory} />
       <GlobalTable columns={columns} tableData={tableData} />
     </div>
   );

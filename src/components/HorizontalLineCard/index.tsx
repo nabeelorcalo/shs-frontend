@@ -1,9 +1,11 @@
 import { Progress } from "antd";
+import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import "./style.scss";
 
 interface HorizonalLineCardProps {
   icon?: string;
   title: string;
+  lastAchivmentTime:string;
   subTitle: string;
   content: string;
   alt?: string;
@@ -17,11 +19,13 @@ export const HorizonalLineCard = (props: any) => {
     <>
       {arraydata.map((item: HorizonalLineCardProps, index: any) => {
         return (
-          <div className="horizontal-line-card flex flex-col rounded-2xl  p-2 md:p-5 my-3  ">
-            <span className=" md:font-medium text-lg md:text-xl dark-gray ">
-              {item.title}
-            </span>
-
+          <BoxWrapper className="horizontal-line-card flex flex-col rounded-2xl  p-2 md:p-5 my-3  ">
+            <div className="flex items-center justify-between flex-wrap">
+              <span className=" md:font-medium text-lg md:text-xl dark-gray ">
+                {item.title}
+              </span>
+              <span>{item.lastAchivmentTime}</span>
+            </div>
             <div className=" md:pl-3  py-3 flex">
               <img src={item.icon} alt={item.alt} height="60px" />
               <div className="flex flex-col px-5 w-full">
@@ -44,7 +48,7 @@ export const HorizonalLineCard = (props: any) => {
                 <span></span>
               </div>
             </div>
-          </div>
+          </BoxWrapper>
         );
       })}
     </>
