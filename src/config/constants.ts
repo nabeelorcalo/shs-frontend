@@ -8,7 +8,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: "Manager",
+  USER_ROLE: "SystemAdmin",
 };
 
 // Possibe string of roles:
