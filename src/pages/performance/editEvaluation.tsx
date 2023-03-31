@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Typography } from "antd";
+import { Col, Row, Typography } from "antd";
 import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -9,7 +9,8 @@ import {
   EvaluationCard,
   EvaluationStatsCard,
   TextArea,
-  Button
+  Button,
+  Breadcrumb
 } from "../../components";
 import {
   Sad,
@@ -185,18 +186,18 @@ const ViewPerformance = () => {
   const onCancelClick = () => {
     alert("Cancel");
   }
-
+  const tempArray = [
+    { name: "Evaluation Form " },
+    { name: "Performance", onClickNavigateTo: "/performance" },
+    { name: "/" },
+    { name: 'Performance History', onClickNavigateTo: "/performance/history" }
+  ];
   return (
     <div className="view-evaluation">
       <PageHeader
         bordered
         title={
-          <div className="font-medium">
-            Evaluation Form
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
-          </div>
+          <Breadcrumb breadCrumbData={tempArray} />
         }
       />
 
@@ -215,69 +216,63 @@ const ViewPerformance = () => {
           icon={<DownloadIconWithBg />}
         />
       </div>
-
-      <div className="flex flex-row flex-wrap gap-4">
-        <div className="w-[23%]">
+      <Row gutter={[20, 10]}>
+        <Col xs={24} md={12} xxl={6}>
           <EvaluationCard
             name={user.name}
             avatar={user.avatar}
             profession={user.profession}
           />
-        </div>
-
-        <div className="w-[23%]">
+        </Col>
+        <Col xs={24} md={12} xxl={6}>
           <EvaluationStatsCard
             name='Learning Objectives'
             percentage={user.learningObjectives}
             color='#9BD5E8'
           />
-        </div>
-
-        <div className="w-[23%]">
+        </Col>
+        <Col xs={24} md={12} xxl={6}>
           <EvaluationStatsCard
             name='Discipline'
             percentage={user.discipline}
             color='#E96F7C'
           />
-        </div>
-
-        <div className="w-[23%]">
+        </Col>
+        <Col xs={24} md={12} xxl={6}>
           <EvaluationStatsCard
             name='Personal'
             percentage={user.personal}
             color='#6AAD8E'
           />
-        </div>
-      </div>
-
+        </Col>
+      </Row>
       {
         state.data.map((obj: any) => {
           return (
-            <div className="flex flex-col flex-wrap evaluation-container">
-              <div key={obj.name} className="mt-6 mb-2">
-                <Typography.Title level={3} className="evaluation-heading">
-                  {obj.name}
-                </Typography.Title>
-              </div>
-
-              <div className="flex flex-row flex-wrap gap-4">
-                {obj.values.map((child: any, index: number) =>
-                  <div key={child.title} className="w-[32%]">
+            <Row gutter={[20,10]}>
+              <Col xs={24}>
+                <div key={obj.name} className="mt-6 mb-2">
+                  <Typography.Title level={3} className="evaluation-heading">
+                    {obj.name}
+                  </Typography.Title>
+                </div>
+              </Col>
+              {obj.values.map((child: any, index: number) =>
+                <Col xs={24} xl={12} xxl={8}>
+                  <div key={child.title}>
                     <EmojiMoodRating
                       size={5}
                       data={emojiData}
                       title={child.title}
-                      onClick={(event: any) => onEmojiClick(event)}
                       activeIconIndex={child.value}
                     />
                   </div>
-                )}
-              </div>
-            </div>
+                </Col>
+              )}
+            </Row>
           )
         })
       }
-
       <div className="my-4">
         <Typography.Title level={3} className="evaluation-heading">
           Comments

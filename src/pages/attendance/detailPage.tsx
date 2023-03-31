@@ -11,7 +11,6 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
-  EmojiGray1st
 } from "../../assets/images";
 
 import {
@@ -23,11 +22,16 @@ import {
   GlobalTable,
   ProfileCard,
   TimeTracking,
+  Breadcrumb
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Detail = () => {
+  const tempArray = [
+    { name: "Mino Marina" },
+    { name: " Attendance ", onClickNavigateTo: "/attendance" },
+  ];
   const timeFrameOptions = [
     "This Week",
     "Last Week",
@@ -125,38 +129,41 @@ const Detail = () => {
     ],
   });
 
-  const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
+  // const breadCrumbs = () => {
+  //   const role = constants.USER_ROLE;
 
-    switch (role) {
-      case "Manager":
-        return (
-          <Link className="bread-crumb" to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}>
-            Attendance
-          </Link>
-        );
-      case "CompanyAdmin":
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-            >
-              Attendance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`}
-            >
-              Attendance Details
-            </Link>
-          </>
-        );
-      default:
-        return <></>;
-    }
-  };
+  //   switch (role) {
+  //     case 'Manager':
+  //       return (
+  //         <Link
+  //           className="bread-crumb"
+  //           to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
+  //         >
+  //           Attendance
+  //         </Link>
+  //       );
+  //     case 'CompanyAdmin':
+  //       return (
+  //         <>
+  //           <Link
+  //             className="bread-crumb"
+  //             to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
+  //           >
+  //             Attendance
+  //           </Link>
+  //           /
+  //           <Link
+  //             className="bread-crumb"
+  //             to={`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`}
+  //           >
+  //             Attendance Details
+  //           </Link>
+  //         </>
+  //       );
+  //     default:
+  //       return <></>;
+  //   }
+  // }
 
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
@@ -194,7 +201,6 @@ const Detail = () => {
         return "";
     }
   }
-
   // const [expandedRowKeys, setExpandedRowKeys] = useState<any>([]);
   // const handleExpand = (expanded: any, record: any) => {
   //   if (expanded) {
@@ -209,12 +215,12 @@ const Detail = () => {
       <PageHeader
         title={
           <div className="font-medium">
-            {constants.USER_ROLE === "Intern" ? "Attendance" : "Mino Marina"}
-            {constants.USER_ROLE === "Intern" ? (
-              <></>
-            ) : (
-              <span className="vertical-line">{breadCrumbs()}</span>
-            )}
+            {
+              constants.USER_ROLE === "Intern" ?
+                <></>
+                :
+                <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+            }
           </div>
         }
         children={
@@ -241,7 +247,7 @@ const Detail = () => {
         bordered
       />
       <Row gutter={[20, 20]}>
-        <Col xxl={7} xl={10} md={24} xs={24}>
+        <Col xxl={7} xl={10} md={24} xs={24} className="attendance-content">
           <div className="left-container">
             {constants.USER_ROLE === "Intern" ? (
               <TimeTracking vartical />
@@ -298,7 +304,7 @@ const Detail = () => {
           {
             constants.USER_ROLE === "Intern" ?
               <TimeTracking vartical />
-              :
+            ) : (
               <ProfileCard
                 name="Mino Marina"
                 profession="Data Researcher"

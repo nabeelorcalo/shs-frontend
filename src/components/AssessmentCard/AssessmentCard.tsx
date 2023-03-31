@@ -1,7 +1,8 @@
 import { AssessmentAproved, AssessmentDraft, AssessmentRejected, AssessmentSubmitted, ThreeDots } from '../../assets/images';
-import {BoxWrapper} from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
 import { Dropdown } from 'antd';
 import './AssessmentCard.scss';
+import DropDownNew from '../Dropdown/DropDownNew';
 
 interface Props {
     id?: string;
@@ -25,32 +26,34 @@ const AssessmentCard = (props: Props) => {
         status = 'draft',
         handleMenuClick
     } = props;
-
-    const renderStyles: any = {
-        'draft': { icon: AssessmentDraft, bg: '#FFC15E' },
-        'submitted': { icon: AssessmentSubmitted, bg: '#4783FF' },
-        'approved': { icon: AssessmentAproved, bg: '#4ED185' },
-        'rejected': { icon: AssessmentRejected, bg: '#D83A52' },
-    };
-    let Icon = renderStyles[status].icon;
-
-    const items = [
+    const isSubmitted: any = [
+        { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'view', id })}>View</p>, key: 'view' },
+        { label: <p onClick={() => handleMenuClick({ action: 'send reminder', id })}>Send Reminder</p>, key: 'send reminder' }
+    ]
+    const isApproved: any = [
+        { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'view', id })}>View</p>, key: 'view' },
+        { label: <p onClick={() => handleMenuClick({ action: 'send reminder', id })}>Download</p>, key: 'send reminder' }
+    ]
+    const items: any = [
         { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'edit', id })}>Edit</p>, key: 'edit' },
         { label: <p onClick={() => handleMenuClick({ action: 'delete', id })}>Delete</p>, key: 'delete' }
     ];
 
+
+    const renderStyles: any = {
+        'draft': { icon: AssessmentDraft, bg: '#FFC15E', options: items },
+        'submitted': { icon: AssessmentSubmitted, bg: '#4783FF', options: isSubmitted },
+        'approved': { icon: AssessmentAproved, bg: '#4ED185', options: isApproved },
+        'rejected': { icon: AssessmentRejected, bg: '#D83A52', options: items },
+    };
+    let Icon = renderStyles[status].icon;
+
     return (
-        <BoxWrapper className='relative assessment-card-wrapper' id={id}>
-            <Dropdown
-                menu={{ items }}
-                trigger={['click']}
-                placement={'bottomRight'}
-                className='absolute right-[20px] top-[20px] cursor-pointer'
-                overlayClassName='assessment-card-dropdown'
-                overlayStyle={{ minWidth: '140px' }}
-            >
+        <BoxWrapper className='relative assessment-card-wrapper' boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' id={id}>
+
+            <DropDownNew items={renderStyles[status].options} placement={'bottomRight'} className='absolute right-[20px] top-[20px] cursor-pointer'>
                 <ThreeDots />
-            </Dropdown>
+            </DropDownNew>
             <div className="flex items-center gap-4 flex-wrap">
                 <Icon />
                 <p className='title text-lg capitalize'>{title}</p>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Row, Select, TabsProps } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, PopUpModal } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
@@ -11,6 +11,7 @@ import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Avatar } from "../../../assets/images";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import AttendaceLog from "./AttendanceLogModal";
 
 const items: TabsProps["items"] = [
   {
@@ -84,6 +85,7 @@ const HelpDesk = () => {
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
 
+
   const handleChange = () => {
     console.log("change");
   };
@@ -111,6 +113,7 @@ const HelpDesk = () => {
 
   return (
     <div className="help-desk">
+      
       <Drawer
         onClose={() => setOpenDrawer(false)}
         open={openDrawer}
@@ -213,7 +216,7 @@ const HelpDesk = () => {
 
           <BoxWrapper className="border-2 ">
             <div className="mb-4">
-              <SearchBar size="small" handleChange={() => {}} />
+              <SearchBar size="small" handleChange={() => { }} />
             </div>
             <div className="assign-users h-52">
               {drawerAssignToData.map((item: any, index: any) => {
@@ -229,7 +232,7 @@ const HelpDesk = () => {
                     </div>
                     <div
                       onClick={() => handleAddUser(item)}
-                      className="cursor-pointer text-[#A0A3BD] text-xs"
+                      className="cursor-pointer light-grey-color text-xs"
                     >
                       {item.btn}
                     </div>
@@ -259,12 +262,11 @@ const HelpDesk = () => {
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[10, 10]}>
-            <Col xxl={8} xl={8} lg={8} md={8} sm={12} xs={24}>
+            <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
-            <Col xxl={13} xl={12} lg={8} md={8} sm={1} xs={1}></Col>
-
-            <Col xxl={3} xl={4} lg={8} md={8} sm={11} xs={24}>
+            
+            <Col className="flex justify-end "  xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
               <div className="flex">
                 <div className="mr-4">
                   <FiltersButton label="Filter" onClick={handleClick} />

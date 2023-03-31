@@ -116,7 +116,7 @@
   background-color: $text-error-line-color;
 }
 
-.text-error-line-color {
+.gray-color {
   color: $text-error-line-color;
 }
 
@@ -230,6 +230,21 @@
 .light-blue-bg-color {
   background-color: $light-blue-color;
 }
+.light-blue-color {
+  color: $light-blue-color
+}
+.light-green-bg-color {
+  background-color: $light-green-color;
+}
+.light-green-color {
+  color: $light-green-color;
+}
+.wrapper-shadow {
+  box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+}
+.light-orange-color {
+  color: $light-orange-color;
+}
 
 .info-dark-bg-color {
   background-color: $manager-btn-info;
@@ -244,5 +259,33 @@
 }
 
 .teriary-light {
-    color: $teriary-light; 
+  color: $teriary-light;
+}
+
+.wrapper-shadow {
+  box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+}
+.active-bg {
+  background-color: $active-color;
+}
+.line-bg {
+  background-color: $line-color;
+}
+.light-purple-bg {
+  background-color: $light-purple-color;
+}
+.purple-bg {
+  background-color: $purple-color;
+}
+.light-blue-bg {
+  background-color: $light-blue-color;
+}
+.light-gray-color {
+  color: $light-gray-color;
+}
+.gray-color {
+  color: $gray-color;
+}
+.off-white-color{
+background-color: $off-white-color;
 }

@@ -1,0 +1,38 @@
+@import "../../../scss/colors";
+.Dram_upMain {
+  .SearchBar {
+    max-width: 375px;
+  }
+  .Life_balanceGraph{
+    h4{
+      color: $text-secondary-body-color;
+    }
+    .echarts-for-react {
+      height: 380px !important;
+
+    }
+
+  }
+  .Life_assesment{
+    .Life_assesment_inner_main_heading_wraper{
+      h4{
+        color: $text-secondary-body-color;
+
+      }
+    }
+    .lifeAssesment_main{
+      margin: 25px 0;
+
+    }
+
+  }
+   .view_history_button_wrapper {
+    .button {
+        background: $white-bg-color;
+        border: 1px solid $teriary-bg-color;
+        box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+        color: $teriary-bg-color;
+    }
+}
+
+}

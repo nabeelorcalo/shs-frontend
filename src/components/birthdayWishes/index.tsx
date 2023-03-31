@@ -2,24 +2,24 @@ import React from 'react';
 import { Carousel, Avatar, Image } from 'antd';
 import { Button } from '../Button';
 import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
-import { WishesBox } from '../../assets/images';
 import './style.scss';
 
 interface BirthdayProps {
+  user?:string,
   wishList: any,
   onClick?: () => void,
 }
 
 export const BirthdayWishes = (props: BirthdayProps) => {
-  const { wishList } = props;
+  const { wishList,user } = props;
 
   const onWishClick = (id: number) => {
     alert(id);
   }
 
   return (
-    <BoxWrapper className='birthday-wishes my-4'>
-      <Carousel autoplay>
+    <div className={`birthday-wishes bg-white rounded-2xl p-5 wrapper-shadow h-full ${user==="Intern"?"min-h-[182px]":""}`}>
+      <Carousel autoplay={false} className='h-full'>
         {
           wishList.map((item: any) => (
             <div className='flex flex-col a-wish'>
@@ -30,7 +30,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                   src={<img src={item.avatar} />}
                 />
 
-                <div className='flex flex-col px-4'>
+                <div className='flex flex-col pl-4'>
                   <p className='text-primary-color'>
                     {item.name}
                   </p>
@@ -44,14 +44,14 @@ export const BirthdayWishes = (props: BirthdayProps) => {
 
                 <Image
                   alt="birthday"
-                  width={108}
-                  height={108}
+                  width={70}
+                  height={70}
                   preview={false}
-                  src={WishesBox}
+                  src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/6b3fe963030867.5aa3707f0c627.gif"
                 />
               </div>
 
-              <div className='flex flex-row mt-4'>
+              <div className='flex flex-row mt-4 items-end'>
                 <Button
                   label="Wish Now"
                   type="primary"
@@ -64,6 +64,6 @@ export const BirthdayWishes = (props: BirthdayProps) => {
           ))
         }
       </Carousel>
-    </BoxWrapper>
+    </div>
   )
 }

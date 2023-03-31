@@ -1,0 +1,64 @@
+@import '../../../scss/_colors.scss';
+
+.manager-wrapper {
+  .box-wrapper {
+    padding: 10px;
+
+    .user-list {
+      border-bottom: 1px solid $text-error-line-color;
+
+      .user {
+        background: transparent;
+        border-radius: 16px;
+        cursor: pointer;
+
+        &:hover {
+          background: $text-input-bg-color;
+        }
+
+        .user-name {
+          color: $text-primary-title-color;
+        }
+
+        .user.designation {
+          color: $text-secondary-body-color;
+
+        }
+
+        .last-activity {
+          color: $text-success-placeholder-color;
+        }
+      }
+    }
+  }
+
+  .time-progress {
+    padding: 30px;
+
+    .hours-title {
+      color: $text-success-placeholder-color;
+    }
+
+    .hours {
+      color: $text-secondary-body-color;
+    }
+
+    .ant-progress-text {
+      color: $text-secondary-body-color;
+      font-size: 16px;
+      font-weight: 400;
+      margin-top: 15px;
+    }
+  }
+
+  .scroller {
+    height: 70vh;
+    overflow: scroll;
+  }
+
+  .time-history-scroller {
+    height: 53vh;
+    overflow: scroll;
+  }
+
+}
