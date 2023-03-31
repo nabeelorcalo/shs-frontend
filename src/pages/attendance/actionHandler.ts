@@ -22,7 +22,7 @@ const useCustomHook = () => {
       excel(`${fileName}.csv`, data);
   }
 
-  const pdf = (fileName:string, header: any, data: any) => {
+  const pdf = (fileName: string, header: any, data: any) => {
     const unit = 'pt';
     const size = 'A4';
     const orientation = 'landscape';
@@ -37,7 +37,7 @@ const useCustomHook = () => {
     );
 
     doc.autoTable({
-      head: [header.map((h: any) => h.header)],
+      head: [header],
       body: body,
       margin: { top: 50 },
 
@@ -45,11 +45,15 @@ const useCustomHook = () => {
         fillColor: [230, 244, 249],
         textColor: [20, 20, 42],
         fontStyle: 'normal',
-        fontSize: 16,
+        fontSize: 12,
       },
 
-      styles: {
-        fillColor: false,
+      didParseCell: async (item: any) => {
+        if (item.row.section === "head") {
+          item.cell.styles.fillColor = [230, 244, 249];
+        } else {
+          item.cell.styles.fillColor = false;
+        }
       },
 
       didDrawCell: async (item: any) => {
@@ -71,6 +75,18 @@ const useCustomHook = () => {
           const { x, y } = item.cell;
           item.cell.padding('vertical', 0);
           doc.addImage(img, 'PNG', x+10, y, 20, 20);
+
+          // const img = new Image();
+          // img.src = "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png";
+          // img.crossOrigin = 'Anonymous';
+          // const canvas = document.createElement('canvas');
+          // canvas.width = img.width;
+          // canvas.height = img.height;
+          // const ctx: any = canvas.getContext('2d');
+          // ctx.drawImage(img, 0, 0);
+          // const dataUrl = canvas.toDataURL("https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png");
+
+          // doc.addImage(dataUrl, 'PNG', 10, 10, 50, 50);
         }
       },
     });
@@ -78,7 +94,7 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
-  const excel = (fileName:string, data: any) => {
+  const excel = (fileName: string, data: any) => {
     const csvContent = csvData(data);
 
     const url = window.URL.createObjectURL(new Blob([csvContent]));
@@ -100,7 +116,7 @@ const useCustomHook = () => {
       else
         return Object.values(obj);
     });
-    
+
     excelContent = excelContent.map((e: any) => e.join(",")).join("\n");
 
     return excelContent;
