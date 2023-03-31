@@ -27,12 +27,11 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Detail = () => {
-  const role = constants.USER_ROLE;
   const tempArray = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
-    { name: role !== 'University' && "/" },
-    { name: role !== 'University' && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
+    { name: constants.USER_ROLE !== 'University' && "/" },
+    { name: constants.USER_ROLE !== 'University' && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const timeFrameOptions = [
     "This Week",

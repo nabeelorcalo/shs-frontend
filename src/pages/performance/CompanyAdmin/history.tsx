@@ -28,9 +28,8 @@ import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
-  const role = constants.USER_ROLE;
   const tempArray = [
-    { name: role === 'CompanyAdmin' ? 'Performance History' :  "View History" },
+    { name: constants.USER_ROLE === 'CompanyAdmin' ? 'Performance History' :  "View History" },
     { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
@@ -289,7 +288,7 @@ const PerformanceHistory = () => {
       label: (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${role !== "University" ?
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${constants.USER_ROLE !== "University" ?
             ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL
           }`}
         >
@@ -299,7 +298,7 @@ const PerformanceHistory = () => {
       key: "0",
     },
     {
-      label: role !== "University" && (
+      label: (
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${
@@ -312,7 +311,7 @@ const PerformanceHistory = () => {
       key: "1",
     },
     {
-      label: role !== "University" && (
+      label: (
         <p
           onClick={() => {
             setState((prevState) => ({
@@ -327,7 +326,7 @@ const PerformanceHistory = () => {
       key: "2",
     },
     {
-      label: role !== "University" && (
+      label: (
         <p
           onClick={() => {
             setState((prevState) => ({
@@ -342,7 +341,7 @@ const PerformanceHistory = () => {
       key: "3",
     },
   ];
-  if (role === "University" && items.length > 2) {
+  if (constants.USER_ROLE === "University" && items.length > 2) {
     items = items.slice(0, -3)
   }
 

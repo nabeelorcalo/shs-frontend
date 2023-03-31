@@ -24,14 +24,13 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
-  const role = constants.USER_ROLE
   const tempArray = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`},
-    { name: (role === 'University' || role === 'CompanyAdmin') && "/" },
-    { name: role === 'University' ? "View History" : (role === 'Intern' || role === 'Manager') ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
-    { name: (role === 'University' || role === 'Manager') && "/" },
-    { name: (role === 'University' || role === 'Manager') && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (constants.USER_ROLE === 'University' || constants.USER_ROLE === 'CompanyAdmin') && "/" },
+    { name: constants.USER_ROLE === 'University' ? "View History" : (constants.USER_ROLE === 'Intern' || constants.USER_ROLE === 'Manager') ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (constants.USER_ROLE === 'University' || constants.USER_ROLE === 'Manager') && "/" },
+    { name: (constants.USER_ROLE === 'University' || constants.USER_ROLE === 'Manager') && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const user = {
     name: 'Calvin Grayson',

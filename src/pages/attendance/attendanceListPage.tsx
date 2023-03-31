@@ -27,11 +27,10 @@ import "./style.scss";
 
 const Detail = () => {
   const action = useCustomHook();
-  const role = constants.USER_ROLE;
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
   const tempArray = [
     { name: "Attendance Details"},
-    { name: role === "CompanyAdmin" && "Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
+    { name: constants.USER_ROLE === "CompanyAdmin" && "Attendance", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
   ];
   const timeFrameOptions = [
     "This Week",
@@ -64,7 +63,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -73,7 +72,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Designer",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "leave",
     },
     {
@@ -82,7 +81,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Business Analyst",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -91,7 +90,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -100,7 +99,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -109,7 +108,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -118,7 +117,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "absent",
     },
     {
@@ -127,7 +126,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Scientist",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -136,7 +135,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
       status: "present",
     },
   ];
@@ -239,7 +238,7 @@ const Detail = () => {
         title={
           <div className="font-medium">
             {
-              (role === "University" || role === "Manager") ?
+              (constants.USER_ROLE === "University" || constants.USER_ROLE === "Manager") ?
                 <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
                 <Breadcrumb breadCrumbData={tempArray} />
@@ -310,7 +309,7 @@ const Detail = () => {
                     value={state.departmentVal}
                   />
                 </div>
-                {role === "University" && (
+                {constants.USER_ROLE === "University" && (
                   <div className="flex flex-col my-2 gap-2">
                     <p className="sidebar-label">Company</p>
                     <DropDown

@@ -14,12 +14,11 @@ import data from './CompanyAdmin/data';
 
 const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
-  const role = constants.USER_ROLE;
   const tempArray = [
     { name: "Mino Marina" },
     { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: role !== 'Manager' && "/" },
-    { name: role === 'University' ?  "View History" : role === 'Manager' ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: constants.USER_ROLE !== 'Manager' && "/" },
+    { name: constants.USER_ROLE === 'University' ?  "View History" : constants.USER_ROLE === 'Manager' ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const performanceData = [
     {
@@ -227,7 +226,7 @@ const DetailHistory = () => {
               profession="UI UX Designer"
               className="bg-visible-btn evaluate-btn"
               icon={<ColorLessMedalIcon />}
-              btnTxt={role !== 'University' && 'Evaluate'}
+              btnTxt={constants.USER_ROLE !== 'University' && 'Evaluate'}
               size={64}
               url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
               avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
