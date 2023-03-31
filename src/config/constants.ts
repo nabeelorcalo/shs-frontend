@@ -102,6 +102,7 @@ export const ROUTES_CONSTANTS: any = {
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
   REPORT_VIEW_DETAILS:"report/view-details/:id",
+  REPORT_ASSESSMENT_FORM:"assement-form/:id",
   LISTINGS: "listings",
   LISTING_EDIT: "edit-listing/:listingId",
   OFFERS: "offers",

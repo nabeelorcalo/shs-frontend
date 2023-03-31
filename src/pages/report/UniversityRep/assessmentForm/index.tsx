@@ -4,8 +4,10 @@ import { Divider, Button, Typography, Form, Input } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { SettingHorizontalLine } from '../../../../assets/images'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
-import ManagerRemarks from '../../Common/managerRemarks'
+import { Emoji1st,Emoji2nd, Emoji3rd, Emoji4th, } from '../../../../assets/images';
+// import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
+import ManagerRemarks from './manageRemarks'
 
 const { TextArea } = Input;
 
@@ -18,31 +20,31 @@ const index = () => {
       learningCategories: "Technical Skills",
       learningObjectives: "For accuracy and completeness, developed and rewrote technical documentation known as Market Research Description and Product Requirement Document, which included instructions, broachers, product catalogues, and website resources.",
       evidenceOfProgress: "Collected and documented information on integration issues and vulnerabilities, as well as suggestions for improvement. Using Visual Studio, created accurate and efficient test scripts for automated testing of certain products and features.",
-      managerRemarks: <ManagerRemarks />
+      managerRemarks: <ManagerRemarks image={<Emoji3rd/>}  content="Meets expectations" />
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Working as part of a team can assist build abilities such as leadership and task skills, which can be improved or increased through it on learning. Process skills include things like "effectiveness skills," "team functioning skills," and "systems thinking abilities."`,
       evidenceOfProgress: "Since we started working in the office. This has exposed me to a working atmosphere, which is the first stage in my personal development. And I'm transitioning from a teaching setting to an office setting.",
-      managerRemarks: <ManagerRemarks />
+     managerRemarks: <ManagerRemarks image={<Emoji1st/>}  content="Does not meet expectations" />
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Being presentable includes more than just conveying ideas; it also necessitates appearing balanced, and body language plays a vital role in being regarded as worthy.`,
       evidenceOfProgress: "Being proactive about the duties and accomplishing them on time was difficult at first, but with practice and superior performance, it is possible.",
-      managerRemarks: <ManagerRemarks />
+     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />
     },
     {
       learningCategories: "Commercial Awareness",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-      managerRemarks: <ManagerRemarks />
+     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />
     },
     {
       learningCategories: "Personal and Professional Development",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-      managerRemarks: <ManagerRemarks />
+     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />
     },
 
   ]
@@ -50,7 +52,7 @@ const index = () => {
     <div className='company-admin-assessment-form'>
       <PageHeader title={<> Assessment Form {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
         <NavLink to="/case-studies">
-          <span className='text-base font-medium dashboard-primary-color' >Case Studies</span>
+          <span className='text-base font-medium dashboard-primary-color' >Report</span>
         </NavLink>  </>} />
       <Divider className="my-0" />
 
@@ -77,26 +79,22 @@ const index = () => {
             )
           })}
           <Form layout="vertical" form={form}>
-            <Typography className='text-xl font-semibold my-1'>Feedback <span className='text-[#a0a3bd] font-medium'>(Optional)</span></Typography>
-            <TextArea rows={6} placeholder="Type here..." maxLength={6} />
+            <Typography className='text-xl font-semibold my-1'>Feedback </Typography>
+            <Typography className='font-normal text-base my-1'>Something I really appreciate about you is your aptitude for problem-solving </Typography>
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
                 <div className='sign-box w-full rounded-lg'></div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-                <div className='sign-box w-full rounded-lg flex items-center justify-around'>
-                  <span onClick={() => setOpenModal(true)} className='sign-btn cursor-pointer'>Click here to sign</span>
-                </div>
+              <div className='sign-box w-full rounded-lg'></div>
               </div>
             </div>
           </Form>
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
+         
             <Button type='primary'
-              className='text-error-bg-color white-color reject-btn'>Reject</Button>
-            <Button type='primary'
-              className='white-bg-color teriary-color save-btn'>Save Draft</Button>
-            <Button type='primary'
-              className='teriary-bg-color  white-color  finalise-btn '>Finalise</Button>
+              className='white-bg-color teriary-color save-btn'>Back</Button>
+         
           </div>
         </BoxWrapper>
       </div>
@@ -114,32 +112,30 @@ const index = () => {
               <span className='text-base font-medium '>Manager Remarks </span>
               <div className='flex flex-row justify-between '>
                 <div className='w-full'> {item.managerRemarks}
-                </div></div>
+                </div>
+                </div>
             </div>
           )
         })}
         <Form layout="vertical" form={form}>
-          <Typography className='text-xl font-semibold my-3'>Feedback <span className='text-[#a0a3bd] font-medium'>(Optional)</span></Typography>
-          <TextArea rows={6} placeholder="Type here..." maxLength={6} />
+          <Typography className='text-xl font-semibold my-3'>Feedback</Typography>
+          <Typography className='font-normal text-base my-1'>Something I really appreciate about you is your aptitude for problem-solving </Typography>
+
           <div className='flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
               <div className='sign-box w-full rounded-lg'></div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-              <div className='sign-box w-full rounded-lg flex items-center justify-around'>
-                <span onClick={() => setOpenModal(true)} className='text-[#b8bacd] cursor-pointer'>Click here to sign</span>
-              </div>
+            <div className='sign-box w-full rounded-lg'></div>
 
             </div>
           </div>
         </Form>
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
+        
           <Button type='primary'
-            className='text-error-bg-color white-color reject-btn'>Reject</Button>
-          <Button type='primary'
-            className='white-bg-color teriary-color save-btn'>Save Draft</Button>
-          <Button type='primary'
-            className='teriary-bg-color  white-color  finalise-btn '>Finalise</Button>
+            className='white-bg-color teriary-color save-btn'>Back</Button>
+          
         </div>
       </BoxWrapper>
       <SignatureAndUploadModal
@@ -148,7 +144,6 @@ const index = () => {
         state={openModal}
         cancelBtntxt={() => { setOpenModal(!openModal) }}
         okBtntxt="Upload"
-        closeFunc={() => { setOpenModal(false) }}
         okBtnFunc={() => { }}
         footer={<>
           <Button

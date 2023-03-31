@@ -28,16 +28,16 @@ const items: TabsProps['items'] = [
     children: <DragAndDropUpload />,
   },
 ];
- export const SignatureAndUploadModal = (props: any) => {
-  const { state, setState, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
+export const SignatureAndUploadModal = (props: any) => {
+  const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
   return (
     <>
-    
+
       <div>
         <PopUpModal
           title={title}
           open={state}
-          setState={setState}
+          close={closeFunc}
           width={width}
           okBtntxt={okBtntxt}
           cancelBtntxt={cancelBtntxt}
