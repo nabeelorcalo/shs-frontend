@@ -28,8 +28,8 @@ import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
-  const tempArray = [
-    { name: constants.USER_ROLE === 'CompanyAdmin' ? 'Performance History' :  "View History" },
+  const historyBreadCrumb = [
+    { name: constants.USER_ROLE === constants.COMPANY_ADMIN ? 'Performance History' :  "View History" },
     { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
@@ -418,7 +418,7 @@ const PerformanceHistory = () => {
     <div className="company-admin-performance-history">
       <PageHeader
         bordered
-        title={<Breadcrumb breadCrumbData={tempArray} />}
+        title={<Breadcrumb breadCrumbData={historyBreadCrumb} />}
       />
 
       <div className="flex">

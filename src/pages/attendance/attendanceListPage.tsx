@@ -28,9 +28,9 @@ import "./style.scss";
 const Detail = () => {
   const action = useCustomHook();
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
-  const tempArray = [
+  const attendanceListBreadCrumb = [
     { name: "Attendance Details"},
-    { name: constants.USER_ROLE === "CompanyAdmin" && "Attendance", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
+    { name: constants.USER_ROLE === constants.COMPANY_ADMIN && "Attendance", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
   ];
   const timeFrameOptions = [
     "This Week",
@@ -240,10 +240,10 @@ const Detail = () => {
         title={
           <div className="font-medium">
             {
-              (constants.USER_ROLE === "University" || constants.USER_ROLE === "Manager") ?
+              (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) ?
                 <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
-                <Breadcrumb breadCrumbData={tempArray} />
+                <Breadcrumb breadCrumbData={attendanceListBreadCrumb} />
             }
           </div>
         }

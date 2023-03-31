@@ -26,7 +26,7 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
-  const tempArray = [
+  const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: "/" },
@@ -118,7 +118,7 @@ const ViewPerformance = () => {
       <PageHeader
         bordered
         title={
-          <Breadcrumb breadCrumbData={tempArray} />
+          <Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />
         }
       />
 

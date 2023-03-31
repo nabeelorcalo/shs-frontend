@@ -14,11 +14,11 @@ import data from './CompanyAdmin/data';
 
 const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
-  const tempArray = [
+  const detailHistoryBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: constants.USER_ROLE !== 'Manager' && "/" },
-    { name: constants.USER_ROLE === 'University' ?  "View History" : constants.USER_ROLE === 'Manager' ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: constants.USER_ROLE !== constants.MANAGER && "/" },
+    { name: constants.USER_ROLE === constants.UNIVERSITY ?  "View History" : constants.USER_ROLE === 'Manager' ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const performanceData = [
     {
@@ -212,7 +212,7 @@ const DetailHistory = () => {
     <>
       <PageHeader
         bordered
-        title={<Breadcrumb breadCrumbData={tempArray} />}
+        title={<Breadcrumb breadCrumbData={detailHistoryBreadCrumb} />}
       />
 
       <Row gutter={[20,20]} className="company-admin-detail-history-container">

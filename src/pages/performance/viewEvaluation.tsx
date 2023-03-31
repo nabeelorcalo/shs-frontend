@@ -24,13 +24,13 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 
 const ViewPerformance = () => {
-  const tempArray = [
+  const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`},
-    { name: (constants.USER_ROLE === 'University' || constants.USER_ROLE === 'CompanyAdmin') && "/" },
-    { name: constants.USER_ROLE === 'University' ? "View History" : (constants.USER_ROLE === 'Intern' || constants.USER_ROLE === 'Manager') ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
-    { name: (constants.USER_ROLE === 'University' || constants.USER_ROLE === 'Manager') && "/" },
-    { name: (constants.USER_ROLE === 'University' || constants.USER_ROLE === 'Manager') && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.COMPANY_ADMIN) && "/" },
+    { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : (constants.USER_ROLE === constants.INTERN || constants.USER_ROLE === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && "/" },
+    { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const user = {
     name: 'Calvin Grayson',
@@ -109,7 +109,7 @@ const ViewPerformance = () => {
       <PageHeader
         bordered
         title={
-          <Breadcrumb breadCrumbData={tempArray} />
+          <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
         }
       />
 

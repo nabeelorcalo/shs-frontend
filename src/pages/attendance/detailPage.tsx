@@ -27,11 +27,11 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Detail = () => {
-  const tempArray = [
+  const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
-    { name: constants.USER_ROLE !== 'University' && "/" },
-    { name: constants.USER_ROLE !== 'University' && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
+    { name: constants.USER_ROLE !== constants.UNIVERSITY && "/" },
+    { name: constants.USER_ROLE !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const timeFrameOptions = [
     "This Week",
@@ -173,10 +173,10 @@ const Detail = () => {
         title={
           <div className="font-medium">
             {
-              constants.USER_ROLE === "Intern" ?
+              constants.USER_ROLE === constants.INTERN ?
                 <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
-                <Breadcrumb breadCrumbData={tempArray} />
+                <Breadcrumb breadCrumbData={attendanceDetailBreadCrumb} />
             }
           </div>
         }
