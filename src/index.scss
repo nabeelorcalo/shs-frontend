@@ -211,6 +211,22 @@ svg {
   }
 }
 
+.ant-input-affix-wrapper {
+  .ant-input {
+  
+    &:hover,
+    &:focus {
+      box-shadow: none;
+      border-color: rgba(90, 89, 128, 0.5);
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+    border-color: rgba(90, 89, 128, 0.5) !important;
+  }
+}
+
 .ant-select {
   &:hover {
     .ant-select-selector {

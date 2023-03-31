@@ -12,11 +12,12 @@ import {
   IconShare,
   FacebookCircle,
   TwitterCircle,
-  WhatsAppCircle
+  WhatsAppCircle,
+  IconDocumentCopy,
+  Logo
 } from '../../../assets/images'
 import { RegisterMemberAndFeddbackGraph, PopUpModal } from "../../../components";
 import "./style.scss";
-
 
 interface DataType {
   key: React.Key;
@@ -73,6 +74,7 @@ const Dashboard = () => {
   -------------------------------------------------------------------------------------*/
   const [form] = Form.useForm();
   const [modalShareLinkOpen, setModalShareLinkOpen] = useState(false)
+  const [modalInvitaionOpen, setModalInvitaionOpen] = useState(false)
   const [initValues,  setInitValues] = useState({
     "delegateLink": "htttp://delegate_and_earn08765808.com",
     "email": "",
@@ -134,8 +136,18 @@ const Dashboard = () => {
     setModalShareLinkOpen(false)
   }
 
+  function openModalInvitaion() {
+    setModalInvitaionOpen(true)
+  }
+
+  function closeModalInvitaion() {
+    setModalInvitaionOpen(false)
+  }
+
   function submitShareLink(values: any) {
     console.log('Success:', values);
+    closeModalShareLink()
+    openModalInvitaion()
   }
 
 
@@ -188,7 +200,7 @@ const Dashboard = () => {
                         </div>
                       </Col>
                       <Col xs={12}>
-                        <div className="top-card-inner">
+                        <div className="top-card-inner ref-number">
                           <div className="user-reference-no">Reference Number: <span>DF41331056</span></div>
                         </div>
                       </Col>
@@ -265,7 +277,7 @@ const Dashboard = () => {
         
       </div>
 
-      {/* STARTS: MODAL VIEW CONTRACT
+      {/* STARTS: MODAL SHARE LINK
       *************************************************************************/}
       <PopUpModal
         open={modalShareLinkOpen}
@@ -275,7 +287,7 @@ const Dashboard = () => {
         wrapClassName="modal-share-link"
       >
         <div className="modal-share-link-title">Share Link</div>
-        <Form
+          <Form
             form={form}
             layout="vertical"
             name="updateListing"
@@ -287,7 +299,7 @@ const Dashboard = () => {
             onFinish={submitShareLink}
           >
             <Form.Item name="delegateLink" label="Delegate Link">
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Placeholder" suffix={<IconDocumentCopy />} />
             </Form.Item>
             <div className="invite-email">
               <div className="invite-email-field">
@@ -297,7 +309,7 @@ const Dashboard = () => {
               </div>
               <div className="invite-email-submit">
                 <Form.Item>
-                  <Button className="button-tertiary" block>Invite</Button>
+                  <Button htmlType="submit" className="button-tertiary" block>Invite</Button>
                 </Form.Item>
               </div>
             </div>
@@ -308,11 +320,37 @@ const Dashboard = () => {
               <Link className="share-link-item" to={''}><FacebookCircle /></Link>
               <Link className="share-link-item" to={''}><TwitterCircle /></Link>
               <Link className="share-link-item" to={''}><WhatsAppCircle /></Link>
-              
             </div>
           </div>
       </PopUpModal>
-      {/* ENDS: MODAL VIEW CONTRACT
+      {/* ENDS: MODAL SHARE LINK
+      *************************************************************************/}
+
+      {/* STARTS: MODAL INVITATION SENT
+      *************************************************************************/}
+      <PopUpModal
+        open={modalInvitaionOpen}
+        close={closeModalInvitaion}
+        footer={null}
+        width={560}
+        wrapClassName="modal-invitation"
+      >
+        <div className="invitation-content">
+          <div className="invitation-content-header">
+            <Logo />
+          </div>
+          <div className="invitation-body">
+            <div className="invitaion-title">Invitation Sent!</div>
+            <div className="invitation-text-light">
+              We have sent an invitation to “johndoemail.com” to join Student Help Squad. 
+            </div>
+            <div className="invitation-text-dark">
+              If an email is not received, contact our support team. 
+            </div>
+          </div>
+        </div>
+      </PopUpModal>
+      {/* ENDS: MODAL INVITATION SENT
       *************************************************************************/}
     </>
   )

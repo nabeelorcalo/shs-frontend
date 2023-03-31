@@ -28,11 +28,36 @@
       font-size: 16px;
       font-weight: 500;
       cursor: pointer;
+
+      & > svg {
+        margin-left: 8px;
+      }
+    }
+
+    .card-user-welcome {
+      max-width: 684px;
+      position: static;
+
+      &::before {
+        content: '';
+        background-color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: 16px;
+        transition: all 0.5s;
+      }
     }
 
     &:hover {
-    & > .top-card {
-        width: calc(100% - 116px);
+
+      .card-user-welcome {
+
+        &::before {
+          right: 116px;
+        }
       }
     }
   }
@@ -97,7 +122,7 @@
   &.card-user-welcome {
     height: 100%;
     position: relative;
-    transition: all 0.5s;
+    background-color: transparent;
 
     & > .ant-row {
       height: 100%;
@@ -107,6 +132,11 @@
         min-height: 60px;
         display: flex;
         align-items: center;
+        padding-right: 0;
+
+        &.ref-number {
+          padding-left: 0;
+        }
 
         .user-welcome-text {
           color: $primary-bg-color;
@@ -258,6 +288,40 @@
           margin: 0 9px;
         }
       }
+    }
+  }
+}
+
+.invitation-content {
+  .invitation-content-header {
+    max-width: 50px;
+    margin: 0 auto;
+  }
+
+  .invitation-body {
+    text-align: center;
+    padding-top: 43px;
+
+    .invitaion-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: $text-primary-title-color;
+
+    }
+
+    .invitation-text-light {
+      font-size: 14px;
+      line-height: 22px;
+      color: $text-secondary-body-color;
+      max-width: 312px;
+      margin:  6px auto 0;
+    }
+
+    .invitation-text-dark {
+      font-size: 14px;
+      line-height: 22px;
+      color: $text-primary-title-color;
+      margin-top: 30px;
     }
   }
 }

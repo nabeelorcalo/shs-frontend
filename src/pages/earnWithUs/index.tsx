@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import {PageHeader} from "../../components/PageHeader";
 import AppTabs from "../../components/Tabs";
 import WithDrawalRequest from "./studentWithDrawalRequest";
 import Dashboard from "./dashboard";
 import DelegateMembers from "./delegateMembers";
+import Withdrawals from "./withdrawals"
 import "./style.scss";
 
 
@@ -22,7 +22,7 @@ const items = [
   {
     key: "3",
     label: "Withdrawals",
-    children:"working"
+    children: <Withdrawals />
   },
   {
     key: "4",

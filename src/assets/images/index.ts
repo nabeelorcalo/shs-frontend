@@ -501,4 +501,7 @@ export { ReactComponent as IconShare } from "./earnWithUs/icon-share.svg";
 export { ReactComponent as FacebookCircle } from "./earnWithUs/facebook-circle.svg";
 export { ReactComponent as TwitterCircle } from "./earnWithUs/twitter-circle.svg";
 export { ReactComponent as WhatsAppCircle } from "./earnWithUs/WhatsAppCircle.svg";
+export { ReactComponent as IconDocumentCopy } from "./earnWithUs/document-copy.svg";
+export { ReactComponent as IconBank } from "./earnWithUs/icon-bank.svg";
+export { ReactComponent as IconEditAccount } from "./earnWithUs/icon-edit.svg";
 
