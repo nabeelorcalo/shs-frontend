@@ -3,6 +3,7 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
+import csv from '../../helpers/csv';
 import svg from '../../assets/images/avatar1.png';
 import constants from "../../config/constants";
 
@@ -13,28 +14,29 @@ const useCustomHook = () => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
-  const downloadPdfOrExcel = (event: any, header: any, data: any, fileName: any) => {
+  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
     if (type === "pdf" || type === "Pdf")
-      pdf(fileName, header, data);
+      pdf(`${fileName}`, header, data);
     else
-      excel(`${fileName}.csv`, data);
+      csv(`${fileName}`, data);
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
+    const title = fileName;
     const unit = 'pt';
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const doc = new jsPDF(orientation, unit, size);
-    doc.setFontSize(15);
-    const title = fileName;
-    doc.text(title, marginLeft, 40);
     const body = data.map(({ id, name, avatar, profession, status }: any) =>
       [id, name, '', profession, status]
     );
+
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    doc.text(title, marginLeft, 40);
 
     doc.autoTable({
       head: [header],
@@ -49,44 +51,28 @@ const useCustomHook = () => {
       },
 
       didParseCell: async (item: any) => {
-        if (item.row.section === "head") {
+        if (item.row.section === "head")
           item.cell.styles.fillColor = [230, 244, 249];
-        } else {
+        else
           item.cell.styles.fillColor = false;
-        }
       },
 
       didDrawCell: async (item: any) => {
-        if (item.row.section === "head") {
-          item.cell.styles.fillColor = [230, 244, 249];
-        } else {
-          item.cell.styles.fillColor = false;
-        }
         if (item.column.dataKey === 2 && item.section === "body") {
-          // var dim = 20;
-          // const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
-          // doc.addImage(img, item.cell.x, item.cell.y, dim, dim);
+          const xPos = item.cell.x;
+          const yPos = item.cell.y;
+          var dim = 20;
+
+          const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
+          doc.addImage(img, xPos+10, yPos, dim, dim);
 
           // doc.setFillColor(255, 0, 0);
-          // doc.roundedRect(item.cell.x, item.cell.y+6, 100, 6, 5, 5, 'F');
-
-          const img = new Image();
-          img.src = svg;
-          const { x, y } = item.cell;
-          item.cell.padding('vertical', 0);
-          doc.addImage(img, 'PNG', x+10, y, 20, 20);
+          // doc.roundedRect(xPos,yPos+6, 100, 20, 5, 5, 'F'); //doc.roundedRect(xPos,yPos, width, height, radius, radius, 'F');
 
           // const img = new Image();
-          // img.src = "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png";
-          // img.crossOrigin = 'Anonymous';
-          // const canvas = document.createElement('canvas');
-          // canvas.width = img.width;
-          // canvas.height = img.height;
-          // const ctx: any = canvas.getContext('2d');
-          // ctx.drawImage(img, 0, 0);
-          // const dataUrl = canvas.toDataURL("https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png");
-
-          // doc.addImage(dataUrl, 'PNG', 10, 10, 50, 50);
+          // img.src = svg;
+          // item.cell.padding('vertical', 0);
+          // doc.addImage(img, 'PNG', xPos+10, yPos, 20, 20);
         }
       },
     });
@@ -94,37 +80,9 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
-  const excel = (fileName: string, data: any) => {
-    const csvContent = csvData(data);
-
-    const url = window.URL.createObjectURL(new Blob([csvContent]));
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', fileName);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  }
-
-  // This method will set your api json
-  // into an excel sheet format
-  const csvData = (data: any) => {
-    let excelContent = data.map((obj: any, index: any) => {
-      if (index === data.length - 1)
-        return Object.values(obj).slice(0, -1);
-      else
-        return Object.values(obj);
-    });
-
-    excelContent = excelContent.map((e: any) => e.join(",")).join("\n");
-
-    return excelContent;
-  }
-
   return {
     getData,
-    downloadPdfOrExcel
+    downloadPdfOrCsv
   };
 };
 
