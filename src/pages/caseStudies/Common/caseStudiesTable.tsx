@@ -9,12 +9,12 @@ const CaseStudiesTable = () => {
   const [openWarningModal, setOpenWarningModal] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(false)
 
- 
+
   const escalatedByMeTableData = [
     {
       no: '01',
       avater: Image,
-      name:"Mino Marina",
+      name: "Mino Marina",
       ReportName: 'September 2022',
       department: 'Design',
       assessmentDate: '20/09/2022',
@@ -23,7 +23,7 @@ const CaseStudiesTable = () => {
     },
     {
       no: '02',
-      name:"Craig Donin",
+      name: "Craig Donin",
       avater: Image,
       ReportName: 'September 2022',
       department: 'Research',
@@ -33,7 +33,7 @@ const CaseStudiesTable = () => {
     },
     {
       no: '03',
-      name:"Gustavo Korsgaard",
+      name: "Gustavo Korsgaard",
       avater: Image,
       ReportName: 'August 2022',
       department: 'Business',
@@ -43,7 +43,7 @@ const CaseStudiesTable = () => {
     },
     {
       no: '04',
-      name:"Omar Schleifer",
+      name: "Omar Schleifer",
       avater: Image,
       ReportName: 'September 2022',
       department: 'Management',
@@ -54,7 +54,7 @@ const CaseStudiesTable = () => {
     {
       no: '05',
       avater: Image,
-      name:"Adison Donin",
+      name: "Adison Donin",
       ReportName: 'University of London',
       department: 'Development',
       assessmentDate: '20/09/2022',
@@ -63,7 +63,7 @@ const CaseStudiesTable = () => {
     },
     {
       no: '06',
-      name:"Lindsey Mango",
+      name: "Lindsey Mango",
       avater: Image,
       ReportName: 'August 2022',
       department: 'Development',
@@ -120,47 +120,47 @@ const CaseStudiesTable = () => {
         dataIndex: 'status',
         key: 'status',
         title: 'Status',
-      render: (text: string) => {
-        return {
-          children: (
-            <div className='case-studies-table'>
-                 <span
-                className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'Pending'? 'pending':
-                 text === 'Approved'? 'approved':text === 'Rejected'?'rejected' : ''} `}
-              >
-                {text}
-              </span>
-            </div>
-          ),
-        };
-      }
+        render: (text: string) => {
+          return {
+            children: (
+              <div className='case-studies-table'>
+                <span
+                  className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'Pending' ? 'pending' :
+                    text === 'Approved' ? 'approved' : text === 'Rejected' ? 'rejected' : ''} `}
+                >
+                  {text}
+                </span>
+              </div>
+            ),
+          };
+        }
       },
       {
         title: 'Action',
         dataIndex: '',
         render: (_: any, data: any) => <CustomDropDownCaseStudies setState={setOpenDropdown}
-         state={openDropdown} data={data.no} openWarningModal={openWarningModal} setOpenWarningModal={setOpenWarningModal}/>
+          state={openDropdown} data={data.no} openWarningModal={openWarningModal} setOpenWarningModal={setOpenWarningModal} />
       },
     ]
 
   return (
     <>
-    <GlobalTable
-      columns={escalatedByMeTableColumns}
-      pagination
-      tableData={escalatedByMeTableData}
-    />
-    <Alert
-    cancelBtntxt="Cancel"
-    okBtntxt="Continue"
-    state={openWarningModal}
-    setState={setOpenWarningModal}
-    type="WARNING"
-    width={500}
-    title="Warning"
-    children={<p>Are you sure you want to reject this case study?</p>}
-  />
-  </>
+      <GlobalTable
+        columns={escalatedByMeTableColumns}
+        pagination
+        tableData={escalatedByMeTableData}
+      />
+      <Alert
+        state={openWarningModal}
+        setState={setOpenWarningModal}
+        type="warning"
+        okBtntxt="Delete"
+        cancelBtntxt="Cancel"
+      >
+        <p>Are you sure you want to reject this case study?</p>
+      </Alert>
+
+    </>
   )
 }
 

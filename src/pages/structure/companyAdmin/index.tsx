@@ -7,9 +7,10 @@ import {
   StructureMinus,
   StructureAdd,
 } from "../../../assets/images";
+
 import "./style.scss";
-import { PageHeader } from "../../../components";
 import Node from "./Node";
+import { PageHeader } from "../../../components";
 
 export default function Structure(props: any) {
   const [scale, setScale] = useState(1);

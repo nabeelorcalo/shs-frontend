@@ -26,7 +26,7 @@ function DropDownDemo() {
                         placeholder={'dfdsfsf'}
                         required
                         label="label"
-                        handleChange={(e) => { }}
+                        handleChange={(e:any) => { }}
                     />
                 </Col>
                 {/* search bar sizes */}

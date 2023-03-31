@@ -14,6 +14,8 @@ import tick from "../../../../../assets/images/profile/student/Tick.svg";
 import cross from "../../../../../assets/images/profile/student/close-circle.svg";
 import "../../../style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
+import "../../../style.scss";
+import { profileInfo } from "./studentRightToWorkMock";
 import ImmigrationStatusForm from "./ImmigrationStatusForm";
 
 const ImmigrationStatus = () => {
@@ -29,6 +31,67 @@ const ImmigrationStatus = () => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
+  return (
+    <>
+      <Typography className="title">Right To Work</Typography>
+      <div className="flex gap-x-4">
+        <img src={profileInfo.profile} alt="" />
+        <div className="">
+          <Typography className="title text-secondary-color  text-lg font-semibold">
+            Maria Sanoid{" "}
+          </Typography>
+          <Typography className=" text-sm text-teriary-color ">
+            They have permission to work in the UK from 18 January 2022. They
+            can work in the UK until 18 January 2024.
+          </Typography>
+        </div>
+      </div>
+      <Typography className="title text-secondary-color  text-lg font-semibold">
+        Details
+      </Typography>
+      <Typography className=" text-sm text-teriary-color ">
+        They have permission to work in the UK from 18 January 2022. They can
+        work in the UK until 18 January 2024.
+      </Typography>
+
+      <Typography className="title text-secondary-color  text-lg font-semibold">
+        Conditions
+      </Typography>
+      <Typography className=" text-sm text-teriary-color ">
+        They cannot work as a professional sportsperson or coach. This condition{" "}
+        <br />
+        is a standard requirement for their visa.
+      </Typography>
+      <div className="flex gap-8">
+        <div>
+          <Typography className="title text-secondary-color  text-lg font-semibold">
+            Company Name
+          </Typography>
+          <Typography className=" text-sm text-teriary-color ">
+            Orcalo Holdings.
+          </Typography>
+        </div>
+
+        <div>
+          <Typography className="title text-secondary-color  text-lg font-semibold">
+            Date of Check
+          </Typography>
+          <Typography className=" text-sm text-teriary-color ">
+            19 Jan 2023.
+          </Typography>
+        </div>
+
+        <div>
+          <Typography className="title text-secondary-color  text-lg font-semibold">
+            Reference Number
+          </Typography>
+          <Typography className=" text-sm text-teriary-color ">
+            WETRWERWERW
+          </Typography>
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <div className="immigration-status">
@@ -116,7 +179,7 @@ const ImmigrationStatus = () => {
                 Submit
               </Button>
             </Space>
-          </div>
+          </div>,
         ]}
         title="Tell us about Immigration Status"
         width={720}

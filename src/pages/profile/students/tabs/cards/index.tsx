@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { Button, Divider, Modal, Space, Switch, Typography } from "antd";
-import { Col, Form, Input, Row } from "antd";
-import "../../../style.scss";
-import upload from "../../../../../assets/images/profile/student/Upload.svg";
+import {
+  Button,
+  Divider,
+  Modal,
+  Space,
+  Switch,
+  Typography,
+  Col,
+  Form,
+  Input,
+  Row
+} from "antd";
+import { CommonDatePicker } from "../../../../../components";
+import upload from "../../../../../assets/images/profile/student/upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { CommonDatePicker } from "../../../../../components";
+import "../../../style.scss";
 
 const CardTabs = () => {
   const [isOpen, setIsOpen] = useState(false);

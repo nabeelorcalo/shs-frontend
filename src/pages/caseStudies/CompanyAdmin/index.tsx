@@ -1,5 +1,6 @@
-import { Divider } from 'antd'
+
 import React, { useState } from 'react'
+import { Divider } from 'antd'
 import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import Drawer from '../../../components/Drawer';
 import CaseStudiesTable from '../Common/caseStudiesTable';

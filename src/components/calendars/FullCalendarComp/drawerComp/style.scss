@@ -1,0 +1,71 @@
+@import '../../../../scss/_colors.scss';
+
+.calendar-drawer-wrapper {
+  .ant-drawer-header {
+    padding: 20px !important;
+  }
+
+  .event-detail-wrapper {
+    .heading {
+      color: $text-primary-title-color;
+    }
+
+    .event-detail,
+    .event-type,
+    .onsite,
+    .virtual,
+    .attendees {
+      border-bottom: 1px solid $text-error-line-color;
+      margin-bottom: 20px;
+    }
+
+    .event-detail {
+      padding-top: 25px;
+      border-top: 1px solid $text-error-line-color;
+
+      .event-info {
+        color: $text-secondary-body-color;
+      }
+
+      .user-role {
+        color: $text-success-placeholder-color;
+      }
+
+    }
+
+    .onsite .flex,
+    .virtual .link {
+      border: 1px solid $dark-grey-color;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    .attendees .user-list {
+      max-height: 150px;
+      overflow-y: scroll;
+    }
+  }
+
+  .outlined-btn {
+    color: $text-error-color;
+    border: 1px solid $text-error-color;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+    border-radius: 8px;
+
+    &:hover {
+      color: $text-error-color;
+      border: 1px solid $text-error-color;
+    }
+  }
+
+  .primary-btn {
+    background: $green-graph-tooltip-color;
+    color: $white-bg-color;
+
+    &:hover {
+      color: $white-bg-color;
+      background: $green-graph-tooltip-color;
+      border-color: $green-graph-tooltip-color;
+    }
+  }
+}

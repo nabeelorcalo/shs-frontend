@@ -1,9 +1,8 @@
 import Manager from "./Manager/index"
 import constants from "../../config/constants";
+import Structure from "./companyAdmin";
 import ManagerStructure from "./Manager/index";
 import InternStructure from "./Intern";
-import Structure from "./companyAdmin";
-
 const index = () => {
 
   const rederWthRole: any = {

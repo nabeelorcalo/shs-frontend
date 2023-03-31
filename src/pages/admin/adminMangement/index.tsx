@@ -19,10 +19,9 @@ import {
   Row,
   Select,
   Space,
-  Typography,
 } from "antd";
 import { CalendarIcon } from "../../../assets/images";
-import { CommonDatePicker, DropDown, SearchBar ,GlobalTable, PageHeader, FiltersButton} from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, BoxWrapper } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -42,7 +41,7 @@ const AdminManagement = () => {
     console.log("Failed:", errorInfo);
   };
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => {};
+  const searchValue = () => { };
   const columns = [
     {
       dataIndex: "no",
@@ -81,8 +80,8 @@ const AdminManagement = () => {
               data.status === "Active"
                 ? "#3DC475"
                 : data.status === "Inactive"
-                ? "#D83A52"
-                : "",
+                  ? "#D83A52"
+                  : "",
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -196,20 +195,22 @@ const AdminManagement = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <PageHeader title='Admin Management' bordered={true}/>
-          
+            <PageHeader title='Admin Management' bordered={true} />
+
           </div>
         </Col>
       </Row>
-     
+
       <Row gutter={10}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex justify-end items-center gap-3 mb-3">
-          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
-            <div className="w-25">
+          <div className="flex justify-end items-center gap-3 mb-3 admin-right-menu">
+            <div className="filter-btn">
+              <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+            </div>
+            <div className="w-25 download-btn">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
@@ -223,15 +224,17 @@ const AdminManagement = () => {
                 setOpen(true);
               }}
             >
-              <UserAddOutlined className="text-base font-semibold"  />
+              <UserAddOutlined className="text-base font-semibold" />
               Add User
             </Button>
           </div>
         </Col>
       </Row>
       <Row>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <GlobalTable tableData={tableData} columns={columns} />
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="my-2">
+          <BoxWrapper>
+            <GlobalTable tableData={tableData} columns={columns} />
+          </BoxWrapper>
         </Col>
       </Row>
       <Modal

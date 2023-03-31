@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Form, Row, Typography, Space, Menu } from "antd";
-import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, BoxWrapper } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -201,7 +201,7 @@ const StudentMain = () => {
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-          <div className="flex justify-end items-center gap-3">
+          <div className="flex justify-end items-center gap-3 right-menu">
           <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
             <div className="w-25">
               <DropDown
@@ -215,7 +215,8 @@ const StudentMain = () => {
         </Col>
       </Row>
       <Row className="mt-4">
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="my-2">
+          <BoxWrapper>
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable
               tableData={tableData}
@@ -223,6 +224,7 @@ const StudentMain = () => {
               pagination={false}
             />
           </div>
+          </BoxWrapper>
         </Col>
       </Row>
     </div>

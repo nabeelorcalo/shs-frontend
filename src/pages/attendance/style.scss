@@ -1,10 +1,36 @@
 @import '../../scss/_colors.scss';
 
 .attendance-detail-container {
+  .attendance-main-header{
+    .search-bar{
+      height: 48px;
+    }
+    @media only screen and (max-width:575px) {
+      display: block;
+      .search-bar{
+        width: 100% !important;
+      }
+      .attendance-filter-section{
+        flex-wrap: wrap;
+        margin: 10px 0px;
+        .download-btn{
+          margin: 0px
+        }
+        @media only screen and (max-width:375px) {
+          flex-basis: 50%;
+        }
+      }
+    }
+  }
+  
   .shs-page-header {
     padding-bottom: 0;
     display: flex;
     align-items: flex-start;
+  
+    @media only screen and (max-width:500px) {
+      flex-direction: column;
+    }
   }
 
   .icon-btn {
@@ -23,14 +49,17 @@
     width: 28px;
   }
 
-  .download-btn {
-    border: none;
-    margin: auto;
-    width: 48px !important;
-    padding: 12px;
+  .drop-down-wrapper{
+    padding: 0;
+    width: 48px;
     height: 48px;
-    border-radius: 8px;
-    background-color: $text-input-bg-color;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    div{
+      margin-right: 0;
+    }
   }
 
   .left-radius {
@@ -71,10 +100,24 @@
 }
 
 .company-admin-detail-container {
+  .main-cards{
+    flex-wrap: wrap;
+    @media only screen and (max-width:1125px) {
+      flex-direction: column;   
+      gap: 20px;   
+    }
+  }
   .shs-page-header {
     padding-bottom: 10px;
     display: flex;
     align-items: center;
+    @media only screen and (max-width:768px) {
+      .shs-page-header-actions{
+        margin-top: 20px;
+      }
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   .icon-btn {
@@ -104,16 +147,7 @@
   }
 
   .attendance-content {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    // flex-wrap: wrap;
-
     .left-container {
-      display: flex;
-      height: fit-content;
-      width: 30%;
-
       a {
         display: flex;
         justify-content: center;

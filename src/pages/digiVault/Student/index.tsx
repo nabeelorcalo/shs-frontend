@@ -243,7 +243,7 @@ const DigiVaultStudent = () => {
             <div className="text-2xl font-semibold primary-color">
               Manage your vault
             </div>
-            <Row gutter={[20, 25]} className="p-2">
+            <Row gutter={[15, 15]} className="p-2">
               {manageVaultArr.map((item, index) => {
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -266,7 +266,7 @@ const DigiVaultStudent = () => {
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
             <Row gutter={4} className="storage-bar-header">
-              <Col xxl={10} xl={10} lg={24} md={8} sm={8} xs={24}>
+              <Col xxl={10} xl={12} lg={24} md={8} sm={8} xs={24}>
                 <Progress
                   strokeWidth={12}
                   strokeColor={"#5D89F4"}
@@ -278,7 +278,7 @@ const DigiVaultStudent = () => {
 
               <Col
                 xxl={14}
-                xl={14}
+                xl={12}
                 lg={24}
                 md={12}
                 sm={14}

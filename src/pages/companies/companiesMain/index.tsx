@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
-import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, BoxWrapper } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -33,7 +33,7 @@ const tableData = [
   {
     Actions: "fffff",
     companyName: "University of Birmingham",
-    status: "Inactive",
+    status: "Blocked",
     address: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
@@ -46,7 +46,7 @@ const tableData = [
   {
     Actions: "fffff",
     companyName: "University of Birmingham",
-    status: "Inactive",
+    status: "Blocked",
     address: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
@@ -61,7 +61,7 @@ const tableData = [
 const CompaniesMain = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => {};
+  const searchValue = () => { };
   const columns = [
     {
       dataIndex: "no",
@@ -109,10 +109,10 @@ const CompaniesMain = () => {
               data.status === "Pending"
                 ? "#FFC15D"
                 : data.status === "Active"
-                ? "#3DC475"
-                : data.status === "Inactive"
-                ? "#D83A52"
-                : "",
+                  ? "#3DC475"
+                  : data.status === "Blocked"
+                    ? "#D83A52"
+                    : "",
             padding: " 2px 3px 2px 3px",
 
           }}
@@ -189,14 +189,14 @@ const CompaniesMain = () => {
           </div>
         </Col>
       </Row>
-    
+
       <Row className="m-2">
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-          <div className="flex justify-end items-center gap-3">
-          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
+          <div className="flex justify-end items-center gap-3 company-right-menu">
+            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon
@@ -209,10 +209,12 @@ const CompaniesMain = () => {
         </Col>
       </Row>
       <Row className="mt-4">
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-            <GlobalTable tableData={tableData} columns={columns} />
-          </div>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="my-2">
+          <BoxWrapper>
+            <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
+              <GlobalTable tableData={tableData} columns={columns} />
+            </div>
+          </BoxWrapper>
         </Col>
       </Row>
     </div>
