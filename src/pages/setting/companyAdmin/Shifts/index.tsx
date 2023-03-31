@@ -27,7 +27,7 @@ const SettingShifts: React.FC = () => {
   const handleChange = () => { };
   return (
     <div className="setting-shifts">
-      <div className="flex justify-between">
+      <div className="flex justify-between location-header">
         <SearchBar size="middle" handleChange={handleChange} />
         <NavLink to="/settings/shifts/add-shift">
           <Button
@@ -42,7 +42,7 @@ const SettingShifts: React.FC = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row flex" xs={24} md={6} lg={8} >
+            <Col key={index} className="gutter-row flex" xs={24} md={12} xxl={8}>
               <BoxWrapper className="setting-shift-box-wrapper w-full">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
