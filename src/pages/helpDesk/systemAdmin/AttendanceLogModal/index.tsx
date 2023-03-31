@@ -1,16 +1,15 @@
-import { Button, Col, Divider, Input, Row, Select, Space, Dropdown, Menu } from "antd";
 import React, { useState } from "react";
+import { Button, Col, Divider, Input, Row, Select, Space, Dropdown, Menu } from "antd";
 import {
-  // ArchiveFilledIcon,
-  // ArchiveIcon,
-  // AttachmentIcon,
+  ArchiveFilledIcon,
+  ArchiveIcon,
+  AttachmentIcon,
   Avatar,
-  // EmojiIcon,
+  EmojiIcon,
 } from "../../../../assets/images";
 import { PopUpModal, SearchBar, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
 import CommentCard from "../CommentCard";
-import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import "./style.scss";
 import { DownOutlined, CloseCircleFilled } from "@ant-design/icons";
@@ -112,7 +111,7 @@ const AttendaceLog = (props: any) => {
                   <div>{item.name}</div>
                 </div>
                 <div
-                  className="cursor-pointer text-[#A0A3BD] text-xs"
+                  className="cursor-pointer light-grey-color text-xs"
                   onClick={() => handleAddUser(item)}
                 >
                   {item.btn}
@@ -142,7 +141,7 @@ const AttendaceLog = (props: any) => {
                   className="cursor-pointer"
                   onClick={() => setIsArchive(!isArchive)}
                 >
-                  {/* {isArchive ? <ArchiveFilledIcon /> : <ArchiveIcon />} */}
+                  {isArchive ? <ArchiveFilledIcon /> : <ArchiveIcon />}
                 </div>
                 <p className="font-semibold text-[20px] leading-[28px] capitalize">
                   Attendance Log Issue
@@ -240,7 +239,7 @@ const AttendaceLog = (props: any) => {
                         <div className="flex items-center gap-2 flex-wrap">
                           {assignUser.map((user) => (
                             <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                              <span className="text-[#6E7191] font-normal text-xs">
+                              <span className="text-teriary-color font-normal text-xs">
                                 {user.name}
                               </span>
                               <CloseCircleFilled
@@ -377,7 +376,7 @@ const AttendaceLog = (props: any) => {
                 <Button onClick={() => setOpen(false)}>cancel</Button>
               </Col>
               <Col>
-                <Button className="teriary-bg-color text-white capitalize font-semibold	text-base">
+                <Button className="attendence-log-btn teriary-bg-color white-color capitalize font-semibold	text-base ">
                   save
                 </Button>
               </Col>
@@ -387,7 +386,7 @@ const AttendaceLog = (props: any) => {
 
         <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
           <div className="pr-2 pl-6">
-            <div className="mb-16 text-xl font-medium text-[#14142A]">
+            <div className="mb-16 text-xl font-medium text-primary-color">
               Comments
             </div>
             {[1, 2].map((item) => {
@@ -422,8 +421,8 @@ const AttendaceLog = (props: any) => {
                 <Col>
                   <Row className="gap-[10px]">
                     <p className="text-[16px] font-medium leading-[14px]">B</p>
-                    {/* <EmojiIcon />
-                    <AttachmentIcon /> */}
+                    <EmojiIcon />
+                    <AttachmentIcon />
                   </Row>
                 </Col>
 
@@ -432,7 +431,7 @@ const AttendaceLog = (props: any) => {
                     className="
                 teriary-bg-color 
                 cursor-pointer
-                text-white 
+                white-color 
                 capitalize 
                 font-normal 
                 p-0 text-xs 

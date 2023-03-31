@@ -1,10 +1,10 @@
 import { FC, useState } from "react";
 import { Row, Avatar, Col } from "antd";
 import {
-  // AttachmentIcon,
-  // EmojiIcon,
-  // FilledLikeIcon,
-  // LikeIcon,
+  AttachmentIcon,
+  EmojiIcon,
+  FilledLikeIcon,
+  LikeIcon,
 } from "../../../../assets/images";
 
 interface ICommentCard {
@@ -34,7 +34,7 @@ const index = (props:any) => {
               className="cursor-pointer w-6 h-6"
               onClick={() => setIsLike(!isLike)}
             >
-              {/* {isLike ? <FilledLikeIcon /> : <LikeIcon />} */}
+              {isLike ? <FilledLikeIcon /> : <LikeIcon />}
             </span>
             <span className="text-[#8991A0]">{likes ?? 0} likes</span>
           </Row>
@@ -61,8 +61,8 @@ const index = (props:any) => {
             <Col>
               <Row className="gap-[10px]">
                 <p className="text-[16px] font-medium leading-[14px]">B</p>
-                {/* <EmojiIcon />
-                <AttachmentIcon /> */}
+                <EmojiIcon />
+                <AttachmentIcon />
               </Row>
             </Col>
             <Col>
@@ -70,7 +70,7 @@ const index = (props:any) => {
                 className="
                 teriary-bg-color 
                 cursor-pointer
-                text-white 
+                white-color
                 capitalize 
                 font-normal 
                 p-0 text-xs 
