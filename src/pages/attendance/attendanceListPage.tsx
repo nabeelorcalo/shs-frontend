@@ -16,15 +16,16 @@ import {
 } from "../../components";
 import {
   CardViewIcon,
-  DownlaodFileIcon,
   GlassMagnifier,
   TableViewIcon,
 } from "../../assets/images";
+import useCustomHook from './actionHandler';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
 import "./style.scss";
 
 const Detail = () => {
+  const action = useCustomHook();
   const role = constants.USER_ROLE;
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
 
@@ -42,6 +43,14 @@ const Detail = () => {
     "Data Scientist",
     "Product Manager",
     "Developer",
+  ];
+
+  const tableColumns = [
+    { header: 'Id', dataKey: 'id' },
+    { header: 'Name', dataKey: 'name' },
+    { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
+    { header: 'Profession', dataKey: 'profession' },
+    { header: 'Status', dataKey: 'status' },
   ];
 
   const dummyData = [
@@ -158,8 +167,8 @@ const Detail = () => {
     let btn = event.target.parentElement.name
       ? event.target.parentElement.name
       : event.target.name
-      ? event.target.name
-      : event.target.parentElement.parentElement.name;
+        ? event.target.name
+        : event.target.parentElement.parentElement.name;
 
     if (btn === "next") newDate = state.currentDate.add(1, "day");
     else if (btn === "prev") newDate = state.currentDate.subtract(1, "day");
@@ -176,8 +185,6 @@ const Detail = () => {
       openSidebar: !state.openSidebar,
     }));
   };
-
-  const downloadClick = () => {};
 
   const statusSelection = (event: any) => {
     const value = event.target.innerText;
@@ -220,6 +227,14 @@ const Detail = () => {
       isToggle: !state.isToggle,
     }));
   };
+
+  function renderAvatar(cellDataKey: any, cellOptions: any) {
+    const img = new Image();
+    img.src = cellDataKey;
+    img.width = cellOptions.row.raw.avatarWidth;
+    img.height = cellOptions.row.raw.avatarHeight;
+    return img;
+  }
 
   return (
     <div className="attendance-detail-container">
@@ -330,18 +345,22 @@ const Detail = () => {
               </div>
             }
           />
-          <IconButton
-            size='large'
-            className='icon-btn download-btn'
-            onClick={downloadClick}
-            icon={<DownlaodFileIcon />}
-          />
+
           <ToggleButton
             isToggle={state.isToggle}
             onTogglerClick={togglerClick}
             FirstIcon={CardViewIcon}
             LastIcon={TableViewIcon}
             className="w-[88px]"
+          />
+
+          <DropDown
+            options={[
+              'pdf',
+              'excel'
+            ]}
+            requiredDownloadIcon
+            setValue={() => action.downloadPdfOrExcel(event, tableColumns, dummyData, "Attendance Detail")}
           />
         </div>
       </div>

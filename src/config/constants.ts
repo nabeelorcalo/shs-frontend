@@ -8,9 +8,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: JSON.parse(
-    localStorage.getItem("UserData") || JSON.stringify({ role: "" })
-  )?.role,
+  USER_ROLE: "Intern",
 };
 
 // Possible string of roles:
@@ -37,9 +35,14 @@ export const ROUTES_CONSTANTS: any = {
   ERROR_PAGE: "error-page",
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
+  INTERNSHIP_PIPELINE: 'internships/pipeline',
   NEW_INTERNSHIP: "internships/new-internship",
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
+  PAYROLL: "payroll",
+  PAYROLL_DETAILS: "payroll/payroll-details",
+  VIEW_PAYROLL_SALARY_SLIP: "payroll/payroll-details/view-payroll-details",
   INTERNS: "interns",
+  COMPLETE_INTERNS: "interns/complete",
   INTERNS_PROFILE: "interns/profile",
   INTERNS_CHAT:"interns/chat",
   ATTENDANCE: "attendance",
@@ -80,6 +83,7 @@ export const ROUTES_CONSTANTS: any = {
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
+  VIEW_PAYMENT_DETAILS:"payments/view-payment-details",
   ACCOMMODATION: "accommodation",
   SAVED_SEARCHES: "saved-searches",
   RENTED_PROPERTIES: "rented-properties",
@@ -102,7 +106,6 @@ export const ROUTES_CONSTANTS: any = {
   SETTING: "settings",
   CERTIFICATES: "certificates",
   CERTIFICATESDETAIL: 'certificates/detail/:id',
-  PAYROLL: "payroll",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
   SETTING_LOCATION:"location",
