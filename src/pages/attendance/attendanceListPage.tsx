@@ -64,7 +64,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -73,7 +73,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Designer",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "leave",
     },
     {
@@ -82,7 +82,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Business Analyst",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -91,7 +91,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -100,7 +100,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -109,7 +109,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -118,7 +118,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "absent",
     },
     {
@@ -127,7 +127,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Scientist",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -136,7 +136,7 @@ const Detail = () => {
       avatar:
         "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: constants.USER_ROLE === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
   ];
