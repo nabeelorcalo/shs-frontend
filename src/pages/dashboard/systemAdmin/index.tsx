@@ -1,6 +1,5 @@
 import { Row, Col } from "antd";
 import { AnalyticsData, regionData, TotalUserData } from "./mock";
-// import Graph from "../../../components/Graph/graphForGrowthAnalytics";
 import {
   UserAnalytics,
   DashboardCharts,
@@ -9,12 +8,12 @@ import {
   GaugePlot,
   GrowthAnalyticsGraph,
 } from "../../../components";
-// import AreaMap from "../../../components/Graph/AreaMap";
 import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
 import { useState } from "react";
 import { gutter } from "..";
+import AreaMapp from "../../../components/Graph/AreaMap";
 
 const SystemAdmin = () => {
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false)
@@ -40,7 +39,7 @@ const SystemAdmin = () => {
             <RegionCard regionData={regionData} />
           </Col>
           <Col xs={24} xxl={12}>
-            {/* <AreaMap /> */}
+            {/* <AreaMapp /> */}
           </Col>
         </Row>
       </Col>

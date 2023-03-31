@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { InterShipData } from "./internShipData";
 import { RadialBar } from "@ant-design/plots";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
 
 export const InternshipSummaryChart = (props: any) => {
   const {
