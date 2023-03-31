@@ -1,8 +1,11 @@
 import { FC } from "react";
 import {
+  HiredIcon,
   InactiveMembersIcon,
   ListingIcon,
+  OngoingIcon,
   PeopleIcon,
+  PresentInternsIcon,
   ProfileRemoveIcon,
   ProfileTick,
   ProfileTwouserIcon,
@@ -38,6 +41,12 @@ interface ICountingCard {
   totalMembers?: string | number;
   activeMembers?: string | number;
   inActiveMembers?: string | number;
+
+  // university dashboard
+  registeredStudents?: string | number;
+  hiredStudents?: string | number;
+  completedInternship?: string | number;
+  ongoingInternship?: string | number;
 
   // styling check
   isSeprate?: boolean;
@@ -79,6 +88,11 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     totalMembers,
     activeMembers,
     inActiveMembers,
+    //university dashboard
+    registeredStudents,
+    hiredStudents,
+    completedInternship,
+    ongoingInternship,
     // styling check
     isSeprate,
   } = props;
@@ -178,6 +192,19 @@ export const CountingCard: FC<ICountingCard> = (props) => {
       inActiveMembers,
       blueBg
     );
+
+    // university dashboard
+    registeredStudents &&
+    handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
+
+    hiredStudents &&
+    handleCardList(<HiredIcon />, "Hired Students", hiredStudents, greenBg);
+
+    completedInternship &&
+    handleCardList(<PresentInternsIcon />, "Completed Internship", completedInternship, greenBg);
+
+    ongoingInternship &&
+    handleCardList(<OngoingIcon />, "Ongoing Internship", ongoingInternship, redBg);
 
   return (
     <Row

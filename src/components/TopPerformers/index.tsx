@@ -44,7 +44,7 @@ export const TopPerformers: FC<{
       <Row
         align="middle"
         justify="space-between"
-        className={user === "companyAdmin" ? "mb-[12px]" : `mb-[30px]`}
+        className={user === "companyAdmin" ? "mb-[12px]" : user==="university"?`mb-[26px]`:`mb-[30px]`}
       >
         <p className="font-medium text-[20px] leading-[28px]">Top Performers</p>
         <Row align="middle" className="gap-[9px]">
@@ -64,7 +64,7 @@ export const TopPerformers: FC<{
       <Row>
         {topPerformersList?.map(
           ({ image, name, designation, progress }, index) => (
-            <div className={user === "companyAdmin" ? "w-full" : `py-2 w-full`}>
+            <div className={user === "companyAdmin" ? "w-full":user==="university"?"w-full py-[2px]" : `py-2 w-full`}>
               <ListItem
                 key={index}
                 image={image}

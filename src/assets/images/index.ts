@@ -347,6 +347,10 @@ export { ReactComponent as FilledLikeIcon } from './dashboard/likeIconFilled.svg
 export { ReactComponent as AttachmentIcon } from './dashboard/attachment.svg';
 export { ReactComponent as EmojiIcon } from './dashboard/emoji.svg';
 export { ReactComponent as InformationIcon } from "./dashboard/info-icon.svg";
+// university dshboard
+export { ReactComponent as HiredIcon } from "./dashboard/hiredIcon.svg";
+export { ReactComponent as OngoingIcon } from "./dashboard/Ongoing.svg";
+export { ReactComponent as PresentInternsIcon } from "./dashboard/PresentInterns.svg";
 
 // contract
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";

@@ -92,22 +92,36 @@ export const topPerformers = [
   { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
   { image: "", name: "Maria Sanoid", designation: "Business Analyst", progress: "96%" },
   { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
+  { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
+  { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
+  { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
+  { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
 ];
+
 import UniLogo from "../../../assets/images/dashboard/UniLogo.svg";
-export const universityList = [
+export const agnecyList = [
   {
     logo: UniLogo,
     title: "University of London",
+    agency:"Software Agency ",
     peopleList: ["a", "s", "d", "f", "", "", ""]
   },
   {
     logo: UniLogo,
     title: "University of London",
+    agency:"Software Agency ",
     peopleList: ["a", "s", "d", "f", "", "", ""]
   },
   {
     logo: UniLogo,
     title: "University of London",
+    agency:"Software Agency ",
+    peopleList: ["a", "s", "d", "f", "", "", ""]
+  },
+  {
+    logo: UniLogo,
+    title: "University of London",
+    agency:"Software Agency ",
     peopleList: ["a", "s", "d", "f", "", "", ""]
   },
 ]

@@ -1,25 +1,21 @@
 import { useEffect, useState } from "react";
 import { Row, Col } from "antd";
 import {
-  AnnouncementList,
-  AnnouncementModal,
   AttendanceAndListingGraph,
-  BirthdayWishes,
   CountingCard,
-  LeaveDetails,
   MonthlyPerfomanceChart,
   TopPerformers,
   UniversityCard,
-  PageHeader
+  PageHeader,
 } from "../../../components";
-import userData from "../../../config/constants";
 import {
+  agnecyList,
   PerformanceAnalyticsData,
   topPerformers,
-  universityList,
 } from "./mockData";
 import "../style.scss";
 import { gutter } from "..";
+import AgencyCard from "../../../components/AgencyCard";
 
 const University = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -49,11 +45,7 @@ const University = () => {
           };
         });
       })
-      .catch(() => { });
-  };
-
-  const handleAddAnnouncement = () => {
-    setIsShowModal(true);
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -71,20 +63,19 @@ const University = () => {
         }
       />
       <Row gutter={gutter}>
-        <Col xs={24} >
+        <Col xs={24}>
           <CountingCard
-            totalInterns={33}
-            present={6}
-            myInterns={9}
-            onLeave={3}
+            registeredStudents={33}
+            hiredStudents={6}
+            completedInternship={9}
+            ongoingInternship={3}
             isSeprate
           />
         </Col>
-        <Col xs={24} sm={24} xl={17} xxl={19}>
-          <Row className="rounded-2xl bg-white wrapper-shadow">
-
-            <Col xs={24} lg={16} xl={14}>
-              <div className="p-5">
+        <Col xs={24} sm={24} xxl={12}>
+          <Row gutter={gutter} className="">
+            <Col xs={24} xl={12} xxl={24}>
+              <div className="rounded-2xl bg-white wrapper-shadow p-5">
                 <MonthlyPerfomanceChart
                   XField="city"
                   YField="value"
@@ -101,45 +92,29 @@ const University = () => {
                   marginRatio=".5"
                   seriesField="type"
                   textColor="#4E4B66"
-                  style={{ height: 285 }}
+                  style={{ height: 218 }}
                 />
               </div>
             </Col>
-          </Row>
-        </Col>
-        <Col xs={24} sm={24} xl={7} xxl={5}>
-          <TopPerformers topPerformersList={topPerformers} />
-        </Col>
-
-        <Col xs={24} sm={24} lg={24} xl={18} xxl={12}>
-          <Row gutter={gutter}>
-            <Col xs={24}>
+            <Col xs={24} xl={12} xxl={24}>
               <AttendanceAndListingGraph
                 title="Listing"
                 level={4}
                 graphName="attendance"
-                styling={{ height: 230 }}
+                styling={{ height: 220 }}
               />
-            </Col>
-            <Col xs={24}>
-              <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, peopleList }) => (
-                  <Col flex={1}>
-                    <UniversityCard
-                      logo={logo}
-                      title={title}
-                      maxCount={6}
-                      list={peopleList}
-                    />
-                  </Col>
-                ))}
-              </Row>
             </Col>
           </Row>
         </Col>
+        <Col xs={24} sm={24} lg={24} xl={12} xxl={7}>
+          <AgencyCard agnecyList={agnecyList} />
+        </Col>
+        <Col xs={24} sm={24} xl={12} xxl={5}>
+          <TopPerformers topPerformersList={topPerformers} user="university" />
+        </Col>
       </Row>
     </>
-  );
+  );  
 };
 
 export default University;
