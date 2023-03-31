@@ -140,7 +140,7 @@ const Accommodation = () => {
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
-  return (
+  return ( 
     <>
       <div className="page-content">
         <PageHeader
