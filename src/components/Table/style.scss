@@ -243,10 +243,9 @@
 
 .primary_table_wrapper {
   position: relative;
-
-  .ant-table-content {
-    @include tablestyel;
-  }
+  // .ant-table-content {
+  @include tablestyel;
+  // }
 
   @include pagination;
 

@@ -1,5 +1,5 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconAngleDown,
   NewImg,
@@ -278,13 +278,11 @@ const CompanyAdmin = () => {
                 <BoxWrapper>
                   <div>
                     <div className="flex">
-
                       {item.img}
                       <div className="flex flex-col items-center pl-4">
                         <p className=" text-xl font-semibold mt-2">{item.title}</p>
                         <div className="text-4xl font-medium mt-4">{item.num}</div>
                       </div>
-
                     </div>
                   </div>
 
@@ -295,13 +293,13 @@ const CompanyAdmin = () => {
         }
       </Row>
 
-      <Row className="mt-8" gutter={[0, 20]} justify={"space-between"}>
-        <Col xxl={6} xl={6} lg={8} md={9} sm={10} xs={24}>
+      <Row className="mt-8" gutter={[0, 20]} >
+        <Col  xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => { }} />
         </Col>
 
-        <Col className="flex" xxl={5} xl={8} lg={11} md={12} sm={24} xs={24}>
-          <Dropdown className="mr-12"
+        <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+          <Dropdown
             menu={{ items: TimeFrameItems }}
             trigger={["click"]}
             placement="bottomRight"

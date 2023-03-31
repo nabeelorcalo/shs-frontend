@@ -156,8 +156,6 @@ const WithDrawalRequest = () => {
           </BoxWrapper>
         </Col>
       </Row>
-
-
     </div>
   );
 };

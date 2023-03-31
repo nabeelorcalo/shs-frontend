@@ -1,22 +1,32 @@
-import React, { useState, useEffect, FC } from 'react';
-import { DualAxes } from '@ant-design/plots';
-import { registerMemeberData, resolutionFeedbackData } from './data';
-import { IconLikeShapes } from '../../../assets/images';
-import constants from '../../../config/constants';
+import React, { useState, useEffect, FC } from "react";
+import { DualAxes } from "@ant-design/plots";
+import { registerMemeberData, resolutionFeedbackData } from "./data";
+import { IconLikeShapes } from "../../../assets/images";
+import constants from "../../../config/constants";
 
-export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: any }> = (props) => {
-  const { graphName, styling } = props;
-  const data = graphName === constants.REGISTER_MEMBERS ? registerMemeberData : resolutionFeedbackData;
-  const yFields = graphName === constants.REGISTER_MEMBERS ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
+export const RegisterMemberAndFeddbackGraph: FC<{
+  graphName: string;
+  title?:string,
+  styling?: any;
+}> = (props) => {
+  const { graphName, styling,title } = props;
+  const data =
+    graphName === constants.REGISTER_MEMBERS
+      ? registerMemeberData
+      : resolutionFeedbackData;
+  const yFields =
+    graphName === constants.REGISTER_MEMBERS
+      ? ["Active", "Inactive"]
+      : ["Positive", "Negative"];
 
   const config: any = {
     data: [data, data],
-    xField: 'month',
+    xField: "month",
     yField: yFields,
 
     legend: {
-      position: 'top-right',
-      marker: { symbol: 'square', radius: 8, },
+      position: "top-right",
+      marker: { symbol: "square", radius: 8 },
       // legendMarker
     },
 
@@ -28,7 +38,7 @@ export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: 
         visible: true,
         line: {
           style: {
-            stroke: '#D9DBE9',
+            stroke: "#D9DBE9",
           },
         },
       },
@@ -54,9 +64,9 @@ export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: 
 
     geometryOptions: [
       {
-        geometry: 'line',
+        geometry: "line",
         smooth: true,
-        color: '#4A9D77',
+        color: "#4A9D77",
         lineStyle: {
           lineWidth: 4,
           opacity: 0.5,
@@ -67,18 +77,18 @@ export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: 
         //   },
         // },
         point: {
-          shape: 'circle',
+          shape: "circle",
           size: 10,
           style: {
-            stroke: '#4A9D77',
-            fill: '#4A9D77',
+            stroke: "#4A9D77",
+            fill: "#4A9D77",
           },
         },
       },
       {
-        geometry: 'line',
+        geometry: "line",
         smooth: true,
-        color: '#E95060',
+        color: "#E95060",
         lineStyle: {
           lineWidth: 4,
           opacity: 0.5,
@@ -89,11 +99,11 @@ export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: 
         //   },
         // },
         point: {
-          shape: 'circle',
+          shape: "circle",
           size: 10,
           style: {
-            stroke: '#E94E5D',
-            fill: '#E94E5D',
+            stroke: "#E94E5D",
+            fill: "#E94E5D",
           },
         },
       },
@@ -104,20 +114,27 @@ export const RegisterMemberAndFeddbackGraph : FC<{ graphName: string, styling?: 
         let attributeName, value;
 
         if (graphName === constants.REGISTER_MEMBERS) {
-          attributeName = props.hasOwnProperty('Active') ? "Active" : "Inactive";
-          value = attributeName === 'Active' ? props.Active : props.Inactive;
+          attributeName = props.hasOwnProperty("Active")
+            ? "Active"
+            : "Inactive";
+          value = attributeName === "Active" ? props.Active : props.Inactive;
         } else {
-          attributeName = props.hasOwnProperty('Positive') ? "Positive" : "Negative";
-          value = attributeName === 'Positive' ? props.Positive : props.Negative;
+          attributeName = props.hasOwnProperty("Positive")
+            ? "Positive"
+            : "Negative";
+          value =
+            attributeName === "Positive" ? props.Positive : props.Negative;
         }
 
-        return { name: attributeName, value: `${value}%` }
+        return { name: attributeName, value: `${value}%` };
       },
     },
-
   };
 
   return (
-    <DualAxes style={styling} {...config} />
+    <div className="relative">
+    <p className="font-medium text--[20px] leading-[28px] text-secondary-color absolute">{title}</p>
+      <DualAxes style={styling} {...config} />
+    </div>
   );
 };
