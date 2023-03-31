@@ -625,8 +625,8 @@ const systemAdminRoutes = [
         element: <HelpDesk />,
       },
       {
-        key: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
-        path: `${ROUTES_CONSTANTS.ASCTIVITY_LOG}`,
+        key: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
+        path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
         element: <ActivityLog />,
       },
     ],
@@ -752,7 +752,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
-        element: <Universities/>
+        element: <Universities />
       },
 
       {
@@ -1332,6 +1332,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
     ],
   },

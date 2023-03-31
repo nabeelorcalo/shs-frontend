@@ -1,5 +1,11 @@
 @import '../../scss/_colors.scss';
-
+.candidate-main{
+  .candidate-right-sec{
+    @media only screen and (max-width:575px) {
+      flex-direction: column;
+    }
+  }
+}
 .candidate-rating {
   .ant-dropdown-menu {
     padding: 15px;

@@ -114,7 +114,7 @@ const OffersAgent = () => {
             <div>
               <Button
                 onClick={() => setISOpen(false)}
-                className="text-[#4A9D77]"
+                className="teriary-color"
               >
                 Cancel
               </Button>
