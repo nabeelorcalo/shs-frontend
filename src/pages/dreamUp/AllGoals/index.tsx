@@ -13,7 +13,7 @@ const { Panel } = Collapse;
 const AllGoals = () => {
   const action = useCustomHook();
   const [openAdGoal, setOpenAddGoal] = useState(false);
-  const [openAddGoalTask,setOpenAddGoalTask] =useState(false)
+  const [openAddGoalTask, setOpenAddGoalTask] = useState(false)
   const [selectedGoal, setSelectedGoal] = useState<any>(goalsData[0]?.details);
   // const [taskId, setTaskId] = useState('');
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, id: '' })
@@ -25,14 +25,13 @@ const AllGoals = () => {
   };
   // 
   const handleCompleted = () => {
-
-    const newArr = selectedGoal.map((item: any) => {
-      console.log(item.id === dropdownDataRecord.id)
-      return { ...item, isCompleted: true }
-    })
-    console.log(newArr);
-
-    setSelectedGoal(newArr)
+    const newArr1 = [...selectedGoal];
+    const find = newArr1.find((goal) => goal.id === dropdownDataRecord.id);
+    if (!find.isCompleted) {
+      find.isCompleted = true
+    }
+    console.log(find);
+    setSelectedGoal(newArr1);
   }
   const items: MenuProps['items'] = [
     {
@@ -125,8 +124,6 @@ const AllGoals = () => {
                 <>
                   {
                     selectedGoal?.map((goalDetail: any, i: number) => {
-                      // console.log(goalDetail);
-
                       return <div className="flex gap-4" key={i}>
                         <span className='mt-5' >{goalDetail?.isCompleted ? <TickCircleGreenIcon /> : <TickCircleGrayIcon />}</span>
                         <Collapse accordion className='collaps_main flex-1' expandIcon={customExpandIcon} bordered={false} collapsible={'icon'}>
@@ -138,16 +135,7 @@ const AllGoals = () => {
                               </span>
                               <Dropdown
                                 menu={{ items }}
-                                // open={dropdown}
-                                // onOpenChange={setDropdown}
                                 trigger={['click']}
-                              // dropdownRender={() => {
-                              //   return <BoxWrapper className=" action_dropDown">
-                              //     <p className=" cursor-pointer " onClick={() => setTaskId(goalDetail.id)}>Mark as Complete</p>
-                              //     <p className="cursor-pointer my-4">Edit</p>
-                              //     <p className="cursor-pointer" onClick={() => setDeleteAlertModal(true)}>Delete</p>
-                              //   </BoxWrapper>
-                              // }}
                               >
                                 <MoreIcon className='cursor-pointer' style={{ transform: 'rotate(90deg)' }} onClick={() => setDropDownDataRecord(goalDetail)} />
                               </Dropdown>
@@ -171,14 +159,12 @@ const AllGoals = () => {
         setOpenAddGoal={setOpenAddGoal}
         submitAddGoal={action.addGoals}
       />}
-
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
         open={openAddGoalTask}
         setOpenAddEditGoalTask={setOpenAddGoalTask}
         submitGoalTask={action.addGoalTask}
       />
-
       {deletaAlert.isToggle && <Alert
         alertType={"error"}
         state={deletaAlert.isToggle}
@@ -188,7 +174,6 @@ const AllGoals = () => {
         okBtnFunc={() => { alert("alert") }}
         children={<p>Are you sure you want to delete this task? {deletaAlert.id}</p>}
       />}
-
     </>
   )
 }
