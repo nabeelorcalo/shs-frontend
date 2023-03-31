@@ -15,22 +15,15 @@ const AllGoals = () => {
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [openAddGoalTask, setOpenAddGoalTask] = useState(false)
   const [selectedGoal, setSelectedGoal] = useState<any>(goalsData[0]?.details);
-  const newArr:any=[]
-  const calPer = selectedGoal.map((data: any) => {
-    console.log(data.isCompleted);
-    if(data.isCompleted) newArr.push(data) 
-  }) 
-  console.log(newArr);
-  
-  // const [taskId, setTaskId] = useState('');
+  const newArr: any = []
+  selectedGoal.map((data: any) => data.isCompleted ? newArr.push(data) : []) 
+  const calculatePercentage = Math.floor(((newArr.length) / selectedGoal.length) * 100);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, id: '' })
-  // const [dropdown, setDropdown] = useState(false)
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
   const customExpandIcon = ({ isActive }: any) => {
     const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
     return <span className="custom-expand-icon">{icon}</span>;
   };
-  // 
   const handleCompleted = () => {
     const newArr1 = [...selectedGoal];
     const find = newArr1.find((goal) => goal.id === dropdownDataRecord.id);
@@ -55,7 +48,6 @@ const AllGoals = () => {
       key: '3',
     },
   ];
-  // console.log(dropdownDataRecord);
   return (
     <>
       <div className='allGoals_main'>
@@ -118,7 +110,7 @@ const AllGoals = () => {
                     <span>10/05/2023</span>
                   </div>
                 </div>
-                <div className='progres_wrapper basis-[100%] lg:basis-[30%] '><Progress className='flex' percent={100} /></div>
+                <div className='progres_wrapper basis-[100%] lg:basis-[30%] '><Progress className='flex' percent={calculatePercentage} /></div>
               </div>
               <Divider />
               <div className='flex items-center justify-end Add_new_task mb-5'>
