@@ -1,7 +1,5 @@
 /// <reference types="vite-plugin-svgr/client" />
 // Header Icons
-// export { default as AppLogo } from './AppLogo.svg';
-/// <reference types="vite-plugin-svgr/client" />
 export { default as ContractsRecieved } from "./contractsRecieved.png";
 export { default as ContractsRejected } from "./contractsRejected.png";
 export { default as ContractsSigned } from "./contractsSigned.png";
@@ -185,10 +183,10 @@ export { ReactComponent as CertificateEyeIcon } from "../images/certificates-img
 export { default as CertificateLayout } from "../images/certificates-img/certificate-layout.png";
 
 // Accommodation Icons
-export { ReactComponent as IconFilters } from "./icon-filters.svg";
-export { ReactComponent as IconFiltersAngle } from "./icon-filters-angle.svg";
-export { ReactComponent as IconCloseCircle } from "./icon-close-circle.svg";
-export { ReactComponent as IconWebLocation } from "./icon-web-location.svg";
+export { ReactComponent as IconFilters } from "./accommodation/icon-filters.svg";
+export { ReactComponent as IconFiltersAngle } from "./accommodation/icon-filters-angle.svg";
+export { ReactComponent as IconCloseCircle } from "./accommodation/icon-close-circle-sm.svg";
+export { ReactComponent as IconWebLocation } from "./accommodation/icon-web-location.svg";
 export { ReactComponent as IconStatusCheck } from "./accommodation/icon-check.svg";
 export { ReactComponent as IconArrowDown } from "./accommodation/icon-arrow-down.svg";
 export { ReactComponent as IconDatePicker } from "./accommodation/icon-calendar.svg";
