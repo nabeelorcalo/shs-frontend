@@ -26,7 +26,7 @@ const SettingModal = (props: any) => {
         <Col>
           <div className="modal-p">
             Automatically lock application after
-            <span className="text-[#E95060] pl-2 font-medium text-base">
+            <span className="secondary-color pl-2 font-medium text-base">
               15 minutes
             </span>
           </div>
