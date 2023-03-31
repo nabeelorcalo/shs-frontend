@@ -1,13 +1,13 @@
 
 import { Col, Row } from 'antd/es/grid';
 import { useState } from 'react'
-import { AddGoalIcon, AddGoalPlusIcon, CircleMinusIcon, CirclePlusIcon, MoreIcon, TickCircleGrayIcon, TickCircleGreenIcon } from '../../../assets/images';
+import { AddGoalIcon, AddGoalPlusIcon, CircleMinusIcon, CirclePlusIcon, GoalHeaderCalanderIcon, MoreIcon, TaskSquareIcon, TickCircleGrayIcon, TickCircleGreenIcon } from '../../../assets/images';
 import { Alert, BoxWrapper, Button, PageHeader, SearchBar } from '../../../components'
 import useCustomHook from '../actionHandler';
 import { SetGoal } from './addGoalModal';
 import { goalsData } from './allGoalMockData';
 import "./style.scss";
-import { Collapse, Divider, Dropdown, MenuProps } from 'antd';
+import { Collapse, Divider, Dropdown, MenuProps, Progress } from 'antd';
 import { AddEditGoalTaskModal } from './addEditGoalTaskModal';
 const { Panel } = Collapse;
 const AllGoals = () => {
@@ -15,6 +15,13 @@ const AllGoals = () => {
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [openAddGoalTask, setOpenAddGoalTask] = useState(false)
   const [selectedGoal, setSelectedGoal] = useState<any>(goalsData[0]?.details);
+  const newArr:any=[]
+  const calPer = selectedGoal.map((data: any) => {
+    console.log(data.isCompleted);
+    if(data.isCompleted) newArr.push(data) 
+  }) 
+  console.log(newArr);
+  
   // const [taskId, setTaskId] = useState('');
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, id: '' })
   // const [dropdown, setDropdown] = useState(false)
@@ -76,7 +83,7 @@ const AllGoals = () => {
           </Col>
         </Row>
         <Row gutter={[20, 20]} className="mt-8">
-          <Col xs={24} lg={7}>
+          <Col xs={24} lg={11} xl={7}>
             <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab h-screen' >
               <h1 className='font-medium text-xl mb-5 '>My Goals</h1>
               {goalsData.length === 0 ?
@@ -98,8 +105,21 @@ const AllGoals = () => {
               }
             </BoxWrapper>
           </Col>
-          <Col lg={17}>
+          <Col lg={13} xl={17} xs={24}>
             <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab_details h-screen'>
+              <div className='top_header_tasksInfo_info flex items-center justify-between flex-wrap'>
+                <div className="flex flex-wrap gap-[20px] sm:gap[50px] md:gap-[25px] lg:gap-[22px]   lg:basis-[70%] basis-[100%] ">
+                  <p className='heading '>Create Balance in life</p>
+                  <div className='task_count'>
+                    <TaskSquareIcon className='mr-2' /><span>Tasks: {selectedGoal.length}</span>
+                  </div>
+                  <div className='Date_wrapper'>
+                    <GoalHeaderCalanderIcon className='mr-2' />
+                    <span>10/05/2023</span>
+                  </div>
+                </div>
+                <div className='progres_wrapper basis-[100%] lg:basis-[30%] '><Progress className='flex' percent={100} /></div>
+              </div>
               <Divider />
               <div className='flex items-center justify-end Add_new_task mb-5'>
                 <Button
@@ -110,7 +130,7 @@ const AllGoals = () => {
                   className="Request_leave flex items-center justify-center"
                 />
               </div>
-              {selectedGoal?.length === 0 ?
+              {selectedGoal?.length === 0 || goalsData.length === 0 ?
                 <>
                   <h1 className='font-medium text-xl '>hello</h1>
                   <div className='h-full flex items-center justify-center'>
