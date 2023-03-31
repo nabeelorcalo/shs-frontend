@@ -45,13 +45,15 @@ const Detail = () => {
     "Developer",
   ];
 
-  const tableColumns = [
-    { header: 'Id', dataKey: 'id' },
-    { header: 'Name', dataKey: 'name' },
-    { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
-    { header: 'Profession', dataKey: 'profession' },
-    { header: 'Status', dataKey: 'status' },
-  ];
+
+  const tableColumns = ['Id', 'Name', 'Avatar', 'Profession','Status'];
+  // const tableColumns = [
+  //   { header: 'Id', dataKey: 'id' },
+  //   { header: 'Name', dataKey: 'name' },
+  //   { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
+  //   { header: 'Profession', dataKey: 'profession' },
+  //   { header: 'Status', dataKey: 'status' },
+  // ];
 
   const dummyData = [
     {
