@@ -69,8 +69,8 @@ const DocumentsAgent = () => {
 
         <div className="flex items-center">
           <div>
-            <p className="text-[#A0A3BD] text-sm font-normal">{item.date}</p>
-            <p className="text-[#A0A3BD] text-sm font-normal">{item.size}</p>
+            <p className="light-grey-color text-sm font-normal">{item.date}</p>
+            <p className="light-grey-color text-sm font-normal">{item.size}</p>
           </div>
           
           <div className="pl-2">

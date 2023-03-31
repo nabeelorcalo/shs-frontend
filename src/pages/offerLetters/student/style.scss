@@ -2,7 +2,7 @@
 
 .offer-latter-student {
   .offer-latter-student-title {
-    color: #363565;
+    color: $primary-bg-color;
   }
 
   .offer-letter-status {
@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     background: $white-bg-color;
-    border: 1px solid #e6f4f9;
+    border: 1px solid $text-input-bg-color;
     border-radius: 10px;
   }
 

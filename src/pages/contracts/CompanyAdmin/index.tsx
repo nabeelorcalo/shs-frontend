@@ -106,7 +106,7 @@ const CompanyAdmin = () => {
             }
             <div className="text-start pl-4">
               <div className="text-base">Contract</div>
-              <div className="text-sm text-[#A0A3BD]">From Power Source</div>
+              <div className="text-sm light-grey-color">From Power Source</div>
             </div>
           </div>
         );
@@ -146,7 +146,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -158,7 +158,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
