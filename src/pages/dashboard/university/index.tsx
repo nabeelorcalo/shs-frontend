@@ -5,7 +5,6 @@ import {
   CountingCard,
   MonthlyPerfomanceChart,
   TopPerformers,
-  UniversityCard,
   PageHeader,
 } from "../../../components";
 import {

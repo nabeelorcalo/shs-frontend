@@ -87,6 +87,7 @@ export const PerformanceAnalyticsData = [
     value: 7000,
   },
 ];
+import { AlphabetIncIcon, IntuitIncIncIcon, MLACorporationIncIcon, SnowflakeIncIcon } from "../../../assets/images";
 import user from "../../../assets/images/dashboard/Image.svg";
 export const topPerformers = [
   { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
@@ -98,30 +99,29 @@ export const topPerformers = [
   { image: user, name: "Maria Sanoid", designation: "UI UX Designer", progress: "97%" },
 ];
 
-import UniLogo from "../../../assets/images/dashboard/UniLogo.svg";
 export const agnecyList = [
   {
-    logo: UniLogo,
-    title: "University of London",
+    logo: IntuitIncIncIcon,
+    title: "Intuit Inc.",
     agency:"Software Agency ",
     peopleList: ["a", "s", "d", "f", "", "", ""]
   },
   {
-    logo: UniLogo,
-    title: "University of London",
+    logo: AlphabetIncIcon,
+    title: "Alphabet Inc.",
     agency:"Software Agency ",
     peopleList: ["a", "s", "d", "f", "", "", ""]
   },
   {
-    logo: UniLogo,
-    title: "University of London",
+    logo: MLACorporationIncIcon,
+    title: "MLA Corporation Inc",
     agency:"Software Agency ",
-    peopleList: ["a", "s", "d", "f", "", "", ""]
+    peopleList: ["a", "s", "d"]
   },
   {
-    logo: UniLogo,
-    title: "University of London",
+    logo: SnowflakeIncIcon,
+    title: "Snowflake Inc",
     agency:"Software Agency ",
-    peopleList: ["a", "s", "d", "f", "", "", ""]
+    peopleList: ["a", "s", "d", "f", "",]
   },
 ]

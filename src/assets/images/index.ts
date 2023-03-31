@@ -347,9 +347,14 @@ export { ReactComponent as AttachmentIcon } from './dashboard/attachment.svg';
 export { ReactComponent as EmojiIcon } from './dashboard/emoji.svg';
 export { ReactComponent as InformationIcon } from "./dashboard/info-icon.svg";
 // university dshboard
-export { ReactComponent as HiredIcon } from "./dashboard/hiredIcon.svg";
+export { ReactComponent as HiredStudentsIcon } from "./dashboard/hiredIcon.svg";
 export { ReactComponent as OngoingIcon } from "./dashboard/Ongoing.svg";
 export { ReactComponent as PresentInternsIcon } from "./dashboard/PresentInterns.svg";
+export { default as SnowflakeIncIcon } from "./dashboard/SnowflakeInc.svg";
+export { default as MLACorporationIncIcon } from "./dashboard/MLACorporationInc.svg";
+export { default as IntuitIncIncIcon } from "./dashboard/IntuitInc.svg";
+export { default as AlphabetIncIcon } from "./dashboard/AlphabetInc.svg";
+
 
 // contract
 export { default as Recevied } from "../images/ColorfullIconsProgressbar/received.svg";

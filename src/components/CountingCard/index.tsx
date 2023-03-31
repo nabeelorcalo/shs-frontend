@@ -1,6 +1,6 @@
 import { FC } from "react";
 import {
-  HiredIcon,
+  HiredStudentsIcon,
   InactiveMembersIcon,
   ListingIcon,
   OngoingIcon,
@@ -198,7 +198,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
 
     hiredStudents &&
-    handleCardList(<HiredIcon />, "Hired Students", hiredStudents, greenBg);
+    handleCardList(<HiredStudentsIcon />, "Hired Students", hiredStudents, greenBg);
 
     completedInternship &&
     handleCardList(<PresentInternsIcon />, "Completed Internship", completedInternship, greenBg);
