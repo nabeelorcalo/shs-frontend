@@ -12,11 +12,11 @@ import {
   Space,
   Typography,
 } from "antd";
-import '../../../style.scss';
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
+import '../../../style.scss';
 
 
 import { Option } from "antd/es/mentions";
@@ -27,7 +27,7 @@ const PersonalInformation = () => {
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70,height:"48px" }}>
+      <Select style={{ width: 70, height: "48px" }}>
         <Option value="86">+86</Option>
         <Option value="87">+87</Option>
       </Select>
@@ -90,9 +90,9 @@ const PersonalInformation = () => {
               ]}
             >
               <DropDown
-                 name='Select'
-                 value={value}
-                 options={['item 1', 'item 2', 'item 3']}
+                name='Select'
+                value={value}
+                options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
               />
             </Form.Item>
@@ -109,7 +109,7 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-          <Form.Item
+            <Form.Item
               label="Nationality"
               name="nationality"
               rules={[
@@ -117,9 +117,9 @@ const PersonalInformation = () => {
               ]}
             >
               <DropDown
-                 name='Select'
-                 value={value}
-                 options={['item 1', 'item 2', 'item 3']}
+                name='Select'
+                value={value}
+                options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
               />
             </Form.Item>
@@ -133,13 +133,13 @@ const PersonalInformation = () => {
               ]}
             >
               <CommonDatePicker
-                 requireAsButton
-                 btnIcon={CalendarIcon}
-                 btnClassName={'h-[48px]'}
-                 placement="bottomLeft"
-                 open={isdate1}
-                 setOpen={setIsDate1}
-                 setValue={setValue}/>
+                requireAsButton
+                btnIcon={CalendarIcon}
+                btnClassName={'h-[48px]'}
+                placement="bottomLeft"
+                open={isdate1}
+                setOpen={setIsDate1}
+                setValue={setValue} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -154,26 +154,25 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-          <Form.Item
-        name="phone"
-        label="Phone Number"
+            <Form.Item
+              name="phone"
+              label="Phone Number"
               rules={[{ required: true, message: 'Please input your phone number!' }]}
-              
             >
-               <Input.Group compact>
-      <Select size="large" defaultValue="+92" style={{ width: '25%' }}>
-        <Option value="+44">+44</Option>
-        <Option value="+92">+92</Option>
-      </Select>
+              <Input.Group compact>
+                <Select defaultValue="+92" style={{ width: '25%' }}>
+                  <Option value="+44">+44</Option>
+                  <Option value="+92">+92</Option>
+                </Select>
                 <AutoComplete
-                  size='large'
-        style={{ width: '75%' }}
-        placeholder="xxxxxxx-xxx"
-        options={[{ value: 'text 1' }, { value: 'text 2' }]}
-      />
-    </Input.Group>
+                  
+                  style={{ width: '75%' }}
+                  placeholder="xxxxxxx-xxx"
+                  options={[{ value: 'text 1' }, { value: 'text 2' }]}
+                />
+              </Input.Group>
 
-      </Form.Item>
+            </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -194,10 +193,10 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Visa Status!" },
               ]}
             >
-             <DropDown
-                 name='Select'
-                 value={value}
-                 options={['item 1', 'item 2', 'item 3']}
+              <DropDown
+                name='Select'
+                value={value}
+                options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
               />
             </Form.Item>
@@ -244,15 +243,15 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Post Code!" },
               ]}
             >
-             <DropDown
-                        name='Select'
-                        value={value}
-                        options={['search', 'item 1']}
-                        setValue={setValue}
-                        requireSearchBar
-                        searchValue={searchValue}
-                        setSearchValue={setSearchValue}
-                    />
+              <DropDown
+                name='Select'
+                value={value}
+                options={['search', 'item 1']}
+                setValue={setValue}
+                requireSearchBar
+                searchValue={searchValue}
+                setSearchValue={setSearchValue}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -263,7 +262,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your House No!" },
               ]}
             >
-              <Input placeholder="Enter House Number" className="input-style"/>
+              <Input placeholder="Enter House Number" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -274,7 +273,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Street!" },
               ]}
             >
-              <Input placeholder="Enter Street Number" className="input-style"/>
+              <Input placeholder="Enter Street Number" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -285,10 +284,10 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Country!" },
               ]}
             >
-               <DropDown
-                 name='Select'
-                 value={value}
-                 options={['item 1', 'item 2', 'item 3']}
+              <DropDown
+                name='Select'
+                value={value}
+                options={['item 1', 'item 2', 'item 3']}
                 setValue={setValue}
               />
             </Form.Item>
@@ -301,7 +300,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your City!" },
               ]}
             >
-              <Input  placeholder="Enter City" className="input-style"/>
+              <Input placeholder="Enter City" className="input-style" />
             </Form.Item>
           </Col>
         </Row>
@@ -319,7 +318,7 @@ const PersonalInformation = () => {
               ]}
             >
               <Button className="text-input-bg-color border-0 rounded-[14.5px]"
-              
+
               >
                 <PlusOutlined /> Add
               </Button>
@@ -334,7 +333,7 @@ const PersonalInformation = () => {
               ]}
             >
               <Button
-               className="text-input-bg-color border-0 rounded-[14.5px]"
+                className="text-input-bg-color border-0 rounded-[14.5px]"
               >
                 <PlusOutlined /> Add
               </Button>
@@ -348,7 +347,7 @@ const PersonalInformation = () => {
                 { required: true, message: "Please input your Medical Condition!" },
               ]}
             >
-              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="text-area"/>
+              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="text-area" />
             </Form.Item>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -395,11 +394,11 @@ const PersonalInformation = () => {
                       <div
                         onClick={() => {
                           const copyDependents = [...dependents];
-                          copyDependents.splice(index+1, 1);
+                          copyDependents.splice(index + 1, 1);
                           setDependents(copyDependents);
                         }}
                       >
-                        
+
                         remove
                       </div>
                     </div>
@@ -411,20 +410,20 @@ const PersonalInformation = () => {
         </Row>
 
         <Form.Item>
-        <div className="flex justify-center sm:justify-end">
-          <Space>
-            <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-              Cancel
-            </Button>
+          <div className="flex justify-center sm:justify-end">
+            <Space>
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+                Cancel
+              </Button>
               <Button
-                
-              className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Space>
-        </div>
+
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Space>
+          </div>
         </Form.Item>
       </Form>
     </div>
