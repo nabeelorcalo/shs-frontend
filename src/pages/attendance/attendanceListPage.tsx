@@ -362,7 +362,7 @@ const Detail = () => {
               'excel'
             ]}
             requiredDownloadIcon
-            setValue={() => action.downloadPdfOrExcel(event, tableColumns, dummyData, "Attendance Detail")}
+            setValue={() => action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail")}
           />
         </div>
       </div>
