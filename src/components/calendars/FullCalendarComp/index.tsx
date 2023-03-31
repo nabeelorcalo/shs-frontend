@@ -17,16 +17,12 @@ const Index = () => {
 
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: '', eventId: '', status: '' });
 
-  console.log(openDrawer);
-
-
   const renderEventColor: any = {
     'meeting': '#E94E5D',
     'interview': '#5879CE',
     'reminder': '#FFC15D',
   };
   const handleEventClick = (id: string, category: string, status: string) => {
-    console.log(category);
     setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status })
   }
 
