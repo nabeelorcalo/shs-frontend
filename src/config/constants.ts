@@ -8,9 +8,7 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  USER_ROLE: JSON.parse(
-    localStorage.getItem("UserData") || JSON.stringify({ role: "" })
-  )?.role,
+  USER_ROLE: "Intern",
 };
 
 // Possible string of roles:
