@@ -19,6 +19,7 @@
       }
     }
     .save-btn{
+      border: 1px solid $teriary-bg-color;
       &:hover{
         background: $white-bg-color!important;
         color:$teriary-bg-color
@@ -31,7 +32,7 @@
     }
   }
   .sign-box{
-    border: 1px solid #e3e4ef;
+    border: 1px solid $text-success-placeholder-color;
     height: 150px;
   }
 .ant-input{

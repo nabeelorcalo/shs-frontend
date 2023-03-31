@@ -3,12 +3,14 @@ import { BoxWrapper, PageHeader } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
 import { NavLink } from 'react-router-dom'
 import { SettingHorizontalLine } from '../../../../assets/images'
-const { TextArea } = Input;
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
 import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
 
+const { TextArea } = Input;
+
 const index = () => {
+  const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
 
   const mockData = [
@@ -82,35 +84,19 @@ const index = () => {
                 <div className='sign-box w-full rounded-lg'></div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-                <div className='sign-box w-full rounded-lg flex items-center justify-around'> <span className='text-[#b8bacd]'>Click here to sign</span></div>
+                <div className='sign-box w-full rounded-lg flex items-center justify-around'>
+                  <span onClick={() => setOpenModal(true)} className='sign-btn cursor-pointer'>Click here to sign</span>
+                </div>
               </div>
             </div>
           </Form>
-          {/* <SignatureAndUploadModal 
-         title= ""
-         width ={500}
-         state= {openModal}
-         cancelBtntxt= {()=>{setOpenModal(!openModal)}}
-         okBtntxt= "Upload"
-         okBtnFunc= {()=>{}}
-         footer={<>
-           <Button
-             className='bg-[#fff] text-[#4A9D77] border-[#4A9D77]'
-           >
-             Cancel
-           </Button>,
-           <Button
-             type='primary'
-             className='bg-[#4A9D77] text-[#fff] border-[#4A9D77]'
-           >Submit</Button></> }/> */}
-
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
             <Button type='primary'
-              className='text-error-bg-color text-[#fff] border-[#4A9D77] reject-btn'>Reject</Button>
+              className='text-error-bg-color white-color reject-btn'>Reject</Button>
             <Button type='primary'
-              className='white-bg-color teriary-color  border-[#4A9D77] save-btn'>Save Draft</Button>
+              className='white-bg-color teriary-color save-btn'>Save Draft</Button>
             <Button type='primary'
-              className='teriary-bg-color  text-[#fff] border-[#4A9D77] finalise-btn '>Finalise</Button>
+              className='teriary-bg-color  white-color  finalise-btn '>Finalise</Button>
           </div>
         </BoxWrapper>
       </div>
@@ -140,37 +126,39 @@ const index = () => {
               <div className='sign-box w-full rounded-lg'></div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-              <div className='sign-box w-full rounded-lg flex items-center justify-around'> <span className='text-[#b8bacd]'>Click here to sign</span></div>
+              <div className='sign-box w-full rounded-lg flex items-center justify-around'>
+                <span onClick={() => setOpenModal(true)} className='text-[#b8bacd] cursor-pointer'>Click here to sign</span>
+              </div>
 
             </div>
           </div>
         </Form>
-        {/* <SignatureAndUploadModal 
-         title= ""
-         width ={500}
-         state= {openModal}
-         cancelBtntxt= {()=>{setOpenModal(!openModal)}}
-         okBtntxt= "Upload"
-         okBtnFunc= {()=>{}}
-         footer={<>
-           <Button
-             className='bg-[#fff] text-[#4A9D77] border-[#4A9D77]'
-           >
-             Cancel
-           </Button>,
-           <Button
-             type='primary'
-             className='bg-[#4A9D77] text-[#fff] border-[#4A9D77]'
-           >Submit</Button></> }/> */}
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
           <Button type='primary'
-            className='text-error-bg-color text-[#fff] border-[#4A9D77] reject-btn'>Reject</Button>
+            className='text-error-bg-color white-color reject-btn'>Reject</Button>
           <Button type='primary'
-            className='white-bg-color teriary-color  border-[#4A9D77] save-btn'>Save Draft</Button>
+            className='white-bg-color teriary-color save-btn'>Save Draft</Button>
           <Button type='primary'
-            className='teriary-bg-color  text-[#fff] border-[#4A9D77] finalise-btn '>Finalise</Button>
+            className='teriary-bg-color  white-color  finalise-btn '>Finalise</Button>
         </div>
       </BoxWrapper>
+      <SignatureAndUploadModal
+        title=""
+        width={500}
+        state={openModal}
+        cancelBtntxt={() => { setOpenModal(!openModal) }}
+        okBtntxt="Upload"
+        okBtnFunc={() => { }}
+        footer={<>
+          <Button
+            className='white-bg-color teriary-color'
+          >
+            Cancel
+          </Button>,
+          <Button
+            type='primary'
+            className='white-color teriary-bg-color  '
+          >Submit</Button></>} />
     </div>
   )
 }

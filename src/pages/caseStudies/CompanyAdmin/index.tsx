@@ -1,8 +1,7 @@
 
 import React, { useState } from 'react'
 import { Divider } from 'antd'
-import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
-import Drawer from '../../../components/Drawer';
+import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar ,  } from '../../../components'
 import CaseStudiesTable from '../Common/caseStudiesTable';
 import Filters from '../Common/filter';
 import './style.scss'
@@ -11,7 +10,6 @@ const index = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [value, setValue] = useState<any>()
    const handleChange = () => { };
-
   return (
     <div className='manager-case-studies'>
        <PageHeader title="Case Studies"

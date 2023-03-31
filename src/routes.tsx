@@ -133,6 +133,7 @@ const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
+const ViewDetailsReport = Loadable(lazy(() => import("./pages/report/UniversityRep/ViewDetails")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
 const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
@@ -1427,6 +1428,11 @@ const universityRoutes = [
         key: `${ROUTES_CONSTANTS.REPORT}`,
         path: `${ROUTES_CONSTANTS.REPORT}`,
         element: <Report />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        element: <ViewDetailsReport />,
       },
     ],
   },

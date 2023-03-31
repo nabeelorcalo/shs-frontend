@@ -1,7 +1,4 @@
 /// <reference types="vite-plugin-svgr/client" />
-// Header Icons
-// export { default as AppLogo } from './AppLogo.svg';
-/// <reference types="vite-plugin-svgr/client" />
 export { default as ContractsRecieved } from "./contractsRecieved.png";
 export { default as ContractsRejected } from "./contractsRejected.png";
 export { default as ContractsSigned } from "./contractsSigned.png";

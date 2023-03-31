@@ -1,18 +1,17 @@
 import { Divider } from 'antd'
 import React, { useState } from 'react'
-import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
-import CaseStudiesTable from '../Common/caseStudiesTable';
-import Filters from '../Common/filter';
-import './style.scss'
+import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
+import Drawer from '../../../components/Drawer';
+import Filters from './filter';
+import UniversityRepReportTable from './reportTable';
 
 const index = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [value, setValue] = useState<any>()
-   const handleChange = () => { };
-
+  const handleChange = () => { };
   return (
-    <div className='manager-case-studies'>
-       <PageHeader title="Case Studies"
+    <div>
+         <PageHeader title="Report"
          />
       <Divider className="my-0" />
       <div className='flex justify-between my-2'>
@@ -28,7 +27,7 @@ const index = () => {
         </div>
       </div>
       <BoxWrapper>
-      <CaseStudiesTable/>
+      <UniversityRepReportTable/>
       </BoxWrapper>
       <Drawer 
         closable={() => setShowDrawer(false)}
@@ -40,7 +39,8 @@ const index = () => {
           <Filters />
         </React.Fragment>
       </Drawer>
-      </div>
+
+    </div>
   )
 }
 

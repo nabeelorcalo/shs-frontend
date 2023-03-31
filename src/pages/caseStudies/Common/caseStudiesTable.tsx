@@ -10,7 +10,7 @@ const CaseStudiesTable = () => {
   const [openDropdown, setOpenDropdown] = useState(false)
 
 
-  const escalatedByMeTableData = [
+  const caseStudyTableData = [
     {
       no: '01',
       avater: Image,
@@ -72,7 +72,7 @@ const CaseStudiesTable = () => {
       status: 'Rejected',
     },
   ]
-  const escalatedByMeTableColumns =
+  const caseStudyColumnData =
     [
       {
         dataIndex: 'no',
@@ -146,9 +146,9 @@ const CaseStudiesTable = () => {
   return (
     <>
       <GlobalTable
-        columns={escalatedByMeTableColumns}
+        columns={caseStudyColumnData}
         pagination
-        tableData={escalatedByMeTableData}
+        tableData={caseStudyTableData}
       />
       <Alert
         state={openWarningModal}
@@ -156,9 +156,11 @@ const CaseStudiesTable = () => {
         type="warning"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-      >
-        <p>Are you sure you want to reject this case study?</p>
-      </Alert>
+        children={<p>Are you sure you want to reject this case study?</p>}
+
+      />
+   
+      
 
     </>
   )
