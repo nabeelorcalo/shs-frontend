@@ -6,7 +6,6 @@ import {
   Button,
   DropDown,
   FiltersButton,
-  IconButton,
   MonthChanger,
   PageHeader,
   SearchBar,

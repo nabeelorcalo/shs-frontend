@@ -16,8 +16,7 @@ const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
   const detailHistoryBreadCrumb = [
     { name: "Mino Marina" },
-    { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: constants.USER_ROLE !== constants.MANAGER && "/" },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: constants.USER_ROLE === constants.UNIVERSITY ?  "View History" : constants.USER_ROLE === 'Manager' ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const performanceData = [

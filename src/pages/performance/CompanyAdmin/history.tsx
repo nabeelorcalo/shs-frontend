@@ -30,7 +30,7 @@ import { Link } from "react-router-dom";
 const PerformanceHistory = () => {
   const historyBreadCrumb = [
     { name: constants.USER_ROLE === constants.COMPANY_ADMIN ? 'Performance History' :  "View History" },
-    { name: " Performance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
   const action = useCustomHook();

@@ -30,7 +30,6 @@ const Detail = () => {
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
-    { name: constants.USER_ROLE !== constants.UNIVERSITY && "/" },
     { name: constants.USER_ROLE !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const timeFrameOptions = [
