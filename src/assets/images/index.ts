@@ -516,7 +516,6 @@ export { ReactComponent as CardViewIcon } from "./Attendance/CardViewIcon.svg";
 export { ReactComponent as TableViewIcon } from "./Attendance/TableViewIcon.svg";
 export { ReactComponent as CalendarPickerIcon } from "./Attendance/CalendarPickerIcon.svg";
 
-<<<<<<< HEAD
 // Earn With Us Icons
 export { ReactComponent as IconWalletMoney } from "./earnWithUs/icon-wallet-money.svg";
 export { ReactComponent as IconInactiveMemberBal } from "./earnWithUs/icon-inactive-member-balance.svg";
@@ -531,7 +530,6 @@ export { ReactComponent as IconDocumentCopy } from "./earnWithUs/document-copy.s
 export { ReactComponent as IconBank } from "./earnWithUs/icon-bank.svg";
 export { ReactComponent as IconEditAccount } from "./earnWithUs/icon-edit.svg";
 
-=======
 // payments
 export { ReactComponent as UserIcon } from "./payments/userIcon.svg";
 export { ReactComponent as Success } from "./payments/success.svg";
@@ -553,4 +551,3 @@ export { ReactComponent as TickCircleGrayIcon } from "./AllGoals/TickCircleGrayI
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
 export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
 export { ReactComponent as VideoRecorder } from './VideoRecorder.svg';
->>>>>>> dev
