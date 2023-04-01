@@ -1,33 +1,15 @@
 import React, { FC, useEffect, useState } from "react";
-import "./style.scss";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Logo,
-  IconCollapsebleOff,
-  IconCollapsebleOn,
-  IconSearchNormal,
-  MessageNotif,
-  Notification,
-  IconGlobe,
-  IconLogout,
-  IconProfile,
-  IconCross,
-} from "../../../assets/images";
-import {
-  Layout,
-  Input,
-  Dropdown,
-  Avatar,
-  Drawer,
-  List,
-  MenuProps,
-  Typography,
-} from "antd";
-const { Search } = Input;
-const { Header } = Layout;
+import {  Logo, IconCollapsebleOff,  IconCollapsebleOn,  IconSearchNormal, MessageNotif,
+  Notification, IconGlobe,  IconLogout,  IconProfile,   IconCross} from "../../../assets/images";
+import { Layout,  Input,  Dropdown,  Avatar,  Drawer, List, MenuProps, Typography} from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { ExtendedButton } from "../../../components";
+import "./style.scss";
+
+const { Search } = Input;
+const { Header } = Layout; 
 
 type HeaderProps = {
   collapsed: boolean;
@@ -162,13 +144,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             />
           </div>
 
-          <div
-            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
-          >
-            <div
-              className="mobile-searchbox-toggler"
-              onClick={() => handleMobileSearch()}
-            >
+          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`} >
+            <div className="mobile-searchbox-toggler" onClick={() => handleMobileSearch()} >
               <IconSearchNormal />
             </div>
             <Search
