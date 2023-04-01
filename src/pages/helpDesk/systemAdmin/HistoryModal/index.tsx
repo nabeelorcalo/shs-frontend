@@ -58,7 +58,7 @@ const HistoryModal = (props: any) => {
                   <div className='pl-4'>
                     <div className='flex'>
                       <div className='text-teriary-color text-xs font-normal pr-10'>{item.date}</div>
-                      <div className='text-xs text-[#A0A3BD] font-normal'>{item.time}</div>
+                      <div className='text-xs light-grey-color font-normal'>{item.time}</div>
                     </div>
 
                     <div className='font-medium text-base text-secondary-color '>{item.title}</div>

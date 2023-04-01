@@ -45,94 +45,78 @@ const Detail = () => {
     "Developer",
   ];
 
-  const tableColumns = [
-    { header: 'Id', dataKey: 'id' },
-    { header: 'Name', dataKey: 'name' },
-    { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
-    { header: 'Profession', dataKey: 'profession' },
-    { header: 'Status', dataKey: 'status' },
-  ];
+
+  const tableColumns = ['Id', 'Name', 'Avatar', 'Profession','Status'];
+  // const tableColumns = [
+  //   { header: 'Id', dataKey: 'id' },
+  //   { header: 'Name', dataKey: 'name' },
+  //   { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
+  //   { header: 'Profession', dataKey: 'profession' },
+  //   { header: 'Status', dataKey: 'status' },
+  // ];
 
   const dummyData = [
     {
       id: 1,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 2,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Designer",
-      company: role === "University" && "Orcalo Holdings",
       status: "leave",
     },
     {
       id: 3,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Business Analyst",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 4,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 5,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 6,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 7,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "absent",
     },
     {
       id: 8,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Scientist",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 9,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
   ];
@@ -360,7 +344,7 @@ const Detail = () => {
               'excel'
             ]}
             requiredDownloadIcon
-            setValue={() => action.downloadPdfOrExcel(event, tableColumns, dummyData, "Attendance Detail")}
+            setValue={() => action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail")}
           />
         </div>
       </div>

@@ -12,7 +12,7 @@ import {
   Row
 } from "antd";
 import { CommonDatePicker } from "../../../../../components";
-import upload from "../../../../../assets/images/profile/student/upload.svg";
+import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "../../../style.scss";

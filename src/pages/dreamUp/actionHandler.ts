@@ -9,9 +9,13 @@ const useCustomHook = () => {
   const addGoals =()=>{
     alert("hellofjfgjf")
   }
+  const addGoalTask =()=>{
+    alert("addGoalTask")
+  }
   return {
     getData,
     addGoals,
+    addGoalTask,
   };
 };
 
