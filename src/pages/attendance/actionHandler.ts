@@ -20,7 +20,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`, data);
+      csv(`${fileName}`,header, data); // csv(fileName, header, data, hasAvatar)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
