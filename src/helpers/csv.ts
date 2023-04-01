@@ -1,5 +1,5 @@
-const csv = (fileName: string, data: any) => {
-  const csvContent = csvData(data);
+const csv = (fileName: string, header: any, data: any) => {
+  const csvContent = csvData(header, data);
 
   const url = window.URL.createObjectURL(new Blob([csvContent]));
 
@@ -13,17 +13,25 @@ const csv = (fileName: string, data: any) => {
 
 // This method will set your api json
 // into an excel sheet format
-const csvData = (data: any) => {
+
+const csvData = (header: any, data: any) => {
+  const newHeaders = header.filter((str: any) => str !== 'Avatar'); // Delete Avatar from header array
+
   let excelContent = data.map((obj: any, index: any) => {
+    delete obj.avatar; // Delete Avatar from data array
+
     if (index === data.length - 1)
       return Object.values(obj).slice(0, -1);
     else
       return Object.values(obj);
   });
 
-  excelContent = excelContent.map((e: any) => e.join(",")).join("\n");
+  const csvContent = [
+    newHeaders.join(','),
+    ...excelContent.map((row: any) => Object.values(row).join(',')),
+  ].join('\n');
 
-  return excelContent;
+  return csvContent;
 }
 
 export default csv;

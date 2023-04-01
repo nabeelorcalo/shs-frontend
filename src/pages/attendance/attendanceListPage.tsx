@@ -59,82 +59,64 @@ const Detail = () => {
     {
       id: 1,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 2,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Designer",
-      company: role === "University" && "Orcalo Holdings",
       status: "leave",
     },
     {
       id: 3,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Business Analyst",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 4,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 5,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 6,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 7,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "absent",
     },
     {
       id: 8,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Scientist",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
     {
       id: 9,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
       status: "present",
     },
   ];
