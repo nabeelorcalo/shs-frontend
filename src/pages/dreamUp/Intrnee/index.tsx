@@ -151,7 +151,7 @@ const DreamUp = () => {
           />
         </Col>
         <Col lg={8}>
-          <BoxWrapper className="h-full Life_balanceGraph">
+          <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_balanceGraph">
             <div className="flex items-center justify-between">
               <h4 className="text-xl font-medium  ">Life Balance</h4>
             </div>
@@ -159,7 +159,7 @@ const DreamUp = () => {
           </BoxWrapper>
         </Col>
         <Col lg={8}>
-          <BoxWrapper className="h-full Life_assesment">
+          <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_assesment">
             <div className="flex items-center justify-between Life_assesment_inner_main_heading_wraper">
               <h4 className="text-xl font-medium  ">Life Assessment</h4>
             </div>
@@ -184,7 +184,7 @@ const DreamUp = () => {
           </div>
         </Col>
       </Row>
-      <BoxWrapper className="Table_wrapper">
+      <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="Table_wrapper">
         <GlobalTable
           columns={columData}
           tableData={data}
