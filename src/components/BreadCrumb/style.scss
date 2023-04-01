@@ -36,6 +36,7 @@
       &::before {
         content: " / ";
         padding-inline: 4px;
+        cursor:default;
       }
     }
   }
