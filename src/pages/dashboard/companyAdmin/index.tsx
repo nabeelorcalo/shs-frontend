@@ -14,7 +14,6 @@ import {
   AttendanceAndListingGraph,
   PageHeader,
 } from "../../../components";
-import userData from "../../../config/constants";
 import "../style.scss";
 import {
   PerformanceAnalyticsData,
@@ -22,7 +21,7 @@ import {
   universityList,
 } from "./mockData";
 import PiplineTable from "./PiplineTable";
-
+import Constants from '../../../config/constants'
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
@@ -97,10 +96,10 @@ const CompanyAdmin = () => {
         }
       />
       <Row gutter={gutter}>
-        <Col xs={24} xl={16}>
+        <Col xs={24} xl={15} xxl={16}>
           <PiplineTable handleSelect={handleSelect} />
         </Col>
-        <Col xs={24} xl={8}>
+        <Col xs={24} xl={9} xxl={8}>
           <InternshipSummaryChart
             autoFit
             barStyle={{
@@ -108,7 +107,7 @@ const CompanyAdmin = () => {
             }}
             colorField="name"
             heading="Internships Summary"
-            innerRadius={0.37}
+            innerRadius={0.5}
             intervalPadding={9.1}
             maxAngle={360}
             padding="auto"
@@ -135,7 +134,7 @@ const CompanyAdmin = () => {
             data={state.list}
             loading={state.loading}
             loadMoreData={loadMoreData}
-            role={userData?.USER_ROLE}
+            role={Constants?.USER_ROLE}
             handleAddAnnouncement={handleAddAnnouncement}
             height={505}
           />
@@ -180,7 +179,7 @@ const CompanyAdmin = () => {
             <Col xs={24} xl={12} xxl={24}>
               <TopPerformers
                 topPerformersList={topPerformers}
-                user={"companyAdmin"}
+                user={Constants?.COMPANY_ADMIN}
               />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
@@ -190,7 +189,7 @@ const CompanyAdmin = () => {
                 casualLeaves={["", "", ""]}
                 medicalLeaves={[""]}
                 workFromHome=""
-                user={"companyAdmin"}
+                user={Constants?.COMPANY_ADMIN}
               />
             </Col>
           </Row>

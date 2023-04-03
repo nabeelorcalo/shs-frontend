@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Space, Row, Col } from "antd";
-import { Link } from "react-router-dom";
 import {
   ClockInCommon,
   ClockOutCommon,
@@ -28,9 +27,10 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Detail = () => {
-  const tempArray = [
+  const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
-    { name: " Attendance ", onClickNavigateTo: "/attendance" },
+    { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
+    { name: constants.USER_ROLE !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const timeFrameOptions = [
     "This Week",
@@ -129,42 +129,6 @@ const Detail = () => {
     ],
   });
 
-  // const breadCrumbs = () => {
-  //   const role = constants.USER_ROLE;
-
-  //   switch (role) {
-  //     case 'Manager':
-  //       return (
-  //         <Link
-  //           className="bread-crumb"
-  //           to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-  //         >
-  //           Attendance
-  //         </Link>
-  //       );
-  //     case 'CompanyAdmin':
-  //       return (
-  //         <>
-  //           <Link
-  //             className="bread-crumb"
-  //             to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-  //           >
-  //             Attendance
-  //           </Link>
-  //           /
-  //           <Link
-  //             className="bread-crumb"
-  //             to={`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`}
-  //           >
-  //             Attendance Details
-  //           </Link>
-  //         </>
-  //       );
-  //     default:
-  //       return <></>;
-  //   }
-  // }
-
   const timeFrameSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -201,14 +165,6 @@ const Detail = () => {
         return "";
     }
   }
-  // const [expandedRowKeys, setExpandedRowKeys] = useState<any>([]);
-  // const handleExpand = (expanded: any, record: any) => {
-  //   if (expanded) {
-  //     setExpandedRowKeys([record.key]);
-  //   } else {
-  //     setExpandedRowKeys([]);
-  //   }
-  // };
 
   return (
     <div className="company-admin-detail-container">
@@ -216,10 +172,10 @@ const Detail = () => {
         title={
           <div className="font-medium">
             {
-              constants.USER_ROLE === "Intern" ?
-                <></>
+              constants.USER_ROLE === constants.INTERN ?
+                <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
-                <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+                <Breadcrumb breadCrumbData={attendanceDetailBreadCrumb} />
             }
           </div>
         }
@@ -288,11 +244,6 @@ const Detail = () => {
                   pagination={false}
                   columns={tableColumns}
                   tableData={tableData}
-                // expandable={{
-                //   defaultExpandAllRows: false,
-                //   expandedRowKeys,
-                //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
-                // }}
                 />
               </BoxWrapper>
             </Col>
