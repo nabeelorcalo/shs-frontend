@@ -1,16 +1,18 @@
 @import '../../scss/colors';
+
 .leave_modal_main {
     .Leave_request_SubmitBtn {
         background: $teriary-bg-color;
         box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
         border-radius: 8px;
         color: $white-bg-color;
+
         &:hover {
             background-color: $teriary-bg-color;
             color: $white-bg-color;
         }
     }
-    
+
     .Leave_request_Canclebtn {
         background: $white-bg-color;
         border: 1px solid $teriary-bg-color;
@@ -55,13 +57,25 @@
             }
 
         }
-        .ant-upload-list-item{
+
+        .ant-upload-list-item {
             background-color: $text-input-bg-color;
             padding: 12px 10px;
             border-radius: 6px;
             height: unset;
-            &:hover{
+
+            &:hover {
                 background-color: $text-input-bg-color;
+            }
+        }
+    }
+}
+
+.leave-time-picker {
+    .ant-picker-footer {
+        .ant-picker-footer-extra {
+            button{
+                display: none !important;
             }
         }
     }

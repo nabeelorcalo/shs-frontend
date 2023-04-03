@@ -8,6 +8,7 @@ import { DocumentUpload } from '../../assets/images';
 import { Button } from '../Button';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
 import { AcceptedFileTyp } from '../../config/leaveRequestFileConstant';
+import TimePickerComp from '../calendars/TimePicker/timePicker';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -56,11 +57,12 @@ export const LeaveRequest = (props: any) => {
     attachment: ''
 
   }
-  
+
   const { title, open, setIsAddModalOpen, subMitLeaveBtn, data } = props;
   // console.log(openModal);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
+  const [time, setTime] = useState({ from: false, to: false });
   const [formVal, setFormVal] = useState(data ? data : initailVal)
   const [form] = Form.useForm();
   // const handleTimeChange = (time: any) => {
@@ -103,7 +105,7 @@ export const LeaveRequest = (props: any) => {
         <Form.Item
           name="radio"
         >
-          <Radio.Group onChange={(e:any) => setRequestLeave(e.target.value)} defaultValue= "FullDay">
+          <Radio.Group onChange={(e: any) => setRequestLeave(e.target.value)} defaultValue="FullDay">
             <Radio value="FullDay">Full Day</Radio>
             <Radio value="HalfDay">Half Day</Radio>
           </Radio.Group>
@@ -141,23 +143,25 @@ export const LeaveRequest = (props: any) => {
             </Form.Item>
           </Col>
         </Row>
-        {requestLeave === "HalfDay" && 
+        {requestLeave === "HalfDay" &&
           <Row gutter={[10, 10]}>
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
-                <TimePicker
-                  minuteStep={60}
-                  secondStep={60}
-                // onChange={handleTimeChange}
+                <TimePickerComp
+                  popupclassName={'leave-time-picker'}
+                  open={time.from}
+                  setOpen={() => setTime({ from: !time.from, to: false })}
+                // value={initailVal.timeFrom}
                 />
               </Form.Item>
             </Col>
             <Col lg={8}>
               <Form.Item name="timeTo" label="Time To" rules={[{ required: true }]}>
-                <TimePicker
-                  minuteStep={60}
-                  secondStep={60}
-                // onChange={handleTimeChange}
+                <TimePickerComp
+                  popupclassName={'leave-time-picker'}
+                  open={time.to}
+                  setOpen={() => setTime({ to: !time.to, from: false })}
+                // value={initailVal.timeTo}
                 />
               </Form.Item>
             </Col>

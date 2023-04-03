@@ -1,4 +1,5 @@
 import { Col, Divider, Row, Tooltip } from "antd"
+import { useState } from "react"
 import { InTooltipIcon } from "../../../assets/images"
 import { BoxWrapper, Button, GlobalTable, PageHeader } from "../../../components"
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal"
@@ -21,6 +22,7 @@ const mockData = [
   },
 ]
 const AssesmentForm = () => {
+  const [openSignatureModal, setOpenSignatureModal] = useState(false)
   const colum = [
     {
       render: (_: any, data: any) => (<p>{data.no}</p>),
@@ -81,13 +83,13 @@ const AssesmentForm = () => {
           <Col xs={24} lg={11}>
             <div className="signature_wraper">
               <h4 className="mb-4">Maria Sanoid</h4>
-              <div className="Signatur_modal_opener flex items-center justify-center rounded-lg" onClick={()=>{alert("heloo")}}>Click Here To Sign</div>
+              <div className="Signatur_modal_opener flex items-center justify-center rounded-lg cursor-pointer" onClick={() => {setOpenSignatureModal(true)}}>Click Here To Sign</div>
             </div>
           </Col>
           <Col xs={24} lg={11}>
             <div className="signature_wraper">
               <h4 className="mb-4">Maria Sanoid</h4>
-              <div className="Signatur_modal_opener flex items-center justify-center rounded-lg">Click Here To Sign</div>
+              <div className="Signatur_modal_opener flex items-center justify-center rounded-lg cursor-pointer">Click Here To Sign</div>
             </div>
           </Col>
         </Row>
@@ -105,9 +107,15 @@ const AssesmentForm = () => {
             className="Apply_btn flex items-center justify-center "
           />
         </div>
-
       </BoxWrapper>
-      {/* <SignatureAndUploadModal/> */}
+      <SignatureAndUploadModal
+        state={openSignatureModal}
+        okBtnFunc={() => {alert("Sign Functionality goes here")}}
+        closeFunc={() => { setOpenSignatureModal(false) }}
+        okBtntxt={"Sign"}
+        cancelBtntxt={"Cancle"}
+        width={650}
+      />
     </div>
   )
 }
