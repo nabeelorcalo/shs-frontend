@@ -23,7 +23,7 @@ const steps = [
   ];
 
 const completionPercent = '25';
-const ProfileCompletion = () => {
+const ProfileCompletion = (props:any) => {
     return (
         <div className='profile-completion'>
             <div className='card-style'>
@@ -82,7 +82,9 @@ const ProfileCompletion = () => {
   />
                 </div>
                 <div>
-                    <Button className='btn-veri'>Complete</Button>
+            <Button className='btn-veri' onClick={() => {
+              props.setHide(false)
+                    }}>Complete</Button>
                 </div>
             </div>
         </div>

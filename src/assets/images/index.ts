@@ -546,4 +546,6 @@ export { ReactComponent as VerifyIcon } from '../../assets/images/dashboard/stud
 export { ReactComponent as Apply } from '../../assets/images/dashboard/studentdashboard/Apply.svg';
 export { ReactComponent as InterView} from '../../assets/images/dashboard/studentdashboard/Interviews.svg';
 export { ReactComponent as Sun} from '../../assets/images/dashboard/studentdashboard/Sun.svg';
-export { ReactComponent as LocationSun} from '../../assets/images/dashboard/studentdashboard/location.svg';
+export { ReactComponent as LocationSun } from '../../assets/images/dashboard/studentdashboard/location.svg';
+export { ReactComponent as WebArrow } from '../../assets/images/dashboard/studentdashboard/webarrow.svg';
+export {ReactComponent as CompanyLogoOne} from '../../assets/images/dashboard/studentdashboard/asset1.svg'

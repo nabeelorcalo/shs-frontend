@@ -44,6 +44,7 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^3.1.4",
+    "react-grid-carousel": "^1.0.1",
     "react-image-gallery": "^1.2.11",
     "react-infinite-scroll-component": "^6.1.0",
     "react-organizational-chart": "^2.2.0",
