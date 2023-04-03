@@ -15,6 +15,7 @@ import {
 import "../style.scss";
 import { gutter } from "..";
 import AgencyCard from "../../../components/AgencyCard";
+import constants from "../../../config/constants";
 
 const University = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -109,7 +110,7 @@ const University = () => {
           <AgencyCard agnecyList={agnecyList} />
         </Col>
         <Col xs={24} sm={24} xl={12} xxl={5}>
-          <TopPerformers topPerformersList={topPerformers} user="university" />
+          <TopPerformers topPerformersList={topPerformers} user={constants?.UNIVERSITY} />
         </Col>
       </Row>
     </>
