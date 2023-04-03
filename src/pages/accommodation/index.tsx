@@ -24,6 +24,14 @@ const Accommodation = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
+  const [filterValues,  setFilterValues] = useState({
+    "priceRange": 0,
+    "moveInDate": "",
+    "moveOutDate": "",
+    "offer": null,
+    "accomodationType": null,
+    "facilities": null,
+  })
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
@@ -115,6 +123,10 @@ const Accommodation = () => {
 
   const closeAvailablePropertyFilters = () => {
     setAvailablePropertyFiltersOpen(false)
+  }
+
+  function applyFilterAvailableProperties(values: any) {
+    console.log('Success:', values);
   }
 
   const openSavedSearchesFilters = () => {
@@ -284,7 +296,16 @@ const Accommodation = () => {
         onClose={closeAvailablePropertyFilters}
       >
         <div className="shs-filter-form">
-          <Form layout="vertical" name="availablePropertiesFilters" onFinish={onFinish}>
+          <Form
+            layout="vertical"
+            name="availablePropertiesFilters"
+            initialValues={filterValues}
+            onValuesChange={(_, values) => {
+              setFilterValues(prevState => ({...prevState, ...values}))
+              console.log('init:: ', values)
+            }}
+            onFinish={applyFilterAvailableProperties}
+          >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
