@@ -37,7 +37,7 @@ const index = (props: any) => {
       {constants.USER_ROLE === "CompanyAdmin" &&
         <Row gutter={[20, 20]} className="mb-5">
           {[1, 2, 3, 4].map((data: any) => (
-            <Col xl={6} lg={12} md={12} sm={12} xs={24}>
+            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={24}>
               <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main'>
                 <div className='user_intro flex items-center justify-center flex-col mb-5'>
                   <div className='w-[64px] h-[64px] rounded-full mb-5'>
