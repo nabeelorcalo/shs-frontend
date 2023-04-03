@@ -54,16 +54,7 @@ export const SalarySlip = () => {
       />
       <Card className="mt-5">
         <div className="flex justify-between items-center max-sm:flex-col md:flex-row gap-3">
-          <div
-            className="w-52 flex justify-center"
-            onClick={() =>
-              Notifications({
-                title: "Success",
-                description: "File downloaded",
-                icon: <Success />,
-              })
-            }
-          >
+          <div className="w-52 flex justify-center" >
             <Logo className="logo" />
           </div>
           <div className="details flex flex-col gap-2">
