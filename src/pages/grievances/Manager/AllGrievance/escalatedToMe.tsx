@@ -1,4 +1,3 @@
-import React from 'react'
 import {Space} from 'antd'
 import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'

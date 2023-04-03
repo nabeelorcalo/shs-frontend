@@ -1,5 +1,5 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconAngleDown,
   NewImg,
@@ -9,8 +9,6 @@ import {
   Rejected,
   Signed,
   Recevied,
-  GreyEye,
-  GreyLock,
   GreenErrow,
   GreenEye,
   GreenLock,
@@ -106,7 +104,7 @@ const CompanyAdmin = () => {
             }
             <div className="text-start pl-4">
               <div className="text-base">Offer Letter</div>
-              <div className="text-sm text-[#A0A3BD]">From Power Source</div>
+              <div className="text-sm light-grey-color">From Power Source</div>
             </div>
           </div>
 
@@ -147,7 +145,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -159,7 +157,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -301,13 +299,13 @@ const CompanyAdmin = () => {
         <SearchBar handleChange={() => { }} />
       </Col>
 
-      <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+      <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
         <Dropdown 
           menu={{ items: TimeFrameItems }}
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Button className="button-sky-blue">
+          <Button className="button-sky-blue main-btn">
             Time Frame
             <IconAngleDown />
           </Button>
@@ -318,7 +316,7 @@ const CompanyAdmin = () => {
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Button className="button-sky-blue">
+          <Button className="button-sky-blue main-btn">
             Status
             <IconAngleDown />
           </Button>

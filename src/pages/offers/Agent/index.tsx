@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./style.scss";
 import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form, Input } from "antd";
@@ -114,7 +114,7 @@ const OffersAgent = () => {
             <div>
               <Button
                 onClick={() => setISOpen(false)}
-                className="text-[#4A9D77]"
+                className="teriary-color"
               >
                 Cancel
               </Button>

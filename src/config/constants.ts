@@ -8,6 +8,14 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
+  COMPANY_ADMIN:'CompanyAdmin',
+  MANAGER:'Manager',
+  INTERN:'Intern',
+  UNIVERSITY:'University',
+  SYSTEM_ADMIN:'SystemAdmin',
+  DELEGATE_AGENT:'DelegateAgent',
+  STUDENT:'Student',
+  AGENT:'Agent',
   USER_ROLE: JSON.parse(
     localStorage.getItem("UserData") || JSON.stringify({ role: "" })
   )?.role,

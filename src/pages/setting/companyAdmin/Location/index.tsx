@@ -36,7 +36,7 @@ const SettingLocation: React.FC = () => {
   const handleChange = () => { };
   return (
     <div className="setting-location">
-      <div className="flex justify-between">
+      <div className="flex justify-between location-header">
         <SearchBar size="middle" handleChange={handleChange} />
         <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
           <Button

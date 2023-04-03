@@ -67,7 +67,7 @@ const SettingLeave = () => {
   return (
     <div className="setting-leaves">
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
           <NavLink to={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}>
             <Button

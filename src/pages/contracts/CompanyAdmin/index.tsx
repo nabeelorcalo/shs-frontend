@@ -1,21 +1,7 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
 import { useState } from "react";
-import {
-  IconAngleDown,
-  NewImg,
-  PendingImg,
-  RejectedImg,
-  SignedImg,
-  Rejected,
-  Signed,
-  Recevied,
-  GreyEye,
-  GreyLock,
-  GreenErrow,
-  GreenEye,
-  GreenLock,
-  RedLock,
-} from "../../../assets/images";
+import {IconAngleDown,NewImg,PendingImg,RejectedImg,SignedImg,Rejected,Signed,Recevied,
+  GreenErrow,GreenEye,GreenLock,RedLock} from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -106,7 +92,7 @@ const CompanyAdmin = () => {
             }
             <div className="text-start pl-4">
               <div className="text-base">Contract</div>
-              <div className="text-sm text-[#A0A3BD]">From Power Source</div>
+              <div className="text-sm light-grey-color">From Power Source</div>
             </div>
           </div>
         );
@@ -146,7 +132,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -158,7 +144,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -298,13 +284,13 @@ const CompanyAdmin = () => {
           <SearchBar handleChange={() => { }} />
         </Col>
 
-        <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end contract-right-sec" >
           <Dropdown
             menu={{ items: TimeFrameItems }}
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Time Frame
               <IconAngleDown />
             </Button>
@@ -315,7 +301,7 @@ const CompanyAdmin = () => {
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Status
               <IconAngleDown />
             </Button>
