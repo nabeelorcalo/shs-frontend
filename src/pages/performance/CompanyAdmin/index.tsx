@@ -98,39 +98,6 @@ const CompanyAdminPerformance = () => {
     }
   ];
 
-  const evaluationHistoryData = [
-    {
-      id: 1,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 40,
-    },
-    {
-      id: 2,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 80,
-    },
-    {
-      id: 3,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 50,
-    },
-    {
-      id: 4,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 30,
-    },
-    {
-      id: 5,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 100,
-    },
-  ];
-
   return (
     <>
       <PageHeader actions title="Performance" >

@@ -4,15 +4,20 @@ import { Col, Row } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import { CalendarWhiteIcon } from "../../../assets/images";
-import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../../components";
+import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader, Breadcrumb } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
 import DrawerComp from "../../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
-import constants from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
 import "./style.scss"
+import Divider from "antd/es/divider";
+const LeaveViewHistoryData = [
+  { name:  'Leaves History' },
+  { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
+];
 
 
 const index = () => {
@@ -22,11 +27,9 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   return (
     <div className="main_view_detail">
-      <PageHeader
-        actions
-        bordered
-        title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
-      />
+      <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
+      <Divider />
+  
       <Row className=' items-center' gutter={[20, 20]}>
         <Col xs={24} md={24} lg={6} xl={6} xxl={6}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {

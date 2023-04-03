@@ -1,9 +1,11 @@
 @import "../../../../scss/colors";
+
 .calander_main_wrapper {
     .fc-media-screen {
         .fc-header-toolbar {
             border-bottom: 1px solid $text-error-line-color;
             padding-bottom: 10px;
+            flex-wrap: wrap;
 
             .fc-toolbar-chunk {
                 display: flex;
@@ -20,6 +22,9 @@
                         color: $text-secondary-body-color;
                     }
                 }
+                .fc-prev-button{
+                    margin-right: 25px;
+                }
 
                 .fc .fc-button-primary:focus {
                     box-shadow: none;
@@ -30,24 +35,48 @@
                     font-size: 16px;
                     line-height: 24px;
                     color: $text-primary-title-color;
+                    position: relative;
+
+                    &::before {
+                        position: absolute;
+                        content: '';
+                        background-image: url('../../../../assets/images/calender-icon.png');
+                        height: 24px;
+                        width: 24px;
+                        left: -30px;
+                        top: 0;
+                    }
                 }
             }
 
         }
     }
 
-    .fc .fc-button-primary {
+    .fc .fc-myCustomButton-button {
         background-color: $teriary-bg-color;
         border: unset;
+        min-width: 200px;
+        position: relative;
+        &::before {
+            position: absolute;
+            content: '';
+            background-image: url('../../../../assets/images/calender-icon.png');
+            height: 24px;
+            width: 24px;
+            left: 10px;
+            top: 5px;
+        }
 
         &:hover {
             background-color: $teriary-bg-color;
         }
-        &:focus{
+
+        &:focus {
             box-shadow: none !important;
         }
-        &:not(:disabled){
-            &:active{
+
+        &:not(:disabled) {
+            &:active {
                 background-color: $teriary-bg-color;
             }
 
@@ -66,9 +95,9 @@
                 color: $text-secondary-body-color;
             }
         }
-        
+
     }
-    
+
 
     .fc .fc-daygrid-day.fc-day-today {
         background-color: unset;
@@ -139,7 +168,7 @@
     .ant-drawer-body {
         padding: 30px 20px;
 
-        
+
     }
 
 }

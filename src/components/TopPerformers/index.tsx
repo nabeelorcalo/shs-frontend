@@ -1,6 +1,7 @@
 import { FC, ReactNode, useState } from "react";
 import { Row, Radio, Divider } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import Constants from "../../config/constants";
 import ListItem from "./ListItem";
 import "./style.scss";
 
@@ -44,7 +45,13 @@ export const TopPerformers: FC<{
       <Row
         align="middle"
         justify="space-between"
-        className={user === "companyAdmin" ? "mb-[12px]" : `mb-[30px]`}
+        className={
+          user === Constants?.COMPANY_ADMIN
+            ? "mb-[12px]"
+            : user === Constants?.UNIVERSITY
+            ? `mb-[26px]`
+            : `mb-[30px]`
+        }
       >
         <p className="font-medium text-[20px] leading-[28px]">Top Performers</p>
         <Row align="middle" className="gap-[9px]">
@@ -64,7 +71,15 @@ export const TopPerformers: FC<{
       <Row>
         {topPerformersList?.map(
           ({ image, name, designation, progress }, index) => (
-            <div className={user === "companyAdmin" ? "w-full" : `py-2 w-full`}>
+            <div
+              className={
+                user === Constants?.COMPANY_ADMIN
+                  ? "w-full"
+                  : user === Constants?.UNIVERSITY
+                  ? "w-full py-[2px]"
+                  : `py-2 w-full`
+              }
+            >
               <ListItem
                 key={index}
                 image={image}

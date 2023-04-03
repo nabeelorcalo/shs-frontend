@@ -40,18 +40,17 @@ const Meeting = (props: any) => {
   return (
     <div className='meeting-wrapper'>
       <Form onFinish={handleSubmitForm}>
-        <Form.Item name={'title'} rules={[{ required: true, }]}>
+        <Form.Item name={'title'}>
           <Input
             label='Title'
             value={formValues.title}
             name='title'
-            required
             type='text'
             placeholder='Select'
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })} />
         </Form.Item>
-        <Form.Item name={'attendees'} rules={[{ required: true, }]} className='attendees'>
-          <label className='label'>Attendees <span className='text-[#E95060]'>*</span></label>
+        <Form.Item name={'attendees'} className='attendees'>
+          <label className='label'>Attendees</label>
           <DropDownNew items={[
             { key: '1', label: <SearchBar handleChange={(e) => { }} /> },
             {
@@ -74,8 +73,8 @@ const Meeting = (props: any) => {
           </DropDownNew>
         </Form.Item>
 
-        <Form.Item name={'recurrence'} rules={[{ required: true, }]} className='recurrence'>
-          <label className='label'>Recurrence <span className='text-[#E95060]'>*</span></label>
+        <Form.Item name={'recurrence'} className='recurrence'>
+          <label className='label'>Recurrence</label>
           <DropDown
             value={formValues.recurrence}
             options={recurrenceData}
@@ -122,7 +121,9 @@ const Meeting = (props: any) => {
             <div className='repeat-weekday'>
               <label className='label'>Repeat Every</label>
               <div className='flex items-center gap-3'>
-                <p className='total-count rounded-[8px] flex items-center justify-center'>1</p>
+                <p className='total-count rounded-[8px] flex items-center justify-center'>
+                  <input type='number' name='repeatDays' value={1} className='w-[20px] border-none text-center' />
+                </p>
                 <p className='weeks'>Week(s)</p>
               </div>
               <div className="flex items-center gap-3 mt-3">
