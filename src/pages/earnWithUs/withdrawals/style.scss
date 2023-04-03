@@ -1,0 +1,178 @@
+@import "../../../scss/colors";
+
+.earnwith-withdrawals {
+
+  .withdrawals-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .withdrawals-title {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 28px;
+      color: $text-primary-title-color;
+    }
+
+    .withdrawals-header-actions {
+      margin-left: auto;
+    }
+  }
+
+  .withdrawals-details {
+
+    .withdrawals-details-title {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 28px;
+      color: $text-secondary-body-color;
+      margin-bottom: 30px;
+    }
+
+    .withdrawals-details-card {
+      box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+      background-color: #fff;
+      padding: 20px;
+
+      .withdrawals-card-item {
+        background-color: $text-input-bg-color;
+        padding: 18px 20px;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: $text-primary-title-color;
+        display: flex;
+        border-radius: 8px 8px 0 0;
+
+        .item-label {
+          flex: 1;
+        }
+
+        .item-label-value {
+          margin-left: 12px;
+        }
+      }
+    }
+
+    .withdraw-now {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+  }
+
+  .account-list-card {
+    box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+    padding: 20px;
+    border-radius: 16px;
+
+    .account-list-header {
+      border-bottom: 1px solid $text-error-line-color;
+      padding-bottom: 34px;
+      margin-bottom: 32px;
+
+      .account-list-header-title {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 24px;
+      }
+    }
+
+    .account-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      & > li {
+        background-color: $text-input-bg-color;
+        display: flex;
+        align-items: center;
+        padding: 14px 20px 14px 34px;
+
+        & + li {
+          margin-top: 16px;
+        }
+
+        .account-list-item-left {
+          flex: 1;
+          display: flex;
+          align-items: center;
+
+          .account-item-icon {
+            width: 37px;
+            margin-right: 18px;
+          }
+
+          .account-item-content {
+            color: $text-primary-title-color;
+
+            .bank-name {
+              font-size: 16px;
+              font-weight: 400;
+              line-height: 24px;
+            }
+
+            .account-title {
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 24px;
+            }
+          }
+        }
+
+        .account-list-item-right {
+          margin-left: 20px;
+
+          .account-edit-btn {
+            cursor: pointer;
+            width: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.ant-modal-wrap.modal-add-account {
+  .ant-modal {
+    .ant-modal-body {
+      .ant-form-item {
+        margin-bottom: 10px;
+      }
+
+      .add-account-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 47px;
+
+        .btn-close-add-account-modal {
+          background-color: #F1EFF2;
+          border-color: #F1EFF2;
+        }
+      }
+    }
+  }
+}
+
+.modal-withdraw-successful {
+  .ant-modal {
+    .ant-modal-body {
+      text-align: center;
+
+      .withdraw-success-title {
+        color: #171721;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.333333;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      .ant-typography {
+        color: #000000;
+        font-size: 19px;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}

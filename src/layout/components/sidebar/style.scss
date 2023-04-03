@@ -4,6 +4,9 @@
   left: 0;
   top: 80px;
   bottom: 0;
+  scrollbar-width: none;
+  -moz-scrollbar: none;
+  
   @media (min-width: 1200px) {
     bottom: 60px;
   }
