@@ -37,7 +37,7 @@ const SignatureAndUploadModal = (props: any) => {
         <PopUpModal
           title={title}
           open={true}
-          //setState={setState}
+          // setState={setState}
           width={width}
           okBtntxt={okBtntxt}
           cancelBtntxt={cancelBtntxt}
