@@ -1,0 +1,11 @@
+.earn-with-us-container {
+  .ant-tabs {
+    & > .ant-tabs-nav {
+      margin-bottom: 30px;
+
+      &::before {
+        border-bottom: none;
+      }
+    }
+  }
+}
