@@ -25,7 +25,7 @@ const LinkAccount = () => {
                         Current Balance : ${balance}
                     </Typography>
                 </Col>
-                <Col xxl={12} xl={12} lg={12} md={24} xs={24} className='flex justify-end'>
+                <Col xxl={12} xl={12} lg={12} md={24} xs={24} className='flex justify-end mb-2'>
                     <Button onClick={() => { setAddNew(true); }} className='teriary-light-bg-color white-color text-base font-semibold'>Add New</Button>
                 </Col>
             </Row>
@@ -35,7 +35,6 @@ const LinkAccount = () => {
                         <Row>
                             <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
                                 <Typography className='primary-color text-lg font-medium ml-3 mt-2'>Banks</Typography>
-
                             </Col>
                         </Row>
                         <Divider />

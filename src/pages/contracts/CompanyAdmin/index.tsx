@@ -1,21 +1,7 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
 import { useState } from "react";
-import {
-  IconAngleDown,
-  NewImg,
-  PendingImg,
-  RejectedImg,
-  SignedImg,
-  Rejected,
-  Signed,
-  Recevied,
-  GreyEye,
-  GreyLock,
-  GreenErrow,
-  GreenEye,
-  GreenLock,
-  RedLock,
-} from "../../../assets/images";
+import {IconAngleDown,NewImg,PendingImg,RejectedImg,SignedImg,Rejected,Signed,Recevied,
+  GreenErrow,GreenEye,GreenLock,RedLock} from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -298,13 +284,13 @@ const CompanyAdmin = () => {
           <SearchBar handleChange={() => { }} />
         </Col>
 
-        <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end contract-right-sec" >
           <Dropdown
             menu={{ items: TimeFrameItems }}
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Time Frame
               <IconAngleDown />
             </Button>
@@ -315,7 +301,7 @@ const CompanyAdmin = () => {
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Status
               <IconAngleDown />
             </Button>

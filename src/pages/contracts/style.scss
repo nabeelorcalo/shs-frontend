@@ -1,0 +1,11 @@
+.contract-company-admin{
+  .contract-right-sec{
+    @media only screen and (max-width:475px) {
+      flex-direction: column;
+      .main-btn{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}

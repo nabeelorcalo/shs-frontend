@@ -339,13 +339,7 @@ const Detail = () => {
             }
           />
 
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={togglerClick}
-            FirstIcon={CardViewIcon}
-            LastIcon={TableViewIcon}
-            className="w-[88px]"
-          />
+          
 
           <DropDown
             options={[
@@ -354,6 +348,13 @@ const Detail = () => {
             ]}
             requiredDownloadIcon
             setValue={() => action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail")}
+          />
+          <ToggleButton
+            isToggle={state.isToggle}
+            onTogglerClick={togglerClick}
+            FirstIcon={CardViewIcon}
+            LastIcon={TableViewIcon}
+            className="w-[88px]"
           />
         </div>
       </div>

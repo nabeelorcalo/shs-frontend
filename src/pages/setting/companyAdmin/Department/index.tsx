@@ -43,7 +43,7 @@ const SettingDepartment: React.FC = (props: any) => {
 
   return (
     <div className="setting-department">
-      <div className="flex justify-between">
+      <div className="flex justify-between location-header">
         <SearchBar size="middle" handleChange={handleChange} />
         <Button
           size="middle"
