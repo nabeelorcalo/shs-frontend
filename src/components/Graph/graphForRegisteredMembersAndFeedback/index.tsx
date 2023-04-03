@@ -47,16 +47,16 @@ export const RegisterMemberAndFeddbackGraph: FC<{
 
     yAxis: [
       {
-        min: 0,
-        max: 100,
+        // min: 0,
+        // max: 100,
         tickCount: 3,
         label: {
           formatter: (val: any) => `${val}%`,
         },
       },
       {
-        min: 0,
-        max: 100,
+        // min: 0,
+        // max: 100,
         tickCount: 3,
         label: null,
       },
