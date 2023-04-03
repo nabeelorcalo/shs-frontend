@@ -8,9 +8,9 @@ import { useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
 import IssueCertificate from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
-import SignatureModal from './certificateModal/SignatureModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
+import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 
 const CertificateDetail = () => {
   const { id } = useParams();
@@ -148,7 +148,7 @@ const CertificateDetail = () => {
         type={issuewNewCertificate?.type}
         desc={issuewNewCertificate?.desc}
       />}
-      {signatureModal && <SignatureModal open={signatureModal} setOpen={setSignatureModal} />}
+      {signatureModal && <SignatureAndUploadModal />}
 
       {deleteModal &&
         <Alert
@@ -160,7 +160,7 @@ const CertificateDetail = () => {
           okBtntxt={'Delete'}
         >
           <p className='font-medium text-[#4E4B66]'>
-            Are you sure you want to delete thisw cetificate?
+            Are you sure you want to delete this cetificate?
           </p>
         </Alert>}
     </div>
