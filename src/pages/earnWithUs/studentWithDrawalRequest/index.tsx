@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { Row, Col, Button, Menu } from 'antd';
+import { useState } from 'react'
+import { Row, Col, Menu } from 'antd';
 import { DropDown, SearchBar, GlobalTable } from '../../../components';
-import CustomDroupDown from '../../digiVault/Student/dropDownCustom';
+// import CustomDroupDown from '../../digiVault/Student/dropDownCustom';
 
 const tableData = [
     {
@@ -57,10 +57,6 @@ const tableData = [
       
     },
   ];
-  
-
-
-
 
 const WithDrawalRequest = () => {
     const [value, setValue] = useState("");

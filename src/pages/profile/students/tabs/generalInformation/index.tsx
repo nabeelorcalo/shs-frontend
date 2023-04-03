@@ -44,8 +44,8 @@ const GeneralInformation = () => {
       >
         <div>
           <Typography className="title">Personal Details</Typography>
-              </div>
-              <Row gutter={20}>
+        </div>
+        <Row gutter={20}>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University"
@@ -161,15 +161,13 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-          <Form.Item
-        name="phone"
-        label="Phone Number"
+            <Form.Item
+              name="phone"
+              label="Phone Number"
               rules={[{ required: true, message: 'Please input your phone number!' }]}
-              
             >
               <Input.Group compact>
                 <Select
-                  size="large"
                   defaultValue="+92"
                   style={{ width: "25%" }}
                 >
@@ -177,7 +175,6 @@ const GeneralInformation = () => {
                   <Option value="+92">+92</Option>
                 </Select>
                 <AutoComplete
-                  size="large"
                   style={{ width: "75%" }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: "text 1" }, { value: "text 2" }]}
@@ -277,9 +274,9 @@ const GeneralInformation = () => {
         <Divider />
         <div>
           <Typography className="title">Emergency Contact</Typography>
-              </div>
-              <Row gutter={20}>
-              <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+        </div>
+        <Row gutter={20}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Name"
               name="name"
@@ -291,15 +288,15 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-          <Form.Item
-        name="phone"
-        label="Phone Number"
+            <Form.Item
+              name="phone"
+              label="Phone Number"
               rules={[{ required: true, message: 'Please input your phone number!' }]}
-              
+
             >
               <Input.Group compact>
                 <Select
-                  size="large"
+
                   defaultValue="+92"
                   style={{ width: "25%" }}
                 >
@@ -307,7 +304,7 @@ const GeneralInformation = () => {
                   <Option value="+92">+92</Option>
                 </Select>
                 <AutoComplete
-                  size="large"
+
                   style={{ width: "75%" }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: "text 1" }, { value: "text 2" }]}
@@ -331,7 +328,7 @@ const GeneralInformation = () => {
               />
             </Form.Item>
           </Col>
-              <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Post Code"
               name="postCode"

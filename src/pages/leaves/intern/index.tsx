@@ -1,13 +1,13 @@
-import { Button, Col, Divider, Row } from 'antd'
+import { Button, Col, Row } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 import Calendar from "./calendar"
-import action from "../actionHandler"
-import "./style.scss"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
 import { leaveCardData, upcomingHolidayData } from './internMockdata';
+import "./style.scss" 
+
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
@@ -19,11 +19,7 @@ const index = () => {
 
   return (
     <div className='intrne_main'>
-      <PageHeader
-        actions
-        bordered
-        title="Leave"
-      >
+      <PageHeader actions   bordered title="Leave">
         <div className='flex items-center justify-end view_history_button_wrapper'>
           <Button className='button font-semibold' onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}>View History</Button>
         </div>

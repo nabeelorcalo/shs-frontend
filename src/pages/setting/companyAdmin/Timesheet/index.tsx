@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
 import { SettingTimesheetIcon, } from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
@@ -44,7 +44,7 @@ const SettingTimesheet = () => {
   return (
     <div className="setting-time-sheet">
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
           <Button
             size="middle"
