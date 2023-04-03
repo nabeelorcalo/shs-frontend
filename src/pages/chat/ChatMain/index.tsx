@@ -151,7 +151,7 @@ const index = () => {
 
                     <div>
                       <div className="">
-                        <div className="mb-2 text-sm font-normal text-[#A0A3BD]">
+                        <div className="mb-2 text-sm font-normal light-grey-color">
                           {item.time}
                         </div>
                         <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
@@ -187,7 +187,7 @@ const index = () => {
                             <div className="incoming-message text-base text-secondary-color mb-2">
                               {item.text}
                             </div>
-                            <div className="font-normal text-sm text-[#A0A3BD] mix-blend-normal">
+                            <div className="font-normal text-sm light-grey-color mix-blend-normal">
                               {item.time}
                             </div>
                           </div>
@@ -221,7 +221,7 @@ const index = () => {
                           </div>
 
                           <div className="flex items-center">
-                            <p className="font-normal text-sm text-[#A0A3BD] mix-blend-normal ">
+                            <p className="font-normal text-sm light-grey-color mix-blend-normal ">
                               {item.time}
                               <span className="ml-2">
                                 <img src={DoubleTik} alt="bluetik" />
@@ -272,13 +272,13 @@ const index = () => {
             <div>
               <div className="text-center">
                 <img src={Userimg} alt="userimg" />
-                <div className="text-[#14142A] text-xl font-semibold mt-1">
+                <div className="text-primary-color text-xl font-semibold mt-1">
                   Mino Marina
                 </div>
-                <div className="text-[#14142A] font-medium text-base">
+                <div className="text-primary-color font-medium text-base">
                   UI UX Designer
                 </div>
-                <div className="font-normal text-[#14142A] text-base">
+                <div className="font-normal text-primary-color text-base">
                   Design
                 </div>
               </div>
@@ -302,7 +302,7 @@ const index = () => {
               <Divider />
               <div>
                 <div className="flex justify-between">
-                  <div className="text-[#A0A3BD] text-sm font-medium">
+                  <div className="light-grey-color text-sm font-medium">
                     Media Files
                   </div>
                   <div>
@@ -350,7 +350,7 @@ const index = () => {
                 </div>
                 <Divider />
                 <div className="flex justify-between mb-4">
-                  <div className="text-[#A0A3BD] text-sm font-medium">
+                  <div className="light-grey-color text-sm font-medium">
                     Documents
                   </div>
                   <div className="text-teriary-color font-normal text-base">
@@ -368,7 +368,7 @@ const index = () => {
                         <div className="text-secondary-color text-sm font-medium">
                           {item.docName}
                         </div>
-                        <div className="text-[#A0A3BD] text-sm font-light">
+                        <div className="light-grey-color text-sm font-light">
                           {item.docSize}
                         </div>
                       </div>

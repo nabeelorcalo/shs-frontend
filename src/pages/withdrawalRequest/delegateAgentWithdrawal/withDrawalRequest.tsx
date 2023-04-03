@@ -37,7 +37,7 @@ const WithDrawalRequest = (props: any) => {
               Current Balance : ${balance}
             </Typography>
           </Col>
-          <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+          <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item label="Withdraw Account" name="account">
               <DropDown
                 name="With Drawal Method"
@@ -47,7 +47,7 @@ const WithDrawalRequest = (props: any) => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+          <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item label="Amount" name="amount">
               <Input type='text'
                 name='amount'

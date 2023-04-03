@@ -155,12 +155,11 @@ const ActivityLog = () => {
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[10, 10]}>
-            <Col xxl={7} xl={8} lg={8} md={8} sm={12} xs={24}>
+          <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
-            <Col xxl={14} xl={12} lg={8} md={8} sm={1} xs={1}></Col>
-
-            <Col xxl={3} xl={4} lg={8} md={8} sm={11} xs={24}>
+            
+            <Col className="flex justify-end "  xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
               <div className="flex">
                 <div className="mr-4">
                   <FiltersButton label="Filter" onClick={handleClick} />

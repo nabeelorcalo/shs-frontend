@@ -91,6 +91,7 @@ const Index = (props: any) => {
           <span className="capitalize text-sm text-[#4E4B66]">{name}</span>
         </p>)}
       </div>
+
       <FullCalendar
         initialView={'timeGridWeek'}
         customButtons={{
@@ -129,6 +130,7 @@ const Index = (props: any) => {
           }
         }}
       />
+      
       <CalendarDrawer
         open={openDrawer.open}
         category={openDrawer.category}

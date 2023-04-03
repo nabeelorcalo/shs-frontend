@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import { DropDown, SearchBar, FiltersButton, PageHeader } from "../../components";
+import { useState } from "react";
+import {
+  GlobalTable,
+  SearchBar,
+  PageHeader,
+  BoxWrapper,
+  InternsCard,
+  ToggleButton
+} from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-// import {GlobalTable} from "../../components";
-import { Avatar, Button, Popover, Divider } from 'antd';
-import { More } from "../../assets/images"
-import type { MenuProps } from 'antd';
-import { Dropdown, Space } from 'antd';
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import Drawer from "../../components/Drawer";
+import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
+import { MenuProps } from 'antd';
+import { Dropdown, Avatar } from 'antd';
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -47,11 +50,16 @@ const PopOver = () => {
   );
 };
 
+const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 const Interns = () => {
-  const navigate = useNavigate();
-  const [value, setValue] = useState("");
-  const [showDrawer, setShowDrawer] = useState(false);
-  const [state, setState] = useState(false);
+  // const navigate = useNavigate()
+  // const [value, setValue] = useState("")
+  // const [showDrawer, setShowDrawer] = useState(false)
+  // const [state, setState] = useState(false)
+  const [listandgrid, setListandgrid] = useState(false)
+  const [isToggle, setIsToggle] = useState(false)
+  console.log(isToggle)
   const columns = [
     {
       dataIndex: "no",
@@ -122,50 +130,71 @@ const Interns = () => {
     },
   ];
   const newTableData = tableData.map((item, idx) => {
-    return {
-      no: item.no,
-      posted_by: <Avatar>{item.posted_by}</Avatar>,
-      title: item.title,
-      department: item.department,
-      joining_date: item.joining_date,
-      date_of_birth: item.date_of_birth,
-      location: item.location,
-      actions: <PopOver />,
-    };
-  });
-  console.log(value);
+    return (
+      {
+        no: item.no,
+        posted_by:
+          <Avatar
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+          />,
+        title: item.title,
+        department: item.department,
+        joining_date: item.joining_date,
+        date_of_birth: item.date_of_birth,
+        location: item.location,
+        actions: <PopOver />
+      }
+    )
+  })
   return (
     <>
       <PageHeader title="Interns" />
-      <Divider />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => {}}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar
+              className=""
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="search"
+              size="middle"
+            />
+          </div>
           <div className="flex flex-row gap-4">
-            <FiltersButton
-              label="View"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+            <div className='p-2 download-icon-style'>
+            <DownloadDocumentIcon />
+            </div>
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
             />
           </div>
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            {/* <GlobalTable
-              columns={columns}
-              expandable={{
-                expandedRowRender: () => {},
-                rowExpandable: function noRefCheck() {},
-              }}
-              tableData={newTableData}
-            /> */}
+            {
+              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
+                {
+                  cardDummyArray.map((items: any, idx: any) => {
+                    return (
+                      <InternsCard />
+                    )
+                  })
+                }
+              </div>
+                :
+                <GlobalTable
+                  columns={columns}
+                  expandable={{
+                    expandedRowRender: () => { },
+                    rowExpandable: function noRefCheck() { }
+                  }}
+                  tableData={newTableData}
+                />
+            }
           </div>
         </BoxWrapper>
       </div>

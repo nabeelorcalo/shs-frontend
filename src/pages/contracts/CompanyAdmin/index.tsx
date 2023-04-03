@@ -1,21 +1,7 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import React, { useState } from "react";
-import {
-  IconAngleDown,
-  NewImg,
-  PendingImg,
-  RejectedImg,
-  SignedImg,
-  Rejected,
-  Signed,
-  Recevied,
-  GreyEye,
-  GreyLock,
-  GreenErrow,
-  GreenEye,
-  GreenLock,
-  RedLock,
-} from "../../../assets/images";
+import { useState } from "react";
+import {IconAngleDown,NewImg,PendingImg,RejectedImg,SignedImg,Rejected,Signed,Recevied,
+  GreenErrow,GreenEye,GreenLock,RedLock} from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -106,7 +92,7 @@ const CompanyAdmin = () => {
             }
             <div className="text-start pl-4">
               <div className="text-base">Contract</div>
-              <div className="text-sm text-[#A0A3BD]">From Power Source</div>
+              <div className="text-sm light-grey-color">From Power Source</div>
             </div>
           </div>
         );
@@ -146,7 +132,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -158,7 +144,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="text-[#A0A3BD]">06/10/2022</div>
+            <div className="light-grey-color">06/10/2022</div>
           </div>
         )
       }
@@ -278,13 +264,11 @@ const CompanyAdmin = () => {
                 <BoxWrapper>
                   <div>
                     <div className="flex">
-
                       {item.img}
                       <div className="flex flex-col items-center pl-4">
                         <p className=" text-xl font-semibold mt-2">{item.title}</p>
                         <div className="text-4xl font-medium mt-4">{item.num}</div>
                       </div>
-
                     </div>
                   </div>
 
@@ -295,18 +279,18 @@ const CompanyAdmin = () => {
         }
       </Row>
 
-      <Row className="mt-8" gutter={[0, 20]} justify={"space-between"}>
-        <Col xxl={6} xl={6} lg={8} md={9} sm={10} xs={24}>
+      <Row className="mt-8" gutter={[0, 20]} >
+        <Col  xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => { }} />
         </Col>
 
-        <Col className="flex" xxl={5} xl={8} lg={11} md={12} sm={24} xs={24}>
-          <Dropdown className="mr-12"
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end contract-right-sec" >
+          <Dropdown
             menu={{ items: TimeFrameItems }}
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Time Frame
               <IconAngleDown />
             </Button>
@@ -317,7 +301,7 @@ const CompanyAdmin = () => {
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Status
               <IconAngleDown />
             </Button>
