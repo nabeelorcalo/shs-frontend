@@ -4,11 +4,13 @@ import {
   NewTemplate,
 } from "../../../../../assets/images";
 
-import { Alert, SearchBar } from "../../../../../components";
+import { Alert, Breadcrumb, SearchBar } from "../../../../../components";
 import { NavLink } from "react-router-dom";
-import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
+const TemplatesOfferLater = () => {
+  
 let overview = [
   {
     name: "Offer Letter 01",
@@ -23,20 +25,22 @@ let overview = [
     content: "Join Our World",
   },
 ];
-
-const handleChange = () => { };
-
-const TemplatesOfferLater = () => {
+  const breadcrumbArray = [
+    { name: "Offer Letter"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+  ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  
+const handleChange = () => { };
   return (
     <div>
       <div>
-        <TemplateCommonBreadcrumb current="Offer Letter" />
-
-        <Divider className="my-1 mb-3" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+        <Divider/>
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
-          <NavLink to="/settings/template/offer-letters/new-template">
+          <NavLink to={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}>
             <Button
               size="middle"
               onClick={() => { }}
@@ -48,7 +52,7 @@ const TemplatesOfferLater = () => {
         </div>
       </div>
       <TemplatesCommonCard
-        link="/settings/template/offer-letters/new-template"
+        link={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}

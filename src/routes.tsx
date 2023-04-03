@@ -918,7 +918,7 @@ const companyAdminRoutes = [
             key: `${ROUTES_CONSTANTS.SETTING_LEAVES}`,
             path: `${ROUTES_CONSTANTS.SETTING_LEAVES}`,
             element: (
-              <Setting title="leaves">
+              <Setting title="Leaves">
                 <SettingLeaves />
               </Setting>
             ),

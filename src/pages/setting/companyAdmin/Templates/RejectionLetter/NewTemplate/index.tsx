@@ -11,13 +11,21 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
 import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
 import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { useNavigate } from "react-router-dom";
+import { Breadcrumb } from "../../../../../../components";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Rejection Letter" , onClickNavigateTo:"/settings/template/rejection-letter" },
+  ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
   const onChangeHandler = (e: any) => {
@@ -35,10 +43,7 @@ const NewTemplateRejectionLetter = () => {
 
   return (
     <div className="rejection-letter-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Rejection Letter"
-        perviousPageLink="/settings/template/rejection-letter"
-      />
+       <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
         <Form layout="vertical" form={form}>
@@ -78,7 +83,7 @@ const NewTemplateRejectionLetter = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary" onClick={()=>navigate("/settings/template/rejection-letter")} >
               Cencal
             </Button>
             <Button

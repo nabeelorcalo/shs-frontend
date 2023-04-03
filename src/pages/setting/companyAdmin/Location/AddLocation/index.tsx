@@ -5,16 +5,18 @@ import {
 } from "antd";
 import {
   SettingAvater,
-  SettingHorizontalLine,
 } from "../../../../../assets/images";
-import "./style.scss";
 import { NavLink } from "react-router-dom";
-import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
-import { DropDown, Input, SearchBar } from "../../../../../components";
-import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
+import { Breadcrumb, DropDown, Input,BoxWrapper,DragAndDropUpload ,SettingCommonModal } from "../../../../../components";
+import "./style.scss";
 const { Title, Paragraph } = Typography;
+
 const AddLocation: React.FC = () => {
+  const breadcrumbArray = [
+    { name: "Add Location"},
+    { name: "Setting"  },
+    { name: "Location" , onClickNavigateTo:"/settings/location" },
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -60,25 +62,8 @@ const AddLocation: React.FC = () => {
 
   return (
     <div className="add-location">
-      <div className="flex items-center">
-        <Title level={3} className="mt-2">
-          Add Location
-        </Title>
-        <span className="mx-2">
-          <SettingHorizontalLine />
-        </span>
-        <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-        <span className="mx-2">/</span>
-        <NavLink to="/settings/location">
-          <span className=" text-base font-medium text-secondary-color">
-            Location
-          </span>
-        </NavLink>
-      </div>
-
-      <Divider className="my-1 mb-3" />
+    <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+      <Divider/>
       <BoxWrapper>
         <Form layout="vertical" form={form}>
           {/*------------------------ Office----------------------------- */}
@@ -207,12 +192,11 @@ const AddLocation: React.FC = () => {
                     handleChange={() => { }}
                   />
                 </Form.Item>
-                <div className="w-full mt-1 ">
+                <div className="w-full  ">
                   <Form.Item
                     label="Country"
                     required={false}
                     name="county"
-
                     rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown

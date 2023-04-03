@@ -1,12 +1,13 @@
 @import "../../../../../../scss/colors";
 .certificate-of-appreciation-new-template {
   .ant-form-item .ant-form-item-control-input-content {
+
     .ant-input {
       background: $text-input-bg-color;
+      border:2px solid $white-bg-color ;
 
-      &:hover{
+      &:hover {
         background: $white-bg-color;
-
       }
     }
   }

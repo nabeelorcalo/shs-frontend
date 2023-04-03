@@ -11,9 +11,6 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import {
   CertificateTickCircle,
@@ -21,10 +18,19 @@ import {
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
 import { EyeFilled } from "@ant-design/icons/lib/icons";
-import { PopUpModal } from "../../../../../../components";
+import { Breadcrumb, PopUpModal,BoxWrapper } from "../../../../../../components";
+import { useNavigate } from "react-router-dom";
 const { Title, Paragraph } = Typography;
+import "./style.scss";
 
 const NewTemplateCertificationOfAppreciation = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Certificate of Appreciation" , onClickNavigateTo:"/settings/template/certificate-of-appreciation" },
+  ];
   const [value, setValue] = useState();
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
@@ -67,11 +73,8 @@ const NewTemplateCertificationOfAppreciation = () => {
 
   return (
     <div className="certificate-of-appreciation-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Certification of Appreciation"
-        perviousPageLink="/settings/template/certificate-of-appreciation"
-      />
-      <Divider className="my-1 mb-3" />
+     <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+      <Divider />
       <BoxWrapper>
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
@@ -121,6 +124,7 @@ const NewTemplateCertificationOfAppreciation = () => {
             <Col className="gutter-row" xs={24} md={24} xl={12}>
               <Row gutter={[16, 16]}>
                 <Col className="gutter relative" xs={24} xl={12}>
+                  <BoxWrapper>
                   <div
                     style={{ border: `2px solid ${borderColorfirst.color}` }}
                     className="cursor-pointer certificate-card "
@@ -154,8 +158,10 @@ const NewTemplateCertificationOfAppreciation = () => {
                       Template 1
                     </p>
                   </div>
+                  </BoxWrapper>
                 </Col>
                 <Col className="gutter relative" xs={24} xl={12}>
+                <BoxWrapper>
                   <div
                     style={{ border: `2px solid ${borderColorSecond.color}` }}
                     className="cursor-pointer certificate-card "
@@ -188,12 +194,14 @@ const NewTemplateCertificationOfAppreciation = () => {
                       Template 2
                     </p>
                   </div>
+                  </BoxWrapper>
                 </Col>
               </Row>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary" 
+             onClick={()=>navigate("/settings/template/certificate-of-appreciation")}>
               Cencal
             </Button>
             <Button

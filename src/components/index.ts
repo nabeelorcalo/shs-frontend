@@ -88,4 +88,6 @@ export * from './Graph/FunnelChart';
 export * from './Graph/GaugePlot';
 export * from './GreetingCard';
 export * from './Drawer';
+export * from './Setting/Common/SettingCommonModal';
+export * from './Setting/Common/CustomSettingDropdown';
 

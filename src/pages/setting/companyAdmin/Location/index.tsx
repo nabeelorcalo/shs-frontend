@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Col, Row, Typography, Space, Input, Button } from "antd";
+import { Col, Row, Typography, Space, Button } from "antd";
 import { Settinglocation, LocationPeople, CardLocation, } from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Alert, SearchBar } from "../../../../components";
+import { Alert, BoxWrapper, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
-import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 const { Title, Text } = Typography;
 

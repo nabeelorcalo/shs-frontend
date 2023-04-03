@@ -1,39 +1,42 @@
 import React, { useState } from "react";
 import { Divider, Button } from "antd";
 import { NewTemplate } from "../../../../../assets/images";
-import { Alert, SearchBar } from "../../../../../components";
+import { Alert, Breadcrumb, SearchBar } from "../../../../../components";
 import { NavLink } from "react-router-dom";
-import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
-
-let overview = [
-  {
-    name: "Template 01",
-    content: "Exciting News: Your job Offer and Template Inside",
-  },
-  {
-    name: "Template 02",
-    content: "Take the First Step Today!",
-  },
-  {
-    name: "Template 03",
-    content: "Congratulations! You are selected.",
-  },
-];
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const TemplatesCertificateOfAppreciation = () => {
+  let overview = [
+    {
+      name: "Template 01",
+      content: "Exciting News: Your job Offer and Template Inside",
+    },
+    {
+      name: "Template 02",
+      content: "Take the First Step Today!",
+    },
+    {
+      name: "Template 03",
+      content: "Congratulations! You are selected.",
+    },
+  ];
+  const breadcrumbArray = [
+    { name: "Certification of Appreciation"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+  ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-
   const handleChange = () => { };
 
   return (
     <div className="template-contract">
       <div className="header">
-        <TemplateCommonBreadcrumb current="Certificate of Appreciation" />
-        <Divider className="my-1 mb-3" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+        <Divider />
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
-          <NavLink to="/settings/template/certificate-of-appreciation/new-template">
+          <NavLink to={ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}>
             <Button
               size="middle"
               onClick={() => { }}
@@ -45,7 +48,7 @@ const TemplatesCertificateOfAppreciation = () => {
         </div>
       </div>
       <TemplatesCommonCard
-        link="/settings/template/certificate-of-appreciation/new-template"
+        link={ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}

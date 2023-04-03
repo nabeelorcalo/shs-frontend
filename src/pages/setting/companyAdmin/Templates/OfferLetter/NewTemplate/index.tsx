@@ -11,13 +11,20 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { Breadcrumb ,BoxWrapper } from "../../../../../../components";
+import { useNavigate } from "react-router-dom";
+import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateOfferLetter = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Offer Letter" , onClickNavigateTo:"/settings/template/template-offer-letters" },
+  ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
   const onChangeHandler = (e: any) => {
@@ -35,11 +42,8 @@ const NewTemplateOfferLetter = () => {
 
   return (
     <div className="offer-letter-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Rejection Letter"
-        perviousPageLink="/settings/template/rejection-letter"
-      />
-      <Divider className="my-1 mb-3" />
+       <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+      <Divider/>
       <BoxWrapper>
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
@@ -78,7 +82,8 @@ const NewTemplateOfferLetter = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary" 
+            onClick={()=>navigate("/settings/template/template-offer-letters")} >
               Cencal
             </Button>
             <Button

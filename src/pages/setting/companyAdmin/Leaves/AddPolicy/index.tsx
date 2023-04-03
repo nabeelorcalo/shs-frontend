@@ -6,13 +6,18 @@ import {
   Typography, Row, Col, Divider, Form, Radio,
   RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
-import { CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
+import { Breadcrumb, CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 import "./style.scss";
 
 const LeavesAddPolicy: React.FC = () => {
+  const breadcrumbArray = [
+    { name: "Add Policy"},
+    { name: "Setting"  },
+    { name: "Leaves" , onClickNavigateTo:"/settings/leaves" },
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -71,25 +76,9 @@ const LeavesAddPolicy: React.FC = () => {
   };
   return (
     <div className="leaves-add-policy">
-      <div className="flex items-center ">
-        <Title level={3} className="mt-2">
-          Add Policy
-        </Title>
-        <span className="mx-2">
-          <SettingHorizontalLine />
-        </span>
-        <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-        <span className="mx-2 ">/</span>
-        <NavLink to="/settings/leaves">
-          <span className=" text-base font-medium text-secondary-color">
-            Leaves
-          </span>
-        </NavLink>
-      </div>
+        <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
 
-      <Divider className="my-1 mb-3" />
+      <Divider/>
 
       <BoxWrapper>
         <Form layout="vertical">
