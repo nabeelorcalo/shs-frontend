@@ -1,76 +1,14 @@
 import React, { useState } from 'react'
 import { Alert, GlobalTable } from '../../../components'
-import Image from '../../../assets/images/Grievances/avater-1.svg'
 import './style.scss'
 import CustomDropDownCaseStudies from './customDropDown'
 
-const CaseStudiesTable = () => {
+const CaseStudiesTable = (props:any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(false)
 
 
-  const caseStudyTableData = [
-    {
-      no: '01',
-      avater: Image,
-      name: "Mino Marina",
-      ReportName: 'September 2022',
-      department: 'Design',
-      assessmentDate: '20/09/2022',
-      reportingManager: '+44 7700 900077',
-      status: 'Pending',
-    },
-    {
-      no: '02',
-      name: "Craig Donin",
-      avater: Image,
-      ReportName: 'September 2022',
-      department: 'Research',
-      assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
-      status: 'Pending',
-    },
-    {
-      no: '03',
-      name: "Gustavo Korsgaard",
-      avater: Image,
-      ReportName: 'August 2022',
-      department: 'Business',
-      assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
-      status: 'Pending',
-    },
-    {
-      no: '04',
-      name: "Omar Schleifer",
-      avater: Image,
-      ReportName: 'September 2022',
-      department: 'Management',
-      assessmentDate: '20/09/2022',
-      reportingManager: '+44 7700 900077',
-      status: 'Pending',
-    },
-    {
-      no: '05',
-      avater: Image,
-      name: "Adison Donin",
-      ReportName: 'University of London',
-      department: 'Development',
-      assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
-      status: 'Approved',
-    },
-    {
-      no: '06',
-      name: "Lindsey Mango",
-      avater: Image,
-      ReportName: 'August 2022',
-      department: 'Development',
-      assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
-      status: 'Rejected',
-    },
-  ]
+
   const caseStudyColumnData =
     [
       {
@@ -147,7 +85,7 @@ const CaseStudiesTable = () => {
       <GlobalTable
         columns={caseStudyColumnData}
         pagination
-        tableData={caseStudyTableData}
+        tableData={props.caseStudyTableData}
       />
       <Alert
         state={openWarningModal}

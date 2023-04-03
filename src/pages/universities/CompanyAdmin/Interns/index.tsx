@@ -9,6 +9,7 @@ import InternTable from './internsTable';
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
 import './style.scss'
 import InternCard from './internCard';
+import useCustomHook from './actionHandler';
 
 const dummyData = [
   { id: 1, name: 'Maria Sanoid', avatar: Image1, status: "Employed", department: 'ui ux designers', joiningDate: '01/07 /2022', dateOfBirth: '04/12/1996' },
@@ -28,6 +29,8 @@ const dummyData = [
   { id: 15, name: 'Deng Jing-mei', avatar: Image1, status: "Terminated", department: 'ui ux designers', joiningDate: '01/07 /2022', dateOfBirth: '04/12/1996' },
 ]
 const index: React.FC = () => {
+  const TableColumn = ['No.' , 'Avater',' Name', 'Department' , 'Joining Date' , 'Date of Birth' , ]
+const action = useCustomHook();
   const [state, setState] = useState({
     openSidebar: false,
     status: 'Select',
@@ -76,8 +79,7 @@ const index: React.FC = () => {
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              value={value}
-              setValue={setValue}
+              setValue={()=>action.downloadPdfOrCsv(event,TableColumn,dummyData,"Interns " )}
             />
           </div>
         </div>

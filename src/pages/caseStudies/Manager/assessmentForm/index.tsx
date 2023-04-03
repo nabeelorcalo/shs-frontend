@@ -4,8 +4,10 @@ import { Divider, Button, Typography, Form, Input } from 'antd'
 const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
+import { useNavigate } from 'react-router-dom';
 
 const index = () => {
+  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: "/case-studies" },
@@ -90,7 +92,7 @@ const index = () => {
           </Form>
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
             <Button type='primary'
-              className='text-error-bg-color white-color reject-btn'>Reject</Button>
+              className='text-error-bg-color white-color reject-btn' onClick={()=>navigate("/case-studies")}>Reject</Button>
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>Save Draft</Button>
             <Button type='primary'
@@ -133,7 +135,7 @@ const index = () => {
         </Form>
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
           <Button type='primary'
-            className='text-error-bg-color white-color reject-btn'>Reject</Button>
+            className='text-error-bg-color white-color reject-btn' onClick={()=>navigate("/case-studies")}>Reject</Button>
           <Button type='primary'
             className='white-bg-color teriary-color save-btn'>Save Draft</Button>
           <Button type='primary'

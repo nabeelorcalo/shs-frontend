@@ -1,8 +1,7 @@
 import jsPDF from "jspdf";
 import React from "react";
-import api from "../../api";
-import csv from "../../helpers/csv";
-
+import csv from '../../../../helpers/csv';
+import api from "../../../../api";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 
@@ -34,8 +33,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, avatar , name, ReportName, department , assessmentDate,reportingManager, status }: any) =>
-      [  no, '' , name, ReportName, department , assessmentDate,reportingManager, status  ]
+    const body = data.map(({ id, avatar , name, department, joiningDate , dateOfBirth,  }: any) =>
+      [ id, '' , name, department, joiningDate , dateOfBirth, ]
     );
 
     const doc = new jsPDF(orientation, unit, size);

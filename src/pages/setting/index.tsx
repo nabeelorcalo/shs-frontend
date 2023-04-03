@@ -7,7 +7,7 @@ import "./style.scss";
 const Setting = (props: any) => {
   const breadcrumbArray = [
     { name: props.title},
-    { name: " Setting "},
+    { name: "Setting"},
   ];
   return (
     <div className="setting">
