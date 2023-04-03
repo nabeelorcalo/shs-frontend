@@ -273,10 +273,10 @@ export { ReactComponent as InternCardLine } from "./universities/line.svg";
 // export { ReactComponent as More } from './ColorfullIconsProgressbar/More.svg';
 
 // Icons for Buttons
-export { ReactComponent as FilterIcon } from './ButtonIcons/FilterIcon.svg';
-export { ReactComponent as ArrowToRight } from './ButtonIcons/Arrowtoright.svg';
-export { ReactComponent as InternshipsIcon } from './ButtonIcons/InternshipsIcon.svg';
-export { ReactComponent as ListViewIcon } from './ButtonIcons/ListViewIcon.svg';
+export { ReactComponent as FilterIcon } from './buttonIcons/FilterIcon.svg';
+export { ReactComponent as ArrowToRight } from './buttonIcons/Arrowtoright.svg';
+export { ReactComponent as InternshipsIcon } from './buttonIcons/InternshipsIcon.svg';
+export { ReactComponent as ListViewIcon } from './buttonIcons/ListViewIcon.svg';
 export { ReactComponent as ArrowToLeft } from './buttonIcons/ArrowToLeft.svg';
 export { ReactComponent as ArrowToRight1 } from './buttonIcons/ArrowToRight1.svg';
 
@@ -542,6 +542,8 @@ export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
 export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";
 export { ReactComponent as TickCircleGreenIcon } from "./AllGoals/TickCircleGreenIcon.svg";
 export { ReactComponent as TickCircleGrayIcon } from "./AllGoals/TickCircleGrayIcon.svg";
+export { ReactComponent as TaskSquareIcon } from "./AllGoals/TaskSquareIcon.svg";
+export { ReactComponent as GoalHeaderCalanderIcon } from "./AllGoals/GoalHeaderCalanderIcon.svg";
 
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
 export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
