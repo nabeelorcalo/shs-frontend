@@ -14,7 +14,6 @@ import {
   AttendanceAndListingGraph,
   PageHeader,
 } from "../../../components";
-import userData from "../../../config/constants";
 import "../style.scss";
 import {
   PerformanceAnalyticsData,
@@ -22,7 +21,7 @@ import {
   universityList,
 } from "./mockData";
 import PiplineTable from "./PiplineTable";
-
+import Constants from '../../../config/constants'
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
@@ -135,7 +134,7 @@ const CompanyAdmin = () => {
             data={state.list}
             loading={state.loading}
             loadMoreData={loadMoreData}
-            role={userData?.USER_ROLE}
+            role={Constants?.USER_ROLE}
             handleAddAnnouncement={handleAddAnnouncement}
             height={505}
           />
@@ -180,7 +179,7 @@ const CompanyAdmin = () => {
             <Col xs={24} xl={12} xxl={24}>
               <TopPerformers
                 topPerformersList={topPerformers}
-                user={"companyAdmin"}
+                user={Constants?.COMPANY_ADMIN}
               />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
@@ -190,7 +189,7 @@ const CompanyAdmin = () => {
                 casualLeaves={["", "", ""]}
                 medicalLeaves={[""]}
                 workFromHome=""
-                user={"companyAdmin"}
+                user={Constants?.COMPANY_ADMIN}
               />
             </Col>
           </Row>

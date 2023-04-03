@@ -1,8 +1,8 @@
 import { List, Typography } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import AnnouncementCard from "../AnnouncementCard";
 import { RoundedAddIcon } from "../../assets/images";
+import constants from "../../config/constants";
 import "./style.scss";
 interface AnnouncementProps {
   role?: string;
@@ -33,7 +33,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
         Announcements
       </Typography.Title>
 
-      {(role === "Manager" || role === "CompanyAdmin") && (
+      {(role === constants?.MANAGER || role === constants?.COMPANY_ADMIN) && (
         <div
           className="light-sky-blue-bg mb-5 flex items-center justify-center h-[69px] rounded-2xl cursor-pointer border border-[#D9DBE9] border-dashed	"
           onClick={handleAddAnnouncement}

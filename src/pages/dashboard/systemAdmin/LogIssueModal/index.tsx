@@ -110,7 +110,7 @@ const LogIssueModal = () => {
                 <div>{item.name}</div>
               </div>
               <div
-                className="cursor-pointer text-[#A0A3BD] text-xs"
+                className="cursor-pointer light-grey-color text-xs"
                 onClick={() => handleAddUser(item)}
               >
                 {item.btn}
@@ -235,7 +235,7 @@ const LogIssueModal = () => {
                   >
                     <div>
                       <label>Assign</label>
-                      <div className="border-[1px] border-solid border-[#DDE2E6] h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
+                      <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
                             {assignUser.map((user) => (
@@ -412,7 +412,7 @@ const LogIssueModal = () => {
             </div>
 
             <div className="ml-3 ">
-              <div className=" mt-2 p-2 rounded-lg border border-solid border-[#D9DBE9]">
+              <div className=" mt-2 p-2 rounded-lg light-gray-border">
                 <textarea
                   placeholder="Comment here"
                   className="w-full h-24 border-0 outline-0 resize-none"
@@ -420,7 +420,7 @@ const LogIssueModal = () => {
                 <Row
                   justify="space-between"
                   align="middle"
-                  className="bg-[#F8F8F8] px-[10px] py-[6px] rounded-md"
+                  className="off-white-bg px-[10px] py-[6px] rounded-md"
                 >
                   <Col>
                     <Row className="gap-[10px]">
