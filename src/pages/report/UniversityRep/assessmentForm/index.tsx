@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
-import { BoxWrapper, PageHeader } from '../../../../components'
-import { Divider, Button, Typography, Form, Input } from 'antd'
-import { NavLink } from 'react-router-dom'
-import { SettingHorizontalLine } from '../../../../assets/images'
+import { BoxWrapper, Breadcrumb } from '../../../../components'
+import { Divider, Button, Typography, Form,} from 'antd'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
-import { Emoji1st,Emoji2nd, Emoji3rd, Emoji4th, } from '../../../../assets/images';
-// import ManagerRemarks from '../../Common/managerRemarks'
-import './style.scss'
+import { Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
 import ManagerRemarks from './manageRemarks'
-
-const { TextArea } = Input;
+import './style.scss'
+import { useNavigate } from 'react-router-dom';
 
 const index = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "Assessment Form" },
+    { name: "report", onClickNavigateTo: "/report" },
+   
+  ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
 
@@ -50,12 +52,8 @@ const index = () => {
   ]
   return (
     <div className='company-admin-assessment-form'>
-      <PageHeader title={<> Assessment Form {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-        <NavLink to="/case-studies">
-          <span className='text-base font-medium dashboard-primary-color' >Report</span>
-        </NavLink>  </>} />
-      <Divider className="my-0" />
-
+  <Breadcrumb  breadCrumbData={breadcrumbArray} />
+      <Divider />
       {/* for destop */}
       <div className='scroll '>
         <BoxWrapper className='my-5 hidden destop-view lg:block'>
@@ -93,7 +91,7 @@ const index = () => {
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
          
             <Button type='primary'
-              className='white-bg-color teriary-color save-btn'>Back</Button>
+              className='white-bg-color teriary-color save-btn'    onClick={()=>navigate("/report/view-details/01")}>Back</Button>
          
           </div>
         </BoxWrapper>
@@ -134,6 +132,7 @@ const index = () => {
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
         
           <Button type='primary'
+             onClick={()=>navigate("/report/view-details/01")}
             className='white-bg-color teriary-color save-btn'>Back</Button>
           
         </div>

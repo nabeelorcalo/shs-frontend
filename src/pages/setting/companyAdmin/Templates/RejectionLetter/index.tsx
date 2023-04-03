@@ -31,7 +31,7 @@ const TemplatesRejectionLetter = () => {
   return (
     <div className="template-contract">
       <div>
-      <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+      <Breadcrumb breadCrumbData={breadcrumbArray}/>
         <Divider />
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />

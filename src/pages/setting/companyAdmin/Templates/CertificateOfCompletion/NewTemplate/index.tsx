@@ -11,9 +11,6 @@ import {
 } from "antd";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import {
   CertificateTickCircle,
@@ -21,8 +18,9 @@ import {
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
 import { EyeFilled } from "@ant-design/icons/lib/icons";
-import { Breadcrumb, PopUpModal } from "../../../../../../components";
+import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
 import { useNavigate } from "react-router-dom";
+import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
@@ -87,7 +85,7 @@ const NewTemplateCertiticationOfCompletion = () => {
 
   return (
     <div className="certificate-of-appreciation-new-template">
-       <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+       <Breadcrumb breadCrumbData={breadcrumbArray}/>
 
       <Divider className="my-1 mb-3" />
       <BoxWrapper>

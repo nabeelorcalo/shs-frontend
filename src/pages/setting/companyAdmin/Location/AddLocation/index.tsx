@@ -62,7 +62,7 @@ const AddLocation: React.FC = () => {
 
   return (
     <div className="add-location">
-    <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+    <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider/>
       <BoxWrapper>
         <Form layout="vertical" form={form}>

@@ -13,7 +13,7 @@ const CustomDropDownReport = (props:any) => {
       key: '1',
       label: (
         <span onClick={() => navigate(`/report/view-details/assement-form/${props.data}`)}>
-        view</span>
+        View</span>
       ),
     },
     {

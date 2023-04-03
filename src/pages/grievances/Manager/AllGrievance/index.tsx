@@ -1,11 +1,7 @@
 import { Button, Col, Divider, Row } from 'antd'
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { BlowWistle, SettingHorizontalLine, } from '../../../../assets/images'
-import { DropDown, FiltersButton, PageHeader, PopUpModal, SearchBar } from '../../../../components'
-import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
-import Drawer from '../../../../components/Drawer'
-import AppTabs from '../../../../components/Tabs'
+import { BlowWistle} from '../../../../assets/images'
+import { Breadcrumb,AppTabs, DropDown, FiltersButton, Drawer,BoxWrapper, PopUpModal, SearchBar } from '../../../../components'
 import BlowWhistleForm from '../../Common/blowWhistleForm'
 import EscalatedByMe from './escalatedByMe'
 import EscalatedToMe from './escalatedToMe'
@@ -13,6 +9,10 @@ import Filters from '../../Common/filters'
 import './style.scss'
 
 const index = () => {
+  const breadcrumbArray = [
+    { name: "All Grievance"},
+    { name: "Grievances" , onClickNavigateTo:"/grievances" },
+  ];
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const handleChange = () => {
@@ -20,13 +20,8 @@ const index = () => {
   }
   return (
     <div className='add-grievance'>
-      <div className='header'>
-        <PageHeader title={<> All Grievances {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-          <NavLink to="/grievances">
-            <span className='text-base font-medium dashboard-primary-color' >Grievances</span>
-          </NavLink>  </>} />
-        <Divider className="my-1 mb-2" />
-      </div>
+    <Breadcrumb  breadCrumbData={breadcrumbArray} />
+       <Divider/>
       <Row gutter={[20,20]}>
         <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />

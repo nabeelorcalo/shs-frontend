@@ -11,11 +11,10 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import { useNavigate } from "react-router-dom";
-import { Breadcrumb } from "../../../../../../components";
+import { Breadcrumb ,BoxWrapper } from "../../../../../../components";
+import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
@@ -43,7 +42,7 @@ const NewTemplateRejectionLetter = () => {
 
   return (
     <div className="rejection-letter-new-template">
-       <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+       <Breadcrumb breadCrumbData={breadcrumbArray}/>
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
         <Form layout="vertical" form={form}>

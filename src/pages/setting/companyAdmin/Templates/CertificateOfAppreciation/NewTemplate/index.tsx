@@ -73,7 +73,7 @@ const NewTemplateCertificationOfAppreciation = () => {
 
   return (
     <div className="certificate-of-appreciation-new-template">
-     <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+     <Breadcrumb breadCrumbData={breadcrumbArray}  />
       <Divider />
       <BoxWrapper>
         <Form layout="vertical" form={form}>

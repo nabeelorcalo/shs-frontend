@@ -32,7 +32,7 @@ const TemplatesContract = () => {
   return (
     <div className="template-contract">
       <div>
-      <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
 
         <Divider className="my-1 mb-3" />
         <div className="flex justify-between">

@@ -42,7 +42,7 @@ const NewTemplateOfferLetter = () => {
 
   return (
     <div className="offer-letter-new-template">
-       <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider/>
       <BoxWrapper>
         <Form layout="vertical" form={form}>

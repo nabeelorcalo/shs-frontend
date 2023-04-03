@@ -36,7 +36,7 @@ const handleChange = () => { };
   return (
     <div>
       <div>
-      <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
         <Divider/>
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />

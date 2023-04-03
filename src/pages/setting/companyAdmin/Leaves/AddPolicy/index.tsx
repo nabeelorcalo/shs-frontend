@@ -60,7 +60,6 @@ const LeavesAddPolicy: React.FC = () => {
     carryForwardExpiration: "",
     AllInterns: "",
     switch: "",
-
   });
 
   const handleChange = (event: any) => {
@@ -76,10 +75,8 @@ const LeavesAddPolicy: React.FC = () => {
   };
   return (
     <div className="leaves-add-policy">
-        <Breadcrumb breadCrumbData={breadcrumbArray} className="breadcrumb" />
-
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider/>
-
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}

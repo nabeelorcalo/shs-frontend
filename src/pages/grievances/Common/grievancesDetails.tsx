@@ -1,15 +1,15 @@
 import { CheckOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/icons'
 import { Col, Divider, Form, Row, Typography, Input, Select } from 'antd'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { GrievancesAvater, GrievancesCall,
-   GrievancesDocDownload, GrievancesDocJPG,
-    GrievancesDocPDF, GrievancesInbox, GrievancesLocation,
-     GrievancesSidebarAvater, SettingHorizontalLine, } from '../../../assets/images'
-import { Alert, Button, PageHeader } from '../../../components'
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
+import {
+  GrievancesAvater, GrievancesCall,
+  GrievancesDocDownload, GrievancesDocJPG,
+  GrievancesDocPDF, GrievancesInbox, GrievancesLocation,
+  GrievancesSidebarAvater
+} from '../../../assets/images'
+import { Alert, Breadcrumb, Button, BoxWrapper } from '../../../components'
+
 import DragAndDropWide from '../../../components/DragAndDrop'
-import { ROUTES_CONSTANTS } from '../../../config/constants';
 import './style.scss';
 
 const { Text } = Typography;
@@ -20,23 +20,16 @@ function handleChange(value: any) {
 }
 
 const GrievancesDetails = () => {
+  const breadcrumbArray = [
+    { name: "Grievances Details" },
+    { name: "Grievances", onClickNavigateTo: "/grievances" },
+    { name: "All Grievances", onClickNavigateTo: "/grievances/all-grievance" },
+  ];
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   return (
     <div className='grievance-details'>
-      <PageHeader title={<>Grievances Details{<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-        <span className='text-base font-medium '>
-          <NavLink to="/grievances">
-            <span className='dashboard-primary-color'>
-              Grievances
-            </span>
-          </NavLink>
-          <span className='mx-1'>/</span>
-          <NavLink to={ROUTES_CONSTANTS.ALL_GRIEVANCES}>
-            <span className='dashboard-primary-color'>  All Grievances  </span>
-          </NavLink>
-        </span>
-      </>} />
-      <Divider className="my-1 mb-2" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <Row gutter={[16, 16]}>
         <Col sm={24} md={24} lg={16} xl={16} xxl={18}>
           <BoxWrapper>
@@ -101,7 +94,7 @@ const GrievancesDetails = () => {
                 className="mt-3"
                 name="description"
               >
-           <DragAndDropWide/>
+                <DragAndDropWide />
               </Form.Item>
               <div className='flex justify-end'>
                 <Button className='teriary-bg-color replay-btn'
