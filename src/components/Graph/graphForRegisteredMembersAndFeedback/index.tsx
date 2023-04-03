@@ -42,21 +42,26 @@ export const RegisterMemberAndFeddbackGraph: FC<{
           },
         },
       },
+      line: {
+        style: {
+          stroke: 'white',
+        },
+      },
       tickLine: null,
     },
 
     yAxis: [
       {
-        // min: 0,
-        // max: 100,
+        min: -2,
+        max: 102,
         tickCount: 3,
         label: {
           formatter: (val: any) => `${val}%`,
         },
       },
       {
-        // min: 0,
-        // max: 100,
+        min: -2,
+        max: 102,
         tickCount: 3,
         label: null,
       },
@@ -71,14 +76,9 @@ export const RegisterMemberAndFeddbackGraph: FC<{
           lineWidth: 4,
           opacity: 0.5,
         },
-        // label: {
-        //   formatter: (datum: any) => {
-        //     return `${datum.Active}`;
-        //   },
-        // },
         point: {
           shape: "circle",
-          size: 10,
+          size: 5,
           style: {
             stroke: "#4A9D77",
             fill: "#4A9D77",
@@ -93,14 +93,9 @@ export const RegisterMemberAndFeddbackGraph: FC<{
           lineWidth: 4,
           opacity: 0.5,
         },
-        // label: {
-        //   formatter: (datum: any) => {
-        //     return `${datum.Inactive}`;
-        //   },
-        // },
         point: {
           shape: "circle",
-          size: 10,
+          size: 5,
           style: {
             stroke: "#E94E5D",
             fill: "#E94E5D",
