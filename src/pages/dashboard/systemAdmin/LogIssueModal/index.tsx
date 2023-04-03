@@ -240,11 +240,11 @@ const LogIssueModal = () => {
                           <div className="flex items-center gap-2 flex-wrap">
                             {assignUser.map((user) => (
                               <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                                <span className="text-[#6E7191] font-normal text-xs">
+                                <span className="text-teriary-color font-normal text-xs">
                                   {user.name}
                                 </span>
                                 <CloseCircleFilled
-                                  style={{ color: "#A3AED0", fontSize: "20px" }}
+                                  className="text-[20px] gray-color"
                                   onClick={() => handleRemoveUser(user.id)}
                                 />
                               </div>
@@ -390,7 +390,7 @@ const LogIssueModal = () => {
             lg={8}
           >
             <div className="pr-2 pl-6">
-              <div className="mb-16 text-xl font-medium text-[#14142A]">
+              <div className="mb-16 text-xl font-medium text-primary-color">
                 Comments
               </div>
               {[1, 2].map((item) => {

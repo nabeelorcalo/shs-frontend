@@ -60,8 +60,8 @@ export const InternshipSummaryChart = (props: any) => {
         position: ["50%", "50%"],
         html: () => {
           return `<div style="transform:translate(-50%,-60%)">
-          <p class="text-center	text-base sm:text-[30px] sm:leading-[40px]">${24}<p/>
-          <p class="text-center text-[#14142A] text-xs sm:text-base">${"Internships"}<p/>
+          <p class="text-center text-base sm:text-[30px] sm:leading-[40px]">${24}<p/>
+          <p class="text-center text-primary-color text-xs sm:text-base">${"Internships"}<p/>
         </div>`;
         },
       },

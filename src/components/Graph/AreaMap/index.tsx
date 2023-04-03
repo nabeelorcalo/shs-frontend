@@ -88,13 +88,11 @@ const AreaMapp = ({}: any) => {
   };
 
   return (
-    <div style={{ minHeight: 500 }} className="bg-[red] p-10">
-      <AreaMap
-        style={{ minWidth: 300, minHeight: 400, background: "green" }}
-        className="h-full"
-        {...config}
-      />
-    </div>
+    <AreaMap
+      style={{ minWidth: 300, minHeight: 400, background: "green" }}
+      className="h-full"
+      {...config}
+    />
   );
 };
 
