@@ -182,7 +182,7 @@ const DetailHistory = () => {
   ];
 
   // remove last two items if role is of Manager
-  if (constants.USER_ROLE === "Manager" || constants.USER_ROLE === "University" && items.length > 2) {
+  if (constants.USER_ROLE === constants.MANAGER || constants.USER_ROLE === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -2)
   }
 
@@ -225,7 +225,7 @@ const DetailHistory = () => {
               profession="UI UX Designer"
               className="bg-visible-btn evaluate-btn"
               icon={<ColorLessMedalIcon />}
-              btnTxt={constants.USER_ROLE !== 'University' && 'Evaluate'}
+              btnTxt={constants.USER_ROLE !== constants.UNIVERSITY && 'Evaluate'}
               size={64}
               url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
               avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"

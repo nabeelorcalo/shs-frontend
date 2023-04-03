@@ -14,7 +14,6 @@ Primary.args = {
     breadCrumbData: [
     { name: "Main Title" },
     { name: " child 1", onClickNavigateTo: '/' },
-    { name: "/" },
     { name: " child 2", onClickNavigateTo: '/' },
     ]
 }

@@ -301,7 +301,7 @@ const Detail = () => {
                     value={state.departmentVal}
                   />
                 </div>
-                {constants.USER_ROLE === "University" && (
+                {constants.USER_ROLE === constants.UNIVERSITY && (
                   <div className="flex flex-col my-2 gap-2">
                     <p className="sidebar-label">Company</p>
                     <DropDown

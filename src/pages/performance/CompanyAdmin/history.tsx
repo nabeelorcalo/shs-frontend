@@ -288,7 +288,7 @@ const PerformanceHistory = () => {
       label: (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${constants.USER_ROLE !== "University" ?
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${constants.USER_ROLE !== constants.UNIVERSITY ?
             ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL
           }`}
         >
@@ -341,7 +341,7 @@ const PerformanceHistory = () => {
       key: "3",
     },
   ];
-  if (constants.USER_ROLE === "University" && items.length > 2) {
+  if (constants.USER_ROLE === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -3)
   }
 
