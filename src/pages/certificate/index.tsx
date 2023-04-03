@@ -34,7 +34,7 @@ const Certificates = () => {
         </div>
       </div>
       <CertificateTable />
-      
+
       {openIssueCertificate &&
         <IssueCertificateModal
           setOpen={setOpenIssueCertificate}
@@ -64,8 +64,8 @@ const Certificates = () => {
         okBtntxt="Upload"
         okBtnFunc={() => { }}
         footer={<>
-          <Button className='bg-[#fff] text-[#4A9D77] border-[#4A9D77]' > Cancel </Button>
-          <Button type='primary' className='bg-[#4A9D77] text-[#fff] border-[#4A9D77]' >Submit</Button>
+          <Button className='  signature-cancel-btn' > Cancel </Button>
+          <Button type='primary' className='signature-submit-btn' >Submit</Button>
         </>}
       />
     </div>
