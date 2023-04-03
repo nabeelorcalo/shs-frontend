@@ -32,7 +32,7 @@ const SignatureAndUploadModal = (props: any) => {
   const { state, setState, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
   return (
     <>
-      <Button onClick={() => { setState(!state) }}>Signature & upload</Button>
+      {/* <Button onClick={() => { setState(!state) }}>Signature & upload</Button> */}
       <div>
         <PopUpModal
           title={title}
