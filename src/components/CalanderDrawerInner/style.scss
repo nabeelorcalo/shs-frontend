@@ -5,7 +5,7 @@
     .profilData_wrapper {
       .details {
         .name_of_person {
-          color: #14142B;
+          color: $text-primary-title-color;
         }
 
         .designation {
@@ -21,17 +21,17 @@
     .request_data,
     .File_wrapper {
       h4 {
-        color: #14142B;
+        color: $text-primary-title-color;
       }
 
       p {
-        color: $text-secondary-body-color;
+        color: $white-bg-color;
       }
     }
   }
 
   .leaveType {
-    color: #363565;
+    color: $dashboard-primary-bg-color;
   }
 
   .File_wrapper {
