@@ -1,4 +1,4 @@
-/// <reference path="../../../jspdf.d.ts" />
+///<reference path="../../../jspdf.d.ts" />
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
