@@ -132,3 +132,47 @@
     }
   }
 }
+
+.ant-modal-wrap.modal-add-account {
+  .ant-modal {
+    .ant-modal-body {
+      .ant-form-item {
+        margin-bottom: 10px;
+      }
+
+      .add-account-modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 47px;
+
+        .btn-close-add-account-modal {
+          background-color: #F1EFF2;
+          border-color: #F1EFF2;
+        }
+      }
+    }
+  }
+}
+
+.modal-withdraw-successful {
+  .ant-modal {
+    .ant-modal-body {
+      text-align: center;
+
+      .withdraw-success-title {
+        color: #171721;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.333333;
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
+      .ant-typography {
+        color: #000000;
+        font-size: 19px;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}

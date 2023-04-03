@@ -529,6 +529,9 @@ export { ReactComponent as WhatsAppCircle } from "./earnWithUs/WhatsAppCircle.sv
 export { ReactComponent as IconDocumentCopy } from "./earnWithUs/document-copy.svg";
 export { ReactComponent as IconBank } from "./earnWithUs/icon-bank.svg";
 export { ReactComponent as IconEditAccount } from "./earnWithUs/icon-edit.svg";
+export { ReactComponent as IconCheckSuccess } from "./earnWithUs/icon-check-success.svg";
+export { ReactComponent as IconWithdrawAgain } from "./earnWithUs/icon-withdraw-again.svg";
+
 
 // payments
 export { ReactComponent as UserIcon } from "./payments/userIcon.svg";

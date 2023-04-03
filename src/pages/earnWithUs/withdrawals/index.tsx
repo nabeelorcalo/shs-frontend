@@ -1,10 +1,23 @@
 import React, { useState, useEffect } from "react"
-import { Form, Input, Button, Select, Row, Col } from 'antd'
-import { IconAngleDown, IconBank, IconEditAccount } from '../../../assets/images'
-import { SearchBar } from "../../../components";
+import { 
+  Form, 
+  Input, 
+  Button, 
+  Select, 
+  Row, 
+  Col, 
+  Space, 
+  Typography
+} from 'antd'
+import { 
+  IconAngleDown, 
+  IconBank, 
+  IconEditAccount, 
+  IconCheckSuccess, 
+  IconWithdrawAgain 
+} from '../../../assets/images'
+import { PopUpModal } from "../../../components";
 import "./style.scss";
-
-
 
 
 
@@ -12,10 +25,29 @@ const Withdrawals = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [isAccountList, setIsAccountList] = useState(false)
+  const [modalAddAccountOpen, setModalAddAccountOpen] = useState(false)
+  const [modalEditAccountOpen, setModalEditAccountOpen] = useState(false)
+  const [modalWithdrawSuccessfulOpen, setModalWithdrawSuccessfulOpen] = useState(false)
   const [form] = Form.useForm();
   const [initValues,  setInitValues] = useState({
     "withdrawAccoutn": null,
     "withdrawAmount": "",
+  })
+  const [addAccountValues,  setAddAccountValues] = useState({
+    "selectBank": null,
+    "accountNumber": "",
+    "accountName": "",
+    "routingNumber": "",
+    "sortCode": "",
+    "accountType": null,
+  })
+  const [editAccountValues,  setEditAccountValues] = useState({
+    "selectBank": "NatWest Group",
+    "accountNumber": "31926819",
+    "accountName": "Business: porter inc.",
+    "routingNumber": "GB29 NWBK 6016 1331 9268 19 ",
+    "sortCode": "31926819",
+    "accountType": "checking",
   })
 
 
@@ -31,6 +63,39 @@ const Withdrawals = () => {
   -------------------------------------------------------------------------------------*/
   function submitWithdrawals(values: any) {
     console.log('Success:', values);
+  }
+
+  function openModalAddAccount() {
+    setModalAddAccountOpen(true)
+  }
+
+  function closeModalAddAccount() {
+    setModalAddAccountOpen(false)
+  }
+
+  function submitAddAccount(values: any) {
+    console.log('Success:', values);
+  }
+
+  function openModalEditAccount() {
+    setModalEditAccountOpen(true)
+  }
+
+  function closeModalEditAccount() {
+    setModalEditAccountOpen(false)
+  }
+
+  function submitEditAccount(values: any) {
+    console.log('Success:', values);
+    closeModalEditAccount()
+  }
+
+  function openModalWithdrawSuccessful() {
+    setModalWithdrawSuccessfulOpen(true)
+  }
+
+  function closeModalWithdrawSuccessful() {
+    setModalWithdrawSuccessfulOpen(false)
   }
 
 
@@ -49,9 +114,8 @@ const Withdrawals = () => {
             <Button className="button-tertiary" onClick={() => setIsAccountList(true)}>Link a bank Account</Button>
           }
           {isAccountList &&
-            <Button className="button-tertiary">Add New</Button>
-          }
-            
+            <Button className="button-tertiary" onClick={openModalAddAccount}>Add New</Button>
+          } 
           </div>
         </div>
 
@@ -133,7 +197,7 @@ const Withdrawals = () => {
                   </Row>
 
                   <div className="withdraw-now">
-                    <Button className="button-tertiary">WITHDRAW  NOW</Button>
+                    <Button className="button-tertiary" onClick={openModalWithdrawSuccessful}>WITHDRAW  NOW</Button>
                   </div>
                 </div>
               </div>
@@ -156,7 +220,7 @@ const Withdrawals = () => {
                   </div>
                 </div>
                 <div className="account-list-item-right">
-                  <div className="account-edit-btn"><IconEditAccount /></div>
+                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount /></div>
                 </div>
               </li>
 
@@ -169,7 +233,7 @@ const Withdrawals = () => {
                   </div>
                 </div>
                 <div className="account-list-item-right">
-                  <div className="account-edit-btn"><IconEditAccount /></div>
+                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount /></div>
                 </div>
               </li>
 
@@ -182,13 +246,181 @@ const Withdrawals = () => {
                   </div>
                 </div>
                 <div className="account-list-item-right">
-                  <div className="account-edit-btn"><IconEditAccount /></div>
+                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount /></div>
                 </div>
               </li>
             </ul>
           </div>
         }
       </div>
+
+      {/* STARTS: MODAL WITHDRAW REQUEST SUCCESSFUL
+      *************************************************************************/}
+      <PopUpModal
+        open={modalWithdrawSuccessfulOpen}
+        close={closeModalWithdrawSuccessful}
+        footer={null}
+        width={1140}
+        wrapClassName="modal-withdraw-successful"
+      >
+        <div className="withdraw-success-icon">
+          <IconCheckSuccess />
+        </div>
+        <div className="withdraw-success-title">$1000 Withdraw Request Successful</div>
+        <Typography.Paragraph>
+          The Withdraw Request has been successfully sent
+        </Typography.Paragraph>
+        <Typography.Paragraph>
+          Transaction ID: TRX2MGNVHSEZR
+        </Typography.Paragraph>
+        <Button className="button-tertiary" icon={<IconWithdrawAgain />} onClick={closeModalWithdrawSuccessful}>
+          WITHDRAW REQUEST AGAIN
+        </Button>
+      </PopUpModal>
+      {/* ENDS: MODAL WITHDRAW REQUEST SUCCESSFUL
+      *************************************************************************/}
+
+      {/* STARTS: MODAL ADD ACCOUNT
+      *************************************************************************/}
+      <PopUpModal
+        open={modalAddAccountOpen}
+        close={closeModalAddAccount}
+        closable={false}
+        footer={null}
+        width={824}
+        wrapClassName="modal-add-account"
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          name="addAccount"
+          initialValues={addAccountValues}
+          onValuesChange={(_, values) => {
+            setAddAccountValues(prevState => ({...prevState, ...values}))
+            console.log('init:: ', values)
+          }}
+          onFinish={submitAddAccount}
+        >
+          <Row gutter={40}>
+            <Col sm={12}>
+              <Form.Item name="selectBank" label="Choose your Bank">
+                <Select className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
+                  <Select.Option value="natwestGroup">Natwest Group</Select.Option>
+                  <Select.Option value="HBL">HBL</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="accountNumber" label="Account Number">
+                <Input className="filled" placeholder="Enter account number" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="accountName" label="Account Name">
+                <Input className="filled" placeholder="Enter account name" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="routingNumber" label="Routing Number">
+                <Input className="filled" placeholder="Enter routing number" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="sortCode" label="Sort Code">
+                <Input className="filled" placeholder="Enter sort code" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="accountType" label="Account Type">
+                <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
+                  <Select.Option value="savings">Savings</Select.Option>
+                  <Select.Option value="current">Current</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          
+          <div className="add-account-modal-footer">
+            <Space size={20}>
+              <Button className="btn-close-add-account-modal" onClick={closeModalAddAccount}>Cancel</Button>
+              <Button htmlType="submit" className="button-tertiary">Link Account</Button>
+            </Space>
+          </div>
+        </Form>
+      </PopUpModal>
+      {/* ENDS: MODAL ADD ACCOUNT
+      *************************************************************************/}
+
+      {/* STARTS: MODAL EDIT ACCOUNT
+      *************************************************************************/}
+      <PopUpModal
+        open={modalEditAccountOpen}
+        close={closeModalEditAccount}
+        closable={false}
+        footer={null}
+        width={824}
+        wrapClassName="modal-add-account"
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          name="editAccount"
+          initialValues={editAccountValues}
+          onValuesChange={(_, values) => {
+            setEditAccountValues(prevState => ({...prevState, ...values}))
+            console.log('init:: ', values)
+          }}
+          onFinish={submitEditAccount}
+        >
+          <Row gutter={40}>
+            <Col sm={12}>
+              <Form.Item name="selectBank" label="Choose your Bank">
+                <Select className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
+                  <Select.Option value="natwestGroup">Natwest Group</Select.Option>
+                  <Select.Option value="HBL">HBL</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="accountNumber" label="Account Number">
+                <Input className="filled" placeholder="Enter account number" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="accountName" label="Account Name">
+                <Input className="filled" placeholder="Enter account name" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="routingNumber" label="Routing Number">
+                <Input className="filled" placeholder="Enter routing number" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="sortCode" label="Sort Code">
+                <Input className="filled" placeholder="Enter sort code" />
+              </Form.Item>
+            </Col>
+            <Col sm={12}>
+              <Form.Item name="accountType" label="Account Type">
+                <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
+                  <Select.Option value="checking">Checking</Select.Option>
+                  <Select.Option value="current">Current</Select.Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          
+          <div className="add-account-modal-footer">
+            <Space size={20}>
+              <Button className="btn-close-add-account-modal" onClick={closeModalEditAccount}>Cancel</Button>
+              <Button htmlType="submit" className="button-tertiary">Update</Button>
+            </Space>
+          </div>
+        </Form>
+      </PopUpModal>
+      {/* ENDS: MODAL EDIT ACCOUNT
+      *************************************************************************/}
     </>
   )
 }

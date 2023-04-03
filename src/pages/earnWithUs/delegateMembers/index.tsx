@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps, DatePickerProps } from 'antd';
-import { Table, Typography, Row, Col, Space, Dropdown, Button } from 'antd'
-import {IconAngleDown, IconDocumentDownload} from '../../../assets/images'
+import type { MenuProps } from 'antd';
+import { Table, Space, Dropdown, Button } from 'antd'
+import { IconAngleDown } from '../../../assets/images'
 import { SearchBar } from "../../../components";
 import "./style.scss";
 
@@ -219,6 +219,7 @@ const DelegateMembers = () => {
   return (
     <>
       <div className="earnwithus-delegate-members">
+        
         <div className="page-filterbar">
           <div className="page-filterbar-left">
             <div className="searchbar-wrapper">
@@ -253,7 +254,6 @@ const DelegateMembers = () => {
         </div>
         
       </div>
-
     </>
   )
 }
