@@ -61,8 +61,7 @@ const Detail = () => {
     {
       id: 1,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
@@ -70,8 +69,7 @@ const Detail = () => {
     {
       id: 2,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Designer",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "leave",
@@ -79,8 +77,7 @@ const Detail = () => {
     {
       id: 3,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Business Analyst",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
@@ -88,8 +85,7 @@ const Detail = () => {
     {
       id: 4,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
@@ -97,8 +93,7 @@ const Detail = () => {
     {
       id: 5,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
@@ -106,8 +101,7 @@ const Detail = () => {
     {
       id: 6,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
@@ -115,8 +109,7 @@ const Detail = () => {
     {
       id: 7,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "absent",
@@ -124,8 +117,7 @@ const Detail = () => {
     {
       id: 8,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Scientist",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
@@ -133,8 +125,7 @@ const Detail = () => {
     {
       id: 9,
       name: "Mino Marina",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+      avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
       company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
