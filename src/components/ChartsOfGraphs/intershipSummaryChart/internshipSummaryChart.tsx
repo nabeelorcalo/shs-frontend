@@ -54,10 +54,23 @@ export const InternshipSummaryChart = (props: any) => {
       },
       fontSize: 18,
     },
+    annotations: [
+      {
+        type: "html",
+        position: ["50%", "50%"],
+        html: () => {
+          return `<div style="transform:translate(-50%,-60%)">
+          <p class="text-center	text-base sm:text-[30px] sm:leading-[40px]">${24}<p/>
+          <p class="text-center text-[#14142A] text-xs sm:text-base">${"Internships"}<p/>
+        </div>`;
+        },
+      },
+    ],
     barStyle: barStyle,
     intervalPadding: intervalPadding,
     xAxis: xAxis,
   };
+
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       {heading && (

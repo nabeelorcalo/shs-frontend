@@ -97,10 +97,10 @@ const CompanyAdmin = () => {
         }
       />
       <Row gutter={gutter}>
-        <Col xs={24} xl={16}>
+        <Col xs={24} xl={15} xxl={16}>
           <PiplineTable handleSelect={handleSelect} />
         </Col>
-        <Col xs={24} xl={8}>
+        <Col xs={24} xl={9} xxl={8}>
           <InternshipSummaryChart
             autoFit
             barStyle={{
@@ -108,7 +108,7 @@ const CompanyAdmin = () => {
             }}
             colorField="name"
             heading="Internships Summary"
-            innerRadius={0.37}
+            innerRadius={0.5}
             intervalPadding={9.1}
             maxAngle={360}
             padding="auto"
