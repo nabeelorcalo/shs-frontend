@@ -578,8 +578,5 @@ export { ReactComponent as LocationSun } from '../../assets/images/dashboard/stu
 export { ReactComponent as WebArrow } from '../../assets/images/dashboard/studentdashboard/webarrow.svg';
 export {ReactComponent as CompanyLogoOne} from '../../assets/images/dashboard/studentdashboard/asset1.svg'
 
-
-
-
 export { default as Certificate1 } from './Performance/certificate1.png';
 export { default as Certificate2 } from './Performance/certificate2.png';

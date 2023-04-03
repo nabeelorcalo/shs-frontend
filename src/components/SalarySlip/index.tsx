@@ -9,7 +9,7 @@ import {
 } from "../../assets/images";
 import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
-import { Breadcrumb, openNotification } from "../../components";
+import { Breadcrumb, Notifications } from "../../components";
 import "./style.scss";
 
 export const SalarySlip = () => {
@@ -57,7 +57,7 @@ export const SalarySlip = () => {
           <div
             className="w-52 flex justify-center"
             onClick={() =>
-              openNotification({
+              Notifications({
                 title: "Success",
                 description: "File downloaded",
                 icon: <Success />,
