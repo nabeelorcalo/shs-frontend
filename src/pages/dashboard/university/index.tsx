@@ -18,7 +18,6 @@ import AgencyCard from "../../../components/AgencyCard";
 import constants from "../../../config/constants";
 
 const University = () => {
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
     list: [],
     loading: false,
