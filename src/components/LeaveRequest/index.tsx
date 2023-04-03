@@ -3,7 +3,6 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import "./style.scss"
-import dayjs from 'dayjs';
 import { DocumentUpload } from '../../assets/images';
 import { Button } from '../Button';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
@@ -55,7 +54,6 @@ export const LeaveRequest = (props: any) => {
     hours: '',
     reason: "",
     attachment: ''
-
   }
 
   const { title, open, setIsAddModalOpen, subMitLeaveBtn, data } = props;
