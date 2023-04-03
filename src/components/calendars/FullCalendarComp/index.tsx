@@ -11,7 +11,9 @@ import CalendarModalBox from "./modalBox";
 import CalendarDrawer from './drawerComp/index'
 import { calendarMockData } from "./mockData";
 
-const Index = () => {
+const Index = (props: any) => {
+
+  const { eventData } = props;
 
   const [openModal, setOpenModal] = useState(false);
 
