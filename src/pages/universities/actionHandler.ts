@@ -32,8 +32,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no,universityName, universityRep, email , contact, city  }: any) =>
-      [ no, universityName, universityRep, email , contact, city]
+    const body = data.map(({ no, logo , universityName, universityRep, email , contact, city  }: any) =>
+      [ no, '', universityName, universityRep, email , contact, city]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -60,7 +60,7 @@ const useCustomHook = () => {
       },
 
       didDrawCell: async (item: any) => {
-        if (item.column.dataKey === 2 && item.section === "body") {
+        if (item.column.dataKey === 1 && item.section === "body") {
           const xPos = item.cell.x;
           const yPos = item.cell.y;
           var dim = 20;

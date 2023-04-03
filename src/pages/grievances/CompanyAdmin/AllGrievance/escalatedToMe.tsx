@@ -3,51 +3,8 @@ import { Space } from 'antd'
 import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
-import {
-  GrievancesAvater1,
-  GrievancesAvater2,
-  GrievancesAvater3,
-  GrievancesAvater4
-} from '../../../../assets/images'
 
-const escalatedByMeTableData = [
-  {
-    no: '01',
-    avater: <GrievancesAvater1/>,
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedBy: 'Julie Andrews',
-    status: 'New',
-  },
-  {
-    no: '02',
-    avater: <GrievancesAvater2/>,
-    subject: 'Working conditions',
-    type: 'Discipline',
-    date: '2/09/2022',
-    escalatedBy: 'Sean Bean',
-    status: 'In Progess',
-  },
-  {
-    no: '03',
-    avater:   <GrievancesAvater3/>,
-    subject: 'Bullying',
-    type: 'Personal',
-    date: '22/09/2022',
-    escalatedBy: 'Emma Thompson',
-    status: 'Re-Opened',
-  },
-  {
-    no: '04',
-    avater:  <GrievancesAvater4/>,
-    subject: 'Attendance Log Issue',
-    type: 'Work',
-    date: '04/09/2022',
-    escalatedBy: 'Robert Carlyle',
-    status: 'Resolved',
-  },
-]
+
 const escalatedByMeTableColumns =
   [
     {
@@ -117,12 +74,12 @@ const escalatedByMeTableColumns =
       ),
     },
   ]
-const EscalatedToMe = () => {
+const EscalatedToMe = (props:any) => {
   return (
     <GlobalTable
       columns={escalatedByMeTableColumns}
       pagination
-      tableData={escalatedByMeTableData}
+      tableData={props.escalatedByMeTableData}
     />
   )
 }

@@ -9,8 +9,6 @@ import flag3 from '../../../assets/images/universities/flag3.svg'
 import flag4 from '../../../assets/images/universities/flag4.svg'
 import flag5 from '../../../assets/images/universities/flag5.svg'
 import flag6 from '../../../assets/images/universities/flag6.svg'
-
-
 import './style.scss'
 import UniversityTable from './universityTable';
 const escalatedByMeTableData = [
@@ -72,8 +70,7 @@ const escalatedByMeTableData = [
 ]
 
 const index: React.FC = () => {
-  const csvColumn = ["No.","Logo" , "University Name" , "Univerity Rep" , "Email" , "Contact" , "City"]
-
+const TableColumn = ['No.' , 'Logo','University Name', 'Univerity Rep' , 'Email' , 'Contact' , 'City']
 const action = useCustomHook();
   const [value, setValue] = useState<any>()
   const handleChange = () => { };
@@ -95,7 +92,7 @@ const action = useCustomHook();
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={()=>action.downloadPdfOrCsv(event,csvColumn,escalatedByMeTableData,"University Details" )}
+              setValue={()=>action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"University Details" )}
             />
           </div>
         </div>
