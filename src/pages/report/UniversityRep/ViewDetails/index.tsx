@@ -1,46 +1,43 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import { ReportViewDetails, DownloadIconLeave, SettingHorizontalLine, GrievancesAvater } from '../../../../assets/images'
-import { BoxWrapper, PageHeader, SearchBar } from '../../../../components'
+import { BoxWrapper, Breadcrumb, SearchBar } from '../../../../components'
 import { Divider, Typography, Row, Col,} from 'antd'
-import './style.scss'
-import DropDownForSetting from '../../../../components/Setting/Common/CustomSettingDropdown'
 import CustomDropDownReport from './customDropDown'
+import './style.scss'
 
-
-let overview = [
-  { id:4,
-    name: "Self Assessment 4",
-    image: <ReportViewDetails />,
-    date: "October 2022",
-  },
-  { id:3,
-    name: "Self Assessment 3",
-    image: <ReportViewDetails />,
-    date: "September 2022",
-  },
-  {id:2,
-    name: "Self Assessment 2",
-    image: <ReportViewDetails />,
-    date: "Augest 2022",
-  },
-  {id:1,
-    name: "Self Assessment 1",
-    image: <ReportViewDetails />,
-    date: "july 2022",
-  },
-
-
-];
 const index = () => {
+  let overview = [
+    { id:4,
+      name: "Self Assessment 4",
+      image: <ReportViewDetails />,
+      date: "October 2022",
+    },
+    { id:3,
+      name: "Self Assessment 3",
+      image: <ReportViewDetails />,
+      date: "September 2022",
+    },
+    {id:2,
+      name: "Self Assessment 2",
+      image: <ReportViewDetails />,
+      date: "Augest 2022",
+    },
+    {id:1,
+      name: "Self Assessment 1",
+      image: <ReportViewDetails />,
+      date: "july 2022",
+    },
+  ];
+  const breadcrumbArray = [
+    { name: "Mino Mrina" },
+    { name: "report", onClickNavigateTo: "/report" },
+   
+  ];
   const handleChange = () => {
   }
   return (
     <div>
-      <PageHeader title={<> Mino Mrina {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-        <NavLink to="/report">
-          <span className='text-base font-medium dashboard-primary-color' >Report</span>
-        </NavLink>  </>} />
+      <Breadcrumb  breadCrumbData={breadcrumbArray} />
       <Divider />
       <div className="flex justify-between">
         <div><SearchBar size="middle" handleChange={handleChange} /></div>

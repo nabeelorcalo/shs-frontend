@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Alert, GlobalTable } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import './style.scss'
-import CustomDropDown from './customDropDown'
 import CustomDropDownCaseStudies from './customDropDown'
 
 const CaseStudiesTable = () => {

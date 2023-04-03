@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
-import { BoxWrapper, PageHeader } from '../../../../components'
+import { BoxWrapper, Breadcrumb,SignatureAndUploadModal  } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
-import { NavLink } from 'react-router-dom'
-import { SettingHorizontalLine } from '../../../../assets/images'
-import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
+
 import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
 
 const { TextArea } = Input;
 
 const index = () => {
+  const breadcrumbArray = [
+    { name: "Assessment Form" },
+    { name: "Case Studies", onClickNavigateTo: "/case-studies" },
+   
+  ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
 
@@ -48,11 +51,8 @@ const index = () => {
   ]
   return (
     <div className='company-admin-assessment-form'>
-      <PageHeader title={<> Assessment Form {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-        <NavLink to="/case-studies">
-          <span className='text-base font-medium dashboard-primary-color' >Case Studies</span>
-        </NavLink>  </>} />
-      <Divider className="my-0" />
+     <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
 
       {/* for destop */}
       <div className='scroll '>

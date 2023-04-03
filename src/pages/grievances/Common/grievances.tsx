@@ -125,13 +125,14 @@ const Grievance = () => {
                   </div>
                 </div>
                 <div className=' gap-2'>
-                  <span>Grievances Type:</span><span className='px-2 text-[#F08D97]'>Attendance Log Issue</span>
+                  <span>Grievances Type:</span>
+                  <span className='px-2 text-[#F08D97]'>Attendance Log Issue</span>
                 </div>
               </div>
               <div className="view-all-btn ">
                <NavLink to="/grievances/all-grievance/grievance-detials">
-                <span className='capitalize xl:mx-2 white-color' >view</span >
-                <span  className='capitalize xl:mx-2 white-color'><ArrowRightOutlined /></span> 
+                <span className='capitalize  xxl:mx-2 white-color' >view</span >
+                <span  className='capitalize ml-1 xxl:mx-2 white-color'><ArrowRightOutlined /></span> 
                 </NavLink> 
               </div>
             </BoxWrapper>

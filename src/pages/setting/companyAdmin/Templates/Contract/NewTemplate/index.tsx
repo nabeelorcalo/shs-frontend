@@ -11,13 +11,20 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { useNavigate } from "react-router-dom";
+import { Breadcrumb , BoxWrapper } from "../../../../../../components";
+import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateContract = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Settidddng"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "xyz" , onClickNavigateTo:"/settings/template/contract" },
+  ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
   const onChangeHandler = (e: any) => {
@@ -35,11 +42,8 @@ const NewTemplateContract = () => {
 
   return (
     <div className="offer-letter-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Contract"
-        perviousPageLink="/settings/template/contract"
-      />
-      <Divider className="my-1 mb-3" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider/>
       <BoxWrapper>
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
@@ -78,7 +82,7 @@ const NewTemplateContract = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary" onClick={()=>navigate("/settings/template/template-offer-letters")}>
               Cencal
             </Button>
             <Button

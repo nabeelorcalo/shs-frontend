@@ -11,9 +11,6 @@ import {
 } from "antd";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import {
   CertificateTickCircle,
@@ -21,10 +18,19 @@ import {
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
 import { EyeFilled } from "@ant-design/icons/lib/icons";
-import { PopUpModal } from "../../../../../../components";
+import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
+import { useNavigate } from "react-router-dom";
+import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Certificate of Completion" , onClickNavigateTo:"/settings/template/certificate-of-completion/new-template" },
+  ];
   const [value, setValue] = useState();
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
@@ -79,10 +85,8 @@ const NewTemplateCertiticationOfCompletion = () => {
 
   return (
     <div className="certificate-of-appreciation-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Certification of Completion"
-        perviousPageLink="/settings/template/certificate-of-appreciation"
-      />
+       <Breadcrumb breadCrumbData={breadcrumbArray}/>
+
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
       <Form layout="vertical" form={form}>
@@ -133,6 +137,7 @@ const NewTemplateCertiticationOfCompletion = () => {
             <Col className="gutter-row" xs={24} md={24} xl={12}>
               <Row gutter={[16, 16]}>
                 <Col className="gutter relative" xs={24} xl={12}>
+                  <BoxWrapper>
                   <div
                     style={{ border: `2px solid ${borderColorfirst.color}` }}
                     className="cursor-pointer certificate-card "
@@ -166,8 +171,10 @@ const NewTemplateCertiticationOfCompletion = () => {
                       Template 1
                     </p>
                   </div>
+                  </BoxWrapper>
                 </Col>
                 <Col className="gutter relative" xs={24} xl={12}>
+                <BoxWrapper>
                   <div
                     style={{ border: `2px solid ${borderColorSecond.color}` }}
                     className="cursor-pointer certificate-card "
@@ -200,12 +207,14 @@ const NewTemplateCertiticationOfCompletion = () => {
                       Template 2
                     </p>
                   </div>
+                  </BoxWrapper>
                 </Col>
               </Row>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary"
+             onClick={()=>navigate("/settings/template/certificate-of-completion")}>
               Cencal
             </Button>
             <Button

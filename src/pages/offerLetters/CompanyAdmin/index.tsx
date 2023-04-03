@@ -1,5 +1,5 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconAngleDown,
   NewImg,
@@ -9,8 +9,6 @@ import {
   Rejected,
   Signed,
   Recevied,
-  GreyEye,
-  GreyLock,
   GreenErrow,
   GreenEye,
   GreenLock,
@@ -301,13 +299,13 @@ const CompanyAdmin = () => {
         <SearchBar handleChange={() => { }} />
       </Col>
 
-      <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+      <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
         <Dropdown 
           menu={{ items: TimeFrameItems }}
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Button className="button-sky-blue">
+          <Button className="button-sky-blue main-btn">
             Time Frame
             <IconAngleDown />
           </Button>
@@ -318,7 +316,7 @@ const CompanyAdmin = () => {
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Button className="button-sky-blue">
+          <Button className="button-sky-blue main-btn">
             Status
             <IconAngleDown />
           </Button>

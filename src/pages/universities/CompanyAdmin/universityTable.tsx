@@ -9,66 +9,66 @@ import flag6 from '../../../assets/images/universities/flag6.svg'
 import DropDownNew from '../../../components/Dropdown/DropDownNew'
 import { useNavigate } from 'react-router'
 import { ThreeDots } from '../../../assets/images'
-const UniversityTable = () => {
+const UniversityTable = (props:any) => {
 
   const navigate = useNavigate();
-  const escalatedByMeTableData = [
-    {
-      no: '01',
-      logo: flag,
-      universityName: 'University of Lincoln',
-      universityRep: 'Mino Marina',
-      email: 'enquiries@linclon.ac.uk',
-      contact: '+44 7700 900077',
-      city: 'Linclon',
-    },
-    {
-      no: '02',
-      logo: flag2,
-      universityName: 'University of London',
-      universityRep: 'Craig Donin',
-      email: 'enquiries@london.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'London',
-    },
-    {
-      no: '03',
-      logo: flag3,
-      universityName: 'University of Birmingham',
-      universityRep: 'Omar Schleifer',
-      email: 'enquiries@birmingham.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'Birmingham',
-    },
-    {
-      no: '04',
-      logo: flag4,
-      universityName: 'University of Lincoln',
-      universityRep: 'Mino Marina',
-      email: 'enquiries@linclon.ac.uk',
-      contact: '+44 7700 900077',
-      city: 'Linclon',
-    },
-    {
-      no: '05',
-      logo: flag5,
-      universityName: 'University of London',
-      universityRep: 'Craig Donin',
-      email: 'enquiries@london.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'London',
-    },
-    {
-      no: '06',
-      logo: flag6,
-      universityName: 'University of Birmingham',
-      universityRep: 'Omar Schleifer',
-      email: 'enquiries@birmingham.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'Birmingham',
-    },
+  // const escalatedByMeTableData = [
+  //   {
+  //     no: '01',
+  //     logo: flag,
+  //     universityName: 'University of Lincoln',
+  //     universityRep: 'Mino Marina',
+  //     email: 'enquiries@linclon.ac.uk',
+  //     contact: '+44 7700 900077',
+  //     city: 'Linclon',
+  //   },
+  //   {
+  //     no: '02',
+  //     logo: flag2,
+  //     universityName: 'University of London',
+  //     universityRep: 'Craig Donin',
+  //     email: 'enquiries@london.ac.uk',
+  //     contact: '+44 2078 628009',
+  //     city: 'London',
+  //   },
+  //   {
+  //     no: '03',
+  //     logo: flag3,
+  //     universityName: 'University of Birmingham',
+  //     universityRep: 'Omar Schleifer',
+  //     email: 'enquiries@birmingham.ac.uk',
+  //     contact: '+44 2078 628009',
+  //     city: 'Birmingham',
+  //   },
+  //   {
+  //     no: '04',
+  //     logo: flag4,
+  //     universityName: 'University of Lincoln',
+  //     universityRep: 'Mino Marina',
+  //     email: 'enquiries@linclon.ac.uk',
+  //     contact: '+44 7700 900077',
+  //     city: 'Linclon',
+  //   },
+  //   {
+  //     no: '05',
+  //     logo: flag5,
+  //     universityName: 'University of London',
+  //     universityRep: 'Craig Donin',
+  //     email: 'enquiries@london.ac.uk',
+  //     contact: '+44 2078 628009',
+  //     city: 'London',
+  //   },
+  //   {
+  //     no: '06',
+  //     logo: flag6,
+  //     universityName: 'University of Birmingham',
+  //     universityRep: 'Omar Schleifer',
+  //     email: 'enquiries@birmingham.ac.uk',
+  //     contact: '+44 2078 628009',
+  //     city: 'Birmingham',
+  //   },
 
-  ]
+  // ]
   const escalatedByMeTableColumns =
     [
       {
@@ -145,7 +145,7 @@ const UniversityTable = () => {
     <GlobalTable
       columns={escalatedByMeTableColumns}
       pagination
-      tableData={escalatedByMeTableData}
+      tableData={props.escalatedByMeTableData}
     />
   )
 }
