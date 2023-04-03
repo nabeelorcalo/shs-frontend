@@ -31,18 +31,18 @@ const items: TabsProps['items'] = [
 const SignatureAndUploadModal = (props: any) => {
   const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
   return (
-        <PopUpModal
-          title={title}
-          open={state}
-          close={closeFunc}
-          width={width}
-          okBtntxt={okBtntxt}
-          cancelBtntxt={cancelBtntxt}
-          okBtnFunc={okBtnFunc}
-          footer={footer}
-        >
-          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-        </PopUpModal>
+    <PopUpModal
+      title={title}
+      open={state}
+      close={closeFunc}
+      width={width}
+      okBtntxt={okBtntxt}
+      cancelBtntxt={cancelBtntxt}
+      okBtnFunc={okBtnFunc}
+      footer={footer}
+    >
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </PopUpModal>
   )
 }
 

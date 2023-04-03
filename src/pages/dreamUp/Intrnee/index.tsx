@@ -1,7 +1,6 @@
 import { Col, Dropdown, Row, Space } from "antd"
-import Divider from "antd/es/divider"
 import { useNavigate } from "react-router-dom"
-import { FilterIconLeave, LeaveProfileImg, MoreIcon } from "../../../assets/images"
+import {MoreIcon } from "../../../assets/images"
 import { BoxWrapper, Button, GlobalTable, HorizonalLineCard, LifeAssessmentGraph, LifeBalanceGraph, SearchBar } from "../../../components"
 import { ROUTES_CONSTANTS } from "../../../config/constants"
 import "./style.scss"
@@ -145,21 +144,21 @@ const DreamUp = () => {
   return (
     <div className="Dram_upMain">
       <Row gutter={[20, 20]}>
-        <Col xs={24} lg={8}>
+        <Col xs={24} md={24}  lg={10} xl={8}>
           <HorizonalLineCard
             arraydata={LineGraphData}
           />
         </Col>
-        <Col lg={8}>
-          <BoxWrapper className="h-full Life_balanceGraph">
+        <Col  xs={24} md={24} lg={14} xl={8}>
+          <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_balanceGraph">
             <div className="flex items-center justify-between">
               <h4 className="text-xl font-medium  ">Life Balance</h4>
             </div>
             <LifeBalanceGraph monthName="Jan" />
           </BoxWrapper>
         </Col>
-        <Col lg={8}>
-          <BoxWrapper className="h-full Life_assesment">
+        <Col  xs={24} md={24} lg={24} xl={8}>
+          <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_assesment">
             <div className="flex items-center justify-between Life_assesment_inner_main_heading_wraper">
               <h4 className="text-xl font-medium  ">Life Assessment</h4>
             </div>
@@ -167,14 +166,14 @@ const DreamUp = () => {
           </BoxWrapper>
         </Col>
       </Row>
-      <Row className=' items-center my-8'>
-        <Col xs={24} md={12} lg={12}>
+      <Row gutter={[20,20]} className=' items-center my-8'>
+        <Col xs={24} md={24} lg={6} xl={6}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
             console.log(e);
           }} />
         </Col>
-        <Col xs={24} md={12} lg={12} >
-          <div className='flex items-center justify-end view_history_button_wrapper'>
+        <Col xs={24} md={24} lg={18} xl={18} >
+          <div className='flex items-center lg:justify-end view_history_button_wrapper'>
             <Button
               label="View History"
               className="button font-semibold"
@@ -184,7 +183,7 @@ const DreamUp = () => {
           </div>
         </Col>
       </Row>
-      <BoxWrapper className="Table_wrapper">
+      <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="Table_wrapper">
         <GlobalTable
           columns={columData}
           tableData={data}

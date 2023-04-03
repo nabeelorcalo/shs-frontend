@@ -85,11 +85,19 @@
           background-color: $light-gray-tertiary;
           border-radius: 16px;
           align-items: center;
+          border-bottom: unset !important;
         }
 
-        // .ant-collapse-expand-icon{
+        .ant-collapse-content {
+          .ant-collapse-content-box {
+            background-color: #FCFCFC;
+            border-radius: 16px;
+            margin-top: 10px;
+            padding: 15px 20px;
+          }
+        }
 
-        // }
+        // .ant-collapse-expand-icon{}
         .ant-collapse-header-text {
           .goals_task_Accordion {
             .heading_date {
@@ -104,40 +112,28 @@
           }
         }
       }
+    }
 
-      // background-color: $light-gray-tertiary;
-      // border: unset;
+    .ant-collapse-borderless {
+      .ant-collapse-item {
+        border-bottom: unset !important;
+      }
+    }
+  }
+  .top_header_tasksInfo_info{
+    p.heading{
+      color: $text-primary-title-color;
+      // max-width: 210px;
+      // width: 100%;
+      
+    }
+    .task_count{
 
-      // .ant-collapse-header-text {
-      //   .goals_task_Accordion {
-      //     span {
-      //       color: $text-primary-title-color;
-      //     }
-      //   }
-      // }
+    }
+    .Date_wrapper{
 
-      // .ant-collapse-header{
-      //   .ant-collapse-expand-icon{
-      //     padding: 0;
-      //     border: 1px solid red;
-      //     width: 24px;
-      //     height: 24px;
-      //     border-radius: 5px;
-      //     margin-right: 10px;
-
-      //   }
-
-      // }
-
-      // .ant-collapse-item{
-      //   border-bottom: unset;
-      // }
-      // .ant-collapse-content{
-      //   &.ant-collapse-content-active{
-      //     border-top: unset;
-      //   }
-
-      // }
+    }
+    .progres_wrapper{
 
     }
   }

@@ -3,6 +3,7 @@
 .calendar-drawer-wrapper {
   .ant-drawer-header {
     padding: 20px !important;
+    padding-bottom: 10px !important;
   }
 
   .event-detail-wrapper {
@@ -13,6 +14,7 @@
     .event-detail,
     .event-type,
     .onsite,
+    .virtual,
     .attendees {
       border-bottom: 1px solid $text-error-line-color;
       margin-bottom: 20px;
@@ -32,17 +34,56 @@
 
     }
 
-    .onsite {
-      .flex {
-        border: 1px solid $dark-grey-color;
-        padding: 8px 16px;
-        cursor: pointer;
-      }
+    .onsite .flex,
+    .virtual .link {
+      border: 1px solid $dark-grey-color;
+      padding: 8px 16px;
+      cursor: pointer;
     }
 
     .attendees .user-list {
       max-height: 150px;
       overflow-y: scroll;
+    }
+  }
+
+  .edit-detail-wrapper {
+    border-top: 1px solid $text-error-line-color;
+
+    .label {
+      color: $text-primary-title-color;
+    }
+
+    .recurrence .drop-down-wrapper,
+    .attendees-dropdown,
+    .description .ant-input {
+      background-color: transparent;
+      border: 2px solid $text-error-line-color;
+
+      &:hover {
+        border: 2px solid $input-hover-color;
+      }
+    }
+
+    .virtual-link {
+      background-color: $certificate-textarea-bg;
+      border: 1px solid $certificate-textarea-border;
+
+      a {
+        color: $dark-grey-color;
+      }
+    }
+
+    .on-site-address {
+      border: 1px solid $dark-grey-color;
+
+      p {
+        color: $dark-grey-color;
+      }
+    }
+
+    .description .ant-input:hover {
+      box-shadow: none;
     }
   }
 

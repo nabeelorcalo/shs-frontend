@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, Typography } from 'antd';
 import { PopUpModal, } from '../../../components/Model';
 import { Button, TextArea } from '../../../components';

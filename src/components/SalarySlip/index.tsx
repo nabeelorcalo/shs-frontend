@@ -44,7 +44,7 @@ export const SalarySlip = () => {
   };
   return (
     <div className="salarySlip-main-wrapper">
-      <Breadcrumb breadCrumbData={tempArray} className="breadcrumb" />
+      <Breadcrumb breadCrumbData={tempArray} />
       <Divider style={{background:'#D9DBE9'}} />
       <IconButton
         size="large"

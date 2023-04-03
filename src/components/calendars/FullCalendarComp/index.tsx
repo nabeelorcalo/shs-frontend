@@ -9,21 +9,23 @@ import { Button } from "antd";
 import './style.scss';
 import CalendarModalBox from "./modalBox";
 import CalendarDrawer from './drawerComp/index'
-import { eventsMockData } from "./mockData";
+import { calendarMockData } from "./mockData";
 
-const Index = () => {
+const Index = (props: any) => {
+
+  const { eventData } = props;
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [openDrawer, setOpenDrawer] = useState<any>({ open: false, type: '', eventId: '' });
+  const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: '', eventId: '', status: '' });
 
   const renderEventColor: any = {
     'meeting': '#E94E5D',
     'interview': '#5879CE',
-    'event': '#FFC15D',
+    'reminder': '#FFC15D',
   };
-  const handleEventClick = (id: string) => {
-    setOpenDrawer({ open: !openDrawer.open, type: 'eventDetail', eventId: id })
+  const handleEventClick = (id: string, category: string, status: string) => {
+    setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status })
   }
 
   const handleEditClick = (id: string, type: string) => { }
@@ -32,25 +34,47 @@ const Index = () => {
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
-    const category = events?.extendedProps?.category;
+    const { category, status } = events?.extendedProps;
 
     return (
       <div className="event-content"
         style={{ borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : '#4E4B66'}` }}
       >
-        <div className="content" onClick={() => handleEventClick(events?.publicId)}>
+        <div className="content" onClick={() => handleEventClick(events?.publicId, category, status)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
           <p className="duration text-[14px] mt-[5px]">{dayjs().format('DD:MM:YYYY')}</p>
         </div>
         <div className="event-btn gap-3">
-          <Button size="small" className={`btn capitalize btn-primary`} onClick={() => handleEditClick(events?.publicId, '')}>
-            edit
-          </Button>
-
-          <Button size="small" className={`btn capitalize`} onClick={() => handleCancelClick(events?.publicId, '')}>
-            cancel
-          </Button>
+          {category === 'meeting' ?
+            <>
+              <Button size="small" className={`btn capitalize btn-primary`}>
+                {status === 'pending' ? 'edit' : status === 'accept' ? 'accept' : status === 'accepted' && 'accepted'}
+              </Button>
+              <Button size="small" className={`btn capitalize`}>
+                {status === 'pending' ? 'cancel' : 'decline'}
+              </Button>
+            </>
+            :
+            category === 'interview' ?
+              <>
+                <Button size="small" className={`btn capitalize btn-primary`}>
+                  accept
+                </Button>
+                <Button size="small" className={`btn capitalize`}>
+                  decline
+                </Button>
+              </>
+              :
+              category === 'reminder' && <>
+                <Button size="small" className={`btn capitalize btn-primary`}>
+                  edit
+                </Button>
+                <Button size="small" className={`btn capitalize`}>
+                  delete
+                </Button>
+              </>
+          }
         </div>
       </div>
     )
@@ -62,11 +86,12 @@ const Index = () => {
       <PageHeader title={'Calendar'} bordered />
 
       <div className="flex justify-center gap-7">
-        {['meeting', 'interview', 'event'].map((name: string) => <p className="flex items-center gap-3">
+        {['meeting', 'interview', 'reminder'].map((name: string) => <p className="flex items-center gap-3">
           <span className="h-[12px] w-[12px] rounded-[4px] inline-block" style={{ background: renderEventColor[name] }}></span>
           <span className="capitalize text-sm text-[#4E4B66]">{name}</span>
         </p>)}
       </div>
+
       <FullCalendar
         initialView={'timeGridWeek'}
         customButtons={{
@@ -81,7 +106,7 @@ const Index = () => {
         height="63vh"
         slotDuration="00:60:00"
         eventContent={handleEventContent}
-        events={eventsMockData}
+        events={calendarMockData}
         views={{
           week: {
             dayHeaderContent: (args) => {
@@ -105,11 +130,13 @@ const Index = () => {
           }
         }}
       />
+      
       <CalendarDrawer
         open={openDrawer.open}
-        type={openDrawer.type}
+        category={openDrawer.category}
         setOpen={setOpenDrawer}
         eventId={openDrawer.eventId}
+        status={openDrawer.status}
       />
       <CalendarModalBox open={openModal} setOpen={setOpenModal} />
     </div>

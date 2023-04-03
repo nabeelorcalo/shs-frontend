@@ -1,15 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import {
-  OverAllPerfomance,
-  MonthlyPerfomanceChart,
-  PageHeader,
-  TopPerformanceList,
-  MonthChanger
-} from "../../../components";
+import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader, TopPerformanceList, MonthChanger } from "../../../components";
 import data from './data';
 import '../style.scss';
+import { Row, Col } from "antd";
 
 const CompanyAdminPerformance = () => {
   const [state, setState] = useState({
@@ -103,53 +98,54 @@ const CompanyAdminPerformance = () => {
     }
   ];
 
-  const evaluationHistoryData = [
-    {
-      id: 1,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 40,
-    },
-    {
-      id: 2,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 80,
-    },
-    {
-      id: 3,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 50,
-    },
-    {
-      id: 4,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 30,
-    },
-    {
-      id: 5,
-      date: '22/09/2022',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 100,
-    },
-  ];
-
   return (
     <>
-      <PageHeader
-        actions
-        title="Performance"
-      >
+      <PageHeader actions title="Performance" >
         <Link
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
           className="performance-history-btn">
           View History
         </Link>
       </PageHeader>
+      <Row gutter={[20, 20]} className="company-admin-performance-container">
+        <Col xs={24} md={24} xl={17}>
+          <Row gutter={[20, 20]}>
+            <Col xs={24}>
+              <OverAllPerfomance
+                heading="Overall Performance"
+                data={performanceData}
+                trailColor="#E6F4F9"
+                strokeWidth={10}
+                type="circle"
+                width={100}
+              />
+            </Col>
+            <Col xs={24}>
+              <MonthlyPerfomanceChart
+                heading="Summary"
+                data={data}
+                XField="department"
+                columnWidthRatio={0.5}
+                children={
+                  <MonthChanger
+                    month='Jan'
+                    onClick={() => console.log("Month Changed")}
+                  />
+                }
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={24} md={24} xl={7}>
+          <TopPerformanceList
+            heading="Top Performers"
+            data={state.topPerformanceList}
+            action={true}
+          />
+        </Col>
+      </Row>
 
-      <div className="company-admin-performance-container gap-4">
+      {/* <div className="company-admin-performance-container gap-4">
         <div className="performance-left-subcontainer ">
           <OverAllPerfomance
             heading="Overall Performance"
@@ -175,7 +171,6 @@ const CompanyAdminPerformance = () => {
             />
           </div>
         </div>
-
         <div className="performance-right-subcontainer ">
           <TopPerformanceList
             heading="Top Performers"
@@ -183,7 +178,7 @@ const CompanyAdminPerformance = () => {
             action={true}
           />
         </div>
-      </div>
+      </div> */}
     </>
   )
 }

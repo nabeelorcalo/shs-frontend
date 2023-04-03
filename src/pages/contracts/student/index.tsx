@@ -1,8 +1,8 @@
-import "./style.scss";
 import { Col, Divider, Row } from "antd";
 import { SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
+import "./style.scss";
 
 const contractReceived = [
   {
@@ -59,7 +59,7 @@ const ContractsStudent = () => {
         <Divider />
 
         <Col className="mb-6" xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar  handleChange={handleChange} />
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>

@@ -1,9 +1,9 @@
 import React from "react";
-import "./style.scss";
 import { Col, Divider, Row } from "antd";
 import { SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
+import "./style.scss";
 
 const offerLetterRecieved = [
   {
@@ -66,7 +66,7 @@ const OfferLetterStudent = () => {
         <Divider />
 
         <Col className="mb-6" xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar  handleChange={handleChange} />
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>

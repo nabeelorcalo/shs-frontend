@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   GlobalTable,
   SearchBar,
-  ListAndGridViewButton,
   PageHeader,
   BoxWrapper,
   InternsCard,
-  Alert,
   ToggleButton
 } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { MenuProps, Space } from 'antd';
+import { MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 
 const PopOver = () => {
@@ -55,10 +53,10 @@ const PopOver = () => {
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const Interns = () => {
-  const navigate = useNavigate()
-  const [value, setValue] = useState("")
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+  // const navigate = useNavigate()
+  // const [value, setValue] = useState("")
+  // const [showDrawer, setShowDrawer] = useState(false)
+  // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
   console.log(isToggle)
@@ -148,7 +146,6 @@ const Interns = () => {
       }
     )
   })
-  console.log(listandgrid)
   return (
     <>
       <PageHeader title="Interns" />
@@ -164,6 +161,9 @@ const Interns = () => {
             />
           </div>
           <div className="flex flex-row gap-4">
+            <div className='p-2 download-icon-style'>
+            <DownloadDocumentIcon />
+            </div>
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
@@ -171,9 +171,6 @@ const Interns = () => {
               LastIcon={TableViewIcon}
               className='w-[88px]'
             />
-            <div className='p-2 download-icon-style'>
-            <DownloadDocumentIcon />
-            </div>
           </div>
         </div>
         <BoxWrapper>

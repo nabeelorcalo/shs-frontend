@@ -23,21 +23,21 @@ const index = (props: any) => {
       <PageHeader
         actions
         bordered
-        title="Leave"
+        title="Leaves"
       >
         <div className='flex items-center justify-end view_history_button_wrapper'>
           <Button
-            className='button font-semibold'
+            className='button font-semibold px-8'
             onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
             label='View History'
-            size="small"
+          // size="small"
           />
         </div>
       </PageHeader>
       {constants.USER_ROLE === "CompanyAdmin" &&
         <Row gutter={[20, 20]} className="mb-5">
           {[1, 2, 3, 4].map((data: any) => (
-            <Col lg={6}>
+            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={24}>
               <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main'>
                 <div className='user_intro flex items-center justify-center flex-col mb-5'>
                   <div className='w-[64px] h-[64px] rounded-full mb-5'>
@@ -63,12 +63,19 @@ const index = (props: any) => {
               </BoxWrapper>
             </Col>
           ))}
-
         </Row>}
       <Row gutter={[20, 20]} >
         {leaveCardDataManager.map((data: any, index: number) => (
-          <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6} >
-            <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
+          <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
+            <LeaveCard
+              Icon={CardIcon[index].Icon}
+              bg={CardIcon[index].bg}
+              title={data.leavType}
+              total={data.leaveLength}
+              pending={data.pending}
+              approved={data.approved}
+              declined={data.declined}
+            />
           </Col>
         ))}
       </Row>
