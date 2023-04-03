@@ -1,16 +1,7 @@
 import { useState } from "react";
-import { Typography, Row, Col, Form, Input, Button } from "antd";
-import {
-  BereavementLeave,
-  CasualLeave,
-  SettingLeaves,
-  MaternityLeave,
-  MatrimonialLeave,
-  MedicalLeave,
-  PaternityLeave,
-  SickLeave,
-  WorkFromHome,
-} from "../../../../assets/images";
+import { Typography, Row, Col, Input, Button } from "antd";
+import { BereavementLeave, CasualLeave, SettingLeaves, MaternityLeave,  MatrimonialLeave,
+  MedicalLeave, PaternityLeave, SickLeave, WorkFromHome, } from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../../components/Model";
@@ -56,7 +47,7 @@ let overview = [
 ];
 
 const SettingLeave = () => {
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  // const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<any>({
     departmentName: "",
@@ -69,7 +60,7 @@ const SettingLeave = () => {
   return (
     <div className="setting-leaves">
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
           <NavLink to="/settings/leaves/add-policy">
             <Button

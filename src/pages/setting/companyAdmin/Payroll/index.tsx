@@ -31,7 +31,7 @@ const SettingPayroll: React.FC = () => {
   return (
     <div className="setting-shifts">
       <div>
-        <div className="flex justify-between">
+        <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
           <NavLink to="/settings/payroll/add-category">
             <Button

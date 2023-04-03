@@ -1,8 +1,7 @@
 
 import { useState } from "react";
-import { Col, Divider, Row } from "antd";
+import { Col, Row } from "antd";
 import { CloseCircleFilled } from "@ant-design/icons";
-import "./style.scss"
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader } from "../../../components";
@@ -13,6 +12,7 @@ import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/c
 import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
+import "./style.scss"
 
 
 const index = () => {
@@ -27,21 +27,21 @@ const index = () => {
         bordered
         title={<div>Leaves History | <span className="text-base text-[#363565]">Leaves</span></div>}
       />
-      <Row className=' items-center' gutter={[10, 10]}>
-        <Col xs={24} md={12} lg={12}>
+      <Row className=' items-center' gutter={[20, 20]}>
+        <Col xs={24} md={24} lg={6} xl={6} xxl={6}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
             console.log(e);
           }} />
         </Col>
-        <Col xs={24} md={12} lg={12} >
-          <div className='flex items-center justify-end view_history_button_wrapper'>
-            <div className="mr-4">
+        <Col xs={24} md={24} lg={18} xl={18} xxl={18}>
+          <div className='flex md:justify-end view_history_button_wrapper'>
+            <div>
               <FiltersButton
                 label="Filters"
                 onClick={() => setOpenDrawer({ type: 'filters', open: true })}
               />
             </div>
-            <div className="mr-4">
+            <div>
               <DropDown
                 options={[
                   'pdf',
@@ -60,11 +60,13 @@ const index = () => {
             />}
           </div>
         </Col>
-        <Divider />
+        <Col xs={24}>
+          <BoxWrapper>
+            <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow} id="LeaveHistoryTable" />
+          </BoxWrapper>
+        </Col>
       </Row>
-      <BoxWrapper>
-        <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow} id="LeaveHistoryTable" />
-      </BoxWrapper>
+
       {openDrawer.open && <DrawerComp
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
@@ -113,7 +115,7 @@ const index = () => {
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-        alertType='warning'
+          alertType='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"Cancle"}
