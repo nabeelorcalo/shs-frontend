@@ -11,17 +11,20 @@ import CalendarModalBox from "./modalBox";
 import CalendarDrawer from './drawerComp/index'
 import { calendarMockData } from "./mockData";
 
-const Index = () => {
+const Index = (props: any) => {
+
+  const { eventData } = props;
+
   const [openModal, setOpenModal] = useState(false);
+
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: '', eventId: '', status: '' });
+
   const renderEventColor: any = {
     'meeting': '#E94E5D',
     'interview': '#5879CE',
     'reminder': '#FFC15D',
   };
-
   const handleEventClick = (id: string, category: string, status: string) => {
-    console.log(category);
     setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status })
   }
 
