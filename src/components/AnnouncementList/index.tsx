@@ -3,7 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import AnnouncementCard from "../AnnouncementCard";
 import { RoundedAddIcon } from "../../assets/images";
-import './style.scss';
+import "./style.scss";
 interface AnnouncementProps {
   role?: string;
   data: any;
@@ -14,14 +14,33 @@ interface AnnouncementProps {
 }
 
 export const AnnouncementList: any = (props: AnnouncementProps) => {
-  const { data, loading, loadMoreData, role = "", handleAddAnnouncement, height } = props;
+  const {
+    data,
+    loading,
+    loadMoreData,
+    role = "",
+    handleAddAnnouncement,
+    height,
+  } = props;
 
   return (
     <div className="wrapper-shadow bg-white rounded-2xl xs:p-3 2xl:p-5">
-      <Typography.Title className="mb-5" level={4} style={{ fontWeight: 500, marginBottom: 20 }}>
+      <Typography.Title
+        className="mb-5"
+        level={4}
+        style={{ fontWeight: 500, marginBottom: 20 }}
+      >
         Announcements
       </Typography.Title>
 
+      {(role === "Manager" || role === "CompanyAdmin") && (
+        <div
+          className="light-sky-blue-bg mb-5 flex items-center justify-center h-[69px] rounded-2xl cursor-pointer border border-[#D9DBE9] border-dashed	"
+          onClick={handleAddAnnouncement}
+        >
+          <RoundedAddIcon />
+        </div>
+      )}
       <div
         className="announcements-wrapper"
         id="scrollableDiv"
@@ -30,13 +49,24 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
           overflow: "auto",
         }}
       >
-        <InfiniteScroll dataLength={data.length} next={loadMoreData} hasMore={!loading} loader={<p>Loading ..</p>} scrollableTarget="scrollableDiv">
-          {(role === "Manager" || role === "CompanyAdmin") && (
-            <div className="light-sky-blue-bg mb-5 flex items-center justify-center h-[69px] rounded-2xl cursor-pointer border border-[#D9DBE9] border-dashed	" onClick={handleAddAnnouncement}>
-              <RoundedAddIcon />
-            </div>
-          )}
-          <List dataSource={data} renderItem={(item: any) => <AnnouncementCard text={item.email} author={item.name.last} avatar={item.picture.large} dateTime="2023-03-09T10:00:00" />} />
+        <InfiniteScroll
+          dataLength={data.length}
+          next={loadMoreData}
+          hasMore={!loading}
+          loader={<p>Loading ..</p>}
+          scrollableTarget="scrollableDiv"
+        >
+          <List
+            dataSource={data}
+            renderItem={(item: any) => (
+              <AnnouncementCard
+                text={item.email}
+                author={item.name.last}
+                avatar={item.picture.large}
+                dateTime="2023-03-09T10:00:00"
+              />
+            )}
+          />
         </InfiniteScroll>
       </div>
     </div>
