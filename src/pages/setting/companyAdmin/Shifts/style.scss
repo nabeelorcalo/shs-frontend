@@ -1,5 +1,12 @@
 @import '../../../../scss/colors';
 .setting-shifts{
+    .location-header{
+        gap: 10px;
+        @media only screen and (max-width:1000px) {
+          align-items: flex-start;
+          flex-direction: column;
+         }
+      }
     .setting-shift-box-wrapper {
         // min-height: 125px !important;
         background-color: $white-bg-color;

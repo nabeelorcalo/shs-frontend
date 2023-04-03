@@ -6,13 +6,13 @@ import {
   Button,
   DropDown,
   FiltersButton,
-  IconButton,
   MonthChanger,
   PageHeader,
   SearchBar,
   AttendanceCardDetail,
   AttendanceListViewCard,
   ToggleButton,
+  Breadcrumb,
 } from "../../components";
 import {
   CardViewIcon,
@@ -26,9 +26,11 @@ import "./style.scss";
 
 const Detail = () => {
   const action = useCustomHook();
-  const role = constants.USER_ROLE;
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
-
+  const attendanceListBreadCrumb = [
+    { name: "Attendance Details"},
+    { name: constants.USER_ROLE === constants.COMPANY_ADMIN && "Attendance", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
+  ];
   const timeFrameOptions = [
     "This Week",
     "Last Week",
@@ -61,7 +63,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -69,7 +71,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Designer",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "leave",
     },
     {
@@ -77,7 +79,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Business Analyst",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -85,7 +87,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -93,7 +95,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -101,7 +103,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -109,7 +111,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "absent",
     },
     {
@@ -117,7 +119,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Scientist",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
     {
@@ -125,7 +127,7 @@ const Detail = () => {
       name: "Mino Marina",
       avatar:"https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
       profession: "Data Researcher",
-      company: role === "University" && "Orcalo Holdings",
+      company: constants.USER_ROLE === constants.UNIVERSITY && "Orcalo Holdings",
       status: "present",
     },
   ];
@@ -146,14 +148,6 @@ const Detail = () => {
     departmentVal: "Select",
     isToggle: false,
   });
-
-  const breadCrumbs = () => {
-    return (
-      <Link className="bread-crumb" to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}>
-        Attendance
-      </Link>
-    );
-  };
 
   const changeMonth = (event: any) => {
     let newDate: any;
@@ -235,14 +229,12 @@ const Detail = () => {
         bordered
         title={
           <div className="font-medium">
-            {constants.USER_ROLE === "CompanyAdmin"
-              ? "Attendance Detail"
-              : "Attendance"}
-            {constants.USER_ROLE === "CompanyAdmin" ? (
-              <span className="vertical-line">{breadCrumbs()}</span>
-            ) : (
-              <></>
-            )}
+            {
+              (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) ?
+                <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
+                :
+                <Breadcrumb breadCrumbData={attendanceListBreadCrumb} />
+            }
           </div>
         }
         actions
@@ -309,7 +301,7 @@ const Detail = () => {
                     value={state.departmentVal}
                   />
                 </div>
-                {role === "University" && (
+                {constants.USER_ROLE === constants.UNIVERSITY && (
                   <div className="flex flex-col my-2 gap-2">
                     <p className="sidebar-label">Company</p>
                     <DropDown
@@ -339,13 +331,7 @@ const Detail = () => {
             }
           />
 
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={togglerClick}
-            FirstIcon={CardViewIcon}
-            LastIcon={TableViewIcon}
-            className="w-[88px]"
-          />
+          
 
           <DropDown
             options={[
@@ -354,6 +340,13 @@ const Detail = () => {
             ]}
             requiredDownloadIcon
             setValue={() => action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail")}
+          />
+          <ToggleButton
+            isToggle={state.isToggle}
+            onTogglerClick={togglerClick}
+            FirstIcon={CardViewIcon}
+            LastIcon={TableViewIcon}
+            className="w-[88px]"
           />
         </div>
       </div>

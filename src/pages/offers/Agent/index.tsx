@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./style.scss";
 import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form, Input } from "antd";

@@ -14,12 +14,10 @@ import data from './CompanyAdmin/data';
 
 const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
-  const role = constants.USER_ROLE;
-  const tempArray = [
+  const detailHistoryBreadCrumb = [
     { name: "Mino Marina" },
-    { name: " Performance ", onClickNavigateTo: "/performance" },
-    { name: role !== 'Manager' && "/" },
-    { name: role === 'University' ?  "View History" : role === 'Manager' ? '' : 'Performance History', onClickNavigateTo: "/performance/history" },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
+    { name: constants.USER_ROLE === constants.UNIVERSITY ?  "View History" : constants.USER_ROLE === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const performanceData = [
     {
@@ -184,7 +182,7 @@ const DetailHistory = () => {
   ];
 
   // remove last two items if role is of Manager
-  if (constants.USER_ROLE === "Manager" || constants.USER_ROLE === "University" && items.length > 2) {
+  if (constants.USER_ROLE === constants.MANAGER || constants.USER_ROLE === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -2)
   }
 
@@ -209,56 +207,11 @@ const DetailHistory = () => {
     }));
   }
 
-  // const breadCrumbs = () => {
-  //   const role = constants.USER_ROLE;
-
-  //   switch (role) {
-  //     case 'Intern':
-  //     case 'Manager':
-  //       return (
-  //         <Link
-  //           className="bread-crumb"
-  //           to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-  //         >
-  //           Performance
-  //         </Link>
-  //       );
-  //     case 'CompanyAdmin':
-  //       return (
-  //         <>
-  //           <Link
-  //             className="bread-crumb"
-  //             to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-  //           >
-  //             Performance
-  //           </Link>
-  //           /
-  //           <Link
-  //             className="bread-crumb"
-  //             to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-  //           >
-  //             Performance History
-  //           </Link>
-  //         </>
-  //       );
-  //     default:
-  //       return <></>;
-  //   }
-  // }
-
   return (
     <>
       <PageHeader
         bordered
-        title={
-          // <div className="font-medium">
-          //   Mino Marina
-          //   <span className="vertical-line">
-          //     {breadCrumbs()}
-          //   </span>
-          // </div>
-          <Breadcrumb breadCrumbData={tempArray} />
-        }
+        title={<Breadcrumb breadCrumbData={detailHistoryBreadCrumb} />}
       />
 
       <Row gutter={[20,20]} className="company-admin-detail-history-container">
@@ -272,7 +225,7 @@ const DetailHistory = () => {
               profession="UI UX Designer"
               className="bg-visible-btn evaluate-btn"
               icon={<ColorLessMedalIcon />}
-              btnTxt={role !== 'University' && 'Evaluate'}
+              btnTxt={constants.USER_ROLE !== constants.UNIVERSITY && 'Evaluate'}
               size={64}
               url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
               avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
@@ -316,59 +269,6 @@ const DetailHistory = () => {
         </div>
         </Col>
       </Row>
-
-      {/* <div className="company-admin-detail-history-container gap-4">
-        <div className="performance-left-subcontainer ">
-          <BoxWrapper className="flex flex-col">
-            <TopPerformanceCard
-              id={1}
-              name="Maria Sanoid"
-              nameClassName="text-2xl text-primary-color"
-              profession="UI UX Designer"
-              className="bg-visible-btn evaluate-btn"
-              icon={<ColorLessMedalIcon />}
-              btnTxt='Evaluate'
-              size={64}
-              url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
-              avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-            />
-
-            <p className="mt-4">Overall</p>
-            <Progress className="flex" percent={81} strokeColor="#4783FF" />
-
-            <p>Learning Objectives</p>
-            <Progress className="flex" percent={85} strokeColor="#A1D8EA" />
-
-            <p>Discipline</p>
-            <Progress className="flex" percent={75} strokeColor="#F08D97" />
-
-            <p>Personal</p>
-            <Progress className="flex" percent={68} strokeColor="#78DAAC" />
-          </BoxWrapper>
-
-          <div className="my-4 h-[502px]">
-            <MonthlyPerfomanceChart
-              heading="Summary"
-              data={data}
-              XField="department"
-              columnWidthRatio={0.5}
-            />
-          </div>
-        </div>
-        <div className="performance-right-subcontainer ">
-          <BoxWrapper >
-            <Typography.Title level={4} >
-              Evaluation History
-            </Typography.Title>
-            <GlobalTable
-              columns={evaluationHistoryColumnNames}
-              tableData={evaluationHistoryData}
-              pagination={false}
-            />
-          </BoxWrapper>
-        </div>
-      </div> */}
-
       <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"

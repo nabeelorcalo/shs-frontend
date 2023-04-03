@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./style.scss";
 import "react-circular-progressbar/dist/styles.css";
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "./settingModal";
@@ -28,6 +27,7 @@ import {
 } from "../../../assets/images";
 import CustomDroupDown from "./dropDownCustom";
 import { Alert } from "../../../components";
+import "./style.scss";
 
 const manageVaultArr = [
   {
@@ -265,26 +265,18 @@ const DigiVaultStudent = () => {
 
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
-            <Row gutter={4} className="storage-bar-header">
+            <Row gutter={[20,10]} className="storage-bar-header">
               <Col xxl={10} xl={12} lg={24} md={8} sm={8} xs={24}>
                 <Progress
-                  strokeWidth={12}
+                  strokeWidth={10}
                   strokeColor={"#5D89F4"}
                   strokeLinecap="butt"
                   type="circle"
                   percent={75}
-                />
+                   />
               </Col>
 
-              <Col
-                xxl={14}
-                xl={12}
-                lg={24}
-                md={12}
-                sm={14}
-                xs={24}
-                className="flex flex-col justify-center"
-              >
+              <Col xxl={14} xl={12}  lg={24} md={12}  sm={14} xs={24}  className="flex flex-col justify-center" >
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>
               </Col>
