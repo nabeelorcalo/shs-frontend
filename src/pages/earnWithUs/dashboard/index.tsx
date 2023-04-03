@@ -252,8 +252,10 @@ const Dashboard = () => {
           <Row gutter={[30, 30]}>
             <Col md={24} lg={12}>
               <div className="registered-members">
-                <Typography.Title level={4}>Registered Members</Typography.Title>
-                <RegisterMemberAndFeddbackGraph  graphName='registerMember' />
+                <RegisterMemberAndFeddbackGraph  
+                  graphName='registerMember' 
+                  title="Registered Members" 
+                />
               </div>
               
             </Col>
@@ -272,7 +274,6 @@ const Dashboard = () => {
             </Col>
           </Row>
         </div>
-
         
       </div>
 
