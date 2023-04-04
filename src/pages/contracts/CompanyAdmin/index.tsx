@@ -267,7 +267,7 @@ const CompanyAdmin = () => {
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
       >
-        <p>Are you sure you want to delete this?</p>
+        <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
       <PageHeader title="Contracts" />
       <Row gutter={[20, 20]}>
@@ -294,7 +294,7 @@ const CompanyAdmin = () => {
       </Row>
 
       <Row className="mt-8" gutter={[0, 20]} >
-        <Col  xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => { }} />
         </Col>
 
