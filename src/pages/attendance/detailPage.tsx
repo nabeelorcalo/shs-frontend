@@ -198,11 +198,10 @@ const Detail = () => {
             <IconButton
               size="large"
               className="icon-btn download-btn"
-              // onClick={downloadClick}
               icon={<DownlaodFileIcon />}
               onClick={() => {
                 action.pdf('Mino Marina' ,tableColumns, tableData);
-                Notifications({title:"Success", description:"Download Done",icon:<Success />})
+                Notifications({title:"Success", description:"Download Done",type:'success'})
               }}
             />
           </div>
