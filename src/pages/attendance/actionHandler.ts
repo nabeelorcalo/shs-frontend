@@ -33,6 +33,9 @@ const useCustomHook = () => {
     const body = data.map(({ id, name, avatar, profession, status }: any) =>
       [id, name, '', profession, status]
     );
+    const Marinabody = data.map(({ date,mood,clockIn,clockOut,totalHours }: any) =>
+      [date,mood,clockIn,clockOut,totalHours]
+    );
 
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
@@ -40,7 +43,7 @@ const useCustomHook = () => {
 
     doc.autoTable({
       head: [header],
-      body: body,
+      body: fileName === 'Mino Marina' ? Marinabody : body,
       margin: { top: 50 },
 
       headStyles: {
@@ -57,8 +60,8 @@ const useCustomHook = () => {
           item.cell.styles.fillColor = false;
       },
 
-      didDrawCell: async (item: any) => {
-        if (item.column.dataKey === 2 && item.section === "body") {
+       didDrawCell: async (item: any) => {
+        if (item.column.dataKey === 2 && item.section === "body" && fileName !== 'Mino Marina') {
           const xPos = item.cell.x;
           const yPos = item.cell.y;
           var dim = 20;
@@ -82,7 +85,8 @@ const useCustomHook = () => {
 
   return {
     getData,
-    downloadPdfOrCsv
+    downloadPdfOrCsv,
+    pdf
   };
 };
 
