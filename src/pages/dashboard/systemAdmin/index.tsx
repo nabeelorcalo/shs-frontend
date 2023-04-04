@@ -1,6 +1,5 @@
 import { Row, Col } from "antd";
 import { AnalyticsData, regionData, TotalUserData } from "./mock";
-// import Graph from "../../../components/Graph/graphForGrowthAnalytics";
 import {
   UserAnalytics,
   DashboardCharts,
@@ -9,12 +8,12 @@ import {
   GaugePlot,
   GrowthAnalyticsGraph,
 } from "../../../components";
-// import AreaMap from "../../../components/Graph/AreaMap";
 import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
 import { useState } from "react";
 import { gutter } from "..";
+import AreaMapp from "../../../components/Graph/AreaMap";
 
 const SystemAdmin = () => {
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false)
@@ -36,11 +35,11 @@ const SystemAdmin = () => {
       </Col>
       <Col xs={24} xxl={10}>
         <Row className="bg-white rounded-2xl p-5 wrapper-shadow">
-          <Col xs={24} xxl={12}>
+          <Col xs={24} xl={12}>
             <RegionCard regionData={regionData} />
           </Col>
-          <Col xs={24} xxl={12}>
-            {/* <AreaMap /> */}
+          <Col xs={24} xl={12}>
+            {/* <AreaMapp /> */}
           </Col>
         </Row>
       </Col>
@@ -59,7 +58,7 @@ const SystemAdmin = () => {
               usedSpace="GB Used"
             />
           </Col>
-          <Col xs={24} xxl={14}>
+          <Col xs={24} xl={12} xxl={14}>
             <ActivityLogTable />
           </Col>
           <Col xs={24} xl={12} xxl={10} className="">
@@ -69,12 +68,12 @@ const SystemAdmin = () => {
           </Col>
         </Row>
       </Col>
-      <Col xxl={10}>
+      <Col xs={24} xxl={10}>
         <Row gutter={gutter}>
-          <Col xs={24}>
+          <Col xs={24} xl={12} xxl={24} >
             <GaugePlot style={{height:234}} />
           </Col>
-          <Col xs={24}>
+          <Col xs={24} xl={12} xxl={24}>
             <RecentIssuesTable />
           </Col>
         </Row>

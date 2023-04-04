@@ -9,7 +9,7 @@ import {
 } from "../../assets/images";
 import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
-import { Breadcrumb, openNotification } from "../../components";
+import { Breadcrumb, Notifications } from "../../components";
 import "./style.scss";
 
 export const SalarySlip = () => {
@@ -45,7 +45,7 @@ export const SalarySlip = () => {
   return (
     <div className="salarySlip-main-wrapper">
       <Breadcrumb breadCrumbData={tempArray} />
-      <Divider style={{background:'#D9DBE9'}} />
+      <Divider />
       <IconButton
         size="large"
         className="icon-btn download-btn"
@@ -54,16 +54,7 @@ export const SalarySlip = () => {
       />
       <Card className="mt-5">
         <div className="flex justify-between items-center max-sm:flex-col md:flex-row gap-3">
-          <div
-            className="w-52 flex justify-center"
-            onClick={() =>
-              openNotification({
-                title: "Success",
-                description: "File downloaded",
-                icon: <Success />,
-              })
-            }
-          >
+          <div className="w-52 flex justify-center" >
             <Logo className="logo" />
           </div>
           <div className="details flex flex-col gap-2">

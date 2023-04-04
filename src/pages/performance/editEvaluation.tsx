@@ -10,7 +10,8 @@ import {
   EvaluationStatsCard,
   TextArea,
   Button,
-  Breadcrumb
+  Breadcrumb,
+  Notifications
 } from "../../components";
 import {
   Sad,
@@ -22,10 +23,14 @@ import {
   Awesome,
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
+  Success,
 } from '../../assets/images';
 import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
+  const action = useCustomHook();
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
@@ -132,7 +137,10 @@ const ViewPerformance = () => {
         <IconButton
           size='large'
           className='icon-btn'
-          onClick={downloadClick}
+          onClick={() => {
+            action.downloadPdf(header, tableData);
+            Notifications({title:"Success", description:"Download Done",icon:<Success />})
+          }}
           icon={<DownloadIconWithBg />}
         />
       </div>

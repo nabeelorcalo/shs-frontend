@@ -29,25 +29,20 @@ const items: TabsProps['items'] = [
   },
 ];
 const SignatureAndUploadModal = (props: any) => {
-  const { state, setState, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
+  const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
   return (
-    <>
-      <Button onClick={() => { setState(!state) }}>Signature & upload</Button>
-      <div>
-        <PopUpModal
-          title={title}
-          open={true}
-          //setState={setState}
-          width={width}
-          okBtntxt={okBtntxt}
-          cancelBtntxt={cancelBtntxt}
-          okBtnFunc={okBtnFunc}
-          footer={footer}
-        >
-          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-        </PopUpModal>
-      </div>
-    </>
+    <PopUpModal
+      title={title}
+      open={state}
+      close={closeFunc}
+      width={width}
+      okBtntxt={okBtntxt}
+      cancelBtntxt={cancelBtntxt}
+      okBtnFunc={okBtnFunc}
+      footer={footer}
+    >
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </PopUpModal>
   )
 }
 

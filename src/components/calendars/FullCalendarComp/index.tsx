@@ -6,22 +6,23 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
 import { Button } from "antd";
-import './style.scss';
 import CalendarModalBox from "./modalBox";
 import CalendarDrawer from './drawerComp/index'
-import { calendarMockData } from "./mockData";
+import './style.scss';
 
-const Index = () => {
+const Index = (props: any) => {
+
+  const { eventData } = props;
   const [openModal, setOpenModal] = useState(false);
+
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: '', eventId: '', status: '' });
+
   const renderEventColor: any = {
     'meeting': '#E94E5D',
     'interview': '#5879CE',
     'reminder': '#FFC15D',
   };
-
   const handleEventClick = (id: string, category: string, status: string) => {
-    console.log(category);
     setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status })
   }
 
@@ -103,7 +104,7 @@ const Index = () => {
         height="63vh"
         slotDuration="00:60:00"
         eventContent={handleEventContent}
-        events={calendarMockData}
+        events={eventData}
         views={{
           week: {
             dayHeaderContent: (args) => {
@@ -127,7 +128,7 @@ const Index = () => {
           }
         }}
       />
-      
+
       <CalendarDrawer
         open={openDrawer.open}
         category={openDrawer.category}
