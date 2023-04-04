@@ -27,7 +27,7 @@ const btnStyle = {
   "rejected": "p-1 rounded-lg secondary-bg-color white-color",
 }
 
-const PopOver = () => {
+const PopOver = ({ state }: any) => {
   const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
@@ -65,7 +65,7 @@ const PopOver = () => {
 };
 
 
-const CompanyData = ({companyName, companyNature}:any) => {
+const CompanyData = ({ companyName, companyNature }: any) => {
   return (
     <div className="flex flex-row align-center gap-2">
       <Avatar
@@ -130,7 +130,7 @@ const CompaniesMain = () => {
   const tableData = [
     {
       no: "01",
-      company: {name: "Alphabet Inc.", details:"Software Agency"},
+      company: { name: "Alphabet Inc.", details: "Software Agency" },
       company_rep: "Deing Jim M",
       email: "deing.jing@gmail.com",
       phone_no: "+44 5459 90872435",
@@ -138,7 +138,7 @@ const CompaniesMain = () => {
     },
     {
       no: "02",
-      company: {name: "Intuit Inc.", details:"Sports"},
+      company: { name: "Intuit Inc.", details: "Sports" },
       company_rep: "Robbert Patenson",
       email: "robert.patenson@gmail.com",
       phone_no: "+44 5459 90872435",
@@ -146,7 +146,7 @@ const CompaniesMain = () => {
     },
     {
       no: "02",
-      company: {name: "ServiceNOW", details:"Software Solutions"},
+      company: { name: "ServiceNOW", details: "Software Solutions" },
       company_rep: "Silwa Kreig",
       email: "silwa.kreig@gmail.com",
       phone_no: "+44 5459 90872435",
@@ -154,7 +154,7 @@ const CompaniesMain = () => {
     },
     {
       no: "01",
-      company: {name: "Alphabet Inc.", details:"Software Agency"},
+      company: { name: "Alphabet Inc.", details: "Software Agency" },
       company_rep: "Deing Jim M",
       email: "deing.jing@gmail.com",
       phone_no: "+44 5459 90872435",
@@ -162,7 +162,7 @@ const CompaniesMain = () => {
     },
     {
       no: "02",
-      company: {name: "Intuit Inc.", details:"Sports"},
+      company: { name: "Intuit Inc.", details: "Sports" },
       company_rep: "Robbert Patenson",
       email: "robert.patenson@gmail.com",
       phone_no: "+44 5459 90872435",
@@ -170,7 +170,7 @@ const CompaniesMain = () => {
     },
     {
       no: "02",
-      company: {name: "ServiceNOW", details:"Software Solutions"},
+      company: { name: "ServiceNOW", details: "Software Solutions" },
       company_rep: "Silwa Kreig",
       email: "silwa.kreig@gmail.com",
       phone_no: "+44 5459 90872435",
@@ -181,7 +181,11 @@ const CompaniesMain = () => {
     return (
       {
         no: item.no,
-        company: <CompanyData companyName={item.company?.name} companyNature={item.company?.details} />,
+        company:
+          <CompanyData
+            companyName={item.company?.name}
+            companyNature={item.company?.details}
+          />,
         company_rep: item.company_rep,
         email: item.email,
         phone_no: item.phone_no,
