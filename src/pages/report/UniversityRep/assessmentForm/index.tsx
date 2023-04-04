@@ -3,9 +3,10 @@ import { BoxWrapper, Breadcrumb } from '../../../../components'
 import { Divider, Button, Typography, Form,} from 'antd'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
 import { Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
-import ManagerRemarks from './manageRemarks'
+
 import './style.scss'
 import { useNavigate } from 'react-router-dom';
+import ManagerRemarks from './manageRemarks';
 
 const index = () => {
   const navigate = useNavigate();

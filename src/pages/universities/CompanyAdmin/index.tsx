@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Divider, Select } from 'antd'
 import { IconAngleDown } from '../../../assets/images';
 import { BoxWrapper, DropDown, PageHeader, SearchBar } from '../../../components'
-import useCustomHook from '../actionHandler';
 import flag from '../../../assets/images/universities/flag.svg'
 import flag2 from '../../../assets/images/universities/flag2.svg'
 import flag3 from '../../../assets/images/universities/flag3.svg'
@@ -11,6 +10,11 @@ import flag5 from '../../../assets/images/universities/flag5.svg'
 import flag6 from '../../../assets/images/universities/flag6.svg'
 import './style.scss'
 import UniversityTable from './universityTable';
+import useCustomHook from './actionHandler';
+
+
+const index: React.FC = () => {
+const TableColumn = ['No.','Avater','University Name', 'Univerity Rep' , 'Email' , 'Contact' , 'City']
 const escalatedByMeTableData = [
   {
     no: '01',
@@ -68,9 +72,6 @@ const escalatedByMeTableData = [
   },
 
 ]
-
-const index: React.FC = () => {
-const TableColumn = ['No.' , 'Logo','University Name', 'Univerity Rep' , 'Email' , 'Contact' , 'City']
 const action = useCustomHook();
   const [value, setValue] = useState<any>()
   const handleChange = () => { };
@@ -92,7 +93,7 @@ const action = useCustomHook();
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={()=>action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"University Details" )}
+              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"University Details")}}
             />
           </div>
         </div>

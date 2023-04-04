@@ -134,7 +134,7 @@ const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
 const ViewDetailsReport = Loadable(lazy(() => import("./pages/report/UniversityRep/ViewDetails")));
-const AssessmentFormReport = Loadable(lazy(() => import("./pages/report/UniversityRep/assessmentForm")));
+const AssessmentFormReport = Loadable(lazy(() => import("./pages/report/UniversityRep/AssessmentForm")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
 const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
@@ -590,6 +590,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         element: <Universities />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        element: <UniversitesProfile />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,

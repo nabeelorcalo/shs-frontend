@@ -4,30 +4,41 @@ import { BoxWrapper, Breadcrumb, SearchBar } from '../../../../components'
 import { Divider, Typography, Row, Col,} from 'antd'
 import CustomDropDownReport from './customDropDown'
 import './style.scss'
+import useCustomHook from './actionHandler'
 
 const index = () => {
   let overview = [
     { id:4,
-      name: "Self Assessment 4",
+      assessmentName: "Self Assessment 4",
       image: <ReportViewDetails />,
       date: "October 2022",
+      name:   "Jessica Alba",
+      profile:<GrievancesAvater className='w-[48px] px-2' />
     },
     { id:3,
-      name: "Self Assessment 3",
+      assessmentName: "Self Assessment 3",
       image: <ReportViewDetails />,
       date: "September 2022",
+      name:   "Jessica Alba",
+      profile:<GrievancesAvater className='w-[48px] px-2' />
     },
     {id:2,
-      name: "Self Assessment 2",
+      assessmentName: "Self Assessment 2",
       image: <ReportViewDetails />,
       date: "Augest 2022",
+      name:   "Jessica Alba",
+      profile:<GrievancesAvater className='w-[48px] px-2' />
     },
     {id:1,
-      name: "Self Assessment 1",
+      assessmentName: "Self Assessment 1",
       image: <ReportViewDetails />,
       date: "july 2022",
+      name:   "Jessica Alba",
+      profile:<GrievancesAvater className='w-[48px] px-2' />
     },
   ];
+  const TableColumn = ['Assessment Name',' Profile', 'Name' , 'Date'  ]
+  const action = useCustomHook();
   const breadcrumbArray = [
     { name: "Mino Mrina" },
     { name: "report", onClickNavigateTo: "/report" },
@@ -35,6 +46,7 @@ const index = () => {
   ];
   const handleChange = () => {
   }
+ 
   return (
     <div>
       <Breadcrumb  breadCrumbData={breadcrumbArray} />
@@ -42,7 +54,7 @@ const index = () => {
       <div className="flex justify-between">
         <div><SearchBar size="middle" handleChange={handleChange} /></div>
         <div className='flex items-center justify-between drop-down-wrapper'>
-          <div className='mr-[-5px]'><DownloadIconLeave /></div>
+          <div className='mr-[-5px]'onClick={()=>action.downloadPdfOrCsv(event,TableColumn,overview,"Performance Report " )}><DownloadIconLeave /></div>
         </div>
       </div>
       <Row gutter={[30, 20]} className="mt-5">
@@ -55,13 +67,12 @@ const index = () => {
                     <div className='flex'>
                       <span> {data.image}</span>
                     <Typography className="pt-3 pl-2 m-0">
-                      {data.name}
+                      {data.assessmentName}
                     </Typography>
                     </div>
                     <span className='text-xl lg:text-2xl font-semibold py-2'>{data.date}</span>
                     <div>
-                    <GrievancesAvater className='w-[48px] px-2' /> 
-                     <span>Jessica Alba</span>
+                      {data.profile} <span>{data.name}</span>
                     </div>
                     </div>
                   <div className="float-right place-items-end cursor-pointer ">

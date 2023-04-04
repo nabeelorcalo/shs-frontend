@@ -5,9 +5,8 @@ import React from "react";
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import api from "../../../../api";
 import csv from "../../../../helpers/csv";
-
+import api from "../../../../api";
 
 
 // Chat operation and save into store
@@ -23,10 +22,11 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
-      pdf(`${fileName}`, header, data);
+    if (type === "csv" || type === "CSV")
+    csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
     else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+  
+      pdf(`${fileName}`, header, data);
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -35,8 +35,9 @@ const useCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ id, avater,  name, department, joiningDate , dateOfBirth  }: any) =>
-      [ id, '',  name, department, joiningDate , dateOfBirth  ]
+
+    const body = data.map(({ assessmentName,  Profile , name ,  date}: any) =>
+      [ assessmentName, '' ,name , date]
     );
 
     const doc = new jsPDF(orientation, unit, size);

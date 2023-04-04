@@ -202,7 +202,7 @@ const index = () => {
       label: 'Manager Grievances'
     },
   ]
-  const TableColumn1 = ['No.' , 'Avater','Escalated By', 'Subject' , 'Type' , 'Date' , 'Status']
+  const TableColumn1 = ['No.' ,'Escalated By', 'Subject' , 'Type' , 'Date' , 'Status']
   const TableColumn2 = ['No.' , 'Subject','Type', 'Date','Escalated To','Status']
   const TableColumn3 = ['No.' ,'Escalated By', 'Subject','Type','Date','Escalated To', 'Status']
   const TableColumn4 = ['No.'  ,'Escalated By', 'Subject','Type','Date', 'Escalated To' , 'Status']
@@ -242,10 +242,10 @@ const index = () => {
               options={["pdf", "excel"]}
               // setValue={()=>action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"University Details" )}
               setValue={() => {
-                action.downloadPdfOrCsv(event , selectedTab === "1" ? TableColumn1 : selectedTab === "2" ?
-                 TableColumn2 : selectedTab === "3" ? TableColumn3: selectedTab === "4" ? TableColumn3 : "", 
-                   selectedTab === "1" ? escalatedByMeTableData : selectedTab === "2" ? 
-                   EscalatedByMeTableData : selectedTab === "3" ? internGrievancesTableData:selectedTab === "4" ? managerGrievancesTableData :"" ,
+                action.downloadPdfOrCsv(event , selectedTab === "2" ?
+                 TableColumn2 : selectedTab === "3" ? TableColumn3: selectedTab === "4" ? TableColumn4 :  TableColumn1  , 
+                  selectedTab === "2" ?  EscalatedByMeTableData : selectedTab === "3" ? internGrievancesTableData:selectedTab === "4" ?
+                   managerGrievancesTableData : escalatedByMeTableData , 
                    "All Grievance",  selectedTab )
               }}
 

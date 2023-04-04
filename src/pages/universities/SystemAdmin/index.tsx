@@ -7,6 +7,8 @@ import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import DetailPage from "./detailPage";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const tableData = [
   {
@@ -62,6 +64,8 @@ const tableData = [
 ];
 
 const UniveristyMain = () => {
+  
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const searchValue = () => {};
@@ -140,7 +144,7 @@ const UniveristyMain = () => {
 
   const menu2 = (
     <Menu>
-      <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item onClick={()=> navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
         <a href="create-password">Password Reset</a>

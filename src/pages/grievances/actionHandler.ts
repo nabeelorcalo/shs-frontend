@@ -32,15 +32,15 @@ const useCustomHook = () => {
     const marginLeft = 40;
 
 
-    let data1 = selectedTab === "1" ? data.map(({ no,  escalatedBy, subject, type, date, status }: any) =>
-      [no,  escalatedBy, subject, type, date, status]
-    ) : selectedTab === "2" ? data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
+    let data1 = selectedTab === "2" ? data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
       [no, subject, type, date, escalatedTo, status]
-    ) : selectedTab === "3" ? data.map(({ no,  escalatedBy, subject ,type, date , escalatedTo , status}: any) =>
-      [no,   escalatedBy, subject ,type, date , escalatedTo , status]
-    ) : selectedTab === "4" ? data.map(({ no,  escalatedBy, subject ,type, date , escalatedTo , status}: any) =>
-    [no,  escalatedBy, subject ,type, date , escalatedTo , status]
-  ) : ""
+    ) : selectedTab === "3" ? data.map(({ no, escalatedBy, subject, type, date, escalatedTo, status }: any) =>
+      [no, escalatedBy, subject, type, date, escalatedTo, status]
+    ) : selectedTab === "4" ? data.map(({ no, escalatedBy, subject, type, date, escalatedTo, status }: any) =>
+      [no, escalatedBy, subject, type, date, escalatedTo, status]
+    ) : data.map(({ no, escalatedBy, subject, type, date, status }: any) =>
+      [no, escalatedBy, subject, type, date, status]
+    )
     const body = data1
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
