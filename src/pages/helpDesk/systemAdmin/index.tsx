@@ -224,12 +224,35 @@ const drawerAssignToData = [
   },
 ];
 
+const items: TabsProps["items"] = [
+  {
+    key: "1",
+    label: `All`,
+    children: <AllData tableData={tableDataAll} />,
+  },
+  {
+    key: "2",
+    label: `Unassigned`,
+    children: <UnassignedData tableData={tableDataUnassigned} />,
+  },
+  {
+    key: "3",
+    label: `Assigned`,
+    children: <AssignedData tableData={tableDataAssigned} />,
+  },
+  {
+    key: "4",
+    label: `Resolved`,
+    children: <ResolvedData tableData={tableDataResolved} />,
+  },
+];
+
 const HelpDesk = () => {
   const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [selectedTab, setSelectedTab] = useState<any>(1)
+  const [selectedTab, setSelectedTab] = useState<any>("1")
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
 
@@ -258,28 +281,21 @@ const HelpDesk = () => {
     }
   };
 
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: `All`,
-      children: <AllData tableData={tableDataAll} />,
-    },
-    {
-      key: "2",
-      label: `Unassigned`,
-      children: <UnassignedData tableData={tableDataUnassigned} />,
-    },
-    {
-      key: "3",
-      label: `Assigned`,
-      children: <AssignedData tableData={tableDataAssigned} />,
-    },
-    {
-      key: "4",
-      label: `Resolved`,
-      children: <ResolvedData tableData={tableDataResolved} />,
-    },
-  ];
+  const downloadPdfCsv = () => {
+    if (selectedTab === "1") {
+      return tableDataAll
+    } else if (selectedTab === "2") {
+      return tableDataUnassigned
+    } else if (selectedTab === "3") {
+      return tableDataAssigned
+    } else if (selectedTab === "4") {
+      return tableDataResolved
+    } else {
+      null
+    }
+  }
+
+
 
   return (
     <div className="help-desk">
@@ -456,7 +472,7 @@ const HelpDesk = () => {
                     requiredDownloadIcon
                     setValue={() => {
 
-                      action.downloadPdfOrCsv(event, csvAllColum, selectedTab === "1" ? tableDataAll : selectedTab === "2" ? tableDataUnassigned : selectedTab === "3" ? tableDataAssigned : selectedTab === "4" ? tableDataResolved : null, "Help Desk Detail")
+                      action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail")
                     }}
                   />
                 </div>
