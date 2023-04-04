@@ -1,90 +1,107 @@
-import React, { useState } from "react";
+import react, { useState } from "react";
 import {
-  DropDown,
-  SearchBar,
   GlobalTable,
+  SearchBar,
   PageHeader,
   BoxWrapper,
-  FiltersButton
+  InternsCard,
+  ToggleButton,
+  FiltersButton,
+  DropDown
 } from "../../components";
-import { InternshipProgressStepper } from "../../components/InternshipProgressStepper";
-import Drawer from "../../components/Drawer";
 import "./style.scss";
-import "../../scss/global-color/Global-colors.scss"
-import { Avatar, Button, Divider, Dropdown } from "antd";
-import { InternshipsIcon, More } from "../../assets/images";
-import type { MenuProps } from 'antd';
-import { STATUS_CONSTANTS } from "../../config/constants";
-import { useNavigate, Link } from "react-router-dom";
+import '../../scss/global-color/Global-colors.scss'
+import { useNavigate } from 'react-router-dom';
+import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
+import { Button, MenuProps, Space } from 'antd';
+import { Dropdown, Avatar } from 'antd';
+import Drawer from "../../components/Drawer";
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
+const btnStyle= {
+  "applied": "p-1 rounded-lg primary-bg-color white-color",
+  "interviewed" : "p-1 rounded-lg text-info-bg-color white-color",
+  "shortlisted" : "p-1 rounded-lg purple-bg white-color",
+  "offerletter": "p-1 rounded-lg light-purple-bg white-color",
+  "hired": "p-1 rounded-lg text-success-bg-color white-color",
+  "rejected" : "p-1 rounded-lg secondary-bg-color white-color",
+}
 
-const tableData = [
-  {
-    no: "01",
-    title: "Research Analyst",
-    department: "Business Analyst",
-    posting_date: "01/07/2022",
-    closing_date: "01/07/2022",
-    location: "virtual",
-    status: 'pending',
-    posted_by: 'T',
+const PopOver = () => {
+  const navigate = useNavigate();
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <a
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("profile");
+          }}
+        >
+          View Details
+        </a>
+      ),
+    },
 
-  },
-  {
-    no: "02",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'active',
-    posted_by: 'U',
+  ];
+  return (
+    <Dropdown menu={{ items }} placement="bottomRight">
+      <More />
+    </Dropdown>
+  );
+};
 
-  },
-  {
-    no: "03",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'rejected',
-    posted_by: 'U',
+const DownloadPopOver = () => {
+  const navigate = useNavigate()
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <a rel="noopener noreferrer" onClick={() => { }}>
+          PDF
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a rel="noopener noreferrer" onClick={() => { }}>
+          Excel
+        </a>
+      ),
+    },
+  ];
+  return (
+    <Dropdown menu={{ items }} placement="bottomRight">
+      <DownloadDocumentIcon />
+    </Dropdown>
+  )
+}
 
-  }
-]
+const CompanyData = () => {
+  return (
+    <div className="flex flex-row">
+      <Avatar
+        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+      />
+      <div>
+        <p className="font-medium">Alphabit Inc.</p>
+        <p className="text-sm">Software Agency</p>
+      </div>
+    </div>
+  )
+}
+
+const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 const Application = () => {
   const navigate = useNavigate()
-  const [value, setValue] = useState("")
+  // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
-  const PopOver = () => {
-    const navigate = useNavigate()
-    const items: MenuProps['items'] = [
-      {
-        key: '1',
-        label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
-            View details
-          </a>
-        ),
-      },
-      {
-        key: '2',
-        label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
-            Duplicate
-          </a>
-        ),
-      },
-    ];
-    return (
-      <Dropdown menu={{ items }} placement="bottomRight">
-        <More />
-      </Dropdown>
-    )
-  }
+  // const [state, setState] = useState(false)
+  const [listandgrid, setListandgrid] = useState(false)
+  const [isToggle, setIsToggle] = useState(false)
+  console.log(isToggle)
   const columns = [
     {
       dataIndex: "no",
@@ -92,29 +109,34 @@ const Application = () => {
       title: "No.",
     },
     {
-      dataIndex: "title",
-      key: "title",
-      title: "Title",
+      dataIndex: "date_applied",
+      key: "date_applied",
+      title: "Date Applied",
     },
     {
-      dataIndex: "department",
-      key: "department",
-      title: "Department",
+      dataIndex: "company",
+      key: "company",
+      title: "Company",
     },
     {
-      dataIndex: "posting_date",
-      key: "posting_date",
-      title: "Posting Date",
+      dataIndex: "type_of_work",
+      key: "type_of_work",
+      title: "Type of Work",
     },
     {
-      dataIndex: "closing_date",
-      key: "closing-_date",
-      title: "Closing Date",
+      dataIndex: "internship_type",
+      key: "internship_type",
+      title: "Internship Type",
     },
     {
-      dataIndex: "location",
-      key: "location",
-      title: "Location",
+      dataIndex: "nature_of_work",
+      key: "nature_of_work",
+      title: "Nature of Work",
+    },
+    {
+      dataIndex: "position",
+      key: "position",
+      title: "Position",
     },
     {
       dataIndex: "status",
@@ -122,60 +144,128 @@ const Application = () => {
       title: "Status",
     },
     {
-      dataIndex: "posted_by",
-      key: "posted_by",
-      title: "Posted By",
+      dataIndex: "actions",
+      key: "actions",
+      title: "Actions",
+    },
+  ];
+  const tableData = [
+    {
+      no: "01",
+      date_applied: "01/07/2022",
+      type_of_work: "Part Time",
+      internship_type: "Un-Paid",
+      nature_of_work: "On site",
+      position: "UI/UX Designer",
+      location: "virtual",
+      status: "Hired",
+      posted_by: "T",
     },
     {
-      dataIndex: 'actions',
-      key: 'actions',
-      title: 'Actions'
-    }
-  ]
+      no: "02",
+      date_applied: "01/07/2022",
+      type_of_work: "Full Time",
+      internship_type: "Paid",
+      nature_of_work: "Hybrid (London)",
+      position: "Business Analyst",
+      location: "Onsite",
+      status: "Offer Letter",
+      posted_by: "U",
+    },
+    {
+      no: "02",
+      date_applied: "01/07/2022",
+      type_of_work: "Part Time",
+      internship_type: "Un-Paid",
+      nature_of_work: "Virtual",
+      position: "SQA",
+      location: "Onsite",
+      status: "Rejected",
+      posted_by: "U",
+    },
+    {
+      no: "02",
+      date_applied: "01/07/2022",
+      type_of_work: "Full Time",
+      internship_type: "Paid",
+      nature_of_work: "Hybrid (London)",
+      position: "Business Analyst",
+      location: "Onsite",
+      status: "Short Listed",
+      posted_by: "U",
+    },
+    {
+      no: "02",
+      date_applied: "01/07/2022",
+      type_of_work: "Part Time",
+      internship_type: "Un-Paid",
+      nature_of_work: "Virtual",
+      position: "SQA",
+      location: "Onsite",
+      status: "Interviewed",
+      posted_by: "U",
+    },
+    {
+      no: "02",
+      date_applied: "01/07/2022",
+      type_of_work: "Full Time",
+      internship_type: "Paid",
+      nature_of_work: "Hybrid (London)",
+      position: "Business Analyst",
+      location: "Onsite",
+      status: "Rejected",
+      posted_by: "U",
+    },
+    {
+      no: "02",
+      date_applied: "01/07/2022",
+      type_of_work: "Part Time",
+      internship_type: "Un-Paid",
+      nature_of_work: "Virtual",
+      position: "SQA",
+      location: "Onsite",
+      status: "Applied",
+      posted_by: "U",
+    },
+  ];
   const newTableData = tableData.map((item, idx) => {
     return (
       {
         no: item.no,
-        title: item.title,
-        department: item.department,
-        posting_date: item.posting_date,
-        closing_date: item.closing_date,
-        location: item.location,
-        status:
-          <Button
-            size="small"
-            className={
-              `${item.status === ACTIVE ?
-                `text-success-bg-color`
-                :
-                item.status === PENDING ?
-                  `text-warning-bg-color`
-                  :
-                  item.status === CLOSED ?
-                    `text-info-bg-color`
-                    :
-                    item.status === REJECTED ?
-                      `text-error-bg-color`
-                      :
-                      `light-sky-blue-bg`
-              }  
-                text-[#fff]`
-            }
-          >
-            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-          </Button>,
-        posted_by: <Avatar
-          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        />,
+        date_applied: item.date_applied,
+        company: <CompanyData />,
+        type_of_work: item.type_of_work,
+        internship_type: item.internship_type,
+        nature_of_work: item.nature_of_work,
+        position: item.position,
+        status: 
+        <p 
+        className={
+          
+          `text-md ${item.status === "Applied"? btnStyle["applied"]
+          : 
+          item.status === "Interviewed"? btnStyle["interviewed"]
+          : 
+          item.status === "Short Listed"? btnStyle["shortlisted"]
+          : 
+          item.status === "Offer Letter"? btnStyle["offerletter"]
+          : 
+          item.status === "Hired"? btnStyle["hired"]
+          : 
+          item.status === "Rejected"? btnStyle["rejected"]
+          :
+          btnStyle["offerletter"]}`
+        }
+        >
+        {item.status}
+        </p>,
         actions: <PopOver />
       }
     )
   })
-  console.log(value)
   return (
     <>
-      <PageHeader title="Internships" />
-      <Divider />
+      <PageHeader title="Applications" />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
@@ -194,23 +284,31 @@ const Application = () => {
                 setShowDrawer(true);
               }}
             />
+
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => { }}
+              value=""
+            />
             <Drawer
               closable
               open={showDrawer}
-              width={850}
               onClose={() => {
                 setShowDrawer(false);
               }}
               title="Filters"
             >
-              <React.Fragment key=".0">
+              <div key=".0">
                 <div className="flex flex-col gap-12">
-                <InternshipProgressStepper />
                   <div className="flex flex-col gap-2">
-                    <p>Location</p>
+                    <p>Time Fram</p>
                     <DropDown
-                      name="name"
-                      options={["EidinBurg", "Glasgow", "London", "Virtual"]}
+                      name="Select"
+                      options={["This weak", "Last weak", "This month", "Last month"]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -218,9 +316,43 @@ const Application = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p>Department</p>
+                    <p>Nature of Work</p>
                     <DropDown
-                      name="name"
+                      name="Select"
+                      options={[
+                        "All",
+                        "On-site",
+                        "Hybrid",
+                        "Virtual",
+                      ]}
+                      setValue={() => { }}
+                      requireCheckbox
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value=""
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <p>Type of Work</p>
+                    <DropDown
+                      name="Select"
+                      options={[
+                        "Paid",
+                        "Un-paid",
+                        "Part Time",
+                        "Full Time",
+                      ]}
+                      setValue={() => { }}
+                      requireCheckbox
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value=""
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <p>Stage</p>
+                    <DropDown
+                      name="Select"
                       options={[
                         "Business analyst",
                         "Research analyst",
@@ -229,6 +361,7 @@ const Application = () => {
                         "HR Cordinator",
                       ]}
                       setValue={() => { }}
+                      requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value=""
@@ -255,30 +388,32 @@ const Application = () => {
                     </Button>
                   </div>
                 </div>
-              </React.Fragment>
+              </div>
             </Drawer>
-            <Button
-              size="middle"
-              className="flex gap-2 teriary-bg-color white-color"
-              onClick={() => {
-                navigate("new-internship");
-              }}
-            >
-              <InternshipsIcon />
-              New Internship
-            </Button>
           </div>
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable
-              columns={columns}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { },
-              }}
-              tableData={newTableData}
-            />
+            {
+              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
+                {
+                  cardDummyArray.map((items: any, idx: any) => {
+                    return (
+                      <InternsCard />
+                    )
+                  })
+                }
+              </div>
+                :
+                <GlobalTable
+                  columns={columns}
+                  expandable={{
+                    expandedRowRender: () => { },
+                    rowExpandable: function noRefCheck() { }
+                  }}
+                  tableData={newTableData}
+                />
+            }
           </div>
         </BoxWrapper>
       </div>
