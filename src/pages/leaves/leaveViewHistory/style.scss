@@ -3,6 +3,7 @@
 .main_view_detail {
   .view_history_button_wrapper {
     gap: 20px;
+
     @media only screen and (max-width:575px) {
       flex-direction: column;
     }
@@ -38,5 +39,34 @@
     &:hover {
       outline: 2px solid $input-hover-color;
     }
+  }
+
+
+}
+
+.form_button_wrapper {
+  .Reset_btn {
+    color: $green-graph-tooltip-color;
+    background: $white-bg-color;
+    border: 1px solid $green-graph-tooltip-color;
+
+    &:hover {
+      background: $white-bg-color;
+      color: $green-graph-tooltip-color;
+      box-shadow: none;
+    }
+  }
+
+  .Apply_btn {
+    color: $white-bg-color;
+    background: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+
+    &:hover {
+      background: $teriary-bg-color;
+      color: $white-bg-color;
+      box-shadow: none;
+    }
+
   }
 }
