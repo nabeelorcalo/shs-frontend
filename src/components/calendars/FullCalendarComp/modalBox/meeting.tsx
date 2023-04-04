@@ -122,7 +122,7 @@ const Meeting = (props: any) => {
               <label className='label'>Repeat Every</label>
               <div className='flex items-center gap-3'>
                 <p className='total-count rounded-[8px] flex items-center justify-center'>
-                  <input type='number' name='repeatDays' value={1} className='w-[20px] border-none text-center' />
+                  <input type='number' name='repeatWeeks' value={1} className='repeat-week w-[20px] border-none text-center' />
                 </p>
                 <p className='weeks'>Week(s)</p>
               </div>

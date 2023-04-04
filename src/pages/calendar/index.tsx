@@ -1,4 +1,5 @@
 import CalendarComp from '../../components/calendars/FullCalendarComp/index';
+import { calendarMockData } from '../../components/calendars/FullCalendarComp/mockData';
 
 const Index = () => {
 
@@ -9,7 +10,7 @@ const Index = () => {
   }
 
   return (
-    <CalendarComp />
+    <CalendarComp eventData={calendarMockData}/>
   )
 }
 

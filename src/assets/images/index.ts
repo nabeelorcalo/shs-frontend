@@ -564,12 +564,10 @@ export { ReactComponent as GoalHeaderCalanderIcon } from "./AllGoals/GoalHeaderC
 
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
 export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
+
 export { ReactComponent as VideoRecorder } from './VideoRecorder.svg';
 
-
-
 // student dashboard
-
 export { ReactComponent as VerifyIcon } from '../../assets/images/dashboard/studentdashboard/verify.svg';
 export { ReactComponent as Apply } from '../../assets/images/dashboard/studentdashboard/Apply.svg';
 export { ReactComponent as InterView} from '../../assets/images/dashboard/studentdashboard/Interviews.svg';
