@@ -2,9 +2,9 @@ import React from 'react'
 import { ReportViewDetails, DownloadIconLeave, SettingHorizontalLine, GrievancesAvater } from '../../../../assets/images'
 import { BoxWrapper, Breadcrumb, SearchBar } from '../../../../components'
 import { Divider, Typography, Row, Col,} from 'antd'
-import CustomDropDownReport from './customDropDown'
 import './style.scss'
 import useCustomHook from './actionHandler'
+import CustomDropDownReport from './customDropDown'
 
 const index = () => {
   let overview = [

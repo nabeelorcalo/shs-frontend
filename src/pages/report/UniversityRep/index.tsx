@@ -2,10 +2,10 @@ import { Divider } from 'antd'
 import React, { useState } from 'react'
 import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import Drawer from '../../../components/Drawer';
-import Filters from './filter';
 import Image from '../../../assets/images/Grievances/avater-1.svg'
-import UniversityRepReportTable from './reportTable';
 import useCustomHook from '../actionHandler';
+import UniversityRepReportTable from './reportTable';
+import Filters from './filter';
 
 
 const index = () => {

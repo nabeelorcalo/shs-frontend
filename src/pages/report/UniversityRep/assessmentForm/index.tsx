@@ -3,10 +3,13 @@ import { BoxWrapper, Breadcrumb } from '../../../../components'
 import { Divider, Button, Typography, Form,} from 'antd'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
 import { Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
-
 import './style.scss'
 import { useNavigate } from 'react-router-dom';
-import ManagerRemarks from './manageRemarks';
+import ManagerRemarksForAssmentForm from './manageRemarksforUni';
+
+
+
+
 
 const index = () => {
   const navigate = useNavigate();
@@ -23,31 +26,31 @@ const index = () => {
       learningCategories: "Technical Skills",
       learningObjectives: "For accuracy and completeness, developed and rewrote technical documentation known as Market Research Description and Product Requirement Document, which included instructions, broachers, product catalogues, and website resources.",
       evidenceOfProgress: "Collected and documented information on integration issues and vulnerabilities, as well as suggestions for improvement. Using Visual Studio, created accurate and efficient test scripts for automated testing of certain products and features.",
-      managerRemarks: <ManagerRemarks image={<Emoji3rd/>}  content="Meets expectations" />
+      managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji3rd/>}  content="Meets expectations" />
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Working as part of a team can assist build abilities such as leadership and task skills, which can be improved or increased through it on learning. Process skills include things like "effectiveness skills," "team functioning skills," and "systems thinking abilities."`,
       evidenceOfProgress: "Since we started working in the office. This has exposed me to a working atmosphere, which is the first stage in my personal development. And I'm transitioning from a teaching setting to an office setting.",
-     managerRemarks: <ManagerRemarks image={<Emoji1st/>}  content="Does not meet expectations" />
+     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji1st/>}  content="Does not meet expectations" />
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Being presentable includes more than just conveying ideas; it also necessitates appearing balanced, and body language plays a vital role in being regarded as worthy.`,
       evidenceOfProgress: "Being proactive about the duties and accomplishing them on time was difficult at first, but with practice and superior performance, it is possible.",
-     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />
+     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji4th/>}  content="Exceeds expectations" />
     },
     {
       learningCategories: "Commercial Awareness",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />
+     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji4th/>}  content="Exceeds expectations" />
     },
     {
       learningCategories: "Personal and Professional Development",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />
+     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji4th/>}  content="Exceeds expectations" />
     },
 
   ]

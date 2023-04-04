@@ -3,12 +3,11 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Divider, Form, Menu, Row, Space, Typography } from "antd";
+import { Button, Col, Form, Menu, Row, Space, } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
-import DetailPage from "./detailPage";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const tableData = [
   {
