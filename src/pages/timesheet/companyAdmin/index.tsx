@@ -3,14 +3,14 @@ import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
 import { timesheetMock } from "../mockData";
 import "./style.scss";
+import { PageHeader } from "../../../components";
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   return (
     <div className="timesheet-wrapper">
-      <div className="timesheet-top-heading text-2xl font-semibold pb-[30px] mb-[30px]">
-        Timesheets
-      </div>
+      <PageHeader title='Timesheet' bordered />
+      
       <CommonHeader />
 
       {timesheetMock.map((data, i) => (

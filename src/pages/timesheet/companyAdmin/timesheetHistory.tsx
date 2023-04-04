@@ -7,6 +7,7 @@ import { timesheetMock } from '../mockData';
 import CommonTableCollapsible from '../commonTableCollapsible/index';
 // const { Panel } = Collapse;
 import './style.scss';
+import { Breadcrumb } from '../../../components';
 
 const TimeSheetHistory = () => {
 
@@ -15,11 +16,7 @@ const TimeSheetHistory = () => {
 
   return (
     <div className='timesheet-history'>
-      <div className="timesheet-top-heading text-2xl flex items-center gap-4 font-semibold pb-[30px] mb-[30px] capitalize">
-        history
-        <span className='seperator'></span>
-        <span className='font-medium text-base'>Certificate</span>
-      </div>
+      <Breadcrumb breadCrumbData={[{ name: 'History' }, { name: 'Timesheet', onClickNavigateTo: '/timesheet' }]} />
       <CommonHeader />
 
       {findTimesheet?.history ? findTimesheet?.history.map((data) => (
