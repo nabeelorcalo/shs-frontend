@@ -9,6 +9,7 @@ import {
   EvaluationStatsCard,
   TextArea,
   Breadcrumb,
+  Notifications,
 } from "../../components";
 import {
   Sad,
@@ -20,18 +21,18 @@ import {
   Awesome,
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
+  Success,
 } from '../../assets/images';
 import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
-  const role = constants.USER_ROLE
-  const tempArray = [
+  const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: "/performance" },
-    { name: (role === 'University' || role === 'CompanyAdmin') && "/" },
-    { name: role === 'University' ? "View History" : (role === 'Intern' || role === 'Manager') ? '' : 'Performance History', onClickNavigateTo: "/performance/history" },
-    { name: (role === 'University' || role === 'Manager') && "/" },
-    { name: (role === 'University' || role === 'Manager') && " Mino Marina", onClickNavigateTo: "/performance/1/detail" },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`},
+    { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : (constants.USER_ROLE === constants.INTERN || constants.USER_ROLE === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const user = {
     name: 'Calvin Grayson',
@@ -100,73 +101,14 @@ const ViewPerformance = () => {
       colorLessComp: SatisfiedColorLessIcon
     },
   ];
-
-  const downloadClick = () => {
-    alert('download popup');
-  }
-
-  const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
-
-    switch (role) {
-      case 'Intern':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-
-      case 'CompanyAdmin':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              Performance History
-            </Link>
-          </>
-        );
-
-      case 'Manager':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.DETAIL}`}
-            >
-              Mino Marina
-            </Link>
-          </>
-        );
-      default:
-        return <></>;
-    }
-  }
+  const action = useCustomHook();
 
   return (
     <div className="view-evaluation">
       <PageHeader
         bordered
         title={
-          <Breadcrumb breadCrumbData={tempArray} />
+          <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
         }
       />
 
@@ -181,7 +123,10 @@ const ViewPerformance = () => {
         <IconButton
           size='large'
           className='icon-btn'
-          onClick={downloadClick}
+          onClick={() => {
+            action.downloadPdf(header, tableData);
+            Notifications({title:"Success", description:"Download Done",icon:<Success />})
+          }}
           icon={<DownloadIconWithBg />}
         />
       </div>

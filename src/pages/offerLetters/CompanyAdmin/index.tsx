@@ -1,5 +1,5 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconAngleDown,
   NewImg,
@@ -9,8 +9,6 @@ import {
   Rejected,
   Signed,
   Recevied,
-  GreyEye,
-  GreyLock,
   GreenErrow,
   GreenEye,
   GreenLock,

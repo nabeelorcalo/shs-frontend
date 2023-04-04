@@ -1,6 +1,54 @@
-@import "../../../../scss//colors";
+@import "../../../../scss/_colors.scss";
 
 .manage_calendar_wrapper {
+  .fc-header-toolbar {
+    .fc-toolbar-chunk:nth-child(2) {
+      display: flex;
+      align-items: center;
+
+      .fc-toolbar-title {
+        color: $text-primary-title-color;
+        font-size: 16px;
+        font-weight: 400;
+        position: relative;
+
+        &::before {
+          position: absolute;
+          content: '';
+          background-image: url('../../../../assets/images/calender-icon.png');
+          height: 24px;
+          width: 24px;
+          left: -30px;
+          top: -2px;
+        }
+      }
+
+      .fc-button {
+        all: unset;
+        border: 1px solid $text-error-line-color;
+        border-radius: 4px;
+        cursor: pointer;
+
+        .fc-icon {
+          color: $light-grey-color;
+        }
+
+        &.fc-prev-button {
+          margin-left: 30px;
+          border-right: 0px;
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
+
+        &.fc-next-button {
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
+        }
+      }
+
+    }
+  }
+
   .fc-timeline-slot-frame {
     display: flex;
     justify-content: center !important;
@@ -60,9 +108,10 @@
 }
 
 .leave_profile_wrapper {
-  .profile_wrapper{
+  .profile_wrapper {
     flex: 0 0 48px;
   }
+
   ._name {
     color: $text-primary-title-color;
   }

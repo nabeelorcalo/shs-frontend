@@ -1,4 +1,13 @@
 @import '../../scss/colors';
+.setting-location{
+  .location-header{
+    gap: 10px;
+    @media only screen and (max-width:1000px) {
+      align-items: flex-start;
+      flex-direction: column;
+     }
+  }
+}
 .setting-add-button{
   &:hover{
  opacity: 75%;

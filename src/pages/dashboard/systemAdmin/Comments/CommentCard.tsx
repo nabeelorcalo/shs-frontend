@@ -6,6 +6,7 @@ import {
   FilledLikeIcon,
   LikeIcon,
 } from "../../../../assets/images";
+
 interface ICommentCard {
   name: string;
   image: string;
@@ -13,11 +14,11 @@ interface ICommentCard {
   time: string;
   likes: number | string;
 }
-const CommentCard: FC<ICommentCard> = (props) => {
+
+const index = (props: any) => {
   const { name, image, content, time, likes } = props;
   const [isLike, setIsLike] = useState(false);
   const [isReply, setIsReply] = useState(false);
-
   return (
     <div>
       <Row className="gap-[10px]" align="middle">
@@ -33,7 +34,7 @@ const CommentCard: FC<ICommentCard> = (props) => {
               className="cursor-pointer w-6 h-6"
               onClick={() => setIsLike(!isLike)}
             >
-              {isLike ? <FilledLikeIcon /> : <LikeIcon />}
+              {/* {isLike ? <FilledLikeIcon /> : <LikeIcon />} */}
             </span>
             <span className="gray-color">{likes ?? 0} likes</span>
           </Row>
@@ -88,5 +89,4 @@ const CommentCard: FC<ICommentCard> = (props) => {
     </div>
   );
 };
-
-export default CommentCard;
+export default index;

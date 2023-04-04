@@ -1,6 +1,14 @@
 @import '../../../scss/_colors.scss';
 
 .history-detail {
+    .panel-main{
+        @media only screen and (max-width:575px) {
+            justify-content: space-between;
+            .seperator{
+                display: none;
+            }
+        }
+    }
     border: none;
     box-shadow: $shadow-shade-1 !important;
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import dayjs from "dayjs";
 import { Dropdown, Space } from 'antd';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
