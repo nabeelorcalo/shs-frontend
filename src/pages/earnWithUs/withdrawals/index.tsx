@@ -132,8 +132,8 @@ const Withdrawals = () => {
               }}
               onFinish={submitWithdrawals}
             >
-              <Row gutter={115}>
-                <Col sm={12}>
+              <Row gutter={[{xs: 30, sm: 30, md:30, lg:115}, 0]}>
+                <Col xs={24} sm={12}>
                   <Form.Item name="withdrawAccoutn" label="Withdraw Account">
                     <Select className="filled" placeholder="Withdraw Method" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="natwestGroup">Natwest Group</Select.Option>
@@ -141,7 +141,7 @@ const Withdrawals = () => {
                     </Select>
                   </Form.Item>
                 </Col>
-                <Col sm={12}>
+                <Col xs={24} sm={12}>
                   <Form.Item name="withdrawAmount" label="Amount">
                     <Input placeholder="Enter Amount" className="filled" />
                   </Form.Item>
@@ -151,44 +151,44 @@ const Withdrawals = () => {
               <div className="withdrawals-details">
                 <div className="withdrawals-details-title">Withdraw Details</div>
                 <div className="withdrawals-details-card">
-                  <Row gutter={[158, 14]}>
-                    <Col sm={12}>
+                  <Row gutter={[{xs: 30, sm: 30,md: 30, lg:158}, 14]}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Withdraw Amount</div>
                         <div className="item-label-value">1000 GBP</div>
                       </div>
                     </Col>
-                    <Col sm={12}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Withdraw Fee</div>
                         <div className="item-label-value">3 GBP</div>
                       </div>
                     </Col>
-                    <Col sm={12}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Account Name</div>
                         <div className="item-label-value">Porter inc</div>
                       </div>
                     </Col>
-                    <Col sm={12}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Account Number</div>
                         <div className="item-label-value">31926819</div>
                       </div>
                     </Col>
-                    <Col sm={12}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Sort Code</div>
                         <div className="item-label-value">Porter inc</div>
                       </div>
                     </Col>
-                    <Col sm={12}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Routing Number</div>
                         <div className="item-label-value">Porter inc</div>
                       </div>
                     </Col>
-                    <Col sm={12}>
+                    <Col xs={24} md={12}>
                       <div className="withdrawals-card-item">
                         <div className="item-label">Account Type</div>
                         <div className="item-label-value">Porter inc</div>
@@ -302,7 +302,7 @@ const Withdrawals = () => {
           onFinish={submitAddAccount}
         >
           <Row gutter={40}>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="selectBank" label="Choose your Bank">
                 <Select className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
                   <Select.Option value="natwestGroup">Natwest Group</Select.Option>
@@ -310,27 +310,27 @@ const Withdrawals = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="accountNumber" label="Account Number">
                 <Input className="filled" placeholder="Enter account number" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="accountName" label="Account Name">
                 <Input className="filled" placeholder="Enter account name" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="routingNumber" label="Routing Number">
                 <Input className="filled" placeholder="Enter routing number" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="sortCode" label="Sort Code">
                 <Input className="filled" placeholder="Enter sort code" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="accountType" label="Account Type">
                 <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
                   <Select.Option value="savings">Savings</Select.Option>
@@ -373,7 +373,7 @@ const Withdrawals = () => {
           onFinish={submitEditAccount}
         >
           <Row gutter={40}>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="selectBank" label="Choose your Bank">
                 <Select className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
                   <Select.Option value="natwestGroup">Natwest Group</Select.Option>
@@ -381,27 +381,27 @@ const Withdrawals = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="accountNumber" label="Account Number">
                 <Input className="filled" placeholder="Enter account number" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="accountName" label="Account Name">
                 <Input className="filled" placeholder="Enter account name" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="routingNumber" label="Routing Number">
                 <Input className="filled" placeholder="Enter routing number" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="sortCode" label="Sort Code">
                 <Input className="filled" placeholder="Enter sort code" />
               </Form.Item>
             </Col>
-            <Col sm={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="accountType" label="Account Type">
                 <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
                   <Select.Option value="checking">Checking</Select.Option>

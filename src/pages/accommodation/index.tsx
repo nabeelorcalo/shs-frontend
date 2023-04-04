@@ -21,17 +21,11 @@ const agentOptions = [
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const [form] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
   const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
-  const [filterValues,  setFilterValues] = useState({
-    "priceRange": 0,
-    "moveInDate": "",
-    "moveOutDate": "",
-    "offer": null,
-    "accomodationType": null,
-    "facilities": null,
-  })
+  const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
@@ -127,6 +121,10 @@ const Accommodation = () => {
 
   function applyFilterAvailableProperties(values: any) {
     console.log('Success:', values);
+  }
+
+  const resetFormFields = () => {
+    form.resetFields()
   }
 
   const openSavedSearchesFilters = () => {
@@ -297,12 +295,11 @@ const Accommodation = () => {
       >
         <div className="shs-filter-form">
           <Form
+            form={form}
             layout="vertical"
             name="availablePropertiesFilters"
-            initialValues={filterValues}
             onValuesChange={(_, values) => {
-              setFilterValues(prevState => ({...prevState, ...values}))
-              console.log('init:: ', values)
+              console.log('Filter Values:: ', values)
             }}
             onFinish={applyFilterAvailableProperties}
           >
@@ -371,7 +368,7 @@ const Accommodation = () => {
             </div>
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost>
+                <ExtendedButton customType="tertiary" ghost onClick={resetFormFields}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">

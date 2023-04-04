@@ -158,7 +158,7 @@ const Dashboard = () => {
       <div className="earn-with-us-dashboard">
         <div className="earnwith-topcards">
           <Row gutter={30}>
-            <Col xs={24} sm={24} md={12}>
+            <Col xs={24} lg={12}>
               <div className="top-card">
                 <Row gutter={15}>
                   <Col xs={12}>
@@ -186,19 +186,19 @@ const Dashboard = () => {
                 </Row>
               </div>
             </Col>
-            <Col xs={24} sm={24} md={12}>
+            <Col xs={24} lg={12}>
                 <div className="card-share-wrapper">
                   <div className="card-share" onClick={openModalShareLink}>
                     <div>Share <IconShare /></div>
                   </div>
                   <div className="top-card card-user-welcome">
                     <Row gutter={15}>
-                      <Col xs={12}>
+                      <Col xs={24} lg={12}>
                         <div className="top-card-inner">
                           <div className="user-welcome-text">Welcome Back, <span>Stephen!</span></div>
                         </div>
                       </Col>
-                      <Col xs={12}>
+                      <Col xs={24} lg={12}>
                         <div className="top-card-inner ref-number">
                           <div className="user-reference-no">Reference Number: <span>DF41331056</span></div>
                         </div>
@@ -212,7 +212,7 @@ const Dashboard = () => {
 
         <div className="members-cards">
           <Row gutter={30}>
-            <Col md={24} lg={8}>
+            <Col xs={24} lg={8}>
               <div className="member-card">
                 <div className="member-card-icon">
                   <IconTotalMember />
@@ -223,7 +223,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Col>
-            <Col md={24} lg={8}>
+            <Col xs={24} lg={8}>
               <div className="member-card">
                 <div className="member-card-icon">
                   <IconActiveMember />
@@ -234,7 +234,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </Col>
-            <Col md={24} lg={8}>
+            <Col xs={24} lg={8}>
               <div className="member-card">
                 <div className="member-card-icon">
                   <IconInactiveMember />
@@ -250,7 +250,7 @@ const Dashboard = () => {
 
         <div className="earnwith-bottom-content">
           <Row gutter={[30, 30]}>
-            <Col md={24} lg={12}>
+            <Col xs={24} lg={12}>
               <div className="registered-members">
                 <RegisterMemberAndFeddbackGraph  
                   graphName='registerMember' 
@@ -259,7 +259,7 @@ const Dashboard = () => {
               </div>
               
             </Col>
-            <Col md={24} lg={12}>
+            <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">
                 <Typography.Title level={4}>Members Details</Typography.Title>
                 <div className="shs-table">
