@@ -7,10 +7,6 @@ import './style.scss'
 import { useNavigate } from 'react-router-dom';
 import ManagerRemarksForAssmentForm from './manageRemarksforUni';
 
-
-
-
-
 const index = () => {
   const navigate = useNavigate();
   const breadcrumbArray = [
