@@ -12,18 +12,18 @@ import {
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Breadcrumb ,BoxWrapper } from "../../../../../../components";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "New Template"},
     { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
-    { name: "Rejection Letter" , onClickNavigateTo:"/settings/template/rejection-letter" },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Rejection Letter" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}` },
   ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
@@ -48,7 +48,7 @@ const NewTemplateRejectionLetter = () => {
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>
@@ -82,9 +82,11 @@ const NewTemplateRejectionLetter = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary" onClick={()=>navigate("/settings/template/rejection-letter")} >
-              Cencal
-            </Button>
+          <Button danger size="middle" type="primary">
+          <NavLink to={ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}> 
+             Cancel 
+             </NavLink>
+             </Button>
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"

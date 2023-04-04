@@ -4,7 +4,6 @@ import type { MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { LocationMore } from '../../../../assets/images';
 
-
 const CustomDropDownReport = (props:any) => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ const CustomDropDownReport = (props:any) => {
       key: '2',
       label: (
         <span onClick={()=>{props.dewnload, setVisible(false)}}>
-        Dewnload
+        Download
       </span>
       ),
     },

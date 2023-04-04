@@ -14,65 +14,66 @@ import useCustomHook from './actionHandler';
 
 
 const index: React.FC = () => {
-const TableColumn = ['No.','Avater','University Name', 'Univerity Rep' , 'Email' , 'Contact' , 'City']
-const escalatedByMeTableData = [
-  {
-    no: '01',
-    logo: flag,
-    universityName: 'University of Lincoln',
-    universityRep: 'Mino Marina',
-    email: 'enquiries@linclon.ac.uk',
-    contact: '+44 7700 900077',
-    city: 'Linclon',
-  },
-  {
-    no: '02',
-    logo: flag2,
-    universityName: 'University of London',
-    universityRep: 'Craig Donin',
-    email: 'enquiries@london.ac.uk',
-    contact: '+44 2078 628009',
-    city: 'London',
-  },
-  {
-    no: '03',
-    logo: flag3,
-    universityName: 'University of Birmingham',
-    universityRep: 'Omar Schleifer',
-    email: 'enquiries@birmingham.ac.uk',
-    contact: '+44 2078 628009',
-    city: 'Birmingham',
-  },
-  {
-    no: '04',
-    logo: flag4,
-    universityName: 'University of Lincoln',
-    universityRep: 'Mino Marina',
-    email: 'enquiries@linclon.ac.uk',
-    contact: '+44 7700 900077',
-    city: 'Linclon',
-  },
-  {
-    no: '05',
-    logo: flag5,
-    universityName: 'University of London',
-    universityRep: 'Craig Donin',
-    email: 'enquiries@london.ac.uk',
-    contact: '+44 2078 628009',
-    city: 'London',
-  },
-  {
-    no: '06',
-    logo: flag6,
-    universityName: 'University of Birmingham',
-    universityRep: 'Omar Schleifer',
-    email: 'enquiries@birmingham.ac.uk',
-    contact: '+44 2078 628009',
-    city: 'Birmingham',
-  },
+  const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
+  const escalatedByMeTableData = [
+    {
+      no: '01',
+      logo: flag,
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      contact: '+44 7700 900077',
+      city: 'Linclon',
+    },
+    {
+      no: '02',
+      logo: flag2,
+      universityName: 'University of London',
+      universityRep: 'Craig Donin',
+      email: 'enquiries@london.ac.uk',
+      contact: '+44 2078 628009',
+      city: 'London',
+    },
+    {
+      no: '03',
+      logo: flag3,
+      universityName: 'University of Birmingham',
+      universityRep: 'Omar Schleifer',
+      email: 'enquiries@birmingham.ac.uk',
+      contact: '+44 2078 628009',
+      city: 'Birmingham',
+    },
+    {
+      no: '04',
+      logo: flag4,
+      universityName: 'University of Lincoln',
+      universityRep: 'Mino Marina',
+      email: 'enquiries@linclon.ac.uk',
+      contact: '+44 7700 900077',
+      city: 'Linclon',
+    },
+    {
+      no: '05',
+      logo: flag5,
+      universityName: 'University of London',
+      universityRep: 'Craig Donin',
+      email: 'enquiries@london.ac.uk',
+      contact: '+44 2078 628009',
+      city: 'London',
+    },
+    {
+      no: '06',
+      logo: flag6,
+      universityName: 'University of Birmingham',
+      universityRep: 'Omar Schleifer',
+      email: 'enquiries@birmingham.ac.uk',
+      contact: '+44 2078 628009',
+      city: 'Birmingham',
+    },
 
-]
-const action = useCustomHook();
+  ]
+  const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
+  const action = useCustomHook();
   const [value, setValue] = useState<any>()
   const handleChange = () => { };
   return (
@@ -82,26 +83,22 @@ const action = useCustomHook();
       <div className='flex justify-between my-2'>
         <SearchBar size="middle" handleChange={handleChange} />
         <div className='flex justify-end gap-2'>
-          <Select className='w-[200px] select' placeholder="London" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="London">London</Select.Option>
-            <Select.Option value="Bristol">Bristol</Select.Option>
-            <Select.Option value="Manchester">Manchester</Select.Option>
-            <Select.Option value="Oxford">Oxford</Select.Option>
-            <Select.Option value="Belfast">Belfast</Select.Option>
+          <Select className='w-[200px] select' placeholder="City" suffixIcon={<IconAngleDown />}>
+            {dropdownValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
           </Select>
           <div className="flex justify-end items-center gap-3">
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"University Details")}}
+              setValue={() => { action.downloadPdfOrCsv(event, TableColumn, escalatedByMeTableData, "University Details") }}
             />
           </div>
         </div>
       </div>
       <BoxWrapper>
-      <UniversityTable escalatedByMeTableData={escalatedByMeTableData}/>
+        <UniversityTable escalatedByMeTableData={escalatedByMeTableData} />
       </BoxWrapper>
-      
+
     </div>
   )
 }

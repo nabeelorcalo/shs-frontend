@@ -18,9 +18,9 @@ import {
   GrievancesAvater3,
   GrievancesAvater4
 } from '../../../../assets/images'
-import './style.scss'
 import useCustomHook from '../../actionHandler'
-
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import './style.scss'
 const escalatedByMeTableData = [
   {
     no: '01',
@@ -209,7 +209,7 @@ const index = () => {
   const action = useCustomHook();
   const breadcrumbArray = [
     { name: "All Grievance"},
-    { name: "Grievances" , onClickNavigateTo:"/grievances" },
+    { name: "Grievances" , onClickNavigateTo:`${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -240,7 +240,6 @@ const index = () => {
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              // setValue={()=>action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"University Details" )}
               setValue={() => {
                 action.downloadPdfOrCsv(event , selectedTab === "2" ?
                  TableColumn2 : selectedTab === "3" ? TableColumn3: selectedTab === "4" ? TableColumn4 :  TableColumn1  , 

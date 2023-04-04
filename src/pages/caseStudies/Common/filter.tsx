@@ -25,8 +25,7 @@ const Filters: React.FC = (props: any) => {
       </Option>
     );
   }
-  function handleChange(value: any) {
-  }
+  function handleChange(value: any) { }
 
   return (
     <div className='casestudies-filter_main_wrapper'>
@@ -64,7 +63,6 @@ const Filters: React.FC = (props: any) => {
             <Select.Option value="Rejected">Rejected</Select.Option>
           </Select>
         </Form.Item>
-
         <div className="filter-footer flex justify-end mt-4 gap-2">
           <Button key="Cancel" className="footer-cancel-btn " >
             Reset

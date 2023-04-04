@@ -5,17 +5,18 @@ import {
   IconLocation,
   IconPhone,
   Person,
-  SettingHorizontalLine,
   UniLogo,
 } from "../../../../assets/images";
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
-import { BoxWrapper, PageHeader, PopUpModal } from "../../../../components";
+import { BoxWrapper, Breadcrumb, PopUpModal } from "../../../../components";
 import mapImage from '../../../../assets/images/universities/map.svg'
-import { NavLink } from "react-router-dom";
-import { EyeFilled } from "@ant-design/icons";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import './style.scss'
 
-const name = "University";
+const breadcrumbArray = [
+  { name: "University of Lincoln " },
+  { name: "Universities", onClickNavigateTo: `${ROUTES_CONSTANTS.UNIVERSITIES}` },
+];
 
 const commonObj = {
   moduleName: "University of Lincoln",
@@ -55,12 +56,8 @@ const index = () => {
     <div className="university-profile-detail-page">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <PageHeader title={<> {commonObj.moduleName} {<span className='inline-block align-middle mx-2'>
-            <SettingHorizontalLine className="" /></span>}
-            <NavLink to="/universities">
-              <span className='text-base font-medium dashboard-primary-color' >Universities</span>
-            </NavLink>  </>} />
-          <Divider className="my-0" />
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
+          <Divider />
         </Col>
       </Row>
 
@@ -115,9 +112,9 @@ const index = () => {
                   Location
                 </Typography>
                 <div className="container mt-10">
-                <span className="image w-full">
-                  <img src={mapImage} alt="Avatar" className="background-img" />
-                  </span>  
+                  <span className="image w-full">
+                    <img src={mapImage} alt="Avatar" className="background-img" />
+                  </span>
                   <div
                     className="middle"
                     onClick={() => {
@@ -143,7 +140,7 @@ const index = () => {
                   <Row gutter={[5, 20]}>
                     <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                       <Typography className="font-medium text-base text-primary-color font-[outfit]">
-                        {name} Name
+                      University Name
                       </Typography>
                       <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                         {commonObj.basic.name}
@@ -216,7 +213,7 @@ const index = () => {
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <div>
                       <Typography className="pb-2 font-semibold text-xl text-primary-color font-[outfit]">
-                        About {name}
+                        About University
                       </Typography>
                       <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
                         {commonObj.about.description}
@@ -236,14 +233,14 @@ const index = () => {
         footer=""
         close={() => setShowEditModal(false)}
       >
-      <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13285.188936753058!2d73.07593304999999!3d33.64945945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1678436391749!5m2!1sen!2s"
-                  className="border-0 w-full h-[500px]"
-                  // style="border:0;"
-                  // allowfullscreen=""
-                  loading="lazy"
-                  // referrerpolicy="no-referrer-when-downgrade"
-                ></iframe> 
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13285.188936753058!2d73.07593304999999!3d33.64945945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1678436391749!5m2!1sen!2s"
+          className="border-0 w-full h-[500px]"
+          // style="border:0;"
+          // allowfullscreen=""
+          loading="lazy"
+        // referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
       </PopUpModal>
     </div>
   );

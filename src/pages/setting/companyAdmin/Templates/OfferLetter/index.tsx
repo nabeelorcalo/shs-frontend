@@ -28,7 +28,7 @@ let overview = [
   const breadcrumbArray = [
     { name: "Offer Letter"},
     { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   

@@ -146,7 +146,7 @@ export const ROUTES_CONSTANTS: any = {
   GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
   UNIVERSITIES_INTERNS:"universities/interns",
-  UNIVERSITIES_PROFILE:"universities/Profile"
+  UNIVERSITIES_PROFILE:"universities/profile"
 };
 
 export const STATUS_CONSTANTS: any = {

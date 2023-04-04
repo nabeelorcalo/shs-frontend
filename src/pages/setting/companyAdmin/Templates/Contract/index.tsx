@@ -25,7 +25,7 @@ const TemplatesContract = () => {
   const breadcrumbArray = [
     { name: "Contract"},
     { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const handleChange = () => { };

@@ -8,6 +8,7 @@ import EscalatedToMe from './escalatedToMe'
 import Filters from '../../Common/filters'
 import './style.scss'
 import useCustomHook from '../actionHandler'
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
 
 
 const index = () => {
@@ -96,7 +97,7 @@ const index = () => {
 
   const breadcrumbArray = [
     { name: "All Grievance" },
-    { name: "Grievances", onClickNavigateTo: "/grievances" },
+    { name: "Grievances", onClickNavigateTo: `${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
   const TableColumn1 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
   const TableColumn2 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']

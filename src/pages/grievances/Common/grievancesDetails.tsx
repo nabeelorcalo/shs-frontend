@@ -8,16 +8,13 @@ import {
   GrievancesSidebarAvater
 } from '../../../assets/images'
 import { Alert, Breadcrumb, Button, BoxWrapper } from '../../../components'
-
 import DragAndDropWide from '../../../components/DragAndDrop'
 import './style.scss';
 
 const { Text } = Typography;
 const { TextArea } = Input;
 
-function handleChange(value: any) {
-  console.log(`selected ${value}`);
-}
+function handleChange(value: any) { }
 
 const GrievancesDetails = () => {
   const breadcrumbArray = [
@@ -101,7 +98,8 @@ const GrievancesDetails = () => {
                   label="Replay"
                   onClick={() => { }}
                   type="primary"
-                /></div>
+                />
+              </div>
 
             </Form>
           </BoxWrapper>
@@ -130,10 +128,20 @@ const GrievancesDetails = () => {
 
               <Select defaultValue="Jessica Alba" className='w-full lg:w-[200px] border-none' onChange={handleChange}
                 options={[{
-                  value: "Gregory Maxwell Hall", label:
-                    <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>,
+                  value: "Gregory Maxwell Hall",
+                  label: <>
+                    <GrievancesAvater className='w-[48px] px-2' />
+                    <span>Jessica Alba</span>
+                  </>,
                 },
-                { value: <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>, label: <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></>, },]} />
+                {
+                  value: <>
+                    <GrievancesAvater className='w-[48px] px-2' />
+                    <span>Jessica Alba</span></>,
+                  label: <>
+                    <GrievancesAvater className='w-[48px] px-2' />
+                    <span>Jessica Alba</span></>,
+                },]} />
             </div>
 
           </BoxWrapper>

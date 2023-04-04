@@ -15,6 +15,7 @@ import { textEditorData } from "../../../../../../components/Setting/Common/Text
 import { Breadcrumb ,BoxWrapper } from "../../../../../../components";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateOfferLetter = () => {
@@ -22,8 +23,8 @@ const NewTemplateOfferLetter = () => {
   const breadcrumbArray = [
     { name: "New Template"},
     { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
-    { name: "Offer Letter" , onClickNavigateTo:"/settings/template/template-offer-letters" },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`  },
+    { name: "Offer Letter" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}` },
   ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
@@ -48,7 +49,7 @@ const NewTemplateOfferLetter = () => {
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>

@@ -3,15 +3,16 @@ import { BoxWrapper, Breadcrumb } from '../../../../components'
 import { Divider, Button, Typography, Form,} from 'antd'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
 import { Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
-import './style.scss'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import ManagerRemarksForAssmentForm from './manageRemarksforUni';
+import { ROUTES_CONSTANTS } from '../../../../config/constants';
+import './style.scss'
 
 const index = () => {
   const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
-    { name: "report", onClickNavigateTo: "/report" },
+    { name: "report", onClickNavigateTo: `${ROUTES_CONSTANTS.REPORT}` },
    
   ];
   const [openModal, setOpenModal] = useState(false)
@@ -91,7 +92,11 @@ const index = () => {
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
          
             <Button type='primary'
-              className='white-bg-color teriary-color save-btn'    onClick={()=>navigate("/report/view-details/01")}>Back</Button>
+              className='white-bg-color teriary-color save-btn'>
+                <NavLink to={`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`}> 
+             Back
+             </NavLink>
+                </Button>
          
           </div>
         </BoxWrapper>

@@ -22,9 +22,9 @@ const TemplatesCertificateOfCompletion = () => {
     },
   ];
   const breadcrumbArray = [
-    { name: "Certification of Completion"},
-    { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Certification of Completion" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
@@ -32,8 +32,8 @@ const TemplatesCertificateOfCompletion = () => {
   return (
     <div className="template-contract">
       <div>
-      <Breadcrumb breadCrumbData={breadcrumbArray}  />
-        <Divider  />
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
+        <Divider />
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
           <NavLink to={ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}>

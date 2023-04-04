@@ -19,17 +19,17 @@ import {
 } from "../../../../../../assets/images";
 import { EyeFilled } from "@ant-design/icons/lib/icons";
 import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "New Template"},
     { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
-    { name: "Certificate of Completion" , onClickNavigateTo:"/settings/template/certificate-of-completion/new-template" },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Completion" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
   const [value, setValue] = useState();
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
@@ -64,7 +64,6 @@ const NewTemplateCertiticationOfCompletion = () => {
       color: "#3DC575",
       toggle: !borderColorSecond.toggle,
     });
-    console.log("ddd, ", borderColorSecond.toggle);
   };
   const NoBorderHandler = () => {
     setBorderColorfirst({ color: "#FFFFFF" });
@@ -86,19 +85,18 @@ const NewTemplateCertiticationOfCompletion = () => {
   return (
     <div className="certificate-of-appreciation-new-template">
        <Breadcrumb breadCrumbData={breadcrumbArray}/>
-
-      <Divider className="my-1 mb-3" />
+      <Divider/>
       <BoxWrapper>
       <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>
               <Paragraph>Enter template details</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row" xs={24} md={14} xxl={8}>
               <Form.Item
                 required={false}
                 name="templateName"
@@ -118,7 +116,7 @@ const NewTemplateCertiticationOfCompletion = () => {
                 name="description"
                 label="Description (optional)"
               >
-                <div className="text-input-bg-color rounded-lg text-editor my-2 ">
+                <div className="text-input-bg-color rounded-lg text-editor my-2  ">
                   <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
                 </div>
               </Form.Item>
@@ -128,15 +126,15 @@ const NewTemplateCertiticationOfCompletion = () => {
           <Divider />
           {/*------------------------ Select Design----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} xl={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} lg={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Select Design
               </Title>
               <Paragraph>Select the design of the certificate</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={24} xl={12}>
+            <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
               <Row gutter={[16, 16]}>
-                <Col className="gutter relative" xs={24} xl={12}>
+                <Col className="gutter relative" xs={24} lg={12} xl={12}>
                   <BoxWrapper>
                   <div
                     style={{ border: `2px solid ${borderColorfirst.color}` }}
@@ -173,7 +171,7 @@ const NewTemplateCertiticationOfCompletion = () => {
                   </div>
                   </BoxWrapper>
                 </Col>
-                <Col className="gutter relative" xs={24} xl={12}>
+                <Col className="gutter relative" xs={24} lg={12} xl={12}>
                 <BoxWrapper>
                   <div
                     style={{ border: `2px solid ${borderColorSecond.color}` }}
@@ -213,9 +211,10 @@ const NewTemplateCertiticationOfCompletion = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary"
-             onClick={()=>navigate("/settings/template/certificate-of-completion")}>
-              Cencal
+            <Button danger size="middle" type="primary">
+            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

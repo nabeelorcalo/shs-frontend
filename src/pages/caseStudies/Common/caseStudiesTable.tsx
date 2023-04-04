@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import { Alert, GlobalTable } from '../../../components'
-import './style.scss'
 import CustomDropDownCaseStudies from './customDropDown'
+import './style.scss'
 
-const CaseStudiesTable = (props:any) => {
+const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(false)
-
-
-
   const caseStudyColumnData =
     [
       {
@@ -94,11 +91,7 @@ const CaseStudiesTable = (props:any) => {
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to reject this case study?</p>}
-
       />
-   
-      
-
     </>
   )
 }

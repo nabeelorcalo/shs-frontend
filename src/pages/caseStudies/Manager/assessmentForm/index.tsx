@@ -4,14 +4,15 @@ import { Divider, Button, Typography, Form, Input } from 'antd'
 const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ROUTES_CONSTANTS } from '../../../../config/constants';
 
 const index = () => {
   const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
-    { name: "Case Studies", onClickNavigateTo: "/case-studies" },
-   
+    { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
+
   ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
@@ -51,7 +52,7 @@ const index = () => {
   ]
   return (
     <div className='company-admin-assessment-form'>
-   <Breadcrumb  breadCrumbData={breadcrumbArray} />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
 
       {/* for destop */}
@@ -77,7 +78,9 @@ const index = () => {
             )
           })}
           <Form layout="vertical" form={form}>
-            <Typography className='text-xl font-semibold my-1'>Feedback <span className='text-[#a0a3bd] font-medium'>(Optional)</span></Typography>
+            <Typography className='text-xl font-semibold my-1'>Feedback
+              <span className='form-title font-medium'>(Optional)</span>
+            </Typography>
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
@@ -92,7 +95,11 @@ const index = () => {
           </Form>
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
             <Button type='primary'
-              className='text-error-bg-color white-color reject-btn' onClick={()=>navigate("/case-studies")}>Reject</Button>
+              className='text-error-bg-color white-color reject-btn' >
+              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+                Reject
+              </NavLink>
+            </Button>
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>Save Draft</Button>
             <Button type='primary'
@@ -119,7 +126,9 @@ const index = () => {
           )
         })}
         <Form layout="vertical" form={form}>
-          <Typography className='text-xl font-semibold my-3'>Feedback <span className='text-[#a0a3bd] font-medium'>(Optional)</span></Typography>
+          <Typography className='text-xl font-semibold my-3'>Feedback
+            <span className='form-title font-medium'>(Optional)</span>
+          </Typography>
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
           <div className='flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
@@ -135,7 +144,11 @@ const index = () => {
         </Form>
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
           <Button type='primary'
-            className='text-error-bg-color white-color reject-btn' onClick={()=>navigate("/case-studies")}>Reject</Button>
+            className='text-error-bg-color white-color reject-btn' >
+              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+                Reject
+              </NavLink>
+              </Button>
           <Button type='primary'
             className='white-bg-color teriary-color save-btn'>Save Draft</Button>
           <Button type='primary'

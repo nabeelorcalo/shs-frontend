@@ -22,9 +22,9 @@ const TemplatesCertificateOfAppreciation = () => {
     },
   ];
   const breadcrumbArray = [
-    { name: "Certification of Appreciation"},
-    { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
+    { name: "Certification of Appreciation" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const handleChange = () => { };
@@ -32,7 +32,7 @@ const TemplatesCertificateOfAppreciation = () => {
   return (
     <div className="template-contract">
       <div className="header">
-      <Breadcrumb breadCrumbData={breadcrumbArray}/>
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
         <Divider />
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />

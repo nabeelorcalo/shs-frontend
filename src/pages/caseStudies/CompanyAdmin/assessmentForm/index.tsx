@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
-import { BoxWrapper, Breadcrumb,SignatureAndUploadModal  } from '../../../../components'
+import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
-
 import ManagerRemarks from '../../Common/managerRemarks'
+import { NavLink } from 'react-router-dom'
 import './style.scss'
-import { useNavigate } from 'react-router-dom'
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
 
 const { TextArea } = Input;
 
 const index = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
-    { name: "Case Studies", onClickNavigateTo: "/case-studies" },
-   
+    { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
   ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
@@ -49,11 +47,10 @@ const index = () => {
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
       managerRemarks: <ManagerRemarks />
     },
-
   ]
   return (
     <div className='company-admin-assessment-form'>
-     <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
 
       {/* for destop */}
@@ -79,7 +76,9 @@ const index = () => {
             )
           })}
           <Form layout="vertical" form={form}>
-            <Typography className='text-xl font-semibold my-1'>Feedback <span className='text-[#a0a3bd] font-medium'>(Optional)</span></Typography>
+            <Typography className='text-xl font-semibold my-1'>Feedback
+              <span className='form-title font-medium'>(Optional)</span>
+            </Typography>
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
@@ -94,7 +93,11 @@ const index = () => {
           </Form>
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
             <Button type='primary'
-              className='text-error-bg-color white-color reject-btn' onClick={()=>navigate("/case-studies")}>Reject</Button>
+              className='text-error-bg-color white-color reject-btn'>
+              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+                Reject
+              </NavLink>
+            </Button>
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>Save Draft</Button>
             <Button type='primary'
@@ -121,7 +124,7 @@ const index = () => {
           )
         })}
         <Form layout="vertical" form={form}>
-          <Typography className='text-xl font-semibold my-3'>Feedback <span className='text-[#a0a3bd] font-medium'>(Optional)</span></Typography>
+          <Typography className='text-xl font-semibold my-3'>Feedback <span className='form-title font-medium'>(Optional)</span></Typography>
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
           <div className='flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
@@ -137,7 +140,11 @@ const index = () => {
         </Form>
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
           <Button type='primary'
-            className='text-error-bg-color white-color reject-btn' onClick={()=>navigate("/case-studies")}>Reject</Button>
+            className='text-error-bg-color white-color reject-btn' >
+            <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+              Reject
+            </NavLink>
+          </Button>
           <Button type='primary'
             className='white-bg-color teriary-color save-btn'>Save Draft</Button>
           <Button type='primary'

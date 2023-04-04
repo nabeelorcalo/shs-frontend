@@ -7,7 +7,6 @@ import useCustomHook from '../actionHandler';
 import UniversityRepReportTable from './reportTable';
 import Filters from './filter';
 
-
 const index = () => {
   const action = useCustomHook();
   const TableColumn = ['No.' ,' Name', 'Department' , 'Company' , 'Reviewer']
@@ -63,7 +62,6 @@ const index = () => {
      
     },
   ]
-  
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [value, setValue] = useState<any>()
   const [selectedTab, setSelectedTab] = useState<any>(1)

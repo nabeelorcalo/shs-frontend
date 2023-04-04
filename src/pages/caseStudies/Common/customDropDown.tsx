@@ -1,45 +1,46 @@
 import React, { ReactNode, useState } from 'react';
 import { Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { LocationMore } from '../../../assets/images';
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 
-const CustomDropDownCaseStudies = (props:any) => {
+const CustomDropDownCaseStudies = (props: any) => {
   const [visible, setVisible] = useState(false);
-  const navigate = useNavigate();
   const items: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <span onClick={() => navigate(`/case-studies/assessment-form/${props.data}`)}>
-        Give Feedback</span>
+        <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}${props.data}`}>
+          Give Feedback
+        </NavLink>
       ),
     },
     {
       key: '2',
       label: (
-        <span onClick={()=>{props.setOpenWarningModal(true), setVisible(false)}}>
-        Reject
-      </span>
+        <span onClick={() => { props.setOpenWarningModal(true), setVisible(false) }}>
+          Reject
+        </span>
       ),
     },
   ];
- 
+
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
   return (
     <Dropdown
-    className=""
-    menu={{ items }}
-    open={visible}
-    onOpenChange={handleVisibleChange}
-    trigger={["click"]}
-  >
-    <div style={{ cursor: "pointer" }}>
-      <LocationMore width="24px" />
-    </div>
-  </Dropdown>
+      className=""
+      menu={{ items }}
+      open={visible}
+      onOpenChange={handleVisibleChange}
+      trigger={["click"]}
+    >
+      <div style={{ cursor: "pointer" }}>
+        <LocationMore width="24px" />
+      </div>
+    </Dropdown>
   )
 }
 

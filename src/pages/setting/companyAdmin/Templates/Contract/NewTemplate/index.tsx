@@ -12,18 +12,19 @@ import {
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Breadcrumb , BoxWrapper } from "../../../../../../components";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateContract = () => {
   const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "New Template"},
-    { name: "Settidddng"  },
-    { name: "Template" , onClickNavigateTo:"/settings/template" },
-    { name: "xyz" , onClickNavigateTo:"/settings/template/contract" },
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Contract" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
   ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
@@ -48,7 +49,7 @@ const NewTemplateContract = () => {
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>
@@ -82,8 +83,10 @@ const NewTemplateContract = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary" onClick={()=>navigate("/settings/template/template-offer-letters")}>
-              Cencal
+            <Button danger size="middle" type="primary">
+            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CONTRACT}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"
