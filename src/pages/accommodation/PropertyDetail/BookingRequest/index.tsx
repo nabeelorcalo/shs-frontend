@@ -4,13 +4,14 @@ import type { DatePickerProps, RadioChangeEvent  } from 'antd'
 import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space } from 'antd'
 import useCollapse from 'react-collapsed';
 import { DatePicker, PopUpModal, ExtendedButton } from "../../../../components"
+import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif'
 import {
   SaveIcon,
   IconInfoCircle,
   IconMasterCard,
   IconVisaCard,
   IconAddCircle,
-  IconProfileCircleWhite 
+  IconProfileCircleWhite,
 } from '../../../../assets/images'
 import './style.scss'
 
@@ -418,6 +419,7 @@ const PropertyPricing = () => {
       >
         <div className="payment-receipt-wrapper">
           <div className="payment-receipt-header">
+            <img src={congratulationCheck} />
             <Typography.Title level={3}>
               Congratulations
             </Typography.Title>

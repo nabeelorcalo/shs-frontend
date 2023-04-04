@@ -12,7 +12,7 @@ import {
   UniversityCard,
   PageHeader
 } from "../../../components";
-import userData from "../../../config/constants";
+import constants from "../../../config/constants";
 import {
   PerformanceAnalyticsData,
   topPerformers,
@@ -136,9 +136,9 @@ const Manager = () => {
             data={state.list}
             loading={state.loading}
             loadMoreData={loadMoreData}
-            role={userData?.USER_ROLE}
+            role={constants?.USER_ROLE}
             handleAddAnnouncement={handleAddAnnouncement}
-            height={425}
+            height={335}
           />
         </Col>
 

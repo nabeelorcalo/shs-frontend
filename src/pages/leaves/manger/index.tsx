@@ -23,14 +23,14 @@ const index = (props: any) => {
       <PageHeader
         actions
         bordered
-        title="Leave"
+        title="Leaves"
       >
         <div className='flex items-center justify-end view_history_button_wrapper'>
           <Button
-            className='button font-semibold'
+            className='button font-semibold px-8'
             onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
             label='View History'
-            size="small"
+          // size="small"
           />
         </div>
       </PageHeader>
@@ -67,7 +67,15 @@ const index = (props: any) => {
       <Row gutter={[20, 20]} >
         {leaveCardDataManager.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
-            <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
+            <LeaveCard
+              Icon={CardIcon[index].Icon}
+              bg={CardIcon[index].bg}
+              title={data.leavType}
+              total={data.leaveLength}
+              pending={data.pending}
+              approved={data.approved}
+              declined={data.declined}
+            />
           </Col>
         ))}
       </Row>

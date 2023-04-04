@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { CloseCircleFilled } from '@ant-design/icons'
-import { Button, Modal } from 'antd'
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import DragAndDropUpload from '../DragAndDropUpload';
@@ -31,23 +29,18 @@ const items: TabsProps['items'] = [
 export const SignatureAndUploadModal = (props: any) => {
   const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
   return (
-    <>
-
-      <div>
-        <PopUpModal
-          title={title}
-          open={state}
-          close={closeFunc}
-          width={width}
-          okBtntxt={okBtntxt}
-          cancelBtntxt={cancelBtntxt}
-          okBtnFunc={okBtnFunc}
-          footer={footer}
-        >
-          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-        </PopUpModal>
-      </div>
-    </>
+    <PopUpModal
+      title={title}
+      open={state}
+      close={closeFunc}
+      width={width}
+      okBtntxt={okBtntxt}
+      cancelBtntxt={cancelBtntxt}
+      okBtnFunc={okBtnFunc}
+      footer={footer}
+    >
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </PopUpModal>
   )
 }
 
