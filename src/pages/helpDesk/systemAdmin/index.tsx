@@ -294,12 +294,16 @@ const HelpDesk = () => {
           <div className="mt-2">
             <Select
               className="w-[100%]"
-              defaultValue="lucy"
+              defaultValue=""
               onChange={handleChangeSelect}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
+                { value: "Payment", label: "Payment" },
+                { value: "Bug", label: "Bug" },
+                { value: "Internship", label: "Internship" },
+                { value: "Technical ", label: "Technical " },
+                { value: "Support Support", label: "Support Support" },
+                { value: "Delegate Reference", label: "Delegate Reference" },
+                { value: "Wrong Information", label: "Wrong Information" },
               ]}
             />
           </div>
@@ -310,12 +314,13 @@ const HelpDesk = () => {
           <div className="mt-2 ">
             <Select
               className="w-[100%]"
-              defaultValue="lucy"
+              defaultValue=""
               onChange={handleChangeSelect}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
+                { value: "Highest", label: "Highest" },
+                { value: "High", label: "High" },
+                { value: "Medium", label: "Medium" },
+                { value: "Low", label: "Low" },
               ]}
             />
           </div>
@@ -334,12 +339,12 @@ const HelpDesk = () => {
           <div className="mt-2">
             <Select
               className="w-[100%]"
-              defaultValue="lucy"
+              defaultValue=""
               onChange={handleChangeSelect}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
+                { value: "Pending", label: "Pending" },
+                { value: "In Progress", label: "In Progress" },
+                { value: "Resolved", label: "Resolved" },
               ]}
             />
           </div>
