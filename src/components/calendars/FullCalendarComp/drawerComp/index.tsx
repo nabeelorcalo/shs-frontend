@@ -4,18 +4,23 @@ import Drawer from '../../../Drawer';
 import EventDetail from './eventDetail';
 import EditEvent from './editEvent';
 import './style.scss';
+import EditReminder from './editReminder';
 
 const Index = (props: any) => {
   const { open, setOpen, category, eventId, status } = props;
   const [toggle, setToggle] = useState(false);
+  const [toggleReminder, setToggleReminder] = useState(false);
 
   const renderTitle: any = {
     'meeting': <div className='flex items-center gap-3'>
       <p>Event Detail</p>
-      {!toggle && <EditIcon className='cursor-pointer' onClick={() => { setToggle(!toggle) }} />}
+      {!toggle && <EditIcon className='cursor-pointer' onClick={() => setToggle(!toggle)} />}
     </div>,
     'interview': <p>Interview Detail</p>,
-    'reminder': <p>Event Detail</p>
+    'reminder': <div className="flex items-center gap-3">
+      <p>Event Detail</p>
+      <EditIcon className='cursor-pointer' onClick={() => setToggleReminder(!toggleReminder)} />
+    </div>
   };
 
   return (
@@ -24,17 +29,23 @@ const Index = (props: any) => {
       width={'522px'}
       title={renderTitle[category]}
       className='calendar-drawer-wrapper'
-      onClose={() => { setOpen(!open); setToggle(false) }}
+      onClose={() => { setOpen(!open); setToggle(false); setToggleReminder(false) }}
     >
-      {!toggle ?
-        <EventDetail
-          eventId={eventId}
-          eventCategory={category}
-          eventStatus={status}
-        />
-        :
-        <EditEvent eventId={eventId} onClose={setOpen} />
+
+      {!toggleReminder ? <>
+        {!toggle ?
+          <EventDetail
+            eventId={eventId}
+            eventCategory={category}
+            eventStatus={status}
+          />
+          :
+          <EditEvent eventId={eventId} onClose={setOpen} />
+        }
+      </> :
+        <EditReminder eventId={eventId} onClose={setOpen} />
       }
+
     </Drawer>
   )
 }

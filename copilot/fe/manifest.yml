@@ -47,6 +47,7 @@ network:
 #       rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
 environments:
   dev:
-
+    http:
+      alias: fe.dev.studenthelpsquad.developersorcalo.com
     variables:
-      REACT_APP_APP_URL: development
+      VITE_NODE_ENV: dev
