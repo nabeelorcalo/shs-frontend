@@ -14,7 +14,9 @@ const Index = (props: any) => {
 
   const { eventData } = props;
   const [openModal, setOpenModal] = useState(false);
+
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: '', eventId: '', status: '' });
+
   const renderEventColor: any = {
     'meeting': '#E94E5D',
     'interview': '#5879CE',

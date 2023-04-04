@@ -1266,6 +1266,11 @@ const studentRoutes = [
         element: <DreamUp />,
       },
       {
+        key: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        path: `${ROUTES_CONSTANTS.ALL_GOALS}`,
+        element: <AllGoals />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
         path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
