@@ -564,12 +564,10 @@ export { ReactComponent as GoalHeaderCalanderIcon } from "./AllGoals/GoalHeaderC
 
 export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
 export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
+
 export { ReactComponent as VideoRecorder } from './VideoRecorder.svg';
 
-
-
 // student dashboard
-
 export { ReactComponent as VerifyIcon } from '../../assets/images/dashboard/studentdashboard/verify.svg';
 export { ReactComponent as Apply } from '../../assets/images/dashboard/studentdashboard/Apply.svg';
 export { ReactComponent as InterView} from '../../assets/images/dashboard/studentdashboard/Interviews.svg';
@@ -577,9 +575,6 @@ export { ReactComponent as Sun} from '../../assets/images/dashboard/studentdashb
 export { ReactComponent as LocationSun } from '../../assets/images/dashboard/studentdashboard/location.svg';
 export { ReactComponent as WebArrow } from '../../assets/images/dashboard/studentdashboard/webarrow.svg';
 export {ReactComponent as CompanyLogoOne} from '../../assets/images/dashboard/studentdashboard/asset1.svg'
-
-
-
 
 export { default as Certificate1 } from './Performance/certificate1.png';
 export { default as Certificate2 } from './Performance/certificate2.png';
