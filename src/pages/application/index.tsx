@@ -52,42 +52,16 @@ const PopOver = ({ state }: any) => {
   );
 };
 
-const DownloadPopOver = () => {
-  const navigate = useNavigate()
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: (
-        <a rel="noopener noreferrer" onClick={() => { }}>
-          PDF
-        </a>
-      ),
-    },
-    {
-      key: '2',
-      label: (
-        <a rel="noopener noreferrer" onClick={() => { }}>
-          Excel
-        </a>
-      ),
-    },
-  ];
-  return (
-    <Dropdown menu={{ items }} placement="bottomRight">
-      <DownloadDocumentIcon />
-    </Dropdown>
-  )
-}
 
-const CompanyData = () => {
+const CompanyData = ({companyName, companyNature}:any) => {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row align-center gap-2">
       <Avatar
         src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
       />
       <div>
-        <p className="font-medium">Alphabit Inc.</p>
-        <p className="text-sm">Software Agency</p>
+        <p className="font-medium">{companyName}</p>
+        <p className="text-sm">{companyNature}</p>
       </div>
     </div>
   )
@@ -155,6 +129,7 @@ const Application = () => {
     {
       no: "01",
       date_applied: "01/07/2022",
+      company: {name: "Alphabet Inc.", details:"Software Agency"},
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "On site",
@@ -166,6 +141,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
+      company: {name: "Intuit Inc.", details:"Sports"},
       type_of_work: "Full Time",
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
@@ -177,6 +153,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
+      company: {name: "ServiceNOW", details:"Software Solutions"},
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
@@ -188,6 +165,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
+      company: {name: "kla Corporation Inc.", details:"Logistics"},
       type_of_work: "Full Time",
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
@@ -199,6 +177,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
+      company: {name: "SnowFlake Inc.", details:"Software Tech"},
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
@@ -210,6 +189,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
+      company: {name: "WorkDay Inc.", details:"Design Tech"},
       type_of_work: "Full Time",
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
@@ -221,6 +201,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
+      company: {name: "Fortinet Inc.", details:"Game Agency"},
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
@@ -235,7 +216,7 @@ const Application = () => {
       {
         no: item.no,
         date_applied: item.date_applied,
-        company: <CompanyData />,
+        company: <CompanyData companyName={item.company?.name} companyNature={item.company?.details} />,
         type_of_work: item.type_of_work,
         internship_type: item.internship_type,
         nature_of_work: item.nature_of_work,
