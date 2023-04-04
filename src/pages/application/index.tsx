@@ -7,7 +7,8 @@ import {
   InternsCard,
   ToggleButton,
   FiltersButton,
-  DropDown
+  DropDown,
+  StageStepper
 } from "../../components";
 import "./style.scss";
 import '../../scss/global-color/Global-colors.scss'
@@ -17,16 +18,16 @@ import { Button, MenuProps, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
 
-const btnStyle= {
+const btnStyle = {
   "applied": "p-1 rounded-lg primary-bg-color white-color",
-  "interviewed" : "p-1 rounded-lg text-info-bg-color white-color",
-  "shortlisted" : "p-1 rounded-lg purple-bg white-color",
+  "interviewed": "p-1 rounded-lg text-info-bg-color white-color",
+  "shortlisted": "p-1 rounded-lg purple-bg white-color",
   "offerletter": "p-1 rounded-lg light-purple-bg white-color",
   "hired": "p-1 rounded-lg text-success-bg-color white-color",
-  "rejected" : "p-1 rounded-lg secondary-bg-color white-color",
+  "rejected": "p-1 rounded-lg secondary-bg-color white-color",
 }
 
-const PopOver = () => {
+const PopOver = ({ state }: any) => {
   const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
@@ -35,7 +36,7 @@ const PopOver = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("profile");
+            state(true);
           }}
         >
           View Details
@@ -98,6 +99,7 @@ const Application = () => {
   const navigate = useNavigate()
   // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
+  const [showStageStepper, setShowStageStepper] = useState(false)
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
@@ -238,28 +240,28 @@ const Application = () => {
         internship_type: item.internship_type,
         nature_of_work: item.nature_of_work,
         position: item.position,
-        status: 
-        <p 
-        className={
-          
-          `text-md ${item.status === "Applied"? btnStyle["applied"]
-          : 
-          item.status === "Interviewed"? btnStyle["interviewed"]
-          : 
-          item.status === "Short Listed"? btnStyle["shortlisted"]
-          : 
-          item.status === "Offer Letter"? btnStyle["offerletter"]
-          : 
-          item.status === "Hired"? btnStyle["hired"]
-          : 
-          item.status === "Rejected"? btnStyle["rejected"]
-          :
-          btnStyle["offerletter"]}`
-        }
-        >
-        {item.status}
-        </p>,
-        actions: <PopOver />
+        status:
+          <p
+            className={
+
+              `text-md ${item.status === "Applied" ? btnStyle["applied"]
+                :
+                item.status === "Interviewed" ? btnStyle["interviewed"]
+                  :
+                  item.status === "Short Listed" ? btnStyle["shortlisted"]
+                    :
+                    item.status === "Offer Letter" ? btnStyle["offerletter"]
+                      :
+                      item.status === "Hired" ? btnStyle["hired"]
+                        :
+                        item.status === "Rejected" ? btnStyle["rejected"]
+                          :
+                          btnStyle["offerletter"]}`
+            }
+          >
+            {item.status}
+          </p>,
+        actions: <PopOver state={setShowStageStepper} />
       }
     )
   })
@@ -389,6 +391,17 @@ const Application = () => {
                   </div>
                 </div>
               </div>
+            </Drawer>
+            <Drawer
+              closable
+              width={1000}
+              open={showStageStepper}
+              onClose={() => {
+                setShowStageStepper(false);
+              }}
+
+            >
+              <StageStepper />
             </Drawer>
           </div>
         </div>
