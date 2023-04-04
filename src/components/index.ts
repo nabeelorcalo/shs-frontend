@@ -97,3 +97,4 @@ export * from './InternsCard';
 export * from './InternshipProgressCard';
 export * from './InternshipPipeLineCard';
 export * from './StageStepper';
+export * from './StageProgressStepper';
