@@ -37,8 +37,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, title, companyrep, date_of_joining}: any) =>
-      [ no, name, title, companyrep, date_of_joining]
+    const body = data.map(({ no, month, payroll_cycle, hours_worked, base_pay, total_payment}: any) =>
+      [  no, month, payroll_cycle, hours_worked, base_pay, total_payment]
     );
 
     const doc = new jsPDF(orientation, unit, size);

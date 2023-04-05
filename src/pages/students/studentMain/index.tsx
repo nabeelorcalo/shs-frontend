@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../../assets/images"
 import { MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
+import useCustomHook from "../actionHandler";
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -53,15 +54,17 @@ const PopOver = () => {
 };
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
 const StudentMain = () => {
+  const action = useCustomHook()
   // const navigate = useNavigate()
   // const [value, setValue] = useState("")
   // const [showDrawer, setShowDrawer] = useState(false)
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
+
+  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -106,9 +109,6 @@ const StudentMain = () => {
       title: "Business Analyst",
       companyrep: "Anika john",
       date_of_joining: "01/07/2022",
-      location: "virtual",
-      status: "Pending",
-      avatar: "T",
     },
     {
       no: "02",
@@ -116,9 +116,6 @@ const StudentMain = () => {
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
       date_of_joining: "01/07/2021",
-      location: "Onsite",
-      status: "Active",
-      avatar: "U",
     },
     {
       no: "02",
@@ -126,9 +123,6 @@ const StudentMain = () => {
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
       date_of_joining: "01/07/2021",
-      location: "Onsite",
-      status: "Rejected",
-      avatar: "U",
     },
     {
       no: "01",
@@ -136,9 +130,6 @@ const StudentMain = () => {
       title: "Business Analyst",
       companyrep: "Anika john",
       date_of_joining: "01/07/2022",
-      location: "virtual",
-      status: "Pending",
-      avatar: "T",
     },
     {
       no: "02",
@@ -146,9 +137,6 @@ const StudentMain = () => {
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
       date_of_joining: "01/07/2021",
-      location: "Onsite",
-      status: "Active",
-      avatar: "U",
     },
     {
       no: "02",
@@ -156,9 +144,6 @@ const StudentMain = () => {
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
       date_of_joining: "01/07/2021",
-      location: "Onsite",
-      status: "Rejected",
-      avatar: "U",
     },
   ];
   const newTableData = tableData.map((item, idx) => {
@@ -173,7 +158,6 @@ const StudentMain = () => {
         title: item.title,
         companyrep: item.companyrep,
         date_of_joining: item.date_of_joining,
-        location: item.location,
         actions: <PopOver />
       }
     )
@@ -184,8 +168,6 @@ const StudentMain = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-
-
             <SearchBar
               className=""
               handleChange={() => { }}
@@ -227,7 +209,10 @@ const StudentMain = () => {
                 'excel'
               ]}
               requiredDownloadIcon
-              setValue={() => { }}
+              setValue={() => {
+
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
+              }}
               value=""
             />
           </div>

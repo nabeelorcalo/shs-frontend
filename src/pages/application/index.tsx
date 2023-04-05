@@ -17,6 +17,7 @@ import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../a
 import { Button, MenuProps, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
+import useCustomHook from "./actionHandler";
 
 const btnStyle = {
   "applied": "px-2 py-1 rounded-lg primary-bg-color white-color",
@@ -52,7 +53,6 @@ const PopOver = ({ state }: any) => {
   );
 };
 
-
 const CompanyData = ({ companyName, companyNature }: any) => {
   return (
     <div className="flex flex-row align-center gap-2">
@@ -77,7 +77,10 @@ const Application = () => {
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -134,9 +137,8 @@ const Application = () => {
       internship_type: "Un-Paid",
       nature_of_work: "On site",
       position: "UI/UX Designer",
-      location: "virtual",
       status: "Hired",
-      posted_by: "T",
+
     },
     {
       no: "02",
@@ -146,9 +148,7 @@ const Application = () => {
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
       position: "Business Analyst",
-      location: "Onsite",
       status: "Offer Letter",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -158,9 +158,7 @@ const Application = () => {
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
       position: "SQA",
-      location: "Onsite",
       status: "Rejected",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -170,9 +168,7 @@ const Application = () => {
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
       position: "Business Analyst",
-      location: "Onsite",
       status: "Short Listed",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -182,9 +178,7 @@ const Application = () => {
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
       position: "SQA",
-      location: "Onsite",
       status: "Interviewed",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -194,9 +188,7 @@ const Application = () => {
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
       position: "Business Analyst",
-      location: "Onsite",
       status: "Rejected",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -206,9 +198,7 @@ const Application = () => {
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
       position: "SQA",
-      location: "Onsite",
       status: "Applied",
-      posted_by: "U",
     },
   ];
   const newTableData = tableData.map((item, idx) => {
@@ -269,14 +259,15 @@ const Application = () => {
                 setShowDrawer(true);
               }}
             />
-
             <DropDown
               options={[
                 'pdf',
                 'excel'
               ]}
               requiredDownloadIcon
-              setValue={() => { }}
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
+              }}
               value=""
             />
             <Drawer
@@ -382,7 +373,6 @@ const Application = () => {
               onClose={() => {
                 setShowStageStepper(false);
               }}
-
             >
               <StageStepper />
             </Drawer>

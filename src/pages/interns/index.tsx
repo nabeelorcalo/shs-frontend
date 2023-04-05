@@ -5,13 +5,16 @@ import {
   PageHeader,
   BoxWrapper,
   InternsCard,
-  ToggleButton
+  ToggleButton,
+  DropDown
 } from "../../components";
+
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
 import { MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
+import useCustomHook from "./actionHandler";
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -59,7 +62,10 @@ const Interns = () => {
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -104,9 +110,6 @@ const Interns = () => {
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
-      location: "virtual",
-      status: "Pending",
-      posted_by: "T",
     },
     {
       no: "02",
@@ -114,9 +117,6 @@ const Interns = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
-      status: "Active",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -124,10 +124,7 @@ const Interns = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
-      status: "Rejected",
-      posted_by: "U",
-    },
+    }
   ];
   const newTableData = tableData.map((item, idx) => {
     return (
@@ -141,7 +138,6 @@ const Interns = () => {
         department: item.department,
         joining_date: item.joining_date,
         date_of_birth: item.date_of_birth,
-        location: item.location,
         actions: <PopOver />
       }
     )
@@ -161,9 +157,17 @@ const Interns = () => {
             />
           </div>
           <div className="flex flex-row gap-4">
-            <div className='p-2 download-icon-style'>
-            <DownloadDocumentIcon />
-            </div>
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+              }}
+              value=""
+            />
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}

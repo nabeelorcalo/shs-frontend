@@ -17,6 +17,7 @@ import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../.
 import { Button, MenuProps, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
+import useCustomHook from "../actionHandler";
 
 const btnStyle = {
   "applied": "p-1 rounded-lg primary-bg-color white-color",
@@ -64,7 +65,6 @@ const PopOver = ({ state }: any) => {
   );
 };
 
-
 const CompanyData = ({ companyName, companyNature }: any) => {
   return (
     <div className="flex flex-row align-center gap-2">
@@ -89,7 +89,10 @@ const CompaniesMain = () => {
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -215,7 +218,9 @@ const CompaniesMain = () => {
                 'excel'
               ]}
               requiredDownloadIcon
-              setValue={() => { }}
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Companies Applications")
+              }}
               value=""
             />
             <Drawer
