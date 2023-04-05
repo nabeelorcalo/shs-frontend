@@ -8,8 +8,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import signature from "../../../../assets/images/Report/signature.svg"
 import './style.scss'
-import ManagerRemarksForAssmentForm from './manageRemarksforUni';
 import useCustomHook from './actionHandler';
+import ManagerRemarksForAssmentForm from './manageRemarksforUni';
 
 const index = () => {
   const navigate = useNavigate();
