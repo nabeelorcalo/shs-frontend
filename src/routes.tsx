@@ -498,6 +498,11 @@ const managerRoutes = [
         path: `${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
+      },
     ],
   },
   {
@@ -1022,6 +1027,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
         path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
         element: <CertificateDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
       },
     ],
   },
