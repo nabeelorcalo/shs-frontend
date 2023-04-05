@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader, TopPerformanceList, MonthChanger } from "../../../components";
 import data from './data';
-import '../style.scss';
 import { Row, Col } from "antd";
+import '../style.scss';
 
 const CompanyAdminPerformance = () => {
   const [state, setState] = useState({
@@ -144,41 +144,6 @@ const CompanyAdminPerformance = () => {
           />
         </Col>
       </Row>
-
-      {/* <div className="company-admin-performance-container gap-4">
-        <div className="performance-left-subcontainer ">
-          <OverAllPerfomance
-            heading="Overall Performance"
-            data={performanceData}
-            trailColor="#E6F4F9"
-            strokeWidth={10}
-            type="circle"
-            width={100}
-          />
-
-          <div className="my-4 h-[502px]">
-            <MonthlyPerfomanceChart
-              heading="Summary"
-              data={data}
-              XField="department"
-              columnWidthRatio={0.5}
-              children={
-                <MonthChanger
-                  month='Jan'
-                  onClick={() => console.log("Month Changed")}
-                />
-              }
-            />
-          </div>
-        </div>
-        <div className="performance-right-subcontainer ">
-          <TopPerformanceList
-            heading="Top Performers"
-            data={state.topPerformanceList}
-            action={true}
-          />
-        </div>
-      </div> */}
     </>
   )
 }
