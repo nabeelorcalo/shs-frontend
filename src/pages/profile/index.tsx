@@ -4,7 +4,7 @@ import Student from "./student";
 import University from './university'
 import constants from "../../config/constants";
 
-const DigiVault = () => {
+const Profile = () => {
   const renderPage = () => {
     switch (constants.USER_ROLE) {
       case "Student":
@@ -22,4 +22,4 @@ const DigiVault = () => {
   return renderPage();
 };
 
-export default DigiVault;
+export default Profile;
