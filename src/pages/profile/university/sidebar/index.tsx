@@ -1,12 +1,15 @@
-import React from "react";
-import { Button, Divider, Typography } from "antd";
-import "../../style.scss";
-import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { Divider, Typography } from "antd";
+import { EllipsisOutlined } from '@ant-design/icons';
 import { profileInfo } from "./studentSideBarMock";
-import video from "../../../../assets/images/profile/student/Vedio.svg";
+import { UniLogo} from "../../../../assets/images";
+import profile from "../../../../assets/images/profile/student/profiled.svg";
+import "../../style.scss";
+
 
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
+  const [hide, setHide] = useState(false)
 
   return (
     <div className="student-side-bar">
@@ -15,11 +18,25 @@ const StudentSideBar = (props: any) => {
           return (
             <>
               <div className="profile-main-detail">
-                <div className="flex justify-end">
-                  <MoreOutlined className="pt-5 pr-5" />
+                <div className="flex justify-end relative">
+                  <EllipsisOutlined className="pt-5 pr-5 text-xl cursor-pointer" onClick={() => {
+                    setHide(true);
+                  }} />
+                  {hide && (
+ <div className="absolute top-9 right-9 poper">
+ <p className='option-style' onClick={() => {
+                    setHide(false);
+                  }}>Upload Photo</p>
+ <p className='option-style' onClick={() => {
+                    setHide(false);
+                  }}>Delete Photo</p>
+</div>
+                  )}
+                 
+
                 </div>
                 <center>
-                  <img src={item.profile} alt="" />
+                 <UniLogo/>
                   <div>
                     <Typography className="emp-name">{item.name}</Typography>
                     <Typography className="emp-desgination">
@@ -50,9 +67,9 @@ const StudentSideBar = (props: any) => {
               <div className="flex justify-center items-center">
                 <Typography className="mr-2">Conatact Person:</Typography>
 
-                <img height={50} src={item.profile} alt="" />
+                <img src={profile} alt='' width={40} />
 
-                <Typography className="">Marie Gold</Typography>
+                <Typography className="ml-2">Marie Gold</Typography>
               </div>
 
               <Divider />

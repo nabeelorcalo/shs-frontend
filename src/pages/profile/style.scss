@@ -1,4 +1,4 @@
-@import '../../scss/colors';
+@import "../../scss/colors";
 
 .main-student-profile {
   .main-profile-title {
@@ -7,11 +7,11 @@
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
-    color: #363565;
+    color: $primary-bg-color;
   }
-  .studdnt-dash{
-    background: #FFFFFF;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+  .studdnt-dash {
+    background: $white-bg-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 1rem;
     height: 81vh;
@@ -65,6 +65,22 @@
         line-height: 22px;
         color: $text-secondary-body-color;
       }
+    
+    }
+    .poper{
+      background: $white-bg-color;
+border: 2px solid #D9DBE9;
+box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+border-radius: 8px;
+padding: 1rem;
+    }
+    .option-style{
+      font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+color: #4E4B66;
+margin-bottom: 0.3rem;
+cursor: pointer;
     }
     .main-skill-box {
       display: flex;
@@ -113,141 +129,35 @@
   }
 }
 
-
-.personal-information {
-  .title {
-    font-family: "Outfit";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 28px;
-    color: $text-primary-title-color;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  .input-style {
-    height: 48px;
-    border-radius: 8px;
-    background-color: $text-input-bg-color;
-  }
-  .text-area {
-    border-radius: 8px;
-    background-color: $text-input-bg-color;
-  }
-}
-.general-information {
-  .title {
-    font-family: "Outfit";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 28px;
-    color: $text-primary-title-color;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-  .input-style {
-    height: 48px;
-    border-radius: 8px;
-    background-color: $text-input-bg-color;
-  }
-  .text-area {
-    border-radius: 8px;
-    background-color: $text-input-bg-color;
-  }
-}
-.immigration-status {
-  .status-card {
+.univeristy-profile-form {
+  .profile-style {
     background: $white-bg-color;
-    border: 1px solid $white-bg-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
-    padding: 1rem;
-    cursor: pointer;
   }
-  .title {
-    font-family: "Outfit";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
+  .main-label {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
     color: $text-secondary-body-color;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
   }
-}
-.immigration-form {
   .input-style {
-    background: $white-bg-color;
-    height: 48px;
-    box-shadow: 0px 2px 48px rgba(0, 0, 0, 0.08);
+    background: $text-input-bg-color;
     border-radius: 8px;
+    color: $text-primary-disabled-color;
   }
-}
-.document-tabs {
-  .upload-button {
-    background: $teriary-bg-color;
+  .btn-cancle {
+    background: $white-bg-color;
     border: 1px solid $teriary-bg-color;
-    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 8px;
+    color: $teriary-bg-color;
+  }
+  .btn-save {
+    background: $teriary-bg-color;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
     color: $white-bg-color;
   }
-  .animate {
-    background: $white-bg-color;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-top: 20px;
-  }
-  .animate:hover {
-    background-color: $text-input-bg-color;
-  }
-
-  .animate:hover .button-ts {
-    display: block;
-    display: flex;
-    gap: 10px;
-  }
-
-  .animate .button-ts {
-    display: none;
-  }
-}
-.card-tabs {
-  .upload-button {
-    background: $teriary-bg-color;
-    border: 1px solid $teriary-bg-color;
-    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
-    border-radius: 8px;
-    color: $white-bg-color;
-  }
-}
-.animate {
-  background: "#FFFFFF";
-  border-radius: 8px;
-  padding: 1rem;
-  margin-top: 20px;
-}
-.animate:hover {
-  background-color: $text-input-bg-color;
-}
-
-.animate:hover .button-ts {
-  display: block;
-  display: flex;
-  gap: 10px;
-}
-
-.animate .button-ts {
-  display: none;
-}
-
-.title {
-  font-family: "Outfit";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-  color: $text-primary-title-color;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
 }

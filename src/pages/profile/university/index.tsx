@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { Col, Divider, Row, Typography } from "antd";
+import { Col, Divider, Row } from "antd";
 import { PageHeader } from "../../../components";
-import StudentsTabs from "./StudentTabs";
-import AddVideo from "./addVideo";
 import ChangePassword from "./changePassword";
 import StudentSideBar from "./sidebar";
+import UniversityProfileForm from "./universityForm";
 import "../style.scss";
 
 const UniversityProfile = () => {
-  const [showSideViewType, setShowSideViewType] = useState("student-tabs");
+  const [showSideViewType, setShowSideViewType] = useState("university-form");
 
   return (
     <div className="main-student-profile">
@@ -25,7 +24,7 @@ const UniversityProfile = () => {
         <Col xxl={18} xl={14} lg={24} md={24} sm={24} xs={24}>
           {showSideViewType === "change-password" && <ChangePassword />}
 
-          {showSideViewType === "student-tabs" && <StudentsTabs />}
+          {showSideViewType === "university-form" && <UniversityProfileForm/>}
         </Col>
       </Row>
     </div>
