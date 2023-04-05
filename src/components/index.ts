@@ -91,6 +91,9 @@ export * from './RegionCard';
 export * from './Graph/FunnelChart';
 export * from './Graph/GaugePlot';
 export * from './GreetingCard';
+export * from './Drawer';
+export * from './Setting/Common/SettingCommonModal';
+export * from './Setting/Common/CustomSettingDropdown';
 export * from './SalarySlip';
 export * from './ListAndGridViewButton';
 export * from './InternsCard';
@@ -98,3 +101,6 @@ export * from './InternshipProgressCard';
 export * from './InternshipPipeLineCard';
 export * from './StageStepper';
 export * from './StageProgressStepper';
+export * from './Tabs';
+export * from './SignatureAndUploadModal';
+

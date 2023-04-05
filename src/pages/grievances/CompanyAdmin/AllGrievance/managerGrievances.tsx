@@ -9,48 +9,7 @@ import Image3 from '../../../../assets/images/Grievances/avater-3.svg'
 import Image4 from '../../../../assets/images/Grievances/avater-4.svg'
 import './style.scss'
 
-const managerGrievancesTableData = [
-  {
-    no: '01',
-    avater: Image1,
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedBy: 'Julie Andrews',
-    escalatedTo: 'Maria Sanoid',
-    status: 'New',
-  },
-  {
-    no: '02',
-    avater: Image2,
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedBy: 'Sean Bean',
-    escalatedTo: 'David Miller',
-    status: 'In Progess',
-  },
-  {
-    no: '03',
-    avater: Image3,
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedBy: 'Emma Thompson',
-    escalatedTo: 'Tom Hanks',
-    status: 'Re-Opened',
-  },
-  {
-    no: '04',
-    avater: Image4,
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedTo: 'David Miller',
-    escalatedBy: 'Robert Carlyle',
-    status: 'Resolved',
-  },
-]
+
 const managerGrievancesColumn =
   [
     {
@@ -134,12 +93,12 @@ const managerGrievancesColumn =
       ),
     },
   ]
-const ManagerGrievances = () => {
+const ManagerGrievances = (props:any) => {
   return (
     <GlobalTable
       columns={managerGrievancesColumn}
       pagination
-      tableData={managerGrievancesTableData}
+      tableData={props.managerGrievancesTableData}
     />
   )
 }

@@ -19,7 +19,6 @@ const useCustomHook = () => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
-
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -28,7 +27,6 @@ const useCustomHook = () => {
     else
       csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;

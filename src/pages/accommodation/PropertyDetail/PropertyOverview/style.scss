@@ -6,10 +6,6 @@
   max-width: 540px;
   padding-left: 20px;
 
-  &.amenities {
-    max-width: 660px;
-  }
-
   .overview-section-label {
     font-size: 18px;
     font-weight: 500;
@@ -44,6 +40,10 @@
         top: 50%;
         margin-top: -4px;
       }
+
+      @media (max-width: 575px) {
+        width: 100%;
+      }
     }
     &.amenities-list {
       & > li {
@@ -72,6 +72,21 @@
         }
         span {
           flex: 1 0 0%;
+        }
+      }
+    }
+  }
+
+  &.amenities {
+    max-width: 720px;
+
+    .overview-list {
+      & > li {
+        @media (max-width: 991px) {
+          width: 50%;
+        }
+        @media (max-width: 575px) {
+          width: 100%;
         }
       }
     }

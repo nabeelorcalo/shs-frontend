@@ -12,16 +12,22 @@ import {
   Input,
   Switch,
 } from "antd";
-import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
-import { NavLink } from "react-router-dom";
-import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
-import { CommonDatePicker } from "../../../../../components";
+import { SettingAvater} from "../../../../../assets/images";
+import { useNavigate } from "react-router-dom";
+import { Breadcrumb, CommonDatePicker , BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import "./style.scss";
 
 const { Title, Paragraph } = Typography;
 
 const PayrollAddCategory = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "Add Category"},
+    { name: "Setting"  },
+    { name: "Payroll" , onClickNavigateTo:"/settings/payroll" },
+  
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -80,25 +86,9 @@ const PayrollAddCategory = () => {
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
 
-      <div className="flex items-center">
-        <Title level={3} className="mt-2">
-          Add Category
-        </Title>
-        <span className="mx-2">
-          <SettingHorizontalLine />
-        </span>
-        <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-        <span className="mx-2">/</span>
-        <NavLink to="/settings/payroll">
-          <span className=" text-base font-medium text-secondary-color">
-            Payroll
-          </span>
-        </NavLink>
-      </div>
+      <Breadcrumb breadCrumbData={breadcrumbArray}  />
 
-      <Divider className="my-1 mb-3" />
+      <Divider  />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
@@ -163,7 +153,8 @@ const PayrollAddCategory = () => {
           </Row>
 
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary"
+               onClick={()=>navigate("/settings/payroll")}>
               Cencal
             </Button>
             <Button

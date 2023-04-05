@@ -100,7 +100,7 @@ const ViewPayrollDetails = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "File downloaded", icon: <Success />, }) }}>
+          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "File downloaded", type:'success' }) }}>
             Download
           </a>
         ),

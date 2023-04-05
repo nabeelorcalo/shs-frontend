@@ -13,9 +13,11 @@ import {
   IconLikeShapes,
   IconEmojiSad,
   IconWalletCheck,
+  IconRecipes,
+  IconGift,
 } from '../../../assets/images'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, STRUCTURE, SELF_ASSESSMENT, GRIEVANCES, DIGIVAULT, DREAM_UP, PAYMENTS, CALENDAR, ACCOMMODATION } = ROUTES_CONSTANTS;
+const { DASHBOARD, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, STRUCTURE, SELF_ASSESSMENT, GRIEVANCES, DIGIVAULT, DREAM_UP, PAYMENTS, CALENDAR, ACCOMMODATION, RECIPES, EARN_WITH_US } = ROUTES_CONSTANTS;
 
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
@@ -64,5 +66,7 @@ export const itemsIntern: MenuProps['items'] = [
   // DISCOVER GROUP
   getItem('Discover', 'discover', null, [
     getItem('Accommodation', `/${ACCOMMODATION}`, <IconHouse />),
+    getItem('Recipes', `/${RECIPES}`, <IconRecipes />),
+    getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
   ], 'group'),
 ]

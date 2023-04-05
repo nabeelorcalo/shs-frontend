@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Divider, Menu } from 'antd'
-import { CardViewIcon, SettingHorizontalLine, TableViewIcon } from '../../../../assets/images';
-import { DropDown, FiltersButton, PageHeader, SearchBar, ToggleButton } from '../../../../components'
-import { Link, NavLink } from 'react-router-dom';
+import { CardViewIcon,  TableViewIcon } from '../../../../assets/images';
+import { Breadcrumb, DropDown, FiltersButton,  SearchBar, ToggleButton,Drawer } from '../../../../components'
 import Filters from './filter';
-import Drawer from '../../../../components/Drawer';
 import InternTable from './internsTable';
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
-import './style.scss'
 import InternCard from './internCard';
+import useCustomHook from './actionHandler';
+import { ROUTES_CONSTANTS } from '../../../../config/constants';
+import './style.scss'
 
 const dummyData = [
   { id: 1, name: 'Maria Sanoid', avatar: Image1, status: "Employed", department: 'ui ux designers', joiningDate: '01/07 /2022', dateOfBirth: '04/12/1996' },
@@ -28,6 +28,13 @@ const dummyData = [
   { id: 15, name: 'Deng Jing-mei', avatar: Image1, status: "Terminated", department: 'ui ux designers', joiningDate: '01/07 /2022', dateOfBirth: '04/12/1996' },
 ]
 const index: React.FC = () => {
+  const breadcrumbArray = [
+    { name: "Interns" },
+    { name: "Universities", onClickNavigateTo:`/${ROUTES_CONSTANTS.UNIVERSITIES}` },
+  ];
+  const TableColumn = ['No.', 'Avater', ' Name', 'Department', 'Joining Date', 'Date of Birth',]
+  const action = useCustomHook();
+
   const [state, setState] = useState({
     openSidebar: false,
     status: 'Select',
@@ -56,11 +63,8 @@ const index: React.FC = () => {
   }
   return (
     <div className='company-university '>
-      <PageHeader title={<> Interns {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-        <NavLink to="/universities">
-          <span className='text-base font-medium dashboard-primary-color' >Universities</span>
-        </NavLink>  </>} />
-      <Divider className="my-0" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider/>
       <div className='flex justify-between my-2'>
         <SearchBar size="middle" handleChange={handleChange} />
         <div className='flex justify-end gap-2'>
@@ -76,8 +80,7 @@ const index: React.FC = () => {
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              value={value}
-              setValue={setValue}
+              setValue={() => action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")}
             />
           </div>
         </div>

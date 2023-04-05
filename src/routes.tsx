@@ -71,6 +71,7 @@ const AttendanceDetail = Loadable(lazy(() => import("./pages/attendance/detailPa
 const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const ManagerCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/Manager/assessmentForm")));
+const CompanyAdminCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm")));
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
 const ManagerAllGrievances = Loadable(lazy(() => import("./pages/grievances/Manager/AllGrievance")));
@@ -78,7 +79,7 @@ const CompanyAdminAllGrievances = Loadable(lazy(() => import("./pages/grievances
 const InternAllGrievances = Loadable(lazy(() => import("./pages/grievances/Intern/AllGrievance")));
 const ManagerGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Manager/GrievanceDetails")));
 const CompanyAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails")));
-const InternAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern")));
+const InternGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern/GrievanceDetails")));
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure/index")));
@@ -132,6 +133,8 @@ const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
+const ViewDetailsReport = Loadable(lazy(() => import("./pages/report/UniversityRep/ViewDetails")));
+const AssessmentFormReport = Loadable(lazy(() => import("./pages/report/UniversityRep/AssessmentForm")));
 const Listings = Loadable(lazy(() => import("./pages/listings")));
 const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
 const Offers = Loadable(lazy(() => import("./pages/offers")));
@@ -529,8 +532,8 @@ const delegateAgentRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
-        path: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
+        key: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
+        path: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
         element: <DelegateMembers />,
       },
       {
@@ -587,6 +590,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         element: <Universities />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        element: <UniversitesProfile />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
@@ -789,6 +797,16 @@ const companyAdminRoutes = [
         element: <Structure />,
       },
       {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES}`,
+        element: <CaseStudies />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        element: <CompanyAdminCaseStudiesAssessment />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         path: `${ROUTES_CONSTANTS.ATTENDANCE}`,
         element: <Attendance />,
@@ -905,7 +923,7 @@ const companyAdminRoutes = [
             key: `${ROUTES_CONSTANTS.SETTING_LEAVES}`,
             path: `${ROUTES_CONSTANTS.SETTING_LEAVES}`,
             element: (
-              <Setting title="leaves">
+              <Setting title="Leaves">
                 <SettingLeaves />
               </Setting>
             ),
@@ -1111,7 +1129,7 @@ const internRoutes = [
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        element: <InternAdminGrievancesDetails />,
+        element: <InternGrievancesDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.DIGIVAULT}`,
@@ -1184,6 +1202,31 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPES}`,
+        path: `${ROUTES_CONSTANTS.RECIPES}`,
+        element: <Recipes />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        element: <RecipeDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        element: <AddRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        element: <EditRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
       },
       {
         key: `${ROUTES_CONSTANTS.CHAT}`,
@@ -1426,6 +1469,16 @@ const universityRoutes = [
         key: `${ROUTES_CONSTANTS.REPORT}`,
         path: `${ROUTES_CONSTANTS.REPORT}`,
         element: <Report />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        element: <ViewDetailsReport />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
+        element: <AssessmentFormReport />,
       },
     ],
   },

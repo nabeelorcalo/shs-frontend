@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
+import { useNavigate } from "react-router-dom";
+import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
@@ -20,11 +20,19 @@ import {
   Switch,
 } from "antd";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
+import { Breadcrumb } from "../../../../../components";
 
 const { Title, Paragraph } = Typography;
 dayjs.extend(customParseFormat);
 
 const AddShift: React.FC = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "Add Shift"},
+    { name: "Setting"  },
+    { name: "Shift" , onClickNavigateTo:"/settings/shifts" },
+  
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -79,23 +87,8 @@ const AddShift: React.FC = () => {
   };
   return (
     <div className="leaves-add-policy">
-   
-        <div className="flex items-center">
-          <Title level={3} className="mt-2">Add Shift </Title>
-          <span className="mx-2">
-            <SettingHorizontalLine />
-          </span>
-          <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-          <span className="mx-2">/</span>
-          <NavLink to="/settings/shifts">
-          <span className=" text-base font-medium text-secondary-color">
-          Shifts
-        </span>
-          </NavLink>
-        </div>
-        <Divider className="my-1 mb-3" />
+   <Breadcrumb breadCrumbData={breadcrumbArray}  />
+        <Divider />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
@@ -166,7 +159,8 @@ const AddShift: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary">
+            <Button danger size="middle" type="primary"
+            onClick={()=>navigate("/settings/shifts")}>
               Cencal
             </Button>
             <Button
