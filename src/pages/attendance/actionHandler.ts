@@ -33,7 +33,7 @@ const useCustomHook = () => {
     const body = data.map(({ id, name, avatar, profession, status }: any) =>
       [id, name, '', profession, status]
     );
-    const Marinabody = data.map(({ date,mood,clockIn,clockOut,totalHours }: any) =>
+    const historyTablebody = data.map(({ date,mood,clockIn,clockOut,totalHours }: any) =>
       [date,mood,clockIn,clockOut,totalHours]
     );
 
@@ -43,7 +43,7 @@ const useCustomHook = () => {
 
     doc.autoTable({
       head: [header],
-      body: fileName === 'Mino Marina' ? Marinabody : body,
+      body: fileName === 'historyDetail' ? historyTablebody : body,
       margin: { top: 50 },
 
       headStyles: {
@@ -61,7 +61,7 @@ const useCustomHook = () => {
       },
 
        didDrawCell: async (item: any) => {
-        if (item.column.dataKey === 2 && item.section === "body" && fileName !== 'Mino Marina') {
+        if (item.column.dataKey === 2 && item.section === "body" && fileName !== 'historyDetail') {
           const xPos = item.cell.x;
           const yPos = item.cell.y;
           var dim = 20;

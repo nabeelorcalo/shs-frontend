@@ -200,7 +200,7 @@ const Detail = () => {
               className="icon-btn download-btn"
               icon={<DownlaodFileIcon />}
               onClick={() => {
-                action.pdf('Mino Marina' ,tableColumns, tableData);
+                action.pdf('historyDetail' ,tableColumns, tableData);
                 Notifications({title:"Success", description:"Download Done",type:'success'})
               }}
             />
