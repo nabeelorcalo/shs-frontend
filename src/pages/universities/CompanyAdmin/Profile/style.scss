@@ -1,0 +1,46 @@
+@import '../../../../scss/colors';
+.university-profile-detail-page{
+
+.container {
+  &:hover .image {
+    opacity: 0.8;
+    background: rgba($color: #000000, $alpha: 1);
+    border-radius: 8px;
+  }
+  &:hover .background-img {
+    opacity: 0.2;
+  }
+  position: relative;
+ 
+  .image {
+    opacity: 1;
+    display: block;
+    width: 80%;
+    transition: .5s ease;
+    backface-visibility: hidden;
+
+  }
+  .middle {
+    
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}
+.container:hover .middle {
+  opacity: 100%;
+}
+
+.text {
+  color: $white-bg-color;
+  cursor: pointer;
+
+}
+
+
+}

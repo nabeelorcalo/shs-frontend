@@ -8,47 +8,7 @@ import StatusDropdown from "../statusDropDown/statusDropdown";
 import HistoryModal from "../HistoryModal";
 import AttendaceLog from "../AttendanceLogModal";
 
-const tableData = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "Subject",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+
 
 const StatusOptions = [
   {
@@ -84,7 +44,9 @@ const priorityOption = [
   },
 ];
 
-const ResolvedData = () => {
+const ResolvedData = (props: any) => {
+
+  const { tableData } = props
   const [history, setHistory] = useState<any>(false)
   const [openModal, setOpenModal] = useState<any>(false)
 

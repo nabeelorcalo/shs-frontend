@@ -1,6 +1,11 @@
 @import "../../../../scss/colors";
 .cancellation-policy-content {
   .canc-policy-inner {
+    @media (min-width: 992px) {
+      padding-left: 40px;
+    }
+    
+
     .canc-policy-title {
       font-size: 18px;
       font-weight: 500;
@@ -8,19 +13,24 @@
       color: $text-secondary-body-color;
       margin-bottom: 10px;
     }
-    padding-left: 40px;
+    
     .canc-policy-row {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 870px;
+      @media (min-width: 992px) {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 870px;
+      }
+      
 
       .standard-cancellation {
-        flex-shrink: 0;
-        max-width: 100%;
-        flex: 0 0 auto;
-        width: 60%;
-        box-sizing: border-box;
-        padding-right: 50px;
+        @media (min-width: 992px) {
+          flex-shrink: 0;
+          max-width: 100%;
+          flex: 0 0 auto;
+          width: 60%;
+          box-sizing: border-box;
+          padding-right: 50px;
+        }
 
         .ant-typography {
           font-size: 16px;
@@ -42,14 +52,18 @@
         }
       }
       .safeguard-cancellation {
-        flex-shrink: 0;
-        max-width: 100%;
-        flex: 0 0 auto;
-        width: 40%;
-        box-sizing: border-box;
-        padding-left: 50px;
-        border-left: 1px solid #D9DBE9;
-
+        @media (min-width: 992px) {
+          flex-shrink: 0;
+          max-width: 100%;
+          flex: 0 0 auto;
+          width: 40%;
+          box-sizing: border-box;
+          padding-left: 50px;
+          border-left: 1px solid #D9DBE9;
+          margin-top: 0;
+        }
+        margin-top: 40px;
+        
         .safeguard-candellation-desc {
           .ant-typography {
             font-size: 16px;

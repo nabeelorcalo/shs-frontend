@@ -11,9 +11,6 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import {
   CertificateTickCircle,
@@ -21,10 +18,20 @@ import {
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
 import { EyeFilled } from "@ant-design/icons/lib/icons";
-import { PopUpModal } from "../../../../../../components";
+import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
+import { NavLink, useNavigate } from "react-router-dom";
 const { Title, Paragraph } = Typography;
+import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 
 const NewTemplateCertificationOfAppreciation = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}` },
+  ];
   const [value, setValue] = useState();
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
@@ -48,7 +55,7 @@ const NewTemplateCertificationOfAppreciation = () => {
       description: textEditorValue
     }
   };
-  
+
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
   };
@@ -67,16 +74,13 @@ const NewTemplateCertificationOfAppreciation = () => {
 
   return (
     <div className="certificate-of-appreciation-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Certification of Appreciation"
-        perviousPageLink="/settings/template/certificate-of-appreciation"
-      />
-      <Divider className="my-1 mb-3" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <BoxWrapper>
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>
@@ -112,89 +116,95 @@ const NewTemplateCertificationOfAppreciation = () => {
           <Divider />
           {/*------------------------ Select Design----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} xl={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={12} lg={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Select Design
               </Title>
               <Paragraph>Select the design of the certificate</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={24} xl={12}>
+            <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
               <Row gutter={[16, 16]}>
-                <Col className="gutter relative" xs={24} xl={12}>
-                  <div
-                    style={{ border: `2px solid ${borderColorfirst.color}` }}
-                    className="cursor-pointer certificate-card "
-                  >
-                    {borderColorfirst.toggle && (
-                      <CertificateTickCircle className="absolute certificate-tick-circle" />
-                    )}
+                <Col className="gutter relative" xs={24} lg={12} xl={12}>
+                  <BoxWrapper>
+                    <div
+                      style={{ border: `2px solid ${borderColorfirst.color}` }}
+                      className="cursor-pointer certificate-card "
+                    >
+                      {borderColorfirst.toggle && (
+                        <CertificateTickCircle className="absolute certificate-tick-circle" />
+                      )}
 
-                    <div className="card-image-box ">
-                      <span className="flex justify-center p-5 image">
-                        <TemplateCertificateSmall className=" background-img" />
-                      </span>
-                      <div
-                        className="middle"
-                        onClick={() => {
-                          setShowEditModal(!showEditModal);
-                        }}
-                      >
-                        <EyeFilled className="text" />
+                      <div className="card-image-box ">
+                        <span className="flex justify-center p-5 image">
+                          <TemplateCertificateSmall className=" background-img" />
+                        </span>
+                        <div
+                          className="middle"
+                          onClick={() => {
+                            setShowEditModal(!showEditModal);
+                          }}
+                        >
+                          <EyeFilled className="text" />
+                        </div>
                       </div>
+                      <Divider />
+                      <p
+                        className="text-center"
+                        onClick={
+                          borderColorfirst.toggle
+                            ? NoBorderHandler
+                            : FirstBorderHandler
+                        }
+                      >
+                        Template 1
+                      </p>
                     </div>
-                    <Divider />
-                    <p
-                      className="text-center"
-                      onClick={
-                        borderColorfirst.toggle
-                          ? NoBorderHandler
-                          : FirstBorderHandler
-                      }
-                    >
-                      Template 1
-                    </p>
-                  </div>
+                  </BoxWrapper>
                 </Col>
-                <Col className="gutter relative" xs={24} xl={12}>
-                  <div
-                    style={{ border: `2px solid ${borderColorSecond.color}` }}
-                    className="cursor-pointer certificate-card "
-                  >
-                    {borderColorSecond.toggle && (
-                      <CertificateTickCircle className="absolute certificate-tick-circle" />
-                    )}
-                    <div className="card-image-box ">
-                      <span className="flex justify-center p-5 image">
-                        <TemplateCertificateSmall className=" background-img" />
-                      </span>
-                      <div
-                        className="middle"
-                        onClick={() => {
-                          setShowEditModal(!showEditModal);
-                        }}
-                      >
-                        <EyeFilled className="text" />
-                      </div>
-                    </div>
-                    <Divider />
-                    <p
-                      className="text-center"
-                      onClick={
-                        borderColorSecond.toggle
-                          ? NoBorderHandler1
-                          : SecondBorderHandler
-                      }
+                <Col className="gutter relative" xs={24} lg={12} xl={12}>
+                  <BoxWrapper>
+                    <div
+                      style={{ border: `2px solid ${borderColorSecond.color}` }}
+                      className="cursor-pointer certificate-card "
                     >
-                      Template 2
-                    </p>
-                  </div>
+                      {borderColorSecond.toggle && (
+                        <CertificateTickCircle className="absolute certificate-tick-circle" />
+                      )}
+                      <div className="card-image-box ">
+                        <span className="flex justify-center p-5 image">
+                          <TemplateCertificateSmall className=" background-img" />
+                        </span>
+                        <div
+                          className="middle"
+                          onClick={() => {
+                            setShowEditModal(!showEditModal);
+                          }}
+                        >
+                          <EyeFilled className="text" />
+                        </div>
+                      </div>
+                      <Divider />
+                      <p
+                        className="text-center"
+                        onClick={
+                          borderColorSecond.toggle
+                            ? NoBorderHandler1
+                            : SecondBorderHandler
+                        }
+                      >
+                        Template 2
+                      </p>
+                    </div>
+                  </BoxWrapper>
                 </Col>
               </Row>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

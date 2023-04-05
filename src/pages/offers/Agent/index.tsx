@@ -1,10 +1,10 @@
 import { useState } from "react";
-import "./style.scss";
 import { PageHeader, PopUpModal } from "../../../components";
-import { Button, Row, Col, Card, Select, InputNumber, Form, Input } from "antd";
-import { PlusCircleFilled } from "@ant-design/icons";
-import { Offerimg1, Offerimg3 } from "../../../assets/images";
-import { cardData } from "../../propertyAgent/propertDahboard/Dashboard/DashboardMock";
+import { Button, Row, Col, Card, Select, InputNumber, Form } from "antd";
+import { PlusCircleFilled} from "@ant-design/icons";
+import { Offerimg1} from "../../../assets/images";
+// import { cardData } from "../../propertyAgent/propertDahboard/Dashboard/DashboardMock";
+import "./style.scss";
 
 
 
