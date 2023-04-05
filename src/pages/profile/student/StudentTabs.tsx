@@ -69,6 +69,6 @@ const StudentsTabs = () => {
       <AppTabs items={items} />
     </div>
   );
-};
+}
 
 export default StudentsTabs;

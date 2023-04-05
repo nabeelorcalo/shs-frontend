@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Divider, Typography } from "antd";
-import '../style.scss';
+import "../../style.scss";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
-import video from "../../../assets/images/profile/student/Vedio.svg";
+import video from "../../../../assets/images/profile/student/Vedio.svg";
+
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
 
@@ -24,7 +25,6 @@ const StudentSideBar = (props: any) => {
                     <Typography className="emp-desgination">
                       {item.designation}
                     </Typography>
-                    <Typography className="emp-role">{item.role}</Typography>
                   </div>
                 </center>
               </div>
@@ -46,48 +46,22 @@ const StudentSideBar = (props: any) => {
                 </div>
               </div>
               <Divider />
-              <div className="ml-5 mb-3">
-                <Typography className="emp-name">Skills</Typography>
+
+              <div className="flex justify-center items-center">
+                <Typography className="mr-2">Conatact Person:</Typography>
+
+                <img height={50} src={item.profile} alt="" />
+
+                <Typography className="">Marie Gold</Typography>
               </div>
-              <div className="main-skill-box">
-                <Button>
-                  <PlusOutlined /> Add
-                </Button>
-                {item.skills.map((item, index) => {
-                  return (
-                    <>
-                      <div className="skill-box">
-                        <Typography className="skills-typography">
-                          {item.skill}
-                        </Typography>
-                      </div>
-                    </>
-                  );
-                })}
-              </div>
+
               <Divider />
-              <div className="intro">
-                <div className="ml-5 mb-3">
-                  <Typography className="emp-name">Intro</Typography>
-                  <Typography className="emp-desgination">
-                    Create your video interview to get hired
-                  </Typography>
-                </div>
-                <center>
-                  <div
-                    onClick={() => {
-                      setShowSideViewType('add-video');
-                    }}
-                  >
-                    <img src={video} alt="" />
-                    <Typography className="video-p">Add Video</Typography>
-                  </div>
-                </center>
-              </div>
-              <Divider />
-              <p onClick={()=>{
-                setShowSideViewType('change-password')
-              }} className="a-tag-side">
+              <p
+                onClick={() => {
+                  setShowSideViewType("change-password");
+                }}
+                className="a-tag-side"
+              >
                 Change Password
               </p>
             </>

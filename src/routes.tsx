@@ -102,7 +102,7 @@ const Contracts = Loadable(lazy(() => import("./pages/contracts")));
 const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
-const Profile = Loadable(lazy(() => import("./pages/profile")));
+const Profile = Loadable(lazy(() => import("./pages/profile/")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(
   lazy(() => import("./pages/accommodation/AvailableProperties"))
@@ -1149,6 +1149,11 @@ const internRoutes = [
         element: <Calendar />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         path: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
         element: <Accommodation />,
@@ -1371,6 +1376,11 @@ const universityRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,

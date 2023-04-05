@@ -1,5 +1,5 @@
 import React from "react";
-import UpdatePassword from "../changePassword/updatePassword";
+import UpdatePassword from "./updatePassword";
 function ChangePassword() {
   return (
     <div>
