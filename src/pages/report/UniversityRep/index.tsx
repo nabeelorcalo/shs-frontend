@@ -9,7 +9,7 @@ import Filters from './filter';
 
 const index = () => {
   const action = useCustomHook();
-  const TableColumn = ['No.' ,' Name', 'Department' , 'Company' , 'Reviewer']
+  const TableColumn = ['No.','Avater' ,' Name', 'Department' , 'Company' , 'Reviewer']
   const reportTableData = [
     {
       no: '01',
