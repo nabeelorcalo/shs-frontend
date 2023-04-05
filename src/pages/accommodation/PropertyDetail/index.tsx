@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Anchor, Collapse } from 'antd'
+import { Typography, Anchor, Collapse, Grid } from 'antd'
 import {PageHeader} from "../../../components";
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
@@ -11,6 +11,7 @@ import BookingRequest from "./BookingRequest";
 import { IconWebLocation, IconArrowDown } from '../../../assets/images'
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
+const { useBreakpoint } = Grid;
 
 // Temporary
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
@@ -48,6 +49,8 @@ const images = [
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const screens = useBreakpoint();
+  console.log("Breakpoint:::: ", screens.lg)
   const anchorItems = [
     {
       key: 'Overview',
@@ -105,7 +108,7 @@ const AccPropertyDetail = () => {
             <ImageGallery
               items={images}
               showNav={false}
-              thumbnailPosition={'left'}
+              thumbnailPosition={screens.lg ? 'left' : 'bottom'}
               showFullscreenButton={false}
               useBrowserFullscreen={false}
               showPlayButton={false}
@@ -138,7 +141,8 @@ const AccPropertyDetail = () => {
 
           <div className="property-detial-card">
             <Anchor
-              offsetTop={80}
+              offsetTop={screens.xs ? 60 : 70}
+              targetOffset={100}
               direction="horizontal"
               items={anchorItems}
             />

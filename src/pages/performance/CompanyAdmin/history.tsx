@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar, Dropdown, Progress, Space, MenuProps } from "antd";
+import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
 import {
   PageHeader,
@@ -422,22 +422,19 @@ const PerformanceHistory = () => {
         bordered
         title={<Breadcrumb breadCrumbData={historyBreadCrumb} />}
       />
-
-      <div className="flex">
-        <div className="w-[33%]">
+      <Row gutter={[20, 20]}>
+        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar
             className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
-            placeholder="search"
-            size="small"
+            placeholder="Search"
+          // size="small"
           />
-        </div>
-
-        <div className="flex justify-center ml-auto">
+        </Col>
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex justify-end">
           <FiltersButton label="Filters" onClick={handleSidebarClick} />
-
           <IconButton
             size="large"
             className="icon-btn"
@@ -447,7 +444,6 @@ const PerformanceHistory = () => {
             }}
             icon={<DownlaodFileIcon />}
           />
-
           <Drawer
             title="Filters"
             open={state.openSidebar}
@@ -504,18 +500,13 @@ const PerformanceHistory = () => {
               </div>
             }
           />
-        </div>
-      </div>
+        </Col>
+        <Col xs={24}>
+            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+        </Col>
+      </Row>
 
-      <div className="performace-history-list">
-        <GlobalTable
-          columns={columnNames}
-          tableData={evaluationHistoryData}
-          pagination={false}
-        />
-      </div>
-
-      <AppreciationModal
+    <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"
         initialValues={{

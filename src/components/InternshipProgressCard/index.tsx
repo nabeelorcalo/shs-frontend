@@ -72,7 +72,7 @@ export const InternshipProgressCard = () => {
         <Link to="pipeline"><h3>UI/UX Designer</h3></Link>
         <PopOver />
       </div>
-      <div className='flex flex-row gap-6'>
+      <div className='flex max-sm:flex-col md:flex-row gap-6'>
         <div className='flex flex-row gap-3 items-center'>
           <DepartmentIcon />
           <p>Design</p>
@@ -93,7 +93,7 @@ export const InternshipProgressCard = () => {
       <div>
         <InternshipProgressStepper />
       </div>
-      <div className='flex flex-row justify-between items-center'>
+      <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center'>
         <div className='flex flex-row gap-3'>
           <p>Created on July 24, 2021</p>
           <p>.</p>

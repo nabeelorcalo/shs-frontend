@@ -1,17 +1,12 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
-import {
-  CountingCard,
-  FavouritesViewCard,
-  GreetingCard,
-  RegisterMemberAndFeddbackGraph,
-} from "../../../components";
+import { CountingCard,FavouritesViewCard,GreetingCard,RegisterMemberAndFeddbackGraph} from "../../../components";
 // import Graph from "../../../components/Graph/graphForRegisteredMembersAndFeedback";
 import MembersDetails from "./MembersDetails";
-import "../style.scss";
 import ShareModal from "../../../components/ShareModal";
 import InvitationModal from "../../../components/InvitationModal";
 import { gutter } from "..";
+import "../style.scss";
 
 const DelegateAgent = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);

@@ -529,8 +529,8 @@ const delegateAgentRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
-        path: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
+        key: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
+        path: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
         element: <DelegateMembers />,
       },
       {
@@ -1184,6 +1184,31 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
         element: <AccPropertyDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPES}`,
+        path: `${ROUTES_CONSTANTS.RECIPES}`,
+        element: <Recipes />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        element: <RecipeDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_ADD}`,
+        element: <AddRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        element: <EditRecipe />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
       },
       {
         key: `${ROUTES_CONSTANTS.CHAT}`,

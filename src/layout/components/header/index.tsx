@@ -6,6 +6,7 @@ import { Layout,  Input,  Dropdown,  Avatar,  Drawer, List, MenuProps, Typograph
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { ExtendedButton } from "../../../components";
+import constants from "../../../config/constants";
 import "./style.scss";
 
 const { Search } = Input;
@@ -192,7 +193,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                       <Typography.Title level={4}>
                         Maria Sanoid
                       </Typography.Title>
-                      <div className="user-meta-role">Student</div>
+                      <div className="user-meta-role">{constants.USER_ROLE}</div>
                     </div>
                   </div>
                   {React.cloneElement(menu as React.ReactElement, {
