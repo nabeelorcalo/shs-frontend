@@ -36,21 +36,34 @@
     .recipe-detail-hero {
       display: flex;
       margin-bottom: 50px;
+      @media(max-width: 1200px) {
+        display: block;
+      }
 
       .recipe-image {
-        overflow: hidden;
         margin-right: 30px;
-        border-radius: 16px;
-        box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
-        background-color: $text-error-line-color;
-        
-        img {
-          
+        @media(max-width: 1400px) {
+          max-width: 360px;
+        }
+        @media(max-width: 1200px) {
+          max-width: 100%;
+          margin-right: 0;
+        }
+
+        figure {
+          display: inline-block;
+          border-radius: 16px;
+          box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+          background-color: $text-error-line-color;
+          overflow: hidden;
         }
       }
 
       .recipe-hero-content {
         flex: 1;
+        @media(max-width: 1200px) {
+          margin-top: 20px;
+        }
 
         .recipe-hero-title {
           margin-bottom: 20px;
