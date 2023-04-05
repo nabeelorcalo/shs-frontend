@@ -81,9 +81,10 @@ const CommonTableCollapsible = (props: any) => {
     const [toggle, setToggle] = useState({ open: false, id: '' });
 
     return (
-        <Collapse size='large'
+        <Collapse size='large'  
             expandIcon={toggle.open && id === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
             onChange={(e: any) => setToggle({ open: true, id: e })}
+            collapsible='icon'
             className={` bg-white border-0 history-detail rounded-[16px] mt-[10px]`}
         >
             <Panel header={
