@@ -154,8 +154,7 @@
     justify-content: center;
     align-items: center;
     padding: 0;
-    width: 38px !important;
-    height: 38px;
+    height: 48px;
     background-color: #E6F4F9;
     margin: 0 8px;
   }
@@ -163,10 +162,6 @@
   .icon-btn:hover {
     background-color: transparent;
     border: 2px solid #A0A3BD;
-  }
-
-  .filter-button {
-    height: 37px;
   }
 
   .icon-btn:focus {
