@@ -1,21 +1,14 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Divider,
-  Modal,
-  Space,
-  Switch,
-  Typography,
-  Col,
-  Form,
-  Input,
-  Row
-} from "antd";
-import { CommonDatePicker } from "../../../../../components";
-import upload from "../../../../../assets/images/profile/student/Upload.svg";
+import { Button, Modal, Space, Switch } from "antd";
+import { Col, Form, Input, Row } from "antd";
+import "../../../style.scss";
+import upload from "../../../../../assets/images/profile/student/upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
-import "../../../style.scss";
+import { CommonDatePicker } from "../../../../../components";
+import { DeleteIcon } from '../../../../../assets/images';
+import CardUsers from "./userCards";
+
 
 const CardTabs = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +34,7 @@ const CardTabs = () => {
       {cardArr.map((item, index) => {
         return (
           <>
-            <div className="animate">
+            {/* <div className="animate">
               <div className="flex justify-between">
                 <div className="flex items-center">
                   <img src={item.img} alt="" />
@@ -62,7 +55,14 @@ const CardTabs = () => {
                 </div>
               </div>
             </div>
-            <Divider />
+            <Divider /> */}
+            <CardUsers
+              img={item.img}
+              title={item.name}
+              description={item.expDate}
+              sideIcon={<DeleteIcon/>}
+            />
+
           </>
         );
       })}

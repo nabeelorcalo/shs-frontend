@@ -12,6 +12,7 @@ import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/c
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
+
 import "./style.scss"
 import Divider from "antd/es/divider";
 const LeaveViewHistoryData = [
@@ -20,11 +21,13 @@ const LeaveViewHistoryData = [
 ];
 
 
+
 const index = () => {
   const action = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
+  const CsvImportData = ['No', 	'RequestDate', 'DateFrom', 'DateTo','LeaveType', 'Description', 'Status']
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
@@ -51,7 +54,7 @@ const index = () => {
                   'excel'
                 ]}
                 requiredDownloadIcon
-                setValue={action.handleDownloadPdfExcel}
+                setValue={()=>{action.downloadPdfOrCsv(event,CsvImportData,data,"Leave History")}}
               />
             </div>
             {constants.USER_ROLE === 'Intern' && <Button
