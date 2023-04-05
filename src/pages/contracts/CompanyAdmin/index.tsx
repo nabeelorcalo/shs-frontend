@@ -1,7 +1,7 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
 import { useState } from "react";
-import {IconAngleDown,NewImg,PendingImg,RejectedImg,SignedImg,Rejected,Signed,Recevied,
-  GreenErrow,GreenEye,GreenLock,RedLock} from "../../../assets/images";
+import { IconAngleDown, NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
+  GreenErrow, GreenEye, GreenLock, RedLock} from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -283,7 +283,6 @@ const CompanyAdmin = () => {
         <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => { }} />
         </Col>
-
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end contract-right-sec" >
           <Dropdown
             menu={{ items: TimeFrameItems }}
@@ -307,16 +306,12 @@ const CompanyAdmin = () => {
             </Button>
           </Dropdown>
         </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <GlobalTable columns={tableColumns} tableData={tableData} />
+          </BoxWrapper>
+        </Col>
       </Row>
-
-      <div className="mt-4">
-        <BoxWrapper>
-          <GlobalTable
-            columns={tableColumns}
-            tableData={tableData}
-          />
-        </BoxWrapper>
-      </div>
     </div>
   );
 };
