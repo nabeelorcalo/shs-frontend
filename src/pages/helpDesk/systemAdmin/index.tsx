@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./style.scss";
-import { Button, Col, Divider, Row, Select, TabsProps } from "antd";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, PopUpModal } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
@@ -11,28 +11,174 @@ import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Avatar } from "../../../assets/images";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import AttendaceLog from "./AttendanceLogModal";
+import useCustomHook from '../actionHandler';
 
-const items: TabsProps["items"] = [
+const tableDataAll = [
   {
-    key: "1",
-    label: `All`,
-    children: <AllData />,
+    key: "01",
+    ID: "01",
+    Subject: "Subject kmy cc",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
   },
   {
-    key: "2",
-    label: `Unassigned`,
-    children: <UnassignedData />,
+    key: "02",
+    ID: "02",
+    Subject: "file2",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
   },
   {
-    key: "3",
-    label: `Assigned`,
-    children: <AssignedData />,
+    key: "03",
+    ID: "03",
+    Subject: "file3",
+    ReportedBy: "john",
+    Type: "kljdasfhuasd",
+    Role: "issue Name",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+];
+
+const tableDataUnassigned = [
+  {
+    key: "01",
+    ID: "01",
+    Subject: "SubjectUnassined",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
   },
   {
-    key: "4",
-    label: `Resolved`,
-    children: <ResolvedData />,
+    key: "02",
+    ID: "02",
+    Subject: "file2",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "03",
+    ID: "03",
+    Subject: "file3",
+    ReportedBy: "john",
+    Type: "kljdasfhuasd",
+    Role: "issue Name",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+];
+
+const tableDataAssigned = [
+  {
+    key: "01",
+    ID: "01",
+    Subject: "SubjectAssigned",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "02",
+    ID: "02",
+    Subject: "file2",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "03",
+    ID: "03",
+    Subject: "file3",
+    ReportedBy: "john",
+    Type: "kljdasfhuasd",
+    Role: "issue Name",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+];
+
+
+const tableDataResolved = [
+  {
+    key: "01",
+    ID: "01",
+    Subject: "SubjectResoveld",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "02",
+    ID: "02",
+    Subject: "file2",
+    ReportedBy: "john",
+    Role: "issue Name",
+    Type: "kljdasfhuasd",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
+  },
+  {
+    key: "03",
+    ID: "03",
+    Subject: "file3",
+    ReportedBy: "john",
+    Type: "kljdasfhuasd",
+    Role: "issue Name",
+    Priority: "high",
+    Date: "22/09/2013",
+    Assigned: "amila clark",
+    Status: "Resolved",
+    Actions: "fduhguisd",
   },
 ];
 
@@ -50,8 +196,6 @@ const filterData = [
     ],
   },
 ];
-
-const options = ["pdf", "excel"];
 
 const drawerAssignToData = [
   {
@@ -80,11 +224,37 @@ const drawerAssignToData = [
   },
 ];
 
+const items: TabsProps["items"] = [
+  {
+    key: "1",
+    label: `All`,
+    children: <AllData tableData={tableDataAll} />,
+  },
+  {
+    key: "2",
+    label: `Unassigned`,
+    children: <UnassignedData tableData={tableDataUnassigned} />,
+  },
+  {
+    key: "3",
+    label: `Assigned`,
+    children: <AssignedData tableData={tableDataAssigned} />,
+  },
+  {
+    key: "4",
+    label: `Resolved`,
+    children: <ResolvedData tableData={tableDataResolved} />,
+  },
+];
+
 const HelpDesk = () => {
+  const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
+  const [selectedTab, setSelectedTab] = useState<any>("1")
 
+  const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
 
   const handleChange = () => {
     console.log("change");
@@ -111,9 +281,25 @@ const HelpDesk = () => {
     }
   };
 
+  const downloadPdfCsv = () => {
+    if (selectedTab === "1") {
+      return tableDataAll
+    } else if (selectedTab === "2") {
+      return tableDataUnassigned
+    } else if (selectedTab === "3") {
+      return tableDataAssigned
+    } else if (selectedTab === "4") {
+      return tableDataResolved
+    } else {
+      null
+    }
+  }
+
+
+
   return (
     <div className="help-desk">
-      
+
       <Drawer
         onClose={() => setOpenDrawer(false)}
         open={openDrawer}
@@ -124,12 +310,16 @@ const HelpDesk = () => {
           <div className="mt-2">
             <Select
               className="w-[100%]"
-              defaultValue="lucy"
+              defaultValue=""
               onChange={handleChangeSelect}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
+                { value: "Payment", label: "Payment" },
+                { value: "Bug", label: "Bug" },
+                { value: "Internship", label: "Internship" },
+                { value: "Technical ", label: "Technical " },
+                { value: "Support Support", label: "Support Support" },
+                { value: "Delegate Reference", label: "Delegate Reference" },
+                { value: "Wrong Information", label: "Wrong Information" },
               ]}
             />
           </div>
@@ -140,12 +330,13 @@ const HelpDesk = () => {
           <div className="mt-2 ">
             <Select
               className="w-[100%]"
-              defaultValue="lucy"
+              defaultValue=""
               onChange={handleChangeSelect}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
+                { value: "Highest", label: "Highest" },
+                { value: "High", label: "High" },
+                { value: "Medium", label: "Medium" },
+                { value: "Low", label: "Low" },
               ]}
             />
           </div>
@@ -164,12 +355,12 @@ const HelpDesk = () => {
           <div className="mt-2">
             <Select
               className="w-[100%]"
-              defaultValue="lucy"
+              defaultValue=""
               onChange={handleChangeSelect}
               options={[
-                { value: "jack", label: "Jack" },
-                { value: "lucy", label: "Lucy" },
-                { value: "Yiminghe", label: "yiminghe" },
+                { value: "Pending", label: "Pending" },
+                { value: "In Progress", label: "In Progress" },
+                { value: "Resolved", label: "Resolved" },
               ]}
             />
           </div>
@@ -265,15 +456,25 @@ const HelpDesk = () => {
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
-            
-            <Col className="flex justify-end "  xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
+
+            <Col className="flex justify-end " xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
               <div className="flex">
                 <div className="mr-4">
                   <FiltersButton label="Filter" onClick={handleClick} />
                 </div>
 
                 <div>
-                  <DropDown requiredDownloadIcon={true} options={options} />
+                  <DropDown
+                    options={[
+                      'pdf',
+                      'excel'
+                    ]}
+                    requiredDownloadIcon
+                    setValue={() => {
+
+                      action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail")
+                    }}
+                  />
                 </div>
               </div>
             </Col>
@@ -284,7 +485,9 @@ const HelpDesk = () => {
       <Row className="mt-8">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
-            <AppTabs items={items} />
+            <AppTabs items={items} onChange={(selectedTab: any) => {
+              setSelectedTab(selectedTab)
+            }} />
           </BoxWrapper>
         </Col>
       </Row>

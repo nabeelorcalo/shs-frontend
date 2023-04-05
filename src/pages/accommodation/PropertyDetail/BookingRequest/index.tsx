@@ -158,14 +158,14 @@ const PropertyPricing = () => {
 
         <Form layout="vertical" name="bookingRequest" onFinish={submitBookingRequest}>
           <Row gutter={20}>
-            <Col xs={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="moveInDate" label="Move-in Date">
                 <DatePicker 
                   onChange={onChange}
                 />
               </Form.Item>
             </Col>
-            <Col xs={12}>
+            <Col xs={24} sm={12}>
               <Form.Item name="moveOutDate" label="Move-out Date">
                 <DatePicker 
                   onChange={onChange}

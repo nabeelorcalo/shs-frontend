@@ -9,6 +9,7 @@ import {
   EvaluationStatsCard,
   TextArea,
   Breadcrumb,
+  Notifications,
 } from "../../components";
 import {
   Sad,
@@ -20,8 +21,11 @@ import {
   Awesome,
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
+  Success,
 } from '../../assets/images';
 import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
   const ViewPerformanceBreadCrumb = [
@@ -97,10 +101,7 @@ const ViewPerformance = () => {
       colorLessComp: SatisfiedColorLessIcon
     },
   ];
-
-  const downloadClick = () => {
-    alert('download popup');
-  }
+  const action = useCustomHook();
 
   return (
     <div className="view-evaluation">
@@ -122,7 +123,10 @@ const ViewPerformance = () => {
         <IconButton
           size='large'
           className='icon-btn'
-          onClick={downloadClick}
+          onClick={() => {
+            action.downloadPdf(header, tableData);
+            Notifications({title:"Success", description:"Download Done",icon:<Success />})
+          }}
           icon={<DownloadIconWithBg />}
         />
       </div>

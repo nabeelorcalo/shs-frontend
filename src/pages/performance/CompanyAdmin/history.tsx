@@ -10,6 +10,7 @@ import {
   Button,
   GlobalTable,
   Breadcrumb,
+  Notifications,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
@@ -18,6 +19,8 @@ import {
   GlassMagnifier,
   MoreIcon,
   TalentBadge,
+  Success,
+  SuccessIcon
 } from "../../../assets/images";
 import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -29,7 +32,7 @@ import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
   const historyBreadCrumb = [
-    { name: constants.USER_ROLE === constants.COMPANY_ADMIN ? 'Performance History' :  "View History" },
+    { name: constants.USER_ROLE === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
@@ -435,7 +438,10 @@ const PerformanceHistory = () => {
           <IconButton
             size="large"
             className="icon-btn"
-            onClick={() => action.downloadPdf(header, tableData)}
+            onClick={() => {
+              action.downloadPdf(header, tableData);
+              Notifications({title:"Success", description:"Download Done",icon:<Success />})
+            }}
             icon={<DownlaodFileIcon />}
           />
           <Drawer
@@ -499,7 +505,6 @@ const PerformanceHistory = () => {
             <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
         </Col>
       </Row>
-  
     <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"

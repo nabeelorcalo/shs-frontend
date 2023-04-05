@@ -253,7 +253,7 @@ const CompanyAdmin = () => {
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
       >
-        <p>Are you sure you want to delete this?</p>
+        <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
       <PageHeader title="Contracts" />
       <Row gutter={[20, 20]}>
