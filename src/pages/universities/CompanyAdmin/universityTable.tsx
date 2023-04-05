@@ -1,4 +1,3 @@
-import React from 'react'
 import { GlobalTable } from '../../../components'
 import flag from '../../../assets/images/universities/flag.svg'
 import flag2 from '../../../assets/images/universities/flag2.svg'
