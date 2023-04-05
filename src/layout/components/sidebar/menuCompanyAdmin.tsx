@@ -97,8 +97,8 @@ export const itemsCompanyAdmin: MenuProps['items'] = [
   // REPORTS GROUP
   getItem('Report', 'report', null, [
     getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes />),
-    // getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
-    // getItem('Certificates', `/${CERTIFICATES}`, <IconEmojiSad />),
+    getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
+    getItem('Certificates', `/${CERTIFICATES}`, <IconEmojiSad />),
   ], 'group'),
 
   // PERSONAL GROUP

@@ -3,7 +3,7 @@ import { DocumentUpload } from '../../assets/images'
 import SelectedUploadCard from '../SelectedUploadCard'
 import './style.scss'
 
-const DragAndDropUpload = () => {
+export const DragAndDropUpload = () => {
   const [files, setFiles] = useState([])
   const inputRef: any = useRef();
   const handleDragOver = (event: any) => {

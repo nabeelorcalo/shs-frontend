@@ -343,7 +343,7 @@ const Detail = () => {
             requiredDownloadIcon
             setValue={() => {
               action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail");
-              Notifications({ title: 'Success', description: 'List Download', icon: <Success /> })
+              Notifications({ title: 'Success', description: 'List Download', type:'success' })
             }}
           />
           <ToggleButton

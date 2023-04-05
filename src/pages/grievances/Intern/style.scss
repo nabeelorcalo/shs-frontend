@@ -1,6 +1,10 @@
 @import '../../../scss/colors';
 .intern-grievance{
-
+.blow-whistle-button{
+  &:hover{
+    color: $white-bg-color;
+  }
+}
 }
 .intern-blow-whistle-footer{
   .footer-cancel-btn {
@@ -11,7 +15,10 @@
     .footer-submit-btn {
       background: $teriary-bg-color;
       border: 1px solid $teriary-bg-color;
-      color: #fff;
+      color: $white-bg-color;
       padding: 0px 20px;
+      &:hover{
+        color: $white-bg-color;
+      }
     }
 }

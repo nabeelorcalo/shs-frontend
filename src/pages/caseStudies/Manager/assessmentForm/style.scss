@@ -1,0 +1,62 @@
+@import '../../../../scss/colors';
+
+.assessment-form-image-container {
+  &:hover {
+    transform: scale(1.3);
+  }
+}
+
+.company-admin-assessment-form {
+  .sign-btn {
+    color: $text-success-placeholder-color
+  }
+
+  .form-title {
+    color: $text-success-placeholder-color;
+  }
+
+  .scroll {
+    width: 100%;
+    overflow-x: scroll;
+  }
+
+  .destop-view {
+    min-width: 1000px;
+  }
+
+  .assessment-footer {
+    .reject-btn {
+      &:hover {
+        background: $secondary-bg-color !important;
+      }
+    }
+
+    .save-btn {
+      border: 1px solid $teriary-bg-color;
+
+      &:hover {
+        background: $white-bg-color !important;
+        color: $teriary-bg-color
+      }
+    }
+
+    .finalise-btn {
+      &:hover {
+        background: $teriary-bg-color !important;
+      }
+    }
+  }
+
+  .sign-box {
+    border: 1px solid $text-success-placeholder-color;
+    height: 150px;
+  }
+
+  .ant-input {
+    background-color: $text-input-bg-color;
+
+    &:hover {
+      background-color: $white-bg-color;
+    }
+  }
+}

@@ -3,12 +3,14 @@
 
     .ant-form-item .ant-form-item-control-input-content {
 
-        .ant-input{
-            background: $text-input-bg-color;
-            &:hover{
-              background: $white-bg-color;
-            }
+      .ant-input {
+        background: $text-input-bg-color;
+        border:2px solid $white-bg-color ;
+  
+        &:hover {
+          background: $white-bg-color;
         }
+      }
     }
     .text-editor{
       border: 2px solid $white-bg-color;
