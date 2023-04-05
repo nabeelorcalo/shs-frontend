@@ -14,7 +14,7 @@ interface DrawerProps {
   className?: string;
 }
 
-const Drawer: any = ({ title, className, placement = "right", open, onClose, children, width = "380", closable = true }: any) => {
+ export const Drawer: any = ({ title, className, placement = "right", open, onClose, children, width = "380", closable = true }: any) => {
   return (
     <AntDrawer
       title={title}

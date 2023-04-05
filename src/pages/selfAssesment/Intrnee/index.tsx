@@ -1,6 +1,5 @@
 import { Col, Divider, Row } from 'antd'
-import "./style.scss"
-import {Likeshapethumbicon,} from '../../../assets/images'
+import { Likeshapethumbicon, } from '../../../assets/images'
 import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import AssessmentCard from '../../../components/AssessmentCard/AssessmentCard'
@@ -10,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import DrawerComp from '../../../components/DrawerComp'
 import { CloseCircleFilled } from '@ant-design/icons'
 import SelfAssesmentFilterForm from './selfAssesmentFilterForm'
-
+import "./style.scss"
 
 const Internee = () => {
   const navigate = useNavigate()
@@ -24,12 +23,12 @@ const Internee = () => {
         title="Self Assessment"
       >
       </PageHeader>
-      <Row className=' items-center' gutter={[10, 10]}>
-        <Col xs={24} md={12} lg={12}>
+      <Row className=' items-center' gutter={[20, 20]}>
+        <Col xs={24} md={24} lg={6}>
           <SearchBar className="SearchBar" handleChange={(e: any) => { console.log(e); }} />
         </Col>
-        <Col xs={24} md={12} lg={12} >
-          <div className='flex items-center justify-end view_history_button_wrapper'>
+        <Col xs={24} md={24} lg={18} >
+          <div className='flex items-center lg:justify-end view_history_button_wrapper'>
             <div className="mr-4">
               <FiltersButton
                 label="Filters"
@@ -45,11 +44,29 @@ const Internee = () => {
             />
           </div>
         </Col>
-        <Divider />
+        <Col xs={24}>
+          <Row gutter={[20, 20]}>
+            {data.map((item: any) => (
+              <Col xs={24} md={24} lg={12} xl={6} xxl={6} >
+                <AssessmentCard
+                  id={item.id}
+                  title={item.title}
+                  month={item.month}
+                  year={item.year}
+                  userName={item.userName}
+                  userImg={item.userImg}
+                  status={item.status}
+                  handleMenuClick={() => { }}
+                />
+              </Col>
+            ))}
+          </Row>
+        </Col>
+        {/* <Divider /> */}
       </Row>
-      <Row gutter={[20, 20]}>
+      {/* <Row gutter={[20, 20]}>
         {data.map((item: any) => (
-          <Col lg={6}>
+          <Col md={8} lg={6}>
             <AssessmentCard
               id={item.id}
               title={item.title}
@@ -62,7 +79,7 @@ const Internee = () => {
             />
           </Col>
         ))}
-      </Row>
+      </Row> */}
 
       <DrawerComp
         title={"Filters"}

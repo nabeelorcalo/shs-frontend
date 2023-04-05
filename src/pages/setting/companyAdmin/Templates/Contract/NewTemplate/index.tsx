@@ -11,13 +11,21 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Breadcrumb , BoxWrapper } from "../../../../../../components";
+import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateContract = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Contract" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
+  ];
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
   const onChangeHandler = (e: any) => {
@@ -35,16 +43,13 @@ const NewTemplateContract = () => {
 
   return (
     <div className="offer-letter-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Contract"
-        perviousPageLink="/settings/template/contract"
-      />
-      <Divider className="my-1 mb-3" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider/>
       <BoxWrapper>
         <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>
@@ -79,7 +84,9 @@ const NewTemplateContract = () => {
           </Row>
           <Space className="flex justify-end pt-5">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CONTRACT}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

@@ -1,21 +1,7 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
 import { useState } from "react";
-import {
-  IconAngleDown,
-  NewImg,
-  PendingImg,
-  RejectedImg,
-  SignedImg,
-  Rejected,
-  Signed,
-  Recevied,
-  GreyEye,
-  GreyLock,
-  GreenErrow,
-  GreenEye,
-  GreenLock,
-  RedLock,
-} from "../../../assets/images";
+import { IconAngleDown, NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
+  GreenErrow, GreenEye, GreenLock, RedLock} from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
@@ -267,7 +253,7 @@ const CompanyAdmin = () => {
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
       >
-        <p>Are you sure you want to delete this?</p>
+        <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
       <PageHeader title="Contracts" />
       <Row gutter={[20, 20]}>
@@ -294,17 +280,16 @@ const CompanyAdmin = () => {
       </Row>
 
       <Row className="mt-8" gutter={[0, 20]} >
-        <Col  xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => { }} />
         </Col>
-
-        <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end contract-right-sec" >
           <Dropdown
             menu={{ items: TimeFrameItems }}
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Time Frame
               <IconAngleDown />
             </Button>
@@ -315,22 +300,18 @@ const CompanyAdmin = () => {
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Status
               <IconAngleDown />
             </Button>
           </Dropdown>
         </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <GlobalTable columns={tableColumns} tableData={tableData} />
+          </BoxWrapper>
+        </Col>
       </Row>
-
-      <div className="mt-4">
-        <BoxWrapper>
-          <GlobalTable
-            columns={tableColumns}
-            tableData={tableData}
-          />
-        </BoxWrapper>
-      </div>
     </div>
   );
 };

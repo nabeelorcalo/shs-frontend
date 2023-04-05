@@ -4,7 +4,7 @@ import { Button, DropDown } from '../../../components';
 const FilterDrawerForm = (props: any) => {
   const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit } = props;
 
-  const [filterValu, setFilterValue] = useState({leaveType:"Select",timeFrame:"Select",status:"Select"});
+  const [filterValu, setFilterValue] = useState({ leaveType: "Select", timeFrame: "Select", status: "Select" });
   // console.log(value);
 
   return (
@@ -27,7 +27,7 @@ const FilterDrawerForm = (props: any) => {
               name={filterValu.leaveType}
               value={filterValu.leaveType}
               options={['Pending ', 'Declined', 'Approved']}
-              setValue={(e:string) => setFilterValue({...filterValu, leaveType:e})}
+              setValue={(e: string) => setFilterValue({ ...filterValu, leaveType: e })}
             />
             {/* <Select
               defaultValue="sick"
@@ -50,7 +50,7 @@ const FilterDrawerForm = (props: any) => {
               name={filterValu.timeFrame}
               value={filterValu.timeFrame}
               options={['This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']}
-              setValue={(e:string)=>setFilterValue({...filterValu,timeFrame:e})}
+              setValue={(e: string) => setFilterValue({ ...filterValu, timeFrame: e })}
               showDatePickerOnVal={'date Range'}
               requireDatePicker
               placement='bottomLeft' />
@@ -63,32 +63,24 @@ const FilterDrawerForm = (props: any) => {
               name={filterValu.status}
               value={filterValu.status}
               options={['Pending ', 'Declined', 'Approved']}
-              setValue={(e:string)=>setFilterValue({...filterValu,status:e})}
+              setValue={(e: string) => setFilterValue({ ...filterValu, status: e })}
             />
           </Form.Item>
         </Form>
 
       </div>
-      <div className='flex items-center justify-end view_history_button_wrapper'>
+      <div className='flex items-center justify-end form_button_wrapper mt-5'>
         <Button
           label="Reset"
           htmlType="button"
-          onClick={HandleCancel}
-          shape="default"
-          size="large"
-          type="default"
-          style={{ color: "#4A9D77", background: "#fff", display: "flex", alignItems: "center", border: "1px solid #4A9D77" }}
-          className="button_request_leave  mr-5"
+          onClick={() => { alert("hello Reset") }}
+          className="Reset_btn flex items-center justify-center   mr-5"
         />
         <Button
           label="Apply"
           htmlType="submit"
-          onClick={Handlesubmit}
-          shape="default"
-          size="large"
-          type="default"
-          style={{ color: "#fff", background: "#4A9D77", display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #4A9D77" }}
-          className="button_request_leave"
+          onClick={() => { alert("hello Applay") }}
+          className="Apply_btn flex items-center justify-center "
         />
       </div>
     </div>

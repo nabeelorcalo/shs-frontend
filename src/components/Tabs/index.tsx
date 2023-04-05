@@ -7,7 +7,7 @@ interface TabProps {
   onChange?: any;
 }
 
-const AppTabs = (props: TabProps) => {
+export const AppTabs = (props: TabProps) => {
   const { items, onChange } = props;
 
   return (

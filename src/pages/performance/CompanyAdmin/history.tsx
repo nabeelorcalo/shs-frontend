@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Avatar, Dropdown, Progress, Space, MenuProps } from "antd";
+import { useState } from "react";
+import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
 import {
   PageHeader,
@@ -10,6 +10,7 @@ import {
   Button,
   GlobalTable,
   Breadcrumb,
+  Notifications,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
@@ -18,6 +19,8 @@ import {
   GlassMagnifier,
   MoreIcon,
   TalentBadge,
+  Success,
+  SuccessIcon
 } from "../../../assets/images";
 import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -28,10 +31,9 @@ import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
 
 const PerformanceHistory = () => {
-  const role = constants.USER_ROLE;
-  const tempArray = [
-    { name: role === 'CompanyAdmin' ? 'Performance History' :  "View History" },
-    { name: " Performance ", onClickNavigateTo: "/performance" },
+  const historyBreadCrumb = [
+    { name: constants.USER_ROLE === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
   const action = useCustomHook();
@@ -167,7 +169,7 @@ const PerformanceHistory = () => {
           >
             <MoreIcon
               className="cursor-pointer"
-              // onClick={() => setActionType({ ...actionType, id: data.key })}
+            // onClick={() => setActionType({ ...actionType, id: data.key })}
             />
           </Dropdown>
         </Space>
@@ -289,9 +291,9 @@ const PerformanceHistory = () => {
       label: (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${role !== "University" ?
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${constants.USER_ROLE !== constants.UNIVERSITY ?
             ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL
-          }`}
+            }`}
         >
           View Details
         </Link>
@@ -299,12 +301,11 @@ const PerformanceHistory = () => {
       key: "0",
     },
     {
-      label: role !== "University" && (
+      label: (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${
-            ROUTES_CONSTANTS.EVALUATE
-          }`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE
+            }`}
         >
           Evaluate
         </Link>
@@ -312,7 +313,7 @@ const PerformanceHistory = () => {
       key: "1",
     },
     {
-      label: role !== "University" && (
+      label: (
         <p
           onClick={() => {
             setState((prevState) => ({
@@ -327,7 +328,7 @@ const PerformanceHistory = () => {
       key: "2",
     },
     {
-      label: role !== "University" && (
+      label: (
         <p
           onClick={() => {
             setState((prevState) => ({
@@ -342,7 +343,7 @@ const PerformanceHistory = () => {
       key: "3",
     },
   ];
-  if (role === "University" && items.length > 2) {
+  if (constants.USER_ROLE === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -3)
   }
 
@@ -362,7 +363,7 @@ const PerformanceHistory = () => {
     }));
   };
 
-  const downloadClick = () => {};
+  const downloadClick = () => { };
 
   const evaluatedBySelection = (event: any) => {
     const value = event.target.innerText;
@@ -415,46 +416,34 @@ const PerformanceHistory = () => {
     }));
   };
 
-  // const breadCrumbs = () => {
-  //   return (
-  //     <Link
-  //       className="bread-crumb"
-  //       to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-  //     >
-  //       Performance
-  //     </Link>
-  //   )
-  // }
-
   return (
     <div className="company-admin-performance-history">
       <PageHeader
         bordered
-        title={<Breadcrumb breadCrumbData={tempArray} />}
+        title={<Breadcrumb breadCrumbData={historyBreadCrumb} />}
       />
-
-      <div className="flex">
-        <div className="w-[33%]">
+      <Row gutter={[20, 20]}>
+        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar
             className=""
-            handleChange={() => {}}
+            handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
-            placeholder="search"
-            size="small"
+            placeholder="Search"
+          // size="small"
           />
-        </div>
-
-        <div className="flex justify-center ml-auto">
+        </Col>
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex justify-end">
           <FiltersButton label="Filters" onClick={handleSidebarClick} />
-
           <IconButton
             size="large"
             className="icon-btn"
-            onClick={() => action.downloadPdf(header, tableData)}
+            onClick={() => {
+              action.downloadPdf(header, tableData);
+              Notifications({title:"Success", description:"Download Done",type:'success'})
+            }}
             icon={<DownlaodFileIcon />}
           />
-
           <Drawer
             title="Filters"
             open={state.openSidebar}
@@ -511,18 +500,13 @@ const PerformanceHistory = () => {
               </div>
             }
           />
-        </div>
-      </div>
+        </Col>
+        <Col xs={24}>
+            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+        </Col>
+      </Row>
 
-      <div className="performace-history-list">
-        <GlobalTable
-          columns={columnNames}
-          tableData={evaluationHistoryData}
-          pagination={false}
-        />
-      </div>
-
-      <AppreciationModal
+    <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"
         initialValues={{

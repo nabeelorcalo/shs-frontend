@@ -10,7 +10,8 @@ import {
   EvaluationStatsCard,
   TextArea,
   Button,
-  Breadcrumb
+  Breadcrumb,
+  Notifications
 } from "../../components";
 import {
   Sad,
@@ -22,10 +23,19 @@ import {
   Awesome,
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
+  Success,
 } from '../../assets/images';
 import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
+  const action = useCustomHook();
+  const editEvaluationBreadCrumb = [
+    { name: "Evaluation Form " },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
+    { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
+  ];
   const user = {
     name: 'Calvin Grayson',
     profession: 'Manager',
@@ -100,85 +110,6 @@ const ViewPerformance = () => {
     alert('download popup');
   }
 
-  const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
-
-    switch (role) {
-      case 'Intern':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-      case 'CompanyAdmin':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              Performance History
-            </Link>
-          </>
-        );
-        case 'Manager':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.DETAIL}`}
-            >
-              Mino Marina
-            </Link>
-          </>
-        );
-      default:
-        return <></>;
-    }
-  }
-
-  const onEmojiClick = (event: any) => {
-    const rootContainer = event.target.closest(".evaluation-container");
-    const rootContainerName = rootContainer.querySelector(".evaluation-heading").innerText;
-    const parentNode = event.target.closest(".emoji-mood-container");
-    const type = parentNode.querySelector(".emoji-heading").innerText;
-    const selectedEmoji = event.currentTarget.innerText;
-    const classList = event.currentTarget.classList;
-    const selectedEmojiIndex = classList[classList.length - 1];
-
-    var obj = state.data.find(function (obj) {
-      return obj.name === rootContainerName;
-    });
-
-    var childObj = obj?.values.find(function (obj) {
-      return obj.title === type;
-    });
-
-    // childObj.value = selectedEmojiIndex;
-
-    // setState(prevState => ({
-    //   ...prevState,
-    // }));
-
-  }
-
   const onSaveClick = () => {
     alert("Save");
   }
@@ -186,18 +117,12 @@ const ViewPerformance = () => {
   const onCancelClick = () => {
     alert("Cancel");
   }
-  const tempArray = [
-    { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: "/performance" },
-    { name: "/" },
-    { name: 'Performance History', onClickNavigateTo: "/performance/history" }
-  ];
   return (
     <div className="view-evaluation">
       <PageHeader
         bordered
         title={
-          <Breadcrumb breadCrumbData={tempArray} />
+          <Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />
         }
       />
 
@@ -212,7 +137,10 @@ const ViewPerformance = () => {
         <IconButton
           size='large'
           className='icon-btn'
-          onClick={downloadClick}
+          onClick={() => {
+            action.downloadPdf(header, tableData);
+            Notifications({title:"Success", description:"Download Done",type:'success'})
+          }}
           icon={<DownloadIconWithBg />}
         />
       </div>

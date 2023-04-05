@@ -7,7 +7,7 @@ import {
   BoxWrapper,
   FiltersButton,
   CommonDatePicker,
-  openNotification
+  Notifications
 } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
@@ -96,7 +96,7 @@ const ViewPayrollDetails = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { openNotification({ title: "Success", description: "File downloaded", icon: <Success />, }) }}>
+          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "File downloaded", type:'success' }) }}>
             Download
           </a>
         ),

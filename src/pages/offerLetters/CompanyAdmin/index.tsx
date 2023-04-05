@@ -1,5 +1,5 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconAngleDown,
   NewImg,
@@ -9,8 +9,6 @@ import {
   Rejected,
   Signed,
   Recevied,
-  GreyEye,
-  GreyLock,
   GreenErrow,
   GreenEye,
   GreenLock,
@@ -261,80 +259,80 @@ const CompanyAdmin = () => {
   ];
   return (
     <div className="offer-letter-company-admin">
-    <Alert
-      state={showDelete}
-      setState={setShowDelete}
-      type="error"
-      okBtntxt="Delete"
-      cancelBtntxt="Cancel"
-    >
-      <p>Are you sure you want to delete this?</p>
-    </Alert>
-    <PageHeader title="Offer Letters" />
-    <Row gutter={[20, 20]}>
-      {
-        ContractsCard.map((item) => {
-          return (
-            <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-              <BoxWrapper>
-                <div>
-                  <div className="flex">
-                    {item.img}
-                    <div className="flex flex-col items-center pl-4">
-                      <p className=" text-xl font-semibold mt-2">{item.title}</p>
-                      <div className="text-4xl font-medium mt-4">{item.num}</div>
+      <Alert
+        state={showDelete}
+        setState={setShowDelete}
+        type="error"
+        okBtntxt="Delete"
+        cancelBtntxt="Cancel"
+      >
+        <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
+      </Alert>
+      <PageHeader title="Offer Letters" />
+      <Row gutter={[20, 20]}>
+        {
+          ContractsCard.map((item) => {
+            return (
+              <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+                <BoxWrapper>
+                  <div>
+                    <div className="flex">
+                      {item.img}
+                      <div className="flex flex-col items-center pl-4">
+                        <p className=" text-xl font-semibold mt-2">{item.title}</p>
+                        <div className="text-4xl font-medium mt-4">{item.num}</div>
+                      </div>
+
                     </div>
-
                   </div>
-                </div>
 
-              </BoxWrapper>
-            </Col>
-          )
-        })
-      }
+                </BoxWrapper>
+              </Col>
+            )
+          })
+        }
 
-    </Row>
+      </Row>
 
-    <Row className="mt-8" gutter={[0, 20]} >
-      <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-        <SearchBar handleChange={() => { }} />
-      </Col>
+      <Row className="mt-8" gutter={[0, 20]} >
+        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+          <SearchBar handleChange={() => { }} />
+        </Col>
 
-      <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
-        <Dropdown 
-          menu={{ items: TimeFrameItems }}
-          trigger={["click"]}
-          placement="bottomRight"
-        >
-          <Button className="button-sky-blue">
-            Time Frame
-            <IconAngleDown />
-          </Button>
-        </Dropdown>
+        <Col xxl={18} xl={8} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+          <Dropdown
+            menu={{ items: TimeFrameItems }}
+            trigger={["click"]}
+            placement="bottomRight"
+          >
+            <Button className="button-sky-blue">
+              Time Frame
+              <IconAngleDown />
+            </Button>
+          </Dropdown>
 
-        <Dropdown
-          menu={{ items: statusItems }}
-          trigger={["click"]}
-          placement="bottomRight"
-        >
-          <Button className="button-sky-blue">
-            Status
-            <IconAngleDown />
-          </Button>
-        </Dropdown>
-      </Col>
-    </Row>
+          <Dropdown
+            menu={{ items: statusItems }}
+            trigger={["click"]}
+            placement="bottomRight"
+          >
+            <Button className="button-sky-blue">
+              Status
+              <IconAngleDown />
+            </Button>
+          </Dropdown>
+        </Col>
+      </Row>
 
-    <div className="mt-4">
-      <BoxWrapper>
-        <GlobalTable
-          columns={tableColumns}
-          tableData={tableData}
-        />
-      </BoxWrapper>
+      <div className="mt-4">
+        <BoxWrapper>
+          <GlobalTable
+            columns={tableColumns}
+            tableData={tableData}
+          />
+        </BoxWrapper>
+      </div>
     </div>
-  </div>
   )
 }
 export default CompanyAdmin

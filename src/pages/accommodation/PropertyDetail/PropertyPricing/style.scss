@@ -13,6 +13,10 @@
     padding: 10px 40px;
     margin-top: 30px;
 
+    @media (max-width: 575px) {
+      padding: 10px 20px;
+    }
+
     .pricing-card-list {
       list-style: none;
       padding: 0;
@@ -40,7 +44,10 @@
           font-weight: 400;
           line-height: 1.5;
           margin-left: auto;
-          min-width: 190px;
+
+          @media (min-width: 992px) {
+            min-width: 190px;
+          }
         }
 
         .during-your-stay {
@@ -71,7 +78,9 @@
               font-weight: 500;
               line-height: 1.5;
               margin-left: auto;
-              min-width: 180px
+              @media (min-width: 992px) {
+                min-width: 180px
+              }
             }
           }
           .utilities-list {
@@ -97,7 +106,9 @@
               }
 
               .utilities-list-item-value {
-                min-width: 190px;
+                @media (min-width: 992px) {
+                  min-width: 190px;
+                }
               }
             }
           }

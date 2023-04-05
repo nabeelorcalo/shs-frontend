@@ -4,6 +4,7 @@ import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, BoxWrapper } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import useCustomHook from "../actionHandler";
 
 const tableData = [
   {
@@ -59,9 +60,12 @@ const tableData = [
 ];
 
 const CompaniesMain = () => {
+  const action = useCustomHook()
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const searchValue = () => { };
+  const csvColums = ["Sr.No", "University Name", "Contact Person", "Email", "No.Of Interns", "Phone Number", "Address", "Status"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -134,6 +138,7 @@ const CompaniesMain = () => {
       title: "Actions",
     },
   ];
+
   const menu2 = (
     <Menu>
       <Menu.Item key="1">View Details</Menu.Item>
@@ -202,7 +207,9 @@ const CompaniesMain = () => {
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
                 value={value}
-                setValue={setValue}
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvColums, tableData, "Companies Detail")
+                }}
               />
             </div>
           </div>

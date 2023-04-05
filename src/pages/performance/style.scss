@@ -62,7 +62,6 @@
 .performance-container {
   display: flex;
   flex-wrap: wrap;
-
   .performance-left-subcontainer,
   .performance-right-subcontainer {
     width: 50%;
@@ -84,8 +83,7 @@
   .overall-performance-txt {
     margin-bottom: 16px;
   }
-
-  .icon-btn {
+ .icon-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,20 +109,26 @@
 }
 
 // History button of page header
-.performance-history-btn {
-  display: flex;
-  justify-content: center;
-  padding: 12px;
-  width: 154px;
-  border-radius: 8px;
-  color: $teriary-bg-color;
-  border: 1px solid $teriary-bg-color;
+.shs-page-header{
+    .performance-history-btn {
+      display: flex;
+      justify-content: center;
+      padding: 12px;
+      width: 154px;
+      border-radius: 8px;
+      color: $teriary-bg-color;
+      border: 1px solid $teriary-bg-color;
+    }
+    .performance-history-btn:hover {
+      color: $teriary-light-bg-color;
+      border: 1px solid $teriary-light-bg-color;
+    }
+    @media only screen and (max-width:575px) {
+      align-items: flex-start;
+      flex-direction: column;
+     }
 }
 
-.performance-history-btn:hover {
-  color: $teriary-light-bg-color;
-  border: 1px solid $teriary-light-bg-color;
-}
 
 // Company Admin: performance/history
 .company-admin-performance-history,
@@ -167,10 +171,6 @@
 
   .icon-btn:focus {
     outline: none;
-  }
-
-  .performace-history-list {
-    margin: 20px 0;
   }
 
   .ant-progress-text {
