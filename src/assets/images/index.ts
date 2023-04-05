@@ -56,7 +56,7 @@ export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
 export { ReactComponent as DocumentUploadIcon } from "./login/document-upload.svg";
 export { ReactComponent as DeleteIcon } from './profile/student/delete.svg';
-export { ReactComponent as UploadIcon } from './profile/student/upload.svg';
+export { ReactComponent as UploadIcon } from './profile/student/Upload.svg';
 
 // Footer Icons
 export { ReactComponent as Round } from "./login/round.svg";

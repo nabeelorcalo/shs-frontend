@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal, Space, Switch } from "antd";
 import { Col, Form, Input, Row } from "antd";
 import "../../../style.scss";
-import upload from "../../../../../assets/images/profile/student/upload.svg";
+import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { CommonDatePicker } from "../../../../../components";
