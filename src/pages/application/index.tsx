@@ -19,12 +19,12 @@ import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
 
 const btnStyle = {
-  "applied": "p-1 rounded-lg primary-bg-color white-color",
-  "interviewed": "p-1 rounded-lg text-info-bg-color white-color",
-  "shortlisted": "p-1 rounded-lg purple-bg white-color",
-  "offerletter": "p-1 rounded-lg light-purple-bg white-color",
-  "hired": "p-1 rounded-lg text-success-bg-color white-color",
-  "rejected": "p-1 rounded-lg secondary-bg-color white-color",
+  "applied": "px-2 py-1 rounded-lg primary-bg-color white-color",
+  "interviewed": "px-2 py-1 rounded-lg text-info-bg-color white-color",
+  "shortlisted": "px-2 py-1 rounded-lg purple-bg white-color",
+  "offerletter": "px-2 py-1 rounded-lg light-purple-bg white-color",
+  "hired": "px-2 py-1 rounded-lg text-success-bg-color white-color",
+  "rejected": "px-2 py-1 rounded-lg secondary-bg-color white-color",
 }
 
 const PopOver = ({ state }: any) => {
@@ -53,7 +53,7 @@ const PopOver = ({ state }: any) => {
 };
 
 
-const CompanyData = ({companyName, companyNature}:any) => {
+const CompanyData = ({ companyName, companyNature }: any) => {
   return (
     <div className="flex flex-row align-center gap-2">
       <Avatar
@@ -129,7 +129,7 @@ const Application = () => {
     {
       no: "01",
       date_applied: "01/07/2022",
-      company: {name: "Alphabet Inc.", details:"Software Agency"},
+      company: { name: "Alphabet Inc.", details: "Software Agency" },
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "On site",
@@ -141,7 +141,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
-      company: {name: "Intuit Inc.", details:"Sports"},
+      company: { name: "Intuit Inc.", details: "Sports" },
       type_of_work: "Full Time",
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
@@ -153,7 +153,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
-      company: {name: "ServiceNOW", details:"Software Solutions"},
+      company: { name: "ServiceNOW", details: "Software Solutions" },
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
@@ -165,7 +165,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
-      company: {name: "kla Corporation Inc.", details:"Logistics"},
+      company: { name: "kla Corporation Inc.", details: "Logistics" },
       type_of_work: "Full Time",
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
@@ -177,7 +177,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
-      company: {name: "SnowFlake Inc.", details:"Software Tech"},
+      company: { name: "SnowFlake Inc.", details: "Software Tech" },
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
@@ -189,7 +189,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
-      company: {name: "WorkDay Inc.", details:"Design Tech"},
+      company: { name: "WorkDay Inc.", details: "Design Tech" },
       type_of_work: "Full Time",
       internship_type: "Paid",
       nature_of_work: "Hybrid (London)",
@@ -201,7 +201,7 @@ const Application = () => {
     {
       no: "02",
       date_applied: "01/07/2022",
-      company: {name: "Fortinet Inc.", details:"Game Agency"},
+      company: { name: "Fortinet Inc.", details: "Game Agency" },
       type_of_work: "Part Time",
       internship_type: "Un-Paid",
       nature_of_work: "Virtual",
@@ -222,25 +222,27 @@ const Application = () => {
         nature_of_work: item.nature_of_work,
         position: item.position,
         status:
-          <p
-            className={
+          <p>
+            <span
+              className={
 
-              `text-md ${item.status === "Applied" ? btnStyle["applied"]
-                :
-                item.status === "Interviewed" ? btnStyle["interviewed"]
+                `text-md ${item.status === "Applied" ? btnStyle["applied"]
                   :
-                  item.status === "Short Listed" ? btnStyle["shortlisted"]
+                  item.status === "Interviewed" ? btnStyle["interviewed"]
                     :
-                    item.status === "Offer Letter" ? btnStyle["offerletter"]
+                    item.status === "Short Listed" ? btnStyle["shortlisted"]
                       :
-                      item.status === "Hired" ? btnStyle["hired"]
+                      item.status === "Offer Letter" ? btnStyle["offerletter"]
                         :
-                        item.status === "Rejected" ? btnStyle["rejected"]
+                        item.status === "Hired" ? btnStyle["hired"]
                           :
-                          btnStyle["offerletter"]}`
-            }
-          >
-            {item.status}
+                          item.status === "Rejected" ? btnStyle["rejected"]
+                            :
+                            btnStyle["offerletter"]}`
+              }
+            >
+              {item.status}
+            </span>
           </p>,
         actions: <PopOver state={setShowStageStepper} />
       }
