@@ -168,6 +168,7 @@ const GeneralInformation = () => {
             >
               <Input.Group compact>
                 <Select
+                  size="large"
                   defaultValue="+92"
                   style={{ width: "25%" }}
                 >
@@ -175,6 +176,7 @@ const GeneralInformation = () => {
                   <Option value="+92">+92</Option>
                 </Select>
                 <AutoComplete
+                  size="large"
                   style={{ width: "75%" }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: "text 1" }, { value: "text 2" }]}
@@ -292,11 +294,11 @@ const GeneralInformation = () => {
               name="phone"
               label="Phone Number"
               rules={[{ required: true, message: 'Please input your phone number!' }]}
-
+              
             >
               <Input.Group compact>
                 <Select
-
+                  size="large"
                   defaultValue="+92"
                   style={{ width: "25%" }}
                 >
@@ -304,7 +306,7 @@ const GeneralInformation = () => {
                   <Option value="+92">+92</Option>
                 </Select>
                 <AutoComplete
-
+                  size="large"
                   style={{ width: "75%" }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: "text 1" }, { value: "text 2" }]}
