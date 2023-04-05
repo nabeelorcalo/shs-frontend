@@ -14,16 +14,16 @@ const options = {
   },
 
   title: {
-    text: 'UK Map'
+    text: ''
   },
 
   mapNavigation: {
-    enabled: true,
-    buttonOptions: {
-      verticalAlign: 'bottom'
-    }
+    enabled: false,
   },
-
+  legend: { enabled: false },
+  credits: {
+    enabled: false
+  },
   colorAxis: {
     min: 0
   },
@@ -42,7 +42,7 @@ const options = {
         color: 'red'
       }
     },
-    
+
     dataLabels: {
       enabled: false,
       format: '{point.name}'
@@ -50,7 +50,7 @@ const options = {
   }]
 };
 
-const UKMapChart = () => {
+export const UKMapChart = () => {
   return (
     <HighchartsReact
       highcharts={Highcharts}
@@ -59,5 +59,3 @@ const UKMapChart = () => {
     />
   );
 };
-
-export default UKMapChart;
