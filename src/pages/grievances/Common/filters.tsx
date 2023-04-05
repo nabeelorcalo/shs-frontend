@@ -32,7 +32,6 @@ const Filters: React.FC = (props: any) => {
     console.log("values", values)
   }
   const ResetHandler = () => {
-    console.log("Dddddd")
     options = []
   }
 

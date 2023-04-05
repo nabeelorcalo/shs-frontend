@@ -8,6 +8,7 @@ import {
   AllGrievances,
   Clock24h,
   ClockGrievances,
+  GrievancesArrowForward,
   GrievancesAvater,
   GrievancesDisLike,
   GrievancesLike,
@@ -96,8 +97,9 @@ const Grievance = () => {
                 </div>
                
               </div>
-              <LineGrievances  className='mr-5'/>
-              <div className='flex flex-row  w-full'>
+            
+              <div className='flex flex-row  w-full '>
+              <div className='mr-5'><LineGrievances /></div> 
                 <div className='flex flex-row'>
                   <ClockGrievances />
                   <div className='flex flex-col'>
@@ -132,7 +134,7 @@ const Grievance = () => {
               <div className="view-all-btn ">
                <NavLink to="/grievances/all-grievance/grievance-detials">
                 <span className='capitalize  xxl:mx-2 white-color' >view</span >
-                <span  className='capitalize ml-1 xxl:mx-2 white-color'><ArrowRightOutlined /></span> 
+                <span  className='capitalize ml-1 xxl:mx-2 white-color'><GrievancesArrowForward /></span> 
                 </NavLink> 
               </div>
             </BoxWrapper>

@@ -4,7 +4,6 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from '../../../api';
 import csv from '../../../helpers/csv';
-import svg from '../../assets/images/avatar1.png';
 
 
 const useCustomHook = () => {
@@ -30,20 +29,29 @@ const useCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
+
     let TableData = () => {
       if (selectedTab === "1") {
-        return data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
-          [no, subject, type, date, escalatedTo, status]
-        )
+       return data.map(({ no, escalatedBy, subject, type, date, status }: any) =>
+       [no, escalatedBy, subject, type, date, status]
+     )
       } else if (selectedTab === "2") {
-        return data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
-          [no, subject, type, date, escalatedTo, status]
-        )
+       return data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
+       [no, subject, type, date, escalatedTo, status]
+     )
+      } else if (selectedTab === "3") {
+       return data.map(({ no, escalatedBy, subject, type, date, escalatedTo, status }: any) =>
+       [no, escalatedBy, subject, type, date, escalatedTo, status]
+     )
+      } else if (selectedTab === "4") {
+       return data.map(({ no, escalatedBy, subject, type, date, escalatedTo, status }: any) =>
+       [no, escalatedBy, subject, type, date, escalatedTo, status]
+     )
+      } else {
+       null
       }
-      else {
-        null
-      }
-    }
+        }
+
     const body = TableData()
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);

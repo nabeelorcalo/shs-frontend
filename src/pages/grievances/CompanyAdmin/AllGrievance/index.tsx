@@ -18,10 +18,10 @@ import {
   GrievancesAvater3,
   GrievancesAvater4
 } from '../../../../assets/images'
-import useCustomHook from '../../actionHandler'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import './style.scss'
-const escalatedByMeTableData = [
+import useCustomHook from '../action.handler'
+const escalatedToMeTableData = [
   {
     no: '01',
     avater: <GrievancesAvater1/>,
@@ -181,7 +181,7 @@ const managerGrievancesTableData = [
 const index = () => {
   const items: TabsProps["items"] = [
     {
-      children: <EscalatedToMe escalatedByMeTableData={escalatedByMeTableData} />,
+      children: <EscalatedToMe escalatedToMeTableData={escalatedToMeTableData} />,
       key: '1',
       label: 'Escalated To Me'
     },
@@ -213,7 +213,35 @@ const index = () => {
   ];
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [selectedTab, setSelectedTab] = useState<any>(1)
+  const [selectedTab, setSelectedTab] = useState<any>("1")
+  
+  const downloadPdfCsvData = () => {
+    if (selectedTab === "1") {
+     return escalatedToMeTableData
+    } else if (selectedTab === "2") {
+     return EscalatedByMeTableData
+    } else if (selectedTab === "3") {
+     return internGrievancesTableData
+    } else if (selectedTab === "4") {
+     return managerGrievancesTableData
+    } else {
+     null
+    }
+      }
+
+  const downloadPdfCsvColumn = () => {
+    if (selectedTab === "1") {
+     return TableColumn1
+    } else if (selectedTab === "2") {
+     return TableColumn2
+    } else if (selectedTab === "3") {
+     return TableColumn3
+    } else if (selectedTab === "4") {
+     return TableColumn4
+    } else {
+     null
+    }
+      }
   const handleChange = () => {
   }
   return (
@@ -241,11 +269,7 @@ const index = () => {
               requiredDownloadIcon
               options={["pdf", "excel"]}
               setValue={() => {
-                action.downloadPdfOrCsv(event , selectedTab === "2" ?
-                 TableColumn2 : selectedTab === "3" ? TableColumn3: selectedTab === "4" ? TableColumn4 :  TableColumn1  , 
-                  selectedTab === "2" ?  EscalatedByMeTableData : selectedTab === "3" ? internGrievancesTableData:selectedTab === "4" ?
-                   managerGrievancesTableData : escalatedByMeTableData , 
-                   "All Grievance",  selectedTab )
+                action.downloadPdfOrCsv(event , downloadPdfCsvColumn(),  downloadPdfCsvData(), "All Grievance",  selectedTab )
               }}
 
             />

@@ -3,8 +3,9 @@ import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from '../../../../com
 import { Divider, Button, Typography, Form, Input } from 'antd'
 import ManagerRemarks from '../../Common/managerRemarks'
 import { NavLink } from 'react-router-dom'
-import './style.scss'
+import signature from "../../../../assets/images/Report/signature.svg"
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import './style.scss'
 
 const { TextArea } = Input;
 
@@ -82,7 +83,9 @@ const index = () => {
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-                <div className='sign-box w-full rounded-lg'></div>
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
                 <div className='sign-box w-full rounded-lg flex items-center justify-around'>
@@ -126,9 +129,11 @@ const index = () => {
         <Form layout="vertical" form={form}>
           <Typography className='text-xl font-semibold my-3'>Feedback <span className='form-title font-medium'>(Optional)</span></Typography>
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
-          <div className='flex gap-10'>
+          <div className='xs:flex-col sm:flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg'></div>
+            <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
               <div className='sign-box w-full rounded-lg flex items-center justify-around'>

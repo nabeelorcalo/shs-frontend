@@ -31,12 +31,21 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-
-    let data1 = selectedTab === "2" ? data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
-      [no, subject, type, date, escalatedTo, status]
-    ) : data.map(({ no, subject, type, date, escalatedTo, status  }: any) => [no, subject, type, date, escalatedTo, status ]
-    )
-    const body = data1
+    let TableData = () => {
+      if (selectedTab === "1") {
+        return data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
+        [no, subject, type, date, escalatedTo, status]
+        )
+      } else if (selectedTab === "2") {
+        return data.map(({ no, subject, type, date, escalatedTo, status  }: any) => 
+        [no, subject, type, date, escalatedTo, status ]
+        )
+      }
+      else {
+        null
+      }
+    }
+    const body = TableData()
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);

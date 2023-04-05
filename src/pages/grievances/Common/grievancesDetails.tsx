@@ -169,15 +169,15 @@ const GrievancesDetails = () => {
         </Col>
 
       </Row>
-      <Alert
+       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Proceed"
         state={showSuccess}
         setState={setShowSuccess}
-        alertType="success"
+        type="success"
         width={500}
         title=""
-        children={<p>Are you sure you want to delete this?</p>}
+        children={<p>Do you want to mack thid grievance as mark as resolved?</p>}
       />
 
     </div>

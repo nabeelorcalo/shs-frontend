@@ -73,9 +73,29 @@ const index = () => {
   const TableColumn1 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
   const TableColumn2 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
   const action = useCustomHook();
-  const [selectedTab, setSelectedTab] = useState<any>(1)
+  const [selectedTab, setSelectedTab] = useState<any>("1")
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
+
+  const downloadPdfCsvData = () => {
+    if (selectedTab === "1") {
+     return escalatedToMeTableData
+    } else if (selectedTab === "2") {
+     return escalatedByMeTableData
+    } else {
+     null
+    }
+      }
+
+  const downloadPdfCsvColumn = () => {
+    if (selectedTab === "1") {
+     return TableColumn1
+    } else if (selectedTab === "2") {
+     return TableColumn2
+    } else {
+     null
+    }
+      }
   const handleChange = () => {
   }
   return (
@@ -95,10 +115,7 @@ const index = () => {
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(event, selectedTab === "2" ?
-                TableColumn2 : TableColumn1,
-                selectedTab === "2" ? escalatedByMeTableData : escalatedToMeTableData,
-                "All Grievance", selectedTab)
+              action.downloadPdfOrCsv(event,downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
             }}
           />
               <Button

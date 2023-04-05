@@ -6,6 +6,7 @@ import { Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ManagerRemarksForAssmentForm from './manageRemarksforUni';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
+import signature from "../../../../assets/images/Report/signature.svg"
 import './style.scss'
 
 const index = () => {
@@ -82,10 +83,14 @@ const index = () => {
             <Typography className='font-normal text-base my-1'>Something I really appreciate about you is your aptitude for problem-solving </Typography>
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-                <div className='sign-box w-full rounded-lg'></div>
+                <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-              <div className='sign-box w-full rounded-lg'></div>
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
               </div>
             </div>
           </Form>
@@ -124,12 +129,16 @@ const index = () => {
           <Typography className='text-xl font-semibold my-3'>Feedback</Typography>
           <Typography className='font-normal text-base my-1'>Something I really appreciate about you is your aptitude for problem-solving </Typography>
 
-          <div className='flex gap-10'>
+          <div className='xs:flex-col sm:flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg'></div>
+                  <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-            <div className='sign-box w-full rounded-lg'></div>
+                <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
 
             </div>
           </div>

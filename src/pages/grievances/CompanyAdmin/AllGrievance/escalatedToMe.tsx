@@ -5,7 +5,7 @@ import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
 
 
-const escalatedByMeTableColumns =
+const EscalatedToMeTableColumn =
   [
     {
       dataIndex: 'no',
@@ -77,9 +77,9 @@ const escalatedByMeTableColumns =
 const EscalatedToMe = (props:any) => {
   return (
     <GlobalTable
-      columns={escalatedByMeTableColumns}
+      columns={EscalatedToMeTableColumn}
       pagination
-      tableData={props.escalatedByMeTableData}
+      tableData={props.escalatedToMeTableData}
     />
   )
 }

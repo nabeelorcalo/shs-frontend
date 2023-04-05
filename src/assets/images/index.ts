@@ -443,6 +443,7 @@ export { ReactComponent as GrievancesAvater1 } from './Grievances/avater-1.svg';
 export { ReactComponent as GrievancesAvater2 } from './Grievances/avater-2.svg';
 export { ReactComponent as GrievancesAvater3 } from './Grievances/avater-3.svg';
 export { ReactComponent as GrievancesAvater4 } from './Grievances/avater-4.svg';
+export { ReactComponent as GrievancesArrowForward } from './Grievances/arrowForward.svg';
 
 // Recipes Icons
 export { ReactComponent as IconAddRecipe } from "./recipes/icon-add-recipe.svg";
