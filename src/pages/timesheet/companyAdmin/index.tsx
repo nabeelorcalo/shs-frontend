@@ -4,29 +4,40 @@ import CommonHeader from "../commonHeader";
 import { timesheetMock } from "../mockData";
 import "./style.scss";
 import { PageHeader } from "../../../components";
+import { useState } from "react";
+import { downloadPDF } from "../../../components/pdfExcelDownload";
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
+  const [download, setDownload] = useState('');
+
+  const handleDownload = (val: string) => {
+    setDownload(val);
+    downloadPDF('timesheet-pdf-download');
+  }
+
   return (
     <div className="timesheet-wrapper">
       <PageHeader title='Timesheet' bordered />
-      
-      <CommonHeader />
 
-      {timesheetMock.map((data, i) => (
-        <ContractCard key={i}
-          className='mt-[30px] timesheet-work-history'
-          cardWithProgressBar
-          userName={data.userName}
-          designation={data.designation}
-          userImg={data.userImg}
-          progress={data.progess}
-          strokeColor={'#3DC575'}
-          totalHours={data.totalHours}
-          workedHours={data.workedHours}
-          handleViewAll={() => navigate(`/timesheet/history/${data.id}`)}
-        />
-      ))}
+      <CommonHeader download={download} setDownload={handleDownload} />
+
+      <div id="timesheet-pdf-download">
+        {timesheetMock.map((data, i) => (
+          <ContractCard key={i}
+            className='mt-[30px] timesheet-work-history'
+            cardWithProgressBar
+            userName={data.userName}
+            designation={data.designation}
+            userImg={data.userImg}
+            progress={data.progess}
+            strokeColor={'#3DC575'}
+            totalHours={data.totalHours}
+            workedHours={data.workedHours}
+            handleViewAll={() => navigate(`/timesheet/history/${data.id}`)}
+          />
+        ))}
+      </div>
 
     </div>
   )

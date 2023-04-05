@@ -2,36 +2,36 @@ import { useParams } from 'react-router-dom'
 import CommonHeader from '../commonHeader';
 import CommonTableCollapsible from '../commonTableCollapsible'
 import { timesheetMock } from '../mockData';
+import { Breadcrumb } from '../../../components';
+import { useState } from 'react';
 
 const ViewHistory = () => {
 
-    const { id } = useParams();
+  const { id } = useParams();
+  const [download, setDownload] = useState('');
 
-    const findTimesheet = timesheetMock.find(timesheet => timesheet.id === id);
+  const findTimesheet = timesheetMock.find(timesheet => timesheet.id === id);
 
-    return (
-        <div className='view-history-wrapper'>
-            <div className="timesheet-top-heading text-2xl flex items-center gap-4 font-semibold pb-[30px] mb-[30px] capitalize">
-                history
-                <span className='seperator'></span>
-                <span className='font-medium text-base'>Certificate</span>
-            </div>
+  return (
+    <div className='view-history-wrapper'>
 
-            <CommonHeader hideUser />
+      <Breadcrumb breadCrumbData={[{ name: 'History' }, { name: 'Timesheet', onClickNavigateTo: '/timesheet' }]} />
 
-            {findTimesheet?.history ? findTimesheet?.history.map((data) => (
-                <CommonTableCollapsible
-                    id={data.id}
-                    dateTime={data.dateTime}
-                    totalTasks={data.totalTasks}
-                    totalTime={data.totalTime}
-                    tableData={data.taskDetails}
-                />
-            )) :
-                <p className='font-medium opacity-[0.5] mt-[30px]'>No History Found...</p>
-            }
-        </div>
-    )
+      <CommonHeader hideUser download={download} setDownload={setDownload} />
+
+      {findTimesheet?.history ? findTimesheet?.history.map((data) => (
+        <CommonTableCollapsible
+          id={data.id}
+          dateTime={data.dateTime}
+          totalTasks={data.totalTasks}
+          totalTime={data.totalTime}
+          tableData={data.taskDetails}
+        />
+      )) :
+        <p className='font-medium opacity-[0.5] mt-[30px]'>No History Found...</p>
+      }
+    </div>
+  )
 }
 
 export default ViewHistory
