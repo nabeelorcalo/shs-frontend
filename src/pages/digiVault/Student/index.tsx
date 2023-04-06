@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "react-circular-progressbar/dist/styles.css";
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "./settingModal";
-import {GlobalTable} from "../../../components";
+import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
@@ -201,7 +200,7 @@ const DigiVaultStudent = () => {
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
       />
-      
+
       <NewPasswordModal
         newPass={newPass}
         setNewPass={setNewPass}
@@ -265,18 +264,12 @@ const DigiVaultStudent = () => {
 
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
-            <Row gutter={[20,10]} className="storage-bar-header">
+            <Row gutter={[20, 10]} className="storage-bar-header">
               <Col xxl={10} xl={12} lg={24} md={8} sm={8} xs={24}>
-                <Progress
-                  strokeWidth={10}
-                  strokeColor={"#5D89F4"}
-                  strokeLinecap="butt"
-                  type="circle"
-                  percent={75}
-                   />
+                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
               </Col>
 
-              <Col xxl={14} xl={12}  lg={24} md={12}  sm={14} xs={24}  className="flex flex-col justify-center" >
+              <Col xxl={14} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>
               </Col>
