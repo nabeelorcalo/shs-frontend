@@ -49,7 +49,7 @@ const Agent = () => {
             occupiedProperties={6}
             reservedProperties={9}
             vacantProperties={3}
-            isSeprate={true}
+            isSeprate
           />
         </Col>
 
