@@ -9,7 +9,6 @@ const index = () => {
     'CompanyAdmin': <Structure />,
     'Manager': <ManagerStructure />,
     'Intern': <InternStructure />,
-
   }
   return (
     <>

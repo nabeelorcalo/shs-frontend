@@ -136,7 +136,7 @@ const ActivityLog = () => {
 
   const action = useCustomHook();
 
-  const csvAllColum = ["ID", "Users", "UserRole", "Activity", "Performed By", "Performer Role", "Date & Time"]
+  const csvAllColum = ["Sr.No", "Name", "Email", "PhoneNumber", "University" ,"City" , "Hired","Status"]
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);

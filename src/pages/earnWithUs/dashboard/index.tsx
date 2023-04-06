@@ -257,7 +257,6 @@ const Dashboard = () => {
                   title="Registered Members" 
                 />
               </div>
-              
             </Col>
             <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">

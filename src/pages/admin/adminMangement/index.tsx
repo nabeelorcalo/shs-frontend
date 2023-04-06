@@ -24,10 +24,45 @@ import { CalendarIcon } from "../../../assets/images";
 import { CommonDatePicker, DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, BoxWrapper } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
-
+import useCustomHook from "../actionHandler";
 import { Option } from "antd/es/mentions";
 
+const tableData = [
+  {
+    Actions: "fffff",
+    date: "23/09/2022",
+    status: "Active",
+    email: "anablack@gmail.com",
+    phoneNumber: "0333333333",
+    name: "Natwest Group",
+    no: "01",
+  },
+  {
+    Actions: "fffff",
+    date: "23/09/2022",
+    status: "Active",
+    phoneNumber: "0333333333",
+    email: "anablack@gmail.com",
+    no: "02",
+    name: "Natwest Group",
+  },
+  {
+    Actions: (
+      <div>
+        <EllipsisOutlined />
+      </div>
+    ),
+    date: "23/09/2022",
+    status: "Inactive",
+    phoneNumber: "0333333333",
+    email: "anablack@gmail.com",
+    no: "03",
+    name: "Natwest Group",
+  },
+];
+
 const AdminManagement = () => {
+  const action = useCustomHook()
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
@@ -42,6 +77,8 @@ const AdminManagement = () => {
   };
   const [openDrawer, setOpenDrawer] = useState(false);
   const searchValue = () => { };
+  const csvColum = ["No.",	"Name",	"Email",	"Phone Number",	"Date",	"Status"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -110,46 +147,7 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
-  const tableData = [
-    {
-      Actions: "fffff",
-      date: "23/09/2022",
-      status: "Active",
-
-      email: "anablack@gmail.com",
-      phoneNumber: "0333333333",
-      name: "Natwest Group",
-      no: "01",
-    },
-    {
-      Actions: "fffff",
-      date: "23/09/2022",
-
-      status: "Active",
-
-      phoneNumber: "0333333333",
-      email: "anablack@gmail.com",
-
-      no: "02",
-      name: "Natwest Group",
-    },
-    {
-      Actions: (
-        <div>
-          <EllipsisOutlined />
-        </div>
-      ),
-      date: "23/09/2022",
-
-      status: "Inactive",
-
-      phoneNumber: "0333333333",
-      email: "anablack@gmail.com",
-
-      no: "03",
-      name: "Natwest Group",
-    },
-  ];
+  
   return (
     <div className="admin-management">
       <Drawer
@@ -215,7 +213,9 @@ const AdminManagement = () => {
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
                 value={value}
-                setValue={setValue}
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvColum, tableData, "Admin Management Detail")
+                }}
               />
             </div>
             <Button

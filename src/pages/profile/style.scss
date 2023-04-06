@@ -227,34 +227,34 @@
     border-radius: 8px;
     color: $white-bg-color;
   }
-}
-.animate {
-  background: "#FFFFFF";
-  border-radius: 8px;
-  padding: 1rem;
-  margin-top: 20px;
-}
-.animate:hover {
-  background-color: $text-input-bg-color;
-}
-
-.animate:hover .button-ts {
-  display: block;
-  display: flex;
-  gap: 10px;
-}
-
-.animate .button-ts {
-  display: none;
-}
-
-.title {
-  font-family: "Outfit";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 20px;
-  line-height: 28px;
-  color: $text-primary-title-color;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  .animate {
+    background: "#FFFFFF";
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 20px;
+  }
+  .animate:hover {
+    background-color: $text-input-bg-color;
+  }
+  
+  .animate:hover .button-ts {
+    display: block;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .animate .button-ts {
+    display: none;
+  }
+  
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-primary-title-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
