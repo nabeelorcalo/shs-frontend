@@ -29,7 +29,7 @@ function Organization ({ org, onCollapse, collapsed }: any) {
             className="borderLeft absolute w-[80px] lg:w-[115px] "
             style={{ border: `1px solid ${org.color}` }}
           ></div>
-          <div className="avater-content absolute left-[30%] lg:left-[35%] ">
+          <div className="avater-content absolute left-[30%] lg:left-[40%] ">
             <Avatar
               className=""
               size={48}
