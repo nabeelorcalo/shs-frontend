@@ -8,13 +8,14 @@ import CommonTableCollapsible from '../commonTableCollapsible/index';
 // const { Panel } = Collapse;
 import './style.scss';
 import { Breadcrumb } from '../../../components';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const TimeSheetHistory = () => {
 
   const { id } = useParams();
   const [download, setDownload] = useState('');
   const findTimesheet = timesheetMock.find(timesheet => timesheet.id === id);
+  console.log(download);
 
   return (
     <div className='timesheet-history'>
@@ -23,8 +24,8 @@ const TimeSheetHistory = () => {
 
       {findTimesheet?.history ? findTimesheet?.history.map((data) => (
         <CommonTableCollapsible
+          activeKey={download === 'pdf' ? data.id : ''}
           key={data.id}
-          defaultActiveKey={data.id}
           id={data.id}
           dateTime={data.dateTime}
           totalTasks={data.totalTasks}
