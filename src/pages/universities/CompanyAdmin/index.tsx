@@ -12,7 +12,6 @@ import './style.scss'
 import UniversityTable from './universityTable';
 import useCustomHook from './actionHandler';
 
-
 const index: React.FC = () => {
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
   const escalatedByMeTableData = [
