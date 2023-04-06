@@ -81,7 +81,6 @@ const PayrollAddCategory = () => {
     setValue(e.target.value);
   };
 
-  console.log("formValues", formValues);
   return (
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
