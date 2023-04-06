@@ -317,16 +317,16 @@ const ListingUpdate = () => {
                         <Form.Item name="buildingHas">
                           <Checkbox.Group>
                             <Row gutter={[30,20]}>
-                              <Col md={24} lg={12} xl={12} xxl={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingElevator">Elevator</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingParking">Parking</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingPoolAccess">Pool Access</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingGYM">GYM</Checkbox>
                               </Col>
                             </Row>
@@ -340,22 +340,22 @@ const ListingUpdate = () => {
                         <Form.Item name="PropertyHas">
                           <Checkbox.Group>
                             <Row gutter={[30, 20]}>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyBalcony">Balcony</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyEquippedKitchen">Equipped Kitchen</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyClothesDryer">Clothes Dryer</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyDishWasher">Dish Washer</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyOven">Oven</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyWashingMachine">Washing machine</Checkbox>
                               </Col>
                             </Row>
@@ -449,34 +449,34 @@ const ListingUpdate = () => {
                         <Form.Item name="kindOfAmenities" label="What kind of amenities does bedroom 1 have? ">
                           <Checkbox.Group>
                             <Row gutter={[30, 30]}>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="ChestOfDrawers">Chest of drawers</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="desk">Desk</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="rivateBathroom">Private Bathroom</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="keyLocker">Key or Locker</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Wardrobe">Wardrobe</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Shelving">Shelving</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="TV">TV</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Wi-fi">Wi-fi</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="carpetedFloors">Carpeted Floors</Checkbox>
                               </Col>
-                              <Col md={24} lg={12} xl={12} xxl={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Other">Other</Checkbox>
                               </Col>
                             </Row>
