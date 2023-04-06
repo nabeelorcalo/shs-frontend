@@ -101,4 +101,4 @@ export * from './InternshipProgressCard';
 export * from './InternshipPipeLineCard';
 export * from './Tabs';
 export * from './SignatureAndUploadModal';
-
+export * from './Graph/AreaMap';

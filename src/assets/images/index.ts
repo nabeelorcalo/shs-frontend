@@ -582,3 +582,10 @@ export {ReactComponent as CompanyLogoOne} from '../../assets/images/dashboard/st
 
 export { default as Certificate1 } from './Performance/certificate1.png';
 export { default as Certificate2 } from './Performance/certificate2.png';
+
+// student profile 
+export { ReactComponent as ProfileUser } from '../../assets/images/profile/student/user.svg';
+export { ReactComponent as GeneralInfo } from '../../assets/images/profile/student/GeneralInfo.svg';
+export { ReactComponent as ProfileDoc } from '../../assets/images/profile/student/document-text.svg';
+export { ReactComponent as Imigration } from '../../assets/images/profile/student/Immigration.svg';
+export { ReactComponent as ProfileCards } from '../../assets/images/profile/student/cards.svg';

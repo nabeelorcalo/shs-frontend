@@ -262,11 +262,10 @@ const DigiVaultStudent = () => {
             </Row>
           </div>
         </Col>
-
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
             <Row gutter={[20,10]} className="storage-bar-header">
-              <Col xxl={10} xl={12} lg={24} md={8} sm={8} xs={24}>
+              <Col xxl={12} xl={12} lg={24} md={12} sm={24} xs={24}>
                 <Progress
                   strokeWidth={10}
                   strokeColor={"#5D89F4"}
@@ -275,8 +274,7 @@ const DigiVaultStudent = () => {
                   percent={75}
                    />
               </Col>
-
-              <Col xxl={14} xl={12}  lg={24} md={12}  sm={14} xs={24}  className="flex flex-col justify-center" >
+              <Col xxl={12} xl={12}  lg={24} md={12}  sm={24} xs={24}  className="flex flex-col justify-center" >
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>
               </Col>
