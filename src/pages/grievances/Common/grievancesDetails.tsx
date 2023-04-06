@@ -30,7 +30,7 @@ const GrievancesDetails = () => {
       <Row gutter={[16, 16]}>
         <Col sm={24} md={24} lg={16} xl={16} xxl={18}>
           <BoxWrapper>
-            <div className='flex justify-between'>
+            <div className='flex max-sm:flex-col justify-between'>
               <Text className='text-xl font-medium'>Attendance Log Issue</Text>
               <Text onClick={() => { setShowSuccess(!showSuccess) }} className=' font-medium text-base px-1 attandance-button text-input-bg-color cursor-pointer  '>
                 <CheckOutlined /> Attendance Log Issue</Text>

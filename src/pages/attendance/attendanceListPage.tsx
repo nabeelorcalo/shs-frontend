@@ -18,7 +18,6 @@ import {
 import {
   CardViewIcon,
   GlassMagnifier,
-  Success,
   TableViewIcon,
 } from "../../assets/images";
 import useCustomHook from './actionHandler';
