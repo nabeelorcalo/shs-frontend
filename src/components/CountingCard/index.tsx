@@ -193,18 +193,38 @@ export const CountingCard: FC<ICountingCard> = (props) => {
       blueBg
     );
 
-    // university dashboard
-    registeredStudents &&
-    handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
+  // university dashboard
+  registeredStudents &&
+    handleCardList(
+      <PeopleIcon />,
+      "Registered Students",
+      registeredStudents,
+      blueBg
+    );
 
-    hiredStudents &&
-    handleCardList(<HiredStudentsIcon />, "Hired Students", hiredStudents, greenBg);
+  hiredStudents &&
+    handleCardList(
+      <HiredStudentsIcon />,
+      "Hired Students",
+      hiredStudents,
+      greenBg
+    );
 
-    completedInternship &&
-    handleCardList(<PresentInternsIcon />, "Completed Internship", completedInternship, greenBg);
+  completedInternship &&
+    handleCardList(
+      <PresentInternsIcon />,
+      "Completed Internship",
+      completedInternship,
+      greenBg
+    );
 
-    ongoingInternship &&
-    handleCardList(<OngoingIcon />, "Ongoing Internship", ongoingInternship, redBg);
+  ongoingInternship &&
+    handleCardList(
+      <OngoingIcon />,
+      "Ongoing Internship",
+      ongoingInternship,
+      redBg
+    );
 
   return (
     <Row
