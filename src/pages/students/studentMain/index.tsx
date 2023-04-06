@@ -108,6 +108,7 @@ const StudentMain = () => {
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
+      company:"Power source",
       date_of_joining: "01/07/2022",
     },
     {
@@ -115,6 +116,7 @@ const StudentMain = () => {
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
+      company:"CodingHub",
       date_of_joining: "01/07/2021",
     },
     {
@@ -122,6 +124,7 @@ const StudentMain = () => {
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
+      company:"Dev spot",
       date_of_joining: "01/07/2021",
     },
     {
@@ -129,6 +132,7 @@ const StudentMain = () => {
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
+      company:"Orcalo Holdings",
       date_of_joining: "01/07/2022",
     },
     {
@@ -136,6 +140,7 @@ const StudentMain = () => {
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
+      company:"Dev spot",
       date_of_joining: "01/07/2021",
     },
     {
@@ -143,6 +148,7 @@ const StudentMain = () => {
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
+      company:"CodingHub",
       date_of_joining: "01/07/2021",
     },
   ];
@@ -157,6 +163,7 @@ const StudentMain = () => {
         name: item.name,
         title: item.title,
         companyrep: item.companyrep,
+        company: item.company,
         date_of_joining: item.date_of_joining,
         actions: <PopOver />
       }
@@ -222,9 +229,16 @@ const StudentMain = () => {
             {
               listandgrid ? <div className="flex flex-row flex-wrap gap-6">
                 {
-                  cardDummyArray.map((items: any, idx: any) => {
+                  newTableData.map((items: any, idx: any) => {
                     return (
-                      <InternsCard />
+                      <InternsCard 
+                      posted_by={items.avatar}
+                      title={items.name} 
+                      department={items.title} 
+                      joining_date={items.date_of_joining} 
+                      date_of_birth={items.companyrep} 
+                      company={items.company}
+                      />
                     )
                   })
                 }

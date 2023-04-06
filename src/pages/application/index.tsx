@@ -20,12 +20,12 @@ import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 
 const btnStyle = {
-  "applied": "px-2 py-1 rounded-lg primary-bg-color white-color",
-  "interviewed": "px-2 py-1 rounded-lg text-info-bg-color white-color",
-  "shortlisted": "px-2 py-1 rounded-lg purple-bg white-color",
-  "offerletter": "px-2 py-1 rounded-lg light-purple-bg white-color",
-  "hired": "px-2 py-1 rounded-lg text-success-bg-color white-color",
-  "rejected": "px-2 py-1 rounded-lg secondary-bg-color white-color",
+  "Applied": "px-2 py-1 rounded-lg primary-bg-color white-color",
+  "Interviewed": "px-2 py-1 rounded-lg text-info-bg-color white-color",
+  "Short Listed": "px-2 py-1 rounded-lg purple-bg white-color",
+  "Offer Letter": "px-2 py-1 rounded-lg light-purple-bg white-color",
+  "Hired": "px-2 py-1 rounded-lg text-success-bg-color white-color",
+  "Rejected": "px-2 py-1 rounded-lg secondary-bg-color white-color",
 }
 
 const PopOver = ({ state }: any) => {
@@ -80,7 +80,7 @@ const Application = () => {
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
-
+  console.log(btnStyle.Applied)
   const columns = [
     {
       dataIndex: "no",
@@ -216,19 +216,7 @@ const Application = () => {
             <span
               className={
 
-                `text-md ${item.status === "Applied" ? btnStyle["applied"]
-                  :
-                  item.status === "Interviewed" ? btnStyle["interviewed"]
-                    :
-                    item.status === "Short Listed" ? btnStyle["shortlisted"]
-                      :
-                      item.status === "Offer Letter" ? btnStyle["offerletter"]
-                        :
-                        item.status === "Hired" ? btnStyle["hired"]
-                          :
-                          item.status === "Rejected" ? btnStyle["rejected"]
-                            :
-                            btnStyle["offerletter"]}`
+                `text-md` ${btnStyle.+item.status}
               }
             >
               {item.status}
