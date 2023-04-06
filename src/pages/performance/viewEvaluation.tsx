@@ -26,11 +26,12 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
+import "./style.scss";
 
 const ViewPerformance = () => {
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`},
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : (constants.USER_ROLE === constants.INTERN || constants.USER_ROLE === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
     { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
@@ -125,7 +126,7 @@ const ViewPerformance = () => {
           className='icon-btn'
           onClick={() => {
             action.downloadPdf(header, tableData);
-            Notifications({title:"Success", description:"Download Done",type:'success'})
+            Notifications({ title: "Success", description: "Download Done", type: 'success' })
           }}
           icon={<DownloadIconWithBg />}
         />
