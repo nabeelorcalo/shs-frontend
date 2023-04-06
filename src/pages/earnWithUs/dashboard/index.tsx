@@ -160,8 +160,8 @@ const Dashboard = () => {
           <Row gutter={30}>
             <Col xs={24} lg={12}>
               <div className="top-card">
-                <Row gutter={15}>
-                  <Col xs={12}>
+                <Row gutter={[20,20]}>
+                  <Col xs={24} md={24} lg={12}>
                     <div className="top-card-inner">
                       <div className="top-card-icon balance">
                         <IconWalletMoney />
@@ -172,7 +172,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                   </Col>
-                  <Col xs={12}>
+                  <Col xs={24} md={24} lg={12}>
                     <div className="top-card-inner with-divider">
                       <div className="top-card-icon inactive">
                         <IconInactiveMemberBal />
@@ -257,7 +257,6 @@ const Dashboard = () => {
                   title="Registered Members" 
                 />
               </div>
-              
             </Col>
             <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">

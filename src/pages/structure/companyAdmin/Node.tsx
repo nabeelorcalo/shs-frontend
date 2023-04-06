@@ -29,7 +29,6 @@ function Node({ o, parent }: any) {
       setCollapsed(!collapsed);
     };
    
-   
     return collapsed ? (
       <T
         label={
@@ -58,4 +57,3 @@ function Node({ o, parent }: any) {
   }
 
   export default Node
-  

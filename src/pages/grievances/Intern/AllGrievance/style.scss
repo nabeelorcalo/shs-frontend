@@ -1,15 +1,16 @@
 @import '../../../../scss//colors';
 .intern-blow-whistle-footer{
 
+
   .footer-cancel-btn {
-    border: 1px solid #4a9d77 !important;
-    color: #4a9d77 !important ;
+    border: 1px solid $teriary-bg-color!important;
+    color: $teriary-bg-color!important ;
     padding: 0px 20px;
   }
   .footer-submit-btn {
-    background: #4a9d77;
-    border: 1px solid #4a9d77;
-    color: #fff;
+    background: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+    color: $white-bg-color;
     padding: 0px 20px;
   }
 }
@@ -21,6 +22,12 @@
 }
 
 .add-grievance{
+  .blow-whistle-button{
+    &:hover{
+      color: $white-bg-color;
+    }
+
+  }
   .new{
     background: #FF6F31;
   }
@@ -31,6 +38,6 @@
     background: #1FBEC8;
   }
   .resolved{
-    background: #3DC575;
+    background: $text-success-color;
   }
   }

@@ -12,7 +12,7 @@ interface IDUMMYDATA {
 const InternTable = (props:IDUMMYDATA) => {
   const {dummyData ,menu } = props
 
-const escalatedByMeTableColumns =
+const interTableColumn =
   [
     {
       dataIndex: 'id',
@@ -76,7 +76,7 @@ const escalatedByMeTableColumns =
 
   return (
     <GlobalTable
-      columns={escalatedByMeTableColumns}
+      columns={interTableColumn}
       pagination
       tableData={dummyData}
     />
