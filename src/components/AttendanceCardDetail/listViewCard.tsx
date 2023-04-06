@@ -54,7 +54,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
           className={`${
             status === "present"
               ? "text-success-bg-color"
-              : "text-input-bg-color"
+              : "text-input-bg-color text-secondary-color font-semibold text-base"
           } align-middle`}
         >
           P
@@ -63,7 +63,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
         <Avatar
           size={40}
           className={`${
-            status === "absent" ? "text-error-bg-color" : "text-input-bg-color"
+            status === "absent" ? "text-error-bg-color" : "text-input-bg-color text-secondary-color font-semibold text-base"
           } align-middle`}
         >
           A
@@ -72,7 +72,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
         <Avatar
           size={40}
           className={`${
-            status === "leave" ? "text-warning-bg-color" : "text-input-bg-color"
+            status === "leave" ? "text-warning-bg-color" : "text-input-bg-color text-secondary-color font-semibold text-base"
           } align-middle`}
         >
           L

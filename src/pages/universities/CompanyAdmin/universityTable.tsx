@@ -1,4 +1,3 @@
-import React from 'react'
 import { GlobalTable } from '../../../components'
 import DropDownNew from '../../../components/Dropdown/DropDownNew'
 import { useNavigate } from 'react-router'

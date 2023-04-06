@@ -1,6 +1,9 @@
 @import '../../scss/colors.scss';
 
 .top-performance-list {
+  .top-perfomers-main{
+    height: 55px;
+  }
   .ant-typography {
     margin-bottom: 0;
   }
@@ -30,7 +33,7 @@
   }
 
   .performance-cards {
-    height: 500px;
+    height: 605px;
     overflow: auto;
   }
 }

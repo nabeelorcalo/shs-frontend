@@ -142,7 +142,7 @@ const UniversityPerformance = () => {
       <PageHeader actions title="Performance" >
         <Link
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-          className="performance-history-btn">
+          className="performance-history-btn font-semibold">
           View History
         </Link>
       </PageHeader>
