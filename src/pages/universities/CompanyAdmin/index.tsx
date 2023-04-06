@@ -83,7 +83,7 @@ const index: React.FC = () => {
         <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <SearchBar handleChange={handleChange} />
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end" >
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end company-right-sec">
           <Select className='w-[200px] select' placeholder="London" suffixIcon={<IconAngleDown />}>
             <Select.Option value="London">London</Select.Option>
             <Select.Option value="Bristol">Bristol</Select.Option>
