@@ -564,8 +564,8 @@ export { ReactComponent as TickCircleGreenIcon } from "./AllGoals/TickCircleGree
 export { ReactComponent as TickCircleGrayIcon } from "./AllGoals/TickCircleGrayIcon.svg";
 export { ReactComponent as TaskSquareIcon } from "./AllGoals/TaskSquareIcon.svg";
 export { ReactComponent as GoalHeaderCalanderIcon } from "./AllGoals/GoalHeaderCalanderIcon.svg";
-export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
-export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
+export { ReactComponent as InTooltipIcon } from './selfAssesment/InfoIcon.svg';
+export { ReactComponent as Likeshapethumbicon } from './selfAssesment/Likeshapethumbicon.svg';
 
 
 // Report
