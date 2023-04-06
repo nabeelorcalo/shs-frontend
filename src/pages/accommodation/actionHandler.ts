@@ -1,10 +1,10 @@
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-import { propertiesState } from "../../store";
+import { availablePropertiesState } from "../../store";
 import api from '../../api'
 
 
 const useAccommodationData = () => {
-  const [availableProperties, setAvailableProperties] = useRecoilState(propertiesState);
+  const [availableProperties, setAvailableProperties] = useRecoilState(availablePropertiesState);
 
   const getAvailableProperties = async (params: any) => {
     try {
