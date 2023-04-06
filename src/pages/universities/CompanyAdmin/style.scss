@@ -1,9 +1,19 @@
 @import '../../../scss/colors';
-.company-university{
-  .ant-select-selector{
+
+.company-university {
+  .company-right-sec {
+    @media only screen and (max-width:475px) {
+      flex-direction: column;
+      .select {
+        width: 100%;
+      }
+    }
+  }
+
+  .ant-select-selector {
     background: $text-input-bg-color !important;
-    &:hover{
-        background: $white-bg-color !important;
+    &:hover {
+      background: $white-bg-color !important;
     }
   }
 }

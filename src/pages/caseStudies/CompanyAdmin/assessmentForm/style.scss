@@ -25,6 +25,9 @@
   }
 
   .assessment-footer {
+    @media only screen and (max-width:475px) {
+      flex-direction: column;
+    }
     .reject-btn {
       &:hover {
         background: $secondary-bg-color !important;

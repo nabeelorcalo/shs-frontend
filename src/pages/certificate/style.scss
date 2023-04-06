@@ -60,6 +60,23 @@
 
 // certificate detail
 .certificate-detail-wrapper {
+    .certificates-row {
+        @media only screen and (max-width:1600px) {
+            .ant-col {
+                &:first-child {
+                    order: 0;
+                }
+
+                &:last-child {
+                    order: 1;
+                }
+
+                &:nth-child(2) {
+                    order: 2;
+                }
+            }
+        }
+    }
 
     .seperator {
         width: 1px;
