@@ -9,6 +9,93 @@ import { Form, Select, Slider, Space, DatePicker, Dropdown, Button } from 'antd'
 import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
+import useBookingRequests from './BookingRequests/actionHandler'
+
+const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Contracts', 'Status'];
+  // Temporary Data
+  const bookingRequestsData = [
+    {
+      key: '1',
+      agentTitle: 'Stenna Freddi',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'pending'
+    },
+    {
+      key: '2',
+      agentTitle: 'Keith Thompson',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'success'
+    },
+    {
+      key: '3',
+      agentTitle: 'John Emple',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'rejected'
+    },
+    {
+      key: '4',
+      agentTitle: 'Stenna Freddi',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'pending'
+    },
+    {
+      key: '5',
+      agentTitle: 'Keith Thompson',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'success'
+    },
+    {
+      key: '6',
+      agentTitle: 'John Emple',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'rejected'
+    },
+    {
+      key: '7',
+      agentTitle: 'Stenna Freddi',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'pending'
+    },
+    {
+      key: '8',
+      agentTitle: 'Keith Thompson',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'success'
+    },
+    {
+      key: '9',
+      agentTitle: 'John Emple',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'rejected'
+    },
+  ];
 
 // Temporary
 const agentOptions = [
@@ -21,6 +108,7 @@ const agentOptions = [
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const downloadBookingRequest = useBookingRequests()
   const [form] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
@@ -152,6 +240,15 @@ const Accommodation = () => {
     console.log(`selected ${value}`);
   }
 
+  function handledownloadBookingRequest (key:any) {
+    if(key === 'pdf') {
+      downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestColumns, bookingRequestsData)
+    }
+    if(key === 'excel') {
+      downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestColumns, bookingRequestsData, )
+    }
+  }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -233,7 +330,15 @@ const Accommodation = () => {
                 </Dropdown>
               </div>
               <div className="dropdown-download">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown
+                  overlayClassName="shs-dropdown"
+                  trigger={['click']}
+                  placement="bottomRight"
+                  menu={{ 
+                    items: downloadItems,
+                    onClick: ({key}) => handledownloadBookingRequest(key)
+                  }}
+                >
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
                 </Dropdown>
               </div>
