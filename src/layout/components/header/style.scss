@@ -13,7 +13,7 @@
   @media (max-width: 991px) {
     height: 70px;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 575px) {
     height: 60px;
   }
 
@@ -111,6 +111,7 @@
                 margin-top: -12px;
                 z-index: 99;
               }
+
               .ant-input {
                 background-color: #E6F4F9;
                 border-radius: 8px;
@@ -119,6 +120,10 @@
                 height: 48px;
                 width: 64px;
                 opacity: 0;
+              }
+
+              &:hover {
+                box-shadow: none;
               }
             }
             .ant-input-group-addon {

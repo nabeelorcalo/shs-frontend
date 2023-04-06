@@ -12,7 +12,7 @@ interface ISETTINGCOMMONARRAY {
   setOpenModal: any;
 }
 
-const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
+export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
   const { selectArray, deselectArray, openModal, setOpenModal } = props;
 
   const [selectArrayData, setSelectArrayData] = useState<any>(selectArray);

@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import AdminManagement from "./adminMangement";
 import "./style.scss";
 

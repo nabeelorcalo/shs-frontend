@@ -11,10 +11,11 @@ import {
   IconEmojiSad,
   IconEdit,
   IconProfileUsers,
-  IconDocument
+  IconDocument,
+  IconGift
 } from '../../../assets/images'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, INTERNSHIPS, INTERNS, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, DOCUMENTS, STRUCTURE, CASE_STUDIES, GRIEVANCES, CALENDAR } = ROUTES_CONSTANTS
+const { DASHBOARD, INTERNSHIPS, INTERNS, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, DOCUMENTS, STRUCTURE, CASE_STUDIES, GRIEVANCES, CALENDAR, EARN_WITH_US } = ROUTES_CONSTANTS
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 function getItem(
@@ -57,5 +58,10 @@ export const itemsManager: MenuProps['items'] = [
   // PERSONAL GROUP
   getItem('Personal', 'personal', null, [
     getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
+  ], 'group'),
+
+  // DISCOVER GROUP
+  getItem('Discover', 'discover', null, [
+    getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
   ], 'group'),
 ]

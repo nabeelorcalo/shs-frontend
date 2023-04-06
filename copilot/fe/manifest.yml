@@ -50,4 +50,4 @@ environments:
     http:
       alias: fe.dev.studenthelpsquad.developersorcalo.com
     variables:
-      NODE_ENV: dev
+      VITE_NODE_ENV: dev

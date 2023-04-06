@@ -125,7 +125,7 @@ const ViewPerformance = () => {
           className='icon-btn'
           onClick={() => {
             action.downloadPdf(header, tableData);
-            Notifications({title:"Success", description:"Download Done",icon:<Success />})
+            Notifications({title:"Success", description:"Download Done",type:'success'})
           }}
           icon={<DownloadIconWithBg />}
         />

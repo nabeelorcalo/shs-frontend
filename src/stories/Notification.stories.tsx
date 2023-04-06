@@ -9,9 +9,30 @@ export default {
 
 const Template: ComponentStory<typeof Notifications> = (args) => <Notifications {...args} />
 
-export const Primary = Template.bind({})
-Primary.args = { 
+export const Success = Template.bind({})
+Success.args = {
+  type:'success',
   title:'Success',
   description:'List Downloaded',
-  icon:''
+}
+
+export const Warning = Template.bind({})
+Warning.args = {
+  type:'warning',
+  title:'Warning',
+  description:'List Downloaded',
+}
+
+export const Info = Template.bind({})
+Info.args = {
+  type:'info',
+  title:'Info',
+  description:'List Downloaded',
+}
+
+export const Error = Template.bind({})
+Error.args = {
+  type:'error',
+  title:'Error',
+  description:'List Downloaded',
 }

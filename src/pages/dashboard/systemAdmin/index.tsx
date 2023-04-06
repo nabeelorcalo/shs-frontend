@@ -7,13 +7,13 @@ import {
   FunnelChart,
   GaugePlot,
   GrowthAnalyticsGraph,
+  UKMapChart,
 } from "../../../components";
 import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
 import { useState } from "react";
 import { gutter } from "..";
-import AreaMapp from "../../../components/Graph/AreaMap";
 
 const SystemAdmin = () => {
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false)
@@ -39,7 +39,7 @@ const SystemAdmin = () => {
             <RegionCard regionData={regionData} />
           </Col>
           <Col xs={24} xl={12}>
-            {/* <AreaMapp /> */}
+            <UKMapChart />
           </Col>
         </Row>
       </Col>

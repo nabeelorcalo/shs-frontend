@@ -21,9 +21,11 @@ const agentOptions = [
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const [form] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
   const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
+  const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
@@ -117,6 +119,19 @@ const Accommodation = () => {
     setAvailablePropertyFiltersOpen(false)
   }
 
+  function applyFilterAvailableProperties(fieldsValue: any) {
+    const values = {
+      ...fieldsValue,
+      'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
+      'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
+    }
+    console.log('Success:', values);
+  }
+
+  const resetFormFields = () => {
+    form.resetFields()
+  }
+
   const openSavedSearchesFilters = () => {
     setSavedSearchesFiltersOpen(true)
   }
@@ -130,7 +145,7 @@ const Accommodation = () => {
   }
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log('dfdfdsfsdfas::: ', date, dateString);
+    console.log('Date::: ', date, dateString);
   }
 
   const handleChangeStatus = (value: string) => {
@@ -284,14 +299,21 @@ const Accommodation = () => {
         onClose={closeAvailablePropertyFilters}
       >
         <div className="shs-filter-form">
-          <Form layout="vertical" name="availablePropertiesFilters" onFinish={onFinish}>
+          <Form
+            form={form}
+            layout="vertical"
+            name="availablePropertiesFilters"
+            onValuesChange={(_, values) => {
+              console.log('Filter Values:: ', values)
+            }}
+            onFinish={applyFilterAvailableProperties}
+          >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
                 <Slider
                   min={0}
                   max={1000}
-                  defaultValue={0}
                   marks={{
                     0: '£0',
                     1000: '£1000',
@@ -307,7 +329,6 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -317,7 +338,6 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -350,7 +370,7 @@ const Accommodation = () => {
             </div>
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost>
+                <ExtendedButton customType="tertiary" ghost onClick={resetFormFields}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
@@ -378,7 +398,6 @@ const Accommodation = () => {
                 <Slider
                   min={0}
                   max={1000}
-                  defaultValue={0}
                   marks={{
                     0: '£0',
                     1000: '£1000',

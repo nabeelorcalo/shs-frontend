@@ -1,12 +1,20 @@
 import { useState } from "react";
 import { Typography, Row, Col, Input, Button } from "antd";
-import { BereavementLeave, CasualLeave, SettingLeaves, MaternityLeave,  MatrimonialLeave,
-  MedicalLeave, PaternityLeave, SickLeave, WorkFromHome, } from "../../../../assets/images";
-import { Alert, SearchBar } from "../../../../components";
-import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
-import { PopUpModal } from "../../../../components/Model";
+import {
+  BereavementLeave,
+  CasualLeave,
+  SettingLeaves,
+  MaternityLeave,
+  MatrimonialLeave,
+  MedicalLeave,
+  PaternityLeave,
+  SickLeave,
+  WorkFromHome,
+} from "../../../../assets/images";
+import { Alert, SearchBar , DropDownForSetting } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -47,7 +55,6 @@ let overview = [
 ];
 
 const SettingLeave = () => {
-  // const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<any>({
     departmentName: "",
@@ -62,7 +69,7 @@ const SettingLeave = () => {
       <div>
         <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
-          <NavLink to="/settings/leaves/add-policy">
+          <NavLink to={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}>
             <Button
               size="middle"
               onClick={() => { }}
@@ -80,10 +87,10 @@ const SettingLeave = () => {
               <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
-                    link={"/settings/leaves/add-policy"}
+                    link={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}
                     showDeleteModal={showDeleteModal}
                     setShowDeleteModal={setShowDeleteModal}
-                  // setShowEditModal={setShowEditModal}
+                
                   />
                 </div>
                 <div className="flex ">

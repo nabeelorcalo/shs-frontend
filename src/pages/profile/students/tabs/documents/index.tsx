@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Button, Divider, Modal, Typography } from "antd";
-import svg from "../../../../../assets/images/profile/student/Upload.svg";
+import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import '../../../style.scss';
 import { documentArr } from "./DocumentMock";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
 import DragAndDropUpload from "../../../../../components/DragAndDrop";
+import CardUsers from "../cards/userCards";
+import { UploadIcon } from "../../../../../assets/images";
+
 
 const Documents = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,67 +21,24 @@ const Documents = () => {
             setIsOpen(true);
           }}
         >
-          <img src={svg} alt="" /> Upload
+          <img src={upload} alt="" /> Upload
         </Button>
       </div>
 
       {documentArr.map((item, index) => {
         return (
           <>
-            <div className="animate">
-              <div className="flex justify-between">
-                <div className="flex justify-start">
-                  <img src={item.img} alt="" />
-                  <div>
-                    <Typography>{item.name}</Typography>
-                    <Typography>{item.subName}</Typography>
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <div className="grid justify-end">
-                    <Typography>{item.date}</Typography>
-                    <Typography>{item.fileSize}</Typography>
-                  </div>
-
-                  <div className="button-ts">
-                    <div
-                      style={{
-                        background: "#FFFFFF",
-                        borderRadius: "8px",
-                        height: "48px",
-                        width: "48px",
-                      }}
-                    >
-                      <EyeFilled
-                        style={{ fontSize: "22px", color: "#A0A3BD" }}
-                        className="flex justify-center mt-4"
-                      />
-                    </div>
-                    <div
-                      style={{
-                        background: "#FFFFFF",
-                        borderRadius: "8px",
-                        height: "48px",
-                        width: "48px",
-                      }}
-                    >
-                      <img
-                        src={svg}
-                        alt=""
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          margin: "auto",
-                          paddingTop: "15px",
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
+            <CardUsers
+              img={item.img}
+              title={item.name}
+              description={item.subName}
+              date={item.date}
+              fSize={item.fileSize}
+              downloadIcon={<UploadIcon style={{ width: "26px", color: "gray" }} />}
+              sideIcon={<EyeFilled style={{ fontSize: "26px", color: "gray" }} />}
+            />
+         
             <Divider />
           </>
         );

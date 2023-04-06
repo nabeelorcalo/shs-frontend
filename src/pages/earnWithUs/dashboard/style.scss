@@ -35,12 +35,12 @@
     }
 
     .card-user-welcome {
-      max-width: 684px;
+      width: calc(100% - 116px);
       position: static;
+      box-shadow: none;
 
       &::before {
         content: '';
-        background-color: #fff;
         position: absolute;
         top: 0;
         right: 0;
@@ -48,6 +48,8 @@
         left: 0;
         border-radius: 16px;
         transition: all 0.5s;
+        box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+        background-color: #ffffff;
       }
     }
 
@@ -129,13 +131,17 @@
 
       .top-card-inner {
         height: 100%;
-        min-height: 60px;
         display: flex;
         align-items: center;
         padding-right: 0;
+        @media (min-width: 992px) {
+          min-height: 60px;
+        }
 
         &.ref-number {
-          padding-left: 0;
+          @media (min-width: 992px) {
+            padding-left: 0;
+          }
         }
 
         .user-welcome-text {

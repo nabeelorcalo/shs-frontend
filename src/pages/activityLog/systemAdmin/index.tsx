@@ -4,7 +4,49 @@ import { Button, Col, Divider, Row } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
-import {GlobalTable} from "../../../components";
+import { GlobalTable } from "../../../components";
+import useCustomHook from "../actionHandler"
+
+
+
+
+const tableData = [
+  {
+    ID: "01",
+    Users: "Subject kmy cc",
+    UserRole: "john",
+    Activity: "issue Name",
+    PerformedBy: "kljdasfhuasd",
+    Priority: "high",
+    DateTime: "22/09/2013",
+    PerformerRole: "amila clark",
+  },
+  {
+
+    ID: "02",
+    Users: "file2",
+    UserRole: "john",
+    Activity: "issue Name",
+    PerformedBy: "kljdasfhuasd",
+    Priority: "high",
+    DateTime: "22/09/2013",
+    PerformerRole: "amila clark",
+
+  },
+  {
+
+    ID: "03",
+    Users: "file3",
+    UserRole: "john",
+    PerformedBy: "kljdasfhuasd",
+    Activity: "issue Name",
+    Priority: "high",
+    DateTime: "22/09/2013",
+    PerformerRole: "amila clark",
+
+  },
+];
+
 
 
 const columns = [
@@ -42,7 +84,7 @@ const columns = [
   },
   {
     title: "Date & Time",
-    dataIndex: "Date&Time",
+    dataIndex: "DateTime",
     key: "Date&Time",
   },
 ];
@@ -88,9 +130,14 @@ const filterData = [
   },
 ];
 
-const options = ["pdf", "excel"];
+
 
 const ActivityLog = () => {
+
+  const action = useCustomHook();
+
+  const csvAllColum = ["Sr.No", "Name", "Email", "PhoneNumber", "University" ,"City" , "Hired","Status"]
+
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
 
@@ -155,18 +202,28 @@ const ActivityLog = () => {
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[10, 10]}>
-          <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+            <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
-            
-            <Col className="flex justify-end "  xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
+
+            <Col className="flex justify-end " xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
               <div className="flex">
                 <div className="mr-4">
                   <FiltersButton label="Filter" onClick={handleClick} />
                 </div>
 
                 <div>
-                  <DropDown requiredDownloadIcon={true} options={options} />
+                  <DropDown
+                    options={[
+                      'pdf',
+                      'excel'
+                    ]}
+                    requiredDownloadIcon
+                    setValue={() => {
+
+                      action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
+                    }}
+                  />
                 </div>
               </div>
             </Col>
@@ -177,7 +234,7 @@ const ActivityLog = () => {
       <Row className="mt-8">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={columns} />
+            <GlobalTable columns={columns} tableData={tableData} />
           </BoxWrapper>
         </Col>
       </Row>
