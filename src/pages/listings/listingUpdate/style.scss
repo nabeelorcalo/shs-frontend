@@ -1,5 +1,20 @@
 @import "../../../scss/colors";
-
+.agent-listing-update{
+  flex-direction: column;
+  .ant-tabs{
+    @media only screen and (max-width:957px) {
+      flex-direction: column;
+      gap: 20px;
+      .ant-tabs-nav{
+        width: 100% !important;
+      }
+      .ant-tabs-tabpane{
+        padding: 0px !important;
+      }
+    }
+  }
+  
+}
 .listing-edit-content {
   .ant-tabs {
     .ant-tabs-nav {
@@ -266,6 +281,9 @@
       border: 1px dashed $primary-bg-color;
       min-height: 304px;
       padding: 30px 30px 0;
+      @media only screen and (max-width:320px) {
+        padding: 0px;
+      }
 
       .ant-upload-select {
         .ant-upload {

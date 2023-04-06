@@ -1,24 +1,28 @@
 @import "../../../scss/colors";
 
 .earnwithus-delegate-members {
-
+  .page-filterbar-right{
+    display: flex;
+    gap: 20px;
+  }
   .page-filterbar {
+    margin: 0px;
     .button-sky-blue {
-      min-width: 170px;
+      width: 170px;
       text-align: left;
       display: inline-flex;
-
       & > span {
         flex: 1
       }
+    }
+    @media only screen and (max-width:400px){
+      flex-direction: column;
     }
   }
 
   .shs-table-card.table-delegate-members {
     padding-bottom: 20px;
-
     .shs-table {
-
       .shs-status-badge {
         font-weight: 400;
         width: 92px;

@@ -153,7 +153,7 @@ const WithDrawalRequest = () => {
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-        <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0">
+        <div className="flex md:justify-end gap-3 mt-3 md:mt-0">
             <DropDown
               name="Status"
               value={value}

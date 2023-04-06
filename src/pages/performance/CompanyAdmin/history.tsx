@@ -505,7 +505,6 @@ const PerformanceHistory = () => {
             <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
         </Col>
       </Row>
-
     <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"

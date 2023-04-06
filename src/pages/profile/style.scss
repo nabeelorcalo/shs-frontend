@@ -17,6 +17,13 @@
     height: 81vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    .ant-tabs-tab-active{
+      svg{
+        path{
+          fill:#363565
+        }
+      }
+    }
   }
   .studdnt-dash::-webkit-scrollbar {
     width: 0px;
