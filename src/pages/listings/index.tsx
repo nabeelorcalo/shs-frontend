@@ -1132,30 +1132,13 @@ const Listings = () => {
     <>
       <div className="agent-listings">
         <PageHeader title="Listings" bordered />
-
-        {/* <div className="page-filterbar">
-          <div className="page-filterbar-left">
-            <div className="searchbar-wrapper">
-              <SearchBar handleChange={() => console.log('Search')} />
-            </div>
-          </div>
-          <div className="page-filterbar-right">
-            <Button
-              className="button-tertiary"
-              icon={<IconAddListings />}
-              onClick={openModalAddListing}
-            >
-              Add Listing
-            </Button>
-          </div>
-        </div> */}
         <Row gutter={[20,20]}>
           <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
             <div className="searchbar-wrapper">
               <SearchBar handleChange={() => console.log('Search')} />
             </div>
           </Col>
-          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end">
+          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex md:justify-end">
             <div className="page-filterbar-right">
               <Button
                 className="button-tertiary"
