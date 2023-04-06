@@ -8,58 +8,94 @@
       outline: 1px solid $teriary-bg-color;
       box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
       color: $teriary-bg-color;
-      &:hover{
+
+      &:hover {
         outline: 1px solid rgba(74, 157, 119, 0.5);
       }
     }
   }
 
-  .LeaveRequest_card_main {
-    // .user_intro{
+  .Leave_request_card_wrapper {
+    .LeaveRequest_card_main {
+      @media only screen and (max-width:575px) {
+        max-width: 100%;
+      }
 
-    // }
-    .about_leave_info {
-      border: 1px solid $text-error-line-color;
+      @media only screen and (min-width:576px) and (max-width:767px) {
+        max-width: 47%;
+      }
 
-      .info_inner {
-        .Name_of_cat {
-          color: $light-grey-color;
+      @media only screen and (min-width:768px) and (max-width:991px) {
+        max-width: 47%;
+      }
+
+      @media only screen and (min-width:992px) and (max-width:1200px) {
+        max-width: 31%;
+      }
+
+      @media only screen and (min-width:1201px) and (max-width:1600px) {
+        max-width: 22%;
+      }
+
+      @media only screen and (min-width:1601px) {
+        max-width: 18%;
+      }
+
+      .about_leave_info {
+        border: 1px solid $text-error-line-color;
+
+        .info_inner {
+          .Name_of_cat {
+            color: $light-grey-color;
+          }
+
+          .count_of_cat {
+            color: $text-secondary-body-color;
+          }
+        }
+      }
+
+      .LeaveAplicationCardBtns_wraper {
+        .Declin_btn {
+          background-color: rgba(216, 58, 82, 0.1);
+          color: $text-error-color;
+
+          &:hover {
+            background-color: $text-error-color;
+            color: $white-bg-color;
+          }
         }
 
-        .count_of_cat {
-          color: $text-secondary-body-color;
+        .Approve_btn {
+          background-color: $text-input-bg-color;
+          color: $teriary-bg-color;
+
+          &:hover {
+            background-color: $teriary-bg-color;
+            color: $white-bg-color;
+          }
+
+        }
+        @media only screen and (max-width:1440px) {
+          flex-direction: column;
+
+          .Declin_btn,
+          .Approve_btn {
+            width: 100%;
+            margin: 5px 0px;
+          }
+        }
+
+        @media only screen and (min-width:1441px) and (max-width:1840px) {
+          .ant-btn {
+            min-width: 90px;
+          }
         }
       }
     }
-
-    .LeaveAplicationCardBtns_wraper {
-      .Declin_btn {
-        background-color: rgba(216, 58, 82, 0.1);
-        color: $text-error-color;
-
-        &:hover {
-          background-color: $text-error-color;
-          color: $white-bg-color;
-        }
-      }
-
-      .Approve_btn {
-        background-color: $text-input-bg-color;
-        color: $teriary-bg-color;
-
-        &:hover {
-          background-color: $teriary-bg-color;
-          color: $white-bg-color;
-        }
-
-      }
-      @media only screen and (max-width:1440px) {
-        flex-direction: column;
-        .Declin_btn,.Approve_btn{
-          width: 100%;
-          margin:5px 0px;
-        }
-      }
+    @media only screen and (min-width:992px) and (max-width:1200px) {
+      justify-content: flex-start;
     }
   }
+
 }

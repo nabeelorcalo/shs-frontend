@@ -7,7 +7,7 @@ const useCustomHook = () => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
   const addGoals =()=>{
-    alert("hellofjfgjf")
+    alert("Function to Add Goals")
   }
   const addGoalTask =()=>{
     alert("addGoalTask")

@@ -15,6 +15,7 @@
     "@ant-design/icons": "^5.0.1",
     "@ant-design/maps": "^1.0.6",
     "@ant-design/plots": "^1.2.5",
+    "@esbuild/win32-x64": "^0.17.15",
     "@fullcalendar/core": "^6.1.5",
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/interaction": "^6.1.4",

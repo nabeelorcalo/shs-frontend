@@ -46,7 +46,7 @@ const index = () => {
   const action = useCustomHook();
   const breadcrumbArray = [
     { name: "Mino Mrina" },
-    { name: "report", onClickNavigateTo: `${ROUTES_CONSTANTS.REPORT} ` },
+    { name: "report", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT} ` },
 
   ];
   const handleChange = () => {

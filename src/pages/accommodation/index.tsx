@@ -119,7 +119,12 @@ const Accommodation = () => {
     setAvailablePropertyFiltersOpen(false)
   }
 
-  function applyFilterAvailableProperties(values: any) {
+  function applyFilterAvailableProperties(fieldsValue: any) {
+    const values = {
+      ...fieldsValue,
+      'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
+      'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
+    }
     console.log('Success:', values);
   }
 
@@ -140,7 +145,7 @@ const Accommodation = () => {
   }
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log('dfdfdsfsdfas::: ', date, dateString);
+    console.log('Date::: ', date, dateString);
   }
 
   const handleChangeStatus = (value: string) => {
@@ -309,7 +314,6 @@ const Accommodation = () => {
                 <Slider
                   min={0}
                   max={1000}
-                  defaultValue={0}
                   marks={{
                     0: '£0',
                     1000: '£1000',
@@ -325,7 +329,6 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -335,7 +338,6 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -396,7 +398,6 @@ const Accommodation = () => {
                 <Slider
                   min={0}
                   max={1000}
-                  defaultValue={0}
                   marks={{
                     0: '£0',
                     1000: '£1000',
