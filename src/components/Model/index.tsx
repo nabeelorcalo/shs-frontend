@@ -18,7 +18,7 @@ interface ModalProps {
 }
 
 export const PopUpModal: FC<ModalProps> = (props) => {
-  const { title, width = 700, open, close, children, footer, closable = true, wrapClassName } = props
+  const { title, width = 700, open, close, children, footer, closable , wrapClassName } = props
   return (
     <>
       <Modal

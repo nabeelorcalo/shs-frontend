@@ -10,6 +10,7 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
+  Success,
 } from "../../assets/images";
 
 import {
@@ -21,10 +22,12 @@ import {
   GlobalTable,
   ProfileCard,
   TimeTracking,
-  Breadcrumb
+  Breadcrumb,
+  Notifications
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
+import useCustomHook from "./actionHandler";
 
 const Detail = () => {
   const attendanceDetailBreadCrumb = [
@@ -32,6 +35,7 @@ const Detail = () => {
     { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
     { name: constants.USER_ROLE !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
+  const action = useCustomHook();
   const timeFrameOptions = [
     "This Week",
     "Last Week",
@@ -194,8 +198,11 @@ const Detail = () => {
             <IconButton
               size="large"
               className="icon-btn download-btn"
-              onClick={downloadClick}
               icon={<DownlaodFileIcon />}
+              onClick={() => {
+                action.pdf('historyDetail' ,tableColumns, tableData);
+                Notifications({title:"Success", description:"Download Done",type:'success'})
+              }}
             />
           </div>
         }

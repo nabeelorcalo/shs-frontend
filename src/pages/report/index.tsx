@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import constants from "../../config/constants";
+import UniversitRep  from './UniversityRep'
 import "./style.scss";
 
 const Report = () => {
+  const rederWthRole: any = {
+    'University': <UniversitRep />,
+   
+  }
   return (
-    <p>Report</p>
+    <>
+    {rederWthRole[constants.USER_ROLE]}
+    </>
   )
 }
 

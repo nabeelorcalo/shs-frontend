@@ -1,99 +1,63 @@
-import { useState, useEffect } from "react";
-import { AreaMap } from "@ant-design/maps";
-const AreaMapp = ({}: any) => {
-  const [data, setData] = useState({ type: "FeatureCollection", features: [] });
-  useEffect(() => {
-    asyncFetch();
-  }, []);
+import React from 'react';
+import Highcharts from 'highcharts';
+import HighchartsReact from 'highcharts-react-official';
+import HighchartsMap from 'highcharts/modules/map';
+import ukMapData from '@highcharts/map-collection/countries/gb/gb-all.geo.json';
+import mapData from './data';
 
-  const asyncFetch = () => {
-    fetch(
-      "https://gw.alipayobjects.com/os/basement_prod/1d27c363-af3a-469e-ab5b-7a7e1ce4f311.json"
-    )
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log("fetch data failed", error);
-      });
-  };
+HighchartsMap(Highcharts); // Initialize the map module
 
-  const config: any = {
-    map: {
-      type: "mapbox",
-      style: "blank",
-      center: [120.19382669582967, 30.258134],
-      zoom: 3,
-      pitch: 0,
-    },
-    source: {
-      data: data,
-      parser: {
-        type: "geojson",
-      },
-    },
-    autoFit: true,
-    color: {
-      field: "unit_price",
-      value: [
-        "#1A4397",
-        "#2555B7",
-        "#3165D1",
-        "#467BE8",
-        "#6296FE",
-        "#7EA6F9",
-        "#98B7F7",
-        "#BDD0F8",
-        "#DDE6F7",
-        "#F2F5FC",
-      ].reverse(),
-      scale: {
-        type: "quantile",
-      },
-    },
-    style: {
-      opacity: 1,
-      stroke: "#fff",
-      lineWidth: 0.8,
-      lineOpacity: 1,
-    },
-    state: {
-      active: true,
-      select: {
-        stroke: "yellow",
-        lineWidth: 1.5,
-        lineOpacity: 0.8,
-      },
-    },
-    enabledMultiSelect: true,
-    label: {
-      visible: true,
-      field: "name",
-      style: {
-        fill: "black",
-        opacity: 0.5,
-        fontSize: 12,
-        spacing: 1,
-        padding: [15, 15],
-      },
-    },
+const options = {
+  chart: {
+    map: ukMapData,
+    height: 500
+  },
+
+  title: {
+    text: 'UK Map'
+  },
+
+  mapNavigation: {
+    enabled: true,
+    buttonOptions: {
+      verticalAlign: 'bottom'
+    }
+  },
+
+  colorAxis: {
+    min: 0
+  },
+
+  series: [{
+    name: 'Population',
+
+    data: mapData,
+
     tooltip: {
-      items: ["name", "code"],
+      pointFormat: '{point.name}: {point.value}'
     },
-    zoom: {
-      position: "bottomright",
-    },
-    legend: {
-      position: "bottomleft",
-    },
-  };
 
+    states: {
+      hover: {
+        color: 'red'
+      }
+    },
+    
+    dataLabels: {
+      enabled: false,
+      format: '{point.name}'
+    }
+  }]
+};
+
+const UKMapChart = () => {
   return (
-    <AreaMap
-      style={{ minWidth: 300, minHeight: 400, background: "green" }}
-      className="h-full"
-      {...config}
+    <HighchartsReact
+      highcharts={Highcharts}
+      constructorType={'mapChart'}
+      options={options}
     />
   );
 };
 
-export default AreaMapp;
+export default UKMapChart;

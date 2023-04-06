@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Select, Button, Form } from "antd";
 import { GrievancesAvater, IconAngleDown } from '../../../assets/images';
-import { CommonDatePicker } from '../../../components';
 import './style.scss'
 
 const { Option } = Select;
@@ -29,11 +28,16 @@ const Filters: React.FC = (props: any) => {
   }
 
   return (
-    <div className='manager-casestudies-filter_main_wrapper'>
+    <div className='uni-report-filter_main_wrapper'>
       <Form layout="vertical" form={form}>
-      <Form.Item name="mySelect" label="Manager">
-          <Select onChange={handleChange} placeholder="Select" suffixIcon={<IconAngleDown />}   >
-            {options.map(renderOption)}
+      <Form.Item name="company" label="Company">
+          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+            <Select.Option value="Pending">Power Source</Select.Option>
+            <Select.Option value="Approved">DevSpot</Select.Option>
+            <Select.Option value="Rejected">Abacus</Select.Option>
+            <Select.Option value="Rejected">Orcalo Holdings</Select.Option>
+            <Select.Option value="Rejected">Coding Hub</Select.Option>
+            
           </Select>
         </Form.Item>
         <Form.Item
@@ -48,24 +52,12 @@ const Filters: React.FC = (props: any) => {
             <Select.Option value="Business">Business</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item  label="Date">
-          <CommonDatePicker
-            name="Date Picker"
-            onBtnClick={() => { }}
-            open={openDataPicker}
-            setOpen={setOpenDataPicker}
-            setValue={function noRefCheck() { }}
-          />
-        </Form.Item>
-        <Form.Item name="status" label="Status">
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Pending">Pending</Select.Option>
-            <Select.Option value="Approved">Approved</Select.Option>
-            <Select.Option value="Rejected">Rejected</Select.Option>
+      <Form.Item name="reviewer" label="Reviewer">
+          <Select onChange={handleChange} placeholder="Select" suffixIcon={<IconAngleDown />}   >
+            {options.map(renderOption)}
           </Select>
         </Form.Item>
-       
-        <div className="manager-filter-footer flex justify-end mt-4 gap-2">
+        <div className="report-filter-footer flex justify-end mt-4 gap-2">
           <Button key="Cancel" className="footer-cancel-btn " >
             Reset
           </Button>

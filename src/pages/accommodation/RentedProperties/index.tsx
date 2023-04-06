@@ -60,7 +60,7 @@ const RentedProperties = () => {
                 location={property.location}
                 handleSaveClick={() => console.log('handle clik')}
                 handleDetailClick={() => handleDetailClick(property.id)}
-                handleChatClick={() => console.log('chat')}
+                handleChatClick={() => navigate('/chat')}
               />
             </div>
           )

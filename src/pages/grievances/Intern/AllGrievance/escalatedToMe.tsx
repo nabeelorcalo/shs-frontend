@@ -5,17 +5,8 @@ import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
 import './style.scss'
 
-const UniversitesTableData = [
-  {
-    no: '01',
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedTo: 'Maria Sanoid',
-    status: 'New',
-  },
-]
-const UniversitesTablecolumn =
+
+const escalatedToMeTableColumn =
   [
     {
       dataIndex: 'no',
@@ -71,12 +62,12 @@ const UniversitesTablecolumn =
       ),
     },
   ]
-const EscalatedToMe = () => {
+const EscalatedToMe = (props:any) => {
   return (
     <GlobalTable
-      columns={UniversitesTablecolumn}
+      columns={escalatedToMeTableColumn}
       pagination
-      tableData={UniversitesTableData}
+      tableData={props.escalatedToMeTableData}
     />
   )
 }

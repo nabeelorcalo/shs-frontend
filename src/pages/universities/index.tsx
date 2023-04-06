@@ -1,16 +1,17 @@
 import { useState } from "react";
 import "./style.scss";
-import UniveristyMain from "./univeristyMain"
+import SystemAdmin from "./SystemAdmin/index"
 import constants from "../../config/constants";
 import CompanyAdmin from './CompanyAdmin/index'
 
 const Universities = () => {
   const rederWthRole: any = {
     'CompanyAdmin': <CompanyAdmin/>,
+    'SystemAdmin':  <SystemAdmin/>
   }
   return (
     <>
-      {/* <UniveristyMain/> */}
+    
       {rederWthRole[constants.USER_ROLE]}
     </>
   )

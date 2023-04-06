@@ -109,6 +109,8 @@ export const ROUTES_CONSTANTS: any = {
   RECIPE_ADD: "recipe-add",
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
+  REPORT_VIEW_DETAILS:"report/view-details/:id",
+  REPORT_ASSESSMENT_FORM:"assement-form/:id",
   LISTINGS: "listings",
   LISTING_EDIT: "edit-listing/:listingId",
   OFFERS: "offers",
@@ -144,7 +146,7 @@ export const ROUTES_CONSTANTS: any = {
   GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
   UNIVERSITIES_INTERNS:"universities/interns",
-  UNIVERSITIES_PROFILE:"universities/Profile"
+  UNIVERSITIES_PROFILE:"universities/profile"
 };
 
 export const STATUS_CONSTANTS: any = {
