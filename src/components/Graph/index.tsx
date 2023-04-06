@@ -7,12 +7,12 @@ import { LifeBalanceGraph } from './graphForLifeAssessmentAndLifeBalance/lifeBal
 import { RegisterAgentsAndRewardGraph } from './graphForRegisterAgentsAndRewards';
 import { RegisterMemberAndFeddbackGraph } from './graphForRegisteredMembersAndFeedback';
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
-import AreaMap from './AreaMap';
+// import AreaMap from './AreaMap';
 
 const Graph = (props: any) => {
   return (
     <div className='p-4'>
-      <AreaMap />
+      {/* <AreaMap /> */}
 
       {/* <BoxWrapper >
         <LifeBalanceGraph monthName="Jan" />

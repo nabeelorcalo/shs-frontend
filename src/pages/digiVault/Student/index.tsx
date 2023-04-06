@@ -261,7 +261,6 @@ const DigiVaultStudent = () => {
             </Row>
           </div>
         </Col>
-
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
             <Row gutter={[20, 10]} className="storage-bar-header">

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps } from 'antd';
+import { Col, MenuProps, Row } from 'antd';
 import { Table, Space, Dropdown, Button } from 'antd'
 import { IconAngleDown } from '../../../assets/images'
 import { SearchBar } from "../../../components";
@@ -152,52 +152,52 @@ const DelegateMembers = () => {
   ];
 
   const tableColumns: ColumnsType<DataType> = [
-  {
-    title: 'No',
-    dataIndex: 'no.',
-    align: 'center',
-    render: (_, row, index) => {
-      return (
-        <>{index < 9?0 : null}{index + 1}</>
-      );
+    {
+      title: 'No',
+      dataIndex: 'no.',
+      align: 'center',
+      render: (_, row, index) => {
+        return (
+          <>{index < 9 ? 0 : null}{index + 1}</>
+        );
+      },
     },
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Reward Amount',
-    dataIndex: 'rewardAmount',
-  },
-  {
-    title: 'Member Type',
-    dataIndex: 'memberType',
-  },
-  {
-    title: 'Joining Date',
-    dataIndex: 'joiningDate',
-  },
-  {
-    title: 'Location',
-    dataIndex: 'location',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    render: (_, row, index) => {
-      return (
-        <div className={`shs-status-badge ${row.status === 'inactive'? 'error' : 'success'}`}>
-          {row.status === 'inactive'? 'Inactive': 'Active'}
-        </div>
-      );
+    {
+      title: 'Name',
+      dataIndex: 'name',
     },
-  },
-];
+    {
+      title: 'Email',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Reward Amount',
+      dataIndex: 'rewardAmount',
+    },
+    {
+      title: 'Member Type',
+      dataIndex: 'memberType',
+    },
+    {
+      title: 'Joining Date',
+      dataIndex: 'joiningDate',
+    },
+    {
+      title: 'Location',
+      dataIndex: 'location',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      render: (_, row, index) => {
+        return (
+          <div className={`shs-status-badge ${row.status === 'inactive' ? 'error' : 'success'}`}>
+            {row.status === 'inactive' ? 'Inactive' : 'Active'}
+          </div>
+        );
+      },
+    },
+  ];
 
 
 
@@ -219,8 +219,38 @@ const DelegateMembers = () => {
   return (
     <>
       <div className="earnwithus-delegate-members">
-        
-        <div className="page-filterbar">
+        <Row gutter={[20, 20]}>
+          <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+            <SearchBar handleChange={() => console.log('Search')} />
+          </Col>
+          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="page-filterbar-right md:justify-end">
+          <Space size={20} className="page-filterbar">
+            <div className="requests-filterby-status">
+              <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
+                <Button className="button-sky-blue">Status<IconAngleDown /></Button>
+              </Dropdown>
+            </div>
+            <div className="dropdown-download">
+              <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
+                <Button className="button-sky-blue">Type<IconAngleDown /></Button>
+              </Dropdown>
+            </div>
+            </Space>
+          </Col>
+          <Col xs={24}>
+            <div className="shs-table-card table-delegate-members">
+              <div className="shs-table">
+                <Table
+                  scroll={{ x: "max-content" }}
+                  columns={tableColumns}
+                  dataSource={tableData}
+                  pagination={{ pageSize: 5, showTotal: (total) => <>Total: <span>{total}</span></> }}
+                />
+              </div>
+            </div>
+          </Col>
+        </Row>
+        {/* <div className="page-filterbar">
           <div className="page-filterbar-left">
             <div className="searchbar-wrapper">
               <SearchBar handleChange={() => console.log('Search')}/>
@@ -240,19 +270,7 @@ const DelegateMembers = () => {
               </div>
             </Space>
           </div>
-        </div>
-
-        <div className="shs-table-card table-delegate-members">
-          <div className="shs-table">
-            <Table
-              scroll={{ x: "max-content" }}
-              columns={tableColumns}
-              dataSource={tableData}
-              pagination={{pageSize: 5, showTotal: (total) => <>Total: <span>{total}</span></> }}
-            />
-          </div>
-        </div>
-        
+        </div> */}
       </div>
     </>
   )
