@@ -158,3 +158,4 @@ export const STATUS_CONSTANTS: any = {
   CLOSED: "closed",
   REJECTED: "rejected"
 }
+export const AcceptedFileTyp = 'application/pdf,image/jpeg,application/msword'
