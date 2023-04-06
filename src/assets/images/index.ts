@@ -230,7 +230,6 @@ export { ReactComponent as SettingChart } from "./setting/chart.svg";
 export { ReactComponent as SettingDocument } from "./setting/document.svg";
 export { ReactComponent as SettingShifts } from "./setting/shifts.svg";
 export { ReactComponent as SettingTimer } from "./setting/timer.svg";
-export { ReactComponent as SettingHorizontalLine } from "./setting/horizontal-line.svg";
 export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
 export { ReactComponent as LocationMore } from "./setting/More.svg";
 export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
@@ -564,8 +563,8 @@ export { ReactComponent as TickCircleGreenIcon } from "./AllGoals/TickCircleGree
 export { ReactComponent as TickCircleGrayIcon } from "./AllGoals/TickCircleGrayIcon.svg";
 export { ReactComponent as TaskSquareIcon } from "./AllGoals/TaskSquareIcon.svg";
 export { ReactComponent as GoalHeaderCalanderIcon } from "./AllGoals/GoalHeaderCalanderIcon.svg";
-export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
-export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
+export { ReactComponent as InTooltipIcon } from './selfAssesment/InfoIcon.svg';
+export { ReactComponent as Likeshapethumbicon } from './selfAssesment/Likeshapethumbicon.svg';
 
 
 // Report

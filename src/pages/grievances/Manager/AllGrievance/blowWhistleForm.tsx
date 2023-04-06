@@ -22,7 +22,6 @@ function renderOption(option: any) {
   );
 }
 function handleChange(value: any) {
-  console.log(`selected ${value}`);
 }
 
 const BlowWhistleForm = (props: any) => {

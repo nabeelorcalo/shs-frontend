@@ -53,9 +53,12 @@
     padding: 0 2px;
   }
 
-  .ant-input[disabled] {
-    background-color: $light-blue-color;
+  .ant-input[disabled],.ant-input {
+    background-color:rgb(59 130 246 / 0.1);
     color: $text-primary-title-color;
+    &:hover{
+      box-shadow: none;
+    }
   }
 }
 
