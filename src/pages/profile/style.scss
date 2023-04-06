@@ -191,3 +191,37 @@ cursor: pointer;
     margin-bottom: 1rem;
   }
 }
+.personal-information{
+  .input-style {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    color: $text-primary-disabled-color;
+  }
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-primary-title-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.general-information{
+  .input-style {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    color: $text-primary-disabled-color;
+  }
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-primary-title-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
