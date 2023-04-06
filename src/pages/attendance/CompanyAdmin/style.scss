@@ -19,10 +19,12 @@
     border-radius: 8px;
     color: $teriary-bg-color;
     border: 1px solid $teriary-bg-color;
-  }
-  .attendance-detail-btn:hover {
-    color: $teriary-light-bg-color;
-    border: 1px solid $teriary-light-bg-color;
+    font-weight: 600;
+    &:hover {
+      color: $teriary-light-bg-color;
+      border: 1px solid $teriary-light-bg-color;
+      font-weight: 500;
+    }
   }
   .ant-typography+h1.ant-typography{
     margin-top: 0;
