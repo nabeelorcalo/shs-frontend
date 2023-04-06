@@ -1,20 +1,19 @@
 import "./style.scss";
 import Student from "./student";
-// import Intern from "./Intern";
-import University from './university'
+import University from "./university";
 import constants from "../../config/constants";
 
 const Profile = () => {
   const renderPage = () => {
     switch (constants.USER_ROLE) {
-      case "Student":
+      case constants.STUDENT:
         return <Student />;
 
-      case "Intern":
+      case constants.INTERN:
         return <Student />;
 
-      case "University":
-        return <University/>;
+      case constants.UNIVERSITY:
+        return <University />;
       default:
         return <></>;
     }

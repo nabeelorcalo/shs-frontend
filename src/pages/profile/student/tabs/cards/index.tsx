@@ -6,9 +6,8 @@ import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { CommonDatePicker } from "../../../../../components";
-import { DeleteIcon } from '../../../../../assets/images';
+import { DeleteIcon } from "../../../../../assets/images";
 import CardUsers from "./userCards";
-
 
 const CardTabs = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,35 +33,12 @@ const CardTabs = () => {
       {cardArr.map((item, index) => {
         return (
           <>
-            {/* <div className="animate">
-              <div className="flex justify-between">
-                <div className="flex items-center">
-                  <img src={item.img} alt="" />
-                  <div className="ml-2">
-                    <Typography>{item.name}</Typography>
-                    <Typography>Exp. date: {item.expDate}</Typography>
-                  </div>
-                </div>
-
-                <div className="flex justify-end">
-                  <div className="white-bg-color rounded-lg h-10 w-10">
-                    <img
-                      src={upload}
-                      alt=""
-                      className="flex justify-center items-center m-auto pt-3"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Divider /> */}
             <CardUsers
               img={item.img}
               title={item.name}
               description={item.expDate}
-              sideIcon={<DeleteIcon/>}
+              sideIcon={<DeleteIcon />}
             />
-
           </>
         );
       })}

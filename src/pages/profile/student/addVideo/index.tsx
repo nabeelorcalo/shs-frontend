@@ -1,23 +1,12 @@
 import React from "react";
-
 import { Divider, Typography } from "antd";
 import { Button } from "../../../../components";
-
 const { Title, Paragraph, Text, Link } = Typography;
+import "../../style.scss";
 
 function AddVideo() {
   return (
-    <div
-      style={{
-        background: "#FFFFFF",
-        boxShadow: "0px 0px 8px 1px rgba(9, 161, 218, 0.1)",
-        borderRadius: "16px",
-        padding: "2rem",
-        height: "80vh",
-        overflowY: "scroll",
-        overflowX: "hidden",
-      }}
-    >
+    <div className="add-video-container">
       <Title>Video</Title>
       <Title level={5}>Create your video interview to get hired</Title>
       <Title level={4}>

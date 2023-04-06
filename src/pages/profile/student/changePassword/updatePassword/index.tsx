@@ -8,13 +8,10 @@ const CreatePassword = () => {
   return (
     <div>
       <div className="create-password">
-        
-    
           <UpdatePasswordForm />
 
       </div>
     </div>
   );
 };
-
 export default CreatePassword;

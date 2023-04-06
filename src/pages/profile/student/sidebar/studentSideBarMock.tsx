@@ -3,8 +3,6 @@ import iconEmail from "../../../../assets/images/profile/student/email.svg";
 import iconPhone from "../../../../assets/images/profile/student/Phone.svg";
 import iconLocation from "../../../../assets/images/profile/student/location.svg";
 
-
-
 export const profileInfo = [
   {
     profile: profile,
