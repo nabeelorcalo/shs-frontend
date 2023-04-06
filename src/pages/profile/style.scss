@@ -190,6 +190,7 @@
     margin-bottom: 1rem;
   }
 }
+<<<<<<< HEAD
 
 .add-video-container {
   background: #ffffff;
@@ -206,4 +207,39 @@
   font-size: 14px;
   font-weight: 400;
   margin-left: 10px;
+=======
+.personal-information{
+  .input-style {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    color: $text-primary-disabled-color;
+  }
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-primary-title-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+.general-information{
+  .input-style {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    color: $text-primary-disabled-color;
+  }
+  .title {
+    font-family: "Outfit";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-primary-title-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+>>>>>>> 1068b24e3026143f42b501e4352473cf14023572
 }

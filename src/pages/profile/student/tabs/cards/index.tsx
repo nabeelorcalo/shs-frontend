@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { Button, Modal, Space, Switch } from "antd";
 import { Col, Form, Input, Row } from "antd";
-import "../../../style.scss";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { CommonDatePicker } from "../../../../../components";
+<<<<<<< HEAD
 import { DeleteIcon } from "../../../../../assets/images";
+=======
+import { DeleteIcon } from '../../../../../assets/images';
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+>>>>>>> 1068b24e3026143f42b501e4352473cf14023572
 import CardUsers from "./userCards";
+import "../../../style.scss";
 
 const CardTabs = () => {
   const [isOpen, setIsOpen] = useState(false);
   const onFinish = (values: any) => {
     console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
   };
   return (
     <div className="card-tabs">
@@ -45,17 +46,16 @@ const CardTabs = () => {
       <Modal
         open={isOpen}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} onClick={() => setIsOpen(false)} />
         }
         footer={[
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] text-[#4A9D77] font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button
-                onClick={() => setIsOpen(false)}
-                className="bg-[#4a9d77] text-white border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              <Button onClick={() => setIsOpen(false)}
+                className="teriary-bg-color  white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Submit
@@ -69,8 +69,8 @@ const CardTabs = () => {
           layout="vertical"
           name="basic"
           initialValues={{ remember: true }}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Row>
@@ -78,9 +78,7 @@ const CardTabs = () => {
               <Form.Item
                 label="Card Number"
                 name="cardNumber"
-                rules={[
-                  { required: true, message: "Please input your Cars Number!" },
-                ]}
+                rules={[{ required: true }, { type: "string" }]}
               >
                 <Input className="input-style" />
               </Form.Item>
@@ -89,7 +87,7 @@ const CardTabs = () => {
               <Form.Item
                 label="Card Holder"
                 name="dob"
-                rules={[{ required: true, message: "Enter Name!" }]}
+                rules={[{ required: true }, { type: "string" }]}
               >
                 <Input className="input-style" />
               </Form.Item>
@@ -98,12 +96,7 @@ const CardTabs = () => {
               <Form.Item
                 label="Expiration Date"
                 name="companyname"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your Company Name!",
-                  },
-                ]}
+                rules={[{ required: true }, { type: "string" }]}
               >
                 <CommonDatePicker />
               </Form.Item>
