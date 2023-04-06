@@ -14,10 +14,10 @@ const index = () => {
       <PageHeader title="Grievances" />
       <Divider className='mt-1 mb-1'/>
       </div>
-      <div className='flex items-center h-screen'>
+      <div className='flex items-center h-[75vh]'>
         <div className='mx-auto'>
         <div className="flex flex-col">
-        <Text className="text-2xl text-[#A0A3BD] "> Solve Your workplace problems by blowing a whistle. </Text>
+        <Text className="text-2xl title text-center"> Solve Your workplace problems by blowing a whistle. </Text>
         <div className='flex justify-center items-center my-4'><Button
             size="middle"
             onClick={() => {
