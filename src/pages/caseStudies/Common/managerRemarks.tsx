@@ -6,13 +6,13 @@ const ManagerRemarks = () => {
   const [hover3, setHover3] = useState(false)
 
   const SadIconHandler = () => {
-    setHover1(!hover1); console.log(hover1)
+    setHover1(!hover1); 
   }
   const SmileyIconHandler = () => {
-    setHover2(!hover2); console.log(hover2)
+    setHover2(!hover2); 
   }
   const ExceedIconHandler = () => {
-    setHover3(!hover3); console.log(hover3)
+    setHover3(!hover3); 
   }
 
   const managerRemarks = [{

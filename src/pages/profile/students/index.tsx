@@ -1,11 +1,4 @@
-import React from "react";
-import {
-  CreditCardFilled,
-  DribbbleSquareFilled,
-  FileFilled,
-  InfoCircleFilled,
-  UserOutlined,
-} from "@ant-design/icons";
+import {ProfileUser,GeneralInfo,ProfileDoc,Imigration,ProfileCards} from "../../../assets/images/index"
 import AppTabs from "../../../components/Tabs";
 import Documents from "./tabs/documents";
 import GeneralInformation from "./tabs/generalInformation";
@@ -20,7 +13,8 @@ const items = [
 
     label: (
       <span>
-        <UserOutlined /> Personal Information
+        <ProfileUser /> 
+        <span className="ml-3">Personal Information</span> 
       </span>
     ),
     children: <PersonalInformation />,
@@ -29,7 +23,8 @@ const items = [
     key: "2",
     label: (
       <span>
-        <InfoCircleFilled /> General Information
+        <GeneralInfo />
+        <span className="ml-3">General Information</span>
       </span>
     ),
     children: <GeneralInformation />,
@@ -38,7 +33,8 @@ const items = [
     key: "3",
     label: (
       <span>
-        <FileFilled /> Documents
+        <ProfileDoc />
+        <span className="ml-3">Documents</span>
       </span>
     ),
     children: <Documents />,
@@ -47,7 +43,8 @@ const items = [
     key: "4",
     label: (
       <span>
-        <DribbbleSquareFilled /> Immigration Status
+        <Imigration />
+        <span className="ml-3">Immigration Status</span>
       </span>
     ),
     children: <ImmigrationStatus />,
@@ -56,7 +53,8 @@ const items = [
     key: "5",
     label: (
       <span>
-        <CreditCardFilled /> Cards
+        <ProfileCards /> 
+        <span className="ml-3">Cards</span>
       </span>
     ),
     children: <CardTabs />,

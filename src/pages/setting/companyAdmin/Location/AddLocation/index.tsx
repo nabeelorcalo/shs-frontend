@@ -51,7 +51,6 @@ const AddLocation: React.FC = () => {
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
-    console.log(values);
   };
 
   const onChange = (e: RadioChangeEvent) => {

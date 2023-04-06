@@ -52,9 +52,12 @@
     padding: 0 2px;
   }
 
-  .ant-input[disabled] {
-    background-color: $light-blue-color;
+  .ant-input[disabled],.ant-input {
+    background-color:rgb(59 130 246 / 0.1);
     color: $text-primary-title-color;
+    &:hover{
+      box-shadow: none;
+    }
   }
 }
 
@@ -154,8 +157,7 @@
     justify-content: center;
     align-items: center;
     padding: 0;
-    width: 38px !important;
-    height: 38px;
+    height: 48px;
     background-color: #E6F4F9;
     margin: 0 8px;
   }
@@ -163,10 +165,6 @@
   .icon-btn:hover {
     background-color: transparent;
     border: 2px solid #A0A3BD;
-  }
-
-  .filter-button {
-    height: 37px;
   }
 
   .icon-btn:focus {

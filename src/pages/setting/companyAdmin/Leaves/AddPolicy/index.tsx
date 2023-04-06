@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
+import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import {
   Typography, Row, Col, Divider, Form, Radio,
@@ -67,7 +66,6 @@ const LeavesAddPolicy: React.FC = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
     if (e.target.value === 2) {
       setOpenModal(!openModal);
     }

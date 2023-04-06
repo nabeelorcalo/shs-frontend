@@ -16,7 +16,6 @@ const Filters: React.FC = (props: any) => {
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
-    console.log("values", values)
   }
   const renderOption = (option: any) => {
     return (
