@@ -6,7 +6,7 @@ import "./style.scss"
 import { DocumentUpload } from '../../assets/images';
 import { Button } from '../Button';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
-import { AcceptedFileTyp } from '../../config/constants';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 import TimePickerComp from '../calendars/TimePicker/timePicker';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -179,7 +179,7 @@ export const LeaveRequest = (props: any) => {
         </Form.Item>
         <Form.Item label="Attachment" name='attachment'>
           <Dragger
-            accept={AcceptedFileTyp}
+            accept={ROUTES_CONSTANTS.AcceptedFileTyp}
             beforeUpload={() => false}
             className="FileUploder"
             // iconRender={iconRender}
