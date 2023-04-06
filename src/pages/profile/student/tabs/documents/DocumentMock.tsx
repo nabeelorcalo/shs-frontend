@@ -1,8 +1,5 @@
 import errorIcon from '../../../../../assets/images/profile/student/StatusIcon.svg';
 import documentCard from '../../../../../assets/images/profile/student/Document Card.svg';
-
-
-
 export const documentArr = [
     {
         img:documentCard,

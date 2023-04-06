@@ -5,12 +5,8 @@ import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { cardArr } from "./cardMock";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { CommonDatePicker } from "../../../../../components";
-<<<<<<< HEAD
-import { DeleteIcon } from "../../../../../assets/images";
-=======
 import { DeleteIcon } from '../../../../../assets/images';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
->>>>>>> 1068b24e3026143f42b501e4352473cf14023572
 import CardUsers from "./userCards";
 import "../../../style.scss";
 
