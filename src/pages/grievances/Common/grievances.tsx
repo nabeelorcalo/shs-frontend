@@ -1,6 +1,6 @@
 import React from 'react';
-import { Col, Row, Button, Typography } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Col, Row, Typography } from 'antd';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 const { Text } = Typography;
 import './style.scss';
@@ -17,11 +17,12 @@ import {
   NewGrievances,
   ResolevedGrievances
 } from '../../../assets/images';
-import {PageHeader, RegisterMemberAndFeddbackGraph}from '../../../components';
+import {Button, PageHeader, RegisterMemberAndFeddbackGraph}from '../../../components';
 import { GrievanceStats } from '../../../components/ChartsOfGraphs/grievanceStats/grievanceStats';
-import { ArrowRightOutlined } from '@ant-design/icons/lib/icons';
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const Grievance = () => {
+  const navigate = useNavigate()
   let overview = [
     {
       name: "All Grievances",
@@ -53,12 +54,20 @@ const Grievance = () => {
   return (
     <div className="grievances">
       <div>
-        <div className="flex justify-between">
-          <PageHeader title="Grievances" />
-          <NavLink to="/grievances/all-grievance">
-            <Button className='teriary-color header-btn'>All Grievences</Button>
-          </NavLink>
+      <PageHeader
+        actions
+        bordered
+        title="Grievences"
+      >
+        <div className='flex items-center justify-end header-btn'>
+          <Button
+            className='button font-semibold px-8'
+            onClick={() => navigate(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`)}
+            label='All Grievences'
+          // size="small"
+          />
         </div>
+      </PageHeader>
       </div>
       <Row gutter={[10, 10]} className="mt-5">
         {overview.map((data: any, index: any) => {

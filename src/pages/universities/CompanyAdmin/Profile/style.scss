@@ -1,6 +1,8 @@
 @import '../../../../scss/colors';
 .university-profile-detail-page{
-
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
 .container {
   &:hover .image {
     opacity: 0.8;

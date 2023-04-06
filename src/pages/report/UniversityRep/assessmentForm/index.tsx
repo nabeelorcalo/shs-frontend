@@ -171,7 +171,6 @@ const index = () => {
         title=""
         width={500}
         state={openModal}
-        cancelBtntxt={() => { setOpenModal(!openModal) }}
         okBtntxt="Upload"
         okBtnFunc={() => { }}
         footer={<>

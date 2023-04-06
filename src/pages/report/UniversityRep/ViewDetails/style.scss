@@ -1,5 +1,8 @@
 @import '../../../../scss/colors';
-
+.view-details-university-rep{
+  .ant-divider-horizontal{
+  background: $text-error-line-color !important;
+}
 .drop-down-wrapper {
   background: $text-input-bg-color;
   border-radius: 8px;
@@ -22,4 +25,6 @@
   &.pilled {
       border-radius: 50px;
   }
-}
+}}
+
+

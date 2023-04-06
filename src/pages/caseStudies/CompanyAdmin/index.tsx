@@ -1,14 +1,11 @@
 
 import React, { useState } from 'react'
-import { Divider } from 'antd'
-import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar ,  } from '../../../components'
+import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar, } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import CaseStudiesTable from '../Common/caseStudiesTable';
 import Filters from '../Common/filter';
-import './style.scss'
 import useCustomHook from '../actionHandler';
-
-
+import './style.scss'
 
 const index = () => {
   const caseStudyTableData = [
@@ -73,32 +70,31 @@ const index = () => {
       status: 'Rejected',
     },
   ]
-  const TableColumn = ['No.', 'Avater' ,' Name', 'Report Name' , 'Department' , 'Assessment Date' , 'Reporting Manager'  , 'Status']
+  const TableColumn = ['No.', 'Avater', ' Name', 'Report Name', 'Department', 'Assessment Date', 'Reporting Manager', 'Status']
   const action = useCustomHook();
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [value, setValue] = useState<any>()
-   const handleChange = () => { };
+  const handleChange = () => { };
   return (
     <div className='manager-case-studies'>
-       <PageHeader title="Case Studies"
-         />
-      <Divider className="my-0" />
+      <PageHeader title="Case Studies" actions bordered
+      />
       <div className='flex justify-between my-2'>
         <SearchBar size="middle" handleChange={handleChange} />
         <div className='flex justify-end gap-2'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,caseStudyTableData,"Case Studies " )}}
-            />
+            requiredDownloadIcon
+            options={["pdf", "excel"]}
+            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ") }}
+          />
         </div>
       </div>
       <BoxWrapper>
-      <CaseStudiesTable caseStudyTableData={caseStudyTableData}/>
+        <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
       </BoxWrapper>
-      <Drawer 
+      <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}
         title="Filters"
@@ -108,7 +104,7 @@ const index = () => {
           <Filters />
         </React.Fragment>
       </Drawer>
-      </div>
+    </div>
   )
 }
 

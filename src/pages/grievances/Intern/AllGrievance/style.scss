@@ -1,43 +1,32 @@
 @import '../../../../scss//colors';
-.intern-blow-whistle-footer{
 
-
-  .footer-cancel-btn {
-    border: 1px solid $teriary-bg-color!important;
-    color: $teriary-bg-color!important ;
-    padding: 0px 20px;
-  }
-  .footer-submit-btn {
-    background: $teriary-bg-color;
-    border: 1px solid $teriary-bg-color;
-    color: $white-bg-color;
-    padding: 0px 20px;
-  }
-}
-.filter_main_wrapper{
-  .drop-down-wrapper{
+.filter_main_wrapper {
+  .drop-down-wrapper {
     background: $white-bg-color;
     border: 1px solid $text-primary-disabled-color;
   }
 }
 
-.add-grievance{
-  .blow-whistle-button{
-    &:hover{
+.all-grievance {
+  .blow-whistle-button {
+    &:hover {
       color: $white-bg-color;
     }
-
   }
-  .new{
+
+  .new {
     background: #FF6F31;
   }
-  .in-progress{
+
+  .in-progress {
     background: #128AF9;
   }
-  .re-opened{
+
+  .re-opened {
     background: #1FBEC8;
   }
-  .resolved{
+
+  .resolved {
     background: $text-success-color;
   }
-  }
+}

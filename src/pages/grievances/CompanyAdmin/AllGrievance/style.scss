@@ -8,7 +8,10 @@
     border: 1px solid $text-primary-disabled-color;
   }
 }
-.add-grievance{
+.all-grievance{
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
 .new{
   background: #FF6F31;
 }

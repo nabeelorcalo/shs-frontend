@@ -1,59 +1,40 @@
 @import '../../../../scss/colors';
-.add-grievance{
-    .blow-whistle-button{
-        &:hover{
-            color:$white-bg-color !important
-        }
+
+.all-grievance {
+  .blow-whistle-button {
+    &:hover {
+      color: $white-bg-color !important
     }
-    .gerievance-right-sec{
-      @media only screen and (max-width:575px) {
-        flex-direction: column;
-      }
+  }
+
+  .gerievance-right-sec {
+    @media only screen and (max-width:575px) {
+      flex-direction: column;
     }
-}
-.filter_main_wrapper{
-  .drop-down-wrapper{
-    border: 1px solid $text-primary-disabled-color;
-    background: $white-bg-color;
-  }}
-.blow-whistle-footer{
-    .footer-cancel-btn {
-        border: 1px solid $green-graph-tooltip-color !important;
-        color: $green-graph-tooltip-color !important ;
-        padding: 0px 20px;
-      }
-      .footer-submit-btn {
-        background: $green-graph-tooltip-color;
-        border: 1px solid $green-graph-tooltip-color;
-        color: $white-bg-color;
-        padding: 0px 20px;
-      }
+  }
+
+  .new {
+    background: #FF6F31;
+  }
+
+  .in-progress {
+    background: #128AF9;
+  }
+
+  .re-opened {
+    background: #1FBEC8;
+  }
+
+  .resolved {
+    background: $text-success-color;
+  }
+
 }
 
-.add-grievance{
-    .new{
-      background: #FF6F31;
-    }
-    .in-progress{
-      background: #128AF9;
-    }
-    .re-opened{
-      background: #1FBEC8;
-    }
-    .resolved{
-      background: $text-success-color;
-    }
-    }
-    .manager-blow-whistle-footer{
-      .footer-cancel-btn {
-        border: 1px solid #4a9d77 !important;
-        color: #4a9d77 !important ;
-        padding: 0px 20px;
-      }
-      .footer-submit-btn {
-        background: #4a9d77;
-        border: 1px solid #4a9d77;
-        color: #fff;
-        padding: 0px 20px;
-      }
-    }
+.filter_main_wrapper {
+  .drop-down-wrapper {
+    border: 1px solid $text-primary-disabled-color;
+    background: $white-bg-color;
+  }
+}
+
