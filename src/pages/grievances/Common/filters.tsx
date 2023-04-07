@@ -15,6 +15,9 @@ const Filters: React.FC = (props: any) => {
     { value: 'jean ella', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>jean ella</span></> },
     { value: 'Mino Marina', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>Mino Marina</span></> },
   ];
+  const typeSelectValue = ["New", "In Progress", "Re-Open", "Resolved",]
+  const statusSelectValue = ["Work", "Personal", "Discipline" , "Other"]
+
 
   const renderOption = (option: any) => {
     return (
@@ -53,11 +56,9 @@ const Filters: React.FC = (props: any) => {
           label="Type"
         >
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="New">New</Select.Option>
-            <Select.Option value="In Progress">In Progress</Select.Option>
-            <Select.Option value="Re-Open">Re-Open</Select.Option>
-            <Select.Option value="Resolved">Resolved</Select.Option>
-          </Select>
+          {typeSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
+
+          </Select>tion
         </Form.Item>
 
         <Form.Item
@@ -65,10 +66,8 @@ const Filters: React.FC = (props: any) => {
           label="Status"
         >
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Work">Work</Select.Option>
-            <Select.Option value="Personal">Personal</Select.Option>
-            <Select.Option value="Discipline">Discipline</Select.Option>
-            <Select.Option value="Other">Other</Select.Option>
+          {statusSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
+
           </Select>
         </Form.Item>
 
