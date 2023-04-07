@@ -6,6 +6,7 @@ import "./style.scss";
 import { PageHeader } from "../../../components";
 import { useState } from "react";
 import { downloadPDF } from "../../../components/pdfExcelDownload";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const CompanyAdmin = () => {
             strokeColor={'#3DC575'}
             totalHours={data.totalHours}
             workedHours={data.workedHours}
-            handleViewAll={() => navigate(`/timesheet/history/${data.id}`)}
+            handleViewAll={() => navigate(`/${ROUTES_CONSTANTS.TIMESHEETHISTORY}/${data.id}`)}
           />
         ))}
       </div>

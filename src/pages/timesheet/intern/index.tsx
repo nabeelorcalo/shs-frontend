@@ -7,12 +7,12 @@ import InternTable from "./internTable";
 import TaskDetails from "./taskDetails";
 import { useNavigate } from "react-router-dom";
 import './style.scss';
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const Intern = () => {
 
   const boxShadow = '0px 0px 8px 1px rgba(9, 161, 218, 0.1)';
   const [category, setCategory] = useState('');
-  const id = '1';
   const navigate = useNavigate();
 
   return (
@@ -21,15 +21,11 @@ const Intern = () => {
       <PageHeader title='TimeSheet' bordered actions>
         <Button
           className="view-history text-base font-semibold"
-          onClick={() => navigate(`/timesheet/view-history/${id}`)}
+          onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}
         >View History
         </Button>
       </PageHeader>
 
-      {/* <div className="timesheet-top-heading text-2xl flex items-center justify-between gap-3 font-semibold pb-[30px] mb-[30px] capitalize">
-        TimeSheet
-
-      </div> */}
       <Row gutter={[25, 25]}>
         <Col xl={16} xs={24}>
           <BoxWrapper boxShadow={boxShadow} className="add-new-wrapper flex items-center justify-between flex-wrap gap-4">
