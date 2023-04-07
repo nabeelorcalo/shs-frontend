@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-const  ManagerRemarksForAssmentForm = (props:any) => {
+const  ManagerRemarks = (props:any) => {
 
   return (
     <div className='flex flex-row justify-between manage-remark-image-container'>
@@ -10,4 +10,4 @@ const  ManagerRemarksForAssmentForm = (props:any) => {
       </div>
   )
 }
- export default ManagerRemarksForAssmentForm
+ export default ManagerRemarks

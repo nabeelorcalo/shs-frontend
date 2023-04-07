@@ -2,57 +2,59 @@ import React, { useState, useEffect } from 'react';
 import constants from '../../config/constants';
 import { AttendanceAndListingGraph } from './graphForAttendanceAndListings';
 import { GrowthAnalyticsGraph } from './graphForGrowthAnalytics';
-import {LifeAssessmentGraph} from './graphForLifeAssessmentAndLifeBalance/lifeAssessment';
-import {LifeBalanceGraph} from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
+import { LifeAssessmentGraph } from './graphForLifeAssessmentAndLifeBalance/lifeAssessment';
+import { LifeBalanceGraph } from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
 import { RegisterAgentsAndRewardGraph } from './graphForRegisterAgentsAndRewards';
-import {RegisterMemberAndFeddbackGraph} from './graphForRegisteredMembersAndFeedback';
-import {BoxWrapper} from '../../components/BoxWrapper/BoxWrapper';
+import { RegisterMemberAndFeddbackGraph } from './graphForRegisteredMembersAndFeedback';
+import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
+// import AreaMap from './AreaMap';
 
 const Graph = (props: any) => {
   return (
     <div className='p-4'>
+      {/* <AreaMap /> */}
 
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <LifeBalanceGraph monthName="Jan" />
       </BoxWrapper>
 
       <BoxWrapper >
         <LifeAssessmentGraph monthName="Jan" />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
-      <BoxWrapper >
-        {/* <GrowthAnalyticsGraph /> */}
-      </BoxWrapper>
+      {/* <BoxWrapper >
+        <GrowthAnalyticsGraph />
+      </BoxWrapper> */}
 
       {/* Register Member Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <RegisterMemberAndFeddbackGraph graphName={constants.REGISTER_MEMBERS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Feedback Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <RegisterMemberAndFeddbackGraph graphName={constants.FEEDBACk} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Attendance Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <AttendanceAndListingGraph title="Graph Name" level={3} graphName={constants.ATTENDANCE} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Listings Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <AttendanceAndListingGraph title="Graph Name" level={3} graphName={constants.LISTINGS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Register Agents Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <RegisterAgentsAndRewardGraph graphName={constants.REGISTER_AGENTS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
 
       {/* Rewards Graph */}
-      <BoxWrapper >
+      {/* <BoxWrapper >
         <RegisterAgentsAndRewardGraph graphName={constants.REWARDS} />
-      </BoxWrapper>
+      </BoxWrapper> */}
     </div>
   );
 };

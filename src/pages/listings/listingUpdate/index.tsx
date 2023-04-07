@@ -181,36 +181,36 @@ const ListingUpdate = () => {
                   </div>
                   <div className="tabs-pane-card-body">
                     <Row gutter={30}>
-                      <Col xs={24}>
+                      <Col xs={24} md={24}>
                         <Form.Item name="address" label="Address">
                           <Input placeholder="Placeholder" />
                         </Form.Item>
                       </Col>
-                      <Col xs={12}>
+                      <Col xs={24} md={24} lg={12} xl={12}>
                         <Form.Item name="address2" label="Address  Line 2 (optional)">
                           <Input placeholder="Placeholder" />
                         </Form.Item>
                       </Col>
-                      <Col xs={12}>
+                      <Col xs={24} md={24} lg={12} xl={12}>
                         <Form.Item name="postcode" label="Postcode">
                           <Input placeholder="Placeholder" />
                         </Form.Item>
                       </Col>
-                      <Col xs={24}>
+                      <Col xs={24} md={24} lg={24} xl={24}>
                         <Form.Item name="isFurnished" label="Is it furnished?">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} lg={12} xl={12}>
                                 <Radio value="furnishedYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} lg={12} xl={12}>
                                 <Radio value="furnishedNo">No</Radio>
                               </Col>
                             </Row>
                           </Radio.Group>
                         </Form.Item>
                       </Col>
-                      <Col xs={24}>
+                      <Col xs={24} md={24} lg={24} xl={24}>
                         <Form.Item className="form-btn-right">
                           <Button className="button-tertiary">Update</Button>
                         </Form.Item>
@@ -259,19 +259,19 @@ const ListingUpdate = () => {
                       {initValues.propertyType === "entireProperty" &&
                       <>
                       <Col xs={24}>
-                        <Row gutter={30}>
-                          <Col xs={8}>
+                        <Row gutter={[30,20]}>
+                          <Col xs={24} md={24} lg={12} xl={8}>
                             <Form.Item name="bedroomsTotal" label="Bedrooms in total">
                               <InputNumber min={1} max={10} />
                             </Form.Item>
                           </Col>
-                          <Col xs={8}>
+                          <Col xs={24} md={24} lg={12} xl={8}>
                             <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
                               <InputNumber min={1} max={10} />
                             </Form.Item>
                             
                           </Col>
-                          <Col xs={8}>
+                          <Col xs={24} md={24} lg={24} xl={8}>
                             <Form.Item name="bathrooms" label="Bathrooms">
                               <InputNumber min={1} max={10} />
                             </Form.Item>
@@ -309,23 +309,24 @@ const ListingUpdate = () => {
                           </Select>
                         </Form.Item>
                       </Col>
+
                       <Col xs={24}>
                         <div className="step-form-fields-title">
                           The building has:
                         </div>
                         <Form.Item name="buildingHas">
                           <Checkbox.Group>
-                            <Row gutter={30}>
-                              <Col xs={6}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingElevator">Elevator</Checkbox>
                               </Col>
-                              <Col xs={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingParking">Parking</Checkbox>
                               </Col>
-                              <Col xs={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingPoolAccess">Pool Access</Checkbox>
                               </Col>
-                              <Col xs={6}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
                                 <Checkbox value="buildingGYM">GYM</Checkbox>
                               </Col>
                             </Row>
@@ -338,23 +339,23 @@ const ListingUpdate = () => {
                         </div>
                         <Form.Item name="PropertyHas">
                           <Checkbox.Group>
-                            <Row gutter={[30, 30]}>
-                              <Col xs={8}>
+                            <Row gutter={[30, 20]}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyBalcony">Balcony</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyEquippedKitchen">Equipped Kitchen</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyClothesDryer">Clothes Dryer</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyDishWasher">Dish Washer</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyOven">Oven</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="propertyWashingMachine">Washing machine</Checkbox>
                               </Col>
                             </Row>
@@ -433,11 +434,11 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="allowedTwoPeople" label="Are two people allowed to live in this bedroom">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="allowedYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="allowedNo">No</Radio>
                               </Col>
                             </Row>
@@ -448,34 +449,34 @@ const ListingUpdate = () => {
                         <Form.Item name="kindOfAmenities" label="What kind of amenities does bedroom 1 have? ">
                           <Checkbox.Group>
                             <Row gutter={[30, 30]}>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="ChestOfDrawers">Chest of drawers</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="desk">Desk</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="rivateBathroom">Private Bathroom</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="keyLocker">Key or Locker</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Wardrobe">Wardrobe</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Shelving">Shelving</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="TV">TV</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Wi-fi">Wi-fi</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="carpetedFloors">Carpeted Floors</Checkbox>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
                                 <Checkbox value="Other">Other</Checkbox>
                               </Col>
                             </Row>
@@ -529,11 +530,11 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="securityDeposit" label="Is there security deposit?">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="securityDepositYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="securityDepositNo">No</Radio>
                               </Col>
                             </Row>
@@ -651,11 +652,11 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="couplesAllowed" label="Are couples allowed to rent your property?">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="couplesAllowedYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="couplesAllowedNo">No</Radio>
                               </Col>
                             </Row>
@@ -665,11 +666,11 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="tenantsRegisterAddress" label="Can tenants register to your address?">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="tenantsRegisterAddressYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="tenantsRegisterAddressNo">No</Radio>
                               </Col>
                             </Row>
@@ -679,11 +680,11 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="allowedPets" label="Are tenants allowed to have pets in your property?">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="allowedYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="allowedNo">No</Radio>
                               </Col>
                             </Row>
@@ -693,11 +694,11 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="allowedMusic" label="Can tenants play musical instrument in your property?">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="allowedMusicYes">Yes</Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} md={24} xl={12}>
                                 <Radio value="allowedMusicNo">No</Radio>
                               </Col>
                             </Row>
@@ -758,8 +759,8 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="contractType" label="Contract type">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={8}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
                                 <Radio value="contractTypeDaily">
                                   <div className="radio-card-content">
                                     <div className="radio-card-label">Daily</div>
@@ -767,7 +768,7 @@ const ListingUpdate = () => {
                                   </div>
                                 </Radio>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
                                 <Radio value="contractTypeFortnightly">
                                   <div className="radio-card-content">
                                     <div className="radio-card-label">Fortnightly</div>
@@ -775,7 +776,7 @@ const ListingUpdate = () => {
                                   </div>
                                 </Radio>
                               </Col>
-                              <Col xs={8}>
+                              <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
                                 <Radio value="contractTypeMonthly">
                                   <div className="radio-card-content">
                                     <div className="radio-card-label">Monthly</div>
@@ -790,8 +791,8 @@ const ListingUpdate = () => {
                       <Col xs={24}>
                         <Form.Item name="cancellationPolicy" label="Cancellation policy">
                           <Radio.Group>
-                            <Row gutter={30}>
-                              <Col xs={12}>
+                            <Row gutter={[30,20]}>
+                              <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
                                 <Radio value="standardCancellation">
                                   <div className="radio-card-content">
                                     <div className="radio-card-label">Standard Cancellation</div>
@@ -803,7 +804,7 @@ const ListingUpdate = () => {
                                   </div>
                                 </Radio>
                               </Col>
-                              <Col xs={12}>
+                              <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
                                 <Radio value="clexibleCancellation">
                                   <div className="radio-card-content">
                                     <div className="radio-card-label">Flexible cancellation</div>

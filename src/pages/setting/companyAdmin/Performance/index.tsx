@@ -45,7 +45,6 @@ const SettingPerformance: React.FC = () => {
 
   const IdHandler = (id: any) => {
     setId(id);
-    console.log(id);
   };
   return (
     <div className="setting-performance">

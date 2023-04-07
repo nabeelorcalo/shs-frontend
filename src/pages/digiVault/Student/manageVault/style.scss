@@ -29,8 +29,9 @@
     }
   }
 
-  .foldet-add-btn {
-    min-width: -webkit-fill-available;
+  .folder-add-btn {
+    height: 48px;
+    width: 100%;
     background: $white-bg-color;
     border: 1px solid $green-graph-tooltip-color;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);

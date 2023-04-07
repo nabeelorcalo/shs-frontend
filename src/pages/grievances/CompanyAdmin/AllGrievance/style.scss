@@ -9,6 +9,15 @@
   }
 }
 .add-grievance{
+  .add-grievance-right{
+    @media only screen and (max-width:475px) {
+      flex-direction: column;
+      .main-btn{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 .new{
   background: #FF6F31;
 }

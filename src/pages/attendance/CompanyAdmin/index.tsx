@@ -191,40 +191,6 @@ const CompanyAdminAttendance = () => {
           />
         </Col>
       </Row>
-
-      {/* <div className="attendance-detail-container" > */}
-        {/* <div className="left-container"> */}
-          {/* <AttendanceAndListingGraph
-            title="Attendance Overview"
-            graphName="attendance"
-            level={4}
-          /> */}
-          {/* <MonthlyPerfomanceChart
-            data={AttendanceDepartmentData}
-            heading={"Attendance By department"}
-            color={['#4A9D77', '#E95060', '#FFC15D']}
-            columnStyle={{ radius: [5, 5, 0, 0] }}
-            columnWidthRatio={.5}
-            children={
-              <div className="ml-auto">
-                <DropDown
-                  name="Select"
-                  options={months}
-                  setValue={() => onMonthChange(event)}
-                  value={state.graphSelectedMonth}
-                  placement="bottomCenter"
-                />
-              </div>
-            }
-          /> */}
-        {/* </div> */}
-        {/* <div className="right-container"> */}
-          {/* <TopPerformanceList
-            heading="Today's Attendance"
-            data={state.attendanceList}
-          /> */}
-        {/* </div> */}
-      {/* </div> */}
     </div>
   )
 }

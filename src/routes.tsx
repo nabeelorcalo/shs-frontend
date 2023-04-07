@@ -103,7 +103,7 @@ const Contracts = Loadable(lazy(() => import("./pages/contracts")));
 const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
-const Profile = Loadable(lazy(() => import("./pages/profile")));
+const Profile = Loadable(lazy(() => import("./pages/profile/")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(
   lazy(() => import("./pages/accommodation/AvailableProperties"))
@@ -500,6 +500,11 @@ const managerRoutes = [
         key: `${ROUTES_CONSTANTS.CHAT}`,
         path: `${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
       },
     ],
   },
@@ -1041,6 +1046,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
         element: <CertificateDetail />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
+      },
     ],
   },
   {
@@ -1165,6 +1175,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
         path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
@@ -1414,6 +1429,11 @@ const universityRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,

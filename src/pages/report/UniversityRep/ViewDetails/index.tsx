@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReportViewDetails, DownloadIconLeave, SettingHorizontalLine, GrievancesAvater } from '../../../../assets/images'
+import { ReportViewDetails, DownloadIconLeave, GrievancesAvater } from '../../../../assets/images'
 import { BoxWrapper, Breadcrumb, SearchBar } from '../../../../components'
 import { Divider, Typography, Row, Col, } from 'antd'
 import './style.scss'
@@ -46,7 +46,7 @@ const index = () => {
   const action = useCustomHook();
   const breadcrumbArray = [
     { name: "Mino Mrina" },
-    { name: "report", onClickNavigateTo: `${ROUTES_CONSTANTS.REPORT} ` },
+    { name: "report", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT} ` },
 
   ];
   const handleChange = () => {

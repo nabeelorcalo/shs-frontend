@@ -1,5 +1,8 @@
 @import '../../../scss/colors';
 .intern-grievance{
+  .title{
+    color: $text-success-placeholder-color;
+  }
 .blow-whistle-button{
   &:hover{
     color: $white-bg-color;

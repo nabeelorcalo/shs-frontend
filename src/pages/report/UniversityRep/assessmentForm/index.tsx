@@ -2,57 +2,65 @@ import React, { useState } from 'react'
 import { BoxWrapper, Breadcrumb } from '../../../../components'
 import { Divider, Button, Typography, Form,} from 'antd'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
-import { Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
+import { DownloadIconLeave, Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
 import { NavLink, useNavigate } from 'react-router-dom';
-
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import signature from "../../../../assets/images/Report/signature.svg"
 import './style.scss'
-import ManagerRemarksForAssmentForm from '../assessmentForm/manageRemarksforUni';
+import useCustomHookforAssment from './actionHandler';
+import ManagerRemarks from './manageRemarksforUni';
 
 const index = () => {
   const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
-    { name: "report", onClickNavigateTo: `${ROUTES_CONSTANTS.REPORT}` },
+    { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}` },
    
   ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
 
-  const mockData = [
+  const tableData = [
     {
       learningCategories: "Technical Skills",
       learningObjectives: "For accuracy and completeness, developed and rewrote technical documentation known as Market Research Description and Product Requirement Document, which included instructions, broachers, product catalogues, and website resources.",
       evidenceOfProgress: "Collected and documented information on integration issues and vulnerabilities, as well as suggestions for improvement. Using Visual Studio, created accurate and efficient test scripts for automated testing of certain products and features.",
-      managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji3rd/>}  content="Meets expectations" />
+      managerRemarks: <ManagerRemarks image={<Emoji3rd/>}  content="Meets expectations" />,
+      content:"Meets expectations"
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Working as part of a team can assist build abilities such as leadership and task skills, which can be improved or increased through it on learning. Process skills include things like "effectiveness skills," "team functioning skills," and "systems thinking abilities."`,
       evidenceOfProgress: "Since we started working in the office. This has exposed me to a working atmosphere, which is the first stage in my personal development. And I'm transitioning from a teaching setting to an office setting.",
-     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji1st/>}  content="Does not meet expectations" />
+     managerRemarks: <ManagerRemarks image={<Emoji1st/>}  content="Does not meet expectations" />,
+     content:"Does not meet expectations"
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Being presentable includes more than just conveying ideas; it also necessitates appearing balanced, and body language plays a vital role in being regarded as worthy.`,
       evidenceOfProgress: "Being proactive about the duties and accomplishing them on time was difficult at first, but with practice and superior performance, it is possible.",
-     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji4th/>}  content="Exceeds expectations" />
+     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />,
+     content:"Meets expectations"
     },
     {
       learningCategories: "Commercial Awareness",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji4th/>}  content="Exceeds expectations" />
+     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />,
+     content:"Meets expectations"
     },
     {
       learningCategories: "Personal and Professional Development",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-     managerRemarks: <ManagerRemarksForAssmentForm image={<Emoji4th/>}  content="Exceeds expectations" />
+     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />,
+     content:"Exceeds expectations"
     },
 
   ]
+  const TableColumn = ['Learning Categories', ' Learning Objectives', 'Evidence of Progress', "Manager's Remarks"]
+
+  const action = useCustomHookforAssment();
   return (
     <div className='company-admin-assessment-form'>
   <Breadcrumb  breadCrumbData={breadcrumbArray} />
@@ -60,7 +68,14 @@ const index = () => {
       {/* for destop */}
       <div className='scroll '>
         <BoxWrapper className='my-5 hidden destop-view lg:block'>
+        <div className='flex justify-between'>
           <Typography className='md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
+        
+           <div className='mr-[-5px] drop-down-wrapper'
+            onClick={() => action.downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ")}>
+            <DownloadIconLeave />
+          </div> 
+          </div> 
           <div className='mt-5 flex gap-10'>
             <span className='font-semibold text-xl lg:w-[200px]'>Learning Categories</span>
             <span className='font-semibold text-xl lg:w-[400px]'>Learning Objectives</span>
@@ -68,7 +83,7 @@ const index = () => {
             <span className='font-semibold text-xl lg:w-[400px]'>Manager’s Remarks</span>
           </div>
           <Divider />
-          {mockData.map((item) => {
+          {tableData.map((item) => {
             return (
               <div className='mt-5 flex gap-10'>
                 <span className='text-base font-normal lg:w-[200px]'>{item.learningCategories}</span>
@@ -85,12 +100,12 @@ const index = () => {
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
                 <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
+                  <img src={signature} alt="signature" />
                 </div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
               <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
+                  <img src={signature} alt="signature"/>
                 </div>
               </div>
             </div>
@@ -110,7 +125,7 @@ const index = () => {
       {/* for mobile */}
       <BoxWrapper className='my-5 block lg:hidden w-full'>
         <Typography className='text-xl md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
-        {mockData.map((item) => {
+        {tableData.map((item) => {
           return (
             <div className='mt-5 flex flex-col gap-5'>
               <span className='text-xl font-medium text-center'>{item.learningCategories}</span>
@@ -133,12 +148,12 @@ const index = () => {
           <div className='xs:flex-col sm:flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
                   <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
+                  <img  alt='error' src={signature} />
                 </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
                 <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
+                  <img   alt='error' src={signature} />
                 </div>
 
             </div>
