@@ -264,25 +264,25 @@ const NewInternships = () => {
           <Col span={8}></Col>
         </Row>
         <Divider />
-        <Row className="flex my-3 flex-row gap-5 justify-end">
+        <Row className="flex my-3 flex-row gap-4 justify-end">
           <Button
             type="link"
             size="middle"
-            className="flex white-bg-color teriary-color"
+            className="white-bg-color teriary-color"
             onClick={() => { }}
           >
             Save Draft
           </Button>
           <Button
             size="middle"
-            className="flex white-bg-color teriary-color"
+            className="white-bg-color teriary-color"
             onClick={() => { }}
           >
             Cancel
           </Button>
           <Button
             size="middle"
-            className="flex teriary-bg-color white-color"
+            className="teriary-bg-color white-color"
             onClick={() => { }}
           >
             Submit
