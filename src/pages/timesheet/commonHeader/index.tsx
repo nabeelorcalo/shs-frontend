@@ -4,9 +4,8 @@ import { DropDown, SearchBar } from "../../../components"
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 
 const CommonHeader = (props: any) => {
-  const { hideUser } = props;
+  const { hideUser, download, setDownload } = props;
   const [dateRange, setDateRange] = useState('');
-  const [download, setDownload] = useState('');
   const [user, setUser] = useState({ userImg: UserAvatar, userName: 'amelia clark' });
 
   const userData = [

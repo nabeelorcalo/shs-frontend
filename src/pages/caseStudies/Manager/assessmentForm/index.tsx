@@ -5,6 +5,7 @@ const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
 import { NavLink, useNavigate } from 'react-router-dom';
+import signature from "../../../../assets/images/Report/signature.svg"
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 
 const index = () => {
@@ -84,7 +85,9 @@ const index = () => {
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-                <div className='sign-box w-full rounded-lg'></div>
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} />
+                </div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
                 <div className='sign-box w-full rounded-lg flex items-center justify-around'>
@@ -132,7 +135,9 @@ const index = () => {
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
           <div className='flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg'></div>
+            <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} alt="signature" />
+                </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
               <div className='sign-box w-full rounded-lg flex items-center justify-around'>
@@ -159,8 +164,9 @@ const index = () => {
         title=""
         width={500}
         state={openModal}
-        cancelBtntxt={() => { setOpenModal(!openModal) }}
+        cancelBtntxt={() => { setOpenModal(false) }}
         okBtntxt="Upload"
+        closeFunc={() => { setOpenModal(false) }}
         okBtnFunc={() => { }}
         footer={<>
           <Button
@@ -172,6 +178,7 @@ const index = () => {
             type='primary'
             className='white-color teriary-bg-color  '
           >Submit</Button></>} />
+  
     </div>
   )
 }
