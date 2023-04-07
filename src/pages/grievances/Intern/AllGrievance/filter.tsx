@@ -24,15 +24,13 @@ const Filters: React.FC = (props: any) => {
     );
   }
   function handleChange(value: any) {
-    console.log(`selected ${value}`);
     setSscalatedValue(value)
   }
   const handleSubmit = () => {
     const values = form.getFieldsValue();
-    console.log("values", values)
+    
   }
   const ResetHandler = () => {
-    console.log("Dddddd")
     options = []
   }
 

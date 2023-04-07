@@ -7,7 +7,7 @@ import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import { IconAddListings, IconAngleDown, IconMore, IconLink, IconAddUpload, IconRemoveAttachment } from '../../assets/images'
-import { 
+import {
   Button,
   Table,
   Dropdown,
@@ -150,7 +150,7 @@ const Listings = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
-  const [ modalAddListingOpen, setModalAddListingOpen ] = useState(false)
+  const [modalAddListingOpen, setModalAddListingOpen] = useState(false)
   const [current, setCurrent] = useState(0)
   const [entireProperty, setEntireProperty] = useState(false)
   const [uploadURL, setUploadURL] = useState(false)
@@ -158,7 +158,7 @@ const Listings = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [initValues,  setInitValues] = useState({
+  const [initValues, setInitValues] = useState({
     "address": "",
     "address2": "",
     "postcode": "",
@@ -221,7 +221,7 @@ const Listings = () => {
         return (
           <>
             <div>{row.propertyType}</div>
-            <div style={{fontSize: '14px', lineHeight: '22px'}}>{row.bedroom} {Number(row.bedroom) > 1? "Bedrooms": "Bedroom"}</div>
+            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.bedroom} {Number(row.bedroom) > 1 ? "Bedrooms" : "Bedroom"}</div>
           </>
         );
       },
@@ -232,8 +232,8 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <div className={`shs-status-badge ${row.verificationStatus === 'unchecked'? 'error': 'success'}`}>
-            {row.verificationStatus === 'unchecked'? 'Unchecked': 'Checked'}
+          <div className={`shs-status-badge ${row.verificationStatus === 'unchecked' ? 'error' : 'success'}`}>
+            {row.verificationStatus === 'unchecked' ? 'Unchecked' : 'Checked'}
           </div>
         );
       },
@@ -252,8 +252,8 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <div className={`shs-status-badge ${row.publicationStatus === 'pending'? 'error': 'success'}`}>
-            {row.publicationStatus === 'pending'? 'Pending': 'Published'}
+          <div className={`shs-status-badge ${row.publicationStatus === 'pending' ? 'error' : 'success'}`}>
+            {row.publicationStatus === 'pending' ? 'Pending' : 'Published'}
           </div>
         );
       },
@@ -264,7 +264,7 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({key}) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
+          <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({ key }) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
             <div className="dropdown-button">
               <IconMore />
             </div>
@@ -285,11 +285,11 @@ const Listings = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function handleActionItem (key:any, id:any) {
-    if(key === 'listingEdit') {
+  function handleActionItem(key: any, id: any) {
+    if (key === 'listingEdit') {
       navigate(`/edit-listing/${id}`)
     }
-    if(key === 'listingRemove') {
+    if (key === 'listingRemove') {
       console.log('listingRemove')
     }
   }
@@ -304,7 +304,7 @@ const Listings = () => {
 
   function onChangeRadioProperty(e: RadioChangeEvent) {
     console.log('Radio checked', e.target.value);
-    e.target.value === 'entireProperty'? setEntireProperty(true) : setEntireProperty(false)
+    e.target.value === 'entireProperty' ? setEntireProperty(true) : setEntireProperty(false)
   }
 
   const onChangeSwitch = (checked: boolean) => {
@@ -401,39 +401,39 @@ const Listings = () => {
             </Form.Item>
           </Col>
           {entireProperty &&
-          <>
-          <Col xs={24}>
-            <Form.Item name="maximumOccupants" label="Maximum Occupants">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="occupants2">2</Select.Option>
-                <Select.Option value="Occupants4">4</Select.Option>
-                <Select.Option value="Occupants6">6</Select.Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <Row gutter={30}>
-              <Col xs={8}>
-                <Form.Item name="bedroomsTotal" label="Bedrooms in total">
-                  <InputNumber min={1} max={10} />
+            <>
+              <Col xs={24}>
+                <Form.Item name="maximumOccupants" label="Maximum Occupants">
+                  <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                    <Select.Option value="occupants2">2</Select.Option>
+                    <Select.Option value="Occupants4">4</Select.Option>
+                    <Select.Option value="Occupants6">6</Select.Option>
+                  </Select>
                 </Form.Item>
               </Col>
-              <Col xs={8}>
-                <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                  <InputNumber min={1} max={10} />
-                </Form.Item>
-                
+              <Col xs={24}>
+                <Row gutter={30}>
+                  <Col xs={8}>
+                    <Form.Item name="bedroomsTotal" label="Bedrooms in total">
+                      <InputNumber min={1} max={10} />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={8}>
+                    <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
+                      <InputNumber min={1} max={10} />
+                    </Form.Item>
+
+                  </Col>
+                  <Col xs={8}>
+                    <Form.Item name="bathrooms" label="Bathrooms">
+                      <InputNumber min={1} max={10} />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Col>
-              <Col xs={8}>
-                <Form.Item name="bathrooms" label="Bathrooms">
-                  <InputNumber min={1} max={10} />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Col>
-          </>
+            </>
           }
-          
+
           <Col xs={24}>
             <Form.Item name="airConditioning" label="Does it have air conditioning?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
@@ -546,7 +546,7 @@ const Listings = () => {
                     name="logo"
                     action="/upload.do"
                     listType={"picture-card"}
-                    showUploadList={{showPreviewIcon: false, removeIcon: <IconRemoveAttachment />}}
+                    showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
                     {initValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
@@ -686,7 +686,7 @@ const Listings = () => {
           </Col>
           <Col xs={24}>
             <Form.Item name="minimumStay" label="Minimum Stay">
-              <InputNumber  />
+              <InputNumber />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -986,7 +986,7 @@ const Listings = () => {
                     name="logo"
                     action="/upload.do"
                     listType={"picture-card"}
-                    showUploadList={{showPreviewIcon: false, removeIcon: <IconRemoveAttachment />}}
+                    showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
                     {initValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
@@ -1008,7 +1008,7 @@ const Listings = () => {
                     </div>
                   </div>
                 }
-                <div className={`enter-url-card ${uploadURL ? 'show': 'hide'}`}>
+                <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
                   <div className="enter-url-form-field">
                     <Form.Item name={'enterUrl'} label="Enter URL">
                       <Input placeholder="https://www.example.com/examplefile.pdf" />
@@ -1123,7 +1123,7 @@ const Listings = () => {
   function prev() {
     setCurrent(current - 1);
   };
-  
+
 
 
   /* RENDER APP
@@ -1133,13 +1133,13 @@ const Listings = () => {
       <div className="agent-listings">
         <PageHeader title="Listings" bordered />
 
-        <div className="page-filterbar">
+        {/* <div className="page-filterbar">
           <div className="page-filterbar-left">
             <div className="searchbar-wrapper">
-              <SearchBar handleChange={() => console.log('Search')}/>
+              <SearchBar handleChange={() => console.log('Search')} />
             </div>
           </div>
-          <div className="page-filterbar-right">   
+          <div className="page-filterbar-right">
             <Button
               className="button-tertiary"
               icon={<IconAddListings />}
@@ -1148,19 +1148,40 @@ const Listings = () => {
               Add Listing
             </Button>
           </div>
-        </div>
-
-        <div className="agent-listing-content">
-          <div className="shs-table-card">
-            <div className="shs-table">
-              <Table
-                columns={tableColumns}
-                dataSource={tableData}
-                pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
-              />
+        </div> */}
+        <Row gutter={[20,20]}>
+          <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+            <div className="searchbar-wrapper">
+              <SearchBar handleChange={() => console.log('Search')} />
             </div>
-          </div>
-        </div>
+          </Col>
+          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end">
+            <div className="page-filterbar-right">
+              <Button
+                className="button-tertiary"
+                icon={<IconAddListings />}
+                onClick={openModalAddListing}
+              >
+                Add Listing
+              </Button>
+            </div>
+          </Col>
+          <Col xs={24}>
+            <div className="agent-listing-content">
+              <div className="shs-table-card">
+                <div className="shs-table">
+                  <Table
+                    scroll={{ x: "max-content" }}
+                    columns={tableColumns}
+                    dataSource={tableData}
+                    pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
+                  />
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+
       </div>
 
       {/* MODAL: ADD LISTING 
@@ -1175,13 +1196,13 @@ const Listings = () => {
         mask={false}
         maskClosable={false}
       >
-        <Form 
+        <Form
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
           initialValues={initValues}
           onValuesChange={(_, values) => {
-            setInitValues(prevState => ({...prevState, ...values}))
+            setInitValues(prevState => ({ ...prevState, ...values }))
             console.log('init:: ', initValues)
           }}
           onFinish={submitAddListing}

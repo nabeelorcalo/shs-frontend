@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Divider, Select } from 'antd'
+import { Divider, Select,Row,Col } from 'antd'
 import { IconAngleDown } from '../../../assets/images';
 import { BoxWrapper, DropDown, PageHeader, SearchBar } from '../../../components'
 import flag from '../../../assets/images/universities/flag.svg'
@@ -79,25 +79,31 @@ const index: React.FC = () => {
     <div className='company-university '>
       <PageHeader title="Universities" />
       <Divider className="my-0" />
-      <div className='flex justify-between my-2'>
-        <SearchBar size="middle" handleChange={handleChange} />
-        <div className='flex justify-end gap-2'>
-          <Select className='w-[200px] select' placeholder="City" suffixIcon={<IconAngleDown />}>
-            {dropdownValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
+      <Row className="mt-8" gutter={[20, 20]} >
+        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+          <SearchBar handleChange={handleChange} />
+        </Col>
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end company-right-sec">
+          <Select className='w-[200px] select' placeholder="London" suffixIcon={<IconAngleDown />}>
+            <Select.Option value="London">London</Select.Option>
+            <Select.Option value="Bristol">Bristol</Select.Option>
+            <Select.Option value="Manchester">Manchester</Select.Option>
+            <Select.Option value="Oxford">Oxford</Select.Option>
+            <Select.Option value="Belfast">Belfast</Select.Option>
           </Select>
-          <div className="flex justify-end items-center gap-3">
-            <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              setValue={() => { action.downloadPdfOrCsv(event, TableColumn, escalatedByMeTableData, "University Details") }}
-            />
-          </div>
-        </div>
-      </div>
-      <BoxWrapper>
-        <UniversityTable escalatedByMeTableData={escalatedByMeTableData} />
-      </BoxWrapper>
-
+          <DropDown
+            requiredDownloadIcon
+            options={["pdf", "excel"]}
+            value={value}
+            setValue={setValue}
+          />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <UniversityTable />
+          </BoxWrapper>
+        </Col>
+      </Row>
     </div>
   )
 }

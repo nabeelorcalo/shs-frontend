@@ -230,7 +230,6 @@ export { ReactComponent as SettingChart } from "./setting/chart.svg";
 export { ReactComponent as SettingDocument } from "./setting/document.svg";
 export { ReactComponent as SettingShifts } from "./setting/shifts.svg";
 export { ReactComponent as SettingTimer } from "./setting/timer.svg";
-export { ReactComponent as SettingHorizontalLine } from "./setting/horizontal-line.svg";
 export { ReactComponent as LocationImage } from "./setting/locationImage.svg";
 export { ReactComponent as LocationMore } from "./setting/More.svg";
 export { ReactComponent as LocationPeople } from "./setting/locationPeople.svg";
@@ -564,8 +563,8 @@ export { ReactComponent as TickCircleGreenIcon } from "./AllGoals/TickCircleGree
 export { ReactComponent as TickCircleGrayIcon } from "./AllGoals/TickCircleGrayIcon.svg";
 export { ReactComponent as TaskSquareIcon } from "./AllGoals/TaskSquareIcon.svg";
 export { ReactComponent as GoalHeaderCalanderIcon } from "./AllGoals/GoalHeaderCalanderIcon.svg";
-export { ReactComponent as InTooltipIcon } from './InfoIcon.svg';
-export { ReactComponent as Likeshapethumbicon } from './Likeshapethumbicon.svg';
+export { ReactComponent as InTooltipIcon } from './selfAssesment/InfoIcon.svg';
+export { ReactComponent as Likeshapethumbicon } from './selfAssesment/Likeshapethumbicon.svg';
 
 
 // Report
@@ -583,3 +582,10 @@ export { ReactComponent as CompanyLogoOne } from '../../assets/images/dashboard/
 
 export { default as Certificate1 } from './Performance/certificate1.png';
 export { default as Certificate2 } from './Performance/certificate2.png';
+
+// student profile 
+export { ReactComponent as ProfileUser } from '../../assets/images/profile/student/user.svg';
+export { ReactComponent as GeneralInfo } from '../../assets/images/profile/student/GeneralInfo.svg';
+export { ReactComponent as ProfileDoc } from '../../assets/images/profile/student/document-text.svg';
+export { ReactComponent as Imigration } from '../../assets/images/profile/student/Immigration.svg';
+export { ReactComponent as ProfileCards } from '../../assets/images/profile/student/cards.svg';

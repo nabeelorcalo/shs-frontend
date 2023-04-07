@@ -207,7 +207,6 @@ const ViewPerformance = () => {
         </Typography.Title>
 
         <TextArea
-          disabled
           rows={6}
           classNme='light-blue-bg-color text-primary-color'
           placeholder="placeholder"

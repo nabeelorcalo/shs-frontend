@@ -146,7 +146,8 @@ export const ROUTES_CONSTANTS: any = {
   GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
   UNIVERSITIES_INTERNS:"universities/interns",
-  UNIVERSITIES_PROFILE:"universities/profile"
+  UNIVERSITIES_PROFILE:"universities/profile",
+  AcceptedFileTyp:'application/pdf,image/jpeg,application/msword',
 };
 
 export const STATUS_CONSTANTS: any = {
@@ -158,3 +159,4 @@ export const STATUS_CONSTANTS: any = {
   CLOSED: "closed",
   REJECTED: "rejected"
 }
+export const AcceptedFileTyp = 'application/pdf,image/jpeg,application/msword'

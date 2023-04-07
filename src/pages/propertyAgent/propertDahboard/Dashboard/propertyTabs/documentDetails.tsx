@@ -1,7 +1,7 @@
 import { EyeFilled } from "@ant-design/icons";
 import { Divider, Typography } from "antd";
 import React from "react";
-import { documentArr } from "../../../../profile/students/tabs/documents/DocumentMock";
+import { documentArr } from "../../../../profile/student/tabs/documents/DocumentMock";
 import download from "../../../../../assets/images/download-icon.png";
 
 const DocumentDetails = () => {

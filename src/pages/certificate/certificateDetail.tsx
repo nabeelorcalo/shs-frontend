@@ -11,6 +11,7 @@ import PreviewModal from './certificateModal/PreviewModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
+import "./style.scss";
 
 const CertificateDetail = () => {
   const { id } = useParams();
@@ -44,14 +45,14 @@ const CertificateDetail = () => {
             <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col xl={12} lg={18} md={24} xs={24} className='over-all-performance'>
+        <Col xxl={12} xl={24} lg={24} md={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             lg={5} md={12} xs={24}
             data={findUser?.performance}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xl={6} lg={24} xs={24}>
+        <Col xxl={6} xl={12} lg={24} xs={24}>
           <LeaveChart heading='Leaves' />
         </Col>
       </Row>

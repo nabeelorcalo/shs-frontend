@@ -15,8 +15,10 @@ export const FiltersButton: FC<FiltersButtonProps> = ({ label, onClick }) => {
       icon={<IconFilters />}
       onClick={onClick}
     >
+      <span className="label">
       {label}
       <IconFiltersAngle />
+      </span>
     </Button>
   )
 }
