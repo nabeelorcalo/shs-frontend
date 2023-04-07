@@ -11,6 +11,7 @@ import PreviewModal from './certificateModal/PreviewModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
+import "./style.scss";
 
 const CertificateDetail = () => {
   const { id } = useParams();
@@ -33,8 +34,8 @@ const CertificateDetail = () => {
         <span className='seperator'></span>
         <span className='font-medium text-base'>Certificate</span>
       </div>
-      <Row gutter={[15, 15]} className='flex-wrap'>
-        <Col xl={6} lg={6} md={24} xs={24}>
+      <Row gutter={[15, 15]} className='flex-wrap certificates-row'>
+        <Col xxl={6} xl={12} lg={24} md={24} xs={24}>
           <BoxWrapper
             boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
             className='user-info flex items-center justify-center flex-col'>
@@ -48,14 +49,14 @@ const CertificateDetail = () => {
             <Button className='mt-[30px] w-full view-profile-btn'>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col xl={12} lg={18} md={24} xs={24} className='over-all-performance'>
+        <Col xxl={12} xl={24} lg={24} md={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             lg={5} md={12} xs={24}
             data={findUser?.performance}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xl={6} lg={24} xs={24}>
+        <Col xxl={6} xl={12} lg={24} xs={24}>
           <LeaveChart heading='Leaves' />
         </Col>
       </Row>

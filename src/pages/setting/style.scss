@@ -1,4 +1,13 @@
 @import '../../scss/colors';
+.setting{
+  .settings-row{
+    @media only screen and (max-width:576px) {
+      flex-direction: column;
+    }
+
+      
+  }
+}
 .setting-location{
   .location-header{
     gap: 10px;

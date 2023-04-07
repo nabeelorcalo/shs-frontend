@@ -1,6 +1,9 @@
 @import '../../../../scss/colors';
 
 .all-grievance {
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
   .blow-whistle-button {
     &:hover {
       color: $white-bg-color !important

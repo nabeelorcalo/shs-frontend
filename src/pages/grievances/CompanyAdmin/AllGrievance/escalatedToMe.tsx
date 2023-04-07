@@ -4,7 +4,6 @@ import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
 
-
 const EscalatedToMeTableColumn =
   [
     {

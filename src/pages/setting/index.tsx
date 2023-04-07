@@ -19,7 +19,7 @@ const Setting = (props: any) => {
             <SettingSidebar />
           </div>
         </Col>
-        <Col span={21} sm={16} lg={19}>
+        <Col xs={24} sm={16} lg={19}>
           {props.children}
           <Outlet />
         </Col>

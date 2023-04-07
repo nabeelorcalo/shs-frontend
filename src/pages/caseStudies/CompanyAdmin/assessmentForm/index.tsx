@@ -164,7 +164,7 @@ const index = () => {
         okBtntxt="Upload"
         closeFunc={() => { setOpenModal(false) }}
         okBtnFunc={() => { }}
-        footer={<>
+        footer={<div className='btn-wrapper'>
           <Button
             className='white-bg-color teriary-color'
           >
@@ -173,7 +173,7 @@ const index = () => {
           <Button
             type='primary'
             className='white-color teriary-bg-color  '
-          >Submit</Button></>} />
+          >Submit</Button></div>} />
     </div>
   )
 }

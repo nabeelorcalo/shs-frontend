@@ -58,7 +58,7 @@ const Filters: React.FC = (props: any) => {
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
           {typeSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
 
-          </Select>tion
+          </Select>
         </Form.Item>
 
         <Form.Item

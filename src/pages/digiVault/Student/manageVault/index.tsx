@@ -167,7 +167,7 @@ const ManageVault = (props: any) => {
                 >
                   <Button
                     onClick={() => setISOpen(true)}
-                    className="foldet-add-btn"
+                    className="folder-add-btn "
                   >
                     Create Folder
                   </Button>
