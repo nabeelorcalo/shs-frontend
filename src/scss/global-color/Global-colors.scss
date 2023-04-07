@@ -119,6 +119,9 @@
 .gray-color {
   color: $text-error-line-color;
 }
+.gray-border-color {
+  border-color: $text-error-line-color;
+}
 
 .text-link-bg-color {
   background-color: $text-link-color;
@@ -231,7 +234,7 @@
   background-color: $light-blue-color;
 }
 .light-blue-color {
-  color: $light-blue-color
+  color: $light-blue-color;
 }
 .light-green-bg-color {
   background-color: $light-green-color;
@@ -286,10 +289,10 @@
 .gray-color {
   color: $gray-color;
 }
-.off-white-bg{
-background-color: $off-white-color;
+.off-white-bg {
+  background-color: $off-white-color;
 }
-.light-gray-border{
+.light-gray-border {
   border: 1px solid $certificate-textarea-border;
 }
 .accommodation-btn-info-bg {

@@ -1,7 +1,6 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
 import { CountingCard,FavouritesViewCard,GreetingCard,RegisterMemberAndFeddbackGraph} from "../../../components";
-// import Graph from "../../../components/Graph/graphForRegisteredMembersAndFeedback";
 import MembersDetails from "./MembersDetails";
 import ShareModal from "../../../components/ShareModal";
 import InvitationModal from "../../../components/InvitationModal";
