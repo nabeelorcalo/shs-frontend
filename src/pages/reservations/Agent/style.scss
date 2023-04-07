@@ -1,0 +1,11 @@
+.reservations{
+    .reservation-right{
+        @media only screen and (max-width:475px) {
+            .main-btn{
+                justify-content: space-between;
+                width: 100%;
+                display: flex;
+            }
+        }
+    }
+}

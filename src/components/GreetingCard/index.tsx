@@ -1,43 +1,41 @@
 import { FC } from "react";
 import { Row, Col } from "antd";
-import "./style.scss";
 import { ShareIcon } from "../../assets/images";
+import "./style.scss";
 interface IGreetingCard {
   name?: string;
   greetingText?: string;
   referenceNumber?: string | number;
-  handleShareModal?:()=>void
+  handleShareModal?: () => void;
 }
 export const GreetingCard: FC<IGreetingCard> = (props) => {
-  const { name, greetingText, referenceNumber,handleShareModal } = props;
+  const { name, greetingText, referenceNumber, handleShareModal } = props;
   return (
-    <Row
-      align="middle" justify='space-between'
-      className="green-graph-tooltip-bg wrapper-shadow rounded-2xl greating-card gap-4 flex-nowrap "
-    >
-      <Row
-        align="middle"
-        className={`greeting-card-wrapper xs:gap-[8px] sm:gap-[16px] lg:gap-[20px] xl:gap-[30px] px-[37px] h-[106px] bg-white rounded-2xl wrapper-shadow`}
-      >
-        <Col className={`flex-1`}>
-          <span className="">
-            {greetingText ? greetingText : "Welcome Back, "}
-          </span>
-          <span className="secondary-color"> {name}!</span>
-        </Col>
-        <Col className={`flex-1`}>
-          <span className="">
-            {greetingText ? greetingText : "Reference Number: "}
-          </span>
-          <span className="light-orange-color"> {referenceNumber}</span>
-        </Col>
-      </Row>
-      <Row className="share-wrapper gap-2 pr-5">
-        <p className="font-medium text-white text-base">Share</p>
-        <div className="cursor-pointer" onClick={handleShareModal}>
+    <Row align="middle" className="card-share-wrapper p-5">
+      <div className="card-share" onClick={handleShareModal}>
+        <Row align="middle" className="gap-[10px]">
+          <p>Share</p>
           <ShareIcon />
-        </div>
-      </Row>
+        </Row>
+      </div>
+      <div className="card-user-welcome">
+        <Row gutter={[16,16]} align="middle">
+          <Col flex={1}>
+            <p className="text-[18px] leading-7">
+              {greetingText ?? "Welcome Back"},
+              <span className="secondary-color">{name ?? "Stephen"}!</span>
+            </p>
+          </Col>
+          <Col flex={1}>
+            <p className="text-[14px]">
+              Reference Number:
+              <span className="light-orange-color">
+                {referenceNumber ?? " DF41331056"}
+              </span>
+            </p>
+          </Col>
+        </Row>
+      </div>
     </Row>
   );
 };
