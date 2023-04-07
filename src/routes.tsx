@@ -56,6 +56,9 @@ const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
 const ViewPayrollDetails = Loadable(lazy(() => import("./pages/Payroll/viewPayrollDetails")));
 const ViewPayrollSalarySlip = Loadable(lazy(() => import("./pages/Payroll/viewPayrollSalarySlip")));
 
+//Company admin Interns
+const InternsCM = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
+
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
@@ -730,7 +733,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
-        element: <Interns />,
+        element: <InternsCM />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
@@ -843,7 +846,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
-        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}/:id`,
         element: <TimeSheetHistory />,
       },
       {
@@ -1043,7 +1046,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
-        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/:id`,
         element: <CertificateDetail />,
       },
       {

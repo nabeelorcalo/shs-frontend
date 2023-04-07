@@ -18,6 +18,7 @@ import Drawer from "../../components/Drawer";
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
 import { Button, Menu, MenuProps, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
+import useCustomHook from "./actionHandler";
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -44,15 +45,8 @@ const PopOver = () => {
 };
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7]
-const departmentOptions = [
-  "Business analyst",
-  "Research analyst",
-  "Accountant",
-  "Administrator",
-  "HR Cordinator",
-]
+const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator",]
 const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"]
-
 const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
 
 const Payroll = () => {
@@ -61,6 +55,10 @@ const Payroll = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -105,9 +103,6 @@ const Payroll = () => {
       department: "Business Analyst",
       joining_date: "01/07/2022",
       payroll_cycle: "Jan-July",
-      location: "virtual",
-      status: "Pending",
-      posted_by: "T",
     },
     {
       no: "02",
@@ -115,9 +110,6 @@ const Payroll = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       payroll_cycle: "Jan-July",
-      location: "Onsite",
-      status: "Active",
-      posted_by: "U",
     },
     {
       no: "03",
@@ -125,9 +117,6 @@ const Payroll = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       payroll_cycle: "Jan-July",
-      location: "Onsite",
-      status: "Rejected",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -135,9 +124,6 @@ const Payroll = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       payroll_cycle: "Jan-July",
-      location: "Onsite",
-      status: "Active",
-      posted_by: "U",
     },
     {
       no: "03",
@@ -145,9 +131,6 @@ const Payroll = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       payroll_cycle: "Jan-July",
-      location: "Onsite",
-      status: "Rejected",
-      posted_by: "U",
     },
     {
       no: "02",
@@ -155,9 +138,6 @@ const Payroll = () => {
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       payroll_cycle: "Jan-July",
-      location: "Onsite",
-      status: "Active",
-      posted_by: "U",
     },
   ];
   const DownloadPopOver = () => {
@@ -198,7 +178,6 @@ const Payroll = () => {
         department: item.department,
         joining_date: item.joining_date,
         payroll_cycle: item.payroll_cycle,
-        location: item.location,
         actions: <PopOver />
       }
     )
@@ -224,7 +203,6 @@ const Payroll = () => {
               size="middle"
             />
           </div>
-
           <div className="flex flex-row gap-4 flex-wrap">
             <FiltersButton
               label="Filters"
@@ -305,15 +283,19 @@ const Payroll = () => {
               LastIcon={TableViewIcon}
               className='w-[88px]'
             />
-            <Space wrap>
-              <div className='p-2 download-icon-style'>
-                <DownloadPopOver />
-              </div>
-            </Space>
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Payroll")
+              }}
+              value=""
+            />
           </div>
-
         </div>
-
         <div className="pt-3">
           {
             isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">

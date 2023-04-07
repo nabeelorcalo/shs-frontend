@@ -10,6 +10,8 @@ const Filters: React.FC = (props: any) => {
     { value: 'jean ella', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>jean ella</span></div> },
     { value: 'Mino Marina', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Mino Marina</span></div> },
   ];
+  const companySelectValue = ["Power DevSpot", "Abacus", "Orcalo Holdings", "Coding Hub"]
+  const departmentSelectValue = ["Design", "Research", "Management", "Development", "Business"]
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
 
@@ -23,20 +25,14 @@ const Filters: React.FC = (props: any) => {
       </Option>
     );
   }
-  function handleChange(value: any) {
-  }
+  function handleChange(value: any) { }
 
   return (
     <div className='uni-report-filter_main_wrapper'>
       <Form layout="vertical" form={form}>
       <Form.Item name="company" label="Company">
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Pending">Power Source</Select.Option>
-            <Select.Option value="Approved">DevSpot</Select.Option>
-            <Select.Option value="Rejected">Abacus</Select.Option>
-            <Select.Option value="Rejected">Orcalo Holdings</Select.Option>
-            <Select.Option value="Rejected">Coding Hub</Select.Option>
-            
+          {companySelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
           </Select>
         </Form.Item>
         <Form.Item
@@ -44,11 +40,7 @@ const Filters: React.FC = (props: any) => {
           label="Department"
         >
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Design">Design</Select.Option>
-            <Select.Option value="Research">Research</Select.Option>
-            <Select.Option value="Management">Management</Select.Option>
-            <Select.Option value="Development">Development</Select.Option>
-            <Select.Option value="Business">Business</Select.Option>
+          {departmentSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
           </Select>
         </Form.Item>
       <Form.Item name="reviewer" label="Reviewer">

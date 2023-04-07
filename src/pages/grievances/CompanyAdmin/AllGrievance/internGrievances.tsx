@@ -4,6 +4,7 @@ import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
 import { CloseOutlined } from '@ant-design/icons'
+import icon from '../../../../assets/images/Grievances/escalatedCrossIcon.svg'
 import './style.scss'
 
 
@@ -54,8 +55,8 @@ const internGrievancesColumn =
       render: (escalatedTo: string) => {
         return {
           children: (
-            <><Button className='text-base font-semibold dashboard-primary-color escalated-btn'>
-              {escalatedTo}<CloseOutlined /> </Button></>
+            <><span className='p-2  text-base font-semibold dashboard-primary-color  escalated-btn'>
+              {escalatedTo}</span><CloseOutlined  className='px-2 escalated-icon'/> </>
           )
         }
       }

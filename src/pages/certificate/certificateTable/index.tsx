@@ -1,9 +1,10 @@
-import {GlobalTable} from '../../../components';
+import { GlobalTable } from '../../../components';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 import { ThreeDots } from '../../../assets/images';
 import { tableMockData } from './tableMock';
 import { useNavigate } from 'react-router-dom';
 import DropDownNew from '../../../components/Dropdown/DropDownNew';
+import {ROUTES_CONSTANTS} from '../../../config/constants';
 
 const CertificateTable = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const CertificateTable = () => {
     {
       title: 'No.',
       dataIndex: 'no',
-      render: (no: string | number) => <span>{no > 9 ? no : `0${no}`}</span>
+      render: (no: string | number | any) => <span>{no > 9 ? no : `0${no}`}</span>
     },
     {
       title: 'Avatar',
@@ -49,7 +50,7 @@ const CertificateTable = () => {
       render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
         items={[
           {
-            label: <span onClick={() => navigate(`/certificates/detail/${data.no}`)}>
+            label: <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/${data.no}`)}>
               View Details</span>,
             key: 'detail'
           }

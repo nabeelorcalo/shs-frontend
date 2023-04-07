@@ -5,6 +5,7 @@ import { Alert, SearchBar , BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import './style.scss'
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const { Title, Text } = Typography;
 let overview = [
@@ -28,7 +29,7 @@ const SettingShifts: React.FC = () => {
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
         <SearchBar size="middle" handleChange={handleChange} />
-        <NavLink to="/settings/shifts/add-shift">
+        <NavLink to={`${ROUTES_CONSTANTS.ADD_SHIFT}`}>
           <Button
             size="middle"
             onClick={() => { }}
