@@ -156,7 +156,7 @@ const CompanyAdmin = () => {
                   marginRatio=".5"
                   seriesField="type"
                   textColor="#4E4B66"
-                  style={{ height: 220 }}
+                  style={{ height: 260 }}
                 />
               </div>
             </Col>
@@ -166,7 +166,7 @@ const CompanyAdmin = () => {
                 title="Attendance"
                 level={4}
                 graphName="attendance"
-                styling={{ height: 230 }}
+                styling={{ height: 265 }}
               />
             </Col>
           </Row>

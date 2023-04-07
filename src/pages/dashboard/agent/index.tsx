@@ -1,6 +1,11 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
-import {  AttendanceAndListingGraph, CountingCard,  FavouritesViewCard, PageHeader} from "../../../components";
+import {
+  AttendanceAndListingGraph,
+  CountingCard,
+  FavouritesViewCard,
+  PageHeader,
+} from "../../../components";
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
@@ -63,7 +68,7 @@ const Agent = () => {
                 title="Listing"
                 level={4}
                 graphName="listings"
-                styling={{ height: 415 }}
+                styling={{ height: 455 }}
               />
             </Col>
           </Row>

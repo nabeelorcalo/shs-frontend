@@ -55,7 +55,6 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
         },
       },
     },
-
     yAxis: {
       min: 0,
       max: maxValue,
@@ -114,7 +113,7 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
 
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow">
-      <div className='flex flex-row'>
+      <div className='flex flex-row absolute'>
         <Typography.Title level={level} >
           {title}
         </Typography.Title>
