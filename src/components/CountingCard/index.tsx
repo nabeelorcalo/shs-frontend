@@ -1,6 +1,8 @@
 import { FC } from "react";
 import {
   HiredStudentsIcon,
+  IconActiveMember,
+  IconTotalMember,
   InactiveMembersIcon,
   ListingIcon,
   OngoingIcon,
@@ -180,10 +182,10 @@ export const CountingCard: FC<ICountingCard> = (props) => {
 
   //delegate agent dashboard
   totalMembers &&
-    handleCardList(<PeopleIcon />, "Total Members", totalMembers, blueBg);
+    handleCardList(<IconTotalMember />, "Total Members", totalMembers, blueBg);
 
   activeMembers &&
-    handleCardList(<ProfileTick />, "Active Members", activeMembers, blueBg);
+    handleCardList(<IconActiveMember />, "Active Members", activeMembers, blueBg);
 
   inActiveMembers &&
     handleCardList(
