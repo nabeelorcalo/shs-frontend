@@ -9,7 +9,6 @@ import {
 import Node from "./node";
 import "./style.scss";
 import { PageHeader } from "../../../components";
-import { Divider } from "antd";
 
 export default function ManagerStructure(props: any) {
   const [scale, setScale] = useState(1);
@@ -27,8 +26,7 @@ export default function ManagerStructure(props: any) {
 
   return (
     <div>   
-   <PageHeader title="Struture" />
-    <Divider/>
+     <PageHeader title="Struture" actions bordered />
     <div className="w-[100%] struture-wrapper ">
       <div className="flex flex-col justify-center w-[40px] h-[80px] white-bg-color float-right ml-5 ">
         <div className="m-2">

@@ -1,7 +1,7 @@
 console.log("ENV: ", import.meta.env.VITE_APP_URL);
 
 export default {
-  appUrl: import.meta.env.VITE_APP_URL || "http://localhost:8001",
+  APP_URL: import.meta.env.VITE_APP_URL || "http://localhost:8001",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
