@@ -19,13 +19,24 @@ import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 
-const btnStyle = {
-  "Applied": "px-2 py-1 rounded-lg primary-bg-color white-color",
-  "Interviewed": "px-2 py-1 rounded-lg text-info-bg-color white-color",
-  "Short Listed": "px-2 py-1 rounded-lg purple-bg white-color",
-  "Offer Letter": "px-2 py-1 rounded-lg light-purple-bg white-color",
-  "Hired": "px-2 py-1 rounded-lg text-success-bg-color white-color",
-  "Rejected": "px-2 py-1 rounded-lg secondary-bg-color white-color",
+const ButtonStatus = (props: any) => {
+  const btnStyle: any = {
+    "Applied": "primary-bg-color",
+    "Interviewed": "text-info-bg-color",
+    "Short Listed": "purple-bg",
+    "Offer Letter": "light-purple-bg",
+    "Hired": "text-success-bg-color",
+    "Rejected": "secondary-bg-color",
+  }
+  return (
+    <p>
+      <span
+        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
+      >
+        {props.status}
+      </span>
+    </p>
+  )
 }
 
 const PopOver = ({ state }: any) => {
@@ -77,10 +88,8 @@ const Application = () => {
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
-
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
-  console.log(btnStyle.Applied)
   const columns = [
     {
       dataIndex: "no",
@@ -201,7 +210,7 @@ const Application = () => {
       status: "Applied",
     },
   ];
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = tableData.map((item: any, idx: any) => {
     return (
       {
         no: item.no,
@@ -211,18 +220,11 @@ const Application = () => {
         internship_type: item.internship_type,
         nature_of_work: item.nature_of_work,
         position: item.position,
-        status:
-          <p>
-            <span
-              className={
-
-                `text-md` ${btnStyle.+item.status}
-              }
-            >
-              {item.status}
-            </span>
-          </p>,
-        actions: <PopOver state={setShowStageStepper} />
+        status: <ButtonStatus status={item.status} />,
+        actions:
+          <PopOver
+            state={setShowStageStepper}
+          />
       }
     )
   })
