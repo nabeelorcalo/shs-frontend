@@ -40,7 +40,7 @@ const InternsCM = () => {
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
 
 
-  const ButtonStatus = (props: any) => {
+  const ButtonStatus = (props: any) => { 
     const btnStyle: any = {
       "Completed": "primary-bg-color",
       "Employed": "text-success-bg-color",
@@ -354,7 +354,7 @@ const InternsCM = () => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
+                      className="flex justify-center gap-2 white-bg-color teriary-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -363,7 +363,7 @@ const InternsCM = () => {
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
+                      className="flex justify-center gap-2 teriary-bg-color white-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -476,7 +476,7 @@ const InternsCM = () => {
         }
       />
 
-<Alert
+      <Alert
         width={700}
         type="success"
         state={complete}

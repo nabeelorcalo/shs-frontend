@@ -268,21 +268,21 @@ const NewInternships = () => {
           <Button
             type="link"
             size="middle"
-            className="flex white-bg-color teriary-color"
+            className="flex justify-center white-bg-color teriary-color"
             onClick={() => { }}
           >
             Save Draft
           </Button>
           <Button
             size="middle"
-            className="flex white-bg-color teriary-color"
+            className="flex justify-center white-bg-color teriary-color"
             onClick={() => { }}
           >
             Cancel
           </Button>
           <Button
             size="middle"
-            className="flex teriary-bg-color white-color"
+            className="flex justify-center teriary-bg-color white-color"
             onClick={() => { }}
           >
             Submit
