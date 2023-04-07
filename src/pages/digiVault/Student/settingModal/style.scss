@@ -1,0 +1,80 @@
+@import "../../../../scss/colors";
+
+.setting-modal {
+  .modal-header {
+    .modal-title {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 28px;
+      color: $text-primary-title-color;
+    }
+
+    .modal-close {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: $text-success-placeholder-color;
+      color: $white-bg-color;
+      padding-bottom: 3px;
+    }
+  }
+  .sub-title-modal {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: $primary-bg-color;
+  }
+
+  .modal-p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: $text-secondary-body-color;
+  }
+
+  .ant-switch {
+    height: 12px !important;
+    min-width: 40px;
+
+    .ant-switch-handle {
+      top: -4px;
+    }
+  }
+
+  .modal-body {
+    .ant-slider-horizontal .ant-slider-track {
+      width: 220px;
+      height: 10px;
+      background: $primary-bg-color;
+      border-radius: 8px;
+    }
+    .ant-slider-horizontal .ant-slider-rail {
+      height: 10px !important;
+      background: $text-input-bg-color !important;
+      border-radius: 8px;
+    }
+    .ant-slider .ant-slider-handle {
+      width: 22px;
+      height: 22px;
+      color: $primary-bg-color;
+      margin-top: -2px;
+      
+    }
+    .ant-slider-handle::after {
+      color: $primary-bg-color;
+      width: 22px;
+      height: 22px;
+      background-color: $primary-bg-color;
+      box-shadow: none;
+    }
+  }
+
+  .modal-reset-pass {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: $primary-bg-color;
+    cursor: pointer;
+  }
+}

@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import ReservationsAgent from "./Agent";
 import "./style.scss";
 
 const Reservations = () => {
-  return (
-    <p>Reservations</p>
-  )
+  return <ReservationsAgent/>
 }
 
 export default Reservations

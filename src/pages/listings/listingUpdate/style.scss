@@ -1,0 +1,376 @@
+@import "../../../scss/colors";
+.agent-listing-update{
+  flex-direction: column;
+  .ant-tabs{
+    @media only screen and (max-width:957px) {
+      flex-direction: column;
+      gap: 20px;
+      .ant-tabs-nav{
+        width: 100% !important;
+      }
+      .ant-tabs-tabpane{
+        padding: 0px !important;
+      }
+    }
+  }
+  
+}
+.listing-edit-content {
+  .ant-tabs {
+    .ant-tabs-nav {
+      width: 298px;
+      border-radius: 16px;
+      box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+      background-color: #fff;
+      overflow: hidden;
+
+      .ant-tabs-nav-wrap {
+        .ant-tabs-nav-list {
+
+          .ant-tabs-ink-bar {
+            display: none;
+          }
+
+          .ant-tabs-tab {
+            text-align: left;
+            display: block;
+            padding: 20px 12px 10px 20px;
+            margin: 0;
+
+            & + .ant-tabs-tab {
+              border-top: 1px solid $text-error-line-color;
+            }
+
+            .ant-tabs-tab-btn {
+              display: block;
+              text-shadow: none;
+              white-space: initial;
+
+              .listing-edit-nav-item {
+                .listing-edit-nav-title {
+                  display: flex;
+                  align-items: center;
+                  font-size: 16px;
+                  font-weight: 500;
+                  line-height: 24px;
+                  color: $text-primary-title-color;
+
+                  & > svg {
+                    margin-right: 20px;
+                  }
+                }
+
+                .ant-typography {
+                  font-size: 14px;
+                  font-weight: 400;
+                  line-height: 22px;
+                  color: #A0A3BD;
+                  margin-top: 10px;
+                  margin-bottom: 0;
+                }
+              }
+            }
+
+            &.ant-tabs-tab-active {
+              background-color: $text-input-bg-color;
+            }
+          }
+        }
+      }
+    }
+
+    .ant-tabs-content-holder {
+      border: none;
+      margin: 0;
+
+      .ant-tabs-content {
+        .ant-tabs-tabpane {
+          padding-left: 30px;
+        }
+      } 
+    }
+  }
+}
+
+.tabs-pane-card {
+  background-color: #fff;
+  box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+  border-radius: 16px;
+  padding: 30px 30px 0;
+
+  .tabs-pane-card-title {
+    padding-bottom: 30px;
+
+    h4.ant-typography {
+      line-height: 1.4;
+      margin: 0;
+    }
+  }
+
+  .tabs-pane-card-body {
+    max-width: 800px;
+
+    &.rental-condition-body {
+      max-width: 954px;
+
+      .ant-form-item .ant-form-item-label > label {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+      .ant-radio-group {
+        .ant-radio-wrapper {
+          border: 1px solid $light-sky-blue;
+          box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
+          border-radius: 10px;
+          padding: 20px;
+          height: auto;
+          display: block;
+          position: relative;
+          height: 100%;
+          transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  
+          .ant-radio + span {
+            padding: 0;
+          }
+  
+          .radio-card-content {
+            padding-top: 14px;
+  
+            .radio-card-label {
+              position: absolute;
+              left: 64px;
+              top: 20px;
+            }
+  
+            .radio-card-content-text {
+              font-size: 14px;
+              font-weight: 400;
+              line-height: 1.57142857;
+              color: $light-grey-color;
+            }
+            
+          }
+  
+          &::after {
+            display: none;
+          }
+  
+          &.ant-radio-wrapper-checked {
+            border-color: $text-primary-title-color;
+          }
+        }
+      }
+    }
+  }
+
+  .ant-radio-group {
+    display: block;
+
+    .ant-radio-wrapper {
+      display: block;
+      min-height: 48px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      border: 1px solid $text-error-line-color;
+      border-radius: 8px;
+      padding: 6px 16px;
+
+      .ant-radio-inner {
+        height: 24px;
+        width: 24px;
+        border-color: $text-error-line-color;
+        background-color: $text-input-bg-color;
+      }
+
+      .ant-radio-checked {
+
+        .ant-radio-inner {
+          border-color: $primary-bg-color;
+
+          &::after {
+            background-color: $primary-bg-color;
+            transform: scale(1);
+          }
+        }
+      }
+    }
+  }
+
+  .ant-checkbox-group {
+    display: block;
+
+    .ant-checkbox-wrapper {
+      display: block;
+      min-height: 48px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      border: 1px solid $text-error-line-color;
+      border-radius: 8px;
+      padding: 6px 16px;
+
+      .ant-checkbox {
+        top: auto;
+
+        .ant-checkbox-inner {
+          border-radius: 8px;
+          border-color: $text-error-line-color;
+          background-color: $text-input-bg-color;
+        }
+
+        &.ant-checkbox-checked {
+          
+          .ant-checkbox-inner {
+            background-color: $primary-bg-color;
+            border-color: $primary-bg-color;
+          }
+
+          &::after {
+            content: unset;
+          }
+        }
+      }
+    }
+
+    .select-doc-checkbox {
+      margin-top: 22px;
+      .ant-checkbox-wrapper {
+        border: none;
+        padding: 0;
+        min-height: 0;
+
+      }
+      .select-doc-checkbox-help {
+        color: $certificate-label-disabled;
+        font-size: 14px;
+        line-height: 17px;
+        margin-top: 12px;
+      }
+    }
+  }
+
+  .ant-input-number {
+    display: block;
+    width: 100%;
+  }
+
+  .form-btn-right {
+    text-align: right;
+  }
+
+  .bedromm-count {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.333333;
+    margin-bottom: 12px;
+  }
+
+  .add-bedroom-photos-holder {
+    margin-bottom: 30px;
+    
+    .add-bedroom-photos-label {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+  
+    .add-bedroom-photos {
+      border-radius: 8px;
+      border: 1px dashed $primary-bg-color;
+      min-height: 304px;
+      padding: 30px 30px 0;
+      @media only screen and (max-width:320px) {
+        padding: 0px;
+      }
+
+      .ant-upload-select {
+        .ant-upload {
+          .upload-device-btn {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 22px;
+            color: $text-primary-title-color;
+
+            & > .label {
+              margin-top: 32px;
+            }
+          }
+        }
+      }
+
+      .ant-upload-wrapper.ant-upload-picture-card-wrapper {
+
+        .ant-upload-list.ant-upload-list-picture-card {
+
+          .ant-upload-list-item-container {
+            width: 197px;
+            height: 185px;
+            margin-right: 30px;
+            margin-bottom: 30px;
+
+            .ant-upload-list-item  {
+              padding: 0;
+              border-radius: 8px;
+              border: 1px solid $text-error-line-color;
+              flex-direction: column;
+              align-items: flex-start;
+              overflow: hidden;
+
+              .ant-upload-list-item-thumbnail {
+                height: 147px;
+                
+                img {
+                  object-fit: cover;
+                }
+              }
+
+              .ant-upload-list-item-name {
+                display: block;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 14px;
+                color: $primary-bg-color;
+                text-align: left;
+                padding: 4px 5px;
+                height: 37px;
+                display: flex;
+                align-items: center;
+              }
+
+              .ant-upload-list-item-actions {
+                padding: 10px;
+                text-align: right;
+
+                .ant-upload-list-item-action.ant-btn-sm {
+                  min-width: 0;
+                  height: 24px;
+                  width: 24px;
+                  padding: 0;
+                  border-radius: 50%;
+                }
+              }
+
+              &::before {
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.3);
+              }
+            }
+          }
+        }
+
+        .ant-upload.ant-upload-select {
+          width: 197px;
+          height: 185px;
+          margin-right: 30px;
+          margin-bottom: 30px;
+          border-radius: 8px;
+          border: 1px solid $text-error-line-color;
+          background-color: #fff;
+        }
+      }  
+    }
+  }
+}

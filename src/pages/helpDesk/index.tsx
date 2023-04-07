@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import "./style.scss";
+import HelpDesk from "./systemAdmin";
 
 const Withdrawals = () => {
   return (
-    <p>Withdrawals</p>
+    <p>
+      <HelpDesk/>
+    </p>
   )
 }
 
-export default Withdrawals
+export default Withdrawals;

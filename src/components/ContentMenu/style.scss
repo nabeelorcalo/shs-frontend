@@ -1,6 +1,9 @@
+@import "../../scss/colors";
 .shs-content-menu {
+  margin-bottom: 30px;
   .ant-menu.ant-menu-light.ant-menu-horizontal {
     background-color: transparent;
+    line-height: 1.5;
 
     .ant-menu-item {
       color: #A0A3BD;
@@ -27,6 +30,21 @@
           left: 0;
           border-radius: 8px 8px 0 0;
         }
+      }
+
+      &.ant-menu-overflow-item-rest {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.ant-menu-submenu-popup {
+  .ant-menu.ant-menu-sub {
+    .ant-menu-item {
+
+      &.ant-menu-item-selected {
+        background-color: $text-input-bg-color;
       }
     }
   }

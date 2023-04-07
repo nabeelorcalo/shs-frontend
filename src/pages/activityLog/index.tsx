@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import ActivityLog from "./systemAdmin";
 import "./style.scss";
 
-const ActivityLog = () => {
-  return (
-    <p>ActivityLog</p>
-  )
-}
 
-export default ActivityLog
+const SystemAdmin = () => {
+  return <ActivityLog />
+};
+
+export default SystemAdmin

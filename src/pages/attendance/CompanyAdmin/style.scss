@@ -1,0 +1,54 @@
+@import '../../../scss/_colors.scss';
+
+.company-admin-attendance-container {
+  .shs-page-header {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width:575px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .attendance-detail-btn {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    width: 211px;
+    border-radius: 8px;
+    color: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+    font-weight: 600;
+    &:hover {
+      color: $teriary-light-bg-color;
+      border: 1px solid $teriary-light-bg-color;
+      font-weight: 500;
+    }
+  }
+  .ant-typography+h1.ant-typography{
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+  // .attendance-card{
+  //   width: 24%;
+  // }
+  .attendance-detail-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    justify-content: space-between;
+    // .left-container{
+    //   width: 64%;
+    //   display: flex;
+    //   flex-direction: column;
+    //   gap: 16px;
+    // }
+
+    // .right-container{
+    //   width: 34%;
+    // }
+  }
+}

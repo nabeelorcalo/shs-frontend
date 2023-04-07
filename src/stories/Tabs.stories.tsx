@@ -28,7 +28,12 @@ export default {
 
 const Template: ComponentStory<typeof Tabs> = (args) => <Tabs {...args} />;
 
+const onChange = (key: string) => {
+  console.log(key);
+};
+
 export const AppTabs = Template.bind({});
 AppTabs.args = {
   items: items,
+  onChange: onChange,
 };

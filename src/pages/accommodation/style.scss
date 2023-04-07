@@ -1,3 +1,49 @@
-.page-filterbar {
-  margin-bottom: 50px;
+.shs-filter-form {
+  .shs-form-group {
+    .form-group-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #14142A;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+  }
 }
+
+.requests-filterby-status, .requests-filterby-agent {
+  .ant-select {
+    .ant-select-selector {
+      min-width: 170px;
+    }
+  }
+}
+
+.agents-dropdown.ant-select-dropdown {
+  min-width: 205px !important;
+}
+
+.agent-option {
+  display: flex;
+  align-items: center;
+
+  & > img {
+    height: 24px;
+    width: 24px;
+    margin-right: 16px;
+  }
+}
+
+.page-filterbar{
+  @media only screen and (max-width:1060px) {
+    display: block;
+    .page-filterbar-right{
+      margin-top: 20px;
+    }
+    .main-filter-btns{
+      @media  only screen and (max-width:400px) {
+       flex-direction: column;
+       width: 100%;
+      }
+    }
+    }
+  }

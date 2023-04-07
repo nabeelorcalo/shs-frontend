@@ -1,4 +1,18 @@
+.ant-layout .ant-layout-sider {
+  position: fixed;
+  overflow: auto;
+  left: 0;
+  top: 80px;
+  bottom: 0;
+  scrollbar-width: none;
+  -moz-scrollbar: none;
+  
+  @media (min-width: 1200px) {
+    bottom: 60px;
+  }
+}
 .ant-layout-sider {
+
   .ant-layout-sider-children {
     padding: 35px 0;
   }

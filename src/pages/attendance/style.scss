@@ -1,0 +1,195 @@
+@import '../../scss/_colors.scss';
+
+.attendance-detail-container {
+  .attendance-main-header{
+    .search-bar{
+      height: 48px;
+    }
+    @media only screen and (max-width:575px) {
+      display: block;
+      .search-bar{
+        width: 100% !important;
+      }
+      .attendance-filter-section{
+        flex-wrap: wrap;
+        margin: 10px 0px;
+        .download-btn{
+          margin: 0px
+        }
+        @media only screen and (max-width:375px) {
+          flex-basis: 50%;
+        }
+      }
+    }
+  }
+  
+  .shs-page-header {
+    padding-bottom: 0;
+    display: flex;
+    align-items: flex-start;
+  
+    @media only screen and (max-width:500px) {
+      flex-direction: column;
+    }
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    width: 20px;
+    border: 1px solid $text-error-line-color;
+    border-radius: 0;
+    height: 28px;
+    width: 28px;
+  }
+
+  .drop-down-wrapper{
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    div{
+      margin-right: 0;
+    }
+  }
+
+  .left-radius {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .right-radius {
+    border-radius: 0 4px 4px 0;
+  }
+
+  .ant-picker-input input {
+    visibility: hidden;
+    width: 0;
+  }
+
+  .month-changer {
+    .ant-picker-borderless {
+      padding-right: 0;
+    }
+  }
+
+  .shs-row {
+    margin: 12px -15px;
+    row-gap: 30px;
+  }
+
+  .card{
+    border: 3px solid transparent;
+  }
+
+  .card:hover{
+    border: 3px solid $text-input-bg-color;
+  }
+
+  .ant-typography {
+    margin-bottom: 0;
+  }
+}
+
+.company-admin-detail-container {
+  .main-cards{
+    flex-wrap: wrap;
+    @media only screen and (max-width:1125px) {
+      flex-direction: column;   
+      gap: 20px;   
+    }
+  }
+  .shs-page-header {
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width:768px) {
+      .shs-page-header-actions{
+        margin-top: 20px;
+      }
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+    height: fit-content;
+    width: 20px;
+    border: 1px solid $text-error-line-color;
+    border-radius: 0;
+    height: 28px;
+    width: 28px;
+  }
+
+  .download-btn {
+    border: none;
+    margin: auto;
+    width: 48px !important;
+    padding: 12px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: $text-input-bg-color;
+  }
+
+  .attendance-content {
+    .left-container {
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        border-radius: 8px;
+        color: $primary-light-bg-color;
+        background-color: $text-input-bg-color;
+      }
+
+      a:hover {
+        color: $white-bg-color;
+        background-color: $primary-light-bg-color;
+      }
+    }
+
+    .right-container {
+      display: flex;
+      flex-direction: column;
+      width: 70%;
+    }
+  }
+}
+
+// Sidebar styling
+.sidebar-label {
+  color: $text-teriary-label-color;
+  font-weight: 400;
+}
+
+.border-visible-btn {
+  width: 113px;
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+}
+
+.bg-visible-btn {
+  width: 113px;
+  background-color: $teriary-bg-color;
+  color: white;
+}
+
+.bg-visible-btn:hover {
+  background-color: $teriary-light-bg-color !important;
+}

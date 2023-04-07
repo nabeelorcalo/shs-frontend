@@ -1,11 +1,21 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import "./style.scss";
+import constants from '../../config/constants';
+import CompanyAdmin from './companyAdmin';
+import Intern from './intern';
+import Manager from './manager';
 
-const Timesheet = () => {
-  return (
-    <p>Timesheet</p>
-  )
+const Index = () => {
+
+    const renderRoleBasedTimeSheet: any = {
+        'CompanyAdmin': <CompanyAdmin />,
+        'Intern': <Intern />,
+        'Manager': <Manager />
+    }
+
+    return (
+        <>
+            {renderRoleBasedTimeSheet[constants.USER_ROLE]}
+        </>
+    )
 }
 
-export default Timesheet
+export default Index

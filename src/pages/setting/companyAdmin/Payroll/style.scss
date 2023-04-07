@@ -1,0 +1,13 @@
+@import '../../../../scss/colors';
+.setting-shifts{
+    .location-header{
+        gap: 10px;
+        @media only screen and (max-width:1000px) {
+          align-items: flex-start;
+          flex-direction: column;
+         }
+      }
+    .content-text{
+        color:$text-success-placeholder-color
+    }
+}

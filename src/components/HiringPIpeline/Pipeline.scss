@@ -1,0 +1,18 @@
+.pipeline-wrapper {
+    display: flex;
+
+    .pipline-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+        width: 170px;
+        height: 40px;
+        margin-left: -33px;
+        clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
+
+        &:first-child {
+            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        }
+    }
+}

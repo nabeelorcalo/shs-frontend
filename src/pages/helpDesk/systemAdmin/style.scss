@@ -1,0 +1,36 @@
+@import "../../../scss/colors";
+
+.help-desk {
+  .ant-select-selector {
+    height: 22px !important;
+    // border: 1px solid red !important;
+    border-radius: 40px !important;
+
+    &:hover {
+      //   border: 1px solid red !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .ant-select-selection-item {
+    line-height: 18px !important;
+  }
+}
+
+.assign-to {
+  background: rgba(155, 213, 232, 0.2);
+  border-radius: 50px;
+}
+
+.assign-users {
+  overflow-y: scroll;
+}
+
+.assign-users::-webkit-scrollbar {
+  width: 20px;
+}
+
+.ant-select-item-option {
+  height: 3px !important;
+  background: white !important;
+}

@@ -1,0 +1,37 @@
+@import '../../../../../../scss/colors';
+.offer-letter-new-template{
+
+    .ant-form-item .ant-form-item-control-input-content {
+
+      .ant-input {
+        background: $text-input-bg-color;
+        border:2px solid $white-bg-color ;
+  
+        &:hover {
+          background: $white-bg-color;
+        }
+      }
+    }
+    .text-editor{
+      border: 2px solid $white-bg-color;
+      &:hover{
+        background-color: $white-bg-color;
+        border: 2px solid $input-hover-color;
+      }
+    }
+    .ql-container {
+        min-height: 10rem;
+        height: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0px 0px 8px 8px ;
+        border: none;
+    
+      }
+      .ql-toolbar.ql-snow{
+        border-radius: 8px 8px 0px 0px;
+        border: none;
+      }
+     
+}

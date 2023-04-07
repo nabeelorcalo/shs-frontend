@@ -1,0 +1,42 @@
+@import '../../scss/colors';
+
+.main_calender_drawer_data_wrapper {
+  .user_profile {
+    .profilData_wrapper {
+      .details {
+        .name_of_person {
+          color: $text-primary-title-color;
+        }
+
+        .designation {
+          color: $text-secondary-body-color;
+        }
+
+        .email {
+          color: $text-secondary-body-color;
+        }
+      }
+    }
+
+    .request_data,
+    .File_wrapper {
+      h4 {
+        color: $text-primary-title-color;
+      }
+
+      p {
+        color: $white-bg-color;
+      }
+    }
+  }
+
+  .leaveType {
+    color: $dashboard-primary-bg-color;
+  }
+
+  .File_wrapper {
+    background-color: $text-input-bg-color;
+
+  }
+
+}

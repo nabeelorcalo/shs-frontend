@@ -1,0 +1,63 @@
+@import "../../../scss/colors";
+
+.payment-receipt-wrapper {
+  .payment-receipt-header {
+    text-align: center;
+
+    h3.ant-typography {
+      margin-bottom: 0;
+    }
+    span.ant-typography {
+      display: block;
+      color: $light-grey-color;
+      margin-top: 24px;
+    }
+  }
+
+  .paid-information {
+    display: flex;
+    margin-top: 30px;
+    padding: 0 20px;
+
+    .payment-date {
+      flex: 1;
+    }
+
+    .paid-amount {
+      .paid-amount-amount {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.333333;
+      }
+
+      .paid-amount-paid {
+        color: $text-success-color;
+        text-align: center;
+      }
+    }
+  }
+
+  .payment-details {
+    margin-top: 12px;
+
+    .payment-details-title {
+      color: $text-teriary-label-color;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .payment-details-list {
+      list-style: none;
+      margin: 0 20px;
+      padding: 0;
+
+      & > li {
+        display: flex;
+        justify-content: space-between;
+        color: $light-grey-color;
+        padding: 10px 0;
+      }
+    }
+  }
+}

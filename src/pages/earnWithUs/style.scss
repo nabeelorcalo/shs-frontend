@@ -1,0 +1,19 @@
+.earn-with-us-container {
+  .ant-tabs {
+    & > .ant-tabs-nav {
+      margin-bottom: 30px;
+
+      &::before {
+        border-bottom: none;
+      }
+
+      .ant-tabs-nav-operations {
+        .ant-tabs-nav-more {
+          padding: 0;
+          width: 24px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

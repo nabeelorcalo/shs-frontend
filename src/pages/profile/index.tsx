@@ -1,11 +1,24 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import "./style.scss";
+import Student from "./student";
+import University from "./university";
+import constants from "../../config/constants";
 
 const Profile = () => {
-  return (
-    <p>profile</p>
-  )
-}
+  const renderPage = () => {
+    switch (constants.USER_ROLE) {
+      case constants.STUDENT:
+        return <Student />;
 
-export default Profile
+      case constants.INTERN:
+        return <Student />;
+
+      case constants.UNIVERSITY:
+        return <University />;
+      default:
+        return <></>;
+    }
+  };
+  return renderPage();
+};
+
+export default Profile;

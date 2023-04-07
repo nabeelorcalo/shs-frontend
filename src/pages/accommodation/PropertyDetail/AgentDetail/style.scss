@@ -1,0 +1,110 @@
+@import "../../../../scss/colors";
+.property-agent-detail {
+  border: 1px solid $text-input-bg-color;
+  border-radius: 10px;
+  padding: 44px 5%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .agent-profile-info {
+    display: flex;
+    align-items: center;
+    padding-right: 7%;
+    border-right: 1px solid $text-input-bg-color;
+    @media (max-width: 575px) {
+      display: block;
+      flex: 0 0 auto;
+      width: 100%;
+      border-right: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    .ant-avatar {
+      margin-right: 20px;
+      min-width: 80px;
+      @media (max-width: 575px) {
+        margin: 0;
+      }
+    }
+    .agent-info {
+      .ant-typography {
+        margin-bottom: 0;
+      }
+      .last-seen {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 1.5714285;
+        letter-spacing: 0.02em;
+        color: $text-teriary-label-color;
+        margin-top: 4px;
+      }
+    }
+  }
+
+  .agent-member-since {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 7%;
+    border-right: 1px solid $text-input-bg-color;
+    @media (max-width: 1600px) {
+      border-right: none;
+      padding-right: 0;
+    }
+    @media (max-width: 575px) {
+      flex: 0 0 auto;
+      width: 100%;
+      padding-left: 0;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .member-since-label {
+      color: $text-teriary-label-color;
+    }
+    .member-since-value {
+      color: $text-secondary-body-color;
+    }
+  }
+
+  .agent-detail-list {
+    padding: 0 7%;
+    flex: 1;
+    height: 100%;
+    @media (max-width: 1600px) {
+      flex: 0 0 auto;
+      width: 100%;
+      padding: 0;
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid $text-input-bg-color;
+    }
+    @media (max-width: 575px) {
+      margin-top: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+
+      .agent-detail-list-item-left {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: $text-teriary-label-color;
+        white-space: nowrap;
+      }
+      .agent-detail-list-item-right {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: $text-secondary-body-color;
+        margin-left: auto;
+        min-width: 50px;
+      }
+    }
+  }
+}

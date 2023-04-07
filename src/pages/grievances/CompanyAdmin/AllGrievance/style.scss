@@ -1,0 +1,33 @@
+@import '../../../../scss//colors';
+.escalated-btn{
+  border: 1px solid $dashboard-primary-bg-color;
+}
+.filter_main_wrapper{
+  .drop-down-wrapper{
+    background: $white-bg-color;
+    border: 1px solid $text-primary-disabled-color;
+  }
+}
+.add-grievance{
+  .add-grievance-right{
+    @media only screen and (max-width:475px) {
+      flex-direction: column;
+      .main-btn{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+.new{
+  background: #FF6F31;
+}
+.in-progress{
+  background: #128AF9;
+}
+.re-opened{
+  background: #1FBEC8;
+}
+.resolved{
+  background: #3DC575;
+}
+}

@@ -1,0 +1,180 @@
+@import '../../../../scss/_colors.scss';
+
+.calendar-modal-box {
+  .ant-modal-header {
+    margin-bottom: 10px;
+  }
+
+  .meeting-wrapper,
+  .remindar-wrapper {
+
+    height: 60vh;
+    padding: 3px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+
+    .repeat-weekday {
+      .total-count {
+        padding: 8px 16px;
+        width: 80px;
+        border: 1px solid $text-error-line-color;
+        color: $text-primary-title-color;
+
+        .repeat-week {
+
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            display: none;
+          }
+
+          &:focus {
+            box-shadow: none;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+
+      .weeks {
+        color: $text-teriary-label-color;
+      }
+
+      .day {
+        height: 28px;
+        width: 28px;
+        background: $text-input-bg-color;
+        color: $light-grey-color;
+
+        &.active {
+          background-color: $primary-light-bg-color;
+          color: $white-bg-color;
+        }
+      }
+    }
+
+    .cancel-btn {
+      color: $green-graph-tooltip-color;
+      border-color: $green-graph-tooltip-color;
+    }
+
+    .add-btn:hover {
+      color: $white-bg-color;
+      border-color: $green-graph-tooltip-color;
+    }
+  }
+
+  .meeting-wrapper {
+    .label {
+      display: block;
+      font-size: 16px;
+      color: $text-teriary-label-color;
+      margin-bottom: 4px;
+    }
+
+    .users-list {
+      border: 2px solid $text-error-line-color;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 5px;
+      height: 48px;
+      color: $text-success-placeholder-color;
+      border-radius: 8px;
+      padding: 12px;
+
+      &:hover {
+        border: 2px solid $input-hover-color;
+        box-shadow: none;
+      }
+
+      &:focus {
+        box-shadow: none;
+        border: 2px solid $input-hover-color;
+      }
+    }
+
+    .recurrence {
+      .drop-down-wrapper {
+        background-color: transparent;
+        border: 2px solid $text-error-line-color;
+
+        &:hover {
+          border: 2px solid $input-hover-color;
+          box-shadow: none;
+        }
+      }
+    }
+
+    .date-from,
+    .date-to {
+      .common-date-picker-wrapper {
+        .ant-picker {
+          border-color: $text-error-line-color;
+
+          &:hover {
+            border: 2px solid $input-hover-color;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    .virtual-link {
+      background-color: $certificate-textarea-bg;
+      border: 1px solid $certificate-textarea-border;
+
+      a {
+        color: $dark-grey-color;
+      }
+    }
+
+    .on-site-address {
+      border: 1px solid $dark-grey-color;
+
+      p {
+        color: $dark-grey-color;
+      }
+    }
+  }
+
+  .remindar-wrapper {
+    .label {
+      display: block;
+      font-size: 16px;
+      color: $text-teriary-label-color;
+      margin-bottom: 4px;
+    }
+
+    .reminder,
+    .recurrence {
+      .drop-down-wrapper {
+        background-color: $white-bg-color;
+        border: 2px solid $text-error-line-color;
+
+        &:hover {
+          border: 2px solid $input-hover-color;
+          box-shadow: none;
+        }
+      }
+    }
+
+    .date-from,
+    .date-to {
+      background-color: $white-bg-color;
+      border: 2px solid $text-error-line-color;
+
+      &:hover {
+        border: 2px solid $input-hover-color;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .ant-input-status-error {
+    border-color: inherit !important;
+
+    .ant-form-item-explain {
+      color: $text-error-color;
+    }
+  }
+}

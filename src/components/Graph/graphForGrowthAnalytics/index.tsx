@@ -1,27 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Line } from '@ant-design/plots';
-import growthAnalyticsData from './data';
-import '../style.scss';
+import React, { useState, useEffect, FC } from "react";
+import { Line } from "@ant-design/plots";
+import growthAnalyticsData from "./data";
+import "../style.scss";
+import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { Row, Col } from "antd";
+import { CommonDatePicker } from "../../calendars/CommonDatePicker/CommonDatePicker";
 
-const Graph = ({ graphName }: any) => {
+interface IGrowthAnalyticsGraph {
+  graphName: string;
+  styling: any;
+  isOpenRangePicker?: boolean;
+  setIsOpenRangePicker?: any;
+}
+
+export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
+  const { graphName, styling, setIsOpenRangePicker, isOpenRangePicker } = props;
   const data = growthAnalyticsData;
+
   const attributeColors: any = {
-    "Interns": "#363565",
-    "Universities": "#E94E5D",
-    "Companies": "#9BD5E8",
-    "Agents": "#252D9B",
-  }
+    Interns: "#363565",
+    Universities: "#E94E5D",
+    Companies: "#9BD5E8",
+    Agents: "#252D9B",
+  };
 
-  useEffect(() => {
+  useEffect(() => {}, []);
 
-  }, []);
-
-  const config = {
+  const config: any = {
     data,
-    xField: 'date',
-    yField: 'value',
-    seriesField: 'name',
-    color: ['#363565', '#E94E5D', '#9BD5E8', '#252D9B'],
+    xField: "date",
+    yField: "value",
+    seriesField: "name",
+    color: ["#363565", "#E94E5D", "#9BD5E8", "#252D9B"],
 
     xAxis: {
       label: {
@@ -47,22 +57,38 @@ const Graph = ({ graphName }: any) => {
     },
 
     legend: {
-      position: 'bottom-left',
+      position: "bottom-left",
       offsetY: 18,
       marker: function (name: any) {
-        return { symbol: 'circle', style: { fill: attributeColors[name]} }
+        return { symbol: "circle", style: { fill: attributeColors[name] } };
       },
     },
 
     animation: {
       appear: {
-        animation: 'path-in',
+        animation: "path-in",
         duration: 3000,
       },
     },
   };
 
-  return <Line {...config} />;
+  return (
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
+      <Row justify="space-between" align="middle" className=" pb-[32px]">
+        <Col>
+          <p className="font-semibold text-[20px] leading-[28px]">
+            {graphName}
+          </p>
+        </Col>
+        <Col>
+          <CommonDatePicker
+            picker="date"
+            open={isOpenRangePicker}
+            setOpen={setIsOpenRangePicker}
+          />
+        </Col>
+      </Row>
+      <Line style={styling} {...config} />
+    </div>
+  );
 };
-
-export default Graph;

@@ -1,0 +1,48 @@
+@import "../../../scss/colors";
+
+.earnwithus-delegate-members {
+  .page-filterbar-right{
+    display: flex;
+    gap: 20px;
+  }
+  .page-filterbar {
+    margin: 0px;
+    .button-sky-blue {
+      width: 170px;
+      text-align: left;
+      display: inline-flex;
+      & > span {
+        flex: 1
+      }
+    }
+    @media only screen and (max-width:400px){
+      flex-direction: column;
+    }
+  }
+
+  .shs-table-card.table-delegate-members {
+    padding-bottom: 20px;
+    .shs-table {
+      .shs-status-badge {
+        font-weight: 400;
+        width: 92px;
+        text-align: center;
+      }
+  
+      .ant-table-wrapper {
+
+        .ant-pagination.ant-table-pagination {
+          margin-top: 20px;
+          margin-bottom: 0;
+
+          .ant-pagination-total-text {
+            height: auto;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  } 
+}
+

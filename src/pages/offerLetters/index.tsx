@@ -1,11 +1,22 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import "./style.scss";
+import Student from "./student";
+import CompanyAdmin from "./CompanyAdmin";
+import constants from "../../config/constants";
 
 const OfferLetters = () => {
+  const renderPage = () => {
+    switch (constants.USER_ROLE) {
+      case 'CompanyAdmin':
+        return <CompanyAdmin />;
+      case 'Student':
+        return <Student />;
+      default:
+        return <></>;
+    }
+  }
   return (
-    <p>OfferLetters</p>
+    renderPage()
   )
 }
 
-export default OfferLetters
+export default OfferLetters;

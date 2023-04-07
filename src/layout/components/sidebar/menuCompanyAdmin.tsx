@@ -1,4 +1,5 @@
 import React from 'react'
+import { ROUTES_CONSTANTS } from '../../../config/constants'
 import {
   IconDashboard,
   IconCalendarTick,
@@ -17,10 +18,35 @@ import {
   IconLikeShapes,
   IconEmojiSad,
   IconWalletCheck,
-  IconCalendar
+  IconCalendar,
+  IconGift
 } from '../../../assets/images'
-import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, CANDIDATES, INTERNSHIPS, OFFER_LETTER, CONTRACTS, INTERNS, MANAGERS, UNIVERSITIES, STRUCTURE, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, DOCUMENTS, PAYROLL, CASE_STUDIES, GRIEVANCES, CERTIFICATES, CALENDAR, SETTING, PERSONALISATION  } = ROUTES_CONSTANTS
+
+const { 
+  DASHBOARD,
+  CANDIDATES,
+  INTERNSHIPS,
+  OFFER_LETTER,
+  CONTRACTS,
+  INTERNS,
+  MANAGERS,
+  UNIVERSITIES,
+  STRUCTURE,
+  ATTENDANCE,
+  LEAVES,
+  TIMESHEET,
+  PERFORMANCE,
+  DOCUMENTS,
+  PAYROLL,
+  CASE_STUDIES,
+  GRIEVANCES,
+  CERTIFICATES,
+  CALENDAR,
+  SETTING,
+  PERSONALISATION,
+  EARN_WITH_US  
+} = ROUTES_CONSTANTS
+
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 function getItem(
@@ -82,7 +108,12 @@ export const itemsCompanyAdmin: MenuProps['items'] = [
 
   // SETUP GROUP
   getItem('Setup', 'setup', null, [
-    getItem('Settings', `/${SETTING}`, <IconCalendar />),
+    getItem('Settings', `/${SETTING}/location`, <IconCalendar />),
     getItem('Personalisation', `/${PERSONALISATION}`, <IconCalendar />),
+  ], 'group'),
+
+  // DISCOVER GROUP
+  getItem('Discover', 'discover', null, [
+    getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
   ], 'group'),
 ]

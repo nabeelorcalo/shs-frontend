@@ -1,82 +1,76 @@
-import React, {FC, useEffect, useState} from 'react'
-import './style.scss'
-import type { MenuProps } from 'antd';
-import { Avatar, Typography, Layout, Menu, theme } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { } from '../../../assets/images'
-import avatar from '../../../assets/images/header/avatar.svg'
-import { itemsManager } from './menuManager'
-import { itemsStudents } from './menuStudents'
-import { itemsIntern } from './menuIntern'
-import { itemsCompanyAdmin } from './menuCompanyAdmin'
-import { itemsUniversity } from './menuUniversity'
-import { itemsSystemAdmin } from './menuSystemAdmin'
-import { itemsDelegateAgent } from './menuDelegateAgent'
-import { itemsPropertyAgent } from './menuPropertyAgent'
+import React, { FC, useEffect, useState } from "react";
+import "./style.scss";
+import type { MenuProps } from "antd";
+import { Avatar, Typography, Layout, Menu, theme } from "antd";
+import { useNavigate, useLocation } from "react-router-dom";
+import constants from "../../../config/constants";
+import {} from "../../../assets/images";
+import avatar from "../../../assets/images/header/avatar.svg";
+import { itemsManager } from "./menuManager";
+import { itemsStudents } from "./menuStudents";
+import { itemsIntern } from "./menuIntern";
+import { itemsCompanyAdmin } from "./menuCompanyAdmin";
+import { itemsUniversity } from "./menuUniversity";
+import { itemsSystemAdmin } from "./menuSystemAdmin";
+import { itemsDelegateAgent } from "./menuDelegateAgent";
+import { itemsPropertyAgent } from "./menuPropertyAgent";
 const { Sider } = Layout;
 
 type SidebarProps = {
-  collapsed: boolean
-  sidebarToggler: () => void
-  setCollapsed:any
-}
+  collapsed: boolean;
+  collapsedWidth: number;
+  onBreakpoint: any
+  
+};
 
-
-
-const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) => {
+const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { useToken } = theme
-  const { token } = useToken()
-  const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const [collapsedWidth, setCollapsedWidth] = useState(94)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { useToken } = theme;
+  const { token } = useToken();
+  const [selectedKey, setSelectedKey] = useState(location.pathname);
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
+  useEffect(() => {}, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleMenuClick : MenuProps['onClick'] = (item) => {
-    if(item.key) {
-      setSelectedKey(item.key)
-      navigate(item.key)
+  const handleMenuClick: MenuProps["onClick"] = (item) => {
+    if (item.key) {
+      setSelectedKey(item.key);
+      navigate(item.key);
     }
   };
 
-  const menuSwitcher = (role:string) => {
-    if(role === "Student") {
-      return itemsStudents
+  const menuSwitcher = (role: string) => {
+    if (role === "Student") {
+      return itemsStudents;
     }
-    if(role === "Intern") {
-      return itemsIntern
+    if (role === "Intern") {
+      return itemsIntern;
     }
-    if(role === "Manager") {
-      return itemsManager
+    if (role === "Manager") {
+      return itemsManager;
     }
-    if(role === 'Company Admin') {
-      return itemsCompanyAdmin
+    if (role === "CompanyAdmin") {
+      return itemsCompanyAdmin;
     }
-    if(role === 'University Rep') {
-      return itemsUniversity
+    if (role === "University") {
+      return itemsUniversity;
     }
-    if(role === 'System Admin') {
-      return itemsSystemAdmin
+    if (role === "SystemAdmin") {
+      return itemsSystemAdmin;
     }
-    if(role === 'Delegate Agent') {
-      return itemsDelegateAgent
+    if (role === "DelegateAgent") {
+      return itemsDelegateAgent;
     }
-    if(role === 'Agent') {
-      return itemsPropertyAgent
+    if (role === "Agent") {
+      return itemsPropertyAgent;
     }
-  }
-
+  };
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -87,31 +81,28 @@ const AppSidebar:FC<SidebarProps> = ({collapsed, sidebarToggler, setCollapsed}) 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
+      style={{ backgroundColor: token.colorPrimary }}
       breakpoint="md"
-      style={{backgroundColor: token.colorPrimary}}
-      onBreakpoint={(broken) => {
-        setCollapsedWidth(broken ? 0: 94)
-        setCollapsed(broken)
-      }}
+      onBreakpoint={onBreakpoint}
     >
-      <div className='sidebar-user-profile'>
+      <div className="sidebar-user-profile">
         <Avatar size={48} src={avatar} />
-        <div className='sidebar-user-profile-content'>
+        <div className="sidebar-user-profile-content">
           <Typography.Title level={4}>Maria Sanoid</Typography.Title>
-          <div className='sidebar-user-profile-role'>Student</div>
+          <div className='sidebar-user-profile-role'>{constants.USER_ROLE}</div>
         </div>
       </div>
 
       <Menu
-        items={menuSwitcher('Company Admin')}
+        items={menuSwitcher(constants.USER_ROLE)}
         onClick={handleMenuClick}
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
         theme="dark"
-        style={{backgroundColor: token.colorPrimary}}
+        style={{ backgroundColor: token.colorPrimary }}
       />
     </Sider>
-  )
-}
+  );
+};
 
-export default AppSidebar
+export default AppSidebar;

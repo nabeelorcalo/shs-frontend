@@ -1,43 +1,41 @@
-import { Rate, Typography } from "antd";
-const { Paragraph, Text } = Typography;
+import { Col, Rate, Row, Typography } from "antd";
+import {BoxWrapper} from "../BoxWrapper/BoxWrapper";
+const { Paragraph } = Typography;
+import "./style.scss";
+
 interface RecipeCardProps {
-  image: string;
-  alt?: string;
   title: string;
+  thumb: string;
   description: string;
-  radius?: string;
-  boxShadow?: string;
-  ratingValue: number;
-  ratingColor: string;
-  onClick?: () => void;
+  rating: number;
+  status: string;
+  onCardClick: () => void
+  onRateChange: (value: number) => void
 }
 
-export const RecipeCard = ({
-  image,
-  title,
-  description,
-  radius,
-  boxShadow,
-  alt,
-  ratingValue,
-  ratingColor,
-}: RecipeCardProps) => {
+export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
+  const {title, thumb, description, rating, status, onCardClick, onRateChange} = props
   return (
-    <div
-      style={{ borderRadius: radius, boxShadow: boxShadow }}
-      className={`flex flex-col max-w-sm p-5 cursor-pointer`}
-    >
-      <img src={image} alt={alt} width="100%" />
-      <Typography.Title level={5} className="px-2 my-1 font-medium">
-        {title}
-      </Typography.Title>
-      <Paragraph className="md:w-80 px-2 ">{description}</Paragraph>
-      <Rate
-        disabled
-        defaultValue={ratingValue}
-        className="px-2"
-        style={{ color: ratingColor }}
-      />
+    <div className="recipe-card">
+      <div className='recipe-card-body' onClick={onCardClick}>
+        <div className='recipe-card-thumb'>
+          <img src={thumb} alt={title} />
+        </div>
+        <div className='recipe-card-header'>
+          <Typography.Title level={4}>
+            {title}
+          </Typography.Title>
+          <div className={`recipe-card-status ${status === 'published'? 'published' : 'draft'}`}>
+            {status === 'published'? 'Published': 'Draft'}
+          </div>
+        </div>
+        <div className='recipe-card-description'>
+          <Paragraph>{description}</Paragraph>
+        </div>
+      </div>
+      <div className='recipe-card-footer'>
+        <Rate value={rating} onChange={onRateChange} />
+      </div>
     </div>
   );
 };

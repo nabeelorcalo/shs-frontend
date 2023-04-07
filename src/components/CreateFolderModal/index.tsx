@@ -2,8 +2,6 @@ import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
 import { Button, Modal, Input } from 'antd'
 
-
-
 const CreateFolderModal = ({ title }: any) => {
   const [show, setShow] = useState(false)
 
@@ -23,14 +21,13 @@ const CreateFolderModal = ({ title }: any) => {
               Cancel
             </Button>,
             <Button onClick={() => { setShow(!show) }} key="submit" style={{ backgroundColor: '#4a9d77', color: '#fff', border: '1px solid #4a9d77', padding: '0px 20px' }}>
-              Submit
+              Create
             </Button>,
           ]}
         >
           <div className="my-8">
               <p>Create New Folder</p>
-              <Input rows={4} placeholder="Enter Folder Name" maxLength={6} />
-
+              <Input.TextArea  rows={4} placeholder="Enter Folder Name" maxLength={6} />
             </div>
         </Modal>
       </div>

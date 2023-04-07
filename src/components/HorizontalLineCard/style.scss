@@ -1,0 +1,14 @@
+
+@import "../../scss/colors.scss";
+.horizontal-line-card{
+    offset: 0px, 0px
+    rgba(9, 161, 218, 0.1);
+   border: 1px solid rgba(9, 161, 218, 0.1);
+    .dark-gray {
+        color: $text-secondary-body-color;
+    }
+    .light-gray{
+        color:$text-success-placeholder-color
+    }
+
+}

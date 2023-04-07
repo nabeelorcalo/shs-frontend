@@ -1,0 +1,89 @@
+@import '../../scss/_colors.scss';
+
+.contract-card {
+    border: 1px solid $light-grey-thin;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+
+    .box-wrapper {
+        margin: 0;
+        border-radius: 6px;
+        transition: all 0.3s ease-in-out;
+        width: 100%;
+    }
+
+    .view-all-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+        height: 100%;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .progress-bar {
+        width: 80%;
+    }
+
+    .total-hours {
+        p {
+            width: 100px;
+        }
+    }
+
+    &:hover {
+        background-color: $teriary-bg-color;
+
+        .box-wrapper {
+            width: 92%;
+            box-shadow: 0 0 5px $shadow-shade-2;
+        }
+
+        .progress-bar {
+            width: 70%;
+        }
+
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            color: $white-bg-color;
+            cursor: pointer;
+        }
+    }
+
+}
+
+.contract-card-progress {
+    box-shadow: 0 0 4px $shadow-shade-2;
+    border: none;
+
+    .card-progress-box {
+        width: 100%;
+        padding: 20px;
+
+        .img {
+            // border-radius: 50px;
+            object-fit: cover;
+        }
+
+        .user {
+            min-width: 250px;
+            width: auto;
+
+            &::after {
+                position: absolute;
+                content: '';
+                top: 0px;
+                right: 0;
+                height: 50px;
+                width: 2px;
+                background-color: $light-grey-thin;
+            }
+
+
+        }
+    }
+}

@@ -1,18 +1,17 @@
-import './index.scss'
-import { ConfigProvider } from 'antd'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import './index.scss';
-import { theme } from './theme';
-import { BrowserRouter } from "react-router-dom";
+import React from "react";
+import { ConfigProvider } from "antd";
+import { RecoilRoot } from 'recoil';
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./index.scss";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ConfigProvider theme={theme}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <RecoilRoot>
         <App />
-      </BrowserRouter>
-    </ConfigProvider>
-  </React.StrictMode>,
-)
+      </RecoilRoot>
+    </BrowserRouter>
+  </React.StrictMode>
+);

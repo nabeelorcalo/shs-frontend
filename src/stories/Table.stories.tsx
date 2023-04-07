@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import GlobalTable from '../components/Table/Table'
+import {GlobalTable} from '../components'
 
 
 export default {
@@ -58,6 +58,48 @@ Primary.args = {
         Actions: "fduhguisd",
     },],
     pagination: false,
+}
+export const Paginateed = Template.bind({})
+Paginateed.args = {
+    columns: [{
+        title: 'No',
+        dataIndex: 'no',
+        key: 'no',
+    },
+    {
+        title: 'Date Applied',
+        dataIndex: 'dateApplied',
+        key: 'dateApplied',
+    },
+    {
+        title: 'Company',
+        dataIndex: 'company',
+        key: 'company',
+
+    },],
+    tableData: [{
+        no: '01',
+        dateApplied: '01/07 /2022',
+        company: 'kljdasfhuasd',
+        typeOfWork: 'New York No. 1 Lake Park',
+        internshipType: 'nice',
+        natureOfWork: "asduhfuiyasdg",
+        Position: "gjdifsdu",
+        Status: "fjgvifd",
+        Actions: "fduhguisd",
+    },
+    {
+        no: '02',
+        dateApplied: '01/07 /2022',
+        company: 'kljdasfhuasd',
+        typeOfWork: 'New York No. 1 Lake Park',
+        internshipType: 'nice',
+        natureOfWork: "asduhfuiyasdg",
+        Position: "gjdifsdu",
+        Status: "fjgvifd",
+        Actions: "fduhguisd",
+    },],
+    pagination: true,
 }
 export const Expandable = Template.bind({})
 Expandable.args = {

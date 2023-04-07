@@ -1,12 +1,17 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import './style.scss'
 import { Link } from 'react-router-dom';
 import { IconFacebook, IconYoutube, IconLinkedin, IconInstagram, IconTwitter } from '../../../assets/images'
 import { Layout } from 'antd';
 const { Footer } = Layout;
 
+type FooterProps = {
+  collapsed: boolean;
+  collapsedWidth: number;
+};
 
-const AppFooter:FC = () => {
+
+const AppFooter: FC<FooterProps> = ({ collapsed, collapsedWidth }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
 
@@ -22,7 +27,9 @@ const AppFooter:FC = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  
+  function currentYear() {
+    return new Date().getFullYear();
+  }
 
 
   /* RENDER APP
@@ -44,7 +51,7 @@ const AppFooter:FC = () => {
         </ul>
       </div>
       <div className='footer-copyright'>
-        Copyrights &copy; 2022 All Rights Reserved by <span>Student Help Squad</span>
+        Copyrights &copy; {currentYear()} All Rights Reserved by <span>Student Help Squad</span>
       </div>
     </Footer>
   )

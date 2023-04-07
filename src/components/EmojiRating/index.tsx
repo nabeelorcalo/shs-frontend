@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import { Rate } from 'antd';
 import { Emoji1st, Emoji2nd, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray2nd, EmojiGray3rd, EmojiGray4th } from '../../assets/images';
 
-
-
-
-
-const EmojiRating = ({title}) => {
+const EmojiRating = ({title}: any) => {
     const [hover1, setHover1] = useState(false)
     const [hover2, setHover2] = useState(false)
     const [hover3, setHover3] = useState(false)
     const [hover4, setHover4] = useState(false)
     return (
-        <div className="w-5/12">
+        <div className="flex flex-col gap-2 w-5/12">
             <p className="text-sm">{title}</p>
             <div>
             <div className="flex gap-4 justify-between">

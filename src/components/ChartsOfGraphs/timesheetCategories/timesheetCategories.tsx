@@ -1,6 +1,6 @@
 import { Pie } from '@ant-design/plots';
 import { useState } from 'react';
-import {BoxWrapper} from '../../BoxWrapper/boxWrapper';
+import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
 import { TimeSheetCategoriesData } from './timeSheet';
 
 export const TimesheetCategories = (props: any) => {
@@ -29,11 +29,15 @@ export const TimesheetCategories = (props: any) => {
         color = ['#E76864', '#88DCC6', '#5D89F4', '#FFC200'],
         legend = {
             layout: 'vertical',
-            position: 'left-top'
+            position: 'right-top',
+            display: 'none'
         }, heading,
+        chartData = TimeSheetCategoriesData,
+        height = 100,
+        width = 100
     } = props
 
-    const [data] = useState(TimeSheetCategoriesData)
+    const [data] = useState(chartData)
 
     const config: any = {
         appendPadding: appendPadding,
@@ -45,7 +49,9 @@ export const TimesheetCategories = (props: any) => {
         label: label,
         statistic: statistic,
         color: color,
-        legend: legend
+        legend: legend,
+        height,
+        width
     };
     return (
         <BoxWrapper>

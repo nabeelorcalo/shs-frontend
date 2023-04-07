@@ -1,37 +1,39 @@
-import React, { useState } from 'react';
-import { Button, Modal } from 'antd';
+import React, { FC } from 'react';
+import { Modal } from 'antd';
+import { IconCloseModal } from '../../assets/images'
+import './style.scss'
 
-export const PopupModal: React.FC = ({Title, Width}:any) => {
-  const [open, setOpen] = useState(true);
+interface ModalProps {
+  title?: React.ReactNode
+  width?: string | number
+  open: boolean
+  close?: () => void
+  children?: React.ReactNode
+  footer?: React.ReactNode
+  closable?: boolean
+  wrapClassName?: string,
+  okBtntxt?: any,
+  cancelBtntxt?: any,
+  okBtnFunc?: any,
+}
 
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleOk = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e);
-    setOpen(false);
-  };
-
-  const handleCancel = (e: React.MouseEvent<HTMLElement>) => {
-    console.log(e);
-    setOpen(false);
-  };
-
+export const PopUpModal: FC<ModalProps> = (props) => {
+  const { title, width = 700, open, close, children, footer, closable , wrapClassName } = props
   return (
     <>
       <Modal
-        title={Title}
+        centered
+        title={title}
+        maskClosable={true}
+        closeIcon={<IconCloseModal />}
         open={open}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okButtonProps={{ }}
-        cancelButtonProps={{ }}
-        width={Width}
+        onCancel={close}
+        width={width}
+        closable={closable}
+        footer={footer}
+        wrapClassName={wrapClassName}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {children}
       </Modal>
     </>
   );

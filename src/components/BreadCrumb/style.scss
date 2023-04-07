@@ -1,0 +1,46 @@
+@import "../../scss/_colors.scss";
+
+.breadCrumb-main {
+  margin-bottom: 25px;
+
+  span {
+    &:nth-child(1) {
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 28px;
+      padding-right: 10px;
+      color: $primary-bg-color;
+    }
+
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5) {
+      color: $primary-bg-color;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      height: 30px;
+    }
+
+    &:nth-child(2) {
+      border-left: 1px solid $primary-bg-color;
+      padding-left: 10px;
+    }
+
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(5) {
+      padding-left: 5px;
+
+      &::before {
+        content: " / ";
+        padding-inline: 4px;
+        cursor:default;
+      }
+    }
+  }
+  .ant-divider {
+    border:1px solid #D9DBE9;
+  }
+}

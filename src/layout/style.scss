@@ -1,5 +1,8 @@
 .ant-layout {
+  background-color: #fff !important;
+
   .ant-layout.ant-layout-has-sider {
+    overflow-x: hidden;
     min-height: calc(100vh - 120px);
     @media (min-width: 601px) {
       min-height: calc(100vh - 130px);
@@ -10,5 +13,6 @@
   }
   .ant-layout-content {
     padding: 30px;
+    transition: all 0.2s;
   }
 }

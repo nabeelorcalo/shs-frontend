@@ -1,0 +1,22 @@
+@import "../../../../../scss/_colors.scss";
+.payroll-add-category{
+    .ant-form-item .ant-form-item-control-input-content {
+        .ant-input {
+          background: $text-input-bg-color;
+          border: 1px solid white;
+          &:hover{
+            background: $white-bg-color;
+    
+          }
+        }
+      }
+      .ant-picker {
+        background: $text-input-bg-color !important;
+        border: 1px solid white;
+        &:hover{
+          background: $white-bg-color !important;
+  
+        }
+      }
+
+}

@@ -1,20 +1,17 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import "./style.scss";
-import LeaveRequest from "../../components/LeaveRequest";
-import EmojiEvaluation from "../../components/EmojiEvaluation"
-import AssesmentModal from "../../components/AssesmentModal"
-import MyProfileDocUpload from "../../components/MyProfileDocUpload";
-import CreateFolderModal from "../../components/CreateFolderModal";
-import EditGoalTask from "../../components/EditGoalTask";
+import CalendarComp from '../../components/calendars/FullCalendarComp/index';
+import { calendarMockData } from '../../components/calendars/FullCalendarComp/mockData';
 
-const Calendar = () => {
-  const name = "Calvin Grayson"
+const Index = () => {
+
+  const roleToShow: any = {
+    // 'manager':
+    // 'student':
+    // 'intern':
+  }
+
   return (
-
-      <p>Calendar </p>
-
+    <CalendarComp eventData={calendarMockData}/>
   )
 }
 
-export default Calendar
+export default Index

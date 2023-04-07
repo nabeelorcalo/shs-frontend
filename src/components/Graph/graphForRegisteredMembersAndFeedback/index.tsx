@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { DualAxes } from '@ant-design/plots';
-import { registerMemeberData, resolutionFeedbackData } from './data';
-import { IconLikeShapes } from '../../../assets/images';
-import constants from '../../../config/constants';
+import React, { useState, useEffect, FC } from "react";
+import { DualAxes } from "@ant-design/plots";
+import { registerMemeberData, resolutionFeedbackData } from "./data";
+import { IconLikeShapes } from "../../../assets/images";
+import constants from "../../../config/constants";
 
-const Graph = ({ graphName }: any) => {
-  const data = graphName === constants.REGISTER_MEMBERS ? registerMemeberData : resolutionFeedbackData;
-  const yFields = graphName === constants.REGISTER_MEMBERS ? ['Active', 'Inactive'] : ['Positive', 'Negative'];
+export const RegisterMemberAndFeddbackGraph: FC<{
+  graphName: string;
+  title?:string,
+  styling?: any;
+}> = (props) => {
+  const { graphName, styling,title } = props;
+  const data =
+    graphName === constants.REGISTER_MEMBERS
+      ? registerMemeberData
+      : resolutionFeedbackData;
+  const yFields =
+    graphName === constants.REGISTER_MEMBERS
+      ? ["Active", "Inactive"]
+      : ["Positive", "Negative"];
 
-  // const legendMarker = (iconName: string) => {
-  //   return (
-  //     <IconLikeShapes />
-  //   );
-  // };
-
-  const config = {
+  const config: any = {
     data: [data, data],
-    xField: 'month',
+    xField: "month",
     yField: yFields,
 
     legend: {
-      position: 'top-right',
-      marker: { symbol: 'square', radius: 8, },
+      position: "top-right",
+      marker: { symbol: "square", radius: 8 },
       // legendMarker
     },
 
@@ -33,8 +38,13 @@ const Graph = ({ graphName }: any) => {
         visible: true,
         line: {
           style: {
-            stroke: '#D9DBE9',
+            stroke: "#D9DBE9",
           },
+        },
+      },
+      line: {
+        style: {
+          stroke: 'white',
         },
       },
       tickLine: null,
@@ -42,16 +52,16 @@ const Graph = ({ graphName }: any) => {
 
     yAxis: [
       {
-        min: 0,
-        max: 100,
+        min: -2,
+        max: 102,
         tickCount: 3,
         label: {
           formatter: (val: any) => `${val}%`,
         },
       },
       {
-        min: 0,
-        max: 100,
+        min: -2,
+        max: 102,
         tickCount: 3,
         label: null,
       },
@@ -59,46 +69,36 @@ const Graph = ({ graphName }: any) => {
 
     geometryOptions: [
       {
-        geometry: 'line',
+        geometry: "line",
         smooth: true,
-        color: '#4A9D77',
+        color: "#4A9D77",
         lineStyle: {
           lineWidth: 4,
           opacity: 0.5,
         },
-        // label: {
-        //   formatter: (datum: any) => {
-        //     return `${datum.Active}`;
-        //   },
-        // },
         point: {
-          shape: 'circle',
-          size: 10,
+          shape: "circle",
+          size: 5,
           style: {
-            stroke: '#4A9D77',
-            fill: '#4A9D77',
+            stroke: "#4A9D77",
+            fill: "#4A9D77",
           },
         },
       },
       {
-        geometry: 'line',
+        geometry: "line",
         smooth: true,
-        color: '#E95060',
+        color: "#E95060",
         lineStyle: {
           lineWidth: 4,
           opacity: 0.5,
         },
-        // label: {
-        //   formatter: (datum: any) => {
-        //     return `${datum.Inactive}`;
-        //   },
-        // },
         point: {
-          shape: 'circle',
-          size: 10,
+          shape: "circle",
+          size: 5,
           style: {
-            stroke: '#E94E5D',
-            fill: '#E94E5D',
+            stroke: "#E94E5D",
+            fill: "#E94E5D",
           },
         },
       },
@@ -109,22 +109,27 @@ const Graph = ({ graphName }: any) => {
         let attributeName, value;
 
         if (graphName === constants.REGISTER_MEMBERS) {
-          attributeName = props.hasOwnProperty('Active') ? "Active" : "Inactive";
-          value = attributeName === 'Active' ? props.Active : props.Inactive;
+          attributeName = props.hasOwnProperty("Active")
+            ? "Active"
+            : "Inactive";
+          value = attributeName === "Active" ? props.Active : props.Inactive;
         } else {
-          attributeName = props.hasOwnProperty('Positive') ? "Positive" : "Negative";
-          value = attributeName === 'Positive' ? props.Positive : props.Negative;
+          attributeName = props.hasOwnProperty("Positive")
+            ? "Positive"
+            : "Negative";
+          value =
+            attributeName === "Positive" ? props.Positive : props.Negative;
         }
 
-        return { name: attributeName, value: `${value}%` }
+        return { name: attributeName, value: `${value}%` };
       },
     },
-
   };
 
   return (
-    <DualAxes {...config} />
+    <div className="relative">
+    <p className="font-medium text--[20px] leading-[28px] text-secondary-color absolute">{title}</p>
+      <DualAxes style={styling} {...config} />
+    </div>
   );
 };
-
-export default Graph;
