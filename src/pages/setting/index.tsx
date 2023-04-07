@@ -1,22 +1,25 @@
 import { Col, Row, Divider } from "antd";
 import { Outlet } from "react-router-dom";
-import { SettingHorizontalLine } from "../../assets/images";
-import { PageHeader } from "../../components";
+import { Breadcrumb } from "../../components";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
 import "./style.scss";
 
 const Setting = (props: any) => {
+  const breadcrumbArray = [
+    { name: props.title},
+    { name: "Setting"},
+  ];
   return (
     <div className="setting">
-     <PageHeader title={<div> {props.title}  {<SettingHorizontalLine className=""/>} Setting </div>} />
-      <Divider className="my-1 mb-3" />
+     <Breadcrumb breadCrumbData={breadcrumbArray}  />
+      <Divider />
       <Row gutter={16} className="mt-5">
         <Col span={3} sm={8} lg={5} className="setting-sidebar flex flex-col">
           <div className="rounded-lg ">
             <SettingSidebar />
           </div>
         </Col>
-        <Col span={21} sm={16} lg={19}>
+        <Col xs={24} sm={16} lg={19}>
           {props.children}
           <Outlet />
         </Col>

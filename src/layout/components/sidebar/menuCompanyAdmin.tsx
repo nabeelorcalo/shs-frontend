@@ -1,4 +1,5 @@
 import React from 'react'
+import { ROUTES_CONSTANTS } from '../../../config/constants'
 import {
   IconDashboard,
   IconCalendarTick,
@@ -17,10 +18,35 @@ import {
   IconLikeShapes,
   IconEmojiSad,
   IconWalletCheck,
-  IconCalendar
+  IconCalendar,
+  IconGift
 } from '../../../assets/images'
-import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, CANDIDATES, INTERNSHIPS, OFFER_LETTER, CONTRACTS, INTERNS, MANAGERS, UNIVERSITIES, STRUCTURE, ATTENDANCE, LEAVES, TIMESHEET, PERFORMANCE, DOCUMENTS, PAYROLL, CASE_STUDIES, GRIEVANCES, CERTIFICATES, CALENDAR, SETTING, PERSONALISATION  } = ROUTES_CONSTANTS
+
+const { 
+  DASHBOARD,
+  CANDIDATES,
+  INTERNSHIPS,
+  OFFER_LETTER,
+  CONTRACTS,
+  INTERNS,
+  MANAGERS,
+  UNIVERSITIES,
+  STRUCTURE,
+  ATTENDANCE,
+  LEAVES,
+  TIMESHEET,
+  PERFORMANCE,
+  DOCUMENTS,
+  PAYROLL,
+  CASE_STUDIES,
+  GRIEVANCES,
+  CERTIFICATES,
+  CALENDAR,
+  SETTING,
+  PERSONALISATION,
+  EARN_WITH_US  
+} = ROUTES_CONSTANTS
+
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 function getItem(
@@ -45,15 +71,15 @@ export const itemsCompanyAdmin: MenuProps['items'] = [
   // RECRUITMENT GROUP
   getItem('Recruitment', 'recruitment', null, [
     getItem('Candidates', `/${CANDIDATES}`, <IconPeoples />),
-    // getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
+    getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
     getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick />),
     getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare />),
   ], 'group'),
 
   // PEOPLE GROUP
   getItem('People', 'people', null, [
-    // getItem('Interns', `/${INTERNS}`, <IconProfileUsers />),
-    // getItem('Managers', `/${MANAGERS}`, <IconProfileCircle />),
+    getItem('Interns', `/${INTERNS}`, <IconProfileUsers />),
+    getItem('Managers', `/${MANAGERS}`, <IconProfileCircle />),
     getItem('Universities', `/${UNIVERSITIES}`, <IconCourtHouse />),
   ], 'group'),
 
@@ -64,25 +90,30 @@ export const itemsCompanyAdmin: MenuProps['items'] = [
     getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove />),
     getItem('Timesheets', `/${TIMESHEET}`, <IconTimer />),
     getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
-    // getItem('Documents', `/${DOCUMENTS}`, <IconDocument />),
-    // getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck />),
+    getItem('Documents', `/${DOCUMENTS}`, <IconDocument />),
+    getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck />),
   ], 'group'),
 
   // REPORTS GROUP
   getItem('Report', 'report', null, [
     getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes />),
-    // getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
-    // getItem('Certificates', `/${CERTIFICATES}`, <IconEmojiSad />),
+    getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
+    getItem('Certificates', `/${CERTIFICATES}`, <IconEmojiSad />),
   ], 'group'),
 
   // PERSONAL GROUP
-  // getItem('Personal', 'personal', null, [
-  //   getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
-  // ], 'group'),
+  getItem('Personal', 'personal', null, [
+    getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
+  ], 'group'),
 
   // SETUP GROUP
   getItem('Setup', 'setup', null, [
     getItem('Settings', `/${SETTING}/location`, <IconCalendar />),
-    // getItem('Personalisation', `/${PERSONALISATION}`, <IconCalendar />),
+    getItem('Personalisation', `/${PERSONALISATION}`, <IconCalendar />),
+  ], 'group'),
+
+  // DISCOVER GROUP
+  getItem('Discover', 'discover', null, [
+    getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
   ], 'group'),
 ]

@@ -10,6 +10,7 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
+  Success,
 } from "../../assets/images";
 
 import {
@@ -21,10 +22,12 @@ import {
   GlobalTable,
   ProfileCard,
   TimeTracking,
-  Breadcrumb
+  Breadcrumb,
+  Notifications
 } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
+import useCustomHook from "./actionHandler";
 
 const Detail = () => {
   const attendanceDetailBreadCrumb = [
@@ -32,6 +35,7 @@ const Detail = () => {
     { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
     { name: constants.USER_ROLE !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
+  const action = useCustomHook();
   const timeFrameOptions = [
     "This Week",
     "Last Week",
@@ -194,8 +198,11 @@ const Detail = () => {
             <IconButton
               size="large"
               className="icon-btn download-btn"
-              onClick={downloadClick}
               icon={<DownlaodFileIcon />}
+              onClick={() => {
+                action.pdf('historyDetail' ,tableColumns, tableData);
+                Notifications({title:"Success", description:"Download Done",type:'success'})
+              }}
             />
           </div>
         }
@@ -250,53 +257,6 @@ const Detail = () => {
           </Row>
         </Col>
       </Row>
-      {/* <div className="attendance-content">
-        <div className="left-container">
-          {
-            constants.USER_ROLE === "Intern" ?
-              <TimeTracking vartical />
-            ) : (
-              <ProfileCard
-                name="Mino Marina"
-                profession="Data Researcher"
-                email="minomarina@gmail.com"
-                phone="+44 7700 900077"
-                address="263 Eversholt St, London NW11NB, UK"
-                avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-              />
-          }
-        </div>
-        <div className="right-container">
-          <BoxWrapper className="flex mb-6">
-            {
-              state.timeData.map((item: any, index) => {
-                const { color, icon }: any = getColorAndIcon(item.heading);
-
-                return (
-                  <AttendanceTimeCard
-                    Icon={icon}
-                    heading={item.heading}
-                    time={item.time}
-                    colorClass={color}
-                    isLast={index === state.timeData.length - 1}
-                  />
-                )
-              })
-            }
-          </BoxWrapper>
-          <BoxWrapper>
-            <GlobalTable
-              pagination={false}
-              columns={tableColumns}
-              tableData={tableData}
-            // expandable={{
-            //   defaultExpandAllRows: false,              //   expandedRowKeys,
-            //   onExpand: (expanded: any, data: any) => handleExpand(expanded, data),
-            // }}
-            />
-          </BoxWrapper>
-        </div>
-      </div> */}
     </div>
   );
 };

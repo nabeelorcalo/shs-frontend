@@ -20,30 +20,28 @@ const EmojiMoodRating = (props: EmojiProps) => {
         <Typography.Title className='emoji-heading' level={size}>
           {title}
         </Typography.Title>
-        <div>
-          <div className="flex flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
-            {
-              data.map((item: any, idx: any) => {
-                return (
-                  <div className='emoji-container text-[#363565]'>
-                    <div
-                      key={idx}
-                      className={`flex flex-col items-center ${idx}`}
-                      onClick={onClick}
-                    >
-                      {
-                        activeIconIndex === idx + 1 || activeIconIndex === -1 ?
-                          <item.comp className='svgIcon' />
-                          :
-                          <item.colorLessComp className='svgIcon' />
-                      }
-                      <p className='name-font-size'>{item.name}</p>
-                    </div>
+        <div className="flex max-sm:flex-col md:flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
+          {
+            data.map((item: any, idx: any) => {
+              return (
+                <div className='emoji-container text-[#363565]'>
+                  <div
+                    key={idx}
+                    className={`flex flex-col items-center ${idx}`}
+                    onClick={onClick}
+                  >
+                    {
+                      activeIconIndex === idx + 1 || activeIconIndex === -1 ?
+                        <item.comp className='svgIcon' />
+                        :
+                        <item.colorLessComp className='svgIcon' />
+                    }
+                    <p className='name-font-size'>{item.name}</p>
                   </div>
-                )
-              })
-            }
-          </div>
+                </div>
+              )
+            })
+          }
         </div>
       </div>
     </BoxWrapper>

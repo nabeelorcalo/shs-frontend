@@ -10,6 +10,7 @@ import {
 } from "../../../components";
 import data from '../CompanyAdmin/data';
 import '../style.scss';
+import { Col, Row } from "antd";
 
 const UniversityPerformance = () => {
   const [state, setState] = useState({
@@ -138,52 +139,50 @@ const UniversityPerformance = () => {
 
   return (
     <>
-      <PageHeader
-        actions
-        title="Performance"
-      >
+      <PageHeader actions title="Performance" >
         <Link
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-          className="performance-history-btn">
+          className="performance-history-btn font-semibold">
           View History
         </Link>
       </PageHeader>
-
-      <div className="company-admin-performance-container gap-4">
-        <div className="performance-left-subcontainer ">
-          <OverAllPerfomance
-            heading="Overall Performance"
-            data={performanceData}
-            trailColor="#E6F4F9"
-            strokeWidth={10}
-            type="circle"
-            width={100}
-          />
-
-          <div className="my-4 h-[502px]">
-            <MonthlyPerfomanceChart
-              heading="Summary"
-              data={data}
-              XField="department"
-              columnWidthRatio={0.5}
-              children={
-                <MonthChanger
-                  month='Jan'
-                  onClick={() => console.log("Month Changed")}
-                />
-              }
-            />
-          </div>
-        </div>
-
-        <div className="performance-right-subcontainer ">
+      <Row gutter={[20, 20]} className="company-admin-performance-container">
+        <Col xs={24} md={24} xl={17}>
+          <Row gutter={[20, 20]}>
+            <Col xs={24}>
+              <OverAllPerfomance
+                heading="Overall Performance"
+                data={performanceData}
+                trailColor="#E6F4F9"
+                strokeWidth={10}
+                type="circle"
+                width={100}
+              />
+            </Col>
+            <Col xs={24}>
+              <MonthlyPerfomanceChart
+                heading="Summary"
+                data={data}
+                XField="department"
+                columnWidthRatio={0.5}
+                children={
+                  <MonthChanger
+                    month='Jan'
+                    onClick={() => console.log("Month Changed")}
+                  />
+                }
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={24} md={24} xl={7}>
           <TopPerformanceList
             heading="Top Performers"
             data={state.topPerformanceList}
             action={true}
           />
-        </div>
-      </div>
+        </Col>
+      </Row>
     </>
   )
 }

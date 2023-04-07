@@ -71,7 +71,9 @@ const RecipeDetails = () => {
         <div className="recipe-detail-card">
           <div className="recipe-detail-hero">
             <div className="recipe-image">
-              <img src={recipeSingleThumb} alt={'Sticky Orange Chicken'} />
+              <figure>
+                <img src={recipeSingleThumb} alt={'Sticky Orange Chicken'} />
+              </figure>
             </div>
             <div className="recipe-hero-content">
               <div className="recipe-hero-title">

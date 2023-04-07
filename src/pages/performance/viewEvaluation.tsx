@@ -1,5 +1,4 @@
 import { Col, Row, Typography } from "antd";
-import { Link } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import {
@@ -9,6 +8,7 @@ import {
   EvaluationStatsCard,
   TextArea,
   Breadcrumb,
+  Notifications,
 } from "../../components";
 import {
   Sad,
@@ -22,11 +22,15 @@ import {
   DownloadIconWithBg,
 } from '../../assets/images';
 import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
+import "./style.scss";
 
 const ViewPerformance = () => {
+  const action = useCustomHook();
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`},
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : (constants.USER_ROLE === constants.INTERN || constants.USER_ROLE === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
     { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
@@ -97,11 +101,11 @@ const ViewPerformance = () => {
       colorLessComp: SatisfiedColorLessIcon
     },
   ];
-
-  const downloadClick = () => {
-    alert('download popup');
-  }
-
+  const detailedCards = [
+    { title: 'Learning Objectives', progressColor: '#9BD5E8' },
+    { title: 'Descipline', progressColor: '#E96F7C' },
+    { title: 'Personal', progressColor: '#6AAD8E' },
+  ]
   return (
     <div className="view-evaluation">
       <PageHeader
@@ -122,7 +126,10 @@ const ViewPerformance = () => {
         <IconButton
           size='large'
           className='icon-btn'
-          onClick={downloadClick}
+          onClick={() => {
+            action.downloadPdf(header, tableData);
+            Notifications({ title: "Success", description: "Download Done", type: 'success' })
+          }}
           icon={<DownloadIconWithBg />}
         />
       </div>
@@ -134,27 +141,15 @@ const ViewPerformance = () => {
             profession={user.profession}
           />
         </Col>
-        <Col xs={24} md={12} xxl={6}>
-          <EvaluationStatsCard
-            name='Learning Objectives'
-            percentage={user.learningObjectives}
-            color='#9BD5E8'
-          />
-        </Col>
-        <Col xs={24} md={12} xxl={6}>
-          <EvaluationStatsCard
-            name='Discipline'
-            percentage={user.discipline}
-            color='#E96F7C'
-          />
-        </Col>
-        <Col xs={24} md={12} xxl={6}>
-          <EvaluationStatsCard
-            name='Personal'
-            percentage={user.personal}
-            color='#6AAD8E'
-          />
-        </Col>
+        {detailedCards.map((item: any) => (
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={item.title}
+              percentage={user.learningObjectives}
+              color={item.progressColor}
+            />
+          </Col>
+        ))}
       </Row>
       {
         data.map((obj: any) => {

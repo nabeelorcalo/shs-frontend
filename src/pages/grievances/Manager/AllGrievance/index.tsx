@@ -1,66 +1,142 @@
-import { Button, Col, Divider, Row } from 'antd'
+import { Button, Col, Divider, Row, TabsProps } from 'antd'
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { BlowWistle, SettingHorizontalLine, } from '../../../../assets/images'
-import { DropDown, FiltersButton, PageHeader, PopUpModal, SearchBar } from '../../../../components'
-import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
-import Drawer from '../../../../components/Drawer'
-import AppTabs from '../../../../components/Tabs'
-import BlowWhistleForm from './blowWhistleForm'
+import { BlowWistle } from '../../../../assets/images'
+import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar } from '../../../../components'
+import BlowWhistleForm from '../../Common/blowWhistleForm'
 import EscalatedByMe from './escalatedByMe'
 import EscalatedToMe from './escalatedToMe'
-import Filters from './filters'
+import Filters from '../../Common/filters'
 import './style.scss'
+import useCustomHook from '../actionHandler'
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
+
 
 const index = () => {
+  const escalatedByMe = [
+    {
+      no: '01',
+      subject: 'Attendance Log Issue',
+      type: 'Others',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'New',
+    },
+    {
+      no: '02',
+      subject: 'Working conditions',
+      type: 'Discipline',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'In Progess',
+    },
+    {
+      no: '03',
+      subject: 'Bullying',
+      type: 'Personal',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'Re-Opened',
+    },
+    {
+      no: '04',
+      subject: 'Attendance Log Issue',
+      type: 'Work',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'Resolved',
+    },
+
+  ]
+  const escalatedToMeTableData = [
+    {
+      no: '01',
+      subject: 'Attendance Log Issue',
+      type: 'Others',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'New',
+    },
+    {
+      no: '02',
+      subject: 'Working conditions',
+      type: 'Discipline',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'In Progess',
+    },
+    {
+      no: '03',
+      subject: 'Bullying',
+      type: 'Personal',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'Re-Opened',
+    },
+    {
+      no: '04',
+      subject: 'Attendance Log Issue',
+      type: 'work',
+      date: '22/09/2022',
+      escalatedTo: 'Maria Sanoid',
+      status: 'Resolved',
+    },
+
+  ]
+  const items: TabsProps["items"] = [
+    {
+      children: <EscalatedToMe escalatedToMeTableData={escalatedToMeTableData} />,
+      key: '1',
+      label: 'Escalated To Me'
+    },
+    {
+      children: <EscalatedByMe escalatedByMe={escalatedByMe} />,
+      key: '2',
+      label: 'Escalated By Me'
+    },
+  ]
+
+  const breadcrumbArray = [
+    { name: "All Grievance" },
+    { name: "Grievances", onClickNavigateTo: `${ROUTES_CONSTANTS.GRIEVANCES}` },
+  ];
+  const TableColumn1 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
+  const TableColumn2 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
+  const action = useCustomHook();
+  const [selectedTab, setSelectedTab] = useState<any>("1")
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
+
+  const downloadPdfCsvData = () => {
+    if (selectedTab === "1") {
+      return escalatedToMeTableData
+    } else if (selectedTab === "2") {
+      return escalatedByMe
+    } else {
+      null
+    }
+  }
+
+  const downloadPdfCsvColumn = () => {
+    if (selectedTab === "1") {
+      return TableColumn1
+    } else if (selectedTab === "2") {
+      return TableColumn2
+    } else {
+      null
+    }
+  }
   const handleChange = () => {
 
   }
   return (
-    <div className='add-grievance'>
-      <div className='header'>
-        <PageHeader title={<> All Grievances {<span className='inline-block align-middle mx-2'><SettingHorizontalLine className="" /></span>}
-          <NavLink to="/grievances">
-            <span className='text-base font-medium dashboard-primary-color' >Grievances</span>
-          </NavLink>  </>} />
-        <Divider className="my-1 mb-2" />
-      </div>
-      <Row gutter={[20,20]}>
+    <div className='all-grievance'>
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
+      <Row gutter={[20, 20]}>
         <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />
         </Col>
         <Col xxl={18} xl={18} md={18} sm={24} xs={24} className='flex  gap-2 justify-end gerievance-right-sec'>
-        <Button
-            size="middle"
-            onClick={() => {
-              setShowBlowWhistleModal(!showBlowWhistleModal);
-            }}
-            className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
-          >
-            <BlowWistle /> Blow a Whistle
-          </Button>
-        <FiltersButton
-            label="Filters"
-            onClick={() => { setShowDrawer(!showDrawer) }}
-          />
-          <DropDown
-            options={[
-              'pdf',
-              'excel'
-            ]}
-            requiredDownloadIcon
-            setValue={() => { }}
-            value=""
-          />
-        </Col>
-      </Row>
-      {/* <div className="flex justify-between">
-        <div>
-          <SearchBar size="middle" handleChange={handleChange} />
-        </div>
-        <div className='flex  gap-2' >
           <Button
             size="middle"
             onClick={() => {
@@ -75,32 +151,19 @@ const index = () => {
             onClick={() => { setShowDrawer(!showDrawer) }}
           />
           <DropDown
-            options={[
-              'pdf',
-              'excel'
-            ]}
             requiredDownloadIcon
-            setValue={() => { }}
-            value=""
+            options={["pdf", "excel"]}
+            setValue={() => {
+              action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
+            }}
           />
-        </div>
-      </div> */}
-      <BoxWrapper className='my-5'>
-        <AppTabs
-          items={[
-            {
-              children: <EscalatedToMe />,
-              key: '1',
-              label: 'Escalated To Me'
-            },
-            {
-              children: <EscalatedByMe />,
-              key: '2',
-              label: 'Escalated By Me'
-            },
+        </Col>
+      </Row>
 
-          ]}
-        />
+      <BoxWrapper className='my-5'>
+        <AppTabs items={items} onChange={(selectedTab: any) => {
+          setSelectedTab(selectedTab)
+        }} />
 
       </BoxWrapper>
       <PopUpModal

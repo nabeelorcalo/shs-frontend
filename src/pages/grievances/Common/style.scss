@@ -1,0 +1,137 @@
+@import '../../../scss/colors';
+
+.grievances {
+  .header-btn   
+    .button {
+      background: $white-bg-color;
+      border: unset;
+      outline: 1px solid $teriary-bg-color;
+      box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+      color: $teriary-bg-color;
+
+      &:hover {
+        outline: 1px solid rgba(74, 157, 119, 0.5);
+      }
+    
+  }
+
+  .grievances-box-wrapper {
+    // min-height: 125px !important;
+    background-color: $white-bg-color;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: initial;
+    max-height: -webkit-fill-available;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+
+    &:hover {
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+      
+    }
+  }
+
+  .grievance-card {
+    box-shadow: 0px 2px 3px #E4E8F0;
+    overflow: hidden;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+
+    &:hover {
+      background-color: $text-success-hover-color;
+    
+      .box-wrapper {
+        width: 85%;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        &:hover {
+          border-radius:  0  15px  15px 0;}
+      }
+
+      .view-all-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        color: $white-bg-color;
+        cursor: pointer;
+      }
+    }
+
+    .box-wrapper {
+      margin: 0;
+      border-radius: 6px;
+      transition: all 0.3s ease-in-out;
+      width: 100%;
+    }
+
+    .view-all-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+      display: none;
+      height: 100%;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  .grievance-stats-box {
+    height: 450px;
+    padding: 20px
+  }
+}
+
+.grievance-details {
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
+  .replay-btn {
+    &:hover {
+      background: $teriary-bg-color;
+
+    }
+  }
+
+  .ant-select-selector {
+    border: none !important;
+
+    &:hover {
+      border: none !important;
+    }
+  }
+
+  .attandance-button {
+    color: $text-success-placeholder-color !important;
+
+    &:hover {
+      border: 1px solid $text-success-hover-color;
+    }
+  }
+}
+
+.ant-select-focused .ant-select-selector,
+.ant-select-selector:focus,
+.ant-select-selector:active,
+.ant-select-open .ant-select-selector {
+  border-color: #d9d9d9 !important;
+  box-shadow: none !important;
+}
+
+.blow-whistle-footer,
+.whistle-footer {
+  .footer-cancel-btn {
+    border: 1px solid $teriary-bg-color !important;
+    color: $teriary-bg-color !important;
+    padding: 0px 20px;
+  }
+
+  .footer-submit-btn {
+    background: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+    color: #fff;
+    padding: 0px 20px;
+
+    &:hover {
+      color: $white-bg-color;
+
+    }
+  }
+}

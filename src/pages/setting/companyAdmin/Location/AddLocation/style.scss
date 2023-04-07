@@ -3,12 +3,17 @@
   .ant-form-item .ant-form-item-control-input-content {
     .ant-input {
       background: $text-input-bg-color;
+      border:2px solid $white-bg-color ;
 
       &:hover {
         background: $white-bg-color;
+        border: 2px solid $input-hover-color;
 
       }
     }
+  }
+  .ant-dropdown-trigger{
+    height: 44px !important;
   }
 
   .ant-select-single {

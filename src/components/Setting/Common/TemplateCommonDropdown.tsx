@@ -9,7 +9,7 @@ interface ITEMPLATEDROPDOWN {
   link: string;
 }
 
-const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
+export const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
   const { setShowDeleteModal, showDeleteModal, link } = props;
   const [visible, setVisible] = useState(false);
 

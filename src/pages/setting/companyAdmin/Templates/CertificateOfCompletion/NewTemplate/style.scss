@@ -1,5 +1,10 @@
 @import "../../../../../../scss/colors";
 .certificate-of-completion-new-template {
+  .eye-icon {
+    path {
+        fill: $white-bg-color;
+    }
+}
   .ant-form-item .ant-form-item-control-input-content {
     .ant-input {
       background: $text-input-bg-color;
@@ -59,7 +64,7 @@
         transition: 0.5s ease;
         opacity: 0;
         position: absolute;
-        top: 50%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);

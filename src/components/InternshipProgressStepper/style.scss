@@ -1,6 +1,7 @@
 @import '../../scss/colors';
+
 body {
-  background:$text-input-bg-color;
+  background: $text-input-bg-color;
 }
 
 .stepper {
@@ -10,7 +11,13 @@ body {
   width: 95%;
   list-style: none;
   position: relative;
-  
+  @media only screen and (max-width:768px){
+    flex-wrap: wrap;
+    .stepper__item {
+      font-size: 12px;
+      flex-basis: 50%;
+    }
+  }
   &::before {
     position: absolute;
     top: 0;
@@ -24,47 +31,50 @@ body {
 
 .stepper__item {
   flex: 100%;
-  color:$white-bg-color;
+  color: $white-bg-color;
   text-align: center;
   padding: 30px 10px 30px 10px;
-  background: repeating-linear-gradient(
-				-65deg,
-				$text-input-bg-color,
-				$text-input-bg-color 20px,
-				$text-input-bg-color 20px,
-				$text-input-bg-color 40px
-			);
+  background: repeating-linear-gradient(-65deg,
+      $text-input-bg-color,
+      $text-input-bg-color 20px,
+      $text-input-bg-color 20px,
+      $text-input-bg-color 40px);
   margin: 0 0 0 -15px;
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
-  
+
   &.applied {
     background: $dashboard-primary-bg-color;
   }
-  
+
   &.interviewed {
     background: $accommodation-tag;
   }
+
   &.recommended {
     background: $light-orange-color;
   }
+
   &.offerletter {
     background: $text-success-placeholder-color;
   }
+
   &.contract {
     background: $teriary-light-bg-color;
   }
+
   &.hired {
     background: $teriary-bg-color;
   }
-  &.reject {
+
+  &.reject-sep {
     background: $page-header-secondary;
   }
-  
+
   &:first-child {
-    padding: 30px 10px ;
+    padding: 30px 10px;
     -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   }
-  
+
   &:last-child {
     // -webkit-clip-path: polygon(20px 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%);
     -webkit-clip-path: polygon(20px 50%, 0% 0%, 100%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);

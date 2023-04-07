@@ -10,10 +10,10 @@ import thumb5 from '../../../assets/images/gallery/thumb5.png'
 
 const data = [
   {id: '01', coverPhoto: thumb1, discount: '30', autualPrice: '1200', discountPrice: '840', propertyAvailableFor: 'week', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '2', tags: ['Utility Bills', 'Laundry', 'Meals'], location: 'Black horse Lane, London, E17 6DS'},
-  {id: '02', coverPhoto: thumb2, discount: '0', autualPrice: '1200', discountPrice: '0', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
-  {id: '03', coverPhoto: thumb3, discount: '0', autualPrice: '1200', discountPrice: '0', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
-  {id: '04', coverPhoto: thumb4, discount: '0', autualPrice: '1200', discountPrice: '0', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
-  {id: '05', coverPhoto: thumb5, discount: '0', autualPrice: '1200', discountPrice: '0', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
+  {id: '02', coverPhoto: thumb2, discount: '', autualPrice: '1200', discountPrice: '1200', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
+  {id: '03', coverPhoto: thumb3, discount: '', autualPrice: '1200', discountPrice: '1200', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
+  {id: '04', coverPhoto: thumb4, discount: '18', autualPrice: '1200', discountPrice: '960', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
+  {id: '05', coverPhoto: thumb5, discount: '', autualPrice: '1200', discountPrice: '1200', propertyAvailableFor: 'month', propertyType: 'Apartment', totalBeds: '2', totalWashRoom: '1', tags: ['Utility Bills', 'Laundry', 'Meals'], location: '11 Queensway London EC49 5PC'},
 ]
 
 const AvailableProperties = () => {
@@ -60,7 +60,7 @@ const AvailableProperties = () => {
                 location={property.location}
                 handleSaveClick={() => console.log('handle clik')}
                 handleDetailClick={() => handleDetailClick(property.id)}
-                handleChatClick={() => console.log('chat')}
+                handleChatClick={() => navigate('/chat')}
               />
             </div>
           )

@@ -1,5 +1,15 @@
 @import '../../scss/_colors.scss';
-
+.internship-details{
+  .internship-right-sec{
+    @media only screen and (max-width:475px){
+      flex-direction: column !important;
+      .main-btn{
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+}
 .pipeline-heading-style{
   border: 1px solid $text-error-line-color;
   border-radius: 5px;

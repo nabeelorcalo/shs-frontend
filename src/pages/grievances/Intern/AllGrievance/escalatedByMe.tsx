@@ -5,42 +5,8 @@ import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { GlobalTable } from '../../../../components'
 import './style.scss'
 
-const UniversitesTableData = [
-  {
-    no: '01',
-    subject: 'Attendance Log Issue',
-    type: 'Others',
-    date: '22/09/2022',
-    escalatedTo: 'Maria Sanoid',
-    status: 'New',
-  },
-  {
-    no: '02',
-    subject: 'Working conditions',
-    type: 'Discipline',
-    date: '22/09/2022',
-    escalatedTo: 'Maria Sanoid',
-    status: 'In Progess',
-  },
-  {
-    no: '03',
-    subject: 'Bullying',
-    type: 'Personal',
-    date: '22/09/2022',
-    escalatedTo: 'David Miller',
-    status: 'Re-Opened',
-  },
-  {
-    no: '04',
-    subject: 'Working Environment',
-    type: 'Work',
-    date: '22/09/2022',
-    escalatedTo: 'Maria Sanoid',
-    status: 'Resolved',
-  },
 
-]
-const UniversitesTablecolumn =
+const escalatedByMeTableColumn =
   [
     {
       dataIndex: 'no',
@@ -97,12 +63,12 @@ const UniversitesTablecolumn =
       ),
     },
   ]
-const EscalatedByMe = () => {
+const EscalatedByMe = (props:any) => {
   return (
     <GlobalTable
-      columns={UniversitesTablecolumn}
+      columns={escalatedByMeTableColumn}
       pagination
-      tableData={UniversitesTableData}
+      tableData={props.escalatedByMeTableData}
     />
   )
 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import DreamUp from '../Intrnee'
 
 const Student = () => {
   return (
-    <div>Student Dream up</div>
+    <div><DreamUp/></div>
   )
 }
 

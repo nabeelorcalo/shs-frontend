@@ -23,51 +23,57 @@ const index = (props: any) => {
       <PageHeader
         actions
         bordered
-        title="Leave"
+        title="Leaves"
       >
         <div className='flex items-center justify-end view_history_button_wrapper'>
           <Button
-            className='button font-semibold'
+            className='button font-semibold px-8'
             onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
             label='View History'
-            size="small"
+          // size="small"
           />
         </div>
       </PageHeader>
       {constants.USER_ROLE === "CompanyAdmin" &&
-        <Row gutter={[20, 20]} className="mb-5">
-          {[1, 2, 3, 4].map((data: any) => (
-            <Col xxl={6} xl={6} lg={12} md={12} sm={12} xs={24}>
-              <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main'>
-                <div className='user_intro flex items-center justify-center flex-col mb-5'>
-                  <div className='w-[64px] h-[64px] rounded-full mb-5'>
-                    <img src={LeaveProfileImg} className=" rounded-full w-full h-full object-cover " />
-                  </div>
-                  <h4 className='user_name mb-1'>Maren Press</h4>
-                  <p className='designation'>Data Researcher</p>
+        <div className="Leave_request_card_wrapper mb-5 flex items-center justify-between flex-wrap gap-5">
+          {[1, 2, 3, 4, 5].map((data: any) => (
+            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%]  w-full'>
+              <div className='user_intro flex items-center justify-center flex-col mb-5'>
+                <div className='w-[64px] h-[64px] rounded-full mb-5'>
+                  <img src={LeaveProfileImg} className=" rounded-full w-full h-full object-cover " />
                 </div>
-                <div className='about_leave_info flex items-center justify-around p-3 rounded-lg mb-5 '>
-                  <div className='info_inner text-center'>
-                    <p className='Name_of_cat text-sm font-normal capitalize '>Days</p>
-                    <p className='count_of_cat text-sm font-normal capitalize'>1</p>
-                  </div>
-                  <div className='info_inner text-center'>
-                    <p className='Name_of_cat text-sm font-normal capitalize '>Leave Type</p>
-                    <p className='count_of_cat text-sm font-normal capitalize'>casual</p>
-                  </div>
+                <h4 className='user_name mb-1'>Maren Press</h4>
+                <p className='designation'>Data Researcher</p>
+              </div>
+              <div className='about_leave_info flex items-center justify-around p-3 rounded-lg mb-5 '>
+                <div className='info_inner text-center'>
+                  <p className='Name_of_cat text-sm font-normal capitalize '>Days</p>
+                  <p className='count_of_cat text-sm font-normal capitalize'>1</p>
                 </div>
-                <div className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
-                  <Button className="Declin_btn" label='Decline' size="small" type='primary' />
-                  <Button className="Approve_btn" label='Approve' size="small" type='primary' />
+                <div className='info_inner text-center'>
+                  <p className='Name_of_cat text-sm font-normal capitalize '>Leave Type</p>
+                  <p className='count_of_cat text-sm font-normal capitalize'>casual</p>
                 </div>
-              </BoxWrapper>
-            </Col>
+              </div>
+              <div className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
+                <Button className="Declin_btn" label='Decline' size="small" type='primary' />
+                <Button className="Approve_btn" label='Approve' size="small" type='primary' />
+              </div>
+            </BoxWrapper>
           ))}
-        </Row>}
+        </div>}
       <Row gutter={[20, 20]} >
         {leaveCardDataManager.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
-            <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
+            <LeaveCard
+              Icon={CardIcon[index].Icon}
+              bg={CardIcon[index].bg}
+              title={data.leavType}
+              total={data.leaveLength}
+              pending={data.pending}
+              approved={data.approved}
+              declined={data.declined}
+            />
           </Col>
         ))}
       </Row>

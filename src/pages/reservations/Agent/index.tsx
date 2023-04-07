@@ -1,12 +1,12 @@
-import { Col, Row, Dropdown, Button, MenuProps, Table } from "antd";
+import { Col, Row, Dropdown, Button, MenuProps } from "antd";
 import React, { useState } from "react";
 import { Documentcard, IconAngleDown } from "../../../assets/images";
 import { GlobalTable, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType } from "antd/es/table";
-import "./style.scss";
 import { EyeFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import BookingModal from "./BookingModal";
+import "./style.scss";
 
 interface DataType {
   key: React.Key;
@@ -129,7 +129,7 @@ const ReservationsAgent = () => {
     },
   ];
   return (
-    <div className="Reservations">
+    <div className="reservations">
       <BookingModal open={isOpen} setOpen={setISOpen}/>
       <PageHeader title="Reservations" bordered={true} />
 
@@ -138,13 +138,13 @@ const ReservationsAgent = () => {
           <SearchBar handleChange={() => {}} />
         </Col>
 
-        <Col xxl={2} xl={3} lg={4} md={5} sm={4} xs={24}>
+        <Col xxl={2} xl={3} lg={4} md={5} sm={4} xs={24} className="reservation-right">
           <Dropdown
             menu={{ items: statusItems }}
             trigger={["click"]}
             placement="bottomRight"
           >
-            <Button className="button-sky-blue">
+            <Button className="button-sky-blue main-btn">
               Status
               <IconAngleDown />
             </Button>

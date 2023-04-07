@@ -21,7 +21,7 @@ const index = () => {
     <div className='intrne_main'>
       <PageHeader actions   bordered title="Leave">
         <div className='flex items-center justify-end view_history_button_wrapper'>
-          <Button className='button font-semibold' onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}>View History</Button>
+          <Button className='button font-semibold px-8' onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}>View History</Button>
         </div>
       </PageHeader>
       <Row gutter={[20, 20]} >

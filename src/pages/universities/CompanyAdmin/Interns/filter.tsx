@@ -5,7 +5,6 @@ const { Option } = Select;
 import './style.scss'
 import { CommonDatePicker } from '../../../../components';
 
-
 const Filters: React.FC = (props: any) => {
   let options = [
     { value: 'jessia', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Jessica Alba</span></div> },
@@ -17,7 +16,6 @@ const Filters: React.FC = (props: any) => {
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
-    console.log("values", values)
   }
   const renderOption = (option: any) => {
     return (

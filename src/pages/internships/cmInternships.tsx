@@ -10,9 +10,9 @@ import {
   BoxWrapper
 } from '../../components'
 import Drawer from '../../components/Drawer'
-import { Button } from 'antd'
+import { Button, Col, Row } from 'antd'
 import '../../scss/global-color/Global-colors.scss'
-
+import './style.scss'
 const mapArray: any = [1, 2, 3, 4]
 
 const CMInternships = () => {
@@ -21,28 +21,17 @@ const CMInternships = () => {
   return (
     <>
       <PageHeader bordered title="Internships for Company Admin" />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              className=""
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="search"
-              size="middle"
-            />
-          </div>
-          <div className="flex flex-row gap-4">
+      <div className="flex flex-col gap-5 internship-details">
+        <Row gutter={[20, 20]}>
+          <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" size="middle" />
+          </Col>
+          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
             <FiltersButton
               label="Filters"
               onClick={() => { setShowDrawer(true) }}
             />
-            <Drawer
-              closable
-              open={showDrawer}
-              onClose={() => { setShowDrawer(false) }}
-              title="Filters"
-            >
+            <Drawer closable   open={showDrawer} onClose={() => { setShowDrawer(false) }} title="Filters" >
               <React.Fragment key=".0">
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
@@ -115,14 +104,14 @@ const CMInternships = () => {
             </Drawer>
             <Button
               size="middle"
-              className="flex gap-2 teriary-bg-color white-color"
+              className="flex gap-2 teriary-bg-color white-color main-btn"
               onClick={() => { navigate("new-internship"); }}
             >
               <InternshipsIcon />
               New Internship
             </Button>
-          </div>
-        </div>
+          </Col>
+        </Row>
         {
           mapArray.map((item: any, idx: any) => {
             return (

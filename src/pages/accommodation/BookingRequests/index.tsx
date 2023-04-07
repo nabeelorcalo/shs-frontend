@@ -4,7 +4,7 @@ import type { MenuProps } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Table, Dropdown, Typography, Row, Col } from 'antd'
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images'
-import { PopUpModal } from "../../../components";
+import { PopUpModal, Alert } from "../../../components";
 import "./style.scss";
 interface DataType {
   key: React.Key;
@@ -111,8 +111,28 @@ const BookingRequests = () => {
   const location = useLocation()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalViewContractOpen, setModalViewContractOpen] = useState(false)
+  const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false)
 
-  const items: MenuProps['items'] = [
+  const itemsPending: MenuProps['items'] = [
+    {
+      label: 'View Details',
+      key: 'viewDetails',
+    },
+    {
+      label: 'Sign contract',
+      key: 'signContract',
+    },
+    {
+      label: 'Chat with agent',
+      key: 'chatWithAgent',
+    },
+    {
+      label: 'Cancel booking',
+      key: 'cancelBooking',
+    },
+  ];
+
+  const itemsReserved: MenuProps['items'] = [
     {
       label: 'View Details',
       key: 'viewDetails',
@@ -124,6 +144,32 @@ const BookingRequests = () => {
     {
       label: 'Chat with agent',
       key: 'chatWithAgent',
+    },
+  ];
+
+  const itemsRejected: MenuProps['items'] = [
+    {
+      label: 'View Details',
+      key: 'viewDetails',
+    },
+    {
+      label: 'Chat with agent',
+      key: 'chatWithAgent',
+    },
+  ];
+
+  const itemsNoCntracted: MenuProps['items'] = [
+    {
+      label: 'View Details',
+      key: 'viewDetails',
+    },
+    {
+      label: 'Chat with agent',
+      key: 'chatWithAgent',
+    },
+    {
+      label: 'Cancel booking',
+      key: 'cancelBooking',
     },
   ];
   
@@ -167,7 +213,7 @@ const BookingRequests = () => {
     render: (_, row, index) => {
       return (
         <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': 'success'}`}>
-          {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Success'}
+          {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Reserved'}
         </div>
       );
     },
@@ -178,7 +224,15 @@ const BookingRequests = () => {
     align: 'center',
     render: (_, row, index) => {
       return (
-        <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({key}) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
+        <Dropdown
+          overlayClassName="shs-dropdown" 
+          placement="bottomRight"
+          trigger={['click']}
+          menu={{ 
+            items: row.contracts && row.status? itemsNoCntracted: row.status === 'pending' ? itemsPending : row.status === 'rejected' ? itemsRejected: itemsReserved,
+            onClick: ({key}) => handleActionItem(key, row.key) 
+          }}
+        >
           <div className="dropdown-button">
             <IconMore />
           </div>
@@ -208,6 +262,10 @@ const BookingRequests = () => {
     setModalViewContractOpen(false)
   }
 
+  function openModalCancelBooking() {
+    setModalCancelBookingOpen(true)
+  }
+
   function handleActionItem (key:any, id:any) {
     if(key === 'viewDetails') {
       navigate(`/property/${id}`)
@@ -217,6 +275,9 @@ const BookingRequests = () => {
     }
     if(key === 'chatWithAgent') {
       navigate(`/chat`)
+    }
+    if(key === 'cancelBooking') {
+      openModalCancelBooking()
     }
   }
 
@@ -370,6 +431,17 @@ const BookingRequests = () => {
       </PopUpModal>
       {/* ENDS: MODAL VIEW CONTRACT
       *************************************************************************/}
+
+      <Alert
+        type="error"
+        width={570}
+        state={modalCancelBookingOpen}
+        setState={setModalCancelBookingOpen}
+        cancelBtntxt={'No'}
+        okBtntxt={'Yes'}
+        // okBtnFunc={}
+        children={<p>Do you really want to cancel this booking?</p>}
+      />
     </>
   )
 }

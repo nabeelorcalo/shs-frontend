@@ -1,6 +1,18 @@
 @import '../../../../scss//colors';
 .escalated-btn{
   border: 1px solid $dashboard-primary-bg-color;
+  padding-right: 20px;
+  border-right: none;
+  border-radius: 8px 0px 0px 8px
+;
+}
+.escalated-icon{
+  border: 1px solid $dashboard-primary-bg-color;
+
+  border-radius: 0px 8px 8px 0px;
+  height: 38px;
+ 
+
 }
 .filter_main_wrapper{
   .drop-down-wrapper{
@@ -8,7 +20,10 @@
     border: 1px solid $text-primary-disabled-color;
   }
 }
-.add-grievance{
+.all-grievance{
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
 .new{
   background: #FF6F31;
 }
@@ -21,17 +36,4 @@
 .resolved{
   background: #3DC575;
 }
-}
-.company-admin-blow-whistle-footer{
-  .footer-cancel-btn {
-    border: 1px solid $teriary-bg-color !important;
-    color: $teriary-bg-color !important ;
-    padding: 0px 20px;
-  }
-  .footer-submit-btn {
-    background: $teriary-bg-color;
-    border: 1px solid $teriary-bg-color;
-    color: #fff;
-    padding: 0px 20px;
-  }
 }

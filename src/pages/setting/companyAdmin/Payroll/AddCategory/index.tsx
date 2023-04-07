@@ -12,16 +12,23 @@ import {
   Input,
   Switch,
 } from "antd";
-import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
-import { NavLink } from "react-router-dom";
-import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
-import { CommonDatePicker } from "../../../../../components";
+import { SettingAvater} from "../../../../../assets/images";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Breadcrumb, CommonDatePicker , BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const { Title, Paragraph } = Typography;
 
 const PayrollAddCategory = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "Add Category"},
+    { name: "Setting"  },
+    { name: "Payroll" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
+
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -75,30 +82,13 @@ const PayrollAddCategory = () => {
     setValue(e.target.value);
   };
 
-  console.log("formValues", formValues);
   return (
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
 
-      <div className="flex items-center">
-        <Title level={3} className="mt-2">
-          Add Category
-        </Title>
-        <span className="mx-2">
-          <SettingHorizontalLine />
-        </span>
-        <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-        <span className="mx-2">/</span>
-        <NavLink to="/settings/payroll">
-          <span className=" text-base font-medium text-secondary-color">
-            Payroll
-          </span>
-        </NavLink>
-      </div>
+      <Breadcrumb breadCrumbData={breadcrumbArray}  />
 
-      <Divider className="my-1 mb-3" />
+      <Divider  />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
@@ -164,7 +154,9 @@ const PayrollAddCategory = () => {
 
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_PAYROLL}`}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

@@ -1,4 +1,6 @@
 @import "../../../scss/colors.scss";
+.struture-wrapper {
+  background: #f8f8f8;
 .structure {
   overflow-x: scroll;
   &::-webkit-scrollbar {
@@ -12,7 +14,7 @@
     text-align: center;
     .borderLeft {
       border: 1px solid $secondary-light-bg-color;
-      left: 20%;
+      left: 23%;
       z-index: 0;
     }
     .avater-content {
@@ -32,4 +34,5 @@
       }
     }
   }
+}
 }

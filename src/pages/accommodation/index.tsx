@@ -9,6 +9,93 @@ import { Form, Select, Slider, Space, DatePicker, Dropdown, Button } from 'antd'
 import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
+import useBookingRequests from './BookingRequests/actionHandler'
+
+const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Contracts', 'Status'];
+  // Temporary Data
+  const bookingRequestsData = [
+    {
+      key: '1',
+      agentTitle: 'Stenna Freddi',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'pending'
+    },
+    {
+      key: '2',
+      agentTitle: 'Keith Thompson',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'success'
+    },
+    {
+      key: '3',
+      agentTitle: 'John Emple',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'rejected'
+    },
+    {
+      key: '4',
+      agentTitle: 'Stenna Freddi',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'pending'
+    },
+    {
+      key: '5',
+      agentTitle: 'Keith Thompson',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'success'
+    },
+    {
+      key: '6',
+      agentTitle: 'John Emple',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'rejected'
+    },
+    {
+      key: '7',
+      agentTitle: 'Stenna Freddi',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'pending'
+    },
+    {
+      key: '8',
+      agentTitle: 'Keith Thompson',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: true,
+      status: 'success'
+    },
+    {
+      key: '9',
+      agentTitle: 'John Emple',
+      address: '118-127 Park Ln, London W1K 7AF, UK',
+      durationBooking: '22/09/2022 - 22/09/2022',
+      rent: '£ 170/day',
+      contracts: false,
+      status: 'rejected'
+    },
+  ];
 
 // Temporary
 const agentOptions = [
@@ -21,9 +108,12 @@ const agentOptions = [
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const downloadBookingRequest = useBookingRequests()
+  const [form] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
   const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
+  const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
@@ -117,6 +207,19 @@ const Accommodation = () => {
     setAvailablePropertyFiltersOpen(false)
   }
 
+  function applyFilterAvailableProperties(fieldsValue: any) {
+    const values = {
+      ...fieldsValue,
+      'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
+      'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
+    }
+    console.log('Success:', values);
+  }
+
+  const resetFormFields = () => {
+    form.resetFields()
+  }
+
   const openSavedSearchesFilters = () => {
     setSavedSearchesFiltersOpen(true)
   }
@@ -130,11 +233,20 @@ const Accommodation = () => {
   }
 
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log('dfdfdsfsdfas::: ', date, dateString);
+    console.log('Date::: ', date, dateString);
   }
 
   const handleChangeStatus = (value: string) => {
     console.log(`selected ${value}`);
+  }
+
+  function handledownloadBookingRequest (key:any) {
+    if(key === 'pdf') {
+      downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestColumns, bookingRequestsData)
+    }
+    if(key === 'excel') {
+      downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestColumns, bookingRequestsData, )
+    }
   }
 
 
@@ -218,7 +330,15 @@ const Accommodation = () => {
                 </Dropdown>
               </div>
               <div className="dropdown-download">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown
+                  overlayClassName="shs-dropdown"
+                  trigger={['click']}
+                  placement="bottomRight"
+                  menu={{ 
+                    items: downloadItems,
+                    onClick: ({key}) => handledownloadBookingRequest(key)
+                  }}
+                >
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
                 </Dropdown>
               </div>
@@ -284,14 +404,21 @@ const Accommodation = () => {
         onClose={closeAvailablePropertyFilters}
       >
         <div className="shs-filter-form">
-          <Form layout="vertical" name="availablePropertiesFilters" onFinish={onFinish}>
+          <Form
+            form={form}
+            layout="vertical"
+            name="availablePropertiesFilters"
+            onValuesChange={(_, values) => {
+              console.log('Filter Values:: ', values)
+            }}
+            onFinish={applyFilterAvailableProperties}
+          >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
                 <Slider
                   min={0}
                   max={1000}
-                  defaultValue={0}
                   marks={{
                     0: '£0',
                     1000: '£1000',
@@ -307,7 +434,6 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -317,7 +443,6 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -350,7 +475,7 @@ const Accommodation = () => {
             </div>
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost>
+                <ExtendedButton customType="tertiary" ghost onClick={resetFormFields}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
@@ -378,7 +503,6 @@ const Accommodation = () => {
                 <Slider
                   min={0}
                   max={1000}
-                  defaultValue={0}
                   marks={{
                     0: '£0',
                     1000: '£1000',

@@ -54,7 +54,7 @@ export const AccommodationCard = (props: Props) => {
                 <div className='flex items-center justify-between flex-wrap gap-2'>
                     <p>
                         <span className='actual-price text-xs mr-1'>
-                            {autualPrice && <><span className='line-through mr-1'>£{autualPrice}</span>-</>}
+                            {discount && <><span className='line-through mr-1'>£{autualPrice}</span>-</>}
                         </span>
                         <span className='discount'>
                             <span className='bold text-2xl font-semibold mr-1'>£{withDiscountPrice}</span>

@@ -1,6 +1,6 @@
 import React from "react";
-import { Divider,  } from "antd";
-import { NavLink,  } from "react-router-dom";
+import { Divider, } from "antd";
+import { NavLink, } from "react-router-dom";
 import {
   SettingCalendarRemove,
   SettingChart,
@@ -61,7 +61,7 @@ const menuLinks = [
   {
     title: "Payroll",
     link: "/settings/payroll",
-    icon: <SettingPayroll/>,
+    icon: <SettingPayroll />,
     description:
       "Add departments within your organisation for people management",
   },
@@ -70,46 +70,43 @@ const menuLinks = [
 const SettingSidebar: React.FC = () => {
   return (
     <div className="setting-sidebar">
+      {menuLinks.map((item, idx) => {
+        return (
+          <div >
+            <NavLink
+              key={idx}
+              to={item.link}
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center  text-[#14142A] bg-[#E6F4F9] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
+                  : "flex items-center  text-[#6E7191] bg-white rounded-lg hover:bg-[#E6F4F9] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
+              }
+            >
+              <div className="px-2 m-0">
+                <div className="flex flex-col my-2">
+                  <div className="flex">
+                    <span>{item.icon}</span>
 
-      <div className="">
-        {menuLinks.map((item, idx) => {
-          return (
-            <div >
-              <NavLink
-                key={idx}
-                to={item.link}
-                className={({ isActive }) =>
-                  isActive
-                    ? "flex items-center  text-[#14142A] bg-[#E6F4F9] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
-                    : "flex items-center  text-[#6E7191] bg-white rounded-lg hover:bg-[#E6F4F9] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
-                }
-              >
-                <div className="px-2 m-0">
-                  <div className="flex flex-col my-2">
-                    <div className="flex">
-                      <span>{item.icon}</span>
-
-                      <span className="font-medium mx-3 text-base text-primary-color hidden sm:block">
-                        {item.title}
-                      </span>
-                    </div>
-                    <div className="hidden sm:block">
-                      <p className="font-normal text-sm pt-1 ">
-                        {item.description}
-                      </p>
-                    </div>
+                    <span className="font-medium mx-3 text-base text-primary-color hidden sm:block">
+                      {item.title}
+                    </span>
                   </div>
-                  <Divider className="mb-0 " />
+                  {/* hidden sm:block */}
+                  <div className="">
+                    <p className="font-normal text-sm pt-1 ">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </NavLink>
-           
+                <Divider className="mb-0 " />
+              </div>
+            </NavLink>
 
-            </div>
-          );
-        })}
-      </div>
+
+          </div>
+        );
+      })}
     </div>
-    // </div>
   );
 };
 
