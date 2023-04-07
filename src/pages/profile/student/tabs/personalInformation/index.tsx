@@ -16,6 +16,7 @@ import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined } from "@ant-design/icons";
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import '../../../style.scss';
 
 
@@ -42,17 +43,14 @@ const PersonalInformation = () => {
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
   return (
     <div className="personal-information">
       <Form
         name="basic"
         layout="vertical"
         initialValues={{ remember: true }}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <div>
@@ -63,9 +61,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="First Name"
               name="firstName"
-              rules={[
-                { required: true, message: "Please input your First Name!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter First Name" className="input-style" />
             </Form.Item>
@@ -74,9 +70,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Last Name"
               name="lastName"
-              rules={[
-                { required: true, message: "Please input your Last Name!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter Last Name" className="input-style" />
             </Form.Item>
@@ -85,9 +79,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Gender"
               name="gender"
-              rules={[
-                { required: true, message: "Please input your gender!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <DropDown
                 name='Select'
@@ -101,9 +93,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Place Of Birth"
               name="pob"
-              rules={[
-                { required: true, message: "Please input your POB!" },
-              ]}
+              rules={[{ required: true }, { type: "date" }]}
             >
               <Input placeholder="Enter your Birth Place" className="input-style" />
             </Form.Item>
@@ -112,9 +102,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Nationality"
               name="nationality"
-              rules={[
-                { required: true, message: "Please input your Nationality!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <DropDown
                 name='Select'
@@ -128,9 +116,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Date of Birth"
               name="dob"
-              rules={[
-                { required: true, message: "Please input your dob!" },
-              ]}
+              rules={[{ required: true }, { type: "date" }]}
             >
               <CommonDatePicker
                 requireAsButton
@@ -146,9 +132,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Personal Email"
               name="email"
-              rules={[
-                { required: true, message: "Please input your Email!" },
-              ]}
+              rules={[{ required: true }, { type: "email" }]}
             >
               <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
@@ -157,7 +141,7 @@ const PersonalInformation = () => {
             <Form.Item
               name="phone"
               label="Phone Number"
-              rules={[{ required: true, message: 'Please input your phone number!' }]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Group compact>
                 <Select defaultValue="+92" style={{ width: '25%' }}>
@@ -178,9 +162,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="National Ensurance Number"
               name="nen"
-              rules={[
-                { required: true, message: "Please input your National Ensurace Number!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter Ensurance Number" className="input-style" />
             </Form.Item>
@@ -189,9 +171,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Visa Status"
               name="visastatus"
-              rules={[
-                { required: true, message: "Please input your Visa Status!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <DropDown
                 name='Select'
@@ -205,9 +185,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Delegate Refrence Number"
               name="drn"
-              rules={[
-                { required: true, message: "Please input your Delegate Refrence Number!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter Refrence Number" className="input-style" />
             </Form.Item>
@@ -222,11 +200,9 @@ const PersonalInformation = () => {
             <Form.Item
               label="Description"
               name="description"
-              rules={[
-                { required: true, message: "Please input your Description!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="Write about yourself" maxLength={6} className="text-area" />
+              <TextArea rows={4} placeholder="Write about yourself" maxLength={6} className="input-style" />
             </Form.Item>
           </Col>
         </Row>
@@ -239,9 +215,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Post Code"
               name="postcode"
-              rules={[
-                { required: true, message: "Please input your Post Code!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <DropDown
                 name='Select'
@@ -258,9 +232,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="House No"
               name="houseno"
-              rules={[
-                { required: true, message: "Please input your House No!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter House Number" className="input-style" />
             </Form.Item>
@@ -269,9 +241,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Street"
               name="street"
-              rules={[
-                { required: true, message: "Please input your Street!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter Street Number" className="input-style" />
             </Form.Item>
@@ -280,9 +250,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Country"
               name="country"
-              rules={[
-                { required: true, message: "Please input your Country!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <DropDown
                 name='Select'
@@ -296,9 +264,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="City"
               name="city"
-              rules={[
-                { required: true, message: "Please input your City!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter City" className="input-style" />
             </Form.Item>
@@ -313,9 +279,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Hobbies"
               name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Button className="text-input-bg-color border-0 rounded-[14.5px]"
 
@@ -328,9 +292,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Allergies"
               name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Button
                 className="text-input-bg-color border-0 rounded-[14.5px]"
@@ -343,11 +305,9 @@ const PersonalInformation = () => {
             <Form.Item
               label="Medical Condition"
               name="medicalcondition"
-              rules={[
-                { required: true, message: "Please input your Medical Condition!" },
-              ]}
+              rules={[{ required: true }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="text-area" />
+              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -371,9 +331,7 @@ const PersonalInformation = () => {
                 <Form.Item
                   label="Username"
                   name="username"
-                  rules={[
-                    { required: true, message: "Please input your username!" },
-                  ]}
+                  rules={[{ required: true }, { type: "string" }]}
                 >
                   <div className="flex gap-4">
                     <Input />

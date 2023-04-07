@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Divider, Typography } from "antd";
-import '../style.scss';
+import '../../style.scss';
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
-import video from "../../../assets/images/profile/student/Vedio.svg";
+import video from "../../../../assets/images/profile/student/Vedio.svg";
+
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
 

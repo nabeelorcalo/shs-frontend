@@ -63,16 +63,7 @@ const PasswordCritera = (props: any) => {
           <div key={index}>
             {!e.id && <CheckCircleFilled style={{ color: "#D9DBE9" }} />}
             {e.id && <CheckCircleFilled style={{ color: "#4A9D77" }} />}
-            <span
-              style={{
-                color: "#4E4B66",
-                fontSize: "14px",
-                fontWeight: "400",
-                marginLeft: "10PX",
-              }}
-            >
-              {e.error}
-            </span>
+            <span className="error-password-criteria">{e.error}</span>
           </div>
         );
       })}
