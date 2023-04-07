@@ -10,7 +10,7 @@ import {
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { MenuProps } from 'antd';
+import { Col, MenuProps, Row } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 
 const PopOver = () => {
@@ -152,18 +152,9 @@ const Interns = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              className=""
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="search"
-              size="middle"
-            />
+            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
           </div>
           <div className="flex flex-row gap-4">
-            <div className='p-2 download-icon-style'>
-            <DownloadDocumentIcon />
-            </div>
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
@@ -171,20 +162,26 @@ const Interns = () => {
               LastIcon={TableViewIcon}
               className='w-[88px]'
             />
+             <div className='p-2 download-icon-style'>
+              <DownloadDocumentIcon />
+            </div>
           </div>
         </div>
         <BoxWrapper>
           <div className="pt-3">
             {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
+              // className="flex flex-row flex-wrap gap-6"
+              listandgrid ? <Row gutter={[20,20]}>
                 {
                   cardDummyArray.map((items: any, idx: any) => {
                     return (
-                      <InternsCard />
+                      <Col xs={24} sm={12} md={12} xl={6} xxl={6}>
+                        <InternsCard />
+                      </Col>
                     )
                   })
                 }
-              </div>
+              </Row>
                 :
                 <GlobalTable
                   columns={columns}
