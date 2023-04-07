@@ -276,9 +276,9 @@ const BookingRequests = () => {
     if(key === 'chatWithAgent') {
       navigate(`/chat`)
     }
-    if(key === 'cancelBooking') [
+    if(key === 'cancelBooking') {
       openModalCancelBooking()
-    ]
+    }
   }
 
 

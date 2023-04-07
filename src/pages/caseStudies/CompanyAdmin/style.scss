@@ -1,0 +1,7 @@
+.manager-case-studies{
+  .case-studies-right{
+    @media only screen and (max-width:475px){
+      flex-direction: column;
+    }
+  }
+}

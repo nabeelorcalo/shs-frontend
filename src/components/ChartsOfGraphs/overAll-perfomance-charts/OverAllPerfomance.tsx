@@ -11,7 +11,7 @@ export const OverAllPerfomance = (props: any) => {
           {heading}
         </p>
       }
-      <Row className='gap-5 justify-between'>
+      <Row className='max-sm:gap-0 lg:gap-5 justify-between'>
         {data.map((item: any, i: any) => (
           <Col key={i} lg={lg} md={md} sm={sm} xs={xs} className="text-center">
             <Progress trailColor={trailColor}

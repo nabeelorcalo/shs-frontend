@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
-import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable, Breadcrumb } from "../../components";
+import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable, Breadcrumb, Notifications } from "../../components";
 import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
 // end
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
@@ -11,6 +11,7 @@ import { AppreciationModal } from "./CompanyAdmin/appreciationModal";
 import { WarnModal } from "./CompanyAdmin/warnModel";
 import './style.scss';
 import data from './CompanyAdmin/data';
+import useCustomHook from "./actionHandler";
 
 const DetailHistory = () => {
   const [actionType, setActionType] = useState({ type: '', id: '' });
@@ -19,28 +20,7 @@ const DetailHistory = () => {
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: constants.USER_ROLE === constants.UNIVERSITY ?  "View History" : constants.USER_ROLE === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
-  const performanceData = [
-    {
-      percent: '85',
-      strokeColor: '#4783FF',
-      title: 'Overall'
-    },
-    {
-      percent: '85',
-      strokeColor: '#9BD5E8',
-      title: 'Learning'
-    },
-    {
-      percent: '75',
-      strokeColor: '#F08D97',
-      title: 'Discipline'
-    },
-    {
-      percent: '68',
-      strokeColor: '#78DAAC',
-      title: 'Personal'
-    }
-  ];
+  const action = useCustomHook();
 
   const evaluationHistoryColumnNames = [
     {
@@ -144,7 +124,8 @@ const DetailHistory = () => {
         :
         <p
           onClick={() => {
-            alert('download')
+            action.downloadHistoryDataPdf(evaluationHistoryColumnNames,evaluationHistoryData);
+            Notifications({title:'Success',description:'List Download',type:'success'})
           }}
         >
           Download
