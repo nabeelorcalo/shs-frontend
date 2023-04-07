@@ -3,7 +3,6 @@ import { Row, Avatar, Typography, Dropdown , Col} from 'antd'
 import { InternCardLine, ThreeDots } from '../../../../assets/images'
 import { BoxWrapper, Button} from '../../../../components'
 import './style.scss'
-
 interface IDUMMYDATA {
   dummyData?: any
   menu?: any
@@ -12,7 +11,6 @@ interface IDUMMYDATA {
 
 const InternCard = (props: IDUMMYDATA) => {
   const { index, dummyData, menu } = props;
-
   return (
     <div className='university-intern-card'>
       <Row gutter={[16, 16]} >
@@ -70,12 +68,10 @@ const InternCard = (props: IDUMMYDATA) => {
                   <Button label="Chat" size='small' className='intern-card-chat-button'/> 
                   </div>
               </div>
-
             </BoxWrapper>
             </Col>
           )
         })}
-
       </Row>
     </div>
   )

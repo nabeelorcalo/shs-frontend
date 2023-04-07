@@ -1,14 +1,11 @@
 
 import React, { useState } from 'react'
-import { Col, Divider, Row } from 'antd'
 import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar, } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import CaseStudiesTable from '../Common/caseStudiesTable';
 import Filters from '../Common/filter';
-import './style.scss'
 import useCustomHook from '../actionHandler';
-
-
+import './style.scss'
 
 const index = () => {
   const caseStudyTableData = [
@@ -81,21 +78,19 @@ const index = () => {
   const handleChange = () => { };
   return (
     <div className='manager-case-studies'>
-      <PageHeader title="Case Studies" />
-      <Divider className="my-0" />
-      <Row gutter={[20, 20]} className='my-2'>
-        <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
-          <SearchBar size="middle" handleChange={handleChange} />
-        </Col>
-        <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex md:justify-end gap-4 case-studies-right">
+      <PageHeader title="Case Studies" actions bordered
+      />
+      <div className='flex justify-between my-2'>
+        <SearchBar size="middle" handleChange={handleChange} />
+        <div className='flex justify-end gap-2'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ") }}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
       <BoxWrapper>
         <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
       </BoxWrapper>

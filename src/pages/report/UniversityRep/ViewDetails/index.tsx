@@ -53,7 +53,7 @@ const index = () => {
   }
 
   return (
-    <div>
+    <div className='view-details-university-rep'>
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <div className="flex justify-between">

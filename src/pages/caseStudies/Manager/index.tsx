@@ -1,4 +1,4 @@
-import { Divider } from 'antd'
+
 import React, { useState } from 'react'
 import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
@@ -79,9 +79,7 @@ const index = () => {
 
   return (
     <div className='manager-case-studies'>
-      <PageHeader title="Case Studies"
-      />
-      <Divider className="my-0" />
+      <PageHeader title="Case Studies" actions bordered/>
       <Row gutter={[20, 20]} className='mt-5'>
         <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />

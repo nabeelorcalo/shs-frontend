@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -21,6 +21,7 @@ import {
 } from "antd";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import { Breadcrumb } from "../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const { Title, Paragraph } = Typography;
 dayjs.extend(customParseFormat);
@@ -30,7 +31,7 @@ const AddShift: React.FC = () => {
   const breadcrumbArray = [
     { name: "Add Shift"},
     { name: "Setting"  },
-    { name: "Shift" , onClickNavigateTo:"/settings/shifts" },
+    { name: "Shift" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   
   ];
   const selectArray = [
@@ -159,9 +160,10 @@ const AddShift: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary"
-            onClick={()=>navigate("/settings/shifts")}>
-              Cencal
+            <Button danger size="middle" type="primary">
+            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_SHIFTS}`}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

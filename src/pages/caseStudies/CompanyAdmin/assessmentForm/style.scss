@@ -7,6 +7,9 @@
 }
 
 .company-admin-assessment-form {
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
   .sign-btn {
     color: $text-success-placeholder-color
   }
