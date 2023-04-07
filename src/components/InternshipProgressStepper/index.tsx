@@ -28,7 +28,7 @@ export const InternshipProgressStepper = () => {
         <p>1</p>
         <p>Hired</p>
       </li>
-      <li className="stepper__item reject">
+      <li className="stepper__item reject-sep">
         <p>0</p>
         <p>Reject</p>
       </li>

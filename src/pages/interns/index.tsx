@@ -12,7 +12,7 @@ import {
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { MenuProps } from 'antd';
+import { Col, MenuProps, Row } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 
@@ -190,13 +190,7 @@ const Interns = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              className=""
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="search"
-              size="middle"
-            />
+            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
           </div>
           <div className="flex flex-row gap-4">
             <DropDown
@@ -217,28 +211,33 @@ const Interns = () => {
               LastIcon={TableViewIcon}
               className='w-[88px]'
             />
+             <div className='p-2 download-icon-style'>
+              <DownloadDocumentIcon />
+            </div>
           </div>
         </div>
-
-        <div className="pt-3">
-          {
-            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData.map((items: any, idx: any) => {
-                  return (
-                    <InternsCard 
-                    posted_by={items.posted_by}
-                    title={items.title} 
-                    department={items.department} 
-                    joining_date={items.joining_date} 
-                    date_of_birth={items.date_of_birth} 
-                    />
-                  )
-                })
-              }
-            </div>
-              :
-              <BoxWrapper>
+        <BoxWrapper>
+          <div className="pt-3">
+            {
+              // className="flex flex-row flex-wrap gap-6"
+              listandgrid ? <Row gutter={[20,20]}>
+                {
+                  newTableData.map((items: any, idx: any) => {
+                    return (
+                      <Col xs={24} sm={12} md={12} xl={6} xxl={6}>
+                        <InternsCard
+                         posted_by={items.posted_by}
+                         title={items.title} 
+                         department={items.department} 
+                         joining_date={items.joining_date} 
+                         date_of_birth={items.date_of_birth} 
+                        />
+                      </Col>
+                    )
+                  })
+                }
+              </Row>
+                :
                 <GlobalTable
                   columns={columns}
                   expandable={{
@@ -247,9 +246,9 @@ const Interns = () => {
                   }}
                   tableData={newTableData}
                 />
-              </BoxWrapper>
-          }
+              }
         </div>
+         </BoxWrapper>
 
       </div>
     </>
