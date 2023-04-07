@@ -13,10 +13,11 @@ import {
   Switch,
 } from "antd";
 import { SettingAvater} from "../../../../../assets/images";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Breadcrumb, CommonDatePicker , BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const { Title, Paragraph } = Typography;
 
@@ -25,8 +26,8 @@ const PayrollAddCategory = () => {
   const breadcrumbArray = [
     { name: "Add Category"},
     { name: "Setting"  },
-    { name: "Payroll" , onClickNavigateTo:"/settings/payroll" },
-  
+    { name: "Payroll" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
+
   ];
   const selectArray = [
     {
@@ -152,9 +153,10 @@ const PayrollAddCategory = () => {
           </Row>
 
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary"
-               onClick={()=>navigate("/settings/payroll")}>
-              Cencal
+            <Button danger size="middle" type="primary">
+            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_PAYROLL}`}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

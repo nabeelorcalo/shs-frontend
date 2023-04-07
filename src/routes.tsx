@@ -56,6 +56,9 @@ const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
 const ViewPayrollDetails = Loadable(lazy(() => import("./pages/Payroll/viewPayrollDetails")));
 const ViewPayrollSalarySlip = Loadable(lazy(() => import("./pages/Payroll/viewPayrollSalarySlip")));
 
+//Company admin Interns
+const InternsCM = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
+
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
@@ -103,7 +106,7 @@ const Contracts = Loadable(lazy(() => import("./pages/contracts")));
 const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const Application = Loadable(lazy(() => import("./pages/application")));
-const Profile = Loadable(lazy(() => import("./pages/profile")));
+const Profile = Loadable(lazy(() => import("./pages/profile/")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(
   lazy(() => import("./pages/accommodation/AvailableProperties"))
@@ -730,7 +733,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
-        element: <Interns />,
+        element: <InternsCM />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
@@ -843,7 +846,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
-        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}/:id`,
         element: <TimeSheetHistory />,
       },
       {
@@ -1043,7 +1046,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
-        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/:id`,
         element: <CertificateDetail />,
       },
       {
@@ -1175,6 +1178,11 @@ const internRoutes = [
         key: `${ROUTES_CONSTANTS.CALENDAR}`,
         path: `${ROUTES_CONSTANTS.CALENDAR}`,
         element: <Calendar />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.ACCOMMODATION}`,
@@ -1424,6 +1432,11 @@ const universityRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,

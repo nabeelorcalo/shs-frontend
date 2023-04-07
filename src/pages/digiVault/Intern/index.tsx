@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../Student/style.scss";
-import "react-circular-progressbar/dist/styles.css";
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "../Student/settingModal";
 import { GlobalTable } from "../../../components";

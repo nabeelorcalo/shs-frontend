@@ -96,11 +96,11 @@
   color: $text-teriary-label-color;
 }
 
-.text-success-bg-color {
+.text-success-placeholder-bg-color {
   background-color: $text-success-placeholder-color;
 }
 
-.text-success-color {
+.text-success-placeholder-color {
   color: $text-success-placeholder-color;
 }
 
@@ -291,4 +291,7 @@ background-color: $off-white-color;
 }
 .light-gray-border{
   border: 1px solid $certificate-textarea-border;
+}
+.accommodation-btn-info-bg {
+  background-color: $accommodation-btn-info-bg;
 }

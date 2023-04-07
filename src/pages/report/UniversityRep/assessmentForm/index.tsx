@@ -148,12 +148,12 @@ const index = () => {
           <div className='xs:flex-col sm:flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
                   <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
+                  <img  alt='error' src={signature} />
                 </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
                 <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
+                  <img   alt='error' src={signature} />
                 </div>
 
             </div>
@@ -171,7 +171,6 @@ const index = () => {
         title=""
         width={500}
         state={openModal}
-        cancelBtntxt={() => { setOpenModal(!openModal) }}
         okBtntxt="Upload"
         okBtnFunc={() => { }}
         footer={<>

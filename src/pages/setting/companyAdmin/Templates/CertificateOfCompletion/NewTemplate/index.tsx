@@ -13,11 +13,11 @@ import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import {
+  CertificateEyeIcon,
   CertificateTickCircle,
   TemplateCertificateLarger,
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
-import { EyeFilled } from "@ant-design/icons/lib/icons";
 import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
 import { NavLink } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
@@ -154,7 +154,10 @@ const NewTemplateCertiticationOfCompletion = () => {
                           setShowEditModal(!showEditModal);
                         }}
                       >
-                        <EyeFilled className="text" />
+                     <CertificateEyeIcon className='eye-icon text'
+                            height={70}
+                            width={70}
+                          />
                       </div>
                     </div>
                     <Divider />
@@ -190,7 +193,10 @@ const NewTemplateCertiticationOfCompletion = () => {
                           setShowEditModal(!showEditModal);
                         }}
                       >
-                        <EyeFilled className="text" />
+                     <CertificateEyeIcon className='eye-icon text'
+                            height={70}
+                            width={70}
+                          />
                       </div>
                     </div>
                     <Divider />

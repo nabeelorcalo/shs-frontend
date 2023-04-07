@@ -13,11 +13,11 @@ import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import {
+  CertificateEyeIcon,
   CertificateTickCircle,
   TemplateCertificateLarger,
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
-import { EyeFilled } from "@ant-design/icons/lib/icons";
 import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
 import { NavLink, useNavigate } from "react-router-dom";
 const { Title, Paragraph } = Typography;
@@ -144,7 +144,10 @@ const NewTemplateCertificationOfAppreciation = () => {
                             setShowEditModal(!showEditModal);
                           }}
                         >
-                          <EyeFilled className="text" />
+                          <CertificateEyeIcon className='eye-icon text'
+                            height={70}
+                            width={70}
+                          />
                         </div>
                       </div>
                       <Divider />
@@ -180,7 +183,10 @@ const NewTemplateCertificationOfAppreciation = () => {
                             setShowEditModal(!showEditModal);
                           }}
                         >
-                          <EyeFilled className="text" />
+                          <CertificateEyeIcon className='eye-icon text'
+                            height={70}
+                            width={70}
+                          />
                         </div>
                       </div>
                       <Divider />
@@ -202,9 +208,9 @@ const NewTemplateCertificationOfAppreciation = () => {
           </Row>
           <Space className="flex justify-end pt-5">
             <Button danger size="middle" type="primary">
-            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}> 
-             Cancel 
-             </NavLink>
+              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}>
+                Cancel
+              </NavLink>
             </Button>
             <Button
               size="middle"

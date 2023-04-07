@@ -15,6 +15,7 @@ import { Button, Dropdown, Space } from "antd";
 import { DownloadDocumentIcon, InternshipsIcon, More, Success } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useNavigate, Link } from "react-router-dom";
+import useCustomHook from "./viewPayrollActionHandler";
 
 
 const tableData = [
@@ -23,56 +24,56 @@ const tableData = [
     month: "June 2022",
     payroll_cycle: "Jan-June",
     hours_worked: "07:00",
-    base_pay: "$5,100",
-    total_payment: "$5,100",
+    base_pay: "$5100",
+    total_payment: "$5100",
   },
   {
     no: "02",
     month: "May 2022",
     payroll_cycle: "Jan-May",
     hours_worked: "08:00",
-    base_pay: "$3,100",
-    total_payment: "$6,100",
+    base_pay: "$3100",
+    total_payment: "$6100",
   },
   {
     no: "03",
     month: "April 2022",
     payroll_cycle: "Jan-April",
     hours_worked: "07:00",
-    base_pay: "$8,100",
-    total_payment: "$1,100",
+    base_pay: "$8100",
+    total_payment: "$1100",
   },
   {
     no: "02",
     month: "May 2022",
     payroll_cycle: "Jan-May",
     hours_worked: "08:00",
-    base_pay: "$3,100",
-    total_payment: "$6,100",
+    base_pay: "$3100",
+    total_payment: "$6100",
   },
   {
     no: "03",
     month: "April 2022",
     payroll_cycle: "Jan-April",
     hours_worked: "07:00",
-    base_pay: "$8,100",
-    total_payment: "$1,100",
+    base_pay: "$8100",
+    total_payment: "$1100",
   },
   {
     no: "02",
     month: "May 2022",
     payroll_cycle: "Jan-May",
     hours_worked: "08:00",
-    base_pay: "$3,100",
-    total_payment: "$6,100",
+    base_pay: "$3100",
+    total_payment: "$6100",
   },
   {
     no: "03",
     month: "April 2022",
     payroll_cycle: "Jan-April",
     hours_worked: "07:00",
-    base_pay: "$8,100",
-    total_payment: "$1,100",
+    base_pay: "$8100",
+    total_payment: "$1100",
   },
 ]
 const ViewPayrollDetails = () => {
@@ -81,6 +82,9 @@ const ViewPayrollDetails = () => {
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
   const ActionPopOver = () => {
     const navigate = useNavigate()
@@ -105,33 +109,6 @@ const ViewPayrollDetails = () => {
     return (
       <Dropdown menu={{ items }} placement="bottomRight">
         <More />
-      </Dropdown>
-    )
-  }
-
-  const DownloadPopOver = () => {
-    const navigate = useNavigate()
-    const items: MenuProps['items'] = [
-      {
-        key: '1',
-        label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("") }}>
-            PDF
-          </a>
-        ),
-      },
-      {
-        key: '2',
-        label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
-            Excel
-          </a>
-        ),
-      },
-    ];
-    return (
-      <Dropdown menu={{ items }} placement="bottomRight">
-        <DownloadDocumentIcon />
       </Dropdown>
     )
   }
@@ -213,11 +190,17 @@ const ViewPayrollDetails = () => {
                setOpen={function noRefCheck() {}}
                setValue={function noRefCheck() {}}
             />
-            <Space wrap>
-              <div className='p-2 download-icon-style'>
-                <DownloadPopOver />
-              </div>
-            </Space>
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Payroll")
+              }}
+              value=""
+            />
           </div>
         </div>
         <BoxWrapper>

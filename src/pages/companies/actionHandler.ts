@@ -7,6 +7,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import constants from "../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -34,8 +35,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, companyName, companyadmin, Email, noOfInterns ,PhoneNumber , address,status}: any) =>
-      [ no, companyName, companyadmin, Email, noOfInterns ,PhoneNumber , address, status]
+    const body = data.map(({ no, company, company_rep, email, phone_no, students_hired}: any) =>
+      [no, company, company_rep, email, phone_no, students_hired]
     );
 
     const doc = new jsPDF(orientation, unit, size);
