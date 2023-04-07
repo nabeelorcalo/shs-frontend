@@ -9,6 +9,7 @@ import InternCard from './internCard';
 import useCustomHook from './actionHandler';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import './style.scss'
+import { NavLink } from 'react-router-dom';
 
 const dummyData = [
   { id: 1, name: 'Maria Sanoid', avatar: Image1, status: "Employed", department: 'ui ux designers', joiningDate: '01/07 /2022', dateOfBirth: '04/12/1996' },
@@ -47,7 +48,9 @@ const index: React.FC = () => {
   const menu = (
     <Menu>
       <Menu.Item>
+        <NavLink to ={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
         Profile
+        </NavLink>
       </Menu.Item>
       <Menu.Item>
         Chat

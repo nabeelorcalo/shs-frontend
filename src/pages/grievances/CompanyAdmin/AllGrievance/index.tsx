@@ -209,7 +209,7 @@ const index = () => {
   const action = useCustomHook();
   const breadcrumbArray = [
     { name: "All Grievance"},
-    { name: "Grievances" , onClickNavigateTo:`${ROUTES_CONSTANTS.GRIEVANCES}` },
+    { name: "Grievances" , onClickNavigateTo:`/${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
