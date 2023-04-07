@@ -245,7 +245,7 @@ const index = () => {
   const handleChange = () => {
   }
   return (
-    <div className='add-grievance'>
+    <div className='all-grievance'>
        <Breadcrumb breadCrumbData={breadcrumbArray} />
        <Divider/>
 

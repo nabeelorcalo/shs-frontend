@@ -83,7 +83,7 @@ const index = () => {
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <div className='sign-box w-full rounded-lg flex justify-center'>
                   <img src={signature} />
                 </div>
               </div>
@@ -131,9 +131,9 @@ const index = () => {
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
           <div className='xs:flex-col sm:flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-            <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} />
-                </div>
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <img src={signature} />
+              </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
               <div className='sign-box w-full rounded-lg flex items-center justify-around'>
@@ -160,11 +160,11 @@ const index = () => {
         title=""
         width={500}
         state={openModal}
-        cancelBtntxt={() => { setOpenModal(!openModal) }}
+        cancelBtntxt={() => { setOpenModal(false) }}
         okBtntxt="Upload"
         closeFunc={() => { setOpenModal(false) }}
         okBtnFunc={() => { }}
-        footer={<>
+        footer={<div className='btn-wrapper'>
           <Button
             className='white-bg-color teriary-color'
           >
@@ -173,7 +173,7 @@ const index = () => {
           <Button
             type='primary'
             className='white-color teriary-bg-color  '
-          >Submit</Button></>} />
+          >Submit</Button></div>} />
     </div>
   )
 }

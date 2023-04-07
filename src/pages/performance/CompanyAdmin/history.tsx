@@ -429,7 +429,7 @@ const PerformanceHistory = () => {
           // size="small"
           />
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex justify-end">
+        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex justify-end right-sec gap-4">
           <FiltersButton label="Filters" onClick={handleSidebarClick} />
           <IconButton
             size="large"

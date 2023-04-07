@@ -5,13 +5,16 @@ import {
   PageHeader,
   BoxWrapper,
   InternsCard,
-  ToggleButton
+  ToggleButton,
+  DropDown
 } from "../../components";
+
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
 import { MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
+import useCustomHook from "./actionHandler";
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -59,7 +62,10 @@ const Interns = () => {
   // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
+
   const columns = [
     {
       dataIndex: "no",
@@ -72,9 +78,9 @@ const Interns = () => {
       title: "Posted By",
     },
     {
-      dataIndex: "title",
-      key: "title",
-      title: "Title",
+      dataIndex: "name",
+      key: "name",
+      title: "Name",
     },
     {
       dataIndex: "department",
@@ -100,34 +106,67 @@ const Interns = () => {
   const tableData = [
     {
       no: "01",
-      title: "Research Analyst",
+      name: "Research Analyst",
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
-      location: "virtual",
-      status: "Pending",
-      posted_by: "T",
     },
     {
       no: "02",
-      title: "Business Analyst",
+      name: "Business Analyst",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
-      status: "Active",
-      posted_by: "U",
     },
     {
       no: "02",
-      title: "Business Analyst",
+      name: "Business Analyst",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
-      status: "Rejected",
-      posted_by: "U",
     },
+    {
+      no: "01",
+      name: "Research Analyst",
+      department: "Business Analyst",
+      joining_date: "01/07/2022",
+      date_of_birth: "01/07/2022",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    },
+    {
+      no: "01",
+      name: "Research Analyst",
+      department: "Business Analyst",
+      joining_date: "01/07/2022",
+      date_of_birth: "01/07/2022",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    }
   ];
   const newTableData = tableData.map((item, idx) => {
     return (
@@ -137,11 +176,10 @@ const Interns = () => {
           <Avatar
             src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
           />,
-        title: item.title,
+        name: item.name,
         department: item.department,
         joining_date: item.joining_date,
         date_of_birth: item.date_of_birth,
-        location: item.location,
         actions: <PopOver />
       }
     )
@@ -161,9 +199,17 @@ const Interns = () => {
             />
           </div>
           <div className="flex flex-row gap-4">
-            <div className='p-2 download-icon-style'>
-            <DownloadDocumentIcon />
-            </div>
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+              }}
+              value=""
+            />
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
@@ -173,19 +219,26 @@ const Interns = () => {
             />
           </div>
         </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {
-                  cardDummyArray.map((items: any, idx: any) => {
-                    return (
-                      <InternsCard />
-                    )
-                  })
-                }
-              </div>
-                :
+
+        <div className="pt-3">
+          {
+            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+              {
+                newTableData.map((items: any, idx: any) => {
+                  return (
+                    <InternsCard 
+                    posted_by={items.posted_by}
+                    title={items.title} 
+                    department={items.department} 
+                    joining_date={items.joining_date} 
+                    date_of_birth={items.date_of_birth} 
+                    />
+                  )
+                })
+              }
+            </div>
+              :
+              <BoxWrapper>
                 <GlobalTable
                   columns={columns}
                   expandable={{
@@ -194,9 +247,10 @@ const Interns = () => {
                   }}
                   tableData={newTableData}
                 />
-            }
-          </div>
-        </BoxWrapper>
+              </BoxWrapper>
+          }
+        </div>
+
       </div>
     </>
   );

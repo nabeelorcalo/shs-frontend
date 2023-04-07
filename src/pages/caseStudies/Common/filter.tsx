@@ -11,6 +11,9 @@ const Filters: React.FC = (props: any) => {
     { value: 'jean ella', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>jean ella</span></div> },
     { value: 'Mino Marina', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Mino Marina</span></div> },
   ];
+  const departmentSelectValue = ["Design", "Research", "Management", "Development", "Business"]
+  const statusSelectValue = ["Pending", "Approved", "Rejected"]
+
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
 
@@ -25,7 +28,6 @@ const Filters: React.FC = (props: any) => {
     );
   }
   function handleChange(value: any) { }
-
   return (
     <div className='casestudies-filter_main_wrapper'>
       <Form layout="vertical" form={form}>
@@ -39,11 +41,8 @@ const Filters: React.FC = (props: any) => {
           label="Department"
         >
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Design">Design</Select.Option>
-            <Select.Option value="Research">Research</Select.Option>
-            <Select.Option value="Management">Management</Select.Option>
-            <Select.Option value="Development">Development</Select.Option>
-            <Select.Option value="Business">Business</Select.Option>
+            {departmentSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
+
           </Select>
         </Form.Item>
         <Form.Item label="Date">
@@ -57,9 +56,8 @@ const Filters: React.FC = (props: any) => {
         </Form.Item>
         <Form.Item name="status" label="Status">
           <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Pending">Pending</Select.Option>
-            <Select.Option value="Approved">Approved</Select.Option>
-            <Select.Option value="Rejected">Rejected</Select.Option>
+            {statusSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
+
           </Select>
         </Form.Item>
         <div className="filter-footer flex justify-end mt-4 gap-2">

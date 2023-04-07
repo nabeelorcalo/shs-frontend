@@ -9,13 +9,16 @@ import { Button } from "antd";
 import CalendarModalBox from "./modalBox";
 import CalendarDrawer from './drawerComp/index'
 import './style.scss';
+import { Alert } from "../../Alert";
 
 const Index = (props: any) => {
 
   const { eventData } = props;
   const [openModal, setOpenModal] = useState(false);
-
+  const [alertModal, setAlertModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: '', eventId: '', status: '' });
+  const [editMod, setEditMod] = useState(false);
+  const [toggleReminder, setToggleReminder] = useState(false);
 
   const renderEventColor: any = {
     'meeting': '#E94E5D',
@@ -25,10 +28,6 @@ const Index = (props: any) => {
   const handleEventClick = (id: string, category: string, status: string) => {
     setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status })
   }
-
-  const handleEditClick = (id: string, type: string) => { }
-
-  const handleCancelClick = (id: string, type: string) => { }
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
@@ -46,35 +45,47 @@ const Index = (props: any) => {
         <div className="event-btn gap-3">
           {category === 'meeting' ?
             <>
-              <Button size="small" className={`btn capitalize btn-primary`}>
+              <Button size="small" className={`btn capitalize btn-primary ${status === 'accepted' && 'accepted'}`}
+                onClick={() => {
+                  setOpenDrawer({ open: true, category, eventId: events?.publicId, status });
+                  setEditMod(status === 'pending' ? !editMod : false)
+                }}
+              >
                 {status === 'pending' ? 'edit' : status === 'accept' ? 'accept' : status === 'accepted' && 'accepted'}
               </Button>
-              <Button size="small" className={`btn capitalize`}>
+              <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
                 {status === 'pending' ? 'cancel' : 'decline'}
               </Button>
             </>
             :
             category === 'interview' ?
               <>
-                <Button size="small" className={`btn capitalize btn-primary`}>
+                <Button size="small" className={`btn capitalize btn-primary`}
+                  onClick={() => setOpenDrawer({ open: true, category, eventId: events?.publicId, status })}
+                >
                   accept
                 </Button>
-                <Button size="small" className={`btn capitalize`}>
+                <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
                   decline
                 </Button>
               </>
               :
               category === 'reminder' && <>
-                <Button size="small" className={`btn capitalize btn-primary`}>
+                <Button size="small" className={`btn capitalize btn-primary`}
+                  onClick={() => {
+                    setOpenDrawer({ open: true, category, eventId: events?.publicId, status });
+                    setToggleReminder(true)
+                  }}
+                >
                   edit
                 </Button>
-                <Button size="small" className={`btn capitalize`}>
+                <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
                   delete
                 </Button>
               </>
           }
         </div>
-      </div>
+      </div >
     )
   }
 
@@ -135,8 +146,22 @@ const Index = (props: any) => {
         setOpen={setOpenDrawer}
         eventId={openDrawer.eventId}
         status={openDrawer.status}
+        toggle={editMod}
+        setToggle={setEditMod}
+        toggleReminder={toggleReminder}
+        setToggleReminder={setToggleReminder}
       />
       <CalendarModalBox open={openModal} setOpen={setOpenModal} />
+
+      <Alert
+        type={'warning'}
+        state={alertModal}
+        setState={setAlertModal}
+        okBtnFunc={() => { }}
+        cancelBtntxt={'Cancel'}
+        okBtntxt={'Submit'}
+        children={<p>Are you sure you want to cancel this event?</p>}
+      />
     </div>
   )
 }

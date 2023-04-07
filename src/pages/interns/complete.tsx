@@ -5,12 +5,14 @@ import {
   GlobalTable,
   BoxWrapper,
   InternsCard,
-  ListAndGridViewButton
+  ListAndGridViewButton,
+  DropDown,
+  ToggleButton
 } from "../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Button, Dropdown, Space} from 'antd';
-import { More } from "../../assets/images"
+import { Avatar, Button, Dropdown, Space } from 'antd';
+import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
 import type { MenuProps } from 'antd';
 
 const PopOver = () => {
@@ -54,9 +56,9 @@ const Complete = () => {
       title: 'Posted By'
     },
     {
-      dataIndex: 'title',
-      key: 'title',
-      title: 'Title'
+      dataIndex: 'name',
+      key: 'name',
+      title: 'Name'
     },
     {
       dataIndex: 'department',
@@ -87,33 +89,75 @@ const Complete = () => {
   const tableData = [
     {
       no: "01",
-      title: "Research Analyst",
+      name: "Naveed Khatak",
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
-      location: "virtual",
       status: 'Completed',
-      posted_by: 'T',
     },
     {
       no: "02",
-      title: "Business Analyst",
+      name: "Atzazz khan",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
       status: 'Completed',
-      posted_by: 'U',
     },
     {
       no: "02",
-      title: "Business Analyst",
+      name: "Ismail Inayat",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
       status: 'Completed',
-      posted_by: 'U',
+    },
+    {
+      no: "01",
+      name: "Naveed Khatak",
+      department: "Business Analyst",
+      joining_date: "01/07/2022",
+      date_of_birth: "01/07/2022",
+      status: 'Completed',
+    },
+    {
+      no: "02",
+      name: "Atzazz khan",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+      status: 'Completed',
+    },
+    {
+      no: "02",
+      name: "Ismail Inayat",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+      status: 'Completed',
+    },
+    {
+      no: "01",
+      name: "Naveed Khatak",
+      department: "Business Analyst",
+      joining_date: "01/07/2022",
+      date_of_birth: "01/07/2022",
+      status: 'Completed',
+    },
+    {
+      no: "02",
+      name: "Atzazz khan",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+      status: 'Completed',
+    },
+    {
+      no: "02",
+      name: "Ismail Inayat",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+      status: 'Completed',
     }
   ]
   const newTableData = tableData.map((item, idx) => {
@@ -122,9 +166,9 @@ const Complete = () => {
         no: item.no,
         posted_by:
           <Avatar
-            src={`https://joesch.moe/api/v1/random?key=${idx}`}
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
           />,
-        title: item.title,
+        name: item.name,
         department: item.department,
         joining_date: item.joining_date,
         date_of_birth: item.date_of_birth,
@@ -143,30 +187,45 @@ const Complete = () => {
     <>
       <PageHeader title="Interns" />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
-
-          <div className="flex flex-row gap-4" onClick={() => { setListandgrid(!listandgrid) }}>
-            <ListAndGridViewButton />
+      <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar
+              className=""
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="search"
+              size="middle"
+            />
+          </div>
+          <div className="flex flex-row gap-4">
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
           </div>
         </div>
-        <BoxWrapper>
+
           <div className="pt-3">
             {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {Array(5).map((item, idx) => {
+
+              listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+                {newTableData.map((item, idx) => {
                   return (
-                    <InternsCard />
+                    <InternsCard 
+                    posted_by={item.posted_by}
+                    title={item.name} 
+                    department={item.department} 
+                    joining_date={item.joining_date} 
+                    date_of_birth={item.date_of_birth} 
+                    />
                   )
                 })}
               </div>
                 :
+                <BoxWrapper>
                 <GlobalTable
                   columns={columns}
                   expandable={{
@@ -175,9 +234,10 @@ const Complete = () => {
                   }}
                   tableData={newTableData}
                 />
+                        </BoxWrapper>
             }
           </div>
-        </BoxWrapper>
+
       </div>
     </>
   )

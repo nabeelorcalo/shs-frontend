@@ -1,8 +1,8 @@
 import { Button, Col, Row } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
 import { tableMockData } from './certificateTable/tableMock';
-import { Alert, OverAllPerfomance } from '../../components';
+import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
 import { useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
@@ -11,10 +11,11 @@ import PreviewModal from './certificateModal/PreviewModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
+import "./style.scss";
 
 const CertificateDetail = () => {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const findUser = tableMockData.find(user => user.no === id);
   const [issueCertificateModal, setIssueCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
@@ -28,11 +29,7 @@ const CertificateDetail = () => {
 
   return (
     <div className='certificate-detail-wrapper'>
-      <div className="certificate-top-heading text-2xl flex items-center gap-4 font-semibold pb-[30px] mb-[30px] capitalize">
-        {findUser?.name}
-        <span className='seperator'></span>
-        <span className='font-medium text-base'>Certificate</span>
-      </div>
+      <Breadcrumb breadCrumbData={[{ name: 'Mino Marina' }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
       <Row gutter={[15, 15]} className='flex-wrap'>
         <Col xl={6} lg={6} md={24} xs={24}>
           <BoxWrapper
@@ -45,17 +42,17 @@ const CertificateDetail = () => {
             />
             <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{findUser?.name}</p>
             <span className='department capitalize'>{findUser?.department}</span>
-            <Button className='mt-[30px] w-full view-profile-btn'>View Profile</Button>
+            <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col xl={12} lg={18} md={24} xs={24} className='over-all-performance'>
+        <Col xxl={12} xl={24} lg={24} md={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             lg={5} md={12} xs={24}
             data={findUser?.performance}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xl={6} lg={24} xs={24}>
+        <Col xxl={6} xl={12} lg={24} xs={24}>
           <LeaveChart heading='Leaves' />
         </Col>
       </Row>

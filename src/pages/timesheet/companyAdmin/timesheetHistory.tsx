@@ -1,29 +1,27 @@
-// import { useState } from 'react';
 import { useParams } from 'react-router-dom'
-// import { Collapse } from 'antd';
-// import { ClockDarkIcon, TaskListIcon } from '../../../assets/images';
 import CommonHeader from '../commonHeader';
 import { timesheetMock } from '../mockData';
 import CommonTableCollapsible from '../commonTableCollapsible/index';
-// const { Panel } = Collapse;
 import './style.scss';
+import { Breadcrumb } from '../../../components';
+import { useState } from 'react';
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const TimeSheetHistory = () => {
 
   const { id } = useParams();
+  const [download, setDownload] = useState('');
   const findTimesheet = timesheetMock.find(timesheet => timesheet.id === id);
 
   return (
     <div className='timesheet-history'>
-      <div className="timesheet-top-heading text-2xl flex items-center gap-4 font-semibold pb-[30px] mb-[30px] capitalize">
-        history
-        <span className='seperator'></span>
-        <span className='font-medium text-base'>Certificate</span>
-      </div>
-      <CommonHeader />
+      <Breadcrumb breadCrumbData={[{ name: 'History' }, { name: 'Timesheet', onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
+      <CommonHeader download={download} setDownload={setDownload} />
 
       {findTimesheet?.history ? findTimesheet?.history.map((data) => (
         <CommonTableCollapsible
+          activeKey={download === 'pdf' ? data.id : ''}
+          key={data.id}
           id={data.id}
           dateTime={data.dateTime}
           totalTasks={data.totalTasks}

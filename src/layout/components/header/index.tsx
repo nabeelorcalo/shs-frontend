@@ -32,6 +32,9 @@ const items: MenuProps["items"] = [
     key: "1",
     label: "Profile",
     icon: <IconProfile />,
+    onClick: ()=>{
+      window.location.href = "/profile";
+    }
   },
   {
     key: "2",
