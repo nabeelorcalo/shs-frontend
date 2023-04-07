@@ -645,6 +645,11 @@ const systemAdminRoutes = [
         path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
         element: <ActivityLog />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
+      },
     ],
   },
   {
