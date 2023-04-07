@@ -846,7 +846,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
-        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}/:id`,
         element: <TimeSheetHistory />,
       },
       {
@@ -1046,7 +1046,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
-        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/:id`,
         element: <CertificateDetail />,
       },
       {

@@ -99,10 +99,10 @@ const index = () => {
   const handleChange = () => {
   }
   return (
-    <div className='add-grievance'>
+    <div className='all-grievance'>
       <div className='header'>
-        <PageHeader title="Grievances" />
-        <Divider className="my-1 mb-2" />
+        <PageHeader title="Grievances" actions bordered />
+        
       </div>
       <div className="flex justify-between">
         <div><SearchBar size="middle" handleChange={handleChange} /></div>

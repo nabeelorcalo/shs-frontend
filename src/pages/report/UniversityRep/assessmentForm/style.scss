@@ -7,6 +7,9 @@
   }
 }
 .company-admin-assessment-form{
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
   .drop-down-wrapper {
     background: $text-input-bg-color;
     border-radius: 8px;

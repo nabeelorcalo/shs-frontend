@@ -1,7 +1,6 @@
-import { Divider } from 'antd'
+
 import React, { useState } from 'react'
-import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
-import Drawer from '../../../components/Drawer';
+import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar, Drawer} from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import useCustomHook from '../actionHandler';
 import UniversityRepReportTable from './reportTable';
@@ -9,7 +8,7 @@ import Filters from './filter';
 
 const index = () => {
   const action = useCustomHook();
-  const TableColumn = ['No.','Avater' ,' Name', 'Department' , 'Company' , 'Reviewer']
+  const TableColumn = ['No.', 'Avater', ' Name', 'Department', 'Company', 'Reviewer']
   const reportTableData = [
     {
       no: '01',
@@ -50,7 +49,7 @@ const index = () => {
       department: 'Development',
       company: 'Poer Source',
       reviewer: 'Leslie Alexander',
-  
+
     },
     {
       no: '06',
@@ -59,7 +58,7 @@ const index = () => {
       department: 'Development',
       company: 'Poer Source',
       reviewer: 'Wade Warren',
-     
+
     },
   ]
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -68,24 +67,22 @@ const index = () => {
   const handleChange = () => { };
   return (
     <div>
-         <PageHeader title="Report"
-         />
-      <Divider className="my-0" />
+      <PageHeader title="Report" actions bordered />
       <div className='flex justify-between my-2'>
         <SearchBar size="middle" handleChange={handleChange} />
         <div className='flex justify-end gap-2'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,reportTableData,"Report" )}}
-            />
+            requiredDownloadIcon
+            options={["pdf", "excel"]}
+            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, reportTableData, "Report") }}
+          />
         </div>
       </div>
       <BoxWrapper>
-      <UniversityRepReportTable reportTableData={reportTableData}/>
+        <UniversityRepReportTable reportTableData={reportTableData} />
       </BoxWrapper>
-      <Drawer 
+      <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}
         title="Filters"

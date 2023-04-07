@@ -6,6 +6,7 @@ import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import './style.scss'
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const { Title, Text } = Typography;
 let overview = [
@@ -33,7 +34,7 @@ const SettingPayroll: React.FC = () => {
       <div>
         <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
-          <NavLink to="/settings/payroll/add-category">
+          <NavLink to={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}>
             <Button
               size="middle"
               onClick={() => { }}
