@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Divider, Menu } from 'antd'
-import { CardViewIcon,  TableViewIcon } from '../../../../assets/images';
-import { Breadcrumb, DropDown, FiltersButton,  SearchBar, ToggleButton,Drawer } from '../../../../components'
+import { CardViewIcon, TableViewIcon } from '../../../../assets/images';
+import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
@@ -31,7 +31,7 @@ const dummyData = [
 const index: React.FC = () => {
   const breadcrumbArray = [
     { name: "Interns" },
-    { name: "Universities", onClickNavigateTo:`/${ROUTES_CONSTANTS.UNIVERSITIES}` },
+    { name: "Universities", onClickNavigateTo: `/${ROUTES_CONSTANTS.UNIVERSITIES}` },
   ];
   const TableColumn = ['No.', 'Avater', ' Name', 'Department', 'Joining Date', 'Date of Birth',]
   const action = useCustomHook();
@@ -48,8 +48,8 @@ const index: React.FC = () => {
   const menu = (
     <Menu>
       <Menu.Item>
-        <NavLink to ={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
-        Profile
+        <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
+          Profile
         </NavLink>
       </Menu.Item>
       <Menu.Item>
@@ -67,12 +67,16 @@ const index: React.FC = () => {
   return (
     <div className='company-university '>
       <Breadcrumb breadCrumbData={breadcrumbArray} />
-      <Divider/>
-      <div className='flex justify-between my-2'>
-        <SearchBar size="middle" handleChange={handleChange} />
-        <div className='flex justify-end gap-2'>
-          <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
-          <div className="flex justify-end items-center gap-3">
+      <Divider />
+      <div className="flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row">
+        <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
+          <SearchBar size="middle" handleChange={handleChange} />
+        </div>
+        <div className='w-full flex flex-row lg:justify-end gap-2 '>
+          <div>
+            <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
+            </div>
+          <div className="">
             <ToggleButton
               isToggle={state.isToggle}
               onTogglerClick={togglerClick}
@@ -80,6 +84,8 @@ const index: React.FC = () => {
               LastIcon={TableViewIcon}
               className="w-[88px]"
             />
+          </div>
+          <div>
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}

@@ -92,7 +92,7 @@ const SettingSidebar: React.FC = () => {
                     </span>
                   </div>
                   {/* hidden sm:block */}
-                  <div className="">
+                  <div className="hidden sm:block">
                     <p className="font-normal text-sm pt-1 ">
                       {item.description}
                     </p>

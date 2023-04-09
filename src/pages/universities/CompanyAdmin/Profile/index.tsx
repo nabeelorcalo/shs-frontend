@@ -61,9 +61,9 @@ const index = () => {
         </Col>
       </Row>
 
-      <Row gutter={20} className="my-5 "  >
+      <Row gutter={[20,20]} className="md:my-5 "  >
         <Col xxl={6} xl={8} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper className="min-h-[850px]">
+          <BoxWrapper className="md:min-h-[850px]">
             <div className="pt-10">
               <center>
                 <UniLogo />
@@ -97,12 +97,12 @@ const index = () => {
                 </div>
               </div>
               <Divider />
-              <div className="flex items-center justify-between">
+              <div className="flex-col flex sm:flex-row items-center justify-between">
                 <span className="font-noraml text-[#A0A3BD] text-base font-[outfit]">
                   University Rep
                 </span>
 
-                <span className="font-noraml text-secondary-color  font-[outfit] flex">
+                <span className="font-noraml text-secondary-color  font-[outfit] flex my-2 md:sm-0">
                   <img src={Image1} /><span className="mt-1 px-2">{commonObj.personName}</span>
                 </span>
               </div>
@@ -111,8 +111,8 @@ const index = () => {
                 <Typography className="ml-4 font-[outfit] font-semibold text-xl text-primary-color">
                   Location
                 </Typography>
-                <div className="container mt-10">
-                  <span className="image w-full">
+                <div className="container xs:mt-2 md:mt-10">
+                  <span className="image">
                     <img src={mapImage} alt="Avatar" className="background-img" />
                   </span>
                   <div
@@ -130,7 +130,7 @@ const index = () => {
         </Col>
 
         <Col xxl={18} xl={16} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper className="min-h-[850px]">
+          <BoxWrapper className="md:min-h-[850px]">
             <div>
               <div className="p-2">
                 <div className="pt-10 pb-2 font-semibold text-xl text-primary-color font-[outfit]">

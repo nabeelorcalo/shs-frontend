@@ -59,4 +59,10 @@
       background-color: $white-bg-color;
     }
   }
+  @media screen and (max-width: 480px) {
+    .ant-btn {
+      min-width: 75px;
+      padding: 0;
+  }
+  }
 }

@@ -249,9 +249,12 @@ const index = () => {
        <Breadcrumb breadCrumbData={breadcrumbArray} />
        <Divider/>
 
-      <div className="flex justify-between">
-        <div><SearchBar size="middle" handleChange={handleChange} /></div>
-        <div className='flex  gap-2' >
+      <div className="flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row">
+      <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
+          <SearchBar size="middle" handleChange={handleChange} />
+        </div>
+        <div className='w-full flex flex-row lg:justify-end gap-2' >
+          <div>
           <Button
             size="middle"
             onClick={() => {
@@ -261,18 +264,22 @@ const index = () => {
           >
             <BlowWistle /> Blow a Whistle
           </Button>
+          </div>
+          <div>
           <FiltersButton
             label="Filters"
             onClick={() => {setShowDrawer(!showDrawer) }}
           />
-            <DropDown
+          </div>
+          <div>
+          <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
               setValue={() => {
                 action.downloadPdfOrCsv(event , downloadPdfCsvColumn(),  downloadPdfCsvData(), "All Grievance",  selectedTab )
               }}
-
             />
+          </div>
         </div>
       </div>
       <BoxWrapper className='my-5'>
