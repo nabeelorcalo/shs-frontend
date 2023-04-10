@@ -11,10 +11,10 @@ import useCustomHook from '../actionHandler';
 const TimeSheetHistory = () => {
   const action = useCustomHook();
   const { id } = useParams();
-  const [download, setDownload] = useState('');
   const findTimesheet = timesheetMock.find(timesheet => timesheet.id === id);
 
   const PdfHeader = ['Date', 'Total Tasks', 'Total Time'];
+  const PdfInnerHeader = ['Task Name', 'Category', 'Date', 'Start Time', 'End Time'];
 
   const PdfBody = findTimesheet?.history?.map(({ id, userName, designation, totalHours, progess, workedHours }: any) =>
     [id, userName, designation, totalHours, `${progess}%`, workedHours]
@@ -23,9 +23,10 @@ const TimeSheetHistory = () => {
   return (
     <div className='timesheet-history'>
       <Breadcrumb breadCrumbData={[{ name: 'History' }, { name: 'Timesheet', onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
-      <CommonHeader download={download}
-        setDownload={() =>
-          action.downloadPdfOrCsv(event, PdfHeader, findTimesheet?.history, 'Timesheet-Detail-History', PdfBody)}
+      <CommonHeader
+        setDownload={(val: string) =>
+          action.downloadNestedTable(event, PdfHeader, PdfInnerHeader, findTimesheet?.history, 'Timesheet-Detail-History', PdfBody)
+        }
       />
 
       {findTimesheet?.history ? findTimesheet?.history.map((data) => (
