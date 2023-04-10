@@ -61,9 +61,9 @@ const index = () => {
         </Col>
       </Row>
 
-      <Row gutter={20} className="my-5 "  >
+      <Row gutter={[20,20]} className="md:my-5 "  >
         <Col xxl={6} xl={8} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper className="min-h-[850px]">
+          <BoxWrapper className="md:min-h-[850px]">
             <div className="pt-10">
               <center>
                 <UniLogo />
@@ -97,12 +97,12 @@ const index = () => {
                 </div>
               </div>
               <Divider />
-              <div className="flex items-center justify-between">
+              <div className="flex-col flex sm:flex-row items-center justify-between">
                 <span className="font-noraml text-[#A0A3BD] text-base font-[outfit]">
                   University Rep
                 </span>
 
-                <span className="font-noraml text-secondary-color  font-[outfit] flex">
+                <span className="font-noraml text-secondary-color  font-[outfit] flex my-2 md:sm-0">
                   <img src={Image1} /><span className="mt-1 px-2">{commonObj.personName}</span>
                 </span>
               </div>
@@ -111,8 +111,8 @@ const index = () => {
                 <Typography className="ml-4 font-[outfit] font-semibold text-xl text-primary-color">
                   Location
                 </Typography>
-                <div className="container mt-10">
-                  <span className="image w-full">
+                <div className="container xs:mt-2 md:mt-10">
+                  <span className="image">
                     <img src={mapImage} alt="Avatar" className="background-img" />
                   </span>
                   <div
@@ -130,7 +130,7 @@ const index = () => {
         </Col>
 
         <Col xxl={18} xl={16} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper className="min-h-[850px]">
+          <BoxWrapper className="md:min-h-[850px]">
             <div>
               <div className="p-2">
                 <div className="pt-10 pb-2 font-semibold text-xl text-primary-color font-[outfit]">
@@ -184,7 +184,7 @@ const index = () => {
                       <Typography className="font-medium text-base text-primary-color font-[outfit]">
                         Address
                       </Typography>
-                      <Typography className="font-normal text-lg text-secondary-color font-[outfit]">
+                      <Typography className="font-normal text-lg text-secondary-color font-[outfit] lg:mr-5">
                         {commonObj.address.address}
                       </Typography>
                     </Col>
@@ -233,8 +233,9 @@ const index = () => {
         footer=""
         close={() => setShowEditModal(false)}
       >
+       
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d13285.188936753058!2d73.07593304999999!3d33.64945945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1678436391749!5m2!1sen!2s"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11361.466148264095!2d-0.5635788254192343!3d53.22763683565447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48785b27c23b160d%3A0xd4016d4c2c43e9ae!2sUniversity%20of%20Lincoln!5e0!3m2!1sen!2sus!4v1680849119123!5m2!1sen!2sus"
           className="border-0 w-full h-[500px]"
           // style="border:0;"
           // allowfullscreen=""

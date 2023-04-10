@@ -15,7 +15,6 @@ import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/Verific
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
 
-
 //Interns Child Components
 import profile from "./pages/interns/profile";
 import chat from "./pages/interns/chat";
@@ -277,6 +276,7 @@ const UniversitesProfile = Loadable(
 );
 
 export const publicRoutes = [
+ 
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
@@ -554,6 +554,7 @@ const delegateAgentRoutes = [
         path: `link-account`,
         element: <LinkAccount />,
       },
+      
       {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,

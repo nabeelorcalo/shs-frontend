@@ -1,4 +1,3 @@
-import React from 'react'
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
 import {GlobalTable} from '../../components';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from "../../assets/images";
@@ -6,7 +5,7 @@ import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from "../
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 
 const CandidateTable = (props: any) => {
-  const { setOpenDrawer, setOpenRejectModal } = props;
+  const {setOpenDrawer, setOpenRejectModal } = props;
 
   let ratingCount = [
     { title: 'exceptional', count: 5 },
@@ -94,10 +93,10 @@ const CandidateTable = (props: any) => {
     {
       key: 'action',
       dataIndex: '',
-      title: 'Action',
+      title: 'Actions',
       render: (_: any, data: any) => <DropDownNew
         items={[
-          { label: <p onClick={() => setOpenDrawer(true)}>View Details</p>, key: 'detail' },
+          { label: <p onClick={() => setOpenDrawer(true)} >View Details</p>, key: 'detail' },
           { label: <p onClick={() => setOpenRejectModal(true)}>Reject</p>, key: 'reject' }
         ]}
       >

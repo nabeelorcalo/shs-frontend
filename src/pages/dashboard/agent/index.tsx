@@ -68,7 +68,7 @@ const Agent = () => {
                 title="Listing"
                 level={4}
                 graphName="listings"
-                styling={{ height: 455 }}
+                styling={{ height: 418 }}
               />
             </Col>
           </Row>
