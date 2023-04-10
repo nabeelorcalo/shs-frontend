@@ -67,7 +67,7 @@ const DelegateAgent = () => {
         <Col xs={24} xl={12}>
           <div className="bg-white p-5 mb-5 rounded-2xl wrapper-shadow">
             <RegisterMemberAndFeddbackGraph
-              styling={{ height: 493 }}
+              styling={{ height: 468 }}
               graphName="registerMember"
               title="Registered Members"
             />
