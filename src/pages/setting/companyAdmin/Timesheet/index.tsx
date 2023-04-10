@@ -58,7 +58,7 @@ const SettingTimesheet = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row flex" xs={24} md={12} lg={8}>
+            <Col key={index} className="gutter-row flex" xs={24} lg={8}>
               <div className="w-full setting-time-sheet-box-wrapper">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">

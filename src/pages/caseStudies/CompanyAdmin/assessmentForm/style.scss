@@ -28,9 +28,7 @@
   }
 
   .assessment-footer {
-    @media only screen and (max-width:475px) {
-      flex-direction: column;
-    }
+  
     .reject-btn {
       &:hover {
         background: $secondary-bg-color !important;
@@ -65,4 +63,11 @@
       background-color: $white-bg-color;
     }
   }
+  @media screen and (max-width: 480px) {
+    .ant-btn {
+      min-width: 75px;
+      padding: 0;
+  }
+  }
 }
+
