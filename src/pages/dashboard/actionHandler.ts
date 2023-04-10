@@ -3,6 +3,8 @@ import React from "react";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
 import constants from "../../config/constants";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { agent_dashboard_widgets } from "../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -25,9 +27,12 @@ const useCustomHook = () => {
       });
   };
 
+  const agentDashboardWidgets = useRecoilValue(agent_dashboard_widgets)
+
   return {
     getData,
-    loadMoreData
+    loadMoreData,
+    agentDashboardWidgets,
   };
 };
 

@@ -9,8 +9,20 @@ import {
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
+import useCustomHook from "../actionHandler";
 
 const Agent = () => {
+  const {
+    //countingCard data
+    agentDashboardWidgets: {
+      totalProperties,
+      totalVacantProperties,
+      totalReservedProperties,
+      totalOccupiedProperties,
+    },
+  } = useCustomHook();
+  // console.log(agentDashboardWidgets, "agentDashboardWidgets");
+
   const [state, setState] = useState({
     list: [],
     loading: false,
@@ -50,10 +62,10 @@ const Agent = () => {
       <Row gutter={gutter}>
         <Col xs={24}>
           <CountingCard
-            totalListings={33}
-            occupiedProperties={6}
-            reservedProperties={9}
-            vacantProperties={3}
+            totalListings={totalProperties}
+            occupiedProperties={totalOccupiedProperties}
+            reservedProperties={totalReservedProperties}
+            vacantProperties={totalVacantProperties}
             isSeprate
           />
         </Col>
