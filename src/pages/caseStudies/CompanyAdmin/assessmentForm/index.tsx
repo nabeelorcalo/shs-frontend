@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
 import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
-import ManagerRemarks from '../../Common/managerRemarks'
-import { NavLink } from 'react-router-dom'
-import signature from "../../../../assets/images/Report/signature.svg"
-import { ROUTES_CONSTANTS } from '../../../../config/constants'
-import './style.scss'
-
 const { TextArea } = Input;
+import ManagerRemarks from '../../Common/managerRemarks'
+import './style.scss'
+import { NavLink, useNavigate } from 'react-router-dom';
+import signature from "../../../../assets/images/Report/signature.svg"
+import { ROUTES_CONSTANTS } from '../../../../config/constants';
 
 const index = () => {
+  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
+
   ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
@@ -48,6 +49,7 @@ const index = () => {
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
       managerRemarks: <ManagerRemarks />
     },
+
   ]
   return (
     <div className='company-admin-assessment-form'>
@@ -96,7 +98,7 @@ const index = () => {
           </Form>
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
             <Button type='primary'
-              className='text-error-bg-color white-color reject-btn'>
+              className='text-error-bg-color white-color reject-btn' >
               <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
                 Reject
               </NavLink>
@@ -109,12 +111,12 @@ const index = () => {
         </BoxWrapper>
       </div>
       {/* for mobile */}
-      <BoxWrapper className='my-5 block lg:hidden w-full'>
+      <BoxWrapper className='block lg:hidden w-full p-3'>
         <Typography className='text-xl md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
         {mockData.map((item) => {
           return (
-            <div className='mt-5 flex flex-col gap-5'>
-              <span className='text-xl font-medium text-center'>{item.learningCategories}</span>
+            <div className='mt-5 flex flex-col xs:gap-2 sm:gap-5'>
+              <span className='xs:text-lg sm:text-xl font-medium text-center'>{item.learningCategories}</span>
               <span className='text-base font-medium '>Learning Categories</span>
               <span className='text-xs font-normal '>{item.learningObjectives}</span>
               <span className='text-base font-medium '>Evidence of Progress </span>
@@ -127,13 +129,15 @@ const index = () => {
           )
         })}
         <Form layout="vertical" form={form}>
-          <Typography className='text-xl font-semibold my-3'>Feedback <span className='form-title font-medium'>(Optional)</span></Typography>
+          <Typography className='text-xl font-semibold my-3'>Feedback
+            <span className='form-title font-medium'>(Optional)</span>
+          </Typography>
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
-          <div className='xs:flex-col sm:flex gap-10'>
+          <div className='flex xs:flex-col sm:flex-row gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg flex justify-center'>
-                <img src={signature} />
-              </div>
+            <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} alt="signature" />
+                </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
               <div className='sign-box w-full rounded-lg flex items-center justify-around'>
@@ -143,17 +147,17 @@ const index = () => {
             </div>
           </div>
         </Form>
-        <div className='flex justify-end gap-5 my-5 assessment-footer'>
+        <div className='flex justify-end xs:gap-1 sm :gap-5 my-5 assessment-footer'>
           <Button type='primary'
-            className='text-error-bg-color white-color reject-btn' >
-            <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
-              Reject
-            </NavLink>
-          </Button>
+            className='text-error-bg-color white-color reject-btn  text-xs' >
+              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+                Reject
+              </NavLink>
+              </Button>
           <Button type='primary'
-            className='white-bg-color teriary-color save-btn'>Save Draft</Button>
+            className='white-bg-color teriary-color save-btn  text-xs'>Save Draft</Button>
           <Button type='primary'
-            className='teriary-bg-color  white-color  finalise-btn '>Finalise</Button>
+            className='teriary-bg-color  white-color finalise-btn text-xs'>Finalise</Button>
         </div>
       </BoxWrapper>
       <SignatureAndUploadModal
@@ -164,7 +168,7 @@ const index = () => {
         okBtntxt="Upload"
         closeFunc={() => { setOpenModal(false) }}
         okBtnFunc={() => { }}
-        footer={<div className='btn-wrapper'>
+        footer={<>
           <Button
             className='white-bg-color teriary-color'
           >
@@ -173,7 +177,8 @@ const index = () => {
           <Button
             type='primary'
             className='white-color teriary-bg-color  '
-          >Submit</Button></div>} />
+          >Submit</Button></>} />
+  
     </div>
   )
 }

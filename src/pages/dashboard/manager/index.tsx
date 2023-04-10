@@ -122,7 +122,7 @@ const Manager = () => {
                   marginRatio=".5"
                   seriesField="type"
                   textColor="#4E4B66"
-                  style={{ height: 328 }}
+                  style={{ height: 300 }}
                 />
               </div>
             </Col>
@@ -149,7 +149,7 @@ const Manager = () => {
                 title="Listing"
                 level={4}
                 graphName="attendance"
-                styling={{ height: 265 }}
+                styling={{ height: 228 }}
               />
             </Col>
             <Col xs={24}>

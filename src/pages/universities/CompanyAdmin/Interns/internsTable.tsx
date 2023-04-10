@@ -2,6 +2,8 @@ import React from 'react'
 import DropDownNew from '../../../../components/Dropdown/DropDownNew'
 import { ThreeDots } from '../../../../assets/images'
 import { GlobalTable } from '../../../../components'
+import { NavLink } from 'react-router-dom'
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
 
 interface IDUMMYDATA {
  dummyData?:any
@@ -57,9 +59,10 @@ const interTableColumn =
       render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
         items={[
           {
-            label:<span>
+            label:
+            <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
               Profile
-            </span>,
+            </NavLink>,
             key:'profile'
           },
           {
@@ -84,3 +87,4 @@ const interTableColumn =
 }
 
 export default InternTable
+
