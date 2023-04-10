@@ -216,13 +216,13 @@ const Detail = () => {
     }));
   };
 
-  function renderAvatar(cellDataKey: any, cellOptions: any) {
-    const img = new Image();
-    img.src = cellDataKey;
-    img.width = cellOptions.row.raw.avatarWidth;
-    img.height = cellOptions.row.raw.avatarHeight;
-    return img;
-  }
+  // function renderAvatar(cellDataKey: any, cellOptions: any) {
+  //   const img = new Image();
+  //   img.src = cellDataKey;
+  //   img.width = cellOptions.row.raw.avatarWidth;
+  //   img.height = cellOptions.row.raw.avatarHeight;
+  //   return img;
+  // }
 
   return (
     <div className="attendance-detail-container">

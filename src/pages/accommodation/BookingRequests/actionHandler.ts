@@ -7,17 +7,19 @@ import csv from '../../../helpers/csv';
 import svg from '../../../assets/images/avatar1.png';
 import constants from "../../../config/constants";
 
+const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Contracts', 'Status'];
+
 const useBookingRequests = () => {
 
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
-  const downloadCSV = (fileName: any, header: any, data: any) => {
-    csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)  
+  const downloadCSV = (fileName: any, data: any) => {
+    csv(`${fileName}`, bookingRequestColumns, data, false); // csv(fileName, header, data, hasAvatar)  
   }
 
-  const downloadPDF = (fileName: string, header: any, data: any) => {
+  const downloadPDF = (fileName: string, data: any) => {
     const title = fileName;
     const unit = 'pt';
     const size = 'A4';
@@ -30,25 +32,38 @@ const useBookingRequests = () => {
 
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(16);
-    doc.text(title, 30, 30);
+    doc.text(title, 40, 30);
 
     doc.autoTable({
-      head: [header],
+      head: [bookingRequestColumns],
       body: body,
       margin: { top: 50 },
 
       headStyles: {
         fillColor: [230, 244, 249],
         textColor: [20, 20, 42],
-        fontStyle: 'normal',
-        fontSize: 12,
+        fontStyle: 'bold',
+        fontSize: 10.5,
+      },
+      bodyStyles: {
+        textColor: [78, 75, 102],
+        fontSize: 10.5
+      },
+      columnStyles: {
+        0: {
+          halign: 'center',
+        }
       },
 
       didParseCell: async (item: any) => {
-        if (item.row.section === "head")
+        if (item.row.section === "head") {
           item.cell.styles.fillColor = [230, 244, 249];
-        else
+        } else {
           item.cell.styles.fillColor = false;
+        }
+        if(item.column.dataKey === 0) {
+
+        }
       },
 
       //  didDrawCell: async (item: any) => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BoxWrapper, Button, CommonDatePicker, DropDown, Input, TimesheetCategories } from '../../../components';
 import { TagPrimaryIcon, TagSuccessIcon, TagWarningIcon } from '../../../assets/images';
 import { Row, Col } from 'antd';
+import TimePickerComp from '../../../components/calendars/TimePicker/timePicker';
 
 const TaskDetails = () => {
 
@@ -17,6 +18,8 @@ const TaskDetails = () => {
       { id: '3', title: 'research', hours: '21h:29m' },
     ]
   });
+
+  const [openTime, setOpenTime] = useState({ start: false, end: false });
 
   const categories = ['design', 'research/R&D', 'requirement on confluence', 'user stories on jira', 'others'];
 
@@ -50,9 +53,23 @@ const TaskDetails = () => {
         setValue={(e: string) => handleChange(e, 'category')}
       />
 
-      <Row className='mb-[30px]'>
-        <Col lg={12}>start time</Col>
-        <Col lg={12}>end time</Col>
+      <Row className='mb-[30px]' gutter={[20, 20]}>
+        <Col lg={12}>
+          <TimePickerComp
+            label={'Start Time'}
+            open={openTime.start}
+            setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
+            setValue={(val: string) => setTaskDetailVal({ ...taskDetailVal, startTime: val })}
+          />
+        </Col>
+        <Col lg={12}>
+          <TimePickerComp
+            label={'End Time'}
+            open={openTime.end}
+            setOpen={() => setOpenTime({ end: !openTime.end, start: false })}
+            setValue={(val: string) => setTaskDetailVal({ ...taskDetailVal, endTime: val })}
+          />
+        </Col>
       </Row>
       <div className='task-categories'>
         <p className='font-medium text-xl task-heading mb-[20px]'>Categories</p>
@@ -87,7 +104,7 @@ const TaskDetails = () => {
           />
         </div>
       </div>
-    </BoxWrapper>
+    </BoxWrapper >
   )
 }
 

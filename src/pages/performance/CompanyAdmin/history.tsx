@@ -19,8 +19,6 @@ import {
   GlassMagnifier,
   MoreIcon,
   TalentBadge,
-  Success,
-  SuccessIcon
 } from "../../../assets/images";
 import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -362,8 +360,6 @@ const PerformanceHistory = () => {
       openSidebar: !state.openSidebar,
     }));
   };
-
-  const downloadClick = () => { };
 
   const evaluatedBySelection = (event: any) => {
     const value = event.target.innerText;

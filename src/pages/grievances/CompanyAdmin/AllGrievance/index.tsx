@@ -253,7 +253,7 @@ const index = () => {
       <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
           <SearchBar size="middle" handleChange={handleChange} />
         </div>
-        <div className='w-full flex flex-row lg:justify-end gap-2' >
+        <div className='w-full flex flex-row lg:justify-end gap-1 md:gap-2' >
           <div>
           <Button
             size="middle"

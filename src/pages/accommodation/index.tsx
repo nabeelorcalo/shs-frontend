@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import "./style.scss";
 import useBookingRequests from './BookingRequests/actionHandler'
 
-const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Contracts', 'Status'];
+
   // Temporary Data
   const bookingRequestsData = [
     {
@@ -151,36 +151,6 @@ const Accommodation = () => {
     },
   ];
 
-  const statusItems: MenuProps['items'] = [
-    {
-      key: 'reserved',
-      label: 'Reserved'
-    },
-    {
-      key: 'pending',
-      label: 'Pending'
-    },
-    {
-      key: 'rejected',
-      label: 'Rejected'
-    },
-  ];
-
-  const agentItems: MenuProps['items'] = [
-    {
-      key: 'reserved',
-      label: 'Reserved'
-    },
-    {
-      key: 'pending',
-      label: 'Pending'
-    },
-    {
-      key: 'rejected',
-      label: 'Rejected'
-    },
-  ];
-
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -242,11 +212,15 @@ const Accommodation = () => {
 
   function handledownloadBookingRequest (key:any) {
     if(key === 'pdf') {
-      downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestColumns, bookingRequestsData)
+      downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestsData)
     }
     if(key === 'excel') {
-      downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestColumns, bookingRequestsData, )
+      downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestsData, )
     }
+  }
+
+  function handleFilterStatusBookingRequests(key: any) {
+    console.log(key)
   }
 
 
@@ -325,7 +299,29 @@ const Accommodation = () => {
               </div>
 
               <div className="requests-filterby-status">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown 
+                  overlayClassName="shs-dropdown" 
+                  trigger={['click']} 
+                  placement="bottomRight"
+                  menu={{ 
+                    items: [
+                      {
+                        key: 'reserved',
+                        label: 'Reserved'
+                      },
+                      {
+                        key: 'pending',
+                        label: 'Pending'
+                      },
+                      {
+                        key: 'rejected',
+                        label: 'Rejected'
+                      },
+                    ],
+                    onClick: ({key}) => handleFilterStatusBookingRequests(key),
+                    selectable: true,
+                  }} 
+                >
                   <Button className="button-sky-blue">Status<IconAngleDown /></Button>
                 </Dropdown>
               </div>

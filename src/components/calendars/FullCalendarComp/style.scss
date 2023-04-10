@@ -21,7 +21,7 @@
           &::before {
             position: absolute;
             content: '';
-            background-image: url('../../../assets/images/calender-icon.png');
+            background-image: url('../../../assets/images/timesheet/calender-icon.png');
             background-repeat: no-repeat;
             width: 30px;
             height: 30px;
@@ -42,7 +42,8 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          &:hover{
+
+          &:hover {
             background-color: transparent !important;
           }
 
@@ -109,7 +110,7 @@
             &::before {
               position: absolute;
               content: '';
-              background-image: url('../../../assets/images/CalendarIconWhite.svg');
+              background-image: url('../../../assets/images/timesheet/CalendarIconWhite.svg');
               background-repeat: no-repeat;
               top: 10px;
               left: 10px;
@@ -218,6 +219,7 @@
         padding: 4px 10px;
         border-radius: 4px;
         min-width: 45% !important;
+        font-size: 14px;
         color: $text-error-color;
         border: 1px solid $text-error-color;
 
@@ -229,6 +231,12 @@
           background-color: $green-graph-tooltip-color;
           color: $white-bg-color !important;
           border: none;
+        }
+
+        &.accepted {
+          background-color: $off-white-color;
+          color: $text-primary-disabled-color !important;
+          border: 1px solid $light-gray-thin-color;
         }
       }
     }

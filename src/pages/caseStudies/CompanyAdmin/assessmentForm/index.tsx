@@ -85,7 +85,7 @@ const index = () => {
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <div className='sign-box w-full rounded-lg flex justify-center'>
                   <img src={signature} />
                 </div>
               </div>

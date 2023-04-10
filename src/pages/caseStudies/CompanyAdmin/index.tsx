@@ -84,7 +84,7 @@ const index = () => {
       <div className= "max-sm:w-full md:w-[50%] lg:w-[25%]"> 
          <SearchBar size="middle" handleChange={handleChange} />
          </div>
-        <div className='flex justify-end gap-2'>
+        <div className='flex sm:justify-end gap-2'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
             requiredDownloadIcon
