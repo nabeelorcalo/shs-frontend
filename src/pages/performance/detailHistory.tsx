@@ -18,7 +18,7 @@ const DetailHistory = () => {
   const detailHistoryBreadCrumb = [
     { name: "Mino Marina" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: constants.USER_ROLE === constants.UNIVERSITY ?  "View History" : constants.USER_ROLE === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : constants.USER_ROLE === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const action = useCustomHook();
 
@@ -107,7 +107,7 @@ const DetailHistory = () => {
       label:
         < Link
           className="bread-crumb"
-          to={ `/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
         >
           {constants.USER_ROLE === "CompanyAdmin" ? "View Details" : "View"}
         </Link >,
@@ -124,8 +124,8 @@ const DetailHistory = () => {
         :
         <p
           onClick={() => {
-            action.downloadHistoryDataPdf(evaluationHistoryColumnNames,evaluationHistoryData);
-            Notifications({title:'Success',description:'List Download',type:'success'})
+            action.downloadHistoryDataPdf(evaluationHistoryColumnNames, evaluationHistoryData);
+            Notifications({ title: 'Success', description: 'List Download', type: 'success' })
           }}
         >
           Download
@@ -187,7 +187,12 @@ const DetailHistory = () => {
       openWarnModal: !state.openWarnModal,
     }));
   }
-
+  const progressData = [
+    { title: 'Overall', progressPercent: 81, progressColor: '#4783FF' },
+    { title: 'Learning Objectives', progressPercent: 85, progressColor: '#A1D8EA' },
+    { title: 'Discipline', progressPercent: 75, progressColor: '#F08D97' },
+    { title: 'Personal', progressPercent: 68, progressColor: '#78DAAC' },
+  ]
   return (
     <>
       <PageHeader
@@ -195,59 +200,53 @@ const DetailHistory = () => {
         title={<Breadcrumb breadCrumbData={detailHistoryBreadCrumb} />}
       />
 
-      <Row gutter={[20,20]} className="company-admin-detail-history-container">
+      <Row gutter={[20, 20]} className="company-admin-detail-history-container">
         <Col xs={24} md={24} xl={12}>
-        <div className="performance-left-subcontainer ">
-          <BoxWrapper className="flex flex-col">
-            <TopPerformanceCard
-              id={1}
-              name="Maria Sanoid"
-              nameClassName="text-2xl text-primary-color"
-              profession="UI UX Designer"
-              className="bg-visible-btn evaluate-btn"
-              icon={<ColorLessMedalIcon />}
-              btnTxt={constants.USER_ROLE !== constants.UNIVERSITY && 'Evaluate'}
-              size={64}
-              url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
-              avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-            />
+          <div className="performance-left-subcontainer ">
+            <BoxWrapper className="flex flex-col">
+              <TopPerformanceCard
+                id={1}
+                name="Maria Sanoid"
+                nameClassName="text-2xl text-primary-color"
+                profession="UI UX Designer"
+                className="bg-visible-btn evaluate-btn"
+                icon={<ColorLessMedalIcon />}
+                btnTxt={constants.USER_ROLE !== constants.UNIVERSITY && 'Evaluate'}
+                size={64}
+                url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
+                avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+              />
+              {progressData.map((item: any) => (
+                <>
+                  <p className="mt-4">{item.title}</p>
+                  <Progress className="flex" percent={item.progressPercent} strokeColor={item.progressColor} />
+                </>
+              ))}
+            </BoxWrapper>
 
-            <p className="mt-4">Overall</p>
-            <Progress className="flex" percent={81} strokeColor="#4783FF" />
-
-            <p>Learning Objectives</p>
-            <Progress className="flex" percent={85} strokeColor="#A1D8EA" />
-
-            <p>Discipline</p>
-            <Progress className="flex" percent={75} strokeColor="#F08D97" />
-
-            <p>Personal</p>
-            <Progress className="flex" percent={68} strokeColor="#78DAAC" />
-          </BoxWrapper>
-
-          <div className="my-4 h-[502px]">
-            <MonthlyPerfomanceChart
-              heading="Summary"
-              data={data}
-              XField="department"
-              columnWidthRatio={0.5}
-            />
+            <div className="my-4 h-[502px]">
+              <MonthlyPerfomanceChart
+                heading="Summary"
+                data={data}
+                XField="department"
+                columnWidthRatio={0.5}
+              />
+            </div>
           </div>
-        </div>
         </Col>
         <Col xs={24} md={24} xl={12}>
-        <div className="performance-right-subcontainer ">
-          <BoxWrapper >
-            <Typography.Title level={4} >
-              Evaluation History
-            </Typography.Title>
-            <GlobalTable
-              columns={evaluationHistoryColumnNames}
-              tableData={evaluationHistoryData}
-              pagination={false}
-            />
-          </BoxWrapper>
-        </div>
+          <div className="performance-right-subcontainer ">
+            <BoxWrapper >
+              <Typography.Title level={4} >
+                Evaluation History
+              </Typography.Title>
+              <GlobalTable
+                columns={evaluationHistoryColumnNames}
+                tableData={evaluationHistoryData}
+                pagination={false}
+              />
+            </BoxWrapper>
+          </div>
         </Col>
       </Row>
       <AppreciationModal

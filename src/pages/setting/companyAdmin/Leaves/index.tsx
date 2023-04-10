@@ -83,7 +83,7 @@ const SettingLeave = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={12} lg={8}>
+            <Col key={index} className="gutter-row" xs={24}  lg={8}>
               <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting

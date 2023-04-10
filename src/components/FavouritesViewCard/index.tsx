@@ -1,6 +1,11 @@
 import { Row, Col } from "antd";
 import { FC } from "react";
-import { CardRemoveIcon, EyeIcon, MDIHeartIcon, WalletMoneyIcon } from "../../assets/images";
+import {
+  CardRemoveIcon,
+  EyeIcon,
+  MDIHeartIcon,
+  WalletMoneyIcon,
+} from "../../assets/images";
 import Card from "./Card";
 interface IFavouritesViewCard {
   totalViews?: string | number;
@@ -36,23 +41,49 @@ export const FavouritesViewCard: FC<IFavouritesViewCard> = (props) => {
   const { greenBg, redBg } = IconBgColors;
 
   // FavouritesViewCard handling card list on props basis
-  const handleCardList = (icon: JSX.Element, title: string, count: string | number, iconBg: string) => cardsList.push({ icon, title, count, iconBg });
+  const handleCardList = (
+    icon: JSX.Element,
+    title: string,
+    count: string | number,
+    iconBg: string
+  ) => cardsList.push({ icon, title, count, iconBg });
 
   // FavouritesViewCard card list
   const cardsList: ICardsList[] = [];
 
   // agent dashboard
   totalViews && handleCardList(<EyeIcon />, "Total Views", totalViews, greenBg);
-  favourites && handleCardList(<MDIHeartIcon />, "Favourites", favourites, redBg);
+  favourites &&
+    handleCardList(<MDIHeartIcon />, "Favourites", favourites, redBg);
 
   // delegate agent dashboard
-  currentBalance && handleCardList(<WalletMoneyIcon />, "Current Balance", currentBalance, greenBg);
-  inactiveMembersBalance && handleCardList(<CardRemoveIcon />, "Inactive Members Balance", inactiveMembersBalance, redBg);
+  currentBalance &&
+    handleCardList(
+      <WalletMoneyIcon />,
+      "Current Balance",
+      currentBalance,
+      greenBg
+    );
+  inactiveMembersBalance &&
+    handleCardList(
+      <CardRemoveIcon />,
+      "Inactive Members Balance",
+      inactiveMembersBalance,
+      redBg
+    );
 
   return (
-    <Row className={`xs:gap-[8px] sm:gap-[16px] lg:gap-[20px] xl:gap-[30px] px-7 py-6 bg-white rounded-2xl wrapper-shadow`}>
+    <Row
+      className={`xs:gap-[8px] sm:gap-[16px] lg:gap-[20px] xl:gap-[30px] px-7 py-6 bg-white rounded-2xl wrapper-shadow flex-col sm:flex-row`}
+    >
       {cardsList?.map(({ icon, iconBg, title, count }, index) => (
-        <Col style={{ borderRight: index === 0 ? "1px solid #D9DBE9" : "" }} key={title} className={`flex-1`}>
+        <Col
+          key={title}
+          className={`flex-1 border-y-0 border-l-0 ${
+            index === 0 &&
+            "border-solid border-b-[1px] sm:border-b-0 xs:pb-5 sm:border-solid border-r-0 sm:border-r-[1px]"
+          } gray-border-color`}
+        >
           <Card icon={icon} title={title} count={count} iconBg={iconBg} />
         </Col>
       ))}

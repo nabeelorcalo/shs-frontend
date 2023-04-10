@@ -136,7 +136,7 @@ const index = () => {
         <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />
         </Col>
-        <Col xxl={18} xl={18} md={18} sm={24} xs={24} className='flex  gap-2 justify-end gerievance-right-sec'>
+        <Col xxl={18} xl={18} md={18} sm={24} xs={24} className='w-full flex flex-row lg:justify-end gap-2'>
           <Button
             size="middle"
             onClick={() => {

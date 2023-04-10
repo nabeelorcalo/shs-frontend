@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { DeleteFilled } from '@ant-design/icons';
 import { Col, Row } from 'antd';
 import { Schedule, DrawerIcon, IconEdit, } from "../../assets/images/"
@@ -11,7 +11,6 @@ const Interview = () => {
 
 
   const openModal = () => {
-
     setAlert(true)
   }
 
@@ -39,7 +38,7 @@ const Interview = () => {
 
       <div className="onTime mt-8 mb-5">21 November 2022</div>
 
-      <div className='main-wrapperr pb-6 relative '>
+      <div className='main-wrapperr pb-6 relative'>
         {ReqDocData.map((data: any) => (
           <div className='interview-content px-4 py-4'>
             <Row gutter={[20, 20]} align="middle">
@@ -65,7 +64,7 @@ const Interview = () => {
                 </div>
               </Col>
               <Col xl={6} lg={6} md={6}>
-                <div className="hover-effect ">
+                <div className="hover-effect">
                   <div className=' flex gap-4 items-center h-[55px]'>
                     <div className="edit-icon h-[40px] w-[40px] flex justify-center items-center ">
                       <IconEdit onClick={() => setOpen(true)} className='cursor-pointer' />

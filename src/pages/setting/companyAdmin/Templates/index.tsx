@@ -43,7 +43,7 @@ const SettingTemplate: React.FC = () => {
       <Row gutter={[10, 10]} >
         {overview.map((data: any, index) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={12} xxl={8}>
+            <Col key={index} className="gutter-row" xs={24} md={24} lg={12} xxl={8}>
               <NavLink key={index} to={data.link}>
                 <div className="template-box-wrapper">
                   <div className="flex px-3 justify-between mt-2 w-full">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Col, Divider, Row, Radio, Space, Select, Input } from 'antd'
 import {
   CommonDatePicker,
@@ -56,8 +56,8 @@ const frequencyOptions = [
 ]
 
 const NewInternships = () => {
-  const [showState, setshowState] = useState(false)
-  const [alertState, setAlertState] = useState(false)
+  // const [showState, setshowState] = useState(false)
+  // const [alertState, setAlertState] = useState(false)
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
   const [remoteOnsite, setRemoteOnsite] = useState(null);
@@ -78,7 +78,7 @@ const NewInternships = () => {
     <>
       <PageHeader title="New Internship" />
       <Divider />
-      <BoxWrapper>
+      <BoxWrapper className='new-intern-main'>
         <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Internship Details</h4>
         <p>This information will be displayed publicly so be careful what you share</p>
         <Divider />
@@ -124,11 +124,11 @@ const NewInternships = () => {
         </Row>
         <Divider />
         <Row>
-          <Col span={8} className='p-4'>
+          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
             <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Responsibilities and Requirements</h4>
             <p>Briefly define the responsibilities and requirements of the internship</p>
           </Col>
-          <Col span={8} className='flex flex-col gap-6 p-4'>
+          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-6 p-4'>
             <div className='flex flex-col gap-2'>
               <p>Responsibilities <span className='text-error-color'>*</span></p>
               <TextArea
@@ -150,21 +150,21 @@ const NewInternships = () => {
         </Row>
         <Divider />
         <Row>
-          <Col span={8} className='p-4'>
+          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
             <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>General</h4>
             <p>Provide the details of internship</p>
           </Col>
-          <Col span={8} className='flex flex-col gap-8 p-4'>
+          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-8 p-4'>
             <div className='flex flex-col gap-2'>
               <p>Type of work</p>
-              <Radio.Group onChange={onChange} value={partAndFullTime} className='flex flex-row gap-24'>
+              <Radio.Group onChange={onChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                 <Radio value={'parttime'}>Part Time</Radio>
                 <Radio value={'fulltime'}>Full Time</Radio>
               </Radio.Group>
             </div>
             <div className='flex flex-col gap-2'>
               <p>Internship Type</p>
-              <Radio.Group onChange={onChange1} value={paidAndUnpaid} className='flex flex-row gap-24'>
+              <Radio.Group onChange={onChange1} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                 <Radio value={'unpaid'}>Unpaid</Radio>
                 <Radio value={'paid'}>Paid</Radio>
               </Radio.Group>
@@ -197,7 +197,7 @@ const NewInternships = () => {
             }
             <div className='flex flex-col gap-2'>
               <p>Nature of work</p>
-              <Radio.Group onChange={onChange2} value={remoteOnsite} className='flex flex-row gap-24'>
+              <Radio.Group onChange={onChange2} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                 <Radio value={'virtual'}>Virtual</Radio>
                 <Radio value={'onsite'}>On site</Radio>
                 <Radio value={'hybrid'}>Hybrid</Radio>
@@ -221,11 +221,11 @@ const NewInternships = () => {
         </Row>
         <Divider />
         <Row>
-          <Col span={8} className='p-4'>
+          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
             <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Additional Information</h4>
             <p>Enter the additional information related to internship</p>
           </Col>
-          <Col span={8} className='flex flex-col gap-4 p-4'>
+          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-4 p-4'>
             <div className='flex flex-col gap-2'>
               <p>Total positions <span className='text-error-color'>*</span></p>
 
@@ -264,25 +264,25 @@ const NewInternships = () => {
           <Col span={8}></Col>
         </Row>
         <Divider />
-        <Row className="flex my-3 flex-row gap-5 justify-end">
+        <Row className="flex my-3 flex-row gap-4 md:justify-end">
           <Button
             type="link"
             size="middle"
-            className="flex justify-center white-bg-color teriary-color"
+            className="new-intern-btn white-bg-color teriary-color"
             onClick={() => { }}
           >
             Save Draft
           </Button>
           <Button
             size="middle"
-            className="flex justify-center white-bg-color teriary-color"
+            className="new-intern-btn white-bg-color teriary-color"
             onClick={() => { }}
           >
             Cancel
           </Button>
           <Button
             size="middle"
-            className="flex justify-center teriary-bg-color white-color"
+            className="new-intern-btn teriary-bg-color white-color"
             onClick={() => { }}
           >
             Submit

@@ -1,6 +1,5 @@
 .pipeline-wrapper {
     display: flex;
-
     .pipline-content {
         display: flex;
         justify-content: center;
@@ -13,6 +12,18 @@
 
         &:first-child {
             clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+            border-radius: 5px;
         }
     }
+
+    @media only screen and (max-width:768px) {
+        flex-direction: column;
+        gap: 20px;
+        .pipline-content {
+            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+            border-radius: 5px;
+            margin-left: 0;
+        }
+    }
+
 }

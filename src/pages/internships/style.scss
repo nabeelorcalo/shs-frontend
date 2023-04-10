@@ -2,7 +2,7 @@
 .internship-details{
   .internship-right-sec{
     @media only screen and (max-width:475px){
-      flex-direction: column;
+      flex-direction: column !important;
       .main-btn{
         display: flex;
         justify-content: space-between;
@@ -25,4 +25,12 @@
     border: 2px solid $text-error-line-color;
   }
   border-radius: 5px;
+}
+.new-intern-main{
+  .new-intern-btn{
+    @media only screen and (max-width:475px) {
+      width: 100%;
+    }
+  }
+
 }

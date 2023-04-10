@@ -1,22 +1,24 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-import api from "../../api";
-import constants from "../../config/constants";
+import { useRecoilState, useRecoilValue, useRecoilStateLoadable } from "recoil";
+import { listingsState } from "../../store";
+import api from '../../api'
 
-// Chat operation and save into store
-const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+const useListingsHook = () => {
+  const [listingsData, setListingsData] = useRecoilStateLoadable(listingsState)
+
+  const createListing = async () => {
+    try {
+      const response = await api.post('https://reqres.in/api/users', {"name": "morpheus", "job": "leader"})
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   return {
-    getData,
+    listingsData,
+    createListing
   };
 };
 
-export default useCustomHook;
+export default useListingsHook;

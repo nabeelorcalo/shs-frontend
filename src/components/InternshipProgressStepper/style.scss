@@ -11,8 +11,9 @@ body {
   width: 95%;
   list-style: none;
   position: relative;
-  @media only screen and (max-width:768px){
+  @media only screen and (max-width:1400px){
     flex-wrap: wrap;
+    gap: 5px;
     .stepper__item {
       font-size: 12px;
       flex-basis: 50%;
@@ -66,7 +67,7 @@ body {
     background: $teriary-bg-color;
   }
 
-  &.reject {
+  &.reject-sep {
     background: $page-header-secondary;
   }
 

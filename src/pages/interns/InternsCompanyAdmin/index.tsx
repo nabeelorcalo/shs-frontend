@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps } from 'antd';
 import useCustomHook from "./actionHandler";
-import Complete from "../complete";
+// import Complete from "../complete";
 
 
 
@@ -34,7 +34,7 @@ const InternsCM = () => {
   const [terminate, setTerminate] = useState(false)
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
+  // const [isToggle, setIsToggle] = useState(false)
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
@@ -257,7 +257,7 @@ const InternsCM = () => {
               size="middle"
             />
           </div>
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 right-sec">
             <FiltersButton
               label="Filters"
               onClick={() => {
