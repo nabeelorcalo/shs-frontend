@@ -8,15 +8,21 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import constants from "../../config/constants";
+import { useRecoilState } from "recoil";
+import { payrollDataState } from "../../store";
+import apiEndpints from "../../config/apiEndpoints";
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const {PAYROLL_FINDALL} = apiEndpints;
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [payrollData,setPayrollData] = useRecoilState(payrollDataState);
 
   const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+    const { data }:any = api.get(`https://gateway.dev.shs-be.developersorcalo.com/${PAYROLL_FINDALL}?page=1&limit=10`);
+    console.log("payroll data are " , data);
   };
 
 

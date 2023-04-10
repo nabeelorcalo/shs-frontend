@@ -240,7 +240,7 @@ const Payroll = () => {
                       startIcon=""
                       value=""
                     />
-                  </div>
+                  </div> 
                   <div className="flex flex-col gap-2">
                     <p>Payroll Cycle</p>
                     <DropDown
