@@ -15,7 +15,6 @@ import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/Verific
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
 
-
 //Interns Child Components
 import profile from "./pages/interns/profile";
 import chat from "./pages/interns/chat";
@@ -33,7 +32,6 @@ import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
 import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
-import { ErrorFallback } from "./pages/errors/errorBoundary";
 // Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
