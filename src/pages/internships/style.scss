@@ -11,8 +11,12 @@
   }
 }
 .pipeline-heading-style{
-  border: 1px solid $text-error-line-color;
+  border: 1px solid $text-input-bg-color;
   border-radius: 5px;
+}
+.pipeline-cards-container{
+  border-left: 1px solid $text-input-bg-color;
+  border-right: 1px solid $text-input-bg-color;
 }
 .download-icon-style{
   border: 2px solid $text-input-bg-color;

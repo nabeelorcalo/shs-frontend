@@ -48,7 +48,7 @@ const InternshipPipeLine = () => {
       <PageHeader title="Internships Pipeline" />
       <Divider />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <h3>UI/UX Designer</h3>
           <div className="flex flex-row gap-4">
             <Select
@@ -63,7 +63,7 @@ const InternshipPipeLine = () => {
           </div>
         </div>
         <div>
-          <div className='flex flex-row gap-6'>
+          <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>
             <div className='flex flex-row gap-3 items-center'>
               <DepartmentIcon />
               <p>Design</p>
@@ -82,7 +82,7 @@ const InternshipPipeLine = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <SearchBar
             className=""
             handleChange={() => { }}
@@ -94,11 +94,11 @@ const InternshipPipeLine = () => {
             Total Candidate: 40
           </div>
         </div>
-        <div className="flex flex-row gap-4 justify-between">
+        <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
           {
             statusArray.map((item, idx) => {
               return (
-                <div className="w-full flex flex-col gap-3">
+                <div className="flex flex-col p-2 ">
                   <div key={idx} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
                       <div className="h-5 w-5 rounded text-off-white-bg-color"></div>
@@ -108,11 +108,14 @@ const InternshipPipeLine = () => {
                       <div className="h-5 w-5 rounded text-off-white-bg-color">02</div>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2">
+                  <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
                     {
                       Array(item.no).fill(item.no).map((items, idx) => {
                         return (
-                          <InternshipPipeLineCard key={idx} />
+                          <>
+                            <InternshipPipeLineCard key={idx} />
+
+                          </>
                         )
                       })
                     }
