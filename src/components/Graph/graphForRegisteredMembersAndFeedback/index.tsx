@@ -128,7 +128,7 @@ export const RegisterMemberAndFeddbackGraph: FC<{
 
   return (
     <div className="relative">
-    <p className="font-medium text--[20px] leading-[28px] text-secondary-color absolute">{title}</p>
+    <p className="font-medium text--[20px] leading-[28px] text-secondary-color">{title}</p>
       <DualAxes style={styling} {...config} />
     </div>
   );
