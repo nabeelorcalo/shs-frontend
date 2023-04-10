@@ -278,11 +278,7 @@ const UniversitesProfile = Loadable(
 );
 
 export const publicRoutes = [
-  {
-    key: `error-boundry`,
-    path: `error-boundry`,
-    element:<ErrorFallback/>
-  },
+ 
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
