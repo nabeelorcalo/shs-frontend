@@ -96,7 +96,6 @@ export { ReactComponent as DocumentCardIcon } from "./uploads/Document-Card.svg"
 export { ReactComponent as AlertIcon } from "./alert/alertIcon.svg";
 export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
 export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
-export { ReactComponent as Allien } from './alert/errorboudry/allien.svg';
 
 // sickLeave-card icon
 export { default as SickIcon } from "../images/sick.png";
