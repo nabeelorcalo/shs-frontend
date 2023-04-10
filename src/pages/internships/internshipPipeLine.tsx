@@ -14,27 +14,33 @@ const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 const statusArray = [
   {
     status: 'Applied',
-    no: 3
+    no: 3,
+    className: "primary-bg-color"
   },
   {
     status: 'Interviewed',
-    no: 5
+    no: 5,
+    className: "text-link-bg-color"
   },
   {
     status: 'Recommended',
-    no: 2
+    no: 2,
+    className: "purple-bg"
   },
   {
     status: 'OfferLetter',
-    no: 4
+    no: 4,
+    className: "light-purple-bg"
   },
   {
     status: 'Contract',
-    no: 1
+    no: 1,
+    className: "line-bg"
   },
   {
     status: 'Hired',
-    no: 5
+    no: 5,
+    className: "text-success-hover-bg-color"
   }
 ]
 
@@ -166,8 +172,7 @@ const InternshipPipeLine = () => {
   }
   return (
     <>
-      <PageHeader title="Internships Pipeline" />
-      <Divider />
+      <PageHeader title="Internships Pipeline" bordered/>
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <h3>UI/UX Designer</h3>
@@ -222,7 +227,7 @@ const InternshipPipeLine = () => {
                 <div className="flex flex-col p-2 ">
                   <div key={idx} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
-                      <div className="h-5 w-5 rounded text-off-white-bg-color bg-[#e2e2e2]"></div>
+                      <div className={`h-5 w-5 rounded ${items.className}`}></div>
                       <p>{items.status}</p>
                     </div>
                     <div>
