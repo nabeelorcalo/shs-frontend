@@ -91,7 +91,7 @@ const University = () => {
                   marginRatio=".5"
                   seriesField="type"
                   textColor="#4E4B66"
-                  style={{ height: 260 }}
+                  style={{ height: 235 }}
                 />
               </div>
             </Col>
@@ -100,7 +100,7 @@ const University = () => {
                 title="Listing"
                 level={4}
                 graphName="attendance"
-                styling={{ height: 255 }}
+                styling={{ height: 220 }}
               />
             </Col>
           </Row>
