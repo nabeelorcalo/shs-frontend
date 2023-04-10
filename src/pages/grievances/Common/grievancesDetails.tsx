@@ -29,29 +29,29 @@ const GrievancesDetails = () => {
       <Divider />
       <Row gutter={[16, 16]}>
         <Col sm={24} md={24} lg={16} xl={16} xxl={18}>
-          <BoxWrapper>
+          <BoxWrapper className='p-3'>
             <div className='flex max-sm:flex-col justify-between'>
-              <Text className='text-xl font-medium'>Attendance Log Issue</Text>
+              <Text className='text-lg sm:text-xl font-medium'>Attendance Log Issue</Text>
               <Text onClick={() => { setShowSuccess(!showSuccess) }} className=' font-medium text-base px-1 attandance-button text-input-bg-color cursor-pointer  '>
                 <CheckOutlined /> Attendance Log Issue</Text>
             </div>
             <Text className="text-[#a0a3bd]"  >
               <ClockCircleOutlined />
-              <span className='text-sm px-2'>Last Updated 26 minutes ago</span>
+              <span className='text-sm mt-4 sm:mt-0 px-2'>Last Updated 26 minutes ago</span>
             </Text>
-            <Text className='flex md:mt-5 text-base font-normal'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis ante non lectus porta, eu tincidunt massa pulvinar. Duis dignissim vel dui ac efficitur. Nunc consectetur pulvinar eros, vel commodo neque condimentum sed. Duis ultricies, purus maximus mollis commodo, ipsum nibh tincidunt ex, eu laoreet elit nibh vitae sapien. Integer a mattis odio, non fringilla massa. In et ligula at sapien ultrices varius in et orci.
+            <Text className='flex md:mt-5 xs:text-sm sm:text-base font-normal'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis ante non lectus porta, eu tincidunt massa pulvinar. Duis dignissim vel dui ac efficitur. Nunc consectetur pulvinar eros, vel commodo neque condimentum sed. Duis ultricies, purus maximus mollis commodo, ipsum nibh tincidunt ex, eu laoreet elit nibh vitae sapien. Integer a mattis odio, non fringilla massa. In et ligula at sapien ultrices varius in et orci.
             </Text>
             <Row>
               <Col span={24}>
                 <div className='Attactments md:mt-5'>
-                  <Text className='text-base text-lg text-teriary-color'>Attachments</Text>
+                  <Text className='xs:text-base sm:text-base text-lg text-teriary-color mt-3 sm:mt-0'>Attachments</Text>
                 </div>
               </Col>
               <Row gutter={[16, 16]} className="w-full gap-2">
-                <Col sm={12} md={10} lg={10} xl={10} xxl={6} className=" gutter-row text-input-bg-color">
+                <Col sm={12} lg={11} xl={10} xxl={6} className=" gutter-row text-input-bg-color">
                   <div className='flex justify-between py-2'>
                     <div className='flex flex-row'><GrievancesDocPDF className='mt-1' />
-                      <div className='flex flex-col px-1'>
+                      <div className='flex flex-col sm:px-1'>
                         <Text className='text-sm font-normal'>Document0023.pdf</Text>
                         <Text className='text-xs font-normal'>2 MB</Text>
                       </div>
@@ -61,10 +61,10 @@ const GrievancesDetails = () => {
                     </div>
                   </div>
                 </Col>
-                <Col sm={12} md={10} lg={10} xl={10} xxl={6} className="gutter-row text-input-bg-color">
+                <Col sm={12} lg={11} xl={10} xxl={6} className="gutter-row text-input-bg-color">
                   <div className='flex justify-between py-2'>
                     <div className='flex flex-row'><GrievancesDocJPG className='mt-1' />
-                      <div className='flex flex-col px-1'>
+                      <div className='flex flex-col sm:px-1'>
                         <Text className='text-sm font-normal'>Document0023.pdf</Text>
                         <Text className='text-xs font-normal'>2 MB</Text>
                       </div>
@@ -78,8 +78,8 @@ const GrievancesDetails = () => {
               </Row>
             </Row>
           </BoxWrapper>
-          <BoxWrapper className='mt-5'>
-            <Text className='text-xl font-medium'>Reply To Grievance</Text>
+          <BoxWrapper className='xs:mt-2 sm:mt-5 p-3'>
+            <Text className='text-lg sm:text-xl font-medium'>Reply To Grievance</Text>
             <Form>
               <Form.Item
                 className="mt-3"
@@ -107,26 +107,26 @@ const GrievancesDetails = () => {
         <Col span={24} md={24} lg={8} xl={8} xxl={6}>
 
           <BoxWrapper>
-            <Text className='text-xl font-medium'>Grievance Information</Text>
-            <div className='flex justify-between font-normal py-2'>
-              <Text >Created on</Text>
-              <Text>28 Nov, 2022</Text>
+            <Text className='text-lg sm:text-xl font-medium'>Grievance Information</Text>
+            <div className='flex justify-between  font-normal py-2'>
+              <Text className='text-sm sm:text-base' >Created on</Text>
+              <Text className='text-sm sm:text-base' >28 Nov, 2022</Text>
             </div>
             <Divider className='mt-2 mb-1' />
             <div className='flex justify-between font-normal py-2'>
-              <Text >Type</Text>
-              <Text>Other</Text>
+              <Text className='text-sm sm:text-base'  >Type</Text>
+              <Text className='text-sm sm:text-base' >Other</Text>
             </div>
             <Divider className='mt-2 mb-1' />
             <div className='flex justify-between font-normal py-2'>
-              <Text >Status</Text>
+              <Text className='text-sm sm:text-base' >Status</Text>
               <Text className='bg-[#FF6F31] rounded-md px-3 white-color '>New</Text>
             </div>
             <Divider className='mt-2 mb-1' />
             <div className='flex justify-between font-normal'>
-              <Text className='pt-2 w-[130px]' >Escalated To</Text>
+              <Text className='pt-2 w-[130px] text-sm sm:text-base mt-1.5 sm:mt-0' >Escalated To</Text>
 
-              <Select defaultValue="Jessica Alba" className='w-full lg:w-[200px] border-none' onChange={handleChange}
+              <Select defaultValue="Jessica Alba" className='w-full  lg:w-[200px] border-none' onChange={handleChange}
                 options={[{
                   value: "Gregory Maxwell Hall",
                   label: <>
@@ -146,23 +146,23 @@ const GrievancesDetails = () => {
 
           </BoxWrapper>
           <BoxWrapper className='my-2 pb-0'>
-            <Text className='text-xl font-medium'>Escalated By</Text>
+            <Text className='text-lg sm:text-xl font-medium'>Escalated By</Text>
             <div className='flex items-center flex-col'>
               <span><GrievancesSidebarAvater /></span>
-              <Text className='text-xl font-semibold'>Maria Sanoid</Text>
+              <Text className='text-lg sm:text-xl font-semibold'>Maria Sanoid</Text>
               <Text className='font-medium text-base'>UI UX Designer</Text>
               <Text className='text-base font-normal'>Design</Text>
             </div>
             <Divider className='mt-2 mb-1' />
             <div className='flex flex-col'>
-              <span className='p-3'><GrievancesInbox />
-                <span className='text-sm px-3 font-normal'>maria@Student Help Squad.com</span>
+              <span className='py-2 sm:p-3'><GrievancesInbox />
+                <span className='text-xs sm:text-sm px-3 font-normal'>maria@Student Help Squad.com</span>
               </span>
-              <span className='p-3'> <GrievancesCall />
-                <span className='text-sm px-3 font-normal'>+44 7700 900077</span>
+              <span className='py-2 sm:p-3'> <GrievancesCall />
+                <span className='text-xs sm:text-sm px-3 font-normal'>+44 7700 900077</span>
               </span>
-              <span className='p-3'>  <GrievancesLocation />
-                <span className='text-sm px-3 font-normal'>263 Eversholt St, London NW11NB, UK</span>
+              <span className='py-2 sm:p-3'>  <GrievancesLocation />
+                <span className='text-xs sm:text-sm px-3 font-normal'>263 Eversholt St, London NW11NB, UK</span>
               </span>
             </div>
           </BoxWrapper>

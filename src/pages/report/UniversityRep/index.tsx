@@ -68,15 +68,15 @@ const index = () => {
   return (
     <div>
       <PageHeader title="Report" actions bordered />
-      <div className='flex justify-between my-2'>
-        <SearchBar size="middle" handleChange={handleChange} />
-        <div className='flex justify-end gap-2'>
-          <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
-          <DropDown
+      <div className='flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row"'>
+      <div className="max-sm:w-full md:w-[50%] lg:w-[25%]"> <SearchBar size="middle" handleChange={handleChange} /></div> 
+        <div className='w-full flex flex-row md:justify-end gap-2 '>
+        <div> <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} /></div> 
+        <div> <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => { action.downloadPdfOrCsv(event, TableColumn, reportTableData, "Report") }}
-          />
+          /></div> 
         </div>
       </div>
       <BoxWrapper>

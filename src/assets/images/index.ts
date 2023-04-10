@@ -589,3 +589,7 @@ export { ReactComponent as GeneralInfo } from '../../assets/images/profile/stude
 export { ReactComponent as ProfileDoc } from '../../assets/images/profile/student/document-text.svg';
 export { ReactComponent as Imigration } from '../../assets/images/profile/student/Immigration.svg';
 export { ReactComponent as ProfileCards } from '../../assets/images/profile/student/cards.svg';
+
+//404 page
+export { default as Page_404 } from '../../assets/images/404/page-404.svg';
+export { default as Page404 } from '../../assets/images/404/404.svg';
