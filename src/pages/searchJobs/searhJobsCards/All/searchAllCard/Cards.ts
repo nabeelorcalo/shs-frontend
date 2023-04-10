@@ -1,9 +1,5 @@
 import Logo from "../../../../../assets/images/serachJobs/logo.png";
-import Card1 from "../../../../../assets/images/serachJobs/card2.png";
-import Card2 from "../../../../../assets/images/serachJobs/card3.png";
-import Card3 from "../../../../../assets/images/serachJobs/card4.png";
-import Card4 from "../../../../../assets/images/serachJobs/card5.png";
-import Card5 from "../../../../../assets/images/serachJobs/card6.png";
+
 
 export const AllJobsData = [
     {
@@ -18,8 +14,8 @@ export const AllJobsData = [
     },
     {
         id: "2",
-        coverPhoto: Card1,
-        heading: "Data Center",
+        coverPhoto: Logo,
+        heading: "Power Source",
         location: "Liverpool, UK",
         time: "Posted 45 mins ago",
         post: "Data Analyst",
@@ -28,40 +24,40 @@ export const AllJobsData = [
     },
     {
         id: "3",
-        coverPhoto: Card2,
-        heading: "Liverpool, UK",
+        coverPhoto: Logo,
+        heading: "Power Source",
         location: "London, UK",
-        time: "Posted 45 mins ago",
+        time: "Posted 45 mins",
         post: "Business Analyst",
         description: "In this role, you will Write high quality, maintainable, reusable code following solid principles, Independently clarify technical requirements, develop coding estimates and apply a broad...",
         tags: ['utility bills', 'laundry', 'meals'],
     },
     {
         id: "4",
-        coverPhoto: Card3,
-        heading: "Delaval",
+        coverPhoto: Logo,
+        heading: "Power Source",
         location: "Manchester, UK",
-        time: "Posted 45 mins ago",
+        time: "Posted 45 mins",
         post: "Business Analyst",
         description: "In this role, you will Write high quality, maintainable, reusable code following solid principles, Independently clarify technical requirements, develop coding estimates and apply a broad...",
         tags: ['utility bills', 'laundry', 'meals'],
     },
     {
         id: "5",
-        coverPhoto: Card4,
-        heading: "Mystic",
+        coverPhoto: Logo,
+        heading: "Power Source",
         location: "London, UK",
-        time: "Posted 45 mins ago",
+        time: "Posted 45 mins ",
         post: "Ui Ux Designer",
         description: "In this role, you will Write high quality, maintainable, reusable code following solid principles, Independently clarify technical requirements, develop coding estimates and apply a broad...",
         tags: ['utility bills', 'laundry', 'meals'],
     },
     {
         id: "6",
-        coverPhoto: Card5,
-        heading: "Exodus",
+        coverPhoto: Logo,
+        heading: "Power Source",
         location: "York, UK",
-        time: "Posted 45 mins ago",
+        time: "Posted 45 mins ",
         post: "Data Analyst",
         description: "In this role, you will Write high quality, maintainable, reusable code following solid principles, Independently clarify technical requirements, develop coding estimates and apply a broad...",
         tags: ['utility bills', 'laundry', 'meals'],

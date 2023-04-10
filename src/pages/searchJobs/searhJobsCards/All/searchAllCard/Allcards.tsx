@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Row } from "antd";
 import { BoxWrapper } from "../../../../../components";
 import { AllJobsData } from "./Cards";
 import "./Styles.scss";
+import DrawerBar from "../../Tabs/drawerSideBar/Drawer";
+import JobDetails from "../../../jobDetails/jobDetails";
 
 interface Props {
   maxWidth?: string;
@@ -22,31 +24,17 @@ interface Props {
   handleChatClick?: () => void;
 }
 const AllCardsTab = (props: any) => {
-  const {
-    maxWidth,
-    coverPhoto,
-    id,
-    discount,
-    autualPrice,
-    withDiscountPrice,
-    propertyAvailableFor,
-    propertyType,
-    totalBeds,
-    totalWashRoom,
-    tags = ["utility bills", "laundry", "meals", "others"],
-    location,
-    handleSaveClick,
-    handleDetailClick,
-    handleChatClick,
-  } = props;
+  const { openDetailPage, setOpenDetailPage } = props;
+  
+  const { tags = ["utility bills", "laundry", "meals", "others"] } = props;
   return (
     <>
       <BoxWrapper>
         <Row gutter={[20, 20]} className="my-5" justify="space-between">
           {AllJobsData.map((data: any) => (
             <Col lg={8} md={12} sm={24} xs={24}>
-              <div>
-                <BoxWrapper>
+              <div className="card-wrapper">
+                <BoxWrapper className="dsfasfd">
                   <div className="flex">
                     <div>
                       <img src={data.coverPhoto} />
@@ -77,7 +65,7 @@ const AllCardsTab = (props: any) => {
                   </div>
                   <Button
                     className="my-7 font-semibold flex-1 card-btn detail-btn rounded-lg accommodation-badger white-color"
-                    onClick={() => {}}
+                    onClick={() => setOpenDetailPage(!openDetailPage)}
                   >
                     Details
                   </Button>
@@ -87,6 +75,10 @@ const AllCardsTab = (props: any) => {
           ))}
         </Row>
       </BoxWrapper>
+      <JobDetails
+        setOpenDetailPage={setOpenDetailPage}
+        openDetailPage={openDetailPage}
+      />
     </>
   );
 };

@@ -605,4 +605,11 @@ export { ReactComponent as TabIcon7 } from './serachJobs/tab7.svg';
 export { ReactComponent as TabIcon8 } from './serachJobs/tab8.svg';
 export { ReactComponent as TabIcon9 } from './serachJobs/tab9.svg';
 export { ReactComponent as PowerLogo } from './serachJobs/logo.svg';
+export { ReactComponent as CrossIcon } from './serachJobs/close-circle.svg';
+export { ReactComponent as Home2 } from './serachJobs/home-2.svg';
+export { ReactComponent as ProgressIcon } from './serachJobs/progressloc.svg';
+export { ReactComponent as Boy } from './serachJobs/boy.svg';
+export { ReactComponent as Cycle } from './serachJobs/cycle.svg';
+export { ReactComponent as Car } from './serachJobs/car.svg';
+export { ReactComponent as Bus } from './serachJobs/bus.svg';
 
