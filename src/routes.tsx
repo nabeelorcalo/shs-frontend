@@ -33,6 +33,7 @@ import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
 import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
+import { ErrorFallback } from "./pages/errors/errorBoundary";
 // Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -277,6 +278,11 @@ const UniversitesProfile = Loadable(
 );
 
 export const publicRoutes = [
+  {
+    key: `error-boundry`,
+    path: `error-boundry`,
+    element:<ErrorFallback/>
+  },
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
@@ -554,6 +560,7 @@ const delegateAgentRoutes = [
         path: `link-account`,
         element: <LinkAccount />,
       },
+      
       {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
