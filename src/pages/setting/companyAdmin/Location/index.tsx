@@ -52,13 +52,13 @@ const SettingLocation: React.FC = () => {
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} lg={12} xxl={8}>
-              <BoxWrapper className="location-box-wrapper">
+              <BoxWrapper className="p-3">
                 <div className="flex">
                   <Text>{data.cardImage}</Text>
                   <div className="flex px-3 justify-between mt-1 w-full">
                     <div className="flex flex-col">
-                      <Title level={5}>{data.name}</Title>
-                      <Text> {data.content}</Text>
+                      <Text className="text-sm sm:text-base">{data.name}</Text>
+                      <Text  className="text-sm sm:text-base"> {data.content}</Text>
                       <Space className="flex py-2">
                         <Text>{data.contentImage}</Text>
                         <Text className="font-normal text-xs p-0 m-0">
