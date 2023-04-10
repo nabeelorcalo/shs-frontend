@@ -25,7 +25,7 @@ const statusArray = [
     no: 2
   },
   {
-    status: 'Offer Letter',
+    status: 'OfferLetter',
     no: 4
   },
   {
@@ -38,11 +38,132 @@ const statusArray = [
   }
 ]
 
+
+const cardArray = [
+  {
+    name: "Jane Cooper",
+    rating: 4,
+    time: "2 days ago",
+    status: "Applied",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "Roman Akhmervo",
+    rating: 2,
+    time: "2 days ago",
+    status: "Hired",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5896.jpg"
+  },
+  {
+    name: "janen gooper",
+    rating: 4,
+    time: "2 days ago",
+    status: "Contract",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "Jane swister",
+    rating: 5,
+    time: "2 days ago",
+    status: "Interviewed",
+    img: "https://faces-img.xcdn.link/image-lorem-face-975.jpg"
+  },
+  {
+    name: "Laura gail",
+    rating: 4,
+    time: "2 days ago",
+    status: "Recommended",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "Leopard cris",
+    rating: 1,
+    time: "2 days ago",
+    status: "Recommended",
+    img: "https://faces-img.xcdn.link/image-lorem-face-1903.jpg"
+  },
+  {
+    name: "Dineo meno",
+    rating: 2,
+    time: "2 days ago",
+    status: "Hired",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "Clonde filte",
+    rating: 4,
+    time: "2 days ago",
+    status: "OfferLetter",
+    img: "https://faces-img.xcdn.link/image-lorem-face-262.jpg"
+  },
+  {
+    name: "loversa tripe",
+    rating: 1,
+    time: "2 days ago",
+    status: "Contract",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "Nicobe mobal",
+    rating: 3,
+    time: "2 days ago",
+    status: "OfferLetter",
+    img: "https://faces-img.xcdn.link/image-lorem-face-569.jpg"
+  },
+  {
+    name: "diverdentine stlo",
+    rating: 5,
+    time: "2 days ago",
+    status: "Applied",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "Desgino modu",
+    rating: 1,
+    time: "2 days ago",
+    status: "Applied",
+    img: "https://faces-img.xcdn.link/image-lorem-face-4370.jpg"
+  },
+  {
+    name: "Laiq faild",
+    rating: 3,
+    time: "2 days ago",
+    status: "Interviewed",
+    img: "https://faces-img.xcdn.link/image-lorem-face-1196.jpg"
+  },
+  {
+    name: "turba droped",
+    rating: 2,
+    time: "2 days ago",
+    status: "Recommended",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5543.jpg"
+  },
+  {
+    name: "calse doplin",
+    rating: 5,
+    time: "2 days ago",
+    status: "Applied",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+  {
+    name: "lowang eenal",
+    rating: 1,
+    time: "2 days ago",
+    status: "Hired",
+    img: "https://faces-img.xcdn.link/image-lorem-face-3621.jpg"
+  },
+
+]
+
 const InternshipPipeLine = () => {
   const navigate = useNavigate()
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
+
+  const colorObj = {
+
+  }
   return (
     <>
       <PageHeader title="Internships Pipeline" />
@@ -96,13 +217,13 @@ const InternshipPipeLine = () => {
         </div>
         <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
           {
-            statusArray.map((item, idx) => {
+            statusArray.map((items, idx) => {
               return (
                 <div className="flex flex-col p-2 ">
                   <div key={idx} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
-                      <div className="h-5 w-5 rounded text-off-white-bg-color"></div>
-                      <p>{item.status}</p>
+                      <div className="h-5 w-5 rounded text-off-white-bg-color bg-[#e2e2e2]"></div>
+                      <p>{items.status}</p>
                     </div>
                     <div>
                       <div className="h-5 w-5 rounded text-off-white-bg-color">02</div>
@@ -110,10 +231,20 @@ const InternshipPipeLine = () => {
                   </div>
                   <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
                     {
-                      Array(item.no).fill(item.no).map((items, idx) => {
+                      cardArray.filter((item) => {
+                        return (item.status === items.status);
+                      }).map((items, idx) => {
                         return (
                           <>
-                            <InternshipPipeLineCard key={idx} />
+                            <InternshipPipeLineCard
+                              key={idx}
+                              name={items.name}
+                              rating={items.rating}
+                              time={items.time}
+                              status={items.status}
+                              img={items.img}
+
+                            />
 
                           </>
                         )
