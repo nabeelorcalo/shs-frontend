@@ -42,7 +42,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
   return (
     <div>
       {heading && (
-        <div className="flex items-center absolute">
+        <div className="flex items-center">
           <p
             style={{
               fontSize: fontSize,
