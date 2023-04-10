@@ -1,9 +1,9 @@
-# The manifest for the "fe" service.
+# The manifest for the "frontend" service.
 # Read the full specification for the "Load Balanced Web Service" type at:
 #  https://aws.github.io/copilot-cli/docs/manifest/lb-web-service/
 
 # Your service name will be used in naming your resources like log groups, ECS services, etc.
-name: fe
+name: frontend
 type: Load Balanced Web Service
 
 # Distribute traffic to your service.
@@ -26,7 +26,7 @@ memory: 1024    # Amount of memory in MiB used by the task.
 count: 1       # Number of tasks that should be running in your service.
 exec: true     # Enable running commands in your container.
 network:
-connect: true # Enable Service Connect for intra-environment traffic between services.
+  connect: true # Enable Service Connect for intra-environment traffic between services.
 
 # storage:
   # readonly_fs: true       # Limit to read-only access to mounted root filesystems.
@@ -48,6 +48,6 @@ connect: true # Enable Service Connect for intra-environment traffic between ser
 environments:
   dev:
     http:
-      alias: fe.dev.studenthelpsquad.developersorcalo.com
+      alias: frontend.dev.shs-fe.developersorcalo.com
     variables:
       VITE_NODE_ENV: dev
