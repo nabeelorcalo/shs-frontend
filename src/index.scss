@@ -170,6 +170,10 @@ svg {
       &:hover {
         background-color: #ffffff;
       }
+
+      &.ant-dropdown-menu-item-selected {
+        background-color: $text-input-bg-color;
+      }
     }
   }
 }

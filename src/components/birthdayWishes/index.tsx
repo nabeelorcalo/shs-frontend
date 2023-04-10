@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Carousel, Avatar, Image, Row } from "antd";
+import { useState } from "react";
+import { Carousel, Avatar, Image } from "antd";
 import { Button } from "../Button";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import "./style.scss";
-
 interface BirthdayProps {
   user?: string;
   wishList: any;
@@ -20,8 +18,6 @@ export const BirthdayWishes = (props: BirthdayProps) => {
     newArr[index].isWished = true;
     setWishList(newArr);
   };
-  console.log(wishList);
-
   return (
     <div
       className={`birthday-wishes bg-white rounded-2xl p-5 wrapper-shadow h-full ${

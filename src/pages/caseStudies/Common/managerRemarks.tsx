@@ -35,10 +35,10 @@ const ManagerRemarks = () => {
   },
   ]
   return (
-    <div className='flex flex-row justify-between'>
+    <div className='flex xs:flex-col sm:flex-row justify-between'>
       {managerRemarks.map((data) => {
         return (
-          <div className='flex flex-col'>
+          <div className='flex xs:flex-row sm:flex-col xs:gap-1 sm-gap-0 xs:my-1 sm:my-0'>
             <span className='text-center font-normal'>{data.icon}</span>
             <span className=' text-sm text-center font-normal '>{data.content}</span>
           </div>
