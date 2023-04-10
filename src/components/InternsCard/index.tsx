@@ -34,7 +34,7 @@ export const InternsCard = (props: any) => {
               <p>{date_of_birth}</p>
             </div>
           </div>
-          <div className='flex flex-row gap-3 items-center'>
+          <div className='flex sm:flex-row flex-col gap-3 items-center'>
             <Button
               className="border-0 accommodation-btn-info-bg text-info-color-dark"
               size="small"
