@@ -5,11 +5,10 @@ import {
   IconLocation,
   UserIcon,
   DownlaodFileIcon,
-  Success,
 } from "../../assets/images";
 import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
-import { Breadcrumb, Notifications } from "../../components";
+import { Breadcrumb } from "../../components";
 import "./style.scss";
 
 export const SalarySlip = () => {
@@ -52,7 +51,7 @@ export const SalarySlip = () => {
         onClick={downloadClick}
         icon={<DownlaodFileIcon />}
       />
-      <Card className="mt-5">
+      <Card className="mt-5 main-salary-card">
         <div className="flex justify-between items-center max-sm:flex-col md:flex-row gap-3">
           <div className="w-52 flex justify-center" >
             <Logo className="logo" />
@@ -60,7 +59,7 @@ export const SalarySlip = () => {
           <div className="details flex flex-col gap-2">
             {userDetail.map((val: any) => (
               <div className="flex gap-2.5">
-                <span className="text-secondary-color">{val.title}</span>
+                <span className="text-secondary-color max-sm:text-xs md:text-lg">{val.title}</span>
                 <span className="mt-1">{val?.icon}</span>
               </div>
             ))}
@@ -77,7 +76,7 @@ export const SalarySlip = () => {
                 {val.subData.map((item: any) => (
                   <div className="flex gap-3 items-center">
                     {item?.icon}
-                    <span className="text-secondary-body-color text-lg font-normal">
+                    <span className="text-secondary-body-color max-sm:text-xs md:text-lg font-normal">
                       {item.label}
                     </span>
                   </div>

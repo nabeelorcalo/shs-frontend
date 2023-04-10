@@ -1,4 +1,5 @@
 @import '../../scss/_colors.scss';
+
 .candidate-main{
   .candidate-right-sec{
     @media only screen and (max-width:575px) {
@@ -32,7 +33,7 @@
 
 .user-info-main {
   border-bottom: 1px solid $text-error-line-color;
-  height: 190px;
+  padding-bottom: 20px;
 
   .user-info {
     display: flex;
@@ -161,6 +162,9 @@
 
   border-right: 1px solid $text-error-line-color;
   height: 100%;
+  @media only screen and (max-width:768px) {
+    border-right: none;
+  }
 
   .ant-dropdown-trigger:nth-child(1) {
     width: 93px;
@@ -277,6 +281,7 @@
 .skills-main {
   min-height: 210px;
   border-bottom: 1px solid $text-error-line-color;
+  padding-bottom: 20px;
 
   .skill-text {
     background-color: $text-input-bg-color;
@@ -301,22 +306,6 @@
     border-radius: 14.5px;
   }
 
-}
-
-.intro {
-
-
-  .heading {
-    color: $text-primary-title-color;
-    font-weight: 500;
-    font-size: 16px;
-  }
-
-  .image {
-    width: 258px;
-    height: 122px;
-
-  }
 }
 
 .advance-dropdown {
@@ -438,6 +427,9 @@
   background: $text-input-bg-color;
   border-radius: 8px;
   border: none;
+  @media only screen and (max-width:1366px) {
+    width: 100%;
+  }
 
   &:hover {
     background-color: transparent;
@@ -545,7 +537,7 @@
 .hover-effect {
   transition: 0.8s;
   position: absolute;
-  left: 300px;
+  // left: 300px;
   top: 0;
   display: flex;
   align-items: center;
