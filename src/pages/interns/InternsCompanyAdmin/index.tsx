@@ -40,7 +40,7 @@ const InternsCM = () => {
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
 
 
-  const ButtonStatus = (props: any) => { 
+  const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "Completed": "primary-bg-color",
       "Employed": "text-success-bg-color",
@@ -432,7 +432,7 @@ const InternsCM = () => {
 
       </div>
       <Alert
-        width={700}
+        width={600}
         type="error"
         state={terminate}
         setState={setTerminate}
@@ -454,7 +454,7 @@ const InternsCM = () => {
       />
       <PopUpModal
         open={assignManager}
-        width={700}
+        width={600}
         close={() => { setAssignManager(false) }}
         title="Assign Manager"
         children={
