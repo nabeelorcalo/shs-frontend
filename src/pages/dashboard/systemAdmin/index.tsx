@@ -34,7 +34,7 @@ const SystemAdmin = () => {
         />
       </Col>
       <Col xs={24} xxl={10}>
-        <Row className="bg-white rounded-2xl p-5 wrapper-shadow">
+        <Row gutter={gutter} className="bg-white rounded-2xl p-5 wrapper-shadow">
           <Col xs={24} xl={12}>
             <RegionCard regionData={regionData} />
           </Col>

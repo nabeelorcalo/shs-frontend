@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {AccommodationCard} from '../../../components'
+import useAccommodationData from "../actionHandler";
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import thumb2 from '../../../assets/images/gallery/thumb2.png'
@@ -22,13 +23,14 @@ const AvailableProperties = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const {propertiesList} = useAccommodationData()
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    console.log("Properties List:: ", propertiesList)
   }, [])
 
 

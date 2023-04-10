@@ -6,7 +6,15 @@ import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
-import { IconAddListings, IconAngleDown, IconMore, IconLink, IconAddUpload, IconRemoveAttachment } from '../../assets/images'
+import useListingsHook from './actionHandler'
+import {
+  IconAddListings,
+  IconAngleDown,
+  IconMore,
+  IconLink,
+  IconAddUpload, 
+  IconRemoveAttachment 
+} from '../../assets/images'
 import {
   Button,
   Table,
@@ -147,6 +155,7 @@ const tableData = [
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {listingsData, createListing} = useListingsHook()
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
@@ -278,10 +287,10 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    
   }, [])
 
-
+  
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
