@@ -19,13 +19,10 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
   const [payrollData,setPayrollData] = useRecoilState(payrollDataState);
-
-  const getData = async (type: string): Promise<any> => {
-    const { data }:any = api.get(`${import.meta.env.VITE_APP_URL}/${PAYROLL_FINDALL}?page=1&limit=10`);
-    console.log("payroll data are " , data);
-  };
-
-
+    
+    const getData = () => {
+      return api.get(`https://gateway.dev.shs-be.developersorcalo.com/${PAYROLL_FINDALL}?page=1&limit=10`);
+  }
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 

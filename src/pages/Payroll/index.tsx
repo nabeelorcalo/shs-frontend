@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   GlobalTable,
   SearchBar,
@@ -55,8 +55,12 @@ const Payroll = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const [payRollData,setPayrollData] = useState([]);
 
   const action = useCustomHook()
+  useEffect(()=>{
+    action.getData().then((res: any) => setPayrollData(res.data)).catch((err) => console.log(err))
+  },[])
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
   const columns = [
@@ -96,88 +100,88 @@ const Payroll = () => {
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      name: "Mino Marina",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      payroll_cycle: "Jan-July",
-    },
-    {
-      no: "02",
-      name: "Julia Johns",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      payroll_cycle: "Jan-July",
-    },
-    {
-      no: "03",
-      name: "Joseph Gonzalex",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      payroll_cycle: "Jan-July",
-    },
-    {
-      no: "02",
-      name: "Julia Johns",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      payroll_cycle: "Jan-July",
-    },
-    {
-      no: "03",
-      name: "Joseph Gonzalex",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      payroll_cycle: "Jan-July",
-    },
-    {
-      no: "02",
-      name: "Julia Johns",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      payroll_cycle: "Jan-July",
-    },
-  ];
-  const DownloadPopOver = () => {
-    const navigate = useNavigate()
-    const items: MenuProps['items'] = [
-      {
-        key: '1',
-        label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
-            PDF
-          </a>
-        ),
-      },
-      {
-        key: '2',
-        label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
-            Excel
-          </a>
-        ),
-      },
-    ];
+  // const tableData = [
+  //   {
+  //     no: "01",
+  //     name: "Mino Marina",
+  //     department: "Business Analyst",
+  //     joining_date: "01/07/2022",
+  //     payroll_cycle: "Jan-July",
+  //   },
+  //   {
+  //     no: "02",
+  //     name: "Julia Johns",
+  //     department: "Scientist Analyst",
+  //     joining_date: "01/07/2023",
+  //     payroll_cycle: "Jan-July",
+  //   },
+  //   {
+  //     no: "03",
+  //     name: "Joseph Gonzalex",
+  //     department: "Scientist Analyst",
+  //     joining_date: "01/07/2023",
+  //     payroll_cycle: "Jan-July",
+  //   },
+  //   {
+  //     no: "02",
+  //     name: "Julia Johns",
+  //     department: "Scientist Analyst",
+  //     joining_date: "01/07/2023",
+  //     payroll_cycle: "Jan-July",
+  //   },
+  //   {
+  //     no: "03",
+  //     name: "Joseph Gonzalex",
+  //     department: "Scientist Analyst",
+  //     joining_date: "01/07/2023",
+  //     payroll_cycle: "Jan-July",
+  //   },
+  //   {
+  //     no: "02",
+  //     name: "Julia Johns",
+  //     department: "Scientist Analyst",
+  //     joining_date: "01/07/2023",
+  //     payroll_cycle: "Jan-July",
+  //   },
+  // ];
+  // const DownloadPopOver = () => {
+  //   const navigate = useNavigate()
+  //   const items: MenuProps['items'] = [
+  //     {
+  //       key: '1',
+  //       label: (
+  //         <a rel="noopener noreferrer" onClick={() => { }}>
+  //           PDF
+  //         </a>
+  //       ),
+  //     },
+  //     {
+  //       key: '2',
+  //       label: (
+  //         <a rel="noopener noreferrer" onClick={() => { }}>
+  //           Excel
+  //         </a>
+  //       ),
+  //     },
+  //   ];
+  //   return (
+  //     <Dropdown menu={{ items }} placement="bottomRight">
+  //       <DownloadDocumentIcon />
+  //     </Dropdown>
+  //   )
+  // }
+  const newTableData = payRollData.map((item, idx) => {
     return (
-      <Dropdown menu={{ items }} placement="bottomRight">
-        <DownloadDocumentIcon />
-      </Dropdown>
-    )
-  }
-  const newTableData = tableData.map((item, idx) => {
-    return (
       {
-        no: item.no,
-        avatar:
-          <Avatar
-            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-          />,
-        name: item.name,
-        department: item.department,
-        joining_date: item.joining_date,
-        payroll_cycle: item.payroll_cycle,
+        // no: idx+1,
+        // avatar:
+        //   <Avatar
+        //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+        //   />,
+        // name: item.name,
+        // department: item.department,
+        // joining_date: item.joining_date,
+        // payroll_cycle: item.payroll_cycle,
         actions: <PopOver />
       }
     )
@@ -240,7 +244,7 @@ const Payroll = () => {
                       startIcon=""
                       value=""
                     />
-                  </div> 
+                  </div>
                   <div className="flex flex-col gap-2">
                     <p>Payroll Cycle</p>
                     <DropDown
@@ -289,7 +293,7 @@ const Payroll = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Payroll")
+                action.downloadPdfOrCsv(event, csvAllColum, payRollData, "Company Admin Payroll")
               }}
               value=""
             />
@@ -336,3 +340,7 @@ const Payroll = () => {
 };
 
 export default Payroll;
+function useRecoilState(payrollDataState: any): [any, any] {
+  throw new Error("Function not implemented.");
+}
+

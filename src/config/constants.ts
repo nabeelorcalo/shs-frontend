@@ -1,6 +1,6 @@
 
 export default {
-  APP_URL: import.meta.env.VITE_APP_URL || "http://localhost:8001",
+  APP_URL: import.meta.env.VITE_APP_URL || "https://gateway.dev.shs-be.developersorcalo.com",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
