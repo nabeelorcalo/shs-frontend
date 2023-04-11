@@ -21,13 +21,7 @@ const SigninForm = (props: any) => {
       email: Email,
       password: password,
     });
-
-   
-
         navigate("/dashboard");
-    //   window.location.reload()
-
-
   };
   const handleChange = (e: any) => {
     const { name, value } = e.target;

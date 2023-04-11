@@ -11,10 +11,7 @@ const useCustomHook = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
   const login = async (body: any): Promise<any> => {
-    const { data } = await api.post(
-      `${import.meta.env.VITE_APP_URL}/${LOGIN}`,
-      body
-    );
+    const { data } = await api.post(LOGIN, body);
     localStorage.setItem("accessToken", data.accessToken);
     setCurrentUser(data.user);
 
