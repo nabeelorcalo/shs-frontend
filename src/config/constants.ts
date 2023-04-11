@@ -8,28 +8,15 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  COMPANY_ADMIN: 'CompanyAdmin',
-  MANAGER: 'Manager',
-  INTERN: 'Intern',
-  UNIVERSITY: 'University',
-  SYSTEM_ADMIN: 'SystemAdmin',
-  DELEGATE_AGENT: 'DelegateAgent',
-  STUDENT: 'Student',
-  AGENT: 'Agent',
-  USER_ROLE: JSON.parse(
-    localStorage.getItem("UserData") || JSON.stringify({ role: "" })
-  )?.role,
+  SYSTEM_ADMIN: 'SYS_ADMIN',
+  INTERN: 'INTERN',
+  COMPANY_ADMIN: 'COMPANY_ADMIN',
+  MANAGER: 'COMPANY_MANAGER',
+  DELEGATE_AGENT: 'DELEGATE_AGENT',
+  AGENT: 'PROPERTY_AGENT',
+  STUDENT: 'STUDENT',
+  UNIVERSITY: 'UNIVERSITY',
 };
-
-// Possible string of roles:
-// SystemAdmin,
-// Manager,
-// DelegateAgent,
-// CompanyAdmin,
-// Intern,
-// Student,
-// University,
-// Agent,
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
