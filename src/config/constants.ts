@@ -1,4 +1,3 @@
-console.log("ENV: ", import.meta.env.VITE_APP_URL);
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL || "http://localhost:8001",
@@ -8,28 +7,17 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  COMPANY_ADMIN: 'CompanyAdmin',
-  MANAGER: 'Manager',
-  INTERN: 'Intern',
-  UNIVERSITY: 'University',
-  SYSTEM_ADMIN: 'SystemAdmin',
-  DELEGATE_AGENT: 'DelegateAgent',
-  STUDENT: 'STUDENT',
-  AGENT: 'Agent',
-  USER_ROLE: JSON.parse(
-    localStorage.getItem("UserData") || JSON.stringify({ role: "" })
-  )?.role,
+  COMPANY_ADMIN: "CompanyAdmin",
+  MANAGER: "Manager",
+  INTERN: "Intern",
+  UNIVERSITY: "University",
+  SYSTEM_ADMIN: "SystemAdmin",
+  DELEGATE_AGENT: "DelegateAgent",
+  STUDENT: "student",
+  PUBLIC: "PUBLIC",
+  AGENT: "Agent",
 };
 
-// Possible string of roles:
-// SystemAdmin,
-// Manager,
-// DelegateAgent,
-// CompanyAdmin,
-// Intern,
-// Student,
-// University,
-// Agent,
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
@@ -45,7 +33,7 @@ export const ROUTES_CONSTANTS: any = {
   ERROR_PAGE: "error-page",
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
-  INTERNSHIP_PIPELINE: 'internships/pipeline',
+  INTERNSHIP_PIPELINE: "internships/pipeline",
   NEW_INTERNSHIP: "internships/new-internship",
   VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
   PAYROLL: "payroll",
@@ -59,8 +47,8 @@ export const ROUTES_CONSTANTS: any = {
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
   TIMESHEET: "timesheet",
-  TIMESHEETHISTORY: 'timesheet/history',
-  INTERNTIMESHEETHISTORY: 'timesheet/view-history',
+  TIMESHEETHISTORY: "timesheet/history",
+  INTERNTIMESHEETHISTORY: "timesheet/view-history",
   PERFORMANCE: "performance",
   VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
   DETAIL: "detail",
@@ -117,7 +105,7 @@ export const ROUTES_CONSTANTS: any = {
   RESERVATIONS: "reservations",
   SETTING: "settings",
   CERTIFICATES: "certificates",
-  CERTIFICATESDETAIL: 'certificates/detail',
+  CERTIFICATESDETAIL: "certificates/detail",
   PERSONALISATION: "personalisation",
   CHAT: "chat",
   SETTING_LOCATION: "location",
@@ -133,21 +121,25 @@ export const ROUTES_CONSTANTS: any = {
   TEMPLATE_OFFER_LETTER: "/settings/template/template-offer-letters",
   TEMPLATE_CONTRACT: "/settings/template/contract",
   TEMPLATE_REJECTION_LETTER: "/settings/template/rejection-letter",
-  TEMPLATE_CERTIFICATE_APPRECIATION: "/settings/template/certificate-of-appreciation",
-  TEMPLATE_CERTIFICATION_COMPLETION: "/settings/template/certificate-of-completion",
+  TEMPLATE_CERTIFICATE_APPRECIATION:
+    "/settings/template/certificate-of-appreciation",
+  TEMPLATE_CERTIFICATION_COMPLETION:
+    "/settings/template/certificate-of-completion",
   OFFER_LETTER_NEW_TEMPLATE: "/settings/template/offer-letters/new-template",
   CONTRACT_NEW_TEMPLATE: "/settings/template/contract/new-template",
-  REJECTION_LETTER_NEW_TEMPLATE: "/settings/template/rejection-letter/new-template",
-  TCA_NEW_TEMPLATE: "/settings/template/certificate-of-appreciation/new-template",
+  REJECTION_LETTER_NEW_TEMPLATE:
+    "/settings/template/rejection-letter/new-template",
+  TCA_NEW_TEMPLATE:
+    "/settings/template/certificate-of-appreciation/new-template",
   TCC_NEW_TEMPLATE: "/settings/template/certificate-of-completion/new-template",
   ADD_SHIFT: "/settings/shifts/add-shift",
   PAYROLL_ADD_CATEGORY: "/settings/payroll/add-category",
   ALL_GRIEVANCES: "/grievances/all-grievance",
   GRIEVANCES_Details: "/grievances/all-grievance/grievance-detials",
-  HISTORY: 'history',
+  HISTORY: "history",
   UNIVERSITIES_INTERNS: "universities/interns",
   UNIVERSITIES_PROFILE: "universities/profile",
-  AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
+  AcceptedFileTyp: "application/pdf,image/jpeg,application/msword",
 };
 
 export const STATUS_CONSTANTS: any = {
@@ -157,6 +149,6 @@ export const STATUS_CONSTANTS: any = {
   ACTIVE: "active",
   PENDING: "pending",
   CLOSED: "closed",
-  REJECTED: "rejected"
-}
-export const AcceptedFileTyp = 'application/pdf,image/jpeg,application/msword'
+  REJECTED: "rejected",
+};
+export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
