@@ -5,7 +5,6 @@ import { Avatar, Typography, Layout, Menu, theme } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import constants from "../../../config/constants";
 import {} from "../../../assets/images";
-import avatar from "../../../assets/images/header/avatar.svg";
 import { itemsManager } from "./menuManager";
 import { itemsStudents } from "./menuStudents";
 import { itemsIntern } from "./menuIntern";
@@ -14,7 +13,7 @@ import { itemsUniversity } from "./menuUniversity";
 import { itemsSystemAdmin } from "./menuSystemAdmin";
 import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
-import { currentUserRoleState } from "../../../store";
+import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
 const { Sider } = Layout;
 
@@ -37,12 +36,15 @@ const AppSidebar: FC<SidebarProps> = ({
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
+  const currentUser = useRecoilValue(currentUserState);
 
   // const {role } =useCurrentUserRole()
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -94,9 +96,11 @@ const AppSidebar: FC<SidebarProps> = ({
       onBreakpoint={onBreakpoint}
     >
       <div className="sidebar-user-profile">
-        <Avatar size={48} src={avatar} />
+        <Avatar size={48} src={currentUser?.avatar}>
+          {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
+        </Avatar>
         <div className="sidebar-user-profile-content">
-          <Typography.Title level={4}>Maria Sanoid</Typography.Title>
+          <Typography.Title level={4}>{currentUser?.firstName} {currentUser?.lastName}</Typography.Title>
           <div className="sidebar-user-profile-role">{role}</div>
         </div>
       </div>

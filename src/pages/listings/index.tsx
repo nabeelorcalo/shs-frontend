@@ -7,6 +7,9 @@ import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
+import { listingsState } from "../../store";
+import { useRecoilValueLoadable, useRecoilValue } from "recoil";
+import dayjs from 'dayjs'
 import {
   IconAddListings,
   IconAngleDown,
@@ -38,13 +41,17 @@ import "./style.scss";
 
 interface DataType {
   key: React.Key;
+  id: number;
   nameAddress: string;
   propertyType: string;
-  bedroom: string;
+  totalBedrooms: number;
   verificationStatus: string;
-  rent: string;
+  monthlyRent: number;
   availability: any;
   publicationStatus: string;
+  availabilityStart: any;
+  availabilityEnd: any;
+
 }
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -56,106 +63,16 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '2',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '1',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '3',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'pending'
-  },
-  {
-    key: '4',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'pending'
-  },
-  {
-    key: '5',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '6',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '7',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '8',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '9',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'published'
-  },
-];
-
 
 
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {listingsData, createListing} = useListingsHook()
+  const listingsActions = useListingsHook()
+
+  const listingsData = useRecoilValueLoadable(listingsState)
+  const { state } = listingsData
+
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
@@ -207,21 +124,12 @@ const Listings = () => {
     "cancellationPolicy": "",
     "selectDocument": []
   })
-  const items: MenuProps['items'] = [
-    {
-      label: 'Edit',
-      key: 'listingEdit',
-    },
-    {
-      label: 'Remove',
-      key: 'listingRemove',
-    },
-  ];
+
 
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
-      dataIndex: 'nameAddress',
+      dataIndex: 'addressOne',
     },
     {
       title: 'Property Type',
@@ -230,7 +138,7 @@ const Listings = () => {
         return (
           <>
             <div>{row.propertyType}</div>
-            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.bedroom} {Number(row.bedroom) > 1 ? "Bedrooms" : "Bedroom"}</div>
+            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.totalBedrooms} {row.totalBedrooms > 1 ? "Bedrooms" : "Bedroom"}</div>
           </>
         );
       },
@@ -249,11 +157,16 @@ const Listings = () => {
     },
     {
       title: 'Rent',
-      dataIndex: 'rent',
+      dataIndex: 'monthlyRent',
     },
     {
       title: 'Availability',
       dataIndex: 'availability',
+      render: (_, row, index) => {
+        return (
+          <>{dayjs(row.availabilityStart, "DD/MM/YYYY")} - {dayjs(row.availabilityEnd, "DD/MM/YYYY")}</>
+        );
+      },
     },
     {
       title: 'Publication Status',
@@ -273,7 +186,15 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({ key }) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
+          <Dropdown
+            overlayClassName="shs-dropdown"
+            trigger={['click']} 
+            placement="bottomRight"
+            menu={{ items: [
+              {label: 'Edit', key: 'listingEdit', onClick: () => navigate(`/edit-listing/${row.id}`)},
+              {label: 'Remove', key: 'listingRemove', onClick: () => console.log('listingRemove')}
+            ]}}
+          >
             <div className="dropdown-button">
               <IconMore />
             </div>
@@ -287,22 +208,13 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    
+    listingsActions.fetchListings()
   }, [])
 
   
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function handleActionItem(key: any, id: any) {
-    if (key === 'listingEdit') {
-      navigate(`/edit-listing/${id}`)
-    }
-    if (key === 'listingRemove') {
-      console.log('listingRemove')
-    }
-  }
-
   function openModalAddListing() {
     setModalAddListingOpen(true)
   }
@@ -1164,8 +1076,9 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
+                    loading={state === 'loading'}
                     columns={tableColumns}
-                    dataSource={tableData}
+                    dataSource={listingsData?.contents?.data}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
                   />
                 </div>
