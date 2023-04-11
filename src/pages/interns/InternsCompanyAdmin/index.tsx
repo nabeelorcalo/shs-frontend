@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps } from 'antd';
 import useCustomHook from "./actionHandler";
-import Complete from "../complete";
+// import Complete from "../complete";
 
 
 
@@ -34,7 +34,7 @@ const InternsCM = () => {
   const [terminate, setTerminate] = useState(false)
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
+  // const [isToggle, setIsToggle] = useState(false)
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
@@ -257,7 +257,7 @@ const InternsCM = () => {
               size="middle"
             />
           </div>
-          <div className="flex flex-row gap-4">
+          <div className="flex flex-row gap-4 right-sec">
             <FiltersButton
               label="Filters"
               onClick={() => {
@@ -354,7 +354,7 @@ const InternsCM = () => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
+                      className="flex justify-center gap-2 white-bg-color teriary-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -363,7 +363,7 @@ const InternsCM = () => {
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
+                      className="flex justify-center gap-2 teriary-bg-color white-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -432,7 +432,7 @@ const InternsCM = () => {
 
       </div>
       <Alert
-        width={700}
+        width={600}
         type="error"
         state={terminate}
         setState={setTerminate}
@@ -454,7 +454,7 @@ const InternsCM = () => {
       />
       <PopUpModal
         open={assignManager}
-        width={700}
+        width={600}
         close={() => { setAssignManager(false) }}
         title="Assign Manager"
         children={
@@ -476,7 +476,7 @@ const InternsCM = () => {
         }
       />
 
-<Alert
+      <Alert
         width={700}
         type="success"
         state={complete}

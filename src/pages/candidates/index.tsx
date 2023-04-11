@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Col, Row } from "antd";
-import { DropDown, SearchBar } from "../../components";
+import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import DetailDrawer from "./viewDetails";
 import RejectModal from "./RejectModal";
+
 import "./style.scss";
 
 const Candidates = () => {
@@ -12,6 +13,7 @@ const Candidates = () => {
 
   return (
     <>
+    <PageHeader title="Candidates"/>
       <Row gutter={[20,20]} className="candidate-main">
         <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(e) => { }} />
@@ -27,12 +29,8 @@ const Candidates = () => {
           <CandidateTable setOpenDrawer={setOpenDrawer} setOpenRejectModal={setOpenRejectModal} />
         </Col>
       </Row>
-
-
       {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} />}
-
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} />}
-
     </>
   )
 }

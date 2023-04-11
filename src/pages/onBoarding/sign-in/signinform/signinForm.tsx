@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import useCustomHook from "../actionHandler";
 
 const SigninForm = (props: any) => {
   const navigate = useNavigate();
+  const action = useCustomHook();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -13,30 +15,13 @@ const SigninForm = (props: any) => {
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
+    const { Email, password } = values;
 
-    const user = [
-      { email: "systemadmin@user.com", role: "SystemAdmin" },
-      { email: "student@user.com", role: "Student" },
-      { email: "manager@user.com", role: "Manager" },
-      { email: "delegateagent@user.com", role: "DelegateAgent" },
-      { email: "intern@user.com", role: "Intern" },
-      { email: "university@user.com", role: "University" },
-      { email: "agent@user.com", role: "Agent" },
-      { email: "companyadmin@user.com", role: "CompanyAdmin" },
-    ].find((item) => item.email === values.Email && values.password ==="12345678");
-
-    if (user) {
-      localStorage.setItem(
-        "UserData",
-        JSON.stringify({ role: user.role, token: "dummytoken" })
-      );
-      navigate("/dashboard");
-      window.location.reload()
-
-
-    } else {
-      console.log("wrong username and password");
-    }
+    action.login({
+      email: Email,
+      password: password,
+    });
+        navigate("/dashboard");
   };
   const handleChange = (e: any) => {
     const { name, value } = e.target;
