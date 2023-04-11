@@ -25,7 +25,7 @@ import useCustomHook from "./actionHandler";
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const InternsCM = () => {
+const InternsCompanyAdmin = () => {
   const navigate = useNavigate()
   // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
@@ -493,4 +493,4 @@ const InternsCM = () => {
   );
 };
 
-export default InternsCM;
+export default InternsCompanyAdmin;

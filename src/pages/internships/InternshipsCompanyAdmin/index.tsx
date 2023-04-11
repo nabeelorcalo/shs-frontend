@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { InternshipsIcon } from '../../assets/images'
+import { InternshipsIcon } from '../../../assets/images'
 import {
   DropDown,
   SearchBar,
@@ -8,19 +8,19 @@ import {
   PageHeader,
   InternshipProgressCard,
   BoxWrapper
-} from '../../components'
-import Drawer from '../../components/Drawer'
+} from '../../../components'
+import Drawer from '../../../components/Drawer'
 import { Button, Col, Row } from 'antd'
-import '../../scss/global-color/Global-colors.scss'
-import './style.scss'
+import '../../../scss/global-color/Global-colors.scss'
+import '../style.scss'
 const mapArray: any = [1, 2, 3, 4]
 
-const CMInternships = () => {
+const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   return (
     <>
-      <PageHeader bordered title="Internships for Company Admin" />
+      <PageHeader bordered title="Internships" />
       <div className="flex flex-col gap-5 internship-details">
         <Row gutter={[20, 20]}>
           <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
@@ -126,4 +126,4 @@ const CMInternships = () => {
   )
 }
 
-export default CMInternships
+export default InternshipsCompanyAdmin
