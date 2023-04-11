@@ -1,4 +1,4 @@
-import Logo from "../../../../src/assets/images/serachJobs/logo.png"
+import Logo from "../../../../src/assets/images/serachJobs/logo.png";
 export const jobDetailsData = [
     {
         id: "1",
@@ -6,7 +6,7 @@ export const jobDetailsData = [
         title: "Frontend Developer",
         description: "London, UK",
         post: "Posted 45 mins ago",
-        tags: ["Full Time", "Paid", "On-Site"]
+        DetailsTags: ["Full Time", "Paid", "On-Site"]
     }
 ]
 export const typesDetails = [

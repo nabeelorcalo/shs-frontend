@@ -28,14 +28,14 @@ const SearchBarCards = (props: any) => {
           <Input
             prefix={<LocationIconJob className="mr-1" />}
             placeholder={"Enter location"}
-            className="bg-none text-input-bg-color "
+            className="bg-none text-input-bg-color"
           />
         </Col>
         <Col lg={2} md={6} sm={12} xs={24}>
           <GlobalButton name={"Search"} className={"py-6"} />
         </Col>
 
-        <Col lg={10} md={6} sm={12} xs={24} className="flex lg:justify-end ">
+        <Col lg={10} md={6} sm={12} xs={24} className="flex lg:justify-end">
           <FiltersButton label="Filters" onClick={() => setDrawer(!drawer)} />
         </Col>
       </Row>

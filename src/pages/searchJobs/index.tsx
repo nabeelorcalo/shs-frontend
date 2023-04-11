@@ -1,6 +1,5 @@
 import { Divider } from "antd";
 import { useState } from "react";
-import JobDetails from "./jobDetails/jobDetails";
 import SearchBarCards from "./searhJobsCards/Header";
 import SearchJobTabs from "./searhJobsCards/Tabs/Tabs";
 import "./style.scss";
