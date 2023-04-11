@@ -1573,10 +1573,10 @@ const ROLES_ROUTES: any = {
   DelegateAgent: delegateAgentRoutes,
   CompanyAdmin: companyAdminRoutes,
   Intern: internRoutes,
-  Student: studentRoutes,
+  STUDENT: studentRoutes,
   University: universityRoutes,
   Agent: agentRoutes,
-  Public: publicRoutes,
+  PUBLIC: publicRoutes,
 };
 
 export const getRoutes = (role: any) => {

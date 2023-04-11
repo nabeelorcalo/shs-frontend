@@ -14,16 +14,21 @@ import { itemsUniversity } from "./menuUniversity";
 import { itemsSystemAdmin } from "./menuSystemAdmin";
 import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
+import { currentUserRoleState } from "../../../store";
+import { useRecoilValue } from "recoil";
 const { Sider } = Layout;
 
 type SidebarProps = {
   collapsed: boolean;
   collapsedWidth: number;
-  onBreakpoint: any
-  
+  onBreakpoint: any;
 };
 
-const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
+const AppSidebar: FC<SidebarProps> = ({
+  collapsed,
+  collapsedWidth,
+  onBreakpoint,
+}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -31,6 +36,9 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const { useToken } = theme;
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
+  const role = useRecoilValue(currentUserRoleState);
+
+  // const {role } =useCurrentUserRole()
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -46,28 +54,28 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   };
 
   const menuSwitcher = (role: string) => {
-    if (role === "Student") {
+    if (role === constants.STUDENT) {
       return itemsStudents;
     }
-    if (role === "Intern") {
+    if (role === constants.INTERN) {
       return itemsIntern;
     }
-    if (role === "Manager") {
+    if (role === constants.MANAGER) {
       return itemsManager;
     }
-    if (role === "CompanyAdmin") {
+    if (role === constants.COMPANY_ADMIN) {
       return itemsCompanyAdmin;
     }
-    if (role === "University") {
+    if (role === constants.UNIVERSITY) {
       return itemsUniversity;
     }
-    if (role === "SystemAdmin") {
+    if (role === constants.SYSTEM_ADMIN) {
       return itemsSystemAdmin;
     }
-    if (role === "DelegateAgent") {
+    if (role === constants.DELEGATE_AGENT) {
       return itemsDelegateAgent;
     }
-    if (role === "Agent") {
+    if (role === constants.AGENT) {
       return itemsPropertyAgent;
     }
   };
@@ -89,12 +97,12 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
         <Avatar size={48} src={avatar} />
         <div className="sidebar-user-profile-content">
           <Typography.Title level={4}>Maria Sanoid</Typography.Title>
-          <div className='sidebar-user-profile-role'>{constants.USER_ROLE}</div>
+          <div className="sidebar-user-profile-role">{role}</div>
         </div>
       </div>
 
       <Menu
-        items={menuSwitcher(constants.USER_ROLE)}
+        items={menuSwitcher(role)}
         onClick={handleMenuClick}
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
