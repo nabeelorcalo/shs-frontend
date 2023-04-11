@@ -1568,15 +1568,15 @@ const agentRoutes = [
 ];
 
 const ROLES_ROUTES: any = {
-  SystemAdmin: systemAdminRoutes,
-  Manager: managerRoutes,
-  DelegateAgent: delegateAgentRoutes,
-  CompanyAdmin: companyAdminRoutes,
-  Intern: internRoutes,
-  Student: studentRoutes,
-  University: universityRoutes,
-  Agent: agentRoutes,
-  Public: publicRoutes,
+  SYS_ADMIN: systemAdminRoutes,
+  COMPANY_MANAGER: managerRoutes,
+  DELEGATE_AGENT: delegateAgentRoutes,
+  COMPANY_ADMIN: companyAdminRoutes,
+  INTERN: internRoutes,
+  STUDENT: studentRoutes,
+  UNIVERSITY: universityRoutes,
+  PROPERTY_AGENT: agentRoutes,
+  PUBLIC: publicRoutes,
 };
 
 export const getRoutes = (role: any) => {
