@@ -8,18 +8,18 @@ export const InternsCard = (props: any) => {
   const { statusBtn, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
   const navigate = useNavigate()
   return (
-    <div className='interns-card-main max-sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 px-4 mb-8'>
+    <div className='interns-card-main px-4 mb-8 max-sm:w-full max-md:w-1/2 max-lg:w-full max-xl:w-1/2 max-2xl:w-1/3 max-3xl:w-1/4 3xl:w-1/5'>
       <BoxWrapper className='interns-card'>
-      <div className='flex flex-row justify-between'>
-              {statusBtn ? statusBtn : null}
-              {pupover? pupover :null}
-          </div>
+        <div className='flex flex-row justify-between'>
+          {statusBtn ? statusBtn : null}
+          {pupover ? pupover : null}
+        </div>
         <div className='flex flex-col gap-4 items-center main-card-jsx'>
 
           <div className='flex flex-col gap-2 items-center'>
             {posted_by}
-            {name?<p className='text-lg font-[700]'>{name}</p>:null}
-            {title?<p className='text-lg font-[700]'>{title}</p>:null}
+            {name ? <p className='text-lg font-[700]'>{name}</p> : null}
+            {title ? <p className='text-lg font-[700]'>{title}</p> : null}
             <p className='text-sm'>{department}</p>
             {company ? <p className='text-sm'>Company:<span className='text-sm pl-2 font-semibold'>{company}</span></p> : null}
           </div>

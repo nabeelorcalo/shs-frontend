@@ -353,7 +353,7 @@ const InternsCM = () => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
+                      className="flex justify-center gap-2 white-bg-color teriary-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -362,7 +362,7 @@ const InternsCM = () => {
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
+                      className="flex justify-center gap-2 teriary-bg-color white-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -431,7 +431,7 @@ const InternsCM = () => {
 
       </div>
       <Alert
-        width={700}
+        width={600}
         type="error"
         state={terminate}
         setState={setTerminate}
@@ -453,7 +453,7 @@ const InternsCM = () => {
       />
       <PopUpModal
         open={assignManager}
-        width={700}
+        width={600}
         close={() => { setAssignManager(false) }}
         title="Assign Manager"
         children={
@@ -475,7 +475,7 @@ const InternsCM = () => {
         }
       />
 
-<Alert
+      <Alert
         width={700}
         type="success"
         state={complete}
