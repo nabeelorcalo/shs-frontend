@@ -1,12 +1,13 @@
 import axios from "axios";
 import constants from "../config/constants";
 
-const baseURL = constants.appUrl;
+const baseURL = constants.APP_URL;
 
 const defaultHeaders = {
   'Content-Type': 'application/json',
   // Authorization: 'Bearer ' + accessToken,
 };
+
 
 const axiosInstance = axios.create({
   baseURL,

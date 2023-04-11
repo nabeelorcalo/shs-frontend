@@ -1,17 +1,58 @@
-.greating-card{
-  transition: ease 0.5s;
-  .share-wrapper{
-    display: none;
-  }
-  .greeting-card-wrapper{
-    width: 100%;
-  }
-  &:hover{
-    .greeting-card-wrapper {
-      width: 85%;
+@import "../../scss/colors";
+
+.card-share-wrapper {
+  position: relative;
+  height: 100%;
+  min-height: 106px;
+  border-radius: 16px;
+
+  .card-share {
+    background-color: $teriary-bg-color;
+    border-radius: 16px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 1px;
+    bottom: 0;
+    right: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 18px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+
+    & > svg {
+      margin-left: 8px;
     }
-    .share-wrapper{
-      display: flex;
+  }
+
+  .card-user-welcome {
+    width: calc(100% - 116px);
+    position: static;
+    box-shadow: none;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border-radius: 16px;
+      transition: all 0.5s;
+      box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
+      background-color: #ffffff;
+    }
+  }
+
+  &:hover {
+    .card-user-welcome {
+      &::before {
+        right: 116px;
+      }
     }
   }
 }

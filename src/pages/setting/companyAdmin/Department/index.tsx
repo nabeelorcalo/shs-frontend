@@ -36,7 +36,6 @@ const SettingDepartment: React.FC = (props: any) => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const handleChange = (event: any) => { };
-
   const handleSubmit = () => {
     const values = form.getFieldsValue();
   };
@@ -100,7 +99,7 @@ const SettingDepartment: React.FC = (props: any) => {
               id="departmentName"
               name="departmentName"
               placeholder="Enter department name "
-              size="small"
+              size="middle"
               type="text"
               defaultValue=""
 
@@ -113,7 +112,7 @@ const SettingDepartment: React.FC = (props: any) => {
             <TextArea rows={6} placeholder="Write Something..." maxLength={6}
               id="description"
               name="description"
-              size="small"
+              size="middle"
               defaultValue=""
             />
           </Form.Item>

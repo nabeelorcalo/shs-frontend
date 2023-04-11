@@ -123,12 +123,12 @@ const index = () => {
         </BoxWrapper>
       </div>
       {/* for mobile */}
-      <BoxWrapper className='my-5 block lg:hidden w-full'>
+      <BoxWrapper className='mblock lg:hidden w-full p-3'>
         <Typography className='text-xl md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
         {tableData.map((item) => {
           return (
-            <div className='mt-5 flex flex-col gap-5'>
-              <span className='text-xl font-medium text-center'>{item.learningCategories}</span>
+            <div className='mt-5 flex flex-col xs:gap-2 sm:gap-5'>
+              <span className='xs:text-lg sm:text-xl font-medium text-center'>{item.learningCategories}</span>
               <span className='text-base font-medium '>Learning Categories</span>
               <span className='text-xs font-normal '>{item.learningObjectives}</span>
               <span className='text-base font-medium '>Evidence of Progress </span>
@@ -171,7 +171,6 @@ const index = () => {
         title=""
         width={500}
         state={openModal}
-        cancelBtntxt={() => { setOpenModal(!openModal) }}
         okBtntxt="Upload"
         okBtnFunc={() => { }}
         footer={<>

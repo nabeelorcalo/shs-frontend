@@ -21,7 +21,7 @@ import {
   universityList,
 } from "./mockData";
 import PiplineTable from "./PiplineTable";
-import Constants from '../../../config/constants'
+import Constants from "../../../config/constants";
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
@@ -77,10 +77,7 @@ const CompanyAdmin = () => {
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
   };
-  console.log(isShowModal, "clicked");
-  const handleSelect = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+  const handleSelect = (value: string) => {};
   useEffect(() => {
     loadMoreData();
   }, []);
@@ -136,7 +133,7 @@ const CompanyAdmin = () => {
             loadMoreData={loadMoreData}
             role={Constants?.USER_ROLE}
             handleAddAnnouncement={handleAddAnnouncement}
-            height={505}
+            height={460}
           />
         </Col>
         <Col xs={24} md={24} xl={16} xxl={13}>
@@ -159,7 +156,7 @@ const CompanyAdmin = () => {
                   marginRatio=".5"
                   seriesField="type"
                   textColor="#4E4B66"
-                  style={{ height: 220 }}
+                  style={{ height: 235 }}
                 />
               </div>
             </Col>
@@ -169,7 +166,7 @@ const CompanyAdmin = () => {
                 title="Attendance"
                 level={4}
                 graphName="attendance"
-                styling={{ height: 185 }}
+                styling={{ height: 230 }}
               />
             </Col>
           </Row>

@@ -1,15 +1,20 @@
 @import '../../../scss/colors';
 
 .grievances {
-  .header-btn {
-    border: 1px solid $teriary-bg-color;
-    scale: 1;
 
-    &:hover {
+
+  .header-btn   
+    .button {
+      background: $white-bg-color;
+      border: unset;
+      outline: 1px solid $teriary-bg-color;
+      box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
       color: $teriary-bg-color;
-      border: 1px solid $teriary-bg-color;
-      scale: 1.1;
-    }
+
+      &:hover {
+        outline: 1px solid rgba(74, 157, 119, 0.5);
+      }
+    
   }
 
   .grievances-box-wrapper {
@@ -23,24 +28,37 @@
 
     &:hover {
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-      
-    }
-  }
+  
+  }}
 
   .grievance-card {
     box-shadow: 0px 2px 3px #E4E8F0;
     overflow: hidden;
-    transition: all 0.2s ease-in-out;
+    // transition: all 0.2s ease-in-out;
     position: relative;
 
     &:hover {
       background-color: $text-success-hover-color;
-    
+      .grievance-type{
+        display: flex;
+        flex-direction: column;
+  }
       .box-wrapper {
-        width: 85%;
+        margin: 0;
+        width: 100%;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
         &:hover {
           border-radius:  0  15px  15px 0;}
+          width: 85%;
+          .grievance-type{
+            display: flex;
+            flex-direction: column;
+      }
+      @media screen and (max-width: 480px) {
+        & {
+          width: 75%;
+        }
+      }
       }
 
       .view-all-btn {
@@ -54,9 +72,7 @@
     }
 
     .box-wrapper {
-      margin: 0;
       border-radius: 6px;
-      transition: all 0.3s ease-in-out;
       width: 100%;
     }
 
@@ -77,6 +93,9 @@
 }
 
 .grievance-details {
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
   .replay-btn {
     &:hover {
       background: $teriary-bg-color;

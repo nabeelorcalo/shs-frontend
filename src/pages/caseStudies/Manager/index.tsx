@@ -1,4 +1,4 @@
-import { Divider } from 'antd'
+
 import React, { useState } from 'react'
 import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
@@ -71,7 +71,7 @@ const index = () => {
       status: 'Rejected',
     },
   ]
-  const TableColumn = ['No.','Avater',' Name', 'Report Name' , 'Department' , 'Assessment Date' , 'Reporting Manager'  , 'Status']
+  const TableColumn = ['No.', 'Avater', ' Name', 'Report Name', 'Department', 'Assessment Date', 'Reporting Manager', 'Status']
   const action = useCustomHook();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [value, setValue] = useState<any>()
@@ -79,27 +79,23 @@ const index = () => {
 
   return (
     <div className='manager-case-studies'>
-      <PageHeader title="Case Studies"
-      />
-      <Divider className="my-0" />
-      <Row gutter={[20, 20]} className='mt-5'>
-        <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
+      <PageHeader title="Case Studies" actions bordered />
+      <div className='flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row'>
+        <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
           <SearchBar size="middle" handleChange={handleChange} />
-        </Col>
-        <Col xxl={18} xl={18} md={18} sm={24} xs={24} className='flex justify-end gap-2'>
+        </div>
+        <div className='flex justify-end gap-2'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,caseStudyTableData,"Case Studies " )}}
-            />
-        </Col>
-        <Col xs={24}>
-          <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
-          </BoxWrapper>
-        </Col>
-      </Row>
+            requiredDownloadIcon
+            options={["pdf", "excel"]}
+            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ") }}
+          />
+        </div>
+      </div>
+      <BoxWrapper>
+        <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+      </BoxWrapper>
       <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}

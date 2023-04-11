@@ -3,6 +3,8 @@ import { Row, Avatar, Typography, Dropdown , Col} from 'antd'
 import { InternCardLine, ThreeDots } from '../../../../assets/images'
 import { BoxWrapper, Button} from '../../../../components'
 import './style.scss'
+import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import { useNavigate } from 'react-router'
 
 interface IDUMMYDATA {
   dummyData?: any
@@ -11,8 +13,11 @@ interface IDUMMYDATA {
 }
 
 const InternCard = (props: IDUMMYDATA) => {
+  const navigate = useNavigate()
   const { index, dummyData, menu } = props;
-
+  const ProfileHandler = ()=>{
+    navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`)
+  }
   return (
     <div className='university-intern-card'>
       <Row gutter={[16, 16]} >
@@ -66,16 +71,15 @@ const InternCard = (props: IDUMMYDATA) => {
                
                 </div>
                 <div className='flex justify-between my-4 w-full'>
-                  <Button label='Profile'  size='small'  className='intern-card-profile-button ' />
+                  <Button label='Profile'  size='small'  className='intern-card-profile-button '
+                   onClick={ProfileHandler}/>
                   <Button label="Chat" size='small' className='intern-card-chat-button'/> 
                   </div>
               </div>
-
             </BoxWrapper>
             </Col>
           )
         })}
-
       </Row>
     </div>
   )

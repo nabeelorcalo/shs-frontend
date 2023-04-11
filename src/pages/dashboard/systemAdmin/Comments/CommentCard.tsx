@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { Row, Avatar, Col } from "antd";
 import {
   AttachmentIcon,
@@ -6,14 +6,6 @@ import {
   FilledLikeIcon,
   LikeIcon,
 } from "../../../../assets/images";
-
-interface ICommentCard {
-  name: string;
-  image: string;
-  content: any;
-  time: string;
-  likes: number | string;
-}
 
 const index = (props: any) => {
   const { name, image, content, time, likes } = props;
@@ -34,7 +26,7 @@ const index = (props: any) => {
               className="cursor-pointer w-6 h-6"
               onClick={() => setIsLike(!isLike)}
             >
-              {/* {isLike ? <FilledLikeIcon /> : <LikeIcon />} */}
+              {isLike ? <FilledLikeIcon /> : <LikeIcon />}
             </span>
             <span className="gray-color">{likes ?? 0} likes</span>
           </Row>

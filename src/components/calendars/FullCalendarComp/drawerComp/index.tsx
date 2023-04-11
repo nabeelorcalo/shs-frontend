@@ -7,19 +7,17 @@ import './style.scss';
 import EditReminder from './editReminder';
 
 const Index = (props: any) => {
-  const { open, setOpen, category, eventId, status } = props;
-  const [toggle, setToggle] = useState(false);
-  const [toggleReminder, setToggleReminder] = useState(false);
+  const { open, setOpen, category, eventId, status, toggle, setToggle, toggleReminder, setToggleReminder } = props;
 
   const renderTitle: any = {
     'meeting': <div className='flex items-center gap-3'>
       <p>Event Detail</p>
-      {!toggle && <EditIcon className='cursor-pointer' onClick={() => setToggle(!toggle)} />}
+      {!toggle && status === 'pending' && <EditIcon className='cursor-pointer' onClick={() => setToggle(!toggle)} />}
     </div>,
     'interview': <p>Interview Detail</p>,
     'reminder': <div className="flex items-center gap-3">
       <p>Event Detail</p>
-      <EditIcon className='cursor-pointer' onClick={() => setToggleReminder(!toggleReminder)} />
+      {!toggleReminder && <EditIcon className='cursor-pointer' onClick={() => setToggleReminder(!toggleReminder)} />}
     </div>
   };
 

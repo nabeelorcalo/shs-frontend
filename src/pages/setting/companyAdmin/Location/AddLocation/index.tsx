@@ -9,13 +9,14 @@ import {
 import { NavLink } from "react-router-dom";
 import { Breadcrumb, DropDown, Input,BoxWrapper,DragAndDropUpload ,SettingCommonModal } from "../../../../../components";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 const { Title, Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
   const breadcrumbArray = [
     { name: "Add Location"},
     { name: "Setting"  },
-    { name: "Location" , onClickNavigateTo:"/settings/location" },
+    { name: "Location" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_LOCATION}`},
   ];
   const selectArray = [
     {
@@ -116,7 +117,7 @@ const AddLocation: React.FC = () => {
                   label="Post Code"
                   name="postCode"
                   placeholder="Enter Code"
-                  size="small"
+                  size="middle"
                   type="text"
                   handleChange={() => { }}
                 //  prefix={<SearchInputIconSetting />} 
@@ -139,7 +140,7 @@ const AddLocation: React.FC = () => {
                     label="Address"
                     name="address"
                     placeholder="Enter address line"
-                    size="small"
+                    size="middle"
                     type="text"
                     handleChange={() => { }}
 
@@ -199,6 +200,7 @@ const AddLocation: React.FC = () => {
                     rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown
+                   
                       name="Select"
                       options={["Pakistan", "India", "France"]}
                       setDateValue={() => { }}
@@ -307,10 +309,12 @@ const AddLocation: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-            <NavLink to="/settings/location">  <Button danger size="middle" type="primary">
-              Cencal
+          <Button danger size="middle" type="primary">
+          <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_LOCATION}`}> 
+             Cancel 
+             </NavLink>
             </Button>
-            </NavLink>
+           
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"

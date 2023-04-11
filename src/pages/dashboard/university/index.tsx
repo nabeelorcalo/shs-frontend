@@ -91,7 +91,7 @@ const University = () => {
                   marginRatio=".5"
                   seriesField="type"
                   textColor="#4E4B66"
-                  style={{ height: 218 }}
+                  style={{ height: 235 }}
                 />
               </div>
             </Col>

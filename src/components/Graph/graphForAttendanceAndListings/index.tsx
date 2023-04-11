@@ -55,7 +55,6 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
         },
       },
     },
-
     yAxis: {
       min: 0,
       max: maxValue,

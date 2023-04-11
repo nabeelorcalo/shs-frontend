@@ -10,12 +10,14 @@ import SettingCommonModal from "../../../../../components/Setting/Common/Setting
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import { NavLink } from "react-router-dom";
 
 const LeavesAddPolicy: React.FC = () => {
   const breadcrumbArray = [
     { name: "Add Policy"},
     { name: "Setting"  },
-    { name: "Leaves" , onClickNavigateTo:"/settings/leaves" },
+    { name: "Leaves" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_LEAVES}`},
   ];
   const selectArray = [
     {
@@ -203,7 +205,9 @@ const LeavesAddPolicy: React.FC = () => {
           </Row>
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_LEAVES}`}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

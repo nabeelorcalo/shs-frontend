@@ -1,6 +1,6 @@
 import React from 'react';
-import { Col, Row, Button, Typography } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { Col, Row, Typography } from 'antd';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
 const { Text } = Typography;
 import './style.scss';
@@ -17,11 +17,12 @@ import {
   NewGrievances,
   ResolevedGrievances
 } from '../../../assets/images';
-import {PageHeader, RegisterMemberAndFeddbackGraph}from '../../../components';
+import {Button, PageHeader, RegisterMemberAndFeddbackGraph}from '../../../components';
 import { GrievanceStats } from '../../../components/ChartsOfGraphs/grievanceStats/grievanceStats';
-import { ArrowRightOutlined } from '@ant-design/icons/lib/icons';
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const Grievance = () => {
+  const navigate = useNavigate()
   let overview = [
     {
       name: "All Grievances",
@@ -53,12 +54,20 @@ const Grievance = () => {
   return (
     <div className="grievances">
       <div>
-        <div className="flex justify-between">
-          <PageHeader title="Grievances" />
-          <NavLink to="/grievances/all-grievance">
-            <Button className='teriary-color header-btn'>All Grievences</Button>
-          </NavLink>
+      <PageHeader
+        actions
+        bordered
+        title="Grievences"
+      >
+        <div className='flex items-center justify-end header-btn'>
+          <Button
+            className='button font-semibold px-8'
+            onClick={() => navigate(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`)}
+            label='All Grievences'
+          // size="small"
+          />
         </div>
+      </PageHeader>
       </div>
       <Row gutter={[10, 10]} className="mt-5">
         {overview.map((data: any, index: any) => {
@@ -82,7 +91,7 @@ const Grievance = () => {
       <Row gutter={[10, 10]} className="mt-5">
         <Col className="gutter-row flex py-2" xs={24} md={24} xl={12} >
           <BoxWrapper className="grievances-box-wrapper w-full">
-            <div className="flex justify-between gap-2 p-1">
+            <div className="flex xs:flex-col sm:flex-row justify-between gap-2 p-1">
               <div className='flex flex-row w-full'>
                 <div className='flex flex-row'>
                   <Clock24h />
@@ -99,7 +108,7 @@ const Grievance = () => {
               </div>
             
               <div className='flex flex-row  w-full '>
-              <div className='mr-5'><LineGrievances /></div> 
+              <div  className='xs:mr-0 xs:hidden sm:block sm:mr-5'><LineGrievances /></div> 
                 <div className='flex flex-row'>
                   <ClockGrievances />
                   <div className='flex flex-col'>
@@ -118,21 +127,23 @@ const Grievance = () => {
         <Col className="gutter-row" xs={24} md={24} xl={12}>
           <div className='grievance-card relative flex items-center overflow-hidden rounded-lg w-full'>
             <BoxWrapper className='card-progress-box flex   flex-wrap'>
-              <div className="total-hours flex items-center justify-between flex-1 gap-2">
-                <div className='flex items-center'>
+              <div className="total-hours flex xs:flex-col sm:flex-row  flex-1 gap-2">
+                <div className='flex  items-center'>
+                  <div className='flex '>
                   <GrievancesAvater />
-                  <div className='flex flex-col mx-2'>
+                  <div className='flex xs:flex-row sm:flex-col mx-2 gap-2 xs:mt-3 sm:mt-0'>
                     <Text className='text-sm font-normal'>Darlene Robertson</Text>
                     <Text className='text-sm font-normal'>UI UX Designer</Text>
                   </div>
+                  </div>
                 </div>
-                <div className=' gap-2'>
+                <div className='gap-2 grievance-type'>
                   <span>Grievances Type:</span>
-                  <span className='px-2 text-[#F08D97]'>Attendance Log Issue</span>
+                  <span className='text-[#F08D97] attendance-log'>Attendance Log Issue</span>
                 </div>
               </div>
               <div className="view-all-btn ">
-               <NavLink to="/grievances/all-grievance/grievance-detials">
+               <NavLink to={ROUTES_CONSTANTS.GRIEVANCES_Details}>
                 <span className='capitalize  xxl:mx-2 white-color' >view</span >
                 <span  className='capitalize ml-1 xxl:mx-2 white-color'><GrievancesArrowForward /></span> 
                 </NavLink> 

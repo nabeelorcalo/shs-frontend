@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DropDown, SearchBar } from '../../components';
+import { DropDown, PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
@@ -23,9 +23,7 @@ const Certificates = () => {
 
   return (
     <div className='certificate-wrapper'>
-      <div className="certificate-top-heading text-2xl font-semibold pb-[30px] mb-[30px]">
-        Certificate
-      </div>
+      <PageHeader title='Certificates' bordered />
       <div className="flex items-center justify-between flex-wrap gap-4">
         <SearchBar size='middle' handleChange={setSearchVal} value={searchVal} className='' />
         <div className='flex gap-4 items-end justify-end flex-wrap'>

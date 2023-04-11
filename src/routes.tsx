@@ -66,6 +66,9 @@ const ViewPayrollSalarySlip = Loadable(
   lazy(() => import("./pages/Payroll/viewPayrollSalarySlip"))
 );
 
+//Company admin Interns
+const InternsCM = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
+
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
@@ -314,6 +317,7 @@ const UniversitesProfile = Loadable(
 );
 
 export const publicRoutes = [
+ 
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
@@ -591,6 +595,7 @@ const delegateAgentRoutes = [
         path: `link-account`,
         element: <LinkAccount />,
       },
+      
       {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
@@ -682,6 +687,11 @@ const systemAdminRoutes = [
         path: `${ROUTES_CONSTANTS.ACTIVITY_LOG}`,
         element: <ActivityLog />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
+        element: <EarnWithUs />,
+      },
     ],
   },
   {
@@ -770,7 +780,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
-        element: <Interns />,
+        element: <InternsCM />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
@@ -881,7 +891,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
-        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}`,
+        path: `${ROUTES_CONSTANTS.TIMESHEETHISTORY}/:id`,
         element: <TimeSheetHistory />,
       },
       {
@@ -1081,7 +1091,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
-        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}`,
+        path: `${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/:id`,
         element: <CertificateDetail />,
       },
       {
@@ -1602,15 +1612,15 @@ const agentRoutes = [
 ];
 
 const ROLES_ROUTES: any = {
-  SystemAdmin: systemAdminRoutes,
-  Manager: managerRoutes,
-  DelegateAgent: delegateAgentRoutes,
-  CompanyAdmin: companyAdminRoutes,
-  Intern: internRoutes,
-  Student: studentRoutes,
-  University: universityRoutes,
-  Agent: agentRoutes,
-  Public: publicRoutes,
+  SYS_ADMIN: systemAdminRoutes,
+  COMPANY_MANAGER: managerRoutes,
+  DELEGATE_AGENT: delegateAgentRoutes,
+  COMPANY_ADMIN: companyAdminRoutes,
+  INTERN: internRoutes,
+  STUDENT: studentRoutes,
+  UNIVERSITY: universityRoutes,
+  PROPERTY_AGENT: agentRoutes,
+  PUBLIC: publicRoutes,
 };
 
 export const getRoutes = (role: any) => {
