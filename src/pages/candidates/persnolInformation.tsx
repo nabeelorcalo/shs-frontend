@@ -31,7 +31,7 @@ const AcademicData = [
 const PersnolInformation = () => {
   return (
     <div className='persnol-main'>
-      <p className='persnol-para mb-4'>Persnol Details</p>
+      <p className='persnol-para mb-4'>Personal Details</p>
       <Row gutter={[30, 20]}>
         {PersnolInformationData.map((item: any) => (
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>

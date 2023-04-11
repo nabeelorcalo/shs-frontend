@@ -21,3 +21,11 @@
   }
   border-radius: 5px;
 }
+.new-intern-main{
+  .new-intern-btn{
+    @media only screen and (max-width:475px) {
+      width: 100%;
+    }
+  }
+
+}

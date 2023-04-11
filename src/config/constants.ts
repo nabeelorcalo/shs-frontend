@@ -14,7 +14,7 @@ export default {
   UNIVERSITY: 'University',
   SYSTEM_ADMIN: 'SystemAdmin',
   DELEGATE_AGENT: 'DelegateAgent',
-  STUDENT: 'Student',
+  STUDENT: 'STUDENT',
   AGENT: 'Agent',
   USER_ROLE: JSON.parse(
     localStorage.getItem("UserData") || JSON.stringify({ role: "" })
