@@ -1568,14 +1568,14 @@ const agentRoutes = [
 ];
 
 const ROLES_ROUTES: any = {
-  SystemAdmin: systemAdminRoutes,
-  Manager: managerRoutes,
-  DelegateAgent: delegateAgentRoutes,
-  CompanyAdmin: companyAdminRoutes,
-  Intern: internRoutes,
+  SYS_ADMIN: systemAdminRoutes,
+  COMPANY_MANAGER: managerRoutes,
+  DELEGATE_AGENT: delegateAgentRoutes,
+  COMPANY_ADMIN: companyAdminRoutes,
+  INTERN: internRoutes,
   STUDENT: studentRoutes,
-  University: universityRoutes,
-  Agent: agentRoutes,
+  UNIVERSITY: universityRoutes,
+  PROPERTY_AGENT: agentRoutes,
   PUBLIC: publicRoutes,
 };
 
