@@ -4,7 +4,9 @@ import React from "react";
 import api from "../../api";
 import constants from "../../config/constants";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { agent_dashboard_widgets } from "../../store";
+import { getDataWrapper } from "../../store";
+import endpoints from "../../config/apiEndpoints";
+// import { agent_dashboard_widgets } from "../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -23,16 +25,18 @@ const useCustomHook = () => {
         return body.results
       })
       .catch(() => {
-        
+
       });
   };
 
-  const agentDashboardWidgets = useRecoilValue(agent_dashboard_widgets)
+  const agentDashboardWidgets = useRecoilValue(getDataWrapper("agentDashboardWidgetsxys", endpoints?.AGENT_DASHBOARD_WIDGETS))
+  console.log("agentDashboardWidgets","agentDashboardWidgets");
+  
 
   return {
     getData,
     loadMoreData,
-    agentDashboardWidgets,
+    // agentDashboardWidgets,
   };
 };
 

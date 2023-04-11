@@ -1,11 +1,6 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
-import {
-  AttendanceAndListingGraph,
-  CountingCard,
-  FavouritesViewCard,
-  PageHeader,
-} from "../../../components";
+import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, PageHeader } from "../../../components";
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
@@ -14,12 +9,13 @@ import useCustomHook from "../actionHandler";
 const Agent = () => {
   const {
     //countingCard data
-    agentDashboardWidgets: {
-      totalProperties,
-      totalVacantProperties,
-      totalReservedProperties,
-      totalOccupiedProperties,
-    },
+    // agentDashboardWidgets,
+    // {
+    //   totalProperties,
+    //   totalVacantProperties,
+    //   totalReservedProperties,
+    //   totalOccupiedProperties,
+    // },
   } = useCustomHook();
   // console.log(agentDashboardWidgets, "agentDashboardWidgets");
 
@@ -36,9 +32,7 @@ const Agent = () => {
       };
     });
 
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
+    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
       .then((res) => res.json())
       .then((body) => {
         setState((prevState) => {
@@ -61,13 +55,13 @@ const Agent = () => {
       <PageHeader bordered title="Dashboard" />
       <Row gutter={gutter}>
         <Col xs={24}>
-          <CountingCard
+          {/* <CountingCard
             totalListings={totalProperties}
             occupiedProperties={totalOccupiedProperties}
             reservedProperties={totalReservedProperties}
             vacantProperties={totalVacantProperties}
             isSeprate
-          />
+          /> */}
         </Col>
 
         <Col xs={24} xl={12}>
@@ -76,12 +70,7 @@ const Agent = () => {
               <FavouritesViewCard totalViews={33} favourites={6} />
             </Col>
             <Col xs={24}>
-              <AttendanceAndListingGraph
-                title="Listing"
-                level={4}
-                graphName="listings"
-                styling={{ height: 418 }}
-              />
+              <AttendanceAndListingGraph title="Listing" level={4} graphName="listings" styling={{ height: 418 }} />
             </Col>
           </Row>
         </Col>
