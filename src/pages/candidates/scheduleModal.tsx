@@ -79,7 +79,7 @@ const RequestDocModel = (props: any) => {
             </div>
           </DropDownNew>
 
-          <div className="time-pick-wrapper flex justify-between mt-5">
+          <div className="time-pick-wrapper flex flex-wrap justify-between mt-5">
             <div className="time-from">
               <div className="heading mt-2 mb-3">Time From</div>
               <TimePicker className='time-p' />
@@ -89,9 +89,6 @@ const RequestDocModel = (props: any) => {
               <TimePicker className='time-p' />
             </div>
           </div>
-
-          <div className='title'><p>Description</p></div>
-          <textarea className='input' placeholder='Describe your problem' />
 
 
           <div className="location-wrapper">
@@ -107,6 +104,9 @@ const RequestDocModel = (props: any) => {
               </div>
             </div>
           </div>
+          <div className='title'><p>Description</p></div>
+          <textarea className='input' placeholder='Describe your problem' />
+
 
         </div>
 

@@ -45,7 +45,7 @@ const items: TabsProps['items'] = [
 const DrawerTabs = () => {
 
   return (
-    <div className='px-5 '>
+    <div className='md:px-5'>
       <Tabs className='' defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   )

@@ -400,6 +400,9 @@ export { ReactComponent as ClockDarkIcon } from "./timesheet/ClockDarkIcon.svg";
 export { ReactComponent as TagPrimaryIcon } from "./timesheet/TagPrimaryIcon.svg";
 export { ReactComponent as TagSuccessIcon } from "./timesheet/TagSuccessIcon.svg";
 export { ReactComponent as TagWarningIcon } from "./timesheet/TagWarningIcon.svg";
+export { ReactComponent as LocationIconNew } from "./timesheet/LocationDarkIcon.svg";
+export { ReactComponent as PlayIconNew } from "./timesheet/TimePlayIcon.svg";
+
 // candidates
 
 export { ReactComponent as CvIcon } from "./cvIcon.svg";
