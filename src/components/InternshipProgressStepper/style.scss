@@ -34,7 +34,7 @@ body {
   flex: 100%;
   color: $white-bg-color;
   text-align: center;
-  padding: 30px 10px 30px 10px;
+  padding: 20px 10px;
   background: repeating-linear-gradient(-65deg,
       $text-input-bg-color,
       $text-input-bg-color 20px,
@@ -52,15 +52,15 @@ body {
   }
 
   &.recommended {
-    background: $light-orange-color;
+    background: $purple-color;
   }
 
   &.offerletter {
-    background: $text-success-placeholder-color;
+    background: $light-purple-color;
   }
 
   &.contract {
-    background: $teriary-light-bg-color;
+    background: $line-color;
   }
 
   &.hired {
@@ -72,7 +72,7 @@ body {
   }
 
   &:first-child {
-    padding: 30px 10px;
+    padding: 20px 10px;
     -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   }
 
