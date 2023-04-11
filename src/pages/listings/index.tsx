@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps, RadioChangeEvent } from 'antd'
+import type { RadioChangeEvent } from 'antd'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
-import { listingsState } from "../../store";
-import { useRecoilValueLoadable, useRecoilValue } from "recoil";
+import { listingsState, listingLoadingState } from "../../store";
+import { useRecoilValue } from "recoil";
 import dayjs from 'dayjs'
+
 import {
   IconAddListings,
   IconAngleDown,
@@ -69,10 +70,8 @@ const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const listingsActions = useListingsHook()
-
-  const listingsData = useRecoilValueLoadable(listingsState)
-  const { state } = listingsData
-
+  const propertyData = useRecoilValue(listingsState)
+  const loading = useRecoilValue(listingLoadingState)
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
@@ -125,7 +124,6 @@ const Listings = () => {
     "selectDocument": []
   })
 
-
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -164,7 +162,7 @@ const Listings = () => {
       dataIndex: 'availability',
       render: (_, row, index) => {
         return (
-          <>{dayjs(row.availabilityStart, "DD/MM/YYYY")} - {dayjs(row.availabilityEnd, "DD/MM/YYYY")}</>
+          <>{dayjs(row.availabilityStart).format('DD/MM/YYYY')} - {dayjs(row.availabilityEnd).format('DD/MM/YYYY')}</>
         );
       },
     },
@@ -1076,9 +1074,9 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
-                    loading={state === 'loading'}
+                    loading={loading}
                     columns={tableColumns}
-                    dataSource={listingsData?.contents?.data}
+                    dataSource={propertyData}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
                   />
                 </div>

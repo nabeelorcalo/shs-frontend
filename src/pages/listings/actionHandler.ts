@@ -1,21 +1,21 @@
 import { useRecoilState, useRecoilValue, useRecoilStateLoadable } from "recoil";
-import { listingsState, propertiesListState, loadingState } from "../../store";
+import { listingsState, listingLoadingState } from "../../store";
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
 
 
 const useListingsHook = () => {
   const {GET_AGENT_PROPERTIES} = endpoints
-  const [propertiesData, setPropertiesData] = useRecoilState(propertiesListState)
-  const [loading, setLoading] = useRecoilState(loadingState)
-  const [listingsData, setListingsData] = useRecoilStateLoadable(listingsState)
+  const [listingsData, setListingsData] = useRecoilState(listingsState)
+  const [loading, setLoading] = useRecoilState(listingLoadingState)
+
 
   const fetchListings = async () => {
     try {
       setLoading(true)
-      const response = await api.get(GET_AGENT_PROPERTIES);
-      console.log("Property Response: ", response)
-      setPropertiesData(response)
+      const {data} = await api.get(GET_AGENT_PROPERTIES);
+      console.log("Property Response: ", data)
+      setListingsData(data)
     } catch (error) {
       throw error;
     } finally {
@@ -33,7 +33,6 @@ const useListingsHook = () => {
   }
 
   return {
-    listingsData,
     createListing,
     fetchListings
   };
