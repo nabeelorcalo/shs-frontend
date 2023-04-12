@@ -87,12 +87,12 @@ const SettingSidebar: React.FC = () => {
                   <div className="flex">
                     <span>{item.icon}</span>
 
-                    <span className="font-medium mx-3 text-base text-primary-color hidden sm:block">
+                    <span className="font-medium mx-3 text-base text-primary-color">
                       {item.title}
                     </span>
                   </div>
                   {/* hidden sm:block */}
-                  <div className="hidden sm:block">
+                  <div className="">
                     <p className="font-normal text-sm pt-1 ">
                       {item.description}
                     </p>
