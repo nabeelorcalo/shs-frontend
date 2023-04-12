@@ -1,18 +1,21 @@
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 import Manager from "./Manager/index"
-import constants from "../../config/constants";
 import Structure from "./companyAdmin";
 import ManagerStructure from "./Manager/index";
 import InternStructure from "./Intern";
-const index = () => {
+import constants from "../../config/constants";
 
-  const rederWthRole: any = {
+const index = () => {
+  const role = useRecoilValue(currentUserRoleState);
+  const renderWthRole: any = {
     'CompanyAdmin': <Structure />,
     'Manager': <ManagerStructure />,
     'Intern': <InternStructure />,
   }
   return (
     <>
-    {rederWthRole[constants.USER_ROLE]}
+    {renderWthRole[role]}
     </>
   )
 }

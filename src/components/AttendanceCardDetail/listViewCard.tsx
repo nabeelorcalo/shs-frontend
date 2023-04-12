@@ -1,4 +1,6 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 import { Avatar, Dropdown, Typography } from "antd";
 import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
 import { ThreeDots } from "../../assets/images";
@@ -11,7 +13,7 @@ interface AttendanceProps {
 }
 
 export const AttendanceListViewCard: any = (props: AttendanceProps) => {
-  const role = constants.USER_ROLE;
+  const role = useRecoilValue(currentUserRoleState);
   const { index, item, menu } = props;
   const { avatar, name, profession, status, company } = item;
 
@@ -54,7 +56,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
       <div className="sm:w-[100%] w-[30%}">
         <p className="">{profession}</p>
       </div>
-      {role === "University" && (
+      {role === constants.UNIVERSITY && (
         <div className="sm:w-[100%] w-[30%}">
           <p className="">Company:{company}</p>
         </div>
