@@ -3,14 +3,15 @@ import { Button, Col, Form, Input, Row, Select, Space, Typography } from "antd";
 import { CommonDatePicker } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import constants from "../../../../config/constants";
 
-const SignupForm = () => {
-  const navigate = useNavigate(); 
+const SignupForm = ({ signupRole }: any) => {
+  const navigate = useNavigate();
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
     // navigate('/verification-steps');
-    navigate('/company-admin-verification');
+    navigate("/company-admin-verification");
   };
 
   const { Option } = Select;
@@ -55,36 +56,88 @@ const SignupForm = () => {
         </Row>
 
         <Form.Item
-          label="Email"
+          label={ signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
           name="Email"
           rules={[{ required: true }, { type: "email" }]}
         >
-          <Input placeholder="Email" className="input-style" />
+          <Input
+            placeholder={
+              signupRole == constants.UNIVERSITY ? "University Email" : "Email"
+            }
+            className="input-style"
+          />
         </Form.Item>
-        <Row gutter={20}>
-          <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-            <Form.Item
-              label="Reference Number (optional)"
-              name="refrenceNumber"
-              rules={[{ required: true }, { type: "string" }]}
-              style={{ width: "100%" }}
-            >
-              <Input
-                placeholder="Reference Number (optional)"
-                className="input-style"
-              />
-            </Form.Item>
-          </Col>
-          <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-            <Form.Item
-              label="Date of Birth"
-              name="dob"
-              rules={[{ required: false }, { type: "date" }]}
-            >
-              <CommonDatePicker />
-            </Form.Item>
-          </Col>
-        </Row>
+        {[constants.STUDENT].includes(signupRole) && (
+          <Row gutter={20}>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <Form.Item
+                label="Reference Number (optional)"
+                name="refrenceNumber"
+                rules={[{ required: true }, { type: "string" }]}
+                style={{ width: "100%" }}
+              >
+                <Input
+                  placeholder="Reference Number (optional)"
+                  className="input-style"
+                />
+              </Form.Item>
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <Form.Item
+                label="Date of Birth"
+                name="dob"
+                rules={[{ required: false }, { type: "date" }]}
+              >
+                <CommonDatePicker />
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
+         {[constants.DELEGATE_AGENT,constants.AGENT].includes(signupRole) && (
+          <Row gutter={20}>
+          
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <Form.Item
+                label="Date of Birth"
+                name="dob"
+                rules={[{ required: false }, { type: "date" }]}
+              >
+                <CommonDatePicker />
+              </Form.Item>
+            </Col>
+            <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+              <Form.Item
+                label="Residentail Address"
+                name="residentailAddress"
+                rules={[{ required: true }, { type: "string" }]}
+                style={{ width: "100%" }}
+              >
+                <Input
+                  placeholder="House#1,Street#1"
+                  className="input-style"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
+
+        {[constants.COMPANY_ADMIN].includes(signupRole) && (
+          <Row>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Form.Item
+                label="Reference Number (optional)"
+                name="refrenceNumber"
+                rules={[{ required: true }, { type: "string" }]}
+                style={{ width: "100%" }}
+              >
+                <Input
+                  placeholder="Reference Number (optional)"
+                  className="input-style"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
         <Form.Item
           name="phone"
           label="Phone Number"

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
+import { PopUpModal } from "../../../../components";
 
 const SigninForm = (props: any) => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const SigninForm = (props: any) => {
       email: Email,
       password: password,
     });
-        navigate("/dashboard");
+    navigate("/dashboard");
   };
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -114,6 +115,7 @@ const SigninForm = (props: any) => {
           </div>
         </Form>
       </div>
+      {/* <PopUpModal open/> */}
     </div>
   );
 };
