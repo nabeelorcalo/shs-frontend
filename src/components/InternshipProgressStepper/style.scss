@@ -1,4 +1,4 @@
-@import '../../scss/colors';
+@import '../../scss/_colors.scss';
 
 body {
   background: $text-input-bg-color;
@@ -26,7 +26,7 @@ body {
     height: 100%;
     content: "";
     width: calc(100% - 20px);
-    background: $text-input-bg-color;
+    background: $white-bg-color;
   }
 }
 
@@ -35,13 +35,10 @@ body {
   color: $white-bg-color;
   text-align: center;
   padding: 20px 10px;
-  background: repeating-linear-gradient(-65deg,
-      $text-input-bg-color,
-      $text-input-bg-color 20px,
-      $text-input-bg-color 20px,
-      $text-input-bg-color 40px);
+  background: $text-error-line-color;
   margin: 0 0 0 -15px;
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  clip-path: inset(10 10 10 10 round 10px);
 
   &.applied {
     background: $dashboard-primary-bg-color;
@@ -55,7 +52,7 @@ body {
     background: $purple-color;
   }
 
-  &.offerletter {
+  &.offer-letter {
     background: $light-purple-color;
   }
 
@@ -67,8 +64,12 @@ body {
     background: $teriary-bg-color;
   }
 
-  &.reject-sep {
+  &.reject {
     background: $page-header-secondary;
+  }
+  &.grayed-out {
+    background: $text-error-line-color;
+    color: $text-primary-title-color
   }
 
   &:first-child {
