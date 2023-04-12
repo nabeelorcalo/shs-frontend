@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Col, Row } from "antd/es/grid";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList } from "../../../components";
+import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList, BoxWrapper } from "../../../components";
 import { Absent, AbsentIntern, PeopleIcon, PresentInterns } from "../../../assets/images";
 import { AttendanceDepartmentData } from "../../../components/ChartsOfGraphs/chartsMockData/AttendanceDepartmentData";
 import "./style.scss";
@@ -163,6 +163,7 @@ const CompanyAdminAttendance = () => {
               />
             </Col>
             <Col xs={24}>
+              <BoxWrapper>
               <MonthlyPerfomanceChart
                 data={AttendanceDepartmentData}
                 heading={"Attendance By department"}
@@ -181,6 +182,7 @@ const CompanyAdminAttendance = () => {
                   </div>
                 }
               />
+              </BoxWrapper>
             </Col>
           </Row>
         </Col>
