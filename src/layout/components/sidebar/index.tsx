@@ -34,7 +34,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
-  console.log(role);
+  const { firstName, lastName } = useRecoilValue(currentUserState);
 
   // const {role } =useCurrentUserRole()
 
@@ -50,7 +50,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       navigate(item.key);
     }
   };
-  const { firstName, lastName } = useRecoilValue(currentUserState);
 
   const menuSwitcher = (role: string) => {
     if (role === constants.STUDENT) {
