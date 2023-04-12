@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "./style.scss";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Layout, Menu, theme } from "antd";
@@ -16,6 +16,7 @@ import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
 import { currentUserRoleState } from "../../../store";
 import { useRecoilValue } from "recoil";
+import getUserRoleLable from "../../../helpers/roleLabel";
 const { Sider } = Layout;
 
 type SidebarProps = {
@@ -24,11 +25,7 @@ type SidebarProps = {
   onBreakpoint: any;
 };
 
-const AppSidebar: FC<SidebarProps> = ({
-  collapsed,
-  collapsedWidth,
-  onBreakpoint,
-}) => {
+const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -37,6 +34,7 @@ const AppSidebar: FC<SidebarProps> = ({
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
+  console.log(role);
 
   // const {role } =useCurrentUserRole()
 
@@ -97,7 +95,7 @@ const AppSidebar: FC<SidebarProps> = ({
         <Avatar size={48} src={avatar} />
         <div className="sidebar-user-profile-content">
           <Typography.Title level={4}>Maria Sanoid</Typography.Title>
-          <div className="sidebar-user-profile-role">{role}</div>
+          <div className="sidebar-user-profile-role">{getUserRoleLable(role)}</div>
         </div>
       </div>
 
