@@ -39,6 +39,7 @@
   .login-form-forgot {
     color: $primary-bg-color;
   }
+
 }
 
 .verfiction-link {
@@ -143,6 +144,50 @@
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
+  }
+
+   
+  
+}
+.verify-modal{
+  padding: 1rem;
+  .top-question{
+    font-weight: 700;
+font-size: 24px;
+line-height: 32px;
+color: $text-primary-title-color;
+text-align: center;
+padding-top: 1rem;
+padding-bottom: 1rem;
+  }
+  .question-description{
+    font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: $teriary-light;
+padding-bottom: 2rem;
+  }
+  .stepnumber{
+    font-weight: 400;
+font-size: 16px;
+line-height: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: $light-step-color;
+
+  }
+  .stepdescription{
+    font-weight: 600;
+font-size: 12px;
+line-height: 20px;
+display: flex;
+align-items: center;
+text-align: center;
+color: $light-heading-color;
   }
 }
 
