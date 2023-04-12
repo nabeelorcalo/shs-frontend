@@ -619,3 +619,10 @@ export { ReactComponent as Bus } from './serachJobs/bus.svg';
 //404 page
 export { default as Page_404 } from '../../assets/images/404/page-404.svg';
 export { default as Page404 } from '../../assets/images/404/404.svg';
+
+//Intern Douments 
+export { default as Folder } from '../../assets/images/documents/folder.svg';
+export { default as UploadIconBtn } from '../../assets/images/documents/document-upload.svg';
+export { default as Star } from '../../assets/images/documents/star.svg';
+export { default as Dots } from '../../assets/images/documents/dots.svg';
+export { default as DoucmentCard } from '../../assets/images/documents/Document Card.svg';

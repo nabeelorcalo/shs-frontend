@@ -1,11 +1,15 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import "./style.scss";
-
+import { Divider } from "antd";
+import InternDocumentHeader from "./internDocument/internDocumentHeader";
 const Documents = () => {
   return (
-    <p>Documents</p>
-  )
-}
+    <>
+      <p className="font-medium text-3xl primary-color ">Documents</p>
+      <Divider />
+      <InternDocumentHeader />
+    </>
+  );
+};
 
-export default Documents
+export default Documents;

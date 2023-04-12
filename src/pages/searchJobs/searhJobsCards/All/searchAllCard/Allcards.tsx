@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import { BoxWrapper } from "../../../../../components";
 import "./Styles.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CoverPhoto from "../../../../../assets/images/serachJobs/logo.png";
 
 interface Props {
@@ -22,7 +22,8 @@ interface Props {
 }
 
 const AllCardsTab = (props: any) => {
-  const navigate = useNavigate();
+  const { data } = useParams();
+  console.log(data, "id");
 
   const {
     tags = ["Full Time ", "Paid", "On-Site"],
