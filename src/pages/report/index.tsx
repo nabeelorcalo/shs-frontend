@@ -8,7 +8,7 @@ import { currentUserRoleState } from "../../store";
 const Report = () => {
   const role = useRecoilValue(currentUserRoleState);
   const renderWthRole: any = {
-    'University': <UniversitRep />,
+    'UNIVERSITY': <UniversitRep />,
   }
 
   return (

@@ -9,8 +9,8 @@ import "./style.scss";
 const Universities = () => {
   const role = useRecoilValue(currentUserRoleState);
   const renderWthRole: any = {
-    'CompanyAdmin': <CompanyAdmin />,
-    'SystemAdmin': <SystemAdmin />
+    'COMPANY_ADMIN': <CompanyAdmin />,
+    'SYS_ADMIN': <SystemAdmin />
   }
 
   return (
