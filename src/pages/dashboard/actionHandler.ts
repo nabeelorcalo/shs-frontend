@@ -1,15 +1,12 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { useEffect, useState } from "react";
+
 import api from "../../api";
-import constants from "../../config/constants";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { getDataWrapper } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 // import { agent_dashboard_widgets } from "../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const { AGENT_DASHBOARD_WIDGETS } = endpoints;
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
@@ -29,14 +26,22 @@ const useCustomHook = () => {
       });
   };
 
-  const agentDashboardWidgets = useRecoilValue(getDataWrapper("agentDashboardWidgetsxys", endpoints?.AGENT_DASHBOARD_WIDGETS))
-  console.log("agentDashboardWidgets","agentDashboardWidgets");
-  
+  // agent dashboard
+  const [agentDashboardWidgets, setAgentDashboardWidgets] = useState({
+    totalProperties: 0,
+    totalVacantProperties: 0,
+    totalReservedProperties: 0,
+    totalOccupiedProperties: 0,
+  })
+
+  useEffect(() => {
+    api.get(AGENT_DASHBOARD_WIDGETS).then(({ data }) => setAgentDashboardWidgets(data[0]))
+  }, [])
 
   return {
     getData,
     loadMoreData,
-    // agentDashboardWidgets,
+    agentDashboardWidgets,
   };
 };
 

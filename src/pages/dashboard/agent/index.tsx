@@ -5,17 +5,13 @@ import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
 import useCustomHook from "../actionHandler";
+import api from "../../../api";
+import endpoints from "../../../config/apiEndpoints";
 
 const Agent = () => {
   const {
     //countingCard data
-    // agentDashboardWidgets,
-    // {
-    //   totalProperties,
-    //   totalVacantProperties,
-    //   totalReservedProperties,
-    //   totalOccupiedProperties,
-    // },
+    agentDashboardWidgets: { totalProperties, totalVacantProperties, totalReservedProperties, totalOccupiedProperties },
   } = useCustomHook();
   // console.log(agentDashboardWidgets, "agentDashboardWidgets");
 
@@ -55,13 +51,13 @@ const Agent = () => {
       <PageHeader bordered title="Dashboard" />
       <Row gutter={gutter}>
         <Col xs={24}>
-          {/* <CountingCard
+          <CountingCard
             totalListings={totalProperties}
             occupiedProperties={totalOccupiedProperties}
             reservedProperties={totalReservedProperties}
             vacantProperties={totalVacantProperties}
             isSeprate
-          /> */}
+          />
         </Col>
 
         <Col xs={24} xl={12}>

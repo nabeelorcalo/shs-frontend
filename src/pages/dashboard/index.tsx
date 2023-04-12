@@ -19,33 +19,26 @@ export const gutter: any = [
 
 const Dashboard = () => {
   const { AGENT, MANAGER, COMPANY_ADMIN, DELEGATE_AGENT, STUDENT, SYSTEM_ADMIN, UNIVERSITY, INTERN } = constants;
-  const role = useRecoilValue(currentUserRoleState)
-  const renderRoleBasedDashboard = (role: string) => {
-    switch (role) {
-      case AGENT:
-        return <Agent />;
-      case COMPANY_ADMIN:
-        return <CompanyAdmin />;
-      case DELEGATE_AGENT:
-        return <DelegateAgent />;
-      case INTERN:
-        return <Intern />;
-      case MANAGER:
-        return <Manager />;
-      case STUDENT:
-        return <Student />;
-      case SYSTEM_ADMIN:
-        return <SystemAdmin />;
-      case UNIVERSITY:
-        return <University />;
-      default:
-        return <></>;
-    }
+  const role = useRecoilValue(currentUserRoleState);
+  switch (role) {
+    case AGENT:
+      return <Agent />;
+    case COMPANY_ADMIN:
+      return <CompanyAdmin />;
+    case DELEGATE_AGENT:
+      return <DelegateAgent />;
+    case INTERN:
+      return <Intern />;
+    case MANAGER:
+      return <Manager />;
+    case STUDENT:
+      return <Student />;
+    case SYSTEM_ADMIN:
+      return <SystemAdmin />;
+    case UNIVERSITY:
+      return <University />;
+    default:
+      return <></>;
   }
-
-  return (
-    renderRoleBasedDashboard(role)
-  )
-}
-
-export default Dashboard
+};
+export default Dashboard;
