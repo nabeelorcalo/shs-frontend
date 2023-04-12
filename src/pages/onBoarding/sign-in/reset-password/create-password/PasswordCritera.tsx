@@ -54,22 +54,17 @@ const PasswordCritera = (props: any) => {
 
   return (
     <div className="password-criteria">
-      <p style={{ color: "#343A40", fontSize: "16px", fontWeight: 600 }}>
+      <p className="teriary-light text-base font-semibold">
         Password must have:
       </p>
 
       {stateArray.map((e, index) => {
         return (
           <div key={index}>
-            {!e.id && <CheckCircleFilled style={{ color: "#D9DBE9" }} />}
-            {e.id && <CheckCircleFilled style={{ color: "#4A9D77" }} />}
-            <span
-              style={{
-                color: "#4E4B66",
-                fontSize: "14px",
-                fontWeight: "400",
-                marginLeft: "10PX",
-              }}
+            {!e.id && <CheckCircleFilled className="text-error-line-color" />}
+            {e.id && <CheckCircleFilled className="teriary-color" />}
+            <span className="text-[#4E4B66] text-sm font-normal ml-3 "
+             
             >
               {e.error}
             </span>

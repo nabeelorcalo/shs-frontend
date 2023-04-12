@@ -4,7 +4,7 @@ import { Dropdown, Menu } from "antd";
 import "./CustomSettingDropdown.scss";
 import { NavLink } from "react-router-dom";
 
-const DropDownForSetting = (props: any) => {
+export const DropDownForSetting = (props: any) => {
   const [visible, setVisible] = useState(false);
 
   const handleVisibleChange = (visible: any) => {
@@ -42,8 +42,8 @@ const DropDownForSetting = (props: any) => {
           </Menu.Item>
         </Menu>
       }
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
+      open={visible}
+      onOpenChange={handleVisibleChange}
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>

@@ -1,23 +1,19 @@
+import React from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Form,
   Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
-import React from "react";
-
-import "./Verification.scss";
-import { BackButton } from "../../../../../assets/images";
-import { SHSLogo } from "../../../../../assets/images";
-
-const { Option } = Select;
+import { BackButton,SHSLogo  } from "../../../../../assets/images";
+import "../../../styles.scss";
 
 const IdentityVerification = (props: any) => {
+
+  const { Option } = Select;
   const { currentStep, setCurrentStep } = props;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -30,16 +26,18 @@ const IdentityVerification = (props: any) => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={10} xl={10} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 7</Typography>
-              <div className="flex items-center">
+              <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton
+                  //style={{ fill: '#363565', stroke: 'white', color: 'red' }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -56,7 +54,7 @@ const IdentityVerification = (props: any) => {
             <div className="sign-up-form-wrapper">
             
                 <Row gutter={20}>
-                  <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                     <Form.Item
                       label="First Name"
                       name="firstName"
@@ -86,30 +84,30 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
 
-                <Form.Item
-                  label="Country"
-                  name="Country"
-                  rules={[
-                    { required: true, message: "Please input your Country!" },
-                  ]}
-                >
-                  <Input placeholder="Country" className="input-style" />
-                </Form.Item>
-                <Form.Item
-                  label="Document Type"
-                  name="Document Type"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your Document Type!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="Document Type" className="input-style" />
-                </Form.Item>
+              <Form.Item
+                label="Country"
+                name="Country"
+                rules={[
+                  { required: true, message: "Please input your Country!" },
+                ]}
+              >
+                <Input placeholder="Country" className="input-style" />
+              </Form.Item>
+              <Form.Item
+                label="Document Type"
+                name="Document Type"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your Document Type!",
+                  },
+                ]}
+              >
+                <Input placeholder="Document Type" className="input-style" />
+              </Form.Item>
 
-                <Row gutter={10}>
-                  <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+                <Row gutter={[130,10]}>
+                  <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
                       //htmlType="submit"
@@ -117,7 +115,7 @@ const IdentityVerification = (props: any) => {
                       Skip
                     </Button>
                   </Col>
-                  <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                     <Form.Item>
                       <Button
                         onClick={() => {
@@ -134,12 +132,11 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
 
-                <div>
-                  <Typography className="text-center">
-                    Why I need to verify myself?
-                  </Typography>
-                </div>
-             
+              <div>
+                <Typography className="text-center">
+                  Why I need to verify myself?
+                </Typography>
+              </div>
             </div>
           </div>
         </Col>

@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { CloseCircleFilled } from '@ant-design/icons'
-import { Button, Modal } from 'antd'
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import DragAndDropUpload from '../DragAndDropUpload';
@@ -28,27 +26,17 @@ const items: TabsProps['items'] = [
     children: <DragAndDropUpload />,
   },
 ];
-const SignatureAndUploadModal = (props: any) => {
-  const { state, setState, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
-  return (
-    <>
-      <Button onClick={() => { setState(!state) }}>Signature & upload</Button>
-      <div>
-        <PopUpModal
-          title={title}
-          open={true}
-          //setState={setState}
-          width={width}
-          okBtntxt={okBtntxt}
-          cancelBtntxt={cancelBtntxt}
-          okBtnFunc={okBtnFunc}
-          footer={footer}
-        >
-          <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-        </PopUpModal>
-      </div>
-    </>
-  )
+export const SignatureAndUploadModal = (props: any) => {
+  const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
+  return (<PopUpModal title={title}
+    open={state} close={closeFunc}
+    width={width}
+    okBtntxt={okBtntxt}
+    cancelBtntxt={cancelBtntxt}
+    okBtnFunc={okBtnFunc}
+    footer={footer} >
+    <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+  </PopUpModal>)
 }
 
 export default SignatureAndUploadModal

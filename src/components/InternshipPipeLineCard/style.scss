@@ -1,0 +1,9 @@
+@import '../../scss/_colors.scss';
+
+.pipeline-card-wrapper{
+  border: 1px solid $text-input-bg-color;
+}
+.divider-color {
+  background-color: $off-white-color;
+  height:2px
+}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Typography, Row, Col, Form, Input, Button } from "antd";
+import { Typography, Row, Col, Input, Button } from "antd";
 import {
   BereavementLeave,
   CasualLeave,
@@ -11,11 +11,10 @@ import {
   SickLeave,
   WorkFromHome,
 } from "../../../../assets/images";
-import { Alert, SearchBar } from "../../../../components";
-import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
-import { PopUpModal } from "../../../../components/Model";
+import { Alert, SearchBar , DropDownForSetting } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
@@ -56,7 +55,6 @@ let overview = [
 ];
 
 const SettingLeave = () => {
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [formValues, setFormValues] = useState<any>({
     departmentName: "",
@@ -69,30 +67,30 @@ const SettingLeave = () => {
   return (
     <div className="setting-leaves">
       <div>
-        <div className="flex justify-between">
-          <SearchBar size="large" handleChange={handleChange} />
-          <NavLink to="/settings/leaves/add-policy">
-          <Button
-            size="middle"
-            onClick={() => {}}
-            className="flex gap-2 setting-add-button white-color teriary-bg-color"
-          >
-            <SettingLeaves /> Add Policy
-          </Button>
+        <div className="flex justify-between location-header">
+          <SearchBar size="middle" handleChange={handleChange} />
+          <NavLink to={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}>
+            <Button
+              size="middle"
+              onClick={() => { }}
+              className="flex gap-2 setting-add-button white-color teriary-bg-color"
+            >
+              <SettingLeaves /> Add Policy
+            </Button>
           </NavLink>
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={12} lg={8}>
+            <Col key={index} className="gutter-row" xs={24}  lg={8}>
               <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
-                     link={"/settings/leaves/add-policy"}
+                    link={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}
                     showDeleteModal={showDeleteModal}
                     setShowDeleteModal={setShowDeleteModal}
-                    // setShowEditModal={setShowEditModal}
+                
                   />
                 </div>
                 <div className="flex ">
@@ -106,30 +104,6 @@ const SettingLeave = () => {
           );
         })}
       </Row>
-      {/* <PopUpModal
-        // cancelBtntxt="Cancel"
-        okBtntxt="Submit"
-        state={showEditModal}
-        setState={setShowEditModal}
-        title="Edit Category"
-        width={600}
-      >
-        <Form layout="vertical">
-          <Form.Item
-            name="locationName"
-            rules={[{ required: true, message: "Please Enter your username!" }]}
-          >
-            <div className="d-flex w-full pl-1">
-              <p className="py-2">Recurrence</p>
-              <Input placeholder="Title" className="input-style" />
-            </div>
-          </Form.Item>
-          <div className="mt-3 flex flex-col">
-            <label className="pb-2">Description</label>
-            <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
-          </div>
-        </Form>
-      </PopUpModal> */}
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
@@ -138,9 +112,8 @@ const SettingLeave = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

@@ -5,7 +5,7 @@ import constants from '../../../config/constants';
 import { Finance, Relationship, Health, Education, Development, Family, Social, Recreation } from '../../../assets/images';
 
 
-const Graph = ({monthName}: any) => {
+export const LifeAssessmentGraph = ({monthName}: any) => {
   const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "Social Life", "Recreation"];
   const filteredArray = data.filter(obj => obj.month === monthName);
 
@@ -42,7 +42,7 @@ const Graph = ({monthName}: any) => {
   return (
     <>
       {assessmentsName.map((item, index) => (
-        <div className="flex items-center">
+        <div className="flex items-center lifeAssesment_main">
           <div className='flex-none w-[120px]'>
             {item}
           </div>
@@ -89,5 +89,3 @@ const Graph = ({monthName}: any) => {
     </>
   )
 };
-
-export default Graph;

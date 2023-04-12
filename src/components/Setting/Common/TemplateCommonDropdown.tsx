@@ -9,7 +9,7 @@ interface ITEMPLATEDROPDOWN {
   link: string;
 }
 
-const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
+export const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
   const { setShowDeleteModal, showDeleteModal, link } = props;
   const [visible, setVisible] = useState(false);
 
@@ -36,8 +36,8 @@ const TemplateCommonDropdown = (props: ITEMPLATEDROPDOWN) => {
           </Menu.Item>
         </Menu>
       }
-      visible={visible}
-      onVisibleChange={handleVisibleChange}
+      open={visible}
+      onOpenChange={handleVisibleChange}
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>

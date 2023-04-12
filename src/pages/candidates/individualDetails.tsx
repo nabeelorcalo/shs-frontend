@@ -1,6 +1,10 @@
-import { Rate } from 'antd'
+import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Intro, DrawerIcon,LocationIconNew, StarOutlinedIcon,PlayIconNew } from '../../assets/images';
 import "./style.scss"
+<<<<<<< HEAD
 import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Location, Intro, PlayIcon, DrawerIcon, StarOutlinedIcon } from '../../assets/images'
+=======
+
+>>>>>>> dev
 import DropDownNew from '../../components/Dropdown/DropDownNew'
 import { useState } from 'react'
 
@@ -21,7 +25,7 @@ const IndividualDetails = () => {
   const userinfoData = [
     { img: Mail, title: "phyliis@gmail.com" },
     { img: Call, title: "+44 7700 900077" },
-    { img: Location, title: "263 Eversholt St, London NW11NB UK" },
+    { img: LocationIconNew, title: "263 Eversholt St, London NW11NB UK" },
   ]
 
   const dropdownData = [
@@ -45,9 +49,8 @@ const IndividualDetails = () => {
           <p className='user-name'>Phylis Godley</p>
         </div>
 
-        <div className="dropdown-wrapper flex gap-3">
+        <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center">
           <div className="flex advance-dropdown ">
-
             <DropDownNew items={[{
               label: <div className='flex gap-4'>
                 {[1, 2, 3, 4, 5].map((val) => rate === val ?
@@ -63,7 +66,6 @@ const IndividualDetails = () => {
                 <ArrowDownDark />
               </div>
             </DropDownNew>
-
           </div>
           <div className="flex advance-dropdown ">
             <DropDownNew items={[{
@@ -86,7 +88,6 @@ const IndividualDetails = () => {
                 <ArrowDownDark />
               </div>
             </DropDownNew>
-
           </div>
         </div>
 
@@ -103,9 +104,9 @@ const IndividualDetails = () => {
 
       <div className='stage-main'>
         <p className='capitalize stage-para'>Stage</p>
-        <div className='flex items-center justify-center rounded-full '>
+        <div className='flex 2xl:gap-0 gap-1  flex-wrap 2xl:flex-nowrap items-center justify-center rounded-full '>
           {[1, 2, 3, 4, 5, 6].map((val) => (
-            <p key={val} className="stage-apply flex items-center justify-center">{val}</p>
+            <p key={val} className="stage-apply flex  items-center justify-center">{val}</p>
           ))}
         </div>
       </div>
@@ -132,10 +133,12 @@ const IndividualDetails = () => {
 
       <div className="intro">
         <p className='heading mt-8'>Intro</p>
+       <div className="main-div relative">
+       <div className='absolute' style={{zIndex:1,left:"43%", top:"45%"}}> <PlayIconNew /></div>
         <div className="image mt-[10px] relative">
-          <PlayIcon className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]' />
           <Intro />
         </div>
+       </div>
       </div>
     </div>
   )

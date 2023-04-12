@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { Col, Row, Typography, Space, Input, Button } from "antd";
-import {
-  Settinglocation,
-  LocationPeople,
-  CardLocation,
-} from "../../../../assets/images";
+import { Col, Row, Typography, Space, Button } from "antd";
+import { Settinglocation, LocationPeople, CardLocation, } from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Alert, SearchBar } from "../../../../components";
+import { Alert, BoxWrapper, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
-import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
-import SettingCommonModal from "../../../../components/Setting/Common/SettingCommonModal";
-const { TextArea } = Input;
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 const { Title, Text } = Typography;
 
 let overview = [
@@ -39,15 +33,15 @@ let overview = [
 
 const SettingLocation: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const handleChange = () => {};
+  const handleChange = () => { };
   return (
     <div className="setting-location">
-        <div className="flex justify-between">
+      <div className="flex justify-between location-header">
         <SearchBar size="middle" handleChange={handleChange} />
-        <NavLink to="/settings/location/add-location">
+        <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
           <Button
             size="middle"
-            onClick={() => {}}
+            onClick={() => { }}
             className="flex gap-2 setting-add-button white-color teriary-bg-color"
           >
             <Settinglocation /> Add Location
@@ -58,13 +52,13 @@ const SettingLocation: React.FC = () => {
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} lg={12} xxl={8}>
-              <BoxWrapper className="location-box-wrapper">
+              <BoxWrapper className="p-3">
                 <div className="flex">
                   <Text>{data.cardImage}</Text>
                   <div className="flex px-3 justify-between mt-1 w-full">
                     <div className="flex flex-col">
-                      <Title level={5}>{data.name}</Title>
-                      <Text> {data.content}</Text>
+                      <Text className="text-sm sm:text-base">{data.name}</Text>
+                      <Text  className="text-sm sm:text-base"> {data.content}</Text>
                       <Space className="flex py-2">
                         <Text>{data.contentImage}</Text>
                         <Text className="font-normal text-xs p-0 m-0">
@@ -72,10 +66,9 @@ const SettingLocation: React.FC = () => {
                         </Text>
                       </Space>
                     </div>
-
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
-                      link={"/settings/location/add-location"}
+                        link={"/settings/location/add-location"}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />
@@ -87,7 +80,6 @@ const SettingLocation: React.FC = () => {
           );
         })}
       </Row>
-
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
@@ -96,9 +88,8 @@ const SettingLocation: React.FC = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this location?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

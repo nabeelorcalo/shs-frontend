@@ -1,22 +1,15 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-import api from "../../api";
-import constants from "../../config/constants";
+import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
+import { availablePropertiesState, allAvailablePropertiesState } from "../../store";
+import api from '../../api'
 
-// Chat operation and save into store
-const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+const useAccommodationData = () => {
+  const [availableProperties, setAvailableProperties] = useRecoilState(availablePropertiesState);
+  const propertiesList = useRecoilValue(allAvailablePropertiesState)
 
   return {
-    getData,
+    propertiesList
   };
 };
 
-export default useCustomHook;
+export default useAccommodationData;

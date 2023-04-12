@@ -11,38 +11,45 @@ import {
 } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
-import NewTemplateCommonBreadcrum from "../../../../../../components/Setting/Common/NewTemplateCommonBreadcrum";
-import { BoxWrapper } from "../../../../../../components/BoxWrapper/BoxWrapper";
-import "./style.scss";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Breadcrumb , BoxWrapper } from "../../../../../../components";
+import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateContract = () => {
-  const [value, setValue] = useState();
-  const [formValues, setFormValues] = useState<any>({
-    templateName: "",
-    subject: "",
-    description: "",
-  });
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "New Template"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Contract" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
+  ];
+  const [form] = Form.useForm();
+  const [textEditorValue, setTextEditorValue] = useState();
+  const onChangeHandler = (e: any) => {
+    setTextEditorValue(e)
+  }
 
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+  const handleSubmit = () => {
+    const values = form.getFieldsValue();
+    const formData = { 
+      subject : values.subject,
+      templateName :values.templateName,
+      description:textEditorValue
+    }
   };
 
   return (
-    <div className="contract-new-template">
-      <NewTemplateCommonBreadcrum
-        currentPageName="Contract"
-        perviousPageLink="/settings/template/contract"
-     
-      />
-      <Divider className="my-1 mb-3" />
+    <div className="offer-letter-new-template">
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider/>
       <BoxWrapper>
-        <Form layout="vertical">
+        <Form layout="vertical" form={form}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
-            <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
+            <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
               <Title className="mt-0.5" level={4}>
                 Template
               </Title>
@@ -50,33 +57,41 @@ const NewTemplateContract = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
+               required={false}
                 name="templateName"
                 label="Template Name"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
                 <Input placeholder="Enter name" className="" />
               </Form.Item>
               <Form.Item
+               required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ message: "Please Enter your username!" }]}
+                rules={[{ required: true, message: "Please Enter your username!" }]}
               >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-
-              <label className="text-teriary-color">Description (optional)</label>
-              <div className="text-input-bg-color rounded-lg  my-2">
-                <ReactQuill theme="snow" value={value} modules={textEditorData} />
-              </div>
+              <Form.Item
+                name="description"
+                label="Description (optional)"
+              >
+                <div className="text-input-bg-color rounded-lg text-editor  my-2">
+                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+                </div>
+              </Form.Item>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CONTRACT}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
+              onClick={handleSubmit}
             >
               Add
             </Button>
@@ -88,3 +103,5 @@ const NewTemplateContract = () => {
 };
 
 export default NewTemplateContract;
+
+

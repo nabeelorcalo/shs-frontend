@@ -4,7 +4,7 @@ import type { ButtonProps } from 'antd';
 import './style.scss'
 
 interface IButtonProps {
-  customType?: 'secondary' | 'tertiary'
+  customType?: 'secondary' | 'tertiary' | 'sky-blue'
   children?: React.ReactNode
 }
 

@@ -2,8 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/plots';
 import { attendanceData, listingsData } from './data';
 import constants from '../../../config/constants';
+import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { Typography } from 'antd';
 
-const Graph = ({ graphName }: any) => {
+interface GraphProps {
+  title: string
+  graphName: string
+  level: any
+  action?: boolean
+  childrens?: any
+  styling?:any
+}
+
+export const AttendanceAndListingGraph = (props: GraphProps) => {
+  const { title, graphName, level, action = false, childrens,styling } = props;
   const data = graphName === constants.ATTENDANCE ? attendanceData : listingsData;
   const maxValue = graphName === constants.ATTENDANCE ? 30 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
@@ -24,7 +36,7 @@ const Graph = ({ graphName }: any) => {
       "Vacant": "#FFC15D"
     };
 
-  const config = {
+  const config: any = {
     data,
     xField: 'month',
     yField: 'value',
@@ -43,7 +55,6 @@ const Graph = ({ graphName }: any) => {
         },
       },
     },
-
     yAxis: {
       min: 0,
       max: maxValue,
@@ -95,13 +106,26 @@ const Graph = ({ graphName }: any) => {
     },
   };
 
-  if(graphName === constants.ATTENDANCE){
+  if (graphName === constants.ATTENDANCE) {
     delete config.yAxis.label;
     delete config.tooltip;
   }
 
-  return <Line {...config
-  } />;
-};
+  return (
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
+      <div className='flex flex-row'>
+        <Typography.Title level={level} >
+          {title}
+        </Typography.Title>
 
-export default Graph;
+        {
+          action &&
+          <div className='ml-auto'>
+            {childrens}
+          </div>
+        }
+      </div>
+      <Line style={styling} {...config} />
+    </div>
+  )
+};

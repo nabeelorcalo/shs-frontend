@@ -5,7 +5,7 @@ import { registerAgentsData, rewardsData } from './data';
 import constants from '../../../config/constants';
 import '../style.scss';
 
-const Graph = ({ graphName }: any) => {
+export const RegisterAgentsAndRewardGraph = ({ graphName }: any) => {
   const data = graphName === constants.REGISTER_AGENTS ? registerAgentsData : rewardsData;
   const color = graphName === constants.REGISTER_AGENTS ? "#4A9D77" : '#E94E5D';
   const bgClass = graphName === constants.REGISTER_AGENTS ?
@@ -91,7 +91,7 @@ const Graph = ({ graphName }: any) => {
     )
   }
 
-  const CutomTooltip = (props: any) => {
+ const CutomTooltip = (props: any) => {
     return (
       <>
         {
@@ -166,5 +166,3 @@ const Graph = ({ graphName }: any) => {
 
   return <Area {...config} />;
 };
-
-export default Graph;

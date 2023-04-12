@@ -1,25 +1,26 @@
 import { Button, Col, Row } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
 import { tableMockData } from './certificateTable/tableMock';
-import { OverAllPerfomance } from '../../components';
+import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
 import { useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
 import IssueCertificate from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
-import SignatureModal from './certificateModal/SignatureModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
+import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
+import "./style.scss";
 
 const CertificateDetail = () => {
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const findUser = tableMockData.find(user => user.no === id);
   const [issueCertificateModal, setIssueCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
-  const [previewImg, setPreviewImg] = useState('');
   const [signatureModal, setSignatureModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
     name: findUser?.name, type: '',
@@ -28,11 +29,7 @@ const CertificateDetail = () => {
 
   return (
     <div className='certificate-detail-wrapper'>
-      <div className="certificate-top-heading text-2xl flex items-center gap-4 font-semibold pb-[30px] mb-[30px] capitalize">
-        {findUser?.name}
-        <span className='seperator'></span>
-        <span className='font-medium text-base'>Certificate</span>
-      </div>
+      <Breadcrumb breadCrumbData={[{ name: 'Mino Marina' }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
       <Row gutter={[15, 15]} className='flex-wrap'>
         <Col xl={6} lg={6} md={24} xs={24}>
           <BoxWrapper
@@ -45,17 +42,17 @@ const CertificateDetail = () => {
             />
             <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{findUser?.name}</p>
             <span className='department capitalize'>{findUser?.department}</span>
-            <Button className='mt-[30px] w-full view-profile-btn'>View Profile</Button>
+            <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col xl={12} lg={18} md={24} xs={24} className='over-all-performance'>
+        <Col xxl={12} xl={24} lg={24} md={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             lg={5} md={12} xs={24}
             data={findUser?.performance}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xl={6} lg={24} xs={24}>
+        <Col xxl={6} xl={12} lg={24} xs={24}>
           <LeaveChart heading='Leaves' />
         </Col>
       </Row>
@@ -84,10 +81,10 @@ const CertificateDetail = () => {
                   </p>
                   <DropDownNew items={[
                     {
-                      label: <p onClick={() => { setIssueCertificateModal(true) }}>Edit</p>,
+                      label: <p onClick={() => setIssueCertificateModal(true)}>Edit</p>,
                       key: 'edit'
                     },
-                    { label: <p>Delete</p>, key: 'delete' },
+                    { label: <p onClick={() => setDeleteModal(true)}>Delete</p>, key: 'delete' },
                   ]}
                     placement={'bottomRight'}
                     overlayStyle={{ width: '100px' }}
@@ -110,7 +107,6 @@ const CertificateDetail = () => {
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
                     onClick={() => {
                       setPreviewModal(true);
-                      setPreviewImg(certificate?.certificateImg)
                     }}
                   >
                     <CertificateEyeIcon
@@ -149,7 +145,21 @@ const CertificateDetail = () => {
         type={issuewNewCertificate?.type}
         desc={issuewNewCertificate?.desc}
       />}
-      {signatureModal && <SignatureModal open={signatureModal} setOpen={setSignatureModal} />}
+      {signatureModal && <SignatureAndUploadModal />}
+
+      {deleteModal &&
+        <Alert
+          type={'error'}
+          state={deleteModal}
+          setState={setDeleteModal}
+          icon={''}
+          cancelBtntxt={'Cancel'}
+          okBtntxt={'Delete'}
+        >
+          <p className='font-medium text-[#4E4B66]'>
+            Are you sure you want to delete this cetificate?
+          </p>
+        </Alert>}
     </div>
   )
 }

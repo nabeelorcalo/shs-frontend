@@ -1,29 +1,30 @@
-import { Button } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
-import useThemeHook from '../../theme';
+import CompanyAdminAttendance from "../attendance/CompanyAdmin";
+import ManagerAttendance from "../attendance/Manager";
+import InternAttendance from "../attendance/Intern";
+import constants from "../../config/constants";
 import "./style.scss";
+import UniversityAttendance from "./University";
 
 const Attendance = () => {
-  const action = useThemeHook();
-  const primaryColor = {colorPrimary: "green", colorPrimaryHover: "green"};
-  const secondaryColor = {colorPrimary: "green", colorPrimaryHover: "green"};
-
+  const renderPage = () => {
+    switch (constants.USER_ROLE) {
+      case 'CompanyAdmin':
+        return <CompanyAdminAttendance />;
+      case 'Intern':
+        return <InternAttendance />;
+      case 'Manager':
+        return <ManagerAttendance />;
+        case 'University':
+        return <UniversityAttendance />;
+      default:
+        return <></>;
+    }
+  }
+  
   return (
-    <>
-      <Button type="primary" className="" onClick={() => action.updateTheme(primaryColor)}>
-        Primary Button
-      </Button>
-
-      <Button className="" type="default" onClick={() => action.updateTheme(primaryColor)}>
-        Default Button
-      </Button>
-
-      <Button className="secondary-color-btn" type="default" onClick={() => action.updateTheme(primaryColor)}>
-        Secondary Button
-      </Button>
-    </>
+    renderPage()
   )
 }
 
-export default Attendance
+export default Attendance;

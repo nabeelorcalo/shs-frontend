@@ -1,0 +1,166 @@
+{
+  "tradingName": "Jane Cooper",
+  "title":"Admin",
+  "color":  "#E96F7C",
+  "organizationChildRelationship": [
+    {
+      "tradingName": "Floyd Miles",
+      "title":"Data Research Manager",
+      "color":"#4CA4FD"
+     
+    },
+    {
+      "tradingName": "Kristin Watson",
+      "title":"Product Manager",
+      "color":"#4CA4FD",
+      "organizationChildRelationship":
+       [
+        {
+          "tradingName": "Piętro 1",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+        },
+        {
+          "tradingName": "Piętro 2",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+      
+          
+        },
+        {
+          "tradingName": "Piętro 1",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+        },
+        {
+          "tradingName": "Piętro 2",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+          
+        }
+       
+      ]
+    },
+    {
+      "tradingName": "Dianne Russell",
+      "title":"Program Manager",
+      "color":"#4CA4FD",
+      "organizationChildRelationship": [
+        {
+          "tradingName": "Piętro 1",
+          "color":"#6AAD8E",
+          "title":"Senior Developer",
+          "organizationChildRelationship": [
+            {
+              "tradingName": "Piętro 1",
+              "color":"#6AAD8E",
+              "title":"Senior Developer",
+           
+                "organizationChildRelationship": [
+                  {
+                    "tradingName": "Piętro 1",
+                    "color":"#6AAD8E",
+                    "title":"Senior Developer"
+                   
+                    
+                  },
+                  {
+                    "tradingName": "Piętro 2",
+                    "color":"#6AAD8E",
+                    "title":"Senior Developer",
+                    "organizationChildRelationship": [
+                      {
+                        "tradingName": "Piętro 1",
+                        "color":"#6AAD8E",
+                        "title":"Senior Developer"
+                        
+                        
+                      },
+                      {
+                        "tradingName": "Piętro 2",
+                        "color":"#6AAD8E",
+                        "title":"Senior Developer",
+                        "organizationChildRelationship": [
+                          {
+                            "tradingName": "Piętro 1",
+                            "color":"#6AAD8E",
+                            "title":"Senior Developer"
+                            
+                            
+                          },
+                          {
+                            "tradingName": "Piętro 2",
+                            "color":"#6AAD8E",
+                            "title":"Senior Developer"
+                            
+                          }
+                         
+                        ]
+                        
+                      }
+                     
+                    ]
+                    
+                  }
+                 
+                ]
+              },
+              
+            
+            {
+              "tradingName": "Piętro 2",
+              "color":"#6AAD8E",
+              "title":"Senior Developer"
+              
+            }
+           
+          ]
+        },
+        {
+          "tradingName": "Piętro 2",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+          
+        }
+       
+      ]
+    },
+    {
+      "tradingName": "Jerome Bell",
+      "title":"HR Manager",
+      "color":"#4CA4FD",
+      "organizationChildRelationship": [
+        {
+          "tradingName": "Piętro 1",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+        },
+        {
+          "tradingName": "Piętro 2",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+          
+        }
+       
+      ]
+    },
+    {
+      "tradingName": "Brooklyn Simmons",
+      "title":"Senior Developer",
+      "color":"#4CA4FD",
+      "organizationChildRelationship": [
+        {
+          "tradingName": "Piętro 1",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+        },
+        {
+          "tradingName": "Piętro 2",
+          "color":"#6AAD8E",
+          "title":"Senior Developer"
+        }
+       
+      ]
+    }
+  ]
+}

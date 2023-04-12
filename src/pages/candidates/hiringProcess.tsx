@@ -42,15 +42,12 @@ const HiringProcess = () => {
 
   return (
     <div className="hiring-wrapper">
-      <div className='hiring flex justify-between'>
+      <div className='hiring flex flex-wrap justify-between'>
         <div>
           <p className='heading mt-5'>UI UX Designer</p>
         </div>
         <div className="rej-mov mt-4 gap-2 flex">
-
-          <button onClick={() => setOpen(true)} className='rej-btn cursor-pointer'>
-            Reject
-          </button>
+          <button onClick={() => setOpen(true)} className='rej-btn cursor-pointer'> Reject </button>
           <RejectModal setOpen={setOpen} open={open} />
           <button className='move-btn'>Move</button>
         </div>
@@ -70,7 +67,8 @@ const HiringProcess = () => {
               <Col xl={8} lg={8} md={8} sm={12} xs={24} >
                 <div className='asignee-wrap'>
                   <h2 className='m-0 font-medium text-base title'>{item.title}</h2>
-                  {item.title === 'Assignee' ? <DropDownNew
+                  {item.title === 'Assignee' ? 
+                  <DropDownNew
                     placement={'bottomRight'}
                     items={[
                       { label: <SearchBar handleChange={() => { }} />, key: 'search' },
@@ -115,7 +113,7 @@ const HiringProcess = () => {
 
       <div className='Comments flex justify-between mt-6'>
         <div className="icon ">
-          <img className='h-[48px] w-[48px]' src={DocAvatar} alt="" />
+          <img className='h-[48px] w-[48px]' src={DocAvatar} alt="icon" />
         </div>
 
         <div className="Input">
@@ -124,14 +122,14 @@ const HiringProcess = () => {
         </div>
 
         <button className='btn-icon'>
-          <img src={BtnIcon} alt="" />
+          <img src={BtnIcon} alt="btn-icon" />
         </button>
 
       </div>
 
       <div className="avatar flex items-center gap-3 mt-6">
-        <img src={DocAvatar} alt="" />
-        <div className="text ">
+        <img src={DocAvatar} alt="doc-avatar" />
+        <div className="text">
           <div className='flex gap-3'>
             <p className='font-medium'>Albert John</p>
             <p className='mt-1 txt-p'>15.45 . 10 Nov 2022</p>

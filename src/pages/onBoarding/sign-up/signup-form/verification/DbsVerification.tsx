@@ -1,21 +1,19 @@
+import React from "react";
 import {
   Button,
-  Checkbox,
   Col,
   Form,
-  Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
-import React from "react";
-import "./Verification.scss";
 import {
   BackButton,
   DocumentUpload,
   SHSLogo,
 } from "../../../../../assets/images";
+import "../../../styles.scss";
+import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -26,12 +24,12 @@ const DbsVerification = (props: any) => {
       <Row className="identity-style">
         <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 2 of 7</Typography>
-              <div className="flex items-center">
+              <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton />
                 </div>
@@ -61,9 +59,10 @@ const DbsVerification = (props: any) => {
                 <div className="dragger">
                   <Row className="p-3">
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
+                      {/* <DragAndDropUpload/> */}
                       <Typography className="dragger-title">
                         Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
+                        <span className="text-[#E95060]">Browse</span>
                       </Typography>
                       <Typography className="dragger-description">
                         Support jpeg,pdf and doc files
@@ -78,7 +77,7 @@ const DbsVerification = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <img src={DocumentUpload} alt="error" />
+                      <DocumentUpload/>
                     </Col>
                   </Row>
                 </div>
@@ -90,8 +89,8 @@ const DbsVerification = (props: any) => {
                 You must be 16 or over to apply. It usually takes up to 14 days
                 to receive your certificate.
               </Typography>
-              <Row gutter={10}>
-                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+              <Row gutter={[10,10]}>
+                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
                     //htmlType="submit"
@@ -99,7 +98,7 @@ const DbsVerification = (props: any) => {
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                   <Form.Item>
                     <Button
                       onClick={() => {

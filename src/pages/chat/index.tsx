@@ -1,12 +1,7 @@
-import React from "react";
-import Student from "../chat/student";
+import ChatMain from "./ChatMain"
 
 const Chat = () => {
-  return (
-    <div>
-      <Student />
-    </div>
-  );
+  return <ChatMain />
 };
 
 export default Chat;

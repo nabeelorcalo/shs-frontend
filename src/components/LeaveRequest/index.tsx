@@ -3,11 +3,11 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import "./style.scss"
-import dayjs from 'dayjs';
 import { DocumentUpload } from '../../assets/images';
 import { Button } from '../Button';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
-import { AcceptedFileTyp } from '../../config/leaveRequestFileConstant';
+import { ROUTES_CONSTANTS } from '../../config/constants';
+import TimePickerComp from '../calendars/TimePicker/timePicker';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -30,7 +30,6 @@ const props: UploadProps = {
     // console.log('Dropped files', e.dataTransfer.files);
   },
 };
-
 // Leave Request Form Select Oprion Array
 const leavRequestOptionDAta = [
   { value: '1', label: 'Sick' },
@@ -55,20 +54,21 @@ export const LeaveRequest = (props: any) => {
     hours: '',
     reason: "",
     attachment: ''
-
   }
-  
-  const { title, open, setIsAddModalOpen, subMitLeaveBtn, changeLeaveTyp, data } = props;
+
+  const { title, open, setIsAddModalOpen, subMitLeaveBtn, data } = props;
   // console.log(openModal);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
+  const [time, setTime] = useState({ from: false, to: false });
   const [formVal, setFormVal] = useState(data ? data : initailVal)
   const [form] = Form.useForm();
   // const handleTimeChange = (time: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
   // }
-  console.log(formVal, 'from modal box');
+  const [requestLeave, setRequestLeave] = useState('');
+  console.log(requestLeave, 'from modal box');
 
   return (
     <Modal
@@ -80,6 +80,7 @@ export const LeaveRequest = (props: any) => {
       maskClosable={true}
       closeIcon={<CloseCircleFilled className=' text-xl text-[#A3AED0]' />}
       footer={false}
+      centered
     >
       <Form
         layout='vertical'
@@ -102,7 +103,7 @@ export const LeaveRequest = (props: any) => {
         <Form.Item
           name="radio"
         >
-          <Radio.Group onChange={changeLeaveTyp}>
+          <Radio.Group onChange={(e: any) => setRequestLeave(e.target.value)} defaultValue="FullDay">
             <Radio value="FullDay">Full Day</Radio>
             <Radio value="HalfDay">Half Day</Radio>
           </Radio.Group>
@@ -139,25 +140,26 @@ export const LeaveRequest = (props: any) => {
               />
             </Form.Item>
           </Col>
-
         </Row>
-        {
+        {requestLeave === "HalfDay" &&
           <Row gutter={[10, 10]}>
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
-                <TimePicker
-                  minuteStep={60}
-                  secondStep={60}
-                // onChange={handleTimeChange}
+                <TimePickerComp
+                  popupclassName={'leave-time-picker'}
+                  open={time.from}
+                  setOpen={() => setTime({ from: !time.from, to: false })}
+                // value={initailVal.timeFrom}
                 />
               </Form.Item>
             </Col>
             <Col lg={8}>
               <Form.Item name="timeTo" label="Time To" rules={[{ required: true }]}>
-                <TimePicker
-                  minuteStep={60}
-                  secondStep={60}
-                // onChange={handleTimeChange}
+                <TimePickerComp
+                  popupclassName={'leave-time-picker'}
+                  open={time.to}
+                  setOpen={() => setTime({ to: !time.to, from: false })}
+                // value={initailVal.timeTo}
                 />
               </Form.Item>
             </Col>
@@ -177,7 +179,7 @@ export const LeaveRequest = (props: any) => {
         </Form.Item>
         <Form.Item label="Attachment" name='attachment'>
           <Dragger
-            accept={AcceptedFileTyp}
+            accept={ROUTES_CONSTANTS.AcceptedFileTyp}
             beforeUpload={() => false}
             className="FileUploder"
             // iconRender={iconRender}

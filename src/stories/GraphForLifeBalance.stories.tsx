@@ -1,15 +1,15 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react'
-import LifebalanceGraph  from '../components/Graph/graphForLifeAssessmentAndLifeBalance/lifeBalance';
+import { LifeBalanceGraph } from '../components';
 
-export default  {
-  title: 'Components/Graph/LifeBalance',
-  component: LifebalanceGraph,
-} as ComponentMeta<typeof LifebalanceGraph>;
+export default {
+  title: 'Components/Graph/Life Balance',
+  component: LifeBalanceGraph,
+} as ComponentMeta<typeof LifeBalanceGraph>;
 
-const Template: ComponentStory<typeof LifebalanceGraph> = (args) => <LifebalanceGraph {...args} />
+const Template: ComponentStory<typeof LifeBalanceGraph> = (args) => <LifeBalanceGraph {...args} />
 
 export const Primary = Template.bind({})
-Primary.args = { 
+Primary.args = {
   monthName: 'Jan',
 }

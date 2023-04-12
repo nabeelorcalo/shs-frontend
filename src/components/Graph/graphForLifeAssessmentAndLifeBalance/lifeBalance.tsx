@@ -1,5 +1,5 @@
 import React from "react";
-// import ReactEcharts from "echarts-for-react";
+import ReactEcharts from "echarts-for-react";
 import data from './data';
 import {
   FinanceIcon,
@@ -12,7 +12,7 @@ import {
   SocialLifeIcon
 } from "../../../assets/images";
 
-const Graph = ({ monthName }: any) => {
+export const LifeBalanceGraph = ({ monthName }: any) => {
   const assessmentsName = [
     { name: "Finance", color: "#D36DF6", secondaryColor: '#D36DF61A' },
     { name: "Relationship", color: "#6986BF", secondaryColor: '#6986BF1A' },
@@ -160,10 +160,9 @@ const Graph = ({ monthName }: any) => {
     ]
   };
 
-  // return <ReactEcharts
-  //   option={option}
-  //   opts={{ renderer: "svg" }}
-  //   style={{ height: '600px' }}
-  // />;
+  return <ReactEcharts
+    option={option}
+    opts={{ renderer: "svg" }}
+    style={{ height: '600px' }}
+  />;
 }
-export default Graph;

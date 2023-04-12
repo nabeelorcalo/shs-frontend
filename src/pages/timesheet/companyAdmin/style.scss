@@ -14,20 +14,6 @@
     height: auto;
     transition: all 0.3s ease-in-out;
   }
-
-  .history-detail {
-    border: none;
-    box-shadow: $shadow-shade-1 !important;
-
-    .ant-collapse-item {
-      border-bottom: none;
-    }
-
-    .ant-collapse-content {
-      border-top: 1px px solid $text-error-line-color;
-      margin: 0 20px;
-    }
-  }
 }
 
 .timesheet-history,
@@ -48,6 +34,9 @@
 
   .drop-down-new {
     width: 250px;
+    @media only screen and (max-width:375px){
+      width: 100%;
+    }
   }
 
   .drop-down-with-imgs {

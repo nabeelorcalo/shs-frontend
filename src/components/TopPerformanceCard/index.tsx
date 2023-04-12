@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Typography, Divider } from 'antd';
+import { ClockInImg, LateComingIcon } from '../../assets/images';
 import './style.scss';
 
 interface TopPerformanceProps {
@@ -14,10 +15,12 @@ interface TopPerformanceProps {
   percentage?: string
   btnTxt?: string,
   url?: string,
+  isLate?: boolean,
+  checkInTime: string,
 }
 
 export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
-  const { 
+  const {
     avatar,
     name,
     nameClassName,
@@ -25,10 +28,23 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
     profession,
     percentage,
     className,
-    url,
+    url = '',
     icon,
-    btnTxt
+    btnTxt,
+    checkInTime,
+    isLate = false,
   } = props;
+
+  const renderIcon = (isLate: boolean) => {
+    switch (isLate) {
+      case true:
+        return <LateComingIcon />;
+      case false:
+        return <ClockInImg />;
+      default:
+        return <></>;
+    }
+  }
 
   return (
     <div className='flex flex-col top-performance-card-container'>
@@ -69,9 +85,20 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
             {btnTxt}
           </Link>
         }
+
+        {
+          checkInTime &&
+          <div className='flex flex-row items-center gap-2 ml-auto'>
+            {renderIcon(isLate)}
+            <p className=''>
+              {checkInTime}
+            </p>
+          </div>
+        }
       </div>
+
       {
-        percentage && <Divider />
+        (percentage || checkInTime) && <Divider />
       }
     </div>
   )

@@ -1,0 +1,35 @@
+@import '../../../../scss//colors';
+
+.filter_main_wrapper {
+  .drop-down-wrapper {
+    background: $white-bg-color;
+    border: 1px solid $text-primary-disabled-color;
+  }
+}
+
+.all-grievance {
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
+  .blow-whistle-button {
+    &:hover {
+      color: $white-bg-color;
+    }
+  }
+
+  .new {
+    background: #FF6F31;
+  }
+
+  .in-progress {
+    background: #128AF9;
+  }
+
+  .re-opened {
+    background: #1FBEC8;
+  }
+
+  .resolved {
+    background: $text-success-color;
+  }
+}

@@ -1,101 +1,129 @@
 import React, { useState } from "react";
-import { DropDown, SearchBar, PageHeader, FiltersButton, LeaveRequest } from "../../components";
-import "./style.scss";
-import { useNavigate } from 'react-router-dom';
-import {GlobalTable} from "../../components";
-import { Avatar, Button, Popover, Divider } from 'antd';
-import { More } from "../../assets/images"
-import { InternshipsIcon } from "../../assets/images";
-// import LeaveRequest from "../../components/LeaveRequest";
-import EmojiEvaluation from "../../components/EmojiEvaluation";
-import CreateFolderModal from "../../components/CreateFolderModal";
-import EditGoalTask from "../../components/EditGoalTask";
-import AddRequestMessage from "../../components/AddRequestMessage";
-import SetaGoal from "../../components/SetaGoal";
-import { PopUpModal } from "../../components/Model";
-import type { MenuProps } from 'antd';
-import { Dropdown, Space } from 'antd';
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  PageHeader,
+  BoxWrapper,
+  FiltersButton
+} from "../../components";
 import Drawer from "../../components/Drawer";
-import SignatureAndUploadModal from "../../components/SignatureAndUploadModal";
+import "./style.scss";
+import "../../scss/global-color/Global-colors.scss"
+import { Avatar, Button, Divider, Dropdown } from "antd";
+import { InternshipsIcon, More } from "../../assets/images";
+import type { MenuProps } from 'antd';
 import { STATUS_CONSTANTS } from "../../config/constants";
+import { useNavigate, Link } from "react-router-dom";
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
+const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
 
-const PopOver = () => {
-  const navigate = useNavigate()
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: (
-        <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
-          View details
-        </a>
-      ),
-    },
-    {
-      key: '2',
-      label: (
-        <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
-          Duplicate
-        </a>
-      ),
-    },
-  ];
+const tableData = [
+  {
+    no: "01",
+    title: "Research Analyst",
+    department: "Business Analyst",
+    posting_date: "01/07/2022",
+    closing_date: "01/07/2022",
+    location: "virtual",
+    status: 'pending',
+    posted_by: 'T',
 
-  return (
-    <Dropdown menu={{ items }} placement="bottomRight">
-      <More />
-    </Dropdown>
-  )
-}
+  },
+  {
+    no: "02",
+    title: "Business Analyst",
+    department: "Scientist Analyst",
+    posting_date: "01/07/2023",
+    closing_date: "01/07/2021",
+    location: "Onsite",
+    status: 'active',
+    posted_by: 'U',
 
+  },
+  {
+    no: "03",
+    title: "Business Analyst",
+    department: "Scientist Analyst",
+    posting_date: "01/07/2023",
+    closing_date: "01/07/2021",
+    location: "Onsite",
+    status: 'rejected',
+    posted_by: 'U',
+
+  }
+]
 const Internships = () => {
   const navigate = useNavigate()
   const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
-
+  const PopOver = () => {
+    const navigate = useNavigate()
+    const items: MenuProps['items'] = [
+      {
+        key: '1',
+        label: (
+          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+            View details
+          </a>
+        ),
+      },
+      {
+        key: '2',
+        label: (
+          <a rel="noopener noreferrer" onClick={() => { }}>
+            Duplicate
+          </a>
+        ),
+      },
+    ];
+    return (
+      <Dropdown menu={{ items }} placement="bottomRight">
+        <More />
+      </Dropdown>
+    )
+  }
   const columns = [
     {
-      dataIndex: 'no',
-      key: 'no',
-      title: 'No.'
+      dataIndex: "no",
+      key: "no",
+      title: "No.",
     },
     {
-      dataIndex: 'title',
-      key: 'title',
-      title: 'Title'
+      dataIndex: "title",
+      key: "title",
+      title: "Title",
     },
     {
-      dataIndex: 'department',
-      key: 'department',
-      title: 'Department'
+      dataIndex: "department",
+      key: "department",
+      title: "Department",
     },
     {
-      dataIndex: 'posting_date',
-      key: 'posting_date',
-      title: 'Posting Date'
+      dataIndex: "posting_date",
+      key: "posting_date",
+      title: "Posting Date",
     },
     {
-      dataIndex: 'closing_date',
-      key: 'closing-_date',
-      title: 'Closing Date'
+      dataIndex: "closing_date",
+      key: "closing-_date",
+      title: "Closing Date",
     },
     {
-      dataIndex: 'location',
-      key: 'location',
-      title: 'Location'
+      dataIndex: "location",
+      key: "location",
+      title: "Location",
     },
     {
-      dataIndex: 'status',
-      key: 'status',
-      title: 'Status'
+      dataIndex: "status",
+      key: "status",
+      title: "Status",
     },
     {
-      dataIndex: 'posted_by',
-      key: 'posted_by',
-      title: 'Posted By'
+      dataIndex: "posted_by",
+      key: "posted_by",
+      title: "Posted By",
     },
     {
       dataIndex: 'actions',
@@ -103,43 +131,6 @@ const Internships = () => {
       title: 'Actions'
     }
   ]
-
-  const tableData = [
-    {
-      no: "01",
-      title: "Research Analyst",
-      department: "Business Analyst",
-      posting_date: "01/07/2022",
-      closing_date: "01/07/2022",
-      location: "virtual",
-      status: 'pending',
-      posted_by: 'T',
-
-    },
-    {
-      no: "02",
-      title: "Business Analyst",
-      department: "Scientist Analyst",
-      posting_date: "01/07/2023",
-      closing_date: "01/07/2021",
-      location: "Onsite",
-      status: 'active',
-      posted_by: 'U',
-
-    },
-    {
-      no: "02",
-      title: "Business Analyst",
-      department: "Scientist Analyst",
-      posting_date: "01/07/2023",
-      closing_date: "01/07/2021",
-      location: "Onsite",
-      status: 'rejected',
-      posted_by: 'U',
-
-    }
-  ]
-
   const newTableData = tableData.map((item, idx) => {
     return (
       {
@@ -152,11 +143,29 @@ const Internships = () => {
         status:
           <Button
             size="small"
-            className={`${item.status === ACTIVE ? `bg-[#4ED185]` : item.status === PENDING ? `bg-[#FFC15E]` : item.status === CLOSED ? `bg-[#4783FF]` : item.status === REJECTED ? `bg-[#D83A52]` : null}  text-[#fff]`}
+            className={
+              `${item.status === ACTIVE ?
+                `text-success-bg-color`
+                :
+                item.status === PENDING ?
+                  `text-warning-bg-color`
+                  :
+                  item.status === CLOSED ?
+                    `text-info-bg-color`
+                    :
+                    item.status === REJECTED ?
+                      `text-error-bg-color`
+                      :
+                      `light-sky-blue-bg`
+              }  
+                text-[#fff]`
+            }
           >
             {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
           </Button>,
-        posted_by: <Avatar>{item.posted_by}</Avatar>,
+        posted_by: <Avatar
+          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+        />,
         actions: <PopOver />
       }
     )
@@ -167,23 +176,29 @@ const Internships = () => {
       <PageHeader title="Internships" />
       <Divider />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar
+              className=""
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="search"
+              size="middle"
+            />
+          </div>
           <div className="flex flex-row gap-4">
             <FiltersButton
               label="Filters"
-              onClick={() => { setShowDrawer(true) }}
+              onClick={() => {
+                setShowDrawer(true);
+              }}
             />
             <Drawer
               closable
               open={showDrawer}
-              onClose={() => { setShowDrawer(false) }}
+              onClose={() => {
+                setShowDrawer(false);
+              }}
               title="Filters"
             >
               <React.Fragment key=".0">
@@ -192,12 +207,7 @@ const Internships = () => {
                     <p>Location</p>
                     <DropDown
                       name="name"
-                      options={[
-                        'EidinBurg',
-                        'Glasgow',
-                        'London',
-                        'Virtual'
-                      ]}
+                      options={["EidinBurg", "Glasgow", "London", "Virtual"]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -209,11 +219,11 @@ const Internships = () => {
                     <DropDown
                       name="name"
                       options={[
-                        'Business analyst',
-                        'Research analyst',
-                        'Accountant',
-                        'Administrator',
-                        'HR Cordinator'
+                        "Business analyst",
+                        "Research analyst",
+                        "Accountant",
+                        "Administrator",
+                        "HR Cordinator",
                       ]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
@@ -224,15 +234,19 @@ const Internships = () => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 bg-[#fff] text-[#4A9D77]"
-                      onClick={() => { navigate("new-internship"); }}
+                      className="flex gap-2 white-bg-color teriary-color"
+                      onClick={() => {
+                        navigate("new-internship");
+                      }}
                     >
                       Reset
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 bg-[#4A9D77] text-[#fff]"
-                      onClick={() => { navigate("new-internship"); }}
+                      className="flex gap-2 teriary-bg-color white-color"
+                      onClick={() => {
+                        navigate("new-internship");
+                      }}
                     >
                       Apply
                     </Button>
@@ -242,8 +256,10 @@ const Internships = () => {
             </Drawer>
             <Button
               size="middle"
-              className="flex gap-2 bg-[#4A9D77] text-[#fff]"
-              onClick={() => { navigate("new-internship"); }}
+              className="flex gap-2 teriary-bg-color white-color"
+              onClick={() => {
+                navigate("new-internship");
+              }}
             >
               <InternshipsIcon />
               New Internship
@@ -256,36 +272,15 @@ const Internships = () => {
               columns={columns}
               expandable={{
                 expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { }
+                rowExpandable: function noRefCheck() { },
               }}
               tableData={newTableData}
             />
           </div>
         </BoxWrapper>
       </div>
-      <div className="flex gap-3 my-3">
-        <SignatureAndUploadModal state={state} setState={setState} okBtntxt="Upload" cancelBtntxt="Cancel" width={600} />
-        <LeaveRequest title="Leave Request" />
-        <EmojiEvaluation title={`Performance Report - ${name}`} />
-        <CreateFolderModal title="Create New Folder" />
-        <EditGoalTask title="Edit Goal Task" />
-        <AddRequestMessage title="Add Request Message" />
-        <SetaGoal title="Set a Goal" />
-      </div>
-      <div className="flex gap-3 my-3">
-        <PopUpModal
-          title="Modal Title Customizable"
-          width={800}
-          state={false}
-          okBtnFunc={() => { console.log("call back function called") }}
-          cancelBtntxt="Cancel"
-          okBtntxt="Submit"
-        >
-          <p>Write your JSX here / Import Components</p>
-        </PopUpModal>
-      </div>
     </>
-  )
-}
+  );
+};
 
-export default Internships
+export default Internships;

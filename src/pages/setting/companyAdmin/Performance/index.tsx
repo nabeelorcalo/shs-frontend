@@ -12,7 +12,6 @@ import DropDownForPerformance from "./PerformanceDropdown";
 import "./style.scss";
 
 const { Panel } = Collapse;
-
 const inputData = [
   {
     id: 1,
@@ -46,7 +45,6 @@ const SettingPerformance: React.FC = () => {
 
   const IdHandler = (id: any) => {
     setId(id);
-    console.log(id);
   };
   return (
     <div className="setting-performance">
@@ -67,7 +65,7 @@ const SettingPerformance: React.FC = () => {
                     key={index}
                     className="gutter-row"
                     xs={24}
-                    md={12}
+                    lg={12}
                     xxl={12}
                   >
                     {item.id !== id &&
@@ -84,7 +82,7 @@ const SettingPerformance: React.FC = () => {
                               IdHandler={IdHandler}
                             />
                           }
-                          style={{ width: "95%" }}
+                          style={{ width: "90%" }}
                           value={item.title}
                           placeholder="Select Address"
                           size="small"
@@ -103,9 +101,9 @@ const SettingPerformance: React.FC = () => {
                           <PerformanceTick
                             className="cursor-pointer"
                             onClick={() => {
-                              setId('')        
+                              setId('')
                             }}
-                           
+
                           />
                           <PerformanceClose
                             onClick={() => {
@@ -147,7 +145,7 @@ const SettingPerformance: React.FC = () => {
                         onClick={() => {
                           sethideButton(!hideButton);
                         }}
-                      />{" "}
+                      />
                       <PerformanceClose
                         onClick={() => {
                           sethideButton(!hideButton);
@@ -163,7 +161,8 @@ const SettingPerformance: React.FC = () => {
         </Collapse>
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ? <PerformanceMinus /> : <PerformancePlus />
+            isActive ? <PerformanceMinus />  : 
+            <PerformancePlus />
           }
           expandIconPosition="right"
           key={2}
@@ -175,7 +174,9 @@ const SettingPerformance: React.FC = () => {
         </Collapse>
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ? <PerformanceMinus /> : <PerformancePlus />
+            isActive ?
+              <PerformanceMinus /> :
+              <PerformancePlus />
           }
           expandIconPosition="right"
           key={3}

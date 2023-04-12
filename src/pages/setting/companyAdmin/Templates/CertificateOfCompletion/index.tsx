@@ -3,48 +3,53 @@ import { Button, Divider } from "antd";
 import { NewTemplate } from "../../../../../assets/images";
 import { NavLink } from "react-router-dom";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
-import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";
-import { Alert, SearchBar } from "../../../../../components";
-
-let overview = [
-  {
-    name: "Template 01",
-    content: "Exciting News: Your job Offer and Template Inside",
-  },
-  {
-    name: "Template 02",
-    content: "Take the First Step Today!",
-  },
-  {
-    name: "Template 03",
-    content: "Congratulations! You are selected.",
-  },
-];
+import { Alert, Breadcrumb, SearchBar } from "../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const TemplatesCertificateOfCompletion = () => {
+  let overview = [
+    {
+      name: "Template 01",
+      content: "Exciting News: Your job Offer and Template Inside",
+    },
+    {
+      name: "Template 02",
+      content: "Take the First Step Today!",
+    },
+    {
+      name: "Template 03",
+      content: "Congratulations! You are selected.",
+    },
+  ];
+  const breadcrumbArray = [
+    { name: "Certification of Completion" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+  ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
-  const handleChange = () => {};
+  const handleChange = () => { };
   return (
     <div className="template-contract">
       <div>
-        <TemplateCommonBreadcrumb current="Certificate of Completion" />
-        <Divider className="my-1 mb-3" />
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
+        <Divider />
         <div className="flex justify-between">
           <SearchBar size="middle" handleChange={handleChange} />
-          <NavLink to="/settings/template/certificate-of-completion/new-template">
+          <NavLink to={ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}>
             <Button
               size="middle"
-              onClick={() => {}}
+              onClick={() => { }}
               className="flex gap-2 setting-add-button white-color teriary-bg-color"
             >
-              <NewTemplate /> New Template
+              <NewTemplate />
+              New Template
             </Button>
           </NavLink>
         </div>
       </div>
       <TemplatesCommonCard
-      link="/settings/template/certificate-of-completion/new-template"
+        link={ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}
@@ -57,9 +62,8 @@ const TemplatesCertificateOfCompletion = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

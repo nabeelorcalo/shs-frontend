@@ -1,18 +1,18 @@
 export const InterShipData = [
   {
-    name: "Gray",
+    name: "Close",
     star: 1200,
   },
   {
-    name: "yellow",
+    name: "Pending",
     star: 1600,
   },
   {
-    name: "blue",
+    name: "Draft",
     star: 1400,
   },
   {
-    name: "green",
+    name: "Active",
     star: 1000,
   },
 ];

@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
+import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import {
-  Typography, Row, Col, Divider, Form, Radio, RadioChangeEvent,Button, Space, Input, Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
-import { CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
+import { Breadcrumb, CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 const { TextArea } = Input;
 const { Title, Paragraph } = Typography;
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import { NavLink } from "react-router-dom";
 
 const LeavesAddPolicy: React.FC = () => {
+  const breadcrumbArray = [
+    { name: "Add Policy"},
+    { name: "Setting"  },
+    { name: "Leaves" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_LEAVES}`},
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -40,7 +47,7 @@ const LeavesAddPolicy: React.FC = () => {
   ];
 
   const deselectArray: any = [];
-
+  const dropdownValues = ['1', '2', '3', '4', '5', '6']
   const [value, setValue] = useState(1);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [openModal, setOpenModal] = useState<any>(false);
@@ -54,7 +61,6 @@ const LeavesAddPolicy: React.FC = () => {
     carryForwardExpiration: "",
     AllInterns: "",
     switch: "",
-
   });
 
   const handleChange = (event: any) => {
@@ -62,7 +68,6 @@ const LeavesAddPolicy: React.FC = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
     if (e.target.value === 2) {
       setOpenModal(!openModal);
     }
@@ -70,26 +75,8 @@ const LeavesAddPolicy: React.FC = () => {
   };
   return (
     <div className="leaves-add-policy">
-      <div className="flex items-center ">
-        <Title level={3} className="mt-2">
-          Add Policy{" "}
-        </Title>
-        <span className="mx-2">
-          <SettingHorizontalLine />
-        </span>
-        <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-        <span className="mx-2 ">/</span>
-        <NavLink to="/settings/leaves">
-          <span className=" text-base font-medium text-secondary-color">
-            Leaves
-          </span>
-        </NavLink>
-      </div>
-
-      <Divider className="my-1 mb-3" />
-
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider/>
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
@@ -178,22 +165,14 @@ const LeavesAddPolicy: React.FC = () => {
                 <p>Maximum Carry Forward (Days Per Year)</p>
 
                 <DropDown
-                  name="Selecy"
-                  options={[
-                    '1',
-                    '2',
-                    '3',
-                    '4',
-                    '5',
-                    '6'
-                  ]}
+                  name="Select"
+                  options={dropdownValues}
                   setValue={() => { }}
                   value=""
                 />
               </div>
               <div>
                 <p>Carry Forward Expiration</p>
-
                 <CommonDatePicker
                   onBtnClick={() => { }}
                   open={openDatePicker}
@@ -226,7 +205,9 @@ const LeavesAddPolicy: React.FC = () => {
           </Row>
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_LEAVES}`}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

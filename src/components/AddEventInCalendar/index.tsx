@@ -33,7 +33,6 @@ interface AddEventInCalendarProps {
 export const AddEventInCalendar = (props: AddEventInCalendarProps) => {
   const { title, open, closeFunction, zoomVideoLink, setOpen } = props;
   const onChange = (key: string) => {
-    console.log(key);
   };
 
   const [value, setValue] = useState(1);

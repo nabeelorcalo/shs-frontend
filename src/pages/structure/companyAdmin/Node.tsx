@@ -1,8 +1,8 @@
 import React from "react";
 import { Tree, TreeNode } from "react-organizational-chart";
 import _ from "lodash";
-import Organization from "./Organization";
 import "./style.scss";
+import Organization from "./Organization";
 
 function Node({ o, parent }: any) {
     const [collapsed, setCollapsed] = React.useState(!o.collapsed);
@@ -28,7 +28,6 @@ function Node({ o, parent }: any) {
     const handleCollapse = () => {
       setCollapsed(!collapsed);
     };
-   
    
     return collapsed ? (
       <T
@@ -58,4 +57,3 @@ function Node({ o, parent }: any) {
   }
 
   export default Node
-  

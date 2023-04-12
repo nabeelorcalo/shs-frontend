@@ -1,0 +1,30 @@
+@import '../../../../scss/colors';
+.view-details-university-rep{
+  .ant-divider-horizontal{
+  background: $text-error-line-color !important;
+}
+.drop-down-wrapper {
+  background: $text-input-bg-color;
+  border-radius: 8px;
+  display: block;
+  padding: 12px 20px 12px 16px;
+  color: $text-success-placeholder-color;
+  cursor: pointer;
+  text-transform: capitalize;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover,
+  &.active {
+      border: 2px solid $input-hover-color;
+      background-color: $white-bg-color;
+  }
+
+  &.pilled {
+      border-radius: 50px;
+  }
+}}
+
+

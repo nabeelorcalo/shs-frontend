@@ -1,9 +1,9 @@
 import React from "react";
-import "./style.scss";
 import { Col, Divider, Row } from "antd";
 import { SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
+import "./style.scss";
 
 const offerLetterRecieved = [
   {
@@ -66,12 +66,13 @@ const OfferLetterStudent = () => {
         <Divider />
 
         <Col className="mb-6" xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-          <SearchBar size="large" handleChange={handleChange} />
+          <SearchBar  handleChange={handleChange} />
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+
           <Row gutter={[20, 40]}>
-            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="offer-letter-status">
                 <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
@@ -88,7 +89,7 @@ const OfferLetterStudent = () => {
                 );
               })}
             </Col>
-            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="offer-letter-status ">
                 <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
@@ -105,7 +106,7 @@ const OfferLetterStudent = () => {
                 );
               })}
             </Col>
-            <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+            <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="offer-letter-status">
                 <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>

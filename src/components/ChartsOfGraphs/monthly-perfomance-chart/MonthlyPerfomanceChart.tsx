@@ -1,8 +1,8 @@
-import { Column } from '@ant-design/plots';
-import { useEffect, useState } from 'react';
-import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
-import { MonthChanger } from '../../MonthChanger';
-import { perfomanceChart } from './MonthlyPerfomance';
+import { Column } from "@ant-design/plots";
+import { useEffect, useState } from "react";
+import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { MonthChanger } from "../../MonthChanger";
+import { perfomanceChart } from "./MonthlyPerfomance";
 
 export const MonthlyPerfomanceChart = (props: any) => {
   const {
@@ -11,17 +11,16 @@ export const MonthlyPerfomanceChart = (props: any) => {
     seriesField = "type",
     isGroup = true,
     columnStyle = { radius: [20, 20, 0, 0] },
-    color = ['#9BD5E8', '#F08D97', '#78DAAC'],
+    color = ["#9BD5E8", "#F08D97", "#78DAAC"],
     marginRatio = ".5",
     heading,
-    columnWidthRatio = .2,
+    columnWidthRatio = 0.2,
     textColor = "#4E4B66",
     fontSize = "20px",
     fontWeight = "500",
     data = { perfomanceChart },
-    isMonthNavigationPresent = false,
-    month = '',
-    changeMonth = () => {}
+    children = <></>,
+    style,
   } = props;
 
   const [chartData] = useState(data);
@@ -35,30 +34,29 @@ export const MonthlyPerfomanceChart = (props: any) => {
     columnWidthRatio: columnWidthRatio,
     color: color,
     legend: {
-      layout: 'horizontal',
-      position: 'top-right',
-    }
+      layout: "horizontal",
+      position: "top-right",
+    },
+    
   };
   return (
-    <BoxWrapper>
-      {
-        heading &&
-        <div className='flex'>
-          <p style={{ fontSize: fontSize, color: textColor, fontWeight: fontWeight }}>
+    <div>
+      {heading && (
+        <div className="flex items-center">
+          <p
+            style={{
+              fontSize: fontSize,
+              color: textColor,
+              fontWeight: fontWeight,
+            }}
+          >
             {heading}
           </p>
-          {
-            isMonthNavigationPresent &&
-            <MonthChanger
-              month={month}
-              onClick={changeMonth}
-            />
-          }
+          {children}
         </div>
-      }
-      <Column
-        marginRatio={marginRatio} {...config}
-      />
-    </BoxWrapper>
-  )
-}
+      )}
+
+      <Column style={style} {...config} marginRatio={marginRatio} />
+    </div>
+  );
+};

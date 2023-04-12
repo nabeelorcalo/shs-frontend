@@ -1,34 +1,25 @@
 import React, { FC, useEffect, useState } from "react";
-import "./style.scss";
 import { Link, useNavigate } from "react-router-dom";
+import { Layout,  Input,  Dropdown,  Avatar,  Drawer, List, MenuProps, Typography} from "antd";
+import organizationLogo from "../../../assets/images/header/organisation.svg";
+import avatar from "../../../assets/images/header/avatar.svg";
+import { ExtendedButton } from "../../../components";
+import constants from "../../../config/constants";
+import "./style.scss";
 import {
   Logo,
   IconCollapsebleOff,
-  IconCollapsebleOn,
-  IconSearchNormal,
+  IconCollapsebleOn, 
+  IconSearchNormal, 
   MessageNotif,
   Notification,
   IconGlobe,
   IconLogout,
   IconProfile,
-  IconCross,
+  IconCross
 } from "../../../assets/images";
-import {
-  Layout,
-  Input,
-  Dropdown,
-  Avatar,
-  Drawer,
-  List,
-  MenuProps,
-  Typography,
-} from "antd";
 const { Search } = Input;
-const { Header } = Layout;
-import organizationLogo from '../../../assets/images/header/organisation.svg'
-import avatar from '../../../assets/images/header/avatar.svg'
-import { ExtendedButton } from '../../../components'
-
+const { Header } = Layout; 
 
 type HeaderProps = {
   collapsed: boolean;
@@ -41,6 +32,9 @@ const items: MenuProps["items"] = [
     key: "1",
     label: "Profile",
     icon: <IconProfile />,
+    onClick: ()=>{
+      window.location.href = "/profile";
+    }
   },
   {
     key: "2",
@@ -51,6 +45,11 @@ const items: MenuProps["items"] = [
     key: "3",
     label: "Logout",
     icon: <IconLogout />,
+    onClick: (props) => {
+      localStorage.removeItem("UserData");
+      console.log("props", props);
+      window.location.href = "/login";
+    },
   },
 ];
 
@@ -136,13 +135,15 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             </div>
           </div>
           {/* Collapseable Ends */}
-
-          <div className="ikd-header-organisation">
-            <div className="organisation-title">Your Organisation</div>
-            <div className="organisation-logo">
-              <img src={organizationLogo} />
+          
+          {constants.USER_ROLE === constants.INTERN &&
+            <div className="ikd-header-organisation">
+              <div className="organisation-title">Your Organisation</div>
+              <div className="organisation-logo">
+                <img src={organizationLogo} />
+              </div>
             </div>
-          </div>
+          }
 
           {/* Global Search */}
           <div
@@ -158,13 +159,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             />
           </div>
 
-          <div
-            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
-          >
-            <div
-              className="mobile-searchbox-toggler"
-              onClick={() => handleMobileSearch()}
-            >
+          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`} >
+            <div className="mobile-searchbox-toggler" onClick={() => handleMobileSearch()} >
               <IconSearchNormal />
             </div>
             <Search
@@ -177,21 +173,31 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           {/* Global Search Ends */}
         </div>
 
-        <div className='ikd-header-right'>
-
-          <div className='ikd-header-message-notif'>
-            <div className='message-notif-handler' onClick={() => navigateToInbox()}>
-              <MessageNotif />
+        <div className="ikd-header-right">
+          {(constants.USER_ROLE === constants.INTERN
+          || constants.USER_ROLE === constants.STUDENT
+          || constants.USER_ROLE === constants.MANAGER
+          || constants.USER_ROLE === constants.COMPANY_ADMIN) &&
+            <div className="ikd-header-message-notif">
+              <div
+                className="message-notif-handler"
+                onClick={() => navigateToInbox()}
+              >
+                <MessageNotif />
+              </div>
             </div>
-          </div>
-
-          <div className='ikd-header-notification'>
-            <div className='notification-handler' onClick={() => showNotificationDrawer()}>
+          }
+          
+          <div className="ikd-header-notification">
+            <div
+              className="notification-handler"
+              onClick={() => showNotificationDrawer()}
+            >
               <Notification />
             </div>
           </div>
 
-          <div className='loggedin-user'>
+          <div className="loggedin-user">
             <Dropdown
               overlayClassName="user-dropdown"
               menu={{ items }}
@@ -206,12 +212,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                       <Typography.Title level={4}>
                         Maria Sanoid
                       </Typography.Title>
-                      <div className="user-meta-role">Student</div>
+                      <div className="user-meta-role">{constants.USER_ROLE}</div>
                     </div>
                   </div>
-                  {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-                  <div className='user-dropdown-footer'>
-                    <ExtendedButton customType='tertiary' block>Switch to Intern</ExtendedButton>
+                  {React.cloneElement(menu as React.ReactElement, {
+                    style: menuStyle,
+                  })}
+                  <div className="user-dropdown-footer">
+                    <ExtendedButton customType="tertiary" block>
+                      Switch to Intern
+                    </ExtendedButton>
                   </div>
                 </div>
               )}

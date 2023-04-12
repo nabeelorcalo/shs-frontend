@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { SettingAvater, SettingHorizontalLine } from "../../../../../assets/images";
+import { NavLink, useNavigate } from "react-router-dom";
+import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
 import "./style.scss";
-// import { Input, SearchBar } from "../../../../components";
 import {
   Typography,
   Row,
@@ -15,19 +14,26 @@ import {
   Radio,
   TimePicker,
   RadioChangeEvent,
-  Select,
   Button,
   Space,
   Input,
   Switch,
 } from "antd";
-import { CommonDatePicker, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-const { TextArea } = Input;
+import { Breadcrumb } from "../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+
 const { Title, Paragraph } = Typography;
 dayjs.extend(customParseFormat);
 
 const AddShift: React.FC = () => {
+  const navigate = useNavigate();
+  const breadcrumbArray = [
+    { name: "Add Shift"},
+    { name: "Setting"  },
+    { name: "Shift" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
+  
+  ];
   const selectArray = [
     {
       name: "Eva Smith",
@@ -82,25 +88,8 @@ const AddShift: React.FC = () => {
   };
   return (
     <div className="leaves-add-policy">
-   
-        <div className="flex items-center">
-          <Title level={3} className="mt-2">Add Shift </Title>
-          <span className="mx-2">
-            <SettingHorizontalLine />
-          </span>
-          <span className=" text-base font-medium text-secondary-color">
-          Setting
-        </span>
-          <span className="mx-2">/</span>
-          <NavLink to="/settings/shifts">
-          <span className=" text-base font-medium text-secondary-color">
-          Shifts
-        </span>
-          </NavLink>
-        </div>
-      
-        <Divider className="my-1 mb-3" />
-
+   <Breadcrumb breadCrumbData={breadcrumbArray}  />
+        <Divider />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
@@ -134,14 +123,14 @@ const AddShift: React.FC = () => {
                 </div>
               </div>
               <Form.Item
-                name="policyName"
+                name="shiftDuration"
                 label="Shift Duration"
                 rules={[{ message: "Please Enter your username!" }]}
               >
                 <Input placeholder="0" />
               </Form.Item>
               <Form.Item
-                name="policyName"
+                name="roundOffCap"
                 label="Round Off Cap"
                 rules={[{ message: "Please Enter your username!" }]}
               >
@@ -170,10 +159,11 @@ const AddShift: React.FC = () => {
               
             </Col>
           </Row>
-
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-              Cencal
+            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_SHIFTS}`}> 
+             Cancel 
+             </NavLink>
             </Button>
             <Button
               size="middle"

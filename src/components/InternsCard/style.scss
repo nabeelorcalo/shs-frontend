@@ -1,0 +1,15 @@
+@import '../../scss/_colors.scss';
+
+.interns-card-main {
+  .interns-card {
+    background-color: $white-bg-color;
+    border: 1px solid $text-input-bg-color;
+    box-shadow: 0px 0px 8px 2px $dropdown-overlay-shadow;
+    border-radius: 10px;
+    .main-card-jsx {
+      .join-dob-card-style {
+        border: 1px solid $text-input-bg-color;
+      }
+    }
+  }
+}

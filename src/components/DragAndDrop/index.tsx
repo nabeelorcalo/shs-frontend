@@ -1,6 +1,8 @@
 import React from 'react'
 import { DocumentUpload } from '../../assets/images'
-const DragAndDropUpload = () => {
+
+
+export const DragAndDropUpload = () => {
 
   const handleDragOver = (event:any) => {
     event.preventDefault()

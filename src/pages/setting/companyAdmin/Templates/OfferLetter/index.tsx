@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import {  Divider , Button } from "antd";
+import { Divider, Button } from "antd";
 import {
   NewTemplate,
 } from "../../../../../assets/images";
 
-import { Alert,SearchBar } from "../../../../../components";
+import { Alert, Breadcrumb, SearchBar } from "../../../../../components";
 import { NavLink } from "react-router-dom";
-import TemplateCommonBreadcrumb from "../../../../../components/Setting/Common/TemplateCommonBreadcrumb";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
+const TemplatesOfferLater = () => {
+  
 let overview = [
   {
     name: "Offer Letter 01",
@@ -23,36 +25,34 @@ let overview = [
     content: "Join Our World",
   },
 ];
-
-const handleChange = () => {};
-
-const TemplatesOfferLater = () => {
+  const breadcrumbArray = [
+    { name: "Offer Letter"},
+    { name: "Setting"  },
+    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+  ];
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  
+const handleChange = () => { };
   return (
     <div>
       <div>
-        <TemplateCommonBreadcrumb current="Offer Letter" />
-
-        <Divider className="my-1 mb-3" />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+        <Divider/>
         <div className="flex justify-between">
-         
-          
           <SearchBar size="middle" handleChange={handleChange} />
-        <NavLink to="/settings/template/offer-letters/new-template">
-          <Button
-            size="middle"
-            onClick={() => {}}
-            className="flex gap-2 setting-add-button white-color teriary-bg-color"
-          >
-            <NewTemplate/> New Template
-          </Button>
-        </NavLink>
-
-          
+          <NavLink to={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}>
+            <Button
+              size="middle"
+              onClick={() => { }}
+              className="flex gap-2 setting-add-button white-color teriary-bg-color"
+            >
+              <NewTemplate /> New Template
+            </Button>
+          </NavLink>
         </div>
       </div>
       <TemplatesCommonCard
-       link="/settings/template/offer-letters/new-template"
+        link={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}
         overview={overview}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}
@@ -65,9 +65,8 @@ const TemplatesOfferLater = () => {
         type="error"
         width={500}
         title=""
-      >
-        <p>Are you sure you want to delete this item?"</p>
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div>
   );
 };

@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Typography } from "antd";
-import { Link } from "react-router-dom";
+import { Col, Row, Typography } from "antd";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import {
@@ -9,6 +7,8 @@ import {
   EvaluationCard,
   EvaluationStatsCard,
   TextArea,
+  Breadcrumb,
+  Notifications,
 } from "../../components";
 import {
   Sad,
@@ -22,8 +22,18 @@ import {
   DownloadIconWithBg,
 } from '../../assets/images';
 import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
+import "./style.scss";
 
 const ViewPerformance = () => {
+  const action = useCustomHook();
+  const ViewPerformanceBreadCrumb = [
+    { name: "Evaluation Form " },
+    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
+    { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : (constants.USER_ROLE === constants.INTERN || constants.USER_ROLE === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
+  ];
   const user = {
     name: 'Calvin Grayson',
     profession: 'Manager',
@@ -91,58 +101,17 @@ const ViewPerformance = () => {
       colorLessComp: SatisfiedColorLessIcon
     },
   ];
-
-  const downloadClick = () => {
-    alert('download popup');
-  }
-
-  const breadCrumbs = () => {
-    const role = constants.USER_ROLE;
-
-    switch (role) {
-      case 'Intern':
-        return (
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-          >
-            Performance
-          </Link>
-        );
-      case 'CompanyAdmin':
-        return (
-          <>
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}`}
-            >
-              Performance
-            </Link>
-            /
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              Performance History
-            </Link>
-          </>
-        );
-      default:
-        return <></>;
-    }
-  }
-
+  const detailedCards = [
+    { title: 'Learning Objectives', progressColor: '#9BD5E8' },
+    { title: 'Descipline', progressColor: '#E96F7C' },
+    { title: 'Personal', progressColor: '#6AAD8E' },
+  ]
   return (
     <div className="view-evaluation">
       <PageHeader
         bordered
         title={
-          <div className="font-medium">
-            Evaluation Form
-            <span className="vertical-line">
-              {breadCrumbs()}
-            </span>
-          </div>
+          <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
         }
       />
 
@@ -157,58 +126,45 @@ const ViewPerformance = () => {
         <IconButton
           size='large'
           className='icon-btn'
-          onClick={downloadClick}
+          onClick={() => {
+            action.downloadPdf(header, tableData);
+            Notifications({ title: "Success", description: "Download Done", type: 'success' })
+          }}
           icon={<DownloadIconWithBg />}
         />
       </div>
-
-      <div className="flex flex-row flex-wrap gap-4">
-        <div className="w-[23%]">
+      <Row gutter={[20, 10]}>
+        <Col xs={24} md={12} xxl={6}>
           <EvaluationCard
             name={user.name}
             avatar={user.avatar}
             profession={user.profession}
           />
-        </div>
-
-        <div className="w-[23%]">
-          <EvaluationStatsCard
-            name='Learning Objectives'
-            percentage={user.learningObjectives}
-            color='#9BD5E8'
-          />
-        </div>
-
-        <div className="w-[23%]">
-          <EvaluationStatsCard
-            name='Discipline'
-            percentage={user.discipline}
-            color='#E96F7C'
-          />
-        </div>
-
-        <div className="w-[23%]">
-          <EvaluationStatsCard
-            name='Personal'
-            percentage={user.personal}
-            color='#6AAD8E'
-          />
-        </div>
-      </div>
-
+        </Col>
+        {detailedCards.map((item: any) => (
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={item.title}
+              percentage={user.learningObjectives}
+              color={item.progressColor}
+            />
+          </Col>
+        ))}
+      </Row>
       {
         data.map((obj: any) => {
           return (
-            <div className="flex flex-col flex-wrap">
-              <div key={obj.name} className="mt-6 mb-2">
-                <Typography.Title level={3} className="evaluation-heading">
-                  {obj.name}
-                </Typography.Title>
-              </div>
-
-              <div className="flex flex-row flex-wrap gap-4">
-                {obj.values.map((child: any, index: number) =>
-                  <div key={child.title} className="w-[32%]">
+            <Row gutter={[20, 10]}>
+              <Col xs={24}>
+                <div key={obj.name} className="mt-6 mb-2">
+                  <Typography.Title level={3} className="evaluation-heading">
+                    {obj.name}
+                  </Typography.Title>
+                </div>
+              </Col>
+              {obj.values.map((child: any, index: number) =>
+                <Col xs={24} xl={12} xxl={8}>
+                  <div key={child.title}>
                     <EmojiMoodRating
                       size={5}
                       data={emojiData}
@@ -216,13 +172,12 @@ const ViewPerformance = () => {
                       activeIconIndex={child.value}
                     />
                   </div>
-                )}
-              </div>
-            </div>
+                </Col>
+              )}
+            </Row>
           )
         })
       }
-
       <div className="my-4">
         <Typography.Title level={3} className="evaluation-heading">
           Comments

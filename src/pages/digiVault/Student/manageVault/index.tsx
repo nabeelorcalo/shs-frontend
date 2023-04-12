@@ -121,15 +121,15 @@ const ManageVault = (props: any) => {
 
   return (
     <div className="manage-vault-main">
-      {/* <Alert
-        open={showDelete}
-        setOpen={setShowDelete}
+      <Alert
+        state={showDelete}
+        setState={setShowDelete}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
       >
         <p>Are you sure you want to delete this?</p>
-      </Alert> */}
+      </Alert>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">
@@ -167,7 +167,7 @@ const ManageVault = (props: any) => {
                 >
                   <Button
                     onClick={() => setISOpen(true)}
-                    className="foldet-add-btn"
+                    className="folder-add-btn "
                   >
                     Create Folder
                   </Button>
@@ -190,11 +190,11 @@ const ManageVault = (props: any) => {
                   >
                     <Button className="manage-vault-btn flex items-center justify-center">
                       <Space>
-                        {/* <img
+                        <img
                           className="flex items-center"
                           src={Upload}
                           alt="fileIcon"
-                        /> */}
+                        />
                         <span>Upload</span>
                       </Space>
                     </Button>
@@ -217,6 +217,7 @@ const ManageVault = (props: any) => {
 
       <Modal
         open={open}
+        centered
         closeIcon={
           <CloseCircleFilled
             className="text-[#A3AED0]"
@@ -252,6 +253,7 @@ const ManageVault = (props: any) => {
       </Modal>
 
       <Modal
+        centered
         title="Upoad File"
         open={upLoadFile}
         onCancel={() => {
@@ -285,6 +287,7 @@ const ManageVault = (props: any) => {
       </Modal>
 
       <Modal
+        centered
         title="Upoad Folder"
         open={upLoadFolder}
         onCancel={() => {

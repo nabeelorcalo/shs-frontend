@@ -1,62 +1,87 @@
 import { useState } from "react";
 import { InterShipData } from "./internShipData";
 import { RadialBar } from "@ant-design/plots";
-import {BoxWrapper} from "../../BoxWrapper/BoxWrapper";
 
 export const InternshipSummaryChart = (props: any) => {
-    const {
-        xField = "name",
-        yField = "star",
-        autoFit = true,
-        padding = "auto",
-        maxAngle = 360,
-        radius = 0.8,
-        innerRadius = 0.37,
-        colorField = "name",
-        barStyle = { lineCap: "round", },
-        intervalPadding = 9.1,
-        xAxis = { label: null },
-        heading,
-    } = props
+  const {
+    xField = "name",
+    yField = "star",
+    autoFit = true,
+    padding = "auto",
+    maxAngle = 360,
+    radius = 0.8,
+    innerRadius = 0.37,
+    colorField = "name",
+    barStyle = { lineCap: "round" },
+    intervalPadding = 9.1,
+    xAxis = { label: null },
+    heading,
+    height,
+  } = props;
 
-    const [data] = useState(InterShipData);
+  const [data] = useState(InterShipData);
 
-    const config: any = {
-        data,
-        xField: xField,
-        yField: yField,
-        autoFit: autoFit,
-        padding: padding,
-        maxAngle: maxAngle,
-        radius: radius,
-        innerRadius: innerRadius,
-        colorField: colorField,
-        barBackground: {},
-        color: ({ name }: any) => {
-            if (name == "Gray") {
-                return "#A0A3BD";
-            } else if (name == "yellow") {
-                return "#FFC15E";
-            } else if (name == "blue") {
-                return "#4783FF";
-            } else if (name == "green") {
-                return " #4A9D77";
-            }
-            return "#ff93a7";
+  const config: any = {
+    data,
+    xField: xField,
+    yField: yField,
+    autoFit: autoFit,
+    padding: padding,
+    maxAngle: maxAngle,
+    radius: radius,
+    innerRadius: innerRadius,
+    colorField: colorField,
+    barBackground: {},
+    color: ({ name }: any) => {
+      if (name == "Close") {
+        return "#A0A3BD";
+      } else if (name == "Pending") {
+        return "#FFC15E";
+      } else if (name == "Draft") {
+        return "#4783FF";
+      } else if (name == "Active") {
+        return " #4A9D77";
+      }
+      return "#ff93a7";
+    },
+    legend: {
+      offsetY: 30,
+      position: "right",
+      show: true, // <== This is the only line causing the plot to not be drawn
+      toggleDataSeries: true,
+      itemMargin: {
+        horizontal: 12,
+      },
+      fontSize: 18,
+    },
+    annotations: [
+      {
+        type: "html",
+        position: ["50%", "50%"],
+        html: () => {
+          return `<div style="transform:translate(-50%,-60%)">
+          <p class="text-center text-base sm:text-[30px] sm:leading-[40px]">${24}<p/>
+          <p class="text-center text-primary-color text-xs sm:text-base">${"Internships"}<p/>
+        </div>`;
         },
-        barStyle: barStyle,
-        intervalPadding: intervalPadding,
-        xAxis: xAxis,
-    };
-    return (
-        <BoxWrapper>
-            {heading && <p className="text-secondary-color font-medium text-xl">{heading}</p>}
-            <RadialBar
-                style={{ height: "300px", marginTop: "-15px" }}
-                tooltip={false}
-                {...config}
-                className="transition-from-right"
-            />
-        </BoxWrapper>
-    )
-}
+      },
+    ],
+    barStyle: barStyle,
+    intervalPadding: intervalPadding,
+    xAxis: xAxis,
+  };
+
+  return (
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
+      {heading && (
+        <p className="text-secondary-color font-medium text-xl">{heading}</p>
+      )}
+      <RadialBar
+        style={{ height: height ?? "300px", marginTop: "-15px" }}
+        tooltip={false}
+        {...config}
+        className="transition-from-right"
+      />
+    </div>
+  );
+};

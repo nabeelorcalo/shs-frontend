@@ -1,19 +1,8 @@
-import {
-  Button,
-  Upload,
-  Col,
-  Form,
-  Row,
-  Select,
-  Space,
-  Typography,
-} from "antd";
-import React, { useState } from "react";
-import { SHSLogo, BackButton } from "../../../../../assets/images";
-import "./Verification.scss";
-import uploadImage from "../../../../../assets/images/login/uploadimage.png";
+import React from "react";
+import { Button, Upload, Col, Form, Row, Typography } from "antd";
+import { SHSLogo, BackButton ,  UploadUserProfile,} from "../../../../../assets/images";
+import "../../../styles.scss";
 
-const { Option } = Select;
 
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -29,12 +18,12 @@ const Photograph = (props: any) => {
       <Row className="university-detail-style">
         <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 6 of 7</Typography>
-              <div className="flex items-center">
+              <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton />
                 </div>
@@ -78,11 +67,11 @@ const Photograph = (props: any) => {
                 className="flex justify-center mt-10"
               >
                 <Upload name="logo" action="/upload.do" listType="picture">
-                  <img src={uploadImage} alt="" />
+                  <UploadUserProfile />
                 </Upload>
               </Form.Item>
-              <Row gutter={10}>
-                <Col xxl={4} xl={4} lg={4} md={24} sm={24} xs={24}>
+              <Row gutter={[10,10]}>
+                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
                     //htmlType="submit"
@@ -90,7 +79,7 @@ const Photograph = (props: any) => {
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                   <Form.Item>
                     <Button
                       type="primary"

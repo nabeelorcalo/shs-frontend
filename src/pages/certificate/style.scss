@@ -55,10 +55,28 @@
             }
         }
     }
+
 }
 
 // certificate detail
 .certificate-detail-wrapper {
+    .certificates-row {
+        @media only screen and (max-width:1600px) {
+            .ant-col {
+                &:first-child {
+                    order: 0;
+                }
+
+                &:last-child {
+                    order: 1;
+                }
+
+                &:nth-child(2) {
+                    order: 2;
+                }
+            }
+        }
+    }
 
     .seperator {
         width: 1px;
@@ -131,5 +149,25 @@
                 }
             }
         }
+    }
+}
+
+.signature-cancel-btn {
+    background-color: $white-bg-color;
+    color: $green-graph-tooltip-color;
+    border-color: $green-graph-tooltip-color;
+
+    &:hover {
+        border-color: $green-graph-tooltip-color !important;
+    }
+}
+
+.signature-submit-btn {
+    color: $white-bg-color;
+    background-color: $green-graph-tooltip-color;
+    border-color: $green-graph-tooltip-color;
+
+    &:hover {
+        background-color: $green-graph-tooltip-color !important;
     }
 }

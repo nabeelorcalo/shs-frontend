@@ -1,5 +1,5 @@
-import { Col, Row, Typography } from "antd";
 import React from "react";
+import { Col, Row, Typography } from "antd";
 import "../../../sign-in/signin.scss";
 import { SHSLogo } from "../../../../../assets/images";
 import CreatePasswordForm from "./CreatePasswordForm";
@@ -13,7 +13,7 @@ const CreatePassword = () => {
         <Row className="form-style">
           <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
             <div className="logo-wrapper">
-             <SHSLogo/>
+              <SHSLogo />
             </div>
             <div className="form-inner-wrapper">
               <div className="main-title-wrapper">

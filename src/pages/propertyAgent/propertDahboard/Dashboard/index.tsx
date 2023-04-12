@@ -1,21 +1,19 @@
-import { Col, Row, Typography } from "antd";
 import React from "react";
-import { MonthlyPerfomanceChart } from "../../../../components";
-import { propertiesStatsData } from "../../../../components/ChartsOfGraphs/chartsMockData/propertiesStats";
-import "./Dashboard.scss";
-import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
 import { useNavigate } from "react-router-dom";
+import { Col, Row, Typography } from "antd";
+import { MonthlyPerfomanceChart } from "../../../../components";
+import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
+import "../../style.scss";
 
 const MainDashboard = () => {
   const nivagate = useNavigate();
-
   return (
     <div className="main-dashboard">
-      <Row gutter={[10, 10]}>
+      <Row gutter={[20, 10]}>
         {cardData.map((item, index) => {
           return (
             <>
-              <Col xxl={6} xl={6} lg={6} md={6} sm={12} xs={24}>
+              <Col xxl={6} xl={6} lg={12} md={24} sm={24} xs={24}>
                 <div className="card-main">
                   <div className="flex items-center p-2">
                     <div className="img-bg">
@@ -63,8 +61,8 @@ const MainDashboard = () => {
         })}
       </Row>
 
-      <Row gutter={[10, 10]} className="mt-2">
-        <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+      <Row gutter={[50,20]} className="mt-5">
+        <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
@@ -75,71 +73,58 @@ const MainDashboard = () => {
             />
           </div>
         </Col>
-        <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-          <div className="recent-card">
+        <Col xxl={6} xl={12} lg={24} md={24} sm={24} xs={24} className="recent-card">
+          <div >
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
-            <div className="inner-activities flex">
-              <Row>
+            <div className="inner-activities flex mt-4">
+              <Row gutter={[20,20]}>
                 {activityData.map((item, index) => {
                   return (
-                    <>
-                        <div style={{ display: "flex" }}>
-                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                    <Typography>{item.date}</Typography>
-                  </Col>
-                  <hr />
-                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                    <div>
-                      <Typography
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: 600,
-                          color: "#14142A",
-                        }}
-                      >
-                        {item.userStatus}
-                      </Typography>
-                      <div className="flex ">
-                        <img src={item.img} alt="1" />
-                        <Typography
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: 400,
-                            color: "#6E7191",
-                            marginRight: "10px",
-                            marginLeft:"10px"
-                          }}
-                        >
-                          {item.detail}
-                        </Typography>
-                        <div
-                          
-                          style={{ background: " #4783FF",padding:"2px", color:"white" }}
-                        >
-                          View
-                        </div>
-                      </div>
-                      <Typography  style={{
-                            fontSize: "14px",
-                            fontWeight: 400,
-                            color: "#6E7191",
-                            // marginRight: "10px",
-                            // marginLeft:"10px"
-                          }}>{item.time}</Typography>
-                    </div>
-                  </Col>
-                </div>
-                    </>
-                  )
+                    <Col span={24}>
+                      <Row gutter={[0,20]}>
+                        <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
+                          <Typography className="text-[#A0A3BD] text-sm font-normal font-[outfit]">
+                            {item.date}
+                          </Typography>
+                        </Col>
+                        <hr />
+                        <Col xxl={16} xl={16} lg={15} md={18} sm={17} xs={19}>
+                          <div className="ml-2">
+                            <Typography className="text-primary-color text-sm font-semibold font-[outfit]">
+                              {item.userStatus}
+                            </Typography>
+                            <div className="flex ">
+                              <img src={item.img} alt="1" />
+                              <Typography className="text-teriary-color text-sm font-normal font-[outfit] mr-10 ml-3">
+                                {item.detail}
+                              </Typography>
+                            </div>
+                            <Typography className="text-teriary-color text-sm font-normal font-[outfit]">
+                              {item.time}
+                            </Typography>
+                          </div>
+                        </Col>
+                        <Col xxl={4} xl={4} lg={4} md={3} sm={3} xs={24}>
+                          <div className="text-info-bg-color p-1 white-color text-center rounded-lg">
+                            View
+                          </div>
+                        </Col>
+                      </Row>
+                    </Col>
+                  );
                 })}
-              
               </Row>
+            </div>
+            <div className="text-center ">
+              <a href="activityData" className="underline decoration-2">
+                View All
+              </a>
             </div>
           </div>
         </Col>
-        <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
+        <Col xxl={6} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
@@ -161,79 +146,31 @@ const MainDashboard = () => {
                       <Row>
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>
-                            <span
-                              style={{
-                                fontFamily: "Outfit",
-                                fontSize: "14px",
-                                fontWeight: 500,
-                                lineHeight: "22px",
-                                color: "#363565",
-                              }}
-                            >
+                            <span className="text-sm font-medium color-[#363565]">
                               {item.name}
                             </span>
-                            <span
-                              style={{
-                                fontFamily: "Outfit",
-                                fontSize: "12px",
-                                fontWeight: 400,
-
-                                color: "#A0A3BD",
-                              }}
-                            >
-                              {" "}
+                            <span className="text-xs font-normal color-[#A0A3BD]">
                               {item.recentActivity}
                             </span>
                           </Typography>
                           <Typography>
-                            <span
-                              style={{
-                                fontFamily: "Outfit",
-                                fontSize: "12px",
-                                fontWeight: 400,
-                                color: "#A0A3BD",
-                              }}
-                            >
+                            <span className="text-xs font-normal color-[#A0A3BD]">
                               Address:
-                            </span>{" "}
-                            <span
-                              style={{
-                                fontFamily: "Outfit",
-                                fontSize: "12px",
-                                fontWeight: 400,
-                                color: "#4E4B66",
-                              }}
-                            >
+                            </span>
+                            <span className="text-xs font-normal color-[#4E4B66]">
                               {item.address}
                             </span>
                           </Typography>
-                          <Typography
-                            style={{
-                              fontFamily: "Outfit",
-                              fontSize: "12px",
-                              fontWeight: 400,
-
-                              color: "#A0A3BD",
-                            }}
-                          >
+                          <Typography className="text-xs font-normal color-[#A0A3BD]">
                             {item.time}
                           </Typography>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-                          <Typography
-                            className="flex justify-end"
-                            style={{
-                              fontFamily: "Outfit",
-                              fontSize: "16px",
-                              fontWeight: 500,
-                              lineHeight: "24px",
-                              color: "#4E4B66",
-                            }}
-                          >
+                          <Typography className="flex justify-end font-medium text-base color-[#4E4B66]">
                             {item.price}
                           </Typography>
                           <div
-                            className="p-1 mt-4"
+                            className="p-1 mt-4 rounded-[6px]"
                             style={{
                               background:
                                 item.status === "Published"
@@ -243,18 +180,9 @@ const MainDashboard = () => {
                                   : item.status === "Pending"
                                   ? "#FFC15D"
                                   : "",
-                              borderRadius: "6px",
                             }}
                           >
-                            <Typography
-                              style={{
-                                fontFamily: "Outfit",
-                                fontSize: "12px",
-                                fontWeight: 400,
-                                textAlign: "center",
-                                color: "#FFFFFF",
-                              }}
-                            >
+                            <Typography className="cursor-pointer text-xs font-normal text-white text-center ">
                               {item.status}
                             </Typography>
                           </div>
@@ -264,6 +192,11 @@ const MainDashboard = () => {
                   </>
                 );
               })}
+              <div className="text-center">
+                <a href="ListingRequest" className="underline decoration-2">
+                  View All
+                </a>
+              </div>
             </div>
           </div>
         </Col>

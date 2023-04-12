@@ -1,12 +1,16 @@
+import React, { useState } from "react";
 import {
-  MoreOutlined,
+  EllipsisOutlined,
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import React, { useState } from "react";
-import {GlobalTable} from "../../../components";
-import { Button, Col, Row, Typography } from "antd";
+import { BoxWrapper, FiltersButton, GlobalTable } from "../../../components";
+import { Button, Col, Row, Space, Form, Menu } from "antd";
 import { DropDown } from "../../../components";
+import Drawer from "../../../components/Drawer";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import '../style.scss';
+
 
 const columns = [
   {
@@ -33,19 +37,17 @@ const columns = [
     dataIndex: "status",
     render: (_: any, data: any) => (
       <div
-        className="table-status-style"
+        className="table-status-style text-center white-color rounded"
         style={{
           backgroundColor:
             data.status === "Pending"
               ? "#FFC15D"
               : data.status === "Published"
-              ? "#3DC475"
-              : data.status === "Rejected"
-              ? "#D83A52"
-              : "",
-          color: "#FFFFFF",
+                ? "#3DC475"
+                : data.status === "Rejected"
+                  ? "#D83A52"
+                  : "",
           padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
         }}
       >
         {data.status}
@@ -58,17 +60,16 @@ const columns = [
     dataIndex: "Verification",
     render: (_: any, data: any) => (
       <div
-        className="table-status-style"
+        className="table-status-style text-center white-color rounded"
         style={{
           backgroundColor:
             data.Verification === "Checked"
               ? "#3DC575"
               : data.Verification === "Unchecked"
-              ? "#D83A52"
-              : "",
-          color: "#FFFFFF",
+                ? "#D83A52"
+                : "",
           padding: " 2px 3px 2px 3px",
-          borderRadius: "4px",
+
         }}
       >
         {data.Verification}
@@ -78,16 +79,25 @@ const columns = [
     title: "Verification",
   },
   {
-    dataIndex: "Actions",
+    render: (_: any, data: any) => (
+      <span>
+        <CustomDroupDown menu1={menu2} />
+      </span>
+    ),
     key: "Actions",
     title: "Actions",
   },
 ];
+const menu2 = (
+  <Menu>
+    <Menu.Item key="1">View Details</Menu.Item>
+  </Menu>
+);
 const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     Rent: "£9,823",
@@ -101,7 +111,7 @@ const tableData = [
   {
     Actions: (
       <span>
-        <MoreOutlined />
+        <EllipsisOutlined />
       </span>
     ),
     Rent: "£9,823",
@@ -117,15 +127,8 @@ const tableData = [
   {
     Actions: (
       <div>
-        <MoreOutlined />
-        {/* <div
-          style={{
-            border: "2px solid #D9DBE9",
-            background: "#FFFFFF",
-            boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)",
-            borderRadius: "8px",
-          }}
-        ><Typography>View Details</Typography></div> */}
+        <EllipsisOutlined />
+
       </div>
     ),
     Rent: "£7,823",
@@ -141,38 +144,65 @@ const tableData = [
 ];
 
 const ListingRequest = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
+  const [openDrawer, setOpenDrawer] = useState(false);
   return (
     <div className="listing-request">
-      <Row>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="flex justify-end gap-2 mb-3">
-            <Button
-              style={{
-                background: "#E6F4F9",
-                borderRadius: "8px",
-                color: "#A0A3BD",
-                fontWeight: 400,
-                fontSize: "16px",
-                fontFamily: "Outfit",
-                margin: "12px",
-            
-              }}
-            >
-              <NodeExpandOutlined style={{ fontSize: "16px" }}  />
-              Filter
-              <RightOutlined style={{ fontSize: "12px" }} />
-            </Button>
+      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
+        <Form layout="vertical">
+          <Form.Item label="Agent" name="agent">
             <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
+              name="Select"
               value={value}
+              options={["item 1", "item 2", "item 3"]}
               setValue={setValue}
             />
+          </Form.Item>
+          <Form.Item label="Status" name="status">
+            <DropDown
+              name="Select"
+              value={value}
+              options={["item 1", "item 2", "item 3"]}
+              setValue={setValue}
+            />
+          </Form.Item>
+
+          <div className="flex justify-center sm:justify-end">
+            <Space>
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+                Cancel
+              </Button>
+              <Button
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Apply
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Drawer>
+      <Row gutter={[20,10]}>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+          <div className="flex justify-end gap-2 mb-4">
+            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+            {/* <div className="w-25">
+              <DropDown
+                requiredDownloadIcon
+                options={["pdf", "excel"]}
+                value={value}
+                setValue={setValue}
+              />
+            </div> */}
           </div>
         </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <GlobalTable tableData={tableData} columns={columns} />
+          </BoxWrapper>
+        </Col>
       </Row>
-      <GlobalTable tableData={tableData} columns={columns} />
+
     </div>
   );
 };

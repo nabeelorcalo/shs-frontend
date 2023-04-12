@@ -7,8 +7,6 @@ import { DropDownInterface } from './DropDown_interface';
 import { handleCheckbox } from './actionHandle';
 import './style.scss';
 
-
-
 export const DropDown = (props: DropDownInterface) => {
     const {
         name = 'this month',

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { Typography, Avatar, Rate, Space } from 'antd'
-import {PageHeader, Alert} from "../../../components";
+import { PageHeader, Alert } from "../../../components"
+import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images'
 import "./style.scss";
 import Slider from 'react-slick';
@@ -12,20 +14,22 @@ import recipeSingleThumb from '../../../assets/images/gallery/recipe-single.png'
 import avatar from '../../../assets/images/header/avatar.svg'
 
 const data = [
-  {id: '001', avatar: avatar, title: 'Austin Wade'},
-  {id: '002', avatar: avatar, title: 'Amelia Clark'},
-  {id: '003', avatar: avatar, title: 'Christopher Campbell'},
-  {id: '004', avatar: avatar, title: 'David Miller'},
-  {id: '005', avatar: avatar, title: 'Austin Wade'},
-  {id: '006', avatar: avatar, title: 'Amelia Clark'},
-  {id: '007', avatar: avatar, title: 'Austin Wade'},
-  {id: '008', avatar: avatar, title: 'Christopher Campbell'},
-  {id: '009', avatar: avatar, title: 'Austin Wade'},
+  { id: '001', avatar: avatar, title: 'Austin Wade' },
+  { id: '002', avatar: avatar, title: 'Amelia Clark' },
+  { id: '003', avatar: avatar, title: 'Christopher Campbell' },
+  { id: '004', avatar: avatar, title: 'David Miller' },
+  { id: '005', avatar: avatar, title: 'Austin Wade' },
+  { id: '006', avatar: avatar, title: 'Amelia Clark' },
+  { id: '007', avatar: avatar, title: 'Austin Wade' },
+  { id: '008', avatar: avatar, title: 'Christopher Campbell' },
+  { id: '009', avatar: avatar, title: 'Austin Wade' },
 ]
 
 const RecipeDetails = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate()
+  const { recipeId } = useParams()
   const settings = {
     arrows: false,
     dots: false,
@@ -67,7 +71,9 @@ const RecipeDetails = () => {
         <div className="recipe-detail-card">
           <div className="recipe-detail-hero">
             <div className="recipe-image">
-              <img src={recipeSingleThumb} alt={'Sticky Orange Chicken'} />
+              <figure>
+                <img src={recipeSingleThumb} alt={'Sticky Orange Chicken'} />
+              </figure>
             </div>
             <div className="recipe-hero-content">
               <div className="recipe-hero-title">
@@ -76,7 +82,10 @@ const RecipeDetails = () => {
                 </Typography.Title>
                 <div className="recipe-hero-actions">
                   <Space size={20}>
-                    <div className="recipe-action update-recipe">
+                    <div
+                      className="recipe-action update-recipe"
+                      onClick={() => navigate(`/recipe-update/${recipeId}`)}
+                    >
                       <IconEditRecipe />
                     </div>
                     <div className="recipe-action update-recipe" onClick={openModalRecipeDelete}>
@@ -172,12 +181,12 @@ const RecipeDetails = () => {
                   </div>
                 )
               })}
-              
 
-              
+
+
             </Slider>
           </div>
-        </div> 
+        </div>
       </div>
 
       <Alert
@@ -188,9 +197,8 @@ const RecipeDetails = () => {
         cancelBtntxt={'Cancel'}
         okBtntxt={'Delete'}
         // okBtnFunc={}
-      >
-        Are you sure you want to delete this task?
-      </Alert>
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </>
   )
 }

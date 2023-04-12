@@ -8,10 +8,10 @@ import {
   IconBriefcase,
   IconDelegateAgent,
   IconHeadset,
-  IconActivity
+  IconActivity,
+  IconGift
 } from '../../../assets/images'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-const { DASHBOARD, STUDENT, UNIVERSITIES, COMPANIES, ADMIN, DELEGATE_AGENT, PROPERTY_AGENT, HELP_DESK, ACTIVITY_LOG } = ROUTES_CONSTANTS;
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 function getItem(
@@ -29,6 +29,7 @@ function getItem(
     type,
   } as MenuItem;
 }
+const { DASHBOARD, STUDENT, UNIVERSITIES, COMPANIES, ADMIN, DELEGATE_AGENT, PROPERTY_AGENT, HELP_DESK, ACTIVITY_LOG, EARN_WITH_US } = ROUTES_CONSTANTS;
 
 export const itemsSystemAdmin: MenuProps['items'] = [
   getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
@@ -51,6 +52,10 @@ export const itemsSystemAdmin: MenuProps['items'] = [
   getItem('Support', 'support', null, [
     getItem('Help Desk', `/${HELP_DESK}`, <IconHeadset />),
     getItem('Activity Log', `/${ACTIVITY_LOG}`, <IconActivity />),
-    
+  ], 'group'),
+
+  // DISCOVER GROUP
+  getItem('Discover', 'discover', null, [
+    getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
   ], 'group'),
 ]

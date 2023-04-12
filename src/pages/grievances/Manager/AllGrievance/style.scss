@@ -1,0 +1,43 @@
+@import '../../../../scss/colors';
+
+.all-grievance {
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
+  .blow-whistle-button {
+    &:hover {
+      color: $white-bg-color !important
+    }
+  }
+
+  .gerievance-right-sec {
+    @media only screen and (max-width:575px) {
+      flex-direction: column;
+    }
+  }
+
+  .new {
+    background: #FF6F31;
+  }
+
+  .in-progress {
+    background: #128AF9;
+  }
+
+  .re-opened {
+    background: #1FBEC8;
+  }
+
+  .resolved {
+    background: $text-success-color;
+  }
+
+}
+
+.filter_main_wrapper {
+  .drop-down-wrapper {
+    border: 1px solid $text-primary-disabled-color;
+    background: $white-bg-color;
+  }
+}
+

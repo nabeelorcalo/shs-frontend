@@ -7,15 +7,18 @@ interface ModalProps {
   title?: React.ReactNode
   width?: string | number
   open: boolean
-  close: () => void
+  close?: () => void
   children?: React.ReactNode
   footer?: React.ReactNode
   closable?: boolean
-  wrapClassName?: string
+  wrapClassName?: string,
+  okBtntxt?: any,
+  cancelBtntxt?: any,
+  okBtnFunc?: any,
 }
 
 export const PopUpModal: FC<ModalProps> = (props) => {
-  const { title, width = 700, open, close, children, footer, closable = true, wrapClassName } = props
+  const { title, width = 700, open, close, children, footer, closable , wrapClassName } = props
   return (
     <>
       <Modal

@@ -1,30 +1,46 @@
-import React, { useState } from "react";
-import { DropDown, SearchBar, FiltersButton, PageHeader } from "../../components";
+import { useState } from "react";
+import {
+  GlobalTable,
+  SearchBar,
+  PageHeader,
+  BoxWrapper,
+  InternsCard,
+  ToggleButton,
+  DropDown
+} from "../../components";
+
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import {GlobalTable} from "../../components";
-import { Avatar, Button, Popover, Divider } from 'antd';
-import { More } from "../../assets/images"
-import type { MenuProps } from 'antd';
-import { Dropdown, Space } from 'antd';
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
-import Drawer from "../../components/Drawer";
+import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
+import { Col, MenuProps, Row } from 'antd';
+import { Dropdown, Avatar } from 'antd';
+import useCustomHook from "./actionHandler";
 
 const PopOver = () => {
-  const navigate = useNavigate()
-  const items: MenuProps['items'] = [
+  const navigate = useNavigate();
+  const items: MenuProps["items"] = [
     {
-      key: '1',
+      key: "1",
       label: (
-        <a rel="noopener noreferrer" onClick={() => { navigate("profile") }}>
+        <a
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("profile");
+          }}
+        >
           Profile
         </a>
       ),
     },
     {
-      key: '2',
+      key: "2",
       label: (
-        <a rel="noopener noreferrer" onClick={() => { navigate("chat") }}>
+        <a
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate("chat");
+          }}
+        >
           Chat
         </a>
       ),
@@ -34,133 +50,209 @@ const PopOver = () => {
     <Dropdown menu={{ items }} placement="bottomRight">
       <More />
     </Dropdown>
-  )
-}
+  );
+};
+
+const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const Interns = () => {
-  const navigate = useNavigate()
-  const [value, setValue] = useState("")
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+  // const navigate = useNavigate()
+  // const [value, setValue] = useState("")
+  // const [showDrawer, setShowDrawer] = useState(false)
+  // const [state, setState] = useState(false)
+  const [listandgrid, setListandgrid] = useState(false)
+  const [isToggle, setIsToggle] = useState(false)
+
+  const action = useCustomHook()
+  const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
+
   const columns = [
     {
-      dataIndex: 'no',
-      key: 'no',
-      title: 'No.'
+      dataIndex: "no",
+      key: "no",
+      title: "No.",
     },
     {
-      dataIndex: 'posted_by',
-      key: 'posted_by',
-      title: 'Posted By'
+      dataIndex: "posted_by",
+      key: "posted_by",
+      title: "Posted By",
     },
     {
-      dataIndex: 'title',
-      key: 'title',
-      title: 'Title'
+      dataIndex: "name",
+      key: "name",
+      title: "Name",
     },
     {
-      dataIndex: 'department',
-      key: 'department',
-      title: 'Department'
+      dataIndex: "department",
+      key: "department",
+      title: "Department",
     },
     {
-      dataIndex: 'joining_date',
-      key: 'joining_date',
-      title: 'Joining Date'
+      dataIndex: "joining_date",
+      key: "joining_date",
+      title: "Joining Date",
     },
     {
-      dataIndex: 'date_of_birth',
-      key: 'date_of_birth',
-      title: 'Date of Birth'
+      dataIndex: "date_of_birth",
+      key: "date_of_birth",
+      title: "Date of Birth",
     },
     {
-      dataIndex: 'actions',
-      key: 'actions',
-      title: 'Actions'
-    }
-  ]
+      dataIndex: "actions",
+      key: "actions",
+      title: "Actions",
+    },
+  ];
   const tableData = [
     {
       no: "01",
-      title: "Research Analyst",
+      name: "Research Analyst",
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
-      location: "virtual",
-      status: 'Pending',
-      posted_by: 'T',
     },
     {
       no: "02",
-      title: "Business Analyst",
+      name: "Business Analyst",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
-      status: 'Active',
-      posted_by: 'U',
     },
     {
       no: "02",
-      title: "Business Analyst",
+      name: "Business Analyst",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
-      location: "Onsite",
-      status: 'Rejected',
-      posted_by: 'U',
+    },
+    {
+      no: "01",
+      name: "Research Analyst",
+      department: "Business Analyst",
+      joining_date: "01/07/2022",
+      date_of_birth: "01/07/2022",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    },
+    {
+      no: "01",
+      name: "Research Analyst",
+      department: "Business Analyst",
+      joining_date: "01/07/2022",
+      date_of_birth: "01/07/2022",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
+    },
+    {
+      no: "02",
+      name: "Business Analyst",
+      department: "Scientist Analyst",
+      joining_date: "01/07/2023",
+      date_of_birth: "01/07/2021",
     }
-  ]
+  ];
   const newTableData = tableData.map((item, idx) => {
     return (
       {
         no: item.no,
-        posted_by: <Avatar>{item.posted_by}</Avatar>,
-        title: item.title,
+        posted_by:
+          <Avatar
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+          />,
+        name: item.name,
         department: item.department,
         joining_date: item.joining_date,
         date_of_birth: item.date_of_birth,
-        location: item.location,
         actions: <PopOver />
       }
     )
   })
-  console.log(value)
   return (
     <>
       <PageHeader title="Interns" />
-      <Divider />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
+        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
+          </div>
           <div className="flex flex-row gap-4">
-            <FiltersButton
-              label="View"
-              onClick={() => { setShowDrawer(true) }}
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+              }}
+              value=""
             />
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
+             <div className='p-2 download-icon-style'>
+              <DownloadDocumentIcon />
+            </div>
           </div>
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable
-              columns={columns}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { }
-              }}
-              tableData={newTableData}
-            />
-          </div>
-        </BoxWrapper>
+            {
+              // className="flex flex-row flex-wrap gap-6"
+              listandgrid ? <Row gutter={[20,20]}>
+                {
+                  newTableData.map((items: any, idx: any) => {
+                    return (
+                      <Col xs={24} sm={12} md={12} xl={6} xxl={6}>
+                        <InternsCard
+                         posted_by={items.posted_by}
+                         title={items.title} 
+                         department={items.department} 
+                         joining_date={items.joining_date} 
+                         date_of_birth={items.date_of_birth} 
+                        />
+                      </Col>
+                    )
+                  })
+                }
+              </Row>
+                :
+                <GlobalTable
+                  columns={columns}
+                  expandable={{
+                    expandedRowRender: () => { },
+                    rowExpandable: function noRefCheck() { }
+                  }}
+                  tableData={newTableData}
+                />
+              }
+        </div>
+         </BoxWrapper>
+
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Interns
+export default Interns;

@@ -1,3 +1,4 @@
+import React,{ useState } from "react";
 import IdentityVerification from "./IdentityVerification";
 import Address from "./Address";
 import Documents from "./Documents";
@@ -5,25 +6,14 @@ import DbsVerification from "./DbsVerification";
 import UniversityDetails from "./UniversityDetails";
 import Photograph from "./Photograph";
 import Video from "./Video";
-import React from "react";
-import { useState } from "react";
-import {
-  Button,
-  DatePicker,
-  Col,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-  Typography,
-} from "antd";
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
+import {Form} from "antd";
 
 function VerificationSteps(props: any) {
+
   const [currentStep, setCurrentStep] = useState(1);
+  const onFinish = (values: any) => {
+    console.log("Received values of form: ", values);
+  };
 
   return (
     <>
