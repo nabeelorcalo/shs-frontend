@@ -1,6 +1,6 @@
 
 export default {
-  APP_URL: import.meta.env.VITE_APP_URL || "hhttp://localhost:5173",
+  APP_URL: import.meta.env.VITE_APP_URL,
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",

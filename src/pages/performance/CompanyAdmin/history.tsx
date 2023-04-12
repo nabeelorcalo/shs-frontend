@@ -27,10 +27,13 @@ import { WarnModal } from "./warnModel";
 import useCustomHook from "../actionHandler";
 import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
+import { currentUserRoleState } from "../../../store";
+import { useRecoilValue } from "recoil";
 
 const PerformanceHistory = () => {
+  const role = useRecoilValue(currentUserRoleState);
   const historyBreadCrumb = [
-    { name: constants.USER_ROLE === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
+    { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
   const id = 1;
@@ -289,7 +292,7 @@ const PerformanceHistory = () => {
       label: (
         <Link
           className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${constants.USER_ROLE !== constants.UNIVERSITY ?
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${role !== constants.UNIVERSITY ?
             ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL
             }`}
         >
@@ -341,7 +344,7 @@ const PerformanceHistory = () => {
       key: "3",
     },
   ];
-  if (constants.USER_ROLE === constants.UNIVERSITY && items.length > 2) {
+  if (role === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -3)
   }
 

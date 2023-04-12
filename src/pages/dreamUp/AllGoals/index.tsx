@@ -40,7 +40,7 @@ const AllGoals = () => {
       disabled: dropdownDataRecord.isCompleted ? true : false,
     },
     {
-      label: <span onClick={() => { alert(dropdownDataRecord.id) }} >Edit</span>,
+      label: <span onClick={() => { setOpenAddGoalTask(true) }} >Edit</span>,
       key: '1',
     },
     {
@@ -57,12 +57,12 @@ const AllGoals = () => {
           title={<div>All Goals | <span className="text-base text-[#363565]">Dream Up</span></div>}
         />
         <Row className=' items-center' gutter={[10, 10]}>
-          <Col xs={24} md={12} lg={12}>
+          <Col  xs={24} sm={14}>
             <SearchBar className="SearchBar" handleChange={(e: any) => {
               console.log(e);
             }} />
           </Col>
-          <Col xs={24} md={12} lg={12} >
+          <Col xs={24} sm={10}  className="flex justify-end gap-4">
             <div className='flex items-center justify-end view_history_button_wrapper'>
               <Button
                 icon={<AddGoalIcon className="mr-1" />}
@@ -178,7 +178,7 @@ const AllGoals = () => {
         submitGoalTask={action.addGoalTask}
       />
       {deletaAlert.isToggle && <Alert
-        alertType={"error"}
+        type={"error"}
         state={deletaAlert.isToggle}
         setState={() => setDeleteAlertModal({ isToggle: false, id: '' })}
         cancelBtntxt={"Cancle"}
