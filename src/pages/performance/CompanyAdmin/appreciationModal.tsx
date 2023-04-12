@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Input, Radio, Row, Col } from 'antd';
+import { useState } from 'react';
+import { Form, Input, Radio } from 'antd';
 import { PopUpModal } from '../../../components/Model';
 import { AvatarBox, Button, TextArea } from '../../../components';
 import { Certificate1, Certificate2 } from '../../../assets/images';

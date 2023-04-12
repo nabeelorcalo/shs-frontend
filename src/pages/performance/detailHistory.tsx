@@ -12,13 +12,16 @@ import { WarnModal } from "./CompanyAdmin/warnModel";
 import './style.scss';
 import data from './CompanyAdmin/data';
 import useCustomHook from "./actionHandler";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 
 const DetailHistory = () => {
+  const role = useRecoilValue(currentUserRoleState);
   const [actionType, setActionType] = useState({ type: '', id: '' });
   const detailHistoryBreadCrumb = [
     { name: "Mino Marina" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : constants.USER_ROLE === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: role === constants.UNIVERSITY ? "View History" : role === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const action = useCustomHook();
 
@@ -109,12 +112,12 @@ const DetailHistory = () => {
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
         >
-          {constants.USER_ROLE === "CompanyAdmin" ? "View Details" : "View"}
+          {role === "CompanyAdmin" ? "View Details" : "View"}
         </Link >,
       key: '0',
     },
     {
-      label: constants.USER_ROLE === "CompanyAdmin" ?
+      label: role === "CompanyAdmin" ?
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
@@ -163,7 +166,7 @@ const DetailHistory = () => {
   ];
 
   // remove last two items if role is of Manager
-  if (constants.USER_ROLE === constants.MANAGER || constants.USER_ROLE === constants.UNIVERSITY && items.length > 2) {
+  if (role === constants.MANAGER || role === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -2)
   }
 
@@ -211,7 +214,7 @@ const DetailHistory = () => {
                 profession="UI UX Designer"
                 className="bg-visible-btn evaluate-btn"
                 icon={<ColorLessMedalIcon />}
-                btnTxt={constants.USER_ROLE !== constants.UNIVERSITY && 'Evaluate'}
+                btnTxt={role !== constants.UNIVERSITY && 'Evaluate'}
                 size={64}
                 url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
                 avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"

@@ -24,15 +24,19 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
+import {currentUserRoleState} from "../../store"
 import "./style.scss";
+import { useRecoilValue } from "recoil";
 
 const ViewPerformance = () => {
   const action = useCustomHook();
+  const role = useRecoilValue(currentUserRoleState);
+  
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: constants.USER_ROLE === constants.UNIVERSITY ? "View History" : (constants.USER_ROLE === constants.INTERN || constants.USER_ROLE === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
-    { name: (constants.USER_ROLE === constants.UNIVERSITY || constants.USER_ROLE === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: role === constants.UNIVERSITY ? "View History" : (role === constants.INTERN || role === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (role === constants.UNIVERSITY || role === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
   ];
   const user = {
     name: 'Calvin Grayson',

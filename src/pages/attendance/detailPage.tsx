@@ -28,12 +28,16 @@ import {
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import useCustomHook from "./actionHandler";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 
 const Detail = () => {
+  const role = useRecoilValue(currentUserRoleState);
+
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
-    { name: constants.USER_ROLE !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
+    { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const action = useCustomHook();
   const timeFrameOptions = [
@@ -176,7 +180,7 @@ const Detail = () => {
         title={
           <div className="font-medium">
             {
-              constants.USER_ROLE === constants.INTERN ?
+              role === constants.INTERN ?
                 <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
                 :
                 <Breadcrumb breadCrumbData={attendanceDetailBreadCrumb} />
@@ -212,7 +216,7 @@ const Detail = () => {
       <Row gutter={[20, 20]}>
         <Col xxl={7} xl={10} md={24} xs={24} className="attendance-content">
           <div className="left-container">
-            {constants.USER_ROLE === "Intern" ? (
+            {role === "Intern" ? (
               <TimeTracking vartical />
             ) : (
               <ProfileCard
