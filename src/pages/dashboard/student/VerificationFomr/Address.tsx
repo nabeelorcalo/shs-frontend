@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
-import { ArrowDownDark, DocumentUpload } from "../../../../assets/images";
-// import { SHSLogo } from "../../../../../assets/images";
-// import { BackButton } from "../../../../../assets/images";
+import { useState } from "react";
+import { Button, Col, Form, Input, Row, Typography } from "antd";
+import { ArrowDownDark, BackButton, DocumentUpload } from "../../../../assets/images";
 import { DropDown } from "../../../../components";
-// import "../../../styles.scss";
+
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -19,12 +17,12 @@ const Address = (props: any) => {
           <div className="form-wrapper">
             <div className="main-title-wrapper">
            
-              <div className="flex items-center  mt-3 mb-3">
-                {/* <div>
+              <div className="flex">
+                <div>
                   <BackButton />
-                </div> */}
+                </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>Address</Typography.Title>
+                  <Typography.Title level={1}>Address</Typography.Title>
                 </div>
               </div>
 
@@ -54,7 +52,7 @@ const Address = (props: any) => {
                 />
               </Form.Item>
               <Row gutter={20}>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                <Col xxl={12} xl={12}  xs={24}>
                   <Form.Item
                     label="Address"
                     name="address"
@@ -72,7 +70,7 @@ const Address = (props: any) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                <Col xxl={12} xl={12}  xs={24}>
                   <Form.Item
                     label="Street"
                     name="street"
@@ -92,7 +90,7 @@ const Address = (props: any) => {
                 </Col>
               </Row>
               <Row gutter={20}>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                <Col xxl={12} xl={12}  xs={24}>
                   <Form.Item
                     label="Town"
                     name="town"
@@ -110,7 +108,7 @@ const Address = (props: any) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                <Col xxl={12} xl={12}  xs={24}>
                   <Form.Item
                     name="country"
                     label="Country"
@@ -138,8 +136,7 @@ const Address = (props: any) => {
                     message: "Please Upload Valid Document!",
                   },
                 ]}
-                style={{ width: "100%", marginBottom: "20px" }}
-              >
+                style={{ width: "100%", marginBottom: "20px" }} >
                 <div className="dragger">
                   <Row className="p-3">
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
@@ -151,35 +148,22 @@ const Address = (props: any) => {
                         Support jpeg,pdf and doc files
                       </Typography>
                     </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
+                    <Col xxl={12} xl={12} lg={12}  md={12} sm={12}  xs={12}  className="flex justify-end" >
                     <DocumentUpload/>
                     </Col>
                   </Row>
                 </div>
               </Form.Item>
-
               <Row gutter={[10,10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
+                <Col xs={24} md={24} lg={12} xl={8}>
+                  <Button className="btn-cancel btn-cancel-verification" >
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
                     <Button
-                      type="primary"
-                      //htmlType="submit"
+                      type="primary" 
                       className="login-form-button"
                       onClick={() => {
                         setCurrentStep(6);
