@@ -18,8 +18,9 @@ const useCustomHook = () => {
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
   const getData = () => {
-    return api.get(`${PAYROLL_FINDALL}?page=1&limit=10`);
+    return api.get(PAYROLL_FINDALL,{page:1,limit:10});
   }
+  
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
