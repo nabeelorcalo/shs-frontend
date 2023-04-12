@@ -1,7 +1,8 @@
 import axios from "axios";
 import constants from "../config/constants";
 
-const baseURL = constants.APP_URL;
+// const baseURL = constants.APP_URL;
+const baseURL = "https://gateway.dev.shs-be.developersorcalo.com";
 const defaultHeaders = {
   'Content-Type': 'application/json',
   // Authorization: 'Bearer ' + accessToken,
