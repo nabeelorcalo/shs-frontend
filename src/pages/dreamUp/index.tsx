@@ -1,20 +1,18 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
 import constants from "../../config/constants";
 import Internee from "./Intrnee";
 import Student from "./Student";
 import "./style.scss";
+import {useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 
 const index = () => {
-  const rederWthRole: any = {
-    'Intern': <Internee />,
-    'Student': <Student />,
+  const { INTERN,STUDENT } = constants;
+  const role: string = useRecoilValue(currentUserRoleState)
+  switch (role) {
+    case STUDENT: return <Student />
+    case INTERN: return <Internee />
+    default: return <></>
   }
-  return (
-    <>
-      {rederWthRole[constants.USER_ROLE]}
-    </>
-  )
 }
 
 export default index

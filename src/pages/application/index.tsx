@@ -1,23 +1,13 @@
-import react, { useState } from "react";
-import {
-  GlobalTable,
-  SearchBar,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  FiltersButton,
-  DropDown,
-  StageStepper
-} from "../../components";
-import "./style.scss";
+import { useState } from "react";
+import {  GlobalTable, SearchBar,  PageHeader, BoxWrapper, InternsCard, FiltersButton,  DropDown, StageStepper} from "../../components";
 import '../../scss/global-color/Global-colors.scss'
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, MenuProps, Space } from 'antd';
+import {  More } from "../../assets/images"
+import { Button, MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
+import "./style.scss";
 
 const ButtonStatus = (props: any) => {
   const btnStyle: any = {
@@ -238,7 +228,7 @@ const Application = () => {
               className=""
               handleChange={() => { }}
               name="search bar"
-              placeholder="search"
+              placeholder="Search"
               size="middle"
             />
           </div>
