@@ -7,11 +7,17 @@ import { PageHeader } from "../../../components";
 import { useState } from "react";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { timeSheetAtom } from "../../../store/timesheet";
 
 const CompanyAdmin = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const [download, setDownload] = useState('');
+
+  const [data, setData] = useRecoilState(timeSheetAtom);
+  console.log(data);
+  
 
   const PdfHeader = ['No', 'User Name', 'Designation', 'Total Hours', 'Progress', 'Worked Hours'];
 
