@@ -1,20 +1,15 @@
 import axios from "axios";
 import constants from "../config/constants";
 
-// const baseURL = constants.APP_URL;
-const baseURL = "https://gateway.dev.shs-be.developersorcalo.com";
-
+const baseURL = constants.APP_URL;
 const defaultHeaders = {
   'Content-Type': 'application/json',
   // Authorization: 'Bearer ' + accessToken,
 };
-
-
 const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
 });
-
 axiosInstance.interceptors.request.use(function (config) {
   // Do something before request is sent
   const accessToken = localStorage.getItem('accessToken');
