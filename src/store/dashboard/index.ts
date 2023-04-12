@@ -1,10 +1,11 @@
-import React from 'react';
 import { recoilPersist } from "recoil-persist";
 import {
   atom,
   selector,
 } from 'recoil';
 import constants from "../../config/constants";
+import api from "../../api";
+import endpoints from "../../config/apiEndpoints";
 
 const { persistAtom } = recoilPersist();
 

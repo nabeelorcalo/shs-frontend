@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
-import { PageHeader, SearchBar, FiltersButton, IconButton, GlobalTable, DropDown, BoxWrapper } from "../../../components";
-import { DownlaodFileIcon, GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
+import { PageHeader, SearchBar,GlobalTable, DropDown, BoxWrapper } from "../../../components";
+import { GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 

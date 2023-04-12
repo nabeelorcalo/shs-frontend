@@ -63,22 +63,21 @@ const ManagerMain = () => {
         </Col>
       </Row>
      
-      <Row gutter={[5, 10]} className="flex items-center ">
+      <Row gutter={[10, 20]} className="flex items-center pb-5">
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
-            <Button className="teriary-bg-color white-color flex items-center ">
-              <a href="addManager" className="flex items-center gap-3 mb-3">
+            <Button className="teriary-bg-color white-color flex items-center">
+              <a href="addManager" className="flex items-center gap-3">
                 <User/> New Manager
               </a>
             </Button>
             <FiltersButton label='Filter' onClick={()=>setOpenDrawer(true)}/> 
-            <div className="text-input-bg-color p-2 flex gap-2">
+            <div className="text-input-bg-color rounded-lg p-1 flex gap-2">
               <div
                className={`button ${activeButton === 0 ? 'active' : ''}`}
-               
                 onClick={() => {
                   setShowGrid(true);
                   setShowTable(false);
