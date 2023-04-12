@@ -90,7 +90,7 @@ export const SetGoal = (props: any) => {
           <div className='flex items-center justify-between'>
             <Button
               className='Leave_request_Canclebtn'
-              label="Cancle"
+              label="Cancel"
               onClick={() => { setOpenAddGoal(false); form.resetFields() }}
               type="primary"
               htmlType="button"
