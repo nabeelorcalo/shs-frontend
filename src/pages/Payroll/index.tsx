@@ -97,96 +97,24 @@ const Payroll = () => {
       title: "Actions",
     },
   ];
-  // const tableData = [
-  //   {
-  //     no: "01",
-  //     name: "Mino Marina",
-  //     department: "Business Analyst",
-  //     joining_date: "01/07/2022",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Johns",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "03",
-  //     name: "Joseph Gonzalex",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Johns",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "03",
-  //     name: "Joseph Gonzalex",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Johns",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  // ];
-  // const DownloadPopOver = () => {
-  //   const navigate = useNavigate()
-  //   const items: MenuProps['items'] = [
-  //     {
-  //       key: '1',
-  //       label: (
-  //         <a rel="noopener noreferrer" onClick={() => { }}>
-  //           PDF
-  //         </a>
-  //       ),
-  //     },
-  //     {
-  //       key: '2',
-  //       label: (
-  //         <a rel="noopener noreferrer" onClick={() => { }}>
-  //           Excel
-  //         </a>
-  //       ),
-  //     },
-  //   ];
-  //   return (
-  //     <Dropdown menu={{ items }} placement="bottomRight">
-  //       <DownloadDocumentIcon />
-  //     </Dropdown>
-  //   )
-  // }
-  const newTableData = payRollData?.map((item, idx) => {
+  const newTableData = payRollData?.map((item:any, index:number) => {
     return (
       {
-        // no: idx+1,
-        // avatar:
-        //   <Avatar
-        //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        //   />,
-        // name: item.name,
+        no: payRollData?.length < 10 && `0 ${index+1}`,
+        // // avatar:
+        // //   <Avatar
+        // //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+        // //   />,
+        name: item.name,
         // department: item.department,
-        // joining_date: item.joining_date,
-        // payroll_cycle: item.payroll_cycle,
+        joining_date: item.createdAt,
+        payroll_cycle: item.updatedAt,
         actions: <PopOver />
       }
     )
   })
-  console.log(listandgrid)
 
   const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
