@@ -1,4 +1,3 @@
-
 import "./style.scss";
 import Internee from "./intern/index"
 import CompanyAdmin from "./companyAdmin/index"
@@ -10,11 +9,14 @@ const Leaves = () => {
   const { MANAGER, COMPANY_ADMIN, INTERN } = constants;
   const role: string = useRecoilValue(currentUserRoleState)
   switch (role) {
-    case COMPANY_ADMIN: return <CompanyAdmin />
-    case MANAGER: return <Manger userRole={role} />
-    case INTERN: return <Internee />
-    default: return <></>
+    case COMPANY_ADMIN:
+      return <CompanyAdmin />
+    case MANAGER:
+      return <Manger userRole={role} />
+    case INTERN:
+      return <Internee />
+    default:
+      return <></>
   }
 }
-
 export default Leaves
