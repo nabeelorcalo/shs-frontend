@@ -216,7 +216,7 @@ const Detail = () => {
       <Row gutter={[20, 20]}>
         <Col xxl={7} xl={10} md={24} xs={24} className="attendance-content">
           <div className="left-container">
-            {role === "Intern" ? (
+            {role === constants.INTERN ? (
               <TimeTracking vartical />
             ) : (
               <ProfileCard

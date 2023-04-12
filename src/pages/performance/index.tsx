@@ -5,19 +5,20 @@ import "./style.scss";
 import UniversityPerformance from "./UniversityRep";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
+import constants from "../../config/constants";
 
 const Performance = () => {
   const userRole = useRecoilValue(currentUserRoleState);
 
   const renderPage = (role: string) => {
     switch (role) {
-      case 'INTERN':
+      case constants.INTERN:
         return <Intern />;
-      case 'COMPANY_ADMIN':
+      case constants.COMPANY_ADMIN:
         return <CompanyAdmin />;
-      case 'COMPANY_MANAGER':
+      case constants.MANAGER:
         return <ManagerPerformance />;
-        case 'UNIVERSITY':
+        case constants.UNIVERSITY:
         return <UniversityPerformance />;
       default:
         return <></>;

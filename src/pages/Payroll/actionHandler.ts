@@ -12,13 +12,13 @@ import apiEndpints from "../../config/apiEndpoints";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const {PAYROLL_FINDALL} = apiEndpints;
+  const { PAYROLL_FINDALL } = apiEndpints;
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
-    
-    const getData = () => {
-      return api.get(`https://gateway.dev.shs-be.developersorcalo.com/${PAYROLL_FINDALL}?page=1&limit=10`);
+
+  const getData = () => {
+    return api.get(`${PAYROLL_FINDALL}?page=1&limit=10`);
   }
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -26,7 +26,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
 
@@ -37,8 +37,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, payroll_cycle}: any) =>
-      [ no, name, department, joining_date, payroll_cycle]
+    const body = data.map(({ no, name, department, joining_date, payroll_cycle }: any) =>
+      [no, name, department, joining_date, payroll_cycle]
     );
 
     const doc = new jsPDF(orientation, unit, size);

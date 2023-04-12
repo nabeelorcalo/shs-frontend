@@ -112,12 +112,12 @@ const DetailHistory = () => {
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
         >
-          {role === "CompanyAdmin" ? "View Details" : "View"}
+          {role === constants.COMPANY_ADMIN ? "View Details" : "View"}
         </Link >,
       key: '0',
     },
     {
-      label: role === "CompanyAdmin" ?
+      label: role === constants.COMPANY_ADMIN ?
         <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}

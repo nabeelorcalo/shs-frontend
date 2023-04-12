@@ -2,22 +2,19 @@ import React, { useEffect, useState } from "react";
 import {
   GlobalTable,
   SearchBar,
-  ListAndGridViewButton,
   PageHeader,
   BoxWrapper,
-  InternsCard,
   ToggleButton,
   FiltersButton,
-  Alert,
   DropDown,
   AttendanceCardDetail
 } from "../../components";
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, Menu, MenuProps, Space } from 'antd';
-import { Dropdown, Avatar } from 'antd';
+import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
+import { Button, Menu, MenuProps } from 'antd';
+import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 
 const PopOver = () => {
@@ -55,12 +52,12 @@ const Payroll = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  const [payRollData,setPayrollData] = useState([]);
+  const [payRollData, setPayrollData] = useState([]);
 
   const action = useCustomHook()
-  useEffect(()=>{
+  useEffect(() => {
     action.getData().then((res: any) => setPayrollData(res.data)).catch((err) => console.log(err))
-  },[])
+  }, [])
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
   const columns = [
@@ -170,7 +167,7 @@ const Payroll = () => {
   //     </Dropdown>
   //   )
   // }
-  const newTableData = payRollData.map((item, idx) => {
+  const newTableData = payRollData?.map((item, idx) => {
     return (
       {
         // no: idx+1,
@@ -340,7 +337,4 @@ const Payroll = () => {
 };
 
 export default Payroll;
-function useRecoilState(payrollDataState: any): [any, any] {
-  throw new Error("Function not implemented.");
-}
 
