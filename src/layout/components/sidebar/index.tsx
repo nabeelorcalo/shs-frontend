@@ -14,7 +14,7 @@ import { itemsUniversity } from "./menuUniversity";
 import { itemsSystemAdmin } from "./menuSystemAdmin";
 import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
-import { currentUserRoleState } from "../../../store";
+import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
 import getUserRoleLable from "../../../helpers/roleLabel";
 const { Sider } = Layout;
@@ -50,6 +50,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       navigate(item.key);
     }
   };
+  const { firstName, lastName } = useRecoilValue(currentUserState);
 
   const menuSwitcher = (role: string) => {
     if (role === constants.STUDENT) {
@@ -94,7 +95,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       <div className="sidebar-user-profile">
         <Avatar size={48} src={avatar} />
         <div className="sidebar-user-profile-content">
-          <Typography.Title level={4}>Maria Sanoid</Typography.Title>
+          <Typography.Title level={4}>{`${firstName} ${lastName}`}</Typography.Title>
           <div className="sidebar-user-profile-role">{getUserRoleLable(role)}</div>
         </div>
       </div>
