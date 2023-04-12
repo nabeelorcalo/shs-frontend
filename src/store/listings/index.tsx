@@ -10,6 +10,7 @@ export const listingsState = atom({
   default: []
 })
 
+
 // export const listingsState = atom({
 //   key: 'listingsState',
 //   default: selector({

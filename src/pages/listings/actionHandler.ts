@@ -5,7 +5,7 @@ import endpoints from "../../config/apiEndpoints";
 
 
 const useListingsHook = () => {
-  const {GET_AGENT_PROPERTIES} = endpoints
+  const { GET_AGENT_PROPERTIES, ADD_PROPERTY } = endpoints
   const [listingsData, setListingsData] = useRecoilState(listingsState)
   const [loading, setLoading] = useRecoilState(listingLoadingState)
 
@@ -23,13 +23,19 @@ const useListingsHook = () => {
     }
   }
 
-  const createListing = async () => {
-    try {
-      const response = await api.post('https://reqres.in/api/users', {"name": "morpheus", "job": "leader"})
-      return response;
-    } catch (error) {
-      throw error;
+  const createListing = async (data: any) => {
+
+    const submitRequest = async(reqBody:any) => {
+      try {
+        const res = await api.post(ADD_PROPERTY, reqBody)
+        return {response: res, error: undefined}
+      } catch (error) {
+        return { response: undefined, error: error };
+      }
     }
+
+    return await submitRequest(data)
+    
   }
 
   return {

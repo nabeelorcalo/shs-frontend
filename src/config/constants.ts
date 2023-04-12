@@ -15,7 +15,18 @@ export default {
   AGENT: 'PROPERTY_AGENT',
   STUDENT: 'STUDENT',
   UNIVERSITY: 'UNIVERSITY',
-  PUBLIC: 'PUBLIC'
+  PUBLIC: 'PUBLIC',
+  NOTIFICATION_DETAILS: {
+    success: {
+      message: "Details Submitted!",
+      description:
+        "We've got your information. Our team will get in touch you shortly!",
+    },
+    error: {
+      message: "Something went wrong!",
+      description: "Please try again later or email us",
+    },
+  }
 };
 
 export const ROUTES_CONSTANTS: any = {

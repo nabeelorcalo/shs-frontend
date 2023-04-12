@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { RadioChangeEvent } from 'antd'
@@ -10,6 +10,8 @@ import useListingsHook from './actionHandler'
 import { listingsState, listingLoadingState } from "../../store";
 import { useRecoilValue } from "recoil";
 import dayjs from 'dayjs'
+import showNotification from '../../helpers/showNotification'
+import constants from '../../config/constants'
 
 import {
   IconAddListings,
@@ -64,6 +66,48 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
+const listingInitValues = {
+  addressOne: "Assd",
+  addressTwo: "",
+  postalCode: "",
+  IsFurnished: "",
+  propertyType: "",
+  totalBedrooms: "",
+  bedroomsForRent: "",
+  totalBathrooms: "",
+  hasAirConditioning: "",
+  hasHeating: "",
+  hasWaterHeating: "",
+  buildingHas: [],
+  PropertyHas: [],
+  propertySize: "",
+  bedroomPhotos: [],
+  bedType: "",
+  allowedTwoPeople: "",
+  kindOfAmenities: [],
+  paymentMethod: "",
+  securityDeposit: "",
+  kindOfDeposit: "",
+  minimumStay: "",
+  allBillsIncluded: "",
+  chargeElectricityBill: "",
+  chargeWaterBill: "",
+  chargeGasBill: "",
+  specificGender: "",
+  maxAge: "",
+  tenantsKind: "",
+  couplesAllowed: "",
+  tenantsRegisterAddress: "",
+  allowedPets: "",
+  allowedMusic: "",
+  identityProof: false,
+  occupationProof: false,
+  incomeProof: false,
+  contractType: "",
+  cancellationPolicy: "",
+  selectDocument: []
+}
+
 
 
 const Listings = () => {
@@ -83,46 +127,7 @@ const Listings = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [initValues, setInitValues] = useState({
-    "address": "",
-    "address2": "",
-    "postcode": "",
-    "isFurnished": "",
-    "propertyType": "",
-    "bedroomsTotal": "",
-    "bedroomsForRent": "",
-    "bathrooms": "",
-    "airConditioning": "",
-    "heating": "",
-    "heatedWaterSystem": "",
-    "buildingHas": [],
-    "PropertyHas": [],
-    "bedroomPhotos": [],
-    "bedType": "",
-    "allowedTwoPeople": "",
-    "kindOfAmenities": [],
-    "paymentMethod": "",
-    "securityDeposit": "",
-    "kindOfDeposit": "",
-    "minimumStay": "",
-    "allBillsIncluded": "",
-    "chargeElectricityBill": "",
-    "chargeWaterBill": "",
-    "chargeGasBill": "",
-    "specificGender": "",
-    "maxAge": "",
-    "tenantsKind": "",
-    "couplesAllowed": "",
-    "tenantsRegisterAddress": "",
-    "allowedPets": "",
-    "allowedMusic": "",
-    "identityProof": false,
-    "occupationProof": false,
-    "incomeProof": false,
-    "contractType": "",
-    "cancellationPolicy": "",
-    "selectDocument": []
-  })
+  const [listingValues, setListingValues] = useState(listingInitValues)
 
   const tableColumns: ColumnsType<DataType> = [
     {
@@ -207,6 +212,7 @@ const Listings = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     listingsActions.fetchListings()
+    console.log("listingValues:::", listingValues)
   }, [])
 
   
@@ -218,7 +224,8 @@ const Listings = () => {
   }
 
   function closeModalAddListing() {
-    setModalAddListingOpen(false)
+    setListingValues(listingInitValues);
+    setModalAddListingOpen(false);
   }
 
   function onChangeRadioProperty(e: RadioChangeEvent) {
@@ -243,10 +250,31 @@ const Listings = () => {
     return e?.fileList;
   };
 
+  const handleSubmission = useCallback(
+    (result:any) => {
+      if (result.error) {
+        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+      } else {
+        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+        setListingValues(listingInitValues)
+      }
+    },
+    [form]
+  );
 
-  const submitAddListing = (values: any) => {
-    console.log('Add Listing:::', values);
-  }
+  const submitAddListing = useCallback(async () => {
+    let values;
+    try {
+      values = await form.validateFields();
+    } catch (errorInfo) {
+      return;
+    }
+    // setAddListingLoading(true);
+    const result = await listingsActions.createListing(listingValues);
+    // setAddListingLoading(false);
+    handleSubmission(JSON.stringify(result));
+  }, [form, handleSubmission]);
+
 
 
   /* ADD LISTING STEPS
@@ -261,17 +289,17 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="address" label="Address">
+            <Form.Item name="addressOne" label="Address">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="address2" label="Address  Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
+            <Form.Item name="addressTwo" label="Address  Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="postcode" label="Postcode">
+            <Form.Item name="postalCode" label="Postcode">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
@@ -333,7 +361,7 @@ const Listings = () => {
               <Col xs={24}>
                 <Row gutter={30}>
                   <Col xs={8}>
-                    <Form.Item name="bedroomsTotal" label="Bedrooms in total">
+                    <Form.Item name="totalBedrooms" label="Bedrooms in total">
                       <InputNumber min={1} max={10} />
                     </Form.Item>
                   </Col>
@@ -344,7 +372,7 @@ const Listings = () => {
 
                   </Col>
                   <Col xs={8}>
-                    <Form.Item name="bathrooms" label="Bathrooms">
+                    <Form.Item name="totalBathrooms" label="Bathrooms">
                       <InputNumber min={1} max={10} />
                     </Form.Item>
                   </Col>
@@ -354,7 +382,7 @@ const Listings = () => {
           }
 
           <Col xs={24}>
-            <Form.Item name="airConditioning" label="Does it have air conditioning?">
+            <Form.Item name="hasAirConditioning" label="Does it have air conditioning?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="notAvailable">Not available</Select.Option>
                 <Select.Option value="central">Central</Select.Option>
@@ -363,7 +391,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="heating" label="Heating">
+            <Form.Item name="hasHeating" label="Heating">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatingNotAvailable">Not available</Select.Option>
                 <Select.Option value="centralProperty">Central Property</Select.Option>
@@ -372,7 +400,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="heatedWaterSystem" label="Does it have heated water system?">
+            <Form.Item name="hasWaterHeating" label="Does it have heated water system?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatedWaterSystemNo">No</Select.Option>
                 <Select.Option value="naturalGas">Natural gas</Select.Option>
@@ -434,7 +462,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="properySize" label="Property Size(optional)">
+            <Form.Item name="propertySize" label="Property Size(optional)">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
@@ -453,7 +481,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${initValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${listingValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -467,7 +495,7 @@ const Listings = () => {
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
-                    {initValues.bedroomPhotos?.length ? (
+                    {listingValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
                         <IconAddUpload />
                         <div className="label">Upload from device</div>
@@ -479,7 +507,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {initValues.bedroomPhotos?.length === 0 &&
+                {listingValues.bedroomPhotos?.length === 0 &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -893,7 +921,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${initValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${listingValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -907,7 +935,7 @@ const Listings = () => {
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
-                    {initValues.bedroomPhotos?.length ? (
+                    {listingValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
                         <IconAddUpload />
                         <div className="label">Upload from device</div>
@@ -919,7 +947,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {initValues.bedroomPhotos?.length === 0 &&
+                {listingValues.bedroomPhotos?.length === 0 &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -1103,11 +1131,16 @@ const Listings = () => {
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
-          initialValues={initValues}
-          onValuesChange={(_, values) => {
-            setInitValues(prevState => ({ ...prevState, ...values }))
-            console.log('init:: ', initValues)
-          }}
+          initialValues={listingValues}
+          // onValuesChange={(_, values) => {
+          //   let tempValues = {}
+          //   tempValues = {
+          //     ...tempValues,
+          //     ...values
+          //   }
+          //   setListingValues(prevState => ({ ...prevState, ...tempValues }))
+          //   console.log('init:: ', listingValues)
+          // }}
           onFinish={submitAddListing}
         >
           <div className="modal-add-listing-body">
@@ -1138,7 +1171,7 @@ const Listings = () => {
                 <Button className="button-tertiary" onClick={next}>Next</Button>
               }
               {current === 6 &&
-                <Button className="button-tertiary">Publish</Button>
+                <Button htmlType="submit" className="button-tertiary">Publish</Button>
               }
             </Space>
           </div>
