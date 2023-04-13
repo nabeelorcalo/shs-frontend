@@ -10,7 +10,6 @@ interface NotificationProps {
 }
 export const Notifications: any = (props: NotificationProps) => {
   const { type, title, description } = props;
-  console.log(type);
   const typeObj: any = {
     success: <Success />,
     warning: <WarningFilled />,

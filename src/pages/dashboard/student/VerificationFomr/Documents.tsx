@@ -1,38 +1,26 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Col, Form, Row, Select, Typography } from "antd";
-// import {
-//   ArrowDownDark,
-//   DocumentUpload,
-//   SHSLogo,
-// } from "../../../../../assets/images";
-// import { BackButton } from "../../../../../assets/images";
 import { DropDown } from "../../../../components";
-// import "../../../styles.scss";
-import { ArrowDownDark, DocumentUpload } from "../../../../assets/images";
+import { ArrowDownDark, BackButton, DocumentUpload } from "../../../../assets/images";
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedList, setSelectedList] = useState([]);
 
   const { Option } = Select;
   return (
     <div className="identity">
       <Row className="identity-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
-          {/* <div className="logo-wrapper">
-            <SHSLogo />
-          </div> */}
           <div className="form-wrapper">
             <div className="main-title-wrapper">
-            
-              <div className="flex items-center mt-3 mb-3">
-                {/* <div>
+
+              <div className="flex ">
+                <div>
                   <BackButton />
-                </div> */}
+                </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>
+                  <Typography.Title level={1}>
                     Identity Documents
                   </Typography.Title>
                 </div>
@@ -70,7 +58,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row gutter={[10,50]} className="p-3">
+                  <Row gutter={[10, 50]} className="p-3">
                     <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
                       <Typography className="dragger-title">
                         Drag & drop files or
@@ -89,7 +77,7 @@ const Documents = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <DocumentUpload/>
+                      <DocumentUpload />
                     </Col>
                   </Row>
                 </div>
@@ -125,7 +113,7 @@ const Documents = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <DocumentUpload/>
+                      <DocumentUpload />
                     </Col>
                   </Row>
                 </div>
@@ -161,30 +149,24 @@ const Documents = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <DocumentUpload/>
+                      <DocumentUpload />
                     </Col>
                   </Row>
                 </div>
               </Form.Item>
 
-              <Row gutter={[10,10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
+              <Row gutter={[10, 10]}>
+                <Col xs={24} md={24} lg={12} xl={8}>
+                  <Button className="btn-cancel btn-cancel-verification" >
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
                     <Button
                       type="primary"
-                      //htmlType="submit"
                       className="login-form-button"
-                      onClick={() => {
-                        setCurrentStep(5);
-                      }}
+                      onClick={() => {  setCurrentStep(5)  }}
                     >
                       Next
                     </Button>

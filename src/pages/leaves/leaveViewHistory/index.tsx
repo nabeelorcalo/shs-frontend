@@ -1,6 +1,8 @@
 
 import { useState } from "react";
 import { Col, Row } from "antd";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
 import { CalendarWhiteIcon } from "../../../assets/images";
@@ -12,27 +14,27 @@ import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/c
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
-
 import "./style.scss"
 import Divider from "antd/es/divider";
+
 const LeaveViewHistoryData = [
-  { name:  'Leaves History' },
+  { name: 'Leaves History' },
   { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
 ];
-
-
 
 const index = () => {
   const action = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
-  const CsvImportData = ['No', 	'RequestDate', 'DateFrom', 'DateTo','LeaveType', 'Description', 'Status']
+  const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
+  const role = useRecoilValue(currentUserRoleState);
+
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
       <Divider />
-  
+
       <Row className=' items-center' gutter={[20, 20]}>
         <Col xs={24} md={24} lg={6} xl={6} xxl={6}>
           <SearchBar className="SearchBar" handleChange={(e: any) => {
@@ -54,16 +56,18 @@ const index = () => {
                   'excel'
                 ]}
                 requiredDownloadIcon
-                setValue={()=>{action.downloadPdfOrCsv(event,CsvImportData,data,"Leave History")}}
+                setValue={() => { action.downloadPdfOrCsv(event, CsvImportData, data, "Leave History") }}
               />
             </div>
-            {constants.USER_ROLE === 'Intern' && <Button
-              icon={<CalendarWhiteIcon className="mr-1" />}
-              label="Request Leave"
-              onClick={() => setOpenModal({ open: true, type: "addLeav" })}
-              size="middle"
-              className="Request_leave"
-            />}
+            {
+              role === constants.INTERN &&
+              <Button
+                icon={<CalendarWhiteIcon className="mr-1" />}
+                label="Request Leave"
+                onClick={() => setOpenModal({ open: true, type: "addLeav" })}
+                size="middle"
+                className="Request_leave"
+              />}
           </div>
         </Col>
         <Col xs={24}>
