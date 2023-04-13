@@ -36,7 +36,7 @@ const PopOver = () => {
     }
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']}>
       <More />
     </Dropdown>
   );
@@ -48,17 +48,11 @@ const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
 
 const Payroll = () => {
   const navigate = useNavigate()
-  const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
-  const [listandgrid, setListandgrid] = useState(false)
-  const [payRollData, setPayrollData] = useState([]);
+  const [isToggle, setIsToggle] = useState(false)
 
-  const action = useCustomHook()
-
-  useEffect(() => {
-    action.getData().then((res: any) => setPayrollData(res.data)).catch((err) => console.log(err))
-  }, [])
+  const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
+  
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -99,13 +93,13 @@ const Payroll = () => {
       title: "Actions",
     },
   ];
-  const newTableData = payRollData?.map((item: any, index: number) => {
+  const newTableData = payrollData?.map((item: any, index: number) => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     return (
       {
         key: index,
-        no: payRollData?.length < 10 && `0 ${index + 1}`,
+        no: payrollData?.length < 10 && `0 ${index + 1}`,
         // // avatar:
         // //   <Avatar
         // //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
@@ -119,7 +113,6 @@ const Payroll = () => {
     )
   })
 
-  const [isToggle, setIsToggle] = useState(false)
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -130,7 +123,7 @@ const Payroll = () => {
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
-              handleChange={() => { }}
+              handleChange={changeHandler}
               name="search bar"
               placeholder="Search"
               size="middle"
@@ -223,7 +216,7 @@ const Payroll = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, payRollData, "Company Admin Payroll")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
               }}
               value=""
             />
@@ -233,7 +226,7 @@ const Payroll = () => {
           {
             isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
-                payRollData.map((items: any, index: number) => {
+                payrollData.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
                   return (
@@ -257,10 +250,6 @@ const Payroll = () => {
               <BoxWrapper>
                 <GlobalTable
                   columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
                   tableData={newTableData}
                 />
               </BoxWrapper>
