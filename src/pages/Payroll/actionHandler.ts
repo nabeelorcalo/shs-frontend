@@ -8,25 +8,25 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import constants from "../../config/constants";
+import apiEndpints from "../../config/apiEndpoints";
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const { PAYROLL_FINDALL } = apiEndpints;
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
-
-
+  const getData = () => {
+    return api.get(`${PAYROLL_FINDALL}?page=1&limit=10`);
+  }
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
 
@@ -37,8 +37,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, payroll_cycle}: any) =>
-      [ no, name, department, joining_date, payroll_cycle]
+    const body = data.map(({ no, name, department, joining_date, payroll_cycle }: any) =>
+      [no, name, department, joining_date, payroll_cycle]
     );
 
     const doc = new jsPDF(orientation, unit, size);

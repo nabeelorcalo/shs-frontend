@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Agent from "./agent";
 import CompanyAdmin from "./companyAdmin";
 import DelegateAgent from "./delegateAgent";
@@ -9,6 +8,8 @@ import SystemAdmin from "./systemAdmin";
 import University from "./university";
 import constants from "../../config/constants";
 import "./style.scss";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 
 // gutter for spacing in dashboard items
 export const gutter: any = [
@@ -17,33 +18,27 @@ export const gutter: any = [
 ];
 
 const Dashboard = () => {
-
-  const renderRoleBasedDashboard = (role: string) => {
-    switch (role) {
-      case 'Agent':
-        return <Agent />;
-      case 'CompanyAdmin':
-        return <CompanyAdmin />;
-      case 'DelegateAgent':
-        return <DelegateAgent />;
-      case 'Intern':
-        return <Intern />;
-      case 'Manager':
-        return <Manager />;
-      case 'Student':
-        return <Student />;
-      case 'SystemAdmin':
-        return <SystemAdmin />;
-      case 'University':
-        return <University />;
-      default:
-        return <></>;
-    }
+  const { AGENT, MANAGER, COMPANY_ADMIN, DELEGATE_AGENT, STUDENT, SYSTEM_ADMIN, UNIVERSITY, INTERN } = constants;
+  const role = useRecoilValue(currentUserRoleState);
+  switch (role) {
+    case AGENT:
+      return <Agent />;
+    case COMPANY_ADMIN:
+      return <CompanyAdmin />;
+    case DELEGATE_AGENT:
+      return <DelegateAgent />;
+    case INTERN:
+      return <Intern />;
+    case MANAGER:
+      return <Manager />;
+    case STUDENT:
+      return <Student />;
+    case SYSTEM_ADMIN:
+      return <SystemAdmin />;
+    case UNIVERSITY:
+      return <University />;
+    default:
+      return <></>;
   }
-
-  return (
-    renderRoleBasedDashboard(constants.USER_ROLE)
-  )
-}
-
-export default Dashboard
+};
+export default Dashboard;

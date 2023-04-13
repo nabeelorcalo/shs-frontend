@@ -86,11 +86,11 @@ export const SetGoal = (props: any) => {
         <Form.Item  >
           <Checkbox onChange={(e: any) => setFormVal({ ...formVal, MainGoal: e.target.checked })}>Mark as main goal.</Checkbox>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 13, span: 11 }}>
-          <div className='flex items-center justify-between'>
+        <Form.Item >
+          <div className='flex items-center justify-end gap-3'>
             <Button
               className='Leave_request_Canclebtn'
-              label="Cancle"
+              label="Cancel"
               onClick={() => { setOpenAddGoal(false); form.resetFields() }}
               type="primary"
               htmlType="button"
