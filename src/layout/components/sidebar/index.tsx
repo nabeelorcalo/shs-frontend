@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "./style.scss";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Layout, Menu, theme } from "antd";
@@ -14,8 +14,9 @@ import { itemsUniversity } from "./menuUniversity";
 import { itemsSystemAdmin } from "./menuSystemAdmin";
 import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
-import { currentUserRoleState } from "../../../store";
+import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
+import getUserRoleLable from "../../../helpers/roleLabel";
 const { Sider } = Layout;
 
 type SidebarProps = {
@@ -24,11 +25,7 @@ type SidebarProps = {
   onBreakpoint: any;
 };
 
-const AppSidebar: FC<SidebarProps> = ({
-  collapsed,
-  collapsedWidth,
-  onBreakpoint,
-}) => {
+const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -37,6 +34,7 @@ const AppSidebar: FC<SidebarProps> = ({
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
+  const { firstName, lastName } = useRecoilValue(currentUserState);
 
   // const {role } =useCurrentUserRole()
 
@@ -96,8 +94,8 @@ const AppSidebar: FC<SidebarProps> = ({
       <div className="sidebar-user-profile">
         <Avatar size={48} src={avatar} />
         <div className="sidebar-user-profile-content">
-          <Typography.Title level={4}>Maria Sanoid</Typography.Title>
-          <div className="sidebar-user-profile-role">{role}</div>
+          <Typography.Title level={4}>{`${firstName} ${lastName}`}</Typography.Title>
+          <div className="sidebar-user-profile-role">{getUserRoleLable(role)}</div>
         </div>
       </div>
 

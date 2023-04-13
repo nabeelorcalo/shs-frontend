@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader, TopPerformanceList, MonthChanger } from "../../../components";
+import { OverAllPerfomance, MonthlyPerfomanceChart, PageHeader, TopPerformanceList, MonthChanger, BoxWrapper } from "../../../components";
 import data from './data';
 import { Row, Col } from "antd";
 import '../style.scss';
@@ -121,7 +121,8 @@ const CompanyAdminPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-              <MonthlyPerfomanceChart
+             <BoxWrapper>
+             <MonthlyPerfomanceChart
                 heading="Summary"
                 data={data}
                 XField="department"
@@ -133,6 +134,7 @@ const CompanyAdminPerformance = () => {
                   />
                 }
               />
+             </BoxWrapper>
             </Col>
           </Row>
         </Col>

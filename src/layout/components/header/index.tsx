@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Layout,  Input,  Dropdown,  Avatar,  Drawer, List, MenuProps, Typography} from "antd";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
+import { Layout, Input, Dropdown, Avatar, Drawer, List, MenuProps, Typography } from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { ExtendedButton } from "../../../components";
@@ -9,8 +11,8 @@ import "./style.scss";
 import {
   Logo,
   IconCollapsebleOff,
-  IconCollapsebleOn, 
-  IconSearchNormal, 
+  IconCollapsebleOn,
+  IconSearchNormal,
   MessageNotif,
   Notification,
   IconGlobe,
@@ -19,7 +21,7 @@ import {
   IconCross
 } from "../../../assets/images";
 const { Search } = Input;
-const { Header } = Layout; 
+const { Header } = Layout;
 
 type HeaderProps = {
   collapsed: boolean;
@@ -32,7 +34,7 @@ const items: MenuProps["items"] = [
     key: "1",
     label: "Profile",
     icon: <IconProfile />,
-    onClick: ()=>{
+    onClick: () => {
       window.location.href = "/profile";
     }
   },
@@ -75,6 +77,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const [mobileSearch, setMobileSearch] = useState(false);
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
+  const role = useRecoilValue(currentUserRoleState);
 
   const menuStyle = {
     boxShadow: "none",
@@ -82,7 +85,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -119,9 +122,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           {/* Collapseable */}
           <div className="ikd-header-collapsebale">
             <div
-              className={`ikd-collapseable-button ${
-                collapsed ? "show" : "hide"
-              }`}
+              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"}`}
               onClick={() => sidebarToggler()}
             >
               <div className="ikd-collapseable-button-toggle">
@@ -135,8 +136,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             </div>
           </div>
           {/* Collapseable Ends */}
-          
-          {constants.USER_ROLE === constants.INTERN &&
+
+          {role === constants.INTERN &&
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               <div className="organisation-logo">
@@ -147,9 +148,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
 
           {/* Global Search */}
           <div
-            className={`ikd-search-box ${
-              searchWidthToggle ? "expand" : "collapsed"
-            }`}
+            className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"}`}
           >
             <Search
               placeholder="Search anything..."
@@ -174,10 +173,12 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
         </div>
 
         <div className="ikd-header-right">
-          {(constants.USER_ROLE === constants.INTERN
-          || constants.USER_ROLE === constants.STUDENT
-          || constants.USER_ROLE === constants.MANAGER
-          || constants.USER_ROLE === constants.COMPANY_ADMIN) &&
+          {(
+            role === constants.INTERN ||
+            role === constants.STUDENT ||
+            role === constants.MANAGER ||
+            role === constants.COMPANY_ADMIN
+          ) &&
             <div className="ikd-header-message-notif">
               <div
                 className="message-notif-handler"
@@ -187,7 +188,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               </div>
             </div>
           }
-          
+
           <div className="ikd-header-notification">
             <div
               className="notification-handler"
@@ -212,7 +213,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                       <Typography.Title level={4}>
                         Maria Sanoid
                       </Typography.Title>
-                      <div className="user-meta-role">{constants.USER_ROLE}</div>
+                      <div className="user-meta-role">{role}</div>
                     </div>
                   </div>
                   {React.cloneElement(menu as React.ReactElement, {

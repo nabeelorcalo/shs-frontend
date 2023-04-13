@@ -20,6 +20,8 @@ import {
 } from "./mockData";
 import "../style.scss";
 import { gutter } from "..";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 
 const Manager = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -72,7 +74,7 @@ const Manager = () => {
           };
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const handleAddAnnouncement = () => {
@@ -82,7 +84,7 @@ const Manager = () => {
   useEffect(() => {
     loadMoreData();
   }, []);
-
+  const role = useRecoilValue(currentUserRoleState)
   return (
     <>
       <PageHeader
@@ -136,7 +138,7 @@ const Manager = () => {
             data={state.list}
             loading={state.loading}
             loadMoreData={loadMoreData}
-            role={constants?.USER_ROLE}
+            role={role}
             handleAddAnnouncement={handleAddAnnouncement}
             height={335}
           />
@@ -187,7 +189,7 @@ const Manager = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={()=>setIsShowModal(false)} />
+      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
     </>
   );
 };
