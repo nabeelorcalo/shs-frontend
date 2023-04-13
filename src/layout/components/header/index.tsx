@@ -2,7 +2,16 @@ import React, { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
-import { Layout, Input, Dropdown, Avatar, Drawer, List, MenuProps, Typography } from "antd";
+import {
+  Layout,
+  Input,
+  Dropdown,
+  Avatar,
+  Drawer,
+  List,
+  MenuProps,
+  Typography,
+} from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
@@ -18,7 +27,7 @@ import {
   IconGlobe,
   IconLogout,
   IconProfile,
-  IconCross
+  IconCross,
 } from "../../../assets/images";
 const { Search } = Input;
 const { Header } = Layout;
@@ -36,7 +45,7 @@ const items: MenuProps["items"] = [
     icon: <IconProfile />,
     onClick: () => {
       window.location.href = "/profile";
-    }
+    },
   },
   {
     key: "2",
@@ -48,8 +57,7 @@ const items: MenuProps["items"] = [
     label: "Logout",
     icon: <IconLogout />,
     onClick: (props) => {
-      localStorage.removeItem("UserData");
-      console.log("props", props);
+      localStorage.removeItem("accessToken");
       window.location.href = "/login";
     },
   },
@@ -79,14 +87,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
   const width = DrawerWidth();
-  
+
   const menuStyle = {
     boxShadow: "none",
   };
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -123,7 +131,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           {/* Collapseable */}
           <div className="ikd-header-collapsebale">
             <div
-              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"}`}
+              className={`ikd-collapseable-button ${
+                collapsed ? "show" : "hide"
+              }`}
               onClick={() => sidebarToggler()}
             >
               <div className="ikd-collapseable-button-toggle">
@@ -138,18 +148,20 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           </div>
           {/* Collapseable Ends */}
 
-          {role === constants.INTERN &&
+          {role === constants.INTERN && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               <div className="organisation-logo">
                 <img src={organizationLogo} />
               </div>
             </div>
-          }
+          )}
 
           {/* Global Search */}
           <div
-            className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"}`}
+            className={`ikd-search-box ${
+              searchWidthToggle ? "expand" : "collapsed"
+            }`}
           >
             <Search
               placeholder="Search anything..."
@@ -159,8 +171,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             />
           </div>
 
-          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`} >
-            <div className="mobile-searchbox-toggler" onClick={() => handleMobileSearch()} >
+          <div
+            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
+          >
+            <div
+              className="mobile-searchbox-toggler"
+              onClick={() => handleMobileSearch()}
+            >
               <IconSearchNormal />
             </div>
             <Search
@@ -174,12 +191,10 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
         </div>
 
         <div className="ikd-header-right">
-          {(
-            role === constants.INTERN ||
+          {(role === constants.INTERN ||
             role === constants.STUDENT ||
             role === constants.MANAGER ||
-            role === constants.COMPANY_ADMIN
-          ) &&
+            role === constants.COMPANY_ADMIN) && (
             <div className="ikd-header-message-notif">
               <div
                 className="message-notif-handler"
@@ -188,7 +203,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                 <MessageNotif />
               </div>
             </div>
-          }
+          )}
 
           <div className="ikd-header-notification">
             <div
