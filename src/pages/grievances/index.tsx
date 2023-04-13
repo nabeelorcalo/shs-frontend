@@ -10,9 +10,9 @@ const Grievances = () => {
   const role = useRecoilValue(currentUserRoleState);
 
   const rederWthRole: any = {
-    'CompanyAdmin': <CompanyAdmin />,
-    'Manager': <Manager />,
-    'Intern': <Intern />
+    'COMPANY_ADMIN': <CompanyAdmin />,
+    'COMPANY_MANAGER': <Manager />,
+    'INTERN': <Intern />
   }
   return (
     <>

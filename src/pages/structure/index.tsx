@@ -9,9 +9,9 @@ import constants from "../../config/constants";
 const index = () => {
   const role = useRecoilValue(currentUserRoleState);
   const renderWthRole: any = {
-    'CompanyAdmin': <Structure />,
-    'Manager': <ManagerStructure />,
-    'Intern': <InternStructure />,
+    'COMPANY_ADMIN': <Structure />,
+    'COMPANY_MANAGER': <ManagerStructure />,
+    'INTERN': <InternStructure />,
   }
   return (
     <>

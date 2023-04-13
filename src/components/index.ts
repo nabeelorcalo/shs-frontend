@@ -104,3 +104,4 @@ export * from './StageProgressStepper';
 export * from './Tabs';
 export * from './SignatureAndUploadModal';
 export * from './Graph/AreaMap';
+export * from './DrawerWidth';

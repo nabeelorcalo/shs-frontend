@@ -10,9 +10,9 @@ const DigiVault = () => {
     const role = useRecoilValue(currentUserRoleState);
 
     switch (role) {
-      case 'Intern':
+      case constants.INTERN:
         return <Intern />;
-      case 'Student':
+      case constants.STUDENT:
         return <Student />;
       default:
         return <></>;

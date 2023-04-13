@@ -10,7 +10,7 @@ const Student = () => {
   const [hide, setHide] = useState(true);
   return (
     <div className="student-dashboard-main">
-      <PageHeader title="Welcome, Maria Sanoid!" />
+      <PageHeader title={<span>Welcome, <span style={{color:"#E94E5D"}}>Maria Sanoid!</span></span>} />
       <Row gutter={[20,20]}>
         <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <ProfileCompletion

@@ -234,7 +234,7 @@ const Internships = () => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
+                      className="gap-2 white-bg-color teriary-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}
@@ -243,7 +243,7 @@ const Internships = () => {
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
+                      className="gap-2 teriary-bg-color white-color"
                       onClick={() => {
                         navigate("new-internship");
                       }}

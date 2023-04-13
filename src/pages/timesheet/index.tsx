@@ -8,9 +8,9 @@ import constants from '../../config/constants';
 const Index = () => {
   const role = useRecoilValue(currentUserRoleState);
   const renderRoleBasedTimeSheet: any = {
-    'CompanyAdmin': <CompanyAdmin />,
-    'Intern': <Intern />,
-    'Manager': <Manager />
+    'COMPANY_ADMIN': <CompanyAdmin />,
+    'INTERN': <Intern />,
+    'COMPANY_MANAGER': <Manager />
   }
 
   return (

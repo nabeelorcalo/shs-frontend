@@ -1,16 +1,5 @@
-import React, { useState } from "react";
-import {
-  AutoComplete,
-  Button,
-  Col,
-  Divider,
-  Form,
-  Input,
-  Row,
-  Select,
-  Space,
-  Typography,
-} from "antd";
+import { useState } from "react";
+import { AutoComplete, Button, Col, Divider, Form,  Input, Row,  Select, Space ,Typography} from "antd";
 import { Option } from "antd/es/mentions";
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -22,14 +11,14 @@ const GeneralInformation = () => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
+  // const prefixSelector = (
+  //   <Form.Item name="prefix" noStyle>
+  //     <Select style={{ width: 70 }}>
+  //       <Option value="86">+86</Option>
+  //       <Option value="87">+87</Option>
+  //     </Select>
+  //   </Form.Item>
+  // );
   return (
     <div className="general-information">
       <Form
@@ -152,17 +141,11 @@ const GeneralInformation = () => {
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Group compact>
-                <Select
-                  size="large"
-                  defaultValue="+92"
-                  style={{ width: "25%" }}
-                >
+                <Select defaultValue="+92"  style={{ width: "25%" }} >
                   <Option value="+44">+44</Option>
                   <Option value="+92">+92</Option>
                 </Select>
-                <AutoComplete
-                  size="large"
-                  style={{ width: "75%" }}
+                <AutoComplete  style={{ width: "75%" }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: "text 1" }, { value: "text 2" }]}
                 />
@@ -259,17 +242,11 @@ const GeneralInformation = () => {
               
             >
               <Input.Group compact>
-                <Select
-                  size="large"
-                  defaultValue="+92"
-                  style={{ width: "25%" }}
-                >
+                <Select  defaultValue="+92" style={{ width: "25%" }} >
                   <Option value="+44">+44</Option>
                   <Option value="+92">+92</Option>
                 </Select>
-                <AutoComplete
-                  size="large"
-                  style={{ width: "75%" }}
+                <AutoComplete  style={{ width: "75%" }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: "text 1" }, { value: "text 2" }]}
                 />
