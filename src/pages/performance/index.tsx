@@ -1,22 +1,24 @@
-import { useState } from "react";
 import Intern from "./intern";
 import CompanyAdmin from './CompanyAdmin';
 import ManagerPerformance from "./Manager";
-import constants from "../../config/constants";
 import "./style.scss";
 import UniversityPerformance from "./UniversityRep";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
+import constants from "../../config/constants";
 
 const Performance = () => {
-  
+  const userRole = useRecoilValue(currentUserRoleState);
+
   const renderPage = (role: string) => {
     switch (role) {
-      case 'Intern':
+      case constants.INTERN:
         return <Intern />;
-      case 'CompanyAdmin':
+      case constants.COMPANY_ADMIN:
         return <CompanyAdmin />;
-      case 'Manager':
+      case constants.MANAGER:
         return <ManagerPerformance />;
-        case 'University':
+        case constants.UNIVERSITY:
         return <UniversityPerformance />;
       default:
         return <></>;
@@ -24,7 +26,7 @@ const Performance = () => {
   }
 
   return (
-    renderPage(constants.USER_ROLE)
+    renderPage(userRole)
   )
 }
 

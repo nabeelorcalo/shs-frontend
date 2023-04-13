@@ -153,10 +153,10 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     );
 
   //agent dashboard
-  totalListings &&
+  (totalListings || totalListings === 0) &&
     handleCardList(<ListingIcon />, "Total Listings", totalListings, blueBg);
 
-  occupiedProperties &&
+  (occupiedProperties || occupiedProperties === 0) &&
     handleCardList(
       <PropertiesIcon />,
       "Occupied Properties",
@@ -164,7 +164,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
       redBg
     );
 
-  reservedProperties &&
+  (reservedProperties || reservedProperties === 0) &&
     handleCardList(
       <ReservedProperties />,
       "Reserved Properties",
@@ -172,7 +172,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
       yellowBg
     );
 
-  vacantProperties &&
+  (vacantProperties || vacantProperties === 0) &&
     handleCardList(
       <VacantProperties />,
       "Vacant Propertiess",
@@ -185,7 +185,12 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     handleCardList(<IconTotalMember />, "Total Members", totalMembers, blueBg);
 
   activeMembers &&
-    handleCardList(<IconActiveMember />, "Active Members", activeMembers, blueBg);
+    handleCardList(
+      <IconActiveMember />,
+      "Active Members",
+      activeMembers,
+      blueBg
+    );
 
   inActiveMembers &&
     handleCardList(

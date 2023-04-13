@@ -13,13 +13,13 @@ const Setting = (props: any) => {
     <div className="setting">
      <Breadcrumb breadCrumbData={breadcrumbArray}  />
       <Divider />
-      <Row gutter={16} className="mt-5">
-        <Col xs={4} sm={3} md={9} lg={6} className="setting-sidebar flex flex-col">
+      <Row gutter={[20,20]} className="mt-5 settings-row">
+        <Col xs={24} sm={10} md={10} lg={6} xxl={6} className="setting-sidebar flex flex-col">
           <div className="rounded-lg ">
             <SettingSidebar />
           </div>
         </Col>
-        <Col xs={20} sm={21} md={15} lg={18}>
+        <Col xs={24} sm={14} md={14} lg={18} xxl={18}>
           {props.children}
           <Outlet />
         </Col>
