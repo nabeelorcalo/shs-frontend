@@ -5,7 +5,7 @@ import { currentUserRoleState } from "../../../store";
 import { Layout, Input, Dropdown, Avatar, Drawer, List, MenuProps, Typography } from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
-import { ExtendedButton } from "../../../components";
+import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants from "../../../config/constants";
 import "./style.scss";
 import {
@@ -78,7 +78,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
-
+  const width = DrawerWidth();
+  
   const menuStyle = {
     boxShadow: "none",
   };
@@ -240,7 +241,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
         onClose={closeNotificationDrawer}
         open={openNotificationDrawer}
         closable={false}
-        width={380}
+        width={width > 768 ? 380: 280}
         className="notifications-drawer"
       >
         <List

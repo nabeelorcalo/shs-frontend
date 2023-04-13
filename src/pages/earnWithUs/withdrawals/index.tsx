@@ -1,14 +1,5 @@
-import React, { useState, useEffect } from "react"
-import { 
-  Form, 
-  Input, 
-  Button, 
-  Select, 
-  Row, 
-  Col, 
-  Space, 
-  Typography
-} from 'antd'
+import { useState, useEffect } from "react"
+import {Form,Input,Button,Select,Row,Col,Space,Typography} from 'antd'
 import { 
   IconAngleDown, 
   IconBank, 
@@ -211,42 +202,42 @@ const Withdrawals = () => {
               <div className="account-list-header-title">Banks</div>
             </div>
             <ul className="account-list">
-              <li>
-                <div className="account-list-item-left">
+              <li className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
+                <div className="flex sm:items-center sm:flex-row flex-col gap-4">
                   <div className="account-item-icon"><IconBank /></div>
                   <div className="account-item-content">
-                    <div className="bank-name">Natwest Group</div>
-                    <div className="account-title">Checking*******4512</div>
+                    <div className="bank-name text-primary-color">Natwest Group</div>
+                    <div className="account-title text-primary-color">Checking*******4512</div>
                   </div>
                 </div>
                 <div className="account-list-item-right">
-                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount /></div>
+                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount className="cursor-pointer" /></div>
                 </div>
               </li>
 
-              <li>
-                <div className="account-list-item-left">
+              <li className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
+                <div className="flex sm:items-center sm:flex-row flex-col gap-4">
                   <div className="account-item-icon"><IconBank /></div>
                   <div className="account-item-content">
-                    <div className="bank-name">UBLBANK, NATIONAL ASSOCIATION</div>
-                    <div className="account-title">Saving*******5622</div>
+                    <div className="bank-name text-primary-color">UBLBANK, NATIONAL ASSOCIATION</div>
+                    <div className="account-title text-primary-color">Saving*******5622</div>
                   </div>
                 </div>
                 <div className="account-list-item-right">
-                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount /></div>
+                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount className="cursor-pointer"/></div>
                 </div>
               </li>
 
-              <li>
-                <div className="account-list-item-left">
+              <li className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
+                <div className="flex sm:items-center sm:flex-row flex-col gap-4">
                   <div className="account-item-icon"><IconBank /></div>
                   <div className="account-item-content">
-                    <div className="bank-name">HBLBANK, NATIONAL ASSOCIATION</div>
-                    <div className="account-title">Checking*******8633</div>
+                    <div className="bank-name text-primary-color">HBLBANK, NATIONAL ASSOCIATION</div>
+                    <div className="account-title text-primary-color">Checking*******8633</div>
                   </div>
                 </div>
                 <div className="account-list-item-right">
-                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount /></div>
+                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount className="cursor-pointer"/></div>
                 </div>
               </li>
             </ul>
