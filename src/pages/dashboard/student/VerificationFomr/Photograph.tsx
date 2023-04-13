@@ -1,6 +1,6 @@
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
 import { BackButton, UploadUserProfile } from "../../../../assets/images";
-
+import "./verifications.scss"
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const normFile = (e: any) => {
@@ -51,9 +51,9 @@ const Photograph = (props: any) => {
                 </Upload>
               </Form.Item>
               <div className="text-center my-5">
-              <Typography style={{ fontSize: "24px",  fontWeight: 600,  fontFamily: "Outfit", color: "#14142A" }} >
+              <p className="font-semibold text-2xl text-primary-color">
                 A photo of you
-              </Typography>
+              </p>
               <Typography className="steps-description">
                 Take a minute to upload a profile photo.
               </Typography>
