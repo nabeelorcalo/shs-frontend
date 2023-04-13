@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {AccommodationCard} from '../../../components'
+import {Empty, Spin} from 'antd'
+import { useRecoilState } from "recoil";
+import { rentedPropertiesState } from "../../../store";
+import useRentedPropertiesHook from "./actionHandler";
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import thumb2 from '../../../assets/images/gallery/thumb2.png'
@@ -20,8 +24,9 @@ const RentedProperties = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const location = useLocation()
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const {getRentedProperties} = useRentedPropertiesHook();
+  const [savedProperties, setsavedProperties] = useRecoilState(rentedPropertiesState)
+  const [loading, setLoading] = useState(false)
 
 
 
@@ -30,6 +35,24 @@ const RentedProperties = () => {
   useEffect(() => {
 
   }, [])
+
+
+    /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const propertiesData = async () => {
+    setLoading(true)
+    try {
+      const response = await getRentedProperties();
+      if(!response.error) {
+        const {data} = response
+        setsavedProperties(data)
+      }
+    } catch (errorInfo) {
+      return;
+    } finally {
+      setLoading(false)
+    }
+  }
 
 
 
