@@ -5,13 +5,36 @@ import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import constants from "../../../../config/constants";
+import useCustomHook from '../../actionHandler';
 
 const SignupForm = ({ signupRole }: any) => {
+
+  const action = useCustomHook();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
+    const body = {
+      "email": values.Email,
+      "firstName": values.firstName,
+      "lastName": values.lastName,
+      "phoneNumber": values.phone,
+      "password": values.password,
+      "referenceNo": values.reference,
+      "gender": values.gender,
+      "address": values.address,
+      "DOB": values.DOB,
+      "country": values.country,
+      "universityId": values.universityId,
+      "role": signupRole,
+      "stripeCustomerId": "56494898496874"
+    }
+
+    action.signup(body)
+
+
+
     // navigate('/verification-steps');
-    navigate("/company-admin-verification");
+    // navigate("/company-admin-verification");
   };
 
   const { Option } = Select;
@@ -56,7 +79,7 @@ const SignupForm = ({ signupRole }: any) => {
         </Row>
 
         <Form.Item
-          label={ signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
+          label={signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
           name="Email"
           rules={[{ required: true }, { type: "email" }]}
         >
@@ -93,9 +116,9 @@ const SignupForm = ({ signupRole }: any) => {
             </Col>
           </Row>
         )}
-         {[constants.DELEGATE_AGENT,constants.AGENT].includes(signupRole) && (
+        {[constants.DELEGATE_AGENT, constants.AGENT].includes(signupRole) && (
           <Row gutter={20}>
-          
+
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
               <Form.Item
                 label="Date of Birth"
@@ -141,7 +164,7 @@ const SignupForm = ({ signupRole }: any) => {
         <Form.Item
           name="phone"
           label="Phone Number"
-          // rules={[{ required: false }, { type: "number" }]}
+        // rules={[{ required: false }, { type: "number" }]}
         >
           <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
         </Form.Item>

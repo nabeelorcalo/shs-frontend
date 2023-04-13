@@ -22,15 +22,11 @@ function App() {
   /* HOOKS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    // if (
-    //   !userData.token &&
-    //   !pathname.includes("signup") &&
-    //   !pathname.includes("forget-password") &&
-    //   !pathname.includes("reset-password")
-    // ) {
-    //   navigate("/login");
-    //
-    // }
+    console.log(pathname);
+
+    if (accessToken && pathname === '/login') {
+      navigate("/dashboard");
+    }
   }, [pathname]);
 
   /* EVENT FUNCTIONS
@@ -44,8 +40,8 @@ function App() {
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           {accessToken
             ? useRoutes(
-                getRoutes(currentUser.role).concat(getRoutes(constants.PUBLIC))
-              )
+              getRoutes(currentUser.role).concat(getRoutes(constants.PUBLIC))
+            )
             : useRoutes(getRoutes(constants.PUBLIC))}
         </ErrorBoundary>
       </ConfigProvider>
