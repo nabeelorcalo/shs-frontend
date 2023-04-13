@@ -4,8 +4,14 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import { PopUpModal } from "../../../../components";
+import SelectUserType from "../../userType";
 
 const SigninForm = (props: any) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
   const navigate = useNavigate();
   const action = useCustomHook();
 
@@ -106,16 +112,20 @@ const SigninForm = (props: any) => {
             </Button>
           </Form.Item>
           <div>
-            <Typography className="text-center">
+            <Typography className="text-center " onClick={showModal}>
               Don’t have an account?
-              <a href="/signup" className="a-tag-signup">
-                Sign up
-              </a>
+             
+                <span className='a-tag-signup cursor-pointer'>Sign up</span>
+              
             </Typography>
           </div>
         </Form>
       </div>
-      {/* <PopUpModal open/> */}
+      <SelectUserType
+        showModal={showModal}
+        isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };

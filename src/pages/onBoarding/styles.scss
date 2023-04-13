@@ -39,7 +39,11 @@
   .login-form-forgot {
     color: $primary-bg-color;
   }
+ 
 }
+
+  
+
 
 .verfiction-link {
   .verfiction-link-style {
@@ -264,3 +268,59 @@
     width: 100%;
   }
 }
+
+.select-user-heading{
+  font-weight: 500;
+font-size: 38px;
+line-height: 46px;
+text-align: center;
+color: #363565
+}
+.images-wrapper{
+  
+  padding-top: 5rem;
+  
+  
+}
+
+.select-user-label{
+  font-weight: 500;
+font-size: 20px;
+line-height: 28px;
+text-align: center;
+color: #14142A;
+padding-top: 2rem;
+
+}
+.select-user-continue{
+  background: #363565;
+box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.043);
+border-radius: 8px;
+font-weight: 600;
+font-size: 16px;
+line-height: 22px;
+text-align: center;
+color: #FFFFFF;
+width: 50%;
+}
+.image-wrapper-box{
+  background: #FFFFFF;
+box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+border-radius: 16px;
+padding: 3rem;
+padding-left: 6rem;
+padding-right: 6rem;
+position: relative;
+}
+.active{
+  border: 1px solid #363565;
+}
+.icon-check{
+position: absolute;
+top: -8%;
+left: 42%;
+background-color: white;
+
+}
+
+

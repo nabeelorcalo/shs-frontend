@@ -57,6 +57,9 @@ export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
 export { ReactComponent as DocumentUploadIcon } from "./login/document-upload.svg";
 export { ReactComponent as DeleteIcon } from './profile/student/delete.svg';
 export { ReactComponent as UploadIcon } from './profile/student/Upload.svg';
+export { ReactComponent as DegreeCap } from './login/unicap.svg';
+export { ReactComponent as OfficeBag } from './login/unibag.svg';
+export { ReactComponent as Home } from './login/work.svg';
 
 // Footer Icons
 export { ReactComponent as Round } from "./login/round.svg";
