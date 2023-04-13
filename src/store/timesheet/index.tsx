@@ -1,14 +1,8 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
 const timeSheetAtom = atom({
     key: 'timeSheet',
-    default: ''
-})
-const timeSheetSelector = selector({
-    key: 'timeSheetSelector',
-    get: ({ get }) => { }
+    default: { data: '', message: '' }
 })
 
-
-
-export { timeSheetAtom, timeSheetSelector }
+export { timeSheetAtom }
