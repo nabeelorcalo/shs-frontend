@@ -3,6 +3,7 @@ import { SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import "./style.scss";
+import { useNavigate } from "react-router-dom";
 
 const contractReceived = [
   {
@@ -10,12 +11,14 @@ const contractReceived = [
     img: Recevied,
     title: "Contract",
     subTitle: "From PowerSource",
+    path: "/received",
   },
   {
     id: "2",
     img: Recevied,
     title: "Contract",
     subTitle: "From PowerSource",
+    path: "/received",
   },
 ];
 
@@ -25,12 +28,15 @@ const contractReject = [
     img: Rejected,
     title: "Contract",
     subTitle: "From PowerSource",
+    path: "/rejected",
+
   },
   {
     id: "2",
     img: Rejected,
     title: "Contract",
     subTitle: "From PowerSource",
+    path: "/rejected",
   },
 ];
 
@@ -40,6 +46,8 @@ const contractSigned = [
     img: Signed,
     title: "Contract",
     subTitle: "From PowerSource",
+    path: "/signed",
+
   },
 ];
 
@@ -47,6 +55,8 @@ const ContractsStudent = () => {
   const handleChange = () => {
     console.log("clicks");
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="contract-student">
@@ -59,7 +69,7 @@ const ContractsStudent = () => {
         <Divider />
 
         <Col className="mb-6" xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={handleChange} />
+          <SearchBar handleChange={handleChange} />
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -76,6 +86,7 @@ const ContractsStudent = () => {
                       img={item.img}
                       title={item.title}
                       description={item.subTitle}
+                      onClick={() => navigate(item.path)}
                     />
                   </div>
                 );
@@ -93,6 +104,7 @@ const ContractsStudent = () => {
                     img={item.img}
                     title={item.title}
                     description={item.subTitle}
+                    onClick={() => navigate(item.path)}
                   />
                 );
               })}
@@ -109,6 +121,7 @@ const ContractsStudent = () => {
                     img={item.img}
                     title={item.title}
                     description={item.subTitle}
+                    onClick={() => navigate(item.path)}
                   />
                 );
               })}

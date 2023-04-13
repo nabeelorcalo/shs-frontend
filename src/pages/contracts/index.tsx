@@ -8,7 +8,6 @@ import "./style.scss";
 const Contracts = () => {
   const renderPage = () => {
     const role = useRecoilValue(currentUserRoleState);
-
     switch (role) {
       case constants.COMPANY_ADMIN:
         return <CompanyAdmin />;

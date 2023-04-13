@@ -7,14 +7,9 @@ import {
   Select,
   Typography,
 } from "antd";
-// import {
-//   BackButton,
-//   DocumentUpload,
-//   SHSLogo,
-// } from "../../../../../assets/images";
-// import "../../../styles.scss";
-import DragAndDropUpload from "../../../../components/DragAndDropUpload";
-import { DocumentUpload } from "../../../../assets/images";
+
+import { BackButton, DocumentUpload } from "../../../../assets/images";
+import { Link } from "react-router-dom";
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -24,18 +19,15 @@ const DbsVerification = (props: any) => {
     <div className="identity">
       <Row className="identity-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
-          {/* <div className="logo-wrapper">
-            <SHSLogo />
-          </div> */}
           <div className="form-wrapper">
             <div className="main-title-wrapper">
          
-              <div className="flex items-center mt-3 mb-3">
-                {/* <div>
+              <div className="flex">
+                <div>
                   <BackButton />
-                </div> */}
+                </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>
+                  <Typography.Title level={1}>
                     DBS Verification
                   </Typography.Title>
                 </div>
@@ -84,31 +76,24 @@ const DbsVerification = (props: any) => {
                 </div>
               </Form.Item>
               <Typography style={{ marginBottom: "20px" }}>
-                or <a href="">Apply Now</a>
+                or <Link to="">Apply Now</Link>
               </Typography>
               <Typography style={{ marginBottom: "20px" }}>
                 You must be 16 or over to apply. It usually takes up to 14 days
                 to receive your certificate.
               </Typography>
               <Row gutter={[10,10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
+                <Col xs={24} md={24} lg={12} xl={8}>
+                  <Button  className="btn-cancel btn-cancel-verification" >
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
                     <Button
-                      onClick={() => {
-                        setCurrentStep(3);
-                      }}
+                      onClick={() => { setCurrentStep(3) }}
                       type="primary"
-                      //htmlType="submit"
-                      className="login-form-button"
-                    >
+                      className="login-form-button" >
                       Next
                     </Button>
                   </Form.Item>
