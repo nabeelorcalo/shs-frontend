@@ -13,7 +13,7 @@ import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
 import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, Menu, MenuProps } from 'antd';
+import { Avatar, Button, Menu, MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
@@ -100,10 +100,10 @@ const Payroll = () => {
       {
         key: index,
         no: payrollData?.length < 10 && `0 ${index + 1}`,
-        // // avatar:
-        // //   <Avatar
-        // //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        // //   />,
+        avatar:
+          <Avatar
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+          />,
         name: item.name,
         // department: item.department,
         joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
@@ -229,17 +229,17 @@ const Payroll = () => {
                 payrollData.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
-                  return (
-                    <AttendanceCardDetail
-                      key={index}
-                      index={1}
-                      item={{
-                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-                        id: 1,
-                        name: items?.name,
-                        profession: 'Data Researcher',
-                      }}
-                      payrollCycle={`${monthFrom} - ${monthTo}`}
+                  return ( 
+                    <AttendanceCardDetail 
+                      key={index} 
+                      index={1} 
+                      item={{ 
+                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/ pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png', 
+                        id: 1, 
+                        name: items?.name, 
+                        profession: 'Data Researcher', 
+                      }} 
+                      payrollCycle={`${monthFrom} - ${monthTo}`} 
                       menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
                     />
                   )
