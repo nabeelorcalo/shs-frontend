@@ -1,10 +1,6 @@
-import React from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
-import { UploadUserProfile } from "../../../../assets/images";
-// import { SHSLogo, BackButton ,  UploadUserProfile,} from "../../../../../assets/images";
-// import "../../../styles.scss";
-
-
+import { BackButton, UploadUserProfile } from "../../../../assets/images";
+import "./verifications.scss"
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const normFile = (e: any) => {
@@ -18,18 +14,15 @@ const Photograph = (props: any) => {
     <div className="university-detail">
       <Row className="university-detail-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
-          {/* <div className="logo-wrapper">
-            <SHSLogo />
-          </div> */}
           <div className="form-wrapper">
             <div className="main-title-wrapper">
          
-              <div className="flex items-center mt-3 mb-3">
-                {/* <div>
+              <div className="flex ">
+                <div>
                   <BackButton />
-                </div> */}
+                </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>Photograph</Typography.Title>
+                  <Typography.Title level={1}>Photograph</Typography.Title>
                 </div>
               </div>
 
@@ -45,21 +38,7 @@ const Photograph = (props: any) => {
               </Typography>
             </div>
 
-            <div className="text-center">
-              <Typography
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  fontFamily: "Outfit",
-                  color: "#14142A",
-                }}
-              >
-                A photo of you
-              </Typography>
-              <Typography className="steps-description">
-                Take a minute to upload a profile photo.
-              </Typography>
-            </div>
+
             <div className="sign-up-form-wrapper">
               <Form.Item
                 name="upload"
@@ -71,27 +50,24 @@ const Photograph = (props: any) => {
                   <UploadUserProfile />
                 </Upload>
               </Form.Item>
+              <div className="text-center my-5">
+              <p className="font-semibold text-2xl text-primary-color">
+                A photo of you
+              </p>
+              <Typography className="steps-description">
+                Take a minute to upload a profile photo.
+              </Typography>
+            </div>
               <Row gutter={[10,10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
+                <Col xs={24} md={24} lg={12} xl={8}>
+                  <Button className="btn-cancel btn-cancel-verification" >
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
-                    <Button
-                      type="primary"
-                      //htmlType="submit"
-                      className="login-form-button"
-                      onClick={() => {
-                        setCurrentStep(7);
-                      }}
-                    >
-                      Next
-                    </Button>
+                    <Button   type="primary"  className="login-form-button"
+                      onClick={() => { setCurrentStep(7) }} > Next </Button>
                   </Form.Item>
                 </Col>
               </Row>

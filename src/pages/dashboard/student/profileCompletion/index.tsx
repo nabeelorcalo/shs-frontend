@@ -27,7 +27,7 @@ const ProfileCompletion = (props:any) => {
     return (
         <div className='profile-completion'>
             <div className='card-style'>
-                <Typography className='main-title'>Profile Completion</Typography>
+                <Typography className='main-title '>Profile Completion</Typography>
                 <Typography className='percent'>{completionPercent}%</Typography>
                 <Typography className='main-title pt-4'>of your profile is complete</Typography>
                 <div className='pt-2 pb-2'>

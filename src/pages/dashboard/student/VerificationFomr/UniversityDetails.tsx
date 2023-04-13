@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   DatePicker,
@@ -7,14 +7,11 @@ import {
   Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
-// import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
-// import { BackButton } from "../../../../../assets/images";
 import type { SelectProps } from "antd";
 import { DropDown } from "../../../../components";
-import { DocumentUpload } from "../../../../assets/images";
+import { BackButton, DocumentUpload } from "../../../../assets/images";
 // import "../../../styles.scss";
 
 
@@ -31,17 +28,14 @@ const UniversityDetails = (props: any) => {
     <div className="university-detail">
       <Row className="university-detail-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
-          {/* <div className="logo-wrapper">
-           <SHSLogo/>
-          </div> */}
           <div className="form-wrapper">
             <div className="main-title-wrapper">
-              <div className="flex items-center mt-3 mb-3">
-                {/* <div>
+              <div className="flex">
+                <div>
                   <BackButton />
-                </div> */}
+                </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>
+                  <Typography.Title level={1}>
                     Univerisity Details
                   </Typography.Title>
                 </div>
@@ -159,30 +153,23 @@ const UniversityDetails = (props: any) => {
                       xs={12}
                       className="flex justify-end"
                     >
-                      <DocumentUpload/>
+                      <DocumentUpload />
                     </Col>
                   </Row>
                 </div>
               </Form.Item>
-              <Row gutter={[10,10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
+              <Row gutter={[10, 10]}>
+                <Col xs={24} md={24} lg={12} xl={8}>
+                  <Button className="btn-cancel btn-cancel-verification" >
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
                     <Button
-                      onClick={() => {
-                        setCurrentStep(4);
-                      }}
+                      onClick={() => { setCurrentStep(4) }}
                       type="primary"
-                      //htmlType="submit"
-                      className="login-form-button"
-                    >
+                      className="login-form-button">
                       Next
                     </Button>
                   </Form.Item>
