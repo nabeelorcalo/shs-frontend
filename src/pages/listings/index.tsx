@@ -8,7 +8,7 @@ import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
 import { listingsState, listingLoadingState } from "../../store";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import dayjs from 'dayjs'
 import showNotification from '../../helpers/showNotification'
 import constants from '../../config/constants'
@@ -114,7 +114,8 @@ const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const listingsActions = useListingsHook()
-  const propertyData = useRecoilValue(listingsState)
+  const [allProperties, setAllProperties] = useRecoilState(listingsState)
+  const [loadingAllProperties, setLoadingAllProperties] = useState(false)
   const loading = useRecoilValue(listingLoadingState)
   const [form] = Form.useForm()
   const navigate = useNavigate()
@@ -211,11 +212,52 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    listingsActions.fetchListings()
-    console.log("listingValues:::", listingValues)
+    propertiesData()
   }, [])
 
-  
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const propertiesData = async () => {
+    setLoadingAllProperties(true)
+    try {
+      const response = await listingsActions.getListings();
+      if(!response.error) {
+        const {data} = response.response
+        setAllProperties(data)
+      }
+    } catch (errorInfo) {
+      return;
+    } finally {
+      setLoadingAllProperties(false)
+    }
+  }
+
+  const handleSubmission = useCallback(
+    (result:any) => {
+      if (result.error) {
+        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+      } else {
+        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+        setListingValues(listingInitValues)
+      }
+    },
+    [form]
+  );
+
+  const submitAddListing = useCallback(async () => {
+    let values;
+    try {
+      values = await form.validateFields();
+    } catch (errorInfo) {
+      return;
+    }
+    // setAddListingLoading(true);
+    const result = await listingsActions.createListing(listingValues);
+    // setAddListingLoading(false);
+    handleSubmission(JSON.stringify(result));
+  }, [form, handleSubmission]);
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -249,31 +291,6 @@ const Listings = () => {
     }
     return e?.fileList;
   };
-
-  const handleSubmission = useCallback(
-    (result:any) => {
-      if (result.error) {
-        showNotification("error", constants.NOTIFICATION_DETAILS.error);
-      } else {
-        showNotification("success", constants.NOTIFICATION_DETAILS.success);
-        setListingValues(listingInitValues)
-      }
-    },
-    [form]
-  );
-
-  const submitAddListing = useCallback(async () => {
-    let values;
-    try {
-      values = await form.validateFields();
-    } catch (errorInfo) {
-      return;
-    }
-    // setAddListingLoading(true);
-    const result = await listingsActions.createListing(listingValues);
-    // setAddListingLoading(false);
-    handleSubmission(JSON.stringify(result));
-  }, [form, handleSubmission]);
 
 
 
@@ -1102,9 +1119,9 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
-                    loading={loading}
+                    loading={loadingAllProperties}
                     columns={tableColumns}
-                    dataSource={propertyData}
+                    dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
                   />
                 </div>
@@ -1132,15 +1149,15 @@ const Listings = () => {
           layout="vertical"
           name="addListing"
           initialValues={listingValues}
-          // onValuesChange={(_, values) => {
-          //   let tempValues = {}
-          //   tempValues = {
-          //     ...tempValues,
-          //     ...values
-          //   }
-          //   setListingValues(prevState => ({ ...prevState, ...tempValues }))
-          //   console.log('init:: ', listingValues)
-          // }}
+          onValuesChange={(_, values) => {
+            let tempValues = {}
+            tempValues = {
+              ...tempValues,
+              ...values
+            }
+            setListingValues(prevState => ({ ...prevState, ...tempValues }))
+            console.log('init:: ', listingValues)
+          }}
           onFinish={submitAddListing}
         >
           <div className="modal-add-listing-body">

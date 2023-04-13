@@ -1,17 +1,20 @@
 /// <reference path="../../../../jspdf.d.ts" />
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import api from "../../../api";
 import csv from '../../../helpers/csv';
-import svg from '../../../assets/images/avatar1.png';
-import constants from "../../../config/constants";
+import api from "../../../api";
+import endpoints from "../../../config/apiEndpoints";
 
-const useAvailableProperties = () => {
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+const useAvailablePropertiesHook = () => {
+
+  const { GET_AVAILABLE_PROPERTIES } = endpoints;
+
+  // Get Available Properties
+  const getAvailableProperties = async () => {
+    return await api.get(`${GET_AVAILABLE_PROPERTIES}`);
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -83,10 +86,10 @@ const useAvailableProperties = () => {
   };
 
   return {
-    getData,
+    getAvailableProperties,
     downloadPdfOrCsv,
     pdf
   };
 };
 
-export default useAvailableProperties;
+export default useAvailablePropertiesHook;
