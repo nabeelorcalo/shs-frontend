@@ -1,9 +1,12 @@
 import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
 import { useState } from "react";
-import { IconAngleDown, NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
-  GreenErrow, GreenEye, GreenLock, RedLock} from "../../../assets/images";
+import {
+  IconAngleDown, NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
+  GreenErrow, GreenEye, GreenLock, RedLock
+} from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { useNavigate } from "react-router-dom";
 
 const tableData = [
   {
@@ -68,7 +71,26 @@ const ContractsCard = [
 ]
 
 const CompanyAdmin = () => {
+  const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState(false);
+
+  const renderDropdown = (status: any) => {
+    switch (status) {
+      case 'rejected':
+        return <CustomDroupDown menu1={rejected} />
+        break;
+      case 'pending':
+        return <CustomDroupDown menu1={pending} />
+        break;
+      case 'Changes requested':
+        return <CustomDroupDown menu1={ChangesRequested} />
+        break;
+      case 'Signed':
+        return <CustomDroupDown menu1={signed} />
+        break;
+
+    }
+  }
 
   const tableColumns = [
     {
@@ -180,7 +202,9 @@ const CompanyAdmin = () => {
       render: (_: any, row: any, index: any) => {
         return (
           <div>
-            <CustomDroupDown menu1={menu2} />
+            {
+              renderDropdown(row.status)
+            }
           </div>
 
         );
@@ -188,10 +212,46 @@ const CompanyAdmin = () => {
     },
   ];
 
-  const menu2 = (
+  const signed = (
     <Menu>
-      <Menu.Item key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate("/signed-company-admin")} key="1">View Details</Menu.Item>
+    </Menu>
+  );
+
+  const ChangesRequested = (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/edit-contract")} key="1">Edit</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+
+  const pending = (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/pending-view-details")} key="1">View Details</Menu.Item>
+      <Menu.Item key="2">Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate("/edit-contract")} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+
+  const rejected = (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/rejected-company-admin")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate("/edit-contract")} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
