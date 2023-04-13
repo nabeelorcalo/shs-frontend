@@ -191,6 +191,7 @@ const CompanyAdmin = () => {
                 casualLeaves={["", "", ""]}
                 medicalLeaves={[""]}
                 workFromHome=""
+                date="10 Nov, 2023"
                 user={Constants?.COMPANY_ADMIN}
               />
             </Col>
