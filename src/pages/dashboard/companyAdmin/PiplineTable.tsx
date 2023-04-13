@@ -155,7 +155,7 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
         <Row className="gap-5" align="middle">
           <p className="text-[20px] leading-[28px] text-secondary-color font-medium">Pipeline</p>
           <Select
-            className="min-w-[170px] text-input-bg-color rounded-xl"
+            className="min-w-[170px] text-input-bg-color rounded-xl pipline-select text-input-bg-color"
             size="small"
             placeholder="Select"
             style={{ width: 120 }}

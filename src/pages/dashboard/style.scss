@@ -1,0 +1,6 @@
+@import "../../scss//colors";
+.pipline-select {
+  .ant-select-selector {
+    background-color: $text-input-bg-color !important ;
+  }
+}
