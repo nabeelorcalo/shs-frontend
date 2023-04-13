@@ -32,6 +32,20 @@ import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
 import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
+import Received from "./pages/contracts/student/received";
+import Rejected from "./pages/contracts/student/rejected";
+import Signed from "./pages/contracts/student/signed";
+import ReceivedOfferLetter from "./pages/offerLetters/student/received";
+import RejectedOfferLetter from "./pages/offerLetters/student/rejected";
+import SignedOfferLetter from "./pages/offerLetters/student/signed";
+import RejectedCompany from "./pages/contracts/CompanyAdmin/rejected";
+import SignedCompany from "./pages/contracts/CompanyAdmin/signed";
+import EditContract from "./pages/contracts/CompanyAdmin/editContract";
+import PendingViewDetail from "./pages/contracts/CompanyAdmin/pendingViewDetail";
+import EditOfferLetter from "./pages/offerLetters/CompanyAdmin/editContract";
+import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
+import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
+import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 // Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -276,7 +290,7 @@ const UniversitesProfile = Loadable(
 );
 
 export const publicRoutes = [
- 
+
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
@@ -554,7 +568,7 @@ const delegateAgentRoutes = [
         path: `link-account`,
         element: <LinkAccount />,
       },
-      
+
       {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
@@ -1063,6 +1077,52 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        element: <RejectedCompany />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        element: <SignedCompany />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EDIT_CONTRACT}`,
+        path: `${ROUTES_CONSTANTS.EDIT_CONTRACT}`,
+        element: <EditContract />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        path: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        element: <PendingViewDetail />,
+      },
+
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_OFFER_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_OFFER_CompanyAdmin}`,
+        element: <ReceivedOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_OFFER_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_OFFER_CompanyAdmin}`,
+        element: <RejectedOfferLetterCompany />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_OFFER_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_OFFER_CompanyAdmin}`,
+        element: <SignedOfferLetterCompanyAdmin />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
+        path: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
+        element: <EditOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
+        path: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
+        element: <PendingViewDetailOfferLetter />,
+      },
     ],
   },
   {
@@ -1412,6 +1472,36 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.CHAT}`,
         path: `${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED}`,
+        element: <Received />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED}`,
+        path: `${ROUTES_CONSTANTS.REJECTED}`,
+        element: <Rejected />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED}`,
+        path: `${ROUTES_CONSTANTS.SIGNED}`,
+        element: <Signed />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_OFFER}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_OFFER}`,
+        element: <ReceivedOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_OFFER}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_OFFER}`,
+        element: <RejectedOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_OFFER}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_OFFER}`,
+        element: <SignedOfferLetter />,
       },
     ],
   },

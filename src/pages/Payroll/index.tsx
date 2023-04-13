@@ -16,6 +16,7 @@ import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
 import { Button, Menu, MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
+import dayjs from "dayjs";
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -35,29 +36,24 @@ const PopOver = () => {
     }
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']}>
       <More />
     </Dropdown>
   );
 };
 
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7]
 const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator",]
 const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"]
 const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
 
 const Payroll = () => {
   const navigate = useNavigate()
-  const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
-  const [listandgrid, setListandgrid] = useState(false)
-  const [payRollData, setPayrollData] = useState([]);
+  const [isToggle, setIsToggle] = useState(false)
 
-  const action = useCustomHook()
-  useEffect(() => {
-    action.getData().then((res: any) => setPayrollData(res.data)).catch((err) => console.log(err))
-  }, [])
+  const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
+  
+
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
   const columns = [
@@ -97,96 +93,26 @@ const Payroll = () => {
       title: "Actions",
     },
   ];
-  // const tableData = [
-  //   {
-  //     no: "01",
-  //     name: "Mino Marina",
-  //     department: "Business Analyst",
-  //     joining_date: "01/07/2022",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Johns",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "03",
-  //     name: "Joseph Gonzalex",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Johns",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "03",
-  //     name: "Joseph Gonzalex",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Johns",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     payroll_cycle: "Jan-July",
-  //   },
-  // ];
-  // const DownloadPopOver = () => {
-  //   const navigate = useNavigate()
-  //   const items: MenuProps['items'] = [
-  //     {
-  //       key: '1',
-  //       label: (
-  //         <a rel="noopener noreferrer" onClick={() => { }}>
-  //           PDF
-  //         </a>
-  //       ),
-  //     },
-  //     {
-  //       key: '2',
-  //       label: (
-  //         <a rel="noopener noreferrer" onClick={() => { }}>
-  //           Excel
-  //         </a>
-  //       ),
-  //     },
-  //   ];
-  //   return (
-  //     <Dropdown menu={{ items }} placement="bottomRight">
-  //       <DownloadDocumentIcon />
-  //     </Dropdown>
-  //   )
-  // }
-  const newTableData = payRollData?.map((item, idx) => {
+  const newTableData = payrollData?.map((item: any, index: number) => {
+    const monthFrom = dayjs(item.from).format("MMM");
+    const monthTo = dayjs(item.to).format("MMM");
     return (
       {
-        // no: idx+1,
-        // avatar:
-        //   <Avatar
-        //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        //   />,
-        // name: item.name,
+        key: index,
+        no: payrollData?.length < 10 && `0 ${index + 1}`,
+        // // avatar:
+        // //   <Avatar
+        // //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+        // //   />,
+        name: item.name,
         // department: item.department,
-        // joining_date: item.joining_date,
-        // payroll_cycle: item.payroll_cycle,
+        joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
+        payroll_cycle: `${monthFrom} - ${monthTo}`,
         actions: <PopOver />
       }
     )
   })
-  console.log(listandgrid)
 
-  const [isToggle, setIsToggle] = useState(false)
-  console.log(isToggle)
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -197,7 +123,7 @@ const Payroll = () => {
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
-              handleChange={() => { }}
+              handleChange={changeHandler}
               name="search bar"
               placeholder="Search"
               size="middle"
@@ -279,8 +205,8 @@ const Payroll = () => {
             <ToggleButton
               isToggle={isToggle}
               onTogglerClick={() => { setIsToggle(!isToggle) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
+              FirstIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
               className='w-[88px]'
             />
             <DropDown
@@ -290,7 +216,7 @@ const Payroll = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, payRollData, "Company Admin Payroll")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
               }}
               value=""
             />
@@ -300,18 +226,20 @@ const Payroll = () => {
           {
             isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
-                cardDummyArray.map((items: any, idx: any) => {
+                payrollData.map((items: any, index: number) => {
+                  const monthFrom = dayjs(items.from).format("MMM");
+                  const monthTo = dayjs(items.to).format("MMM");
                   return (
                     <AttendanceCardDetail
+                      key={index}
                       index={1}
                       item={{
                         avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
                         id: 1,
-                        name: 'Mino Marina',
+                        name: items?.name,
                         profession: 'Data Researcher',
-
                       }}
-                      payrollCycle="Jun-Sept"
+                      payrollCycle={`${monthFrom} - ${monthTo}`}
                       menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
                     />
                   )
@@ -322,10 +250,6 @@ const Payroll = () => {
               <BoxWrapper>
                 <GlobalTable
                   columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
                   tableData={newTableData}
                 />
               </BoxWrapper>

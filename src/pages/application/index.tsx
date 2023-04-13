@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import {  GlobalTable, SearchBar,  PageHeader, BoxWrapper, InternsCard, FiltersButton,  DropDown, StageStepper} from "../../components";
+import {  GlobalTable, SearchBar,  PageHeader, BoxWrapper, InternsCard, FiltersButton,  DropDown, StageStepper, DrawerWidth} from "../../components";
 import { useNavigate } from 'react-router-dom';
 import {  More } from "../../assets/images"
 import { Button, MenuProps } from 'antd';
@@ -75,14 +75,12 @@ const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const Application = () => {
   const navigate = useNavigate()
-  // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
+  const width = DrawerWidth();
   const columns = [
     {
       dataIndex: "no",
@@ -221,16 +219,7 @@ const Application = () => {
       }
     )
   })
-  // Responsive Drawer Code start here
-const getWindowDimensions = () => { const { innerWidth: width } = window; return { width }; };
-const [windowDimensions, setWindowDimensions] = useState<{ width: number }>(getWindowDimensions());
 
-useEffect(() => {
-  window.addEventListener("resize", () => { 
-    setWindowDimensions(getWindowDimensions()); }); 
-    return () => window.removeEventListener("resize", 
-    () => { setWindowDimensions(getWindowDimensions()); });
-}, [windowDimensions.width])
   return (
     <>
       <PageHeader title="Applications" />
@@ -338,20 +327,14 @@ useEffect(() => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
+                      className="white-bg-color teriary-color"
+                      onClick={() => {navigate("new-internship")}}>
                       Reset
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
+                      className="teriary-bg-color white-color"
+                      onClick={() => {  navigate("new-internship")}}>
                       Apply
                     </Button>
                   </div>
@@ -360,8 +343,7 @@ useEffect(() => {
             </Drawer>
             <Drawer
               closable
-              // width={1000}
-              width={windowDimensions.width>1400 ? 1000: windowDimensions.width > 900 ? 900:windowDimensions.width > 576?600:300}
+              width={width>1400 ? 1000: width > 900 ? 900:width > 576?600:300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);
