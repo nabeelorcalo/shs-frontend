@@ -101,7 +101,7 @@ const InternsCompanyAdmin = () => {
       },
     ];
     return (
-      <Dropdown menu={{ items }} placement="bottomRight">
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
         <More />
       </Dropdown>
     );
@@ -430,27 +430,6 @@ const InternsCompanyAdmin = () => {
         </div>
 
       </div>
-      <Alert
-        width={600}
-        type="error"
-        state={terminate}
-        setState={setTerminate}
-        okBtntxt="Terminate"
-        cancelBtntxt="Cancel"
-        children={
-          <>
-            <p>Are you sure you want to terminate this intern?</p>
-            <div>
-              <p className="text-md">Reason</p>
-              <TextArea
-                rows={3}
-                placeholder="write your reason"
-                disable={false}
-              />
-            </div>
-          </>
-        }
-      />
       <PopUpModal
         open={assignManager}
         width={600}
@@ -473,8 +452,40 @@ const InternsCompanyAdmin = () => {
             />
           </div>
         }
+        footer={
+          <>
+            <Button type="default" size="middle" className="button-default-tertiary" onClick={() => setAssignManager(false)}>Cancel</Button>
+            <Button type="primary" size="middle" className="button-tertiary">Assign</Button>
+          </>
+        }
       />
-
+      <Alert
+        width={600}
+        type="error"
+        state={terminate}
+        setState={setTerminate}
+        okBtntxt="Terminate"
+        cancelBtntxt="Cancel"
+        children={
+          <div style={{ height: '50vh' }}>
+            <p>Are you sure you want to terminate this intern?</p>
+            <div>
+              <p className="text-md">Reason</p>
+              <TextArea
+                rows={3}
+                placeholder="write your reason"
+                disable={false}
+              />
+            </div>
+          </div>
+        }
+        footer={
+          <>
+            <Button type="default" size="middle" className="button-default-error" onClick={() => setTerminate(false)}>Cancel</Button>
+            <Button type="primary" size="middle" className="button-error">Terminate</Button>
+          </>
+        }
+      />
       <Alert
         width={700}
         type="success"
@@ -485,6 +496,16 @@ const InternsCompanyAdmin = () => {
         children={
           <>
             <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+          </>
+        }
+        footer={
+          <>
+            <Button type="default" size="middle" className="button-default-tertiary" onClick={() => setComplete(false)}>Cancel</Button>
+            <Button type="primary" size="middle" className="button-tertiary" onClick={() => { alert("hello") }}>Complete</Button>
           </>
         }
       />

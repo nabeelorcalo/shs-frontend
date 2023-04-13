@@ -15,46 +15,46 @@ export const InternshipProgressStepper = (props: any) => {
     {
       name: "Applied",
       count: countFunc('applied'),
-      className: "applied"
+      className: "progress_applied"
     },
     {
       name: "Interviewed",
       count: countFunc('interviewed'),
-      className: "interviewed"
+      className: "progress_interviewed"
     },
     {
       name: "Recommended",
       count: countFunc('recommended'),
-      className: "recommended"
+      className: "progress_recommended"
     },
     {
       name: "Offer Letter",
       count: countFunc('offer-letter'),
-      className: "offer-letter"
+      className: "progress_offer-letter"
     },
     {
       name: "Contract",
       count: countFunc('contract'),
-      className: "contract"
+      className: "progress_contract"
     },
     {
       name: "Hired",
       count: countFunc('hired'),
-      className: "hired"
+      className: "progress_hired"
     },
     {
       name: "Reject",
       count: countFunc('reject'),
-      className: "reject"
+      className: "progress_reject"
     },
   ]
   console.log(stepperObj[0].count)
   return (
-    <ul className="stepper">
+    <ul className="progress_stepper">
       {
         stepperObj.map((item: any, idx: any) => {
           return (
-            <li key={idx} className={`stepper__item ${status === "Draft" || status === "Pending" ? " grayed-out" : item.className}`}>
+            <li key={idx} className={`progress_stepper__item ${status === "Draft" || status === "Pending" ? " progress_grayed-out" : item.className}`}>
               <p>{status === "Draft" || status === "Pending" ? 0 : item.count}</p>
               <p>{item.name}</p>
             </li>

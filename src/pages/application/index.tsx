@@ -48,7 +48,7 @@ const PopOver = ({ state }: any) => {
 
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
       <More />
     </Dropdown>
   );
