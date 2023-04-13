@@ -1,7 +1,7 @@
 @import '../../scss/_colors.scss';
 
 body {
-  background: $text-input-bg-color;
+  background-color: $text-input-bg-color;
 }
 
 .stepper {
@@ -26,7 +26,7 @@ body {
     height: 100%;
     content: "";
     width: calc(100% - 20px);
-    background: $white-bg-color;
+    background-color: $white-bg-color;
   }
 }
 
@@ -35,40 +35,40 @@ body {
   color: $white-bg-color;
   text-align: center;
   padding: 20px 10px;
-  background: $text-error-line-color;
+  background-color: $text-error-line-color;
   margin: 0 0 0 -15px;
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   clip-path: inset(10 10 10 10 round 10px);
 
   &.applied {
-    background: $dashboard-primary-bg-color;
+    background-color: $dashboard-primary-bg-color;
   }
 
   &.interviewed {
-    background: $accommodation-tag;
+    background-color: $accommodation-tag;
   }
 
   &.recommended {
-    background: $purple-color;
+    background-color: $purple-color;
   }
 
   &.offer-letter {
-    background: $light-purple-color;
+    background-color: $light-purple-color;
   }
 
   &.contract {
-    background: $line-color;
+    background-color: $line-color;
   }
 
   &.hired {
-    background: $teriary-bg-color;
+    background-color: $teriary-bg-color;
   }
 
   &.reject {
-    background: $page-header-secondary;
+    background-color: $page-header-secondary;
   }
   &.grayed-out {
-    background: $text-error-line-color;
+    background-color: $text-error-line-color;
     color: $text-primary-title-color
   }
 

@@ -40,7 +40,7 @@ export const InternshipProgressCard = (props:any) => {
       status !== "Pending" && status !== "Draft" ? {
         key: '3',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate('pipeline') }}>
             Pipeline
           </a>
         ),
@@ -95,7 +95,7 @@ export const InternshipProgressCard = (props:any) => {
   return (
     <div className='flex flex-col gap-3'>
       <div className='flex flex-row justify-between'>
-        <Link to="pipeline"><h3>{title}</h3></Link>
+        <h3>{title}</h3>
         <PopOver />
       </div>
       <div className='flex max-sm:flex-col md:flex-row gap-6'>

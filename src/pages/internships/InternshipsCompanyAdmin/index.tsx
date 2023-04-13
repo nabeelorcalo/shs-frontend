@@ -218,7 +218,7 @@ const dummyResponse = {
         "id": 3,
         "companyId": 1,
         "internshipId": 2,
-        "userId": 7,
+        "userId": 7, 
         "rating": null,
         "stage": "applied",
         "offerLetter": null,
