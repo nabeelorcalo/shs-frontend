@@ -66,10 +66,10 @@ const interTableColumn =
             key:'profile'
           },
           {
-            label:<span>
+            label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
               Chat
-            </span>,
-            key:'chat'
+            </NavLink>,
+            key: 'chat'
           }
         ]}>
         <ThreeDots className='cursor-pointer' />

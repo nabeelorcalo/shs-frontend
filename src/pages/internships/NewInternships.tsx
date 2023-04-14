@@ -94,7 +94,6 @@ const NewInternships = () => {
                 className="input"
                 onChange={() => { }}
                 id=""
-                // label="Title"
                 name="name"
                 required
                 placeholder="Enter Title"

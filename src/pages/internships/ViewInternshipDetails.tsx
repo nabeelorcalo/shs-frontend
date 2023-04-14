@@ -1,8 +1,4 @@
-import React from 'react'
-import {
-  PageHeader,
-  BoxWrapper
-} from '../../components'
+import {PageHeader,BoxWrapper} from '../../components'
 import { Space } from 'antd'
 import './style.scss'
 import '../../scss/global-color/Global-colors.scss'

@@ -16,14 +16,14 @@ interface DrawerProps {
 }
 
 export const Drawer: any = ({ title, className, placement = "right", open, onClose, children, width, closable = true }: DrawerProps) => {
-   const FilterWidth = DrawerWidth();
+  const FilterWidth = DrawerWidth();  
   return (
     <AntDrawer
       title={title}
       placement={placement}
       open={open}
       onClose={onClose}
-      width={FilterWidth>768?380:300}
+      width={(title === "Filters" && FilterWidth < 768) ? 300 : width }
       closable={closable}
       closeIcon={<IconCloseCircle />}
       className={`shs-drawer ${className}`}
