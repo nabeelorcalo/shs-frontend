@@ -19,10 +19,11 @@ interface Props {
     okBtnFunc?:any
     children?: any,
     open?: any,
+    footer?: any,
 }
 
 export const Alert: any = (props: Props) => {
-    const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children }= props 
+    const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children , footer}= props 
     return (
         <>
             <Modal
@@ -36,7 +37,7 @@ export const Alert: any = (props: Props) => {
                     <CloseCircleFilled
                         className="text-primary-disabled-color text-[20px]"
                     />}
-                footer={[
+                footer={footer? footer :[
                     <Button
                         onClick={() => { setState(!state) }}
                         key="Cancel"

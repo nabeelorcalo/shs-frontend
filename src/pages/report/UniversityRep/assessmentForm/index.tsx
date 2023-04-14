@@ -123,7 +123,7 @@ const index = () => {
         </BoxWrapper>
       </div>
       {/* for mobile */}
-      <BoxWrapper className='mblock lg:hidden w-full p-3'>
+      <BoxWrapper className='block lg:hidden w-full p-3'>
         <Typography className='text-xl md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
         {tableData.map((item) => {
           return (

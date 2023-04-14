@@ -1,7 +1,6 @@
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
 import {GlobalTable} from '../../components';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from "../../assets/images";
-
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 
 const CandidateTable = (props: any) => {
@@ -17,10 +16,10 @@ const CandidateTable = (props: any) => {
 
   const items: any = [
     {
-      label: <div>
-        {ratingCount.map((obj, i) => <div key={obj.count} className='flex items-center ratings'>
-          <p className='title font-semibold text-base capitalize w-[120px] mb-[15px]'>{obj.title}</p>
-          {Array.from(Array(obj.count).keys()).map(num => <StarFilledIcon key={num} className='icons mx-[2px]' />)}
+      label: <div >
+        {ratingCount.map((obj, i) => <div key={obj.count} className='flex items-center ratings '>
+          <p className='title font-semibold text-base capitalize w-[120px] mb-[15px] '>{obj.title}</p>
+          {Array.from(Array(obj.count).keys()).map(num => <StarFilledIcon key={num} className='icons mx-[2px] mb-[15px] ' />)}
         </div>)}
       </div>,
       key: 'rating'
@@ -69,9 +68,9 @@ const CandidateTable = (props: any) => {
       title: 'Rating',
       render: (_: any, data: any) =>
         <DropDownNew items={items}>
-          <div className='flex items-center justify-center gap-2'>
+          <div className='flex items-center justify-center gap-2 '>
             {data.rating === 0 ? <StarOutlinedIcon cursor={'pointer'} /> : <StarFilledIcon cursor={'pointer'} />}
-            <span>{data.rating}</span>
+            <span className='mt-1'>{data.rating}</span>
           </div>
         </DropDownNew>
     },
