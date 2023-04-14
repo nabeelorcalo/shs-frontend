@@ -62,7 +62,7 @@ const InternDocument = () => {
           </div>
         </Col>
       </Row>
-      {/* <InterCards /> */}
+      <InterCards />
     </>
   );
 };

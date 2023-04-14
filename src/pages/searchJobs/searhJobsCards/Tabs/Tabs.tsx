@@ -10,7 +10,7 @@ import {
   TabIcon8,
   TabIcon9,
 } from "../../../../assets/images";
-import SerarchAll from "../All/All";
+import SerarchTabs from "../All/All";
 
 const SearchJobTabs = () => {
   const items: TabsProps["items"] = [
@@ -24,7 +24,7 @@ const SearchJobTabs = () => {
           </div>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "2",
@@ -35,7 +35,7 @@ const SearchJobTabs = () => {
           <p>Design & Development</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "3",
@@ -46,7 +46,7 @@ const SearchJobTabs = () => {
           <p>Marketing & Communication</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "4",
@@ -57,7 +57,7 @@ const SearchJobTabs = () => {
           <p>Project Management</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "5",
@@ -68,7 +68,7 @@ const SearchJobTabs = () => {
           <p>Finance Management</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "6",
@@ -79,7 +79,7 @@ const SearchJobTabs = () => {
           <p>Human Resource Management</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "7",
@@ -90,7 +90,7 @@ const SearchJobTabs = () => {
           <p>Business & Consultancy</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "8",
@@ -101,7 +101,7 @@ const SearchJobTabs = () => {
           <p>Administration</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
     {
       key: "9",
@@ -112,7 +112,7 @@ const SearchJobTabs = () => {
           <p>Customer Success Management</p>
         </center>
       ),
-      children: <SerarchAll />,
+      children: <SerarchTabs />,
     },
   ];
   return (
