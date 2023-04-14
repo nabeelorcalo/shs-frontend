@@ -9,12 +9,8 @@ import {
   Typography,
   Modal
 } from "antd";
-import { BackButton, IconCloseModal, SHSLogo } from "../../../../../assets/images";
-import step1 from '../../../../../assets/images/login/step1.svg';
-import step2 from '../../../../../assets/images/login/step2.svg';
-import step3 from '../../../../../assets/images/login/step3.svg';
+import { BackButton, IconCloseModal, SHSLogo, Step1, Step2, Step3 } from "../../../../../assets/images";
 import "../../../styles.scss";
-
 
 const IdentityVerification = (props: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,14 +50,12 @@ const IdentityVerification = (props: any) => {
                   </Typography.Title>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Verifying your identity makes it easier for employers to
                 shortlist candidates
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-
               <Row gutter={20}>
                 <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item
@@ -151,9 +145,15 @@ const IdentityVerification = (props: any) => {
         </Col>
 
       </Row>
-      <Modal centered width={700} closeIcon={<IconCloseModal onClick={() => {
+      <Modal
+        centered
+        width={700}
+        closeIcon={<IconCloseModal onClick={() => {
         setIsModalOpen(false)
-      }} />} open={isModalOpen} footer={null}>
+      }}
+      />}
+        open={isModalOpen}
+        footer={null}>
         <div className="verify-modal">
           <Typography className="top-question">Why I need to verfiy myself?</Typography>
           <Typography className="question-description">
@@ -168,14 +168,14 @@ const IdentityVerification = (props: any) => {
               <Row gutter={40}>
                 <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
                   <center>
-                    <img src={step1} alt="" />
+                    <Step1/>
                     <Typography className="stepnumber pt-2 pb-2">Step 1</Typography>
                     <Typography className="stepdescription">Take a photo of your identity document</Typography>
                   </center>
                 </Col>
                 <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
                   <center>
-                    <img src={step2} alt="" />
+                    <Step2/>
                     <Typography className="stepnumber pt-2 pb-2">Step 2</Typography>
                     <Typography className="stepdescription">Take a self-portrait  photo
                       using your phone’s camera or
@@ -184,7 +184,7 @@ const IdentityVerification = (props: any) => {
                 </Col>
                 <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
                   <center className="pt-5">
-                    <img src={step3} alt="" />
+                    <Step3/>
                     <Typography className="stepnumber pt-7 pb-2">Step 3</Typography>
                     <Typography className="stepdescription">Your photos and ID are verified
                       with our system</Typography>
