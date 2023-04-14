@@ -16,7 +16,7 @@ function VerificationSteps(props: any) {
   };
 
   return (
-    <>
+    <div className="verify-form-signup">
       <Form
         layout="vertical"
         name="normal_login"
@@ -61,7 +61,7 @@ function VerificationSteps(props: any) {
           <Video currentStep={currentStep} setCurrentStep={setCurrentStep} />
         )}
       </Form>
-    </>
+    </div>
   );
 }
 

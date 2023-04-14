@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Col, Form, Input, Row, Select, Space, Typography } from "antd";
+import React, { useState } from "react";
+import { Button, Col, Form, Input, Row, Select, Space, Typography, AutoComplete } from 'antd';
 import { CommonDatePicker } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -8,31 +8,41 @@ import constants from "../../../../config/constants";
 import useCustomHook from '../../actionHandler';
 
 const SignupForm = ({ signupRole }: any) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState();
 
   const action = useCustomHook();
   const navigate = useNavigate();
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
-    const body = {
+    console.log('date',value);
+    
+    const body:any = {
       "email": values.Email,
       "firstName": values.firstName,
       "lastName": values.lastName,
-      "phoneNumber": values.phone,
+      "phoneNumber": '090009i090',
       "password": values.password,
-      "referenceNo": values.reference,
+      "referenceNo": values.refrenceNumber,
       "gender": values.gender,
       "address": values.address,
-      "DOB": values.DOB,
+      "DOB": value,
       "country": values.country,
       "universityId": values.universityId,
       "role": signupRole,
       "stripeCustomerId": "56494898496874"
     }
 
-    action.signup(body)
+    const filteredBody = Object.entries(body)
+    .reduce((acc:any, [key, value]) => {
+      if (typeof value !== 'undefined' && value !== null) {
+        acc[key] = value;
+      }
+      return acc;
+    }, {});
 
-
-
+     action.signup(filteredBody)
+    console.log("new console: ", filteredBody);
     // navigate('/verification-steps');
     // navigate("/company-admin-verification");
   };
@@ -77,7 +87,13 @@ const SignupForm = ({ signupRole }: any) => {
             </Form.Item>
           </Col>
         </Row>
-
+        <Form.Item
+              label="Country"
+              name="country"
+              rules={[{ required: true }, { type: "string" }]}
+            >
+              <Input placeholder="country" className="input-style" />
+            </Form.Item>
         <Form.Item
           label={signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
           name="Email"
@@ -106,13 +122,14 @@ const SignupForm = ({ signupRole }: any) => {
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-              <Form.Item
+              {/* <Form.Item
                 label="Date of Birth"
-                name="dob"
+                name="DOB"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker />
-              </Form.Item>
+                
+              </Form.Item> */}
+              <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
             </Col>
           </Row>
         )}
@@ -125,7 +142,7 @@ const SignupForm = ({ signupRole }: any) => {
                 name="dob"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker />
+                <CommonDatePicker open={true}  />
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -164,7 +181,7 @@ const SignupForm = ({ signupRole }: any) => {
         <Form.Item
           name="phone"
           label="Phone Number"
-        // rules={[{ required: false }, { type: "number" }]}
+          
         >
           <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
         </Form.Item>

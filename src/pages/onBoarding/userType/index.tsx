@@ -20,7 +20,7 @@ const userType = [
         id: "2",
         img: OfficeBag,
         role: "Company",
-        key: 'COMPANY',
+        key: 'COMPANY_ADMIN',
     },
     {
         id: "3",
@@ -35,7 +35,9 @@ const SelectUserType = (props: any) => {
     const navigate = useNavigate();
 
     const [activeButton, setActiveButton] = useState("");
-    const [userTypeRole, setUserTypeRole] = useState('STUDENT');
+    const [userTypeRole, setUserTypeRole] = useState('');
+ 
+    
     const handleClick = (buttonIndex: any) => {
         setActiveButton(buttonIndex);
 
