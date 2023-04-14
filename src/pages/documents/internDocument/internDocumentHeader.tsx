@@ -1,24 +1,40 @@
-import React from "react";
-import { Input, Select, Row, Col, Button } from "antd";
-import { ArrowDownDark, UploadIconBtn } from "../../../assets/images";
+import { useState } from "react";
+import { Row, Col, Button } from "antd";
+import {
+  ArrowDownDark,
+  CardViewIcon,
+  TableViewIcon,
+  UploadIconBtn,
+} from "../../../assets/images";
 import "./Styles.scss";
-import { SearchBar } from "../../../components";
+import { DropDown, SearchBar, ToggleButton } from "../../../components";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { SelectData } from "./internHeader";
 import UserImage from "../../../assets/images/documents/Image.svg";
 import InterCards from "./InternCards/interCards";
 
-const InternDocument = () => {
+const InternDocument = (props: any) => {
+  const { isToggle, setIsToggle } = props;
+  const [selectData, setSelectData] = useState("");
+  console.log(selectData, "cnkjv");
+
+ 
   return (
     <>
       <div className="flex ">
-        <select className="select-icon">
-          <option value="" disabled></option>
-          <option value="1">Intern Documents</option>
-          <option value="2">Shared Documents</option>
+        <select
+          className="select-icon"
+          onChange={(e: any) => setSelectData(e.target.value)}
+        >
+          <option value="internDocument">Intern Documents</option>
+          <option value="sharedDocument">Shared Documents</option>
         </select>
         <p className="ml-3 mt-1 text-primary-color text-base font-medium">
-          Intern Documents
+          {selectData === "sharedDocument" ? (
+            <p>Shared Document</p>
+          ) : (
+            <p>Inten Document</p>
+          )}
         </p>
       </div>
 
@@ -53,6 +69,21 @@ const InternDocument = () => {
                 <ArrowDownDark />
               </div>
             </DropDownNew>
+
+            {selectData === "sharedDocument" && (
+              <DropDown
+                setValue={(e: string) => {}}
+                options={[
+                  "this week",
+                  "last week",
+                  "this month",
+                  "last month",
+                  "date range",
+                ]}
+                requireDatePicker
+                showDatePickerOnVal={"date range"}
+              />
+            )}
             <Button className="green-graph-tooltip-bg flex justify-between">
               <img src={UploadIconBtn} alt="" />
               <span className="white-color font-semibold text-base">
@@ -62,7 +93,6 @@ const InternDocument = () => {
           </div>
         </Col>
       </Row>
-      <InterCards />
     </>
   );
 };
