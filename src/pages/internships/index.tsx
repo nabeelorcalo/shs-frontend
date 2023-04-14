@@ -185,7 +185,7 @@ const Internships = () => {
               size="middle"
             />
           </div>
-          <div className="flex flex-row gap-4">
+          <div className="flex max-sm:flex-col flex-row gap-4">
             <FiltersButton
               label="Filters"
               onClick={() => {

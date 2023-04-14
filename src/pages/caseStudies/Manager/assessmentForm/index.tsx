@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
 const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
 import './style.scss'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import signature from "../../../../assets/images/Report/signature.svg"
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 
 const index = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
@@ -153,7 +152,7 @@ const index = () => {
               <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
                 Reject
               </NavLink>
-              </Button>
+          </Button>
           <Button type='primary'
             className='white-bg-color teriary-color save-btn  text-xs'>Save Draft</Button>
           <Button type='primary'

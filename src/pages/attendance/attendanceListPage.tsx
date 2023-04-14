@@ -335,13 +335,6 @@ const Detail = () => {
               </div>
             }
           />
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={togglerClick}
-            FirstIcon={CardViewIcon}
-            LastIcon={TableViewIcon}
-            className="w-[88px]"
-          />
           <DropDown
             options={[
               'pdf',
@@ -352,6 +345,13 @@ const Detail = () => {
               action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail");
               Notifications({ title: 'Success', description: 'List Download', type:'success' })
             }}
+          />
+           <ToggleButton
+            isToggle={state.isToggle}
+            onTogglerClick={togglerClick}
+            FirstIcon={CardViewIcon}
+            LastIcon={TableViewIcon}
+            className="w-[88px]"
           />
         </div>
       </div>

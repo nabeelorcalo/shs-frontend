@@ -9,8 +9,8 @@ const RenderPanel = (props: any) => {
   const { dateTime, totalTasks, totalTime } = props;
   return (
     <Row gutter={[20, 20]} className=' items-center panel-main'>
-      <Col xxl={18} xl={18} md={24} className="capitalize">
-        <Row>
+      <Col xxl={16} xl={16} lg={12}  md={24} className="capitalize">
+        <Row gutter={15}>
           <Col>
             <p className='md:w-[220px]'>{dateTime}</p>
           </Col>
@@ -32,7 +32,7 @@ const RenderPanel = (props: any) => {
           </Col>
         </Row>
       </Col>
-      <Col xxl={6} xl={6} md={24} className="flex-end">
+      <Col xxl={8} xl={8}  lg={12} md={24} className="flex-end">
         <Row>
           <Col>
             <div className='flex justify-end flex-1 gap-3 flex-wrap panel-right'>
