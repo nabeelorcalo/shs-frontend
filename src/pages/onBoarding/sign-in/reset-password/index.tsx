@@ -1,5 +1,4 @@
 import { Col, Row, Typography } from "antd";
-import React from "react";
 import { SHSLogo } from "../../../../assets/images";
 import ResetPasswordForm from "./ResetPasswordForm";
 import "../../sign-in/signin.scss";

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs, TabsProps } from 'antd';
 import PersnolInformation from './persnolInformation';
-import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images/"
+import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images"
 import DrawerDocuments from './drawerDocuments';
 import HiringProcess from './hiringProcess';
 import Interview from './interview';

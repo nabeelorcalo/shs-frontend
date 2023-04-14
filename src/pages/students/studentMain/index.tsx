@@ -1,20 +1,11 @@
 import { useState } from "react";
-import {
-  GlobalTable,
-  SearchBar,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  DropDown,
-  CommonDatePicker,
-} from "../../../components";
-import "./style.scss";
+import { GlobalTable, SearchBar,PageHeader,BoxWrapper,  InternsCard, ToggleButton, DropDown, CommonDatePicker} from "../../../components";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../../assets/images"
+import { CardViewIcon, More, TableViewIcon } from "../../../assets/images"
 import { MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "../actionHandler";
+import "./style.scss";
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -177,10 +168,9 @@ const StudentMain = () => {
         <div className="flex flex-row justify-between gap-3 max-xl:flex-col">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
-              className=""
               handleChange={() => { }}
               name="search bar"
-              placeholder="search"
+              placeholder="Search"
               size="middle"
             />
           </div>

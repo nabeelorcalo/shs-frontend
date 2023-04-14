@@ -63,7 +63,7 @@ const index = () => {
 
       <Row gutter={[20,20]} className="md:my-5 "  >
         <Col xxl={6} xl={8} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper className="md:min-h-[850px]">
+          <BoxWrapper className="md:min-h-[950px]">
             <div className="pt-10">
               <center>
                 <UniLogo />
@@ -130,7 +130,7 @@ const index = () => {
         </Col>
 
         <Col xxl={18} xl={16} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper className="md:min-h-[850px]">
+          <BoxWrapper className="md:min-h-[950px]">
             <div>
               <div className="p-2">
                 <div className="pt-10 pb-2 font-semibold text-xl text-primary-color font-[outfit]">

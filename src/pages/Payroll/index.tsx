@@ -13,7 +13,7 @@ import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
 import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, Menu, MenuProps } from 'antd';
+import { Avatar, Button, Menu, MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
@@ -51,8 +51,7 @@ const Payroll = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
 
-  const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
-
+  const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -100,10 +99,10 @@ const Payroll = () => {
       {
         key: index,
         no: payrollData?.length < 10 && `0 ${index + 1}`,
-        // // avatar:
-        // //   <Avatar
-        // //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        // //   />,
+        avatar:
+          <Avatar
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+          />,
         name: item.name,
         // department: item.department,
         joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),

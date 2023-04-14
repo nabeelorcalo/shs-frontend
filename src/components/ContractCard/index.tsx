@@ -3,8 +3,6 @@ import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
 import './style.scss';
 import TimeIcon from "../../assets/images/timesheetTime.png"
 import Clock from "../../assets/images/Clock.png"
-import { ContractsSigned } from '../../assets/images';
-
 
 export const ContractCard = (props: any) => {
     const {

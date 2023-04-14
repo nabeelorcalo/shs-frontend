@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { Avatar} from "antd";
 import { UpOutlined } from "@ant-design/icons/lib/icons";
-import "./style.scss";
+import "../style.scss";
 import {
   StructureCompanyAdminAvater,
   StructureCompanyAdminDownward,
@@ -43,7 +43,7 @@ function Organization ({ org, onCollapse, collapsed }: any) {
                 {org.title}
                 </span>
             {hideFooterButton && (
-              <div className="lg:w-[100px] lg:h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
+              <div className="w-[100px] lg:h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
                 <span className="pt-1 ">
                   <StructureCompanyAdminProfile2user />
                 </span>

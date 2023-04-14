@@ -10,7 +10,7 @@ import {
   Select,
   Typography,
 } from "antd";
-import  {IconEmail , IconPhone ,IconLocation,Pf } from  "../../../assets/images"
+import  {IconEmail , IconPhone ,IconLocation,Pf } from  "../../../assets/images/"
 import { DropDown } from "../../../components";
 import { Option } from "antd/es/mentions";
 

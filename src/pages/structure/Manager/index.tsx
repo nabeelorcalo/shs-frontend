@@ -7,15 +7,17 @@ import {
   StructureAdd,
 } from "../../../assets/images";
 import Node from "./node";
-import "./style.scss";
+import "../style.scss";
 import { PageHeader } from "../../../components";
 
 export default function ManagerStructure(props: any) {
   const [scale, setScale] = useState(1);
+  const [marginTop , setMarginTop] = useState("20%")
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const style = {
     transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+    marginTop:marginTop
   };
   function handleZoomIn() {
     setScale(scale * 1.2);
@@ -36,11 +38,11 @@ export default function ManagerStructure(props: any) {
           <StructureMinus onClick={handleZoomOut} />
         </div>
       </div>
-      <div className="structure h-[150vh] relative ">
+      <div className="structure h-[150vh] relative pt-4 ">
         <div style={style}>
           <DndProvider backend={HTML5Backend}>
             <div>
-              <Node o={organization} />
+              <Node o={organization} setMarginTop={setMarginTop} />
             </div>
           </DndProvider>
         </div>

@@ -1,0 +1,15 @@
+@import "../../../../../scss/colors";
+.card-btn {
+  border: none;
+  outline: none;
+  padding: 9px 36px;
+  height: auto;
+  transition: all 0.2s ease-in-out;
+  background-color: $page-header-secondary;
+  width: 100%;
+
+  &:hover {
+    color: white;
+    opacity: 0.8;
+  }
+}

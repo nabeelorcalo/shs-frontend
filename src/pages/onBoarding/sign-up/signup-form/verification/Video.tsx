@@ -7,7 +7,6 @@ import "../../../styles.scss";
 
 const Video = (props: any) => {
   const navigate = useNavigate();
-  const { currentStep, setCurrentStep } = props;
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
