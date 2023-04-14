@@ -3,7 +3,6 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
-import constants from "../../config/constants";
 
 const useCustomHook = () => {
 

@@ -1,10 +1,6 @@
-import React from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Round } from "../../../../assets/images";
-// import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
-// import "../../../styles.scss";
-
+import { BackButton, Round } from "../../../../assets/images";
 
 const Video = (props: any) => {
   const navigate = useNavigate();
@@ -20,18 +16,14 @@ const Video = (props: any) => {
     <div className="university-detail">
       <Row className="university-detail-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
-          {/* <div className="logo-wrapper">
-            <SHSLogo />
-          </div> */}
           <div className="form-wrapper">
             <div className="main-title-wrapper">
-        
               <div className="flex items-center mt-3 mb-3">
-                {/* <div>
+                <div>
                   <BackButton />
-                </div> */}
+                </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>Video</Typography.Title>
+                  <Typography.Title level={1}>Video</Typography.Title>
                 </div>
               </div>
 
@@ -40,7 +32,7 @@ const Video = (props: any) => {
               </Typography>
             </div>
             <div>
-              <Typography className="video-description">
+              <Typography className="video-description text-center my-5">
                 Create an introductory video by answering the following
                 questions in 30 to 60 seconds
               </Typography>
@@ -74,15 +66,12 @@ const Video = (props: any) => {
                 </Upload>
               </Form.Item>
               <Row gutter={[10,10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
-                  >
+                <Col xs={24} md={24} lg={12} xl={8}>
+                  <Button className="btn-cancel btn-cancel-verification"  >
                     Skip
                   </Button>
                 </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
                     <Button
                       onClick={() => {

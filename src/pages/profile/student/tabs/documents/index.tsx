@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Button, Divider, Modal, Typography } from "antd";
+import { useState } from "react";
+import { Button, Divider, Modal } from "antd";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
-import "../../../style.scss";
 import { documentArr } from "./DocumentMock";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
 import DragAndDropUpload from "../../../../../components/DragAndDrop";
 import CardUsers from "../cards/userCards";
 import { UploadIcon } from "../../../../../assets/images";
+import "../../../style.scss";
 
 const Documents = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,12 +15,9 @@ const Documents = () => {
     <div className="document-tabs">
       <div className='flex justify-end md:justify-center"'>
         <Button
-          className="upload-button flex items-center justify-between"
-          onClick={() => {
-            setIsOpen(true);
-          }}
-        >
-          <img src={upload} alt="" /> Upload
+          className="upload-button flex items-center justify-between teriary-bg-color white-color"
+          onClick={() => {setIsOpen(true)}} >
+          <img src={upload} alt="upload-btn"/> Upload
         </Button>
       </div>
 

@@ -2,7 +2,7 @@ import { Badge, Dropdown, Pagination, Space, Table } from 'antd';
 import "./style.scss"
 interface TableProps {
   columns?: any[]
-  tableData?: any[],
+  tableData?: any,
   pagination?: boolean | any,
   bgWhiteTable?: boolean,
   expandable?: any;
@@ -19,7 +19,7 @@ export const GlobalTable = (props: TableProps) => {
   return (
     <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
       <Table columns={columns} dataSource={tableData} pagination={pagination} scroll={{ x: "max-content", y: height }} id={id} {...rest} />
-      {pagination && <span className='Counter'> Total:{tableData?.length}</span>}
+      {pagination && <span className='Counter'> Total: {tableData?.length < 10 && `0${tableData?.length}`}</span>}
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from "antd";
 import {
   OverAllPerfomance,

@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import { useState } from "react";
 import IdentityVerification from "./IdentityVerification";
 import Address from "./Address";
 import Documents from "./Documents";
