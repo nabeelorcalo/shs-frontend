@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Row } from "antd";
 import { Star } from "../../../../assets/images";
-import { BoxWrapper } from "../../../../components";
+import { BoxWrapper } from "../../../../components/BoxWrapper/boxWrapper"; 
 
 const InterCards = () => {
   return (
