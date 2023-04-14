@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import './style.scss'
 import { Drawer as AntDrawer } from 'antd';
 import { IconCloseCircle } from '../../assets/images'
+import { DrawerWidth } from "../DrawerWidth";
 
 interface DrawerProps {
   title: React.ReactNode
@@ -14,14 +15,15 @@ interface DrawerProps {
   className?: string;
 }
 
- export const Drawer: any = ({ title, className, placement = "right", open, onClose, children, width = "380", closable = true }: any) => {
+export const Drawer: any = ({ title, className, placement = "right", open, onClose, children, width, closable = true }: DrawerProps) => {
+   const FilterWidth = DrawerWidth();
   return (
     <AntDrawer
       title={title}
       placement={placement}
       open={open}
       onClose={onClose}
-      width={width}
+      width={FilterWidth>768?380:300}
       closable={closable}
       closeIcon={<IconCloseCircle />}
       className={`shs-drawer ${className}`}

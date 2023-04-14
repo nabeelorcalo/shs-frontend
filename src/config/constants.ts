@@ -1,6 +1,6 @@
 
 export default {
-  APP_URL: import.meta.env.VITE_APP_URL || "http://localhost:8001",
+  APP_URL: import.meta.env.VITE_APP_URL,
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -72,7 +72,26 @@ export const ROUTES_CONSTANTS: any = {
   ACTIVITY_LOG: "activity-log",
   CANDIDATES: "candidates",
   OFFER_LETTER: "offer-letter",
+  RECEIVED_OFFER_CompanyAdmin: "received-company-admin-offer",
+  RECEIVED: "received",
+  REJECTED:"rejected",
+  SIGNED:"signed",
+// Student offerLetter
+  RECEIVED_OFFER:"received-offer",
+  REJECTED_OFFER:"rejected-offer",
+  SIGNED_OFFER:"signed-offer",
+  //companyAdmin Contract
+  SIGNED_CompanyAdmin:"signed-company-admin",
+  PENDING_VIEW:"pending-view-details",
+  EDIT_CONTRACT: "edit-contract",
+//ComapnyAdmin offerLetter
+ REJECTED_CompanyAdmin:"rejected-company-admin",
+ PENDING_OFFER_VIEW:"pending-view-details-offer",
+ EDIT_OFFER_CONTRACT: "edit-offer-letter",
+ REJECTED_OFFER_CompanyAdmin:"rejected-company-admin-offer",
+ SIGNED_OFFER_CompanyAdmin:"signed-company-admin-offer",
   CONTRACTS: "contracts",
+  RECEIVED_CompanyAdmin: "received-company-admin",
   MANAGERS: "managers",
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",

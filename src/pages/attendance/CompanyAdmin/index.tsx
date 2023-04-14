@@ -163,6 +163,7 @@ const CompanyAdminAttendance = () => {
               />
             </Col>
             <Col xs={24}>
+              <BoxWrapper>
               <MonthlyPerfomanceChart
                 data={AttendanceDepartmentData}
                 heading={"Attendance By department"}
@@ -181,6 +182,7 @@ const CompanyAdminAttendance = () => {
                   </div>
                 }
               />
+              </BoxWrapper>
             </Col>
           </Row>
         </Col>

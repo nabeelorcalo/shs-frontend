@@ -1,21 +1,23 @@
-import { useState } from "react";
 import CompanyAdminAttendance from "../attendance/CompanyAdmin";
 import ManagerAttendance from "../attendance/Manager";
 import InternAttendance from "../attendance/Intern";
-import constants from "../../config/constants";
 import "./style.scss";
 import UniversityAttendance from "./University";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
+import constants from "../../config/constants";
 
 const Attendance = () => {
+  const userRole = useRecoilValue(currentUserRoleState);
   const renderPage = () => {
-    switch (constants.USER_ROLE) {
-      case 'CompanyAdmin':
+    switch (userRole) {
+      case constants.COMPANY_ADMIN:
         return <CompanyAdminAttendance />;
-      case 'Intern':
+      case constants.INTERN:
         return <InternAttendance />;
-      case 'Manager':
+      case constants.MANAGER:
         return <ManagerAttendance />;
-        case 'University':
+        case constants.UNIVERSITY:
         return <UniversityAttendance />;
       default:
         return <></>;

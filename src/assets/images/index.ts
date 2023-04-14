@@ -369,6 +369,8 @@ export { ReactComponent as GreenErrow } from "../images/contract/greenerrow.svg"
 export { ReactComponent as GreenEye } from "../images/contract/greeneye.svg";
 export { ReactComponent as GreenLock } from "../images/contract/greenlock.svg";
 export { ReactComponent as RedLock } from "../images/contract/redlock.svg";
+export { ReactComponent as Encryption } from "../images/contract/encryption.svg";
+export { ReactComponent as Signeddigital } from "../images/contract/signeddigitaly.svg";
 
 //Chat
 export { default as Filter } from "../images/chat/Filter.svg";

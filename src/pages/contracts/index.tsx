@@ -1,14 +1,17 @@
-import "./style.scss";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 import Student from "./student";
 import CompanyAdmin from "./CompanyAdmin";
 import constants from "../../config/constants";
+import "./style.scss";
 
 const Contracts = () => {
   const renderPage = () => {
-    switch (constants.USER_ROLE) {
-      case 'CompanyAdmin':
+    const role = useRecoilValue(currentUserRoleState);
+    switch (role) {
+      case constants.COMPANY_ADMIN:
         return <CompanyAdmin />;
-      case 'Student':
+      case constants.STUDENT:
         return <Student />;
       default:
         return <></>;
