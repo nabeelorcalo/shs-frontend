@@ -42,7 +42,8 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
   return (
     <>
       {assessmentsName.map((item, index) => (
-        <div className="flex items-center lifeAssesment_main">
+        <div className="flex max-sm:flex-col items-center lifeAssesment_main max-sm:gap-6 gap-0">
+          <div className="main-head flex">
           <div className='flex-none w-[120px]'>
             {item}
           </div>
@@ -50,7 +51,7 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
           <div className='flex-none w-20'>
             {renderIcon(item)}
           </div>
-
+          </div>
           <div className='flex-initial w-full'>
             <Slider
               min={1}

@@ -80,7 +80,9 @@ const Application = () => {
   const [listandgrid, setListandgrid] = useState(false)
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
-  const width = DrawerWidth();
+  const mainDrawerWidth = DrawerWidth();
+
+  
   const columns = [
     {
       dataIndex: "no",
@@ -343,7 +345,7 @@ const Application = () => {
             </Drawer>
             <Drawer
               closable
-              width={width>1400 ? 1000: width > 900 ? 900:width > 576?600:300}
+              width={mainDrawerWidth>1400 ? 1000 : mainDrawerWidth > 900 ? 900:mainDrawerWidth > 576?600:300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);
