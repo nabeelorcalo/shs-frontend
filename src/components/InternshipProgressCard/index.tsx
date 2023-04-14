@@ -1,13 +1,23 @@
 import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More } from '../../assets/images'
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
-import { Button, Dropdown, MenuProps } from 'antd';
-import { STATUS_CONSTANTS } from '../../config/constants';
+import { Dropdown, MenuProps } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../scss/global-color/Global-colors.scss'
+import './style.scss';
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
+export const InternshipProgressCard = (props:any) => {
+  const {title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns} = props
 
-export const InternshipProgressCard = () => {
+  // const dropdownMenuItems = [
+  //   {
+  //     link: "View Details",
+  //     onClickFunc: ()=>{},
+  //     status: 
+  //   }
+  // ]
+  const filterCount = interns.filter((item: any, idx: any)=> {
+    return item.stage === "hired"
+  })
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -19,24 +29,40 @@ export const InternshipProgressCard = () => {
           </a>
         ),
       },
-      {
+      status !== "Published" && status !== "Closed" ? {
         key: '2',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
             Publish
           </a>
         ),
-      },
-      {
+      }:null,
+      status !== "Pending" && status !== "Draft" ? {
         key: '3',
+        label: (
+          <a rel="noopener noreferrer" onClick={() => { navigate('pipeline') }}>
+            Pipeline
+          </a>
+        ),
+      }:null,
+      status !== "Pending" && status !== "Draft" && status !== "Closed" ? {
+        key: '4',
+        label: (
+          <a rel="noopener noreferrer" onClick={() => { }}>
+            Close
+          </a>
+        ),
+      }: null,
+      status !== "Published" && status !== "Draft" && status !== "Closed" ? {
+        key: '5',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
             Decline
           </a>
         ),
-      },
+      }:null,
       {
-        key: '4',
+        key: '6',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
             Edit
@@ -44,7 +70,7 @@ export const InternshipProgressCard = () => {
         ),
       },
       {
-        key: '5',
+        key: '7',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
             Delete
@@ -52,7 +78,7 @@ export const InternshipProgressCard = () => {
         ),
       },
       {
-        key: '6',
+        key: '8',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
             Duplicate
@@ -61,7 +87,7 @@ export const InternshipProgressCard = () => {
       },
     ];
     return (
-      <Dropdown menu={{ items }} placement="bottomRight">
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
         <More />
       </Dropdown>
     )
@@ -69,42 +95,43 @@ export const InternshipProgressCard = () => {
   return (
     <div className='flex flex-col gap-3'>
       <div className='flex flex-row justify-between'>
-        <Link to="pipeline"><h3>UI/UX Designer</h3></Link>
+        <h3>{title}</h3>
         <PopOver />
       </div>
       <div className='flex max-sm:flex-col md:flex-row gap-6'>
         <div className='flex flex-row gap-3 items-center'>
           <DepartmentIcon />
-          <p>Design</p>
+          <p>{department}</p>
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <JobTimeIcon />
-          <p>Full Time</p>
+          <p>{internType}</p>
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
-          <p>London, United Kingdom</p>
+          <p>{locationType}, {locationName}</p>
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />
-          <p>Amelia Carl</p>
+          <p>{postedBy}</p>
         </div>
       </div>
       <div>
-        <InternshipProgressStepper />
+        <InternshipProgressStepper status={status} interns={interns}/>
       </div>
       <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center'>
         <div className='flex flex-row gap-3'>
-          <p>Created on July 24, 2021</p>
+          <p>Created on {createdAt}</p>
           <p>.</p>
-          <p>Expected Closing Date July 24, 2021</p>
+          <p>Expected Closing Date {closingDate}</p>
         </div>
-        <Button
-          size="small"
-          className={`${ACTIVE ? `text-success-bg-color` : PENDING ? `text-warning-bg-color` : CLOSED ? `text-info-bg-color` : REJECTED ? `text-error-bg-color` : null}  white-color`}
+        <p>
+        <span
+          className={`${status} white-color px-3 py-1 rounded-lg`}
         >
-          Pending
-        </Button>
+          {status}
+        </span>
+        </p>
       </div>
     </div>
   )

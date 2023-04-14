@@ -13,7 +13,7 @@ import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
 import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, Menu, MenuProps } from 'antd';
+import { Avatar, Button, Menu, MenuProps } from 'antd';
 import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
@@ -36,7 +36,7 @@ const PopOver = () => {
     }
   ];
   return (
-    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']}>
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -52,7 +52,6 @@ const Payroll = () => {
   const [isToggle, setIsToggle] = useState(false)
 
   const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
-  
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -100,10 +99,10 @@ const Payroll = () => {
       {
         key: index,
         no: payrollData?.length < 10 && `0 ${index + 1}`,
-        // // avatar:
-        // //   <Avatar
-        // //     src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        // //   />,
+        avatar:
+          <Avatar
+            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+          />,
         name: item.name,
         // department: item.department,
         joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
@@ -180,24 +179,8 @@ const Payroll = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>

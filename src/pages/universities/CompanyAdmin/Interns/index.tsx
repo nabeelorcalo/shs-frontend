@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Divider, Menu } from 'antd'
 import { CardViewIcon, TableViewIcon } from '../../../../assets/images';
-import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer } from '../../../../components'
+import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
@@ -89,7 +89,8 @@ const index: React.FC = () => {
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={() => action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")}
+              setValue={() => {action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")
+              Notifications({title:"Success", description:"University interns list downloaded ",type:'success'})}}
             />
           </div>
         </div>

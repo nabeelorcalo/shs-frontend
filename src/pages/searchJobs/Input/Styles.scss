@@ -1,0 +1,21 @@
+@import "../../../scss/colors";
+
+.input-field-wrapper {
+  color: #a0a3bd;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-color: none;
+  .ant-input {
+    background-color: transparent !important;
+  }
+  &:hover {
+    border: 2px solid gray;
+    outline: none;
+    box-shadow: none;
+  }
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+}

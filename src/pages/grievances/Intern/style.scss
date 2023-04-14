@@ -1,27 +1,42 @@
 @import '../../../scss/colors';
-.intern-grievance{
-  .title{
+
+.intern-grievance {
+  .title {
     color: $text-success-placeholder-color;
   }
-.blow-whistle-button{
-  &:hover{
-    color: $white-bg-color;
+
+  .blow-whistle-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
+    &:hover {
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
+    }
   }
 }
-}
-.intern-blow-whistle-footer{
+
+.intern-blow-whistle-footer {
   .footer-cancel-btn {
-      border: 1px solid $teriary-bg-color !important;
-      color: $teriary-bg-color !important ;
-      padding: 0px 20px;
+    border: 1px solid $teriary-bg-color !important;
+    color: $teriary-bg-color !important;
+    padding: 0px 20px;
+  }
+
+  .footer-submit-btn {
+    background: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+    color: $white-bg-color;
+    padding: 0px 20px;
+
+    &:hover {
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
     }
-    .footer-submit-btn {
-      background: $teriary-bg-color;
-      border: 1px solid $teriary-bg-color;
-      color: $white-bg-color;
-      padding: 0px 20px;
-      &:hover{
-        color: $white-bg-color;
-      }
-    }
+  }
 }

@@ -4,7 +4,6 @@ import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import DetailDrawer from "./viewDetails";
 import RejectModal from "./RejectModal";
-
 import "./style.scss";
 
 const Candidates = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { DocumentUpload } from "../../assets/images";
-import SelectedUploadCard from "../SelectedUploadCard";
+
 const UploadDocument = () => {
   const [files, setFiles] = useState([]);
   const BrowseRef = useRef();
@@ -15,8 +15,8 @@ const UploadDocument = () => {
     setFiles(Array.from(event.dataTransfer.files))
   }
 
-  const handleRemoveFile = ()=>{
-    
+  const handleRemoveFile = () => {
+
   }
 
   console.log(files)

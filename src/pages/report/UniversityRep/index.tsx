@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar, Drawer} from '../../../components'
+import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar, Drawer, Notifications} from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import useCustomHook from '../actionHandler';
 import UniversityRepReportTable from './reportTable';
@@ -75,7 +75,8 @@ const index = () => {
         <div> <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
-            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, reportTableData, "Report") }}
+            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, reportTableData, "Report")
+            Notifications({title:"Success", description:"Report list downloaded ",type:'success'})}}  
           /></div> 
         </div>
       </div>

@@ -1,9 +1,12 @@
 @import "../../../../../scss/_colors.scss";
+
 .add-location {
+  font-family: outfit !important;
+
   .ant-form-item .ant-form-item-control-input-content {
     .ant-input {
       background: $text-input-bg-color;
-      border:2px solid $white-bg-color ;
+      border: 2px solid $white-bg-color ;
 
       &:hover {
         background: $white-bg-color;
@@ -12,7 +15,8 @@
       }
     }
   }
-  .ant-dropdown-trigger{
+
+  .ant-dropdown-trigger {
     height: 44px !important;
   }
 
@@ -26,6 +30,7 @@
       }
     }
   }
+
   .label {
     display: block;
     font-size: 16px;
@@ -51,7 +56,19 @@
       border: 2px solid $input-hover-color;
     }
   }
+
   .add-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
+    &:hover {
+      opacity: 85%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
+    }
+
     &:hover {
       opacity: 75%;
       color: white !important;

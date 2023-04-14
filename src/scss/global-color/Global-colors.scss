@@ -295,6 +295,31 @@
 .light-gray-border {
   border: 1px solid $certificate-textarea-border;
 }
+.comp-title {
+  color: $comp-title;
+}
+.comp-bg-title {
+  background-color: $comp-title;
+}
+.accommodation-tag {
+  color: $accommodation-tag;
+}
+.accommodation-bg-tag {
+  background-color: $accommodation-tag;
+}
+.accommodation-bg-tag{
+  color:$accommodation-tag-bg
+}
+.accommodation-tag-bg{
+background-color: $accommodation-tag-bg;
+}
+.accommodation-badge{
+  color:$accommodation-badge
+}
+.accommodation-badge-bg{
+background-color: $accommodation-badge;
+}
+
 .accommodation-btn-info-bg {
   background-color: $accommodation-btn-info-bg;
 }

@@ -1,10 +1,10 @@
-@import '../../scss/colors';
+@import '../../scss/_colors.scss';
 
 body {
-  background: $text-input-bg-color;
+  background-color: $text-input-bg-color;
 }
 
-.stepper {
+.progress_stepper {
   display: flex;
   margin: 10px 20px 10px 20px;
   padding: 0;
@@ -14,7 +14,7 @@ body {
   @media only screen and (max-width:1400px){
     flex-wrap: wrap;
     gap: 5px;
-    .stepper__item {
+    .progress_stepper__item {
       font-size: 12px;
       flex-basis: 50%;
     }
@@ -26,53 +26,54 @@ body {
     height: 100%;
     content: "";
     width: calc(100% - 20px);
-    background: $text-input-bg-color;
+    background-color: $white-bg-color;
   }
 }
 
-.stepper__item {
+.progress_stepper__item {
   flex: 100%;
   color: $white-bg-color;
   text-align: center;
-  padding: 30px 10px 30px 10px;
-  background: repeating-linear-gradient(-65deg,
-      $text-input-bg-color,
-      $text-input-bg-color 20px,
-      $text-input-bg-color 20px,
-      $text-input-bg-color 40px);
+  padding: 20px 10px;
+  background-color: $text-error-line-color;
   margin: 0 0 0 -15px;
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+  clip-path: inset(10 10 10 10 round 10px);
 
-  &.applied {
-    background: $dashboard-primary-bg-color;
+  &.progress_applied {
+    background-color: $dashboard-primary-bg-color;
   }
 
-  &.interviewed {
-    background: $accommodation-tag;
+  &.progress_interviewed {
+    background-color: $accommodation-tag;
   }
 
-  &.recommended {
-    background: $light-orange-color;
+  &.progress_recommended {
+    background-color: $purple-color;
   }
 
-  &.offerletter {
-    background: $text-success-placeholder-color;
+  &.progress_offer-letter {
+    background-color: $light-purple-color;
   }
 
-  &.contract {
-    background: $teriary-light-bg-color;
+  &.progress_contract {
+    background-color: $line-color;
   }
 
-  &.hired {
-    background: $teriary-bg-color;
+  &.progress_hired {
+    background-color: $teriary-bg-color;
   }
 
-  &.reject-sep {
-    background: $page-header-secondary;
+  &.progress_reject {
+    background-color: $page-header-secondary;
+  }
+  &.progress_grayed-out {
+    background-color: $text-error-line-color;
+    color: $text-primary-title-color
   }
 
   &:first-child {
-    padding: 30px 10px;
+    padding: 20px 10px;
     -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   }
 
