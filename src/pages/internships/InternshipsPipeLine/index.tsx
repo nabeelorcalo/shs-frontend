@@ -43,8 +43,6 @@ const statusArray = [
     className: "text-success-hover-bg-color"
   }
 ]
-
-
 const cardArray = [
   {
     name: "Jane Cooper",
@@ -160,21 +158,15 @@ const cardArray = [
   },
 
 ]
-
-
-
 const InternshipPipeLine = () => {
   const navigate = useNavigate()
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
 
-  const colorObj = {
-
-  }
   return (
     <>
-      <PageHeader title="Internships Pipeline" bordered/>
+      <PageHeader title="Internships Pipeline" bordered />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <h3>UI/UX Designer</h3>
@@ -211,7 +203,7 @@ const InternshipPipeLine = () => {
           </div>
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-        <div className="max-sm:w-full md:w-[25%]">
+          <div className="max-sm:w-full md:w-[25%]">
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
           </div>
           <div className="flex flex-row gap-4">
@@ -231,8 +223,8 @@ const InternshipPipeLine = () => {
                     <div>
                       <div className="h-5 w-5 rounded text-off-white-bg-color">
                         {
-                          cardArray.filter((value)=>{
-                          return (value.status === items.status);
+                          cardArray.filter((value) => {
+                            return (value.status === items.status);
                           }).length
                         }
                       </div>
@@ -252,9 +244,7 @@ const InternshipPipeLine = () => {
                               time={items.time}
                               status={items.status}
                               img={items.img}
-
                             />
-
                           </>
                         )
                       })

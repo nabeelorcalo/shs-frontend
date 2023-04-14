@@ -36,7 +36,7 @@ const PopOver = () => {
     }
   ];
   return (
-    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{width:180}}>
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -51,8 +51,8 @@ const Payroll = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
 
-  const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
-  
+  const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
+
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -180,8 +180,8 @@ const Payroll = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                  <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-          <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>
