@@ -36,7 +36,7 @@ const PopOver = () => {
     }
   ];
   return (
-    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']}>
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -52,7 +52,6 @@ const Payroll = () => {
   const [isToggle, setIsToggle] = useState(false)
 
   const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
-  
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -180,24 +179,8 @@ const Payroll = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>
@@ -229,17 +212,17 @@ const Payroll = () => {
                 payrollData.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
-                  return ( 
-                    <AttendanceCardDetail 
-                      key={index} 
-                      index={1} 
-                      item={{ 
-                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/ pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png', 
-                        id: 1, 
-                        name: items?.name, 
-                        profession: 'Data Researcher', 
-                      }} 
-                      payrollCycle={`${monthFrom} - ${monthTo}`} 
+                  return (
+                    <AttendanceCardDetail
+                      key={index}
+                      index={1}
+                      item={{
+                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+                        id: 1,
+                        name: items?.name,
+                        profession: 'Data Researcher',
+                      }}
+                      payrollCycle={`${monthFrom} - ${monthTo}`}
                       menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
                     />
                   )

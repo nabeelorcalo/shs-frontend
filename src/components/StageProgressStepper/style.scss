@@ -27,13 +27,7 @@ body {
   color:$white-bg-color;
   text-align: center;
   padding: 10px 10px 10px 10px;
-  background: repeating-linear-gradient(
-				-65deg,
-				$text-input-bg-color,
-				$text-input-bg-color 20px,
-				$text-input-bg-color 20px,
-				$text-input-bg-color 40px
-			);
+  background: $text-error-line-color;
   margin: 0 0 0 -15px;
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   
@@ -64,6 +58,7 @@ body {
   
   &:last-child {
     // -webkit-clip-path: polygon(20px 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%);
-    -webkit-clip-path: polygon(20px 50%, 0% 0%, 100%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+    padding: 10px 10px ;
+    -webkit-clip-path: polygon(20px 50%, 0% 0%, 0% 0%, 100% 0%, calc(100%) 100%, 0% 100%);
   }
 }
