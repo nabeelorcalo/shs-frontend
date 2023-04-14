@@ -1,6 +1,6 @@
+import React from "react";
 import { Col, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../../assets/images";
-import React from "react";
 import "../../../sign-in/signin.scss";
 import fly from "../../../../../assets/images/login/fly.png";
 

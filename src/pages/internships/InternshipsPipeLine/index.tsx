@@ -2,12 +2,12 @@ import {
   SearchBar,
   PageHeader,
   InternshipPipeLineCard
-} from "../../components";
-import "./style.scss";
+} from "../../../components";
+import "../style.scss";
 import { useNavigate } from 'react-router-dom';
 import { Select, Divider } from 'antd';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon } from '../../assets/images'
-import { STATUS_CONSTANTS } from "../../config/constants";
+import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon } from '../../../assets/images'
+import { STATUS_CONSTANTS } from "../../../config/constants";
 
 const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
@@ -43,8 +43,6 @@ const statusArray = [
     className: "text-success-hover-bg-color"
   }
 ]
-
-
 const cardArray = [
   {
     name: "Jane Cooper",
@@ -160,19 +158,15 @@ const cardArray = [
   },
 
 ]
-
 const InternshipPipeLine = () => {
   const navigate = useNavigate()
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
 
-  const colorObj = {
-
-  }
   return (
     <>
-      <PageHeader title="Internships Pipeline" bordered/>
+      <PageHeader title="Internships Pipeline" bordered />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <h3>UI/UX Designer</h3>
@@ -209,15 +203,11 @@ const InternshipPipeLine = () => {
           </div>
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <SearchBar
-            className=""
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="search"
-            size="middle"
-          />
+          <div className="max-sm:w-full md:w-[25%]">
+            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
+          </div>
           <div className="flex flex-row gap-4">
-            Total Candidate: 40
+            Total Candidate: {cardArray.length}
           </div>
         </div>
         <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
@@ -231,7 +221,13 @@ const InternshipPipeLine = () => {
                       <p>{items.status}</p>
                     </div>
                     <div>
-                      <div className="h-5 w-5 rounded text-off-white-bg-color">02</div>
+                      <div className="h-5 w-5 rounded text-off-white-bg-color">
+                        {
+                          cardArray.filter((value) => {
+                            return (value.status === items.status);
+                          }).length
+                        }
+                      </div>
                     </div>
                   </div>
                   <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
@@ -248,9 +244,7 @@ const InternshipPipeLine = () => {
                               time={items.time}
                               status={items.status}
                               img={items.img}
-
                             />
-
                           </>
                         )
                       })

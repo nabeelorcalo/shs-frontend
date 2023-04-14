@@ -1,6 +1,5 @@
 import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Intro, DrawerIcon,LocationIconNew, StarOutlinedIcon,PlayIconNew } from '../../assets/images';
 import "./style.scss"
-
 import DropDownNew from '../../components/Dropdown/DropDownNew'
 import { useState } from 'react'
 

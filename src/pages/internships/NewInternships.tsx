@@ -272,20 +272,8 @@ const NewInternships = () => {
           >
             Save Draft
           </Button>
-          <Button
-            size="middle"
-            className="new-intern-btn white-bg-color teriary-color"
-            onClick={() => { }}
-          >
-            Cancel
-          </Button>
-          <Button
-            size="middle"
-            className="new-intern-btn teriary-bg-color white-color"
-            onClick={() => { }}
-          >
-            Submit
-          </Button>
+          <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Cancel</Button>
+          <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Submit</Button>
         </Row>
       </BoxWrapper>
     </>
