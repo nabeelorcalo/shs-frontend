@@ -10,7 +10,7 @@ interface Props {
   value?: string;
   name?: string;
   icon?: any;
-  handleChange({}): void;
+  handleChange({ }): void;
 }
 
 export const SearchBar = ({

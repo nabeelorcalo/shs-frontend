@@ -801,8 +801,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
         element: <UniversitesProfile />,
       },
-
-
+      {
+        key: `${ROUTES_CONSTANTS.CALENDAR}`,
+        path: `${ROUTES_CONSTANTS.CALENDAR}`,
+        element: <Calendar />,
+      },
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
