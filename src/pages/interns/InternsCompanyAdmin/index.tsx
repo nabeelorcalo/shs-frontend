@@ -101,7 +101,7 @@ const InternsCompanyAdmin = () => {
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
       </Dropdown>
     );
@@ -351,24 +351,8 @@ const InternsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>

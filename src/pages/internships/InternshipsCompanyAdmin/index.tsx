@@ -218,7 +218,7 @@ const dummyResponse = {
         "id": 3,
         "companyId": 1,
         "internshipId": 2,
-        "userId": 7, 
+        "userId": 7,
         "rating": null,
         "stage": "applied",
         "offerLetter": null,
@@ -302,7 +302,7 @@ const dummyResponse = {
     {
       "stage": "reject",
     },
-  ]
+    ]
   }],
   "count": 4,
   "pagination": {
@@ -384,20 +384,8 @@ const InternshipsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
-                      onClick={() => { navigate("new-internship"); }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
-                      onClick={() => { navigate("new-internship"); }}
-                    >
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>

@@ -25,6 +25,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
 
           <Dropdown
             overlay={menu}
+            overlayStyle={{ width: 180 }}
             trigger={['click']}
             placement="bottomRight"
             className="attendance-menu"
