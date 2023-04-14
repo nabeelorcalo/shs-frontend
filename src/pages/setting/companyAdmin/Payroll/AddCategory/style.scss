@@ -18,5 +18,17 @@
   
         }
       }
+      .add-button{
+        font-size: 16px;
+        font-weight: 600;
+        font-family: 'Outfit';
+        &:hover{
+       opacity: 85%;
+       color: $white-bg-color !important;
+       outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+       border: none !important;
+        }
+
+      }
 
 }

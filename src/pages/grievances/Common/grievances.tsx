@@ -104,9 +104,7 @@ const Grievance = () => {
                     </Text>
                   </div>
                 </div>
-               
               </div>
-            
               <div className='flex flex-row  w-full '>
               <div  className='xs:mr-0 xs:hidden sm:block sm:mr-5'><LineGrievances /></div> 
                 <div className='flex flex-row'>
@@ -125,7 +123,7 @@ const Grievance = () => {
           </BoxWrapper>
         </Col>
         <Col className="gutter-row" xs={24} md={24} xl={12}>
-          <div className='grievance-card relative flex items-center overflow-hidden rounded-lg w-full'>
+          <div className='grievance-card relative flex items-center overflow-hidden rounded-lg w-full my-1'>
             <BoxWrapper className='card-progress-box flex   flex-wrap'>
               <div className="total-hours flex xs:flex-col sm:flex-row  flex-1 gap-2">
                 <div className='flex  items-center'>

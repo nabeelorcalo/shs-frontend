@@ -1,6 +1,12 @@
-.setting-sidebar{
+@import '../../../scss/colors';
 
+.setting-sidebar {
     height: 100%;
- 
-
+    border-radius: 16px !important;
+    background-color: $white-bg-color;
+    border-radius: 10px;
+    padding: 10px 0px;
+    text-align: initial;
+    max-height: -webkit-fill-available;
+    box-shadow: 1px 2px 1px #E4E8F0;
 }
