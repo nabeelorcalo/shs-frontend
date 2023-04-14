@@ -1,5 +1,5 @@
-import { Col, Row } from "antd";
 import React from "react";
+import { Col, Row } from "antd";
 import { Star } from "../../../../assets/images";
 import { BoxWrapper } from "../../../../components";
 
