@@ -242,7 +242,7 @@ const DigiVaultStudent = () => {
             <div className="text-2xl font-semibold primary-color">
               Manage your vault
             </div>
-            <Row gutter={[15, 15]} className="p-2">
+            <Row gutter={[15, 15]} className="p-7">
               {manageVaultArr.map((item, index) => {
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>

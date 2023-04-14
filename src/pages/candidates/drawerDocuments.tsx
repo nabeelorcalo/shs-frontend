@@ -1,8 +1,7 @@
 import { useState } from 'react'
-import { DocumentIconD } from "../../assets/images"
 import "./style.scss"
 import RequestDocModel from './requestDocModel';
-import { CvIcon, DbsIcon, UalIcon, PassportIcon, BrpIcon, PoaIcon } from "../../assets/images"
+import { CvIcon, DbsIcon, UalIcon, PassportIcon, BrpIcon, PoaIcon,DocumentIconD } from "../../assets/images"
 
 const ReqDocData = [
 

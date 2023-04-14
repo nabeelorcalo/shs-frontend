@@ -131,11 +131,11 @@ export { default as SearchIcon } from './search-icon.png';
 export { ReactComponent as CalendarAddNewIcon } from './timesheet/CalendarIconWhite.svg';
 
 // star outline icon
-export { ReactComponent as StarOutlinedIcon } from "./StarOutlined.svg";
-export { ReactComponent as StarFilledIcon } from "./StarFilled.svg";
+export { ReactComponent as StarOutlinedIcon } from "./other-imgs/StarOutlined.svg";
+export { ReactComponent as StarFilledIcon } from "./other-imgs/StarFilled.svg";
 
 // three dots icon
-export { ReactComponent as ThreeDotsIcon } from "./MoreIcon.svg";
+export { ReactComponent as ThreeDotsIcon } from "./other-imgs/MoreIcon.svg";
 
 // DigiVault CArd Img
 export { ReactComponent as EducationImg } from "./digivault/manageVault/educationFolder.svg";
@@ -377,7 +377,7 @@ export { default as Filter } from "../images/chat/Filter.svg";
 export { default as AvatarIcon } from "../images/chat/avatar.svg";
 export { default as Userimg } from "../images/chat/userImg.svg";
 export { default as EmailIcon } from "../images/chat/Email.svg";
-export { default as Location } from "../images/chat/location.svg";
+export { default as Location } from "./other-imgs/location.svg";
 export { default as Phone } from "../images/chat/Phone.svg";
 export { default as Moreicon } from "../images/chat/MoreDots.svg";
 export { default as DocIcon } from "../images/chat/documentIcon.svg";
@@ -407,22 +407,22 @@ export { ReactComponent as PlayIconNew } from "./timesheet/TimePlayIcon.svg";
 
 // candidates
 
-export { ReactComponent as CvIcon } from "./cvIcon.svg";
-export { ReactComponent as DbsIcon } from "./dbsIcon.svg";
-export { ReactComponent as UalIcon } from "./ualIcon.svg";
-export { ReactComponent as PassportIcon } from "./passportIcon.svg";
-export { ReactComponent as BrpIcon } from "./brpIcon.svg";
-export { ReactComponent as PoaIcon } from "./poaIcon.svg";
-export { ReactComponent as PersnolIcon } from "./persnolIcon.svg";
-export { ReactComponent as DocumentsIcon } from "./documentsIcon.svg";
-export { ReactComponent as HiringIcon } from "./hiringIcon.svg";
-export { ReactComponent as InterviewIcon } from "./interviewIcon.svg";
-export { ReactComponent as DocumentIconD } from "./documentsIcondrawer.svg";
-export { ReactComponent as Schedule } from "./schedule.svg";
+export { ReactComponent as CvIcon } from "./other-imgs/cvIcon.svg";
+export { ReactComponent as DbsIcon } from "./other-imgs/dbsIcon.svg";
+export { ReactComponent as UalIcon } from "./other-imgs/ualIcon.svg";
+export { ReactComponent as PassportIcon } from "./other-imgs/passportIcon.svg";
+export { ReactComponent as BrpIcon } from "./other-imgs/brpIcon.svg";
+export { ReactComponent as PoaIcon } from "./other-imgs/poaIcon.svg";
+export { ReactComponent as PersnolIcon } from "./other-imgs/persnolIcon.svg";
+export { ReactComponent as DocumentsIcon } from "./other-imgs/documentsIcon.svg";
+export { ReactComponent as HiringIcon } from "./other-imgs/hiringIcon.svg";
+export { ReactComponent as InterviewIcon } from "./other-imgs/interviewIcon.svg";
+export { ReactComponent as DocumentIconD } from "./other-imgs/documentsIcondrawer.svg";
+export { ReactComponent as Schedule } from "./other-imgs/schedule.svg";
 export { ReactComponent as AddIcon } from "./timesheet/AddIcon.svg";
-export { ReactComponent as Dot } from "./dot.svg";
-export { ReactComponent as Mail } from "./mail.svg";
-export { ReactComponent as Call } from "./call.svg";
+export { ReactComponent as Dot } from "./other-imgs/dot.svg";
+export { ReactComponent as Mail } from "./other-imgs/mail.svg";
+export { ReactComponent as Call } from "./other-imgs/call.svg";
 export { ReactComponent as TimerPlayIcon } from "./timesheet/TimePlayIcon.svg";
 export { ReactComponent as TimerPauseIcon } from "./timesheet/TimePauseIcon.svg";
 
@@ -465,10 +465,10 @@ export { ReactComponent as ColorLessMedalIcon } from "./Performance/ColorlessMed
 export { ReactComponent as TalentBadge } from "./Performance/TalentBadge.svg";
 
 // export { ReactComponent as Location } from './location.svg';
-export { ReactComponent as Intro } from "./Intro.svg";
+export { ReactComponent as Intro } from "./other-imgs/Intro.svg";
 
 // export { ReactComponent as PlayIcon } from './playIcon.svg';
-export { ReactComponent as DrawerIcon } from "./drawerIcon.svg";
+export { ReactComponent as DrawerIcon } from "./other-imgs/drawerIcon.svg";
 
 // Common Icons
 export { ReactComponent as GlassMagnifier } from "./Common/GlassMagnifier.svg";

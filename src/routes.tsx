@@ -64,12 +64,8 @@ const ViewInternshipDetails = Loadable(
 );
 
 //Company admin Internships
-const CMInternships = Loadable(
-  lazy(() => import("./pages/internships/cmInternships"))
-);
-const InternshipPipeLine = Loadable(
-  lazy(() => import("./pages/internships/internshipPipeLine"))
-);
+const InternshipsCompanyAdmin = Loadable(lazy(() => import("./pages/internships/InternshipsCompanyAdmin")));
+const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/InternshipsPipeLine")));
 
 //Company admin payroll
 const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
@@ -81,7 +77,7 @@ const ViewPayrollSalarySlip = Loadable(
 );
 
 //Company admin Interns
-const InternsCM = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
+const InternsCompanyAdmin = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
 
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
@@ -749,7 +745,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
-        element: <CMInternships />,
+        element: <InternshipsCompanyAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,
@@ -794,7 +790,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
-        element: <InternsCM />,
+        element: <InternsCompanyAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
@@ -842,7 +838,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
         element: <UniversitesProfile />,
       },
-
+      {
+        key: `${ROUTES_CONSTANTS.CALENDAR}`,
+        path: `${ROUTES_CONSTANTS.CALENDAR}`,
+        element: <Calendar />,
+      },
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,

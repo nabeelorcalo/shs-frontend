@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./style.scss";
+import React, { useRef, useState } from "react";
+import './style.scss';
 import {
   BoxWrapper,
   Breadcrumb,
@@ -75,7 +75,23 @@ const Received = () => {
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
+  const timeoutRef = useRef<any>(null);
 
+  const handleLongPress = () => {
+    setIsPressed(true);
+    timeoutRef.current = setTimeout(() => {
+      console.log("Long pressed");
+      alert("button pressed")       
+    }, 2000); 
+    
+  };
+
+  const handleButtonRelease = () => {
+    clearTimeout(timeoutRef.current);
+    setIsPressed(false);
+  };
+  
   const tempArray = [
     { name: "Power Source" },
     {
@@ -84,7 +100,7 @@ const Received = () => {
     },
   ];
 
-  const handleSignClick = () => {};
+  const handleSignClick = () => { };
 
   return (
     <div className="received">
@@ -104,14 +120,14 @@ const Received = () => {
         <Row gutter={16}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
-              onClick={() => setWarningModal(false)}
-              className="border-1 border-solid border-[#D83A52] w-[100%] text-error-color rounded-[8px]"
+              onClick={() =>  setDismissModal(false)}
+              className="change-mind-red-btn border-1 border-solid border-[#D83A52] w-[100%] text-error-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Button className="w-[100%] text-error-bg-color rounded-[8px] white-color">
+            <Button onClick={() =>  setDismissModal(false)} className="dismiss-agrement-btn w-[100%] text-error-bg-color rounded-[8px] white-color">
               Dismiss Agrrement
             </Button>
           </Col>
@@ -135,13 +151,13 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setWarningModal(false)}
-              className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Button className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+            <Button onClick={() => setWarningModal(false)} className="edit-request-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
               Send Edit Request
             </Button>
           </Col>
@@ -165,13 +181,20 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setOpenSign(false)}
-              className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Button className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+            <Button
+             onTouchStart={handleLongPress}
+             onTouchEnd={handleButtonRelease}
+             onMouseDown={handleLongPress}
+             onMouseUp={handleButtonRelease}
+             onMouseLeave={handleButtonRelease}
+             className="long-press-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
+            >
               Long press to sign
             </Button>
           </Col>
@@ -180,196 +203,200 @@ const Received = () => {
       <div>
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
-      <BoxWrapper>
+      <BoxWrapper >
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div>
-              {" "}
-              <Steps 
-               items={[{
-                icon: (<div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px]"><EyeFilled style={{width:"24px"}}/><span className="text-base font-semibold">Read</span></div>),
-               }, {
-                icon: (<div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px]"><EditFilled  style={{width:"24px"}}/><span className="text-base font-semibold">Confirm</span></div>)
-               }, {
-                icon: (<div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px]"><CheckCircleFilled style={{width:"24px"}}/><span className="text-base font-semibold">Signed and stored</span></div>)
-               }]} />
-            </div>
+            <Steps
+              items={[{
+                icon: (<div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px] w-[226%] sm:w-[100%]"><EyeFilled style={{ width: "24px" }} /><span className="text-base font-semibold">Read</span></div>),
+              }, {
+                icon: (<div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px] w-[226%] sm:w-[100%]"><EditFilled style={{ width: "24px" }} /><span className="text-base font-semibold">Confirm</span></div>)
+              }, {
+                icon: (<div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px] w-[400%] sm:w-[100%]"><CheckCircleFilled style={{ width: "24px" }} /><span className="text-base font-semibold">Signed and stored</span></div>)
+              }]} />
             <div className=" pt-4 font-semibold text-xl text-secondary-color">
               Contract
             </div>
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[10, 24]}>
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                  {senderInfo.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="pb-4">
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            {item.label}
-                          </p>
-                          <p className="text-lg font-normal text-secondary-color">
-                            {item.title}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Col>
-
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                  {receiverInfo.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="pb-4">
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            {item.label}
-                          </p>
-                          <p className="text-lg font-normal">{item.title}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            {details.map((item, index) => {
-              return (
-                <div key={index}>
-                  <p className=" pb-4 text-secondary-color text-lg ">
-                    {item.name}
-                  </p>
-                  <div>
-                    <p className="font-semibold text-secondary-color text-lg">
-                      {item.title}
-                    </p>
-                    <p className="text-lg font-normal text-secondary-color">
-                      {item.disc}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[10, 24]}>
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                  <div className="p-4">
-                    {senderInfo.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <div className="pb-4">
-                            <p className="text-success-placeholder-color text-base font-normal">
-                              {item.label}
-                            </p>
-                            <p className="text-lg font-normal text-secondary-color">
-                              {item.title}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <p className="text-success-placeholder-color text-base font-normal">
-                      Email
-                    </p>
-                    <p className="text-sm md:text-lg font-normal">
-                      davidmiller@powersource.co.uk
-                    </p>
-                  </div>
-                  <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
-                    <Signeddigital />
-                    <div className="pl-6">
-                      <p className="text-lg font-medium text-green-color pb-2">
-                        Signed digitally
-                      </p>
-                      <p className="text-lg font-medium text-green-color">
-                        26 January 2023 at 12:56 PM
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center pt-10 font-medium text-lg primary-color ">
-                  Message from the contract sender
-                </div>
-              </Col>
-
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                  <div className="p-4">
-                    {receiverInfo.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <div className="pb-4">
-                            <p className="text-success-placeholder-color text-base font-normal">
-                              {item.label}
-                            </p>
-                            <p className="text-lg font-normal">{item.title}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <p className="text-success-placeholder-color text-base font-normal">
-                      Email
-                    </p>
-                    <p className="text-sm md:text-lg font-normal">
-                      davidmiller@powersource.co.uk
-                    </p>
-                  </div>
-                  <div className="flex  p-4 items-center pb-9">
-                    <Encryption />
-                    <div className="pl-6">
-                      <p className="text-lg font-medium primary-color pb-2">
-                        Signature will appear here
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center pt-10 font-medium text-lg primary-color">
-                  updated
-                </div>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[24, 30]}>
+            <div className="scroll">
+              <Row gutter={[0,30]}>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Button
-                  onClick={() => setOpenSign(true)}
-                  className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
-                >
-                  Sign
-                </Button>
+                <Row gutter={[30, 24]}>
+                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      {senderInfo.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            <div className="pb-4">
+                              <p className="text-success-placeholder-color text-base font-normal">
+                                {item.label}
+                              </p>
+                              <p className="text-lg font-normal text-secondary-color">
+                                {item.title}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Col>
+
+                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      {receiverInfo.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            <div className="pb-4">
+                              <p className="text-success-placeholder-color text-base font-normal">
+                                {item.label}
+                              </p>
+                              <p className="text-lg font-normal">{item.title}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Col>
+                </Row>
               </Col>
 
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <Button
-                  onClick={() => setWarningModal(true)}
-                  className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
-                >
-                  Suggest Changes
-                </Button>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                {details.map((item, index) => {
+                  return (
+                    <div key={index}>
+                      <p className=" pb-4 text-secondary-color text-lg ">
+                        {item.name}
+                      </p>
+                      <div>
+                        <p className="font-semibold text-secondary-color text-lg">
+                          {item.title}
+                        </p>
+                        <p className="text-lg font-normal text-secondary-color">
+                          {item.disc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </Col>
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <Button
-                  onClick={() => setDismissModal(true)}
-                  className="w-[100%] text-error-bg-color rounded-[8px] white-color"
-                >
-                  DismissAgreement
-                </Button>
+
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Row gutter={[30, 24]}>
+                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
+                      <div className="p-4">
+                        {senderInfo.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <div className="pb-4">
+                                <p className="text-success-placeholder-color text-base font-normal">
+                                  {item.label}
+                                </p>
+                                <p className="text-lg font-normal text-secondary-color">
+                                  {item.title}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                        <p className="text-success-placeholder-color text-base font-normal">
+                          Email
+                        </p>
+                        <p className="text-sm md:text-lg font-normal">
+                          davidmiller@powersource.co.uk
+                        </p>
+                      </div>
+                      <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
+                        <Signeddigital />
+                        <div className="pl-6">
+                          <p className="text-lg font-medium text-green-color pb-2">
+                            Signed digitally
+                          </p>
+                          <p className="text-lg font-medium text-green-color">
+                            26 January 2023 at 12:56 PM
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center pt-10 font-medium text-lg primary-color ">
+                      Message from the contract sender
+                    </div>
+                  </Col>
+
+                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
+                      <div className="p-4">
+                        {receiverInfo.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <div className="pb-4">
+                                <p className="text-success-placeholder-color text-base font-normal">
+                                  {item.label}
+                                </p>
+                                <p className="text-lg font-normal">{item.title}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                        <p className="text-success-placeholder-color text-base font-normal">
+                          Email
+                        </p>
+                        <p className="text-sm md:text-lg font-normal">
+                          davidmiller@powersource.co.uk
+                        </p>
+                      </div>
+                      <div className="flex  p-4 items-center pb-9">
+                        <Encryption />
+                        <div className="pl-6">
+                          <p className="text-lg font-medium primary-color pb-2">
+                            Signature will appear here
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-center pt-10 font-medium text-lg primary-color">
+                      updated
+                    </div>
+                  </Col>
+                </Row>
               </Col>
-            </Row>
+
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Row gutter={[24, 30]}>
+                  <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                    <Button
+                      onClick={() => setOpenSign(true)}
+                      className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
+                    >
+                      Sign
+                    </Button>
+                  </Col>
+
+                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <Button
+                      onClick={() => setWarningModal(true)}
+                      className="suggest-changes-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+                    >
+                      Suggest Changes
+                    </Button>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                    <Button
+                      onClick={() => setDismissModal(true)}
+                      className="w-[100%] text-error-bg-color rounded-[8px] white-color"
+                    >
+                      DismissAgreement
+                    </Button>
+                  </Col>
+                </Row>
+              </Col>
+              </Row>
+            </div>
           </Col>
         </Row>
+
       </BoxWrapper>
     </div>
   );
