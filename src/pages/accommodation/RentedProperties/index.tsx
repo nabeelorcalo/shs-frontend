@@ -25,7 +25,7 @@ const RentedProperties = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const {getRentedProperties} = useRentedPropertiesHook();
-  const [savedProperties, setsavedProperties] = useRecoilState(rentedPropertiesState)
+  const [rentedProperties, setRentedProperties] = useRecoilState(rentedPropertiesState)
   const [loading, setLoading] = useState(false)
 
 
@@ -33,19 +33,19 @@ const RentedProperties = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    fetchRentedProperties()
   }, [])
 
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const propertiesData = async () => {
+  const fetchRentedProperties = async () => {
     setLoading(true)
     try {
       const response = await getRentedProperties();
       if(!response.error) {
         const {data} = response
-        setsavedProperties(data)
+        setRentedProperties(data)
       }
     } catch (errorInfo) {
       return;
@@ -66,30 +66,36 @@ const RentedProperties = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="rented-properties">
-      <div className="shs-row">
-        {data.map((property, index) => {
-          return (
-            <div key={index} className="shs-col-5">
-              <AccommodationCard
-                coverPhoto={property.coverPhoto}
-                discount={property.discount}
-                autualPrice={property.autualPrice}
-                withDiscountPrice={property.discountPrice}
-                propertyAvailableFor={property.propertyAvailableFor}
-                propertyType={property.propertyType}
-                totalBeds={property.totalBeds}
-                totalWashRoom={property.totalWashRoom}
-                tags={property.tags}
-                location={property.location}
-                handleSaveClick={() => console.log('handle clik')}
-                handleDetailClick={() => handleDetailClick(property.id)}
-                handleChatClick={() => navigate('/chat')}
-              />
+      <Spin spinning={loading}>
+        <div className="shs-row placeholder-height">
+          {rentedProperties?.map((property:any) => {
+            return (
+              <div key={property.id} className="shs-col-5">
+                <AccommodationCard
+                  coverPhoto={thumb1}
+                  discount={'30'}
+                  autualPrice={"1200"}
+                  withDiscountPrice={"840"}
+                  propertyAvailableFor={"week"}
+                  propertyType={property.propertyType}
+                  totalBeds={property.totalBedrooms}
+                  totalWashRoom={property.totalBathrooms}
+                  tags={['Utility Bills', 'Laundry', 'Meals']}
+                  location={property.addressOne}
+                  handleSaveClick={() => console.log('handle clik')}
+                  handleDetailClick={() => handleDetailClick(property.id)}
+                  handleChatClick={() => navigate('/chat')}
+                />
+              </div>
+            )
+          })}
+          {!rentedProperties.length && !loading &&
+            <div className="shs-col-full ">
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>
-          )
-        })}
-        
-      </div>
+          }
+        </div>
+      </Spin>
     </div>
   )
 }

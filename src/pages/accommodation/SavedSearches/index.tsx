@@ -23,13 +23,13 @@ const SavedSearches = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    fetchSavedSearches()
   }, [])
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const propertiesData = async () => {
+  const fetchSavedSearches = async () => {
     setLoading(true)
     try {
       const response = await getSavedProperties();
@@ -57,7 +57,7 @@ const SavedSearches = () => {
   return (
     <div className="saved-searches">
       <Spin spinning={loading}>
-        <div className="shs-row">
+        <div className="shs-row placeholder-height">
           {savedProperties?.map((property:any) => {
             return (
               <div key={property.id} className="shs-col-5">
@@ -79,11 +79,12 @@ const SavedSearches = () => {
               </div>
             )
           })}
-          {!savedProperties.length &&
-            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          {!savedProperties.length && !loading &&
+            <div className="shs-col-full ">
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </div>
           }
         </div>
-        
       </Spin>
     </div>
   )

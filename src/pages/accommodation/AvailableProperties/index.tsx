@@ -59,8 +59,7 @@ const AvailableProperties = () => {
   return (
     <div className="available-properties">
       <Spin spinning={loading}>
-        {availableProperties? (
-        <div className="shs-row">
+        <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
             return (
               <div key={property.id} className="shs-col-5">
@@ -82,11 +81,12 @@ const AvailableProperties = () => {
               </div>
             )
           })}
+          {!availableProperties.length && !loading &&
+            <div className="shs-col-full ">
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </div>
+          }
         </div>
-        ) : (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        )}
-        
       </Spin>
     </div>
   )

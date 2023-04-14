@@ -14,3 +14,8 @@ export const rentedPropertiesState = atom({
   key: 'rentedPropertiesState',
   default: []
 });
+
+export const bookingRequestsState = atom({
+  key: 'bookingRequestsState',
+  default: []
+});
