@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Row, Rate, Divider } from "antd";
 import { BoxWrapper } from "../../../../components/BoxWrapper/boxWrapper";
 import { Dots, DoucmentCard } from "../../../../assets/images";
+import DocTable from "../DocsTable/docTable";
 
 const InterCards = () => {
   const DocsMockData = [
@@ -82,6 +83,7 @@ const InterCards = () => {
           </Col>
         ))}
       </Row>
+      <DocTable />
     </>
   );
 };
