@@ -177,7 +177,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             role === constants.INTERN ||
             role === constants.STUDENT ||
             role === constants.MANAGER ||
-            role === constants.COMPANY_ADMIN
+            role === constants.COMPANY_ADMIN ||
+            role === constants.UNIVERSITY
           ) &&
             <div className="ikd-header-message-notif">
               <div
