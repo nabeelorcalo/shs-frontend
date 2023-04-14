@@ -1,4 +1,5 @@
-// import Button from 'antd/es/button'
+import { useRecoilValue } from 'recoil'
+import { currentUserRoleState } from '../../../store'
 import { Col, Row } from 'antd/es/grid'
 import { useNavigate } from 'react-router-dom'
 import "./style.scss"
@@ -9,6 +10,7 @@ import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
 import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
 import ManagerCalendar from './ManagerCalendar'
 // import ManagerCalendar from './ManagerCalendar'
+
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
@@ -17,7 +19,9 @@ const CardIcon = [
 ]
 const index = (props: any) => {
   const { userRole, hideTopBar } = props;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const role = useRecoilValue(currentUserRoleState);
+
   return (
     <div className='manager_main'>
       <PageHeader
@@ -34,7 +38,7 @@ const index = (props: any) => {
           />
         </div>
       </PageHeader>
-      {constants.USER_ROLE === "CompanyAdmin" &&
+      {role === constants.COMPANY_ADMIN &&
         <div className="Leave_request_card_wrapper mb-5 flex items-center justify-between flex-wrap gap-5">
           {[1, 2, 3, 4, 5].map((data: any) => (
             <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%]  w-full'>

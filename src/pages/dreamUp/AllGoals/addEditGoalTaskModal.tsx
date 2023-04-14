@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
-import { Modal, Form, Row, Col, Input, } from 'antd'
+import { Modal, Form, Input, } from 'antd'
 import { CommonDatePicker, TextArea } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
@@ -71,8 +71,8 @@ export const AddEditGoalTaskModal = (props: any) => {
             placement={'bottomLeft'}
           />
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 13, span: 11 }}>
-          <div className='flex items-center justify-between'>
+        <Form.Item >
+          <div className='flex items-center justify-end gap-3'>
             <Button
               className='Leave_request_Canclebtn'
               label="Cancel"

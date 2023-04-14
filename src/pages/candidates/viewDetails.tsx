@@ -2,6 +2,7 @@ import { Drawer, Row, Col } from 'antd';
 import { ReactNode, useEffect,useState } from 'react';
 import DrawerTabs from './drawerTabs';
 import IndividualDetails from './individualDetails';
+import { DrawerWidth } from '../../components';
 
 interface Props {
   open?: boolean;
@@ -12,22 +13,10 @@ interface Props {
 
 const DetailDrawer = (props: Props) => {
   const { open, setOpen, children, ...rest } = props;
-  
-  
-  const getWindowDimensions = () => { const { innerWidth: width } = window; return { width }; };
-  const [windowDimensions, setWindowDimensions] = useState<{ width: number }>(getWindowDimensions());
-
-  useEffect(() => {
-    window.addEventListener("resize", () => { 
-      setWindowDimensions(getWindowDimensions()); }); 
-      return () => window.removeEventListener("resize", 
-      () => { setWindowDimensions(getWindowDimensions()); });
-  }, [windowDimensions.width])
-
-
+  const width = DrawerWidth();
   return (
     <Drawer
-      width={windowDimensions.width>1400 ? 1283: windowDimensions.width > 900 ? 900:windowDimensions.width > 576?600:300}
+      width={width>1400 ? 1283: width > 900 ? 900: width > 576?600:300}
       headerStyle={{ display: 'none' }}
       placement="right"
       onClose={() => setOpen(false)}

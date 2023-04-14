@@ -1,5 +1,7 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 import { gutter } from "..";
 import {
   AnnouncementList,
@@ -22,6 +24,7 @@ import {
 } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
+
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
@@ -51,6 +54,8 @@ const CompanyAdmin = () => {
       },
     ],
   });
+  const role = useRecoilValue(currentUserRoleState);
+
   const loadMoreData = () => {
     setState((prevState) => {
       return {
@@ -131,7 +136,7 @@ const CompanyAdmin = () => {
             data={state.list}
             loading={state.loading}
             loadMoreData={loadMoreData}
-            role={Constants?.USER_ROLE}
+            role={role}
             handleAddAnnouncement={handleAddAnnouncement}
             height={460}
           />
