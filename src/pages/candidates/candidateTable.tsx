@@ -1,7 +1,6 @@
 import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper'
 import {GlobalTable} from '../../components';
 import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from "../../assets/images";
-
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 
 const CandidateTable = (props: any) => {
