@@ -40,7 +40,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     
   };
   return (
-    <div>
+    <BoxWrapper>
       {heading && (
         <div className="flex items-center">
           <p
@@ -57,6 +57,6 @@ export const MonthlyPerfomanceChart = (props: any) => {
       )}
 
       <Column style={style} {...config} marginRatio={marginRatio} />
-    </div>
+    </BoxWrapper>
   );
 };

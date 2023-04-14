@@ -10,7 +10,7 @@ const Index = () => {
   }
 
   return (
-    <CalendarComp eventData={calendarMockData}/>
+    <CalendarComp eventData={calendarMockData} />
   )
 }
 

@@ -5,16 +5,17 @@ import { Avatar, Button, Space } from "antd";
 import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
 import { SettingRightArrrow } from "../../../assets/images";
 import "./SettingCommonModal.scss";
+
 interface ISETTINGCOMMONARRAY {
   selectArray: any;
   deselectArray: any;
   openModal: boolean;
   setOpenModal: any;
+  SelectInternHandler:any
 }
 
 export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
-  const { selectArray, deselectArray, openModal, setOpenModal } = props;
-
+  const { selectArray, deselectArray, openModal, setOpenModal, SelectInternHandler } = props;
   const [selectArrayData, setSelectArrayData] = useState<any>(selectArray);
   const [deselectArrayData, setDeselectArrayData] =
     useState<any>(deselectArray);
@@ -45,10 +46,14 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
     setDeselectArrayData([]);
     setSelectArrayData([...selectArrayData, ...data]);
   };
-
   const handleChange = (item: any) => {
   };
-
+  const HandlerSubmit = () =>{
+    const selectedValue = deselectArrayData.map((item:any)=>item.image._source.fileName)
+    console.log("dd",selectedValue)
+    SelectInternHandler(selectedValue)
+    setOpenModal(false)
+  }
   return (
     <div>
       <PopUpModal
@@ -146,7 +151,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
             <Button key="Cancel" className="footer-cancel-btn " onClick={() => setOpenModal(false)}>
               Cancel
             </Button>
-            <Button key="submit" className="footer-submit-btn ">
+            <Button key="submit" className="footer-submit-btn" onClick={HandlerSubmit}>
               Submit
             </Button>
           </div>

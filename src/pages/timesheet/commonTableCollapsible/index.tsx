@@ -76,12 +76,11 @@ const RenderPanel = (props: any) => {
 }
 
 const CommonTableCollapsible = (props: any) => {
-  const { activeKey, id, dateTime, totalTasks, totalTime, tableData } = props;
+  const { id, dateTime, totalTasks, totalTime, tableData } = props;
   const [toggle, setToggle] = useState({ open: false, id: '' });
 
   return (
     <Collapse size='large'
-      // activeKey={activeKey}
       expandIcon={toggle.open && id === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
       onChange={(e: any) => setToggle({ open: !toggle.open, id: e })}
       collapsible='icon'

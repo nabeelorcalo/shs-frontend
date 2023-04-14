@@ -53,11 +53,13 @@ const SettingPayroll: React.FC = () => {
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
-                      <Title level={5}>{data.name}</Title>
-                      <Text className="text-base font-medium mb-1">
+                    <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
+                        {data?.name}
+                      </Text>
+                      <Text className="text-base font-medium mb-1 text-teriary-color">
                         {data.content}
                       </Text>
-                      <Text className="text-sm font-normal content-text">{data.payrollCyle}</Text>
+                      <Text className="text-sm font-normal content-text ">{data.payrollCyle}</Text>
                       <Text className="text-sm font-normal content-text">{data.addedDate}</Text>
                       <Text className="text-sm font-normal content-text">{data.addedBy}</Text>
                     </div>
