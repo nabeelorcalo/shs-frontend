@@ -16,12 +16,12 @@ const CandidateTable = (props: any) => {
 
   const items: any = [
     {
-      label: <div >
+      label: (<div >
         {ratingCount.map((obj, i) => <div key={obj.count} className='flex items-center ratings '>
           <p className='title font-semibold text-base capitalize w-[120px] mb-[15px] '>{obj.title}</p>
           {Array.from(Array(obj.count).keys()).map(num => <StarFilledIcon key={num} className='icons mx-[2px] mb-[15px] ' />)}
         </div>)}
-      </div>,
+      </div>),
       key: 'rating'
     },
 

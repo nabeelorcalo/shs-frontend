@@ -2,7 +2,7 @@ import { Gauge } from "@ant-design/plots";
 import { Row } from "antd/es/grid";
 import { FC } from "react";
 import { InformationIcon } from "../../../assets/images";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 
 export const GaugePlot: FC<{ style?: any }> = (props) => {
   const { style } = props;
