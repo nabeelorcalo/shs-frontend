@@ -1,5 +1,5 @@
 import { GlobalTable } from '../../../components';
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import { ThreeDots } from '../../../assets/images';
 import { tableMockData } from './tableMock';
 import { useNavigate } from 'react-router-dom';
