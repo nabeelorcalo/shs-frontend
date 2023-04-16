@@ -1,20 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   DropDown,
   SearchBar,
   GlobalTable,
   PageHeader,
   BoxWrapper,
-  FiltersButton,
   CommonDatePicker,
   Notifications
 } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
-import { Button, Dropdown, Space } from "antd";
-import { DownloadDocumentIcon, InternshipsIcon, More, Success } from "../../assets/images";
+import {Dropdown} from "antd";
+import { More } from "../../assets/images";
 import type { MenuProps } from 'antd';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useCustomHook from "./viewPayrollActionHandler";
 
 
@@ -77,11 +76,7 @@ const tableData = [
   },
 ]
 const ViewPayrollDetails = () => {
-  const navigate = useNavigate()
-  const [value, setValue] = useState("")
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
@@ -150,7 +145,7 @@ const ViewPayrollDetails = () => {
       title: 'Actions'
     }
   ]
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = tableData.map((item) => {
     return (
       {
         no: item.no,
@@ -163,7 +158,6 @@ const ViewPayrollDetails = () => {
       }
     )
   })
-  console.log(value)
   return (
     <>
       <PageHeader
