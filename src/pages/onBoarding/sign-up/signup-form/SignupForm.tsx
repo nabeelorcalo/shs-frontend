@@ -122,14 +122,14 @@ const SignupForm = ({ signupRole }: any) => {
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-              {/* <Form.Item
+              <Form.Item
                 label="Date of Birth"
                 name="DOB"
                 rules={[{ required: false }, { type: "date" }]}
               >
                 
-              </Form.Item> */}
               <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
+              </Form.Item>
             </Col>
           </Row>
         )}
@@ -224,10 +224,10 @@ const SignupForm = ({ signupRole }: any) => {
           </Button>
         </Form.Item>
         <div>
-          <Typography className="text-center">
-            Already have an account?
-            <a href="/login" className="a-tag-signup">
-              Sign In
+          <Typography className="text-center primary-color text-base">
+            Already have an account?&nbsp;
+             <a href="/login" className="a-tag-signup cursor-pointer font-semibold">
+               Sign In
             </a>
           </Typography>
         </div>

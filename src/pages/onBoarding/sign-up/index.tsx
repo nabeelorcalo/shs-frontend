@@ -28,17 +28,17 @@ const SignUp = () => {
   return (
     <div className="signup-form">
       <Row className="form-style">
-        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={8} xl={10} lg={14} md={18} sm={24} xs={22}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
-              <Typography.Title level={2}>Sign up</Typography.Title>
+              <Typography className="primary-color text-[38px] font-medium">Sign up</Typography>
 
-              <Typography.Title level={3}>
+              <Typography  className="primary-color text-[30px] font-medium pb-2">
                 {TagLine[signupRole ? signupRole : "STUDENT"]}
-              </Typography.Title>
+              </Typography>
             </div>
             <SignupForm signupRole={signupRole} />
           </div>
