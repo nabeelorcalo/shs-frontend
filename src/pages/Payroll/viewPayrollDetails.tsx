@@ -206,10 +206,6 @@ const ViewPayrollDetails = () => {
           <div className="pt-3">
             <GlobalTable
               columns={columns}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { },
-              }}
               tableData={newTableData}
             />
           </div>
