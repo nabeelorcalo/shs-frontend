@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Empty, Spin} from 'antd'
-import { useRecoilState } from "recoil";
-import { savedPropertiesState } from "../../../store";
-import useSavedPropertiesHook from "./actionHandler";
 import { AccommodationCard } from '../../../components'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
+import { useRecoilValue} from "recoil";
+import { savedPropertiesState } from "../../../store";
+import useSavedPropertiesHook from "./actionHandler";
 
 
 
@@ -15,7 +15,7 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const {getSavedProperties} = useSavedPropertiesHook();
-  const [savedProperties, setsavedProperties] = useRecoilState(savedPropertiesState)
+  const savedProperties= useRecoilValue(savedPropertiesState)
   const [loading, setLoading] = useState(false)
 
 
@@ -23,26 +23,12 @@ const SavedSearches = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    fetchSavedSearches()
+    getSavedProperties(setLoading)
   }, [])
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const fetchSavedSearches = async () => {
-    setLoading(true)
-    try {
-      const response = await getSavedProperties();
-      if(!response.error) {
-        const {data} = response
-        setsavedProperties(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoading(false)
-    }
-  }
 
 
 

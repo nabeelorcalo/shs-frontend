@@ -6,11 +6,10 @@ import { Table, Dropdown, Typography, Row, Col } from 'antd';
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images';
 import { PopUpModal, Alert } from "../../../components";
 import dayjs from 'dayjs';
-import api from "../../../api";
-import endpoints from "../../../config/apiEndpoints";
-import { useRecoilState } from "recoil";
-import { bookingRequestsState } from "../../../store";
 import "./style.scss";
+import { useRecoilValue} from "recoil";
+import { bookingRequestsState } from "../../../store";
+import useBookingRequests from "./actionHandler";
 interface DataType {
   key: React.Key;
   tenant: any;
@@ -28,13 +27,11 @@ const BookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const location = useLocation()
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalViewContractOpen, setModalViewContractOpen] = useState(false)
   const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false)
-  const [bookingRequests, setBookingRequests] = useRecoilState(bookingRequestsState)
+  const bookingRequests = useRecoilValue(bookingRequestsState)
+  const {getBookingRequests} = useBookingRequests();
   const [loading, setLoading] = useState(false)
-  const { GET_PROPERTY_BOOKINGS } = endpoints;
 
   const itemsPending: MenuProps['items'] = [
     {
@@ -185,26 +182,12 @@ const BookingRequests = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    fetchBookingRequests()
+    getBookingRequests(setLoading)
   }, [])
 
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const fetchBookingRequests = async () => {
-    setLoading(true)
-    try {
-      const response = await api.get(`${GET_PROPERTY_BOOKINGS}`);;
-      if(!response.error) {
-        const {data} = response
-        setBookingRequests(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoading(false)
-    }
-  }
 
 
 

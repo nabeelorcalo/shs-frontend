@@ -7,8 +7,8 @@ import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
-import { listingsState, listingLoadingState } from "../../store";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { listingsState } from "../../store";
+import { useRecoilValue} from "recoil";
 import dayjs from 'dayjs'
 import showNotification from '../../helpers/showNotification'
 import constants from '../../config/constants'
@@ -113,10 +113,9 @@ const listingInitValues = {
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const listingsActions = useListingsHook()
-  const [allProperties, setAllProperties] = useRecoilState(listingsState)
+  const {getListings, createListing} = useListingsHook()
+  const allProperties = useRecoilValue(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false)
-  const loading = useRecoilValue(listingLoadingState)
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
@@ -212,27 +211,12 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    propertiesData()
+    getListings(setLoadingAllProperties)
   }, [])
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const propertiesData = async () => {
-    setLoadingAllProperties(true)
-    try {
-      const response = await listingsActions.getListings();
-      if(!response.error) {
-        const {data} = response.response
-        setAllProperties(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoadingAllProperties(false)
-    }
-  }
-
   const handleSubmission = useCallback(
     (result:any) => {
       if (result.error) {
@@ -253,7 +237,7 @@ const Listings = () => {
       return;
     }
     // setAddListingLoading(true);
-    const result = await listingsActions.createListing(listingValues);
+    const result = await createListing(listingValues);
     // setAddListingLoading(false);
     handleSubmission(JSON.stringify(result));
   }, [form, handleSubmission]);

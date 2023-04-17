@@ -29,6 +29,10 @@ svg {
   min-height: 158px;
 }
 
+.ant-modal-root .ant-modal-wrap {
+  z-index: 1259;
+}
+
 .ant-drawer {
   z-index: 1260;
 }
@@ -494,6 +498,12 @@ svg {
             font-weight: 400;
             font-size: 16px;
             line-height: 1.5;
+          }
+        }
+
+        .ant-table-placeholder {
+          .ant-table-cell {
+            border: none;
           }
         }
 

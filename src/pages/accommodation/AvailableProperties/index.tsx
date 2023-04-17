@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilState } from "recoil";
-import { availablePropertiesState } from "../../../store";
-import { AccommodationCard } from '../../../components'
-import useAvailablePropertiesHook from "./actionHandler";
-import {Empty, Spin} from 'antd'
+import { useNavigate } from 'react-router-dom';
+import { AccommodationCard } from '../../../components';
 import "./style.scss";
-import thumb1 from '../../../assets/images/gallery/thumb1.png'
+import {Empty, Spin} from 'antd';
+import thumb1 from '../../../assets/images/gallery/thumb1.png';
+import { useRecoilValue} from "recoil";
+import { availablePropertiesState } from "../../../store";
+import useAvailablePropertiesHook from "./actionHandler";
 
 
 
@@ -14,10 +14,8 @@ const AvailableProperties = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const location = useLocation()
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const {getAvailableProperties} = useAvailablePropertiesHook();
-  const [availableProperties, setAvailableProperties] = useRecoilState(availablePropertiesState)
+  const availableProperties = useRecoilValue(availablePropertiesState)
   const [loading, setLoading] = useState(false)
 
 
@@ -25,26 +23,12 @@ const AvailableProperties = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    propertiesData()
+    getAvailableProperties(setLoading)
   }, [])
+
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const propertiesData = async () => {
-    setLoading(true)
-    try {
-      const response = await getAvailableProperties();
-      if(!response.error) {
-        const {data} = response
-        setAvailableProperties(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoading(false)
-    }
-  }
-
 
 
 
