@@ -21,8 +21,6 @@ const SignUp = () => {
     UNIVERSITY: "See Your Students Grow",
     DELEGATE_AGENT : 'Become a delegate',
     PROPERTY_AGENT : 'Become a Property Agent'
-
-
   };
 
   return (

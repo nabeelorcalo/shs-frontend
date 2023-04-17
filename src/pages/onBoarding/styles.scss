@@ -42,11 +42,7 @@
   .login-form-forgot {
     color: $primary-bg-color;
   }
- 
 }
-
-  
-
 
 .verfiction-link {
   .verfiction-link-style {
@@ -116,7 +112,6 @@
       width: 100%;
     }
     .btn-cancel-verification {
-      // padding: 5px 30px 30px 5px;
       text-align: center;
       width: 100%;
     }
@@ -142,11 +137,9 @@
       border: 2px dashed $text-primary-title-color;
       border-radius: 4px;
     }
-   
   }
-  
+
   .university-detail {
-  
     .university-detail-style {
       display: flex !important;
       justify-content: center;
@@ -233,7 +226,6 @@
 
 }
 
-
 .about-buisness{
   .about-buisness-style{
     display: flex !important;
@@ -266,10 +258,7 @@ text-align: center;
 color: $primary-bg-color;
 }
 .images-wrapper{
-  
-  padding-top: 5rem;
-  
-  
+  padding-top: 5rem; 
 }
 
 .select-user-label{
@@ -279,7 +268,6 @@ line-height: 28px;
 text-align: center;
 color: $text-primary-title-color;
 padding-top: 2rem;
-
 }
 .select-user-continue{
   background: $primary-bg-color;
@@ -309,7 +297,6 @@ position: absolute;
 top: -8%;
 left: 42%;
 background-color: $white-bg-color;
-
 }
 
 
