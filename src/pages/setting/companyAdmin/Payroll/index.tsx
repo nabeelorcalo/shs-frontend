@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Typography, Row, Col, Button } from "antd";
 import { SettingPayrollAddIcon } from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
-import { BoxWrapper } from "../../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import './style.scss'

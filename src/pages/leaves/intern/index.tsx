@@ -1,7 +1,7 @@
 import { Button, Col, Row } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import Calendar from "./calendar"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';

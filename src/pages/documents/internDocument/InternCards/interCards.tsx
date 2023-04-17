@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row, Rate, Divider } from "antd";
-import { BoxWrapper } from "../../../../components/BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../../../../components";
 import { Dots, DoucmentCard } from "../../../../assets/images";
 import DocTable from "../DocsTable/docTable";
 

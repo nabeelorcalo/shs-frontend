@@ -6,7 +6,7 @@ import { LifeAssessmentGraph } from './graphForLifeAssessmentAndLifeBalance/life
 import { LifeBalanceGraph } from './graphForLifeAssessmentAndLifeBalance/lifeBalance';
 import { RegisterAgentsAndRewardGraph } from './graphForRegisterAgentsAndRewards';
 import { RegisterMemberAndFeddbackGraph } from './graphForRegisteredMembersAndFeedback';
-import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 // import AreaMap from './AreaMap';
 
 const Graph = (props: any) => {

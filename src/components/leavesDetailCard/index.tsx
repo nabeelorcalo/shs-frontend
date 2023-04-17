@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Typography } from "antd";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 import { PinkRectangle, PurpleRectangle, YellowRectangle, BlueRectangle } from "../../assets/images";
 import "./style.scss";
 import AvatarGroup from "../UniversityCard/AvatarGroup";

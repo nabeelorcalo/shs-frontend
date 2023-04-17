@@ -2,7 +2,7 @@ import React, { useState, useEffect, FC } from "react";
 import { Line } from "@ant-design/plots";
 import growthAnalyticsData from "./data";
 import "../style.scss";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { Row, Col } from "antd";
 import { CommonDatePicker } from "../../calendars/CommonDatePicker/CommonDatePicker";
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Row, Col, Divider, Input } from "antd";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { SearchBar } from "../../../components";
 import {
   Filter,

@@ -107,7 +107,7 @@ const CalendarDrawerInnerDetail = (props: any) => {
                     <Col lg={12}>
                         <div className='request_data'>
                             <h4 className=' font-medium text-base  '>Status</h4>
-                            <p className=' text-base font-normal inline p-1 rounded-lg status_style mt-2 ' style={{ backgroundColor: renderStatusColor[reqStatus] }}>{reqStatus}</p>
+                            <p className=' text-base font-normal inline p-1 rounded-lg status_style mt-2 Status  ' style={{ backgroundColor: renderStatusColor[reqStatus] }}>{reqStatus}</p>
                         </div>
                     </Col>
                     <Divider />

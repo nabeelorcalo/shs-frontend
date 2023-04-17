@@ -1,6 +1,6 @@
 import { Avatar, Button, Divider } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper'
+import { BoxWrapper } from '../../components'
 import '../../scss/global-color/Global-colors.scss'
 import './style.scss'
 
