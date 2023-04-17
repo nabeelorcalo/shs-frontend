@@ -147,10 +147,10 @@ export const InternshipProgressCard = (props: any) => {
           </div>
         }
         footer={
-          <>
-            <Button type="default" size="small" className="button-default-error" onClick={() => setDecline(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-error">Decline</Button>
-          </>
+          <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
+            <Button type="default" size="small" className="button-default-error max-sm:w-full" onClick={() => setDecline(false)}>Cancel</Button>
+            <Button type="primary" size="small" className="button-error max-sm:w-full">Decline</Button>
+          </div>
         }
       />
       <PopUpModal
@@ -169,10 +169,10 @@ export const InternshipProgressCard = (props: any) => {
           </div>
         }
         footer={
-          <>
-            <Button type="default" size="small" className="button-default-error" onClick={() => setDeleteInternship(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-error">Decline</Button>
-          </>
+          <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
+            <Button type="default" size="small" className="button-default-error max-sm:w-full" onClick={() => setDeleteInternship(false)}>Cancel</Button>
+            <Button type="primary" size="small" className="button-error max-sm:w-full">Decline</Button>
+          </div>
         }
       />
     </div>

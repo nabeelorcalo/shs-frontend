@@ -429,10 +429,10 @@ const InternsCompanyAdmin = () => {
           </div>
         }
         footer={
-          <>
-            <Button type="default" size="middle" className="button-default-tertiary" onClick={() => setAssignManager(false)}>Cancel</Button>
-            <Button type="primary" size="middle" className="button-tertiary">Assign</Button>
-          </>
+          <div className="flex flex gap-3 justify-end max-sm:flex-col">
+            <Button type="default" size="middle" className="button-default-tertiary max-sm:w-full" onClick={() => setAssignManager(false)}>Cancel</Button>
+            <Button type="default" size="middle" className="button-tertiary max-sm:w-full">Assign</Button>
+          </div>
         }
       />
       <PopUpModal
@@ -459,10 +459,10 @@ const InternsCompanyAdmin = () => {
           </div>
         }
         footer={
-          <>
-            <Button type="default" size="small" className="button-default-error" onClick={() => setTerminate(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-error">Terminate</Button>
-          </>
+          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+            <Button type="default" size="small" className="button-default-error max-sm:w-full" onClick={() => setTerminate(false)}>Cancel</Button>
+            <Button type="primary" size="small" className="button-error max-sm:w-full">Terminate</Button>
+          </div>
         }
       />
       <PopUpModal
@@ -479,10 +479,10 @@ const InternsCompanyAdmin = () => {
           </div>
         }
         footer={
-          <>
-            <Button type="default" size="small" className="button-default-tertiary" onClick={() => setComplete(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-tertiary" onClick={() => { alert("hello") }}>Complete</Button>
-          </>
+          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+            <Button type="default" size="small" className="button-default-tertiary max-sm:w-full" onClick={() => setComplete(false)}>Cancel</Button>
+            <Button type="primary" size="small" className="button-tertiary max-sm:w-full" onClick={() => { alert("hello") }}>Complete</Button>
+          </div>
         }
       />
       <UploadDocument />
