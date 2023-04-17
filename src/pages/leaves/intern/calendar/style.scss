@@ -1,6 +1,9 @@
 @import "../../../../scss/colors";
 
 .calander_main_wrapper {
+    .fc-view-harness{
+        height: 442px !important;
+    }
     .fc-media-screen {
         .fc-header-toolbar {
             border-bottom: 1px solid $text-error-line-color;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import './style.scss';
+
 interface DrawerDataInterface {
   title?: string,
   className?: string,

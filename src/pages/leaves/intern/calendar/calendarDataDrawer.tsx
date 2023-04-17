@@ -19,6 +19,7 @@ const CalendarDataDrawer = (props: any) => {
         "Work from home": "rgba(233, 111, 124, 1)",
         "Medical": "rgba(106, 173, 142, 1)"
     }
+
     // console.log('events', events);
     return (
         <DrawerComp
