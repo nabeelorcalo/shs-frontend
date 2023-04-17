@@ -5,15 +5,12 @@ import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
 import useCustomHook from "../actionHandler";
-import api from "../../../api";
-import endpoints from "../../../config/apiEndpoints";
 
 const Agent = () => {
   const {
     //countingCard data
-    agentDashboardWidgets: { totalProperties, totalVacantProperties, totalReservedProperties, totalOccupiedProperties },
+    countingCardData: { totalProperties, totalVacantProperties, totalReservedProperties, totalOccupiedProperties },
   } = useCustomHook();
-  // console.log(agentDashboardWidgets, "agentDashboardWidgets");
 
   const [state, setState] = useState({
     list: [],
@@ -41,6 +38,7 @@ const Agent = () => {
       })
       .catch(() => {});
   };
+
 
   useEffect(() => {
     loadMoreData();

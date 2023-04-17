@@ -14,8 +14,8 @@ const useCustomHook = () => {
     const { data } = await api.post(LOGIN, body);
     localStorage.setItem("accessToken", data.accessToken);
     setCurrentUser(data.user);
+    return data
 
-    localStorage.setItem("UserData", JSON.stringify({ role: data.user.role }));
   };
 
   return {

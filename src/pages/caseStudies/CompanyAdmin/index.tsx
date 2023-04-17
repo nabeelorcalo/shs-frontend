@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar, } from '../../../components'
+import { BoxWrapper, Drawer, DropDown, FiltersButton, Notifications, PageHeader, SearchBar, } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import CaseStudiesTable from '../Common/caseStudiesTable';
 import Filters from '../Common/filter';
@@ -89,7 +89,8 @@ const index = () => {
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
-            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ") }}
+            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ")
+            Notifications({title:"Success", description:"Case-studies list downloaded ",type:'success'})}} 
           />
         </div>
       </div>

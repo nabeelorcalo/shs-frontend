@@ -87,51 +87,50 @@
       padding: 0;
       margin: 0;
 
-      & > li {
+      li {
         background-color: $text-input-bg-color;
         display: flex;
-        align-items: center;
-        padding: 14px 20px 14px 34px;
+        // padding: 14px 20px 14px 34px;
 
         & + li {
           margin-top: 16px;
         }
 
-        .account-list-item-left {
-          flex: 1;
-          display: flex;
-          align-items: center;
+        // .account-list-item-left {
+        //   // flex: 1;
+        //   // display: flex;
+        //   // align-items: center;
 
-          .account-item-icon {
-            width: 37px;
-            margin-right: 18px;
-          }
+        //   .account-item-icon {
+        //     width: 37px;
+        //     margin-right: 18px;
+        //   }
 
-          .account-item-content {
-            color: $text-primary-title-color;
+        //   .account-item-content {
+        //     color: $text-primary-title-color;
 
-            .bank-name {
-              font-size: 16px;
-              font-weight: 400;
-              line-height: 24px;
-            }
+        //     .bank-name {
+        //       font-size: 16px;
+        //       font-weight: 400;
+        //       line-height: 24px;
+        //     }
 
-            .account-title {
-              font-size: 14px;
-              font-weight: 400;
-              line-height: 24px;
-            }
-          }
-        }
+        //     .account-title {
+        //       font-size: 14px;
+        //       font-weight: 400;
+        //       line-height: 24px;
+        //     }
+        //   }
+        // }
 
-        .account-list-item-right {
-          margin-left: 20px;
+        // .account-list-item-right {
+          // margin-left: 20px;
 
-          .account-edit-btn {
-            cursor: pointer;
-            width: 24px;
-          }
-        }
+          // .account-edit-btn {
+          //   cursor: pointer;
+          //   width: 24px;
+          // }
+        // }
       }
     }
   }

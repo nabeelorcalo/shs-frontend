@@ -17,12 +17,19 @@ const SigninForm = (props: any) => {
     console.log("Received values of form: ", values);
     const { Email, password } = values;
 
-    action.login({
-      email: Email,
-      password: password,
-    });
-        navigate("/dashboard");
+    action
+      .login({
+        email: Email,
+        password: password,
+      })
+      .then((data) => {
+        console.log("data", data); //for debugging purpose
+        data.accessToken && navigate("/dashboard");
+      })
+      .catch((err) => console.log(err));
   };
+
+  
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });

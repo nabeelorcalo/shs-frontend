@@ -1,7 +1,7 @@
 import { Button, Divider, TabsProps } from 'antd'
 import React, { useState } from 'react'
 import { BlowWistle } from '../../../../assets/images'
-import { Breadcrumb, DropDown, FiltersButton ,Drawer,AppTabs, BoxWrapper, PopUpModal, SearchBar } from '../../../../components'
+import { Breadcrumb, DropDown, FiltersButton ,Drawer,AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from '../../../../components'
 import BlowWhistleForm from '../../Common/blowWhistleForm'
 import Filters from '../../Common/filters'
 import EscalatedByMe from './escalatedByMe'
@@ -254,7 +254,7 @@ const index = () => {
           <SearchBar size="middle" handleChange={handleChange} />
         </div>
         <div className='w-full flex flex-row lg:justify-end gap-1 md:gap-2' >
-          <div>
+          <div className='header-btn'>
           <Button
             size="middle"
             onClick={() => {
@@ -277,7 +277,8 @@ const index = () => {
               options={["pdf", "excel"]}
               setValue={() => {
                 action.downloadPdfOrCsv(event , downloadPdfCsvColumn(),  downloadPdfCsvData(), "All Grievance",  selectedTab )
-              }}
+                Notifications({title:"Success", description:"Grievance list downloaded ",type:'success'})}}
+              
             />
           </div>
         </div>

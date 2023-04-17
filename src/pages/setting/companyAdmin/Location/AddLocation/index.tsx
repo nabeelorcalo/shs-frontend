@@ -7,16 +7,17 @@ import {
   SettingAvater,
 } from "../../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Breadcrumb, DropDown, Input,BoxWrapper,DragAndDropUpload ,SettingCommonModal } from "../../../../../components";
+import { Breadcrumb, DropDown, Input, BoxWrapper, DragAndDropUpload, SettingCommonModal } from "../../../../../components";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
-const { Title, Paragraph } = Typography;
+import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
+const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
   const breadcrumbArray = [
-    { name: "Add Location"},
-    { name: "Setting"  },
-    { name: "Location" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_LOCATION}`},
+    { name: "Add Location" },
+    { name: "Setting" },
+    { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
   const selectArray = [
     {
@@ -49,29 +50,41 @@ const AddLocation: React.FC = () => {
   const [form] = Form.useForm();
   const [value, setValue] = useState(1);
   const [openModal, setOpenModal] = useState<any>(false);
+  const [intern, setIntern] = useState<any>();
 
-  const handleSubmit = () => {
-    const values = form.getFieldsValue();
+  const onFinish = (values: any) => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
     if (e.target.value === 2) {
       setOpenModal(!openModal);
     }
+    else if (e.target.value === 1) {
+      setIntern(null)
+    }
   };
+
+  const SelectInternHandler = (data: any) => {
+    console.log(data)
+    setIntern(data)
+  }
 
   return (
     <div className="add-location">
-    <Breadcrumb breadCrumbData={breadcrumbArray} />
-      <Divider/>
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <BoxWrapper>
-        <Form layout="vertical" form={form}>
+        <Form layout="vertical"
+          form={form}
+          onFinish={onFinish}
+        >
           {/*------------------------ Office----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Office
-              </Title>
+              </span>
               <Paragraph>
                 Enter office details for different locations
               </Paragraph>
@@ -100,9 +113,9 @@ const AddLocation: React.FC = () => {
           {/*------------------------ Address----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row " xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Address
-              </Title>
+              </span>
               <Paragraph>Enter address details for office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
@@ -192,7 +205,7 @@ const AddLocation: React.FC = () => {
                     handleChange={() => { }}
                   />
                 </Form.Item>
-                <div className="w-full  ">
+                <div className="w-full">
                   <Form.Item
                     label="Country"
                     required={false}
@@ -200,7 +213,6 @@ const AddLocation: React.FC = () => {
                     rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown
-                   
                       name="Select"
                       options={["Pakistan", "India", "France"]}
                       setDateValue={() => { }}
@@ -214,9 +226,9 @@ const AddLocation: React.FC = () => {
           {/*------------------------ Contact----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Contact
-              </Title>
+              </span>
               <Paragraph>
                 Enter contact information of office location
               </Paragraph>
@@ -283,9 +295,9 @@ const AddLocation: React.FC = () => {
           {/*------------------------ Upload Picture----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
-                Upload Picture
-              </Title>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
+                Upload Image
+              </span>
               <Paragraph>Upload picture for your office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
@@ -296,29 +308,33 @@ const AddLocation: React.FC = () => {
           {/*------------------------ Add Interns----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Add Interns
-              </Title>
+              </span>
               <Paragraph>Select for this office location</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <Radio.Group onChange={onChange} value={value}>
+            <Col className="gutter-row  " xs={24} md={12} xxl={8} >
+              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
                 <Radio value={1}>All interns</Radio>
                 <Radio value={2}>Select Interns</Radio>
               </Radio.Group>
+                <span >
+                  <AvatarGroup maxCount={6} list={intern} />
+                </span>
+              </div>
             </Col>
           </Row>
           <Space className="flex justify-end">
-          <Button danger size="middle" type="primary">
-          <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_LOCATION}`}> 
-             Cancel 
-             </NavLink>
+            <Button danger size="middle" type="primary" onClick={() => form.resetFields()}>
+              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`}>
+                Cancel
+              </NavLink>
             </Button>
-           
+
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
-              onClick={handleSubmit}
+              htmlType="submit"
             >
               Add
             </Button>
@@ -330,6 +346,7 @@ const AddLocation: React.FC = () => {
         deselectArray={deselectArray}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        SelectInternHandler={SelectInternHandler}
       />
     </div>
   );

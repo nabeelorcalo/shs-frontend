@@ -18,6 +18,9 @@ const InternCard = (props: IDUMMYDATA) => {
   const ProfileHandler = ()=>{
     navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`)
   }
+  const ChatHandler = ()=>{
+    navigate(`/${ROUTES_CONSTANTS.CHAT}`)
+  }
   return (
     <div className='university-intern-card'>
       <Row gutter={[16, 16]} >
@@ -73,7 +76,8 @@ const InternCard = (props: IDUMMYDATA) => {
                 <div className='flex justify-between my-4 w-full'>
                   <Button label='Profile'  size='small'  className='intern-card-profile-button '
                    onClick={ProfileHandler}/>
-                  <Button label="Chat" size='small' className='intern-card-chat-button'/> 
+                  <Button label="Chat" size='small' className='intern-card-chat-button'
+                  onClick={ChatHandler}/> 
                   </div>
               </div>
             </BoxWrapper>

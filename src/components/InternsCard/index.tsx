@@ -1,6 +1,6 @@
 import { Avatar, Button, Divider } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper'
+import { BoxWrapper } from '../../components'
 import '../../scss/global-color/Global-colors.scss'
 import './style.scss'
 
@@ -23,7 +23,7 @@ export const InternsCard = (props: any) => {
             <p className='text-sm'>{department}</p>
             {company ? <p className='text-sm'>Company:<span className='text-sm pl-2 font-semibold'>{company}</span></p> : null}
           </div>
-          <div className='flex flex-row gap-3 items-center p-3 rounded-md join-dob-card-style'>
+          <div className='flex flex-row max-xs:flex-col gap-3 items-center p-3 max-sm:p-2 rounded-md join-dob-card-style'>
             <div className='flex flex-col gap-2 items-center'>
               <p className='text-sm text-success-placeholder-color'>Joining</p>
               <p>{joining_date}</p>

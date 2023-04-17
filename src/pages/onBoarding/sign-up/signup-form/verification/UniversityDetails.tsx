@@ -7,22 +7,15 @@ import {
   Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
-import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
-import { BackButton } from "../../../../../assets/images";
-import type { SelectProps } from "antd";
+import { DocumentUpload, SHSLogo ,BackButton } from "../../../../../assets/images";
 import { DropDown } from "../../../../../components";
 import "../../../styles.scss";
-
-
-const { Option } = Select;
 
 const UniversityDetails = (props: any) => {
 
   const { currentStep, setCurrentStep } = props;
-  const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
   const [searchValue, setSearchValue] = useState("");
 

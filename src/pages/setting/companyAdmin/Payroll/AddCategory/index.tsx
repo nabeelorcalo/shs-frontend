@@ -12,21 +12,22 @@ import {
   Input,
   Switch,
 } from "antd";
-import { SettingAvater} from "../../../../../assets/images";
+import { SettingAvater } from "../../../../../assets/images";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Breadcrumb, CommonDatePicker , BoxWrapper } from "../../../../../components";
+import { Breadcrumb, CommonDatePicker, BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const PayrollAddCategory = () => {
   const navigate = useNavigate();
   const breadcrumbArray = [
-    { name: "Add Category"},
-    { name: "Setting"  },
-    { name: "Payroll" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
+    { name: "Add Category" },
+    { name: "Setting" },
+    { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
 
   ];
   const selectArray = [
@@ -56,12 +57,13 @@ const PayrollAddCategory = () => {
     },
   ];
 
-  const deselectArray:any = [];
+  const deselectArray: any = [];
 
   const [value, setValue] = useState(1);
   const [openModal, setOpenModal] = useState<any>(false);
   const [openDatePickerFrom, setOpenDatePickerFrom] = useState(false);
   const [openDatePickerTo, setOpenDatePickerTo] = useState(false);
+  const [intern, setIntern] = useState<any>();
   const [formValues, setFormValues] = useState<any>({
     shiftName: "",
     formDate: "",
@@ -76,27 +78,35 @@ const PayrollAddCategory = () => {
   };
 
   const onChange = (e: RadioChangeEvent) => {
-    if(e.target.value===2){
+    setValue(e.target.value);
+    if (e.target.value === 2) {
       setOpenModal(!openModal);
     }
-    setValue(e.target.value);
+    else if (e.target.value === 1) {
+      setIntern(null)
+    }
+
   };
+
+  const SelectInternHandler = (data: any) => {
+    console.log(data)
+    setIntern(data)
+
+  }
 
   return (
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
-
-      <Breadcrumb breadCrumbData={breadcrumbArray}  />
-
-      <Divider  />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color" >
                 Payroll Details
-              </Title>
+              </span>
               <Paragraph>Enter shift details here</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
@@ -107,25 +117,25 @@ const PayrollAddCategory = () => {
               >
                 <Input placeholder="Enter Name" />
               </Form.Item>
-              <div className="flex flex-col md:flex-row justify-between w-full my-5">
-                <div className="flex flex-col justify-between w-full pr-2 ">
+              <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
+                <div className="flex flex-col justify-between w-full md:pr-2 ">
                   <label>From</label>
                   <CommonDatePicker
                     name="Date Picker"
                     open={openDatePickerFrom}
-                    onBtnClick={() => {}}
+                    onBtnClick={() => { }}
                     setOpen={setOpenDatePickerFrom}
-                    setValue={function noRefCheck() {}}
+                    setValue={function noRefCheck() { }}
                   />
                 </div>
-                <div className="flex flex-col w-full pl-1">
+                <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
                   <label>To</label>
                   <CommonDatePicker
                     name="Date Picker"
                     open={openDatePickerTo}
-                    onBtnClick={() => {}}
+                    onBtnClick={() => { }}
                     setOpen={setOpenDatePickerTo}
-                    setValue={function noRefCheck() {}}
+                    setValue={function noRefCheck() { }}
                   />
                 </div>
               </div>
@@ -135,16 +145,20 @@ const PayrollAddCategory = () => {
           {/*------------------------ Add Interns----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
-                Add Interns
-              </Title>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
+                Applies to
+              </span>
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <Radio.Group onChange={onChange} value={value}>
-                <Radio value={1}>All Employees</Radio>
-                <Radio value={2}>Select Employees</Radio>
+              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
+                <Radio value={1}>All interns</Radio>
+                <Radio value={2}>Select Interns</Radio>
               </Radio.Group>
+                <span >
+                  <AvatarGroup maxCount={6} list={intern} />
+                </span>
+              </div>
               <div className="my-5">
                 <Switch />
                 <span className="px-2">Apply to all new hires</span>
@@ -154,11 +168,12 @@ const PayrollAddCategory = () => {
 
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_PAYROLL}`}> 
-             Cancel 
-             </NavLink>
+              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`}>
+                Cancel
+              </NavLink>
             </Button>
             <Button
+
               size="middle"
               className="teriary-bg-color white-color add-button"
             >
@@ -172,6 +187,7 @@ const PayrollAddCategory = () => {
         deselectArray={deselectArray}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        SelectInternHandler={SelectInternHandler}
       />
     </div>
   );

@@ -1,8 +1,8 @@
 import { Button, Divider, TabsProps } from 'antd'
 import React, { useState } from 'react'
 import { BlowWistle } from '../../../../assets/images'
-import { DropDown, FiltersButton, PageHeader, PopUpModal, SearchBar } from '../../../../components'
-import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper'
+import { DropDown, FiltersButton, Notifications, PageHeader, PopUpModal, SearchBar } from '../../../../components'
+import { BoxWrapper } from '../../../../components'
 import Drawer from '../../../../components/Drawer'
 import AppTabs from '../../../../components/Tabs'
 import Filters from '../../Common/filters'
@@ -116,7 +116,7 @@ const index = () => {
             options={["pdf", "excel"]}
             setValue={() => {
               action.downloadPdfOrCsv(event,downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
-            }}
+              Notifications({title:"Success", description:"Grievance list downloaded ",type:'success'})}}
           />
               <Button
             size="middle"

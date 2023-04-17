@@ -1,5 +1,5 @@
 import { Divider } from "antd";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 import "./style.scss";
 export const UpcomingHolidayComp = (props: any) => {
   const { upcomingHolidayData } = props

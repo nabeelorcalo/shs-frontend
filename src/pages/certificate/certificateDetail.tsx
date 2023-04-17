@@ -1,6 +1,6 @@
 import { Button, Col, Row } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
-import { BoxWrapper } from '../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 import { tableMockData } from './certificateTable/tableMock';
 import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';

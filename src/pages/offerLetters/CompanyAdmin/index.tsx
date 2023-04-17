@@ -16,6 +16,7 @@ import {
 } from "../../../assets/images";
 import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { useNavigate } from "react-router-dom";
 
 const tableData = [
   {
@@ -80,7 +81,25 @@ const ContractsCard = [
 ]
 
 const CompanyAdmin = () => {
+  const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState(false);
+  const renderDropdown = (status: any) => {
+    switch (status) {
+      case 'rejected':
+        return <CustomDroupDown menu1={rejected} />
+        break;
+      case 'pending':
+        return <CustomDroupDown menu1={pending} />
+        break;
+      case 'Changes requested':
+        return <CustomDroupDown menu1={ChangesRequested} />
+        break;
+      case 'Signed':
+        return <CustomDroupDown menu1={signed} />
+        break;
+
+    }
+  }
 
   const tableColumns = [
     {
@@ -193,7 +212,9 @@ const CompanyAdmin = () => {
       render: (_: any, row: any, index: any) => {
         return (
           <div>
-            <CustomDroupDown menu1={menu2} />
+            {
+              renderDropdown(row.status)
+            }
           </div>
 
         );
@@ -201,10 +222,47 @@ const CompanyAdmin = () => {
     },
   ];
 
-  const menu2 = (
+  const signed = (
     <Menu>
-      <Menu.Item key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate("/signed-company-admin-offer")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Initiate Contract</Menu.Item>
+    </Menu>
+  );
+
+  const ChangesRequested = (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="1">Edit</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+
+  const pending = (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/pending-view-details-offer")} key="1">View Details</Menu.Item>
+      <Menu.Item key="2">Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+
+  const rejected = (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/rejected-company-admin-offer")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
@@ -268,7 +326,7 @@ const CompanyAdmin = () => {
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
-      <PageHeader title="Offer Letters" />
+      <PageHeader title="Offer Letters" bordered={true}/>
       <Row gutter={[20, 20]}>
         {
           ContractsCard.map((item) => {

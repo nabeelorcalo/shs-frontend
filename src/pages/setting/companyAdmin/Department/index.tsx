@@ -1,44 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DepartmentAddIcon, LocationMore } from "../../../../assets/images";
 import { Col, Row, Typography, Button, Form } from "antd";
 import { Input } from "antd";
 import { Alert, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { PopUpModal } from "../../../../components/Model";
+import useCustomHook from "./actionHandler";
+import { useRecoilState } from "recoil";
+import { settingDepartmentState } from "../../../../store";
 import "./style.scss";
 
 const { TextArea } = Input;
 const { Title, Text } = Typography;
-const overview = [
-  {
-    id: 0,
-    name: "Finance",
-    content:
-      "The finance department is responsible for the financial planning and management of the company.",
-  },
-  {
-    id: 1,
-    name: "Human Resources",
-    content:
-      "The finance department is responsible for the financial planning and management of the company.",
-  },
-  {
-    id: 2,
-    name: "Design",
-    content:
-      "The finance department is responsible for the financial planning and management of the company.",
-  },
-];
-
-const SettingDepartment: React.FC = (props: any) => {
+const SettingDepartment: React.FC = () => {
+  const action = useCustomHook();
+  const departmentData = useRecoilState<any>(settingDepartmentState)
   const [form] = Form.useForm();
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [departmentId, setDepartmentId] = useState<any>();
+  const [editData, setEditData] = useState<any>();
 
-  const handleChange = (event: any) => { };
-  const handleSubmit = () => {
-    const values = form.getFieldsValue();
+  const handleChange = (event: any) => {
+    action.GetSettingDepartmentById(event)
   };
+
+  const initialValues = {
+    departmentName: editData?.name,
+    description: editData?.description,
+  };
+
+  const onFinish = (values: any) => {
+    const { departmentName, description } = values
+    action.postSettingDepartment({
+      name: departmentName,
+      description: description
+    }).then(() => { action.getSettingDepartment(1) })
+    form.resetFields()
+    setShowEditModal(!showEditModal)
+  };
+
+  const SetId = (id: any) => {
+    setDepartmentId(id)
+    setShowDeleteModal(!showDeleteModal)
+  }
+  const SetEditData = (edit: any) => {
+    setEditData(edit)
+  }
+
+  const DeleleHandler = () => {
+    action.deleteSettingDepartment(departmentId)
+  }
+
+  useEffect(() => {
+    action.getSettingDepartment(1)
+
+  }, [])
 
   return (
     <div className="setting-department">
@@ -55,32 +72,61 @@ const SettingDepartment: React.FC = (props: any) => {
         </Button>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {overview.map((data: any, index) => {
+        {Array.isArray(departmentData[0]) && departmentData[0]?.map((data: any, index) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} lg={12} xxl={8}>
-              <div className="department-box-wrapper flex">
-                <div className="flex">
-                  <div className="flex pl-3 justify-between mt-2 w-full">
-                    <div className="flex flex-col">
-                      <Title level={5}>{data.name}</Title>
-                      <Text className="text-sm font-normal">
-                        {data.content}
-                      </Text>
-                    </div>
-                    <span className="float-right cursor-pointer w-[40px]">
-                      <DropDownForSetting
-                        showEditModal={showEditModal}
-                        showDeleteModal={showDeleteModal}
-                        setShowDeleteModal={setShowDeleteModal}
-                        setShowEditModal={setShowEditModal}
-                      />
-                    </span>
+            <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
+              <div className="department-box-wrapper">
+                <div className="flex justify-between">
+                  <div>
+                    <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
+                      {data?.name}
+                    </Text>
+                  </div>
+                  <div className="float-right cursor-pointer w-[40px]">
+                    <DropDownForSetting
+                      showEditModal={showEditModal}
+                      showDeleteModal={showDeleteModal}
+                      setShowDeleteModal={setShowDeleteModal}
+                      setShowEditModal={setShowEditModal}
+                      id={data?.id}
+                      SetId={SetId}
+                      editData={data}
+                      SetEditData={SetEditData}
+                    />
                   </div>
                 </div>
+                <Text className="text-sm font-normal text-secondary-color ">
+                  {data?.description}
+                </Text>
               </div>
             </Col>
           );
-        })}
+        })
+        }
+        {
+          !Array.isArray(departmentData[0]) && <Col className="gutter-row" xs={24} xl={12} xxl={8}>
+            <div className="department-box-wrapper">
+              <div className="flex justify-between">
+                <div><Title level={5}>{departmentData[0]?.name}</Title></div>
+                <div className="float-right cursor-pointer w-[40px]">
+                  <DropDownForSetting
+                    showEditModal={showEditModal}
+                    showDeleteModal={showDeleteModal}
+                    setShowDeleteModal={setShowDeleteModal}
+                    setShowEditModal={setShowEditModal}
+                    id={departmentData[0]?.id}
+                    SetId={SetId}
+                    SetEditData={SetEditData}
+                  />
+                </div>
+              </div>
+              <Text className="text-sm font-normal">
+                {departmentData[0]?.description}
+              </Text>
+            </div>
+          </Col>
+        }
+
       </Row>
       <PopUpModal
         open={showEditModal}
@@ -89,7 +135,13 @@ const SettingDepartment: React.FC = (props: any) => {
         close={() => setShowEditModal(false)}
         footer=""
       >
-        <Form layout="vertical" form={form}>
+        <Form
+          layout="vertical"
+          initialValues={initialValues}
+          form={form}
+          onValuesChange={() => form.resetFields()}
+          onFinish={onFinish}
+        >
           <Form.Item
             label="Department Name"
             name="departmentName"
@@ -101,26 +153,24 @@ const SettingDepartment: React.FC = (props: any) => {
               placeholder="Enter department name "
               size="middle"
               type="text"
-              defaultValue=""
-
             />
           </Form.Item>
           <Form.Item
             label="Description"
             name="description"
           >
-            <TextArea rows={6} placeholder="Write Something..." maxLength={6}
+            <TextArea rows={6} placeholder="Write Something..."
               id="description"
               name="description"
               size="middle"
-              defaultValue=""
             />
           </Form.Item>
           <div className="setting-department-footer flex justify-end mt-4 gap-2">
-            <Button key="Cancel" className="footer-cancel-btn " onClick={() => { setShowEditModal(false) }}>
+            <Button key="Cancel" className="footer-cancel-btn "
+              onClick={() => { setShowEditModal(false), form.resetFields() }}>
               Cancel
             </Button>
-            <Button key="submit" className="footer-submit-btn" onClick={handleSubmit}>
+            <Button key="submit" className="footer-submit-btn" htmlType="submit">
               Submit
             </Button>
           </div>
@@ -129,6 +179,7 @@ const SettingDepartment: React.FC = (props: any) => {
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
+        okBtnFunc={DeleleHandler}
         state={showDeleteModal}
         setState={setShowDeleteModal}
         type="error"
