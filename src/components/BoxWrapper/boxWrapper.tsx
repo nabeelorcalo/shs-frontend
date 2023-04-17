@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import "./BoxWrapper.scss";
+import "./style.scss";
 interface Props {
   id?: any
   className?: string
   children?: ReactNode
-  boxShadow?: string
+  // boxShadow?: string
   borderLeft?: string
   rest?: any
 }
@@ -13,7 +13,7 @@ export const BoxWrapper = (props: Props) => {
     id,
     className,
     children,
-    boxShadow = "0px 2px 3px #E4E8F0",
+    // boxShadow = "0px 2px 3px #E4E8F0",
     borderLeft="0",
     ...rest
   } = props;
@@ -21,7 +21,7 @@ export const BoxWrapper = (props: Props) => {
   return (
     <div
       className={`${className} box-wrapper`}
-      style={{ boxShadow: boxShadow, borderLeft: borderLeft}}
+      style={{borderLeft: borderLeft}}
       {...rest}
     >
       {children}

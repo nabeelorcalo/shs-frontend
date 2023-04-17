@@ -321,7 +321,7 @@ const InternshipsCompanyAdmin = () => {
   return (
     <>
       <PageHeader bordered title="Internships" />
-      <div className="flex flex-col gap-5 internship-details">
+      <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
           <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" size="middle" />
@@ -391,36 +391,36 @@ const InternshipsCompanyAdmin = () => {
               </React.Fragment>
             </Drawer>
             <Button
+              type="primary"
               size="middle"
-              className="flex gap-2 teriary-bg-color white-color main-btn"
+              icon={<InternshipsIcon />}
+              className="button-tertiary"
               onClick={() => { navigate("new-internship"); }}
-            >
-              <InternshipsIcon />
-              New Internship
-            </Button>
+            >New Internship</Button>
           </Col>
         </Row>
-        {
-          dummyResponse.data.map((item: any, idx: any) => {
-            return (
-              <BoxWrapper key={idx}>
-                <InternshipProgressCard
-                  title={item.title}
-                  status={item.status}
-                  department={item.department}
-                  internType={item.internType}
-                  postedBy={item.postedBy}
-                  locationType={item.locationType}
-                  locationName={item.locationName}
-                  createdAt={item.createdAt}
-                  closingDate={item.closingDate}
-                  interns={item.interns}
-
-                />
-              </BoxWrapper>
-            )
-          })
-        }
+        <div className='flex flex-col gap-7'>
+          {
+            dummyResponse.data.map((item: any, idx: any) => {
+              return (
+                <BoxWrapper key={idx}>
+                  <InternshipProgressCard
+                    title={item.title}
+                    status={item.status}
+                    department={item.department}
+                    internType={item.internType}
+                    postedBy={item.postedBy}
+                    locationType={item.locationType}
+                    locationName={item.locationName}
+                    createdAt={item.createdAt}
+                    closingDate={item.closingDate}
+                    interns={item.interns}
+                  />
+                </BoxWrapper>
+              )
+            })
+          }
+        </div>
       </div>
     </>
   )
