@@ -13,7 +13,7 @@ import {
 
 import './SettingSidebar.scss'
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 
 const menuLinks = [
   {

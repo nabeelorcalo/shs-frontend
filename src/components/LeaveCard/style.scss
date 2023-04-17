@@ -18,6 +18,7 @@
   }
 
   .lower_part {
+
     .info_wraper {
       .heading {
         color: $text-primary-title-color;
@@ -32,12 +33,13 @@
           position: absolute;
           top: 0;
           bottom: 0;
-          right: -50%;
-          transform: translateX(50%);
+          right: -5px;
+          transform: translateX(-50%);
           width: 1px;
           background-color: $text-error-line-color;
-          @media screen and (max-width:575px){
-            right: -8px;
+
+          @media screen and (max-width:300px) {
+            content: unset;
           }
         }
 
@@ -51,6 +53,20 @@
         }
 
       }
+    }
+  }
+
+  @media screen and (min-width:992px) and (max-width:1350px) {
+    padding: 12px 10px;
+    .heading {
+      font-size: 15px;
+    }
+  }
+
+  @media screen and (min-width:768px) and (max-width:991px) {
+    padding: 12px 10px;
+    .heading {
+      font-size: 14px;
     }
   }
 }

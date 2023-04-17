@@ -1,6 +1,5 @@
 import { Progress } from "@ant-design/plots";
 import { InformationIcon } from "../../../assets/images";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
 
 export const DashboardCharts = (props: any) => {
   const {

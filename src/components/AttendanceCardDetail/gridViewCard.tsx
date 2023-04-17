@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Dropdown, Typography } from 'antd';
-import { BoxWrapper, } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper, } from '../../components';
 import { ThreeDots } from '../../assets/images';
 import { useRecoilValue } from 'recoil';
 import { currentUserRoleState } from '../../store';

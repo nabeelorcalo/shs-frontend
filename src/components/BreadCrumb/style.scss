@@ -36,11 +36,14 @@
       &::before {
         content: " / ";
         padding-inline: 4px;
-        cursor:default;
+        cursor: default;
+      }
+      &:empty::before {
+        content: "";
       }
     }
   }
   .ant-divider {
-    border:1px solid #D9DBE9;
+    border: 1px solid #D9DBE9;
   }
 }

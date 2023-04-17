@@ -10,6 +10,10 @@ import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
 import useBookingRequests from './BookingRequests/actionHandler'
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { availablePropertiesState } from "../../store";
+import api from "../../api";
 
 
   // Temporary Data
@@ -117,6 +121,9 @@ const Accommodation = () => {
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
+  const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
+  const [loading, setLoading] = useState(false)
+  const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const items = [
     {
       label: 'Available Properties',
@@ -155,8 +162,27 @@ const Accommodation = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    // fetchBookingRequests()
+    console.log("availablePro: ", availableProperties)
   }, [])
+
+
+    /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const fetchBookingRequests = async () => {
+    setLoading(true)
+    try {
+      const response = await api.get(GET_AVAILABLE_PROPERTIES, {"moveInDate": "2023-02-01", "moveOutDate": "2023-02-02"});
+      if(!response.error) {
+        const {data} = response
+        setavAilableProperties(data)
+      }
+    } catch (errorInfo) {
+      return;
+    } finally {
+      setLoading(false)
+    }
+  }
 
 
 
@@ -222,6 +248,11 @@ const Accommodation = () => {
   function handleFilterStatusBookingRequests(key: any) {
     console.log(key)
   }
+
+  const goToPosts = () => navigate({
+    pathname: '/accommodation',
+    search: '?sort=date&order=newest',
+  });
 
 
   /* RENDER APP

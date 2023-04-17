@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   GlobalTable,
   SearchBar,
@@ -18,7 +18,7 @@ import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 
-const PopOver = () => {
+const PopOver:any = () => {
   const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
@@ -36,9 +36,9 @@ const PopOver = () => {
     }
   ];
   return (
-    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
+      <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
   );
 };
 
@@ -51,7 +51,7 @@ const Payroll = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
 
-  const { payrollData, downloadPdfOrCsv,changeHandler } = useCustomHook();
+  const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 

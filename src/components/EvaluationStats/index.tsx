@@ -1,6 +1,6 @@
 import React from 'react';
 import { Progress, Typography } from 'antd';
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 import './style.scss';
 
 interface EvaluationStatProps {

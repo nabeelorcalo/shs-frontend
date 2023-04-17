@@ -31,23 +31,36 @@ const AppFooter: FC<FooterProps> = ({ collapsed, collapsedWidth }) => {
     return new Date().getFullYear();
   }
 
-
+  const socialIcons = [
+    { icon: <IconFacebook />, navigateTo: '' },
+    { icon: <IconTwitter />, navigateTo: '' },
+    { icon: <IconInstagram />, navigateTo: '' },
+    { icon: <IconLinkedin />, navigateTo: '' },
+    { icon: <IconYoutube />, navigateTo: '' },
+  ]
+  const footerMenu = [
+    {title:'Cookies Policy',navigateTo:''},
+    {title:'Privacy Policy',navigateTo:''},
+    {title:'Terms & Conditions',navigateTo:''},
+  ]
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
     <Footer>
       <ul className='social-links'>
-        <li><Link to=""><IconFacebook /></Link></li>
-        <li><Link to=""><IconTwitter /></Link></li>
-        <li><Link to=""><IconInstagram /></Link></li>
-        <li><Link to=""><IconLinkedin /></Link></li>
-        <li><Link to=""><IconYoutube /></Link></li>
+        {socialIcons.map((item: any, index: number) => (
+          <Link to={item.navigateTo} key={index}>
+            <li>{item.icon}</li>
+          </Link>
+        ))}
       </ul>
       <div className='footer-menu'>
         <ul>
-          <li><Link to="#">Cookies Policy</Link></li>
-          <li><Link to="#">Privacy Policy</Link></li>
-          <li><Link to="#">Terms &amp; Conditions</Link></li>
+          {footerMenu.map((item:any,index:number)=>(
+            <Link to={item.navigateTo} key={index} className=''>
+              <li>{item.title}</li>
+            </Link>
+          ))}
         </ul>
       </div>
       <div className='footer-copyright'>
