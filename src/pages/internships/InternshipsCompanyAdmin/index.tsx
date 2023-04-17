@@ -403,7 +403,7 @@ const InternshipsCompanyAdmin = () => {
           {
             dummyResponse.data.map((item: any, idx: any) => {
               return (
-                <BoxWrapper key={idx}>
+                <BoxWrapper key={idx} boxShadow>
                   <InternshipProgressCard
                     title={item.title}
                     status={item.status}

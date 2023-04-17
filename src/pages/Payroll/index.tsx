@@ -209,7 +209,7 @@ const Payroll = () => {
           {
             isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
-                payrollData.map((items: any, index: number) => {
+                newTableData.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
                   return (

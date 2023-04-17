@@ -4,7 +4,7 @@ interface Props {
   id?: any
   className?: string
   children?: ReactNode
-  // boxShadow?: string
+  boxShadow?: boolean
   borderLeft?: string
   rest?: any
 }
@@ -13,14 +13,14 @@ export const BoxWrapper = (props: Props) => {
     id,
     className,
     children,
-    // boxShadow = "0px 2px 3px #E4E8F0",
+    boxShadow,
     borderLeft="0",
     ...rest
   } = props;
 
   return (
     <div
-      className={`${className} box-wrapper`}
+      className={`${className} ${boxShadow? "box-hover-wrapper": "box-wrapper"}`}
       style={{borderLeft: borderLeft}}
       {...rest}
     >
