@@ -12,8 +12,6 @@ import "../../../styles.scss";
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedList, setSelectedList] = useState([]);
 
   const { Option } = Select;
   return (

@@ -1,10 +1,10 @@
 import React from "react";
 import { Tree, TreeNode } from "react-organizational-chart";
 import _ from "lodash";
-import "./style.scss";
+import "../style.scss";
 import Organization from "./Organization";
 
-function Node({ o, parent }: any) {
+function Node({ o, parent ,setMarginTop }: any) {
     const [collapsed, setCollapsed] = React.useState(!o.collapsed);
     
     const T = parent
@@ -16,17 +16,15 @@ function Node({ o, parent }: any) {
           lineColor={"#bbc"}
           nodePadding={"10px"}
           lineStyle={"dotted"}
+          lineHeight={"30px"}
         >
           {props.children}
         </Tree>
       );
 
-      React.useEffect(() => {
-        o.collapsed = !collapsed;
-      });
-
     const handleCollapse = () => {
       setCollapsed(!collapsed);
+      setMarginTop("0")
     };
    
     return collapsed ? (

@@ -9,17 +9,21 @@ import {
   PerformanceTick,
 } from "../../../../assets/images";
 import DropDownForPerformance from "./PerformanceDropdown";
-import "./style.scss";
+import "../../style.scss";
 
 const { Panel } = Collapse;
 const inputData = [
-  {
+
+
+  { 
     id: 1,
     title: "Work with full potential",
+    pType:"Learning Objective"
   },
   {
     id: 2,
     title: "Quality of work",
+    pType:"Learning Objective"
   },
   {
     id: 3,
@@ -57,8 +61,9 @@ const SettingPerformance: React.FC = () => {
           defaultActiveKey={["1"]}
           className="bg-white"
         >
-          <Panel header="Learning Objective" key="1">
-            <Row gutter={[20, 20]}>
+          {}
+          <Panel className="text-base font-semibold text-primary-color" header="Learning Objective" key="1">
+            <Row gutter={[0, 15]}>
               {inputData.map((item, index) => {
                 return (
                   <Col
@@ -69,51 +74,45 @@ const SettingPerformance: React.FC = () => {
                     xxl={12}
                   >
                     {item.id !== id &&
-                      <Input.Group compact className="w-full">
-                        <span className="h-[40px]">
-                          <Performanceinput style={{ height: "38px" }} />
-                        </span>
+                      <div className="flex mx-3">
+                        <Performanceinput style={{ height: "38px" }} />
+                        <div className="flex pt-1 justify-between performance-box w-full">
+                          <span className="mx-2 font-normal text-sm md:text-base text-primary-color">{item.title}</span>
 
-                        <Input
-                          className="w-full"
-                          suffix={
+                          <span className="mr-3">
                             <DropDownForPerformance
                               item={item}
                               IdHandler={IdHandler}
-                            />
-                          }
-                          style={{ width: "90%" }}
-                          value={item.title}
-                          placeholder="Select Address"
-                          size="small"
-                        />
-                      </Input.Group>
-                    }
-
-                    {item.id === id && (
-                      <div className="w-full flex">
-                        <Input
-                          placeholder="Enter text"
-                          className="w-full"
-                          size="small"
-                        />
-                        <Space className="ml-2">
-                          <PerformanceTick
-                            className="cursor-pointer"
-                            onClick={() => {
-                              setId('')
-                            }}
-
-                          />
-                          <PerformanceClose
-                            onClick={() => {
-                              setId('')
-                            }}
-                            className="cursor-pointer"
-                          />
-                        </Space>
+                            /></span>
+                        </div>
                       </div>
-                    )}
+                    }
+                    {
+                      item.id === id && (
+                        <div className="w-full flex px-3">
+                          <Input
+                            placeholder="Enter text"
+                            className="w-full"
+                            size="small"
+                          />
+                          <Space className="ml-2">
+                            <PerformanceTick
+                              className="cursor-pointer"
+                              onClick={() => {
+                                setId('')
+                              }}
+
+                            />
+                            <PerformanceClose
+                              onClick={() => {
+                                setId('')
+                              }}
+                              className="cursor-pointer"
+                            />
+                          </Space>
+                        </div>
+                      )
+                    }
                   </Col>
                 );
               })}
@@ -126,7 +125,7 @@ const SettingPerformance: React.FC = () => {
                     onClick={() => {
                       sethideButton(!hideButton);
                     }}
-                    className="flex  gap-2 performance-add-button text-teriary-color  text-input-bg-color"
+                    className="flex mx-3  gap-2 performance-add-button text-teriary-color  text-input-bg-color"
                   >
                     <AddNewQuestion /> Add New Question
                   </Button>
@@ -161,14 +160,14 @@ const SettingPerformance: React.FC = () => {
         </Collapse>
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ? <PerformanceMinus />  : 
-            <PerformancePlus />
+            isActive ? <PerformanceMinus /> :
+              <PerformancePlus />
           }
           expandIconPosition="right"
           key={2}
           className="bg-white"
         >
-          <Panel header="Discipline" key="1">
+          <Panel className="text-base font-semibold text-primary-color" header="Discipline" key="2">
             <p></p>
           </Panel>
         </Collapse>
@@ -182,12 +181,12 @@ const SettingPerformance: React.FC = () => {
           key={3}
           className="bg-white"
         >
-          <Panel header="Personal" key="1">
+          <Panel className="text-base font-semibold text-primary-color" header="Personal" key="1">
             <p></p>
           </Panel>
         </Collapse>
       </Space>
-    </div>
+    </div >
   );
 };
 

@@ -7,7 +7,6 @@ import {
   Input,
   Row,
   Select,
-  Space,
   Typography,
 } from "antd";
 import { DocumentUpload, SHSLogo } from "../../../../../assets/images";
@@ -15,9 +14,6 @@ import { BackButton } from "../../../../../assets/images";
 import type { SelectProps } from "antd";
 import { CommonDatePicker, DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
-
-
-const { Option } = Select;
 
 const UniversityDetails = (props: any) => {
 

@@ -1,5 +1,4 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 
@@ -7,7 +6,6 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import constants from "../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {

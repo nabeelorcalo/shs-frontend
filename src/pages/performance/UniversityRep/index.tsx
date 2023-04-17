@@ -6,7 +6,8 @@ import {
   MonthlyPerfomanceChart,
   PageHeader,
   TopPerformanceList,
-  MonthChanger
+  MonthChanger,
+  BoxWrapper
 } from "../../../components";
 import data from '../CompanyAdmin/data';
 import '../style.scss';
@@ -160,18 +161,18 @@ const UniversityPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-              <MonthlyPerfomanceChart
-                heading="Summary"
-                data={data}
-                XField="department"
-                columnWidthRatio={0.5}
-                children={
-                  <MonthChanger
-                    month='Jan'
-                    onClick={() => console.log("Month Changed")}
-                  />
-                }
-              />
+                <MonthlyPerfomanceChart
+                  heading="Summary"
+                  data={data}
+                  XField="department"
+                  columnWidthRatio={0.5}
+                  children={
+                    <MonthChanger
+                      month='Jan'
+                      onClick={() => console.log("Month Changed")}
+                    />
+                  }
+                />
             </Col>
           </Row>
         </Col>

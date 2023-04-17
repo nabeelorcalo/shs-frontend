@@ -86,14 +86,14 @@ const CMInternships = () => {
                   <div className="flex flex-row gap-3 justify-end">
                     <Button
                       size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
+                      className="white-bg-color teriary-color"
                       onClick={() => { navigate("new-internship"); }}
                     >
                       Reset
                     </Button>
                     <Button
                       size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
+                      className="teriary-bg-color white-color"
                       onClick={() => { navigate("new-internship"); }}
                     >
                       Apply

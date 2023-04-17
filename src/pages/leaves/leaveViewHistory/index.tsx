@@ -4,7 +4,7 @@ import { Col, Row } from "antd";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader, Breadcrumb } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";

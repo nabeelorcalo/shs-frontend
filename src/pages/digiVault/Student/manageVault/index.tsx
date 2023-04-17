@@ -226,7 +226,7 @@ const ManageVault = (props: any) => {
         }
         footer={[
           <Button
-            className="teriary-color hover:teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="change-mind-warning-btn teriary-color hover:teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => setISOpen(false)}
             key="Cancel"
           >
@@ -234,7 +234,7 @@ const ManageVault = (props: any) => {
           </Button>,
 
           <Button
-            className="teriary-bg-color white-color pr-4 border-1 border-solid border-[#4a9d77] hover:border-[#4a9d77]"
+            className="edit-request-btn teriary-bg-color white-color pr-4 border-1 border-solid border-[#4a9d77] hover:border-[#4a9d77]"
             key="submit"
           >
             Submit
@@ -264,7 +264,7 @@ const ManageVault = (props: any) => {
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={[
           <Button
-            className="teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="change-mind-warning-btn teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
@@ -273,7 +273,7 @@ const ManageVault = (props: any) => {
             Cancel
           </Button>,
           <Button
-            className="white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="edit-request-btn white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
@@ -297,7 +297,7 @@ const ManageVault = (props: any) => {
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={[
           <Button
-            className="teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="change-mind-warning-btn teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
@@ -307,7 +307,7 @@ const ManageVault = (props: any) => {
           </Button>,
 
           <Button
-            className="white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="edit-request-btn white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}

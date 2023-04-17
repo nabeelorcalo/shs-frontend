@@ -32,7 +32,9 @@
     width: -webkit-fill-available;
   }
   .chat-textarea {
-    border: none;
-    box-shadow: none;
+    &:hover{
+      border: none !important;
+      box-shadow: none;
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Col, Rate, Row, Typography } from "antd";
-import {BoxWrapper} from "../BoxWrapper/BoxWrapper";
+import {BoxWrapper} from "../../components";
 const { Paragraph } = Typography;
 import "./style.scss";
 

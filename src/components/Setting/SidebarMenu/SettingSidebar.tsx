@@ -12,55 +12,56 @@ import {
 } from "../../../assets/images";
 
 import './SettingSidebar.scss'
-
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { BoxWrapper } from "../../../components";
 
 const menuLinks = [
   {
     title: "Locations",
-    link: "/settings/location",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`,
     icon: <SettingMap />,
     description: "Add different geographical locations for your organisation",
   },
   {
     title: "Departments",
-    link: "/settings/department",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_DEPARTMENT}`,
     icon: <SettingPeople />,
     description:
       "Add departments within your organisation for people management",
   },
   {
     title: "Leaves",
-    link: "/settings/leaves",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`,
     icon: <SettingCalendarRemove />,
     description: "Create leave policies to allow your people to take time off",
   },
   {
     title: "Performance",
-    link: "/settings/performance",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PERFORMANCE}`,
     icon: <SettingChart />,
     description: "Manage performance of your team by creating evaluation form",
   },
   {
     title: "Templates",
-    link: "/settings/template",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`,
     icon: <SettingDocument />,
     description: "Create templates for managing letters and certificates",
   },
   {
     title: "Shifts",
-    link: "/settings/shifts",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`,
     icon: <SettingShifts />,
     description: "Add shifts for your people to manage different shifts",
   },
   {
     title: "Timesheet",
-    link: "/settings/timesheet",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TIMESHEET} `,
     icon: <SettingMap />,
     description: "Manage timesheet categories and track tasks for team members",
   },
   {
     title: "Payroll",
-    link: "/settings/payroll",
+    link: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL} `,
     icon: <SettingPayroll />,
     description:
       "Add departments within your organisation for people management",
@@ -69,25 +70,26 @@ const menuLinks = [
 
 const SettingSidebar: React.FC = () => {
   return (
-    <div className="setting-sidebar">
+    <>
+    <BoxWrapper className="setting-sidebar p-1">
       {menuLinks.map((item, idx) => {
         return (
-          <div >
+          <div key={idx} className="p-0  sidebar">
+            
             <NavLink
-              key={idx}
               to={item.link}
-              className={({ isActive }) =>
+              className={({ isActive  } ) =>
                 isActive
-                  ? "flex items-center  text-[#14142A] bg-[#E6F4F9] rounded-lg shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
-                  : "flex items-center  text-[#6E7191] bg-white rounded-lg hover:bg-[#E6F4F9] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
+                  ? "flex items-center  text-[#14142A] bg-[#E6F4F9] active-sidebar  shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
+                  : "flex items-center  text-[#6E7191] bg-white  hover:bg-[#E6F4F9] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
               }
             >
-              <div className="px-2 m-0">
+              <div className="px-1 lg:px-5 py-2 lg:py-3 w-full ">
                 <div className="flex flex-col my-2">
                   <div className="flex">
                     <span>{item.icon}</span>
 
-                    <span className="font-medium mx-3 text-base text-primary-color">
+                    <span className="font-medium mx-3 text-base text-primary-color ">
                       {item.title}
                     </span>
                   </div>
@@ -98,15 +100,15 @@ const SettingSidebar: React.FC = () => {
                     </p>
                   </div>
                 </div>
-                <Divider className="mb-0 " />
               </div>
             </NavLink>
-
-
+          
+            <Divider className="m-0 w-full" />
           </div>
         );
       })}
-    </div>
+    </BoxWrapper>
+    </>
   );
 };
 

@@ -1,12 +1,20 @@
 @import '../../../../scss/colors';
 
 .all-grievance {
-  .ant-divider-horizontal{
+  .ant-divider-horizontal {
     background: $text-error-line-color !important;
   }
+
   .blow-whistle-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
     &:hover {
-      color: $white-bg-color !important
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
     }
   }
 
@@ -31,7 +39,6 @@
   .resolved {
     background: $text-success-color;
   }
-
 }
 
 .filter_main_wrapper {
@@ -40,4 +47,3 @@
     background: $white-bg-color;
   }
 }
-

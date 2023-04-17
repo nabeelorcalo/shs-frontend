@@ -11,7 +11,7 @@ import {
   SickLeave,
   WorkFromHome,
 } from "../../../../assets/images";
-import { Alert, SearchBar , DropDownForSetting } from "../../../../components";
+import { Alert, SearchBar, DropDownForSetting } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -83,21 +83,21 @@ const SettingLeave = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row" xs={24}  lg={8}>
+            <Col key={index} className="gutter-row" xs={24} lg={12} xl={8}>
               <div className="setting-leaves-box-wrapper w-full flex flex-col">
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
                     link={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}
                     showDeleteModal={showDeleteModal}
                     setShowDeleteModal={setShowDeleteModal}
-                
+
                   />
                 </div>
                 <div className="flex ">
                   <span> {data.image}</span>
-                  <Title level={5} className="pt-3 pl-2 m-0">
-                    {data.name}
-                  </Title>
+                  <Text className="text-sm font-normal md:text-lg md:font-semibold pt-3 pl-2 m-0">
+                    {data?.name}
+                  </Text>
                 </div>
               </div>
             </Col>

@@ -1,24 +1,19 @@
 @import '../../../scss/colors';
 
 .grievances {
+  .header-btn .button {
+    background: $white-bg-color;
+    border: unset;
+    outline: 1px solid $teriary-bg-color;
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+    color: $teriary-bg-color;
 
-
-  .header-btn   
-    .button {
-      background: $white-bg-color;
-      border: unset;
-      outline: 1px solid $teriary-bg-color;
-      box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
-      color: $teriary-bg-color;
-
-      &:hover {
-        outline: 1px solid rgba(74, 157, 119, 0.5);
-      }
-    
+    &:hover {
+      outline: 1px solid rgba(74, 157, 119, 0.5);
+    }
   }
 
   .grievances-box-wrapper {
-    // min-height: 125px !important;
     background-color: $white-bg-color;
     border-radius: 10px;
     padding: 5px;
@@ -28,37 +23,45 @@
 
     &:hover {
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-  
-  }}
+    }
+  }
 
   .grievance-card {
     box-shadow: 0px 2px 3px #E4E8F0;
     overflow: hidden;
-    // transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
     position: relative;
 
     &:hover {
       background-color: $text-success-hover-color;
-      .grievance-type{
+      transition: all 0.5s;
+
+      .grievance-type {
         display: flex;
         flex-direction: column;
-  }
+      }
+
       .box-wrapper {
         margin: 0;
         width: 100%;
+        transition: all 0.3s ease-in-out;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
         &:hover {
-          border-radius:  0  15px  15px 0;}
+          border-radius: 0 15px 15px 0;
           width: 85%;
-          .grievance-type{
-            display: flex;
-            flex-direction: column;
-      }
-      @media screen and (max-width: 480px) {
-        & {
-          width: 75%;
         }
-      }
+
+        .grievance-type {
+          display: flex;
+          flex-direction: column;
+        }
+
+        @media screen and (max-width: 480px) {
+          & {
+            width: 75%;
+          }
+        }
       }
 
       .view-all-btn {
@@ -68,6 +71,7 @@
         padding: 10px 20px;
         color: $white-bg-color;
         cursor: pointer;
+        transition: all 0.2s ease-in-out;
       }
     }
 
@@ -93,13 +97,13 @@
 }
 
 .grievance-details {
-  .ant-divider-horizontal{
+  .ant-divider-horizontal {
     background: $text-error-line-color !important;
   }
+
   .replay-btn {
     &:hover {
       background: $teriary-bg-color;
-
     }
   }
 
@@ -143,8 +147,10 @@
     padding: 0px 20px;
 
     &:hover {
-      color: $white-bg-color;
-
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
     }
   }
 }

@@ -59,10 +59,10 @@ export const TopPerformers: FC<{
             {monthList[month]}
           </div>
           <Radio.Group onChange={handleMonthChange} value={month} size="small">
-            <Radio.Button value={+month - 1}>
+            <Radio.Button value={month===0?0:+month - 1}>
               <LeftOutlined />
             </Radio.Button>
-            <Radio.Button value={+month + 1}>
+            <Radio.Button value={month===11?11:+month + 1}>
               <RightOutlined />
             </Radio.Button>
           </Radio.Group>

@@ -4,7 +4,7 @@ import { Documentcard, IconAngleDown } from "../../../assets/images";
 import { GlobalTable, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType } from "antd/es/table";
 import { EyeFilled } from "@ant-design/icons";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import BookingModal from "./BookingModal";
 import "./style.scss";
 
