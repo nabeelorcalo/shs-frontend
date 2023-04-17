@@ -34,21 +34,21 @@ const CompanyAdmin = () => {
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "Jennie Duncan",
+        date: "11 November", 
         id: 1,
         name: "Jennie Duncan",
       },
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "Jennie Duncan",
+        date: "11 November",
         id: 2,
         name: "Duncan",
       },
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "Jennie Duncan",
+        date: "11 November",
         id: 3,
         name: "Jennien",
       },
@@ -88,20 +88,20 @@ const CompanyAdmin = () => {
   }, []);
 
   return (
-    <>
+    <> 
       <PageHeader
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
             <span className="page-header-secondary-color">Maria Sanoid</span>
-          </div>
+          </div> 
         }
       />
       <Row gutter={gutter}>
-        <Col xs={24} xl={15} xxl={16}>
+        <Col xs={24} xl={15} xxl={17}>
           <PiplineTable handleSelect={handleSelect} />
         </Col>
-        <Col xs={24} xl={9} xxl={8}>
+        <Col xs={24} xl={9} xxl={7}>
           <InternshipSummaryChart
             autoFit
             barStyle={{
