@@ -6,7 +6,7 @@ import {
   SHSLogo,
 } from "../../../../../assets/images";
 import { BackButton } from "../../../../../assets/images";
-import { DropDown } from "../../../../../components";
+import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 
 const Documents = (props: any) => {
@@ -69,28 +69,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row gutter={[10,50]} className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                      <DocumentUpload/>
-                    </Col>
-                  </Row>
+                    <DragAndDropUpload/>
                 </div>
               </Form.Item>
               <Form.Item
@@ -104,29 +83,8 @@ const Documents = (props: any) => {
                 ]}
                 style={{ width: "100%", marginBottom: "20px" }}
               >
-                <div className="dragger">
-                  <Row className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                      <DocumentUpload/>
-                    </Col>
-                  </Row>
+          <div className="dragger">
+                    <DragAndDropUpload/>
                 </div>
               </Form.Item>
               <Form.Item
@@ -141,28 +99,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                      <DocumentUpload/>
-                    </Col>
-                  </Row>
+                    <DragAndDropUpload/>
                 </div>
               </Form.Item>
 

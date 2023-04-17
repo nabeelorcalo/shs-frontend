@@ -14,12 +14,23 @@ const useCustomHook = () => {
     const { data } = await api.post(LOGIN, body);
     localStorage.setItem("accessToken", data.accessToken);
     setCurrentUser(data.user);
-    return data
+    return data;
+
+  
 
   };
+  const { CHANGEPASSWORD } = apiEndpints;
+ 
+  const changepassword = async (body: any): Promise<any> => {
+    const { data } = await api.post(CHANGEPASSWORD, body);
+    return data;
+  };
+
+
 
   return {
     login,
+    changepassword,
   };
 };
 

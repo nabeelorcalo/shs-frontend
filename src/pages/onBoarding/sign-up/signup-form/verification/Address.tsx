@@ -3,7 +3,7 @@ import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
 import { ArrowDownDark, DocumentUpload } from "../../../../../assets/images";
 import { SHSLogo } from "../../../../../assets/images";
 import { BackButton } from "../../../../../assets/images";
-import { DropDown } from "../../../../../components";
+import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 
 const Address = (props: any) => {
@@ -143,28 +143,7 @@ const Address = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                    <DocumentUpload/>
-                    </Col>
-                  </Row>
+                    <DragAndDropUpload/>
                 </div>
               </Form.Item>
 

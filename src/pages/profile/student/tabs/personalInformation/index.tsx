@@ -13,7 +13,7 @@ import {
   Typography,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, PlusSquareFilled, PlusCircleFilled, DeleteFilled } from '@ant-design/icons';
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -329,12 +329,12 @@ const PersonalInformation = () => {
             {isDependents === 1 && (
               <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
                 <Form.Item
-                  label="Username"
+                  label="Name"
                   name="username"
                   rules={[{ required: true }, { type: "string" }]}
                 >
                   <div className="flex gap-4">
-                    <Input />
+                  <Input placeholder="Enter name" className="input-style" />
                     <div
                       onClick={() => {
                         const copyDependents = [...dependents];
@@ -342,7 +342,10 @@ const PersonalInformation = () => {
                         setDependents(copyDependents);
                       }}
                     >
-                      add
+                      <div className="teriary-bg-color pr-3 pl-3 pt-1 pb-1 rounded-lg">
+
+                      <PlusCircleFilled className="text-3xl white-color" />
+                      </div>
                     </div>
                   </div>
 
@@ -356,8 +359,11 @@ const PersonalInformation = () => {
                           setDependents(copyDependents);
                         }}
                       >
+<div className="bg-[red] pr-3 pl-3 pt-1 pb-1 rounded-lg">
 
-                        remove
+<DeleteFilled className="text-3xl white-color" />
+</div>
+
                       </div>
                     </div>
                   ))}

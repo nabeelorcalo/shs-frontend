@@ -52,7 +52,6 @@ const IdentityVerification = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-            
                 <Row gutter={20}>
                   <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                     <Form.Item

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Divider, Typography } from "antd";
 import '../../style.scss';
-import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../../assets/images/profile/student/Vedio.svg";
 
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
+  const [actionBox, setActionBox] = useState(false);
 
   return (
     <div className="student-side-bar">
@@ -15,8 +16,23 @@ const StudentSideBar = (props: any) => {
           return (
             <>
               <div className="profile-main-detail">
-                <div className="flex justify-end">
-                  <MoreOutlined className="pt-5 pr-5" />
+                <div className="flex justify-end relative">
+                  <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl" onClick={() => {
+                    setActionBox(true);
+                  }} />
+                  {actionBox && (
+                    <div className="upload-box">
+                      <p className="pt-2 pb-2 cursor-pointer text-base 
+                      font-normal text-[#4E4B66]" onClick={() => {
+                        setActionBox(false);
+                      }}>Upload Image</p>
+                      <p className="pb-2 cursor-pointer text-base 
+                      font-normal text-[#4E4B66]" onClick={() => {
+                        setActionBox(false);
+                      }}>Delete Image</p>
+                    </div>
+                  )}
+
                 </div>
                 <center>
                   <img src={item.profile} alt="" />
@@ -51,7 +67,7 @@ const StudentSideBar = (props: any) => {
                 <Typography className="emp-name">Skills</Typography>
               </div>
               <div className="main-skill-box">
-                <Button>
+                <Button style={{minWidth:"0px"}} className="bg-[#E6F4F9] rounded-[14.5px] flex items-center justify-center border-0">
                   <PlusOutlined /> Add
                 </Button>
                 {item.skills.map((item, index) => {
@@ -86,7 +102,7 @@ const StudentSideBar = (props: any) => {
                 </center>
               </div>
               <Divider />
-              <p onClick={()=>{
+              <p onClick={() => {
                 setShowSideViewType('change-password')
               }} className="a-tag-side">
                 Change Password

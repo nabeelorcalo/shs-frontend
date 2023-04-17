@@ -43,7 +43,7 @@ const SignupForm = ({ signupRole }: any) => {
 
      action.signup(filteredBody)
     console.log("new console: ", filteredBody);
-    // navigate('/verification-steps');
+     navigate('/verification-steps');
     // navigate("/company-admin-verification");
   };
 

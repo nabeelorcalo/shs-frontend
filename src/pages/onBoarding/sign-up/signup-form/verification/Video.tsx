@@ -18,7 +18,7 @@ const Video = (props: any) => {
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={8} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
@@ -43,7 +43,7 @@ const Video = (props: any) => {
                 Create an introductory video by answering the following
                 questions in 30 to 60 seconds
               </Typography>
-              <ul>
+              <ul className="pl-5 pt-2">
                 <li className="list-style">Tell us about yourself</li>
                 <li className="list-style">
                   Why have you applied for this internship?
