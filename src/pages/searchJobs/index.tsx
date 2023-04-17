@@ -1,11 +1,20 @@
+import { Divider } from "antd";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import SearchBarCards from "./searhJobsCards/Header";
+import SearchJobTabs from "./searhJobsCards/Tabs/Tabs";
 import "./style.scss";
 
 const SearchJobs = () => {
-  return (
-    <p>SearchJobs</p>
-  )
-}
+  const [drawer, setDrawer] = useState(false);
 
-export default SearchJobs
+  return (
+    <>
+      <p className="primary-color font-semibold text-2xl">SearchJobs</p>
+      <Divider className="my-7" />
+      <SearchBarCards setDrawer={setDrawer} drawer={drawer} />
+      <SearchJobTabs />
+    </>
+  );
+};
+
+export default SearchJobs;

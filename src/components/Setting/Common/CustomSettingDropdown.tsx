@@ -1,47 +1,57 @@
 import React, { useState } from "react";
 import { LocationMore } from "../../../assets/images";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, MenuProps } from "antd";
 import "./CustomSettingDropdown.scss";
 import { NavLink } from "react-router-dom";
 
 export const DropDownForSetting = (props: any) => {
+  const { showEditModal, showDeleteModal, link, editData, SetId , id ,SetEditData } = props
   const [visible, setVisible] = useState(false);
-
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
+  const GetIdHandler = (id: number) => {
+    SetId(id)
+  }
+  const GetEditHandler = (data: number) => {
+    SetEditData(data)
+  }
+
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <span
+        onClick={() => {
+          props.setShowEditModal(!showEditModal), setVisible(false);
+        }}
+      >
+        <NavLink
+          onClick={()=>{GetEditHandler(editData)}}
+          className="text-primary-color hover:text-[#454545] font-normal"
+          to={link}
+        >
+          Edit
+        </NavLink>
+      </span>,
+    },
+    {
+      key: '2',
+      label: <span
+      className="font-normal"
+        onClick={() => {
+          props.setShowDeleteModal(!showDeleteModal),
+            setVisible(false), GetIdHandler(id);
+        }}
+      >
+        Delete
+      </span>,
+    },
+
+  ];
 
   return (
-    <Dropdown
+    <Dropdown menu={{ items }}
       className="setting-custom-dropdown"
-      overlay={
-        <Menu>
-          <Menu.Item key="1">
-            <span
-              onClick={() => {
-                props.setShowEditModal(!props.showEditModal), setVisible(false);
-              }}
-            >
-              <NavLink
-                className="text-[#454545] hover:text-[#454545]"
-                to={props?.link}
-              >
-                Edit
-              </NavLink>
-            </span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <span
-              onClick={() => {
-                props.setShowDeleteModal(!props.showDeleteModal),
-                  setVisible(false);
-              }}
-            >
-              Delete
-            </span>
-          </Menu.Item>
-        </Menu>
-      }
       open={visible}
       onOpenChange={handleVisibleChange}
       trigger={["click"]}

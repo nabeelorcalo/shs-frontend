@@ -1,5 +1,8 @@
 @import '../../../../scss/colors';
 .template-setting{
+    .ant-divider-horizontal{
+        background: $text-error-line-color !important;
+      }
     .template-box-wrapper{
         background-color: $white-bg-color;
         border-radius: 0px 10px;

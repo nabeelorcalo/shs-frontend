@@ -1,47 +1,65 @@
 @import "../../../../../scss/_colors.scss";
+
 .leaves-add-policy {
   .ant-form-item .ant-form-item-control-input-content {
     .ant-input {
       background: $text-input-bg-color;
-      &:hover{
-        background: $white-bg-color;
 
+      &:hover {
+        background: $white-bg-color;
       }
     }
   }
 
   .ant-picker {
     background: $text-input-bg-color !important;
-    &:hover{
-      background: $white-bg-color !important;
 
+    &:hover {
+      background: $white-bg-color !important;
     }
   }
+
   .ant-select-single {
     .ant-select-selector {
-      // background: $text-input-bg-color;
-      &:hover{
+      &:hover {
         background: $white-bg-color !important;
-
       }
     }
   }
+
   .label {
     display: block;
     font-size: 16px;
     color: $text-teriary-label-color;
     margin-bottom: 4px;
   }
+
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     opacity: 1;
   }
+
   .ant-switch {
     height: 14px !important;
     min-width: 40px;
+
     .ant-switch-handle {
       top: -4px;
       width: 20px;
     }
+  }
+
+  .add-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
+    &:hover {
+      opacity: 85%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
+    }
+
   }
 }

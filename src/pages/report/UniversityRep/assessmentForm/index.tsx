@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { BoxWrapper, Breadcrumb } from '../../../../components'
-import { Divider, Button, Typography, Form,} from 'antd'
+import { BoxWrapper, Breadcrumb, Notifications } from '../../../../components'
+import { Divider, Button, Typography, Form, } from 'antd'
 import SignatureAndUploadModal from '../../../../components/SignatureAndUploadModal'
 import { DownloadIconLeave, Emoji1st, Emoji3rd, Emoji4th, } from '../../../../assets/images';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import signature from "../../../../assets/images/Report/signature.svg"
 import './style.scss'
@@ -11,7 +11,6 @@ import useCustomHookforAssment from './actionHandler';
 import ManagerRemarks from './manageRemarksforUni';
 
 const index = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}` },
@@ -25,36 +24,36 @@ const index = () => {
       learningCategories: "Technical Skills",
       learningObjectives: "For accuracy and completeness, developed and rewrote technical documentation known as Market Research Description and Product Requirement Document, which included instructions, broachers, product catalogues, and website resources.",
       evidenceOfProgress: "Collected and documented information on integration issues and vulnerabilities, as well as suggestions for improvement. Using Visual Studio, created accurate and efficient test scripts for automated testing of certain products and features.",
-      managerRemarks: <ManagerRemarks image={<Emoji3rd/>}  content="Meets expectations" />,
-      content:"Meets expectations"
+      managerRemarks: <ManagerRemarks image={<Emoji3rd />} content="Meets expectations" />,
+      content: "Meets expectations"
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Working as part of a team can assist build abilities such as leadership and task skills, which can be improved or increased through it on learning. Process skills include things like "effectiveness skills," "team functioning skills," and "systems thinking abilities."`,
       evidenceOfProgress: "Since we started working in the office. This has exposed me to a working atmosphere, which is the first stage in my personal development. And I'm transitioning from a teaching setting to an office setting.",
-     managerRemarks: <ManagerRemarks image={<Emoji1st/>}  content="Does not meet expectations" />,
-     content:"Does not meet expectations"
+      managerRemarks: <ManagerRemarks image={<Emoji1st />} content="Does not meet expectations" />,
+      content: "Does not meet expectations"
     },
     {
       learningCategories: "Working with Others",
       learningObjectives: `Being presentable includes more than just conveying ideas; it also necessitates appearing balanced, and body language plays a vital role in being regarded as worthy.`,
       evidenceOfProgress: "Being proactive about the duties and accomplishing them on time was difficult at first, but with practice and superior performance, it is possible.",
-     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />,
-     content:"Meets expectations"
+      managerRemarks: <ManagerRemarks image={<Emoji4th />} content="Exceeds expectations" />,
+      content: "Meets expectations"
     },
     {
       learningCategories: "Commercial Awareness",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />,
-     content:"Meets expectations"
+      managerRemarks: <ManagerRemarks image={<Emoji4th />} content="Exceeds expectations" />,
+      content: "Meets expectations"
     },
     {
       learningCategories: "Personal and Professional Development",
       learningObjectives: `To be well-versed in all project and database databases linked to organizational activities.`,
       evidenceOfProgress: "Developed and wrote Market Research Description and Product Requirement Document, for our Confluence page for different bases for our projects which comprised instructions, broachers, product catalogues, and website resources, was developed and rewritten for correctness and completeness.",
-     managerRemarks: <ManagerRemarks image={<Emoji4th/>}  content="Exceeds expectations" />,
-     content:"Exceeds expectations"
+      managerRemarks: <ManagerRemarks image={<Emoji4th />} content="Exceeds expectations" />,
+      content: "Exceeds expectations"
     },
 
   ]
@@ -63,18 +62,22 @@ const index = () => {
   const action = useCustomHookforAssment();
   return (
     <div className='company-admin-assessment-form'>
-  <Breadcrumb  breadCrumbData={breadcrumbArray} />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       {/* for destop */}
       <div className='scroll '>
         <BoxWrapper className='my-5 hidden destop-view lg:block'>
-        <div className='flex justify-between'>
-          <Typography className='md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
+          <div className='flex justify-between'>
+            <Typography className='md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
         
-           <div className='mr-[-5px] drop-down-wrapper'
-            onClick={() => action.downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ")}>
-            <DownloadIconLeave />
-          </div> 
+            <div className='mr-[-5px] drop-down-wrapper'
+              onClick={() => {
+                action.downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ")
+                Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: 'success' })
+              }}
+            >
+              <DownloadIconLeave />
+            </div>
           </div> 
           <div className='mt-5 flex gap-10'>
             <span className='font-semibold text-xl lg:w-[200px]'>Learning Categories</span>
@@ -104,21 +107,19 @@ const index = () => {
                 </div>
               </div>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-              <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} alt="signature"/>
+                <div className='sign-box w-full rounded-lg flex justify-center'>
+                  <img src={signature} alt="signature" />
                 </div>
               </div>
             </div>
           </Form>
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
-         
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>
-                <NavLink to={`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`}> 
-             Back
-             </NavLink>
-                </Button>
-         
+              <NavLink to={`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`}>
+                Back
+              </NavLink>
+            </Button>
           </div>
         </BoxWrapper>
       </div>
@@ -137,7 +138,7 @@ const index = () => {
               <div className='flex flex-row justify-between '>
                 <div className='w-full'> {item.managerRemarks}
                 </div>
-                </div>
+              </div>
             </div>
           )
         })}
@@ -147,24 +148,25 @@ const index = () => {
 
           <div className='xs:flex-col sm:flex gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-                  <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img  alt='error' src={signature} />
-                </div>
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <img alt='error' src={signature} />
+              </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
-                <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img   alt='error' src={signature} />
-                </div>
-
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <img alt='error' src={signature} />
+              </div>
             </div>
           </div>
         </Form>
         <div className='flex justify-end gap-5 my-5 assessment-footer'>
         
           <Button type='primary'
-             onClick={()=>navigate("/report/view-details/01")}
-            className='white-bg-color teriary-color save-btn'>Back</Button>
-          
+            className='white-bg-color teriary-color save-btn'>
+            <NavLink to={`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`}>
+              Back
+            </NavLink>
+          </Button>
         </div>
       </BoxWrapper>
       <SignatureAndUploadModal

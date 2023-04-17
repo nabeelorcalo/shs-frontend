@@ -14,7 +14,6 @@ import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-pa
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
-
 //Interns Child Components
 import profile from "./pages/interns/profile";
 import chat from "./pages/interns/chat";
@@ -27,7 +26,7 @@ import DemoCard from "./components/ContractCard/demoCard";
 import Chat from "./pages/chat";
 import ManageVault from "./pages/digiVault/Student/manageVault";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ActivityData from './pages/propertyAgent/propertDahboard/Dashboard/activityData'
+import ActivityData from "./pages/propertyAgent/propertDahboard/Dashboard/activityData";
 import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
@@ -51,14 +50,18 @@ import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/reject
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-(
-  <Suspense fallback={<Spin indicator={spinIcon} />}>
-    <Component {...props} />
-  </Suspense>
-);
+  (
+    <Suspense fallback={<Spin indicator={spinIcon} />}>
+      <Component {...props} />
+    </Suspense>
+  );
 //Internships Child Components
-const NewInternships = Loadable(lazy(() => import("./pages/internships/NewInternships")));
-const ViewInternshipDetails = Loadable(lazy(() => import("./pages/internships/ViewInternshipDetails")));
+const NewInternships = Loadable(
+  lazy(() => import("./pages/internships/NewInternships"))
+);
+const ViewInternshipDetails = Loadable(
+  lazy(() => import("./pages/internships/ViewInternshipDetails"))
+);
 
 //Company admin Internships
 const InternshipsCompanyAdmin = Loadable(lazy(() => import("./pages/internships/InternshipsCompanyAdmin")));
@@ -66,8 +69,12 @@ const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/Inter
 
 //Company admin payroll
 const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
-const ViewPayrollDetails = Loadable(lazy(() => import("./pages/Payroll/viewPayrollDetails")));
-const ViewPayrollSalarySlip = Loadable(lazy(() => import("./pages/Payroll/viewPayrollSalarySlip")));
+const ViewPayrollDetails = Loadable(
+  lazy(() => import("./pages/Payroll/viewPayrollDetails"))
+);
+const ViewPayrollSalarySlip = Loadable(
+  lazy(() => import("./pages/Payroll/viewPayrollSalarySlip"))
+);
 
 //Company admin Interns
 const InternsCompanyAdmin = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
@@ -75,27 +82,48 @@ const InternsCompanyAdmin = Loadable(lazy(() => import("./pages/interns/InternsC
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
-const ViewPaymentDetails = Loadable(lazy(() => import("./pages/payments/viewPaymentDetails")));
-
+const ViewPaymentDetails = Loadable(
+  lazy(() => import("./pages/payments/viewPaymentDetails"))
+);
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
 const Attendance = Loadable(lazy(() => import("./pages/attendance")));
-const AttendanceList = Loadable(lazy(() => import("./pages/attendance/attendanceListPage")));
-const AttendanceDetail = Loadable(lazy(() => import("./pages/attendance/detailPage")));
+const AttendanceList = Loadable(
+  lazy(() => import("./pages/attendance/attendanceListPage"))
+);
+const AttendanceDetail = Loadable(
+  lazy(() => import("./pages/attendance/detailPage"))
+);
 const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
-const ManagerCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/Manager/assessmentForm")));
-const CompanyAdminCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm")));
+const ManagerCaseStudiesAssessment = Loadable(
+  lazy(() => import("./pages/caseStudies/Manager/assessmentForm"))
+);
+const CompanyAdminCaseStudiesAssessment = Loadable(
+  lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm"))
+);
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
-const ManagerAllGrievances = Loadable(lazy(() => import("./pages/grievances/Manager/AllGrievance")));
-const CompanyAdminAllGrievances = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/AllGrievance")));
-const InternAllGrievances = Loadable(lazy(() => import("./pages/grievances/Intern/AllGrievance")));
-const ManagerGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Manager/GrievanceDetails")));
-const CompanyAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails")));
-const InternGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern/GrievanceDetails")));
+const ManagerAllGrievances = Loadable(
+  lazy(() => import("./pages/grievances/Manager/AllGrievance"))
+);
+const CompanyAdminAllGrievances = Loadable(
+  lazy(() => import("./pages/grievances/CompanyAdmin/AllGrievance"))
+);
+const InternAllGrievances = Loadable(
+  lazy(() => import("./pages/grievances/Intern/AllGrievance"))
+);
+const ManagerGrievancesDetails = Loadable(
+  lazy(() => import("./pages/grievances/Manager/GrievanceDetails"))
+);
+const CompanyAdminGrievancesDetails = Loadable(
+  lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails"))
+);
+const InternGrievancesDetails = Loadable(
+  lazy(() => import("./pages/grievances/Intern/GrievanceDetails"))
+);
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure/index")));
@@ -118,6 +146,7 @@ const OfferLetters = Loadable(lazy(() => import("./pages/offerLetters")));
 const Contracts = Loadable(lazy(() => import("./pages/contracts")));
 const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
+const SearchJobsDetails = Loadable(lazy(() => import("./pages/searchJobs/jobDetails/jobDetails")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile/")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
@@ -149,14 +178,22 @@ const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
-const ViewDetailsReport = Loadable(lazy(() => import("./pages/report/UniversityRep/ViewDetails")));
-const AssessmentFormReport = Loadable(lazy(() => import("./pages/report/UniversityRep/assessmentForm")));
+const ViewDetailsReport = Loadable(
+  lazy(() => import("./pages/report/UniversityRep/ViewDetails"))
+);
+const AssessmentFormReport = Loadable(
+  lazy(() => import("./pages/report/UniversityRep/assessmentForm"))
+);
 const Listings = Loadable(lazy(() => import("./pages/listings")));
-const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
+const ListingUpdate = Loadable(
+  lazy(() => import("./pages/listings/listingUpdate"))
+);
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
-const AssesmentForm = Loadable(lazy(() => import("./pages/selfAssesment/AssesmentFormPage")));
+const AssesmentForm = Loadable(
+  lazy(() => import("./pages/selfAssesment/AssesmentFormPage"))
+);
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(
@@ -788,7 +825,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
-        element: <Universities />
+        element: <Universities />,
       },
 
       {
@@ -810,7 +847,6 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
-
       },
       {
         key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
@@ -1359,6 +1395,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.SEARCH_JOBS}`,
         path: `${ROUTES_CONSTANTS.SEARCH_JOBS}`,
         element: <SearchJobs />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.JOBDETAILS}`,
+        path: `${ROUTES_CONSTANTS.JOBDETAILS}/:id`,
+        element: <SearchJobsDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.APPLICATION}`,
