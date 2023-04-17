@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/plots';
 import { attendanceData, listingsData } from './data';
 import constants from '../../../config/constants';
-import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import { Typography } from 'antd';
 
 interface GraphProps {

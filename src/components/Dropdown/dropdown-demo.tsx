@@ -1,6 +1,6 @@
 import { Col, Row } from "antd"
 import { useState } from "react"
-import { ArrowDownDark, CalendarIcon } from "../../assets/images";
+import { CalendarIcon } from "../../assets/images";
 import { CommonDatePicker } from "../calendars/CommonDatePicker/CommonDatePicker";
 import { Input } from "../Input/input";
 import { SearchBar } from "../SearchBar/SearchBar";

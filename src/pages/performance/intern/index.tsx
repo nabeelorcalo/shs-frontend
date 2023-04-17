@@ -7,7 +7,7 @@ import {
   GlobalTable,
 } from "../../../components";
 import { MoreIcon } from "../../../assets/images";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 

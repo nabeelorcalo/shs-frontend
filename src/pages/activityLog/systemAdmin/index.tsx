@@ -3,7 +3,7 @@ import "./style.scss";
 import { Button, Col, Divider, Row } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { GlobalTable } from "../../../components";
 import useCustomHook from "../actionHandler"
 

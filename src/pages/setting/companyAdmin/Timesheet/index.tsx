@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
 import { SettingTimesheetIcon, } from "../../../../assets/images";
 import { Alert, SearchBar } from "../../../../components";
@@ -58,13 +58,15 @@ const SettingTimesheet = () => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row flex" xs={24} lg={8}>
+            <Col key={index} className="gutter-row flex" xs={24} lg={12} xl={8}>
               <div className="w-full setting-time-sheet-box-wrapper">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
-                      <Title level={5}>{data.name}</Title>
-                      <Text className="text-base text-sm pb-1 ">
+                      <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
+                        {data?.name}
+                      </Text>
+                      <Text className="text-base text-sm py-2 text-secondary-color ">
                         {data.content}
                       </Text>
                     </div>

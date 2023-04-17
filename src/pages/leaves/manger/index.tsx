@@ -6,7 +6,7 @@ import "./style.scss"
 import { LeaveCard, PageHeader, UpcomingHolidayComp, Button } from '../../../components'
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import { HeartIcon, LeaveProfileImg, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper'
+import { BoxWrapper } from '../../../components'
 import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from './managerMockData'
 import ManagerCalendar from './ManagerCalendar'
 // import ManagerCalendar from './ManagerCalendar'
