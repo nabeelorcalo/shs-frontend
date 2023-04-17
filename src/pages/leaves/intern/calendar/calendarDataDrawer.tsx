@@ -1,6 +1,7 @@
 import "./style.scss"
 import DrawerComp from "../../../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
+import { DrawerWidth } from '../../../../components';
 const CalendarDataDrawer = (props: any) => {
     const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer } = props;
     const events = eventData?.event?._def
@@ -19,12 +20,13 @@ const CalendarDataDrawer = (props: any) => {
         "Work from home": "rgba(233, 111, 124, 1)",
         "Medical": "rgba(106, 173, 142, 1)"
     }
-
+    const mainDrawerWidth = DrawerWidth();
     // console.log('events', events);
     return (
         <DrawerComp
             className={`drawar_main_calendar `}
             placement="right"
+            width={mainDrawerWidth>1400 ? 380 :300}
             onClose={() => setIsOpenCalendarDrawer(false)}
             open={isOpenCalendarDrawer}
             closeIcon={false}
