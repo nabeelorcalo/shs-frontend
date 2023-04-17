@@ -6,6 +6,7 @@ import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker
 import { DropDownInterface } from './DropDown_interface';
 import { handleCheckbox } from './actionHandle';
 import './style.scss';
+import CommonRangePicker from '../calendars/CommonDatePicker/CommonRangePicker';
 
 export const DropDown = (props: DropDownInterface) => {
     const {
@@ -27,10 +28,12 @@ export const DropDown = (props: DropDownInterface) => {
         startIcon,
         endIcon: EndIcon = ArrowDownDark,
         requiredDownloadIcon,
+        requireRangePicker,
     } = props;
 
     const [visible, setVisible] = useState(false);
     const [openPicker, setOpenPicker] = useState(false);
+    const [openRangePicker, setOpenRangePicker] = useState(false);
 
     const items = options?.map((option: string, i: number) => {
         if (requireSearchBar && option === 'search') {
@@ -70,6 +73,18 @@ export const DropDown = (props: DropDownInterface) => {
                         placement='bottomLeft'
                         setValue={setValue}
                     />,
+                key: option
+            }
+        }
+        if (requireRangePicker && option === showDatePickerOnVal) {
+            return {
+                label: <CommonRangePicker
+                    className='common-range-picker-wrapper'
+                    open={openRangePicker}
+                    setOpen={setOpenRangePicker}
+                    option={option}
+                    onChange={(_: any, val: string[]) => setValue(val.toString().split(',').join(' , '))}
+                />,
                 key: option
             }
         }

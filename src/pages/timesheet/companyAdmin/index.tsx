@@ -2,10 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
 import { timesheetMock } from "../mockData";
-import { PageHeader } from "../../../components";
+import { DropDown, PageHeader } from "../../../components";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
+import { useState } from "react";
 
 const CompanyAdmin = () => {
   const action = useCustomHook();
@@ -14,6 +15,10 @@ const CompanyAdmin = () => {
   const PdfBody = timesheetMock.map(({ id, userName, designation, totalHours, progess, workedHours }: any) =>
     [id, userName, designation, totalHours, `${progess}%`, workedHours]
   );
+
+  const [value, setValue] = useState('');
+  const [dateValue, setDateValue] = useState('')
+  console.log(value);
 
   return (
     <div className="timesheet-wrapper">
@@ -35,6 +40,21 @@ const CompanyAdmin = () => {
           handleViewAll={() => navigate(`/${ROUTES_CONSTANTS.TIMESHEETHISTORY}/${data.id}`)}
         />
       ))}
+      <DropDown
+        value={value}
+        options={['option 1', 'option 2', 'range picker']}
+        requireRangePicker
+        showDatePickerOnVal={'range picker'}
+        setValue={(val: string) => setValue(val)}
+      />
+
+      <DropDown
+        value={dateValue}
+        options={['option 1', 'option 2', 'custom']}
+        requireDatePicker
+        showDatePickerOnVal={'custom'}
+        setValue={(val: string) => setDateValue(val)}
+      />
     </div>
   )
 }
