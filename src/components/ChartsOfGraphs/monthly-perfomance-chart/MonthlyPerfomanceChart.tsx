@@ -1,6 +1,6 @@
 import { Column } from "@ant-design/plots";
 import { useEffect, useState } from "react";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { MonthChanger } from "../../MonthChanger";
 import { perfomanceChart } from "./MonthlyPerfomance";
 
@@ -40,7 +40,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     
   };
   return (
-    <div>
+    <BoxWrapper>
       {heading && (
         <div className="flex items-center">
           <p
@@ -57,6 +57,6 @@ export const MonthlyPerfomanceChart = (props: any) => {
       )}
 
       <Column style={style} {...config} marginRatio={marginRatio} />
-    </div>
+    </BoxWrapper>
   );
 };

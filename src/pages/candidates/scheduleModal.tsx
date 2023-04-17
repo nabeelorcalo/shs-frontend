@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Modal, TimePicker } from 'antd';
 import "./style.scss"
 import { ArrowDownDark, CloseCircleIcon, UserAvatar } from '../../assets/images';
-import DateAndTimePicker from '../../components/DateAndTimePicker/DateAndTimePicker';
-import { CommonDatePicker, DatePicker, SearchBar } from '../../components';
+import { CommonDatePicker,  SearchBar } from '../../components';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import { CheckBox } from '../../components/Checkbox';
 

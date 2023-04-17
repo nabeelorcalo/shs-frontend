@@ -19,12 +19,12 @@ const CardTabs = () => {
     <div className="card-tabs">
       <div className='flex justify-end md:justify-center"'>
         <Button
-          className="upload-button flex items-center justify-between"
+          className="upload-button flex gap-2 items-center justify-between teriary-bg-color white-color"
           onClick={() => {
             setIsOpen(true);
           }}
         >
-          <img src={upload} alt="" /> Add Card
+          <img src={upload} alt="wallet" /> Add Card
         </Button>
       </div>
       {cardArr.map((item, index) => {

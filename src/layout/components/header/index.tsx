@@ -1,9 +1,18 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Layout,  Input,  Dropdown,  Avatar,  Drawer, List, MenuProps, Typography} from "antd";
+import {
+  Layout,
+  Input,
+  Dropdown,
+  Avatar,
+  Drawer,
+  List,
+  MenuProps,
+  Typography,
+} from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
-import { ExtendedButton } from "../../../components";
+import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
@@ -11,22 +20,23 @@ import "./style.scss";
 import {
   Logo,
   IconCollapsebleOff,
-  IconCollapsebleOn, 
-  IconSearchNormal, 
+  IconCollapsebleOn,
+  IconSearchNormal,
   MessageNotif,
   Notification,
   IconGlobe,
   IconLogout,
   IconProfile,
-  IconCross
+  IconCross,
 } from "../../../assets/images";
 const { Search } = Input;
-const { Header } = Layout; 
+const { Header } = Layout;
 
 type HeaderProps = {
   collapsed: boolean;
   sidebarToggler: () => void;
 };
+
 
 const data = [
   {
@@ -52,6 +62,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
   const currentUser = useRecoilValue(currentUserState);
+  const width = DrawerWidth();
+
   const menuStyle = {
     boxShadow: "none",
   };
@@ -74,7 +86,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       label: "Logout",
       icon: <IconLogout />,
       onClick: (props) => {
-        localStorage.removeItem("UserData");
+        localStorage.removeItem("accessToken");
         navigate("/login");
       },
     },
@@ -135,15 +147,15 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             </div>
           </div>
           {/* Collapseable Ends */}
-          
-          {role === constants.INTERN &&
+
+          {role === constants.INTERN && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               <div className="organisation-logo">
                 <img src={organizationLogo} />
               </div>
             </div>
-          }
+          )}
 
           {/* Global Search */}
           <div
@@ -159,8 +171,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             />
           </div>
 
-          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`} >
-            <div className="mobile-searchbox-toggler" onClick={() => handleMobileSearch()} >
+          <div
+            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
+          >
+            <div
+              className="mobile-searchbox-toggler"
+              onClick={() => handleMobileSearch()}
+            >
               <IconSearchNormal />
             </div>
             <Search
@@ -174,11 +191,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
         </div>
 
         <div className="ikd-header-right">
-          {( role === constants.INTERN
-          || role === constants.STUDENT
-          || role === constants.MANAGER
-          || role === constants.COMPANY_ADMIN) &&
-            <div className="ikd-header-message-notif">
+          {(role === constants.INTERN ||
+            role === constants.STUDENT ||
+            role === constants.MANAGER ||
+            role === constants.COMPANY_ADMIN ||
+            role === constants.UNIVERSITY
+          ) &&
+            (<div className="ikd-header-message-notif">
               <div
                 className="message-notif-handler"
                 onClick={() => navigateToInbox()}
@@ -186,8 +205,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                 <MessageNotif />
               </div>
             </div>
-          }
-          
+          )}
+
           <div className="ikd-header-notification">
             <div
               className="notification-handler"
@@ -252,7 +271,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
         onClose={closeNotificationDrawer}
         open={openNotificationDrawer}
         closable={false}
-        width={380}
+        width={width > 768 ? 380: 280}
         className="notifications-drawer"
       >
         <List

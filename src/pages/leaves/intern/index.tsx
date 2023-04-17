@@ -1,7 +1,7 @@
 import { Button, Col, Row } from 'antd'
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
 import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import Calendar from "./calendar"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
@@ -33,7 +33,7 @@ const index = () => {
       </Row>
       <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
         <Col xs={24} md={12} xl={17}>
-          <BoxWrapper className='h-full'>
+          <BoxWrapper className='h-full' boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
             <Calendar />
           </BoxWrapper>
         </Col>

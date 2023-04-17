@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from "@ant-design/icons/lib/icons";
 import { Progress } from "antd";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 // import TimeIcon from "../../assets/images/timesheetTime.png";
 // import Clock from "../../assets/images/Clock.png";
 import "./styles.scss";
@@ -9,21 +9,21 @@ export const ContractCard = (props: any) => {
   const {
     cardWithProgressBar,
     img,
-    title ,
-    description ,
+    title,
+    description,
     userImg,
-    userName ,
-    designation ,
+    userName,
+    designation,
     totalHours,
     progress,
     workedHours,
     strokeColor,
+    onClick,
   } = props;
   return (
     <div
-      className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${
-        cardWithProgressBar && "contract-card-progress"
-      }`}
+      className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${cardWithProgressBar && "contract-card-progress"
+        }`}
     >
       {!cardWithProgressBar ? (
         <BoxWrapper className="box-wrapper-1 flex items-center">
@@ -63,7 +63,7 @@ export const ContractCard = (props: any) => {
       )}
 
       <div className="view-all-btn flex">
-        <span className="capitalize">view<span className="ml-2"><ArrowRightOutlined /></span></span>
+        <span onClick={onClick} className="capitalize">view<span className="ml-2"><ArrowRightOutlined /></span></span>
       </div>
     </div>
   );

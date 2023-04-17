@@ -1,23 +1,13 @@
-import react, { useState } from "react";
-import {
-  GlobalTable,
-  SearchBar,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  FiltersButton,
-  DropDown,
-  StageStepper
-} from "../../components";
-import "./style.scss";
-import '../../scss/global-color/Global-colors.scss'
+import { useEffect, useState } from "react";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth } from "../../components";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
-import { Button, MenuProps, Space } from 'antd';
+import { More } from "../../assets/images"
+import { Button, MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
+import '../../scss/global-color/Global-colors.scss'
+import "./style.scss";
 
 const ButtonStatus = (props: any) => {
   const btnStyle: any = {
@@ -58,7 +48,7 @@ const PopOver = ({ state }: any) => {
 
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -80,16 +70,19 @@ const CompanyData = ({ companyName, companyNature }: any) => {
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+
+
+
 const Application = () => {
   const navigate = useNavigate()
-  // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
+  const mainDrawerWidth = DrawerWidth();
+
+  
   const columns = [
     {
       dataIndex: "no",
@@ -160,7 +153,7 @@ const Application = () => {
       status: "Offer Letter",
     },
     {
-      no: "02",
+      no: "03",
       date_applied: "01/07/2022",
       company: { name: "ServiceNOW", details: "Software Solutions" },
       type_of_work: "Part Time",
@@ -170,7 +163,7 @@ const Application = () => {
       status: "Rejected",
     },
     {
-      no: "02",
+      no: "04",
       date_applied: "01/07/2022",
       company: { name: "kla Corporation Inc.", details: "Logistics" },
       type_of_work: "Full Time",
@@ -180,7 +173,7 @@ const Application = () => {
       status: "Short Listed",
     },
     {
-      no: "02",
+      no: "05",
       date_applied: "01/07/2022",
       company: { name: "SnowFlake Inc.", details: "Software Tech" },
       type_of_work: "Part Time",
@@ -190,7 +183,7 @@ const Application = () => {
       status: "Interviewed",
     },
     {
-      no: "02",
+      no: "06",
       date_applied: "01/07/2022",
       company: { name: "WorkDay Inc.", details: "Design Tech" },
       type_of_work: "Full Time",
@@ -200,7 +193,7 @@ const Application = () => {
       status: "Rejected",
     },
     {
-      no: "02",
+      no: "07",
       date_applied: "01/07/2022",
       company: { name: "Fortinet Inc.", details: "Game Agency" },
       type_of_work: "Part Time",
@@ -228,6 +221,7 @@ const Application = () => {
       }
     )
   })
+
   return (
     <>
       <PageHeader title="Applications" />
@@ -235,10 +229,9 @@ const Application = () => {
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
-              className=""
               handleChange={() => { }}
               name="search bar"
-              placeholder="search"
+              placeholder="Search"
               size="middle"
             />
           </div>
@@ -334,31 +327,15 @@ const Application = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </div>
             </Drawer>
             <Drawer
               closable
-              width={1000}
+              width={mainDrawerWidth>1400 ? 1000 : mainDrawerWidth > 900 ? 900:mainDrawerWidth > 576?600:300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);

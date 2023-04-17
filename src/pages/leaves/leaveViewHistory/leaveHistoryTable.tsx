@@ -1,6 +1,8 @@
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
 import { Dropdown, Space } from 'antd';
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';
@@ -8,7 +10,7 @@ import constants from '../../../config/constants';
 
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
-  const { setOpenDrawer, setOpenModal, setSelectedRow,id } = props
+  const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
   const intrneeColumData = [
     {
       title: 'No',
@@ -275,9 +277,15 @@ const LeaveHistoryTable = (props: any) => {
       ),
     },
   ];
+  const role = useRecoilValue(currentUserRoleState);
 
   return (
-    <GlobalTable columns={constants.USER_ROLE === 'Intern' ? intrneeColumData : managerColumData} tableData={data} pagination={true} id={id} />
+    <GlobalTable
+      id={id}
+      tableData={data}
+      pagination={true}
+      columns={role === constants.INTERN ? intrneeColumData : managerColumData}
+    />
   )
 }
 

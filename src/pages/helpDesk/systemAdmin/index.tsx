@@ -10,7 +10,7 @@ import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Avatar } from "../../../assets/images";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 
 const tableDataAll = [

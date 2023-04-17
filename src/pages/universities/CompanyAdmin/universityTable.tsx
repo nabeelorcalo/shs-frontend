@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 import { ThreeDots } from '../../../assets/images'
 import { NavLink } from 'react-router-dom'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-const UniversityTable = (props:any) => {
+const UniversityTable = (props: any) => {
   const escalatedByMeTableColumns =
     [
       {
@@ -56,22 +56,22 @@ const UniversityTable = (props:any) => {
           items={[
             {
               label:
-              <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`}> 
-              View Details
-              </NavLink>,
+                <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`}>
+                  View Details
+                </NavLink>,
               key: 'interns'
             },
             {
-              label:  
-               <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}> 
-              Profile
-              </NavLink>,
+              label:
+                <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
+                  Profile
+                </NavLink>,
               key: 'profile'
             },
             {
-              label: <span>
+              label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
                 Chat
-              </span>,
+              </NavLink>,
               key: 'chat'
             }
           ]}>

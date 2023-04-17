@@ -1,32 +1,50 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useEffect, useMemo } from "react";
+import { useRecoilState } from 'recoil';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import constants from "../../config/constants";
+import apiEndpints from "../../config/apiEndpoints";
+import { payrollDataState } from '../../store';
+import { debounce } from 'lodash';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  //get Payroll data from BE side
+  const { PAYROLL_FINDALL } = apiEndpints;
+  const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
+  const getData = async () => {
+    const { data } = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10 });
+    setPayrollData(data)
+  }
+  useEffect(() => {
+    getData()
+  }, [])
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+  //search vehicle
+  const changeHandler = async (e: any) => {
+    const {data} = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10, q: e });
+    setPayrollData(data);
+  }
+  const debouncedResults = useMemo(() => {
+    return debounce(changeHandler, 500);
+  }, []);
+  
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
 
-
+  //download pdf or excel functionality
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
 
@@ -37,8 +55,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, payroll_cycle}: any) =>
-      [ no, name, department, joining_date, payroll_cycle]
+    const body = data.map(({ no, name, department, joining_date, payroll_cycle }: any) =>
+      [no, name, department, joining_date, payroll_cycle]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -88,7 +106,8 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    payrollData,
+    changeHandler,
     downloadPdfOrCsv,
   };
 };

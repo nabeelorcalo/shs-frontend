@@ -25,7 +25,7 @@ import useCustomHook from "./actionHandler";
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const InternsCM = () => {
+const InternsCompanyAdmin = () => {
   const navigate = useNavigate()
   // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
@@ -101,7 +101,7 @@ const InternsCM = () => {
       },
     ];
     return (
-      <Dropdown menu={{ items }} placement="bottomRight">
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
       </Dropdown>
     );
@@ -246,14 +246,13 @@ const InternsCM = () => {
   return (
     <>
       <PageHeader title="Interns" />
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 intern-main">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
-              className=""
               handleChange={() => { }}
               name="search bar"
-              placeholder="search"
+              placeholder="Search"
               size="middle"
             />
           </div>
@@ -352,24 +351,8 @@ const InternsCM = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex justify-center gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>
@@ -431,27 +414,6 @@ const InternsCM = () => {
         </div>
 
       </div>
-      <Alert
-        width={600}
-        type="error"
-        state={terminate}
-        setState={setTerminate}
-        okBtntxt="Terminate"
-        cancelBtntxt="Cancel"
-        children={
-          <>
-            <p>Are you sure you want to terminate this intern?</p>
-            <div>
-              <p className="text-md">Reason</p>
-              <TextArea
-                rows={3}
-                placeholder="write your reason"
-                disable={false}
-              />
-            </div>
-          </>
-        }
-      />
       <PopUpModal
         open={assignManager}
         width={600}
@@ -474,8 +436,40 @@ const InternsCM = () => {
             />
           </div>
         }
+        footer={
+          <>
+            <Button type="default" size="middle" className="button-default-tertiary" onClick={() => setAssignManager(false)}>Cancel</Button>
+            <Button type="primary" size="middle" className="button-tertiary">Assign</Button>
+          </>
+        }
       />
-
+      <Alert
+        width={600}
+        type="error"
+        state={terminate}
+        setState={setTerminate}
+        okBtntxt="Terminate"
+        cancelBtntxt="Cancel"
+        children={
+          <div style={{ height: '50vh' }}>
+            <p>Are you sure you want to terminate this intern?</p>
+            <div>
+              <p className="text-md">Reason</p>
+              <TextArea
+                rows={3}
+                placeholder="write your reason"
+                disable={false}
+              />
+            </div>
+          </div>
+        }
+        footer={
+          <>
+            <Button type="default" size="middle" className="button-default-error" onClick={() => setTerminate(false)}>Cancel</Button>
+            <Button type="primary" size="middle" className="button-error">Terminate</Button>
+          </>
+        }
+      />
       <Alert
         width={700}
         type="success"
@@ -486,6 +480,16 @@ const InternsCM = () => {
         children={
           <>
             <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
+          </>
+        }
+        footer={
+          <>
+            <Button type="default" size="middle" className="button-default-tertiary" onClick={() => setComplete(false)}>Cancel</Button>
+            <Button type="primary" size="middle" className="button-tertiary" onClick={() => { alert("hello") }}>Complete</Button>
           </>
         }
       />
@@ -493,4 +497,4 @@ const InternsCM = () => {
   );
 };
 
-export default InternsCM;
+export default InternsCompanyAdmin;

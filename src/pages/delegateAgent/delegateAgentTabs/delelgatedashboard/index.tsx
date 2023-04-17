@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { InfoCircleFilled } from '@ant-design/icons';
 import { Col, Row, Tooltip, Typography } from 'antd'
-import { BoxWrapper } from '../../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../../components';
 import {RegisterAgentsAndRewardGraph} from '../../../../components';
 import constants from '../../../../config/constants';
 import { cardDelegate } from './dalegateMock';

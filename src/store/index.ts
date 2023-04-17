@@ -4,5 +4,7 @@ export * from './Theme';
 export * from './accommodation';
 export * from './listings';
 export * from './Signin';
+export * from './Setting';
+export * from "./Payroll";
 
 

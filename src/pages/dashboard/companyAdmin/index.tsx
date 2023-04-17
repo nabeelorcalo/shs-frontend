@@ -1,5 +1,7 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 import { gutter } from "..";
 import {
   AnnouncementList,
@@ -22,6 +24,7 @@ import {
 } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
+
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
@@ -31,26 +34,28 @@ const CompanyAdmin = () => {
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "Jennie Duncan",
+        date: "11 November", 
         id: 1,
         name: "Jennie Duncan",
       },
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "Jennie Duncan",
+        date: "11 November",
         id: 2,
         name: "Duncan",
       },
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "Jennie Duncan",
+        date: "11 November",
         id: 3,
         name: "Jennien",
       },
     ],
   });
+  const role = useRecoilValue(currentUserRoleState);
+
   const loadMoreData = () => {
     setState((prevState) => {
       return {
@@ -83,20 +88,20 @@ const CompanyAdmin = () => {
   }, []);
 
   return (
-    <>
+    <> 
       <PageHeader
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
             <span className="page-header-secondary-color">Maria Sanoid</span>
-          </div>
+          </div> 
         }
       />
       <Row gutter={gutter}>
-        <Col xs={24} xl={15} xxl={16}>
+        <Col xs={24} xl={15} xxl={17}>
           <PiplineTable handleSelect={handleSelect} />
         </Col>
-        <Col xs={24} xl={9} xxl={8}>
+        <Col xs={24} xl={9} xxl={7}>
           <InternshipSummaryChart
             autoFit
             barStyle={{
@@ -131,7 +136,7 @@ const CompanyAdmin = () => {
             data={state.list}
             loading={state.loading}
             loadMoreData={loadMoreData}
-            role={Constants?.USER_ROLE}
+            role={role}
             handleAddAnnouncement={handleAddAnnouncement}
             height={460}
           />
@@ -186,6 +191,7 @@ const CompanyAdmin = () => {
                 casualLeaves={["", "", ""]}
                 medicalLeaves={[""]}
                 workFromHome=""
+                date="10 Nov, 2023"
                 user={Constants?.COMPANY_ADMIN}
               />
             </Col>

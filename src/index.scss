@@ -158,6 +158,107 @@ svg {
   }
 }
 
+
+.ant-btn.button-default-tertiary {
+  background-color: $white-bg-color;
+  border-color: $teriary-bg-color;
+  color: $teriary-bg-color;
+
+  &>svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
+
+  &:hover {
+    background-color: $white-bg-color;
+    border-color: $teriary-bg-color;
+    color: $teriary-bg-color;
+    box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
+  }
+
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: $teriary-bg-color;
+  }
+
+  &.ant-btn-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $teriary-bg-color;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+
+.ant-btn.button-error {
+  background-color: $text-error-color;
+  border-color: $text-error-color;
+  color: $white-bg-color;
+
+  &>svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
+
+  &:hover {
+    background-color: $text-error-color;
+    border-color: $text-error-color;
+    color: $white-bg-color;
+    box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
+  }
+
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: $teriary-bg-color;
+  }
+
+  &.ant-btn-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $teriary-bg-color;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.ant-btn.button-default-error {
+  background-color: $white-bg-color;
+  border-color: $text-error-color;
+  color: $text-error-color;
+
+  &>svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
+
+  &:hover {
+    background-color: $white-bg-color;
+    border-color: $text-error-color;
+    color: $text-error-color;
+    box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
+  }
+
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: $teriary-bg-color;
+  }
+
+  &.ant-btn-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $teriary-bg-color;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
 .ant-btn.button-sky-blue {
   min-width: 48px;
   background-color: $text-input-bg-color;

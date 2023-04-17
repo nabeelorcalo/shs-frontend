@@ -1,5 +1,5 @@
 import { Col, Progress, Row } from 'antd';
-import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import "./OverAllPerfomance.scss"
 
 export const OverAllPerfomance = (props: any) => {
@@ -11,7 +11,7 @@ export const OverAllPerfomance = (props: any) => {
           {heading}
         </p>
       }
-      <Row className='max-sm:gap-0 lg:gap-5 justify-between'>
+      <Row className='max-sm:gap-0 lg:gap-5 justify-around'>
         {data.map((item: any, i: any) => (
           <Col key={i} lg={lg} md={md} sm={sm} xs={xs} className="text-center">
             <Progress trailColor={trailColor}

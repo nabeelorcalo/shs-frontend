@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SettingAvater } from "../../../../../assets/images";
-import { BoxWrapper } from "../../../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../../../components";
 import {
   Typography, Row, Col, Divider, Form, Radio,
   RadioChangeEvent, Button, Space, Input, Switch,
@@ -12,12 +12,13 @@ const { Title, Paragraph } = Typography;
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { NavLink } from "react-router-dom";
+import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 
 const LeavesAddPolicy: React.FC = () => {
   const breadcrumbArray = [
-    { name: "Add Policy"},
-    { name: "Setting"  },
-    { name: "Leaves" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_LEAVES}`},
+    { name: "Add Policy" },
+    { name: "Setting" },
+    { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
   ];
   const selectArray = [
     {
@@ -51,6 +52,7 @@ const LeavesAddPolicy: React.FC = () => {
   const [value, setValue] = useState(1);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const [openModal, setOpenModal] = useState<any>(false);
+  const [intern, setIntern] = useState<any>();
   const [formValues, setFormValues] = useState<any>({
     policyName: "",
     description: "",
@@ -68,23 +70,31 @@ const LeavesAddPolicy: React.FC = () => {
     setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
   };
   const onChange = (e: RadioChangeEvent) => {
+    setValue(e.target.value);
     if (e.target.value === 2) {
       setOpenModal(!openModal);
     }
-    setValue(e.target.value);
+    else if (e.target.value === 1) {
+      setIntern(null)
+    }
   };
+  const SelectInternHandler = (data: any) => {
+    setIntern(data)
+  }
+
   return (
     <div className="leaves-add-policy">
-        <Breadcrumb breadCrumbData={breadcrumbArray} />
-      <Divider/>
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <BoxWrapper>
         <Form layout="vertical">
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
-                Policy Details
-              </Title>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
+                Policy Details   Office
+              </span>
+
               <Paragraph>Enter policy details for time-off</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
@@ -110,9 +120,9 @@ const LeavesAddPolicy: React.FC = () => {
           {/*------------------------ Policy Accrual----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Policy Accrual
-              </Title>
+              </span>
               <Paragraph>Define the occrual period of your policy</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
@@ -153,9 +163,9 @@ const LeavesAddPolicy: React.FC = () => {
           {/*------------------------ Carry Forward----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Carry Forward
-              </Title>
+              </span>
               <Paragraph>
                 Define the carry farward days for your policy
               </Paragraph>
@@ -187,16 +197,20 @@ const LeavesAddPolicy: React.FC = () => {
           {/*------------------------ Add Interns----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Add Interns
-              </Title>
+              </span>
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <Radio.Group onChange={onChange} value={value}>
+              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
                 <Radio value={1}>All interns</Radio>
                 <Radio value={2}>Select Interns</Radio>
               </Radio.Group>
+                <span >
+                  <AvatarGroup maxCount={6} list={intern} />
+                </span>
+              </div>
               <div className="my-5">
                 <Switch />
                 <span className="px-3 ">Apply to all new hires</span>
@@ -205,9 +219,9 @@ const LeavesAddPolicy: React.FC = () => {
           </Row>
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_LEAVES}`}> 
-             Cancel 
-             </NavLink>
+              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`}>
+                Cancel
+              </NavLink>
             </Button>
             <Button
               size="middle"
@@ -223,6 +237,7 @@ const LeavesAddPolicy: React.FC = () => {
         deselectArray={deselectArray}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        SelectInternHandler={SelectInternHandler}
       />
     </div>
   );

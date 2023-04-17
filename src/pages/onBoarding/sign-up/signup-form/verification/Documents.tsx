@@ -4,16 +4,14 @@ import {
   ArrowDownDark,
   DocumentUpload,
   SHSLogo,
-} from "../../../../../assets/images";
-import { BackButton } from "../../../../../assets/images";
+  BackButton 
+} from "../../../../../assets/images/";
 import { DropDown } from "../../../../../components";
 import "../../../styles.scss";
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedList, setSelectedList] = useState([]);
 
   const { Option } = Select;
   return (

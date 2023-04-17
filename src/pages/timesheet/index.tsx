@@ -1,21 +1,18 @@
-import constants from '../../config/constants';
+import { useRecoilValue } from 'recoil';
 import CompanyAdmin from './companyAdmin';
 import Intern from './intern';
 import Manager from './manager';
+import { currentUserRoleState } from '../../store';
 
 const Index = () => {
-
+    const role = useRecoilValue(currentUserRoleState);
     const renderRoleBasedTimeSheet: any = {
-        'CompanyAdmin': <CompanyAdmin />,
-        'Intern': <Intern />,
-        'Manager': <Manager />
+        COMPANY_ADMIN: <CompanyAdmin />,
+        INTERN: <Intern />,
+        MANAGER: <Manager />
     }
-
     return (
-        <>
-            {renderRoleBasedTimeSheet[constants.USER_ROLE]}
-        </>
+        <>{renderRoleBasedTimeSheet[role]}</>
     )
 }
-
 export default Index

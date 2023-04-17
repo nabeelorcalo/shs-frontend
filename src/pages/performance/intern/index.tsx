@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from "antd";
 import {
   OverAllPerfomance,
@@ -7,7 +7,7 @@ import {
   GlobalTable,
 } from "../../../components";
 import { MoreIcon } from "../../../assets/images";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 

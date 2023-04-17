@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Rate, Typography } from 'antd';
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 import './style.scss';
 
 interface EmojiProps {

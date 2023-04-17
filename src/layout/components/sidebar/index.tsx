@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "./style.scss";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Layout, Menu, theme } from "antd";
@@ -15,6 +15,7 @@ import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
 import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
+import getUserRoleLable from "../../../helpers/roleLabel";
 const { Sider } = Layout;
 
 type SidebarProps = {
@@ -23,11 +24,7 @@ type SidebarProps = {
   onBreakpoint: any;
 };
 
-const AppSidebar: FC<SidebarProps> = ({
-  collapsed,
-  collapsedWidth,
-  onBreakpoint,
-}) => {
+const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
@@ -36,7 +33,7 @@ const AppSidebar: FC<SidebarProps> = ({
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
-  const currentUser = useRecoilValue(currentUserState);
+  const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
 
   // const {role } =useCurrentUserRole()
 
@@ -96,12 +93,12 @@ const AppSidebar: FC<SidebarProps> = ({
       onBreakpoint={onBreakpoint}
     >
       <div className="sidebar-user-profile">
-        <Avatar size={48} src={currentUser?.avatar}>
-          {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
+        <Avatar size={48} src={avatar}>
+          {firstName.charAt(0)}{lastName.charAt(0)}
         </Avatar>
         <div className="sidebar-user-profile-content">
-          <Typography.Title level={4}>{currentUser?.firstName} {currentUser?.lastName}</Typography.Title>
-          <div className="sidebar-user-profile-role">{role}</div>
+          <Typography.Title level={4}>{`${firstName} ${lastName}`}</Typography.Title>
+          <div className="sidebar-user-profile-role">{getUserRoleLable(role)}</div>
         </div>
       </div>
 

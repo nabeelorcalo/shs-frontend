@@ -14,7 +14,6 @@ import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-pa
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
 import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
 
-
 //Interns Child Components
 import profile from "./pages/interns/profile";
 import chat from "./pages/interns/chat";
@@ -27,61 +26,104 @@ import DemoCard from "./components/ContractCard/demoCard";
 import Chat from "./pages/chat";
 import ManageVault from "./pages/digiVault/Student/manageVault";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
-import ActivityData from './pages/propertyAgent/propertDahboard/Dashboard/activityData'
+import ActivityData from "./pages/propertyAgent/propertDahboard/Dashboard/activityData";
 import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
 import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
+import Received from "./pages/contracts/student/received";
+import Rejected from "./pages/contracts/student/rejected";
+import Signed from "./pages/contracts/student/signed";
+import ReceivedOfferLetter from "./pages/offerLetters/student/received";
+import RejectedOfferLetter from "./pages/offerLetters/student/rejected";
+import SignedOfferLetter from "./pages/offerLetters/student/signed";
+import RejectedCompany from "./pages/contracts/CompanyAdmin/rejected";
+import SignedCompany from "./pages/contracts/CompanyAdmin/signed";
+import EditContract from "./pages/contracts/CompanyAdmin/editContract";
+import PendingViewDetail from "./pages/contracts/CompanyAdmin/pendingViewDetail";
+import EditOfferLetter from "./pages/offerLetters/CompanyAdmin/editContract";
+import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
+import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
+import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 // Lazy load required end
 
 const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-(
-  <Suspense fallback={<Spin indicator={spinIcon} />}>
-    <Component {...props} />
-  </Suspense>
-);
+  (
+    <Suspense fallback={<Spin indicator={spinIcon} />}>
+      <Component {...props} />
+    </Suspense>
+  );
 //Internships Child Components
-const NewInternships = Loadable(lazy(() => import("./pages/internships/NewInternships")));
-const ViewInternshipDetails = Loadable(lazy(() => import("./pages/internships/ViewInternshipDetails")));
+const NewInternships = Loadable(
+  lazy(() => import("./pages/internships/NewInternships"))
+);
+const ViewInternshipDetails = Loadable(
+  lazy(() => import("./pages/internships/ViewInternshipDetails"))
+);
 
 //Company admin Internships
-const CMInternships = Loadable(lazy(() => import("./pages/internships/cmInternships")));
-const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/internshipPipeLine")));
+const InternshipsCompanyAdmin = Loadable(lazy(() => import("./pages/internships/InternshipsCompanyAdmin")));
+const InternshipPipeLine = Loadable(lazy(() => import("./pages/internships/InternshipsPipeLine")));
 
 //Company admin payroll
 const Payroll = Loadable(lazy(() => import("./pages/Payroll")));
-const ViewPayrollDetails = Loadable(lazy(() => import("./pages/Payroll/viewPayrollDetails")));
-const ViewPayrollSalarySlip = Loadable(lazy(() => import("./pages/Payroll/viewPayrollSalarySlip")));
+const ViewPayrollDetails = Loadable(
+  lazy(() => import("./pages/Payroll/viewPayrollDetails"))
+);
+const ViewPayrollSalarySlip = Loadable(
+  lazy(() => import("./pages/Payroll/viewPayrollSalarySlip"))
+);
 
 //Company admin Interns
-const InternsCM = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
+const InternsCompanyAdmin = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
 
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
-const ViewPaymentDetails = Loadable(lazy(() => import("./pages/payments/viewPaymentDetails")));
-
+const ViewPaymentDetails = Loadable(
+  lazy(() => import("./pages/payments/viewPaymentDetails"))
+);
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
 const Interns = Loadable(lazy(() => import("./pages/interns")));
 const Attendance = Loadable(lazy(() => import("./pages/attendance")));
-const AttendanceList = Loadable(lazy(() => import("./pages/attendance/attendanceListPage")));
-const AttendanceDetail = Loadable(lazy(() => import("./pages/attendance/detailPage")));
+const AttendanceList = Loadable(
+  lazy(() => import("./pages/attendance/attendanceListPage"))
+);
+const AttendanceDetail = Loadable(
+  lazy(() => import("./pages/attendance/detailPage"))
+);
 const Calendar = Loadable(lazy(() => import("./pages/calendar")));
 const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
-const ManagerCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/Manager/assessmentForm")));
-const CompanyAdminCaseStudiesAssessment = Loadable(lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm")));
+const ManagerCaseStudiesAssessment = Loadable(
+  lazy(() => import("./pages/caseStudies/Manager/assessmentForm"))
+);
+const CompanyAdminCaseStudiesAssessment = Loadable(
+  lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm"))
+);
 const Documents = Loadable(lazy(() => import("./pages/documents")));
 const Grievances = Loadable(lazy(() => import("./pages/grievances")));
-const ManagerAllGrievances = Loadable(lazy(() => import("./pages/grievances/Manager/AllGrievance")));
-const CompanyAdminAllGrievances = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/AllGrievance")));
-const InternAllGrievances = Loadable(lazy(() => import("./pages/grievances/Intern/AllGrievance")));
-const ManagerGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Manager/GrievanceDetails")));
-const CompanyAdminGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails")));
-const InternGrievancesDetails = Loadable(lazy(() => import("./pages/grievances/Intern/GrievanceDetails")));
+const ManagerAllGrievances = Loadable(
+  lazy(() => import("./pages/grievances/Manager/AllGrievance"))
+);
+const CompanyAdminAllGrievances = Loadable(
+  lazy(() => import("./pages/grievances/CompanyAdmin/AllGrievance"))
+);
+const InternAllGrievances = Loadable(
+  lazy(() => import("./pages/grievances/Intern/AllGrievance"))
+);
+const ManagerGrievancesDetails = Loadable(
+  lazy(() => import("./pages/grievances/Manager/GrievanceDetails"))
+);
+const CompanyAdminGrievancesDetails = Loadable(
+  lazy(() => import("./pages/grievances/CompanyAdmin/GrievanceDetails"))
+);
+const InternGrievancesDetails = Loadable(
+  lazy(() => import("./pages/grievances/Intern/GrievanceDetails"))
+);
 const Leaves = Loadable(lazy(() => import("./pages/leaves")));
 const Performance = Loadable(lazy(() => import("./pages/performance")));
 const Structure = Loadable(lazy(() => import("./pages/structure/index")));
@@ -104,6 +146,7 @@ const OfferLetters = Loadable(lazy(() => import("./pages/offerLetters")));
 const Contracts = Loadable(lazy(() => import("./pages/contracts")));
 const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
+const SearchJobsDetails = Loadable(lazy(() => import("./pages/searchJobs/jobDetails/jobDetails")));
 const Application = Loadable(lazy(() => import("./pages/application")));
 const Profile = Loadable(lazy(() => import("./pages/profile/")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
@@ -135,14 +178,22 @@ const EarnWithUs = Loadable(lazy(() => import("./pages/earnWithUs")));
 const DreamUp = Loadable(lazy(() => import("./pages/dreamUp")));
 const AllGoals = Loadable(lazy(() => import("./pages/dreamUp/AllGoals/index")));
 const Report = Loadable(lazy(() => import("./pages/report")));
-const ViewDetailsReport = Loadable(lazy(() => import("./pages/report/UniversityRep/ViewDetails")));
-const AssessmentFormReport = Loadable(lazy(() => import("./pages/report/UniversityRep/assessmentForm")));
+const ViewDetailsReport = Loadable(
+  lazy(() => import("./pages/report/UniversityRep/ViewDetails"))
+);
+const AssessmentFormReport = Loadable(
+  lazy(() => import("./pages/report/UniversityRep/assessmentForm"))
+);
 const Listings = Loadable(lazy(() => import("./pages/listings")));
-const ListingUpdate = Loadable(lazy(() => import("./pages/listings/listingUpdate")));
+const ListingUpdate = Loadable(
+  lazy(() => import("./pages/listings/listingUpdate"))
+);
 const Offers = Loadable(lazy(() => import("./pages/offers")));
 const Reservations = Loadable(lazy(() => import("./pages/reservations")));
 const SelfAssesment = Loadable(lazy(() => import("./pages/selfAssesment")));
-const AssesmentForm = Loadable(lazy(() => import("./pages/selfAssesment/AssesmentFormPage")));
+const AssesmentForm = Loadable(
+  lazy(() => import("./pages/selfAssesment/AssesmentFormPage"))
+);
 const DigiVault = Loadable(lazy(() => import("./pages/digiVault")));
 const Payments = Loadable(lazy(() => import("./pages/payments")));
 const ViewHistory = Loadable(
@@ -276,7 +327,7 @@ const UniversitesProfile = Loadable(
 );
 
 export const publicRoutes = [
- 
+
   {
     key: `${ROUTES_CONSTANTS.LOGIN}`,
     path: "/",
@@ -554,7 +605,7 @@ const delegateAgentRoutes = [
         path: `link-account`,
         element: <LinkAccount />,
       },
-      
+
       {
         key: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
         path: `${ROUTES_CONSTANTS.WITHDRAWALS}`,
@@ -694,7 +745,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
-        element: <CMInternships />,
+        element: <InternshipsCompanyAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,
@@ -739,7 +790,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
-        element: <InternsCM />,
+        element: <InternsCompanyAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
@@ -774,7 +825,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
-        element: <Universities />
+        element: <Universities />,
       },
 
       {
@@ -787,13 +838,15 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
         element: <UniversitesProfile />,
       },
-
-
+      {
+        key: `${ROUTES_CONSTANTS.CALENDAR}`,
+        path: `${ROUTES_CONSTANTS.CALENDAR}`,
+        element: <Calendar />,
+      },
       {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
-
       },
       {
         key: `${ROUTES_CONSTANTS.ALL_GRIEVANCES}`,
@@ -1060,6 +1113,52 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        element: <RejectedCompany />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        element: <SignedCompany />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EDIT_CONTRACT}`,
+        path: `${ROUTES_CONSTANTS.EDIT_CONTRACT}`,
+        element: <EditContract />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        path: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        element: <PendingViewDetail />,
+      },
+
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_OFFER_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_OFFER_CompanyAdmin}`,
+        element: <ReceivedOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_OFFER_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_OFFER_CompanyAdmin}`,
+        element: <RejectedOfferLetterCompany />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_OFFER_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_OFFER_CompanyAdmin}`,
+        element: <SignedOfferLetterCompanyAdmin />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
+        path: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
+        element: <EditOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
+        path: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
+        element: <PendingViewDetailOfferLetter />,
+      },
     ],
   },
   {
@@ -1298,6 +1397,11 @@ const studentRoutes = [
         element: <SearchJobs />,
       },
       {
+        key: `${ROUTES_CONSTANTS.JOBDETAILS}`,
+        path: `${ROUTES_CONSTANTS.JOBDETAILS}/:id`,
+        element: <SearchJobsDetails />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.APPLICATION}`,
         path: `${ROUTES_CONSTANTS.APPLICATION}`,
         element: <Application />,
@@ -1409,6 +1513,36 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.CHAT}`,
         path: `${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED}`,
+        element: <Received />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED}`,
+        path: `${ROUTES_CONSTANTS.REJECTED}`,
+        element: <Rejected />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED}`,
+        path: `${ROUTES_CONSTANTS.SIGNED}`,
+        element: <Signed />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_OFFER}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_OFFER}`,
+        element: <ReceivedOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_OFFER}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_OFFER}`,
+        element: <RejectedOfferLetter />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_OFFER}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_OFFER}`,
+        element: <SignedOfferLetter />,
       },
     ],
   },

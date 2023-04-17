@@ -1,18 +1,19 @@
-import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
+import SystemAdmin from "./SystemAdmin/index";
+import CompanyAdmin from './CompanyAdmin/index';
 import "./style.scss";
-import SystemAdmin from "./SystemAdmin/index"
-import constants from "../../config/constants";
-import CompanyAdmin from './CompanyAdmin/index'
 
 const Universities = () => {
-  const rederWthRole: any = {
-    'CompanyAdmin': <CompanyAdmin/>,
-    'SystemAdmin':  <SystemAdmin/>
+  const role = useRecoilValue(currentUserRoleState);
+  const renderWthRole: any = {
+    'COMPANY_ADMIN': <CompanyAdmin />,
+    'SYS_ADMIN': <SystemAdmin />
   }
+
   return (
     <>
-    
-      {rederWthRole[constants.USER_ROLE]}
+      {renderWthRole[role]}
     </>
   )
 }

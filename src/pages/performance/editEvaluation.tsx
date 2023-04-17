@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Col, Row, Typography } from "antd";
-import { Link } from "react-router-dom";
-import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import {
   PageHeader,

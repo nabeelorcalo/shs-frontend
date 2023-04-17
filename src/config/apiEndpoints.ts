@@ -7,8 +7,11 @@ const endpoints = {
   GET_SAVED_PROPERTIES: "property/get-saved-properties",
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
-  POST_SAVE_PROPERTY: "property/save-property"
-
+  POST_SAVE_PROPERTY: "property/save-property",
+  SETTING_LOCATION:"location",
+  SETTING_DAPARTMENT:"department",
+  AGENT_DASHBOARD_WIDGETS:"/property/get-agent-dashboard-widgets",
+  PAYROLL_FINDALL : "payroll/findAll",
+  TIMESHEET_FIND_ALL:'timesheet/category/findAll'
 }
-
 export default endpoints;

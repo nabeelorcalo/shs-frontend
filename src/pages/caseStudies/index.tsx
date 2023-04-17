@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
 import Manager from "./Manager/index"
 import CompanyAdmin from "./CompanyAdmin/index"
-import constants from "../../config/constants";
-import "./style.scss";
 
 const CaseStudies = () => {
+  const role = useRecoilValue(currentUserRoleState);
   const rederWthRole: any = {
-    'CompanyAdmin': <CompanyAdmin/>,
-    'Manager': <Manager />,
+    'COMPANY_ADMIN': <CompanyAdmin/>,
+    'COMPANY_MANAGER': <Manager />,
   }
   return (
     <>
-    {rederWthRole[constants.USER_ROLE]}
+    {rederWthRole[role]}
     </>
   )
 }
