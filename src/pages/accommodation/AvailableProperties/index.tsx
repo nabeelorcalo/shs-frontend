@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
 import { AccommodationCard } from '../../../components';
 import "./style.scss";
@@ -7,6 +7,9 @@ import thumb1 from '../../../assets/images/gallery/thumb1.png';
 import { useRecoilValue} from "recoil";
 import { availablePropertiesState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
+import useAccommodationHook from "../actionHandler"
+import showNotification from '../../../helpers/showNotification'
+import constants from '../../../config/constants'
 
 
 
@@ -14,9 +17,10 @@ const AvailableProperties = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const {getAvailableProperties} = useAvailablePropertiesHook();
+  const { getAvailableProperties } = useAvailablePropertiesHook();
   const availableProperties = useRecoilValue(availablePropertiesState)
   const [loading, setLoading] = useState(false)
+  const { saveProperty } = useAccommodationHook();
 
 
 
@@ -29,7 +33,16 @@ const AvailableProperties = () => {
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-
+  const postSaveProperty = async (id:any) => {
+    setLoading(true)
+    const result = await saveProperty({propertyId: id});
+    setLoading(false)
+    if (result.error) {
+      showNotification("error", constants.NOTIFICATION_DETAILS.error);
+    } else {
+      showNotification("success", constants.NOTIFICATION_DETAILS.success);
+    }
+  }
 
 
   /* EVENT FUNCTIONS
@@ -58,7 +71,7 @@ const AvailableProperties = () => {
                   totalWashRoom={property.totalBathrooms}
                   tags={['Utility Bills', 'Laundry', 'Meals']}
                   location={property.addressOne}
-                  handleSaveClick={() => console.log('handle clik')}
+                  handleSaveClick={() => postSaveProperty(property.id)}
                   handleDetailClick={() => handleDetailClick(property.id)}
                   handleChatClick={() => navigate('/chat')}
                 />

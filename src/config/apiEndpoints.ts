@@ -6,7 +6,8 @@ const endpoints = {
   GET_AVAILABLE_PROPERTIES: "property/get-available-properties",
   GET_SAVED_PROPERTIES: "property/get-saved-properties",
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
-  GET_PROPERTY_BOOKINGS: "property/get-property-bookings"
+  GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
+  POST_SAVE_PROPERTY: "property/save-property"
 
 }
 
