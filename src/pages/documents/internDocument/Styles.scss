@@ -1,3 +1,4 @@
+@import "../../../scss/colors";
 .select-icon {
   background-image: url("../../../assets/images/documents/folder.svg");
   background-repeat: no-repeat;
@@ -18,9 +19,20 @@
     padding: 10px;
   }
 }
-.ant-dropdown-trigger {
-  background: #e6f4f9;
-  border-radius: 8px;
-  height: 50px;
-  padding: 0 13px;
+.tertiory-btn {
+  border: 1px solid $teriary-bg-color;
+  &:hover {
+    border: 1px solid $teriary-bg-color !important;
+    outline: none !important;
+    color: $teriary-bg-color !important;
+  }
+}
+.upload-button {
+  background-color: $teriary-bg-color;
+  &:hover {
+    background-color: $teriary-bg-color;
+    outline: none !important;
+    color: $white-bg-color !important;
+    border: 1px solid $teriary-bg-color !important;
+  }
 }

@@ -2,7 +2,6 @@ import React from "react";
 import { Col, Row, Rate, Divider } from "antd";
 import { BoxWrapper } from "../../../../components";
 import { Dots, DoucmentCard } from "../../../../assets/images";
-import DocTable from "../DocsTable/docTable";
 import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 
 const InterCards = () => {
@@ -56,10 +55,9 @@ const InterCards = () => {
             >
               <div className="flex justify-between">
                 <Rate count={1} />
-             <DropDownNew items={items}>
-             <img src={Dots} alt="" />
-              </DropDownNew>
-
+                <DropDownNew items={items} >
+                  <img className="cursor-pointer" src={Dots} alt="" />
+                </DropDownNew>
               </div>
               <div className="text-center">
                 <img src={DoucmentCard} alt="" />
@@ -85,7 +83,6 @@ const InterCards = () => {
           </Col>
         ))}
       </Row>
-      <DocTable />
     </>
   );
 };

@@ -56,14 +56,10 @@ const columns = [
     key: "action",
     render: (_: any, data: any) => (
       <DropDownNew items={items}>
-        <img src={Dots} alt="" />
+        <img className="cursor-pointer intern-document-model"  src={Dots} alt="" />
       </DropDownNew>
     ),
   },
-  //   {
-  //     title: "Action",
-  //     render: () => <img src={Dots} />,
-  //   },
 ];
 const data = [
   {
