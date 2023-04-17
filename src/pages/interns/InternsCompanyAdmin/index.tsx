@@ -15,30 +15,24 @@ import {
 import { TextArea } from "../../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../../assets/images"
+import { AlertIcon, CardViewIcon, DownloadDocumentIcon, More, SuccessIcon, TableViewIcon, WarningIcon } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps } from 'antd';
 import useCustomHook from "./actionHandler";
-// import Complete from "../complete";
+import UploadDocument from "../../../components/UploadDocument";
+import { STATUS_CONSTANTS } from "../../../config/constants";
 
-
-
-
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
 
 const InternsCompanyAdmin = () => {
   const navigate = useNavigate()
-  // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
-  // const [state, setState] = useState(false)
   const [assignManager, setAssignManager] = useState(false)
   const [terminate, setTerminate] = useState(false)
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  // const [isToggle, setIsToggle] = useState(false)
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
-
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -149,6 +143,7 @@ const InternsCompanyAdmin = () => {
       title: "Actions",
     },
   ];
+
   const tableData = [
     {
       no: "01",
@@ -223,6 +218,7 @@ const InternsCompanyAdmin = () => {
       status: "Employed"
     }
   ];
+
   const newTableData = tableData.map((item, idx) => {
     return (
       {
@@ -240,8 +236,6 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-
-
 
   return (
     <>
@@ -377,7 +371,6 @@ const InternsCompanyAdmin = () => {
             />
           </div>
         </div>
-
         <div className="pt-3">
           <p className="font-semibold pb-4">Total Interns: 40</p>
           {
@@ -412,7 +405,6 @@ const InternsCompanyAdmin = () => {
               </BoxWrapper>
           }
         </div>
-
       </div>
       <PopUpModal
         open={assignManager}
@@ -443,56 +435,57 @@ const InternsCompanyAdmin = () => {
           </>
         }
       />
-      <Alert
-        width={600}
-        type="error"
-        state={terminate}
-        setState={setTerminate}
-        okBtntxt="Terminate"
-        cancelBtntxt="Cancel"
+      <PopUpModal
+        open={terminate}
+        width={500}
+        close={() => { setTerminate(false) }}
         children={
-          <div style={{ height: '50vh' }}>
-            <p>Are you sure you want to terminate this intern?</p>
-            <div>
-              <p className="text-md">Reason</p>
-              <TextArea
-                rows={3}
-                placeholder="write your reason"
-                disable={false}
-              />
+          <div>
+            <div className="flex flex-col gap-5">
+              <div className='flex flex-row items-center gap-3'>
+                <div><AlertIcon /></div>
+                <div><h2>Alert</h2></div>
+              </div>
+              <p>Are you sure you want to terminate this intern?</p>
+              <div className="flex flex-col gap-2">
+                <p className="text-md text-teriary-color">Reason</p>
+                <TextArea
+                  rows={5}
+                  placeholder="write your reason"
+                  disable={false}
+                />
+              </div>
             </div>
           </div>
         }
         footer={
           <>
-            <Button type="default" size="middle" className="button-default-error" onClick={() => setTerminate(false)}>Cancel</Button>
-            <Button type="primary" size="middle" className="button-error">Terminate</Button>
+            <Button type="default" size="small" className="button-default-error" onClick={() => setTerminate(false)}>Cancel</Button>
+            <Button type="primary" size="small" className="button-error">Terminate</Button>
           </>
         }
       />
-      <Alert
-        width={700}
-        type="success"
-        state={complete}
-        setState={setComplete}
-        okBtntxt="Complete"
-        cancelBtntxt="Cancel"
+      <PopUpModal
+        open={complete}
+        width={500}
+        close={() => { setComplete(false) }}
         children={
-          <>
-            <p>Are you sure you want to mark the internship as complete for this intern?</p>
-            <p>Are you sure you want to mark the internship as complete for this intern?</p>
-            <p>Are you sure you want to mark the internship as complete for this intern?</p>
-            <p>Are you sure you want to mark the internship as complete for this intern?</p>
-            <p>Are you sure you want to mark the internship as complete for this intern?</p>
-          </>
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><SuccessIcon /></div>
+              <div><h2>Success</h2></div>
+            </div>
+            <p>Are you sure you want to terminate this intern?</p>
+          </div>
         }
         footer={
           <>
-            <Button type="default" size="middle" className="button-default-tertiary" onClick={() => setComplete(false)}>Cancel</Button>
-            <Button type="primary" size="middle" className="button-tertiary" onClick={() => { alert("hello") }}>Complete</Button>
+            <Button type="default" size="small" className="button-default-tertiary" onClick={() => setComplete(false)}>Cancel</Button>
+            <Button type="primary" size="small" className="button-tertiary" onClick={() => { alert("hello") }}>Complete</Button>
           </>
         }
       />
+      <UploadDocument />
     </>
   );
 };

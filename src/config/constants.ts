@@ -63,6 +63,8 @@ export const ROUTES_CONSTANTS: any = {
   WITHDRAWAL_REQUEST: "withdrawal-request",
   WITHDRAWALS: "withdrawals",
   STUDENT: "student",
+  STUDENT_PROFILE: "student/profile",
+  STUDENT_CHAT:"student/chat",
   UNIVERSITIES: "universities",
   COMPANIES: "companies",
   ADMIN: "admin",
@@ -155,6 +157,8 @@ export const ROUTES_CONSTANTS: any = {
   HISTORY: 'history',
   UNIVERSITIES_INTERNS:"universities/interns",
   UNIVERSITIES_PROFILE:"universities/profile",
+  COMPANIES_PROFILE: "companies/profile",
+  COMPANIES_CHAT: "companies/chat",
   AcceptedFileTyp:'application/pdf,image/jpeg,application/msword',
   JOBDETAILS:'search-jobs/job-details',
 };

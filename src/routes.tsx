@@ -1574,14 +1574,29 @@ const universityRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PROFILE}`,
-        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        key: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
         element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPANIES_CHAT}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES_CHAT}`,
+        element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,
         path: `${ROUTES_CONSTANTS.STUDENT}`,
         element: <Students />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENT_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.STUDENT_PROFILE}`,
+        element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENT_CHAT}`,
+        path: `${ROUTES_CONSTANTS.STUDENT_CHAT}`,
+        element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
