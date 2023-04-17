@@ -1,5 +1,5 @@
 import { Progress } from "antd";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 import "./style.scss";
 
 interface HorizonalLineCardProps {

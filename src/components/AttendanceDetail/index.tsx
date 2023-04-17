@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 import { AvgHoursIcon, ClockInIcon, ClockOutIcon } from '../../assets/images';
 import './style.scss';
 

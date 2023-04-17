@@ -1,6 +1,6 @@
 import { Pie } from '@ant-design/plots';
 import { useState } from 'react';
-import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import { TimeSheetCategoriesData } from './timeSheet';
 
 export const TimesheetCategories = (props: any) => {
