@@ -343,10 +343,10 @@ const Detail = () => {
             requiredDownloadIcon
             setValue={() => {
               action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail");
-              Notifications({ title: 'Success', description: 'List Download', type:'success' })
+              Notifications({ title: 'Success', description: 'List Download', type: 'success' })
             }}
           />
-           <ToggleButton
+          <ToggleButton
             isToggle={state.isToggle}
             onTogglerClick={togglerClick}
             FirstIcon={CardViewIcon}

@@ -108,7 +108,7 @@ const index = () => {
               className='teriary-bg-color  white-color  finalise-btn '
               onClick={() => {
                 Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
-                navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
+                  navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
               }}>Finalise</Button>
           </div>
         </BoxWrapper>
@@ -163,7 +163,7 @@ const index = () => {
             className='teriary-bg-color  white-color finalise-btn text-xs'
             onClick={() => {
               Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
-              navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
+                navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
             }}>Finalise</Button>
         </div>
       </BoxWrapper>
