@@ -252,7 +252,7 @@ const InternsCompanyAdmin = () => {
             <SearchBar
               handleChange={() => { }}
               name="search bar"
-              placeholder="Search"
+              placeholder="Search by name"
               size="middle"
             />
           </div>

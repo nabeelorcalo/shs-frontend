@@ -115,7 +115,7 @@ const Manager = () => {
               value={date}
               setValue={setDate}
               options={['this week', 'last week', 'this month', 'last month', 'date range']}
-              requireDatePicker
+              requireRangePicker
               showDatePickerOnVal={'date range'}
             />
             <DropDown
@@ -129,17 +129,17 @@ const Manager = () => {
             boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
             className='time-progress mb-[30px] flex-wrap rounded-2xl flex items-center justify-between gap-4'
           >
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-5 max-lg:basis-2/4">
               <img src={ClockIcon} />
               <div className='w-[150px]'>
                 <p className='hours-title text-base'>Total Hours</p>
                 <p className='hours text-2xl font-medium'>{'35h'}</p>
               </div>
             </div>
-            <Progress percent={30} className='flex-1 flex items-center gap-3' strokeColor={'#3DC575'} />
-            <div className="flex sm:grow md:grow-0 items-center gap-5">
+            <Progress percent={30} className='flex-1 flex items-center gap-3 max-lg:basis-2/4' strokeColor={'#3DC575'} />
+            <div className="flex sm:grow md:grow-0 items-center gap-5 max-lg:basis-2/4">
               <img src={Clock24Icon} />
-              <div className='w-[150px]'>
+              <div className='w-[150px] '>
                 <p className='hours-title text-base'>Wroked Hours</p>
                 <p className='hours text-2xl font-medium'>{'27h 52m'}</p>
               </div>

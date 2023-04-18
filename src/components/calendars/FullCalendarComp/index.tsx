@@ -94,7 +94,7 @@ const Index = (props: any) => {
 
       <PageHeader title={'Calendar'} bordered />
 
-      <div className="flex justify-center gap-7">
+      <div className="flex justify-center gap-7 flex-wrap">
         {['meeting', 'interview', 'reminder'].map((name: string) => <p className="flex items-center gap-3">
           <span className="h-[12px] w-[12px] rounded-[4px] inline-block" style={{ background: renderEventColor[name] }}></span>
           <span className="capitalize text-sm text-[#4E4B66]">{name}</span>

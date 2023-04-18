@@ -29,7 +29,7 @@ const EditReminder = (props: any) => {
                         setOpen={() => setOpenDateTime({ date: !openDateTime.date, time: false })}
                     />
                 </Form.Item>
-                <Form.Item rules={[{ required: true }]} label='Date'>
+                <Form.Item rules={[{ required: true }]} label='Time'>
                     <TimePickerComp
                         open={openDateTime.time}
                         setValue={(val: string) => setVals({ ...vals, time: val })}

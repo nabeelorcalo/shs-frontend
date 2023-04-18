@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
+import { PopUpModal } from "../../../../components";
+import SelectUserType from "../../userType";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const SigninForm = (props: any) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
   const navigate = useNavigate();
   const action = useCustomHook();
 
@@ -24,7 +32,7 @@ const SigninForm = (props: any) => {
       })
       .then((data) => {
         console.log("data", data); //for debugging purpose
-        data.accessToken && navigate("/dashboard");
+        data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
       .catch((err) => console.log(err));
   };
@@ -49,10 +57,10 @@ const SigninForm = (props: any) => {
           <Form.Item
             label="Email"
             name="Email"
-            rules={[{ required: true }, { type: "email" }]}
+            rules={[ { type: "email" },{ required: true }]}
           >
             <Input
-              placeholder="Email"
+              placeholder="Enter Email"
               className="input-style"
               onChange={handleChange}
               name="Email"
@@ -65,7 +73,7 @@ const SigninForm = (props: any) => {
           >
             <Input.Password
               type="password"
-              placeholder="Password"
+              placeholder="Enter Password"
               className="input-style"
               onChange={handleChange}
               name="password"
@@ -85,9 +93,10 @@ const SigninForm = (props: any) => {
                 name="remember"
                 valuePropName="checked"
                 noStyle
-                className="text-center"
+                className="text-center "
               >
-                <Checkbox>Remember me</Checkbox>
+                <Checkbox >
+                  <span className="text-teriary-color text-base font-normal">Remember me</span></Checkbox>
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -96,7 +105,7 @@ const SigninForm = (props: any) => {
                   className="login-form-forgot text-center md:text-end"
                   href="/forgot-password"
                 >
-                  <Typography>Forgot password</Typography>
+                  <Typography className="primary-color">Forgot password ?</Typography>
                 </a>
               </Form.Item>
             </Col>
@@ -112,15 +121,19 @@ const SigninForm = (props: any) => {
             </Button>
           </Form.Item>
           <div>
-            <Typography className="text-center">
-              Don’t have an account?
-              <a href="/signup" className="a-tag-signup">
-                Sign up
-              </a>
+            <Typography className="text-center primary-color text-base" onClick={showModal}>
+              Don’t have an account? <span
+                className='a-tag-signup cursor-pointer font-semibold'>
+                Sign up</span>
             </Typography>
           </div>
         </Form>
       </div>
+      <SelectUserType
+        showModal={showModal}
+        isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };
