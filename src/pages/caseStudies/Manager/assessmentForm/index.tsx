@@ -3,13 +3,12 @@ import { BoxWrapper, Breadcrumb, Notifications, SignatureAndUploadModal } from '
 import { Divider, Button, Typography, Form, Input } from 'antd'
 const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
-import { NavLink, Navigate, useNavigate} from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import signature from "../../../../assets/images/Report/signature.svg"
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import './style.scss'
 
 const index = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
@@ -17,7 +16,7 @@ const index = () => {
   ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
-
+  const navigate = useNavigate()
   const mockData = [
     {
       learningCategories: "Technical Skills",
@@ -106,9 +105,11 @@ const index = () => {
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>Save Draft</Button>
             <Button type='primary'
-              className='teriary-bg-color  white-color  finalise-btn ' 
-               onClick={()=>{Notifications({title:"Success", description:"Cade Study finalise ",type:'success'}) ,
-               navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)}}>Finalise</Button>
+              className='teriary-bg-color  white-color  finalise-btn '
+              onClick={() => {
+                Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
+                  navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
+              }}>Finalise</Button>
           </div>
         </BoxWrapper>
       </div>
@@ -159,9 +160,11 @@ const index = () => {
           <Button type='primary'
             className='white-bg-color teriary-color save-btn  text-xs'>Save Draft</Button>
           <Button type='primary'
-            className='teriary-bg-color  white-color finalise-btn text-xs' 
-            onClick={()=>{Notifications({title:"Success", description:"Cade Study finalise ",type:'success'}) ,
-               navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)}}>Finalise</Button>
+            className='teriary-bg-color  white-color finalise-btn text-xs'
+            onClick={() => {
+              Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
+                navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
+            }}>Finalise</Button>
         </div>
       </BoxWrapper>
       <SignatureAndUploadModal

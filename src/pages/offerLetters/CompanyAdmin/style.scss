@@ -1,0 +1,39 @@
+@import "../../../scss/colors";
+
+.offer-letter-company-admin {
+  .offer-letter-company-admin-status-bage {
+    color: $white-bg-color;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.57142857;
+    padding: 2px 10px;
+    background-color: $light-sky-blue;
+    display: inline-block;
+    border-radius: 8px;
+
+    &.success {
+      background-color: $active-color;
+    }
+
+    &.rejected,
+    &.error {
+      background-color: $text-error-color;
+    }
+
+    &.pending {
+      background-color: $yellow-status-color;
+    }
+  }
+
+  .scroll {
+    height: 55vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
+.scroll-offer-letter-company-admin {
+  height: 55vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
