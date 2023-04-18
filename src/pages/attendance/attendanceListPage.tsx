@@ -357,7 +357,7 @@ const Detail = () => {
       </div>
 
       <div
-        className={`attendance-card my-4
+        className={`attendance-card mt-2 my-4
           ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`}
       >
         {dummyData.map((item, index) => {
