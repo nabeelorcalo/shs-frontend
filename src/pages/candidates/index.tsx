@@ -10,6 +10,10 @@ const Candidates = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
   const [timeFrame, setTimeFrame] = useState('');
+  const [internship, setInternship] = useState('');
+  const [download, setDownload] = useState('');
+
+
 
   return (
     <>
@@ -23,9 +27,16 @@ const Candidates = () => {
             showDatePickerOnVal={'Date Range'}
             value={timeFrame}
             setValue={setTimeFrame}
-            requireDatePicker placement="bottomLeft" />
-          <DropDown name="Internship" options={['UI UX Designer', 'Business Analyst', 'Data Scientists', 'Product Manager', 'Human Resource']} />
-          <DropDown options={["pdf", "excel"]} requiredDownloadIcon />
+            requireRangePicker
+          />
+          <DropDown name="Internship" options={['UI UX Designer', 'Business Analyst', 'Data Scientists', 'Product Manager', 'Human Resources']}
+            value={internship}
+            setValue={setInternship}
+          />
+          <DropDown options={["PDF", "Excel"]} requiredDownloadIcon
+            value={download}
+            setValue={setDownload}
+          />
         </Col>
         <Col xs={24}>
           <CandidateTable setOpenDrawer={setOpenDrawer} setOpenRejectModal={setOpenRejectModal} />
