@@ -73,7 +73,7 @@ const index: React.FC = () => {
   ]
   const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
-  const [value, setValue] = useState<any>()
+  // const [value, setValue] = useState<any>()
   const handleChange = () => { };
   return (
     <div className='company-university '>

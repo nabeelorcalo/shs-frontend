@@ -5,7 +5,6 @@ import { Avatar, Typography, Layout, Menu, theme } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import constants from "../../../config/constants";
 import {} from "../../../assets/images";
-import avatar from "../../../assets/images/header/avatar.svg";
 import { itemsManager } from "./menuManager";
 import { itemsStudents } from "./menuStudents";
 import { itemsIntern } from "./menuIntern";
@@ -34,13 +33,15 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
-  const { firstName, lastName } = useRecoilValue(currentUserState);
+  const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
 
   // const {role } =useCurrentUserRole()
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -92,7 +93,9 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       onBreakpoint={onBreakpoint}
     >
       <div className="sidebar-user-profile">
-        <Avatar size={48} src={avatar} />
+        <Avatar size={48} src={avatar}>
+          {firstName.charAt(0)}{lastName.charAt(0)}
+        </Avatar>
         <div className="sidebar-user-profile-content">
           <Typography.Title level={4}>{`${firstName} ${lastName}`}</Typography.Title>
           <div className="sidebar-user-profile-role">{getUserRoleLable(role)}</div>

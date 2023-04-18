@@ -19,12 +19,16 @@
     }
 
     .request_data,
-    .File_wrapper {
+    .File_wrapper
+     {
       h4 {
         color: $text-primary-title-color;
       }
 
       p {
+        color: $text-secondary-body-color;
+      }
+      p.Status{
         color: $white-bg-color;
       }
     }
