@@ -13,7 +13,7 @@ import {
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
-import constants from "../../../config/constants";
+import constants, {ROUTES_CONSTANTS} from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
 import "./style.scss";
@@ -73,7 +73,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       label: "Profile",
       icon: <IconProfile />,
       onClick: ()=> {
-        navigate("/profile");
+        navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
     {
@@ -87,7 +87,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       icon: <IconLogout />,
       onClick: (props) => {
         localStorage.removeItem("accessToken");
-        navigate("/login");
+        navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
       },
     },
   ];

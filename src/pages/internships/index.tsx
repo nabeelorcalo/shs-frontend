@@ -251,14 +251,7 @@ const Internships = () => {
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable
-              columns={columns}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { },
-              }}
-              tableData={newTableData}
-            />
+            <GlobalTable  columns={columns} tableData={newTableData} />
           </div>
         </BoxWrapper>
       </div>

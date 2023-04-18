@@ -6,7 +6,8 @@ import DbsVerification from "./DbsVerification";
 import UniversityDetails from "./UniversityDetails";
 import Photograph from "./Photograph";
 import Video from "./Video";
-import {Form} from "antd";
+import { Form } from "antd";
+import './verifications.scss';
 
 function VerificationForm(props: any) {
 
@@ -16,7 +17,7 @@ function VerificationForm(props: any) {
   };
 
   return (
-    <>
+    <div className="complete-verification">
       <Form
         layout="vertical"
         name="normal_login"
@@ -61,7 +62,7 @@ function VerificationForm(props: any) {
           <Video currentStep={currentStep} setCurrentStep={setCurrentStep} />
         )}
       </Form>
-    </>
+    </div>
   );
 }
 

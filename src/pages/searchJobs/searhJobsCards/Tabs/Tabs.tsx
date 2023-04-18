@@ -1,6 +1,6 @@
 import { Col, Row, Tabs, TabsProps } from "antd";
 import {
-  TabIcon1,
+  TabIcon,
   TabIcon2,
   TabIcon3,
   TabIcon4,
@@ -11,6 +11,7 @@ import {
   TabIcon9,
 } from "../../../../assets/images";
 import SerarchTabs from "../All/All";
+import "./Styles.scss";
 
 const SearchJobTabs = () => {
   const items: TabsProps["items"] = [
@@ -18,8 +19,8 @@ const SearchJobTabs = () => {
       key: "1",
       label: (
         <center className="tab-style">
-          <div className="right-divider">
-            <TabIcon1 />
+          <div>
+            <TabIcon />
             <p>All</p>
           </div>
         </center>
@@ -116,15 +117,10 @@ const SearchJobTabs = () => {
     },
   ];
   return (
-    <div className="my-7">
+    <div className="my-7 inetrn-document-tabs">
       <Row>
         <Col xs={24}>
-          <Tabs
-            defaultActiveKey="1"
-            size="small"
-            items={items}
-            onChange={() => {}}
-          />
+          <Tabs size="small" items={items} onChange={() => {}} />
         </Col>
       </Row>
     </div>

@@ -9,16 +9,16 @@ const SignIn = () => {
   return (
     <div className="login-form">
       <Row className="form-style">
-        <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
+        <Col xxl={8} xl={10} lg={14} md={18} sm={24} xs={22}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
-              <Typography.Title level={2}>Welcome back!</Typography.Title>
-              <Typography.Title level={3}>
+              <Typography className="primary-color text-[38px] font-medium">Welcome back!</Typography>
+              <Typography className="primary-color text-[30px] font-medium pb-2">
                 Login to {role} Help Squad
-              </Typography.Title>
+              </Typography>
             </div>
             <SigninForm />
           </div>
