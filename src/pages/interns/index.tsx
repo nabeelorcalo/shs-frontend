@@ -47,7 +47,7 @@ const PopOver = () => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
       <More />
     </Dropdown>
   );
@@ -193,6 +193,14 @@ const Interns = () => {
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
           </div>
           <div className="flex flex-row gap-4">
+
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
             <DropDown
               options={[
                 'pdf',
@@ -204,40 +212,31 @@ const Interns = () => {
               }}
               value=""
             />
-            <ToggleButton
-              isToggle={listandgrid}
-              onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
-              className='w-[88px]'
-            />
-             <div className='p-2 download-icon-style'>
-              <DownloadDocumentIcon />
-            </div>
           </div>
         </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            {
-              // className="flex flex-row flex-wrap gap-6"
-              listandgrid ? <Row gutter={[20,20]}>
-                {
-                  newTableData.map((items: any, idx: any) => {
-                    return (
-                      <Col xs={24} sm={12} md={12} xl={6} xxl={6}>
-                        <InternsCard
-                         posted_by={items.posted_by}
-                         title={items.title} 
-                         department={items.department} 
-                         joining_date={items.joining_date} 
-                         date_of_birth={items.date_of_birth} 
-                        />
-                      </Col>
-                    )
-                  })
-                }
-              </Row>
-                :
+
+        <div className="pt-3">
+          {
+            // className="flex flex-row flex-wrap gap-6"
+            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+              {
+                newTableData.map((items: any, idx: any) => {
+                  return (
+                    <InternsCard
+                      statusBtn={items.status}
+                      name={items.name}
+                      posted_by={items.posted_by}
+                      title={items.title}
+                      department={items.department}
+                      joining_date={items.joining_date}
+                      date_of_birth={items.date_of_birth}
+                    />
+                  )
+                })
+              }
+            </div>
+              :
+              <BoxWrapper>
                 <GlobalTable
                   columns={columns}
                   expandable={{
@@ -246,9 +245,10 @@ const Interns = () => {
                   }}
                   tableData={newTableData}
                 />
-              }
+              </BoxWrapper>
+          }
         </div>
-         </BoxWrapper>
+
 
       </div>
     </>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Typography, Row, Col, Button } from "antd";
 import { SettingShift } from "../../../../assets/images";
-import { Alert, SearchBar , BoxWrapper } from "../../../../components";
+import { Alert, SearchBar, BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import './style.scss'
@@ -47,10 +47,10 @@ const SettingShifts: React.FC = () => {
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
-                      <Title level={5}>
-                        {data.name}
-                      </Title>
-                      <Text className="text-base font-medium">
+                      <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
+                        {data?.name}
+                      </Text>
+                      <Text className="text-base font-medium text-teriary-color">
                         {data.content}
                       </Text>
                       <Text className="text-sm font-normal content-text">
@@ -62,7 +62,7 @@ const SettingShifts: React.FC = () => {
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
-                        link={"/settings/shifts/add-shift"}
+                        link={`${ROUTES_CONSTANTS.ADD_SHIFT}`}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
                       />

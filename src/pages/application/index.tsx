@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import {  GlobalTable, SearchBar,  PageHeader, BoxWrapper, InternsCard, FiltersButton,  DropDown, StageStepper, DrawerWidth} from "../../components";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth } from "../../components";
 import { useNavigate } from 'react-router-dom';
-import {  More } from "../../assets/images"
+import { More } from "../../assets/images"
 import { Button, MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../components/Drawer";
@@ -48,7 +48,7 @@ const PopOver = ({ state }: any) => {
 
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -80,7 +80,9 @@ const Application = () => {
   const [listandgrid, setListandgrid] = useState(false)
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
-  const width = DrawerWidth();
+  const mainDrawerWidth = DrawerWidth();
+
+  
   const columns = [
     {
       dataIndex: "no",
@@ -325,25 +327,15 @@ const Application = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="white-bg-color teriary-color"
-                      onClick={() => {navigate("new-internship")}}>
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="teriary-bg-color white-color"
-                      onClick={() => {  navigate("new-internship")}}>
-                      Apply
-                    </Button>
+                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
                   </div>
                 </div>
               </div>
             </Drawer>
             <Drawer
               closable
-              width={width>1400 ? 1000: width > 900 ? 900:width > 576?600:300}
+              width={mainDrawerWidth>1400 ? 1000 : mainDrawerWidth > 900 ? 900:mainDrawerWidth > 576?600:300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);

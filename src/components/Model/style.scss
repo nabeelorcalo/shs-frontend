@@ -1,40 +1,47 @@
-@import '../../scss/colors.scss';
+@import "../../scss/colors.scss";
 
 .ant-modal {
+  .ant-modal-content {
+    padding: 30px;
 
-	.ant-modal-content {
-		padding: 30px;
+    .ant-modal-close {
+      height: 32px;
+      width: 32px;
+      top: 10px;
+      right: 10px;
 
-		.ant-modal-close {
-			height: 32px;
-			width: 32px;
-			top: 10px;
-			right: 10px;
+      &:hover {
+        background-color: transparent;
+      }
 
-			&:hover {
-				background-color: transparent;
-			}
+      .ant-modal-close-x {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 1;
+      }
+    }
 
-			.ant-modal-close-x {
-				display: inline-block;
-				vertical-align: middle;
-				line-height: 1;
-			}
-		}
+    .ant-modal-header {
+      margin-bottom: 30px;
 
-		.ant-modal-header {
-			margin-bottom: 30px;
+      .ant-modal-title {
+        color: $text-primary-title-color;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 1.4;
+      }
+    }
 
-			.ant-modal-title {
-				color: $text-primary-title-color;
-				font-size: 20px;
-				font-weight: 500;
-				line-height: 1.4;
-			}
-		}
-
-		.ant-modal-footer {
-			margin-top: 30px;
-		}
-	} 
+    .ant-modal-footer {
+      margin-top: 30px;
+      button {
+        color: $teriary-bg-color;
+        border: solid $teriary-bg-color 1px !important;
+        &:nth-child(2) {
+          color: white;
+          background: $teriary-bg-color !important;
+        }
+      }
+    }
+  }
 }

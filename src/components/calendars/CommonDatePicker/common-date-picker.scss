@@ -33,7 +33,7 @@
     .ant-picker {
         position: absolute;
         width: 100%;
-        left: 2.5%;
+        left: 0;
         top: 5%;
         z-index: -1;
         opacity: 0;
@@ -49,6 +49,7 @@
     overflow: hidden;
 
     .ant-picker-panel-container {
+        border: none !important;
         padding: 15px;
 
         .ant-picker-header {
@@ -66,7 +67,7 @@
         }
 
         .ant-picker-body {
-            padding: 0;
+            padding: 0 !important;
 
             .ant-picker-content {
                 margin-top: 15px;

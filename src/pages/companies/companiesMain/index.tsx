@@ -59,8 +59,8 @@ const PopOver = ({ state }: any) => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
-      <More />
+    <Dropdown menu={{ items }} placement="bottomRight" trigger={[`click`]}>
+      <More className="cursor-pointer" />
     </Dropdown>
   );
 };
@@ -223,7 +223,7 @@ const CompaniesMain = () => {
               }}
               value=""
             />
-            <Drawer
+            {/* <Drawer
               closable
               open={showDrawer}
               onClose={() => {
@@ -329,12 +329,12 @@ const CompaniesMain = () => {
 
             >
               <StageStepper />
-            </Drawer>
+            </Drawer> */}
           </div>
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            {
+            {/* {
               listandgrid ? <div className="flex flex-row flex-wrap gap-6">
                 {
                   cardDummyArray.map((items: any, idx: any) => {
@@ -344,16 +344,12 @@ const CompaniesMain = () => {
                   })
                 }
               </div>
-                :
+                : */}
                 <GlobalTable
                   columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
                   tableData={newTableData}
                 />
-            }
+            {/* } */}
           </div>
         </BoxWrapper>
       </div>

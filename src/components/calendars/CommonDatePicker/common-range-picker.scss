@@ -1,0 +1,64 @@
+.common-range-picker-wrapper {
+  position: absolute;
+  left: 0;
+  z-index: -1;
+  width: 0;
+  height: 0px;
+}
+
+.custom-range-picker-popup {
+  .ant-picker-range-arrow {
+    display: none !important;
+  }
+
+  .ant-picker-panel-container {
+    .ant-picker-panel-layout {
+      .ant-picker-panels {
+        .ant-picker-panel {
+          .ant-picker-date-panel {
+            .ant-picker-header {
+              padding-inline: 20px;
+
+              .ant-picker-header-super-prev-btn,
+              .ant-picker-header-super-next-btn {
+                display: none;
+              }
+
+              .ant-picker-header-prev-btn {
+                order: 1;
+              }
+
+              .ant-picker-header-next-btn {
+                visibility: visible !important;
+                order: 2;
+              }
+
+              .ant-picker-header-view {
+                order: 0;
+                display: flex;
+                align-items: flex-start;
+              }
+            }
+
+            .ant-picker-body {
+
+              .ant-picker-cell-range-start,
+              .ant-picker-cell-range-end,
+              .ant-picker-cell-in-range {
+                background-color: rgb(59 130 246 / 0.2) !important;
+
+                &::before {
+                  background-color: transparent !important;
+                }
+              }
+            }
+          }
+        }
+
+        .ant-picker-panel:nth-child(2) {
+          display: none;
+        }
+      }
+    }
+  }
+}

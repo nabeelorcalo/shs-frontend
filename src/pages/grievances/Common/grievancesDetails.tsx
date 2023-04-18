@@ -149,7 +149,7 @@ const GrievancesDetails = () => {
             <Text className='text-lg sm:text-xl font-medium'>Escalated By</Text>
             <div className='flex items-center flex-col'>
               <span><GrievancesSidebarAvater /></span>
-              <Text className='text-lg sm:text-xl font-semibold'>Maria Sanoid</Text>
+              <Text className='text-lg sm:text-xl font-semibold primary-light-color'>Maria Sanoid</Text>
               <Text className='font-medium text-base'>UI UX Designer</Text>
               <Text className='text-base font-normal'>Design</Text>
             </div>

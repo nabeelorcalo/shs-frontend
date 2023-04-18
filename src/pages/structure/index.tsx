@@ -1,10 +1,8 @@
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
-import Manager from "./Manager/index"
 import Structure from "./companyAdmin";
 import ManagerStructure from "./Manager/index";
 import InternStructure from "./Intern";
-import constants from "../../config/constants";
 
 const index = () => {
   const role = useRecoilValue(currentUserRoleState);
@@ -13,6 +11,7 @@ const index = () => {
     'COMPANY_MANAGER': <ManagerStructure />,
     'INTERN': <InternStructure />,
   }
+
   return (
     <>
     {renderWthRole[role]}

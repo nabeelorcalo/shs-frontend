@@ -326,7 +326,7 @@ const CompanyAdmin = () => {
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
-      <PageHeader title="Offer Letters" />
+      <PageHeader title="Offer Letters" bordered={true}/>
       <Row gutter={[20, 20]}>
         {
           ContractsCard.map((item) => {

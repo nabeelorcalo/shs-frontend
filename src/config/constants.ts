@@ -15,7 +15,18 @@ export default {
   AGENT: 'PROPERTY_AGENT',
   STUDENT: 'STUDENT',
   UNIVERSITY: 'UNIVERSITY',
-  PUBLIC: 'PUBLIC'
+  PUBLIC: 'PUBLIC',
+  NOTIFICATION_DETAILS: {
+    success: {
+      message: "Details Submitted!",
+      description:
+        "We've got your information. Our team will get in touch you shortly!",
+    },
+    error: {
+      message: "Something went wrong!",
+      description: "Please try again later or email us",
+    },
+  }
 };
 
 export const ROUTES_CONSTANTS: any = {
@@ -144,20 +155,19 @@ export const ROUTES_CONSTANTS: any = {
   TEMPLATE_CERTIFICATION_COMPLETION:
     "/settings/template/certificate-of-completion",
   OFFER_LETTER_NEW_TEMPLATE: "/settings/template/offer-letters/new-template",
-  CONTRACT_NEW_TEMPLATE: "/settings/template/contract/new-template",
-  REJECTION_LETTER_NEW_TEMPLATE:
-    "/settings/template/rejection-letter/new-template",
-  TCA_NEW_TEMPLATE:
-    "/settings/template/certificate-of-appreciation/new-template",
-  TCC_NEW_TEMPLATE: "/settings/template/certificate-of-completion/new-template",
-  ADD_SHIFT: "/settings/shifts/add-shift",
-  PAYROLL_ADD_CATEGORY: "/settings/payroll/add-category",
-  ALL_GRIEVANCES: "/grievances/all-grievance",
-  GRIEVANCES_Details: "/grievances/all-grievance/grievance-detials",
-  HISTORY: "history",
-  UNIVERSITIES_INTERNS: "universities/interns",
-  UNIVERSITIES_PROFILE: "universities/profile",
-  AcceptedFileTyp: "application/pdf,image/jpeg,application/msword",
+  CONTRACT_NEW_TEMPLATE:"/settings/template/contract/new-template",
+  REJECTION_LETTER_NEW_TEMPLATE:"/settings/template/rejection-letter/new-template",
+  TCA_NEW_TEMPLATE:"/settings/template/certificate-of-appreciation/new-template",
+  TCC_NEW_TEMPLATE:"/settings/template/certificate-of-completion/new-template",
+  ADD_SHIFT:"/settings/shifts/add-shift",
+  PAYROLL_ADD_CATEGORY:"/settings/payroll/add-category",
+  ALL_GRIEVANCES:"/grievances/all-grievance",
+  GRIEVANCES_Details:"/grievances/all-grievance/grievance-detials",
+  HISTORY: 'history',
+  UNIVERSITIES_INTERNS:"universities/interns",
+  UNIVERSITIES_PROFILE:"universities/profile",
+  AcceptedFileTyp:'application/pdf,image/jpeg,application/msword',
+  JOBDETAILS:'search-jobs/job-details',
 };
 
 export const STATUS_CONSTANTS: any = {

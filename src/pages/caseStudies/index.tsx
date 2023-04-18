@@ -1,10 +1,7 @@
-import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 import Manager from "./Manager/index"
 import CompanyAdmin from "./CompanyAdmin/index"
-import constants from "../../config/constants";
-import "./style.scss";
 
 const CaseStudies = () => {
   const role = useRecoilValue(currentUserRoleState);

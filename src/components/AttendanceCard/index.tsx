@@ -1,7 +1,7 @@
 import { Typography } from 'antd';
 import React from 'react';
 import { Absent } from '../../assets/images';
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 
 interface AttendanceProps {
   title: string

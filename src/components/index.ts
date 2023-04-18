@@ -50,7 +50,7 @@ export * from './Model'
 export * from './ExtendedButton'
 export * from './FiltersButton'
 export * from './timeTRacking';
-export * from './BoxWrapper/BoxWrapper';
+export * from './BoxWrapper/boxWrapper';
 export * from './RecipeCard'
 export * from './IconButton'
 export * from './EvaluationPersonCard';

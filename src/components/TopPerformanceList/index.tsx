@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from 'antd';
 import dayjs from 'dayjs';
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
 import { TopPerformanceCard } from '../TopPerformanceCard';

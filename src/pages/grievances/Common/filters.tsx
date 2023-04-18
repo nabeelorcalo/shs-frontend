@@ -27,6 +27,7 @@ const Filters: React.FC = (props: any) => {
     );
   }
   function handleChange(value: any) {
+   
 
     setSscalatedValue(value)
   }
@@ -36,6 +37,7 @@ const Filters: React.FC = (props: any) => {
   const ResetHandler = () => {
     options = []
   }
+
 
   return (
     <div className='filter_main_wrapper'>

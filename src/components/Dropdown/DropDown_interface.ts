@@ -18,4 +18,5 @@ export interface DropDownInterface {
     showDatePickerOnVal?: string;
     endIcon?: any;
     requiredDownloadIcon?: boolean;
+    requireRangePicker?: boolean;
 }

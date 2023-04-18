@@ -1,6 +1,6 @@
 import React from 'react'
 import { ReportViewDetails, DownloadIconLeave, GrievancesAvater } from '../../../../assets/images'
-import { BoxWrapper, Breadcrumb, SearchBar } from '../../../../components'
+import { BoxWrapper, Breadcrumb, Notifications, SearchBar } from '../../../../components'
 import { Divider, Typography, Row, Col, } from 'antd'
 import './style.scss'
 import useCustomHook from './actionHandler'
@@ -60,7 +60,8 @@ const index = () => {
         <div><SearchBar size="middle" handleChange={handleChange} /></div>
         <div className='flex items-center justify-between drop-down-wrapper'>
           <div className='mr-[-5px]'
-            onClick={() => action.downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ")}>
+            onClick={() => {action.downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ")
+            Notifications({title:"Success", description:"Assessment Form list downloaded ",type:'success'})}}  >
             <DownloadIconLeave />
           </div>
         </div>
