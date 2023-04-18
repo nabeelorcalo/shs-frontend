@@ -3,12 +3,15 @@ import { calendarMockData } from '../mockData';
 import { Button } from 'antd';
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import { Alert } from '../../../Alert';
+import { useState } from 'react';
 
 const EventDetail = (props: any) => {
 
   dayjs.extend(weekOfYear);
 
   const { eventId, eventCategory, eventStatus } = props;
+  const [isReminder, setIsReminder] = useState(false);
 
   const selectedEvent = calendarMockData.find(event => event.id === eventId);
 
@@ -112,7 +115,7 @@ const EventDetail = (props: any) => {
       </div>
       <div className="flex justify-end gap-3 mt-[20px] event-actions">
 
-        {eventCategory === 'reminder' ? <Button className='outlined-btn rounded-lg'>Delete Reminder</Button> :
+        {eventCategory === 'reminder' ? <Button className='outlined-btn rounded-lg' onClick={() => setIsReminder(!isReminder)}>Delete Reminder</Button> :
 
           eventCategory === 'meeting' ? <>
             <Button className='outlined-btn rounded-lg capitalize'>
@@ -128,6 +131,15 @@ const EventDetail = (props: any) => {
             </>
         }
       </div>
+      <Alert
+        type={'warning'}
+        state={isReminder}
+        setState={setIsReminder}
+        okBtnFunc={() => { }}
+        cancelBtntxt={'Cancel'}
+        okBtntxt={'Delete'}
+        children={<p>Are you sure you want to delete this event?</p>}
+      />
     </div>
   )
 }
