@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GlobalTable, SearchBar,PageHeader,BoxWrapper,  InternsCard, ToggleButton, DropDown, CommonDatePicker} from "../../../components";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, CommonDatePicker } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, More, TableViewIcon } from "../../../assets/images"
 import { MenuProps } from 'antd';
@@ -38,7 +38,12 @@ const PopOver = () => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+    <Dropdown
+      menu={{ items }}
+      trigger={['click']}
+      placement="bottomRight"
+      overlayStyle={{ width: 180 }}
+    >
       <More />
     </Dropdown>
   );
@@ -179,7 +184,7 @@ const StudentMain = () => {
               <CommonDatePicker
                 name="Date Picker"
                 open={openDatePicker}
-                onBtnClick={() => {console.log("date picker clicked")}}
+                onBtnClick={() => { console.log("date picker clicked") }}
                 setOpen={setOpenDatePicker}
                 setValue={function noRefCheck() { }}
               />
@@ -192,7 +197,7 @@ const StudentMain = () => {
                   'Orcalo Holdings',
                   'Coding Hub'
                 ]}
-                setValue={(e:any) => { setMonth(e.target.value) }}
+                setValue={(e: any) => { setMonth(e.target.value) }}
                 showDatePickerOnVal="custom"
                 value={month}
               />

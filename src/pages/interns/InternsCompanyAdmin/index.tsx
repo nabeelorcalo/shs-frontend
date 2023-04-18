@@ -15,7 +15,15 @@ import {
 import { TextArea } from "../../../components";
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import { AlertIcon, CardViewIcon, DownloadDocumentIcon, More, SuccessIcon, TableViewIcon, WarningIcon } from "../../../assets/images"
+import {
+  AlertIcon,
+  CardViewIcon,
+  DownloadDocumentIcon,
+  More,
+  SuccessIcon,
+  TableViewIcon,
+  WarningIcon
+} from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps } from 'antd';
 import useCustomHook from "./actionHandler";
 import UploadDocument from "../../../components/UploadDocument";
@@ -95,7 +103,12 @@ const InternsCompanyAdmin = () => {
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <More />
       </Dropdown>
     );
@@ -345,8 +358,22 @@ const InternsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button
+                      type="default"
+                      size="middle"
+                      className="button-default-tertiary"
+                      onClick={() => { }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="button-tertiary"
+                      onClick={() => { }}
+                    >
+                      Apply
+                    </Button>
                   </div>
                 </div>
               </React.Fragment>
@@ -430,8 +457,21 @@ const InternsCompanyAdmin = () => {
         }
         footer={
           <div className="flex flex gap-3 justify-end max-sm:flex-col">
-            <Button type="default" size="middle" className="button-default-tertiary max-sm:w-full" onClick={() => setAssignManager(false)}>Cancel</Button>
-            <Button type="default" size="middle" className="button-tertiary max-sm:w-full">Assign</Button>
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setAssignManager(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="default"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+            >
+              Assign
+            </Button>
           </div>
         }
       />
@@ -460,8 +500,21 @@ const InternsCompanyAdmin = () => {
         }
         footer={
           <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
-            <Button type="default" size="small" className="button-default-error max-sm:w-full" onClick={() => setTerminate(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-error max-sm:w-full">Terminate</Button>
+            <Button
+              type="default"
+              size="small"
+              className="button-default-error max-sm:w-full"
+              onClick={() => setTerminate(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-error max-sm:w-full"
+            >
+              Terminate
+            </Button>
           </div>
         }
       />

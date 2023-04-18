@@ -18,7 +18,7 @@ import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 
-const PopOver:any = () => {
+const PopOver: any = () => {
   const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
@@ -36,9 +36,9 @@ const PopOver:any = () => {
     }
   ];
   return (
-      <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
-        <More />
-      </Dropdown>
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
+      <More />
+    </Dropdown>
   );
 };
 
@@ -179,8 +179,22 @@ const Payroll = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button
+                      type="default"
+                      size="middle"
+                      className="button-default-tertiary"
+                      onClick={() => { }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="button-tertiary"
+                      onClick={() => { }}
+                    >
+                      Apply
+                    </Button>
                   </div>
                 </div>
               </React.Fragment>

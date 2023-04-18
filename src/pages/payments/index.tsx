@@ -92,7 +92,10 @@ const Payments = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-payment-details") }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { navigate("view-payment-details") }}
+          >
             View details
           </a>
         ),
@@ -100,14 +103,28 @@ const Payments = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "File downloaded",type:'success'}) }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              Notifications({
+                title: "Success",
+                description: "File downloaded",
+                type: 'success'
+              })
+            }}
+          >
             Download
           </a>
         ),
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <More />
       </Dropdown>
     )
@@ -119,7 +136,10 @@ const Payments = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { }}
+          >
             PDF
           </a>
         ),
@@ -127,14 +147,22 @@ const Payments = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { }}
+          >
             Excel
           </a>
         ),
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <DownloadDocumentIcon />
       </Dropdown>
     )

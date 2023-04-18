@@ -1574,13 +1574,13 @@ const universityRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
+        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.PROFILE}`,
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.COMPANIES_CHAT}`,
-        path: `${ROUTES_CONSTANTS.COMPANIES_CHAT}`,
+        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
       },
       {
@@ -1589,13 +1589,13 @@ const universityRoutes = [
         element: <Students />,
       },
       {
-        key: `${ROUTES_CONSTANTS.STUDENT_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.STUDENT_PROFILE}`,
+        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.PROFILE}`,
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.STUDENT_CHAT}`,
-        path: `${ROUTES_CONSTANTS.STUDENT_CHAT}`,
+        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
       },
       {
