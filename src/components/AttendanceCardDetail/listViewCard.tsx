@@ -90,7 +90,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
         </Avatar>
       </div>
 
-      <div className="flex justify-center w-[10%] hidden sm:block ">
+      <div className="w-[10%] hidden sm:block ">
         <Dropdown
           overlay={menu}
           trigger={["click"]}
