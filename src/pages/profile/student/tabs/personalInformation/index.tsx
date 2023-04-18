@@ -13,7 +13,7 @@ import {
   Typography,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, PlusCircleFilled, DeleteFilled } from '@ant-design/icons';
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -23,8 +23,12 @@ import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 
 const PersonalInformation = () => {
+
   const [value, setValue] = useState('');
   const [isdate1, setIsDate1] = useState(false);
+  const [isDependents, setIsDependents] = React.useState(2);
+  const [dependents, setDependents] = React.useState<any>([]);
+  const [searchValue, setSearchValue] = useState('');
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -38,10 +42,6 @@ const PersonalInformation = () => {
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
-
-  const [isDependents, setIsDependents] = React.useState(2);
-  const [dependents, setDependents] = React.useState<any>([]);
-  const [searchValue, setSearchValue] = useState('');
 
   return (
     <div className="personal-information">
@@ -149,7 +149,6 @@ const PersonalInformation = () => {
                   <Option value="+92">+92</Option>
                 </Select>
                 <AutoComplete
-                  
                   style={{ width: '75%' }}
                   placeholder="xxxxxxx-xxx"
                   options={[{ value: 'text 1' }, { value: 'text 2' }]}
@@ -202,7 +201,8 @@ const PersonalInformation = () => {
               name="description"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="Write about yourself" maxLength={6} className="input-style" />
+              <TextArea rows={4} placeholder="Write about yourself" maxLength={6}
+                className="input-style" />
             </Form.Item>
           </Col>
         </Row>
@@ -282,7 +282,6 @@ const PersonalInformation = () => {
               rules={[{ required: true }, { type: "string" }]}
             >
               <Button className="text-input-bg-color border-0 rounded-[14.5px]"
-
               >
                 <PlusOutlined /> Add
               </Button>
@@ -325,16 +324,15 @@ const PersonalInformation = () => {
                 <Radio value={2}>No</Radio>
               </Radio.Group>
             </Form.Item>
-
             {isDependents === 1 && (
               <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
                 <Form.Item
-                  label="Username"
+                  label="Name"
                   name="username"
                   rules={[{ required: true }, { type: "string" }]}
                 >
                   <div className="flex gap-4">
-                    <Input />
+                    <Input placeholder="Enter name" className="input-style" />
                     <div
                       onClick={() => {
                         const copyDependents = [...dependents];
@@ -342,10 +340,11 @@ const PersonalInformation = () => {
                         setDependents(copyDependents);
                       }}
                     >
-                      add
+                      <div className="teriary-bg-color pr-3 pl-3 pt-1 pb-1 rounded-lg">
+                        <PlusCircleFilled className="text-3xl white-color" />
+                      </div>
                     </div>
                   </div>
-
                   {dependents.map((item: any, index: any) => (
                     <div className="flex gap-4">
                       <Input />
@@ -356,8 +355,10 @@ const PersonalInformation = () => {
                           setDependents(copyDependents);
                         }}
                       >
+                        <div className="red-graph-tooltip-bg pr-3 pl-3 pt-1 pb-1 rounded-lg">
+                          <DeleteFilled className="text-3xl white-color" />
+                        </div>
 
-                        remove
                       </div>
                     </div>
                   ))}
@@ -366,7 +367,6 @@ const PersonalInformation = () => {
             )}
           </Col>
         </Row>
-
         <Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
@@ -374,8 +374,8 @@ const PersonalInformation = () => {
                 Cancel
               </Button>
               <Button
-
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] 
+                ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Submit
