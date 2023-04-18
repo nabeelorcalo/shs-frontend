@@ -80,6 +80,10 @@ const index = () => {
   return (
     <div className='manager-case-studies'>
       <PageHeader title="Case Studies" actions bordered />
+      <Row>
+        <Col></Col>
+        <Col></Col>
+      </Row>
       <div className='flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row'>
         <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
           <SearchBar size="middle" handleChange={handleChange} />
@@ -94,7 +98,7 @@ const index = () => {
           />
         </div>
       </div>
-      <BoxWrapper>
+      <BoxWrapper className='mt-5'>
         <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
       </BoxWrapper>
       <Drawer

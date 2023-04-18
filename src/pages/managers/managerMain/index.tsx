@@ -6,6 +6,7 @@ import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../compone
 import { User} from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
+// import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import ManagerInfo from "./managerInfo";
 import ManagerInfoTable from "./managerInfoTable";
 import Drawer from "../../../components/Drawer";
