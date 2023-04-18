@@ -12,7 +12,7 @@ interface DrawerDataInterface {
   children?: any,
   rest?: any
   closeIcon?: any,
-  width:any
+  width?:any
 
 }
 
