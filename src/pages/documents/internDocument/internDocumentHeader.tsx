@@ -5,6 +5,7 @@ import {
   CardViewIcon,
   TableViewIcon,
   UploadIconBtn,
+  Frame,
 } from "../../../assets/images";
 import "./Styles.scss";
 import {
@@ -21,28 +22,25 @@ import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
 
 const InternDocument = (props: any) => {
-  const [selectData, setSelectData] = useState("");
+  const [selectData, setSelectData] = useState("Intern Documents");
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
 
   console.log(selectData, "cnkjv");
 
   return (
-    <>
+    <div className="intern-header-wrapper">
       <div className="flex ">
         <select
           className="select-icon"
+          value={selectData}
           onChange={(e: any) => setSelectData(e.target.value)}
         >
-          <option value="internDocument">Intern Documents</option>
-          <option value="sharedDocument">Shared Documents</option>
+          <option value="Intern Documents">Intern Documents</option>
+          <option value="Shared Documents">Shared Documents</option>
         </select>
         <p className="ml-3 mt-1 text-primary-color text-base font-medium">
-          {selectData === "sharedDocument" ? (
-            <p>Shared Document</p>
-          ) : (
-            <p>Inten Document</p>
-          )}
+          {selectData}
         </p>
       </div>
 
@@ -51,7 +49,7 @@ const InternDocument = (props: any) => {
           <SearchBar handleChange={() => {}} />
         </Col>
 
-        <Col lg={selectData === "sharedDocument" ? 13 : 9}>
+        <Col lg={selectData === "Shared Documents" ? 13 : 9}>
           <div className="flex gap-3">
             <DropDownNew
               className="text-input-bg-color rounded-md px-[9px]"
@@ -73,14 +71,25 @@ const InternDocument = (props: any) => {
             >
               <div className="flex items-center justify-between gap-3 w-full ">
                 <div className="user flex items-center gap-3">
-                  <img src={UserImage} alt="icon" />
-                  <p>Maria Sonoid</p>
+                  <img
+                    src={selectData === "Shared Documents" ? Frame : UserImage}
+                    alt="icon"
+                  />
+                  <div>
+                    {selectData === "Shared Documents" ? (
+                      <p className="text-success-placeholder-color">
+                        Uploader (All)
+                      </p>
+                    ) : (
+                      <p>Maria Sanoid</p>
+                    )}
+                  </div>
                 </div>
                 <ArrowDownDark />
               </div>
             </DropDownNew>
 
-            {selectData === "sharedDocument" && (
+            {selectData === "Shared Documents" && (
               <Col lg={9}>
                 <DropDown
                   setValue={(e: string) => {}}
@@ -138,7 +147,7 @@ const InternDocument = (props: any) => {
       >
         <UploadDocument />
       </PopUpModal>
-    </>
+    </div>
   );
 };
 

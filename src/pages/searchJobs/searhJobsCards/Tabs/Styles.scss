@@ -1,3 +1,8 @@
-.right-divider {
-  border-right: 1px solid black;
+@import "../../../../scss/colors";
+.inetrn-document-tabs {
+  .ant-tabs-tab-active {
+    svg path {
+      fill: #363565 !important;
+    }
+  }
 }
