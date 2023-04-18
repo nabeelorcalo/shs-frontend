@@ -1,58 +1,98 @@
 import React from "react";
-import { Table } from "antd";
+import { Dropdown, MenuProps, Rate } from "antd";
 import { GlobalTable } from "../../../../components";
+import {
+  DocImage,
+  Dots,
+  DoucmentCard,
+  ThreeDotsIcon,
+} from "../../../../assets/images";
+import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 
+const items = [
+  {
+    label: "View",
+    value: "View",
+  },
+  {
+    label: "Download",
+    value: "Download",
+  },
+];
 const columns = [
   {
     title: "No",
-    dataIndex: "name",
+    dataIndex: "no",
   },
   {
     title: "Preview",
-    dataIndex: "age",
+    dataIndex: "preview",
+    render: (_: any, obj: any) =>
+      obj.name.includes(".pdf") ? (
+        <img src={DoucmentCard} />
+      ) : (
+        <img src={DocImage} alt="" />
+      ),
   },
   {
     title: "Name",
-    dataIndex: "address",
+    dataIndex: "name",
   },
   {
     title: "Favourite",
-    dataIndex: "address",
+    dataIndex: "favourite",
+    render: (text: string) => <Rate count={1} />,
   },
   {
     title: "Date",
-    dataIndex: "address",
+    dataIndex: "Date",
   },
   {
     title: "File Size",
-    dataIndex: "address",
+    dataIndex: "fileSize",
   },
   {
     title: "Action",
-    dataIndex: "address",
+    key: "action",
+    render: (_: any, data: any) => (
+      <DropDownNew items={items}>
+        <img className="cursor-pointer intern-document-model"  src={Dots} alt="" />
+      </DropDownNew>
+    ),
   },
 ];
 const data = [
   {
-    key: "1",
-    no: "01",
+    no: "1",
+    preview: "pdf",
     name: "resume.pdf",
-    // age: star,
-    address: "New York No. 1 Lake Park",
+    favourite: "",
+    Date: "01/07/2022",
+    fileSize: "2.3 MB",
   },
   {
-    key: "2",
     no: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
+    preview: "doc",
+    name: "resume.doc",
+    favourite: "",
+    Date: "01/07/2022",
+    fileSize: "2.3 MB",
   },
   {
-    key: "3",
     no: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
+    preview: "pdf",
+    name: "resume.pdf",
+    favourite: "",
+    Date: "01/07/2022",
+    fileSize: "2.3 MB",
+  },
+  {
+    no: "4",
+    preview: "doc",
+    name: "resume.doc",
+    favourite: "",
+    Date: "01/07/2022",
+    fileSize: "2.3 MB",
   },
 ];
 const DocTable = () => {

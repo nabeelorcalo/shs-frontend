@@ -104,6 +104,8 @@ export const ROUTES_CONSTANTS: any = {
   CONTRACTS: "contracts",
   RECEIVED_CompanyAdmin: "received-company-admin",
   MANAGERS: "managers",
+  ADD_MANAGER: 'add-manager',
+  MANAGER_PROFILE:'manager-profile',
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",

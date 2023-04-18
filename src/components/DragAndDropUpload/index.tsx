@@ -17,19 +17,19 @@ export const DragAndDropUpload = () => {
   }
   return (
     <>
-      <div onDragOver={handleDragOver} onDrop={handleDropped} className="flex flex-col items-stretch justify-center gap-4 content-center items-center h-80  drag-drop-upload-style">
+      <div onDragOver={handleDragOver} onDrop={handleDropped}
+        className="flex flex-col  justify-center gap-4 content-center items-center  drag-drop-upload-style">
         <div className='self-center '>
-
           <DocumentUpload />
-
         </div>
         <div className='self-center'>
-          <p className='text-center text-lg'>Drag & Drop files or <span className="text-[red] cursor-pointer" onClick={() => { inputRef.current.click() }}>Browse</span></p>
+          <p className='text-center text-lg'>Drag & Drop files or <span className="red-graph-tooltip-color cursor-pointer"
+            onClick={() => { inputRef.current.click() }}>Browse</span></p>
           <p className="text-sm text-center">Supported jpeg, pdf oc doc files</p>
-          <input type="file" ref={inputRef} multiple hidden onChange={(event: any) => { setFiles(Array.from(event.target.files)) }} />
+          <input type="file" ref={inputRef} multiple hidden
+            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }} />
         </div>
       </div>
-
       {
         files ?
           <div className='flex flex-row flex-wrap'>

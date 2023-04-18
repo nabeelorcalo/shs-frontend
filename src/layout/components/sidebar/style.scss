@@ -31,6 +31,7 @@
       flex: 1;
       margin-left: 20px;
       white-space: nowrap;
+      min-width: 0;
   
       .ant-typography {
         margin: 0;
@@ -38,6 +39,9 @@
         font-weight: 600;
         line-height: 1.277777778;
         color: #ffffff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .sidebar-user-profile-role {
         font-size: 14px;

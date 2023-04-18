@@ -3,6 +3,7 @@ import { DocumentUpload } from "../../assets/images";
 
 const UploadDocument = () => {
   const [files, setFiles] = useState([]);
+
   const BrowseRef = useRef();
 
   const handleDragOver = (event: any) => {
@@ -13,10 +14,6 @@ const UploadDocument = () => {
   const handleDropped = (event: any) => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files))
-  }
-
-  const handleRemoveFile = () => {
-
   }
 
   console.log(files)
