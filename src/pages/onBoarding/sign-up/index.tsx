@@ -33,7 +33,6 @@ const SignUp = () => {
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="primary-color text-[38px] font-medium">Sign up</Typography>
-
               <Typography  className="primary-color text-[30px] font-medium pb-2">
                 {TagLine[signupRole ? signupRole : "STUDENT"]}
               </Typography>

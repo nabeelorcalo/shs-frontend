@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Row, Form, Space } from 'antd';
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
 import { User} from "../../../assets/images";
@@ -23,11 +24,11 @@ const ManagerMain = () => {
   const handleClick = (buttonIndex:any) => {
     setActiveButton(buttonIndex);
   }
+
   return (
     <div className="manager-main">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
       <Form layout="vertical">
-         
           <Form.Item label="Status" name="status">
             <DropDown
               name="Select"
@@ -64,7 +65,6 @@ const ManagerMain = () => {
           <PageHeader title='Managers' bordered={ true} />
         </Col>
       </Row>
-     
       <Row gutter={[10, 20]} className="flex items-center pb-5">
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
@@ -72,13 +72,9 @@ const ManagerMain = () => {
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
             <Button className="teriary-bg-color white-color flex items-center" onClick={() => {
-              navigate('/add')
+              navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
             }}>
                <span className="flex items-center gap-3"><User/> New Manager</span> 
-              
-              {/* <a href="addManager" className="flex items-center gap-3">
-              
-              </a> */}
             </Button>
             <FiltersButton label='Filter' onClick={()=>setOpenDrawer(true)}/> 
             <div className="text-input-bg-color rounded-lg p-1 flex gap-2">

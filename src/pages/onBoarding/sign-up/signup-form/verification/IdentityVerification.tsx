@@ -11,10 +11,11 @@ import {
 import { BackButton,SHSLogo  } from "../../../../../assets/images";
 import "../../../styles.scss";
 
-const IdentityVerification = (props: any) => {
+const { Option } = Select;
 
-  const { Option } = Select;
+const IdentityVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 70 }}>
@@ -23,6 +24,7 @@ const IdentityVerification = (props: any) => {
       </Select>
     </Form.Item>
   );
+
   return (
     <div className="identity">
       <Row className="identity-style">
@@ -36,7 +38,6 @@ const IdentityVerification = (props: any) => {
               <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton
-                  //style={{ fill: '#363565', stroke: 'white', color: 'red' }}
                   />
                 </div>
                 <div className="mx-auto">
@@ -130,7 +131,6 @@ const IdentityVerification = (props: any) => {
                     </Form.Item>
                   </Col>
                 </Row>
-
               <div>
                 <Typography className="text-center">
                   Why I need to verify myself?

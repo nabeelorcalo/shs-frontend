@@ -14,6 +14,7 @@ const Video = (props: any) => {
     }
     return e?.fileList;
   };
+  
   return (
     <div className="university-detail">
       <Row className="university-detail-style">

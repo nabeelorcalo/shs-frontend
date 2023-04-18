@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
-import { ArrowDownDark, DocumentUpload } from "../../../../../assets/images";
-import { SHSLogo } from "../../../../../assets/images";
-import { BackButton } from "../../../../../assets/images";
+import { Button, Col, Form, Input, Row, Typography } from "antd";
+import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images";
 import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 
@@ -29,7 +27,6 @@ const Address = (props: any) => {
                   <Typography.Title level={3}>Address</Typography.Title>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Provide your address details
               </Typography>
@@ -130,7 +127,6 @@ const Address = (props: any) => {
                   </Form.Item>
                 </Col>
               </Row>
-
               <Form.Item
                 label="Proof of Address"
                 name="proofofaddress"
@@ -143,15 +139,15 @@ const Address = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                    <DragAndDropUpload/>
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
 
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                  //htmlType="submit"
                   >
                     Skip
                   </Button>

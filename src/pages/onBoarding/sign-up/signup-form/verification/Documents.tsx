@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Select, Typography } from "antd";
-import {
-  ArrowDownDark,
-  DocumentUpload,
-  SHSLogo,
-} from "../../../../../assets/images";
-import { BackButton } from "../../../../../assets/images";
+import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images";
 import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
+
+const { Option } = Select;
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
 
-  const { Option } = Select;
   return (
     <div className="identity">
       <Row className="identity-style">
@@ -67,7 +63,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                    <DragAndDropUpload/>
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
               <Form.Item
@@ -81,8 +77,8 @@ const Documents = (props: any) => {
                 ]}
                 style={{ width: "100%", marginBottom: "20px" }}
               >
-          <div className="dragger">
-                    <DragAndDropUpload/>
+                <div className="dragger">
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
               <Form.Item
@@ -97,15 +93,14 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                    <DragAndDropUpload/>
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
-
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                  //htmlType="submit"
                   >
                     Skip
                   </Button>

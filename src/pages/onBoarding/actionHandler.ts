@@ -5,22 +5,17 @@ import api from "../../api";
 import constants from "../../config/constants";
 import apiEndpints from "../../config/apiEndpoints";
 
-
-// Chat operation and save into store
+// Auth operation and save into store
 const useCustomHook = () => {
+
   const { SIGNUP } = apiEndpints;
- 
   const signup = async (body: any): Promise<any> => {
     const { data } = await api.post(SIGNUP, body);
     return data;
   };
 
-  
-
-
   return {
-    signup,
-    
+    signup, 
   };
 };
 

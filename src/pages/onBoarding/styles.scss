@@ -60,26 +60,26 @@
     justify-content: center;
   }
   .form-inner-wrapper {
-    border: 1px solid $text-error-line-color;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
-    border-radius: 16px;
-    padding: 2rem;
-    .main-title {
-      color: $primary-bg-color;
-      font-size: 30px;
-      font-weight: 500;
-      line-height: 40px;
-      font-family: Outfit;
-      text-align: center;
-    }
-    .secondary-title {
-      color: #4e4b66;
-      font-size: 16px;
-      font-weight: 400;
-      line-height: 40px;
-      font-family: Outfit;
-      text-align: center;
-    }
+  border: 1px solid $text-error-line-color;
+  box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+  border-radius: 16px;
+  padding: 2rem;
+  .main-title {
+    color: $primary-bg-color;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 40px;
+    font-family: Outfit;
+    text-align: center;
+  }
+  .secondary-title {
+    color: #4e4b66;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 40px;
+    font-family: Outfit;
+    text-align: center;
+  }
   }
   .a-tag-signup {
     color: $secondary-bg-color;
@@ -92,7 +92,7 @@
   }
 }
 
-.verify-form-signup{
+.verify-form-signup {
   .identity {
     .identity-style {
       display: flex !important;
@@ -190,7 +190,6 @@
       font-weight: 400;
       color: $text-secondary-body-color;
       font-family: Outfit;
-      
     }
     .main-box-video {
       background: $white-bg-color;
@@ -221,13 +220,11 @@
       border: 2px dashed black;
       border-radius: 4px;
     }
- 
   }
-
 }
 
-.about-buisness{
-  .about-buisness-style{
+.about-buisness {
+  .about-buisness-style {
     display: flex !important;
     justify-content: center;
     margin-top: 6rem;
@@ -250,53 +247,50 @@
   }
 }
 
-.select-user-heading{
+.select-user-heading {
   font-weight: 500;
-font-size: 38px;
-line-height: 46px;
-text-align: center;
-color: $primary-bg-color;
+  font-size: 38px;
+  line-height: 46px;
+  text-align: center;
+  color: $primary-bg-color;
 }
-.images-wrapper{
-  padding-top: 5rem; 
+.images-wrapper {
+  padding-top: 5rem;
 }
-
-.select-user-label{
+.select-user-label {
   font-weight: 500;
-font-size: 20px;
-line-height: 28px;
-text-align: center;
-color: $text-primary-title-color;
-padding-top: 2rem;
+  font-size: 20px;
+  line-height: 28px;
+  text-align: center;
+  color: $text-primary-title-color;
+  padding-top: 2rem;
 }
-.select-user-continue{
+.select-user-continue {
   background: $primary-bg-color;
-box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.043);
-border-radius: 8px;
-font-weight: 600;
-font-size: 16px;
-line-height: 22px;
-text-align: center;
-color: $white-bg-color;
-width: 50%;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.043);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+  color: $white-bg-color;
+  width: 50%;
 }
-.image-wrapper-box{
+.image-wrapper-box {
   background: $white-bg-color;
-box-shadow: $accommodation-card-shadow;
-border-radius: 16px;
-padding: 3rem;
-padding-left: 6rem;
-padding-right: 6rem;
-position: relative;
+  box-shadow: $accommodation-card-shadow;
+  border-radius: 16px;
+  padding: 3rem;
+  padding-left: 6rem;
+  padding-right: 6rem;
+  position: relative;
 }
-.active{
+.active {
   border: 1px solid $primary-bg-color;
 }
-.icon-check{
-position: absolute;
-top: -8%;
-left: 42%;
-background-color: $white-bg-color;
+.icon-check {
+  position: absolute;
+  top: -8%;
+  left: 42%;
+  background-color: $white-bg-color;
 }
-
-

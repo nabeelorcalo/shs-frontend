@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Row, Select, Space, Typography, AutoComplete } from 'antd';
+import { Button, Col, Form, Input, Row, Select, Space, Typography } from 'antd';
 import { CommonDatePicker } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import constants from "../../../../config/constants";
+import { useNavigate } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from '../../actionHandler';
+
+const { Option } = Select;
 
 const SignupForm = ({ signupRole }: any) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
-
   const action = useCustomHook();
   const navigate = useNavigate();
+
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
-    console.log('date',value);
-    
-    const body:any = {
+    console.log('date', value);
+
+    const body: any = {
       "email": values.Email,
       "firstName": values.firstName,
       "lastName": values.lastName,
@@ -34,20 +36,17 @@ const SignupForm = ({ signupRole }: any) => {
     }
 
     const filteredBody = Object.entries(body)
-    .reduce((acc:any, [key, value]) => {
-      if (typeof value !== 'undefined' && value !== null) {
-        acc[key] = value;
-      }
-      return acc;
-    }, {});
-
-     action.signup(filteredBody)
+      .reduce((acc: any, [key, value]) => {
+        if (typeof value !== 'undefined' && value !== null) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+    action.signup(filteredBody)
     console.log("new console: ", filteredBody);
-     navigate('/verification-steps');
+    navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
     // navigate("/company-admin-verification");
   };
-
-  const { Option } = Select;
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -57,6 +56,7 @@ const SignupForm = ({ signupRole }: any) => {
       </Select>
     </Form.Item>
   );
+
   return (
     <div className="sign-up-form-wrapper">
       <Form
@@ -88,17 +88,15 @@ const SignupForm = ({ signupRole }: any) => {
           </Col>
         </Row>
         <Form.Item
-              label="Country"
-              name="country"
-              rules={[{ required: true }, { type: "string" }]}
-            >
-              <Input placeholder="country" className="input-style" />
-            </Form.Item>
+          label="Country"
+          name="country"
+          rules={[{ required: true }, { type: "string" }]}>
+          <Input placeholder="country" className="input-style" />
+        </Form.Item>
         <Form.Item
           label={signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
           name="Email"
-          rules={[{ required: true }, { type: "email" }]}
-        >
+          rules={[{ required: true }, { type: "email" }]}>
           <Input
             placeholder={
               signupRole == constants.UNIVERSITY ? "University Email" : "Email"
@@ -127,22 +125,22 @@ const SignupForm = ({ signupRole }: any) => {
                 name="DOB"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                
-              <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
+                <CommonDatePicker
+                  open={open}
+                  setOpen={setOpen}
+                  setValue={setValue} />
               </Form.Item>
             </Col>
           </Row>
         )}
         {[constants.DELEGATE_AGENT, constants.AGENT].includes(signupRole) && (
           <Row gutter={20}>
-
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
               <Form.Item
                 label="Date of Birth"
                 name="dob"
-                rules={[{ required: false }, { type: "date" }]}
-              >
-                <CommonDatePicker open={true}  />
+                rules={[{ required: false }, { type: "date" }]}>
+                <CommonDatePicker open={true} />
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -150,8 +148,7 @@ const SignupForm = ({ signupRole }: any) => {
                 label="Residentail Address"
                 name="residentailAddress"
                 rules={[{ required: true }, { type: "string" }]}
-                style={{ width: "100%" }}
-              >
+                style={{ width: "100%" }}>
                 <Input
                   placeholder="House#1,Street#1"
                   className="input-style"
@@ -160,7 +157,6 @@ const SignupForm = ({ signupRole }: any) => {
             </Col>
           </Row>
         )}
-
         {[constants.COMPANY_ADMIN].includes(signupRole) && (
           <Row>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -168,8 +164,7 @@ const SignupForm = ({ signupRole }: any) => {
                 label="Reference Number (optional)"
                 name="refrenceNumber"
                 rules={[{ required: true }, { type: "string" }]}
-                style={{ width: "100%" }}
-              >
+                style={{ width: "100%" }}>
                 <Input
                   placeholder="Reference Number (optional)"
                   className="input-style"
@@ -180,9 +175,7 @@ const SignupForm = ({ signupRole }: any) => {
         )}
         <Form.Item
           name="phone"
-          label="Phone Number"
-          
-        >
+          label="Phone Number">
           <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
         </Form.Item>
         <Row gutter={20}>
@@ -213,7 +206,6 @@ const SignupForm = ({ signupRole }: any) => {
             </Form.Item>
           </Col>
         </Row>
-
         <Form.Item>
           <Button
             type="primary"
@@ -226,8 +218,8 @@ const SignupForm = ({ signupRole }: any) => {
         <div>
           <Typography className="text-center primary-color text-base">
             Already have an account?&nbsp;
-             <a href="/login" className="a-tag-signup cursor-pointer font-semibold">
-               Sign In
+            <a href={`${ROUTES_CONSTANTS.LOGIN}`} className="a-tag-signup cursor-pointer font-semibold">
+              Sign In
             </a>
           </Typography>
         </div>

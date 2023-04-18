@@ -9,7 +9,6 @@ import {
 } from "antd";
 import {
   BackButton,
-  DocumentUpload,
   SHSLogo,
 } from "../../../../../assets/images";
 import "../../../styles.scss";

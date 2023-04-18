@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Col, Row, Space, Typography } from "antd";
 import { managerCar } from "./managerMock";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const ManagerInfo = () => {
   return (
@@ -31,7 +32,7 @@ const ManagerInfo = () => {
                     <Space className="pb-3 pr-4 pl-3 pt-3">
                       <Button style={{ minWidth: "0px" }} className="info-dark-bg-color text-info-color-dark text-base 
                       font-semibold rounded-[8px] border-0 ">
-                        <a href="managerprofile">Profile</a>
+                        <a href={`${ROUTES_CONSTANTS.MANAGER_PROFILE}`}>Profile</a>
                         
                       </Button>
                       <Button style={{ minWidth: "0px" }} className="text-green-color reset-bg-color text-base 

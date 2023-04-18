@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import IdentityVerification from "./IdentityVerification";
 import Address from "./Address";
 import Documents from "./Documents";
@@ -6,7 +6,7 @@ import DbsVerification from "./DbsVerification";
 import UniversityDetails from "./UniversityDetails";
 import Photograph from "./Photograph";
 import Video from "./Video";
-import {Form} from "antd";
+import { Form } from "antd";
 
 function VerificationSteps(props: any) {
 
@@ -49,7 +49,9 @@ function VerificationSteps(props: any) {
           />
         )}
         {currentStep == 5 && (
-          <Address currentStep={currentStep} setCurrentStep={setCurrentStep} />
+          <Address
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep} />
         )}
         {currentStep == 6 && (
           <Photograph
@@ -58,7 +60,9 @@ function VerificationSteps(props: any) {
           />
         )}
         {currentStep == 7 && (
-          <Video currentStep={currentStep} setCurrentStep={setCurrentStep} />
+          <Video
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep} />
         )}
       </Form>
     </div>
