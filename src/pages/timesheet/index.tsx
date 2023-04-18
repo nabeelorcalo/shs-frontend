@@ -9,7 +9,7 @@ const Index = () => {
     const renderRoleBasedTimeSheet: any = {
         COMPANY_ADMIN: <CompanyAdmin />,
         INTERN: <Intern />,
-        MANAGER: <Manager />
+        COMPANY_MANAGER: <Manager />
     }
     return (
         <>{renderRoleBasedTimeSheet[role]}</>
