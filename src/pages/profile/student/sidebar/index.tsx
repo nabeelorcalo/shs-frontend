@@ -19,19 +19,23 @@ const StudentSideBar = (props: any) => {
                 <div className="flex justify-end relative">
                   <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
                     onClick={() => {
-                    setActionBox(true);
+                      setActionBox(true);
                     }}
                   />
                   {actionBox && (
                     <div className="upload-box">
-                      <p className="pt-2 pb-2 cursor-pointer text-base 
-                      font-normal text-secondary-color" onClick={() => {
-                        setActionBox(false);
-                      }}>Upload Image</p>
-                      <p className="pb-2 cursor-pointer text-base 
-                      font-normal text-secondary-color" onClick={() => {
-                        setActionBox(false);
-                      }}>Delete Image</p>
+                      <p className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                        onClick={() => {
+                          setActionBox(false);
+                        }}>
+                        Upload Image
+                      </p>
+                      <p className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                        onClick={() => {
+                          setActionBox(false);
+                        }}>
+                        Delete Image
+                      </p>
                     </div>
                   )}
                 </div>
@@ -68,9 +72,11 @@ const StudentSideBar = (props: any) => {
                 <Typography className="emp-name">Skills</Typography>
               </div>
               <div className="main-skill-box">
-                <Button style={{ minWidth: "0px" }}
-                className="text-input-bg-color rounded-[14.5px] 
-                flex items-center justify-center border-0">
+                <Button
+                  style={{ minWidth: "0px" }}
+                  className="text-input-bg-color rounded-[14.5px] 
+                  flex items-center justify-center border-0"
+                >
                   <PlusOutlined /> Add
                 </Button>
                 {item.skills.map((item, index) => {
@@ -105,9 +111,11 @@ const StudentSideBar = (props: any) => {
                 </center>
               </div>
               <Divider />
-              <p onClick={() => {
-                setShowSideViewType('change-password')
-              }} className="a-tag-side">
+              <p className="a-tag-side"
+                onClick={() => {
+                  setShowSideViewType('change-password')
+                }}
+              >
                 Change Password
               </p>
             </>

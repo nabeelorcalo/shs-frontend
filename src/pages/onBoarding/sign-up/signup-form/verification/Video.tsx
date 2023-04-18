@@ -14,7 +14,7 @@ const Video = (props: any) => {
     }
     return e?.fileList;
   };
-  
+
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
@@ -33,7 +33,6 @@ const Video = (props: any) => {
                   <Typography.Title level={3}>Video</Typography.Title>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Create your video interview to get hired
               </Typography>
@@ -53,7 +52,6 @@ const Video = (props: any) => {
                 </li>
               </ul>
             </div>
-
             <div className="sign-up-form-wrapper">
               <Form.Item
                 name="upload"
@@ -61,22 +59,21 @@ const Video = (props: any) => {
                 getValueFromEvent={normFile}
                 className="flex justify-center mt-10"
               >
- 
                 <Upload name="logo" action="/upload.do" listType="picture">
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
-                       <Round/>
+                        <Round />
                       </div>
                     </div>
                   </div>
                 </Upload>
               </Form.Item>
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                  //htmlType="submit"
                   >
                     Skip
                   </Button>

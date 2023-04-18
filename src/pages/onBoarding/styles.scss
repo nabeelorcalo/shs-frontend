@@ -8,37 +8,45 @@
     height: 90vh;
     overflow-x: scroll;
   }
+
   .form-inner-wrapper {
     border: 1px solid $text-error-line-color;
     box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
     border-radius: 16px;
     padding: 2rem;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .input-style {
     background: $text-input-bg-color;
     border-radius: 8px;
     height: 48px;
     padding: 8px 16px 8px 16px !important;
   }
-  .ant-input-affix-wrapper > input.ant-input {
+
+  .ant-input-affix-wrapper>input.ant-input {
     background: $text-input-bg-color !important;
   }
+
   .login-form-button {
     padding: 10px 0px 30px 0px;
     background-color: $primary-bg-color;
     width: 100%;
   }
+
   .a-tag-signup {
     color: $secondary-bg-color;
   }
+
   .a-tag-signup:hover {
     color: $secondary-bg-color;
   }
+
   .login-form-forgot {
     color: $primary-bg-color;
   }
@@ -50,43 +58,51 @@
     justify-content: center;
     margin-top: 6rem;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .fly-wrapper {
     display: flex;
     justify-content: center;
   }
+
   .form-inner-wrapper {
-  border: 1px solid $text-error-line-color;
-  box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
-  border-radius: 16px;
-  padding: 2rem;
-  .main-title {
-    color: $primary-bg-color;
-    font-size: 30px;
-    font-weight: 500;
-    line-height: 40px;
-    font-family: Outfit;
-    text-align: center;
+    border: 1px solid $text-error-line-color;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+
+    .main-title {
+      color: $primary-bg-color;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 40px;
+      font-family: Outfit;
+      text-align: center;
+    }
+
+    .secondary-title {
+      color: #4e4b66;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 40px;
+      font-family: Outfit;
+      text-align: center;
+    }
   }
-  .secondary-title {
-    color: #4e4b66;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 40px;
-    font-family: Outfit;
-    text-align: center;
-  }
-  }
+
   .a-tag-signup {
     color: $secondary-bg-color;
   }
+
   .a-tag-signup:hover {
     color: $secondary-bg-color;
   }
+
   .login-form-forgot {
     color: $primary-bg-color;
   }
@@ -101,38 +117,45 @@
       height: 90vh;
       overflow-x: scroll;
     }
+
     .logo-wrapper {
       display: flex;
       justify-content: center;
       margin-bottom: 1rem;
     }
+
     .login-form-button {
       padding: 10px 0px 30px 0px;
       background-color: $primary-bg-color;
       width: 100%;
     }
+
     .btn-cancel-verification {
       text-align: center;
       width: 100%;
     }
+
     .input-style {
       background: $text-input-bg-color;
       border-radius: 8px;
       height: 48px;
       padding: 8px 16px 8px 16px !important;
     }
+
     .form-inner-wrapper {
       border: 1px solid $text-error-line-color;
       box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
       border-radius: 16px;
       padding: 2rem;
     }
+
     .steps-description {
       font-size: 16px;
       font-weight: 500;
       color: $text-secondary-body-color;
       text-align: center;
     }
+
     .dragger {
       border: 2px dashed $text-primary-title-color;
       border-radius: 4px;
@@ -147,50 +170,59 @@
       height: 80vh;
       overflow-x: scroll;
     }
+
     .logo-wrapper {
       display: flex;
       justify-content: center;
       margin-bottom: 1rem;
     }
+
     .login-form-button {
       padding: 10px 0px 30px 0px;
       background-color: $primary-bg-color;
       width: 100%;
     }
+
     .btn-cancel-verification {
       text-align: center;
       width: 100%;
     }
+
     .input-style {
       background: $text-input-bg-color;
       border-radius: 8px;
       height: 48px;
       padding: 8px 16px 8px 16px !important;
     }
+
     .form-inner-wrapper {
       border: 1px solid $text-error-line-color;
       box-shadow: $accommodation-card-shadow;
       border-radius: 16px;
       padding: 2rem;
     }
+
     .steps-description {
       font-size: 16px;
       font-weight: 500;
       color: $text-secondary-body-color;
       text-align: center;
     }
+
     .video-description {
       font-size: 20px;
       font-weight: 500;
       color: $primary-bg-color;
       font-family: Outfit;
     }
+
     .list-style {
       font-size: 16px;
       font-weight: 400;
       color: $text-secondary-body-color;
       font-family: Outfit;
     }
+
     .main-box-video {
       background: $white-bg-color;
       border: 1px solid $text-input-bg-color;
@@ -200,6 +232,7 @@
       width: 500px;
       height: 300px;
     }
+
     .secondary-box-div {
       background: $text-input-bg-color;
       border-radius: 16px;
@@ -207,6 +240,7 @@
       height: 280px;
       position: relative;
     }
+
     .inner-box-video {
       position: absolute;
       top: 45%;
@@ -216,6 +250,7 @@
       height: 50px;
       width: 45px;
     }
+
     .dragger {
       border: 2px dashed black;
       border-radius: 4px;
@@ -229,17 +264,20 @@
     justify-content: center;
     margin-top: 6rem;
   }
+
   .form-inner-wrapper {
     border: 1px solid $text-error-line-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .login-form-button {
     padding: 10px 0px 30px 0px;
     background-color: $primary-bg-color;
@@ -254,9 +292,11 @@
   text-align: center;
   color: $primary-bg-color;
 }
+
 .images-wrapper {
   padding-top: 5rem;
 }
+
 .select-user-label {
   font-weight: 500;
   font-size: 20px;
@@ -265,6 +305,7 @@
   color: $text-primary-title-color;
   padding-top: 2rem;
 }
+
 .select-user-continue {
   background: $primary-bg-color;
   box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.043);
@@ -276,6 +317,7 @@
   color: $white-bg-color;
   width: 50%;
 }
+
 .image-wrapper-box {
   background: $white-bg-color;
   box-shadow: $accommodation-card-shadow;
@@ -285,9 +327,11 @@
   padding-right: 6rem;
   position: relative;
 }
+
 .active {
   border: 1px solid $primary-bg-color;
 }
+
 .icon-check {
   position: absolute;
   top: -8%;

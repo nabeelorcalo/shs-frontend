@@ -6,23 +6,28 @@
     justify-content: center;
     margin-top: 6rem;
   }
+
   .signup-link {
     display: block !important;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .input-style {
     background: $text-input-bg-color;
     border-radius: 8px;
     height: 48px;
     padding: 8px 16px 8px 16px !important;
   }
-  .ant-input-affix-wrapper > input.ant-input {
+
+  .ant-input-affix-wrapper>input.ant-input {
     background: $text-input-bg-color !important;
   }
+
   .login-form-button {
     padding: 10px 0px 30px 0px;
     background-color: $primary-bg-color;
@@ -33,20 +38,24 @@
     text-align: center;
     color: $white-bg-color;
   }
+
   .form-inner-wrapper {
     border: 1px solid $text-error-line-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
+
   .a-tag-signup {
     color: $secondary-bg-color;
   }
+
   .a-tag-signup:hover {
     color: $secondary-bg-color;
   }
+
   .login-form-forgot {
-  
+
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
@@ -65,49 +74,59 @@
     justify-content: center;
     margin-top: 6rem;
   }
+
   .input-style {
     background: $text-input-bg-color;
     border-radius: 8px;
     height: 48px;
   }
+
   .login-form-button {
     padding: 10px 0px 30px 0px;
     background-color: $primary-bg-color;
     width: 100%;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .a-tag-signup {
     color: $secondary-bg-color;
   }
+
   .a-tag-signup:hover {
     color: $secondary-bg-color;
   }
 }
+
 .reset-link {
   .reset-link-style {
     display: flex !important;
     justify-content: center;
     margin-top: 6rem;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .fly-wrapper {
     display: flex;
     justify-content: center;
   }
+
   .form-inner-wrapper {
     border: 1px solid $text-error-line-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 2rem;
   }
+
   .main-title {
     color: $primary-bg-color;
     font-size: 30px;
@@ -116,6 +135,7 @@
     font-family: Outfit;
     text-align: center;
   }
+
   .secondary-title {
     color: $text-secondary-body-color;
     font-size: 16px;
@@ -124,24 +144,29 @@
     font-family: Outfit;
     text-align: center;
   }
+
   .a-tag-signup {
     color: $secondary-bg-color;
   }
+
   .a-tag-signup:hover {
     color: $secondary-bg-color;
   }
 }
+
 .create-password {
   .form-style {
     display: flex !important;
     justify-content: center;
     margin-top: 6rem;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .form-inner-wrapper {
     border: 1px solid $text-error-line-color;
     box-shadow: $accommodation-card-shadow;
@@ -149,21 +174,25 @@
     padding: 2rem;
   }
 }
+
 .password-success {
   .password-success-style {
     display: flex !important;
     justify-content: center;
     margin-top: 6rem;
   }
+
   .logo-wrapper {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
   }
+
   .fly-wrapper {
     display: flex;
     justify-content: center;
   }
+
   .form-inner-wrapper {
     border: 1px solid $text-error-line-color;
     box-shadow: $accommodation-card-shadow;

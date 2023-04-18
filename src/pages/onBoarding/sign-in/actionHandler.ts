@@ -10,16 +10,16 @@ const useCustomHook = () => {
   const { LOGIN } = apiEndpints;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const login = async (body: any): Promise<any> => {
-  const { data } = await api.post(LOGIN, body);
-  localStorage.setItem("accessToken", data.accessToken);
-  setCurrentUser(data.user);
-  return data;
+    const { data } = await api.post(LOGIN, body);
+    localStorage.setItem("accessToken", data.accessToken);
+    setCurrentUser(data.user);
+    return data;
   };
-  
+
   const { CHANGEPASSWORD } = apiEndpints;
   const changepassword = async (body: any): Promise<any> => {
-  const { data } = await api.post(CHANGEPASSWORD, body);
-  return data;
+    const { data } = await api.post(CHANGEPASSWORD, body);
+    return data;
   };
 
   return {

@@ -2,28 +2,26 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button, Modal, Typography, Col, Row } from 'antd'
 import { CheckCircleFilled } from '@ant-design/icons'
-import { BackButton, IconCloseModal } from '../../../assets/images'
-import DegreeCap from '../../../assets/images/login/unicap.svg'
-import OfficeBag from '../../../assets/images/login/unibag.svg'
-import Home from '../../../assets/images/login/work.svg'
+import { BackButton, IconCloseModal, DegreeCap, OfficeBag, Home } from '../../../assets/images'
 import '../styles.scss'
+import { ROUTES_CONSTANTS } from '../../../config/constants'
 
 const userType = [
   {
     id: '1',
-    img: DegreeCap,
+    img: <DegreeCap />,
     role: 'Student',
     key: 'STUDENT'
   },
   {
     id: '2',
-    img: OfficeBag,
+    img: <OfficeBag />,
     role: 'Company',
     key: 'COMPANY_ADMIN'
   },
   {
     id: '3',
-    img: Home,
+    img: <Home />,
     role: 'University',
     key: 'UNIVERSITY'
   }
@@ -37,7 +35,7 @@ const SelectUserType = (props: any) => {
   const handleClick = (buttonIndex: any) => {
     setActiveButton(buttonIndex)
   }
-  
+
   return (
     <div className='select-user-type-modal'>
       <Modal
@@ -69,21 +67,19 @@ const SelectUserType = (props: any) => {
                         handleClick(item.id)
                         setUserTypeRole(item.key)
                       }}
-                      className={`image-wrapper-box ${
-                        item.id === activeButton ? 'active' : ''
-                      }`}
+                      className={`image-wrapper-box ${item.id === activeButton ? 'active' : ''
+                        }`}
                     >
                       <div
-                        className={` ${
-                          item.id === activeButton ? '' : 'icon-check'
-                        }`}
+                        className={`${item.id === activeButton ? '' : 'icon-check'
+                          }`}
                       >
                         <CheckCircleFilled
                           className='icon-check'
                           style={{ color: '#363565', fontSize: '36px' }}
                         />
                       </div>
-                      <img src={item.img} alt='' />
+                      {item.img}
                       <Typography className='select-user-label'>
                         {item.role}
                       </Typography>
@@ -103,7 +99,7 @@ const SelectUserType = (props: any) => {
           />
           <Button
             onClick={() => {
-              navigate(`/signup?signupRole=${userTypeRole}`)
+              navigate(`/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${userTypeRole}`)
             }}
             className='select-user-continue'
           >

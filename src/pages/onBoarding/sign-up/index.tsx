@@ -4,6 +4,7 @@ import SignupForm from "./signup-form/SignupForm";
 import { SHSLogo } from "../../../assets/images";
 import "../styles.scss";
 import { useSearchParams } from "react-router-dom";
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 interface SignupRoleInterface {
   [key: string]: string;
@@ -12,8 +13,7 @@ interface SignupRoleInterface {
 const SignUp = () => {
   const [searchParams] = useSearchParams();
   const signupRole = searchParams.get("signupRole");
-  console.log(signupRole, "signupRole");
-
+ 
   const TagLine: SignupRoleInterface = {
     MANAGER: "Manage your interns.",
     STUDENT: "Find the right career path.",
@@ -34,7 +34,7 @@ const SignUp = () => {
             <div className="main-title-wrapper">
               <Typography className="primary-color text-[38px] font-medium">Sign up</Typography>
               <Typography  className="primary-color text-[30px] font-medium pb-2">
-                {TagLine[signupRole ? signupRole : "STUDENT"]}
+                {TagLine[`/${ROUTES_CONSTANTS.SIGNUP} ? signupRole : "STUDENT"`]}
               </Typography>
             </div>
             <SignupForm signupRole={signupRole} />
