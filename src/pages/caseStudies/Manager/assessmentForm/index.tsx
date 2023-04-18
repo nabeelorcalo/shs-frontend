@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
-import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from '../../../../components'
+import { BoxWrapper, Breadcrumb, Notifications, SignatureAndUploadModal } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
 const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
-import './style.scss'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import signature from "../../../../assets/images/Report/signature.svg"
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
+import './style.scss'
 
 const index = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
@@ -17,7 +16,7 @@ const index = () => {
   ];
   const [openModal, setOpenModal] = useState(false)
   const [form] = Form.useForm();
-
+  const navigate = useNavigate()
   const mockData = [
     {
       learningCategories: "Technical Skills",
@@ -61,10 +60,10 @@ const index = () => {
         <BoxWrapper className='my-5 hidden destop-view lg:block'>
           <Typography className='md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
           <div className='mt-5 flex gap-10'>
-            <span className='font-semibold text-xl lg:w-[200px]'>Learning Categories</span>
-            <span className='font-semibold text-xl lg:w-[400px]'>Learning Objectives</span>
-            <span className='font-semibold text-xl lg:w-[400px]'>Evidence of Progress</span>
-            <span className='font-semibold text-xl lg:w-[400px]'>Manager’s Remarks</span>
+            <span className='font-semibold text-xl lg:w-[200px] text-primary-color'>Learning Categories</span>
+            <span className='font-semibold text-xl lg:w-[400px] text-primary-color'>Learning Objectives</span>
+            <span className='font-semibold text-xl lg:w-[400px] text-primary-color'>Evidence of Progress</span>
+            <span className='font-semibold text-xl lg:w-[400px] text-primary-color'>Manager’s Remarks</span>
           </div>
           <Divider />
           {mockData.map((item) => {
@@ -85,7 +84,7 @@ const index = () => {
             <TextArea rows={6} placeholder="Type here..." maxLength={6} />
             <div className='flex gap-10'>
               <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <div className='sign-box w-full rounded-lg flex justify-center'>
                   <img src={signature} />
                 </div>
               </div>
@@ -106,7 +105,11 @@ const index = () => {
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>Save Draft</Button>
             <Button type='primary'
-              className='teriary-bg-color  white-color  finalise-btn '>Finalise</Button>
+              className='teriary-bg-color  white-color  finalise-btn '
+              onClick={() => {
+                Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
+                  navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
+              }}>Finalise</Button>
           </div>
         </BoxWrapper>
       </div>
@@ -117,11 +120,11 @@ const index = () => {
           return (
             <div className='mt-5 flex flex-col xs:gap-2 sm:gap-5'>
               <span className='xs:text-lg sm:text-xl font-medium text-center'>{item.learningCategories}</span>
-              <span className='text-base font-medium '>Learning Categories</span>
+              <span className='text-base font-medium text-primary-color'>Learning Categories</span>
               <span className='text-xs font-normal '>{item.learningObjectives}</span>
-              <span className='text-base font-medium '>Evidence of Progress </span>
+              <span className='text-base font-medium  text-primary-color'>Evidence of Progress </span>
               <span className='text-xs font-normal '>{item.evidenceOfProgress}</span>
-              <span className='text-base font-medium '>Manager Remarks </span>
+              <span className='text-base font-medium text-primary-color '>Manager Remarks </span>
               <div className='flex flex-row justify-between '>
                 <div className='w-full'> {item.managerRemarks}
                 </div></div>
@@ -135,9 +138,9 @@ const index = () => {
           <TextArea rows={6} placeholder="Type here..." maxLength={6} />
           <div className='flex xs:flex-col sm:flex-row gap-10'>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Maria Sanoid</Typography>
-            <div className='sign-box w-full rounded-lg flex justify-center'>
-                  <img src={signature} alt="signature" />
-                </div>
+              <div className='sign-box w-full rounded-lg flex justify-center'>
+                <img src={signature} alt="signature" />
+              </div>
             </div>
             <div className='w-full'><Typography className='text-xl font-semibold mt-5'>Amelia Clark</Typography>
               <div className='sign-box w-full rounded-lg flex items-center justify-around'>
@@ -150,14 +153,18 @@ const index = () => {
         <div className='flex justify-end xs:gap-1 sm :gap-5 my-5 assessment-footer'>
           <Button type='primary'
             className='text-error-bg-color white-color reject-btn  text-xs' >
-              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
-                Reject
-              </NavLink>
-              </Button>
+            <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+              Reject
+            </NavLink>
+          </Button>
           <Button type='primary'
             className='white-bg-color teriary-color save-btn  text-xs'>Save Draft</Button>
           <Button type='primary'
-            className='teriary-bg-color  white-color finalise-btn text-xs'>Finalise</Button>
+            className='teriary-bg-color  white-color finalise-btn text-xs'
+            onClick={() => {
+              Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
+                navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
+            }}>Finalise</Button>
         </div>
       </BoxWrapper>
       <SignatureAndUploadModal
@@ -178,7 +185,7 @@ const index = () => {
             type='primary'
             className='white-color teriary-bg-color  '
           >Submit</Button></>} />
-  
+
     </div>
   )
 }

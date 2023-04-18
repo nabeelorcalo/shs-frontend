@@ -43,14 +43,12 @@ const SettingTemplate: React.FC = () => {
       <Row gutter={[10, 10]} >
         {overview.map((data: any, index) => {
           return (
-            <Col key={index} className="gutter-row" xs={24} md={24} lg={12} xxl={8}>
+            <Col key={index} className="gutter-row" xs={24} md={24} xl={12} xxl={8}>
               <NavLink key={index} to={data.link}>
                 <div className="template-box-wrapper">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
-                      <Title level={5} className="title">
-                        {data.name}
-                      </Title>
+                    <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">{data?.name}</Text>
                       <Divider className="mt-1 " />
                       <Text className="text-sm font-normal pb-2">
                         {data.content}

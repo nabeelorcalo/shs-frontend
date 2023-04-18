@@ -1,5 +1,5 @@
 import { Divider } from "antd";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 
 
 
@@ -29,16 +29,16 @@ export const LeaveCard = (props: LeaveCardProps) => {
             </div>
             <Divider style={{ marginBlock: '15px' }} />
             <div className="lower_part flex items-center justify-between">
-                <div className="info_wraper ">
-                    <h6 className="heading font-medium text-[16px] mb-0 mt-5 ">Pending</h6>
+                <div className="info_wraper basis-[28.3%] ">
+                    <h6 className="heading text-center font-medium text-[16px] mb-0 mt-5 ">Pending</h6>
                     <h6 className="info_count  font-medium text-[16px] text-center my-2">{pending}</h6>
                 </div>
-                <div className="info_wraper">
-                    <h6 className="heading font-medium text-[16px] mb-0 mt-5">Approved</h6>
+                <div className="info_wraper basis-[28.3%] ">
+                    <h6 className="heading text-center font-medium text-[16px] mb-0 mt-5">Approved</h6>
                     <h6 className="info_count  font-medium text-[16px] text-center my-2">{approved}</h6>
                 </div>
-                <div className="info_wraper">
-                    <h6 className="heading font-medium text-[16px] mb-0 mt-5">Declined</h6>
+                <div className="info_wraper basis-[28.3%]">
+                    <h6 className="heading text-center font-medium text-[16px] mb-0 mt-5">Declined</h6>
                     <h6 className="info_count  font-medium text-[16px] text-center my-2">{declined}</h6>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Select,Row,Col } from 'antd'
 import { IconAngleDown } from '../../../assets/images';
-import { BoxWrapper, DropDown, PageHeader, SearchBar } from '../../../components'
+import { BoxWrapper, DropDown, Notifications, PageHeader, SearchBar } from '../../../components'
 import flag from '../../../assets/images/universities/flag.svg'
 import flag2 from '../../../assets/images/universities/flag2.svg'
 import flag3 from '../../../assets/images/universities/flag3.svg'
@@ -73,7 +73,7 @@ const index: React.FC = () => {
   ]
   const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
-  const [value, setValue] = useState<any>()
+  // const [value, setValue] = useState<any>()
   const handleChange = () => { };
   return (
     <div className='company-university '>
@@ -84,13 +84,14 @@ const index: React.FC = () => {
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end" >
           <Select className='w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
-            {dropdownValue.map((item)=><Select.Option value={item}>{item}</Select.Option> )}
+            {dropdownValue.map((item , index)=><Select.Option key={index} value={item}>{item}</Select.Option> )}
           
           </Select>
           <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"Report" )}}
+              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"Report" )
+              Notifications({title:"Success", description:"University list downloaded ",type:'success'})}}
             />
         </Col>
         <Col xs={24}>

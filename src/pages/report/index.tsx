@@ -1,7 +1,4 @@
-import { useState } from "react";
-import constants from "../../config/constants";
 import UniversitRep  from './UniversityRep'
-import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 

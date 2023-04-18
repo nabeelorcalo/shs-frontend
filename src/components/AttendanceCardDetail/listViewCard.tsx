@@ -2,7 +2,7 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 import { Avatar, Dropdown, Typography } from "antd";
-import { BoxWrapper } from "../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 import { ThreeDots } from "../../assets/images";
 import constants from "../../config/constants";
 
@@ -90,7 +90,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
         </Avatar>
       </div>
 
-      <div className="flex justify-center w-[10%] hidden sm:block ">
+      <div className="w-[10%] hidden sm:block ">
         <Dropdown
           overlay={menu}
           trigger={["click"]}

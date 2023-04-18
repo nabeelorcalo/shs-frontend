@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react'
-import { BoxWrapper, Drawer, DropDown, FiltersButton, PageHeader, SearchBar, } from '../../../components'
-import Image from '../../../assets/images/Grievances/avater-1.svg'
+import { BoxWrapper, Drawer, DropDown, FiltersButton, Notifications, PageHeader, SearchBar } from '../../../components'
+import Image from '../../../assets/images/Grievances/avater-1.svg';
 import CaseStudiesTable from '../Common/caseStudiesTable';
 import Filters from '../Common/filter';
 import useCustomHook from '../actionHandler';
+import { Row, Col } from 'antd';
 import './style.scss'
 
 const index = () => {
@@ -74,28 +75,31 @@ const index = () => {
   const action = useCustomHook();
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [value, setValue] = useState<any>()
+  // const [value, setValue] = useState<any>()
   const handleChange = () => { };
   return (
     <div className='manager-case-studies'>
-      <PageHeader title="Case Studies" actions bordered
-      />
-      <div className='flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row'>
-      <div className= "max-sm:w-full md:w-[50%] lg:w-[25%]"> 
-         <SearchBar size="middle" handleChange={handleChange} />
-         </div>
-        <div className='flex sm:justify-end gap-2'>
+      <PageHeader title="Case Studies" actions bordered />
+      <Row gutter={[20, 20]}>
+        <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+          <SearchBar size="middle" handleChange={handleChange} />
+        </Col>
+        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24} className='flex justify-end gap-4'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
-            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ") }}
-          />
-        </div>
-      </div>
-      <BoxWrapper>
-        <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
-      </BoxWrapper>
+            setValue={() => {
+              action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ")
+              Notifications({ title: "Success", description: "Case-studies list downloaded ", type: 'success' })
+            }} />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+          </BoxWrapper>
+        </Col>
+      </Row>
       <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}

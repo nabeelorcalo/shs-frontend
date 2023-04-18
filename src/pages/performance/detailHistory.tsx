@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
 import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable, Breadcrumb, Notifications } from "../../components";
-import { BoxWrapper } from "../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../components";
 // end
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import { ColorLessMedalIcon, MoreIcon } from "../../assets/images";

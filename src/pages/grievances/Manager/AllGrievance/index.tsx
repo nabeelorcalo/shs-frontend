@@ -1,7 +1,7 @@
 import { Button, Col, Divider, Row, TabsProps } from 'antd'
 import React, { useState } from 'react'
 import { BlowWistle } from '../../../../assets/images'
-import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar } from '../../../../components'
+import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar, Notifications } from '../../../../components'
 import BlowWhistleForm from '../../Common/blowWhistleForm'
 import EscalatedByMe from './escalatedByMe'
 import EscalatedToMe from './escalatedToMe'
@@ -97,7 +97,7 @@ const index = () => {
 
   const breadcrumbArray = [
     { name: "All Grievance" },
-    { name: "Grievances", onClickNavigateTo: `${ROUTES_CONSTANTS.GRIEVANCES}` },
+    { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
   const TableColumn1 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
   const TableColumn2 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
@@ -155,7 +155,7 @@ const index = () => {
             options={["pdf", "excel"]}
             setValue={() => {
               action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
-            }}
+              Notifications({title:"Success", description:"Grievance list downloaded ",type:'success'})}}
           />
         </Col>
       </Row>

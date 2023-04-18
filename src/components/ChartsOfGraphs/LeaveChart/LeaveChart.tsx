@@ -1,5 +1,5 @@
 import { Rose } from '@ant-design/plots';
-import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 
 interface Props {
     heading?: string;
