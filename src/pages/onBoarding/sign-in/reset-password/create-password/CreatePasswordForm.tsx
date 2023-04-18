@@ -2,17 +2,31 @@ import React from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
+import useCustomHook from "../../actionHandler";
 import { useState } from "react";
 
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
+
 const CreatePasswordForm = () => {
+  const action = useCustomHook();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const onFinish = (values: any) => {
+    console.log("Received reset values of form: ", values);
+    const { currentPassword, newPassword } = values;
+    action
+    .changepassword({
+      currentpassword: newPassword,
+      // password: password,
+    })
+    .then((data) => {
+      console.log("data", data); //for debugging purpose
+      // data.accessToken && navigate("/dashboard");
+    })
+    .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -26,7 +40,7 @@ const CreatePasswordForm = () => {
         >
           <Form.Item
             label="New Password"
-            name="password"
+            name="currentpassword"
             rules={[
               { required: true, message: "Please enter new your password!" },
             ]}

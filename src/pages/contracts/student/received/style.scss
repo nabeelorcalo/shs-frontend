@@ -1,82 +1,118 @@
-@import "../../../../scss//colors";
-.received{
-    .ant-steps .ant-steps-item-title::after{
-        height: 3px !important;
-    }
-    
-    .scroll{
-        height: 55vh;
-        overflow-y: scroll;
-        overflow-x: hidden;
-        
-    }
+@import "../../../../scss/colors";
 
-    Button {
-        &:hover{
-           color: $white-bg-color !important;
-           border: none !important;
-        }
-    }
-
-    .suggest-changes-btn{
-        &:hover {
-            color: $teriary-bg-color !important;
-            border: 1px solid $teriary-bg-color !important;
-        }
-    }
-}
-
-.change-mind-red-btn{
-    &:hover {
-        border: 1px solid $text-error-color !important;
-        color: $text-error-color !important;
-    }
-}
-
-.dismiss-agrement-btn{
-    color:$white-bg-color !important ;
-    border: none !important;
-}
-
-.change-mind-warning-btn{
-    &:hover {
-        color: $teriary-bg-color !important;
-        border: 1px solid $teriary-bg-color !important;
-    }
-}
-.edit-request-btn{
-    &:hover {
-        color:$white-bg-color !important ;
-        border: none !important;
-    }
-}
-.long-press-btn{
-    cursor: pointer !important;
-    position: relative !important;
-    overflow: hidden !important;
-    &:hover{
-        color:$white-bg-color !important ;
-        border: none !important;
-    }
-    &:active{
-        background-color: $teriary-bg-color !important;
-        transition: background-color 0.3s ease !important;
-    }
-    &::before{
-        content: "";
-        position: absolute !important;
-        top: 0 !important;
-        left: -100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        background-color: rgba(0, 0, 0, 0.1) !important;
-        transition: left 2s ease !important;
-    }
-    &:active::before{
-        left: 0 !important ;
-    }
-
-}
-.ant-steps .ant-steps-item-title::after{
+.received {
+  .ant-steps .ant-steps-item-title::after {
     height: 3px !important;
+  }
+
+  .scroll {
+    height: 55vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  Button {
+    &:hover {
+      color: $white-bg-color !important;
+      border: none !important;
+    }
+  }
+
+  .suggest-changes-btn {
+    &:hover {
+      color: $teriary-bg-color !important;
+      border: 1px solid $teriary-bg-color !important;
+    }
+  }
+
+  .ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title::after {
+    background-color: $green-graph-tooltip-color !important;
+    height: 4px !important;
+    border-radius: 15px !important;
+  }
+
+  .ant-steps .ant-steps-item-process.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
+    color: $green-graph-tooltip-color !important;
+  }
+
+  .ant-steps .ant-steps-item-finish.ant-steps-item-custom .ant-steps-item-icon>.ant-steps-icon {
+    color: $green-graph-tooltip-color !important;
+  }
+
+  .ant-steps .ant-steps-item:not(.ant-steps-item-active):not(.ant-steps-item-process)>.ant-steps-item-container[role='button']:hover .ant-steps-item-icon .ant-steps-icon {
+    color: $green-graph-tooltip-color !important;
+  }
+
+  .ant-steps .ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+    color: $green-graph-tooltip-color !important;
+  }
+
+  .ant-steps .ant-steps-item:not(.ant-steps-item-active)>.ant-steps-item-container[role='button']:hover .ant-steps-item-title {
+    color: $green-graph-tooltip-color !important;
+  }
+
+  .ant-steps .ant-steps-item-finish>.ant-steps-item-container>.ant-steps-item-content>.ant-steps-item-title {
+    color: $green-graph-tooltip-color !important;
+  }
+}
+
+.change-mind-red-btn {
+  &:hover {
+    border: 1px solid $text-error-color !important;
+    color: $text-error-color !important;
+  }
+}
+
+.dismiss-agrement-btn {
+  color: $white-bg-color !important;
+  border: none !important;
+}
+
+.change-mind-warning-btn {
+  &:hover {
+    color: $teriary-bg-color !important;
+    border: 1px solid $teriary-bg-color !important;
+  }
+}
+
+.edit-request-btn {
+  &:hover {
+    color: $white-bg-color !important;
+    border: none !important;
+  }
+}
+
+.long-press-btn {
+  cursor: pointer !important;
+  position: relative !important;
+  overflow: hidden !important;
+
+  &:hover {
+    color: $white-bg-color !important;
+    border: none !important;
+  }
+
+  &:active {
+    background-color: $teriary-bg-color !important;
+    transition: background-color 0.3s ease !important;
+  }
+
+  &::before {
+    content: "";
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    transition: left 2s ease !important;
+  }
+
+  &:active::before {
+    left: 0 !important;
+  }
+}
+
+.ant-steps .ant-steps-item-title::after {
+  height: 3px !important;
 }

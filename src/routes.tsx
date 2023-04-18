@@ -813,13 +813,13 @@ const companyAdminRoutes = [
         element: <Managers />,
       },
       {
-        key: `addManager`,
-        path: `addManager`,
+        key: `${ROUTES_CONSTANTS.ADD_MANAGER}`,
+        path: `${ROUTES_CONSTANTS.ADD_MANAGER}`,
         element: <AddManager />,
       },
       {
-        key: `managerprofile`,
-        path: `managerprofile`,
+        key: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
         element: <ManagerProfile />,
       },
       {

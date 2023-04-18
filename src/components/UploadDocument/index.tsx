@@ -6,7 +6,7 @@ import './style.scss'
 const UploadDocument = (props: any) => {
   const { height = 80 } = props
   const [files, setFiles] = useState([])
-  const inputRef: any = useRef();
+  const inputRef : any = useRef();
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
@@ -16,7 +16,6 @@ const UploadDocument = (props: any) => {
   const handleDropped = (event: any) => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files))
-    console.log("Dropped")
   }
 
   console.log(files)

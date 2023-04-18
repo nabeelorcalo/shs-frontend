@@ -6,7 +6,7 @@ import {
   SeachJobArrow,
   SearchFilter,
 } from "../../../assets/images";
-import { FiltersButton } from "../../../components";
+import { FiltersButton, SearchBar } from "../../../components";
 import GlobalButton from "../Button/button";
 import Input from "../Input/input";
 import DrawerBar from "./Tabs/drawerSideBar/Drawer";
@@ -18,15 +18,15 @@ const SearchBarCards = (props: any) => {
     <>
       <Row gutter={[20, 20]}>
         <Col lg={6} md={12} sm={24} xs={24}>
-          <Input
-            prefix={<SearchIconJob className="mr-1" />}
+          <SearchBar
+            handleChange={() => {}}
             placeholder={"Job category or keyword"}
             className=" bg-none text-input-bg-color"
           />
         </Col>
         <Col lg={6} md={12} sm={24} xs={24}>
-          <Input
-            prefix={<LocationIconJob className="mr-1" />}
+          <SearchBar
+            handleChange={() => {}}
             placeholder={"Enter location"}
             className="bg-none text-input-bg-color"
           />
