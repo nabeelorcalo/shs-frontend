@@ -105,7 +105,10 @@ const EditOfferLetter = () => {
 
   const tempArray = [
     { name: "Power Source" },
-    { name: "  Offer Letter ", onClickNavigateTo: `/${ROUTES_CONSTANTS.OFFER_LETTER}` },
+    {
+      name: "  Offer Letter ",
+      onClickNavigateTo: `/${ROUTES_CONSTANTS.OFFER_LETTER}`,
+    },
   ];
   return (
     <div className="edit-contract">
@@ -122,143 +125,157 @@ const EditOfferLetter = () => {
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[10, 24]}>
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                  {senderInfo.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="pb-4">
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            {item.label}
-                          </p>
-                          <p className="text-lg font-normal text-secondary-color">
-                            {item.title}
-                          </p>
-                        </div>
+            <div className="scroll-offer-letter-company-admin">
+              <Row gutter={[0, 30]}>
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <Row gutter={[10, 24]}>
+                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                        {senderInfo.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <div className="pb-4">
+                                <p className="text-success-placeholder-color text-base font-normal">
+                                  {item.label}
+                                </p>
+                                <p className="text-lg font-normal text-secondary-color">
+                                  {item.title}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    );
-                  })}
-                </div>
-              </Col>
+                    </Col>
 
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                  {receiverInfo.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="pb-4">
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            {item.label}
-                          </p>
-                          <p className="text-lg font-normal">{item.title}</p>
-                        </div>
+                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                        {receiverInfo.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <div className="pb-4">
+                                <p className="text-success-placeholder-color text-base font-normal">
+                                  {item.label}
+                                </p>
+                                <p className="text-lg font-normal">
+                                  {item.title}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    );
-                  })}
-                </div>
-              </Col>
-            </Row>
-          </Col>
+                    </Col>
+                  </Row>
+                </Col>
 
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="text-teriary-color text-base pb-2">Description</div>
-            <div className="text-input-bg-color p-4 rounded-[8px]">
-              <Row className="mb-4">
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <div className="flex gap-4">
-                    <div>
-                      <Dropdown
-                        placement="bottomRight"
-                        overlay={fontFamily}
-                        visible={visible}
-                        onVisibleChange={handleVisibleChange}
-                        trigger={["click"]}
-                      >
-                        <div className="pr-2 pl-2 flex cursor-pointer border-1 border-solid border-[#A0A3BD] rounded-[15px]">
-                          <p className="">Roboto</p>
-                          <CaretDownOutlined style={{ color: "#A0A3BD" }} />
-                        </div>
-                      </Dropdown>
-                    </div>
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <div className="text-teriary-color text-base pb-2">
+                    Description
+                  </div>
+                  <div className="text-input-bg-color p-4 rounded-[8px]">
+                    <Row className="mb-4">
+                      <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                        <div className="flex gap-4">
+                          <div>
+                            <Dropdown
+                              placement="bottomRight"
+                              overlay={fontFamily}
+                              visible={visible}
+                              onVisibleChange={handleVisibleChange}
+                              trigger={["click"]}
+                            >
+                              <div className="pr-2 pl-2 flex cursor-pointer border-1 border-solid border-[#A0A3BD] rounded-[15px]">
+                                <p className="">Roboto</p>
+                                <CaretDownOutlined
+                                  style={{ color: "#A0A3BD" }}
+                                />
+                              </div>
+                            </Dropdown>
+                          </div>
 
-                    <div>
-                      <Dropdown
-                        placement="bottomRight"
-                        overlay={textDecoration}
-                        visible={visible1}
-                        onVisibleChange={handleVisibleChange1}
-                        trigger={["click"]}
-                      >
-                        <div className="flex pr-2 pl-2 border-1 border-solid border-[#A0A3BD] rounded-[15px] cursor-pointer">
-                          <p className="">pharagraph</p>
-                          <CaretDownOutlined style={{ color: "#A0A3BD" }} />
+                          <div>
+                            <Dropdown
+                              placement="bottomRight"
+                              overlay={textDecoration}
+                              visible={visible1}
+                              onVisibleChange={handleVisibleChange1}
+                              trigger={["click"]}
+                            >
+                              <div className="flex pr-2 pl-2 border-1 border-solid border-[#A0A3BD] rounded-[15px] cursor-pointer">
+                                <p className="">pharagraph</p>
+                                <CaretDownOutlined
+                                  style={{ color: "#A0A3BD" }}
+                                />
+                              </div>
+                            </Dropdown>
+                          </div>
                         </div>
-                      </Dropdown>
-                    </div>
+                      </Col>
+                      <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                        <div className="flex gap-4 justify-end">
+                          <p>
+                            <BoldOutlined />
+                          </p>
+                          <p>
+                            <UnderlineOutlined />
+                          </p>
+                          <p>
+                            <ItalicOutlined />
+                          </p>
+                          <p>
+                            <AlignCenterOutlined />
+                          </p>
+                          <p>
+                            <AlignLeftOutlined />
+                          </p>
+                          <p>
+                            <AlignRightOutlined />
+                          </p>
+                          <p>
+                            <LinkOutlined />
+                          </p>
+                        </div>
+                      </Col>
+                    </Row>
+
+                    {details.map((item, index) => {
+                      return (
+                        <div className="" key={index}>
+                          <p className=" pb-4 text-secondary-color text-lg ">
+                            {item.name}
+                          </p>
+                          <div>
+                            <p className="font-semibold text-secondary-color text-lg">
+                              {item.title}
+                            </p>
+                            <p className="text-lg font-normal text-secondary-color">
+                              {item.disc}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <div className="flex gap-4 justify-end">
-                    <p>
-                      <BoldOutlined />
-                    </p>
-                    <p>
-                      <UnderlineOutlined />
-                    </p>
-                    <p>
-                      <ItalicOutlined />
-                    </p>
-                    <p>
-                      <AlignCenterOutlined />
-                    </p>
-                    <p>
-                      <AlignLeftOutlined />
-                    </p>
-                    <p>
-                      <AlignRightOutlined />
-                    </p>
-                    <p>
-                      <LinkOutlined />
-                    </p>
-                  </div>
+
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <Row gutter={[24, 30]}>
+                    <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                      <Button className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+                        Sign & Send
+                      </Button>
+                    </Col>
+
+                    <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                      <Button className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                        Cancel
+                      </Button>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
-
-              {details.map((item, index) => {
-                return (
-                  <div className="" key={index}>
-                    <p className=" pb-4 text-secondary-color text-lg ">
-                      {item.name}
-                    </p>
-                    <div>
-                      <p className="font-semibold text-secondary-color text-lg">
-                        {item.title}
-                      </p>
-                      <p className="text-lg font-normal text-secondary-color">
-                        {item.disc}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
             </div>
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[24, 30]}>
-              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Button className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
-                  Sign & Send
-                </Button>
-              </Col>
-
-              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Button className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
-                  Cancel
-                </Button>
-              </Col>
-            </Row>
           </Col>
         </Row>
       </BoxWrapper>
