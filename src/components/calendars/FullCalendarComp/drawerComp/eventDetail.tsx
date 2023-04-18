@@ -115,7 +115,11 @@ const EventDetail = (props: any) => {
       </div>
       <div className="flex justify-end gap-3 mt-[20px] event-actions">
 
-        {eventCategory === 'reminder' ? <Button className='outlined-btn rounded-lg' onClick={() => setIsReminder(!isReminder)}>Delete Reminder</Button> :
+        {eventCategory === 'reminder' ?
+          <Button className='outlined-btn rounded-lg'
+            onClick={() => setIsReminder(!isReminder)}>
+            Delete Reminder
+          </Button> :
 
           eventCategory === 'meeting' ? <>
             <Button className='outlined-btn rounded-lg capitalize'>
