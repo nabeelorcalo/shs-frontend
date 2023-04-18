@@ -1,23 +1,47 @@
-import { useRecoilState, useRecoilValue, useRecoilStateLoadable } from "recoil";
-import { listingsState } from "../../store";
-import api from '../../api'
+import api from '../../api';
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { listingsState, listingLoadingState } from "../../store";
 
 
 const useListingsHook = () => {
-  const [listingsData, setListingsData] = useRecoilStateLoadable(listingsState)
+  const [allProperties, setAllProperties] = useRecoilState(listingsState)
+  const { GET_AGENT_PROPERTIES, ADD_PROPERTY } = endpoints
 
-  const createListing = async () => {
+  // Get Agent Properties
+  const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
     try {
-      const response = await api.post('https://reqres.in/api/users', {"name": "morpheus", "job": "leader"})
-      return response;
+      const res = await api.get(GET_AGENT_PROPERTIES);
+      if(!res.error) {
+        const { data } = res;
+        setAllProperties(data)
+      }
     } catch (error) {
-      throw error;
+      return;
+    } finally {
+      setLoading(false);
     }
   }
 
+  // Add Agent Properties
+  const createListing = async (data: any) => {
+
+    const submitRequest = async(reqBody:any) => {
+      try {
+        const res = await api.post(ADD_PROPERTY, reqBody)
+        return {response: res, error: undefined}
+      } catch (error) {
+        return { response: undefined, error: error };
+      }
+    }
+
+    return await submitRequest(data)
+  }
+
   return {
-    listingsData,
-    createListing
+    createListing,
+    getListings
   };
 };
 

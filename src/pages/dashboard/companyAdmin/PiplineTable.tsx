@@ -24,8 +24,8 @@ const columns: ColumnsType<DataType> = [
     render: (obj) => (
       <div className="text-left my-[-8px]">
         <p className="font-semibold text-secondary-color text-[18px] leading-6">{obj?.designation}</p>
-        <span>Total Candidates: </span>
-        <span className="font-semibold">{obj?.candidates}</span>
+        <span className="text-sm font-normal light-grey-color">Total Candidates: </span>
+        <span className="font-medium text-teriary-color">{obj?.candidates}</span>
       </div>
     ),
   },
@@ -34,9 +34,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "applied",
     key: "applied",
     render: (text) => (
-      <div className="primary-bg-color mx-[-11px] my-[-8px] p-2">
+      <div className="primary-bg-color mx-[-11px] my-[-8px] min-w-[131px] flex justify-center items-center gap-1 p-2 rounded">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -45,9 +45,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "interviewed",
     key: "interviewed",
     render: (text) => (
-      <div className="light-blue-bg mx-[-11px] my-[-8px] p-2">
+      <div className="light-blue-bg mx-[-11px] my-[-8px] min-w-[131px] flex justify-center items-center gap-1 p-2 rounded">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -56,9 +56,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "recommended",
     key: "recommended",
     render: (text) => (
-      <div className="purple-bg mx-[-11px] my-[-8px] p-2 min-w-[131px]">
+      <div className="purple-bg mx-[-11px] my-[-8px] flex justify-center items-center gap-1 p-2 rounded min-w-[131px]">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -67,9 +67,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "offerLetter",
     key: "offerLetter",
     render: (text) => (
-      <div className="light-purple-bg mx-[-11px] my-[-8px] p-2">
+      <div className="light-purple-bg mx-[-11px] my-[-8px] min-w-[131px] flex justify-center items-center gap-1 p-2 rounded">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -78,9 +78,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "contract",
     key: "contract",
     render: (text) => (
-      <div className="line-bg  mx-[-11px] my-[-8px] p-2">
+      <div className="line-bg  mx-[-11px] my-[-8px] min-w-[131px] flex justify-center items-center gap-1 p-2 rounded">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -89,9 +89,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "hired",
     key: "hired",
     render: (text) => (
-      <div className="teriary-bg-color mx-[-11px] my-[-8px] p-2">
+      <div className="teriary-bg-color mx-[-11px] my-[-8px] min-w-[131px] flex justify-center items-center gap-1 p-2 rounded">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -100,9 +100,9 @@ const columns: ColumnsType<DataType> = [
     dataIndex: "rejected",
     key: "rejected",
     render: (text) => (
-      <div className="page-header-secondary-bg-color  mx-[-11px] my-[-8px] p-2">
+      <div className="page-header-secondary-bg-color  mx-[-11px] my-[-8px] min-w-[131px] flex justify-center items-center gap-1 p-2 rounded">
         <span className="font-bold text-white">{text}</span>
-        <span className="text-white"> Candidates</span>
+        <span className="text-white text-sm"> Candidates</span>
       </div>
     ),
   },
@@ -155,10 +155,9 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
         <Row className="gap-5" align="middle">
           <p className="text-[20px] leading-[28px] text-secondary-color font-medium">Pipeline</p>
           <Select
-            className="min-w-[170px] text-input-bg-color rounded-xl"
+            className="min-w-[170px] light-grey-color pipline-select"
             size="small"
             placeholder="Select"
-            style={{ width: 120 }}
             onChange={(e) => handleSelect(e)}
             options={[
               { value: "design", label: "Design" },
@@ -174,7 +173,7 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
         <p className="cursor-pointer text-teriary-color text-base" onClick={()=>navigate('/internships')}>View All</p>
       </Row>
       <Divider className="mt-[14px] mb-[20px]" />
-      <GlobalTable bgWhiteTable columns={columns} tableData={data} pagination={false} height={200} />
+      <GlobalTable bgWhiteTable columns={columns} tableData={data} pagination={false} height={195} />
     </div>
   );
 };

@@ -31,6 +31,14 @@
 
   }
 
+  .wrapper {
+    min-height: 60vh;
+
+    @media only screen and (max-width:991px) {
+      min-height: 100%;
+    }
+  }
+
   .Goals_tab {
     .Goals_tab_no_task {
       p {
@@ -39,7 +47,7 @@
     }
 
     .goals_main_wrapper {
-      max-height: 95%;
+      // max-height: 95%;
 
       &::-webkit-scrollbar {
         width: 0;
@@ -120,20 +128,12 @@
       }
     }
   }
-  .top_header_tasksInfo_info{
-    p.heading{
+
+  .top_header_tasksInfo_info {
+    p.heading {
       color: $text-primary-title-color;
       // max-width: 210px;
       // width: 100%;
-      
-    }
-    .task_count{
-
-    }
-    .Date_wrapper{
-
-    }
-    .progres_wrapper{
 
     }
   }

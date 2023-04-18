@@ -1,174 +1,180 @@
 @import "../../../../scss/colors";
 
 .calander_main_wrapper {
-    .fc-media-screen {
-        .fc-header-toolbar {
-            border-bottom: 1px solid $text-error-line-color;
-            padding-bottom: 10px;
-            flex-wrap: wrap;
+  .fc-view-harness {
+    height: 442px !important;
+  }
 
-            .fc-toolbar-chunk {
-                display: flex;
-                align-items: center;
+  .fc-media-screen {
+    .fc-header-toolbar {
+      border-bottom: 1px solid $text-error-line-color;
+      padding-bottom: 10px;
+      flex-wrap: wrap;
 
-                .fc-prev-button,
-                .fc-next-button {
-                    background-color: transparent;
-                    border: none;
-                    padding: 0;
+      .fc-toolbar-chunk {
+        display: flex;
+        align-items: center;
 
-                    .fc-icon-chevron-left,
-                    .fc-icon-chevron-right {
-                        color: $text-secondary-body-color;
-                    }
-                }
-                .fc-prev-button{
-                    margin-right: 25px;
-                }
+        .fc-prev-button,
+        .fc-next-button {
+          background-color: transparent;
+          border: none;
+          padding: 0;
 
-                .fc .fc-button-primary:focus {
-                    box-shadow: none;
-                }
-
-                .fc-toolbar-title {
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 24px;
-                    color: $text-primary-title-color;
-                    position: relative;
-
-                    &::before {
-                        position: absolute;
-                        content: '';
-                        background-image: url('../../../../assets/images/calender-icon.png');
-                        height: 24px;
-                        width: 24px;
-                        left: -30px;
-                        top: 0;
-                    }
-                }
-            }
-
+          .fc-icon-chevron-left,
+          .fc-icon-chevron-right {
+            color: $text-secondary-body-color;
+          }
         }
-    }
 
-    .fc .fc-myCustomButton-button {
-        background-color: $teriary-bg-color;
-        border: unset;
-        min-width: 200px;
-        position: relative;
-        &::before {
+        .fc-prev-button {
+          margin-right: 25px;
+        }
+
+        .fc .fc-button-primary:focus {
+          box-shadow: none;
+        }
+
+        .fc-toolbar-title {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: $text-primary-title-color;
+          position: relative;
+
+          &::before {
             position: absolute;
             content: '';
-            background-image: url('../../../../assets/images/leaves/CalendarRemoveWhiteIcon.svg');
+            background-image: url('../../../../assets/images/timesheet/calender-icon.png');
             height: 24px;
             width: 24px;
-            left: 10px;
-            top: 5px;
+            left: -30px;
+            top: 0;
+          }
         }
+      }
 
-        &:hover {
-            background-color: $teriary-bg-color;
-        }
+    }
+  }
 
-        &:focus {
-            box-shadow: none !important;
-        }
+  .fc .fc-myCustomButton-button {
+    background-color: $teriary-bg-color;
+    border: unset;
+    min-width: 200px;
+    position: relative;
 
-        &:not(:disabled) {
-            &:active {
-                background-color: $teriary-bg-color;
-            }
+    &::before {
+      position: absolute;
+      content: '';
+      background-image: url('../../../../assets/images/leaves/CalendarRemoveWhiteIcon.svg');
+      height: 24px;
+      width: 24px;
+      left: 10px;
+      top: 5px;
+    }
 
-        }
+    &:hover {
+      background-color: $teriary-bg-color;
+    }
+
+    &:focus {
+      box-shadow: none !important;
+    }
+
+    &:not(:disabled) {
+      &:active {
+        background-color: $teriary-bg-color;
+      }
 
     }
 
-    .fc .fc-daygrid-day-frame {
-        background-color: rgba(230, 244, 249, 0.25);
-        border-radius: 6px;
+  }
 
-        .fc-daygrid-day-top {
-            justify-content: start;
+  .fc .fc-daygrid-day-frame {
+    background-color: rgba(230, 244, 249, 0.25);
+    border-radius: 6px;
 
-            a {
-                color: $text-secondary-body-color;
-            }
-        }
+    .fc-daygrid-day-top {
+      justify-content: start;
 
+      a {
+        color: $text-secondary-body-color;
+      }
     }
 
+  }
 
-    .fc .fc-daygrid-day.fc-day-today {
-        background-color: unset;
-    }
 
-    .fc-theme-standard td,
-    .fc-theme-standard th {
-        border: none;
-    }
+  .fc .fc-daygrid-day.fc-day-today {
+    background-color: unset;
+  }
 
-    .fc-theme-standard td {
-        padding: 10px;
-    }
+  .fc-theme-standard td,
+  .fc-theme-standard th {
+    border: none;
+  }
 
-    .fc-theme-standard .fc-scrollgrid {
-        border: none;
-    }
+  .fc-theme-standard td {
+    padding: 10px;
+  }
 
-    .fc-col-header-cell-cushion {
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 28px;
-        color: $text-teriary-label-color;
-    }
+  .fc-theme-standard .fc-scrollgrid {
+    border: none;
+  }
 
+  .fc-col-header-cell-cushion {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-teriary-label-color;
+  }
+
+  .fc-scrollgrid-sync-inner {
+    text-align: left;
+    padding: 0 15px;
+  }
+
+  // .fc-col-header-cell.fc-day.fc-day-sun {
+  //     text-align: left;
+  // }
+  // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.sick {
+  //     background-color: red;
+  // }
+  // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.casual {
+  //     background-color: green;
+  // }
+
+  .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: 3rem;
+  }
+
+  .fc-h-event {
+    background: none;
+    border: none;
+    color: none;
+  }
+
+
+  @media screen and (max-width: 575px) {
     .fc-scrollgrid-sync-inner {
-        text-align: left;
-        padding: 0 15px;
+      padding: 0 0px;
     }
 
-    // .fc-col-header-cell.fc-day.fc-day-sun {
-    //     text-align: left;
-    // }
-    // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.sick {
-    //     background-color: red;
-    // }
-    // .fc-daygrid-day-frame.fc-scrollgrid-sync-inner.casual {
-    //     background-color: green;
-    // }
-
-    .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-        min-height: 3rem;
-    }
-
-    .fc-h-event {
-        background: none;
-        border: none;
-        color: none;
-    }
-
-
-    @media screen and (max-width: 575px) {
-        .fc-scrollgrid-sync-inner {
-            padding: 0 0px;
-        }
-
-    }
+  }
 
 }
 
 .drawar_main_calendar {
-    .ant-drawer-wrapper-body {
-        .ant-drawer-header {
-            padding: 0px;
-        }
+  .ant-drawer-wrapper-body {
+    .ant-drawer-header {
+      padding: 0px;
     }
+  }
 
-    .ant-drawer-body {
-        padding: 30px 20px;
+  .ant-drawer-body {
+    padding: 30px 20px;
 
 
-    }
+  }
 
 }

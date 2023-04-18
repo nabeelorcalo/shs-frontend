@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
 import { Dropdown, Space } from 'antd';
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';

@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps, RadioChangeEvent } from 'antd'
+import type { RadioChangeEvent } from 'antd'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
+import { listingsState } from "../../store";
+import { useRecoilValue} from "recoil";
+import dayjs from 'dayjs'
+import showNotification from '../../helpers/showNotification'
+import constants from '../../config/constants'
+
 import {
   IconAddListings,
   IconAngleDown,
@@ -38,13 +44,17 @@ import "./style.scss";
 
 interface DataType {
   key: React.Key;
+  id: number;
   nameAddress: string;
   propertyType: string;
-  bedroom: string;
+  totalBedrooms: number;
   verificationStatus: string;
-  rent: string;
+  monthlyRent: number;
   availability: any;
   publicationStatus: string;
+  availabilityStart: any;
+  availabilityEnd: any;
+
 }
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -56,106 +66,56 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '2',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '1',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '3',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'pending'
-  },
-  {
-    key: '4',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'pending'
-  },
-  {
-    key: '5',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '6',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '7',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '8',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '9',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'published'
-  },
-];
+const listingInitValues = {
+  addressOne: "Assd",
+  addressTwo: "",
+  postalCode: "",
+  IsFurnished: "",
+  propertyType: "",
+  totalBedrooms: "",
+  bedroomsForRent: "",
+  totalBathrooms: "",
+  hasAirConditioning: "",
+  hasHeating: "",
+  hasWaterHeating: "",
+  buildingHas: [],
+  PropertyHas: [],
+  propertySize: "",
+  bedroomPhotos: [],
+  bedType: "",
+  allowedTwoPeople: "",
+  kindOfAmenities: [],
+  paymentMethod: "",
+  securityDeposit: "",
+  kindOfDeposit: "",
+  minimumStay: "",
+  allBillsIncluded: "",
+  chargeElectricityBill: "",
+  chargeWaterBill: "",
+  chargeGasBill: "",
+  specificGender: "",
+  maxAge: "",
+  tenantsKind: "",
+  couplesAllowed: "",
+  tenantsRegisterAddress: "",
+  allowedPets: "",
+  allowedMusic: "",
+  identityProof: false,
+  occupationProof: false,
+  incomeProof: false,
+  contractType: "",
+  cancellationPolicy: "",
+  selectDocument: []
+}
 
 
 
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {listingsData, createListing} = useListingsHook()
+  const {getListings, createListing} = useListingsHook()
+  const allProperties = useRecoilValue(listingsState)
+  const [loadingAllProperties, setLoadingAllProperties] = useState(false)
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
@@ -167,61 +127,12 @@ const Listings = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [initValues, setInitValues] = useState({
-    "address": "",
-    "address2": "",
-    "postcode": "",
-    "isFurnished": "",
-    "propertyType": "",
-    "bedroomsTotal": "",
-    "bedroomsForRent": "",
-    "bathrooms": "",
-    "airConditioning": "",
-    "heating": "",
-    "heatedWaterSystem": "",
-    "buildingHas": [],
-    "PropertyHas": [],
-    "bedroomPhotos": [],
-    "bedType": "",
-    "allowedTwoPeople": "",
-    "kindOfAmenities": [],
-    "paymentMethod": "",
-    "securityDeposit": "",
-    "kindOfDeposit": "",
-    "minimumStay": "",
-    "allBillsIncluded": "",
-    "chargeElectricityBill": "",
-    "chargeWaterBill": "",
-    "chargeGasBill": "",
-    "specificGender": "",
-    "maxAge": "",
-    "tenantsKind": "",
-    "couplesAllowed": "",
-    "tenantsRegisterAddress": "",
-    "allowedPets": "",
-    "allowedMusic": "",
-    "identityProof": false,
-    "occupationProof": false,
-    "incomeProof": false,
-    "contractType": "",
-    "cancellationPolicy": "",
-    "selectDocument": []
-  })
-  const items: MenuProps['items'] = [
-    {
-      label: 'Edit',
-      key: 'listingEdit',
-    },
-    {
-      label: 'Remove',
-      key: 'listingRemove',
-    },
-  ];
+  const [listingValues, setListingValues] = useState(listingInitValues)
 
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
-      dataIndex: 'nameAddress',
+      dataIndex: 'addressOne',
     },
     {
       title: 'Property Type',
@@ -230,7 +141,7 @@ const Listings = () => {
         return (
           <>
             <div>{row.propertyType}</div>
-            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.bedroom} {Number(row.bedroom) > 1 ? "Bedrooms" : "Bedroom"}</div>
+            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.totalBedrooms} {row.totalBedrooms > 1 ? "Bedrooms" : "Bedroom"}</div>
           </>
         );
       },
@@ -249,11 +160,16 @@ const Listings = () => {
     },
     {
       title: 'Rent',
-      dataIndex: 'rent',
+      dataIndex: 'monthlyRent',
     },
     {
       title: 'Availability',
       dataIndex: 'availability',
+      render: (_, row, index) => {
+        return (
+          <>{dayjs(row.availabilityStart).format('DD/MM/YYYY')} - {dayjs(row.availabilityEnd).format('DD/MM/YYYY')}</>
+        );
+      },
     },
     {
       title: 'Publication Status',
@@ -273,7 +189,15 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({ key }) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
+          <Dropdown
+            overlayClassName="shs-dropdown"
+            trigger={['click']} 
+            placement="bottomRight"
+            menu={{ items: [
+              {label: 'Edit', key: 'listingEdit', onClick: () => navigate(`/edit-listing/${row.id}`)},
+              {label: 'Remove', key: 'listingRemove', onClick: () => console.log('listingRemove')}
+            ]}}
+          >
             <div className="dropdown-button">
               <IconMore />
             </div>
@@ -287,28 +211,47 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    
+    getListings(setLoadingAllProperties)
   }, [])
 
-  
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleSubmission = useCallback(
+    (result:any) => {
+      if (result.error) {
+        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+      } else {
+        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+        setListingValues(listingInitValues)
+      }
+    },
+    [form]
+  );
+
+  const submitAddListing = useCallback(async () => {
+    let values;
+    try {
+      values = await form.validateFields();
+    } catch (errorInfo) {
+      return;
+    }
+    // setAddListingLoading(true);
+    const result = await createListing(listingValues);
+    // setAddListingLoading(false);
+    handleSubmission(JSON.stringify(result));
+  }, [form, handleSubmission]);
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function handleActionItem(key: any, id: any) {
-    if (key === 'listingEdit') {
-      navigate(`/edit-listing/${id}`)
-    }
-    if (key === 'listingRemove') {
-      console.log('listingRemove')
-    }
-  }
-
   function openModalAddListing() {
     setModalAddListingOpen(true)
   }
 
   function closeModalAddListing() {
-    setModalAddListingOpen(false)
+    setListingValues(listingInitValues);
+    setModalAddListingOpen(false);
   }
 
   function onChangeRadioProperty(e: RadioChangeEvent) {
@@ -334,10 +277,6 @@ const Listings = () => {
   };
 
 
-  const submitAddListing = (values: any) => {
-    console.log('Add Listing:::', values);
-  }
-
 
   /* ADD LISTING STEPS
   -------------------------------------------------------------------------------------*/
@@ -351,17 +290,17 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="address" label="Address">
+            <Form.Item name="addressOne" label="Address">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="address2" label="Address  Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
+            <Form.Item name="addressTwo" label="Address  Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="postcode" label="Postcode">
+            <Form.Item name="postalCode" label="Postcode">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
@@ -423,7 +362,7 @@ const Listings = () => {
               <Col xs={24}>
                 <Row gutter={30}>
                   <Col xs={8}>
-                    <Form.Item name="bedroomsTotal" label="Bedrooms in total">
+                    <Form.Item name="totalBedrooms" label="Bedrooms in total">
                       <InputNumber min={1} max={10} />
                     </Form.Item>
                   </Col>
@@ -434,7 +373,7 @@ const Listings = () => {
 
                   </Col>
                   <Col xs={8}>
-                    <Form.Item name="bathrooms" label="Bathrooms">
+                    <Form.Item name="totalBathrooms" label="Bathrooms">
                       <InputNumber min={1} max={10} />
                     </Form.Item>
                   </Col>
@@ -444,7 +383,7 @@ const Listings = () => {
           }
 
           <Col xs={24}>
-            <Form.Item name="airConditioning" label="Does it have air conditioning?">
+            <Form.Item name="hasAirConditioning" label="Does it have air conditioning?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="notAvailable">Not available</Select.Option>
                 <Select.Option value="central">Central</Select.Option>
@@ -453,7 +392,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="heating" label="Heating">
+            <Form.Item name="hasHeating" label="Heating">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatingNotAvailable">Not available</Select.Option>
                 <Select.Option value="centralProperty">Central Property</Select.Option>
@@ -462,7 +401,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="heatedWaterSystem" label="Does it have heated water system?">
+            <Form.Item name="hasWaterHeating" label="Does it have heated water system?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatedWaterSystemNo">No</Select.Option>
                 <Select.Option value="naturalGas">Natural gas</Select.Option>
@@ -524,7 +463,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="properySize" label="Property Size(optional)">
+            <Form.Item name="propertySize" label="Property Size(optional)">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
@@ -543,7 +482,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${initValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${listingValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -557,7 +496,7 @@ const Listings = () => {
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
-                    {initValues.bedroomPhotos?.length ? (
+                    {listingValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
                         <IconAddUpload />
                         <div className="label">Upload from device</div>
@@ -569,7 +508,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {initValues.bedroomPhotos?.length === 0 &&
+                {listingValues.bedroomPhotos?.length === 0 &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -983,7 +922,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${initValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${listingValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -997,7 +936,7 @@ const Listings = () => {
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
-                    {initValues.bedroomPhotos?.length ? (
+                    {listingValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
                         <IconAddUpload />
                         <div className="label">Upload from device</div>
@@ -1009,7 +948,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {initValues.bedroomPhotos?.length === 0 &&
+                {listingValues.bedroomPhotos?.length === 0 &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -1164,8 +1103,9 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
+                    loading={loadingAllProperties}
                     columns={tableColumns}
-                    dataSource={tableData}
+                    dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
                   />
                 </div>
@@ -1192,10 +1132,15 @@ const Listings = () => {
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
-          initialValues={initValues}
+          initialValues={listingValues}
           onValuesChange={(_, values) => {
-            setInitValues(prevState => ({ ...prevState, ...values }))
-            console.log('init:: ', initValues)
+            let tempValues = {}
+            tempValues = {
+              ...tempValues,
+              ...values
+            }
+            setListingValues(prevState => ({ ...prevState, ...tempValues }))
+            console.log('init:: ', listingValues)
           }}
           onFinish={submitAddListing}
         >
@@ -1227,7 +1172,7 @@ const Listings = () => {
                 <Button className="button-tertiary" onClick={next}>Next</Button>
               }
               {current === 6 &&
-                <Button className="button-tertiary">Publish</Button>
+                <Button htmlType="submit" className="button-tertiary">Publish</Button>
               }
             </Space>
           </div>

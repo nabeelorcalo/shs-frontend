@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Typography } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { BoxWrapper } from '../../../components/BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 const { Text } = Typography;
 import './style.scss';
 import {
