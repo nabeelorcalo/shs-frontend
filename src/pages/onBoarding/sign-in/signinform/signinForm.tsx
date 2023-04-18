@@ -5,6 +5,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessa
 import useCustomHook from "../actionHandler";
 import { PopUpModal } from "../../../../components";
 import SelectUserType from "../../userType";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const SigninForm = (props: any) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +32,7 @@ const SigninForm = (props: any) => {
       })
       .then((data) => {
         console.log("data", data); //for debugging purpose
-        data.accessToken && navigate("/dashboard");
+        data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
       .catch((err) => console.log(err));
   };
