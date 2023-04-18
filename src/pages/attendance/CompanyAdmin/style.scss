@@ -12,6 +12,10 @@
     }
   }
 
+  .top-performance-list {
+    height: 643px;
+  }
+
   .attendance-card {
     border-radius: 16px;
     box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1) !important;
@@ -39,7 +43,8 @@
   }
 
 
-  .attendance-overview,.attendance-department {
+  .attendance-overview,
+  .attendance-department {
     height: 311px;
   }
 

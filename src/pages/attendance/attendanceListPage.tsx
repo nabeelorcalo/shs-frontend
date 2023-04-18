@@ -210,7 +210,13 @@ const Detail = () => {
   };
 
   const onResetFilterClick = () => {
-    alert("Reset Filter");
+    // alert("Reset Filter");
+    setState((prevState) => ({
+      ...prevState,
+      departmentVal: '',
+      status:'',
+      timeFrameVal:''
+    }));
   };
 
   const togglerClick = (event: any) => {
