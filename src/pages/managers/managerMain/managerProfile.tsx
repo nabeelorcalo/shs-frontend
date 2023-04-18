@@ -10,7 +10,7 @@ import {
   Select,
   Typography,
 } from "antd";
-import  {IconEmail , IconPhone ,IconLocation,Pf } from  "../../../assets/images/"
+import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
 import { DropDown } from "../../../components";
 import { Option } from "antd/es/mentions";
 
@@ -77,7 +77,7 @@ const ManagerProfile = () => {
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
           <div className=" pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              <Pf/>
+              <Pf />
               <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
                 {commonObj.personName}
               </Typography>
@@ -91,13 +91,13 @@ const ManagerProfile = () => {
             <Divider />
             <div className="social-info">
               <div className="social-icon flex  items-center mt-3 ml-7">
-                <IconEmail/>
+                <IconEmail />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
-                <IconPhone/>
+                <IconPhone />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.phone}
                 </Typography>
@@ -243,12 +243,14 @@ const ManagerProfile = () => {
                 </Col>
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button className="border-1 border-solid border-[#4a9d77] text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
+                <Button className="border-1 border-solid border-[#4a9d77] 
+                text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel
                 </Button>
                 <Button
                   htmlType="submit"
-                  className="teriary-bg-color  white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+                  className="teriary-bg-color  white-color border-1 border-solid 
+                  border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
                 >
                   <a href="managers">Submit</a>
                 </Button>

@@ -71,9 +71,11 @@ const ManagerMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
-            <Button className="teriary-bg-color white-color flex items-center" onClick={() => {
+            <Button className="teriary-bg-color white-color flex items-center"
+              onClick={() => {
               navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
-            }}>
+              }}
+            >
                <span className="flex items-center gap-3"><User/> New Manager</span> 
             </Button>
             <FiltersButton label='Filter' onClick={()=>setOpenDrawer(true)}/> 
