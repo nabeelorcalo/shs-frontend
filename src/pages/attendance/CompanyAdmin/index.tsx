@@ -171,7 +171,7 @@ const CompanyAdminAttendance = () => {
                 columnStyle={{ radius: [5, 5, 0, 0] }}
                 columnWidthRatio={.5}
                 children={
-                  <div className="ml-auto">
+                  <div className="ml-auto w-40">
                     <DropDown
                       name="Select"
                       options={months}

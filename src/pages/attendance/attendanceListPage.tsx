@@ -253,7 +253,7 @@ const Detail = () => {
         }
       />
       <div className="flex attendance-main-header">
-        <div className="w-[28%] search-bar" >
+        <div className="w-[25%] search-bar" >
           <SearchBar
             handleChange={() => { }}
             icon={<GlassMagnifier />}
