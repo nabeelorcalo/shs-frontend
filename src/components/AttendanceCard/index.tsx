@@ -12,7 +12,7 @@ export const AttendanceCard: any = (props: AttendanceProps) => {
   const { title, count, avatar, className } = props
 
   return (
-    <BoxWrapper className='flex items-center gap-2 attendance-card'>
+    <BoxWrapper className='flex items-center gap-4 attendance-card'>
       {avatar}
 
       <Typography.Text >

@@ -210,7 +210,13 @@ const Detail = () => {
   };
 
   const onResetFilterClick = () => {
-    alert("Reset Filter");
+    // alert("Reset Filter");
+    setState((prevState) => ({
+      ...prevState,
+      departmentVal: '',
+      status:'',
+      timeFrameVal:''
+    }));
   };
 
   const togglerClick = (event: any) => {
@@ -253,7 +259,7 @@ const Detail = () => {
         }
       />
       <div className="flex attendance-main-header">
-        <div className="w-[28%] search-bar" >
+        <div className="w-[25%] search-bar" >
           <SearchBar
             handleChange={() => { }}
             icon={<GlassMagnifier />}

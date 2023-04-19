@@ -1,9 +1,6 @@
-import React from 'react';
 import { Col, Row, Typography } from 'antd';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { BoxWrapper } from '../../../components';
-const { Text } = Typography;
-import './style.scss';
 import {
   AllGrievances,
   Clock24h,
@@ -20,7 +17,9 @@ import {
 import {Button, PageHeader, RegisterMemberAndFeddbackGraph}from '../../../components';
 import { GrievanceStats } from '../../../components/ChartsOfGraphs/grievanceStats/grievanceStats';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
+import './style.scss';
 
+const { Text } = Typography;
 const Grievance = () => {
   const navigate = useNavigate()
   let overview = [
@@ -69,7 +68,7 @@ const Grievance = () => {
         </div>
       </PageHeader>
       </div>
-      <Row gutter={[10, 10]} className="mt-5">
+      <Row gutter={[20, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} md={12} xxl={6} >
@@ -88,7 +87,7 @@ const Grievance = () => {
           );
         })}
       </Row>
-      <Row gutter={[10, 10]} className="mt-5">
+      <Row gutter={[20, 20]} className="mt-5">
         <Col className="gutter-row flex py-2" xs={24} md={24} xl={12} >
           <BoxWrapper className="grievances-box-wrapper w-full">
             <div className="flex xs:flex-col sm:flex-row justify-between gap-2 p-1">
@@ -150,7 +149,7 @@ const Grievance = () => {
           </div>
         </Col>
       </Row>
-      <Row gutter={[10, 10]} className="mt-5">
+      <Row gutter={[20, 20]} className="mt-5">
         <Col xs={24} md={24} lg={12}>
           <BoxWrapper>
             <div className='flex justify-between'>

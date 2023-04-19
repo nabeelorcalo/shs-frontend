@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Form, Select, } from "antd";
+import { useState } from 'react'
+import { Form } from "antd";
 import { Button, DropDown } from '../../../components';
 const FilterDrawerForm = (props: any) => {
-  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit } = props;
+  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit ,setOpenDrawer} = props;
 
   const [filterValu, setFilterValue] = useState({ leaveType: "Select", timeFrame: "Select", status: "Select" });
   // console.log(value);
@@ -29,17 +29,6 @@ const FilterDrawerForm = (props: any) => {
               options={['Pending ', 'Declined', 'Approved']}
               setValue={(e: string) => setFilterValue({ ...filterValu, leaveType: e })}
             />
-            {/* <Select
-              defaultValue="sick"
-              onChange={handleChange}
-              size="large"
-              options={[
-                { value: 'sick', label: 'Sick' },
-                { value: 'casual', label: 'Casual' },
-                { value: 'work from home', label: 'Work From Home' },
-                { value: 'medicale', label: 'Medicale' },
-              ]}
-            /> */}
           </Form.Item>
 
           <Form.Item
@@ -73,13 +62,13 @@ const FilterDrawerForm = (props: any) => {
         <Button
           label="Reset"
           htmlType="button"
-          onClick={() => { alert("hello Reset") }}
+          onClick={() => { setOpenDrawer(false) }}
           className="Reset_btn flex items-center justify-center   mr-5"
         />
         <Button
           label="Apply"
           htmlType="submit"
-          onClick={() => { alert("hello Applay") }}
+          onClick={() => { setOpenDrawer(false) }}
           className="Apply_btn flex items-center justify-center "
         />
       </div>

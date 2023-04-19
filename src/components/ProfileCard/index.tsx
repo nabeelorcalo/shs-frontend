@@ -69,7 +69,7 @@ export const ProfileCard: any = (props: ProfileProps) => {
 
       <Link
         to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-        className="profile-btn"
+        className="profile-btn font-medium"
       >
         View Profile
       </Link>
