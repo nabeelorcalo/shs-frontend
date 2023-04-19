@@ -2,7 +2,7 @@ import { useState } from "react";
 import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, CommonDatePicker } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, More, TableViewIcon } from "../../../assets/images"
-import { MenuProps } from 'antd';
+import { MenuProps, Row, Col } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "../actionHandler";
 import "./style.scss";
