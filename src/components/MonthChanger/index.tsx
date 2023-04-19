@@ -23,8 +23,6 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
   function onChange(dateString: any) {
     setDate(dayjs(dateString).format('ddd, DD MMM YYYY'))
   }
-  const current = new Date();
-  const currentDate = dayjs(current).format('ddd, DD MMM YYYY')
   
   return (
     <div className='flex items-center ml-auto mb-4 month-changer'>
@@ -39,7 +37,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
         />
       }
 
-      <p className='min-w-fit mx-2 text-primary-color'>{date ? date : currentDate}</p>
+      <p className='min-w-fit mx-2 text-primary-color'>{date ? date : month}</p>
 
       <div className='flex flex-row ml-1'>
         <IconButton

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "antd/es/grid";
 import dayjs from "dayjs";
@@ -12,10 +12,10 @@ const CompanyAdminAttendance = () => {
   const [state, setState] = useState({
     graphSelectedMonth: dayjs().format('MMMM'),
     cardsData: [
-      { name: "Interns", count: 211 },
-      { name: "Present", count: 111 },
-      { name: "Leave", count: 48 },
-      { name: "Absent", count: 52 }
+      { id:1,name: "Interns", count: 211 },
+      { id:2,name: "Present", count: 111 },
+      { id:3,name: "Leave", count: 48 },
+      { id:4,name: "Absent", count: 52 }
     ],
     attendanceList: [
       {
@@ -143,7 +143,7 @@ const CompanyAdminAttendance = () => {
         {
           state.cardsData.map((item: any) => {
             return (
-              <Col xxl={6} xl={6} md={12} sm={24} xs={24}>
+              <Col xxl={6} xl={6} md={12} sm={24} xs={24} key={item.id}>
                 <AttendanceCard
                   title={item.name}
                   count={item.count}
@@ -160,7 +160,7 @@ const CompanyAdminAttendance = () => {
                 title="Attendance Overview"
                 graphName="attendance"
                 level={4}
-                styling={{height:'235px'}}
+                styling={{ height: '235px' }}
               />
             </Col>
             <Col xs={24}>

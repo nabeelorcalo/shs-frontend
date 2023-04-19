@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Col,
@@ -7,14 +7,20 @@ import {
   Row,
   Select,
   Typography,
+  Modal
 } from "antd";
-import { BackButton, SHSLogo } from "../../../../../assets/images";
+import { BackButton, IconCloseModal, SHSLogo, Step1, Step2, Step3 } from "../../../../../assets/images";
 import "../../../styles.scss";
 
 const { Option } = Select;
 
 const IdentityVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
@@ -130,14 +136,65 @@ const IdentityVerification = (props: any) => {
                 </Col>
               </Row>
               <div>
-                <Typography className="text-center">
+                <Typography className="text-center cursor-pointer" onClick={showModal}>
                   Why I need to verify myself?
                 </Typography>
               </div>
             </div>
           </div>
         </Col>
+
       </Row>
+      <Modal
+        centered
+        width={700}
+        closeIcon={<IconCloseModal onClick={() => {
+          setIsModalOpen(false)
+        }}
+        />}
+        open={isModalOpen}
+        footer={null}>
+        <div className="verify-modal">
+          <Typography className="top-question">Why I need to verfiy myself?</Typography>
+          <Typography className="question-description">
+            Identity verification ensures that there is a real person behind a process
+            and proves that the one is who he or she claims to be, preventing both a
+            person from carrying out a process on our behalf without authorization,
+            and creating false identities or commit fraud.
+          </Typography>
+          <div>
+            <Typography className="top-question">How it works</Typography>
+            <div className="pb-8">
+              <Row gutter={40}>
+                <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
+                  <center>
+                    <Step1 />
+                    <Typography className="stepnumber pt-2 pb-2">Step 1</Typography>
+                    <Typography className="stepdescription">Take a photo of your identity document</Typography>
+                  </center>
+                </Col>
+                <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
+                  <center>
+                    <Step2 />
+                    <Typography className="stepnumber pt-2 pb-2">Step 2</Typography>
+                    <Typography className="stepdescription">Take a self-portrait  photo
+                      using your phone’s camera or
+                      desktop webcam</Typography>
+                  </center>
+                </Col>
+                <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
+                  <center className="pt-5">
+                    <Step3 />
+                    <Typography className="stepnumber pt-7 pb-2">Step 3</Typography>
+                    <Typography className="stepdescription">Your photos and ID are verified
+                      with our system</Typography>
+                  </center>
+                </Col>
+              </Row>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };
