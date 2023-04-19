@@ -1,10 +1,11 @@
-import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
 import { useState } from "react";
+import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
+import "./style.scss";
 import {
   IconAngleDown, NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
 } from "../../../assets/images";
-import { Alert, BoxWrapper, GlobalTable, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DatePicker, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 
@@ -46,6 +47,8 @@ const tableData = [
     status: "Changes requested",
   },
 ];
+const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
+const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
 
 const ContractsCard = [
   {
@@ -73,6 +76,8 @@ const ContractsCard = [
 const CompanyAdmin = () => {
   const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState(false);
+  const [valueStatus, setValueStatus] = useState("")
+  const [valueDatePacker, setValueDatePacker] = useState("")
 
   const renderDropdown = (status: any) => {
     switch (status) {
@@ -126,7 +131,7 @@ const CompanyAdmin = () => {
       render: (_: any, row: any, index: any) => {
         return (
           <div>
-            <div className="flex gap-2 items-center pb-2">
+            <div className="flex gap-5 items-center pb-2">
               <div>
                 <GreenErrow />
               </div>
@@ -136,7 +141,7 @@ const CompanyAdmin = () => {
               <div>David Miller</div>
             </div>
 
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-5 items-center">
               <div><GreenEye /></div>
               <div>
                 <RedLock />
@@ -154,7 +159,7 @@ const CompanyAdmin = () => {
         return (
           <div>
             <div>12:18 PM</div>
-            <div className="light-grey-color">06/10/2022</div>
+            <div className="light-grey-color text-[14px]">06/10/2022</div>
           </div>
         )
       }
@@ -178,7 +183,7 @@ const CompanyAdmin = () => {
       render: (_: any, row: any, index: any) => {
         return (
           <div
-            className={`shs-status-badge ${row.status === "rejected" || row.status === "Changes requested"
+            className={`contract-company-admin-status-bage ${row.status === "rejected" || row.status === "Changes requested"
               ? "rejected"
               : row.status === "pending"
                 ? "pending"
@@ -263,47 +268,6 @@ const CompanyAdmin = () => {
     </Menu>
   );
 
-  const statusItems: MenuProps["items"] = [
-    {
-      key: "new",
-      label: "New",
-    },
-    {
-      key: "pending",
-      label: "Pending",
-    },
-    {
-      key: "rejected",
-      label: "Rejected",
-    },
-    {
-      key: "signed",
-      label: "Signed",
-    },
-  ];
-
-  const TimeFrameItems: MenuProps["items"] = [
-    {
-      key: "thisWeek",
-      label: "This Week",
-    },
-    {
-      key: "lastWeek",
-      label: "Last Week",
-    },
-    {
-      key: "thisMonth",
-      label: "This Month",
-    },
-    {
-      key: "lastMonth",
-      label: "Last Month",
-    },
-    {
-      key: "dateRange",
-      label: "Date Range",
-    },
-  ];
   return (
     <div className="contract-company-admin">
       <Alert
@@ -315,23 +279,22 @@ const CompanyAdmin = () => {
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
-      <PageHeader title="Contracts" />
+      <PageHeader title="Contracts" bordered={true} />
       <Row gutter={[20, 20]}>
         {
           ContractsCard.map((item) => {
             return (
               <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                <BoxWrapper>
+                <BoxWrapper className="p-10 rounded-[16px]">
                   <div>
                     <div className="flex">
                       {item.img}
                       <div className="flex flex-col items-center pl-4">
-                        <p className=" text-xl font-semibold mt-2">{item.title}</p>
-                        <div className="text-4xl font-medium mt-4">{item.num}</div>
+                        <p className=" text-xl font-semibold mt-2 text-primary-color">{item.title}</p>
+                        <div className="text-[38px] font-medium mt-4">{item.num}</div>
                       </div>
                     </div>
                   </div>
-
                 </BoxWrapper>
               </Col>
             )
@@ -341,30 +304,22 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[0, 20]} >
         <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => { }} />
+          <SearchBar className="w-[375px]" handleChange={() => { }} />
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end contract-right-sec" >
-          <Dropdown
-            menu={{ items: TimeFrameItems }}
-            trigger={["click"]}
-            placement="bottomRight"
-          >
-            <Button className="button-sky-blue main-btn">
-              Time Frame
-              <IconAngleDown />
-            </Button>
-          </Dropdown>
 
-          <Dropdown
-            menu={{ items: statusItems }}
-            trigger={["click"]}
-            placement="bottomRight"
-          >
-            <Button className="button-sky-blue main-btn">
-              Status
-              <IconAngleDown />
-            </Button>
-          </Dropdown>
+          <DropDown name="Time Frame" options={timeFrameDropdownData}
+            showDatePickerOnVal={'Date Range'}
+            requireDatePicker placement="bottom"
+            value={valueDatePacker}
+            setValue={setValueDatePacker}
+          />
+
+          <DropDown name="Status" options={statusDropdownData}
+            placement="bottom"
+            value={valueStatus}
+            setValue={setValueStatus}
+          />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
@@ -375,5 +330,4 @@ const CompanyAdmin = () => {
     </div>
   );
 };
-
 export default CompanyAdmin;

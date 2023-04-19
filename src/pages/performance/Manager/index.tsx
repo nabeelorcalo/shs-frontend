@@ -92,7 +92,7 @@ const ManagerPerformance = () => {
       },
     },
     {
-      title: 'Action',
+      title: 'Actions',
       key: 'action',
       render: (_: any, data: any) => (
         <Space size="middle">
@@ -102,10 +102,7 @@ const ManagerPerformance = () => {
             placement="bottomRight"
             overlayClassName='menus_dropdown_main'
           >
-            <MoreIcon
-              className="cursor-pointer"
-            // onClick={() => setActionType({ ...actionType, id: data.key })}
-            />
+            <MoreIcon className="cursor-pointer" />
           </Dropdown>
         </Space>
       ),
@@ -246,7 +243,6 @@ const ManagerPerformance = () => {
       <div className="flex performance-header">
         <div className="w-[30%] performance-search-bar">
           <SearchBar
-            className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"

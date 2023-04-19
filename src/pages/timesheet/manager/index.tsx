@@ -115,7 +115,7 @@ const Manager = () => {
               value={date}
               setValue={setDate}
               options={['this week', 'last week', 'this month', 'last month', 'date range']}
-              requireDatePicker
+              requireRangePicker
               showDatePickerOnVal={'date range'}
             />
             <DropDown

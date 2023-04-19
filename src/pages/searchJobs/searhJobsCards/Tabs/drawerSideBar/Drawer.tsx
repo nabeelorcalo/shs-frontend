@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Drawer, Slider, Input, Button, Row, Col } from "antd";
+import {
+  Drawer,
+  Slider,
+  InputNumber,
+  Progress,
+  Input,
+  Button,
+  Row,
+  Col,
+} from "antd";
 import {
   CrossIcon,
   Home2,
@@ -11,7 +20,7 @@ import {
 } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
 import "./Styles.scss";
-import { DropDown } from "../../../../../components";
+import { DrawerWidth, DropDown, SearchBar } from "../../../../../components";
 
 const transportData = [
   {
@@ -37,12 +46,14 @@ const DrawerBar = (props: any) => {
   const [workType, setWorkType] = useState("");
   const [selectedWorkType, setSelectedWorkType] = useState([]);
   const formatter = (value: any) => `${value}%`;
-
+  const mainDrawerWidth = DrawerWidth();
   return (
     <div className="drawer=-wrapper">
       <Row>
         <Col sm={8} xs={24}>
           <Drawer
+            className="white-bg-color"
+            width={mainDrawerWidth > 1400 ? 380 : 300}
             closable={false}
             placement="right"
             onClose={() => setDrawer(false)}
@@ -64,7 +75,7 @@ const DrawerBar = (props: any) => {
             </label>
             <div className=" my-5 flex justify-between ">
               <Home2 className="-my-1 mr-2" />
-              <Slider className="w-full" tooltip={{ formatter }} />
+              <Slider className="w-full" defaultValue={0} step={15} />
               <ProgressIcon className="-my-1 ml-2" />
             </div>
 
@@ -75,7 +86,7 @@ const DrawerBar = (props: any) => {
               {transportData.map((data: any) => (
                 <div
                   className={`transort ${
-                    data.id === selectedTransport ? "focus" : ""
+                    data.id === selectedTransport ? "transport-focus" : ""
                   }`}
                   onClick={() =>
                     setSelectedTransport(selectedTransport ? "" : data.id)
@@ -93,7 +104,7 @@ const DrawerBar = (props: any) => {
               <DropDown
                 name="drop down with checkbox"
                 value={workType}
-                options={["item 1", "item 2", "item 3"]}
+                options={["All", "On-Site", "Hybrid", "Virtual"]}
                 setValue={setWorkType}
                 requireCheckbox
                 selectedList={selectedWorkType}
@@ -105,13 +116,14 @@ const DrawerBar = (props: any) => {
               Duration
             </label>
             <div className="my-5">
-              <Input
-                placeholder="Enter months"
-                className="input-field-wrapper"
-                type="number"
-              />
+              {/* <InputField
+                placeholder={"Enter Months"}
+                className="input-filed my-3"
+                Type={"number"} */}
+              {/* /> */}
+              <InputNumber className="w-full input-number" />
             </div>
-            <div className="text-end buttons-wrapper">
+            <div className="flex justify-end buttons-wrapper">
               <Button className="Reset-button mx-3">Reset</Button>
               <Button className="Apply-button">Apply</Button>
             </div>

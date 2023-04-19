@@ -64,6 +64,10 @@
         }
       }
 
+      .fc-toolbar-chunk:nth-child(2) {
+        display: none;
+      }
+
       .fc-toolbar-chunk:nth-child(3) {
         height: 48px;
         display: flex;
@@ -262,6 +266,53 @@
         border: 1px solid $text-error-line-color !important;
         height: 74px !important;
       }
+    }
+  }
+
+  @media screen and (max-width:'332px') {
+    .fc-header-toolbar {
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .fc-toolbar-chunk:nth-child(1) {
+        flex-wrap: wrap;
+
+        .fc-toolbar-title {
+          width: 100% !important;
+        }
+
+        .fc-prev-button,
+        .fc-next-button {
+          margin-top: 20px !important;
+        }
+      }
+
+      .fc-toolbar-chunk:nth-child(3) {
+        width: 100%;
+        gap: 10px !important;
+        margin-top: 0px !important;
+
+        .fc-myCustomBtn-button {
+          width: 100% !important;
+          margin: 0px !important;
+        }
+      }
+    }
+
+    .fc-view-harness.fc-view-harness-active {
+      margin-top: 30px;
+    }
+  }
+
+  @media screen and (min-width:'768px') and (max-width:'862px') {
+    .fc-toolbar-chunk:nth-child(1) {
+      margin-bottom: 20px;
+    }
+  }
+  
+  @media screen and (max-width:'612px'){
+    .fc-toolbar-chunk:nth-child(3){
+      margin-top: 20px;
     }
   }
 }
