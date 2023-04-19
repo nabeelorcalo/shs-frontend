@@ -20,10 +20,10 @@ const Video = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton onClick={() => { setCurrentStep(6) }}/>
                 </div>
                 <div className="mx-auto">
-                  <Typography.Title level={1}>Video</Typography.Title>
+                  <Typography className="main-heading-verify">Video</Typography>
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ const Video = (props: any) => {
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
-                       <Round/>
+                       <Round style={{position:"absolute", left:"13px", top:'14px'}}/>
                       </div>
                     </div>
                   </div>

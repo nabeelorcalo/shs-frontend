@@ -63,6 +63,7 @@ const Video = (props: any) => {
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
+                        
                         <Round />
                       </div>
                     </div>

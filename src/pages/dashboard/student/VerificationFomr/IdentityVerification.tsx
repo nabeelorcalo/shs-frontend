@@ -22,9 +22,9 @@ const IdentityVerification = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex items-center mt-3 mb-3">
                 <div className="mx-auto">
-                  <Typography.Title level={1}>
+                  <Typography className="main-heading-verify">
                     Identity Verification
-                  </Typography.Title>
+                  </Typography>
                 </div>
               </div>
 
@@ -90,7 +90,10 @@ const IdentityVerification = (props: any) => {
               <Col xs={24}>
                 <Row gutter={[20, 20]}>
                   <Col xs={24} md={24} lg={12} xl={8}>
-                    <Button className="btn-cancel btn-cancel-verification">
+                    <Button className="btn-cancel btn-cancel-verification"
+                     onClick={() => { setCurrentStep(2) }}
+              
+                    >
                       Skip
                     </Button>
                   </Col>

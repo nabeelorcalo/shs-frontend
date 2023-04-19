@@ -25,12 +25,12 @@ const DbsVerification = (props: any) => {
          
               <div className="flex">
                 <div>
-                  <BackButton />
+                  <BackButton onClick={() => {  setCurrentStep(1)  }} />
                 </div>
                 <div className="mx-auto">
-                  <Typography.Title level={1}>
+                  <Typography className="main-heading-verify">
                     DBS Verification
-                  </Typography.Title>
+                  </Typography>
                 </div>
               </div>
 
@@ -63,7 +63,7 @@ const DbsVerification = (props: any) => {
               </Typography>
               <Row gutter={[10,10]}>
                 <Col xs={24} md={24} lg={12} xl={8}>
-                  <Button  className="btn-cancel btn-cancel-verification" >
+                  <Button  className="btn-cancel btn-cancel-verification"  onClick={() => {  setCurrentStep(3)  }}>
                     Skip
                   </Button>
                 </Col>

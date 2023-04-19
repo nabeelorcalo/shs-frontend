@@ -17,10 +17,12 @@ const Address = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex">
                 <div>
-                  <BackButton />
+                  <BackButton   onClick={() => {
+                        setCurrentStep(4);
+                      }} />
                 </div>
                 <div className="mx-auto">
-                  <Typography.Title level={1}>Address</Typography.Title>
+                  <Typography className="main-heading-verify">Address</Typography>
                 </div>
               </div>
               <Typography className="steps-description">
@@ -152,7 +154,11 @@ const Address = (props: any) => {
               </Form.Item>
               <Row gutter={[10, 10]}>
                 <Col xs={24} md={24} lg={12} xl={8}>
-                  <Button className="btn-cancel btn-cancel-verification" >
+                  <Button className="btn-cancel btn-cancel-verification"
+                    onClick={() => {
+                      setCurrentStep(6);
+                    }}
+                  >
                     Skip
                   </Button>
                 </Col>
