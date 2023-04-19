@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
 import { Dropdown, Space } from 'antd';
-import { BoxWrapper } from '../../../components';
+import { BoxWrapper, Notifications } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';
@@ -245,17 +245,16 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => (
         <Space size="middle">
           <Dropdown
-            // open={visibale}
             dropdownRender={() => {
               return <BoxWrapper className=" action_dropDown">
 
                 {data.status === "Pending" &&
                   <>
-                    <p onClick={() => alert("Approve Function Goes Here")}
+                    <p onClick={()=>{{Notifications({title:'Approved',description:'Approved successfully',type:'success'})}}}
                       className=" cursor-pointer">
                       Approve
                     </p>
-                    <p onClick={() => alert("Decline Function Goes Here ")}
+                    <p onClick={() => {Notifications({title:'Declined',description:'Declined sucessfully',type:'success'})}}
                       className="cursor-pointer my-4">
                       Decline
                     </p>
@@ -269,7 +268,6 @@ const LeaveHistoryTable = (props: any) => {
             trigger={['click']}
             overlayClassName='menus_dropdown_main'
             placement="bottomRight"
-          // onOpenChange={setVisibale}
           >
             <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
           </Dropdown >

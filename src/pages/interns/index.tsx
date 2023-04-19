@@ -47,7 +47,7 @@ const PopOver = () => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -228,7 +228,7 @@ const Interns = () => {
         <div className="pt-3">
           {
             // className="flex flex-row flex-wrap gap-6"
-            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+            !listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
                 newTableData.map((items: any, idx: any) => {
                   return (

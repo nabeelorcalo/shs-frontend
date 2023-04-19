@@ -1,20 +1,11 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Layout,
-  Input,
-  Dropdown,
-  Avatar,
-  Drawer,
-  List,
-  MenuProps,
-  Typography,
-} from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
-import constants from "../../../config/constants";
+import constants, {ROUTES_CONSTANTS} from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
+import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilValue } from "recoil";
 import "./style.scss";
 import {
@@ -29,6 +20,16 @@ import {
   IconProfile,
   IconCross,
 } from "../../../assets/images";
+import {
+  Layout,
+  Input,
+  Dropdown,
+  Avatar,
+  Drawer,
+  List,
+  MenuProps,
+  Typography,
+} from "antd";
 const { Search } = Input;
 const { Header } = Layout;
 
@@ -73,7 +74,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       label: "Profile",
       icon: <IconProfile />,
       onClick: ()=> {
-        navigate("/profile");
+        navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
     {
@@ -87,7 +88,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       icon: <IconLogout />,
       onClick: (props) => {
         localStorage.removeItem("accessToken");
-        navigate("/login");
+        navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
       },
     },
   ];
@@ -233,7 +234,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                       <Typography.Title level={4}>
                         {currentUser?.firstName} {currentUser?.lastName}
                       </Typography.Title>
-                      <div className="user-meta-role">{role}</div>
+                      <div className="user-meta-role">{getUserRoleLable(role)}</div>
                     </div>
                   </div>
                   {React.cloneElement(menu as React.ReactElement, {
