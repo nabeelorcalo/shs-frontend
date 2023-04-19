@@ -1,4 +1,4 @@
-import { useState, useId } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
@@ -16,7 +16,6 @@ import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 
 const DetailHistory = () => {
-  const id = useId();
   const role = useRecoilValue(currentUserRoleState);
   const [actionType, setActionType] = useState({ type: '', id: '' });
   const detailHistoryBreadCrumb = [
@@ -190,10 +189,10 @@ const DetailHistory = () => {
     }));
   }
   const progressData = [
-    { title: 'Overall', progressPercent: 81, progressColor: '#4783FF' },
-    { title: 'Learning Objectives', progressPercent: 85, progressColor: '#A1D8EA' },
-    { title: 'Discipline', progressPercent: 75, progressColor: '#F08D97' },
-    { title: 'Personal', progressPercent: 68, progressColor: '#78DAAC' },
+    { id:1,title: 'Overall', progressPercent: 81, progressColor: '#4783FF' },
+    { id:2,title: 'Learning Objectives', progressPercent: 85, progressColor: '#A1D8EA' },
+    { id:3,title: 'Discipline', progressPercent: 75, progressColor: '#F08D97' },
+    { id:4,title: 'Personal', progressPercent: 68, progressColor: '#78DAAC' },
   ]
   return (
     <>
@@ -219,7 +218,7 @@ const DetailHistory = () => {
                 avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
               />
               {progressData.map((item: any) => (
-                <div key={id}>
+                <div key={item.id}>
                   <p className="mt-4">{item.title}</p>
                   <Progress className="flex" percent={item.progressPercent} strokeColor={item.progressColor} />
                 </div>

@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 import { Space, Row, Col } from "antd";
 import {
   ClockInCommon,
@@ -33,7 +33,6 @@ import { currentUserRoleState } from "../../store";
 
 const Detail = () => {
   const role = useRecoilValue(currentUserRoleState);
-  const id = useId();
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
@@ -238,7 +237,7 @@ const Detail = () => {
                   const { color, icon }: any = getColorAndIcon(item.heading);
                   return (
                     <AttendanceTimeCard
-                      key={id}
+                      key={item.id}
                       Icon={icon}
                       heading={item.heading}
                       time={item.time}
