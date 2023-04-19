@@ -11,7 +11,7 @@ import {
   Typography,
 } from "antd";
 import { DropDown } from "../../../components";
-
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 
 const AddManager = () => {
@@ -29,29 +29,29 @@ const AddManager = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
-            <span className="font-semibold text-2xl text-[#363565]">
+            <span className="font-semibold text-2xl primary-color">
               New Manager
             </span>
             <Divider type="vertical" />
-            <span className="font-semibold text-base text-[#4E4B66]">
+            <span className="font-semibold text-base text-secondary-color">
               Managers
             </span>
           </div>
         </Col>
       </Row>
-      <Divider />
-      <div className=" shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] bg-[#FFFFFF] p-3 rounded-2xl">
+      <Divider/>
+      <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-3 rounded-2xl">
         <Row>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Typography className="text-2xl font-semibold text-[#14142A]">
+            <Typography className="text-2xl font-semibold text-primary-color">
               Manager Details
             </Typography>
-            <Typography className="text-base font-normal text-[#4E4B66]">
+            <Typography className="text-base font-normal text-secondary-color">
               You can add a new manager under your company account
             </Typography>
           </Col>
         </Row>
-        <Divider />
+        <Divider/>
         <Form
           layout="vertical"
           initialValues={{ remember: true }}
@@ -61,10 +61,10 @@ const AddManager = () => {
         >
           <Row>
             <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-              <Typography className="text-xl font-semibold text-[#14142A]">
+              <Typography className="text-xl font-semibold text-primary-color">
                 Personal Details
               </Typography>
-              <Typography className="text-base font-normal text-[#4E4B66]">
+              <Typography className="text-base font-normal text-secondary-color">
                 Enter personal information of manager
               </Typography>
             </Col>
@@ -78,7 +78,7 @@ const AddManager = () => {
               >
                 <Input
                   placeholder="Enter First Name"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
               <Form.Item
@@ -90,7 +90,7 @@ const AddManager = () => {
               >
                 <Input
                   placeholder="Enter Last Name"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
               <Form.Item
@@ -106,7 +106,6 @@ const AddManager = () => {
                   setValue={setValue}
                 />
               </Form.Item>
-
               <Form.Item
                 label="Email"
                 name="email"
@@ -116,7 +115,7 @@ const AddManager = () => {
               >
                 <Input
                   placeholder="Enter Email"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
               <Form.Item label="Phone Number" name="phoneNumber">
@@ -137,10 +136,10 @@ const AddManager = () => {
           <Divider />
           <Row>
             <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-              <Typography className="text-xl font-semibold text-[#14142A]">
+              <Typography className="text-xl font-semibold text-primary-color">
                 General Information
               </Typography>
-              <Typography className="text-base font-normal text-[#4E4B66]">
+              <Typography className="text-base font-normal text-secondary-color">
                 Enter general information of manager
               </Typography>
             </Col>
@@ -154,7 +153,7 @@ const AddManager = () => {
               >
                 <Input
                   placeholder="Enter Title"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
               <Form.Item
@@ -178,10 +177,10 @@ const AddManager = () => {
           <Divider />
           <Row>
             <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-              <Typography className="text-xl font-semibold text-[#14142A]">
+              <Typography className="text-xl font-semibold text-primary-color">
                 Address
               </Typography>
-              <Typography className="text-base font-normal text-[#4E4B66]">
+              <Typography className="text-base font-normal text-secondary-color">
                 Enter address of manager
               </Typography>
             </Col>
@@ -200,13 +199,13 @@ const AddManager = () => {
               <Form.Item label="Address" name="address">
                 <Input
                   placeholder="Enter Address"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
               <Form.Item label="City" name="city">
                 <Input
                   placeholder="Enter City"
-                  className="bg-[#E6F4F9] text-[#A0A3BD] pl-2 text-base"
+                  className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
               <Form.Item label="Country" name="country">
@@ -219,16 +218,15 @@ const AddManager = () => {
               </Form.Item>
             </Col>
           </Row>
-
           <Form.Item className="flex justify-center sm:justify-end items-center">
-            <Button className="border-1 border-solid border-[#4a9d77] text-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5">
+            <Button className="border-1 border-solid border-[#4a9d77] text-teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
               Cancel
             </Button>
             <Button
               htmlType="submit"
-              className="bg-[#4a9d77] text-white border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+              className="text-teriary-bg-color white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
             >
-              <a href="managers">Submit</a>
+              <a href={`${ROUTES_CONSTANTS.MANAGERS}`}>Submit</a>
             </Button>
           </Form.Item>
         </Form>

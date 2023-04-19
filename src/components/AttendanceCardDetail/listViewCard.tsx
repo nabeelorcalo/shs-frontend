@@ -39,7 +39,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
       <div className="flex items-center justify-between sm:w-[100%] w-[30%}">
         <div className="flex items-center gap-4">
           <Avatar size={48} src={avatar} />
-          <Typography.Title level={4}>{name}</Typography.Title>
+          <p className="text-lg text-primary-color">{name}</p>
         </div>
         <div className="flex justify-center w-[10%]  sm:hidden">
           <Dropdown
@@ -70,7 +70,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
               : "text-input-bg-color text-secondary-color font-semibold text-base"
             } align-middle`}
         >
-          P
+          <span className='text-base font-semibold'>P</span>
         </Avatar>
 
         <Avatar
@@ -78,7 +78,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
           className={`${status === "absent" ? "text-error-bg-color" : "text-input-bg-color text-secondary-color font-semibold text-base"
             } align-middle`}
         >
-          A
+         <span className='text-base font-semibold'>A</span>
         </Avatar>
 
         <Avatar
@@ -86,7 +86,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
           className={`${status === "leave" ? "text-warning-bg-color" : "text-input-bg-color text-secondary-color font-semibold text-base"
             } align-middle`}
         >
-          L
+          <span className='text-base font-semibold'>L</span>
         </Avatar>
       </div>
 

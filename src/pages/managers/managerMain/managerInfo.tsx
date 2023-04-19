@@ -28,7 +28,6 @@ const ManagerInfo = () => {
                         {item.interns}
                       </Typography>
                     </div>
-                    {/* <Space className="pb-3 pr-4 pl-3 pt-3"> */}
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center ">
                     <Button className="info-dark-bg-color text-info-color-dark text-base 
                       font-semibold rounded-[8px] border-0 ">
@@ -39,8 +38,6 @@ const ManagerInfo = () => {
                         Reset
                       </Button>
                     </div>
-                      
-                    {/* </Space> */}
                   </center>
                 </div>
               </Col>
