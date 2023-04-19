@@ -54,7 +54,6 @@ interface DataType {
   publicationStatus: string;
   availabilityStart: any;
   availabilityEnd: any;
-
 }
 
 const getBase64 = (file: RcFile): Promise<string> =>
