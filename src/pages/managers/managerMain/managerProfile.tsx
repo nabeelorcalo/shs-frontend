@@ -12,7 +12,9 @@ import {
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
 import { DropDown } from "../../../components";
+import { useNavigate } from "react-router-dom";
 import { Option } from "antd/es/mentions";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const commonObj = {
   moduleName: "University of Lincoln",
@@ -46,6 +48,9 @@ const commonObj = {
 };
 
 const ManagerProfile = () => {
+
+  const navigate = useNavigate();
+
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
   const onFinish = (values: any) => {
@@ -254,11 +259,14 @@ const ManagerProfile = () => {
                   Cancel
                 </Button>
                 <Button
+                  onClick={() => {
+                  navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                  }}
                   htmlType="submit"
                   className="teriary-bg-color  white-color border-1 border-solid 
                   border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
                 >
-                  <a href="managers">Submit</a>
+                  Submit
                 </Button>
               </Form.Item>
             </Form>
