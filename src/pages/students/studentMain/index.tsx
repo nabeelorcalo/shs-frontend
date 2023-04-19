@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { GlobalTable, SearchBar,PageHeader,BoxWrapper,  InternsCard, ToggleButton, DropDown, CommonDatePicker} from "../../../components";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, CommonDatePicker } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, More, TableViewIcon } from "../../../assets/images"
-import { MenuProps } from 'antd';
+import { MenuProps, Row, Col } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -38,7 +38,7 @@ const PopOver = () => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
       <More />
     </Dropdown>
   );
@@ -99,7 +99,7 @@ const StudentMain = () => {
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
-      company:"Power source",
+      company: "Power source",
       date_of_joining: "01/07/2022",
     },
     {
@@ -107,7 +107,7 @@ const StudentMain = () => {
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
-      company:"CodingHub",
+      company: "CodingHub",
       date_of_joining: "01/07/2021",
     },
     {
@@ -115,7 +115,7 @@ const StudentMain = () => {
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
-      company:"Dev spot",
+      company: "Dev spot",
       date_of_joining: "01/07/2021",
     },
     {
@@ -123,7 +123,7 @@ const StudentMain = () => {
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
-      company:"Orcalo Holdings",
+      company: "Orcalo Holdings",
       date_of_joining: "01/07/2022",
     },
     {
@@ -131,7 +131,7 @@ const StudentMain = () => {
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
-      company:"Dev spot",
+      company: "Dev spot",
       date_of_joining: "01/07/2021",
     },
     {
@@ -139,7 +139,7 @@ const StudentMain = () => {
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
-      company:"CodingHub",
+      company: "CodingHub",
       date_of_joining: "01/07/2021",
     },
   ];
@@ -164,17 +164,17 @@ const StudentMain = () => {
     <>
       <PageHeader title="Interns" />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
+        <Row gutter={[20,20]}>
+          <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
             <SearchBar
               handleChange={() => { }}
               name="search bar"
               placeholder="Search"
               size="middle"
             />
-          </div>
-          <div className="flex flex-row gap-4">
-            <CommonDatePicker
+          </Col>
+          <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-3">
+          <CommonDatePicker
               name="Date Picker"
               onBtnClick={() => { }}
               setOpen={function noRefCheck() { }}
@@ -212,8 +212,9 @@ const StudentMain = () => {
               }}
               value=""
             />
-          </div>
-        </div>
+          </Col>
+        </Row>
+
         <BoxWrapper>
           <div className="pt-3">
             {
@@ -221,13 +222,13 @@ const StudentMain = () => {
                 {
                   newTableData.map((items: any, idx: any) => {
                     return (
-                      <InternsCard 
-                      posted_by={items.avatar}
-                      title={items.name} 
-                      department={items.title} 
-                      joining_date={items.date_of_joining} 
-                      date_of_birth={items.companyrep} 
-                      company={items.company}
+                      <InternsCard
+                        posted_by={items.avatar}
+                        title={items.name}
+                        department={items.title}
+                        joining_date={items.date_of_joining}
+                        date_of_birth={items.companyrep}
+                        company={items.company}
                       />
                     )
                   })

@@ -116,12 +116,12 @@ const ManagerMain = () => {
       </Row>
       {showGrid === true && (
         <div>
-          <ManagerInfo />
+          <ManagerInfoTable />
         </div>
       )}
       {showTable === true && (
         <div>
-          <ManagerInfoTable />
+            <ManagerInfo />
         </div>
       )}
     </div>
