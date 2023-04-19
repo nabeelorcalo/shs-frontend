@@ -23,7 +23,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
   function onChange(dateString: any) {
     setDate(dayjs(dateString).format('ddd, DD MMM YYYY'))
   }
-
+  
   return (
     <div className='flex items-center ml-auto mb-4 month-changer'>
       {

@@ -10,9 +10,11 @@ import {
   Select,
   Typography,
 } from "antd";
-import  {IconEmail , IconPhone ,IconLocation,Pf } from  "../../../assets/images/"
+import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
 import { DropDown } from "../../../components";
+import { useNavigate } from "react-router-dom";
 import { Option } from "antd/es/mentions";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const commonObj = {
   moduleName: "University of Lincoln",
@@ -46,6 +48,9 @@ const commonObj = {
 };
 
 const ManagerProfile = () => {
+
+  const navigate = useNavigate();
+
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
   const onFinish = (values: any) => {
@@ -75,9 +80,9 @@ const ManagerProfile = () => {
       <Divider />
       <Row gutter={[5, 10]}>
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
-          <div className=" pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
+          <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              <Pf/>
+              <Pf />
               <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
                 {commonObj.personName}
               </Typography>
@@ -91,13 +96,13 @@ const ManagerProfile = () => {
             <Divider />
             <div className="social-info">
               <div className="social-icon flex  items-center mt-3 ml-7">
-                <IconEmail/>
+                <IconEmail />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
-                <IconPhone/>
+                <IconPhone />
                 <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.phone}
                 </Typography>
@@ -128,12 +133,14 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="First Name" name="firstName">
-                    <Input placeholder="Enter First Name" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter First Name"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Last Name" name="lastName">
-                    <Input placeholder="Enter Last Name" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Last Name"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -156,7 +163,8 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
-                    <Input placeholder="Enter Email" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Email"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -202,7 +210,8 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Title" name="title">
-                    <Input placeholder="Enter Title" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Title"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -223,12 +232,14 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Address" name="address">
-                    <Input placeholder="Enter Address" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Address"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="City" name="City">
-                    <Input placeholder="Enter City" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter City"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -243,14 +254,19 @@ const ManagerProfile = () => {
                 </Col>
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button className="border-1 border-solid border-[#4a9d77] text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
+                <Button className="border-1 border-solid border-[#4a9d77] 
+                text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel
                 </Button>
                 <Button
+                  onClick={() => {
+                  navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                  }}
                   htmlType="submit"
-                  className="teriary-bg-color  white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+                  className="teriary-bg-color  white-color border-1 border-solid 
+                  border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
                 >
-                  <a href="managers">Submit</a>
+                  Submit
                 </Button>
               </Form.Item>
             </Form>
