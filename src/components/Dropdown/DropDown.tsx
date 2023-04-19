@@ -31,7 +31,7 @@ export const DropDown = (props: DropDownInterface) => {
     requireRangePicker,
   } = props;
 
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
   const [openPicker, setOpenPicker] = useState(false);
   const [openRangePicker, setOpenRangePicker] = useState(false);
 
@@ -98,11 +98,11 @@ export const DropDown = (props: DropDownInterface) => {
     <AntDropDown
       menu={{ items }}
       trigger={['click']}
-      open={visible}
+      // open={visible}
       placement={placement}
-      className={`drop-down-wrapper ${visible && 'active'} ${pilled && 'pilled'}`}
+      className={`drop-down-wrapper ${pilled && 'pilled'}`}
       overlayClassName='drop-down-overlay'
-      onOpenChange={setVisible}
+      // onOpenChange={setVisible}
       {...props}
     >
       <div className='flex items-center justify-between'>
