@@ -6,7 +6,7 @@ import './style.scss'
 const UploadDocument = (props: any) => {
   const { height = 80 } = props
   const [files, setFiles] = useState([])
-  const inputRef : any = useRef();
+  const inputRef: any = useRef();
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
@@ -30,9 +30,25 @@ const UploadDocument = (props: any) => {
           <DocumentUpload />
         </div>
         <div className='self-center'>
-          <p className='text-center text-lg'>Drag & Drop files or <span className="text-[red] cursor-pointer" onClick={() => { inputRef.current.click() }}>Browse</span></p>
+          <p
+            className='text-center text-lg'
+          >
+            Drag & Drop files or
+            <span
+              className="text-[red] cursor-pointer"
+              onClick={() => { inputRef.current.click() }}
+            >
+              Browse
+            </span>
+          </p>
           <p className="text-sm text-center">Supported jpeg, pdf oc doc files</p>
-          <input type="file" ref={inputRef} multiple hidden onChange={(event: any) => { setFiles(Array.from(event.target.files)) }} />
+          <input
+            type="file"
+            ref={inputRef}
+            multiple
+            hidden
+            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }}
+          />
         </div>
       </div>
       {

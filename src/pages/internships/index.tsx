@@ -13,7 +13,7 @@ import "../../scss/global-color/Global-colors.scss"
 import { Avatar, Button, Divider, Dropdown } from "antd";
 import { InternshipsIcon, More } from "../../assets/images";
 import type { MenuProps } from 'antd';
-import { STATUS_CONSTANTS } from "../../config/constants";
+import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../config/constants";
 import { useNavigate, Link } from "react-router-dom";
 
 const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
@@ -55,9 +55,12 @@ const tableData = [
 ]
 const Internships = () => {
   const navigate = useNavigate()
-  const [value, setValue] = useState("")
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+  // const [value, setValue] = useState("")
+  // const [showDrawer, setShowDrawer] = useState(false)
+  const [state, setState] = useState({
+    value: "",
+    showDrawer: false
+  })
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -170,7 +173,13 @@ const Internships = () => {
       }
     )
   })
-  console.log(value)
+
+  const handleDrawer = () => {
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: !state.showDrawer
+    }))
+  }
   return (
     <>
       <PageHeader title="Internships" />
@@ -188,16 +197,12 @@ const Internships = () => {
           <div className="flex max-sm:flex-col flex-row gap-4">
             <FiltersButton
               label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+              onClick={handleDrawer}
             />
             <Drawer
               closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
+              open={state.showDrawer}
+              onClose={handleDrawer}
               title="Filters"
             >
               <React.Fragment key=".0">
@@ -241,7 +246,7 @@ const Internships = () => {
               size="middle"
               className="flex gap-2 teriary-bg-color white-color"
               onClick={() => {
-                navigate("new-internship");
+                navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP);
               }}
             >
               <InternshipsIcon />
@@ -251,7 +256,7 @@ const Internships = () => {
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable  columns={columns} tableData={newTableData} />
+            <GlobalTable columns={columns} tableData={newTableData} />
           </div>
         </BoxWrapper>
       </div>

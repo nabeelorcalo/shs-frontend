@@ -13,7 +13,8 @@ import Drawer from '../../../components/Drawer'
 import { Button, Col, Row } from 'antd'
 import '../../../scss/global-color/Global-colors.scss'
 import '../style.scss'
-const mapArray: any = [1, 2, 3, 4]
+import { ROUTES_CONSTANTS } from '../../../config/constants'
+
 const dummyResponse = {
   "statusCode": 200,
   "message": "Success",
@@ -317,7 +318,16 @@ const dummyResponse = {
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate()
-  const [showDrawer, setShowDrawer] = useState(false)
+  const [state, setState] = useState({
+    showDrawer: false
+  })
+
+  const handleDrawer = ()=>{
+    setState((prevState)=>({
+      ...prevState,
+      showDrawer: !state.showDrawer
+    }))
+  }
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -329,9 +339,9 @@ const InternshipsCompanyAdmin = () => {
           <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
             <FiltersButton
               label="Filters"
-              onClick={() => { setShowDrawer(true) }}
+              onClick={handleDrawer}
             />
-            <Drawer closable open={showDrawer} onClose={() => { setShowDrawer(false) }} title="Filters" >
+            <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <React.Fragment key=".0">
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
@@ -395,7 +405,7 @@ const InternshipsCompanyAdmin = () => {
               size="middle"
               icon={<InternshipsIcon />}
               className="button-tertiary"
-              onClick={() => { navigate("new-internship"); }}
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
             >New Internship</Button>
           </Col>
         </Row>

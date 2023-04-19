@@ -7,6 +7,7 @@ import '../../scss/global-color/Global-colors.scss'
 import './style.scss';
 import { PopUpModal } from '../Model';
 import { useState } from 'react';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 
 export const InternshipProgressCard = (props: any) => {
   const { title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
@@ -22,7 +23,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
             View details
           </a>
         ),
@@ -62,7 +63,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '6',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("new-internship"); }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}>
             Edit
           </a>
         ),
@@ -85,7 +86,12 @@ export const InternshipProgressCard = (props: any) => {
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <More />
       </Dropdown>
     )
@@ -148,8 +154,21 @@ export const InternshipProgressCard = (props: any) => {
         }
         footer={
           <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
-            <Button type="default" size="small" className="button-default-error max-sm:w-full" onClick={() => setDecline(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-error max-sm:w-full">Decline</Button>
+            <Button
+              type="default"
+              size="small"
+              className="button-default-error max-sm:w-full"
+              onClick={() => setDecline(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-error max-sm:w-full"
+            >
+              Decline
+            </Button>
           </div>
         }
       />
@@ -170,8 +189,21 @@ export const InternshipProgressCard = (props: any) => {
         }
         footer={
           <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
-            <Button type="default" size="small" className="button-default-error max-sm:w-full" onClick={() => setDeleteInternship(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-error max-sm:w-full">Decline</Button>
+            <Button
+              type="default"
+              size="small"
+              className="button-default-error max-sm:w-full"
+              onClick={() => setDeleteInternship(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-error max-sm:w-full"
+            >
+              Decline
+            </Button>
           </div>
         }
       />

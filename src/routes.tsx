@@ -441,8 +441,8 @@ const managerRoutes = [
         element: <Internships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
-        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
         element: <NewInternships />,
       },
       {
@@ -753,13 +753,13 @@ const companyAdminRoutes = [
         element: <InternshipPipeLine />,
       },
       {
-        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
-        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
         element: <NewInternships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
       {

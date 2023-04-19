@@ -48,8 +48,10 @@ const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
 
 const Payroll = () => {
   const navigate = useNavigate()
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
+  const [state, setState] = useState ({
+    showDrawer : false,
+    isToggle: false
+  })
 
   const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
 
@@ -112,6 +114,20 @@ const Payroll = () => {
     )
   })
 
+  const handleToggle = () => {
+    setState((prevState) => ({
+      ...prevState,
+      isToggle: !state.isToggle,
+    }));
+  };
+
+  const handleDrawer = ()=>{
+    setState((prevState)=>({
+      ...prevState,
+      showDrawer: !state.showDrawer
+    }))
+  }
+
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -131,16 +147,12 @@ const Payroll = () => {
           <div className="flex flex-row gap-4 flex-wrap">
             <FiltersButton
               label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+              onClick={handleDrawer}
             />
             <Drawer
               closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
+              open={state.showDrawer}
+              onClose={handleDrawer}
               title="Filters"
             >
               <React.Fragment key=".0">
@@ -200,8 +212,9 @@ const Payroll = () => {
               </React.Fragment>
             </Drawer>
             <ToggleButton
-              isToggle={isToggle}
-              onTogglerClick={() => { setIsToggle(!isToggle) }}
+              isToggle={state.isToggle}
+              onTogglerClick= {handleToggle}
+              // onTogglerClick={() => { setIsToggle(!isToggle) }}
               FirstIcon={TableViewIcon}
               LastIcon={CardViewIcon}
               className='w-[88px]'
@@ -221,7 +234,7 @@ const Payroll = () => {
         </div>
         <div className="pt-3">
           {
-            isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+            state.isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
                 newTableData.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
