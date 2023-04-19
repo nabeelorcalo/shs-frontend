@@ -3,6 +3,7 @@ import { Select, Button, Form } from "antd";
 import { GrievancesAvater, IconAngleDown } from '../../../assets/images';
 import './style.scss'
 import { DropDown } from '../../../components';
+import dayjs from "dayjs";
 const { Option } = Select;
 
 const Filters: React.FC = (props: any) => {
@@ -10,15 +11,14 @@ const Filters: React.FC = (props: any) => {
   const [value, setValue] = useState();
   const [escalatedValue, setSscalatedValue] = useState("");
 
-  let options = [
+  const options = [
     { value: 'jessia', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></> },
     { value: 'jean ella', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>jean ella</span></> },
     { value: 'Mino Marina', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>Mino Marina</span></> },
   ];
-  const typeSelectValue = ["New", "In Progress", "Re-Open", "Resolved",]
-  const statusSelectValue = ["Work", "Personal", "Discipline" , "Other"]
-
-
+  const timeFrame = ['This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']
+  const type = ["New", "In Progress", "Re-Open", "Resolved"]
+  const status = ["Work", "Personal", "Discipline", "Other"]
   const renderOption = (option: any) => {
     return (
       <Option key={option.value} value={option.value} className="border-none">
@@ -26,19 +26,16 @@ const Filters: React.FC = (props: any) => {
       </Option>
     );
   }
+  const [filterValue, setFilterValue] = useState({ type: "Select", timeFrame: "Select", status: "Select" });
   function handleChange(value: any) {
-   
-
     setSscalatedValue(value)
   }
   const handleSubmit = () => {
     const values = form.getFieldsValue();
   }
   const ResetHandler = () => {
-    options = []
+    setFilterValue({ type: "Select", timeFrame: "Select", status: "Select" });
   }
-
-
   return (
     <div className='filter_main_wrapper'>
       <Form layout="vertical" form={form}>
@@ -48,29 +45,37 @@ const Filters: React.FC = (props: any) => {
           </Select>
         </Form.Item>
         <Form.Item name="timeFrame" label="Time Frame" style={{ background: "white" }}>
-          <DropDown name='Select' value={value}
-            options={['This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']}
-            setValue={() => setValue(value)} showDatePickerOnVal={'date Range'}
-            requireDatePicker placement='bottomLeft' />
+          <DropDown
+            name={filterValue.timeFrame}
+            value={filterValue.timeFrame}
+            options={timeFrame.map((item: any) => { return item })}
+            setValue={(e: string) => setFilterValue({ ...filterValue, timeFrame: e })}
+            showDatePickerOnVal={'date Range'}
+            requireDatePicker
+            placement='bottomLeft' />
         </Form.Item>
         <Form.Item
           name="type"
           label="Type"
         >
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-          {typeSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
-
-          </Select>
+          <DropDown
+            name={filterValue.type}
+            value={filterValue.type}
+            options={type.map((item: any) => { return item })}
+            setValue={(e: string) => setFilterValue({ ...filterValue, type: e })}
+          />
         </Form.Item>
 
         <Form.Item
           name="status"
           label="Status"
         >
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-          {statusSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
-
-          </Select>
+          <DropDown
+            name={filterValue.status}
+            value={filterValue.status}
+            options={status.map((item: any) => { return item })}
+            setValue={(e: string) => setFilterValue({ ...filterValue, status: e })}
+          />
         </Form.Item>
 
         <div className="whistle-footer flex justify-end mt-4 gap-2">

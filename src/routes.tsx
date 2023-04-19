@@ -441,8 +441,8 @@ const managerRoutes = [
         element: <Internships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
-        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
         element: <NewInternships />,
       },
       {
@@ -753,13 +753,13 @@ const companyAdminRoutes = [
         element: <InternshipPipeLine />,
       },
       {
-        key: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
-        path: `${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
         element: <NewInternships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
       {
@@ -1574,14 +1574,29 @@ const universityRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PROFILE}`,
-        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.PROFILE}`,
         element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,
         path: `${ROUTES_CONSTANTS.STUDENT}`,
         element: <Students />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,

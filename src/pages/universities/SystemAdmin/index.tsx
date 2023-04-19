@@ -190,14 +190,14 @@ const UniveristyMain = () => {
           </div>
         </Form>
       </Drawer>
-      <Row>
+      <Row >
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
             <PageHeader title='Universities' bordered={true} />
           </div>
         </Col>
       </Row>
-      <Row className="m-2">
+      <Row gutter={[20,20]}>
         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
