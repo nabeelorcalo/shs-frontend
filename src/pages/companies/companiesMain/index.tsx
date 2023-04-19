@@ -4,19 +4,14 @@ import {
   SearchBar,
   PageHeader,
   BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  FiltersButton,
   DropDown,
-  StageStepper
 } from "../../../components";
 import "./style.scss";
 import '../../../scss/global-color/Global-colors.scss'
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../../assets/images"
-import { Button, MenuProps, Space } from 'antd';
+import { More } from "../../../assets/images"
+import { MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
-import Drawer from "../../../components/Drawer";
 import useCustomHook from "../actionHandler";
 
 const btnStyle = {
@@ -59,7 +54,12 @@ const PopOver = ({ state }: any) => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} placement="bottomRight" trigger={[`click`]}>
+    <Dropdown
+      menu={{ items }}
+      placement="bottomRight"
+      trigger={[`click`]}
+      overlayStyle={{ width: 180 }}
+    >
       <More className="cursor-pointer" />
     </Dropdown>
   );
@@ -222,132 +222,15 @@ const CompaniesMain = () => {
               }}
               value=""
             />
-            {/* <Drawer
-              closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
-              title="Filters"
-            >
-              <div key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Time Fram</p>
-                    <DropDown
-                      name="Select"
-                      options={["This weak", "Last weak", "This month", "Last month"]}
-                      setValue={() => { }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value=""
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Nature of Work</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "All",
-                        "On-site",
-                        "Hybrid",
-                        "Virtual",
-                      ]}
-                      setValue={() => { }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value=""
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Type of Work</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Paid",
-                        "Un-paid",
-                        "Part Time",
-                        "Full Time",
-                      ]}
-                      setValue={() => { }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value=""
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Stage</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                      ]}
-                      setValue={() => { }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value=""
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      size="middle"
-                      className="flex gap-2 white-bg-color teriary-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      size="middle"
-                      className="flex gap-2 teriary-bg-color white-color"
-                      onClick={() => {
-                        navigate("new-internship");
-                      }}
-                    >
-                      Apply
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Drawer>
-            <Drawer
-              closable
-              width={1000}
-              open={showStageStepper}
-              onClose={() => {
-                setShowStageStepper(false);
-              }}
-
-            >
-              <StageStepper />
-            </Drawer> */}
+           
           </div>
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            {/* {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {
-                  cardDummyArray.map((items: any, idx: any) => {
-                    return (
-                      <InternsCard />
-                    )
-                  })
-                }
-              </div>
-                : */}
-                <GlobalTable
-                  columns={columns}
-                  tableData={newTableData}
-                />
+            <GlobalTable
+              columns={columns}
+              tableData={newTableData}
+            />
             {/* } */}
           </div>
         </BoxWrapper>

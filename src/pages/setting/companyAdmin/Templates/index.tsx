@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Col, Row, Typography, Divider } from "antd";
-const { Title, Text } = Typography;
+const { Text } = Typography;
 import { NavLink, Outlet } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import "./Template.scss";
 
 let overview = [
@@ -9,31 +10,31 @@ let overview = [
     name: "Offer Letter",
     content:
       "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: "/settings/template/template-offer-letters",
+    link: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`
   },
   {
     name: "Contract",
     content:
       "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: "/settings/template/contract",
+    link: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}`
   },
   {
     name: "Rejection Letter",
     content:
       "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: "/settings/template/rejection-letter",
+    link: `${ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}`
   },
   {
     name: "Certificate of Appreciation",
     content:
       "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: "/settings/template/certificate-of-appreciation",
+    link: `${ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}`
   },
   {
     name: "Certificate of Completion",
     content:
       "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: "/settings/template/certificate-of-completion",
+    link: `${ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}`
   },
 ];
 
@@ -48,7 +49,7 @@ const SettingTemplate: React.FC = () => {
                 <div className="template-box-wrapper">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
-                    <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">{data?.name}</Text>
+                      <Text className="text-lg font-semibold text-primary-color">{data?.name}</Text>
                       <Divider className="mt-1 " />
                       <Text className="text-sm font-normal pb-2">
                         {data.content}

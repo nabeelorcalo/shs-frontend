@@ -253,6 +253,7 @@ const Detail = () => {
           <MonthChanger
             month={state.currentDate.format("ddd, DD MMMM YYYY")}
             onClick={() => changeMonth(event)}
+            setState={setState}
             datePickerClassName="min-w-0"
             hasDatePicker
           />
