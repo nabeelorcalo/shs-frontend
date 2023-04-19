@@ -29,7 +29,7 @@
     padding: 8px 16px 8px 16px !important;
   }
 
-  .ant-input-affix-wrapper>input.ant-input {
+  .ant-input-affix-wrapper > input.ant-input {
     background: $text-input-bg-color !important;
   }
 
@@ -50,7 +50,6 @@
   .login-form-forgot {
     color: $primary-bg-color;
   }
-
 }
 
 .verfiction-link {
@@ -257,49 +256,45 @@
       border-radius: 4px;
     }
   }
-
-   
-  
 }
-.verify-modal{
+.verify-modal {
   padding: 1rem;
-  .top-question{
+  .top-question {
     font-weight: 700;
-font-size: 24px;
-line-height: 32px;
-color: $text-primary-title-color;
-text-align: center;
-padding-top: 1rem;
-padding-bottom: 1rem;
+    font-size: 24px;
+    line-height: 32px;
+    color: $text-primary-title-color;
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
-  .question-description{
+  .question-description {
     font-weight: 600;
-font-size: 14px;
-line-height: 20px;
-display: flex;
-align-items: center;
-justify-content: center;
-color: $teriary-light;
-padding-bottom: 2rem;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $teriary-light;
+    padding-bottom: 2rem;
   }
-  .stepnumber{
+  .stepnumber {
     font-weight: 400;
-font-size: 16px;
-line-height: 20px;
-display: flex;
-align-items: center;
-justify-content: center;
-color: $light-step-color;
-
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $light-step-color;
   }
-  .stepdescription{
+  .stepdescription {
     font-weight: 600;
-font-size: 12px;
-line-height: 20px;
-display: flex;
-align-items: center;
-text-align: center;
-color: $light-heading-color;
+    font-size: 12px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: $light-heading-color;
   }
 }
 
