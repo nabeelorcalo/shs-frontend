@@ -15,7 +15,18 @@ export default {
   AGENT: 'PROPERTY_AGENT',
   STUDENT: 'STUDENT',
   UNIVERSITY: 'UNIVERSITY',
-  PUBLIC: 'PUBLIC'
+  PUBLIC: 'PUBLIC',
+  NOTIFICATION_DETAILS: {
+    success: {
+      message: "Details Submitted!",
+      description:
+        "We've got your information. Our team will get in touch you shortly!",
+    },
+    error: {
+      message: "Something went wrong!",
+      description: "Please try again later or email us",
+    },
+  }
 };
 
 export const ROUTES_CONSTANTS: any = {
@@ -93,6 +104,8 @@ export const ROUTES_CONSTANTS: any = {
   CONTRACTS: "contracts",
   RECEIVED_CompanyAdmin: "received-company-admin",
   MANAGERS: "managers",
+  ADD_MANAGER: 'add-manager',
+  MANAGER_PROFILE:'manager-profile',
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",

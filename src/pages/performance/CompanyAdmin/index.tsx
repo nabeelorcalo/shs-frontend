@@ -159,7 +159,6 @@ const CompanyAdminPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-              <BoxWrapper>
                 <MonthlyPerfomanceChart
                   heading="Summary"
                   data={data}
@@ -170,7 +169,6 @@ const CompanyAdminPerformance = () => {
                     onClick={changeMonth}
                   />}
                 />
-              </BoxWrapper>
             </Col>
           </Row>
         </Col>

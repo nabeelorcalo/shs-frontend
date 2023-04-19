@@ -60,6 +60,9 @@ export { ReactComponent as Step2 } from './login/step2.svg';
 export { ReactComponent as Step3 } from './login/step3.svg';
 export { ReactComponent as DeleteIcon } from './profile/student/delete.svg';
 export { ReactComponent as UploadIcon } from './profile/student/Upload.svg';
+export { ReactComponent as DegreeCap } from './login/unicap.svg';
+export { ReactComponent as OfficeBag } from './login/unibag.svg';
+export { ReactComponent as Home } from './login/work.svg';
 
 // Footer Icons
 export { ReactComponent as Round } from "./login/round.svg";
@@ -603,7 +606,8 @@ export { ReactComponent as SearchIconJob } from './serachJobs/search-normal.svg'
 export { ReactComponent as LocationIconJob } from './serachJobs/location.svg';
 export { ReactComponent as SearchFilter } from './serachJobs/Filter.svg';
 export { ReactComponent as SeachJobArrow } from './serachJobs/Vector.svg';
-export { ReactComponent as TabIcon1 } from './serachJobs/tab1.svg';
+export { ReactComponent as TabIcon } from './serachJobs/tab1.svg';
+// export { default as TabIcon1 } from '../../assets/images/documents/tabcase.svg';
 export { ReactComponent as TabIcon2 } from './serachJobs/tab2.svg';
 export { ReactComponent as TabIcon3 } from './serachJobs/tab3.svg';
 export { ReactComponent as TabIcon4 } from './serachJobs/tab4.svg';
@@ -628,6 +632,7 @@ export { default as Page404 } from '../../assets/images/404/404.svg';
 //Intern Douments 
 export { default as Folder } from '../../assets/images/documents/folder.svg';
 export { default as UploadIconBtn } from '../../assets/images/documents/document-upload.svg';
-export { default as Star } from '../../assets/images/documents/star.svg';
 export { default as Dots } from '../../assets/images/documents/dots.svg';
 export { default as DoucmentCard } from '../../assets/images/documents/Document Card.svg';
+export { default as DocImage } from '../../assets/images/documents/Document Card (1).svg';
+export { default as Frame } from '../../assets/images/documents/frame.svg';

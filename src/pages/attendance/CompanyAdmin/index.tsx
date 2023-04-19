@@ -147,7 +147,7 @@ const CompanyAdminAttendance = () => {
                 <AttendanceCard
                   title={item.name}
                   count={item.count}
-                  avatar={cardIcon(item.name)}
+                  avatar={<div className={`cards ${item.name}`}>{cardIcon(item.name)}</div>}
                 />
               </Col>
             )
@@ -160,18 +160,18 @@ const CompanyAdminAttendance = () => {
                 title="Attendance Overview"
                 graphName="attendance"
                 level={4}
+                styling={{height:'235px'}}
               />
             </Col>
             <Col xs={24}>
-              <BoxWrapper>
               <MonthlyPerfomanceChart
                 data={AttendanceDepartmentData}
-                heading={"Attendance By department"}
+                heading="Attendance By department"
                 color={['#4A9D77', '#E95060', '#FFC15D']}
                 columnStyle={{ radius: [5, 5, 0, 0] }}
                 columnWidthRatio={.5}
                 children={
-                  <div className="ml-auto">
+                  <div className="ml-auto w-40">
                     <DropDown
                       name="Select"
                       options={months}
@@ -182,7 +182,6 @@ const CompanyAdminAttendance = () => {
                   </div>
                 }
               />
-              </BoxWrapper>
             </Col>
           </Row>
         </Col>

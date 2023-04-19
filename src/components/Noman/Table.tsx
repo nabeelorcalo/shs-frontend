@@ -1,6 +1,6 @@
 import { Space } from 'antd';
-import {BoxWrapper} from '../BoxWrapper/boxWrapper';
-import GlobalTable from '../Table/Table';
+import {BoxWrapper} from '../../components';
+import {GlobalTable} from '../../components';
 interface DataType {
     key: string,
     dateApplied: string,

@@ -4,7 +4,7 @@ import { Col, Row } from "antd";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { BoxWrapper } from "../../../components/BoxWrapper/BoxWrapper";
+import { BoxWrapper, DrawerWidth } from "../../../components";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader, Breadcrumb } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
@@ -29,7 +29,7 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
   const role = useRecoilValue(currentUserRoleState);
-
+  const mainDrawerWidth = DrawerWidth();
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
@@ -78,6 +78,7 @@ const index = () => {
       </Row>
 
       {openDrawer.open && <DrawerComp
+        width={mainDrawerWidth>1400 ? 380:300}
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
         className={openDrawer.type === 'filters' ? "" : "Record_data"}
@@ -85,7 +86,7 @@ const index = () => {
         onClose={() => setOpenDrawer({ type: '', open: false })}
       >
         <div>
-          {openDrawer.type === 'filters' ? <FilterDrawerForm /> :
+          {openDrawer.type === 'filters' ? <FilterDrawerForm setOpenDrawer={setOpenDrawer} /> :
             <CalendarDrawerInnerDetail
               img={selectedRow?.img}
               name={selectedRow?.name}

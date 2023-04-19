@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./style.scss";
 import {
   BoxWrapper,
@@ -11,6 +11,7 @@ import { Row, Col, Button, Steps } from "antd";
 import { Encryption, Signeddigital } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { CheckCircleFilled, EditFilled, EyeFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const senderInfo = [
   {
@@ -79,6 +80,7 @@ const details = [
 ];
 
 const ReceivedOfferLetter = () => {
+  const navigate = useNavigate()
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
@@ -90,6 +92,7 @@ const ReceivedOfferLetter = () => {
     timeoutRef.current = setTimeout(() => {
       console.log("Long pressed");
       alert("button pressed")
+      navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)
     }, 2000);
 
   };
@@ -107,7 +110,50 @@ const ReceivedOfferLetter = () => {
     },
   ];
 
-  const handleSignClick = () => { };
+  const steps = [
+    { title: 'Read', id: 'step1', icon: <EyeFilled /> },
+    { title: 'Edit', id: 'step2', icon: <EditFilled /> },
+    { title: 'Signed and stored', id: 'step3', icon: <CheckCircleFilled /> },
+  ];
+
+  const [activeStep, setActiveStep] = useState(0);
+  const contentRef: any = useRef(null);
+
+  useEffect(() => {
+    const handleWheel = (event: any) => {
+      const scrollPosition = contentRef.current.scrollTop;
+      const stepSections: any = steps.map((step) => document.getElementById(step.id));
+
+      if (event.deltaY > 0) {
+        for (let i = 0; i > stepSections.length; i++) {
+          if (scrollPosition > stepSections[i].offsetTop - 50) {
+            setActiveStep(i);
+            break;
+          }
+        }
+      } else {
+        // Scrolling up
+        for (let i = stepSections.length - 1; i >= 0; i--) {
+          if (scrollPosition > stepSections[i].offsetTop - 50) {
+            setActiveStep(i);
+            break;
+          }
+        }
+      }
+    };
+
+    contentRef.current.addEventListener('wheel', handleWheel);
+    return () => {
+      contentRef?.current?.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
+  const handleStepChange = (current: any) => {
+    setActiveStep(current);
+    const targetId = steps[current].id;
+    const targetElement: any = document.getElementById(targetId);
+    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   return (
     <div className="received">
@@ -216,85 +262,59 @@ const ReceivedOfferLetter = () => {
       <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div >
-              <Steps
-                items={[
-                  {
-                    icon: (
-                      <div className="pr-4 pl-4 flex justify-center gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px] w-[226%] sm:w-[100%]">
-                        <EyeFilled style={{ width: "24px" }} />
-                        <span className="text-base font-semibold hover:text-[#4A9D77]">Read</span>
-                      </div>
-                    ),
-                  },
-                  {
-                    icon: (
-                      <div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px] w-[226%] sm:w-[100%]">
-                        <EditFilled style={{ width: "24px" }} />
-                        <span className="text-base font-semibold">Confirm</span>
-                      </div>
-                    ),
-                  },
-                  {
-                    icon: (
-                      <div className="pr-2 pl-2 flex gap-2 items-center border-[1px] border-solid border-[#4A9D77] rounded-[8px] w-[400%] sm:w-[100%]">
-                        <CheckCircleFilled style={{ width: "24px" }} />
-                        <span className="text-base font-semibold">
-                          Signed and stored
-                        </span>
-                      </div>
-                    ),
-                  },
-                ]}
-              />
-            </div>
+            <Steps current={activeStep} onChange={handleStepChange}>
+              {steps.map((step) => (
+                <Steps.Step key={step.title} title={step.title} icon={step.icon} />
+              ))}
+            </Steps>
             <div className="pt-4 font-semibold text-xl text-secondary-color">
               Offer Letter
             </div>
           </Col>
 
-
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="scroll">
+            <div ref={contentRef} className="scroll">
               <Row gutter={[0, 30]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[30, 24]}>
-                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                        {senderInfo.map((item, index) => {
-                          return (
-                            <div key={index}>
-                              <div className="pb-4">
-                                <p className="text-success-placeholder-color text-base font-normal">
-                                  {item.label}
-                                </p>
-                                <p className="text-lg font-normal text-secondary-color">
-                                  {item.title}
-                                </p>
+                  <div id="step1">
+                    <Row gutter={[30, 24]}>
+                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                          {senderInfo.map((item, index) => {
+                            return (
+                              <div key={index}>
+                                <div className="pb-4">
+                                  <p className="text-success-placeholder-color text-base font-normal">
+                                    {item.label}
+                                  </p>
+                                  <p className="text-lg font-normal text-secondary-color">
+                                    {item.title}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </Col>
+                            );
+                          })}
+                        </div>
+                      </Col>
 
-                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                        {receiverInfo.map((item, index) => {
-                          return (
-                            <div key={index}>
-                              <div className="pb-4">
-                                <p className="text-success-placeholder-color text-base font-normal">
-                                  {item.label}
-                                </p>
-                                <p className="text-lg font-normal">{item.title}</p>
+                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                          {receiverInfo.map((item, index) => {
+                            return (
+                              <div key={index}>
+                                <div className="pb-4">
+                                  <p className="text-success-placeholder-color text-base font-normal">
+                                    {item.label}
+                                  </p>
+                                  <p className="text-lg font-normal">{item.title}</p>
+                                </div>
                               </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </Col>
-                  </Row>
+                            );
+                          })}
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -334,114 +354,118 @@ const ReceivedOfferLetter = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[30, 24]}>
-                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                        <div className="p-4">
-                          {senderInfo.map((item, index) => {
-                            return (
-                              <div key={index}>
-                                <div className="pb-4">
-                                  <p className="text-success-placeholder-color text-base font-normal">
-                                    {item.label}
-                                  </p>
-                                  <p className="text-lg font-normal text-secondary-color">
-                                    {item.title}
-                                  </p>
+                  <div id="step2">
+                    <Row gutter={[30, 24]}>
+                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
+                          <div className="p-4">
+                            {senderInfo.map((item, index) => {
+                              return (
+                                <div key={index}>
+                                  <div className="pb-4">
+                                    <p className="text-success-placeholder-color text-base font-normal">
+                                      {item.label}
+                                    </p>
+                                    <p className="text-lg font-normal text-secondary-color">
+                                      {item.title}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            Email
-                          </p>
-                          <p className="text-sm md:text-lg font-normal">
-                            davidmiller@powersource.co.uk
-                          </p>
-                        </div>
-                        <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
-                          <Signeddigital />
-                          <div className="pl-6">
-                            <p className="text-lg font-medium teriary-color pb-2">
-                              Signed digitally
+                              );
+                            })}
+                            <p className="text-success-placeholder-color text-base font-normal">
+                              Email
                             </p>
-                            <p className="text-lg font-medium teriary-color">
-                              26 January 2023 at 12:56 PM
+                            <p className="text-sm md:text-lg font-normal">
+                              davidmiller@powersource.co.uk
                             </p>
                           </div>
+                          <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
+                            <Signeddigital />
+                            <div className="pl-6">
+                              <p className="text-lg font-medium teriary-color pb-2">
+                                Signed digitally
+                              </p>
+                              <p className="text-lg font-medium teriary-color">
+                                26 January 2023 at 12:56 PM
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="text-center pt-10 font-medium text-lg primary-color ">
-                        Message from the contract sender
-                      </div>
-                    </Col>
+                        <div className="text-center pt-10 font-medium text-lg primary-color ">
+                          Message from the contract sender
+                        </div>
+                      </Col>
 
-                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                        <div className="p-4">
-                          {receiverInfo.map((item, index) => {
-                            return (
-                              <div key={index}>
-                                <div className="pb-4">
-                                  <p className="text-success-placeholder-color text-base font-normal">
-                                    {item.label}
-                                  </p>
-                                  <p className="text-lg font-normal">{item.title}</p>
+                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
+                          <div className="p-4">
+                            {receiverInfo.map((item, index) => {
+                              return (
+                                <div key={index}>
+                                  <div className="pb-4">
+                                    <p className="text-success-placeholder-color text-base font-normal">
+                                      {item.label}
+                                    </p>
+                                    <p className="text-lg font-normal">{item.title}</p>
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })}
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            Email
-                          </p>
-                          <p className="text-sm md:text-lg  font-normal">
-                            davidmiller@powersource.co.uk
-                          </p>
-                        </div>
-                        <div className="flex  p-4 items-center pb-9">
-                          <Encryption />
-                          <div className="pl-6">
-                            <p className="text-lg font-medium primary-color pb-2">
-                              Signature will appear here
+                              );
+                            })}
+                            <p className="text-success-placeholder-color text-base font-normal">
+                              Email
+                            </p>
+                            <p className="text-sm md:text-lg  font-normal">
+                              davidmiller@powersource.co.uk
                             </p>
                           </div>
+                          <div className="flex  p-4 items-center pb-9">
+                            <Encryption />
+                            <div className="pl-6">
+                              <p className="text-lg font-medium primary-color pb-2">
+                                Signature will appear here
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      <div className="text-center pt-10 font-medium text-lg primary-color">
-                        updated
-                      </div>
-                    </Col>
-                  </Row>
+                        <div className="text-center pt-10 font-medium text-lg primary-color">
+                          updated
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[24, 30]}>
-                    <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Button
-                        onClick={() => setOpenSign(true)}
-                        className="w-[100%] teriary-bg-color rounded-[8px] white-color"
-                      >
-                        Sign
-                      </Button>
-                    </Col>
+                  <div id="step3">
+                    <Row gutter={[24, 30]}>
+                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                        <Button
+                          onClick={() => setOpenSign(true)}
+                          className="w-[100%] teriary-bg-color rounded-[8px] white-color"
+                        >
+                          Sign
+                        </Button>
+                      </Col>
 
-                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <Button
-                        onClick={() => setWarningModal(true)}
-                        className="suggest-changes-btn border-1 border-solid border-[#4A9D77] w-[100%] teriary-color rounded-[8px]"
-                      >
-                        Suggest Changes
-                      </Button>
-                    </Col>
-                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <Button
-                        onClick={() => setDismissModal(true)}
-                        className="w-[100%] text-error-bg-color rounded-[8px] white-color"
-                      >
-                        DismissAgreement
-                      </Button>
-                    </Col>
-                  </Row>
+                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                        <Button
+                          onClick={() => setWarningModal(true)}
+                          className="suggest-changes-btn border-1 border-solid border-[#4A9D77] w-[100%] teriary-color rounded-[8px]"
+                        >
+                          Suggest Changes
+                        </Button>
+                      </Col>
+                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                        <Button
+                          onClick={() => setDismissModal(true)}
+                          className="w-[100%] text-error-bg-color rounded-[8px] white-color"
+                        >
+                          DismissAgreement
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
                 </Col>
               </Row>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Dropdown, Typography } from 'antd';
-import { BoxWrapper, } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper, } from '../../components';
 import { ThreeDots } from '../../assets/images';
 import { useRecoilValue } from 'recoil';
 import { currentUserRoleState } from '../../store';
@@ -41,7 +41,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
         <Typography.Title level={3} className='flex justify-center'>
           {name}
         </Typography.Title>
-        <Typography.Text className='flex justify-center'>
+        <Typography.Text className='flex justify-center text-sm font-normal'>
           {profession}
         </Typography.Text>
         {role === constants.UNIVERSITY && <Typography.Text className='flex justify-center'>
@@ -56,21 +56,21 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
                 size={40}
                 className={`${status === 'present' ? 'text-success-bg-color' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
               >
-                P
+                <span className='text-base font-semibold'>P</span>
               </Avatar>
 
               <Avatar
                 size={40}
                 className={`${status === 'absent' ? 'text-error-bg-color ' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
               >
-                A
+               <span className='text-base font-semibold'>A</span>
               </Avatar>
 
               <Avatar
                 size={40}
                 className={`${status === 'leave' ? 'text-warning-bg-color' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
               >
-                L
+                <span className='text-base font-semibold'>L</span>
               </Avatar>
             </div>
         }

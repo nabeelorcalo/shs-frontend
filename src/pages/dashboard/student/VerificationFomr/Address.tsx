@@ -13,10 +13,8 @@ const Address = (props: any) => {
     <div className="university-detail">
       <Row className="university-detail-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
-          
           <div className="form-wrapper">
             <div className="main-title-wrapper">
-           
               <div className="flex">
                 <div>
                   <BackButton />
@@ -25,7 +23,6 @@ const Address = (props: any) => {
                   <Typography.Title level={1}>Address</Typography.Title>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Provide your address details
               </Typography>
@@ -52,7 +49,7 @@ const Address = (props: any) => {
                 />
               </Form.Item>
               <Row gutter={20}>
-                <Col xxl={12} xl={12}  xs={24}>
+                <Col xxl={12} xl={12} xs={24}>
                   <Form.Item
                     label="Address"
                     name="address"
@@ -70,7 +67,7 @@ const Address = (props: any) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xxl={12} xl={12}  xs={24}>
+                <Col xxl={12} xl={12} xs={24}>
                   <Form.Item
                     label="Street"
                     name="street"
@@ -90,7 +87,7 @@ const Address = (props: any) => {
                 </Col>
               </Row>
               <Row gutter={20}>
-                <Col xxl={12} xl={12}  xs={24}>
+                <Col xxl={12} xl={12} xs={24}>
                   <Form.Item
                     label="Town"
                     name="town"
@@ -108,7 +105,7 @@ const Address = (props: any) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xxl={12} xl={12}  xs={24}>
+                <Col xxl={12} xl={12} xs={24}>
                   <Form.Item
                     name="country"
                     label="Country"
@@ -126,7 +123,6 @@ const Address = (props: any) => {
                   </Form.Item>
                 </Col>
               </Row>
-
               <Form.Item
                 label="Proof of Address"
                 name="proofofaddress"
@@ -148,13 +144,13 @@ const Address = (props: any) => {
                         Support jpeg,pdf and doc files
                       </Typography>
                     </Col>
-                    <Col xxl={12} xl={12} lg={12}  md={12} sm={12}  xs={12}  className="flex justify-end" >
-                    <DocumentUpload/>
+                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12} className="flex justify-end" >
+                      <DocumentUpload />
                     </Col>
                   </Row>
                 </div>
               </Form.Item>
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xs={24} md={24} lg={12} xl={8}>
                   <Button className="btn-cancel btn-cancel-verification" >
                     Skip
@@ -163,7 +159,7 @@ const Address = (props: any) => {
                 <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
                     <Button
-                      type="primary" 
+                      type="primary"
                       className="login-form-button"
                       onClick={() => {
                         setCurrentStep(6);

@@ -1,16 +1,23 @@
 import React from "react";
 import { Col, Row, Rate, Divider } from "antd";
-import { BoxWrapper } from "../../../../components/BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../../../../components";
 import { Dots, DoucmentCard } from "../../../../assets/images";
-import DocTable from "../DocsTable/docTable";
+import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 
 const InterCards = () => {
+  const items = [
+    {
+      label: "View",
+      value: "View",
+    },
+    {
+      label: "Download",
+      value: "Download",
+    },
+  ];
   const DocsMockData = [
     {
       id: "1",
-      star: 1,
-      dots: Dots,
-      pdf: DoucmentCard,
       title: "resume.pdf",
       description: "Davide Miller",
       date: "01/07/2022",
@@ -18,9 +25,6 @@ const InterCards = () => {
     },
     {
       id: "2",
-      star: 1,
-      dots: Dots,
-      pdf: DoucmentCard,
       title: "resume.pdf",
       description: "Davide Miller",
       date: "01/07/2022",
@@ -28,9 +32,6 @@ const InterCards = () => {
     },
     {
       id: "3",
-      star: 1,
-      dots: Dots,
-      pdf: DoucmentCard,
       title: "resume.pdf",
       description: "Davide Miller",
       date: "01/07/2022",
@@ -38,9 +39,6 @@ const InterCards = () => {
     },
     {
       id: "4",
-      star: 1,
-      dots: Dots,
-      pdf: DoucmentCard,
       title: "resume.pdf",
       description: "Davide Miller",
       date: "01/07/2022",
@@ -56,8 +54,10 @@ const InterCards = () => {
               boxShadow={"box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);"}
             >
               <div className="flex justify-between">
-                <Rate count={data.star} />
-                <img src={data.dots} alt="" />
+                <Rate count={1} />
+                <DropDownNew items={items} >
+                  <img className="cursor-pointer" src={Dots} alt="" />
+                </DropDownNew>
               </div>
               <div className="text-center">
                 <img src={DoucmentCard} alt="" />
@@ -83,7 +83,6 @@ const InterCards = () => {
           </Col>
         ))}
       </Row>
-      <DocTable />
     </>
   );
 };

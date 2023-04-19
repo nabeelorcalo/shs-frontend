@@ -2,11 +2,17 @@
   position: fixed;
   overflow: auto;
   left: 0;
-  top: 80px;
+  top: 60px;
   bottom: 0;
   scrollbar-width: none;
   -moz-scrollbar: none;
-  
+
+  @media (min-width: 576px) {
+    top: 70px;
+  }
+  @media (min-width: 992px) {
+    top: 80px;
+  }
   @media (min-width: 1200px) {
     bottom: 60px;
   }
@@ -31,6 +37,7 @@
       flex: 1;
       margin-left: 20px;
       white-space: nowrap;
+      min-width: 0;
   
       .ant-typography {
         margin: 0;
@@ -38,6 +45,9 @@
         font-weight: 600;
         line-height: 1.277777778;
         color: #ffffff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .sidebar-user-profile-role {
         font-size: 14px;

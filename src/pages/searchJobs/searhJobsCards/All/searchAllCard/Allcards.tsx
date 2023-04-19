@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "antd";
-import { BoxWrapper } from "../../../../../components/BoxWrapper/boxWrapper";
+import { BoxWrapper } from "../../../../../components";
 import "./Styles.scss";
 import { useParams } from "react-router-dom";
 import CoverPhoto from "../../../../../assets/images/serachJobs/logo.png";

@@ -264,16 +264,11 @@ const NewInternships = () => {
         </Row>
         <Divider />
         <Row className="flex my-3 flex-row gap-4 md:justify-end">
-          <Button
-            type="link"
-            size="middle"
-            className="new-intern-btn white-bg-color teriary-color"
-            onClick={() => { }}
-          >
+          <Button type="link" size="middle" className="new-intern-btn white-bg-color teriary-color main-btn" onClick={() => { }}>
             Save Draft
           </Button>
-          <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Cancel</Button>
-          <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Submit</Button>
+          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { }}>Cancel</Button>
+          <Button type="primary" size="middle" className="button-tertiary main-btn" onClick={() => { }}>Submit</Button>
         </Row>
       </BoxWrapper>
     </>

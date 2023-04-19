@@ -25,12 +25,25 @@ svg {
   vertical-align: middle;
 }
 
+.placeholder-height {
+  min-height: 158px;
+}
+
 // 5 col grid
 .shs-row {
   display: flex;
   flex-wrap: wrap;
   margin-left: -15px;
   margin-right: -15px;
+}
+
+.shs-col-full {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+  flex: 0 0 auto;
 }
 
 .shs-col-5 {
@@ -578,6 +591,12 @@ svg {
             font-weight: 400;
             font-size: 16px;
             line-height: 1.5;
+          }
+        }
+
+        .ant-table-placeholder {
+          .ant-table-cell {
+            border: none;
           }
         }
 

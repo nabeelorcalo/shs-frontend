@@ -1,33 +1,43 @@
 @import '../../scss/_colors.scss';
 
 .attendance-detail-container {
-  .attendance-main-header{
-    .search-bar{
+
+  .attendance-main-header {
+    .search-bar {
       height: 48px;
     }
+
     @media only screen and (max-width:575px) {
       display: block;
-      .search-bar{
+
+      .search-bar {
         width: 100% !important;
       }
-      .attendance-filter-section{
+
+      .attendance-filter-section {
         flex-wrap: wrap;
         margin: 10px 0px;
-        .download-btn{
+
+        .download-btn {
           margin: 0px
         }
+
         @media only screen and (max-width:375px) {
           flex-basis: 50%;
         }
       }
     }
   }
-  
+
+  .payroll-card {
+    box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1) !important;
+  }
+
   .shs-page-header {
     padding-bottom: 0;
     display: flex;
     align-items: flex-start;
-  
+
     @media only screen and (max-width:500px) {
       flex-direction: column;
     }
@@ -49,7 +59,7 @@
     width: 28px;
   }
 
-  .drop-down-wrapper{
+  .drop-down-wrapper {
     padding: 0;
     width: 48px;
     height: 48px;
@@ -57,7 +67,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    div{
+
+    div {
       margin-right: 0;
     }
   }
@@ -70,10 +81,17 @@
     border-radius: 0 4px 4px 0;
   }
 
-  .ant-picker-input input {
-    visibility: hidden;
-    width: 0;
+  .ant-picker-input {
+    input {
+      visibility: hidden;
+      width: 0;
+    }
+
+    &:hover .anticon svg {
+      display: none !important;
+    }
   }
+
 
   .month-changer {
     .ant-picker-borderless {
@@ -82,15 +100,15 @@
   }
 
   .shs-row {
-    margin: 12px -15px;
+    margin: 30px -15px;
     row-gap: 30px;
   }
 
-  .card{
+  .card {
     border: 3px solid transparent;
   }
 
-  .card:hover{
+  .card:hover {
     border: 3px solid $text-input-bg-color;
   }
 
@@ -100,21 +118,41 @@
 }
 
 .company-admin-detail-container {
-  .main-cards{
-    flex-wrap: wrap;
-    @media only screen and (max-width:1125px) {
-      flex-direction: column;   
-      gap: 20px;   
+  .ant-table {
+    // th:first-child {
+    //   padding-left: 46px !important;
+    // }
+
+    // td:first-child {
+    //   padding-left: 40px;
+    //   .ant-table-row-expand-icon{
+    //     background-color: red;
+    //   }
+    // }
+    td:last-child{
+      font-weight: 600 !important;
     }
   }
+
+  .main-cards {
+    flex-wrap: wrap;
+
+    @media only screen and (max-width:1125px) {
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
   .shs-page-header {
     padding-bottom: 10px;
     display: flex;
     align-items: center;
+
     @media only screen and (max-width:768px) {
-      .shs-page-header-actions{
+      .shs-page-header-actions {
         margin-top: 20px;
       }
+
       flex-direction: column;
       align-items: flex-start;
     }

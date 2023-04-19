@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import "./style.scss";
 import { Success } from "../../assets/images";
-import { InfoCircleFilled, WarningFilled } from "@ant-design/icons";
+import { CloseCircleFilled, InfoCircleFilled, WarningFilled } from "@ant-design/icons";
 
 interface NotificationProps {
   title: any;
@@ -12,9 +12,9 @@ export const Notifications: any = (props: NotificationProps) => {
   const { type, title, description } = props;
   const typeObj: any = {
     success: <Success />,
-    warning: <WarningFilled />,
-    info: <InfoCircleFilled />,
-    error: <InfoCircleFilled />
+    warning: <WarningFilled className="text-warning-color" />,
+    info: <InfoCircleFilled className="accommodation-btn-info" />,
+    error: <CloseCircleFilled className="text-error-color" />
   }
   notification.open({
     message: (
@@ -23,7 +23,7 @@ export const Notifications: any = (props: NotificationProps) => {
     description: (
       <span className="text-sm text-normal text-secondary-color ml-3 mt-0">{description}</span>
     ),
-    duration: 10,
+    duration: 3,
     icon: typeObj[type],
   });
 };

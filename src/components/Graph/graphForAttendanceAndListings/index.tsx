@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Line } from '@ant-design/plots';
 import { attendanceData, listingsData } from './data';
 import constants from '../../../config/constants';
-import { BoxWrapper } from '../../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../../components';
 import { Typography } from 'antd';
 
 interface GraphProps {
@@ -112,9 +112,9 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
+    <div className="bg-white rounded-2xl p-5 wrapper-shadow attendance-overview">
       <div className='flex flex-row'>
-        <Typography.Title level={level} >
+        <Typography.Title level={level}>
           {title}
         </Typography.Title>
 

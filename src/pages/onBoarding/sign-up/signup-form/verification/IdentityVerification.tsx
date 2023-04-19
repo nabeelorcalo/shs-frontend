@@ -12,14 +12,16 @@ import {
 import { BackButton, IconCloseModal, SHSLogo, Step1, Step2, Step3 } from "../../../../../assets/images";
 import "../../../styles.scss";
 
+const { Option } = Select;
+
 const IdentityVerification = (props: any) => {
+  const { currentStep, setCurrentStep } = props;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const { Option } = Select;
-  const { currentStep, setCurrentStep } = props;
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
       <Select style={{ width: 70 }}>
@@ -28,6 +30,7 @@ const IdentityVerification = (props: any) => {
       </Select>
     </Form.Item>
   );
+
   return (
     <div className="identity">
       <Row className="identity-style">
@@ -41,7 +44,6 @@ const IdentityVerification = (props: any) => {
               <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton
-
                   />
                 </div>
                 <div className="mx-auto">
@@ -86,7 +88,6 @@ const IdentityVerification = (props: any) => {
                   </Form.Item>
                 </Col>
               </Row>
-
               <Form.Item
                 label="Country"
                 name="Country"
@@ -134,7 +135,6 @@ const IdentityVerification = (props: any) => {
                   </Form.Item>
                 </Col>
               </Row>
-
               <div>
                 <Typography className="text-center cursor-pointer" onClick={showModal}>
                   Why I need to verify myself?
@@ -149,9 +149,9 @@ const IdentityVerification = (props: any) => {
         centered
         width={700}
         closeIcon={<IconCloseModal onClick={() => {
-        setIsModalOpen(false)
-      }}
-      />}
+          setIsModalOpen(false)
+        }}
+        />}
         open={isModalOpen}
         footer={null}>
         <div className="verify-modal">
@@ -168,14 +168,14 @@ const IdentityVerification = (props: any) => {
               <Row gutter={40}>
                 <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
                   <center>
-                    <Step1/>
+                    <Step1 />
                     <Typography className="stepnumber pt-2 pb-2">Step 1</Typography>
                     <Typography className="stepdescription">Take a photo of your identity document</Typography>
                   </center>
                 </Col>
                 <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
                   <center>
-                    <Step2/>
+                    <Step2 />
                     <Typography className="stepnumber pt-2 pb-2">Step 2</Typography>
                     <Typography className="stepdescription">Take a self-portrait  photo
                       using your phone’s camera or
@@ -184,7 +184,7 @@ const IdentityVerification = (props: any) => {
                 </Col>
                 <Col xxl={8} xl={8} lg={8} md={8} xs={24}>
                   <center className="pt-5">
-                    <Step3/>
+                    <Step3 />
                     <Typography className="stepnumber pt-7 pb-2">Step 3</Typography>
                     <Typography className="stepdescription">Your photos and ID are verified
                       with our system</Typography>

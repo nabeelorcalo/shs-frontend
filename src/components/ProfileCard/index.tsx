@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar, Typography } from 'antd';
-import { BoxWrapper } from '../BoxWrapper/BoxWrapper';
+import { BoxWrapper } from '../../components';
 import { EmailImg, LocationImg, PhoneIcon } from '../../assets/images';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import './style.scss';
@@ -69,7 +69,7 @@ export const ProfileCard: any = (props: ProfileProps) => {
 
       <Link
         to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
-        className="profile-btn"
+        className="profile-btn font-medium"
       >
         View Profile
       </Link>

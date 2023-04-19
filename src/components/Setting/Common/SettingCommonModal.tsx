@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { Avatar, Button, Space } from "antd";
-import { BoxWrapper } from "../../BoxWrapper/BoxWrapper";
+import { BoxWrapper } from "../../../components";
 import { SettingRightArrrow } from "../../../assets/images";
 import "./SettingCommonModal.scss";
 

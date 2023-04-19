@@ -185,7 +185,7 @@ const Internships = () => {
               size="middle"
             />
           </div>
-          <div className="flex flex-row gap-4">
+          <div className="flex max-sm:flex-col flex-row gap-4">
             <FiltersButton
               label="Filters"
               onClick={() => {
@@ -251,14 +251,7 @@ const Internships = () => {
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable
-              columns={columns}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { },
-              }}
-              tableData={newTableData}
-            />
+            <GlobalTable  columns={columns} tableData={newTableData} />
           </div>
         </BoxWrapper>
       </div>
