@@ -19,11 +19,9 @@
     }
   }
 
-  .ant-select-single {
-    .ant-select-selector {
-      &:hover {
-        background: $white-bg-color !important;
-      }
+  .ant-input {
+    &:hover {
+      background: $white-bg-color !important;
     }
   }
 
@@ -39,16 +37,6 @@
     opacity: 1;
   }
 
-  .ant-switch {
-    height: 14px !important;
-    min-width: 40px;
-
-    .ant-switch-handle {
-      top: -4px;
-      width: 20px;
-    }
-  }
-
   .add-button {
     font-size: 16px;
     font-weight: 600;
@@ -61,5 +49,9 @@
       border: none !important;
     }
 
+  }
+
+  .active {
+    border: none !important;
   }
 }

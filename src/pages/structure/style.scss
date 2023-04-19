@@ -1,16 +1,25 @@
 @import "../../scss/colors.scss";
 
-.struture-wrapper {
+.structure-wrapper {
   background: #f8f8f8;
+  overflow-x: scroll;
+
+  // &::-webkit-scrollbar {
+  //   background-color: $primary-bg-color;
+  //   border-radius: 14px;
+  //   border: 3px solid $white-bg-color;
+  // }
 
   .structure {
-    overflow-x: scroll;
+    transition: top 0.50s ease;
+  }
 
-    &::-webkit-scrollbar {
-      background-color: $primary-bg-color;
-      border-radius: 10px;
-      border: 3px solid $white-bg-color;
-    }
+  .card.clicked {
+    top: 0px;
+  }
+
+  .card.undo {
+    top: 20vh;
   }
 
   .struture-card {
@@ -35,7 +44,6 @@
 
       .card-footer {
         bottom: -15px;
-        left: 25%;
         border: 1px solid $text-error-line-color;
 
         span {

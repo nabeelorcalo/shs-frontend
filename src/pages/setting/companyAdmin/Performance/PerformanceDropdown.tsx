@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LocationMore } from "../../../../assets/images";
+import { ThreeDots } from "../../../../assets/images";
 import { Dropdown, Menu } from "antd";
 
 const DropDownForPerformance = (props: any) => {
@@ -28,7 +28,7 @@ const DropDownForPerformance = (props: any) => {
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>
-        <LocationMore width="24px" />
+        <ThreeDots width="24px" />
       </div>
     </Dropdown>
   );

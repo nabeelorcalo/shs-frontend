@@ -11,8 +11,6 @@
   }
        
     }}
-
-
 }
 .setting-common-modal-footer{
   .footer-cancel-btn {
@@ -25,5 +23,13 @@
     border: 1px solid #4a9d77;
     color: #fff;
     padding: 0px 20px;
+    &:hover {
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
+    }
+
+    
   }
 }
