@@ -12,6 +12,11 @@ const Candidates = () => {
   const [timeFrame, setTimeFrame] = useState('');
   const [internship, setInternship] = useState('');
   const [download, setDownload] = useState('');
+  const interShipDropDown = ['UI UX Designer',
+    'Business Analyst',
+    'Data Scientists',
+    'Product Manager',
+    'Human Resources']
 
   return (
     <>
@@ -27,7 +32,8 @@ const Candidates = () => {
             setValue={setTimeFrame}
             requireRangePicker
           />
-          <DropDown name="Internship" options={['UI UX Designer', 'Business Analyst', 'Data Scientists', 'Product Manager', 'Human Resources']}
+          <DropDown name="Internship"
+            options={interShipDropDown}
             value={internship}
             setValue={setInternship}
           />
