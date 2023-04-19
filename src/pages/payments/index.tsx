@@ -81,7 +81,9 @@ const Payments = () => {
   const [value, setValue] = useState("")
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+  const [state, setState] = useState({
+    datePicker: false
+  })
 
   const action = useCustomHook()
   const csvAllColum = ["No.", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
@@ -218,7 +220,12 @@ const Payments = () => {
       }
     )
   })
-  console.log(value)
+  const updateOpenCloseDatePicker = () => {
+    setState((prevState) => ({
+      ...prevState,
+      datePicker: !state.datePicker
+    }))
+  }
   return (
     <>
       <PageHeader
@@ -239,8 +246,8 @@ const Payments = () => {
           <div className="flex flex-row gap-4">
             <CommonDatePicker
               name="name"
-              open={false}
-              onBtnClick={() => { setShowDatePicker(!showDatePicker) }}
+              open={state.datePicker}
+              onBtnClick={() => {}}
               picker="month"
               setOpen={function noRefCheck() { }}
               setValue={function noRefCheck() { }}

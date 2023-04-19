@@ -50,7 +50,10 @@ const Payroll = () => {
   const navigate = useNavigate()
   const [state, setState] = useState ({
     showDrawer : false,
-    isToggle: false
+    isToggle: false,
+    deparment: "",
+    time_frame: "",
+    payroll_cycle: ""
   })
 
   const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
@@ -127,7 +130,27 @@ const Payroll = () => {
       showDrawer: !state.showDrawer
     }))
   }
-
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      deparment: value
+    }))
+  }
+  const updateTimeFrame = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      time_frame: value
+    }))
+  }
+  const updatePayrollCycle = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      payroll_cycle: value
+    }))
+  }
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -162,10 +185,10 @@ const Payroll = () => {
                     <DropDown
                       name="select"
                       options={departmentOptions}
-                      setValue={() => { }}
+                      setValue={() => {updateDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.deparment}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -173,10 +196,10 @@ const Payroll = () => {
                     <DropDown
                       name="select"
                       options={timeframeOptions}
-                      setValue={() => { }}
+                      setValue={() => {updateTimeFrame(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.time_frame}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -184,10 +207,10 @@ const Payroll = () => {
                     <DropDown
                       name="select"
                       options={payrollCycleOptions}
-                      setValue={() => { }}
+                      setValue={() => {updatePayrollCycle(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.payroll_cycle}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

@@ -38,6 +38,13 @@ const InternsCompanyAdmin = () => {
   const [terminate, setTerminate] = useState(false)
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const [state, setState] = useState({
+    manager: "",
+    status: "",
+    deparment: "",
+    university: "",
+    date_of_joining: ""
+  })
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
@@ -250,6 +257,41 @@ const InternsCompanyAdmin = () => {
     )
   })
 
+  const updateManager = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      manager: value
+    }))
+  }
+  const updateStatus = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      status: value
+    }))
+  }
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      deparment: value
+    }))
+  }
+  const updateUniversity = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      university: value
+    }))
+  }
+  const updateDateOfJoining = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      date_of_joining: value
+    }))
+  }
   return (
     <>
       <PageHeader title="Interns" />
@@ -285,10 +327,10 @@ const InternsCompanyAdmin = () => {
                     <DropDown
                       name="Select"
                       options={["David miller", "Amila Clark", "Maria sanaid", "Mino Marino"]}
-                      setValue={() => { }}
+                      setValue={() => { updateManager(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.manager}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -300,10 +342,10 @@ const InternsCompanyAdmin = () => {
                         "Completed",
                         "Terminated",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateStatus(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.status}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -317,10 +359,10 @@ const InternsCompanyAdmin = () => {
                         "Administrator",
                         "HR Cordinator",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.deparment}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -334,10 +376,10 @@ const InternsCompanyAdmin = () => {
                         "Orcalo Holdings",
                         "Coding Hub",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateUniversity(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.university}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -351,10 +393,10 @@ const InternsCompanyAdmin = () => {
                         "Orcalo Holdings",
                         "Coding Hub",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => {updateDateOfJoining(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.date_of_joining}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

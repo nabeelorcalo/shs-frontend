@@ -14,6 +14,7 @@ import { Button, Col, Row } from 'antd'
 import '../../../scss/global-color/Global-colors.scss'
 import '../style.scss'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
+import UploadDocument from '../../../components/UploadDocument'
 
 const dummyResponse = {
   "statusCode": 200,
@@ -319,13 +320,38 @@ const dummyResponse = {
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate()
   const [state, setState] = useState({
-    showDrawer: false
+    showDrawer: false,
+    status: "",
+    location: "",
+    department: ""
   })
 
-  const handleDrawer = ()=>{
-    setState((prevState)=>({
+  const handleDrawer = () => {
+    setState((prevState) => ({
       ...prevState,
       showDrawer: !state.showDrawer
+    }))
+  }
+
+  const updateStatus = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      status: value
+    }))
+  }
+  const updateLocation = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      location: value
+    }))
+  }
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      department: value
     }))
   }
   return (
@@ -354,10 +380,10 @@ const InternshipsCompanyAdmin = () => {
                         'Pending',
                         'Draft'
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.status}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -370,10 +396,10 @@ const InternshipsCompanyAdmin = () => {
                         'London',
                         'Virtual'
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateLocation(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.location}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -387,10 +413,10 @@ const InternshipsCompanyAdmin = () => {
                         'Administrator',
                         'HR Cordinator'
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.department}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

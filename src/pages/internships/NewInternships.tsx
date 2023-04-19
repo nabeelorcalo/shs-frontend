@@ -61,6 +61,13 @@ const NewInternships = () => {
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
   const [remoteOnsite, setRemoteOnsite] = useState(null);
+  const [state, setState] = useState({
+    department: "",
+    frequency:"",
+    internship_duration: "",
+    location: "",
+    expected_closing_date: ""
+  })
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
@@ -74,6 +81,34 @@ const NewInternships = () => {
     console.log('radio checked', e.target.value);
     setRemoteOnsite(e.target.value);
   };
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      department: value
+    }))
+  }
+  const updateFrequency = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      frequency: value
+    }))
+  }
+  const updateLocation = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      location: value
+    }))
+  }
+  const updateInternshipDuration = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      internship_duration: value
+    }))
+  }
   return (
     <>
       <PageHeader title="New Internship" />
@@ -106,8 +141,8 @@ const NewInternships = () => {
               <DropDown
                 name="Select"
                 options={departmentOptions}
-                setValue={() => { }}
-                value=""
+                setValue={() => {updateDepartment(event)}}
+                value={state.department}
               />
             </div>
             <div className='flex flex-col gap-2'>
@@ -174,8 +209,8 @@ const NewInternships = () => {
                 <DropDown
                   name="Select"
                   options={frequencyOptions}
-                  setValue={() => { }}
-                  value=""
+                  setValue={() => {updateFrequency(event)}}
+                  value={state.frequency}
                 />
               </div>
               :
@@ -208,8 +243,8 @@ const NewInternships = () => {
                 <DropDown
                   name="Select"
                   options={locationOptions}
-                  setValue={() => { }}
-                  value=""
+                  setValue={() => {updateLocation(event)}}
+                  value={state.location}
                 />
               </div>
               :
@@ -255,8 +290,8 @@ const NewInternships = () => {
               <DropDown
                 name="Select"
                 options={durationOptions}
-                setValue={() => { }}
-                value=""
+                setValue={() => {updateInternshipDuration(event)}}
+                value={state.internship_duration}
               />
             </div>
           </Col>

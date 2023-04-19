@@ -35,7 +35,7 @@ const UploadDocument = (props: any) => {
           >
             Drag & Drop files or
             <span
-              className="text-[red] cursor-pointer"
+              className="browse-text cursor-pointer pl-1"
               onClick={() => { inputRef.current.click() }}
             >
               Browse

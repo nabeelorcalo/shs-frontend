@@ -59,7 +59,9 @@ const Internships = () => {
   // const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState({
     value: "",
-    showDrawer: false
+    showDrawer: false,
+    location: "",
+    department: ""
   })
   const PopOver = () => {
     const navigate = useNavigate()
@@ -180,6 +182,20 @@ const Internships = () => {
       showDrawer: !state.showDrawer
     }))
   }
+  const updateLocation = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      location: value
+    }))
+  }
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      department: value
+    }))
+  }
   return (
     <>
       <PageHeader title="Internships" />
@@ -212,10 +228,10 @@ const Internships = () => {
                     <DropDown
                       name="name"
                       options={["EidinBurg", "Glasgow", "London", "Virtual"]}
-                      setValue={() => { }}
+                      setValue={() => {updateLocation(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.location}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -229,10 +245,10 @@ const Internships = () => {
                         "Administrator",
                         "HR Cordinator",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => {updateDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.department}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

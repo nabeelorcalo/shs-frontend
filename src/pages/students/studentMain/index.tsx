@@ -56,9 +56,11 @@ const StudentMain = () => {
   const [openDatePicker, setOpenDatePicker] = useState(false)
   const [month, setMonth] = useState("")
   // const [showDrawer, setShowDrawer] = useState(false)
-  // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
+  const [state, setState] = useState({
+    time_period: ""
+  })
 
   const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"]
 
@@ -166,6 +168,13 @@ const StudentMain = () => {
       }
     )
   })
+  const updateTimePeriod = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      time_period: value
+    }))
+  }
   return (
     <>
       <PageHeader title="Students" />
@@ -191,15 +200,14 @@ const StudentMain = () => {
               <DropDown
                 name="this month"
                 options={[
-                  'Power Source',
-                  'DevSpot',
-                  'Abacus',
-                  'Orcalo Holdings',
-                  'Coding Hub'
+                  'This week',
+                  'Last week',
+                  'This month',
+                  'Last month',
                 ]}
-                setValue={(e: any) => { setMonth(e.target.value) }}
+                setValue={() => {updateTimePeriod(event)}}
                 showDatePickerOnVal="custom"
-                value={month}
+                value={state.time_period}
               />
             </div>
             <div className="flex flex-row gap-4">
