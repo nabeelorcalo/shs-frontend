@@ -340,6 +340,7 @@ const InternshipsCompanyAdmin = () => {
       status: value
     }))
   }
+  
   const updateLocation = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -347,6 +348,7 @@ const InternshipsCompanyAdmin = () => {
       location: value
     }))
   }
+
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -354,6 +356,7 @@ const InternshipsCompanyAdmin = () => {
       department: value
     }))
   }
+
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -396,7 +399,7 @@ const InternshipsCompanyAdmin = () => {
                         'London',
                         'Virtual'
                       ]}
-                      setValue={() => { updateLocation(event)}}
+                      setValue={() => { updateLocation(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.location}
@@ -413,7 +416,7 @@ const InternshipsCompanyAdmin = () => {
                         'Administrator',
                         'HR Cordinator'
                       ]}
-                      setValue={() => { updateDepartment(event)}}
+                      setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.department}
@@ -432,7 +435,9 @@ const InternshipsCompanyAdmin = () => {
               icon={<InternshipsIcon />}
               className="button-tertiary"
               onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-            >New Internship</Button>
+            >
+              New Internship
+            </Button>
           </Col>
         </Row>
         <div className='flex flex-col gap-7'>

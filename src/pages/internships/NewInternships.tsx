@@ -6,6 +6,7 @@ import {
   PageHeader,
   BoxWrapper,
 } from '../../components'
+
 import type { RadioChangeEvent } from 'antd';
 const { TextArea } = Input;
 const departmentOptions = [
@@ -64,23 +65,26 @@ const NewInternships = () => {
   const [state, setState] = useState({
     department: "",
     frequency:"",
-    internship_duration: "",
+    internshipDuration: "",
     location: "",
-    expected_closing_date: ""
+    expectedClosingDate: ""
   })
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPartAndFullTime(e.target.value);
   };
+
   const onChange1 = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPaidAndUnpaid(e.target.value);
   };
+
   const onChange2 = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setRemoteOnsite(e.target.value);
   };
+
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -88,6 +92,7 @@ const NewInternships = () => {
       department: value
     }))
   }
+
   const updateFrequency = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -95,6 +100,7 @@ const NewInternships = () => {
       frequency: value
     }))
   }
+
   const updateLocation = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -102,13 +108,15 @@ const NewInternships = () => {
       location: value
     }))
   }
+
   const updateInternshipDuration = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      internship_duration: value
+      internshipDuration: value
     }))
   }
+
   return (
     <>
       <PageHeader title="New Internship" />

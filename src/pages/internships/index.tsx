@@ -53,6 +53,7 @@ const tableData = [
 
   }
 ]
+
 const Internships = () => {
   const navigate = useNavigate()
   // const [value, setValue] = useState("")
@@ -63,6 +64,7 @@ const Internships = () => {
     location: "",
     department: ""
   })
+
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -89,6 +91,7 @@ const Internships = () => {
       </Dropdown>
     )
   }
+
   const columns = [
     {
       dataIndex: "no",
@@ -136,6 +139,7 @@ const Internships = () => {
       title: 'Actions'
     }
   ]
+
   const newTableData = tableData.map((item, idx) => {
     return (
       {
@@ -182,6 +186,7 @@ const Internships = () => {
       showDrawer: !state.showDrawer
     }))
   }
+
   const updateLocation = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -189,6 +194,7 @@ const Internships = () => {
       location: value
     }))
   }
+
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -196,6 +202,7 @@ const Internships = () => {
       department: value
     }))
   }
+
   return (
     <>
       <PageHeader title="Internships" />

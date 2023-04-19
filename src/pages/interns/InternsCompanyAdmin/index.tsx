@@ -43,7 +43,7 @@ const InternsCompanyAdmin = () => {
     status: "",
     deparment: "",
     university: "",
-    date_of_joining: ""
+    dateOfJoining: ""
   })
 
   const action = useCustomHook()
@@ -264,6 +264,7 @@ const InternsCompanyAdmin = () => {
       manager: value
     }))
   }
+
   const updateStatus = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -271,6 +272,7 @@ const InternsCompanyAdmin = () => {
       status: value
     }))
   }
+
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -278,6 +280,7 @@ const InternsCompanyAdmin = () => {
       deparment: value
     }))
   }
+
   const updateUniversity = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -285,13 +288,15 @@ const InternsCompanyAdmin = () => {
       university: value
     }))
   }
+
   const updateDateOfJoining = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      date_of_joining: value
+      dateOfJoining: value
     }))
   }
+
   return (
     <>
       <PageHeader title="Interns" />
@@ -342,7 +347,7 @@ const InternsCompanyAdmin = () => {
                         "Completed",
                         "Terminated",
                       ]}
-                      setValue={() => { updateStatus(event)}}
+                      setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.status}
@@ -359,7 +364,7 @@ const InternsCompanyAdmin = () => {
                         "Administrator",
                         "HR Cordinator",
                       ]}
-                      setValue={() => { updateDepartment(event)}}
+                      setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.deparment}
@@ -376,7 +381,7 @@ const InternsCompanyAdmin = () => {
                         "Orcalo Holdings",
                         "Coding Hub",
                       ]}
-                      setValue={() => { updateUniversity(event)}}
+                      setValue={() => { updateUniversity(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.university}
@@ -393,10 +398,10 @@ const InternsCompanyAdmin = () => {
                         "Orcalo Holdings",
                         "Coding Hub",
                       ]}
-                      setValue={() => {updateDateOfJoining(event)}}
+                      setValue={() => { updateDateOfJoining(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value={state.date_of_joining}
+                      value={state.dateOfJoining}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
@@ -575,8 +580,22 @@ const InternsCompanyAdmin = () => {
         }
         footer={
           <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
-            <Button type="default" size="small" className="button-default-tertiary max-sm:w-full" onClick={() => setComplete(false)}>Cancel</Button>
-            <Button type="primary" size="small" className="button-tertiary max-sm:w-full" onClick={() => { alert("hello") }}>Complete</Button>
+            <Button
+              type="default"
+              size="small"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setComplete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-tertiary max-sm:w-full"
+              onClick={() => { alert("hello") }}
+            >
+              Complete
+            </Button>
           </div>
         }
       />

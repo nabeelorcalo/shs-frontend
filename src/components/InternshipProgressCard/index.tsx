@@ -31,7 +31,16 @@ export const InternshipProgressCard = (props: any) => {
       status !== "Published" && status !== "Closed" ? {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "Internship Published", type: 'success' }) }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              Notifications({
+                title: "Success",
+                description: "Internship Published",
+                type: 'success'
+              })
+            }}
+          >
             Publish
           </a>
         ),

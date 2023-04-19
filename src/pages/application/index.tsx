@@ -79,9 +79,9 @@ const Application = () => {
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [state, setState] = useState({
-    time_frame: "",
-    nature_of_work: "",
-    type_of_work:"",
+    timeFrame: "",
+    natureOfWork: "",
+    typeOfWork:"",
     stage: ""
   })
 
@@ -232,21 +232,21 @@ const Application = () => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      time_frame: value
+      timeFrame: value
     }))
   }
   const updateNatureOfWork = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      nature_of_work: value
+      natureOfWork: value
     }))
   }
   const updateTypeOfWork = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      type_of_work: value
+      typeOfWork: value
     }))
   }
   const updateStage = (event: any) => {
@@ -305,7 +305,7 @@ const Application = () => {
                       setValue={() => {updateTimeFrame(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value={state.time_frame}
+                      value={state.timeFrame}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -322,7 +322,7 @@ const Application = () => {
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value={state.nature_of_work}
+                      value={state.natureOfWork}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -339,7 +339,7 @@ const Application = () => {
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value={state.type_of_work}
+                      value={state.typeOfWork}
                     />
                   </div>
                   <div className="flex flex-col gap-2">

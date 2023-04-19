@@ -41,7 +41,11 @@ const UploadDocument = (props: any) => {
               Browse
             </span>
           </p>
-          <p className="text-sm text-center">Supported jpeg, pdf oc doc files</p>
+          <p
+            className="text-sm text-center"
+          >
+            Supported jpeg, pdf oc doc files
+          </p>
           <input
             type="file"
             ref={inputRef}

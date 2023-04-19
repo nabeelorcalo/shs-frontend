@@ -52,8 +52,8 @@ const Payroll = () => {
     showDrawer : false,
     isToggle: false,
     deparment: "",
-    time_frame: "",
-    payroll_cycle: ""
+    timeFrame: "",
+    payrollCycle: ""
   })
 
   const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
@@ -141,14 +141,14 @@ const Payroll = () => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      time_frame: value
+      timeFrame: value
     }))
   }
   const updatePayrollCycle = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      payroll_cycle: value
+      payrollCycle: value
     }))
   }
   return (
@@ -199,7 +199,7 @@ const Payroll = () => {
                       setValue={() => {updateTimeFrame(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value={state.time_frame}
+                      value={state.timeFrame}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -210,7 +210,7 @@ const Payroll = () => {
                       setValue={() => {updatePayrollCycle(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value={state.payroll_cycle}
+                      value={state.payrollCycle}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
