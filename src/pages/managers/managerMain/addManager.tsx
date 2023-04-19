@@ -11,9 +11,8 @@ import {
   Typography,
 } from "antd";
 import { DropDown } from "../../../components";
-
-import { Option } from "antd/es/mentions";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { Option } from "antd/es/mentions";
 
 const AddManager = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -40,7 +39,7 @@ const AddManager = () => {
           </div>
         </Col>
       </Row>
-      <Divider />
+      <Divider/>
       <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-3 rounded-2xl">
         <Row>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -52,7 +51,7 @@ const AddManager = () => {
             </Typography>
           </Col>
         </Row>
-        <Divider />
+        <Divider/>
         <Form
           layout="vertical"
           initialValues={{ remember: true }}
@@ -107,7 +106,6 @@ const AddManager = () => {
                   setValue={setValue}
                 />
               </Form.Item>
-
               <Form.Item
                 label="Email"
                 name="email"
@@ -220,7 +218,6 @@ const AddManager = () => {
               </Form.Item>
             </Col>
           </Row>
-
           <Form.Item className="flex justify-center sm:justify-end items-center">
             <Button className="border-1 border-solid border-[#4a9d77] text-teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
               Cancel

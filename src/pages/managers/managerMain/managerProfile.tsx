@@ -75,7 +75,7 @@ const ManagerProfile = () => {
       <Divider />
       <Row gutter={[5, 10]}>
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
-          <div className=" pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
+          <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
               <Pf />
               <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
@@ -128,12 +128,14 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="First Name" name="firstName">
-                    <Input placeholder="Enter First Name" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter First Name"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Last Name" name="lastName">
-                    <Input placeholder="Enter Last Name" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Last Name"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -156,7 +158,8 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
-                    <Input placeholder="Enter Email" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Email"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -202,7 +205,8 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Title" name="title">
-                    <Input placeholder="Enter Title" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Title"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -223,12 +227,14 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Address" name="address">
-                    <Input placeholder="Enter Address" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter Address"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="City" name="City">
-                    <Input placeholder="Enter City" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input placeholder="Enter City"
+                      className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
