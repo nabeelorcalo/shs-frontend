@@ -1,5 +1,6 @@
 import { Button, Col, Row, Space, Typography } from "antd";
 import { managerCar } from "./managerMock";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const ManagerInfo = () => {
   return (
@@ -27,19 +28,16 @@ const ManagerInfo = () => {
                         {item.interns}
                       </Typography>
                     </div>
-                    {/* <Space className="pb-3 pr-4 pl-3 pt-3"> */}
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center ">
                     <Button className="info-dark-bg-color text-info-color-dark text-base 
                       font-semibold rounded-[8px] border-0 ">
-                        <a href="managerprofile">Profile</a>
+                        <a href={`${ROUTES_CONSTANTS.MANAGER_PROFILE}`}>Profile</a>
                       </Button>
                       <Button className="text-green-color reset-bg-color text-base 
                       ont-semibold rounded-[8px] border-0 ">
                         Reset
                       </Button>
                     </div>
-                      
-                    {/* </Space> */}
                   </center>
                 </div>
               </Col>

@@ -8,8 +8,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 1250;
-
+  z-index: 999;
   @media (max-width: 991px) {
     height: 70px;
   }
@@ -328,6 +327,8 @@
 }
 
 .ant-dropdown.user-dropdown {
+  z-index: 1290;
+  
   .ant-dropdown-arrow {
     background-image: url(../../../assets/images/header/polygon.png);
     background-repeat: no-repeat;

@@ -19,13 +19,12 @@ const Profile = () => {
           </div>
           <Divider className="border-0 border-solid border-[#D9DBE9]" />
         </Col>
-        <Col xxl={6} xl={10} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
           <StudentSideBar setShowSideViewType={setShowSideViewType} />
         </Col>
-        <Col xxl={18} xl={14} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={18} xl={16} lg={14} md={24} sm={24} xs={24}>
           {showSideViewType === "add-video" && <AddVideo />}
           {showSideViewType === "change-password" && <ChangePassword />}
-
           {showSideViewType === "student-tabs" && <StudentsTabs />}
         </Col>
       </Row>

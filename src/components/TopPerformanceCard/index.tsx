@@ -90,7 +90,7 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
           checkInTime &&
           <div className='flex flex-row items-center gap-2 ml-auto'>
             {renderIcon(isLate)}
-            <p className=''>
+            <p className='text-sm'>
               {checkInTime}
             </p>
           </div>
