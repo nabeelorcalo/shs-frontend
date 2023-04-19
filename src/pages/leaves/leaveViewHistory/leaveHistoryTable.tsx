@@ -226,7 +226,7 @@ const LeaveHistoryTable = (props: any) => {
       width: 80,
       render: (_: any, data: any) => (
         <div
-          className="status_container px-[10px] py-[3px] rounded-lg text-sm"
+          className="status_container px-[10px] py-[3px] rounded-lg "
           style={{
             backgroundColor: data.status === "Pending" ?
               "#FFC15E" : data.status === "Declined" ?
