@@ -220,7 +220,7 @@ const Detail = () => {
               <TimeTracking vartical />
             ) : (
               <ProfileCard
-                name="Mino Marina"
+                name={<p className="text-primary-color font-medium">Mino Marina</p>}
                 profession="Data Researcher"
                 email="minomarina@gmail.com"
                 phone="+44 7700 900077"

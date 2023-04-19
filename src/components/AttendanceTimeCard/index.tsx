@@ -21,10 +21,7 @@ export const AttendanceTimeCard: any = (props: TimeProps) => {
         </p>
 
         <div className='flex'>
-          <Typography.Title
-            level={3}
-            style={{ color: `${colorClass}` }}
-          >
+          <p style={{ color: `${colorClass}` }} className='font-medium text-2xl'>
             {`${time} `}
             {
               heading === "Working Days" &&
@@ -32,7 +29,7 @@ export const AttendanceTimeCard: any = (props: TimeProps) => {
                 / 25
               </span>
             }
-          </Typography.Title>
+          </p>
         </div>
       </div>
     </div>

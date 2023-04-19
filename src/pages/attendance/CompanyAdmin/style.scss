@@ -5,10 +5,47 @@
     padding-bottom: 10px;
     display: flex;
     align-items: center;
+
     @media only screen and (max-width:575px) {
       flex-direction: column;
       align-items: flex-start;
     }
+  }
+
+  .top-performance-list {
+    height: 643px;
+  }
+
+  .attendance-card {
+    border-radius: 16px;
+    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1) !important;
+
+    .cards {
+      border-radius: 8px;
+      padding: 4px;
+
+      &.Interns {
+        background-color: rgba(71, 131, 255, 0.05);
+      }
+
+      &.Present {
+        background-color: rgba(74, 157, 119, 0.05);
+      }
+
+      &.Leave {
+        background-color: rgba(255, 193, 93, 0.05);
+      }
+
+      &.Absent {
+        background-color: rgba(233, 78, 93, 0.05);
+      }
+    }
+  }
+
+
+  .attendance-overview,
+  .attendance-department {
+    height: 311px;
   }
 
   .attendance-detail-btn {
@@ -20,21 +57,24 @@
     color: $teriary-bg-color;
     border: 1px solid $teriary-bg-color;
     font-weight: 600;
+
     &:hover {
       color: $teriary-light-bg-color;
       border: 1px solid $teriary-light-bg-color;
       font-weight: 500;
     }
   }
-  .ant-typography+h1.ant-typography{
+
+  .ant-typography+h1.ant-typography {
     margin-top: 0;
     margin-bottom: 0;
     font-weight: 500;
   }
+
   // .attendance-card{
   //   width: 24%;
   // }
-  .attendance-detail-container{
+  .attendance-detail-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
