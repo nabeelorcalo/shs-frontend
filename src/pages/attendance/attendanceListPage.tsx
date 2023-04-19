@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import dayjs from "dayjs";
@@ -28,6 +28,7 @@ import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 
 const Detail = () => {
+  const id = useId();
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
 
@@ -214,8 +215,8 @@ const Detail = () => {
     setState((prevState) => ({
       ...prevState,
       departmentVal: '',
-      status:'',
-      timeFrameVal:''
+      status: '',
+      timeFrameVal: ''
     }));
   };
 
@@ -368,9 +369,9 @@ const Detail = () => {
       >
         {dummyData.map((item, index) => {
           return state.isToggle ? (
-            <AttendanceListViewCard item={item} index={index} menu={menu} />
+            <AttendanceListViewCard item={item} index={index} menu={menu} key={id} />
           ) : (
-            <AttendanceCardDetail item={item} index={index} menu={menu} />
+            <AttendanceCardDetail item={item} index={index} menu={menu} key={id} />
           );
         })}
       </div>

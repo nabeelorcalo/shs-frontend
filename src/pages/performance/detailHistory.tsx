@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useId } from "react";
 import { Link } from "react-router-dom";
 import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col } from "antd";
 // import all reusable componets from component/index.ts
@@ -16,6 +16,7 @@ import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 
 const DetailHistory = () => {
+  const id = useId();
   const role = useRecoilValue(currentUserRoleState);
   const [actionType, setActionType] = useState({ type: '', id: '' });
   const detailHistoryBreadCrumb = [
@@ -176,7 +177,6 @@ const DetailHistory = () => {
   });
 
   const onSubmitAppreciationForm = (values: any) => {
-    console.log("Form Data: ", values);
     setState(prevState => ({
       ...prevState,
       openAprreciationModal: !state.openAprreciationModal,
@@ -184,7 +184,6 @@ const DetailHistory = () => {
   }
 
   const onSubmitWarningForm = (values: any) => {
-    console.log("Form Data: ", values);
     setState(prevState => ({
       ...prevState,
       openWarnModal: !state.openWarnModal,
@@ -220,10 +219,10 @@ const DetailHistory = () => {
                 avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
               />
               {progressData.map((item: any) => (
-                <>
+                <div key={id}>
                   <p className="mt-4">{item.title}</p>
                   <Progress className="flex" percent={item.progressPercent} strokeColor={item.progressColor} />
-                </>
+                </div>
               ))}
             </BoxWrapper>
 

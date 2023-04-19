@@ -24,14 +24,16 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
-import {currentUserRoleState} from "../../store"
+import { currentUserRoleState } from "../../store"
 import "./style.scss";
 import { useRecoilValue } from "recoil";
+import { useId } from "react";
 
 const ViewPerformance = () => {
+  const id = useId();
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
-  
+
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
@@ -146,7 +148,7 @@ const ViewPerformance = () => {
           />
         </Col>
         {detailedCards.map((item: any) => (
-          <Col xs={24} md={12} xxl={6}>
+          <Col xs={24} md={12} xxl={6} key={id}>
             <EvaluationStatsCard
               name={item.title}
               percentage={user.learningObjectives}
@@ -158,7 +160,7 @@ const ViewPerformance = () => {
       {
         data.map((obj: any) => {
           return (
-            <Row gutter={[20, 10]}>
+            <Row gutter={[20, 10]} key={id}>
               <Col xs={24}>
                 <div key={obj.name} className="mt-6 mb-2">
                   <Typography.Title level={3} className="evaluation-heading">
@@ -166,8 +168,8 @@ const ViewPerformance = () => {
                   </Typography.Title>
                 </div>
               </Col>
-              {obj.values.map((child: any, index: number) =>
-                <Col xs={24} xl={12} xxl={8}>
+              {obj.values.map((child: any) =>
+                <Col xs={24} xl={12} xxl={8} key={id}>
                   <div key={child.title}>
                     <EmojiMoodRating
                       size={5}

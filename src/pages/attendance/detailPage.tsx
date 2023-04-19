@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Space, Row, Col } from "antd";
 import {
   ClockInCommon,
@@ -33,11 +33,11 @@ import { currentUserRoleState } from "../../store";
 
 const Detail = () => {
   const role = useRecoilValue(currentUserRoleState);
-
+  const id = useId();
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
-    { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
-    { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
+    { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
+    { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const action = useCustomHook();
   const timeFrameOptions = [
@@ -204,8 +204,8 @@ const Detail = () => {
               className="icon-btn download-btn"
               icon={<DownlaodFileIcon />}
               onClick={() => {
-                action.pdf('historyDetail' ,tableColumns, tableData);
-                Notifications({title:"Success", description:"Download Done",type:'success'})
+                action.pdf('historyDetail', tableColumns, tableData);
+                Notifications({ title: "Success", description: "Download Done", type: 'success' })
               }}
             />
           </div>
@@ -236,9 +236,9 @@ const Detail = () => {
               <BoxWrapper className="flex mb-6 main-cards">
                 {state.timeData.map((item: any, index) => {
                   const { color, icon }: any = getColorAndIcon(item.heading);
-
                   return (
                     <AttendanceTimeCard
+                      key={id}
                       Icon={icon}
                       heading={item.heading}
                       time={item.time}

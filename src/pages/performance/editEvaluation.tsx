@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Col, Row, Typography } from "antd";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -29,6 +29,7 @@ import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
+  const id = useId();
   const action = useCustomHook();
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
@@ -138,7 +139,7 @@ const ViewPerformance = () => {
           className='icon-btn'
           onClick={() => {
             action.downloadPdf(header, tableData);
-            Notifications({title:"Success", description:"Download Done",type:'success'})
+            Notifications({ title: "Success", description: "Download Done", type: 'success' })
           }}
           icon={<DownloadIconWithBg />}
         />
@@ -152,7 +153,7 @@ const ViewPerformance = () => {
           />
         </Col>
         {detailedCards.map((item: any) => (
-          <Col xs={24} md={12} xxl={6}>
+          <Col xs={24} md={12} xxl={6} key={id}>
             <EvaluationStatsCard
               name={item.title}
               percentage={user.learningObjectives}
@@ -164,7 +165,7 @@ const ViewPerformance = () => {
       {
         state.data.map((obj: any) => {
           return (
-            <Row gutter={[20,10]}>
+            <Row gutter={[20, 10]} key={id}>
               <Col xs={24}>
                 <div key={obj.name} className="mt-6 mb-2">
                   <Typography.Title level={3} className="evaluation-heading">
@@ -172,8 +173,8 @@ const ViewPerformance = () => {
                   </Typography.Title>
                 </div>
               </Col>
-              {obj.values.map((child: any, index: number) =>
-                <Col xs={24} xl={12} xxl={8}>
+              {obj.values.map((child: any) =>
+                <Col xs={24} xl={12} xxl={8} key={id}>
                   <div key={child.title}>
                     <EmojiMoodRating
                       size={5}

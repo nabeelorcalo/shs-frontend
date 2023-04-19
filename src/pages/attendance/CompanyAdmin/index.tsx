@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "antd/es/grid";
 import dayjs from "dayjs";
@@ -9,6 +9,7 @@ import { AttendanceDepartmentData } from "../../../components/ChartsOfGraphs/cha
 import "./style.scss";
 
 const CompanyAdminAttendance = () => {
+  const id = useId();
   const [state, setState] = useState({
     graphSelectedMonth: dayjs().format('MMMM'),
     cardsData: [
@@ -143,7 +144,7 @@ const CompanyAdminAttendance = () => {
         {
           state.cardsData.map((item: any) => {
             return (
-              <Col xxl={6} xl={6} md={12} sm={24} xs={24}>
+              <Col xxl={6} xl={6} md={12} sm={24} xs={24} key={id}>
                 <AttendanceCard
                   title={item.name}
                   count={item.count}
@@ -160,7 +161,7 @@ const CompanyAdminAttendance = () => {
                 title="Attendance Overview"
                 graphName="attendance"
                 level={4}
-                styling={{height:'235px'}}
+                styling={{ height: '235px' }}
               />
             </Col>
             <Col xs={24}>
