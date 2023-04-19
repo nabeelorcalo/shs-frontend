@@ -65,48 +65,6 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const listingInitValues = {
-  addressOne: "",
-  addressTwo: "",
-  postalCode: "",
-  IsFurnished: "",
-  propertyType: "",
-  totalBedrooms: "",
-  bedroomsForRent: "",
-  totalBathrooms: "",
-  hasAirConditioning: "",
-  hasHeating: "",
-  hasWaterHeating: "",
-  buildingHas: [],
-  PropertyHas: [],
-  propertySize: "",
-  bedroomPhotos: [],
-  bedType: "",
-  allowedTwoPeople: "",
-  kindOfAmenities: [],
-  paymentMethod: "",
-  securityDeposit: "",
-  kindOfDeposit: "",
-  minimumStay: "",
-  allBillsIncluded: "",
-  chargeElectricityBill: "",
-  chargeWaterBill: "",
-  chargeGasBill: "",
-  specificGender: "",
-  maxAge: "",
-  tenantsKind: "",
-  couplesAllowed: "",
-  tenantsRegisterAddress: "",
-  allowedPets: "",
-  allowedMusic: "",
-  identityProof: false,
-  occupationProof: false,
-  incomeProof: false,
-  contractType: "",
-  cancellationPolicy: "",
-  selectDocument: []
-}
-
 
 
 const Listings = () => {
@@ -115,7 +73,9 @@ const Listings = () => {
   const {getListings, createListing} = useListingsHook()
   const allProperties = useRecoilValue(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false)
-  const [form] = Form.useForm()
+  const [form] = Form.useForm();
+  const mediaValue = Form.useWatch('media', form);
+  console.log("mediaValue:: ", mediaValue)
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false)
@@ -126,7 +86,7 @@ const Listings = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [listingValues, setListingValues] = useState(listingInitValues)
+  const [listingValues, setListingValues] = useState({})
 
   const tableColumns: ColumnsType<DataType> = [
     {
@@ -213,6 +173,11 @@ const Listings = () => {
     getListings(setLoadingAllProperties)
   }, [])
 
+  useEffect(() => {
+    console.log('::: ', form.getFieldsValue())
+    
+  }, [modalAddListingOpen])
+
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -222,7 +187,6 @@ const Listings = () => {
         showNotification("error", constants.NOTIFICATION_DETAILS.error);
       } else {
         showNotification("success", constants.NOTIFICATION_DETAILS.success);
-        setListingValues(listingInitValues)
       }
     },
     [form]
@@ -249,7 +213,8 @@ const Listings = () => {
   }
 
   function closeModalAddListing() {
-    setListingValues(listingInitValues);
+    console.log('reset::: ')
+    form.resetFields();
     setModalAddListingOpen(false);
   }
 
@@ -418,16 +383,16 @@ const Listings = () => {
               <Checkbox.Group>
                 <Row gutter={30}>
                   <Col xs={6}>
-                    <Checkbox value="buildingElevator">Elevator</Checkbox>
+                    <Checkbox value="elevator">Elevator</Checkbox>
                   </Col>
                   <Col xs={6}>
-                    <Checkbox value="buildingParking">Parking</Checkbox>
+                    <Checkbox value="parking">Parking</Checkbox>
                   </Col>
                   <Col xs={6}>
-                    <Checkbox value="buildingPoolAccess">Pool Access</Checkbox>
+                    <Checkbox value="poolAccess">Pool Access</Checkbox>
                   </Col>
                   <Col xs={6}>
-                    <Checkbox value="buildingGYM">GYM</Checkbox>
+                    <Checkbox value="gym">GYM</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
@@ -441,22 +406,22 @@ const Listings = () => {
               <Checkbox.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={8}>
-                    <Checkbox value="propertyBalcony">Balcony</Checkbox>
+                    <Checkbox value="balcony">Balcony</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="propertyEquippedKitchen">Equipped Kitchen</Checkbox>
+                    <Checkbox value="equippedKitchen">Equipped Kitchen</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="propertyClothesDryer">Clothes Dryer</Checkbox>
+                    <Checkbox value="clothesDryer">Clothes Dryer</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="propertyDishWasher">Dish Washer</Checkbox>
+                    <Checkbox value="dishWasher">Dish Washer</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="propertyOven">Oven</Checkbox>
+                    <Checkbox value="oven">Oven</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="propertyWashingMachine">Washing machine</Checkbox>
+                    <Checkbox value="washingMachine">Washing machine</Checkbox>
                   </Col>
                 </Row>
               </Checkbox.Group>
@@ -464,7 +429,7 @@ const Listings = () => {
           </Col>
           <Col xs={24}>
             <Form.Item name="propertySize" label="Property Size(optional)">
-              <Input placeholder="Placeholder" />
+              <InputNumber placeholder="Placeholder" />
             </Form.Item>
           </Col>
         </Row>
@@ -481,40 +446,45 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${listingValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${mediaValue ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
-                  name="bedroomPhotos"
+                  name="media"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                 >
-                  <Upload
-                    name="logo"
-                    action="/upload.do"
-                    listType={"picture-card"}
-                    showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
-                  >
-                    {listingValues.bedroomPhotos?.length ? (
-                      <div className="upload-device-btn">
-                        <IconAddUpload />
-                        <div className="label">Upload from device</div>
-                      </div>
-                    ) : (
-                      <div className="button-upload-from-device">
-                        <Button className="button-tertiary">Upload from device</Button>
-                      </div>
-                    )}
-                  </Upload>
+                  {({getFieldValue}) => (
+                    <Upload
+                      name="logo"
+                      action="/upload.do"
+                      listType={"picture-card"}
+                      showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
+                    >
+                      {!mediaValue && (
+                        <div className="upload-device-btn">
+                          <IconAddUpload />
+                          <div className="label">Upload from device</div>
+                        </div>
+                      )}
+                      {!mediaValue && (
+                          <div className="button-upload-from-device">
+                            <Button className="button-tertiary">Upload from device</Button>
+                          </div>
+                        )
+                      }
+                    </Upload>
+                  )}
+                  
                 </Form.Item>
-                {listingValues.bedroomPhotos?.length === 0 &&
+                {/* {!mediaValue && */}
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
                       <Button type="text" icon={<IconLink />} onClick={() => setUploadURL(true)}>Enter URL</Button>
                     </div>
                   </div>
-                }
+                {/* } */}
                 <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
                   <div className="enter-url-form-field">
                     <Form.Item name={'enterUrl'} label="Enter URL">
@@ -914,7 +884,14 @@ const Listings = () => {
   });
 
   function next() {
+    setListingValues((prev) => {
+      return {
+        ...prev,
+        ...form.getFieldsValue()
+      }
+    })
     setCurrent(current + 1);
+    console.log("Next::: ", listingValues)
   };
 
   function prev() {
@@ -971,25 +948,29 @@ const Listings = () => {
         className="modal-add-listings"
         open={modalAddListingOpen}
         onCancel={closeModalAddListing}
-        closable={false}
+        closable={true}
         footer={null}
         width="100%"
         mask={false}
         maskClosable={false}
       >
         <Form
+          form={form}
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
-          initialValues={listingValues}
+          // initialValues={{media: []}}
+          preserve={true}
           onValuesChange={(_, values) => {
             let tempValues = {}
             tempValues = {
               ...tempValues,
               ...values
             }
-            setListingValues(prevState => ({ ...prevState, ...tempValues }))
-            console.log('init:: ', listingValues)
+            // setListingValues(prevState => ({ ...prevState, ...tempValues }))
+            console.log('init:: ', values)
+            // console.log('console.log(listingInitValues)::', listingValues)
+            console.log("mediaValue:: ", mediaValue)
           }}
           onFinish={submitAddListing}
         >
