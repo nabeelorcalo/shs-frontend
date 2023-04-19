@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1, CalendarPickerIcon } from '../../assets/images';
 import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
 
 interface MonthChangerProps {
   month: any,
