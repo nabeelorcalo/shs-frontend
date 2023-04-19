@@ -1,5 +1,5 @@
-import { Drawer, Row, Col } from 'antd';
 import { ReactNode } from 'react';
+import { Drawer, Row, Col } from 'antd';
 import DrawerTabs from './drawerTabs';
 import IndividualDetails from './individualDetails';
 import { DrawerWidth } from '../../components';

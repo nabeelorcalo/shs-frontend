@@ -54,7 +54,7 @@ const CandidateTable = (props: any) => {
       title: 'Internship',
       render: (_: any, data: any) => <div className='capitalize '>
         <p>{data.internship}</p>
-        <p className='text-sm' style={{ color: "#A0A3BD" }}>{data.type}</p>
+        <p className='text-sm clr'>{data.type}</p>
       </div>
     },
     {
@@ -70,7 +70,7 @@ const CandidateTable = (props: any) => {
       align: 'center',
       render: (_: any, data: any) =>
         <DropDownNew items={items}>
-          <div className='flex items-center justify-center gap-2' style={{color:"#A0A3BD"}}>
+          <div className='flex items-center justify-center gap-2 clr'>
             {data.rating === 0.0 ? <StarOutlinedIcon cursor={'pointer'} /> : <StarFilledIcon cursor={'pointer'} />}
             <span className=''>{data.rating.toFixed(1,0)}</span>
           </div>

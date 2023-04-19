@@ -13,8 +13,6 @@ const Candidates = () => {
   const [internship, setInternship] = useState('');
   const [download, setDownload] = useState('');
 
-
-
   return (
     <>
       <PageHeader title="Candidates" />
