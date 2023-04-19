@@ -1,4 +1,3 @@
-import { useState } from "react";
 import AttendanceList from '../attendanceListPage';
 import "../style.scss";
 

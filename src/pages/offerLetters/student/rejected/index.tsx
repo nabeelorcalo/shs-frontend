@@ -86,7 +86,7 @@ const RejectedOfferLetter = () => {
   return (
     <div className="rejected">
       <div>
-        <Breadcrumb breadCrumbData={tempArray} bordered={true} />
+        <Breadcrumb breadCrumbData={tempArray}/>
       </div>
 
       <BoxWrapper>
@@ -113,6 +113,7 @@ const RejectedOfferLetter = () => {
               Offer Letter
             </div>
           </Col>
+
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <div className="scroll">

@@ -1,6 +1,4 @@
 import { Typography } from 'antd';
-import React from 'react';
-import { Absent } from '../../assets/images';
 import { BoxWrapper } from '../../components';
 
 interface AttendanceProps {
@@ -14,7 +12,7 @@ export const AttendanceCard: any = (props: AttendanceProps) => {
   const { title, count, avatar, className } = props
 
   return (
-    <BoxWrapper className='flex items-center gap-2 attendance-card'>
+    <BoxWrapper className='flex items-center gap-4 attendance-card'>
       {avatar}
 
       <Typography.Text >
@@ -23,7 +21,7 @@ export const AttendanceCard: any = (props: AttendanceProps) => {
 
       <Typography.Title
         level={1}
-        className="ml-auto"
+        className="ml-auto text-primary-color"
       >
         {count}
       </Typography.Title>
