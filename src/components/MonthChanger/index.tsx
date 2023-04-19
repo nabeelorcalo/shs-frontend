@@ -25,7 +25,6 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
       currentDate: dateString,
     }))
   }
-
   return (
     <div className='flex items-center ml-auto mb-4 month-changer'>
       {

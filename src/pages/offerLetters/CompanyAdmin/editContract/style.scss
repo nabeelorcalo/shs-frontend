@@ -1,0 +1,17 @@
+@import "../../../../scss/colors";
+
+.system-admin-offer-letter-edit-main {
+  .system-admin-offer-letter-btn {
+    &:hover {
+      color: $white-bg-color !important;
+      border: none !important;
+    }
+  }
+
+  .system-admin-offer-letter-cancel-btn {
+    &:hover {
+      color: $teriary-bg-color !important;
+      border: 1px solid $teriary-bg-color !important;
+    }
+  }
+}
