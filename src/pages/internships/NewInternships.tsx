@@ -299,7 +299,7 @@ const NewInternships = () => {
                 name="Select"
                 options={durationOptions}
                 setValue={() => {updateInternshipDuration(event)}}
-                value={state.internship_duration}
+                value={state.internshipDuration}
               />
             </div>
           </Col>

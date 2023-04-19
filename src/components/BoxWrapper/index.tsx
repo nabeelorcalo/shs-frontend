@@ -4,7 +4,7 @@ interface Props {
   id?: any
   className?: string
   children?: ReactNode
-  boxShadow?: boolean
+  boxShadow?: any
   borderLeft?: string
   rest?: any
 }
