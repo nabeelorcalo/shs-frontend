@@ -10,6 +10,17 @@ import { settingLocationState } from "../../../../store";
 import { useRecoilState } from "recoil";
 const { Text } = Typography;
 
+const demoData = [
+  {
+    name:"London",
+    address:"United Kingdom"
+  },
+  {
+    name:"Bistol",
+    address:"United Kingdom"
+  },
+]
+
 const SettingLocation: React.FC = () => {
   const action = useCustomHook();
   const settingLocation = useRecoilState(settingLocationState)
@@ -43,16 +54,28 @@ const SettingLocation: React.FC = () => {
         </NavLink>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {settingLocation[0]?.map((data: any, index) => {
+        {/* {settingLocation[0]?.map((data: any, index) => { */}
+        {demoData?.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
               <BoxWrapper className="p-3">
                 <div className="flex">
                   <CardLocation />
-                  <div className="flex px-3 justify-between mt-1 w-full">
-                    <div className="flex flex-col">
-                      <Text className="text-sm font-normal md:text-lg md:font-semibold">{data.name}</Text>
-                      <Text className="text-sm sm:text-base sm:font-normal text-teriary-color"> {data.address}</Text>
+                  <div className="flex  mt-1 w-full ">
+                    <div className=" px-2 flex  w-full flex-col">
+                      <div className="flex justify-between ">
+                        <Text className="text-lg md:font-semibold">{data.name}</Text>
+                        <span className="float-right cursor-pointer">
+                          <DropDownForSetting
+                            link={`${ROUTES_CONSTANTS.ADD_LOCATION}`}
+                            showDeleteModal={showDeleteModal}
+                            setShowDeleteModal={setShowDeleteModal}
+                            id={data?.id}
+                            SetId={SetId}
+                          />
+                        </span>
+                      </div>
+                      <Text className="font-normal text-teriary-color"> {data.address}</Text>
                       <Space className="flex py-2">
                         <LocationPeople />
                         <Text className="font-normal  text-xs p-0 m-0">
@@ -61,15 +84,6 @@ const SettingLocation: React.FC = () => {
                         </Text>
                       </Space>
                     </div>
-                    <span className="float-right cursor-pointer w-[40px]">
-                      <DropDownForSetting
-                        link={`${ROUTES_CONSTANTS.ADD_LOCATION}`}
-                        showDeleteModal={showDeleteModal}
-                        setShowDeleteModal={setShowDeleteModal}
-                        id={data?.id}
-                        SetId={SetId}
-                      />
-                    </span>
                   </div>
                 </div>
               </BoxWrapper>
