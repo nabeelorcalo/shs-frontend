@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Row, Form, Space } from 'antd';
+import { Button, Col, Row, Form, Space, Select } from 'antd';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
@@ -20,31 +20,52 @@ const ManagerMain = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
 
-  const searchValue = () => {};
+  const searchValue = () => { };
+  
   const handleClick = (buttonIndex:any) => {
     setActiveButton(buttonIndex);
   }
 
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="manager-main">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
-      <Form layout="vertical"> 
-          <Form.Item label="Status" name="status">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+      <Form layout="vertical">
+        <div className="mb-6">
+          <label>Status</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "DarrelSteward", label: "DarrelSteward" },
+                { value: "Inactive", label: "Inactive" },
+               
+              ]}
             />
-          </Form.Item>
-          <Form.Item label="Department" name="department">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          </div>
+        </div>
+        <div className="mb-6">
+          <label>Department</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+                { value: "Publish", label: "Publish" },
+               
+              ]}
             />
-          </Form.Item>
+          </div>
+        </div>
+
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">

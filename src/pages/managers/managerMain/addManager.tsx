@@ -219,14 +219,14 @@ const AddManager = () => {
             </Col>
           </Row>
           <Form.Item className="flex justify-center sm:justify-end items-center">
-            <Button className="border-1 border-solid border-[#4a9d77] text-teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
+            <Button className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
               Cancel
             </Button>
             <Button
               htmlType="submit"
-              className="text-teriary-bg-color white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+              className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
             >
-              <a href={`${ROUTES_CONSTANTS.MANAGERS}`}>Submit</a>
+              <a href={`${ROUTES_CONSTANTS.MANAGERS}`}>Save</a>
             </Button>
           </Form.Item>
         </Form>

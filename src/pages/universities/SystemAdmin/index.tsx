@@ -3,7 +3,7 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Menu, Row, Space, } from "antd";
+import { Button, Col, Form, Menu, Row, Space,Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -67,7 +67,11 @@ const UniveristyMain = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => {};
+  const searchValue = () => { };
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   const columns = [
     {
@@ -159,32 +163,48 @@ const UniveristyMain = () => {
         onClose={() => setOpenDrawer(false)}
       >
         <Form layout="vertical">
-          <Form.Item label="Status" name="status">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+            <div className="mb-6">
+          <label>Status</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+               
+              ]}
             />
-          </Form.Item>
-          <Form.Item label="City" name="city">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          </div>
+        </div>
+        <div className="mb-6">
+          <label>City</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "London", label: "London" },
+                { value: "Lacaster", label: "Lacaster" },
+                { value: "Birmingham", label: "Birmingham" },
+                { value: "Glassgow", label: "Glassgow" },
+               
+              ]}
             />
-          </Form.Item>
+          </div>
+        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-                Cancel
+                Reset
               </Button>
               <Button
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
-                Submit
+                Apply
               </Button>
             </Space>
           </div>

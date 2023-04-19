@@ -4,7 +4,7 @@ import {
   NodeExpandOutlined,
   RightOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Row, Menu, Form, Space } from "antd";
+import { Button, Col, Row, Menu, Form, Space, Select } from 'antd';
 import { DropDown, SearchBar, GlobalTable, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -129,7 +129,12 @@ const tableData = [
 const PropertyAgentTable = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => {};
+  const searchValue = () => { };
+  
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="property-agent-table">
       <Drawer
@@ -137,27 +142,43 @@ const PropertyAgentTable = () => {
         title=" Filters"
         onClose={() => setOpenDrawer(false)}
       >
-        <Form layout="vertical">
-          <Form.Item label="Status" name="status">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+       <Form layout="vertical">
+        <div className="mb-6">
+          <label>Agent</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "DarrelSteward", label: "DarrelSteward" },
+                { value: "Inactive", label: "Inactive" },
+               
+              ]}
             />
-          </Form.Item>
-          <Form.Item label="City" name="city">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          </div>
+        </div>
+        <div className="mb-6">
+          <label>Status</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+                { value: "Publish", label: "Publish" },
+               
+              ]}
             />
-          </Form.Item>
+          </div>
+        </div>
+
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-                Cancel
+                Reset
               </Button>
               <Button
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"

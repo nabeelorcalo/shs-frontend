@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   CloseCircleFilled,
   EllipsisOutlined,
-  NodeExpandOutlined,
   RightOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -11,7 +10,6 @@ import {
   Button,
   Checkbox,
   Col,
-  Divider,
   Form,
   Input,
   Menu,
@@ -67,6 +65,10 @@ const AdminManagement = () => {
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
   const [isdate1, setIsDate1] = useState(false);
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -167,14 +169,23 @@ const AdminManagement = () => {
               setValue={setValue}
             />
           </Form.Item>
-          <Form.Item label="City" name="city">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          <div className="mb-6">
+          <label>City</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "London", label: "London" },
+                { value: "Lacaster", label: "Lacaster" },
+                { value: "Birmingham", label: "Birmingham" },
+                { value: "Glassgow", label: "Glassgow" },
+               
+              ]}
             />
-          </Form.Item>
+          </div>
+        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
