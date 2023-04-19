@@ -97,7 +97,7 @@ const PendingViewDetailOfferLetter = () => {
             <div className="scroll-offer-letter-company-admin">
               <Row gutter={[0, 30]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[10, 24]}>
+                  <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
                         {senderInfo.map((item, index) => {
@@ -159,7 +159,7 @@ const PendingViewDetailOfferLetter = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[10, 24]}>
+                  <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
                         <div className="p-4">
@@ -187,10 +187,10 @@ const PendingViewDetailOfferLetter = () => {
                         <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
                           <Signeddigital />
                           <div className="pl-6">
-                            <p className="text-lg font-medium green-color pb-2">
+                            <p className="text-lg font-medium text-green-color pb-2">
                               Signed digitally
                             </p>
-                            <p className="text-lg font-medium green-color">
+                            <p className="text-lg font-medium text-green-color">
                               26 January 2023 at 12:56 PM
                             </p>
                           </div>
