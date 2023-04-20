@@ -62,7 +62,7 @@ const MainDashboard = () => {
       </Row>
 
       <Row gutter={[50,20]} className="mt-5">
-        <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={12} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
@@ -73,7 +73,7 @@ const MainDashboard = () => {
             />
           </div>
         </Col>
-        <Col xxl={6} xl={12} lg={24} md={24} sm={24} xs={24} className="recent-card">
+        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-card">
           <div >
             <Typography className="recent-card-typo">
               Recent Activities
@@ -124,7 +124,7 @@ const MainDashboard = () => {
             </div>
           </div>
         </Col>
-        <Col xxl={6} xl={24} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
