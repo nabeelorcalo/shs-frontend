@@ -18,7 +18,7 @@ import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 
-const PopOver:any = () => {
+const PopOver: any = () => {
   const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
@@ -36,9 +36,9 @@ const PopOver:any = () => {
     }
   ];
   return (
-      <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
-        <More />
-      </Dropdown>
+    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
+      <More />
+    </Dropdown>
   );
 };
 
@@ -48,8 +48,13 @@ const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
 
 const Payroll = () => {
   const navigate = useNavigate()
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
+  const [state, setState] = useState ({
+    showDrawer : false,
+    isToggle: false,
+    deparment: "",
+    timeFrame: "",
+    payrollCycle: ""
+  })
 
   const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
 
@@ -112,6 +117,40 @@ const Payroll = () => {
     )
   })
 
+  const handleToggle = () => {
+    setState((prevState) => ({
+      ...prevState,
+      isToggle: !state.isToggle,
+    }));
+  };
+
+  const handleDrawer = ()=>{
+    setState((prevState)=>({
+      ...prevState,
+      showDrawer: !state.showDrawer
+    }))
+  }
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      deparment: value
+    }))
+  }
+  const updateTimeFrame = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      timeFrame: value
+    }))
+  }
+  const updatePayrollCycle = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      payrollCycle: value
+    }))
+  }
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -131,16 +170,12 @@ const Payroll = () => {
           <div className="flex flex-row gap-4 flex-wrap">
             <FiltersButton
               label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+              onClick={handleDrawer}
             />
             <Drawer
               closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
+              open={state.showDrawer}
+              onClose={handleDrawer}
               title="Filters"
             >
               <React.Fragment key=".0">
@@ -150,10 +185,10 @@ const Payroll = () => {
                     <DropDown
                       name="select"
                       options={departmentOptions}
-                      setValue={() => { }}
+                      setValue={() => {updateDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.deparment}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -161,10 +196,10 @@ const Payroll = () => {
                     <DropDown
                       name="select"
                       options={timeframeOptions}
-                      setValue={() => { }}
+                      setValue={() => {updateTimeFrame(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.timeFrame}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -172,22 +207,37 @@ const Payroll = () => {
                     <DropDown
                       name="select"
                       options={payrollCycleOptions}
-                      setValue={() => { }}
+                      setValue={() => {updatePayrollCycle(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.payrollCycle}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button
+                      type="default"
+                      size="middle"
+                      className="button-default-tertiary"
+                      onClick={() => { }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="button-tertiary"
+                      onClick={() => { }}
+                    >
+                      Apply
+                    </Button>
                   </div>
                 </div>
               </React.Fragment>
             </Drawer>
             <ToggleButton
-              isToggle={isToggle}
-              onTogglerClick={() => { setIsToggle(!isToggle) }}
+              isToggle={state.isToggle}
+              onTogglerClick= {handleToggle}
+              // onTogglerClick={() => { setIsToggle(!isToggle) }}
               FirstIcon={TableViewIcon}
               LastIcon={CardViewIcon}
               className='w-[88px]'
@@ -207,9 +257,9 @@ const Payroll = () => {
         </div>
         <div className="pt-3">
           {
-            isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+            state.isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
-                payrollData.map((items: any, index: number) => {
+                newTableData.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
                   return (

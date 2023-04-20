@@ -13,7 +13,9 @@ import Drawer from '../../../components/Drawer'
 import { Button, Col, Row } from 'antd'
 import '../../../scss/global-color/Global-colors.scss'
 import '../style.scss'
-const mapArray: any = [1, 2, 3, 4]
+import { ROUTES_CONSTANTS } from '../../../config/constants'
+import UploadDocument from '../../../components/UploadDocument'
+
 const dummyResponse = {
   "statusCode": 200,
   "message": "Success",
@@ -317,11 +319,48 @@ const dummyResponse = {
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate()
-  const [showDrawer, setShowDrawer] = useState(false)
+  const [state, setState] = useState({
+    showDrawer: false,
+    status: "",
+    location: "",
+    department: ""
+  })
+
+  const handleDrawer = () => {
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: !state.showDrawer
+    }))
+  }
+
+  const updateStatus = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      status: value
+    }))
+  }
+  
+  const updateLocation = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      location: value
+    }))
+  }
+
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      department: value
+    }))
+  }
+
   return (
     <>
       <PageHeader bordered title="Internships" />
-      <div className="flex flex-col gap-5 internship-details">
+      <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
           <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" size="middle" />
@@ -329,9 +368,9 @@ const InternshipsCompanyAdmin = () => {
           <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
             <FiltersButton
               label="Filters"
-              onClick={() => { setShowDrawer(true) }}
+              onClick={handleDrawer}
             />
-            <Drawer closable open={showDrawer} onClose={() => { setShowDrawer(false) }} title="Filters" >
+            <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <React.Fragment key=".0">
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
@@ -344,10 +383,10 @@ const InternshipsCompanyAdmin = () => {
                         'Pending',
                         'Draft'
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.status}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -360,10 +399,10 @@ const InternshipsCompanyAdmin = () => {
                         'London',
                         'Virtual'
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateLocation(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.location}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -377,10 +416,10 @@ const InternshipsCompanyAdmin = () => {
                         'Administrator',
                         'HR Cordinator'
                       ]}
-                      setValue={() => { }}
+                      setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.department}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
@@ -391,36 +430,38 @@ const InternshipsCompanyAdmin = () => {
               </React.Fragment>
             </Drawer>
             <Button
+              type="primary"
               size="middle"
-              className="flex gap-2 teriary-bg-color white-color main-btn"
-              onClick={() => { navigate("new-internship"); }}
+              icon={<InternshipsIcon />}
+              className="button-tertiary"
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
             >
-              <InternshipsIcon />
               New Internship
             </Button>
           </Col>
         </Row>
-        {
-          dummyResponse.data.map((item: any, idx: any) => {
-            return (
-              <BoxWrapper key={idx}>
-                <InternshipProgressCard
-                  title={item.title}
-                  status={item.status}
-                  department={item.department}
-                  internType={item.internType}
-                  postedBy={item.postedBy}
-                  locationType={item.locationType}
-                  locationName={item.locationName}
-                  createdAt={item.createdAt}
-                  closingDate={item.closingDate}
-                  interns={item.interns}
-
-                />
-              </BoxWrapper>
-            )
-          })
-        }
+        <div className='flex flex-col gap-7'>
+          {
+            dummyResponse.data.map((item: any, idx: any) => {
+              return (
+                <BoxWrapper key={idx} boxShadow>
+                  <InternshipProgressCard
+                    title={item.title}
+                    status={item.status}
+                    department={item.department}
+                    internType={item.internType}
+                    postedBy={item.postedBy}
+                    locationType={item.locationType}
+                    locationName={item.locationName}
+                    createdAt={item.createdAt}
+                    closingDate={item.closingDate}
+                    interns={item.interns}
+                  />
+                </BoxWrapper>
+              )
+            })
+          }
+        </div>
       </div>
     </>
   )

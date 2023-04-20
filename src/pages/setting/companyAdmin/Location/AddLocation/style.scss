@@ -3,32 +3,58 @@
 .add-location {
   font-family: outfit !important;
 
-  .ant-form-item .ant-form-item-control-input-content {
-    .ant-input {
+  .post-code {
+    .search-bar {
       background: $text-input-bg-color;
-      border: 2px solid $white-bg-color ;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      opacity: 1;
 
       &:hover {
-        background: $white-bg-color;
-        border: 2px solid $input-hover-color;
+        border: 1px solid $input-hover-color !important;
+        opacity: 1;
+        background-color: $white-bg-color;
+      }
 
+      .ant-input {
+        background-color: transparent;
+
+        &:hover {
+          box-shadow: none !important;
+
+        }
+
+        &:focus {
+          outline: none;
+          box-shadow: none !important;
+        }
       }
     }
+  }
+
+  .input-style {
+    background: $text-input-bg-color !important;
+    border-color: white;
+    border: 1px solid transparent;
+    opacity: 1;
+
+    &:hover {
+      border: 1px solid $input-hover-color !important;
+      background: $white-bg-color !important;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border: 1px solid $input-hover-color !important;
+    }
+  }
+
+  .post-code {
+    background: $white-bg-color !important;
   }
 
   .ant-dropdown-trigger {
-    height: 44px !important;
-  }
-
-  .ant-select-single {
-    .ant-select-selector {
-      background: $text-input-bg-color;
-
-      &:hover {
-        background: $white-bg-color;
-
-      }
-    }
+    height: 48px !important;
   }
 
   .label {
@@ -39,20 +65,18 @@
   }
 
   select {
-    border: 2px solid $text-error-line-color;
+    border: 2px solid $text-error-line-color !important;
     border-radius: 8px;
     font-size: 16px;
-    margin-top: 5px;
     height: 48px;
     color: $text-success-placeholder-color;
     border-radius: 8px;
 
     &:hover {
-      border: 2px solid $input-hover-color;
+      border: 2px solid $input-hover-color !important;
     }
 
     &:focus {
-      box-shadow: none;
       border: 2px solid $input-hover-color;
     }
   }
@@ -74,4 +98,9 @@
       color: white !important;
     }
   }
+
+  .active {
+    border: none !important;
+}
+
 }

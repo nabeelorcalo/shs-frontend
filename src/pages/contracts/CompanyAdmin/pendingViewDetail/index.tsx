@@ -94,7 +94,7 @@ const PendingViewDetail = () => {
             <div className="scroll-contract-company-admin">
               <Row gutter={[0, 30]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[10, 24]}>
+                  <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
                         {senderInfo.map((item, index) => {
@@ -156,7 +156,7 @@ const PendingViewDetail = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[10, 24]}>
+                  <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
                         <div className="p-4">

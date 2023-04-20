@@ -159,16 +159,16 @@ const CompanyAdminPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-                <MonthlyPerfomanceChart
-                  heading="Summary"
-                  data={data}
-                  XField="department"
-                  columnWidthRatio={0.5}
-                  children={<MonthChanger
-                    month={month.selectedMonth}
-                    onClick={changeMonth}
-                  />}
-                />
+              <MonthlyPerfomanceChart
+                heading="Summary"
+                data={data}
+                XField="department"
+                columnWidthRatio={0.5}
+                children={<MonthChanger
+                  month={month.selectedMonth}
+                  onClick={changeMonth}
+                />}
+              />
             </Col>
           </Row>
         </Col>
