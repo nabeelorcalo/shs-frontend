@@ -44,86 +44,86 @@ const PerformanceHistory = () => {
       title: "No.",
       key: "no",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.no}
-        </Link>
+        </Link> : data.no
       ),
     },
     {
       title: "Avatar",
       key: "avatar",
       render: (_: any, data: any) => (
-        <Space size="middle">
+        role !== constants.COMPANY_ADMIN ? <Space size="middle">
           <Link
             className="bread-crumb"
             to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
           >
             <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
           </Link>
-        </Space>
+        </Space> : <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
       ),
     },
     {
       title: "Name",
       key: "name",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.name}
-        </Link>
+        </Link> : data.name
       ),
     },
     {
       title: "Department",
       key: "department",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.department}
-        </Link>
+        </Link> : data.department
       ),
     },
     {
       title: "Last Evaluation",
       key: "date",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.date}
-        </Link>
+        </Link> : data.date
       ),
     },
     {
       title: "Evaluated By",
       key: "evaluatedBy",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.evaluatedBy}
-        </Link>
+        </Link> : data.evaluatedBy
       ),
     },
     {
       title: "Total Evaluations",
       key: "totalEvaluations",
       render: (_: any, data: any) => (
-        <Link
-          className="bread-crumb p-0"
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.totalEvaluations}
-        </Link>
+        </Link> : data.totalEvaluations
       ),
     },
     {
