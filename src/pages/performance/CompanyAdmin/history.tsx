@@ -119,7 +119,7 @@ const PerformanceHistory = () => {
       key: "totalEvaluations",
       render: (_: any, data: any) => (
         <Link
-          className="bread-crumb"
+          className="bread-crumb p-0"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.totalEvaluations}
@@ -143,7 +143,7 @@ const PerformanceHistory = () => {
                 format={(percent: any) => (
                   <p
                     className={
-                      "myClass " +
+                      "myClass font-normal " +
                       (percent < 50 ? "secondary-color" : "teriary-color")
                     }
                   >
@@ -392,11 +392,17 @@ const PerformanceHistory = () => {
   };
 
   const onApplyFilterClick = () => {
-    alert("Apply Filter");
+    // alert("Apply Filter");
   };
 
   const onResetFilterClick = () => {
-    alert("Reset Filter");
+    // alert("Reset Filter");
+    setState((prevState) => ({
+      ...prevState,
+      timeFrameVal: "Select",
+      departmentVal: "Select",
+      evaluatedByVal: "Select",
+    }));
   };
 
   const onSubmitAppreciationForm = (values: any) => {
