@@ -75,18 +75,19 @@ const Listings = () => {
   const [loadingAllProperties, setLoadingAllProperties] = useState(false)
   const [form] = Form.useForm();
   const mediaValue = Form.useWatch('media', form);
-  console.log("mediaValue:: ", mediaValue)
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false)
   const [current, setCurrent] = useState(0)
   const [entireProperty, setEntireProperty] = useState(false)
   const [uploadURL, setUploadURL] = useState(false)
+  const [uploadDevice, setUploadDevice] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [listingValues, setListingValues] = useState({})
+  const [listingValues, setListingValues] = useState({});
+  const [nextDisabled, setNextDisabled] = useState(true)
 
   const tableColumns: ColumnsType<DataType> = [
     {
@@ -213,14 +214,13 @@ const Listings = () => {
   }
 
   function closeModalAddListing() {
-    console.log('reset::: ')
     form.resetFields();
+    setNextDisabled(true);
     setModalAddListingOpen(false);
   }
 
   function onChangeRadioProperty(e: RadioChangeEvent) {
-    console.log('Radio checked', e.target.value);
-    e.target.value === 'entireProperty' ? setEntireProperty(true) : setEntireProperty(false)
+    e.target.value === 'EntireProperty' ? setEntireProperty(true) : setEntireProperty(false)
   }
 
   const onChangeSwitch = (checked: boolean) => {
@@ -233,7 +233,6 @@ const Listings = () => {
   };
 
   const normFile = (e: any) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -256,22 +255,38 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="addressOne" label="Address">
+            <Form.Item 
+              name="addressOne" 
+              label="Address" 
+              rules={[{ required: true }]}
+            >
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="addressTwo" label="Address Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
+            <Form.Item 
+              name="addressTwo"
+              label="Address Line 2 (optional)"
+              help="Apartment, suite, unit, building, floor, etc."
+            >
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="postalCode" label="Postcode">
+            <Form.Item 
+              name="postalCode" 
+              label="Postcode"
+              rules={[{ required: true }]}
+            >
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="isFurnished" label="Is it furnished?">
+            <Form.Item 
+              name="isFurnished"
+              label="Is it furnished?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
@@ -301,13 +316,13 @@ const Listings = () => {
               <Radio.Group onChange={onChangeRadioProperty}>
                 <Row gutter={[30, 30]}>
                   <Col xs={24}>
-                    <Radio value="entireProperty">Entire Property</Radio>
+                    <Radio value="EntireProperty">Entire Property</Radio>
                   </Col>
                   <Col xs={24}>
-                    <Radio value="studio">Studio</Radio>
+                    <Radio value="Studio">Studio</Radio>
                   </Col>
                   <Col xs={24}>
-                    <Radio value="sharedProperty">Rooms in shared property</Radio>
+                    <Radio value="RoomsInShare">Rooms in shared property</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -446,7 +461,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${mediaValue ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${uploadDevice ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -454,37 +469,34 @@ const Listings = () => {
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                 >
-                  {({getFieldValue}) => (
-                    <Upload
-                      name="logo"
-                      action="/upload.do"
-                      listType={"picture-card"}
-                      showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
-                    >
-                      {!mediaValue && (
-                        <div className="upload-device-btn">
-                          <IconAddUpload />
-                          <div className="label">Upload from device</div>
+                  <Upload
+                    name="logo"
+                    action="/upload.do"
+                    listType={"picture-card"}
+                    showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
+                  >
+                    {uploadDevice && (
+                      <div className="upload-device-btn">
+                        <IconAddUpload />
+                        <div className="label">Upload from device</div>
+                      </div>
+                    )}
+                    {!uploadDevice && (
+                        <div className="button-upload-from-device">
+                          <Button className="button-tertiary">Upload from device</Button>
                         </div>
-                      )}
-                      {!mediaValue && (
-                          <div className="button-upload-from-device">
-                            <Button className="button-tertiary">Upload from device</Button>
-                          </div>
-                        )
-                      }
-                    </Upload>
-                  )}
-                  
+                      )
+                    }
+                  </Upload>
                 </Form.Item>
-                {/* {!mediaValue && */}
+                {!uploadDevice &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
                       <Button type="text" icon={<IconLink />} onClick={() => setUploadURL(true)}>Enter URL</Button>
                     </div>
                   </div>
-                {/* } */}
+                }
                 <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
                   <div className="enter-url-form-field">
                     <Form.Item name={'enterUrl'} label="Enter URL">
@@ -512,7 +524,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="allowedTwoPeople" label="Are two people allowed to live in this bedroom">
+            <Form.Item name="twoPeopleAllowed" label="Are two people allowed to live in this bedroom">
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
@@ -526,20 +538,20 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="kindOfAmenities" label="What kind of amenities does bedroom 1 have? ">
+            <Form.Item name="bedroomAmenities" label="What kind of amenities does bedroom 1 have? ">
               <Checkbox.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={8}>
-                    <Checkbox value="ChestOfDrawers">Chest of drawers</Checkbox>
+                    <Checkbox value="Chest of drawers">Chest of drawers</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="desk">Desk</Checkbox>
+                    <Checkbox value="Desk">Desk</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="rivateBathroom">Private Bathroom</Checkbox>
+                    <Checkbox value="Private Bathroom">Private Bathroom</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="keyLocker">Key or Locker</Checkbox>
+                    <Checkbox value="Key or Locker">Key or Locker</Checkbox>
                   </Col>
                   <Col xs={8}>
                     <Checkbox value="Wardrobe">Wardrobe</Checkbox>
@@ -554,7 +566,7 @@ const Listings = () => {
                     <Checkbox value="Wi-fi">Wi-fi</Checkbox>
                   </Col>
                   <Col xs={8}>
-                    <Checkbox value="carpetedFloors">Carpeted Floors</Checkbox>
+                    <Checkbox value="Carpeted Floors">Carpeted Floors</Checkbox>
                   </Col>
                   <Col xs={8}>
                     <Checkbox value="Other">Other</Checkbox>
@@ -591,14 +603,14 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="securityDeposit" label="Is there security deposit?">
+            <Form.Item name="hasSecurityDeposit" label="Is there security deposit?">
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="securityDepositYes">Yes</Radio>
+                    <Radio value="yes">Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="securityDepositNo">No</Radio>
+                    <Radio value="no">No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -891,11 +903,65 @@ const Listings = () => {
       }
     })
     setCurrent(current + 1);
-    console.log("Next::: ", listingValues)
+    setNextDisabled(true)
   };
 
   function prev() {
     setCurrent(current - 1);
+    setNextDisabled(false)
+  };
+
+  const validateStepOne = (values: any) => {
+    const {addressOne, postalCode, isFurnished } = values;
+    if(addressOne !== "" && addressOne != null 
+      && postalCode !== "" && postalCode != null
+      && isFurnished !== "" && isFurnished != null
+    ) {
+      setNextDisabled(false)
+    } else {
+      setNextDisabled(true)
+    }
+  }
+
+  const validateStepTwo = (values: any) => {
+    const {propertyType, hasAirConditioning, hasHeating, hasWaterHeating} = values;
+    if(propertyType !== "" && propertyType != null 
+      && hasAirConditioning !== "" && hasAirConditioning != null
+      && hasHeating !== "" && hasHeating != null
+      && hasWaterHeating !== "" && hasWaterHeating != null
+    ) {
+      setNextDisabled(false)
+    } else {
+      setNextDisabled(true)
+    }
+  }
+
+  const validateStepThree = (values: any) => {
+    const {bedType} = values;
+    if(bedType != null && bedType !== "") {
+      setNextDisabled(false)
+    } else {
+      setNextDisabled(true)
+    }
+  }
+
+  const onValuesChange = (changedValues:any, allValues:any) => {
+    if(current === 0) {
+      validateStepOne(allValues)
+    }
+
+    if(current === 1) {
+      validateStepTwo(allValues)
+    }
+
+    if(current === 2) {
+      validateStepThree(allValues)
+      if(allValues.media !=null && allValues.media.length != 0) {
+        setUploadDevice(true)
+      } else {
+        setUploadDevice(false)
+      }
+    }
   };
 
 
@@ -955,23 +1021,14 @@ const Listings = () => {
         maskClosable={false}
       >
         <Form
+          requiredMark={false}
           form={form}
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
           // initialValues={{media: []}}
           preserve={true}
-          onValuesChange={(_, values) => {
-            let tempValues = {}
-            tempValues = {
-              ...tempValues,
-              ...values
-            }
-            // setListingValues(prevState => ({ ...prevState, ...tempValues }))
-            console.log('init:: ', values)
-            // console.log('console.log(listingInitValues)::', listingValues)
-            console.log("mediaValue:: ", mediaValue)
-          }}
+          onValuesChange={onValuesChange}
           onFinish={submitAddListing}
         >
           <div className="modal-add-listing-body">
@@ -999,7 +1056,7 @@ const Listings = () => {
                 <Button className="button-tertiary" ghost onClick={prev}>Back</Button>
               }
               {current < 6 &&
-                <Button className="button-tertiary" onClick={next}>Next</Button>
+                <Button disabled={nextDisabled} className="button-tertiary" onClick={next}>Next</Button>
               }
               {current === 6 &&
                 <Button htmlType="submit" className="button-tertiary">Publish</Button>
