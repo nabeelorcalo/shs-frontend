@@ -13,8 +13,8 @@ const DropDownNew = (props: Props | any) => {
   const [visible, setVisible] = useState(false);
   return (
     <AntDropDown
-      visible={visible}
-      onVisibleChange={setVisible}
+      open={visible}
+      onOpenChange={setVisible}
       trigger={['click']}
       className='drop-down-new'
       menu={{ items }}
