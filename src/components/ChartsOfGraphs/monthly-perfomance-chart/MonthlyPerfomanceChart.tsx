@@ -1,7 +1,6 @@
+import { useState } from "react";
 import { Column } from "@ant-design/plots";
-import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../../components";
-import { MonthChanger } from "../../MonthChanger";
 import { perfomanceChart } from "./MonthlyPerfomance";
 
 export const MonthlyPerfomanceChart = (props: any) => {
@@ -14,7 +13,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     color = ["#9BD5E8", "#F08D97", "#78DAAC"],
     marginRatio = ".5",
     heading,
-    columnWidthRatio = 0.2,
+    columnWidthRatio = 0.9,
     textColor = "#4E4B66",
     fontSize = "20px",
     fontWeight = "500",
@@ -37,7 +36,6 @@ export const MonthlyPerfomanceChart = (props: any) => {
       layout: "horizontal",
       position: "top-right",
     },
-    
   };
   return (
     <BoxWrapper>

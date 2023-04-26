@@ -3,8 +3,6 @@ import {
   Drawer,
   Slider,
   InputNumber,
-  Progress,
-  Input,
   Button,
   Row,
   Col,
@@ -20,7 +18,7 @@ import {
 } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
 import "./Styles.scss";
-import { DrawerWidth, DropDown, SearchBar } from "../../../../../components";
+import { DrawerWidth, DropDown, } from "../../../../../components";
 
 const transportData = [
   {
@@ -37,7 +35,7 @@ const transportData = [
   },
   {
     id: "4",
-    icon: <Bus />,
+    icon: <Bus />, 
   },
 ];
 const DrawerBar = (props: any) => {
@@ -45,7 +43,6 @@ const DrawerBar = (props: any) => {
   const [selectedTransport, setSelectedTransport] = useState("");
   const [workType, setWorkType] = useState("");
   const [selectedWorkType, setSelectedWorkType] = useState([]);
-  const formatter = (value: any) => `${value}%`;
   const mainDrawerWidth = DrawerWidth();
   return (
     <div className="drawer=-wrapper">
@@ -104,7 +101,7 @@ const DrawerBar = (props: any) => {
               <DropDown
                 name="drop down with checkbox"
                 value={workType}
-                options={["All", "On-Site", "Hybrid", "Virtual"]}
+                options={["Paid", "Unpaid", "Part Time", "Full Time"]}
                 setValue={setWorkType}
                 requireCheckbox
                 selectedList={selectedWorkType}
@@ -116,11 +113,6 @@ const DrawerBar = (props: any) => {
               Duration
             </label>
             <div className="my-5">
-              {/* <InputField
-                placeholder={"Enter Months"}
-                className="input-filed my-3"
-                Type={"number"} */}
-              {/* /> */}
               <InputNumber className="w-full input-number" />
             </div>
             <div className="flex justify-end buttons-wrapper">

@@ -9,7 +9,7 @@ const JobDetails = (props: any) => {
   const { tags = ["utility bills", "laundry", "meals", "others"] } = props;
   const navigate = useNavigate();
   return (
-    <>
+    <div className="job-details-wrapper">
       <div className="flex">
         <div className="details-heading">
           <p className="font-semibold text-2xl mx-2">Job Details</p>
@@ -51,7 +51,7 @@ const JobDetails = (props: any) => {
             ))}
             <div className="flex justify-end">
               <Button
-                className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color"
+                className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
                 onClick={() => navigate("/search-jobs")}
               >
                 Apply
@@ -147,7 +147,7 @@ const JobDetails = (props: any) => {
           </div>
         </div>
       </BoxWrapper>
-    </>
+    </div>
   );
 };
 

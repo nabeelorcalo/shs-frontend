@@ -35,7 +35,7 @@ const SearchBarCards = (props: any) => {
           <GlobalButton name={"Search"} className={"py-6"} />
         </Col>
 
-        <Col lg={10} md={6} sm={12} xs={24} className="flex lg:justify-end">
+        <Col lg={10} md={6} sm={24} xs={24} className="flex md:justify-end justify-start">
           <FiltersButton label="Filters" onClick={() => setDrawer(!drawer)} />
         </Col>
       </Row>

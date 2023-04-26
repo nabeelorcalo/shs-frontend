@@ -2,12 +2,12 @@ export const perfomanceChart = [
     {
         "city": "Jan",
         "type": "Learning Objectives",
-        "value": 10000
+        "value": "60%"
     },
     {
         "city": "Jan",
         "type": "Dicipline",
-        "value": 15000
+        "value": "50%"
     },
     {
         "city": "Jan",
@@ -18,12 +18,12 @@ export const perfomanceChart = [
     {
         "city": "Feb",
         "type": "Learning Objectives",
-        "value": 10000
+        "value": "60%"
     },
     {
         "city": "Feb",
         "type": "Dicipline",
-        "value": 15000
+        "value": "50%"
     },
     {
         "city": "Feb",
@@ -34,12 +34,12 @@ export const perfomanceChart = [
     {
         "city": "Mar",
         // "type": "Learning Objectives ",
-        "value": 10000
+        "value": "60%"
     },
     {
         "city": "Mar",
         "type": "Dicipline",
-        "value": 15000
+        "value": "50%"
     },
     {
         "city": "Mar",
@@ -50,12 +50,12 @@ export const perfomanceChart = [
     {
         "city": "Apr",
         // "type": "Learning Objectives ",
-        "value": 10000
+        "value": "60%"
     },
     {
         "city": "Apr",
         "type": "Dicipline",
-        "value": 15000
+        "value": "50%"
     },
     {
         "city": "Apr",
@@ -66,12 +66,12 @@ export const perfomanceChart = [
     {
         "city": "May",
         // "type": "Learning Objectives ",
-        "value": 10000
+        "value": "60%"
     },
     {
         "city": "May",
         "type": "Dicipline",
-        "value": 15000
+        "value": "50%"
     },
     {
         "city": "May",
@@ -82,12 +82,12 @@ export const perfomanceChart = [
     {
         "city": "Jun",
         // "type": "Learning Objectives",
-        "value": 10000
+        "value": "60%"
     },
     {
         "city": "Jun",
         "type": "Dicipline",
-        "value": 15000
+        "value": "50%"
     },
     {
         "city": "Jun",
