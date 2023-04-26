@@ -44,7 +44,7 @@ const CommonHeader = (props: any) => {
         </DropDownNew>}
         <DropDown name="This Week"
           options={['this week', 'last week', 'this month', 'last month', 'date range']}
-          requireDatePicker showDatePickerOnVal="date range"
+          requireRangePicker showDatePickerOnVal="date range"
           value={dateRange} setValue={setDateRange}
         />
         <DropDown requiredDownloadIcon options={['pdf', 'excel']} setValue={setDownload} value={download} />
