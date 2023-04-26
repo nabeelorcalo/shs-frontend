@@ -428,8 +428,8 @@ const InternsCompanyAdmin = () => {
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
+              FirstIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
               className='w-[88px]'
             />
             <DropDown
@@ -550,7 +550,7 @@ const InternsCompanyAdmin = () => {
             <Button
               type="default"
               size="small"
-              className="button-default-error max-sm:w-full"
+              className=" max-sm:w-full"
               onClick={() => setTerminate(false)}
             >
               Cancel
@@ -558,7 +558,7 @@ const InternsCompanyAdmin = () => {
             <Button
               type="primary"
               size="small"
-              className="button-error max-sm:w-full"
+              className="text-error-bg-color max-sm:w-full"
             >
               Terminate
             </Button>
