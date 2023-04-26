@@ -158,7 +158,7 @@ const CompanyAdminPerformance = () => {
                 width={100}
               />
             </Col>
-            <Col xs={24} style={{backgroundColor:'red'}}>
+            <Col xs={24}>
               <MonthlyPerfomanceChart
                 heading="Summary"
                 data={data}
