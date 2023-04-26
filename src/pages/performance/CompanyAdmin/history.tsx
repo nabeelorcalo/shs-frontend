@@ -373,15 +373,6 @@ const PerformanceHistory = () => {
     }));
   };
 
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
-  };
-
   const departmentSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -468,11 +459,14 @@ const PerformanceHistory = () => {
                   <DropDown
                     name="Select"
                     options={timeFrameOptions}
-                    setValue={() => timeFrameSelection(event)}
+                    setValue={(e: string) => setState((prevState) => ({
+                      ...prevState,
+                      timeFrameVal: e,
+                    }))}
                     value={state.timeFrameVal}
                     showDatePickerOnVal="Date Range"
-                    requireDatePicker
                     placement="topLeft"
+                    requireRangePicker
                   />
                 </div>
 
