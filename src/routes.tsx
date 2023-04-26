@@ -134,6 +134,7 @@ const WithDrawalRequest = Loadable(
 );
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
+const StudentSystemAdmin = Loadable(lazy(() => import("./pages/students/studentSystemAdmin")));
 const Universities = Loadable(lazy(() => import("./pages/universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
@@ -644,7 +645,7 @@ const systemAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,
         path: `${ROUTES_CONSTANTS.STUDENT}`,
-        element: <Students />,
+        element: <StudentSystemAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
