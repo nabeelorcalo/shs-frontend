@@ -106,63 +106,63 @@ const Interns = () => {
   const tableData = [
     {
       no: "01",
-      name: "Research Analyst",
+      name: "Maria Sanoid",
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
     },
     {
       no: "02",
-      name: "Business Analyst",
+      name: "Andrea Hiyahiya",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
     },
     {
       no: "02",
-      name: "Business Analyst",
+      name: "BBinaco Lalme",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
     },
     {
       no: "01",
-      name: "Research Analyst",
+      name: "Cody Nguyen",
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
     },
     {
       no: "02",
-      name: "Business Analyst",
+      name: "Kristian Warren",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
     },
     {
       no: "02",
-      name: "Business Analyst",
+      name: "Angel Loane",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
     },
     {
       no: "01",
-      name: "Research Analyst",
+      name: "Bessie Howard",
       department: "Business Analyst",
       joining_date: "01/07/2022",
       date_of_birth: "01/07/2022",
     },
     {
       no: "02",
-      name: "Business Analyst",
+      name: "Adi Chen",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
     },
     {
       no: "02",
-      name: "Business Analyst",
+      name: "Shira Chen",
       department: "Scientist Analyst",
       joining_date: "01/07/2023",
       date_of_birth: "01/07/2021",
@@ -193,7 +193,7 @@ const Interns = () => {
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
           </div>
           <div className="flex flex-row gap-4">
-            <DropDown
+          {listandgrid? <DropDown
               options={[
                 'pdf',
                 'excel'
@@ -203,7 +203,7 @@ const Interns = () => {
                 action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
               }}
               value=""
-            />
+            />:null}
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
@@ -211,7 +211,17 @@ const Interns = () => {
               LastIcon={TableViewIcon}
               className='w-[88px]'
             />
-
+            {!listandgrid? <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+              }}
+              value=""
+            />:null}
           </div>
         </div>
 
@@ -237,7 +247,15 @@ const Interns = () => {
             </div>
               :
               <BoxWrapper>
-                <GlobalTable columns={columns} tableData={newTableData} />
+                <GlobalTable
+                  columns={columns}
+                  expandable={{
+                    expandedRowRender: () => { },
+                    rowExpandable: function noRefCheck() { }
+                  }}
+                  tableData={newTableData}
+                  hideTotal={true}
+                />
               </BoxWrapper>
           }
         </div>

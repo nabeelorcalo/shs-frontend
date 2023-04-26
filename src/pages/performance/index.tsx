@@ -18,7 +18,7 @@ const Performance = () => {
         return <CompanyAdmin />;
       case constants.MANAGER:
         return <ManagerPerformance />;
-        case constants.UNIVERSITY:
+      case constants.UNIVERSITY:
         return <UniversityPerformance />;
       default:
         return <></>;

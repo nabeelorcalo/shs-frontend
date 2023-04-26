@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1, CalendarPickerIcon } from '../../assets/images';
 import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
 
 interface MonthChangerProps {
   month: any,
   hasDatePicker?: boolean,
   datePickerClassName?: string,
   onClick?: () => void,
+  setState?: any;
 }
 
 export const MonthChanger: any = (props: MonthChangerProps) => {
@@ -16,16 +15,16 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
     month,
     onClick,
     hasDatePicker = false,
-    datePickerClassName
+    datePickerClassName,
+    setState
   } = props;
-  const [date, setDate] = useState('')
 
   function onChange(dateString: any) {
-    setDate(dayjs(dateString).format('ddd, DD MMM YYYY'))
+    setState((prevState: any) => ({
+      ...prevState,
+      currentDate: dateString,
+    }))
   }
-  const current = new Date();
-  const currentDate = dayjs(current).format('ddd, DD MMM YYYY')
-  
   return (
     <div className='flex items-center ml-auto mb-4 month-changer'>
       {
@@ -39,7 +38,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
         />
       }
 
-      <p className='min-w-fit mx-2 text-primary-color'>{date ? date : currentDate}</p>
+      <p className='min-w-fit mx-2 text-primary-color'>{month}</p>
 
       <div className='flex flex-row ml-1'>
         <IconButton

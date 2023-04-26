@@ -10,7 +10,7 @@ import {
 } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
-import {Dropdown} from "antd";
+import { Dropdown } from "antd";
 import { More } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useNavigate } from "react-router-dom";
@@ -95,14 +95,25 @@ const ViewPayrollDetails = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "File downloaded", type:'success' }) }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              Notifications({
+                title: "Success",
+                description: "File downloaded",
+                type: 'success'
+              })
+            }}>
             Download
           </a>
         ),
       },
     ];
     return (
-      <Dropdown menu={{ items }} placement="bottomRight">
+      <Dropdown
+        menu={{ items }}
+        placement="bottomRight"
+      >
         <More />
       </Dropdown>
     )
@@ -167,21 +178,21 @@ const ViewPayrollDetails = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-          <SearchBar
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="Search"
-            size="middle"
-          />
+            <SearchBar
+              handleChange={() => { }}
+              name="search bar"
+              placeholder="Search"
+              size="middle"
+            />
           </div>
           <div className="flex flex-row gap-4">
             <CommonDatePicker
-               name="name"
-               open={false}
-               onBtnClick={() => {setShowDatePicker(!showDatePicker)}}
-               picker="month"
-               setOpen={function noRefCheck() {}}
-               setValue={function noRefCheck() {}}
+              name="name"
+              open={false}
+              onBtnClick={() => { setShowDatePicker(!showDatePicker) }}
+              picker="month"
+              setOpen={function noRefCheck() { }}
+              setValue={function noRefCheck() { }}
             />
             <DropDown
               options={[

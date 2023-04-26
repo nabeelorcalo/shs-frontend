@@ -13,7 +13,7 @@ import "../../scss/global-color/Global-colors.scss"
 import { Avatar, Button, Divider, Dropdown } from "antd";
 import { InternshipsIcon, More } from "../../assets/images";
 import type { MenuProps } from 'antd';
-import { STATUS_CONSTANTS } from "../../config/constants";
+import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../config/constants";
 import { useNavigate, Link } from "react-router-dom";
 
 const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
@@ -53,11 +53,18 @@ const tableData = [
 
   }
 ]
+
 const Internships = () => {
   const navigate = useNavigate()
-  const [value, setValue] = useState("")
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+  // const [value, setValue] = useState("")
+  // const [showDrawer, setShowDrawer] = useState(false)
+  const [state, setState] = useState({
+    value: "",
+    showDrawer: false,
+    location: "",
+    department: ""
+  })
+
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -84,6 +91,7 @@ const Internships = () => {
       </Dropdown>
     )
   }
+
   const columns = [
     {
       dataIndex: "no",
@@ -131,6 +139,7 @@ const Internships = () => {
       title: 'Actions'
     }
   ]
+
   const newTableData = tableData.map((item, idx) => {
     return (
       {
@@ -170,7 +179,30 @@ const Internships = () => {
       }
     )
   })
-  console.log(value)
+
+  const handleDrawer = () => {
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: !state.showDrawer
+    }))
+  }
+
+  const updateLocation = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      location: value
+    }))
+  }
+
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      department: value
+    }))
+  }
+
   return (
     <>
       <PageHeader title="Internships" />
@@ -188,16 +220,12 @@ const Internships = () => {
           <div className="flex max-sm:flex-col flex-row gap-4">
             <FiltersButton
               label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+              onClick={handleDrawer}
             />
             <Drawer
               closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
+              open={state.showDrawer}
+              onClose={handleDrawer}
               title="Filters"
             >
               <React.Fragment key=".0">
@@ -207,10 +235,10 @@ const Internships = () => {
                     <DropDown
                       name="name"
                       options={["EidinBurg", "Glasgow", "London", "Virtual"]}
-                      setValue={() => { }}
+                      setValue={() => {updateLocation(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.location}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -224,10 +252,10 @@ const Internships = () => {
                         "Administrator",
                         "HR Cordinator",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => {updateDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.department}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
@@ -241,7 +269,7 @@ const Internships = () => {
               size="middle"
               className="flex gap-2 teriary-bg-color white-color"
               onClick={() => {
-                navigate("new-internship");
+                navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP);
               }}
             >
               <InternshipsIcon />
@@ -251,7 +279,7 @@ const Internships = () => {
         </div>
         <BoxWrapper>
           <div className="pt-3">
-            <GlobalTable  columns={columns} tableData={newTableData} />
+            <GlobalTable columns={columns} tableData={newTableData} />
           </div>
         </BoxWrapper>
       </div>

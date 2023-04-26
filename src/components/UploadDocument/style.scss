@@ -1,0 +1,13 @@
+@import '../../scss/_colors.scss';
+
+.drag-drop-upload-style {
+  border: 1px dashed $text-error-line-color;
+  background-color: $white-bg-color;
+  border-radius: 5px;
+  &:hover {
+    border: 1px dashed $select-disabled;
+  }
+}
+.browse-text { 
+  color: $text-error-color
+}

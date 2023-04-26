@@ -400,7 +400,6 @@ const PerformanceHistory = () => {
   };
 
   const onSubmitAppreciationForm = (values: any) => {
-    console.log("Form Data: ", values);
     setState((prevState) => ({
       ...prevState,
       openAprreciationModal: !state.openAprreciationModal,
@@ -408,7 +407,6 @@ const PerformanceHistory = () => {
   };
 
   const onSubmitWarningForm = (values: any) => {
-    console.log("Form Data: ", values);
     setState((prevState) => ({
       ...prevState,
       openWarnModal: !state.openWarnModal,
@@ -439,7 +437,7 @@ const PerformanceHistory = () => {
             className="icon-btn"
             onClick={() => {
               action.downloadPdf(header, tableData);
-              Notifications({title:"Success", description:"Download Done",type:'success'})
+              Notifications({ title: "Success", description: "Download Done", type: 'success' })
             }}
             icon={<DownlaodFileIcon />}
           />
@@ -501,10 +499,10 @@ const PerformanceHistory = () => {
           />
         </Col>
         <Col xs={24}>
-            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+          <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
         </Col>
       </Row>
-    <AppreciationModal
+      <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"
         initialValues={{

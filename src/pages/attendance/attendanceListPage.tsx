@@ -214,8 +214,8 @@ const Detail = () => {
     setState((prevState) => ({
       ...prevState,
       departmentVal: '',
-      status:'',
-      timeFrameVal:''
+      status: '',
+      timeFrameVal: ''
     }));
   };
 
@@ -253,6 +253,7 @@ const Detail = () => {
           <MonthChanger
             month={state.currentDate.format("ddd, DD MMMM YYYY")}
             onClick={() => changeMonth(event)}
+            setState={setState}
             datePickerClassName="min-w-0"
             hasDatePicker
           />
@@ -368,9 +369,9 @@ const Detail = () => {
       >
         {dummyData.map((item, index) => {
           return state.isToggle ? (
-            <AttendanceListViewCard item={item} index={index} menu={menu} />
+            <AttendanceListViewCard item={item} index={index} menu={menu} key={item.id} />
           ) : (
-            <AttendanceCardDetail item={item} index={index} menu={menu} />
+            <AttendanceCardDetail item={item} index={index} menu={menu} key={item.id} />
           );
         })}
       </div>
