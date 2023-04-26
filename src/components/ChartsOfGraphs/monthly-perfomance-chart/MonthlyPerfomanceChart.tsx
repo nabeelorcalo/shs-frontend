@@ -1,7 +1,6 @@
+import { useState } from "react";
 import { Column } from "@ant-design/plots";
-import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../../components";
-import { MonthChanger } from "../../MonthChanger";
 import { perfomanceChart } from "./MonthlyPerfomance";
 
 export const MonthlyPerfomanceChart = (props: any) => {
