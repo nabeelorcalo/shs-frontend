@@ -1,19 +1,39 @@
 /// <reference path="../../../../jspdf.d.ts" />
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
 import svg from '../../../assets/images/avatar1.png';
 import constants from "../../../config/constants";
+import endpoints from "../../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { bookingRequestsState } from "../../../store";
+
 
 const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Contracts', 'Status'];
 
 const useBookingRequests = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const { GET_PROPERTY_BOOKINGS } = endpoints;
+  const [bookingRequests, setBookingRequests] = useRecoilState(bookingRequestsState)
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+   // Get Booking Requests
+   const getBookingRequests = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`${GET_PROPERTY_BOOKINGS}`);
+      if(!res.error) {
+        const { data } = res;
+        setBookingRequests(data)
+      }
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
+
 
   const downloadCSV = (fileName: any, data: any) => {
     csv(`${fileName}`, bookingRequestColumns, data, false); // csv(fileName, header, data, hasAvatar)  
@@ -90,7 +110,7 @@ const useBookingRequests = () => {
   };
 
   return {
-    getData,
+    getBookingRequests,
     downloadCSV,
     downloadPDF
   };

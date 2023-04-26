@@ -14,5 +14,9 @@
   .ant-layout-content {
     padding: 30px;
     transition: all 0.2s;
+
+    @media (max-width: 767px) {
+      margin-left: 0 !important;
+    }
   }
 }

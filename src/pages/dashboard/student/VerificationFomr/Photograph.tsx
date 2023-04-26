@@ -16,7 +16,6 @@ const Photograph = (props: any) => {
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
           <div className="form-wrapper">
             <div className="main-title-wrapper">
-         
               <div className="flex ">
                 <div>
                   <BackButton />
@@ -25,7 +24,6 @@ const Photograph = (props: any) => {
                   <Typography.Title level={1}>Photograph</Typography.Title>
                 </div>
               </div>
-
               <Typography
                 style={{
                   fontSize: "16px",
@@ -37,8 +35,6 @@ const Photograph = (props: any) => {
                 Upload your profile picture
               </Typography>
             </div>
-
-
             <div className="sign-up-form-wrapper">
               <Form.Item
                 name="upload"
@@ -51,14 +47,14 @@ const Photograph = (props: any) => {
                 </Upload>
               </Form.Item>
               <div className="text-center my-5">
-              <p className="font-semibold text-2xl text-primary-color">
-                A photo of you
-              </p>
-              <Typography className="steps-description">
-                Take a minute to upload a profile photo.
-              </Typography>
-            </div>
-              <Row gutter={[10,10]}>
+                <p className="font-semibold text-2xl text-primary-color">
+                  A photo of you
+                </p>
+                <Typography className="steps-description">
+                  Take a minute to upload a profile photo.
+                </Typography>
+              </div>
+              <Row gutter={[10, 10]}>
                 <Col xs={24} md={24} lg={12} xl={8}>
                   <Button className="btn-cancel btn-cancel-verification" >
                     Skip
@@ -66,7 +62,7 @@ const Photograph = (props: any) => {
                 </Col>
                 <Col xs={24} md={24} lg={12} xl={16}>
                   <Form.Item>
-                    <Button   type="primary"  className="login-form-button"
+                    <Button type="primary" className="login-form-button"
                       onClick={() => { setCurrentStep(7) }} > Next </Button>
                   </Form.Item>
                 </Col>

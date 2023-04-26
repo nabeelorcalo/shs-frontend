@@ -23,16 +23,17 @@ import SettingCommonModal from "../../../../../components/Setting/Common/Setting
 import { Breadcrumb } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const { Title, Paragraph } = Typography;
 dayjs.extend(customParseFormat);
 
 const AddShift: React.FC = () => {
   const breadcrumbArray = [
-    { name: "Add Shift"},
-    { name: "Setting"  },
-    { name: "Shift" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
-  
+    { name: "Add Shift" },
+    { name: "Setting" },
+    { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
+
   ];
   const selectArray = [
     {
@@ -61,26 +62,11 @@ const AddShift: React.FC = () => {
     },
   ];
 
-  const deselectArray:any = [];
+  const deselectArray: any = [];
   const format = "HH:mm";
   const [value, setValue] = useState(1);
   const [openModal, setOpenModal] = useState<any>(false);
   const [intern, setIntern] = useState<any>();
-  const [formValues, setFormValues] = useState<any>({
-    shiftName: "",
-    timeForm: "",
-    timeTo: "",
-    street: "",
-    shiftDuration: "",
-    roundOffCap: "",
-    allEmployee: "",
-    applyToAllNewHires: "",
-  });
-
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
-  };
 
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
@@ -91,7 +77,7 @@ const AddShift: React.FC = () => {
       setIntern(null)
     }
   };
-   const SelectInternHandler = (data: any) => {
+  const SelectInternHandler = (data: any) => {
     console.log(data)
     setIntern(data)
 
@@ -99,15 +85,17 @@ const AddShift: React.FC = () => {
 
   return (
     <div className="leaves-add-policy">
-   <Breadcrumb breadCrumbData={breadcrumbArray}  />
-        <Divider />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <BoxWrapper>
-        <Form layout="vertical">
+        <Form
+          layout="vertical"
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
-            <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
-               Shift
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
+                Shift
               </span>
               <Paragraph>Enter shift details here</Paragraph>
             </Col>
@@ -115,12 +103,14 @@ const AddShift: React.FC = () => {
               <Form.Item
                 name="shiftName"
                 label="Shift Name"
-                rules={[{ message: "Please Enter your username!" }]}
+                required={false}
+                rules={[{ required: true }, { type: "string" }]}
+
               >
                 <Input placeholder="Enter name" />
               </Form.Item>
-              <div className="flex flex-col md:flex-row justify-between w-full my-5">
-                <div className="flex flex-col justify-between w-full pr-2 ">
+              <div className="flex flex-col md:flex-row justify-between w-full my-5 shift-time">
+                <div className="flex flex-col justify-between w-full md:pr-2 ">
                   <label>Time From</label>
                   <TimePicker
                     className="h-[45px]"
@@ -128,38 +118,42 @@ const AddShift: React.FC = () => {
                     format={format}
                   />
                 </div>
-                <div className="flex flex-col w-full pl-1">
+                <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
                   <label>Time</label>
-                <TimePicker defaultValue={dayjs('12:08', format)} format={format} />
+                  <TimePicker defaultValue={dayjs('12:08', format)} format={format} />
                 </div>
               </div>
               <Form.Item
                 name="shiftDuration"
                 label="Shift Duration"
-                rules={[{ message: "Please Enter your username!" }]}
+                required={false}
+                rules={[{ required: true }, { type: "string" }]}
+
               >
-                <Input placeholder="0" />
+                <Input placeholder="0" type="number" />
               </Form.Item>
               <Form.Item
                 name="roundOffCap"
                 label="Round Off Cap"
-                rules={[{ message: "Please Enter your username!" }]}
+                required={false}
+                rules={[{ required: true }, { type: "string" }]}
+
               >
                 <Input placeholder="00:00:00" type="number" />
               </Form.Item>
             </Col>
           </Row>
           <Divider />
-        {/*------------------------ Add Interns----------------------------- */}
-        <Row className="mt-5">
+          {/*------------------------ Add Interns----------------------------- */}
+          <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-            <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
-               Applies to
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
+                Applies to
               </span>
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-            <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
+              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
                 <Radio value={1}>All interns</Radio>
                 <Radio value={2}>Select Interns</Radio>
               </Radio.Group>
@@ -168,17 +162,17 @@ const AddShift: React.FC = () => {
                 </span>
               </div>
               <div className="my-5">
-              <Switch />
-              <span className="px-2">Apply to all new hires</span>
+                <Switch />
+                <span className="px-2">Apply to all new hires</span>
               </div>
-              
+
             </Col>
           </Row>
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-            <NavLink to={`/settings/${ROUTES_CONSTANTS.SETTING_SHIFTS}`}> 
-             Cancel 
-             </NavLink>
+              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`}>
+                Cancel
+              </NavLink>
             </Button>
             <Button
               size="middle"

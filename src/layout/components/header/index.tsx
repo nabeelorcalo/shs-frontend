@@ -1,21 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
-import {
-  Layout,
-  Input,
-  Dropdown,
-  Avatar,
-  Drawer,
-  List,
-  MenuProps,
-  Typography,
-} from "antd";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
-import constants from "../../../config/constants";
+import constants, {ROUTES_CONSTANTS} from "../../../config/constants";
+import { currentUserRoleState, currentUserState } from "../../../store";
+import getUserRoleLable from "../../../helpers/roleLabel";
+import { useRecoilValue } from "recoil";
 import "./style.scss";
 import {
   Logo,
@@ -29,6 +20,16 @@ import {
   IconProfile,
   IconCross,
 } from "../../../assets/images";
+import {
+  Layout,
+  Input,
+  Dropdown,
+  Avatar,
+  Drawer,
+  List,
+  MenuProps,
+  Typography,
+} from "antd";
 const { Search } = Input;
 const { Header } = Layout;
 
@@ -37,31 +38,6 @@ type HeaderProps = {
   sidebarToggler: () => void;
 };
 
-// Temporary
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Profile",
-    icon: <IconProfile />,
-    onClick: () => {
-      window.location.href = "/profile";
-    },
-  },
-  {
-    key: "2",
-    label: "Go to Website",
-    icon: <IconGlobe />,
-  },
-  {
-    key: "3",
-    label: "Logout",
-    icon: <IconLogout />,
-    onClick: (props) => {
-      localStorage.removeItem("accessToken");
-      window.location.href = "/login";
-    },
-  },
-];
 
 const data = [
   {
@@ -86,11 +62,36 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
+  const currentUser = useRecoilValue(currentUserState);
   const width = DrawerWidth();
 
   const menuStyle = {
     boxShadow: "none",
   };
+  const userDropdownItems: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "Profile",
+      icon: <IconProfile />,
+      onClick: ()=> {
+        navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
+      }
+    },
+    {
+      key: "2",
+      label: "Go to Website",
+      icon: <IconGlobe />,
+    },
+    {
+      key: "3",
+      label: "Logout",
+      icon: <IconLogout />,
+      onClick: (props) => {
+        localStorage.removeItem("accessToken");
+        navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+      },
+    },
+  ];
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -219,34 +220,47 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           <div className="loggedin-user">
             <Dropdown
               overlayClassName="user-dropdown"
-              menu={{ items }}
+              menu={{ items: userDropdownItems }}
               trigger={["click"]}
               placement="bottomLeft"
               arrow
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">
-                    <Avatar size={50} src={avatar} />
+                    <Avatar size={50} src={currentUser?.avatar}>
+                      {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
+                    </Avatar>
                     <div className="user-dropdown-meta-content">
                       <Typography.Title level={4}>
-                        Maria Sanoid
+                        {currentUser?.firstName} {currentUser?.lastName}
                       </Typography.Title>
-                      <div className="user-meta-role">{role}</div>
+                      <div className="user-meta-role">{getUserRoleLable(role)}</div>
                     </div>
                   </div>
                   {React.cloneElement(menu as React.ReactElement, {
                     style: menuStyle,
                   })}
-                  <div className="user-dropdown-footer">
-                    <ExtendedButton customType="tertiary" block>
-                      Switch to Intern
-                    </ExtendedButton>
-                  </div>
+                  {role === constants.STUDENT &&
+                    <div className="user-dropdown-footer">
+                      <ExtendedButton customType="secondary" block>
+                        Switch to Intern
+                      </ExtendedButton>
+                    </div>
+                  }
+                  {role === constants.INTERN &&
+                    <div className="user-dropdown-footer">
+                      <ExtendedButton customType="tertiary" block>
+                        Switch to Student
+                      </ExtendedButton>
+                    </div>
+                  }
                 </div>
               )}
             >
               <div className="loggedin-user-avatar">
-                <Avatar size={48} src={avatar} />
+                  <Avatar size={48} src={currentUser?.avatar}>
+                    {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
+                  </Avatar>
               </div>
             </Dropdown>
           </div>

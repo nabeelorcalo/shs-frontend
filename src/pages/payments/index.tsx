@@ -81,7 +81,9 @@ const Payments = () => {
   const [value, setValue] = useState("")
   const [showDatePicker, setShowDatePicker] = useState(false)
   const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState(false)
+  const [state, setState] = useState({
+    datePicker: false
+  })
 
   const action = useCustomHook()
   const csvAllColum = ["No.", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
@@ -92,7 +94,10 @@ const Payments = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-payment-details") }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { navigate("view-payment-details") }}
+          >
             View details
           </a>
         ),
@@ -100,14 +105,28 @@ const Payments = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { Notifications({ title: "Success", description: "File downloaded",type:'success'}) }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              Notifications({
+                title: "Success",
+                description: "File downloaded",
+                type: 'success'
+              })
+            }}
+          >
             Download
           </a>
         ),
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <More />
       </Dropdown>
     )
@@ -119,7 +138,10 @@ const Payments = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { }}
+          >
             PDF
           </a>
         ),
@@ -127,14 +149,22 @@ const Payments = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { }}
+          >
             Excel
           </a>
         ),
       },
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <DownloadDocumentIcon />
       </Dropdown>
     )
@@ -190,7 +220,12 @@ const Payments = () => {
       }
     )
   })
-  console.log(value)
+  const updateOpenCloseDatePicker = () => {
+    setState((prevState) => ({
+      ...prevState,
+      datePicker: !state.datePicker
+    }))
+  }
   return (
     <>
       <PageHeader
@@ -211,8 +246,8 @@ const Payments = () => {
           <div className="flex flex-row gap-4">
             <CommonDatePicker
               name="name"
-              open={false}
-              onBtnClick={() => { setShowDatePicker(!showDatePicker) }}
+              open={state.datePicker}
+              onBtnClick={() => {}}
               picker="month"
               setOpen={function noRefCheck() { }}
               setValue={function noRefCheck() { }}

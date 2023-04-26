@@ -104,175 +104,187 @@ const Rejected = () => {
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[10, 24]}>
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                  {senderInfo.map((item, index) => {
+            <div className="scroll-contract-company-admin">
+              <Row gutter={[0, 30]}>
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <Row gutter={[30, 24]}>
+                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                        {senderInfo.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <div className="pb-4">
+                                <p className="text-success-placeholder-color text-base font-normal">
+                                  {item.label}
+                                </p>
+                                <p className="text-lg font-normal text-secondary-color">
+                                  {item.title}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </Col>
+
+                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                        {receiverInfo.map((item, index) => {
+                          return (
+                            <div key={index}>
+                              <div className="pb-4">
+                                <p className="text-success-placeholder-color text-base font-normal">
+                                  {item.label}
+                                </p>
+                                <p className="text-lg font-normal">
+                                  {item.title}
+                                </p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  {details.map((item, index) => {
                     return (
                       <div key={index}>
-                        <div className="pb-4">
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            {item.label}
-                          </p>
-                          <p className="text-lg font-normal text-secondary-color">
+                        <p className=" pb-4 text-secondary-color text-lg ">
+                          {item.name}
+                        </p>
+                        <div>
+                          <p className="font-semibold text-secondary-color text-lg">
                             {item.title}
                           </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </Col>
-
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                  {receiverInfo.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="pb-4">
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            {item.label}
+                          <p className="text-lg font-normal text-secondary-color">
+                            {item.disc}
                           </p>
-                          <p className="text-lg font-normal">{item.title}</p>
                         </div>
                       </div>
                     );
                   })}
-                </div>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            {details.map((item, index) => {
-              return (
-                <div key={index}>
-                  <p className=" pb-4 text-secondary-color text-lg ">
-                    {item.name}
-                  </p>
-                  <div>
-                    <p className="font-semibold text-secondary-color text-lg">
-                      {item.title}
-                    </p>
-                    <p className="text-lg font-normal text-secondary-color">
-                      {item.disc}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Row gutter={[10, 24]}>
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                  <div className="p-4">
-                    {senderInfo.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <div className="pb-4">
-                            <p className="text-success-placeholder-color text-base font-normal">
-                              {item.label}
-                            </p>
-                            <p className="text-lg font-normal text-secondary-color">
-                              {item.title}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <p className="text-success-placeholder-color text-base font-normal">
-                      Email
-                    </p>
-                    <p className="text-sm md:text-lg font-normal">
-                      davidmiller@powersource.co.uk
-                    </p>
-                  </div>
-                  <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
-                    <Signeddigital />
-                    <div className="pl-6">
-                      <p className="text-lg font-medium text-green-color pb-2">
-                        Signed digitally
-                      </p>
-                      <p className="text-lg font-medium text-green-color">
-                        26 January 2023 at 12:56 PM
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-
-              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                  <div className="p-4">
-                    {receiverInfo.map((item, index) => {
-                      return (
-                        <div key={index}>
-                          <div className="pb-4">
-                            <p className="text-success-placeholder-color text-base font-normal">
-                              {item.label}
-                            </p>
-                            <p className="text-lg font-normal">{item.title}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                    <p className="text-success-placeholder-color text-base font-normal">
-                      Email
-                    </p>
-                    <p className="text-sm md:text-lg font-normal">
-                      davidmiller@powersource.co.uk
-                    </p>
-                  </div>
-                  <div className="flex bg-[#fad6d6] rounded-b-[14px]  p-4 items-center pb-9">
-                    <Encryption />
-                    <div className="pl-6">
-                      <p className="text-lg font-medium text-error-color pb-2">
-                        Rejected
-                      </p>
-                      <p className="text-lg font-medium text-error-color">
-                        26 January 2023 at 12:56 PM
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Col>
-            </Row>
-          </Col>
-
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
-              Document History
-            </div>
-
-            <div className="document p-4">
-              <Row>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                    <img src={Signed} alt="sigend" />
-                    <div className="text-center md:text-start">
-                      <p className="text-lg font-normal">changes Request</p>
-                      <p className="text-success-placeholder-color text-base font-normal">
-                        by mariasanoid@gmail.com
-                      </p>
-                    </div>
-                  </div>
                 </Col>
-                <Col
-                  xxl={12}
-                  xl={12}
-                  lg={12}
-                  md={12}
-                  sm={24}
-                  xs={24}
-                  className="flex justify-center md:justify-end"
-                >
-                  <div>
-                    <p className="text-lg font-normal">12:18 PM</p>
-                    <p className="text-success-placeholder-color text-base font-normal">
-                      06/10/2022
-                    </p>
+
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <Row gutter={[30, 24]}>
+                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
+                        <div className="p-4">
+                          {senderInfo.map((item, index) => {
+                            return (
+                              <div key={index}>
+                                <div className="pb-4">
+                                  <p className="text-success-placeholder-color text-base font-normal">
+                                    {item.label}
+                                  </p>
+                                  <p className="text-lg font-normal text-secondary-color">
+                                    {item.title}
+                                  </p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <p className="text-success-placeholder-color text-base font-normal">
+                            Email
+                          </p>
+                          <p className="text-sm md:text-lg font-normal">
+                            davidmiller@powersource.co.uk
+                          </p>
+                        </div>
+                        <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
+                          <Signeddigital />
+                          <div className="pl-6">
+                            <p className="text-lg font-medium text-green-color pb-2">
+                              Signed digitally
+                            </p>
+                            <p className="text-lg font-medium text-green-color">
+                              26 January 2023 at 12:56 PM
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+
+                    <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
+                        <div className="p-4">
+                          {receiverInfo.map((item, index) => {
+                            return (
+                              <div key={index}>
+                                <div className="pb-4">
+                                  <p className="text-success-placeholder-color text-base font-normal">
+                                    {item.label}
+                                  </p>
+                                  <p className="text-lg font-normal">
+                                    {item.title}
+                                  </p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <p className="text-success-placeholder-color text-base font-normal">
+                            Email
+                          </p>
+                          <p className="text-sm md:text-lg font-normal">
+                            davidmiller@powersource.co.uk
+                          </p>
+                        </div>
+                        <div className="flex bg-[#fad6d6] rounded-b-[14px]  p-4 items-center pb-9">
+                          <Encryption />
+                          <div className="pl-6">
+                            <p className="text-lg font-medium text-error-color pb-2">
+                              Rejected
+                            </p>
+                            <p className="text-lg font-medium text-error-color">
+                              26 January 2023 at 12:56 PM
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </Col>
+
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
+                    Document History
+                  </div>
+
+                  <div className="document p-4">
+                    <Row>
+                      <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                        <div className="flex flex-wrap flex-col md:flex-row gap-4">
+                          <img src={Signed} alt="sigend" />
+                          <div className="text-center md:text-start">
+                            <p className="text-lg font-normal">
+                              changes Request
+                            </p>
+                            <p className="text-success-placeholder-color text-base font-normal">
+                              by mariasanoid@gmail.com
+                            </p>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col
+                        xxl={12}
+                        xl={12}
+                        lg={12}
+                        md={12}
+                        sm={24}
+                        xs={24}
+                        className="flex justify-center md:justify-end"
+                      >
+                        <div>
+                          <p className="text-lg font-normal">12:18 PM</p>
+                          <p className="text-success-placeholder-color text-base font-normal">
+                            06/10/2022
+                          </p>
+                        </div>
+                      </Col>
+                    </Row>
                   </div>
                 </Col>
               </Row>

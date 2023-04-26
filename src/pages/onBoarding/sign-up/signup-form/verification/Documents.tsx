@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Select, Typography } from "antd";
-import {
-  ArrowDownDark,
-  DocumentUpload,
-  SHSLogo,
-  BackButton 
-} from "../../../../../assets/images/";
-import { DropDown } from "../../../../../components";
+import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images";
+import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
+
+const { Option } = Select;
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
 
-  const { Option } = Select;
   return (
     <div className="identity">
       <Row className="identity-style">
@@ -67,28 +63,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row gutter={[10,50]} className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                      <DocumentUpload/>
-                    </Col>
-                  </Row>
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
               <Form.Item
@@ -103,28 +78,7 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                      <DocumentUpload/>
-                    </Col>
-                  </Row>
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
               <Form.Item
@@ -139,36 +93,14 @@ const Documents = (props: any) => {
                 style={{ width: "100%", marginBottom: "20px" }}
               >
                 <div className="dragger">
-                  <Row className="p-3">
-                    <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={12}>
-                      <Typography className="dragger-title">
-                        Drag & drop files or
-                        <span style={{ color: "#E95060" }}>Browse</span>
-                      </Typography>
-                      <Typography className="dragger-description">
-                        Support jpeg,pdf and doc files
-                      </Typography>
-                    </Col>
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      xs={12}
-                      className="flex justify-end"
-                    >
-                      <DocumentUpload/>
-                    </Col>
-                  </Row>
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
-
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                  //htmlType="submit"
                   >
                     Skip
                   </Button>

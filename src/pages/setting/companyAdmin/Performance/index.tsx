@@ -13,8 +13,6 @@ import "../../style.scss";
 
 const { Panel } = Collapse;
 const inputData = [
-
-
   { 
     id: 1,
     title: "Work with full potential",
