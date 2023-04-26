@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Anchor, Collapse, Grid } from 'antd'
-import {PageHeader} from "../../../components";
+import { useNavigate, useLocation  } from "react-router-dom";
+import {Breadcrumb, PageHeader} from "../../../components";
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
 import HowToBookPropperty from "./HowToBookPropperty";
@@ -50,7 +51,10 @@ const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const screens = useBreakpoint();
-  console.log("Breakpoint:::: ", screens.lg)
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log('pathname::: ', location)
+  console.log('navigate', navigate)
   const anchorItems = [
     {
       key: 'Overview',
@@ -99,8 +103,12 @@ const AccPropertyDetail = () => {
   return (
     <div className="property-detail">
       <PageHeader
-        title="Accommodation"
         bordered
+        title={<Breadcrumb breadCrumbData={[
+          { name: "Black horse Lane, London, E17 6DS" },
+          { name: "Available Properties", onClickNavigateTo: -1 },
+        ]} />}
+        
       />
       <div className="property-detail-content">
         <div className="property-detail-content-left">

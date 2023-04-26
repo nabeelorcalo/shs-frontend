@@ -471,7 +471,6 @@ const Listings = () => {
                 >
                   <Upload
                     name="logo"
-                    action="/upload.do"
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
@@ -937,7 +936,7 @@ const Listings = () => {
   }
 
   const validateStepThree = (values: any) => {
-    const {bedType} = values;
+    const {media, bedType} = values;
     if(bedType != null && bedType !== "") {
       setNextDisabled(false)
     } else {
@@ -946,6 +945,7 @@ const Listings = () => {
   }
 
   const onValuesChange = (changedValues:any, allValues:any) => {
+    console.log('All Values::: ', allValues)
     if(current === 0) {
       validateStepOne(allValues)
     }

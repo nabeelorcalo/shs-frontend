@@ -1,7 +1,6 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Loader } from "./components";
 import Login from "./pages/onBoarding/sign-in";
 import Signup from "./pages/onBoarding/sign-up";
 import ForgotPassword from "./pages/onBoarding/sign-in/reset-password";
@@ -47,14 +46,12 @@ import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/sig
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 // Lazy load required end
 
-const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
+  <Suspense fallback={<Loader />}>
+    <Component {...props} />
+  </Suspense>
+);
 //Internships Child Components
 const NewInternships = Loadable(
   lazy(() => import("./pages/internships/NewInternships"))
