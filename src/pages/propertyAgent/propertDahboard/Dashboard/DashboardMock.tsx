@@ -72,6 +72,21 @@ export const cardData = [
             },
         ]
     },
+    {
+        img: uilcalender,
+        cardTitle: 'Rejected Listings',
+        cardNumber: "01",
+        status: [
+            {
+                statusDot: "Active",
+                number: "(20)",
+            },
+            {
+                statusDot: "In-active",
+                number: '(13)',
+            },
+        ]
+    },
     
    
 ];

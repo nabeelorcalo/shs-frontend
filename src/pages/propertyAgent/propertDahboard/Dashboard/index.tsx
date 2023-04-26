@@ -9,13 +9,16 @@ const MainDashboard = () => {
   const nivagate = useNavigate();
   return (
     <div className="main-dashboard">
-      <Row gutter={[20, 10]}>
+     
+      <div  style={{ overflowX: "scroll" }}>
+        <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
         {cardData.map((item, index) => {
           return (
-            <>
-              <Col xxl={6} xl={6} lg={12} md={24} sm={24} xs={24}>
-                <div className="card-main">
-                  <div className="flex items-center p-2">
+            <div>
+              {/* <Col xxl={5} xl={8} lg={12} md={24} sm={24} xs={24} > */}
+              <div className="card-main">
+                <div className=" flex items-center p-2">
+                 
                     <div className="img-bg">
                       <img src={item.img} alt="" />
                     </div>
@@ -55,12 +58,21 @@ const MainDashboard = () => {
                     </>
                   )}
                 </div>
-              </Col>
-            </>
+                {/* </Col> */}
+                
+            </div>
           );
         })}
-      </Row>
-
+        </div>
+      
+      
+     </div>
+      {/* <Row gutter={[10, 10]} > */}
+      
+       
+      {/* </Row> */}
+     
+      
       <Row gutter={[50,20]} className="mt-5">
         <Col xxl={12} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">

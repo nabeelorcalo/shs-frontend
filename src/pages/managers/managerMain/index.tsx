@@ -110,7 +110,8 @@ const ManagerMain = () => {
                   handleClick(0);
                 }}
               >
-                <img src={listView} alt="" className='img-style' />
+                <img src={gridview} alt="" className='img-style' />
+                
               </div>
               <div
                   className={`button ${activeButton === 1 ? 'active' : ''}`}
@@ -121,7 +122,7 @@ const ManagerMain = () => {
                   handleClick(1);
                 }}
               >
-                <img src={gridview} alt="" className='img-style' />
+                <img src={listView} alt="" className='img-style' />
               </div>
             </div>
             <div className="w-25">
@@ -136,14 +137,15 @@ const ManagerMain = () => {
         </Col>
       </Row>
       {showGrid === true && (
-        <div>
-          <ManagerInfoTable />
-        </div>
-      )}
-      {showTable === true && (
-        <div>
+            <div>
             <ManagerInfo />
         </div>
+       
+      )}
+      {showTable === true && (
+         <div>
+         <ManagerInfoTable />
+       </div>
       )}
     </div>
   );

@@ -11,10 +11,15 @@ import {
   Typography,
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
-import { DropDown } from "../../../components";
+import { Breadcrumb, DropDown, PageHeader } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+
+const breadcrumbArray = [
+  { name: 'Amelia Parker' },
+  { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
+];
 
 const commonObj = {
   moduleName: "University of Lincoln",
@@ -22,7 +27,7 @@ const commonObj = {
   depName: "University of Lincoln",
   area: "Lincoln, United Kingdom",
   logo: Pf,
-  personName: "Arlene McCoy",
+  personName: "Amelia Parker",
   iconEmail: IconEmail,
   iconPhone: IconPhone,
   iconLocation: IconLocation,
@@ -60,21 +65,11 @@ const ManagerProfile = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-  const name = "Amelia Parker";
-  const role = "Manager";
   return (
     <div className="manager-profile">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div>
-            <span className="font-semibold text-2xl primary-color">
-              {name}
-            </span>
-            <Divider type="vertical" />
-            <span className="font-semibold text-base text-secondary-color">
-              {role}
-            </span>
-          </div>
+          <Breadcrumb breadCrumbData={breadcrumbArray} />
         </Col>
       </Row>
       <Divider />
@@ -156,7 +151,7 @@ const ManagerProfile = () => {
                     <DropDown
                       name="Select"
                       value={value}
-                      options={["item 1", "item 2", "item 3"]}
+                      options={["Male", "Female", "others"]}
                       setValue={setValue}
                     />
                   </Form.Item>
@@ -177,7 +172,6 @@ const ManagerProfile = () => {
                       <AutoComplete
                         style={{ width: "70%" }}
                         placeholder="Phone Number"
-                        options={[{ value: "text 1" }, { value: "text 2" }]}
                       />
                     </Input.Group>
                   </Form.Item>
@@ -203,7 +197,8 @@ const ManagerProfile = () => {
                     <DropDown
                       name="Select"
                       value={value}
-                      options={["item 1", "item 2", "item 3"]}
+                      options={["Business Analysis", "Research", "Accounting", "Human Resources", "Administration",
+                    "Project Management"]}
                       setValue={setValue}
                     />
                   </Form.Item>
@@ -220,7 +215,7 @@ const ManagerProfile = () => {
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Post Code" name="postCode">
                     <DropDown
-                      name="drop down with search bar"
+                      name="Enter Post Code"
                       value={value}
                       options={["search", "item 1"]}
                       setValue={setValue}
@@ -247,20 +242,22 @@ const ManagerProfile = () => {
                     <DropDown
                       name="Select"
                       value={value}
-                      options={["item 1", "item 2", "item 3"]}
+                      options={["England", "Scotland", "Wales", "Ireland"]}
                       setValue={setValue}
                     />
                   </Form.Item>
                 </Col>
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button className="border-1 border-solid border-[#4a9d77] 
+                <Button
+                onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`) }}
+                className="border-1 border-solid border-[#4a9d77] 
                 text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel
                 </Button>
                 <Button
                   onClick={() => {
-                  navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
                   }}
                   htmlType="submit"
                   className="teriary-bg-color  white-color border-1 border-solid 

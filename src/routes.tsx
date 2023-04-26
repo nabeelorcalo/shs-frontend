@@ -325,6 +325,10 @@ const UniversitesInterns = Loadable(
 const UniversitesProfile = Loadable(
   lazy(() => import("./pages/universities/CompanyAdmin/Profile"))
 );
+const SystemDetailPage = Loadable(
+  lazy(() => import("./pages/universities/SystemAdmin/detailPage"))
+);
+
 
 export const publicRoutes = [
 
@@ -654,7 +658,7 @@ const systemAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
-        element: <UniversitesProfile />,
+        element: <SystemDetailPage />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,

@@ -13,17 +13,18 @@ import {
 import { DropDown } from "../../../components";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
+import { useNavigate } from "react-router-dom";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 
 const AddManager = () => {
+  const navigate = useNavigate();
+
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
   return (
     <div className="add-manager">
       <Row>
@@ -39,7 +40,7 @@ const AddManager = () => {
           </div>
         </Col>
       </Row>
-      <Divider/>
+      <Divider />
       <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-3 rounded-2xl">
         <Row>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -51,12 +52,12 @@ const AddManager = () => {
             </Typography>
           </Col>
         </Row>
-        <Divider/>
+        <Divider />
         <Form
           layout="vertical"
           initialValues={{ remember: true }}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Row>
@@ -72,9 +73,7 @@ const AddManager = () => {
               <Form.Item
                 label="First Name"
                 name="firstname"
-                rules={[
-                  { required: true, message: "Please input your firstname!" },
-                ]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <Input
                   placeholder="Enter First Name"
@@ -84,9 +83,7 @@ const AddManager = () => {
               <Form.Item
                 label="Last Name"
                 name="lastname"
-                rules={[
-                  { required: true, message: "Please input your Last name!" },
-                ]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <Input
                   placeholder="Enter Last Name"
@@ -95,23 +92,19 @@ const AddManager = () => {
               </Form.Item>
               <Form.Item
                 label="Gender"
-                rules={[
-                  { required: true, message: "Please input your Last name!" },
-                ]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <DropDown
                   name="Select"
                   value={value}
-                  options={["item 1", "item 2", "item 3"]}
+                  options={["Male", "Female", "others"]}
                   setValue={setValue}
                 />
               </Form.Item>
               <Form.Item
                 label="Email"
                 name="email"
-                rules={[
-                  { required: true, message: "Please input your Email!" },
-                ]}
+                rules={[{ type: "email" }, { required: true }]}
               >
                 <Input
                   placeholder="Enter Email"
@@ -127,7 +120,6 @@ const AddManager = () => {
                   <AutoComplete
                     style={{ width: "75%" }}
                     placeholder="Phone Number"
-                    options={[{ value: "text 1" }, { value: "text 2" }]}
                   />
                 </Input.Group>
               </Form.Item>
@@ -147,9 +139,7 @@ const AddManager = () => {
               <Form.Item
                 label="Title"
                 name="title"
-                rules={[
-                  { required: true, message: "Please input your Title!" },
-                ]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <Input
                   placeholder="Enter Title"
@@ -158,17 +148,13 @@ const AddManager = () => {
               </Form.Item>
               <Form.Item
                 label="Department"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your department!",
-                  },
-                ]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <DropDown
                   name="Select"
                   value={value}
-                  options={["item 1", "item 2", "item 3"]}
+                  options={["Business Analysis", "Research", "Accounting", "Human Resources", "Administration",
+                    "Project Management"]}
                   setValue={setValue}
                 />
               </Form.Item>
@@ -185,9 +171,12 @@ const AddManager = () => {
               </Typography>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-              <Form.Item label="Post Code" name="postCode">
+              <Form.Item
+                label="Post Code"
+                name="postCode"
+                rules={[{ type: "string" }, { required: true }]}>
                 <DropDown
-                  name="drop down with search bar"
+                  name="Enter Post Code"
                   value={value}
                   options={["search", "item 1"]}
                   setValue={setValue}
@@ -196,37 +185,52 @@ const AddManager = () => {
                   setSearchValue={setSearchValue}
                 />
               </Form.Item>
-              <Form.Item label="Address" name="address">
+              <Form.Item
+                label="Address"
+                name="address"
+                rules={[{ type: "string" }, { required: true }]}
+              >
                 <Input
                   placeholder="Enter Address"
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item label="City" name="city">
+              <Form.Item
+                label="City"
+                name="city"
+                rules={[{ type: "string" }, { required: true }]}
+              >
                 <Input
                   placeholder="Enter City"
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item label="Country" name="country">
+              <Form.Item
+                label="Country"
+                name="country"
+                rules={[{ type: "string" }, { required: true }]}
+              >
                 <DropDown
                   name="Select"
                   value={value}
-                  options={["item 1", "item 2", "item 3"]}
+                  options={["England", "Scotland", "Wales", "Ireland"]}
                   setValue={setValue}
                 />
               </Form.Item>
             </Col>
           </Row>
           <Form.Item className="flex justify-center sm:justify-end items-center">
-            <Button className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
+            <Button
+              onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`) }}
+              className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
               Cancel
             </Button>
             <Button
+              // onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)}}
               htmlType="submit"
               className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
             >
-              <a href={`${ROUTES_CONSTANTS.MANAGERS}`}>Save</a>
+              Save
             </Button>
           </Form.Item>
         </Form>
