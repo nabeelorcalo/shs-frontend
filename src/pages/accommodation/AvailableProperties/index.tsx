@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AccommodationCard } from '../../../components';
 import "./style.scss";
 import {Empty, Spin} from 'antd';
@@ -9,17 +9,18 @@ import { availablePropertiesState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import showNotification from '../../../helpers/showNotification'
-import constants from '../../../config/constants'
+import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
 
 const AvailableProperties = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
   const { getAvailableProperties } = useAvailablePropertiesHook();
-  const availableProperties = useRecoilValue(availablePropertiesState)
-  const [loading, setLoading] = useState(false)
+  const availableProperties = useRecoilValue(availablePropertiesState);
+  const [loading, setLoading] = useState(false);
   const { saveProperty } = useAccommodationHook();
 
 
@@ -47,7 +48,7 @@ const AvailableProperties = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`)
+  const handleDetailClick = (propertyId: any) => navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${propertyId}`, {state: {from: location.pathname}})
 
 
 
