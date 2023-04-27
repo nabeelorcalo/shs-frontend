@@ -32,11 +32,14 @@
 }
 
 .ant-tooltip.ant-slider-tooltip {
+  z-index: 0;
+
   .ant-tooltip-arrow{
     visibility: hidden;
   }
   .ant-tooltip-content {
     top: 8px;
+
     .ant-tooltip-inner {
       color: $text-success-placeholder-color;
       background-color: transparent;

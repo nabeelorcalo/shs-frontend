@@ -1,117 +1,37 @@
-import React, { useState, useEffect } from "react"
-import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps } from 'antd'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { Table, Dropdown, Typography, Row, Col } from 'antd'
-import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images'
+import React, { useState, useEffect } from "react";
+import type { ColumnsType } from 'antd/es/table';
+import type { MenuProps } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Table, Dropdown, Typography, Row, Col } from 'antd';
+import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images';
 import { PopUpModal, Alert } from "../../../components";
+import dayjs from 'dayjs';
 import "./style.scss";
+import { useRecoilValue} from "recoil";
+import { bookingRequestsState } from "../../../store";
+import useBookingRequests from "./actionHandler";
 interface DataType {
   key: React.Key;
-  agentTitle: string;
-  address: string;
-  durationBooking: string;
+  tenant: any;
+  property: any;
+  bookingDuration: string;
+  bookingStartDate: string;
+  bookingEndDate: string;
   rent: string;
   contracts: any;
   status: string;
 }
 
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'pending'
-  },
-  {
-    key: '2',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'success'
-  },
-  {
-    key: '3',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'rejected'
-  },
-  {
-    key: '4',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'pending'
-  },
-  {
-    key: '5',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'success'
-  },
-  {
-    key: '6',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'rejected'
-  },
-  {
-    key: '7',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'pending'
-  },
-  {
-    key: '8',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: true,
-    status: 'success'
-  },
-  {
-    key: '9',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    durationBooking: '22/09/2022 - 22/09/2022',
-    rent: '£ 170/day',
-    contracts: false,
-    status: 'rejected'
-  },
-];
-
-
-
 const BookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const location = useLocation()
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalViewContractOpen, setModalViewContractOpen] = useState(false)
   const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false)
+  const bookingRequests = useRecoilValue(bookingRequestsState)
+  const {getBookingRequests} = useBookingRequests();
+  const [loading, setLoading] = useState(false)
 
   const itemsPending: MenuProps['items'] = [
     {
@@ -186,15 +106,30 @@ const BookingRequests = () => {
   },
   {
     title: 'Agent Name',
-    dataIndex: 'agentTitle',
+    dataIndex: 'tenant',
+    render: (_, row, index) => {
+      return (
+        <>{row.tenant.firstName} {row.tenant.lastName}</>
+      );
+    },
   },
   {
     title: 'Address',
-    dataIndex: 'address',
+    dataIndex: 'property',
+    render: (_, row, index) => {
+      return (
+        <>{row.property.addressOne}</>
+      );
+    },
   },
   {
     title: 'Booking Duration',
-    dataIndex: 'durationBooking',
+    dataIndex: 'bookingDuration',
+    render: (_, row, index) => {
+      return (
+        <>{dayjs(row.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row.bookingEndDate).format('DD/MM/YYYY')}</>
+      );
+    },
   },
   {
     title: 'Rent',
@@ -247,8 +182,12 @@ const BookingRequests = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    getBookingRequests(setLoading)
   }, [])
+
+
+    /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
 
 
 
@@ -290,9 +229,10 @@ const BookingRequests = () => {
         <div className="shs-table-card">
           <div className="shs-table">
             <Table
+              loading={loading}
               scroll={{ x: "max-content" }}
               columns={tableColumns}
-              dataSource={tableData}
+              dataSource={bookingRequests}
               pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
             />
           </div>

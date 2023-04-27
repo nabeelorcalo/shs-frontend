@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
-import { SHSLogo, BackButton ,  UploadUserProfile,} from "../../../../../assets/images";
+import { SHSLogo, BackButton, UploadUserProfile, } from "../../../../../assets/images";
 import "../../../styles.scss";
-
 
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
@@ -13,10 +13,11 @@ const Photograph = (props: any) => {
     }
     return e?.fileList;
   };
+
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={8} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
@@ -31,7 +32,6 @@ const Photograph = (props: any) => {
                   <Typography.Title level={3}>Photograph</Typography.Title>
                 </div>
               </div>
-
               <Typography
                 style={{
                   fontSize: "16px",
@@ -43,7 +43,6 @@ const Photograph = (props: any) => {
                 Upload your profile picture
               </Typography>
             </div>
-
             <div className="text-center">
               <Typography
                 style={{
@@ -70,11 +69,11 @@ const Photograph = (props: any) => {
                   <UploadUserProfile />
                 </Upload>
               </Form.Item>
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
                     className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                  //htmlType="submit"
                   >
                     Skip
                   </Button>

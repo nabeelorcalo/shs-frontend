@@ -1,98 +1,98 @@
 export const AttendanceDepartmentData = [
     {
-        "city": "Jan",
+        "city": "Design",
         "type": "Present",
-        "value": 10000
+        "value": 65
     },
     {
-        "city": "Jan",
+        "city": "Design",
         "type": "Absent",
-        "value": 15000
+        "value": 20
     },
     {
-        "city": "Jan",
+        "city": "Design",
         "type": "Leave",
-        "value": 7000
+        "value": 30
     },
 
     {
-        "city": "Feb",
+        "city": "Business Analysis",
         "type": "Present",
-        "value": 10000
+        "value": 70
     },
     {
-        "city": "Feb",
+        "city": "Business Analysis",
         "type": "Absent",
-        "value": 15000
+        "value": 30
     },
     {
-        "city": "Feb",
+        "city": "Business Analysis",
         "type": "Leave",
-        "value": 7000
+        "value": 50
     },
 
     {
-        "city": "Mar",
-        // "type": "Present ",
-        "value": 10000
+        "city": "Project Managment",
+        "type": "Present ",
+        "value": 90
     },
     {
-        "city": "Mar",
+        "city": "Project Managment",
         "type": "Absent",
-        "value": 15000
+        "value": 84
     },
     {
-        "city": "Mar",
+        "city": "Project Managment",
         "type": "Leave",
-        "value": 7000
+        "value": 45
     },
 
     {
-        "city": "Apr",
-        // "type": "Present ",
-        "value": 10000
+        "city": "Development",
+        "type": "Present ",
+        "value": 95
     },
     {
-        "city": "Apr",
+        "city": "Development",
         "type": "Absent",
-        "value": 15000
+        "value": 35
     },
     {
-        "city": "Apr",
+        "city": "Development",
         "type": "Leave",
-        "value": 7000
+        "value": 75
     },
 
     {
-        "city": "May",
-        // "type": "Present ",
-        "value": 10000
+        "city": "Accounts",
+        "type": "Present ",
+        "value": 82
     },
     {
-        "city": "May",
+        "city": "Accounts",
         "type": "Absent",
-        "value": 15000
+        "value": 94
     },
     {
-        "city": "May",
+        "city": "Accounts",
         "type": "Leave",
-        "value": 7000
+        "value": 78
     },
 
     {
-        "city": "Jun",
-        // "type": "Present",
-        "value": 10000
+        "city": "Quality Assurance",
+        "type": "Present",
+        "value": 65
     },
     {
-        "city": "Jun",
+        "city": "Quality Assurance",
         "type": "Absent",
-        "value": 15000
+        "value": 44
     },
     {
-        "city": "Jun",
+        "city": "Quality Assurance",
         "type": "Leave",
-        "value": 7000
+        "value": 39
     },
 
 ]

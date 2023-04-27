@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import {
   Typography, Row, Col, Divider, Form,
-  Radio, RadioChangeEvent, Button, Space,
+  Radio, RadioChangeEvent, Button, Space, Input,
 } from "antd";
 import {
   SettingAvater,
 } from "../../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Breadcrumb, DropDown, Input, BoxWrapper, DragAndDropUpload, SettingCommonModal } from "../../../../../components";
+import { Breadcrumb, DropDown, BoxWrapper, DragAndDropUpload, SettingCommonModal, SearchBar } from "../../../../../components";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
@@ -51,9 +52,25 @@ const AddLocation: React.FC = () => {
   const [value, setValue] = useState(1);
   const [openModal, setOpenModal] = useState<any>(false);
   const [intern, setIntern] = useState<any>();
+  const [selectValue, setSelectValue] = useState({ country: "Select", phoneCode: "+001" });
 
   const onFinish = (values: any) => {
-  };
+    console.log("valies", values)
+    const { address, email, locationName, phoneNumber, postCode, street, town } = values;
+    let locationValues = {
+      intern: intern.length,
+      country: selectValue.country,
+      phoneCode: selectValue.phoneCode,
+      address,
+      email,
+      locationName,
+      phoneNumber,
+      postCode,
+      street,
+      town
+    };
+    console.log("obj", locationValues)
+  }
 
   const onChange = (e: RadioChangeEvent) => {
     setValue(e.target.value);
@@ -70,17 +87,20 @@ const AddLocation: React.FC = () => {
     setIntern(data)
   }
 
+  const handleChange = () => { };
+
   return (
     <div className="add-location">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
-      <BoxWrapper>
+      <BoxWrapper className="my-5">
         <Form layout="vertical"
           form={form}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
         >
           {/*------------------------ Office----------------------------- */}
-          <Row className="mt-5">
+          <Row >
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Office
@@ -92,24 +112,15 @@ const AddLocation: React.FC = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
                 name="locationName"
-                rules={[
-                  { required: true, message: "Please Enter location name!" },
-                ]}
+                required={false}
+                label="Location Name"
+                rules={[{ required: true }, { type: "string" }]}
               >
-                <Input
-                  className="input"
-                  id="locationName"
-                  label="Location Name"
-                  name="locationName"
-                  placeholder="Enter Title"
-                  size="small"
-                  type="text"
-                  handleChange={() => { }}
-                />
+                <Input placeholder="Enter Last Name" className="input-style" />
               </Form.Item>
             </Col>
           </Row>
-          <Divider />
+          <Divider className="mt-1" />
           {/*------------------------ Address----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row " xs={24} md={12} xxl={8}>
@@ -121,108 +132,63 @@ const AddLocation: React.FC = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
                 name="postCode"
-                rules={[{ required: true, message: "Please input post code!" }]}
+                required={false}
+                label="Post Code"
+                rules={[{ required: true }, { type: "string" }]}
               >
-                {/* <SearchBar size="middle" handleChange={handleChange} /> */}
-                <Input
-                  className="input"
-                  id="postCode"
-                  label="Post Code"
-                  name="postCode"
-                  placeholder="Enter Code"
-                  size="middle"
-                  type="text"
-                  handleChange={() => { }}
-                //  prefix={<SearchInputIconSetting />} 
-                />
+                <span className="post-code">
+                  <SearchBar size="middle" handleChange={handleChange} className="searchbar" />
+                </span>
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
                   name="address"
                   className="w-full"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Enter address line!",
-                    },
-                  ]}
+                  required={false}
+                  label="Address"
+                  rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input
-                    className="input"
-                    id="address"
-                    label="Address"
-                    name="address"
-                    placeholder="Enter address line"
-                    size="middle"
-                    type="text"
-                    handleChange={() => { }}
-
-                  />
+                  <Input placeholder="Enter Last Name" className="input-style" />
                 </Form.Item>
 
                 <Form.Item
                   name="street"
                   className="w-full "
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Enter street!",
-                    },
-                  ]}
+                  required={false}
+                  label="Street"
+                  rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input
-                    className="input"
-                    id="street"
-                    label="Street"
-                    name="street"
-                    placeholder="Enter street or location"
-                    size="small"
-                    type="text"
-                    handleChange={() => { }}
-
-                  />
+                  <Input placeholder="Enter Last Name" className="input-style" />
                 </Form.Item>
               </div>
               <div className="md:flex gap-2">
                 <Form.Item
                   name="town"
                   className="w-full"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Enter town!",
-                    },
-                  ]}
+                  required={false}
+                  label="Town"
+                  rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input
-                    className="input"
-                    id="town"
-                    label="Town"
-                    name="town"
-                    placeholder="Enter town "
-                    size="small"
-                    type="text"
-                    handleChange={() => { }}
-                  />
+                  <Input placeholder="Enter Last Name" className="input-style" />
                 </Form.Item>
                 <div className="w-full">
                   <Form.Item
                     label="Country"
                     required={false}
                     name="county"
-                    rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown
-                      name="Select"
+                      name={selectValue.country}
+                      value={selectValue.country}
                       options={["Pakistan", "India", "France"]}
-                      setDateValue={() => { }}
+                      setValue={(e: string) => setSelectValue({ ...selectValue, country: e })}
                     />
                   </Form.Item>
                 </div>
               </div>
             </Col>
           </Row>
-          <Divider />
+          <Divider className="mt-1" />
           {/*------------------------ Contact----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
@@ -238,60 +204,40 @@ const AddLocation: React.FC = () => {
                 Phone Number (optional)<span className="text-[red]"></span>
               </span>
               <div className="flex">
-                <div className=" mt-1 ">
+                <div className="w-[30%]" >
                   <Form.Item
-
                     required={false}
                     name="phoneCode"
-                    rules={[{ required: true, message: "Please input post code!" }]}
                   >
                     <DropDown
-                      name="+92"
+                      name={selectValue.phoneCode}
+                      value={selectValue.phoneCode}
                       options={[
                         '+92',
                         '+93',
                         '+94'
                       ]}
+                      setValue={(e: string) => setSelectValue({ ...selectValue, phoneCode: e })}
                     />
                   </Form.Item>
                 </div>
                 <Form.Item
                   name="phoneNumber"
-                  className="w-full md:pl-2"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Enter phone number!",
-                    },
-                  ]}
+                  required={false}
+                  className="w-full pl-2"
+                  rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input
-                    className="input"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    placeholder="xxxx xxxxxx"
-                    size="small"
-                    type="text"
-                    handleChange={() => { }}
-                  />
+                  <Input placeholder="Enter Last Name" className="input-style" />
                 </Form.Item>
               </div>
               <Form.Item name="email"
-                rules={[{ required: true, message: "Please Enter email!" }]}>
-                <Input
-                  className="input"
-                  id="email"
-                  label="Email (option)"
-                  name="email"
-                  placeholder="Enter email"
-                  size="small"
-                  type="text"
-                  handleChange={() => { }}
-                />
+                label="Email (option)"
+              >
+                <Input placeholder="Enter Last Name" className="input-style" />
               </Form.Item>
             </Col>
           </Row>
-          <Divider />
+          <Divider className="mt-1" />
           {/*------------------------ Upload Picture----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
@@ -301,10 +247,12 @@ const AddLocation: React.FC = () => {
               <Paragraph>Upload picture for your office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <DragAndDropUpload />
+              <Form.Item name="uploadImage">
+                <DragAndDropUpload />
+              </Form.Item>
             </Col>
           </Row>
-          <Divider />
+
           {/*------------------------ Add Interns----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
@@ -314,14 +262,17 @@ const AddLocation: React.FC = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row  " xs={24} md={12} xxl={8} >
-              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
-                <Radio value={1}>All interns</Radio>
-                <Radio value={2}>Select Interns</Radio>
-              </Radio.Group>
-                <span >
-                  <AvatarGroup maxCount={6} list={intern} />
-                </span>
-              </div>
+              <Form.Item name="intern">
+                <div className=" flex items-center">
+                  <Radio.Group onChange={onChange} value={value}>
+                    <Radio value={1}>All interns</Radio>
+                    <Radio value={2}>Select Interns</Radio>
+                  </Radio.Group>
+                  <span >
+                    <AvatarGroup maxCount={6} list={intern} />
+                  </span>
+                </div>
+              </Form.Item>
             </Col>
           </Row>
           <Space className="flex justify-end">

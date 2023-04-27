@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps, RadioChangeEvent } from 'antd'
+import type { RadioChangeEvent } from 'antd'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
+import { listingsState } from "../../store";
+import { useRecoilValue} from "recoil";
+import dayjs from 'dayjs'
+import showNotification from '../../helpers/showNotification'
+import constants from '../../config/constants'
+
 import {
   IconAddListings,
   IconAngleDown,
@@ -38,13 +44,16 @@ import "./style.scss";
 
 interface DataType {
   key: React.Key;
+  id: number;
   nameAddress: string;
   propertyType: string;
-  bedroom: string;
+  totalBedrooms: number;
   verificationStatus: string;
-  rent: string;
+  monthlyRent: number;
   availability: any;
   publicationStatus: string;
+  availabilityStart: any;
+  availabilityEnd: any;
 }
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -56,106 +65,56 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '2',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '1',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '3',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'pending'
-  },
-  {
-    key: '4',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'pending'
-  },
-  {
-    key: '5',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '6',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '7',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '8',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'checked',
-    publicationStatus: 'published'
-  },
-  {
-    key: '9',
-    nameAddress: '118-127 Park Ln, London W1K 7AF, UK',
-    propertyType: 'Shared Apartment',
-    bedroom: '2',
-    rent: '£ 170/day',
-    availability: '22/09/2022 - 22/12/2022',
-    verificationStatus: 'unchecked',
-    publicationStatus: 'published'
-  },
-];
+const listingInitValues = {
+  addressOne: "",
+  addressTwo: "",
+  postalCode: "",
+  IsFurnished: "",
+  propertyType: "",
+  totalBedrooms: "",
+  bedroomsForRent: "",
+  totalBathrooms: "",
+  hasAirConditioning: "",
+  hasHeating: "",
+  hasWaterHeating: "",
+  buildingHas: [],
+  PropertyHas: [],
+  propertySize: "",
+  bedroomPhotos: [],
+  bedType: "",
+  allowedTwoPeople: "",
+  kindOfAmenities: [],
+  paymentMethod: "",
+  securityDeposit: "",
+  kindOfDeposit: "",
+  minimumStay: "",
+  allBillsIncluded: "",
+  chargeElectricityBill: "",
+  chargeWaterBill: "",
+  chargeGasBill: "",
+  specificGender: "",
+  maxAge: "",
+  tenantsKind: "",
+  couplesAllowed: "",
+  tenantsRegisterAddress: "",
+  allowedPets: "",
+  allowedMusic: "",
+  identityProof: false,
+  occupationProof: false,
+  incomeProof: false,
+  contractType: "",
+  cancellationPolicy: "",
+  selectDocument: []
+}
 
 
 
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {listingsData, createListing} = useListingsHook()
+  const {getListings, createListing} = useListingsHook()
+  const allProperties = useRecoilValue(listingsState)
+  const [loadingAllProperties, setLoadingAllProperties] = useState(false)
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [billsIncluded, setBillsIncluded] = useState(false)
@@ -167,61 +126,12 @@ const Listings = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [initValues, setInitValues] = useState({
-    "address": "",
-    "address2": "",
-    "postcode": "",
-    "isFurnished": "",
-    "propertyType": "",
-    "bedroomsTotal": "",
-    "bedroomsForRent": "",
-    "bathrooms": "",
-    "airConditioning": "",
-    "heating": "",
-    "heatedWaterSystem": "",
-    "buildingHas": [],
-    "PropertyHas": [],
-    "bedroomPhotos": [],
-    "bedType": "",
-    "allowedTwoPeople": "",
-    "kindOfAmenities": [],
-    "paymentMethod": "",
-    "securityDeposit": "",
-    "kindOfDeposit": "",
-    "minimumStay": "",
-    "allBillsIncluded": "",
-    "chargeElectricityBill": "",
-    "chargeWaterBill": "",
-    "chargeGasBill": "",
-    "specificGender": "",
-    "maxAge": "",
-    "tenantsKind": "",
-    "couplesAllowed": "",
-    "tenantsRegisterAddress": "",
-    "allowedPets": "",
-    "allowedMusic": "",
-    "identityProof": false,
-    "occupationProof": false,
-    "incomeProof": false,
-    "contractType": "",
-    "cancellationPolicy": "",
-    "selectDocument": []
-  })
-  const items: MenuProps['items'] = [
-    {
-      label: 'Edit',
-      key: 'listingEdit',
-    },
-    {
-      label: 'Remove',
-      key: 'listingRemove',
-    },
-  ];
+  const [listingValues, setListingValues] = useState(listingInitValues)
 
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
-      dataIndex: 'nameAddress',
+      dataIndex: 'addressOne',
     },
     {
       title: 'Property Type',
@@ -230,7 +140,7 @@ const Listings = () => {
         return (
           <>
             <div>{row.propertyType}</div>
-            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.bedroom} {Number(row.bedroom) > 1 ? "Bedrooms" : "Bedroom"}</div>
+            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.totalBedrooms} {row.totalBedrooms > 1 ? "Bedrooms" : "Bedroom"}</div>
           </>
         );
       },
@@ -249,11 +159,16 @@ const Listings = () => {
     },
     {
       title: 'Rent',
-      dataIndex: 'rent',
+      dataIndex: 'monthlyRent',
     },
     {
       title: 'Availability',
       dataIndex: 'availability',
+      render: (_, row, index) => {
+        return (
+          <>{dayjs(row.availabilityStart).format('DD/MM/YYYY')} - {dayjs(row.availabilityEnd).format('DD/MM/YYYY')}</>
+        );
+      },
     },
     {
       title: 'Publication Status',
@@ -273,7 +188,15 @@ const Listings = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <Dropdown overlayClassName="shs-dropdown" menu={{ items, onClick: ({ key }) => handleActionItem(key, row.key) }} trigger={['click']} placement="bottomRight">
+          <Dropdown
+            overlayClassName="shs-dropdown"
+            trigger={['click']} 
+            placement="bottomRight"
+            menu={{ items: [
+              {label: 'Edit', key: 'listingEdit', onClick: () => navigate(`/edit-listing/${row.id}`)},
+              {label: 'Remove', key: 'listingRemove', onClick: () => console.log('listingRemove')}
+            ]}}
+          >
             <div className="dropdown-button">
               <IconMore />
             </div>
@@ -287,28 +210,47 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    
+    getListings(setLoadingAllProperties)
   }, [])
 
-  
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleSubmission = useCallback(
+    (result:any) => {
+      if (result.error) {
+        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+      } else {
+        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+        setListingValues(listingInitValues)
+      }
+    },
+    [form]
+  );
+
+  const submitAddListing = useCallback(async () => {
+    let values;
+    try {
+      values = await form.validateFields();
+    } catch (errorInfo) {
+      return;
+    }
+    // setAddListingLoading(true);
+    const result = await createListing(listingValues);
+    // setAddListingLoading(false);
+    handleSubmission(JSON.stringify(result));
+  }, [form, handleSubmission]);
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function handleActionItem(key: any, id: any) {
-    if (key === 'listingEdit') {
-      navigate(`/edit-listing/${id}`)
-    }
-    if (key === 'listingRemove') {
-      console.log('listingRemove')
-    }
-  }
-
   function openModalAddListing() {
     setModalAddListingOpen(true)
   }
 
   function closeModalAddListing() {
-    setModalAddListingOpen(false)
+    setListingValues(listingInitValues);
+    setModalAddListingOpen(false);
   }
 
   function onChangeRadioProperty(e: RadioChangeEvent) {
@@ -334,16 +276,14 @@ const Listings = () => {
   };
 
 
-  const submitAddListing = (values: any) => {
-    console.log('Add Listing:::', values);
-  }
-
 
   /* ADD LISTING STEPS
   -------------------------------------------------------------------------------------*/
-  function StepLocation() {
-    return (
-      <div className="step-location steps-content">
+  const steps = [
+    {
+      key: 'stepLocation',
+      title: 'Step 1',
+      content: <div className="step-location steps-content">
         <div className="step-content-header">
           <div className="step-content-header-title">Location</div>
           <Typography.Title level={2}>Make sure your property is in our supported area & furnished</Typography.Title>
@@ -351,17 +291,17 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="address" label="Address">
+            <Form.Item name="addressOne" label="Address">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="address2" label="Address  Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
+            <Form.Item name="addressTwo" label="Address Line 2 (optional)" help="Apartment, suite, unit, building, floor, etc.">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item name="postcode" label="Postcode">
+            <Form.Item name="postalCode" label="Postcode">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
@@ -380,13 +320,12 @@ const Listings = () => {
             </Form.Item>
           </Col>
         </Row>
-      </div>
-    )
-  }
-
-  function StepPropertyDetails() {
-    return (
-      <div className="step-property-detail steps-content">
+      </div>,
+    },
+    {
+      key: 'stepPropertyDetails',
+      title: 'Step 2',
+      content: <div className="step-property-detail steps-content">
         <div className="step-content-header">
           <div className="step-content-header-title">Property Details</div>
           <Typography.Title level={2}>How would you like to rent out your place?</Typography.Title>
@@ -423,7 +362,7 @@ const Listings = () => {
               <Col xs={24}>
                 <Row gutter={30}>
                   <Col xs={8}>
-                    <Form.Item name="bedroomsTotal" label="Bedrooms in total">
+                    <Form.Item name="totalBedrooms" label="Bedrooms in total">
                       <InputNumber min={1} max={10} />
                     </Form.Item>
                   </Col>
@@ -434,7 +373,7 @@ const Listings = () => {
 
                   </Col>
                   <Col xs={8}>
-                    <Form.Item name="bathrooms" label="Bathrooms">
+                    <Form.Item name="totalBathrooms" label="Bathrooms">
                       <InputNumber min={1} max={10} />
                     </Form.Item>
                   </Col>
@@ -444,7 +383,7 @@ const Listings = () => {
           }
 
           <Col xs={24}>
-            <Form.Item name="airConditioning" label="Does it have air conditioning?">
+            <Form.Item name="hasAirConditioning" label="Does it have air conditioning?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="notAvailable">Not available</Select.Option>
                 <Select.Option value="central">Central</Select.Option>
@@ -453,7 +392,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="heating" label="Heating">
+            <Form.Item name="hasHeating" label="Heating">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatingNotAvailable">Not available</Select.Option>
                 <Select.Option value="centralProperty">Central Property</Select.Option>
@@ -462,7 +401,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="heatedWaterSystem" label="Does it have heated water system?">
+            <Form.Item name="hasWaterHeating" label="Does it have heated water system?">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatedWaterSystemNo">No</Select.Option>
                 <Select.Option value="naturalGas">Natural gas</Select.Option>
@@ -524,18 +463,17 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="properySize" label="Property Size(optional)">
+            <Form.Item name="propertySize" label="Property Size(optional)">
               <Input placeholder="Placeholder" />
             </Form.Item>
           </Col>
         </Row>
       </div>
-    )
-  }
-
-  function StepBedroomDetails() {
-    return (
-      <div className="step-bedroom-details steps-content">
+    },
+    {
+      key: 'stepBedroomDetails',
+      title: 'Step 3',
+      content: <div className="step-bedroom-details steps-content">
         <div className="step-content-header">
           <div className="step-content-header-title">Bedroom Details</div>
           <Typography.Title level={2}>Lets begin with bedroom 1</Typography.Title>
@@ -543,7 +481,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${initValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${listingValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -557,7 +495,7 @@ const Listings = () => {
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
                   >
-                    {initValues.bedroomPhotos?.length ? (
+                    {listingValues.bedroomPhotos?.length ? (
                       <div className="upload-device-btn">
                         <IconAddUpload />
                         <div className="label">Upload from device</div>
@@ -569,7 +507,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {initValues.bedroomPhotos?.length === 0 &&
+                {listingValues.bedroomPhotos?.length === 0 &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -577,6 +515,19 @@ const Listings = () => {
                     </div>
                   </div>
                 }
+                <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
+                  <div className="enter-url-form-field">
+                    <Form.Item name={'enterUrl'} label="Enter URL">
+                      <Input placeholder="https://www.example.com/examplefile.pdf" />
+                    </Form.Item>
+                  </div>
+                  <div className="enter-url-actions">
+                    <Space size={30}>
+                      <Button className="button-tertiary" ghost onClick={() => setUploadURL(false)}>Back</Button>
+                      <Button className="button-tertiary">Add</Button>
+                    </Space>
+                  </div>
+                </div>
               </div>
             </div>
           </Col>
@@ -643,13 +594,12 @@ const Listings = () => {
             </Form.Item>
           </Col>
         </Row>
-      </div>
-    )
-  }
-
-  function StepRentBilling() {
-    return (
-      <div className="step-rent-billing steps-content">
+      </div>,
+    },
+    {
+      key: 'stepRentBilling',
+      title: 'Step 4',
+      content: <div className="step-rent-billing steps-content">
         <div className="step-content-header">
           <div className="step-content-header-title">Rent and Billing</div>
           <Typography.Title level={2}>Set the price of bedroom 1</Typography.Title>
@@ -737,13 +687,12 @@ const Listings = () => {
             </Form.Item>
           </Col>
         </Row>
-      </div>
-    )
-  }
-
-  function StepRulesPreferences() {
-    return (
-      <div className="step-rules-preferences steps-content">
+      </div>,
+    },
+    {
+      key: 'stepRulesPreferences',
+      title: 'Step 5',
+      content: <div className="step-rules-preferences steps-content">
         <div className="step-content-header">
           <div className="step-content-header-title">Rules and Preferences </div>
           <Typography.Title level={2}>Set rules for your property </Typography.Title>
@@ -855,13 +804,12 @@ const Listings = () => {
             </Form.Item>
           </Col>
         </Row>
-      </div>
-    )
-  }
-
-  function StepRentalConditions() {
-    return (
-      <div className="step-rental-conditions">
+      </div>,
+    },
+    {
+      key: 'stepRentalConditions',
+      title: 'Step 6',
+      content: <div className="step-rental-conditions">
         <div className="step-content-header">
           <div className="step-content-header-title">Rental Conditions</div>
           <Typography.Title level={2}>Set the rental conditions for the contract</Typography.Title>
@@ -934,13 +882,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
         </Row>
-      </div>
-    )
-  }
-
-  function StepPublish() {
-    return (
-      <div className="step-publish">
+      </div>,
+    },
+    {
+      key: 'step7',
+      content: <div className="step-publish">
         <div className="step-content-header">
           <div className="step-content-header-title">All Ready to publish!</div>
           <Typography.Title level={2}>Before you finish....</Typography.Title>
@@ -957,165 +903,7 @@ const Listings = () => {
             <Typography.Paragraph>The listings can take up to 4 to 5 working days for verification and finally it will be published onto our website, you can always check back when the listings will be online and running</Typography.Paragraph>
           </div>
         </div>
-      </div>
-    )
-  }
-
-  const steps = [
-    {
-      key: 'step1',
-      title: 'Step 1',
-      content: <StepLocation />,
-    },
-    {
-      key: 'step2',
-      title: 'Step 2',
-      content: <StepPropertyDetails />,
-    },
-    {
-      key: 'step3',
-      title: 'Step 3',
-      content: <div className="step-bedroom-details steps-content">
-        <div className="step-content-header">
-          <div className="step-content-header-title">Bedroom Details</div>
-          <Typography.Title level={2}>Lets begin with bedroom 1</Typography.Title>
-        </div>
-        <Row gutter={30}>
-          <Col xs={24}>
-            <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${initValues.bedroomPhotos?.length ? '' : 'no-photos'}`}>
-              <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
-              <div className="add-bedroom-photos">
-                <Form.Item
-                  name="bedroomPhotos"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                >
-                  <Upload
-                    name="logo"
-                    action="/upload.do"
-                    listType={"picture-card"}
-                    showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
-                  >
-                    {initValues.bedroomPhotos?.length ? (
-                      <div className="upload-device-btn">
-                        <IconAddUpload />
-                        <div className="label">Upload from device</div>
-                      </div>
-                    ) : (
-                      <div className="button-upload-from-device">
-                        <Button className="button-tertiary">Upload from device</Button>
-                      </div>
-                    )}
-                  </Upload>
-                </Form.Item>
-                {initValues.bedroomPhotos?.length === 0 &&
-                  <div className="upload-step-url">
-                    <div className="upload-or-text">or</div>
-                    <div className="upload-from-url">
-                      <Button type="text" icon={<IconLink />} onClick={() => setUploadURL(true)}>Enter URL</Button>
-                    </div>
-                  </div>
-                }
-                <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
-                  <div className="enter-url-form-field">
-                    <Form.Item name={'enterUrl'} label="Enter URL">
-                      <Input placeholder="https://www.example.com/examplefile.pdf" />
-                    </Form.Item>
-                  </div>
-                  <div className="enter-url-actions">
-                    <Space size={30}>
-                      <Button className="button-tertiary" ghost onClick={() => setUploadURL(false)}>Back</Button>
-                      <Button className="button-tertiary">Add</Button>
-                    </Space>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Col>
-          <Col xs={24}>
-            <Form.Item name="bedType" label="Bed Type">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="typeFuton">Futon</Select.Option>
-                <Select.Option value="typeAirbed">Airbed</Select.Option>
-                <Select.Option value="typeWaterbed">Waterbed</Select.Option>
-                <Select.Option value="typeQueenBed">Queen bed</Select.Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <Form.Item name="allowedTwoPeople" label="Are two people allowed to live in this bedroom">
-              <Radio.Group>
-                <Row gutter={30}>
-                  <Col xs={12}>
-                    <Radio value="allowedYes">Yes</Radio>
-                  </Col>
-                  <Col xs={12}>
-                    <Radio value="allowedNo">No</Radio>
-                  </Col>
-                </Row>
-              </Radio.Group>
-            </Form.Item>
-          </Col>
-          <Col xs={24}>
-            <Form.Item name="kindOfAmenities" label="What kind of amenities does bedroom 1 have? ">
-              <Checkbox.Group>
-                <Row gutter={[30, 30]}>
-                  <Col xs={8}>
-                    <Checkbox value="ChestOfDrawers">Chest of drawers</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="desk">Desk</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="rivateBathroom">Private Bathroom</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="keyLocker">Key or Locker</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="Wardrobe">Wardrobe</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="Shelving">Shelving</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="TV">TV</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="Wi-fi">Wi-fi</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="carpetedFloors">Carpeted Floors</Checkbox>
-                  </Col>
-                  <Col xs={8}>
-                    <Checkbox value="Other">Other</Checkbox>
-                  </Col>
-                </Row>
-              </Checkbox.Group>
-            </Form.Item>
-          </Col>
-        </Row>
       </div>,
-    },
-    {
-      key: 'step4',
-      title: 'Step 4',
-      content: <StepRentBilling />,
-    },
-    {
-      key: 'step5',
-      title: 'Step 5',
-      content: <StepRulesPreferences />,
-    },
-    {
-      key: 'step6',
-      title: 'Step 6',
-      content: <StepRentalConditions />,
-    },
-    {
-      key: 'step7',
-      content: <StepPublish />,
     },
   ];
 
@@ -1164,8 +952,9 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
+                    loading={loadingAllProperties}
                     columns={tableColumns}
-                    dataSource={tableData}
+                    dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
                   />
                 </div>
@@ -1192,10 +981,15 @@ const Listings = () => {
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
-          initialValues={initValues}
+          initialValues={listingValues}
           onValuesChange={(_, values) => {
-            setInitValues(prevState => ({ ...prevState, ...values }))
-            console.log('init:: ', initValues)
+            let tempValues = {}
+            tempValues = {
+              ...tempValues,
+              ...values
+            }
+            setListingValues(prevState => ({ ...prevState, ...tempValues }))
+            console.log('init:: ', listingValues)
           }}
           onFinish={submitAddListing}
         >
@@ -1227,7 +1021,7 @@ const Listings = () => {
                 <Button className="button-tertiary" onClick={next}>Next</Button>
               }
               {current === 6 &&
-                <Button className="button-tertiary">Publish</Button>
+                <Button htmlType="submit" className="button-tertiary">Publish</Button>
               }
             </Space>
           </div>

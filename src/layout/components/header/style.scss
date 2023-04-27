@@ -242,6 +242,7 @@
 
         .ant-dropdown-trigger.loggedin-user-avatar {
           cursor: pointer;
+          margin-right: 10px;        
         }
       }
       .ikd-header-notification {
@@ -328,6 +329,8 @@
 }
 
 .ant-dropdown.user-dropdown {
+  z-index: 1290;
+  
   .ant-dropdown-arrow {
     background-image: url(../../../assets/images/header/polygon.png);
     background-repeat: no-repeat;
@@ -371,7 +374,7 @@
     }
 
     .ant-dropdown-menu {
-      padding: 10px 0;
+      padding: 10px 0 0;
       .ant-dropdown-menu-item {
         padding: 10px 0;
         font-size: 14px;
@@ -383,6 +386,10 @@
           margin-right: 20px;
         }
       }
+    }
+
+    .user-dropdown-footer {
+      margin-top: 10px;
     }
     
   }

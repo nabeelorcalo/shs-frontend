@@ -1,34 +1,39 @@
 @import "../../../../../scss/colors";
-.drawer-wrapper {
-  .input-filed {
-    border: 1px solid #fcecee !important;
-    border-radius: 6px;
+.input-filed {
+  border: 1px solid #fcecee !important;
+  border-radius: 6px;
+}
+.transort {
+  background-color: white;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.transport-focus {
+  background-color: $primary-bg-color !important;
+  cursor: pointer;
+  &:hover {
+    cursor: pointer;
   }
-  .transort {
-    background-color: white;
-    border-radius: 8px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  svg path {
+    fill: white !important;
   }
-  .focus {
-    background-color: $primary-bg-color !important;
+}
+.input-field-wrapper {
+  color: #a0a3bd;
+  outline: none;
+  box-shadow: none;
+  background-color: none;
+  .ant-input {
+    background-color: transparent !important;
+    border-color: none !important;
   }
-  .input-field-wrapper {
-    color: #a0a3bd;
+  &:hover {
     outline: none;
     box-shadow: none;
-    background-color: none;
-    .ant-input {
-      background-color: transparent !important;
-      border-color: none !important;
-    }
-    &:hover {
-      outline: none;
-      box-shadow: none;
-    }
   }
 }
 .buttons-wrapper {
@@ -41,5 +46,10 @@
     background-color: #4a9d77 !important;
     color: white;
     border-radius: 8px;
+  }
+}
+.input-number {
+  &:focus {
+    border-color: none !important;
   }
 }

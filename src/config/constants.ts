@@ -15,7 +15,18 @@ export default {
   AGENT: 'PROPERTY_AGENT',
   STUDENT: 'STUDENT',
   UNIVERSITY: 'UNIVERSITY',
-  PUBLIC: 'PUBLIC'
+  PUBLIC: 'PUBLIC',
+  NOTIFICATION_DETAILS: {
+    success: {
+      message: "Details Submitted!",
+      description:
+        "We've got your information. Our team will get in touch you shortly!",
+    },
+    error: {
+      message: "Something went wrong!",
+      description: "Please try again later or email us",
+    },
+  }
 };
 
 export const ROUTES_CONSTANTS: any = {
@@ -33,8 +44,8 @@ export const ROUTES_CONSTANTS: any = {
   DASHBOARD: "dashboard",
   INTERNSHIPS: "internships",
   INTERNSHIP_PIPELINE: "internships/pipeline",
-  NEW_INTERNSHIP: "internships/new-internship",
-  VIEW_INTERNSHIP_DETAILS: "internships/view-internship-details",
+  NEW_INTERNSHIP: "new-internship",
+  VIEW_INTERNSHIP_DETAILS: "view-internship-details",
   PAYROLL: "payroll",
   PAYROLL_DETAILS: "payroll/payroll-details",
   VIEW_PAYROLL_SALARY_SLIP: "payroll/payroll-details/view-payroll-details",
@@ -93,6 +104,8 @@ export const ROUTES_CONSTANTS: any = {
   CONTRACTS: "contracts",
   RECEIVED_CompanyAdmin: "received-company-admin",
   MANAGERS: "managers",
+  ADD_MANAGER: 'add-manager',
+  MANAGER_PROFILE:'manager-profile',
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",

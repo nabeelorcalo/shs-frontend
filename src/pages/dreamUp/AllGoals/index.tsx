@@ -56,7 +56,7 @@ const AllGoals = () => {
           bordered
           title={<div>All Goals | <span className="text-base text-[#363565]">Dream Up</span></div>}
         />
-        <Row className=' items-center' gutter={[10, 10]}>
+        <Row className='items-center' gutter={[10, 10]}>
           <Col  xs={24} sm={14}>
             <SearchBar className="SearchBar" handleChange={(e: any) => {
               console.log(e);
@@ -76,7 +76,7 @@ const AllGoals = () => {
         </Row>
         <Row gutter={[20, 20]} className="mt-8">
           <Col xs={24} lg={11} xl={7}>
-            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab h-screen' >
+            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab wrapper' >
               <h1 className='font-medium text-xl mb-5 '>My Goals</h1>
               {goalsData.length === 0 ?
                 <div className='h-full flex items-center justify-center Goals_tab_no_task'>
@@ -98,7 +98,7 @@ const AllGoals = () => {
             </BoxWrapper>
           </Col>
           <Col lg={13} xl={17} xs={24}>
-            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab_details h-screen'>
+            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab_details wrapper'>
               <div className='top_header_tasksInfo_info flex items-center justify-between flex-wrap'>
                 <div className="flex flex-wrap gap-[20px] sm:gap[50px] md:gap-[25px] lg:gap-[22px]   lg:basis-[70%] basis-[100%] ">
                   <p className='heading '>Create Balance in life</p>
