@@ -35,20 +35,15 @@ const index = () => {
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
       <Divider />
 
-      <Row className=' items-center' gutter={[20, 20]}>
-        <Col xs={24} md={24} lg={6} xl={6} xxl={6}>
-          <SearchBar className="SearchBar" handleChange={(e: any) => {
-            console.log(e);
-          }} />
+      <Row className='items-center' gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar  handleChange={(e: any) => { console.log(e)}} />
         </Col>
-        <Col xs={24} md={24} lg={18} xl={18} xxl={18}>
-          <div className='flex md:justify-end view_history_button_wrapper'>
-            <div>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
               <FiltersButton
                 label="Filters"
                 onClick={() => setOpenDrawer({ type: 'filters', open: true })}
               />
-            </div>
             <div>
               <DropDown
                 options={[
@@ -68,7 +63,6 @@ const index = () => {
                 size="middle"
                 className="Request_leave"
               />}
-          </div>
         </Col>
         <Col xs={24}>
           <BoxWrapper>

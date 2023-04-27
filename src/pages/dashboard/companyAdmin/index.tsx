@@ -144,7 +144,6 @@ const CompanyAdmin = () => {
         <Col xs={24} md={24} xl={16} xxl={13}>
           <Row gutter={gutter} className="flex-col">
             <Col>
-              <div className="bg-white rounded-2xl p-5 wrapper-shadow">
                 <MonthlyPerfomanceChart
                   XField="city"
                   YField="value"
@@ -163,7 +162,6 @@ const CompanyAdmin = () => {
                   textColor="#4E4B66"
                   style={{ height: 235 }}
                 />
-              </div>
             </Col>
 
             <Col xs={24}>

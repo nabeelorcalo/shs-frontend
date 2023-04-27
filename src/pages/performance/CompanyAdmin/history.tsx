@@ -419,17 +419,15 @@ const PerformanceHistory = () => {
         title={<Breadcrumb breadCrumbData={historyBreadCrumb} />}
       />
       <Row gutter={[20, 20]}>
-        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
-            className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="Search"
-          // size="small"
           />
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex justify-end right-sec gap-4">
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end  gap-4">
           <FiltersButton label="Filters" onClick={handleSidebarClick} />
           <IconButton
             size="large"

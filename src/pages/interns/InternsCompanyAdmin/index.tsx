@@ -10,24 +10,22 @@ import {
   FiltersButton,
   Drawer,
   PopUpModal,
-  Alert
 } from "../../../components";
 import { TextArea } from "../../../components";
-import "./style.scss";
 import { useNavigate } from 'react-router-dom';
 import {
   AlertIcon,
   CardViewIcon,
-  DownloadDocumentIcon,
   More,
   SuccessIcon,
   TableViewIcon,
-  WarningIcon
 } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps } from 'antd';
+import { Dropdown, Avatar, Button, MenuProps, Row, Col } from 'antd';
 import useCustomHook from "./actionHandler";
 import UploadDocument from "../../../components/UploadDocument";
 import { STATUS_CONSTANTS } from "../../../config/constants";
+import "./style.scss";
+
 
 const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
 
@@ -57,9 +55,7 @@ const InternsCompanyAdmin = () => {
     }
     return (
       <p>
-        <span
-          className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-        >
+        <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
           {props.status}
         </span>
       </p>
@@ -301,18 +297,17 @@ const InternsCompanyAdmin = () => {
     <>
       <PageHeader title="Interns" />
       <div className="flex flex-col gap-5 intern-main">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
+        <Row gutter={[20, 20]}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
               handleChange={() => { }}
               name="search bar"
               placeholder="Search by name"
               size="middle"
             />
-          </div>
-          <div className="flex flex-row gap-4 right-sec">
-            <FiltersButton
-              label="Filters"
+          </Col>
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
+          <FiltersButton label="Filters"
               onClick={() => {
                 setShowDrawer(true);
               }}
@@ -425,6 +420,7 @@ const InternsCompanyAdmin = () => {
                 </div>
               </React.Fragment>
             </Drawer>
+            <div className="flex justify-between gap-4">
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
@@ -443,8 +439,10 @@ const InternsCompanyAdmin = () => {
               }}
               value=""
             />
-          </div>
-        </div>
+            </div>
+          </Col>
+        </Row>
+       
         <div className="pt-3">
           <p className="font-semibold pb-4">Total Interns: 40</p>
           {

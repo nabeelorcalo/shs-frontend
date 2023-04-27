@@ -158,12 +158,6 @@
 // Company Admin: performance/history
 .company-admin-performance-history,
 .manager-performance-history {
-  .right-sec {
-    @media only screen and (max-width:475px) {
-      flex-direction: column;
-    }
-  }
-
   .performance-header {
     margin-bottom: 20px;
 
@@ -196,8 +190,10 @@
     background-color: #E6F4F9;
     margin: 0 8px;
 
-    @media only screen and (max-width:420px) {
+    @media only screen and (max-width:639px) {
+      padding: 10px !important;
       width: 100% !important;
+      justify-content: end;
       margin: 0;
     }
   }
