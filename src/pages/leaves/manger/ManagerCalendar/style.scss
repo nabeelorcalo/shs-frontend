@@ -1,7 +1,14 @@
 @import "../../../../scss/_colors.scss";
 
 .manage_calendar_wrapper {
+  .fc-view-harness {
+    height: 390px !important;
+  }
   .fc-header-toolbar {
+    margin-bottom: 0px !important;
+    padding-bottom: 20px;
+    margin-top: 20px;
+    border-bottom: 2px solid #D9DBE9;;
     .fc-toolbar-chunk:nth-child(2) {
       display: flex;
       align-items: center;
@@ -11,11 +18,12 @@
         font-size: 16px;
         font-weight: 400;
         position: relative;
+        // max-width: 100px;
 
         &::before {
           position: absolute;
           content: '';
-          background-image: url('../../../../assets/images/calender-icon.png');
+          // background-image: url('../../../../assets/images/timesheet/calender-icon.png');
           height: 24px;
           width: 24px;
           left: -30px;
