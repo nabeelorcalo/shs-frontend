@@ -902,7 +902,12 @@ const Listings = () => {
       }
     })
     setCurrent(current + 1);
-    setNextDisabled(true)
+    if(current === 0) {
+      validateStepOne(listingValues)
+    }
+    if(current === 1) {
+      validateStepTwo(listingValues)
+    }
   };
 
   function prev() {
@@ -937,7 +942,9 @@ const Listings = () => {
 
   const validateStepThree = (values: any) => {
     const {media, bedType} = values;
-    if(bedType != null && bedType !== "") {
+    if(bedType != null && bedType !== ""
+      && media != null && media.length !== 0
+    ) {
       setNextDisabled(false)
     } else {
       setNextDisabled(true)
@@ -1011,14 +1018,13 @@ const Listings = () => {
       {/* MODAL: ADD LISTING 
       ***********************************************************************************/}
       <Modal
-        className="modal-add-listings"
+        wrapClassName="modal-add-listings"
         open={modalAddListingOpen}
         onCancel={closeModalAddListing}
-        closable={true}
+        closable={false}
         footer={null}
         width="100%"
-        mask={false}
-        maskClosable={false}
+        zIndex={998}
       >
         <Form
           requiredMark={false}
