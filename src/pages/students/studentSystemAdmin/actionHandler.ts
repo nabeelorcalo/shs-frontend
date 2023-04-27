@@ -25,9 +25,8 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -36,8 +35,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, email, phone_number, university, city, hired, status}: any) =>
-      [ no, name, email, phone_number, university, city, hired, status]
+    const body = data.map(({ no, name, email, phone_number, university, city, hired, status }: any) =>
+      [no, name, email, phone_number, university, city, hired, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);

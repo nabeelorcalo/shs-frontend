@@ -25,8 +25,6 @@ const ButtonStatus = (props: any) => {
   )
 }
 
-
-
 const CompanyData = ({ companyName, companyNature }: any) => {
   return (
     <div className="flex flex-row align-center gap-2">
@@ -43,9 +41,6 @@ const CompanyData = ({ companyName, companyNature }: any) => {
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-
-
-
 const CompaniesSystemAdmin = () => {
   const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
@@ -54,11 +49,10 @@ const CompaniesSystemAdmin = () => {
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
-    typeOfWork:"",
+    typeOfWork: "",
     stage: "",
     terminate: false
   })
-
 
   const PopOver = ({ state }: any) => {
     const navigate = useNavigate();
@@ -102,7 +96,7 @@ const CompaniesSystemAdmin = () => {
           </a>
         ),
       },
-  
+
     ];
     return (
       <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
@@ -115,7 +109,6 @@ const CompaniesSystemAdmin = () => {
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
-  
   const columns = [
     {
       dataIndex: "no",
@@ -324,7 +317,7 @@ const CompaniesSystemAdmin = () => {
                         "Active",
                         "Blocked",
                       ]}
-                      setValue={() => {updateNatureOfWork(event)}}
+                      setValue={() => { updateNatureOfWork(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.natureOfWork}
@@ -343,7 +336,7 @@ const CompaniesSystemAdmin = () => {
                         "Bristol",
                         "Leads",
                       ]}
-                      setValue={() => {updateTypeOfWork(event)}}
+                      setValue={() => { updateTypeOfWork(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.typeOfWork}
@@ -358,7 +351,7 @@ const CompaniesSystemAdmin = () => {
             </Drawer>
             <Drawer
               closable
-              width={mainDrawerWidth>1400 ? 1000 : mainDrawerWidth > 900 ? 900:mainDrawerWidth > 576?600:300}
+              width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);
@@ -392,7 +385,7 @@ const CompaniesSystemAdmin = () => {
       <PopUpModal
         open={state.terminate}
         width={500}
-        close={() => { updateTerminate(false)}}
+        close={() => { updateTerminate(false) }}
         children={
           <div>
             <div className="flex flex-col gap-5">

@@ -11,10 +11,6 @@ import "./style.scss";
 
 const ButtonStatus = (props: any) => {
   const btnStyle: any = {
-    // "Active": "primary-bg-color",
-    // "Active": "text-info-bg-color",
-    // "Short Listed": "purple-bg",
-    // "Offer Letter": "light-purple-bg",
     "Active": "text-success-bg-color",
     "In Active": "secondary-bg-color",
   }
@@ -28,7 +24,6 @@ const ButtonStatus = (props: any) => {
     </p>
   )
 }
-
 
 const CompanyData = ({ companyName, companyNature }: any) => {
   return (
@@ -46,9 +41,6 @@ const CompanyData = ({ companyName, companyNature }: any) => {
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-
-
-
 const StudentSystemAdmin = () => {
   const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
@@ -57,67 +49,65 @@ const StudentSystemAdmin = () => {
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
-    typeOfWork:"",
+    typeOfWork: "",
     stage: "",
     terminate: false
   })
 
-  
-const PopOver = ({ state }: any) => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            // state(true);
-          }}
-        >
-          View Details
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            // updateTerminate(event)
-          }}
-        >
-          Block
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            updateTerminate(event)
-          }}
-        >
-          Reset Password
-        </a>
-      ),
-    },
+  const PopOver = ({ state }: any) => {
+    const navigate = useNavigate();
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              // state(true);
+            }}
+          >
+            View Details
+          </a>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              // updateTerminate(event)
+            }}
+          >
+            Block
+          </a>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              updateTerminate(event)
+            }}
+          >
+            Reset Password
+          </a>
+        ),
+      },
 
-  ];
-  return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
-  );
-};
+    ];
+    return (
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
+    );
+  };
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
-  
   const columns = [
     {
       dataIndex: "no",
@@ -336,10 +326,10 @@ const PopOver = ({ state }: any) => {
                     <DropDown
                       name="Select"
                       options={[
-                          "Hired", 
-                          "Not hired"
-                        ]}
-                      setValue={() => {updateTimeFrame(event)}}
+                        "Hired",
+                        "Not hired"
+                      ]}
+                      setValue={() => { updateTimeFrame(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.timeFrame}
@@ -353,7 +343,7 @@ const PopOver = ({ state }: any) => {
                         "Active",
                         "In-Active",
                       ]}
-                      setValue={() => {updateNatureOfWork(event)}}
+                      setValue={() => { updateNatureOfWork(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.natureOfWork}
@@ -372,7 +362,7 @@ const PopOver = ({ state }: any) => {
                         "Bristol",
                         "Leads",
                       ]}
-                      setValue={() => {updateTypeOfWork(event)}}
+                      setValue={() => { updateTypeOfWork(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.typeOfWork}
@@ -387,7 +377,7 @@ const PopOver = ({ state }: any) => {
             </Drawer>
             <Drawer
               closable
-              width={mainDrawerWidth>1400 ? 1000 : mainDrawerWidth > 900 ? 900:mainDrawerWidth > 576?600:300}
+              width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);
@@ -423,7 +413,7 @@ const PopOver = ({ state }: any) => {
       <PopUpModal
         open={state.terminate}
         width={500}
-        close={() => { updateTerminate(false)}}
+        close={() => { updateTerminate(false) }}
         children={
           <div>
             <div className="flex flex-col gap-5">
