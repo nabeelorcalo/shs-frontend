@@ -24,14 +24,14 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
-import {currentUserRoleState} from "../../store"
+import { currentUserRoleState } from "../../store"
 import "./style.scss";
 import { useRecoilValue } from "recoil";
 
 const ViewPerformance = () => {
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
-  
+
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
@@ -106,9 +106,9 @@ const ViewPerformance = () => {
     },
   ];
   const detailedCards = [
-    { title: 'Learning Objectives', progressColor: '#9BD5E8' },
-    { title: 'Descipline', progressColor: '#E96F7C' },
-    { title: 'Personal', progressColor: '#6AAD8E' },
+    { id:1,title: 'Learning Objectives', progressColor: '#9BD5E8' },
+    { id:2,title: 'Descipline', progressColor: '#E96F7C' },
+    { id:3,title: 'Personal', progressColor: '#6AAD8E' },
   ]
   return (
     <div className="view-evaluation">
@@ -146,7 +146,7 @@ const ViewPerformance = () => {
           />
         </Col>
         {detailedCards.map((item: any) => (
-          <Col xs={24} md={12} xxl={6}>
+          <Col xs={24} md={12} xxl={6} key={item.id}>
             <EvaluationStatsCard
               name={item.title}
               percentage={user.learningObjectives}
@@ -158,7 +158,7 @@ const ViewPerformance = () => {
       {
         data.map((obj: any) => {
           return (
-            <Row gutter={[20, 10]}>
+            <Row gutter={[20, 10]} key={obj.id}>
               <Col xs={24}>
                 <div key={obj.name} className="mt-6 mb-2">
                   <Typography.Title level={3} className="evaluation-heading">
@@ -166,8 +166,8 @@ const ViewPerformance = () => {
                   </Typography.Title>
                 </div>
               </Col>
-              {obj.values.map((child: any, index: number) =>
-                <Col xs={24} xl={12} xxl={8}>
+              {obj.values.map((child: any) =>
+                <Col xs={24} xl={12} xxl={8} key={child.value}>
                   <div key={child.title}>
                     <EmojiMoodRating
                       size={5}

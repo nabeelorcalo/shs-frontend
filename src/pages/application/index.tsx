@@ -78,6 +78,13 @@ const Application = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const [state, setState] = useState({
+    timeFrame: "",
+    natureOfWork: "",
+    typeOfWork:"",
+    stage: ""
+  })
+
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
@@ -221,7 +228,34 @@ const Application = () => {
       }
     )
   })
-
+  const updateTimeFrame = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      timeFrame: value
+    }))
+  }
+  const updateNatureOfWork = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      natureOfWork: value
+    }))
+  }
+  const updateTypeOfWork = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      typeOfWork: value
+    }))
+  }
+  const updateStage = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      stage: value
+    }))
+  }
   return (
     <>
       <PageHeader title="Applications" />
@@ -268,10 +302,10 @@ const Application = () => {
                     <DropDown
                       name="Select"
                       options={["This weak", "Last weak", "This month", "Last month"]}
-                      setValue={() => { }}
+                      setValue={() => {updateTimeFrame(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.timeFrame}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -284,11 +318,11 @@ const Application = () => {
                         "Hybrid",
                         "Virtual",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => {updateNatureOfWork(event)}}
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.natureOfWork}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -301,11 +335,11 @@ const Application = () => {
                         "Part Time",
                         "Full Time",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => {updateTypeOfWork(event)}}
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.typeOfWork}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -319,11 +353,11 @@ const Application = () => {
                         "Administrator",
                         "HR Cordinator",
                       ]}
-                      setValue={() => { }}
+                      setValue={() => {updateStage(event)}}
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
-                      value=""
+                      value={state.stage}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

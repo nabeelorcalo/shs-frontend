@@ -1,0 +1,15 @@
+@import "../../../../scss/colors";
+
+.system-admin-edit-contract {
+  .system-admin-contract-edit-btn {
+    &:hover {
+      color: $white-bg-color !important;
+      border: none !important;
+    }
+  }
+
+  .system-admin-contract-cancel-btn{
+    color: $teriary-bg-color !important;
+    border: 1px solid $teriary-bg-color !important;
+  }
+}

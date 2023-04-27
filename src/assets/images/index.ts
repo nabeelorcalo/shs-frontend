@@ -55,6 +55,9 @@ export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.s
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
 export { ReactComponent as SHSLogo } from "./login/shslogo.svg";
 export { ReactComponent as DocumentUploadIcon } from "./login/document-upload.svg";
+export { ReactComponent as Step1 } from './login/step1.svg';
+export { ReactComponent as Step2 } from './login/step2.svg';
+export { ReactComponent as Step3 } from './login/step3.svg';
 export { ReactComponent as DeleteIcon } from './profile/student/delete.svg';
 export { ReactComponent as UploadIcon } from './profile/student/Upload.svg';
 export { ReactComponent as DegreeCap } from './login/unicap.svg';
