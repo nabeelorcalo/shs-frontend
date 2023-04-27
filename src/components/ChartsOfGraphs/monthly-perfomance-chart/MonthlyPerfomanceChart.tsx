@@ -1,7 +1,6 @@
+import { useState } from "react";
 import { Column } from "@ant-design/plots";
-import { useEffect, useState } from "react";
 import { BoxWrapper } from "../../../components";
-import { MonthChanger } from "../../MonthChanger";
 import { perfomanceChart } from "./MonthlyPerfomance";
 
 export const MonthlyPerfomanceChart = (props: any) => {
@@ -17,7 +16,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     columnWidthRatio = 0.2,
     textColor = "#4E4B66",
     fontSize = "20px",
-    fontWeight = "500",
+    fontWeight = "600",
     data = { perfomanceChart },
     children = <></>,
     style={height:'235px'}
