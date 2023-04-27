@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "antd";
+import { Menu, Row, Col } from "antd";
 import dayjs from "dayjs";
 import {
   Button,
@@ -23,9 +23,9 @@ import {
 import useCustomHook from './actionHandler';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
-import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
+import "./style.scss";
 
 const Detail = () => {
   const action = useCustomHook();
@@ -187,15 +187,6 @@ const Detail = () => {
     }));
   };
 
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
-  };
-
   const departmentSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -259,22 +250,20 @@ const Detail = () => {
           />
         }
       />
-      <div className="flex attendance-main-header">
-        <div className="w-[25%] search-bar" >
+      <Row gutter={[20,20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="Search"
           />
-        </div>
-        <div className="flex attendance-filter-section  ml-auto gap-4">
-          <div className="filter-btn">
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
             <FiltersButton
               label="Filters"
               onClick={handleSidebarClick}
             />
-          </div>
           <Drawer
             title="Filters"
             open={state.openSidebar}
@@ -296,10 +285,13 @@ const Detail = () => {
                   <DropDown
                     name="Select"
                     options={timeFrameOptions}
-                    setValue={() => timeFrameSelection(event)}
+                    setValue={(e: string) => setState((prevState) => ({
+                      ...prevState,
+                      timeFrameVal: e,
+                    }))}
                     value={state.timeFrameVal}
                     showDatePickerOnVal="Date Range"
-                    requireDatePicker
+                    requireRangePicker
                     placement="topLeft"
                   />
                 </div>
@@ -342,6 +334,15 @@ const Detail = () => {
               </div>
             }
           />
+         <div className="flex gap-4 justify-between">
+         
+          <ToggleButton
+            isToggle={state.isToggle}
+            onTogglerClick={togglerClick}
+            FirstIcon={CardViewIcon}
+            LastIcon={TableViewIcon}
+            className="w-[88px]"
+          />
           <DropDown
             options={[
               'pdf',
@@ -353,20 +354,10 @@ const Detail = () => {
               Notifications({ title: 'Success', description: 'List Download', type: 'success' })
             }}
           />
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={togglerClick}
-            FirstIcon={CardViewIcon}
-            LastIcon={TableViewIcon}
-            className="w-[88px]"
-          />
-        </div>
-      </div>
-
-      <div
-        className={`attendance-card mt-2 my-4
-          ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`}
-      >
+         </div>
+        </Col>
+      </Row>
+      <div className={`attendance-card mt-2 my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
         {dummyData.map((item, index) => {
           return state.isToggle ? (
             <AttendanceListViewCard item={item} index={index} menu={menu} key={item.id} />

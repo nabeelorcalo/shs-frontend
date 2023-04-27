@@ -46,9 +46,9 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
   return (
     <BoxWrapper className='top-performance-list flex flex-col'>
       <div className='flex flex-row h-[40px] top-perfomers-main'>
-        <Typography.Title level={4}>
+        <p className='font-medium text-xl title-color'>
           {heading}
-        </Typography.Title>
+        </p>
 
         {
           action &&

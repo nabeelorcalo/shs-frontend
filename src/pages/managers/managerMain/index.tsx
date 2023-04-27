@@ -66,12 +66,11 @@ const ManagerMain = () => {
           <PageHeader title='Managers' bordered={ true} />
         </Col>
       </Row>
-      <Row gutter={[10, 20]} className="flex items-center pb-5">
-        <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+      <Row gutter={[20, 20]} className="flex items-center pb-5">
+        <Col xl={6} lg={24} md={24} sm={24} xs={24}>
           <SearchBar placeholder="Search by name" handleChange={searchValue} />
         </Col>
-        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
+        <Col xl={18} lg={24} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end md:items-center gap-4">
             <Button className="teriary-bg-color white-color flex items-center"
               onClick={() => {
               navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
@@ -80,30 +79,31 @@ const ManagerMain = () => {
                <span className="flex items-center gap-3"><User/> New Manager</span> 
             </Button>
             <FiltersButton label='Filter' onClick={()=>setOpenDrawer(true)}/> 
-            <div className="text-input-bg-color rounded-lg p-1 flex gap-2">
-              <div
-               className={`button ${activeButton === 0 ? 'active' : ''}`}
-                onClick={() => {
-                  setShowGrid(true);
-                  setShowTable(false);
-                  handleClick(0);
-                }}
-              >
-                <img src={listView} alt="" className='img-style' />
+           
+            <div className="flex justify-between flex-row gap-4">
+              <div className="text-input-bg-color rounded-lg p-1 flex gap-2">
+                <div
+                className={`button ${activeButton === 0 ? 'active' : ''}`}
+                  onClick={() => {
+                    setShowGrid(true);
+                    setShowTable(false);
+                    handleClick(0);
+                  }}
+                >
+                  <img src={listView} alt="" className='img-style' />
+                </div>
+                <div
+                    className={`button ${activeButton === 1 ? 'active' : ''}`}
+                  
+                  onClick={() => {
+                    setShowTable(true);
+                    setShowGrid(false);
+                    handleClick(1);
+                  }}
+                >
+                  <img src={gridview} alt="" className='img-style' />
+                </div>
               </div>
-              <div
-                  className={`button ${activeButton === 1 ? 'active' : ''}`}
-                 
-                onClick={() => {
-                  setShowTable(true);
-                  setShowGrid(false);
-                  handleClick(1);
-                }}
-              >
-                <img src={gridview} alt="" className='img-style' />
-              </div>
-            </div>
-            <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
@@ -111,7 +111,6 @@ const ManagerMain = () => {
                 setValue={setValue}
               />
             </div>
-          </div>
         </Col>
       </Row>
       {showGrid === true && (

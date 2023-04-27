@@ -52,7 +52,7 @@ const ManagerCalendar = () => {
   }
   const handleResourceAreaHeader = (info: any) => {
     return (
-      <div className=''>{dayjs().format('MMMM')}</div>
+      <div className='font-semibold text-xl text-primary-color'>{dayjs().format('MMMM')}</div>
     )
   }
   return (
