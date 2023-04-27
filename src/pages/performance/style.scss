@@ -1,5 +1,20 @@
 @import '../../scss/_colors.scss';
 
+.company-admin-performance-container {
+  .overall-performance {
+    height: 256px;
+  }
+
+  .top-performance-list {
+    min-height: 788px;
+    overflow-y: auto;
+  }
+
+  .attendance-department {
+    min-height: 512px;
+  }
+}
+
 // Interm/ViewEvaluation-page
 .view-evaluation {
   .vertical-line {

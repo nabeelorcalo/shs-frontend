@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Typography } from 'antd';
+import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { BoxWrapper } from '../../components';
-import { IconButton } from '../IconButton';
-import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
 import { TopPerformanceCard } from '../TopPerformanceCard';
 import { MonthChanger } from '../MonthChanger';
 import './style.scss';
