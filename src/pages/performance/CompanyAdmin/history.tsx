@@ -44,86 +44,86 @@ const PerformanceHistory = () => {
       title: "No.",
       key: "no",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.no}
-        </Link>
+        </Link> : data.no
       ),
     },
     {
       title: "Avatar",
       key: "avatar",
       render: (_: any, data: any) => (
-        <Space size="middle">
+        role !== constants.COMPANY_ADMIN ? <Space size="middle">
           <Link
             className="bread-crumb"
             to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
           >
             <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
           </Link>
-        </Space>
+        </Space> : <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
       ),
     },
     {
       title: "Name",
       key: "name",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.name}
-        </Link>
+        </Link> : data.name
       ),
     },
     {
       title: "Department",
       key: "department",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.department}
-        </Link>
+        </Link> : data.department
       ),
     },
     {
       title: "Last Evaluation",
       key: "date",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.date}
-        </Link>
+        </Link> : data.date
       ),
     },
     {
       title: "Evaluated By",
       key: "evaluatedBy",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.evaluatedBy}
-        </Link>
+        </Link> : data.evaluatedBy
       ),
     },
     {
       title: "Total Evaluations",
       key: "totalEvaluations",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.totalEvaluations}
-        </Link>
+        </Link> : data.totalEvaluations
       ),
     },
     {
@@ -143,7 +143,7 @@ const PerformanceHistory = () => {
                 format={(percent: any) => (
                   <p
                     className={
-                      "myClass " +
+                      "myClass font-normal " +
                       (percent < 50 ? "secondary-color" : "teriary-color")
                     }
                   >
@@ -373,15 +373,6 @@ const PerformanceHistory = () => {
     }));
   };
 
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
-  };
-
   const departmentSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -392,11 +383,17 @@ const PerformanceHistory = () => {
   };
 
   const onApplyFilterClick = () => {
-    alert("Apply Filter");
+    // alert("Apply Filter");
   };
 
   const onResetFilterClick = () => {
-    alert("Reset Filter");
+    // alert("Reset Filter");
+    setState((prevState) => ({
+      ...prevState,
+      timeFrameVal: "Select",
+      departmentVal: "Select",
+      evaluatedByVal: "Select",
+    }));
   };
 
   const onSubmitAppreciationForm = (values: any) => {
@@ -462,11 +459,14 @@ const PerformanceHistory = () => {
                   <DropDown
                     name="Select"
                     options={timeFrameOptions}
-                    setValue={() => timeFrameSelection(event)}
+                    setValue={(e: string) => setState((prevState) => ({
+                      ...prevState,
+                      timeFrameVal: e,
+                    }))}
                     value={state.timeFrameVal}
                     showDatePickerOnVal="Date Range"
-                    requireDatePicker
                     placement="topLeft"
+                    requireRangePicker
                   />
                 </div>
 
