@@ -72,7 +72,7 @@ const PopOver = ({ state }: any) => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            state(true);
+            // state(true);
           }}
         >
           View Details
