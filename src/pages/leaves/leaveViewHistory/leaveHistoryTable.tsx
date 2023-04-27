@@ -272,10 +272,12 @@ const LeaveHistoryTable = (props: any) => {
           <Dropdown trigger={['click']} placement="bottomRight"
             overlay={
               <Menu>
-                {(data.status !== "Pending" || data.status === "Declined") ? <Menu.Item
-                  key="option3"
-                  onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
-                >View Details</Menu.Item> :
+                {(data.status !== "Pending" || data.status === "Declined") ?
+                  <Menu.Item
+                    key="option3"
+                    onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>
+                    View Details
+                  </Menu.Item> :
                   <>
                     {<Menu.Item
                       key="option1"
