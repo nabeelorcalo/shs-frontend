@@ -273,6 +273,7 @@ const PerformanceHistory = () => {
   ];
 
   const timeFrameOptions = [
+    "Select",
     "This Week",
     "Last Week",
     "This Month",
@@ -281,6 +282,7 @@ const PerformanceHistory = () => {
   ];
 
   const departmentOptions = [
+    "All",
     "Design",
     "Business Analyst",
     "Data Scientist",

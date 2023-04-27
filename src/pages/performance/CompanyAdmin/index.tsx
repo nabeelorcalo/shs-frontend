@@ -6,8 +6,7 @@ import {
   MonthlyPerfomanceChart,
   PageHeader,
   TopPerformanceList,
-  MonthChanger,
-  BoxWrapper,
+  MonthChanger
 } from "../../../components";
 import data from "./data";
 import dayjs from "dayjs";
@@ -164,6 +163,7 @@ const CompanyAdminPerformance = () => {
                 data={data}
                 XField="department"
                 columnWidthRatio={0.5}
+                height='400px'
                 children={<MonthChanger
                   month={month.selectedMonth}
                   onClick={changeMonth}

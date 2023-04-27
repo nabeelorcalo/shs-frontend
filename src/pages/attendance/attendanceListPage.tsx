@@ -37,6 +37,7 @@ const Detail = () => {
     { name: role === constants.COMPANY_ADMIN && "Attendance", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
   ];
   const timeFrameOptions = [
+    "Select",
     "This Week",
     "Last Week",
     "This Month",
@@ -45,6 +46,7 @@ const Detail = () => {
   ];
 
   const departmentOptions = [
+    "All",
     "Design",
     "Business Analyst",
     "Data Scientist",
@@ -197,7 +199,7 @@ const Detail = () => {
   };
 
   const onApplyFilterClick = () => {
-    alert("Apply Filter");
+    // alert("Apply Filter");
   };
 
   const onResetFilterClick = () => {
@@ -346,7 +348,7 @@ const Detail = () => {
           <DropDown
             options={[
               'pdf',
-              'excel'
+              'excel' 
             ]}
             requiredDownloadIcon
             setValue={() => {
