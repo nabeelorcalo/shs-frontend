@@ -362,10 +362,10 @@ const InternshipsCompanyAdmin = () => {
       <PageHeader bordered title="Internships" />
       <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
-          <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" size="middle" />
           </Col>
-          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
             <FiltersButton
               label="Filters"
               onClick={handleDrawer}
