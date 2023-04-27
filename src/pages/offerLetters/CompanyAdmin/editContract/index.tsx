@@ -111,14 +111,13 @@ const EditOfferLetter = () => {
     },
   ];
   return (
-    <div className="edit-contract">
+    <div className="system-admin-offer-letter-edit-main">
       <div>
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
       <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div>Stapper</div>
             <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
               Offer Letter
             </div>
@@ -128,7 +127,7 @@ const EditOfferLetter = () => {
             <div className="scroll-offer-letter-company-admin">
               <Row gutter={[0, 30]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <Row gutter={[10, 24]}>
+                  <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
                         {senderInfo.map((item, index) => {
@@ -262,13 +261,13 @@ const EditOfferLetter = () => {
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Row gutter={[24, 30]}>
                     <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Button className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+                      <Button className="system-admin-offer-letter-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
                         Sign & Send
                       </Button>
                     </Col>
 
                     <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Button className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                      <Button className="system-admin-offer-letter-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
                         Cancel
                       </Button>
                     </Col>

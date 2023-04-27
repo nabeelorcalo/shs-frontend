@@ -16,7 +16,7 @@ interface DrawerProps {
 }
 
 export const Drawer: any = ({ title, className, placement = "right", open, onClose, children, width, closable = true }: DrawerProps) => {
-  const FilterWidth = DrawerWidth();  
+  const FilterWidth = DrawerWidth();
   return (
     <AntDrawer
       title={title}

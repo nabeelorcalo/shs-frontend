@@ -2,7 +2,7 @@ export const perfomanceChart = [
     {
         "city": "Jan",
         "type": "Learning Objectives",
-        "value": "60%"
+        "value": 2000
     },
     {
         "city": "Jan",

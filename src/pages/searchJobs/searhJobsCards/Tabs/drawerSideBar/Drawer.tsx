@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Drawer,
-  Slider,
-  InputNumber,
-  Button,
-  Row,
-  Col,
-} from "antd";
+import { Drawer, Slider, InputNumber, Button, Row, Col } from "antd";
 import {
   CrossIcon,
   Home2,
@@ -18,7 +11,7 @@ import {
 } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
 import "./Styles.scss";
-import { DrawerWidth, DropDown, } from "../../../../../components";
+import { DrawerWidth, DropDown } from "../../../../../components";
 
 const transportData = [
   {
@@ -35,7 +28,7 @@ const transportData = [
   },
   {
     id: "4",
-    icon: <Bus />, 
+    icon: <Bus />,
   },
 ];
 const DrawerBar = (props: any) => {
@@ -56,9 +49,9 @@ const DrawerBar = (props: any) => {
             onClose={() => setDrawer(false)}
             open={drawer}
           >
-            <div className="flex justify-between align-middle">
+            <div className="flex justify-between align-middle ">
               <p className="primary-color font-semibold text-2xl">Filter</p>
-              <CrossIcon />
+              <CrossIcon onClick={() => setDrawer(false)} />
             </div>
             <div className="py-3">
               <label>Starting Point</label>
@@ -80,8 +73,9 @@ const DrawerBar = (props: any) => {
               Transport
             </label>
             <div className="flex justify-around my-3">
-              {transportData.map((data: any) => (
+              {transportData.map((data: any, i: any) => (
                 <div
+                  key={i}
                   className={`transort ${
                     data.id === selectedTransport ? "transport-focus" : ""
                   }`}

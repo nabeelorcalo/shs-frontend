@@ -1,5 +1,5 @@
-import { Divider } from "antd";
 import { useState } from "react";
+import { Divider } from "antd";
 import SearchBarCards from "./searhJobsCards/Header";
 import SearchJobTabs from "./searhJobsCards/Tabs/Tabs";
 import "./style.scss";

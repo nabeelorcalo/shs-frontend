@@ -1,14 +1,7 @@
-import { useState } from "react";
+import react from "react";
 import { Col, Row } from "antd";
-import {
-  SearchIconJob,
-  LocationIconJob,
-  SeachJobArrow,
-  SearchFilter,
-} from "../../../assets/images";
 import { FiltersButton, SearchBar } from "../../../components";
 import GlobalButton from "../Button/button";
-import Input from "../Input/input";
 import DrawerBar from "./Tabs/drawerSideBar/Drawer";
 
 const SearchBarCards = (props: any) => {
@@ -35,7 +28,13 @@ const SearchBarCards = (props: any) => {
           <GlobalButton name={"Search"} className={"py-6"} />
         </Col>
 
-        <Col lg={10} md={6} sm={24} xs={24} className="flex md:justify-end justify-start">
+        <Col
+          lg={10}
+          md={6}
+          sm={24}
+          xs={24}
+          className="flex md:justify-end justify-start"
+        >
           <FiltersButton label="Filters" onClick={() => setDrawer(!drawer)} />
         </Col>
       </Row>

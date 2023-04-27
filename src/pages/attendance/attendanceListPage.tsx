@@ -210,7 +210,13 @@ const Detail = () => {
   };
 
   const onResetFilterClick = () => {
-    alert("Reset Filter");
+    // alert("Reset Filter");
+    setState((prevState) => ({
+      ...prevState,
+      departmentVal: '',
+      status: '',
+      timeFrameVal: ''
+    }));
   };
 
   const togglerClick = (event: any) => {
@@ -247,13 +253,14 @@ const Detail = () => {
           <MonthChanger
             month={state.currentDate.format("ddd, DD MMMM YYYY")}
             onClick={() => changeMonth(event)}
+            setState={setState}
             datePickerClassName="min-w-0"
             hasDatePicker
           />
         }
       />
       <div className="flex attendance-main-header">
-        <div className="w-[28%] search-bar" >
+        <div className="w-[25%] search-bar" >
           <SearchBar
             handleChange={() => { }}
             icon={<GlassMagnifier />}
@@ -362,9 +369,9 @@ const Detail = () => {
       >
         {dummyData.map((item, index) => {
           return state.isToggle ? (
-            <AttendanceListViewCard item={item} index={index} menu={menu} />
+            <AttendanceListViewCard item={item} index={index} menu={menu} key={item.id} />
           ) : (
-            <AttendanceCardDetail item={item} index={index} menu={menu} />
+            <AttendanceCardDetail item={item} index={index} menu={menu} key={item.id} />
           );
         })}
       </div>

@@ -111,7 +111,7 @@ const EditContract = () => {
     },
   ];
   return (
-    <div className="edit-contract">
+    <div className="system-admin-edit-contract">
       <div>
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
@@ -125,10 +125,10 @@ const EditContract = () => {
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <div className="scroll-contract-company-admin">
-              <Row gutter={[0, 30]}>
+              <Row gutter={[20, 30]}>
                 <div className="edit-contract">
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                    <Row gutter={[10, 24]}>
+                    <Row gutter={[30, 30]}>
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                         <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
                           {senderInfo.map((item, index) => {
@@ -170,7 +170,7 @@ const EditContract = () => {
                   </Col>
 
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                    <div className="text-teriary-colo text-base pb-2">
+                    <div className="text-teriary-colo text-base pb-4 pt-8">
                       Description
                     </div>
                     <div className="text-input-bg-color p-4 rounded-[8px]">
@@ -260,15 +260,15 @@ const EditContract = () => {
                   </Col>
 
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                    <Row gutter={[24, 30]}>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+                    <Row gutter={[15, 20]}>
+                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="pt-4">
+                        <Button className="system-admin-contract-edit-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
                           Sign & Send
                         </Button>
                       </Col>
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button className="border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                        <Button className="system-admin-contract-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
                           Cancel
                         </Button>
                       </Col>

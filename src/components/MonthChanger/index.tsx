@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1, CalendarPickerIcon } from '../../assets/images';
 import { DatePicker } from 'antd';
@@ -8,6 +7,7 @@ interface MonthChangerProps {
   hasDatePicker?: boolean,
   datePickerClassName?: string,
   onClick?: () => void,
+  setState?: any;
 }
 
 export const MonthChanger: any = (props: MonthChangerProps) => {
@@ -15,25 +15,32 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
     month,
     onClick,
     hasDatePicker = false,
-    datePickerClassName
+    datePickerClassName,
+    setState
   } = props;
 
+  function onChange(dateString: any) {
+    setState((prevState: any) => ({
+      ...prevState,
+      currentDate: dateString,
+    }))
+  }
   return (
     <div className='flex items-center ml-auto mb-4 month-changer'>
       {
         hasDatePicker &&
         <DatePicker
-          placeholder=""
           bordered={false}
           className={datePickerClassName}
           placement="bottomRight"
-          suffixIcon={<CalendarPickerIcon />}
+          suffixIcon={<CalendarPickerIcon className='text-sm' />}
+          onChange={onChange}
         />
       }
 
-      <p className='min-w-fit mx-2'>{month}</p>
+      <p className='min-w-fit mx-2 text-primary-color'>{month}</p>
 
-      <div className='flex flex-row'>
+      <div className='flex flex-row ml-1'>
         <IconButton
           name="prev"
           className="icon-btn left-radius"
