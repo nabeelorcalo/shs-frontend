@@ -1,6 +1,7 @@
 .ant-layout .ant-layout-sider {
   position: fixed;
   overflow: auto;
+  z-index: 99;
   left: 0;
   top: 60px;
   bottom: 0;
@@ -10,13 +11,16 @@
   @media (min-width: 576px) {
     top: 70px;
   }
+
   @media (min-width: 992px) {
     top: 80px;
   }
+
   @media (min-width: 1200px) {
     bottom: 60px;
   }
 }
+
 .ant-layout-sider {
 
   .ant-layout-sider-children {
@@ -28,17 +32,18 @@
     align-items: center;
     border-bottom: 1px solid rgba(217, 217, 217, 0.25);
     padding: 20px;
-  
+
     .ant-avatar {
       min-width: 48px;
       max-width: 48px;
     }
+
     .sidebar-user-profile-content {
       flex: 1;
       margin-left: 20px;
       white-space: nowrap;
       min-width: 0;
-  
+
       .ant-typography {
         margin: 0;
         font-size: 18px;
@@ -49,6 +54,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+
       .sidebar-user-profile-role {
         font-size: 14px;
         font-weight: 500;
@@ -60,6 +66,7 @@
 
   .ant-menu.ant-menu-dark {
     padding: 24px 20px;
+
     .ant-menu-item {
       border-radius: 12px;
       margin: 4px 0 0;
@@ -80,6 +87,7 @@
         margin-left: 15px;
       }
     }
+
     .ant-menu-item-group {
       .ant-menu-item-group-title {
         padding: 8px 0 12px;
@@ -95,16 +103,18 @@
     .sidebar-user-profile {
       text-align: center;
       display: block;
+
       .sidebar-user-profile-content {
         opacity: 0;
         margin-left: 0;
         display: none;
       }
     }
+
     .ant-menu-item {
       .ant-menu-item-icon {
         vertical-align: -6px;
-      } 
+      }
     }
 
     .ant-menu-item-group {
@@ -112,6 +122,6 @@
         display: none;
       }
     }
-    
+
   }
 }
