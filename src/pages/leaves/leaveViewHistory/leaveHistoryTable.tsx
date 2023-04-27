@@ -7,7 +7,6 @@ import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';
 import constants from '../../../config/constants';
-import DropDownNew from "../../../components/Dropdown/DropDownNew";
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
   const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
