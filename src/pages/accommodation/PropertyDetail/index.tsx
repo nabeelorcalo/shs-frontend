@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, Anchor, Collapse, Grid } from 'antd';
 import { useLocation  } from "react-router-dom";
 import {Breadcrumb, PageHeader} from "../../../components";
+import {ROUTES_CONSTANTS} from '../../../config/constants'
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
 import HowToBookPropperty from "./HowToBookPropperty";
@@ -94,8 +95,9 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   const breadcrumbLink = () => {
     return (
-      state.from === '/accommodation' ? 'Available Properties' :
-      state.from === '/accommodation/saved-searches' ? 'Saved Searches' : 'Rented Properties'
+      state.from === ROUTES_CONSTANTS.ACCOMMODATION ? 'Available Properties'
+      : state.from === ROUTES_CONSTANTS.SAVED_SEARCHES ? 'Saved Searches'
+      : 'Rented Properties'
     )
   }
 
