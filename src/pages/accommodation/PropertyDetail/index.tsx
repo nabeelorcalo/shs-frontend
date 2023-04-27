@@ -95,8 +95,8 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   const breadcrumbLink = () => {
     return (
-      state.from === ROUTES_CONSTANTS.ACCOMMODATION ? 'Available Properties'
-      : state.from === ROUTES_CONSTANTS.SAVED_SEARCHES ? 'Saved Searches'
+      state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}` ? 'Available Properties'
+      : state.from === `/${ROUTES_CONSTANTS.SAVED_SEARCHES}` ? 'Saved Searches'
       : 'Rented Properties'
     )
   }

@@ -1319,8 +1319,8 @@ const internRoutes = [
         ],
       },
       {
-        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
       },
       {
@@ -1329,8 +1329,8 @@ const internRoutes = [
         element: <Recipes />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}-detail`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}/:recipeId`,
         element: <RecipeDetails />,
       },
       {
@@ -1339,8 +1339,8 @@ const internRoutes = [
         element: <AddRecipe />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}Update`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}/:recipeId`,
         element: <EditRecipe />,
       },
       {
@@ -1477,8 +1477,8 @@ const studentRoutes = [
         ],
       },
       {
-        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}-detail`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
       },
       {
@@ -1487,8 +1487,8 @@ const studentRoutes = [
         element: <Recipes />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}-detail`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}/:recipeId`,
         element: <RecipeDetails />,
       },
       {
@@ -1497,8 +1497,8 @@ const studentRoutes = [
         element: <AddRecipe />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}Update`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}/:recipeId`,
         element: <EditRecipe />,
       },
       {

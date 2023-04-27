@@ -65,7 +65,7 @@ const Recipes = () => {
                   description={recipe.description}
                   rating={rateValue}
                   status={recipe.status}
-                  onCardClick={() => navigate(`/recipe/${recipe.id}`, {state: {from: location.pathname}})}
+                  onCardClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_DETAILS}/${recipe.id}`, {state: {from: location.pathname}})}
                   onRateChange={handleRateChange}
                 />
               </Col>

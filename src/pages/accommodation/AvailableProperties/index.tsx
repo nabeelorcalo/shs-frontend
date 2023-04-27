@@ -9,7 +9,7 @@ import { availablePropertiesState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import showNotification from '../../../helpers/showNotification'
-import constants from '../../../config/constants'
+import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
 
@@ -48,7 +48,7 @@ const AvailableProperties = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`, {state: {from: location.pathname}})
+  const handleDetailClick = (propertyId: any) => navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${propertyId}`, {state: {from: location.pathname}})
 
 
 

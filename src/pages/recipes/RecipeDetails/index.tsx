@@ -91,7 +91,7 @@ const RecipeDetails = () => {
                   <Space size={20}>
                     <div
                       className="recipe-action update-recipe"
-                      onClick={() => navigate(`/recipe-update/${recipeId}`)}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_UPDATE}/${recipeId}`)}
                     >
                       <IconEditRecipe />
                     </div>
