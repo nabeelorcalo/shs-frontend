@@ -1,10 +1,18 @@
-import { PageHeader, BoxWrapper } from '../../components'
+import { PageHeader, BoxWrapper, Breadcrumb } from '../../components'
 import { Button, Space } from 'antd'
 import './style.scss'
 import '../../scss/global-color/Global-colors.scss'
 import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, DownloadDocumentIcon, EditIcon } from '../../assets/images'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ROUTES_CONSTANTS } from '../../config/constants'
+
+const tempArray = [
+  { name: "Job Details" },
+  {
+    name: "Internships",
+    onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`,
+  },
+];
 
 const ViewInternshipDetails = () => {
   const navigate = useNavigate()
@@ -16,7 +24,7 @@ const ViewInternshipDetails = () => {
       <PageHeader
         actions
         bordered
-        title="Job Details"
+        title={<Breadcrumb bordered breadCrumbData={tempArray} />}
       >
         <Space wrap>
           <div className='p-2 download-icon-style text-input-bg-color'>
@@ -93,7 +101,7 @@ const ViewInternshipDetails = () => {
               <Button
                 type="default"
                 className="button-default-tertiary max-sm:w-full"
-                onClick={() => { }}
+                onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS)}}
               >
                 Back
               </Button>
@@ -103,7 +111,7 @@ const ViewInternshipDetails = () => {
               <Button
                 type="default"
                 className="button-default-tertiary max-sm:w-full"
-                onClick={() => { }}
+                onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS)}}
               >
                 Cancel
               </Button>
