@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, TextArea, PopUpModal } from "../../../components";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, PopUpModal } from "../../../components";
 import { useNavigate } from 'react-router-dom';
-import { WarningIcon, More } from "../../../assets/images"
+import { More, WarningIcon } from "../../../assets/images"
 import { Button, MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
@@ -11,12 +11,8 @@ import "./style.scss";
 
 const ButtonStatus = (props: any) => {
   const btnStyle: any = {
-    // "Active": "primary-bg-color",
-    // "Active": "text-info-bg-color",
-    // "Short Listed": "purple-bg",
-    // "Offer Letter": "light-purple-bg",
     "Active": "text-success-bg-color",
-    "In Active": "secondary-bg-color",
+    "Blocked": "secondary-bg-color",
   }
   return (
     <p>
@@ -28,6 +24,7 @@ const ButtonStatus = (props: any) => {
     </p>
   )
 }
+
 
 
 const CompanyData = ({ companyName, companyNature }: any) => {
@@ -49,7 +46,7 @@ const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 
 
-const StudentSystemAdmin = () => {
+const CompaniesSystemAdmin = () => {
   const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
@@ -62,57 +59,58 @@ const StudentSystemAdmin = () => {
     terminate: false
   })
 
-  
-const PopOver = ({ state }: any) => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            state(true);
-          }}
-        >
-          View Details
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            // updateTerminate(event)
-          }}
-        >
-          Block
-        </a>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            updateTerminate(event)
-          }}
-        >
-          Reset Password
-        </a>
-      ),
-    },
 
-  ];
-  return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
-  );
-};
+  const PopOver = ({ state }: any) => {
+    const navigate = useNavigate();
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              state(true);
+            }}
+          >
+            View Details
+          </a>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              state(true);
+            }}
+          >
+            Block
+          </a>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              updateTerminate(event)
+            }}
+          >
+            Reset Password
+          </a>
+        ),
+      },
+  
+    ];
+    return (
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
+    );
+  };
+
   const action = useCustomHook()
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
@@ -125,9 +123,14 @@ const PopOver = ({ state }: any) => {
       title: "Sr.No",
     },
     {
-      dataIndex: "name",
-      key: "name",
-      title: "Name",
+      dataIndex: "company_name",
+      key: "company_name",
+      title: "Company Name",
+    },
+    {
+      dataIndex: "company_admin",
+      key: "company_admin",
+      title: "Company Admin",
     },
     {
       dataIndex: "email",
@@ -140,19 +143,9 @@ const PopOver = ({ state }: any) => {
       title: "Phone Number",
     },
     {
-      dataIndex: "university",
-      key: "university",
-      title: "University",
-    },
-    {
-      dataIndex: "city",
-      key: "city",
-      title: "City",
-    },
-    {
-      dataIndex: "hired",
-      key: "hired",
-      title: "Hired",
+      dataIndex: "address",
+      key: "address",
+      title: "Address",
     },
     {
       dataIndex: "status",
@@ -168,73 +161,66 @@ const PopOver = ({ state }: any) => {
   const tableData = [
     {
       no: "01",
-      name: "Maria Swats",
+      company_name: "Blue Hawk",
       email: 'maria@internshipken.com',
       phone_number: "477-009-0021",
-      university: "University of Birmingham",
-      city: "London",
-      hired: "No",
+      company_admin: "Arlene McCoy",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
       status: "Active",
 
     },
     {
       no: "02",
-      name: "Ronal Richards",
+      company_name: "HotPoint",
       email: 'Richards@internshipken.com',
       phone_number: "477-009-0021",
-      university: "LSU",
-      city: "Hybrid (London)",
-      hired: "Yes",
+      company_admin: "Ronald Richards",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
       status: "Active",
     },
     {
       no: "03",
-      name: "Kriston Watson",
+      company_name: "Hair",
       email: 'Kriston@internshipken.com',
       phone_number: "477-009-0021",
-      university: "Oxford",
-      city: "Portsmouth",
-      hired: "No",
-      status: "In Active",
+      company_admin: "Kriston Watson",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
+      status: "Blocked",
     },
     {
       no: "04",
-      name: "Jenny Wilson",
+      company_name: "Walls Soft",
       email: 'Wilson@internshipken.com',
       phone_number: "477-009-0021",
-      university: "Portsmouth University",
-      city: "Portsmouth",
-      hired: "Yes",
-      status: "In Active",
+      company_admin: "Portsmouth University",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
+      status: "Blocked",
     },
     {
       no: "05",
-      name: "Kirson David",
+      company_name: "Techno trill",
       email: 'Kirson@internshipken.com',
       phone_number: "477-009-0021",
-      university: "LSA",
-      city: "London",
-      hired: "No",
+      company_admin: "Jenny Wilson",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
       status: "Active",
     },
     {
       no: "06",
-      name: "David Ken",
+      company_name: "DavidSoft",
       email: 'David@internshipken.com',
       phone_number: "477-009-0021",
-      university: "UOG",
-      city: "Portsmouth",
-      hired: "Yes",
-      status: "In Active",
+      company_admin: "Arley Richards",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
+      status: "Blocked",
     },
     {
       no: "07",
-      name: "Laura Sward",
+      company_name: "Soft Tech",
       email: 'Laura@internshipken.com',
       phone_number: "477-009-0021",
-      university: "Priston",
-      city: "London",
-      hired: "Yes",
+      company_admin: "Kriston McCary",
+      address: "34 Thame Road, Great Haseley, OX44 7JF",
       status: "Active",
     },
   ];
@@ -242,12 +228,11 @@ const PopOver = ({ state }: any) => {
     return (
       {
         no: item.no,
-        name: item.name,
+        company_name: item.company_name,
+        company_admin: item.company_admin,
         email: item.email,
         phone_number: item.phone_number,
-        university: item.university,
-        city: item.city,
-        hired: item.hired,
+        address: item.address,
         status: <ButtonStatus status={item.status} />,
         actions:
           <PopOver
@@ -332,26 +317,12 @@ const PopOver = ({ state }: any) => {
               <div key=".0">
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
-                    <p>Type</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                          "Hired", 
-                          "Not hired"
-                        ]}
-                      setValue={() => {updateTimeFrame(event)}}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.timeFrame}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
                     <p>Status</p>
                     <DropDown
                       name="Select"
                       options={[
                         "Active",
-                        "In-Active",
+                        "Blocked",
                       ]}
                       setValue={() => {updateNatureOfWork(event)}}
                       showDatePickerOnVal="custom"
@@ -412,8 +383,6 @@ const PopOver = ({ state }: any) => {
                 :
                 <GlobalTable
                   columns={columns}
-                  hideTotal
-                  pagination={false}
                   tableData={newTableData}
                 />
             }
@@ -459,4 +428,4 @@ const PopOver = ({ state }: any) => {
   );
 };
 
-export default StudentSystemAdmin;
+export default CompaniesSystemAdmin;

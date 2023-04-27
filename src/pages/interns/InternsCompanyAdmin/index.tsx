@@ -495,10 +495,10 @@ const InternsCompanyAdmin = () => {
                 "Jenate Samson",
                 "Alen Juliet",
               ]}
-              setValue={() => { }}
+              setValue={() => {updateManager(event)}}
               showDatePickerOnVal="custom"
               startIcon=""
-              value=""
+              value={state.manager}
             />
           </div>
         }
@@ -550,7 +550,7 @@ const InternsCompanyAdmin = () => {
             <Button
               type="default"
               size="small"
-              className=" max-sm:w-full"
+              className="button-default-error max-sm:w-full"
               onClick={() => setTerminate(false)}
             >
               Cancel
@@ -558,7 +558,7 @@ const InternsCompanyAdmin = () => {
             <Button
               type="primary"
               size="small"
-              className="text-error-bg-color max-sm:w-full"
+              className="button-error max-sm:w-full"
             >
               Terminate
             </Button>
