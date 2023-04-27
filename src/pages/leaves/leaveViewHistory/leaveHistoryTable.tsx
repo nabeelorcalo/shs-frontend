@@ -157,7 +157,7 @@ const LeaveHistoryTable = (props: any) => {
       )
     },
     {
-      title: 'Intrnee Name',
+      title: 'Intern Name',
       dataIndex: 'name',
       key: 'name',
     },
@@ -216,9 +216,9 @@ const LeaveHistoryTable = (props: any) => {
       key: 'leaveType',
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
+      title: 'Duration',
+      dataIndex: 'duration',
+      key: 'duration',
     },
     {
       title: 'Status',

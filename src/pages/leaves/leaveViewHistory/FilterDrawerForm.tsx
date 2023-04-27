@@ -41,7 +41,7 @@ const FilterDrawerForm = (props: any) => {
               options={['This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']}
               setValue={(e: string) => setFilterValue({ ...filterValu, timeFrame: e })}
               showDatePickerOnVal={'date Range'}
-              requireDatePicker
+              requireRangePicker
               placement='bottomLeft' />
           </Form.Item>
           <Form.Item

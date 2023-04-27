@@ -1,4 +1,5 @@
 @import "../../scss//colors";
+
 @mixin tablestyel {
   table {
     .ant-table-thead {
@@ -11,6 +12,7 @@
           border-bottom: unset;
           padding-top: 18px;
           padding-bottom: 18px;
+
           &:last-child {
             text-align: center;
           }
@@ -40,6 +42,7 @@
           font-weight: 400;
           font-size: 16px;
           line-height: 24px;
+
           &:last-child {
             text-align: center;
           }
@@ -78,6 +81,7 @@
             inset-inline-start: 50%;
           }
         }
+
         // }
       }
 
@@ -176,6 +180,7 @@
           background-color: $text-input-bg-color;
         }
       }
+
       a {
         width: 100%;
         height: 100%;
@@ -188,6 +193,7 @@
     .ant-pagination-item-active {
       border: 1px solid $green-graph-tooltip-color;
       background-color: $green-graph-tooltip-color;
+
       a {
         color: $white-bg-color;
         width: 100%;
@@ -197,6 +203,7 @@
         justify-content: center;
       }
     }
+
     // .ant-select-focused.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector
     .ant-pagination-options {
       .ant-select {
@@ -206,25 +213,28 @@
             background-color: $text-input-bg-color;
           }
         }
+
         .ant-select-selector {
           border: 1px solid $text-error-line-color;
         }
       }
 
-      .ant-select-focused.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer)
-        .ant-select-selector {
+      .ant-select-focused.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
         box-shadow: none;
         border: 1px solid $text-error-line-color;
         background: $text-input-bg-color;
       }
+
       .ant-select-dropdown {
         .rc-virtual-list-holder-inner {
+
           // .ant-select-item-option{
           // }
           .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
             color: $white-bg-color;
             background-color: $green-graph-tooltip-color;
           }
+
           .ant-select-item-option-active {
             background: $text-input-bg-color;
           }
@@ -253,6 +263,7 @@
     @include Counter;
   }
 }
+
 .whiteHeadTable {
   position: relative;
 
@@ -283,11 +294,22 @@
     width: 5px;
     height: 5px;
   }
+
   &::-webkit-scrollbar-track {
     background: rgb(242, 242, 242);
   }
+
   &::-webkit-scrollbar-thumb {
     background-color: gainsboro;
     border-radius: 20px;
+  }
+}
+
+.attendance-detail-table table {
+  th:first-child {
+    padding-left: 3.7rem;
+  }
+  .ant-table-row-expand-icon{
+    margin-right: 20px !important;
   }
 }
