@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Anchor, Collapse, Grid } from 'antd'
-import { useNavigate, useLocation  } from "react-router-dom";
+import { Typography, Anchor, Collapse, Grid } from 'antd';
+import { useLocation  } from "react-router-dom";
 import {Breadcrumb, PageHeader} from "../../../components";
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
@@ -9,7 +9,7 @@ import AgentDetail from "./AgentDetail";
 import PropertyOverview from "./PropertyOverview";
 import PropertyPricing from "./PropertyPricing";
 import BookingRequest from "./BookingRequest";
-import { IconWebLocation, IconArrowDown } from '../../../assets/images'
+import { IconWebLocation, IconArrowDown } from '../../../assets/images';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
 const { useBreakpoint } = Grid;
@@ -51,10 +51,7 @@ const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const screens = useBreakpoint();
-  const navigate = useNavigate();
-  const location = useLocation();
-  console.log('pathname::: ', location)
-  console.log('navigate', navigate)
+  const {state} = useLocation();
   const anchorItems = [
     {
       key: 'Overview',
@@ -95,7 +92,12 @@ const AccPropertyDetail = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-
+  const breadcrumbLink = () => {
+    return (
+      state.from === '/accommodation' ? 'Available Properties' :
+      state.from === '/accommodation/saved-searches' ? 'Saved Searches' : 'Rented Properties'
+    )
+  }
 
 
   /* RENDER APP
@@ -104,10 +106,14 @@ const AccPropertyDetail = () => {
     <div className="property-detail">
       <PageHeader
         bordered
-        title={<Breadcrumb breadCrumbData={[
-          { name: "Black horse Lane, London, E17 6DS" },
-          { name: "Available Properties", onClickNavigateTo: -1 },
-        ]} />}
+        title={
+          <Breadcrumb 
+            breadCrumbData={[
+              { name: "Accommodation" },
+              { name: breadcrumbLink(), onClickNavigateTo: -1 },
+            ]}  
+          />
+        }
         
       />
       <div className="property-detail-content">
