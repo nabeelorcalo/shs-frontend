@@ -136,15 +136,6 @@ const Detail = () => {
     ],
   });
 
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
-  };
-
   const downloadClick = () => { };
 
   const getColorAndIcon = (name: string) => {
@@ -191,10 +182,13 @@ const Detail = () => {
             <DropDown
               name="time-frame"
               options={timeFrameOptions}
-              setValue={() => timeFrameSelection(event)}
+              setValue={(e: string) => setState((prevState) => ({
+                ...prevState,
+                timeFrameVal: e,
+              }))}
               value={state.timeFrameVal}
               showDatePickerOnVal="Date Range"
-              requireDatePicker
+              requireRangePicker
               placement="bottomRight"
             />
 
@@ -251,6 +245,7 @@ const Detail = () => {
             <Col xxl={24} md={24}>
               <BoxWrapper>
                 <GlobalTable
+                className="attendance-detail-table"
                   pagination={false}
                   columns={tableColumns}
                   tableData={tableData}

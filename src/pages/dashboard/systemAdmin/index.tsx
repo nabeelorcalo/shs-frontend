@@ -50,7 +50,7 @@ const SystemAdmin = () => {
               barColor="#363565"
               bgColor="#ABAFB1"
               freeSpace="GB Free"
-              heading="System Storage"
+              heading={<span className="text-xl font-medium">System Storage</span>}
               height={65}
               memoryFree="55.5"
               memoryUsed="45.5"

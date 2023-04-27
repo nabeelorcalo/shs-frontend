@@ -5,6 +5,16 @@
   width: 100px;
   transition: padding 0.2s ease-in-out;
 }
+.emoji-mood-container{
+  @media only screen and (max-width:768px) {
+    .emoji-wrapper{
+      flex-wrap: wrap;
+      .emoji-container {
+        flex-basis: 50%;
+      }
+    }
+  }
+}
 
 .svgIcon:hover {
   padding: 0 5px 0 5px;
@@ -15,7 +25,7 @@
   font-size: 12px;
   font-weight: 500;
 
-  @screen md {
-    font-size: 16px;
-  }
+  // @screen md {
+  //   font-size: 16px;
+  // }
 }
