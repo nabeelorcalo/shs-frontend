@@ -599,7 +599,6 @@ const InternsCompanyAdmin = () => {
           </div>
         }
       />
-      <UploadDocument />
     </>
   );
 };
