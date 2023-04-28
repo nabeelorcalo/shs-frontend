@@ -31,7 +31,7 @@ const index = () => {
           </Col>
         ))}
       </Row>
-      <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
+      <Row className='mt-[30px] h-full' gutter={[20, 20]}>
         <Col xs={24} md={12} xl={17}>
           <BoxWrapper className='h-full' boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
             <Calendar />

@@ -1,13 +1,12 @@
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Menu } from 'antd';
 import { BoxWrapper, Notifications } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';
 import constants from '../../../config/constants';
-
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
   const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
@@ -244,17 +243,16 @@ const LeaveHistoryTable = (props: any) => {
       key: 'action',
       render: (_: any, data: any) => (
         <Space size="middle">
-          <Dropdown
+          {/* <Dropdown
             dropdownRender={() => {
               return <BoxWrapper className=" action_dropDown">
-
                 {data.status === "Pending" &&
                   <>
-                    <p onClick={()=>{{Notifications({title:'Approved',description:'Approved successfully',type:'success'})}}}
+                    <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}
                       className=" cursor-pointer">
                       Approve
                     </p>
-                    <p onClick={() => {Notifications({title:'Declined',description:'Declined sucessfully',type:'success'})}}
+                    <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}
                       className="cursor-pointer my-4">
                       Decline
                     </p>
@@ -269,6 +267,37 @@ const LeaveHistoryTable = (props: any) => {
             overlayClassName='menus_dropdown_main'
             placement="bottomRight"
           >
+            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+          </Dropdown > */}
+          <Dropdown trigger={['click']} placement="bottomRight"
+            overlay={
+              <Menu>
+                {(data.status !== "Pending" || data.status === "Declined") ? <Menu.Item
+                  key="option3"
+                  onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
+                >View Details</Menu.Item> :
+                  <>
+                    {<Menu.Item
+                      key="option1"
+                      onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>
+                      Approve
+                    </Menu.Item>
+                    }
+                    {<Menu.Item
+                      key="option2"
+                      onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>
+                      Decline
+                    </Menu.Item>
+                    }
+                    <Menu.Item
+                      key="option3"
+                      onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>
+                      View Details
+                    </Menu.Item>
+                  </>
+                }
+              </Menu>
+            } >
             <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
           </Dropdown >
         </Space >
