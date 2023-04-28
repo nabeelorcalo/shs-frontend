@@ -24,8 +24,8 @@ interface DataType {
   }
   export const data: any = [
     {
-      key: '01',
-      title: "Sick", 
+      key: '1',
+      title: "Sick",
       eventType: "sick",
       requestDate: '2023-03-03',
       start: "2023-03-03T05:21:00",

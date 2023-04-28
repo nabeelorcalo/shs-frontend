@@ -19,7 +19,8 @@ export const MonthlyPerfomanceChart = (props: any) => {
     fontWeight = "600",
     data = { perfomanceChart },
     children = <></>,
-    style={height:'235px'}
+    height,
+    style={height: height ? height : '235px'}
   } = props;
 
   const [chartData] = useState(data);
