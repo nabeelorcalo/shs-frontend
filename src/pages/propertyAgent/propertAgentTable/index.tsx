@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  EllipsisOutlined,
-  NodeExpandOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { useState } from "react";
+import {  EllipsisOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Menu, Form, Space } from "antd";
 import { DropDown, SearchBar, GlobalTable, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
@@ -74,8 +70,7 @@ const menu2 = (
   <Menu>
     <Menu.Item key="2">Block</Menu.Item>
     <Menu.Item key="3">
-      {" "}
-      <a href="create-password">Password Reset</a>{" "}
+      <a href="create-password">Password Reset</a>
     </Menu.Item>
   </Menu>
 );
@@ -170,12 +165,11 @@ const PropertyAgentTable = () => {
         </Form>
       </Drawer>
       <div className="inner-agent-table">
-        <Row className="m-2">
-          <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
+        <Row gutter={[20,20]}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar handleChange={searchValue} />
           </Col>
-          <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-            <div className="flex justify-end items-center gap-3 agent-right-menu">
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
             <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
               <div className="w-25">
                 <DropDown
@@ -185,16 +179,9 @@ const PropertyAgentTable = () => {
                   setValue={setValue}
                 />
               </div>
-            </div>
           </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <GlobalTable
-              tableData={tableData}
-              columns={columns}
-              pagination={false}
-            />
+          <Col xs={24}>
+            <GlobalTable tableData={tableData} columns={columns} pagination={false} />
           </Col>
         </Row>
       </div>

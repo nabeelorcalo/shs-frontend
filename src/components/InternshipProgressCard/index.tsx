@@ -132,8 +132,8 @@ export const InternshipProgressCard = (props: any) => {
       <div>
         <InternshipProgressStepper status={status} interns={interns} />
       </div>
-      <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center'>
-        <div className='flex flex-row gap-3'>
+      <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
+        <div className='flex max-sm:flex-col md:flex-row  gap-3'>
           <p>Created on {createdAt}</p>
           <p>.</p>
           <p>Expected Closing Date {closingDate}</p>

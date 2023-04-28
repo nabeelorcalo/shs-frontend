@@ -22,10 +22,10 @@ const Candidates = () => {
     <>
       <PageHeader title="Candidates" />
       <Row gutter={[20, 20]} className="candidate-main">
-        <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+        <Col  xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(e) => { }} />
         </Col>
-        <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
+        <Col  xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
           <DropDown name="Time Frame" options={['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']}
             showDatePickerOnVal={'Date Range'}
             value={timeFrame}

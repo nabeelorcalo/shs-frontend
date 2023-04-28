@@ -1,7 +1,6 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Loader } from "./components";
 import Login from "./pages/onBoarding/sign-in";
 import Signup from "./pages/onBoarding/sign-up";
 import ForgotPassword from "./pages/onBoarding/sign-in/reset-password";
@@ -47,14 +46,12 @@ import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/sig
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 // Lazy load required end
 
-const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
+  <Suspense fallback={<Loader />}>
+    <Component {...props} />
+  </Suspense>
+);
 //Internships Child Components
 const NewInternships = Loadable(
   lazy(() => import("./pages/internships/NewInternships"))
@@ -1324,8 +1321,8 @@ const internRoutes = [
         ],
       },
       {
-        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
       },
       {
@@ -1334,8 +1331,8 @@ const internRoutes = [
         element: <Recipes />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}-detail`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}/:recipeId`,
         element: <RecipeDetails />,
       },
       {
@@ -1344,8 +1341,8 @@ const internRoutes = [
         element: <AddRecipe />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}Update`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}/:recipeId`,
         element: <EditRecipe />,
       },
       {
@@ -1482,8 +1479,8 @@ const studentRoutes = [
         ],
       },
       {
-        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}-detail`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
       },
       {
@@ -1492,8 +1489,8 @@ const studentRoutes = [
         element: <Recipes />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}-detail`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}/:recipeId`,
         element: <RecipeDetails />,
       },
       {
@@ -1502,8 +1499,8 @@ const studentRoutes = [
         element: <AddRecipe />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}Update`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}/:recipeId`,
         element: <EditRecipe />,
       },
       {

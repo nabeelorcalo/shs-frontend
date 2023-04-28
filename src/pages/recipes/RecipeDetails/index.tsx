@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { Typography, Avatar, Rate, Space } from 'antd'
-import { PageHeader, Alert } from "../../../components"
+import { PageHeader, Alert, Breadcrumb } from "../../../components"
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images'
 import "./style.scss";
@@ -64,7 +64,14 @@ const RecipeDetails = () => {
     <>
       <div className="recipe-detail-page">
         <PageHeader
-          title={<>Sticky Orange Chicken <span>Recipes</span></>}
+          title={
+            <Breadcrumb 
+              breadCrumbData={[
+                { name: "Sticky Orange Chicken" },
+                { name: "Recipes", onClickNavigateTo: -1 },
+              ]}  
+            />
+          }
           bordered
         />
 
@@ -84,7 +91,7 @@ const RecipeDetails = () => {
                   <Space size={20}>
                     <div
                       className="recipe-action update-recipe"
-                      onClick={() => navigate(`/recipe-update/${recipeId}`)}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_UPDATE}/${recipeId}`)}
                     >
                       <IconEditRecipe />
                     </div>

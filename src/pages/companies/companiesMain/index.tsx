@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import { useState } from "react";
 import {
   GlobalTable,
   SearchBar,
@@ -11,7 +11,7 @@ import '../../../scss/global-color/Global-colors.scss'
 import { useNavigate } from 'react-router-dom';
 import { More } from "../../../assets/images"
 import { MenuProps } from 'antd';
-import { Dropdown, Avatar } from 'antd';
+import { Dropdown, Avatar, Row, Col } from 'antd';
 import useCustomHook from "../actionHandler";
 
 const btnStyle = {
@@ -200,17 +200,16 @@ const CompaniesMain = () => {
   return (
     <>
       <PageHeader title="Applications" />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
+        <Row gutter={[20, 20]}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
               handleChange={() => { }}
               name="search bar"
               placeholder="Search"
               size="middle"
             />
-          </div>
-          <div className="flex flex-row gap-4">
+          </Col>
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
             <DropDown
               options={[
                 'pdf',
@@ -222,19 +221,13 @@ const CompaniesMain = () => {
               }}
               value=""
             />
-           
-          </div>
-        </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            <GlobalTable
-              columns={columns}
-              tableData={newTableData}
-            />
-            {/* } */}
-          </div>
-        </BoxWrapper>
-      </div>
+          </Col>
+          <Col xs={24}>
+            <BoxWrapper>
+              <GlobalTable columns={columns} tableData={newTableData} />
+            </BoxWrapper>
+          </Col>
+        </Row>
     </>
   );
 };

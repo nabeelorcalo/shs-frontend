@@ -13,7 +13,6 @@ interface DrawerDataInterface {
   rest?: any
   closeIcon?: any,
   width?:any
-
 }
 
 const DrawerComp = ({ title, className, placement = 'right', onClose, open, closeIcon, children,width, ...rest }: DrawerDataInterface) => {
