@@ -32,16 +32,16 @@
       }
     }
 
-    .ant-modal-footer {
-      margin-top: 30px;
-      button {
-        color: $teriary-bg-color;
-        border: solid $teriary-bg-color 1px !important;
-        &:nth-child(2) {
-          color: white;
-          background: $teriary-bg-color !important;
-        }
-      }
-    }
+    // .ant-modal-footer {
+    //   margin-top: 30px;
+    //   button {
+    //     color: $teriary-bg-color;
+    //     border: solid $teriary-bg-color 1px !important;
+    //     &:nth-child(2) {
+    //       color: white;
+    //       background: $teriary-bg-color !important;
+    //     }
+    //   }
+    // }
   }
 }
