@@ -300,8 +300,8 @@ const Application = () => {
                     <p>Time Fram</p>
                     <DropDown
                       name="Select"
-                      options={["This weak", "Last weak", "This month", "Last month"]}
-                      setValue={() => { updateTimeFrame(event) }}
+                      options={["This weak", "Last weak", "This month", "Last month", "All"]}
+                      setValue={() => {updateTimeFrame(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.timeFrame}
@@ -333,6 +333,7 @@ const Application = () => {
                         "Un-paid",
                         "Part Time",
                         "Full Time",
+                        "All"
                       ]}
                       setValue={() => { updateTypeOfWork(event) }}
                       requireCheckbox
@@ -351,6 +352,7 @@ const Application = () => {
                         "Accountant",
                         "Administrator",
                         "HR Cordinator",
+                        "All"
                       ]}
                       setValue={() => { updateStage(event) }}
                       requireCheckbox

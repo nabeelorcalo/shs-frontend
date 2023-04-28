@@ -1,10 +1,10 @@
 import { Table } from 'antd';
 import "./style.scss"
 interface TableProps {
-  columns?: any[]
-  tableData?: any,
-  pagination?: boolean | any,
-  bgWhiteTable?: boolean,
+  columns?: any[];
+  tableData?: any;
+  pagination?: boolean | any;
+  bgWhiteTable?: boolean;
   expandable?: any;
   rowExpandable?: any;
   expandedRowRender?: any;
@@ -37,6 +37,5 @@ export const GlobalTable = (props: TableProps) => {
           null
       }
     </div>
-  )
-}
-
+  );
+};

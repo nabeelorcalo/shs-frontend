@@ -27,42 +27,41 @@ const handleStatusBg = (value: string) => {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "Issue Id ",
+    title: <th className="text-sm font-medium text-secondary-color">Issue Id</th>,
     dataIndex: "issueId",
     key: "issueId",
-    render: (text) => <p className="break-keep min-w-[60px]">{text}</p>,
+    render: (text) => <p className="break-keep min-w-[60px] text-sm">{text}</p>,
   },
   {
-    title: "Reported By",
+    title: <th className="text-sm font-medium text-secondary-color">Reported By</th>,
     dataIndex: "reportedBy",
     key: "reportedBy",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Date",
+    title: <th className="text-sm font-medium text-secondary-color">Date</th>,
     dataIndex: "date",
     key: "date",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Time",
+    title: <th className="text-sm font-medium text-secondary-color">Time</th>,
     dataIndex: "time",
     key: "time",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Status",
+    title: <th className="text-sm font-medium text-secondary-color">Status</th>,
     dataIndex: "status",
     key: "status",
     render: (text) => (
-      <p
-        className={`text-white text-sm	font-normal text-center rounded-lg px-[10px] py-[2px] ${handleStatusBg(
-          text
-        )}`}
-      >
+      <p className={`text-white text-sm	font-normal text-center rounded-lg px-[10px] py-[2px] ${handleStatusBg(text)}`}>
         {text}
       </p>
     ),
   },
   {
-    title: "Action",
+    title: <th className="text-sm font-medium text-secondary-color">Action</th>,
     dataIndex: "action",
     key: "index",
     render: (action) => (
@@ -107,16 +106,9 @@ const RecentIssuesTable: FC<{}> = () => {
   return (
     <div className="bg-white xs:p-2 md:p-3 lg:p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle">
-        <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">
-          Recent Issues
-        </p>
+        <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Recent Issues</p>
       </Row>
-      <GlobalTable
-        columns={columns}
-        tableData={data}
-        pagination={false}
-        height={155}
-      />
+      <GlobalTable columns={columns} tableData={data} pagination={false} height={155} />
     </div>
   );
 };
