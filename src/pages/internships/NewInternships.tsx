@@ -5,9 +5,11 @@ import {
   DropDown,
   PageHeader,
   BoxWrapper,
+  Breadcrumb,
 } from '../../components'
-
+import { useNavigate } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 const { TextArea } = Input;
 const departmentOptions = [
   'search',
@@ -57,18 +59,25 @@ const frequencyOptions = [
 ]
 
 const NewInternships = () => {
-  // const [showState, setshowState] = useState(false)
-  // const [alertState, setAlertState] = useState(false)
+  const navigate = useNavigate()
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
   const [remoteOnsite, setRemoteOnsite] = useState(null);
   const [state, setState] = useState({
     department: "",
-    frequency:"",
+    frequency: "",
     internshipDuration: "",
     location: "",
     expectedClosingDate: ""
   })
+
+  const tempArray = [
+    { name: "New Internship" },
+    {
+      name: "Internships",
+      onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`,
+    },
+  ];
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
@@ -119,8 +128,10 @@ const NewInternships = () => {
 
   return (
     <>
-      <PageHeader title="New Internship" />
-      <Divider />
+      <PageHeader
+        bordered
+        title={<Breadcrumb  breadCrumbData={tempArray} />}
+      />
       <BoxWrapper className='new-intern-main'>
         <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Internship Details</h4>
         <p>This information will be displayed publicly so be careful what you share</p>
@@ -149,7 +160,7 @@ const NewInternships = () => {
               <DropDown
                 name="Select"
                 options={departmentOptions}
-                setValue={() => {updateDepartment(event)}}
+                setValue={() => { updateDepartment(event) }}
                 value={state.department}
               />
             </div>
@@ -217,7 +228,7 @@ const NewInternships = () => {
                 <DropDown
                   name="Select"
                   options={frequencyOptions}
-                  setValue={() => {updateFrequency(event)}}
+                  setValue={() => { updateFrequency(event) }}
                   value={state.frequency}
                 />
               </div>
@@ -251,7 +262,7 @@ const NewInternships = () => {
                 <DropDown
                   name="Select"
                   options={locationOptions}
-                  setValue={() => {updateLocation(event)}}
+                  setValue={() => { updateLocation(event) }}
                   value={state.location}
                 />
               </div>
@@ -298,7 +309,7 @@ const NewInternships = () => {
               <DropDown
                 name="Select"
                 options={durationOptions}
-                setValue={() => {updateInternshipDuration(event)}}
+                setValue={() => { updateInternshipDuration(event) }}
                 value={state.internshipDuration}
               />
             </div>
@@ -310,7 +321,7 @@ const NewInternships = () => {
           <Button type="link" size="middle" className="new-intern-btn white-bg-color teriary-color main-btn" onClick={() => { }}>
             Save Draft
           </Button>
-          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { }}>Cancel</Button>
+          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}>Cancel</Button>
           <Button type="primary" size="middle" className="button-tertiary main-btn" onClick={() => { }}>Submit</Button>
         </Row>
       </BoxWrapper>

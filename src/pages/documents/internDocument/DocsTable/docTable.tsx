@@ -1,12 +1,7 @@
 import React from "react";
 import { Dropdown, MenuProps, Rate } from "antd";
 import { GlobalTable } from "../../../../components";
-import {
-  DocImage,
-  Dots,
-  DoucmentCard,
-  ThreeDotsIcon,
-} from "../../../../assets/images";
+import { DocImage, Dots, Pdf, ThreeDotsIcon } from "../../../../assets/images";
 import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 
 const items = [
@@ -29,9 +24,9 @@ const columns = [
     dataIndex: "preview",
     render: (_: any, obj: any) =>
       obj.name.includes(".pdf") ? (
-        <img src={DoucmentCard} />
+        <img src={DocImage} />
       ) : (
-        <img src={DocImage} alt="" />
+        <img src={Pdf} alt="" />
       ),
   },
   {
@@ -56,7 +51,11 @@ const columns = [
     key: "action",
     render: (_: any, data: any) => (
       <DropDownNew items={items}>
-        <img className="cursor-pointer intern-document-model"  src={Dots} alt="" />
+        <img
+          className="cursor-pointer intern-document-model"
+          src={Dots}
+          alt=""
+        />
       </DropDownNew>
     ),
   },

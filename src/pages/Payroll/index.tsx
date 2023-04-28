@@ -43,9 +43,9 @@ const PopOver: any = () => {
   );
 };
 
-const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator",]
-const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"]
-const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
+const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
+const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range", "All"]
+const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
   const navigate = useNavigate()

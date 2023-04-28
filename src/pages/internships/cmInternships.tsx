@@ -42,7 +42,8 @@ const CMInternships = () => {
                         'Published',
                         'Closed',
                         'Pending',
-                        'Draft'
+                        'Draft',
+                        'All'
                       ]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
@@ -58,7 +59,8 @@ const CMInternships = () => {
                         'EidinBurg',
                         'Glasgow',
                         'London',
-                        'Virtual'
+                        'Virtual',
+                        'All'
                       ]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"
@@ -75,7 +77,8 @@ const CMInternships = () => {
                         'Research analyst',
                         'Accountant',
                         'Administrator',
-                        'HR Cordinator'
+                        'HR Cordinator',
+                        'All'
                       ]}
                       setValue={() => { }}
                       showDatePickerOnVal="custom"

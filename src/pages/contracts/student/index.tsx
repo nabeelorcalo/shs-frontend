@@ -60,7 +60,7 @@ const ContractsStudent = () => {
 
   return (
     <div className="contract-student">
-      <Row gutter={[10, 10]}>
+      <Row gutter={[20,20]}>
         <Col>
           <div className="contract-student-title text-2xl font-semibold">
             Contracts
@@ -68,7 +68,7 @@ const ContractsStudent = () => {
         </Col>
         <Divider />
 
-        <Col className="mb-6" xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
+        <Col xl={6} lg={12} md={24} sm={24} xs={24}>
           <SearchBar handleChange={handleChange} />
         </Col>
 

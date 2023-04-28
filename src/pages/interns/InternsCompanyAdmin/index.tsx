@@ -307,7 +307,7 @@ const InternsCompanyAdmin = () => {
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
-          <FiltersButton label="Filters"
+            <FiltersButton label="Filters"
               onClick={() => {
                 setShowDrawer(true);
               }}
@@ -326,7 +326,13 @@ const InternsCompanyAdmin = () => {
                     <p>Manager</p>
                     <DropDown
                       name="Select"
-                      options={["David miller", "Amila Clark", "Maria sanaid", "Mino Marino"]}
+                      options={[
+                        "David miller",
+                        "Amila Clark",
+                        "Maria sanaid",
+                        "Mino Marino",
+                        "All"
+                      ]}
                       setValue={() => { updateManager(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -341,6 +347,7 @@ const InternsCompanyAdmin = () => {
                         "Employed",
                         "Completed",
                         "Terminated",
+                        "All"
                       ]}
                       setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
@@ -358,6 +365,7 @@ const InternsCompanyAdmin = () => {
                         "Accountant",
                         "Administrator",
                         "HR Cordinator",
+                        "All"
                       ]}
                       setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
@@ -375,6 +383,7 @@ const InternsCompanyAdmin = () => {
                         "Abacus",
                         "Orcalo Holdings",
                         "Coding Hub",
+                        "All"
                       ]}
                       setValue={() => { updateUniversity(event) }}
                       showDatePickerOnVal="custom"
@@ -392,6 +401,7 @@ const InternsCompanyAdmin = () => {
                         "Abacus",
                         "Orcalo Holdings",
                         "Coding Hub",
+                        "All"
                       ]}
                       setValue={() => { updateDateOfJoining(event) }}
                       showDatePickerOnVal="custom"
@@ -421,28 +431,28 @@ const InternsCompanyAdmin = () => {
               </React.Fragment>
             </Drawer>
             <div className="flex justify-between gap-4">
-            <ToggleButton
-              isToggle={listandgrid}
-              onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
-              className='w-[88px]'
-            />
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-              }}
-              value=""
-            />
+              <ToggleButton
+                isToggle={listandgrid}
+                onTogglerClick={() => { setListandgrid(!listandgrid) }}
+                FirstIcon={TableViewIcon}
+                LastIcon={CardViewIcon}
+                className='w-[88px]'
+              />
+              <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+                }}
+                value=""
+              />
             </div>
           </Col>
         </Row>
-       
+
         <div className="pt-3">
           <p className="font-semibold pb-4">Total Interns: 40</p>
           {
@@ -493,15 +503,15 @@ const InternsCompanyAdmin = () => {
                 "Jenate Samson",
                 "Alen Juliet",
               ]}
-              setValue={() => { }}
+              setValue={() => { updateManager(event) }}
               showDatePickerOnVal="custom"
               startIcon=""
-              value=""
+              value={state.manager}
             />
           </div>
         }
         footer={
-          <div className="flex flex gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="middle"
@@ -544,7 +554,7 @@ const InternsCompanyAdmin = () => {
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"
@@ -573,11 +583,11 @@ const InternsCompanyAdmin = () => {
               <div><SuccessIcon /></div>
               <div><h2>Success</h2></div>
             </div>
-            <p>Are you sure you want to terminate this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"
@@ -597,7 +607,6 @@ const InternsCompanyAdmin = () => {
           </div>
         }
       />
-      <UploadDocument />
     </>
   );
 };

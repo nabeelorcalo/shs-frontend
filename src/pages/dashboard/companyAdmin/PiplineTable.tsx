@@ -18,7 +18,7 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "Internships",
+    title: <th className="text-base font-normal text-teriary-color">Internships</th>,
     dataIndex: "internships",
     key: "internships",
     render: (obj) => (
@@ -30,7 +30,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Applied",
+    title: <th className="text-base font-normal text-teriary-color">Applied</th>,
     dataIndex: "applied",
     key: "applied",
     render: (text) => (
@@ -41,7 +41,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Interviewed",
+    title: <th className="text-base font-normal text-teriary-color">Interviewed</th>,
     dataIndex: "interviewed",
     key: "interviewed",
     render: (text) => (
@@ -52,7 +52,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Recommended",
+    title: <th className="text-base font-normal text-teriary-color">Recommended</th>,
     dataIndex: "recommended",
     key: "recommended",
     render: (text) => (
@@ -63,7 +63,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Offer Letter",
+    title: <th className="text-base font-normal text-teriary-color">Offer Letter</th>,
     dataIndex: "offerLetter",
     key: "offerLetter",
     render: (text) => (
@@ -74,7 +74,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Contract",
+    title: <th className="text-base font-normal text-teriary-color">Contract</th>,
     dataIndex: "contract",
     key: "contract",
     render: (text) => (
@@ -85,7 +85,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Hired",
+    title: <th className="text-base font-normal text-teriary-color">Hired</th>,
     dataIndex: "hired",
     key: "hired",
     render: (text) => (
@@ -96,7 +96,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Rejected",
+    title: <th className="text-base font-normal text-teriary-color">Rejected</th>,
     dataIndex: "rejected",
     key: "rejected",
     render: (text) => (
@@ -153,7 +153,7 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
     <div className="bg-white p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle" justify="space-between">
         <Row className="gap-5" align="middle">
-          <p className="text-[20px] leading-[28px] text-secondary-color font-medium">Pipeline</p>
+          <p className="text-[20px] leading-[28px] text-teriary-color font-medium">Pipeline</p>
           <Select
             className="min-w-[170px] light-grey-color pipline-select"
             size="small"
