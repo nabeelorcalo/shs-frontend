@@ -6,9 +6,9 @@ import { GlobalTable } from "../../../components";
 interface DataType {
   key: string;
   user: string;
-  activity: string ;
-  performedBy: string ;
-  dateTime: string ;
+  activity: string;
+  performedBy: string;
+  dateTime: string;
 }
 
 const columns: ColumnsType<DataType> = [
@@ -16,22 +16,25 @@ const columns: ColumnsType<DataType> = [
     title: "User",
     dataIndex: "user",
     key: "user",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
     title: "Activity",
     dataIndex: "activity",
     key: "activity",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
     title: "Performed By",
     dataIndex: "performedBy",
     key: "performedBy",
-    render:(text)=><p className="min-w-[110px]">{text}</p>
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
     title: " Date & Time",
     dataIndex: "dateTime",
     key: "dateTime",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
 ];
 
@@ -107,14 +110,12 @@ const data: DataType[] = [
     performedBy: "Jerome Bell",
     dateTime: "22 Dec 2022, 5:45 AM",
   },
-
 ];
 
 const ActivityLogTable: FC<{}> = () => {
-
   return (
     <div className="xs:p-2 md:p-3 lg:p-5 rounded-2xl min-h-[444px] bg-white wrapper-shadow">
-      <Row className="gap-5" align='middle'>
+      <Row className="gap-5" align="middle">
         <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Activity Log</p>
       </Row>
       <GlobalTable columns={columns} tableData={data} pagination={false} height={296} />

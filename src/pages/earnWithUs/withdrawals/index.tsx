@@ -134,7 +134,17 @@ const Withdrawals = () => {
                 </Col>
                 <Col xs={24} sm={12}>
                   <Form.Item name="withdrawAmount" label="Amount">
-                    <Input placeholder="Enter Amount" className="filled" />
+                    <Input 
+                      placeholder="Enter Amount"
+                      className="filled"
+                      type="number"
+                      min={0}
+                      onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }}
+                    />
                   </Form.Item>
                 </Col>
               </Row>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import { Row, Col } from 'antd'
 import { PageHeader, RecipeCard, ExtendedButton, SearchBar } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
@@ -20,8 +20,9 @@ const data = [
 const Recipes = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const [rateValue, setRateValue] = useState(3)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [rateValue, setRateValue] = useState(3);
 
 
 
@@ -64,7 +65,7 @@ const Recipes = () => {
                   description={recipe.description}
                   rating={rateValue}
                   status={recipe.status}
-                  onCardClick={() => navigate(`/recipe/${recipe.id}`)}
+                  onCardClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_DETAILS}/${recipe.id}`, {state: {from: location.pathname}})}
                   onRateChange={handleRateChange}
                 />
               </Col>

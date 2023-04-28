@@ -158,10 +158,10 @@ const Dashboard = () => {
       <div className="earn-with-us-dashboard">
         <div className="earnwith-topcards">
           <Row gutter={30}>
-            <Col xs={24} lg={12}>
+            <Col xs={24} xl={12}>
               <div className="top-card">
                 <Row gutter={[20,20]}>
-                  <Col xs={24} md={24} lg={12}>
+                  <Col xs={24} md={12}>
                     <div className="top-card-inner">
                       <div className="top-card-icon balance">
                         <IconWalletMoney />
@@ -172,7 +172,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                   </Col>
-                  <Col xs={24} md={24} lg={12}>
+                  <Col xs={24} md={12}>
                     <div className="top-card-inner with-divider">
                       <div className="top-card-icon inactive">
                         <IconInactiveMemberBal />
@@ -186,7 +186,7 @@ const Dashboard = () => {
                 </Row>
               </div>
             </Col>
-            <Col xs={24} lg={12}>
+            <Col xs={24} xl={12}>
                 <div className="card-share-wrapper">
                   <div className="card-share" onClick={openModalShareLink}>
                     <div>Share <IconShare /></div>
