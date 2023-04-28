@@ -48,9 +48,9 @@ const InterCards = () => {
   ];
   return (
     <>
-      <Row gutter={[20, 20]}>
+      <Row gutter={[20, 20]} justify="space-evenly">
         {DocsMockData.map((data: any) => (
-          <Col lg={6}>
+          <Col lg={5} md={8} sm={12} xs={24}>
             <BoxWrapper
               boxShadow={"box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);"}
             >
@@ -61,7 +61,7 @@ const InterCards = () => {
                 </DropDownNew>
               </div>
               <div className="flex flex-col justify-center items-center">
-                <div className="my-3 docuemnt-card">
+                <div className="my-1 docuemnt-card">
                   <img src={DoucmentCard1} alt="" />
                 </div>
                 <p>{data.title}</p>
@@ -69,15 +69,14 @@ const InterCards = () => {
               </div>
               <Divider />
               <div className="flex justify-around">
-                <div>
+                <div className="text-sm">
                   Date
                   <p className="text-success-placeholder-color">{data.date}</p>
                 </div>
                 <Divider className="h-[40px]" type={"vertical"} />
-                <div>
+                <div className="text-sm">
                   File Size
                   <p className="text-success-placeholder-color">
-                    {" "}
                     {data.fileSize}
                   </p>
                 </div>
