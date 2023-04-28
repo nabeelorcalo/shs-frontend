@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import "./style.scss";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, PopUpModal } from "../../../components";
+import { Button, Col, Divider,  Row, Select,   TabsProps,   } from "antd";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton,  } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
@@ -452,43 +452,28 @@ const HelpDesk = () => {
         <Divider />
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={[10, 10]}>
+          <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
 
-            <Col className="flex justify-end " xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
-              <div className="flex">
-                <div className="mr-4">
+            <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
                   <FiltersButton label="Filter" onClick={handleClick} />
-                </div>
-
-                <div>
                   <DropDown
-                    options={[
-                      'pdf',
-                      'excel'
-                    ]}
+                    options={[ 'pdf', 'excel' ]}
                     requiredDownloadIcon
-                    setValue={() => {
-
-                      action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail")
-                    }}
+                    setValue={() => { action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail") }}
                   />
-                </div>
-              </div>
             </Col>
-          </Row>
-        </Col>
-      </Row>
 
-      <Row className="mt-8">
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper>
+            <Col xs={24}>
+            <BoxWrapper>
             <AppTabs items={items} onChange={(selectedTab: any) => {
               setSelectedTab(selectedTab)
             }} />
           </BoxWrapper>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </div>
