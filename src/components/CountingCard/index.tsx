@@ -247,7 +247,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
           className={`${
             isSeprate
               ? "bg-white p-5 rounded-2xl wrapper-shadow"
-              : `basis-1/2 col-${index + 1}`
+              : `basis-1/2 col-${index + 1} min-h-[150px]`
           } flex-1 `}
         >
           <Card icon={icon} title={title} count={count} iconBg={iconBg} />
