@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
-import { PageHeader, SearchBar,GlobalTable, DropDown, BoxWrapper } from "../../../components";
+import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";

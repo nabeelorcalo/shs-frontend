@@ -7,6 +7,12 @@
         border-bottom: none;
       }
 
+      .ant-tabs-nav-wrap {
+        &::after {
+          box-shadow: none;
+        }
+      }
+
       .ant-tabs-nav-operations {
         .ant-tabs-nav-more {
           padding: 0;

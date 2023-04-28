@@ -5,7 +5,7 @@ import "./OverAllPerfomance.scss"
 export const OverAllPerfomance = (props: any) => {
   const { lg, md, sm, xs, trailColor = "#E6F4F9", strokeWidth = 10, width = 140, type = "circle", data, heading } = props
   return (
-    <BoxWrapper>
+    <BoxWrapper className='overall-performance'>
       {
         heading && <p className='mb-14 font-medium text-xl text-secondary-color overall-performance-txt'>
           {heading}

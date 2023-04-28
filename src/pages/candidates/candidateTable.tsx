@@ -4,7 +4,7 @@ import { StarOutlinedIcon, StarFilledIcon, UserAvatar, ThreeDotsIcon } from "../
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 
 const CandidateTable = (props: any) => {
-  const {setOpenDrawer, setOpenRejectModal } = props;
+  const { setOpenDrawer, setOpenRejectModal } = props;
 
   let ratingCount = [
     { title: 'exceptional', count: 5 },
@@ -52,9 +52,9 @@ const CandidateTable = (props: any) => {
       key: 'internship',
       dataIndex: 'internship',
       title: 'Internship',
-      render: (_: any, data: any) => <div className='capitalize'>
+      render: (_: any, data: any) => <div className='capitalize '>
         <p>{data.internship}</p>
-        <p>{data.type}</p>
+        <p className='text-sm clr'>{data.type}</p>
       </div>
     },
     {
@@ -66,11 +66,13 @@ const CandidateTable = (props: any) => {
       key: 'rating',
       dataIndex: 'rating',
       title: 'Rating',
+      width: "150px",
+      align: 'center',
       render: (_: any, data: any) =>
         <DropDownNew items={items}>
-          <div className='flex items-center justify-center gap-2 '>
-            {data.rating === 0 ? <StarOutlinedIcon cursor={'pointer'} /> : <StarFilledIcon cursor={'pointer'} />}
-            <span className='mt-1'>{data.rating}</span>
+          <div className='flex items-center justify-center gap-2 clr'>
+            {data.rating === 0.0 ? <StarOutlinedIcon cursor={'pointer'} /> : <StarFilledIcon cursor={'pointer'} />}
+            <span className=''>{data.rating.toFixed(1,0)}</span>
           </div>
         </DropDownNew>
     },
@@ -78,13 +80,14 @@ const CandidateTable = (props: any) => {
       key: 'stage',
       dataIndex: 'stage',
       title: 'Stage',
-      render: (_: any, data: any) => <div className='flex' >
+      width: '220px',
+      render: (_: any, data: any) => <div className='flex ' >
         <div className="flex flex-col">
-        <p className='capitalize'>{data.stage}</p>
-        <div className='flex items-center justify-center rounded-full overflow-hidden mt-[10px]'>
-          {[1, 2, 3, 4, 5, 6].map((val) => (
-            <p key={val} className={`stage-apply ${data.stage}`}>{val}</p>
-          ))}
+          <p className='capitalize'>{data.stage}</p>
+          <div className='flex items-center justify-center rounded-full overflow-hidden mt-[10px]'>
+            {[1, 2, 3, 4, 5, 6].map((val) => (
+              <p key={val} className={`stage-apply ${data.stage}`}>{val}</p>
+            ))}
           </div>
         </div>
       </div>

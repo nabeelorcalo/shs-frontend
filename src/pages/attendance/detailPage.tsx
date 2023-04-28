@@ -33,11 +33,10 @@ import { currentUserRoleState } from "../../store";
 
 const Detail = () => {
   const role = useRecoilValue(currentUserRoleState);
-
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
-    { name: " Attendance ", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}` },
-    { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo:`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
+    { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
+    { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
   const action = useCustomHook();
   const timeFrameOptions = [
@@ -137,15 +136,6 @@ const Detail = () => {
     ],
   });
 
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
-  };
-
   const downloadClick = () => { };
 
   const getColorAndIcon = (name: string) => {
@@ -192,10 +182,13 @@ const Detail = () => {
             <DropDown
               name="time-frame"
               options={timeFrameOptions}
-              setValue={() => timeFrameSelection(event)}
+              setValue={(e: string) => setState((prevState) => ({
+                ...prevState,
+                timeFrameVal: e,
+              }))}
               value={state.timeFrameVal}
               showDatePickerOnVal="Date Range"
-              requireDatePicker
+              requireRangePicker
               placement="bottomRight"
             />
 
@@ -204,8 +197,8 @@ const Detail = () => {
               className="icon-btn download-btn"
               icon={<DownlaodFileIcon />}
               onClick={() => {
-                action.pdf('historyDetail' ,tableColumns, tableData);
-                Notifications({title:"Success", description:"Download Done",type:'success'})
+                action.pdf('historyDetail', tableColumns, tableData);
+                Notifications({ title: "Success", description: "Download Done", type: 'success' })
               }}
             />
           </div>
@@ -220,7 +213,7 @@ const Detail = () => {
               <TimeTracking vartical />
             ) : (
               <ProfileCard
-                name="Mino Marina"
+                name={<p className="text-primary-color font-medium">Mino Marina</p>}
                 profession="Data Researcher"
                 email="minomarina@gmail.com"
                 phone="+44 7700 900077"
@@ -236,9 +229,9 @@ const Detail = () => {
               <BoxWrapper className="flex mb-6 main-cards">
                 {state.timeData.map((item: any, index) => {
                   const { color, icon }: any = getColorAndIcon(item.heading);
-
                   return (
                     <AttendanceTimeCard
+                      key={item.id}
                       Icon={icon}
                       heading={item.heading}
                       time={item.time}
@@ -252,6 +245,7 @@ const Detail = () => {
             <Col xxl={24} md={24}>
               <BoxWrapper>
                 <GlobalTable
+                className="attendance-detail-table"
                   pagination={false}
                   columns={tableColumns}
                   tableData={tableData}

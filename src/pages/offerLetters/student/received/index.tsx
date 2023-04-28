@@ -11,6 +11,7 @@ import { Row, Col, Button, Steps } from "antd";
 import { Encryption, Signeddigital } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { CheckCircleFilled, EditFilled, EyeFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const senderInfo = [
   {
@@ -79,6 +80,7 @@ const details = [
 ];
 
 const ReceivedOfferLetter = () => {
+  const navigate = useNavigate()
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
@@ -90,6 +92,7 @@ const ReceivedOfferLetter = () => {
     timeoutRef.current = setTimeout(() => {
       console.log("Long pressed");
       alert("button pressed")
+      navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)
     }, 2000);
 
   };
@@ -141,7 +144,7 @@ const ReceivedOfferLetter = () => {
 
     contentRef.current.addEventListener('wheel', handleWheel);
     return () => {
-      contentRef.current.removeEventListener('wheel', handleWheel);
+      contentRef?.current?.removeEventListener('wheel', handleWheel);
     };
   }, []);
 

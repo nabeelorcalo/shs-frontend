@@ -1,5 +1,20 @@
 @import '../../scss/_colors.scss';
 
+.company-admin-performance-container {
+  .overall-performance {
+    height: 256px;
+  }
+
+  .top-performance-list {
+    min-height: 788px;
+    overflow-y: auto;
+  }
+
+  .attendance-department {
+    min-height: 512px;
+  }
+}
+
 // Interm/ViewEvaluation-page
 .view-evaluation {
   .vertical-line {
@@ -53,10 +68,12 @@
     padding: 0 2px;
   }
 
-  .ant-input[disabled],.ant-input {
-    background-color:rgb(59 130 246 / 0.1);
+  .ant-input[disabled],
+  .ant-input {
+    background-color: rgb(59 130 246 / 0.1);
     color: $text-primary-title-color;
-    &:hover{
+
+    &:hover {
       box-shadow: none;
     }
   }
@@ -66,6 +83,7 @@
 .performance-container {
   display: flex;
   flex-wrap: wrap;
+
   .performance-left-subcontainer,
   .performance-right-subcontainer {
     width: 50%;
@@ -87,7 +105,8 @@
   .overall-performance-txt {
     margin-bottom: 16px;
   }
- .icon-btn {
+
+  .icon-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,51 +132,54 @@
 }
 
 // History button of page header
-.shs-page-header{
-    .performance-history-btn {
-      display: flex;
-      justify-content: center;
-      padding: 12px;
-      width: 154px;
-      border-radius: 8px;
-      color: $teriary-bg-color;
-      border: 1px solid $teriary-bg-color;
-    }
-    .performance-history-btn:hover {
-      color: $teriary-light-bg-color;
-      border: 1px solid $teriary-light-bg-color;
-    }
-    @media only screen and (max-width:575px) {
-      align-items: flex-start;
-      flex-direction: column;
-     }
+.shs-page-header {
+  .performance-history-btn {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    width: 154px;
+    border-radius: 8px;
+    color: $teriary-bg-color;
+    border: 1px solid $teriary-bg-color;
+  }
+
+  .performance-history-btn:hover {
+    color: $teriary-light-bg-color;
+    border: 1px solid $teriary-light-bg-color;
+  }
+
+  @media only screen and (max-width:575px) {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
 
 // Company Admin: performance/history
 .company-admin-performance-history,
 .manager-performance-history {
-  .right-sec{
-    @media only screen and (max-width:475px) {
+  .performance-header {
+    margin-bottom: 20px;
+
+    @media only screen and (max-width:768px) {
       flex-direction: column;
+
+      .performance-search-bar {
+        width: 100%;
+      }
+
+      .manager-dropdowns-container {
+        margin: 10px 0px;
+        justify-content: start;
+
+        @media only screen and (max-width:420px) {
+          flex-direction: column;
+        }
+      }
+
     }
   }
-  .performance-header{
-    margin-bottom:20px ;
-    @media only screen and (max-width:768px)  {
-      flex-direction: column;
-      .performance-search-bar{
-        width: 100%;
-    }
-    .manager-dropdowns-container{
-      margin: 10px 0px;
-      justify-content: start;
-      @media only screen and (max-width:420px)  {
-      flex-direction: column;
-      }
-    }
 
-  }}
   .icon-btn {
     display: flex;
     justify-content: center;
@@ -167,8 +189,11 @@
     height: 48px;
     background-color: #E6F4F9;
     margin: 0 8px;
-    @media only screen and (max-width:420px)  {
+
+    @media only screen and (max-width:639px) {
+      padding: 10px !important;
       width: 100% !important;
+      justify-content: end;
       margin: 0;
     }
   }
@@ -192,8 +217,8 @@
     }
   }
 
-  .manager-dropdowns-container{
-    div{
+  .manager-dropdowns-container {
+    div {
       min-width: 170px;
     }
   }

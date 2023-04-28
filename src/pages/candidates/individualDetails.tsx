@@ -138,5 +138,4 @@ const IndividualDetails = () => {
     </div>
   )
 }
-
 export default IndividualDetails

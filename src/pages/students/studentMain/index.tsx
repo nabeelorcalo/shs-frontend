@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { GlobalTable, SearchBar,PageHeader,BoxWrapper,  InternsCard, ToggleButton, DropDown, CommonDatePicker} from "../../../components";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, CommonDatePicker } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, More, TableViewIcon } from "../../../assets/images"
-import { MenuProps } from 'antd';
+import { MenuProps, Row, Col } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -38,7 +38,12 @@ const PopOver = () => {
     },
   ];
   return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{width:180}}>
+    <Dropdown
+      menu={{ items }}
+      trigger={['click']}
+      placement="bottomRight"
+      overlayStyle={{ width: 180 }}
+    >
       <More />
     </Dropdown>
   );
@@ -48,11 +53,14 @@ const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 const StudentMain = () => {
   const action = useCustomHook()
   // const navigate = useNavigate()
-  // const [value, setValue] = useState("")
+  const [openDatePicker, setOpenDatePicker] = useState(false)
+  const [month, setMonth] = useState("")
   // const [showDrawer, setShowDrawer] = useState(false)
-  // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [isToggle, setIsToggle] = useState(false)
+  const [state, setState] = useState({
+    time_period: ""
+  })
 
   const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"]
 
@@ -99,7 +107,7 @@ const StudentMain = () => {
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
-      company:"Power source",
+      company: "Power source",
       date_of_joining: "01/07/2022",
     },
     {
@@ -107,7 +115,7 @@ const StudentMain = () => {
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
-      company:"CodingHub",
+      company: "CodingHub",
       date_of_joining: "01/07/2021",
     },
     {
@@ -115,7 +123,7 @@ const StudentMain = () => {
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
-      company:"Dev spot",
+      company: "Dev spot",
       date_of_joining: "01/07/2021",
     },
     {
@@ -123,7 +131,7 @@ const StudentMain = () => {
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
-      company:"Orcalo Holdings",
+      company: "Orcalo Holdings",
       date_of_joining: "01/07/2022",
     },
     {
@@ -131,7 +139,7 @@ const StudentMain = () => {
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
-      company:"Dev spot",
+      company: "Dev spot",
       date_of_joining: "01/07/2021",
     },
     {
@@ -139,7 +147,7 @@ const StudentMain = () => {
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
-      company:"CodingHub",
+      company: "CodingHub",
       date_of_joining: "01/07/2021",
     },
   ];
@@ -160,11 +168,18 @@ const StudentMain = () => {
       }
     )
   })
+  const updateTimePeriod = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      time_period: value
+    }))
+  }
   return (
     <>
-      <PageHeader title="Interns" />
+      <PageHeader title="Students" />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
+        <div className="flex flex-row justify-between gap-3 max-xl:flex-col">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
               handleChange={() => { }}
@@ -173,78 +188,80 @@ const StudentMain = () => {
               size="middle"
             />
           </div>
-          <div className="flex flex-row gap-4">
-            <CommonDatePicker
-              name="Date Picker"
-              onBtnClick={() => { }}
-              setOpen={function noRefCheck() { }}
-              setValue={function noRefCheck() { }}
-            />
-            <DropDown
-              name="this month"
-              options={[
-                'Power Source',
-                'DevSpot',
-                'Abacus',
-                'Orcalo Holdings',
-                'Coding Hub'
-              ]}
-              setValue={() => { }}
-              showDatePickerOnVal="custom"
-              value=""
-            />
-            <ToggleButton
-              isToggle={listandgrid}
-              onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
-              className='w-[88px]'
-            />
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
+          <div className="flex flex-row max-xl:flex-col gap-4">
+            <div className="flex flex-row max-sm:flex-col gap-4">
+              <CommonDatePicker
+                name="Date Picker"
+                open={openDatePicker}
+                onBtnClick={() => { console.log("date picker clicked") }}
+                setOpen={setOpenDatePicker}
+                setValue={function noRefCheck() { }}
+              />
+              <DropDown
+                name="this month"
+                options={[
+                  'This week',
+                  'Last week',
+                  'This month',
+                  'Last month',
+                ]}
+                setValue={() => {updateTimePeriod(event)}}
+                showDatePickerOnVal="custom"
+                value={state.time_period}
+              />
+            </div>
+            <div className="flex flex-row gap-4">
+              <ToggleButton
+                isToggle={listandgrid}
+                onTogglerClick={() => { setListandgrid(!listandgrid) }}
+                FirstIcon={CardViewIcon}
+                LastIcon={TableViewIcon}
+                className='w-[88px]'
+              />
+              <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => {
 
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
-              }}
-              value=""
-            />
+                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
+                }}
+                value=""
+              />
+            </div>
           </div>
         </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {
-                  newTableData.map((items: any, idx: any) => {
-                    return (
-                      <InternsCard 
+
+        <div className="pt-3">
+          {
+            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+              {
+                newTableData.map((items: any, idx: any) => {
+                  return (
+                    <InternsCard
                       posted_by={items.avatar}
-                      title={items.name} 
-                      department={items.title} 
-                      joining_date={items.date_of_joining} 
-                      date_of_birth={items.companyrep} 
+                      title={items.name}
+                      department={items.title}
+                      joining_date={items.date_of_joining}
+                      date_of_birth={items.companyrep}
                       company={items.company}
-                      />
-                    )
-                  })
-                }
-              </div>
-                :
+                    />
+                  )
+                })
+              }
+            </div>
+              :
+              <BoxWrapper>
                 <GlobalTable
                   columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
                   tableData={newTableData}
                 />
-            }
-          </div>
-        </BoxWrapper>
+              </BoxWrapper>
+          }
+        </div>
+
       </div>
     </>
   );

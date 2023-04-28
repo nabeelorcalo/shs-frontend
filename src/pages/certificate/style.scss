@@ -18,13 +18,6 @@
 }
 
 .certificate-wrapper {
-    .input-wrapper {
-        width: 400px;
-
-        @media screen and (max-width:710px) {
-            width: 100%;
-        }
-    }
 
     .drop-down-wrapper,
     .issue-certificate {

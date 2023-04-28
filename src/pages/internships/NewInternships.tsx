@@ -6,7 +6,9 @@ import {
   PageHeader,
   BoxWrapper,
 } from '../../components'
+import { useNavigate } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 const { TextArea } = Input;
 const departmentOptions = [
   'search',
@@ -56,24 +58,65 @@ const frequencyOptions = [
 ]
 
 const NewInternships = () => {
-  // const [showState, setshowState] = useState(false)
-  // const [alertState, setAlertState] = useState(false)
+  const navigate = useNavigate()
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
   const [remoteOnsite, setRemoteOnsite] = useState(null);
+  const [state, setState] = useState({
+    department: "",
+    frequency:"",
+    internshipDuration: "",
+    location: "",
+    expectedClosingDate: ""
+  })
 
   const onChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPartAndFullTime(e.target.value);
   };
+
   const onChange1 = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPaidAndUnpaid(e.target.value);
   };
+
   const onChange2 = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setRemoteOnsite(e.target.value);
   };
+
+  const updateDepartment = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      department: value
+    }))
+  }
+
+  const updateFrequency = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      frequency: value
+    }))
+  }
+
+  const updateLocation = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      location: value
+    }))
+  }
+
+  const updateInternshipDuration = (event: any) => {
+    const value = event.target.innerText;
+    setState((prevState) => ({
+      ...prevState,
+      internshipDuration: value
+    }))
+  }
+
   return (
     <>
       <PageHeader title="New Internship" />
@@ -106,8 +149,8 @@ const NewInternships = () => {
               <DropDown
                 name="Select"
                 options={departmentOptions}
-                setValue={() => { }}
-                value=""
+                setValue={() => {updateDepartment(event)}}
+                value={state.department}
               />
             </div>
             <div className='flex flex-col gap-2'>
@@ -174,8 +217,8 @@ const NewInternships = () => {
                 <DropDown
                   name="Select"
                   options={frequencyOptions}
-                  setValue={() => { }}
-                  value=""
+                  setValue={() => {updateFrequency(event)}}
+                  value={state.frequency}
                 />
               </div>
               :
@@ -208,8 +251,8 @@ const NewInternships = () => {
                 <DropDown
                   name="Select"
                   options={locationOptions}
-                  setValue={() => { }}
-                  value=""
+                  setValue={() => {updateLocation(event)}}
+                  value={state.location}
                 />
               </div>
               :
@@ -255,8 +298,8 @@ const NewInternships = () => {
               <DropDown
                 name="Select"
                 options={durationOptions}
-                setValue={() => { }}
-                value=""
+                setValue={() => {updateInternshipDuration(event)}}
+                value={state.internshipDuration}
               />
             </div>
           </Col>
@@ -267,7 +310,7 @@ const NewInternships = () => {
           <Button type="link" size="middle" className="new-intern-btn white-bg-color teriary-color main-btn" onClick={() => { }}>
             Save Draft
           </Button>
-          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { }}>Cancel</Button>
+          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { navigate("/"+ ROUTES_CONSTANTS.INTERNSHIPS)}}>Cancel</Button>
           <Button type="primary" size="middle" className="button-tertiary main-btn" onClick={() => { }}>Submit</Button>
         </Row>
       </BoxWrapper>

@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Typography } from 'antd';
+import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { BoxWrapper } from '../../components';
-import { IconButton } from '../IconButton';
-import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
 import { TopPerformanceCard } from '../TopPerformanceCard';
 import { MonthChanger } from '../MonthChanger';
 import './style.scss';
@@ -46,9 +43,9 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
   return (
     <BoxWrapper className='top-performance-list flex flex-col'>
       <div className='flex flex-row h-[40px] top-perfomers-main'>
-        <Typography.Title level={4}>
+        <p className='font-medium text-xl title-color'>
           {heading}
-        </Typography.Title>
+        </p>
 
         {
           action &&
