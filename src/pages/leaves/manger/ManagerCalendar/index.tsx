@@ -52,12 +52,12 @@ const ManagerCalendar = () => {
   }
   const handleResourceAreaHeader = (info: any) => {
     return (
-      <div className=''>{dayjs().format('MMMM')}</div>
+      <div className='font-semibold text-xl text-primary-color'>{dayjs().format('MMMM')}</div>
     )
   }
   return (
     <>
-      <div className='manage_calendar_wrapper bg-white p-4'>
+      <div className='manage_calendar_wrapper bg-white'>
         <div className='manage_calendar_content'>
           <FullCalendar
             schedulerLicenseKey="CC-Attribution-NonCommercial-NoDerivatives"
@@ -105,7 +105,6 @@ const ManagerCalendar = () => {
             eventMinWidth={100}
             resourceAreaHeaderContent={handleResourceAreaHeader}
             slotDuration="24:00:00"
-            height={'60vh'}
             eventClick={(e: any) => { setIsOpenCalendarDrawer(true); seteventData(e) }}
             slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
           />

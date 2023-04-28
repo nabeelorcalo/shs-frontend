@@ -6,8 +6,9 @@ import {
   PageHeader,
   BoxWrapper,
 } from '../../components'
-
+import { useNavigate } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 const { TextArea } = Input;
 const departmentOptions = [
   'search',
@@ -57,8 +58,7 @@ const frequencyOptions = [
 ]
 
 const NewInternships = () => {
-  // const [showState, setshowState] = useState(false)
-  // const [alertState, setAlertState] = useState(false)
+  const navigate = useNavigate()
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
   const [remoteOnsite, setRemoteOnsite] = useState(null);
@@ -310,7 +310,7 @@ const NewInternships = () => {
           <Button type="link" size="middle" className="new-intern-btn white-bg-color teriary-color main-btn" onClick={() => { }}>
             Save Draft
           </Button>
-          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { }}>Cancel</Button>
+          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { navigate("/"+ ROUTES_CONSTANTS.INTERNSHIPS)}}>Cancel</Button>
           <Button type="primary" size="middle" className="button-tertiary main-btn" onClick={() => { }}>Submit</Button>
         </Row>
       </BoxWrapper>

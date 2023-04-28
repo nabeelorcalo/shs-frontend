@@ -256,10 +256,6 @@ const StudentMain = () => {
               <BoxWrapper>
                 <GlobalTable
                   columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
                   tableData={newTableData}
                 />
               </BoxWrapper>

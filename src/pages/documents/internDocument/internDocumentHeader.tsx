@@ -50,7 +50,7 @@ const InternDocument = (props: any) => {
         </Col>
 
         <Col lg={selectData === "Shared Documents" ? 13 : 9}>
-          <div className="flex gap-3">
+          <div className="flex gap-4">
             <DropDownNew
               className="text-input-bg-color rounded-md px-[9px]"
               items={[
