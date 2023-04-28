@@ -18,7 +18,7 @@ const Photograph = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex ">
                 <div>
-                  <BackButton onClick={() => { setCurrentStep(5) }}/>
+                  <BackButton onClick={() => { setCurrentStep(5) }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">Photograph</Typography>
@@ -57,7 +57,7 @@ const Photograph = (props: any) => {
               <Row gutter={[10, 10]}>
                 <Col xs={24} md={24} lg={12} xl={8}>
                   <Button className="btn-cancel btn-cancel-verification"
-                  onClick={() => { setCurrentStep(7) }}
+                    onClick={() => { setCurrentStep(7) }}
                   >
                     Skip
                   </Button>

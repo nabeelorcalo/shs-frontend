@@ -26,7 +26,6 @@ const Video = (props: any) => {
                   <Typography className="main-heading-verify">Video</Typography>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Create your video interview to get hired
               </Typography>
@@ -46,7 +45,6 @@ const Video = (props: any) => {
                 </li>
               </ul>
             </div>
-
             <div className="sign-up-form-wrapper">
               <Form.Item
                 name="upload"
@@ -54,12 +52,11 @@ const Video = (props: any) => {
                 getValueFromEvent={normFile}
                 className="flex justify-center mt-10"
               >
-
                 <Upload name="logo" action="/upload.do" listType="picture">
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
-                        <Round style={{ position: "absolute", left: "13px", top: '14px' }} />
+                        <Round className="absolute left-[13px] top-[14px]" />
                       </div>
                     </div>
                   </div>

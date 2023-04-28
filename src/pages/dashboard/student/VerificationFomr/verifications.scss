@@ -8,13 +8,14 @@
   height: 100%;
 
   .identity {
-    .main-heading-verify{
+    .main-heading-verify {
       font-weight: 500;
-font-size: 38px;
-line-height: 46px;
-color: $primary-bg-color;
-padding-bottom: 0.9rem;
+      font-size: 38px;
+      line-height: 46px;
+      color: $primary-bg-color;
+      padding-bottom: 0.9rem;
     }
+
     .identity-style {
       display: flex !important;
       justify-content: center;
@@ -68,13 +69,14 @@ padding-bottom: 0.9rem;
   }
 
   .university-detail {
-    .main-heading-verify{
+    .main-heading-verify {
       font-weight: 500;
-font-size: 38px;
-line-height: 46px;
-color: $primary-bg-color;
-padding-bottom: 0.9rem;
+      font-size: 38px;
+      line-height: 46px;
+      color: $primary-bg-color;
+      padding-bottom: 0.9rem;
     }
+
     .university-detail-style {
       display: flex !important;
       justify-content: center;
@@ -169,6 +171,5 @@ padding-bottom: 0.9rem;
       border: 1px dashed black;
       border-radius: 4px;
     }
-
   }
 }
