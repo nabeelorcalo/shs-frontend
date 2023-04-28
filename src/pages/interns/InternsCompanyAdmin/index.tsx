@@ -307,7 +307,7 @@ const InternsCompanyAdmin = () => {
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
-          <FiltersButton label="Filters"
+            <FiltersButton label="Filters"
               onClick={() => {
                 setShowDrawer(true);
               }}
@@ -431,28 +431,28 @@ const InternsCompanyAdmin = () => {
               </React.Fragment>
             </Drawer>
             <div className="flex justify-between gap-4">
-            <ToggleButton
-              isToggle={listandgrid}
-              onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={TableViewIcon}
-              LastIcon={CardViewIcon}
-              className='w-[88px]'
-            />
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-              }}
-              value=""
-            />
+              <ToggleButton
+                isToggle={listandgrid}
+                onTogglerClick={() => { setListandgrid(!listandgrid) }}
+                FirstIcon={TableViewIcon}
+                LastIcon={CardViewIcon}
+                className='w-[88px]'
+              />
+              <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+                }}
+                value=""
+              />
             </div>
           </Col>
         </Row>
-       
+
         <div className="pt-3">
           <p className="font-semibold pb-4">Total Interns: 40</p>
           {

@@ -23,17 +23,21 @@ const ViewInternshipDetails = () => {
     <>
       <PageHeader
         bordered
-        title={<Breadcrumb  breadCrumbData={tempArray} />}
+        title={<Breadcrumb breadCrumbData={tempArray} />}
       />
       <BoxWrapper>
         <div className='flex flex-col gap-6'>
           <div className='flex flex-row justify-between  flex-wrap'>
             <div>
-              <h2
-                className='font-semibold dashboard-primary-color'
-              >
+              <h2 className='font-semibold dashboard-primary-color'>
                 UI/UX Designer
-                <span className='pl-4 cursor-pointer' onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP); }}><EditIcon /></span></h2>
+                <span
+                  className='pl-4 cursor-pointer'
+                  onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
+                >
+                  <EditIcon />
+                </span>
+              </h2>
               <p className='text-lg'>Design</p>
             </div>
             {internshipStatus == "Published" || internshipStatus == "Closed" ?
@@ -94,7 +98,7 @@ const ViewInternshipDetails = () => {
               <Button
                 type="default"
                 className="button-default-tertiary max-sm:w-full"
-                onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS)}}
+                onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}
               >
                 Back
               </Button>
@@ -104,7 +108,7 @@ const ViewInternshipDetails = () => {
               <Button
                 type="default"
                 className="button-default-tertiary max-sm:w-full"
-                onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS)}}
+                onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}
               >
                 Cancel
               </Button>
