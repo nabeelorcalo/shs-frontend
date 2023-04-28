@@ -3,7 +3,6 @@ import { Button, Col, Form, Input, Row, Typography } from "antd";
 import { ArrowDownDark, BackButton, DocumentUpload } from "../../../../assets/images";
 import { DropDown } from "../../../../components";
 
-
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
@@ -17,9 +16,9 @@ const Address = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex">
                 <div>
-                  <BackButton   onClick={() => {
-                        setCurrentStep(4);
-                      }} />
+                  <BackButton onClick={() => {
+                    setCurrentStep(4);
+                  }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">Address</Typography>

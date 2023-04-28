@@ -94,7 +94,6 @@ const UniversityDetails = (props: any) => {
               >
                 <Input placeholder="University Email" className="input-style" />
               </Form.Item>
-
               <Form.Item
                 name="Graduation Year"
                 label="Graduation Year"

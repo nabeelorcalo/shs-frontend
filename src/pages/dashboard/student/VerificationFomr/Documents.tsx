@@ -6,15 +6,14 @@ import { ArrowDownDark, BackButton, DocumentUpload } from "../../../../assets/im
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [value, setValue] = useState("");
-
   const { Option } = Select;
+
   return (
     <div className="identity">
       <Row className="identity-style">
         <Col xxl={12} xl={12} lg={14} md={14} sm={24} xs={24}>
           <div className="form-wrapper">
             <div className="main-title-wrapper">
-
               <div className="flex ">
                 <div>
                   <BackButton onClick={() => { setCurrentStep(3) }} />

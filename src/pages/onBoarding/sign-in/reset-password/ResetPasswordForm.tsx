@@ -10,16 +10,11 @@ const ResetPasswordForm = () => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
     const { email } = values;
-
     action
       .forgotpassword({
         email: email,
       })
-      .then((data: any) => {
-        console.log("data", data);
-        navigate(`/${ROUTES_CONSTANTS.RESET_LINK_SENT}`);
-      })
-      .catch((err) => console.log(err));
+    navigate(`/${ROUTES_CONSTANTS.RESET_LINK_SENT}`);
   };
   return (
     <div>
@@ -39,7 +34,6 @@ const ResetPasswordForm = () => {
           >
             <Input placeholder="Email" className="input-style" />
           </Form.Item>
-
           <Form.Item>
             <Button
               type="primary"

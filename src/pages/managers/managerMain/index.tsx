@@ -19,7 +19,6 @@ const ManagerMain = () => {
   const [showTable, setShowTable] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
-
   const searchValue = () => {};
   const handleClick = (buttonIndex:any) => {
     setActiveButton(buttonIndex);
