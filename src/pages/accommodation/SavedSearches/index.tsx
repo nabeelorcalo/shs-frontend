@@ -25,6 +25,7 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getSavedProperties(setLoading)
+    console.log('savedProperties::: ', savedProperties)
   }, [])
 
 
@@ -54,11 +55,11 @@ const SavedSearches = () => {
                   autualPrice={"1200"}
                   withDiscountPrice={"840"}
                   propertyAvailableFor={"week"}
-                  propertyType={property.propertyType}
-                  totalBeds={property.totalBedrooms}
-                  totalWashRoom={property.totalBathrooms}
+                  propertyType={property?.property.propertyType}
+                  totalBeds={property?.property.totalBedrooms}
+                  totalWashRoom={property?.property.totalBathrooms}
                   tags={['Utility Bills', 'Laundry', 'Meals']}
-                  location={property.addressOne}
+                  location={property?.property.addressOne}
                   handleSaveClick={() => console.log('handle clik')}
                   handleDetailClick={() => handleDetailClick(property.id)}
                   handleChatClick={() => navigate('/chat')}

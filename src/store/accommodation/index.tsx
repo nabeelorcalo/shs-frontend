@@ -1,5 +1,10 @@
 import { atom, selector } from "recoil";
 
+export const propertyState = atom({
+  key: 'propertyState',
+  default: []
+})
+
 export const availablePropertiesState = atom({
   key: 'availablePropertiesState',
   default: []
