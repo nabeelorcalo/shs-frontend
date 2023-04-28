@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   CloseCircleFilled,
   EllipsisOutlined,
@@ -201,21 +201,17 @@ const AdminManagement = () => {
         </Form>
       </Drawer>
       <Row>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div>
+        <Col xs={24}>
             <PageHeader title='Admin Management' bordered={true} />
-          </div>
         </Col>
       </Row>
-      <Row gutter={10}>
-        <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+
+      <Row gutter={[20,20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
-        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex justify-end items-center gap-3 mb-3 admin-right-menu">
-            <div className="filter-btn">
-              <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
-            </div>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
             <div className="w-25 download-btn">
               <DropDown
                 requiredDownloadIcon
@@ -235,7 +231,7 @@ const AdminManagement = () => {
               <UserAddOutlined className="text-base font-semibold" />
               Add User
             </Button>
-          </div>
+          
         </Col>
       </Row>
       <Row>

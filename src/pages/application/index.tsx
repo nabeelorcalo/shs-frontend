@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth } from "../../components";
 import { useNavigate } from 'react-router-dom';
 import { More } from "../../assets/images"
-import { Button, MenuProps } from 'antd';
-import { Dropdown, Avatar } from 'antd';
+import { Button, MenuProps, Dropdown, Avatar, Row, Col } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import '../../scss/global-color/Global-colors.scss'
@@ -81,7 +80,7 @@ const Application = () => {
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
-    typeOfWork:"",
+    typeOfWork: "",
     stage: ""
   })
 
@@ -89,7 +88,7 @@ const Application = () => {
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
-  
+
   const columns = [
     {
       dataIndex: "no",
@@ -260,16 +259,16 @@ const Application = () => {
     <>
       <PageHeader title="Applications" />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
+        <Row gutter={[20,20]}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
               handleChange={() => { }}
               name="search bar"
               placeholder="Search"
               size="middle"
             />
-          </div>
-          <div className="flex flex-row gap-4">
+          </Col>
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
             <FiltersButton
               label="Filters"
               onClick={() => {
@@ -302,7 +301,7 @@ const Application = () => {
                     <DropDown
                       name="Select"
                       options={["This weak", "Last weak", "This month", "Last month"]}
-                      setValue={() => {updateTimeFrame(event)}}
+                      setValue={() => { updateTimeFrame(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.timeFrame}
@@ -318,7 +317,7 @@ const Application = () => {
                         "Hybrid",
                         "Virtual",
                       ]}
-                      setValue={() => {updateNatureOfWork(event)}}
+                      setValue={() => { updateNatureOfWork(event) }}
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -335,7 +334,7 @@ const Application = () => {
                         "Part Time",
                         "Full Time",
                       ]}
-                      setValue={() => {updateTypeOfWork(event)}}
+                      setValue={() => { updateTypeOfWork(event) }}
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -353,7 +352,7 @@ const Application = () => {
                         "Administrator",
                         "HR Cordinator",
                       ]}
-                      setValue={() => {updateStage(event)}}
+                      setValue={() => { updateStage(event) }}
                       requireCheckbox
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -369,7 +368,7 @@ const Application = () => {
             </Drawer>
             <Drawer
               closable
-              width={mainDrawerWidth>1400 ? 1000 : mainDrawerWidth > 900 ? 900:mainDrawerWidth > 576?600:300}
+              width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
               onClose={() => {
                 setShowStageStepper(false);
@@ -377,32 +376,30 @@ const Application = () => {
             >
               <StageStepper />
             </Drawer>
-          </div>
-        </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            {
-              listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                {
-                  cardDummyArray.map((items: any, idx: any) => {
-                    return (
-                      <InternsCard />
-                    )
-                  })
-                }
-              </div>
-                :
-                <GlobalTable
-                  columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
-                  tableData={newTableData}
-                />
-            }
-          </div>
-        </BoxWrapper>
+          </Col>
+          <Col xs={24}>
+            <BoxWrapper>
+
+              {
+                listandgrid ? <div className="flex flex-row flex-wrap gap-6">
+                  {
+                    cardDummyArray.map((items: any, idx: any) => {
+                      return (
+                        <InternsCard />
+                      )
+                    })
+                  }
+                </div>
+                  :
+                  <GlobalTable
+                    columns={columns}
+                    tableData={newTableData}
+                  />
+              }
+
+            </BoxWrapper>
+          </Col>
+        </Row>
       </div>
     </>
   );

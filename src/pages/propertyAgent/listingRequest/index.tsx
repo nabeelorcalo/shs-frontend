@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  EllipsisOutlined,
-  NodeExpandOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { useState } from "react";
+import { EllipsisOutlined} from "@ant-design/icons";
 import { BoxWrapper, FiltersButton, GlobalTable } from "../../../components";
 import { Button, Col, Row, Space, Form, Menu, Select } from 'antd';
 import { DropDown } from "../../../components";
@@ -202,9 +198,8 @@ const ListingRequest = () => {
           </div>
         </Form>
       </Drawer>
-      <Row gutter={[20,10]}>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="flex justify-end gap-2 mb-4">
+      <Row gutter={[20,20]}>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
             <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
             {/* <div className="w-25">
               <DropDown
@@ -214,7 +209,6 @@ const ListingRequest = () => {
                 setValue={setValue}
               />
             </div> */}
-          </div>
         </Col>
         <Col xs={24}>
           <BoxWrapper>
@@ -222,7 +216,6 @@ const ListingRequest = () => {
           </BoxWrapper>
         </Col>
       </Row>
-
     </div>
   );
 };

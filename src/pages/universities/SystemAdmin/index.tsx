@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import {
-  NodeExpandOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
 import { Button, Col, Form, Menu, Row, Space,Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
@@ -60,6 +56,14 @@ const tableData = [
     city: "London",
     hired: "No",
   },
+];
+
+const options = [
+  { value: "London", label: "London" },
+  { value: "Lacaster", label: "Lacaster" },
+  { value: "Birmingham", label: "Birmingham" },
+  { value: "Glassgow", label: "Glassgow" },
+ 
 ];
 
 const UniveristyMain = () => {
@@ -133,7 +137,6 @@ const UniveristyMain = () => {
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -144,7 +147,6 @@ const UniveristyMain = () => {
       title: "Actions",
     },
   ];
-
   const menu2 = (
     <Menu>
       <Menu.Item onClick={()=> navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
@@ -173,7 +175,6 @@ const UniveristyMain = () => {
               options={[
                 { value: "Active", label: "Active" },
                 { value: "Inactive", label: "Inactive" },
-               
               ]}
             />
           </div>
@@ -185,13 +186,7 @@ const UniveristyMain = () => {
               className="w-[100%]"
               defaultValue="Select"
               onChange={handleChangeSelect}
-              options={[
-                { value: "London", label: "London" },
-                { value: "Lacaster", label: "Lacaster" },
-                { value: "Birmingham", label: "Birmingham" },
-                { value: "Glassgow", label: "Glassgow" },
-               
-              ]}
+              options={options}
             />
           </div>
         </div>
@@ -210,7 +205,7 @@ const UniveristyMain = () => {
           </div>
         </Form>
       </Drawer>
-      <Row >
+      <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
             <PageHeader title='Universities' bordered={true} />
@@ -218,11 +213,10 @@ const UniveristyMain = () => {
         </Col>
       </Row>
       <Row gutter={[20,20]}>
-        <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
-        <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-          <div className="flex justify-end items-center gap-3">
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
             <div className="w-25">
               <DropDown
@@ -232,7 +226,6 @@ const UniveristyMain = () => {
                 setValue={setValue}
               />
             </div>
-          </div>
         </Col>
       </Row>
       <Row className="mt-4">
@@ -242,7 +235,6 @@ const UniveristyMain = () => {
           </div>
         </Col>
       </Row>
-      {/* <DetailPage/> */}
     </div>
   );
 };
