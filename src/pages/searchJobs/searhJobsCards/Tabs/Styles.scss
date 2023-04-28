@@ -1,8 +1,14 @@
 @import "../../../../scss/colors";
+
 .inetrn-document-tabs {
   .ant-tabs-tab-active {
     svg path {
       fill: #363565 !important;
     }
+  }
+
+  .first-tabs {
+    border-left: 1px solid $text-error-line-color;
+    margin-right: 20px !important;
   }
 }

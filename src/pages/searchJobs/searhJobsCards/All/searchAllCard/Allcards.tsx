@@ -23,7 +23,6 @@ interface Props {
 
 const AllCardsTab = (props: any) => {
   const { data } = useParams();
-  console.log(data, "id");
 
   const {
     tags = ["Full Time ", "Paid", "On-Site"],
