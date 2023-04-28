@@ -30,33 +30,32 @@ const columns: ColumnsType<DataType> = [
     title: "Issue Id ",
     dataIndex: "issueId",
     key: "issueId",
-    render: (text) => <p className="break-keep min-w-[60px]">{text}</p>,
+    render: (text) => <p className="break-keep min-w-[60px] text-sm">{text}</p>,
   },
   {
     title: "Reported By",
     dataIndex: "reportedBy",
     key: "reportedBy",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
     title: "Date",
     dataIndex: "date",
     key: "date",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
     title: "Time",
     dataIndex: "time",
     key: "time",
+    render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
     render: (text) => (
-      <p
-        className={`text-white text-sm	font-normal text-center rounded-lg px-[10px] py-[2px] ${handleStatusBg(
-          text
-        )}`}
-      >
+      <p className={`text-white text-sm	font-normal text-center rounded-lg px-[10px] py-[2px] ${handleStatusBg(text)}`}>
         {text}
       </p>
     ),
@@ -107,16 +106,9 @@ const RecentIssuesTable: FC<{}> = () => {
   return (
     <div className="bg-white xs:p-2 md:p-3 lg:p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle">
-        <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">
-          Recent Issues
-        </p>
+        <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Recent Issues</p>
       </Row>
-      <GlobalTable
-        columns={columns}
-        tableData={data}
-        pagination={false}
-        height={155}
-      />
+      <GlobalTable columns={columns} tableData={data} pagination={false} height={155} />
     </div>
   );
 };
