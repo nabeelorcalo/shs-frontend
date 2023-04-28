@@ -27,8 +27,7 @@ export default {
       description: "Please try again later or email us",
     },
   },
-  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration",
-  "Project Management"],
+  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration","Project Management"],
   OPTIONS_COUNTRIES: ["England", "Scotland", "Wales", "Ireland"],
   OPTIONS_GENDER: ["Male", "Female", "others"],
   

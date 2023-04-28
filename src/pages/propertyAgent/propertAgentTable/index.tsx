@@ -56,9 +56,13 @@ const tableData = [
 
 const PropertyAgentTable = () => {
   const navigate = useNavigate();
-  const [value, setValue] = useState("");
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [state, setState] = useState({
+    openDrawer: false,
+    open: false,
+  })
+  const { openDrawer, open } = state
+
+  const [value, setValue] = useState("")
   const searchValue = () => { };
 
   const handleChangeSelect = (value: string) => {
@@ -127,7 +131,7 @@ const PropertyAgentTable = () => {
     <Menu>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
-        <div onClick={() => { setOpen(true) }}>Password Reset</div>
+        <div onClick={() => { setState({ ...state, open: true }) }}>Password Reset</div>
       </Menu.Item>
     </Menu>
   );
@@ -137,7 +141,7 @@ const PropertyAgentTable = () => {
       <Drawer
         open={openDrawer}
         title=" Filters"
-        onClose={() => setOpenDrawer(false)}
+        onClose={() => setState({ ...state, openDrawer: false })}
       >
         <Form layout="vertical">
           <div className="mb-6">
@@ -190,7 +194,7 @@ const PropertyAgentTable = () => {
             <SearchBar handleChange={searchValue} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+            <FiltersButton label='Filter' onClick={() => setState({ ...state, openDrawer: true })} />
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon
@@ -208,7 +212,7 @@ const PropertyAgentTable = () => {
       <PopUpModal
         open={open}
         width={500}
-        close={() => { setOpen(false) }}
+        close={() => { setState({ ...state, open: false }) }}
         children={
           <div className="flex flex-col gap-5">
             <div className='flex flex-row items-center gap-3'>
@@ -224,7 +228,7 @@ const PropertyAgentTable = () => {
               type="default"
               size="small"
               className="button-default-tertiary max-sm:w-full"
-              onClick={() => setOpen(false)}
+              onClick={() => setState({ ...state, open: false })}
             >
               Cancel
             </Button>
@@ -233,7 +237,7 @@ const PropertyAgentTable = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
-                setOpen(false)
+                setState({ ...state, open: true })
                 navigate(`/${ROUTES_CONSTANTS.CREATE_PASSWORD}`)
               }}
             >
