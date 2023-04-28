@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
-import {
-  DropDown,
-  SearchBar,
-  FiltersButton,
-  PageHeader,
-  InternshipProgressCard,
-  BoxWrapper
-} from '../../../components'
+import { DropDown, SearchBar, FiltersButton, PageHeader, InternshipProgressCard, BoxWrapper} from '../../../components'
 import Drawer from '../../../components/Drawer'
 import { Button, Col, Row } from 'antd'
 import '../../../scss/global-color/Global-colors.scss'
 import '../style.scss'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-import UploadDocument from '../../../components/UploadDocument'
+// import UploadDocument from '../../../components/UploadDocument';
 
 const dummyResponse = {
   "statusCode": 200,
