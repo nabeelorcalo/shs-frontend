@@ -424,8 +424,8 @@ const InternsCompanyAdmin = () => {
             <ToggleButton
               isToggle={listandgrid}
               onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
+              FirstIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
               className='w-[88px]'
             />
             <DropDown
@@ -493,15 +493,15 @@ const InternsCompanyAdmin = () => {
                 "Jenate Samson",
                 "Alen Juliet",
               ]}
-              setValue={() => { }}
+              setValue={() => {updateManager(event)}}
               showDatePickerOnVal="custom"
               startIcon=""
-              value=""
+              value={state.manager}
             />
           </div>
         }
         footer={
-          <div className="flex flex gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="middle"
@@ -544,7 +544,7 @@ const InternsCompanyAdmin = () => {
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"
@@ -573,11 +573,11 @@ const InternsCompanyAdmin = () => {
               <div><SuccessIcon /></div>
               <div><h2>Success</h2></div>
             </div>
-            <p>Are you sure you want to terminate this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"
@@ -597,7 +597,6 @@ const InternsCompanyAdmin = () => {
           </div>
         }
       />
-      <UploadDocument />
     </>
   );
 };

@@ -23,7 +23,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS+"?status=" + status) }}>
             View details
           </a>
         ),
@@ -162,7 +162,7 @@ export const InternshipProgressCard = (props: any) => {
           </div>
         }
         footer={
-          <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
+          <div className='flex flex-row pt-4 gap-3 justify-end max-sm:flex-col'>
             <Button
               type="default"
               size="small"
@@ -197,7 +197,7 @@ export const InternshipProgressCard = (props: any) => {
           </div>
         }
         footer={
-          <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
+          <div className='flex flex-row pt-4 gap-3 justify-end max-sm:flex-col'>
             <Button
               type="default"
               size="small"
@@ -211,7 +211,7 @@ export const InternshipProgressCard = (props: any) => {
               size="small"
               className="button-error max-sm:w-full"
             >
-              Decline
+              Delete
             </Button>
           </div>
         }
