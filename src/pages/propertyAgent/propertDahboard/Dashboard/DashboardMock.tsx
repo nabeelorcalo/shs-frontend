@@ -8,12 +8,14 @@ import iconPhone from '../../../../assets/images/profile/student/Phone.svg'
 import profile from '../../../../assets/images/profile/propertyagent/pf.svg';
 import bed from '../../../../assets/images/profile/propertyagent/bed.svg';
 import sofa from '../../../../assets/images/profile/propertyagent/sofa.svg'
-import small from '../../../../assets/images/profile/university/small.svg'
+import small from '../../../../assets/images/profile/university/small.svg';
+import reject from '../../../../assets/images/profile/propertyagent/rejected.svg';
 
 
 export const cardData = [
     {
         img: people,
+        bgColor: "#4783FF0D",
         cardTitle: 'Properties Agents',
         cardNumber: "33",
         status: [
@@ -29,6 +31,7 @@ export const cardData = [
     },
     {
         img: clip,
+        bgColor: '#4783FF1A',
         cardTitle: 'Total Listing',
         cardNumber: "10",
         status: [
@@ -44,6 +47,7 @@ export const cardData = [
     },
     {
         img: aproved,
+        bgColor: '#FFC15D4D',  
         cardTitle: 'Pending Listings',
         cardNumber: "06",
         status: [
@@ -59,6 +63,7 @@ export const cardData = [
     },
     {
         img: uilcalender,
+        bgColor: '#3DC5751A',
         cardTitle: 'Approved Listings',
         cardNumber: "01",
         status: [
@@ -73,7 +78,8 @@ export const cardData = [
         ]
     },
     {
-        img: uilcalender,
+        img: reject,
+        bgColor: '#D83A521A',
         cardTitle: 'Rejected Listings',
         cardNumber: "01",
         status: [
@@ -87,8 +93,8 @@ export const cardData = [
             },
         ]
     },
-    
-   
+
+
 ];
 
 
@@ -392,34 +398,34 @@ export const activityData = [
         userStatus: "New User Created",
         img: small,
         detail: "Albert added as a new agent",
-        time:"02:53 pm "
-        
+        time: "02:53 pm "
+
     },
     {
         date: "11 Nov",
         userStatus: "New User Created",
         img: small,
         detail: "Albert added as a new agent",
-        time:"02:53 pm "
-        
+        time: "02:53 pm "
+
     },
     {
         date: "11 Nov",
         userStatus: "New User Created",
         img: small,
         detail: "Albert added as a new agent",
-        time:"02:53 pm "
-        
+        time: "02:53 pm "
+
     },
     {
         date: "11 Nov",
         userStatus: "New User Created",
         img: small,
         detail: "Albert added as a new agent",
-        time:"03:53 pm "
-        
+        time: "03:53 pm "
+
     },
-   
+
 ]
 
 
@@ -433,16 +439,16 @@ export const propertDetailSide = [
         iconPhone: iconPhone,
         iconLocation: iconLocation,
         attachments: [
-          {
-            skill: sofa,
-          },
-          {
-            skill: bed,
-          },
-         
+            {
+                skill: sofa,
+            },
+            {
+                skill: bed,
+            },
+
         ],
         email: "maria@studenthelpsquad.com",
         phone: "+44 7700 900077",
         location: "263 Eversholt St, London NW11NB, UK",
-      },
+    },
 ]
