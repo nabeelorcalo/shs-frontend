@@ -2,10 +2,15 @@ import { CloseCircleFilled } from '@ant-design/icons'
 import React from 'react'
 import { DocumentCardIcon, DocImage } from '../../assets/images'
 
-const SelectedUploadCard = ({ filename, filesize, idx, handleDelete }: any) => {
-
+const SelectedUploadCard = ({files, setFiles, filename, filesize, idx, }: any) => {
     const extension = filename.slice(-3)
-    console.log(extension)
+
+    const handleDelete = (idx: any)=>{
+        console.log()
+        setFiles(files.splice(idx, 1));
+        console.log(idx, "----" , x)
+    }
+
     return (
         <div className="flex w-6/12 ">
             <div className=' flex flex-row justify-between items-center m-1 w-full px-2 py-2  rounded bg-[#E6F4F9]'>
