@@ -46,7 +46,7 @@ const InternDocument = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => {}} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4" >
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4">
           <DropDownNew
             className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown"
             items={[
