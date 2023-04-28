@@ -21,38 +21,48 @@ import InterCards from "./InternCards/interCards";
 import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
 
-const InternDocument = (props: any) => {
-  const [selectData, setSelectData] = useState("Intern Documents");
+const InternDocument = () => {
+  const [selectData, setSelectData] = useState({
+    document: "Intern Documents",
+    timeFrame: '',
+    uploader: ''
+  });
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
-
-  console.log(selectData, "cnkjv");
 
   return (
     <div className="intern-header-wrapper">
       <div className="flex ">
         <select
           className="select-icon"
-          value={selectData}
-          onChange={(e: any) => setSelectData(e.target.value)}
+          value={selectData.document}
+          onChange={(e: any) => setSelectData((prevState) => ({
+            ...prevState,
+            document: e.target.value,
+          }))}
         >
           <option value="Intern Documents">Intern Documents</option>
           <option value="Shared Documents">Shared Documents</option>
         </select>
         <p className="ml-3 mt-1 text-primary-color text-base font-medium">
-          {selectData}
+          {selectData.document}
         </p>
       </div>
 
       <Row gutter={[20, 20]} className="my-7" justify="space-between">
         <Col lg={6}>
-          <SearchBar handleChange={() => {}} />
+          <SearchBar handleChange={() => { }} />
         </Col>
 
-        <Col lg={selectData === "Shared Documents" ? 13 : 9}>
+        <Col lg={selectData.document === "Shared Documents" ? 13 : 9}>
           <div className="flex gap-4">
             <DropDownNew
               className="text-input-bg-color rounded-md px-[9px]"
+              value={selectData.uploader}
+              setValue={(e: any) => setSelectData((prevState) => ({
+                ...prevState,
+                uploader: e,
+              }))}
               items={[
                 {
                   label: (
@@ -72,16 +82,16 @@ const InternDocument = (props: any) => {
               <div className="flex items-center justify-between gap-3 w-full ">
                 <div className="user flex items-center gap-3">
                   <img
-                    src={selectData === "Shared Documents" ? Frame : UserImage}
+                    src={selectData.document === "Shared Documents" ? Frame : UserImage}
                     alt="icon"
                   />
                   <div>
-                    {selectData === "Shared Documents" ? (
+                    {selectData.document === "Shared Documents" ? (
                       <p className="text-success-placeholder-color">
                         Uploader (All)
                       </p>
                     ) : (
-                      <p>Maria Sanoid</p>
+                      <p>{selectData.uploader}</p>
                     )}
                   </div>
                 </div>
@@ -89,18 +99,23 @@ const InternDocument = (props: any) => {
               </div>
             </DropDownNew>
 
-            {selectData === "Shared Documents" && (
+            {selectData.document === "Shared Documents" && (
               <Col lg={9}>
                 <DropDown
-                  setValue={(e: string) => {}}
+                  value={selectData.timeFrame}
+                  setValue={(e: string) => setSelectData((prevState) => ({
+                    ...prevState,
+                    timeFrame: e,
+                  }))}
                   options={[
+                    "All",
                     "this week",
                     "last week",
                     "this month",
                     "last month",
                     "date range",
                   ]}
-                  requireDatePicker
+                  requireRangePicker
                   showDatePickerOnVal={"date range"}
                 />
               </Col>
@@ -118,8 +133,8 @@ const InternDocument = (props: any) => {
             <ToggleButton
               isToggle={documentToggle}
               onTogglerClick={() => setDocumentToggle(!documentToggle)}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
+              FirstIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
               className="w-[88px]"
             />
           </div>
