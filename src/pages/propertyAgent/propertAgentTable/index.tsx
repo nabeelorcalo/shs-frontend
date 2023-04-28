@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {  EllipsisOutlined } from "@ant-design/icons";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Menu, Form, Space, Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal } from "../../../components";
 import Drawer from "../../../components/Drawer";
@@ -8,7 +8,6 @@ import "../style.scss";
 import { WarningIcon } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-
 
 const tableData = [
   {
@@ -32,7 +31,6 @@ const tableData = [
       </span>
     ),
     Publishedlisting: "08",
-
     status: "Active",
     company: "kljdasfhuasd",
     PhoneNumber: "070 3397 6621 ",
@@ -52,7 +50,6 @@ const tableData = [
     PhoneNumber: "070 3397 6621 ",
     Email: "jackson.graham@example.com",
     no: "01",
-
     Agent: "Jenny Wilson",
   },
 ];
@@ -116,7 +113,6 @@ const PropertyAgentTable = () => {
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -154,7 +150,6 @@ const PropertyAgentTable = () => {
                 options={[
                   { value: "DarrelSteward", label: "DarrelSteward" },
                   { value: "Inactive", label: "Inactive" },
-
                 ]}
               />
             </div>
@@ -170,12 +165,10 @@ const PropertyAgentTable = () => {
                   { value: "Active", label: "Active" },
                   { value: "Inactive", label: "Inactive" },
                   { value: "Publish", label: "Publish" },
-
                 ]}
               />
             </div>
           </div>
-
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -192,20 +185,20 @@ const PropertyAgentTable = () => {
         </Form>
       </Drawer>
       <div className="inner-agent-table">
-        <Row gutter={[20,20]}>
+        <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar handleChange={searchValue} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
-              <div className="w-25">
-                <DropDown
-                  requiredDownloadIcon
-                  options={["pdf", "excel"]}
-                  value={value}
-                  setValue={setValue}
-                />
-              </div>
+            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+            <div className="w-25">
+              <DropDown
+                requiredDownloadIcon
+                options={["pdf", "excel"]}
+                value={value}
+                setValue={setValue}
+              />
+            </div>
           </Col>
           <Col xs={24}>
             <GlobalTable tableData={tableData} columns={columns} pagination={false} />
@@ -246,7 +239,6 @@ const PropertyAgentTable = () => {
             >
               Reset
             </Button>
-
           </div>
         }
       />

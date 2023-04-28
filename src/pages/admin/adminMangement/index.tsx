@@ -59,7 +59,7 @@ const tableData = [
   },
 ];
 
-const options =[
+const cities =[
   { value: "London", label: "London" },
   { value: "Lacaster", label: "Lacaster" },
   { value: "Birmingham", label: "Birmingham" },
@@ -114,7 +114,6 @@ const AdminManagement = () => {
       key: "date",
       title: "Date",
     },
-
     {
       dataIndex: "status",
       render: (_: any, data: any) => (
@@ -181,7 +180,7 @@ const AdminManagement = () => {
               className="w-[100%]"
               defaultValue="Select"
               onChange={handleChangeSelect}
-              options={options}
+              options={cities}
             />
           </div>
         </div>

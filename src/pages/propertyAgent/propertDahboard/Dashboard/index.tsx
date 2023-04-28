@@ -18,11 +18,10 @@ const MainDashboard = () => {
                   <div className=" flex items-center p-2">
                     <div className="rounded-[10px] h-[60px] w-[60px]"
                       style={{ backgroundColor: `${item.bgColor}`, padding: '0.2rem' }}>
-                       <div className="img-bg pl-2 pt-2 pr-1">
-                      <img  src={item.img} alt="" style={{zIndex:999}} />
+                      <div className="img-bg pl-2 pt-2 pr-1">
+                        <img src={item.img} alt="" style={{ zIndex: 999 }} />
+                      </div>
                     </div>
-                    </div>
-                 
                     <div className="ml-3">
                       <Typography className="card-title">
                         {item.cardTitle}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Menu, Row, Space,Select } from "antd";
+import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -58,16 +58,8 @@ const tableData = [
   },
 ];
 
-const options = [
-  { value: "London", label: "London" },
-  { value: "Lacaster", label: "Lacaster" },
-  { value: "Birmingham", label: "Birmingham" },
-  { value: "Glassgow", label: "Glassgow" },
- 
-];
-
 const UniveristyMain = () => {
-  
+
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -124,10 +116,10 @@ const UniveristyMain = () => {
               data.status === "Pending"
                 ? "#FFC15D"
                 : data.status === "Active"
-                ? "#3DC475"
-                : data.status === "Inactive"
-                ? "#D83A52"
-                : "",
+                  ? "#3DC475"
+                  : data.status === "Inactive"
+                    ? "#D83A52"
+                    : "",
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -149,7 +141,7 @@ const UniveristyMain = () => {
   ];
   const menu2 = (
     <Menu>
-      <Menu.Item onClick={()=> navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
         <a href="create-password">Password Reset</a>
@@ -165,31 +157,34 @@ const UniveristyMain = () => {
         onClose={() => setOpenDrawer(false)}
       >
         <Form layout="vertical">
-            <div className="mb-6">
-          <label>Status</label>
-          <div className="mt-2">
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={handleChangeSelect}
-              options={[
-                { value: "Active", label: "Active" },
-                { value: "Inactive", label: "Inactive" },
-              ]}
-            />
+          <div className="mb-6">
+            <label>Status</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={[
+                  { value: "Active", label: "Active" },
+                  { value: "Inactive", label: "Inactive" },
+                ]}
+              />
+            </div>
           </div>
-        </div>
-        <div className="mb-6">
-          <label>City</label>
-          <div className="mt-2">
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={handleChangeSelect}
-              options={options}
-            />
+          <div className="mb-6">
+            <label>City</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={[
+                  { value: "Active", label: "Active" },
+                  { value: "Inactive", label: "Inactive" },
+                ]}
+              />
+            </div>
           </div>
-        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -212,20 +207,20 @@ const UniveristyMain = () => {
           </div>
         </Col>
       </Row>
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
-            <div className="w-25">
-              <DropDown
-                requiredDownloadIcon
-                options={["pdf", "excel"]}
-                value={value}
-                setValue={setValue}
-              />
-            </div>
+          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+          <div className="w-25">
+            <DropDown
+              requiredDownloadIcon
+              options={["pdf", "excel"]}
+              value={value}
+              setValue={setValue}
+            />
+          </div>
         </Col>
       </Row>
       <Row className="mt-4">

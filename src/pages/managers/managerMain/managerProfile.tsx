@@ -14,7 +14,7 @@ import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
 import { Breadcrumb, DropDown, PageHeader } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { Option } from "antd/es/mentions";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const breadcrumbArray = [
   { name: 'Amelia Parker' },
@@ -151,7 +151,7 @@ const ManagerProfile = () => {
                     <DropDown
                       name="Select"
                       value={value}
-                      options={["Male", "Female", "others"]}
+                      options={constants.OPTIONS_GENDER}
                       setValue={setValue}
                     />
                   </Form.Item>
@@ -197,8 +197,7 @@ const ManagerProfile = () => {
                     <DropDown
                       name="Select"
                       value={value}
-                      options={["Business Analysis", "Research", "Accounting", "Human Resources", "Administration",
-                    "Project Management"]}
+                      options={constants.OPTIONS_DEPARTMENTS}
                       setValue={setValue}
                     />
                   </Form.Item>
@@ -242,7 +241,7 @@ const ManagerProfile = () => {
                     <DropDown
                       name="Select"
                       value={value}
-                      options={["England", "Scotland", "Wales", "Ireland"]}
+                      options={constants.OPTIONS_COUNTRIES}
                       setValue={setValue}
                     />
                   </Form.Item>

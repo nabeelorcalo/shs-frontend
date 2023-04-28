@@ -43,7 +43,7 @@ const ManagerMain = () => {
               defaultValue="Select"
               onChange={handleChangeSelect}
               options={[
-                { value: "DarrelSteward", label: "DarrelSteward" },
+                { value: "Active", label: "Active" },
                 { value: "Inactive", label: "Inactive" },
                
               ]}

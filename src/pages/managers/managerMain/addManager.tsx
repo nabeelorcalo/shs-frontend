@@ -15,6 +15,7 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import  constants  from '../../../config/constants';
 
 const AddManager = () => {
   const navigate = useNavigate();
@@ -97,7 +98,7 @@ const AddManager = () => {
                 <DropDown
                   name="Select"
                   value={value}
-                  options={["Male", "Female", "others"]}
+                  options={constants.OPTIONS_GENDER}
                   setValue={setValue}
                 />
               </Form.Item>
@@ -153,8 +154,7 @@ const AddManager = () => {
                 <DropDown
                   name="Select"
                   value={value}
-                  options={["Business Analysis", "Research", "Accounting", "Human Resources", "Administration",
-                    "Project Management"]}
+                  options={constants.OPTIONS_DEPARTMENTS}
                   setValue={setValue}
                 />
               </Form.Item>
@@ -213,7 +213,7 @@ const AddManager = () => {
                 <DropDown
                   name="Select"
                   value={value}
-                  options={["England", "Scotland", "Wales", "Ireland"]}
+                  options={constants.OPTIONS_COUNTRIES}
                   setValue={setValue}
                 />
               </Form.Item>
@@ -226,7 +226,6 @@ const AddManager = () => {
               Cancel
             </Button>
             <Button
-              // onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)}}
               htmlType="submit"
               className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
             >

@@ -34,14 +34,14 @@ const ManagerInfo = () => {
                     </div>
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center">
                       <Button
-                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}`)}}
+                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}`) }}
                         style={{ minWidth: "0px" }}
                         className="info-dark-bg-color text-info-color-dark text-base 
                         font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">
                         Profile
                       </Button>
                       <Button
-                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`)}}
+                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`) }}
                         style={{ minWidth: "0px" }}
                         className="text-green-color reset-bg-color text-base 
                         font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">
