@@ -448,8 +448,8 @@ const managerRoutes = [
         element: <NewInternships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
       {

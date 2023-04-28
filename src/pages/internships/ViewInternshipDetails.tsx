@@ -22,16 +22,9 @@ const ViewInternshipDetails = () => {
   return (
     <>
       <PageHeader
-        actions
         bordered
-        title={<Breadcrumb bordered breadCrumbData={tempArray} />}
-      >
-        <Space wrap>
-          <div className='p-2 download-icon-style text-input-bg-color'>
-            <DownloadDocumentIcon />
-          </div>
-        </Space>
-      </PageHeader>
+        title={<Breadcrumb  breadCrumbData={tempArray} />}
+      />
       <BoxWrapper>
         <div className='flex flex-col gap-6'>
           <div className='flex flex-row justify-between  flex-wrap'>
@@ -40,7 +33,7 @@ const ViewInternshipDetails = () => {
                 className='font-semibold dashboard-primary-color'
               >
                 UI/UX Designer
-                <span className='pl-4' onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP); }}><EditIcon /></span></h2>
+                <span className='pl-4 cursor-pointer' onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP); }}><EditIcon /></span></h2>
               <p className='text-lg'>Design</p>
             </div>
             {internshipStatus == "Published" || internshipStatus == "Closed" ?

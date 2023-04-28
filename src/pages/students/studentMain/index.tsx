@@ -204,6 +204,7 @@ const StudentMain = () => {
                   'Last week',
                   'This month',
                   'Last month',
+                  'All'
                 ]}
                 setValue={() => {updateTimePeriod(event)}}
                 showDatePickerOnVal="custom"

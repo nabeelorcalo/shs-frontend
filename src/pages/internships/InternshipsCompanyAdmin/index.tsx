@@ -381,7 +381,8 @@ const InternshipsCompanyAdmin = () => {
                         'Published',
                         'Closed',
                         'Pending',
-                        'Draft'
+                        'Draft',
+                        'All'
                       ]}
                       setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
@@ -397,7 +398,8 @@ const InternshipsCompanyAdmin = () => {
                         'EidinBurg',
                         'Glasgow',
                         'London',
-                        'Virtual'
+                        'Virtual',
+                        'All'
                       ]}
                       setValue={() => { updateLocation(event) }}
                       showDatePickerOnVal="custom"
@@ -414,7 +416,8 @@ const InternshipsCompanyAdmin = () => {
                         'Research analyst',
                         'Accountant',
                         'Administrator',
-                        'HR Cordinator'
+                        'HR Cordinator',
+                        'All'
                       ]}
                       setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"

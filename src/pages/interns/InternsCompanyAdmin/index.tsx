@@ -331,7 +331,13 @@ const InternsCompanyAdmin = () => {
                     <p>Manager</p>
                     <DropDown
                       name="Select"
-                      options={["David miller", "Amila Clark", "Maria sanaid", "Mino Marino"]}
+                      options={[
+                        "David miller",
+                        "Amila Clark",
+                        "Maria sanaid",
+                        "Mino Marino",
+                        "All"
+                      ]}
                       setValue={() => { updateManager(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -346,6 +352,7 @@ const InternsCompanyAdmin = () => {
                         "Employed",
                         "Completed",
                         "Terminated",
+                        "All"
                       ]}
                       setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
@@ -363,6 +370,7 @@ const InternsCompanyAdmin = () => {
                         "Accountant",
                         "Administrator",
                         "HR Cordinator",
+                        "All"
                       ]}
                       setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
@@ -380,6 +388,7 @@ const InternsCompanyAdmin = () => {
                         "Abacus",
                         "Orcalo Holdings",
                         "Coding Hub",
+                        "All"
                       ]}
                       setValue={() => { updateUniversity(event) }}
                       showDatePickerOnVal="custom"
@@ -397,6 +406,7 @@ const InternsCompanyAdmin = () => {
                         "Abacus",
                         "Orcalo Holdings",
                         "Coding Hub",
+                        "All"
                       ]}
                       setValue={() => { updateDateOfJoining(event) }}
                       showDatePickerOnVal="custom"
@@ -495,7 +505,7 @@ const InternsCompanyAdmin = () => {
                 "Jenate Samson",
                 "Alen Juliet",
               ]}
-              setValue={() => {updateManager(event)}}
+              setValue={() => { updateManager(event) }}
               showDatePickerOnVal="custom"
               startIcon=""
               value={state.manager}
