@@ -7,7 +7,8 @@ import {
   ToggleButton,
   FiltersButton,
   DropDown,
-  AttendanceCardDetail
+  AttendanceCardDetail,
+  NoDataFound
 } from "../../components";
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
@@ -108,7 +109,7 @@ const Payroll = () => {
           <Avatar
             src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
           />,
-        name: item.name,
+        name: item.name, 
         // department: item.department,
         joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
         payroll_cycle: `${monthFrom} - ${monthTo}`,
@@ -151,6 +152,7 @@ const Payroll = () => {
       payrollCycle: value
     }))
   }
+
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -234,24 +236,24 @@ const Payroll = () => {
             </React.Fragment>
           </Drawer>
           <div className="flex gap-4 justify-between">
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={handleToggle}
-            FirstIcon={TableViewIcon}
-            LastIcon={CardViewIcon}
-            className='w-[88px]'
-          />
-          <DropDown
-            options={[
-              'pdf',
-              'excel'
-            ]}
-            requiredDownloadIcon
-            setValue={() => {
-              downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
-            }}
-            value=""
-          />
+            <ToggleButton
+              isToggle={state.isToggle}
+              onTogglerClick={handleToggle}
+              FirstIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
+              className='w-[88px]'
+            />
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
+              }}
+              value=""
+            />
           </div>
         </Col>
         <Col xs={24}>
@@ -262,7 +264,7 @@ const Payroll = () => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
                   return (
-                    <AttendanceCardDetail
+                    payrollData.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
                       key={index}
                       index={1}
                       item={{
