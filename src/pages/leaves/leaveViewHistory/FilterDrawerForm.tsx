@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Form } from "antd";
 import { Button, DropDown } from '../../../components';
 const FilterDrawerForm = (props: any) => {
-  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit ,setOpenDrawer} = props;
+  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit, setOpenDrawer } = props;
 
   const [filterValu, setFilterValue] = useState({ leaveType: "Select", timeFrame: "Select", status: "Select" });
   // console.log(value);
@@ -26,7 +26,7 @@ const FilterDrawerForm = (props: any) => {
             <DropDown
               name={filterValu.leaveType}
               value={filterValu.leaveType}
-              options={['Pending ', 'Declined', 'Approved']}
+              options={['All', 'Pending', 'Declined', 'Approved']}
               setValue={(e: string) => setFilterValue({ ...filterValu, leaveType: e })}
             />
           </Form.Item>
@@ -38,7 +38,7 @@ const FilterDrawerForm = (props: any) => {
             <DropDown
               name={filterValu.timeFrame}
               value={filterValu.timeFrame}
-              options={['This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']}
+              options={['Select', 'This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']}
               setValue={(e: string) => setFilterValue({ ...filterValu, timeFrame: e })}
               showDatePickerOnVal={'date Range'}
               requireRangePicker
@@ -51,7 +51,7 @@ const FilterDrawerForm = (props: any) => {
             <DropDown
               name={filterValu.status}
               value={filterValu.status}
-              options={['Pending ', 'Declined', 'Approved']}
+              options={['All', 'Pending ', 'Declined', 'Approved']}
               setValue={(e: string) => setFilterValue({ ...filterValu, status: e })}
             />
           </Form.Item>

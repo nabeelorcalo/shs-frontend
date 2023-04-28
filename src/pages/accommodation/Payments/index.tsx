@@ -115,9 +115,6 @@ const tableData = [
 const Payments = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false)
   const tableColumns: ColumnsType<any> = [
     {

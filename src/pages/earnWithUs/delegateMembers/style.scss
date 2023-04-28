@@ -7,17 +7,17 @@
   }
   .page-filterbar {
     margin: 0px;
-    .button-sky-blue {
-      width: 170px;
-      text-align: left;
-      display: inline-flex;
-      & > span {
-        flex: 1
-      }
-    }
-    @media only screen and (max-width:400px){
-      flex-direction: column;
-    }
+    // .button-sky-blue {
+    //   // width: 170px;
+    //   text-align: left;
+    //   display: inline-flex;
+    //   & > span {
+    //     flex: 1
+    //   }
+    // }
+    // @media only screen and (max-width:400px){
+    //   flex-direction: column;
+    // }
   }
 
   .shs-table-card.table-delegate-members {
