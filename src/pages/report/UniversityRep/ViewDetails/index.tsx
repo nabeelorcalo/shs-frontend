@@ -1,11 +1,10 @@
-import React from 'react'
 import { ReportViewDetails, DownloadIconLeave, GrievancesAvater } from '../../../../assets/images'
 import { BoxWrapper, Breadcrumb, Notifications, SearchBar } from '../../../../components'
-import { Divider, Typography, Row, Col, } from 'antd'
-import './style.scss'
+import { Typography, Row, Col, } from 'antd'
 import useCustomHook from './actionHandler'
 import CustomDropDownReport from './customDropDown'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import './style.scss';
 
 const index = () => {
   let overview = [
@@ -46,7 +45,7 @@ const index = () => {
   const action = useCustomHook();
   const breadcrumbArray = [
     { name: "Mino Mrina" },
-    { name: "report", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT} ` },
+    { name: "Report", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT} ` },
 
   ];
   const handleChange = () => {
@@ -54,18 +53,21 @@ const index = () => {
 
   return (
     <div className='view-details-university-rep'>
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
-      <Divider />
-      <div className="flex justify-between">
-        <div><SearchBar size="middle" handleChange={handleChange} /></div>
-        <div className='flex items-center justify-between drop-down-wrapper'>
-          <div className='mr-[-5px]'
-            onClick={() => {action.downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ")
-            Notifications({title:"Success", description:"Assessment Form list downloaded ",type:'success'})}}  >
+      <Breadcrumb breadCrumbData={breadcrumbArray}/>
+      <Row gutter={[20,20]}>
+        <Col xl={7} md={24} sm={24} xs={24}>
+          <SearchBar size="middle" handleChange={handleChange} />
+        </Col>
+        <Col xl={17} md={24} sm={24} xs={24} className='flex max-sm:flex-col justify-end gap-4'>
+          <div className='drop-down-wrapper'
+            onClick={() => {
+              action.downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ")
+              Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: 'success' })
+            }}  >
             <DownloadIconLeave />
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
       <Row gutter={[30, 20]} className="mt-5">
         {overview.map((data: any, index: any) => {
           return (

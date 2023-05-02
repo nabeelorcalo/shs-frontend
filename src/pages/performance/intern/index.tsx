@@ -260,7 +260,7 @@ const InternPerformance = () => {
 
           <div className="mt-10">
             <MonthlyPerfomanceChart
-              heading="Perfomance Analytics"
+              heading="Monthly Perfomance"
               data={monthlyPerformanceData}
             />
           </div>
