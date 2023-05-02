@@ -30,14 +30,18 @@ const InternDocument = () => {
     <div className="intern-header-wrapper">
       <div className="flex my-5">
         <select
+        style={{width:"30px"}}
           className="select-icon"
           value={selectData}
           onChange={(e: any) => setSelectData(e.target.value)}
         >
-          <option value="Intern Documents">Intern Documents</option>
+          <option style={{width:"100px"}} value="Intern Documents">Intern Documents</option>
           <option value="Shared Documents">Shared Documents</option>
         </select>
-        <p className="ml-3 mt-1 text-primary-color text-base font-medium">
+
+
+
+        <p className="ml-3 mt-1 text-primary-  text-base font-medium">
           {selectData}
         </p>
       </div>
