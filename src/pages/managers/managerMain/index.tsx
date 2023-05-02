@@ -6,7 +6,6 @@ import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../compone
 import { User} from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
-// import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import ManagerInfo from "./managerInfo";
 import ManagerInfoTable from "./managerInfoTable";
 import Drawer from "../../../components/Drawer";
@@ -20,7 +19,6 @@ const ManagerMain = () => {
   const [showTable, setShowTable] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
-
   const searchValue = () => {};
   const handleClick = (buttonIndex:any) => {
     setActiveButton(buttonIndex);
@@ -70,7 +68,8 @@ const ManagerMain = () => {
         <Col xl={6} lg={24} md={24} sm={24} xs={24}>
           <SearchBar placeholder="Search by name" handleChange={searchValue} />
         </Col>
-        <Col xl={18} lg={24} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end md:items-center gap-4">
+        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+          <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
             <Button className="teriary-bg-color white-color flex items-center"
               onClick={() => {
               navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
@@ -111,6 +110,7 @@ const ManagerMain = () => {
                 setValue={setValue}
               />
             </div>
+             </div>
         </Col>
       </Row>
       {showGrid === true && (

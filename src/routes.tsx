@@ -44,6 +44,7 @@ import EditOfferLetter from "./pages/offerLetters/CompanyAdmin/editContract";
 import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
 import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
+import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 // Lazy load required end
 
 
@@ -346,6 +347,11 @@ export const publicRoutes = [
     key: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    element: <ResetLink/>
   },
   // ------Remove below demo components------
   // Demo Graphs

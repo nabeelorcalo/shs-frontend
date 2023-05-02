@@ -3,6 +3,7 @@ import { Button, Col, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../assets/images";
 import fly from "../../../../assets/images/login/fly.png";
 import "../../sign-in/signin.scss";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const ResetLink = () => {
   return (
@@ -24,7 +25,7 @@ const ResetLink = () => {
             </div>
             <div>
               <Typography className="text-center mt-2 mb-2">
-                <a href="" className="a-tag-signup">
+                <a href={`${ROUTES_CONSTANTS.FORGOT_PASSWORD}`} className="a-tag-signup">
                   Resend
                 </a>
               </Typography>
@@ -32,7 +33,7 @@ const ResetLink = () => {
             <div>
               <Typography className="text-center mt-2 mb-2">
                 Back to &nbsp;
-                <a href="/login" className="a-tag-signup">
+                <a href={`${ROUTES_CONSTANTS.LOGIN}`} className="a-tag-signup">
                   Login
                 </a>
               </Typography>
