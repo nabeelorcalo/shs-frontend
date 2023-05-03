@@ -39,7 +39,7 @@ const index: React.FC = () => {
   const [state, setState] = useState({
     openSidebar: false,
     status: 'Select',
-    isToggle: true,
+    isToggle: false,
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -52,8 +52,10 @@ const index: React.FC = () => {
           Profile
         </NavLink>
       </Menu.Item>
-      <Menu.Item>
-        Chat
+      <Menu.Item >
+        <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
+          Chat
+        </NavLink>
       </Menu.Item>
     </Menu>
   );
@@ -75,7 +77,7 @@ const index: React.FC = () => {
         <div className='w-full flex flex-row lg:justify-end gap-2 '>
           <div>
             <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
-            </div>
+          </div>
           <div className="">
             <ToggleButton
               isToggle={state.isToggle}
@@ -89,8 +91,10 @@ const index: React.FC = () => {
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={() => {action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")
-              Notifications({title:"Success", description:"University interns list downloaded ",type:'success'})}}
+              setValue={() => {
+                action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")
+                Notifications({ title: "Success", description: "University interns list downloaded ", type: 'success' })
+              }}
             />
           </div>
         </div>

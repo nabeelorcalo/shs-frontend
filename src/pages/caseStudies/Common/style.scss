@@ -32,5 +32,82 @@
       padding: 0px 20px;
     }
   }
+}
+.company-admin-assessment-form{
+  .ant-dropdown-menu-item ant-dropdown-menu-item-only-child{
+  padding: 0 !important
 
+}
+  .ant-divider-horizontal{
+    background: $text-error-line-color !important;
+  }
+  .drop-down-wrapper {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    display: block;
+    padding: 12px 10px 12px 10px;
+    color: $text-success-placeholder-color;
+    cursor: pointer;
+    text-transform: capitalize;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+    &:hover,
+    &.active {
+        border: 2px solid $input-hover-color;
+        background-color: $white-bg-color;
+    }
+  
+    &.pilled {
+        border-radius: 50px;
+    }
+  }
+  .sign-btn{
+    color:$text-success-placeholder-color
+  }
+  .scroll{
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .destop-view {
+    min-width: 1000px;
+  }
+  .assessment-footer{
+    .reject-btn{
+      &:hover{
+        background: $secondary-bg-color !important;
+      }
+    }
+    .save-btn{
+      border: 1px solid $teriary-bg-color;
+      &:hover{
+        background: $white-bg-color!important;
+        color:$teriary-bg-color
+      }
+    }
+    .finalise-btn{
+      &:hover{
+        background: $teriary-bg-color!important;
+      }
+    }
+  }
+  .sign-box{
+    border: 1px solid $text-success-placeholder-color;
+    height: 150px;
+  }
+.ant-input{
+  background-color: $text-input-bg-color;
+  &:hover{
+    background-color: $white-bg-color;
+  }
+}
+}
+.manage-remark-image-container{
+  .image{
+    &:hover{
+      transform: scale(1.1);
+    }
+  }
 }
