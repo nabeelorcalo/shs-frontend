@@ -1,11 +1,21 @@
 import React, { useState } from "react";
-import { LocationMore } from "../../../assets/images";
+import { ThreeDots } from "../../../assets/images";
 import { Dropdown, MenuProps } from "antd";
-import "./CustomSettingDropdown.scss";
 import { NavLink } from "react-router-dom";
+import './CustomSettingDropdown.scss'
 
 export const DropDownForSetting = (props: any) => {
-  const { showEditModal, showDeleteModal, link, editData, SetId , id ,SetEditData } = props
+  const { showDeleteModal,
+    link,
+    showEditModal,
+    setShowDeleteModal,
+    state,
+    editData,
+    SetId,
+    id,
+    SetEditData,
+    setShowEditModal
+  } = props
   const [visible, setVisible] = useState(false);
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
@@ -13,40 +23,52 @@ export const DropDownForSetting = (props: any) => {
   const GetIdHandler = (id: number) => {
     SetId(id)
   }
+
   const GetEditHandler = (data: number) => {
     SetEditData(data)
+  }
+
+  const editHandler = () => {
+    GetEditHandler(editData)
+    setShowEditModal({ ...state, showEditModal: !showEditModal }),
+    setVisible(false);
+  }
+
+  const deleteHandler = () => {
+    setShowDeleteModal({ ...state, setShowDeleteModal: !showDeleteModal }),
+      setVisible(false), GetIdHandler(id);
   }
 
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <span
-        onClick={() => {
-          props.setShowEditModal(!showEditModal), setVisible(false);
-        }}
-      >
-        <NavLink
-          onClick={()=>{GetEditHandler(editData)}}
-          className="text-primary-color hover:text-[#454545] font-normal"
-          to={link}
-        >
-          Edit
-        </NavLink>
-      </span>,
+      label: <div>
+        {
+          link ? 
+            <div>
+              <NavLink to={link}
+                className="text-primary-color custom-setting-dropdown-edit-btn font-normal"
+              >
+                Edit
+              </NavLink>
+            </div>
+            :
+            <span onClick={editHandler}
+              className="text-primary-color font-normal border-0">
+              Edit
+            </span>
+        }
+      </div>
     },
     {
       key: '2',
       label: <span
-      className="font-normal"
-        onClick={() => {
-          props.setShowDeleteModal(!showDeleteModal),
-            setVisible(false), GetIdHandler(id);
-        }}
+        className="font-normal custom-setting-dropdown-delete-btn"
+        onClick={deleteHandler}
       >
         Delete
       </span>,
     },
-
   ];
 
   return (
@@ -57,7 +79,7 @@ export const DropDownForSetting = (props: any) => {
       trigger={["click"]}
     >
       <div style={{ cursor: "pointer" }}>
-        <LocationMore width="24px" />
+        <ThreeDots />
       </div>
     </Dropdown>
   );

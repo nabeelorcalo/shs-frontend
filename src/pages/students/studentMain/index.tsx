@@ -202,6 +202,7 @@ const StudentMain = () => {
                   'Last week',
                   'This month',
                   'Last month',
+                  'All'
                 ]}
                 setValue={() => { updateTimePeriod(event) }}
                 showDatePickerOnVal="custom"
@@ -249,7 +250,10 @@ const StudentMain = () => {
             </div>
               :
               <BoxWrapper>
-                <GlobalTable columns={columns}  tableData={newTableData} />
+                <GlobalTable
+                  columns={columns}
+                  tableData={newTableData}
+                />
               </BoxWrapper>
           }
         </Col>

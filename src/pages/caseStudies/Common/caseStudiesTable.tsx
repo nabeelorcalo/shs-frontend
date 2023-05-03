@@ -73,7 +73,7 @@ const CaseStudiesTable = (props: any) => {
         title: 'Action',
         dataIndex: '',
         render: (_: any, data: any) => <CustomDropDownCaseStudies setState={setOpenDropdown}
-          state={openDropdown} data={data.no} openWarningModal={openWarningModal} setOpenWarningModal={setOpenWarningModal} />
+          state={openDropdown} status={data.status} data={data.no} openWarningModal={openWarningModal} setOpenWarningModal={setOpenWarningModal} />
       },
     ]
 

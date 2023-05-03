@@ -1,9 +1,7 @@
-.setting-custom-dropdown {
-    width: 50px;
+
+.custom-setting-dropdown-edit-btn {
+  border: none !important;
+ &:hover {
+    color: #454545
   }
-  
-  // .ant-dropdown {
-  //   min-width: 130px !important;
-  //   left: 1522px !important;
-  // }
-  
+}

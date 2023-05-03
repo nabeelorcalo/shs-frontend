@@ -13,25 +13,25 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "User",
+    title: <th className="text-sm font-medium text-secondary-color">User</th>,
     dataIndex: "user",
     key: "user",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Activity",
+    title: <th className="text-sm font-medium text-secondary-color">Activity</th>,
     dataIndex: "activity",
     key: "activity",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Performed By",
+    title: <th className="text-sm font-medium text-secondary-color">Performed By</th>,
     dataIndex: "performedBy",
     key: "performedBy",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: " Date & Time",
+    title: <th className="text-sm font-medium text-secondary-color"> Date & Time</th>,
     dataIndex: "dateTime",
     key: "dateTime",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,

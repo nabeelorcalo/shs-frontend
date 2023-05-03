@@ -1,72 +1,117 @@
 import React, { useState } from 'react'
-import { Select, Button, Form } from "antd";
-import { GrievancesAvater, IconAngleDown } from '../../../../assets/images';
-const { Option } = Select;
+import { Button, Form } from "antd";
+import { ArrowDownDark, UserAvatar } from '../../../../assets/images';
+import { CommonDatePicker, DropDown } from '../../../../components';
+import DropDownNew from '../../../../components/Dropdown/DropDownNew';
 import './style.scss'
-import { CommonDatePicker } from '../../../../components';
 
 const Filters: React.FC = (props: any) => {
-  let options = [
-    { value: 'jessia', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Jessica Alba</span></div> },
-    { value: 'jean ella', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>jean ella</span></div> },
-    { value: 'Mino Marina', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Mino Marina</span></div> },
-  ];
+  const detailsData = [
+    {
+      userImg: UserAvatar,
+      userName: 'john doe'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'mina marino'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'clark'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'sarah joe'
+    },
+  ]
+  const status = ["Pending", "Approved", "Rejected",]
+  const department = ["Design", "Research", "Management", "Development", "Business"]
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
+  const [selectValue, setSelectValue] = useState(
+    {
+      userImg: '',
+      userName: 'Select',
+      status: "Select",
+      department: "Select",
+      joiningDate: "Select"
+    }
+  );
+  const ResetHandler = () => {
+    setSelectValue({
+      department: "Select",
+      status: "Select",
+      joiningDate: "Select",
+      userImg: '',
+      userName: "Select"
+    });
+  }
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
-  }
-  const renderOption = (option: any) => {
-    return (
-      <Option key={option.value} value={option.value} className="border-none">
-        {option.src}
-      </Option>
-    );
-  }
-  function handleChange(value: any) {
   }
 
   return (
     <div className='uni-interns-filter_main_wrapper'>
       <Form layout="vertical" form={form}>
         <Form.Item name="status" label="Status">
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Pending">Pending</Select.Option>
-            <Select.Option value="Approved">Approved</Select.Option>
-            <Select.Option value="Rejected">Rejected</Select.Option>
-          </Select>
-
+          <DropDown
+            name={selectValue.status}
+            value={selectValue.status}
+            options={status.map((item: any) => { return item })}
+            setValue={(e: string) => setSelectValue({ ...selectValue, status: e })}
+          />
         </Form.Item>
         <Form.Item
           name="department"
           label="Department"
         >
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-            <Select.Option value="Design">Design</Select.Option>
-            <Select.Option value="Research">Research</Select.Option>
-            <Select.Option value="Management">Management</Select.Option>
-            <Select.Option value="Development">Development</Select.Option>
-            <Select.Option value="Business">Business</Select.Option>
-          </Select>
+          <DropDown
+            name={selectValue.department}
+            value={selectValue.department}
+            options={department.map((item: any) => { return item })}
+            setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
+          />
         </Form.Item>
-        <Form.Item  label="Joining Date">
+        <Form.Item label="Joining Date">
           <CommonDatePicker
-            name="Date Picker"
+            name={selectValue.joiningDate}
             onBtnClick={() => { }}
             open={openDataPicker}
             setOpen={setOpenDataPicker}
-            setValue={function noRefCheck() { }}
+            setValue={(e: string) => setSelectValue({ ...selectValue, joiningDate: e })}
           />
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
-          <Select onChange={handleChange} placeholder="Select" suffixIcon={<IconAngleDown />}   >
-            {options.map(renderOption)}
-          </Select>
+          <div className='asignee-wrap w-[100%]'>
+            <DropDownNew
+              placement={'bottomRight'}
+              items={[
+                {
+                  label: <div>{detailsData.map((item: any) => (
+                    <div className="flex items-center gap-3 mb-[20px]"
+                      onClick={() => setSelectValue(item)}
+                    >
+                      <img src={item.userImg}
+                        className='h-[24px] w-[24px] rounded-full object-cover'
+                      />
+                      <p>{item.userName}</p>
+                    </div>))}
+                  </div>,
+                  key: 'users'
+                }]}>
+              <div className="drop-down-with-imgs flex items-center gap-3">
+                <div className="flex items-center gap-3 mr-[40px]">
+                  {selectValue.userImg != '' && <img src={selectValue.userImg} />}
+                  <p>{selectValue.userName}</p>
+                </div>
+                <ArrowDownDark />
+              </div>
+            </DropDownNew>
+          </div>
         </Form.Item>
-
         <div className="company-admin-filter-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn " >
+          <Button key="Cancel" className="footer-cancel-btn" onClick={ResetHandler} >
             Reset
           </Button>
           <Button key="submit" className="footer-submit-btn" onClick={handleSubmit}>
@@ -75,7 +120,6 @@ const Filters: React.FC = (props: any) => {
         </div>
       </Form>
     </div>
-
   )
 }
 

@@ -15,13 +15,10 @@ import {
   UniversityCard,
   AttendanceAndListingGraph,
   PageHeader,
+  BoxWrapper,
 } from "../../../components";
 import "../style.scss";
-import {
-  PerformanceAnalyticsData,
-  topPerformers,
-  universityList,
-} from "./mockData";
+import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
 
@@ -64,9 +61,7 @@ const CompanyAdmin = () => {
       };
     });
 
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
+    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
       .then((res) => res.json())
       .then((body) => {
         setState((prevState) => {
@@ -144,6 +139,7 @@ const CompanyAdmin = () => {
         <Col xs={24} md={24} xl={16} xxl={13}>
           <Row gutter={gutter} className="flex-col">
             <Col>
+              <BoxWrapper>
                 <MonthlyPerfomanceChart
                   XField="city"
                   YField="value"
@@ -151,7 +147,7 @@ const CompanyAdmin = () => {
                   columnStyle={{
                     radius: [20, 20, 0, 0],
                   }}
-                  columnWidthRatio={0.2}
+                  columnWidthRatio={0.4}
                   data={PerformanceAnalyticsData}
                   fontSize="20px"
                   fontWeight="500"
@@ -162,6 +158,7 @@ const CompanyAdmin = () => {
                   textColor="#4E4B66"
                   style={{ height: 235 }}
                 />
+              </BoxWrapper>
             </Col>
 
             <Col xs={24}>
@@ -177,10 +174,7 @@ const CompanyAdmin = () => {
         <Col xs={24} sm={24} xl={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} xl={12} xxl={24}>
-              <TopPerformers
-                topPerformersList={topPerformers}
-                user={Constants?.COMPANY_ADMIN}
-              />
+              <TopPerformers topPerformersList={topPerformers} user={Constants?.COMPANY_ADMIN} />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails
@@ -202,12 +196,7 @@ const CompanyAdmin = () => {
               <Row gutter={gutter} justify="space-between">
                 {universityList?.map(({ logo, title, peopleList }) => (
                   <Col flex={1}>
-                    <UniversityCard
-                      logo={logo}
-                      title={title}
-                      maxCount={6}
-                      list={peopleList}
-                    />
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
                   </Col>
                 ))}
               </Row>
@@ -218,10 +207,7 @@ const CompanyAdmin = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal
-        isShowModal={isShowModal}
-        close={() => setIsShowModal(false)}
-      />
+      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
     </>
   );
 };
