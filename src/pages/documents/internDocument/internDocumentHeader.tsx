@@ -22,10 +22,12 @@ import UserImage from "../../../assets/images/documents/Image.svg";
 import InterCards from "./InternCards/interCards";
 import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
+import { CheckBox } from "../../../components/Checkbox";
 
 
 const InternDocument = () => {
-  const [selectData, setSelectData] = useState("intern Documents");
+  const [selectData, setSelectData] = useState("Intern Documents");
+  const [selectValue, setSelectValue] = useState("")
   const [selectedValue, setSelectedValue] = useState()
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
@@ -44,13 +46,13 @@ const InternDocument = () => {
   return (
     <div className="intern-header-wrapper">
       <div className="flex my-5">
-        <Dropdown className="px-3" menu={{ items }} trigger={['click']}>
+        <Dropdown className="px-3 cursor-pointer" menu={{ items }} trigger={['click']}>
           <Space className="outline-color">
             <img src={Folder} alt="icon" />
             <img src={ArrowDoenIcon} alt="icon" className="pl-3 pr-2" />
           </Space>
         </Dropdown>
-        <p className="ml-[30px] capitalize mt-1 text-primary-color text-base font-medium">
+        <p className="ml-[30px] capitalize mt-1 text-secondary-color text-base font-medium">
           {selectData}
         </p>
       </div>
@@ -59,9 +61,9 @@ const InternDocument = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(e: any) => setSelectedValue(e)} value={selectedValue} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4">
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex flex-wrap max-md:flex-col max-sm:flex-col justify-end gap-4">
           <DropDownNew
-            className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown"
+            className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
             items={[
               {
                 label: (
@@ -100,9 +102,12 @@ const InternDocument = () => {
               <ArrowDownDark />
             </div>
           </DropDownNew>
+
           {selectData === "Shared Documents" && (
             <DropDown
-              setValue={(e: string) => { }}
+            
+              setValue={setSelectValue}
+              value={selectValue}
               options={[
                 "this week",
                 "last week",
@@ -110,17 +115,19 @@ const InternDocument = () => {
                 "last month",
                 "date range",
               ]}
-              requireDatePicker
+              name={"time range"}
+              requireRangePicker
               showDatePickerOnVal={"date range"}
             />
           )}
           <Button
-            className="green-graph-tooltip-bg flex justify-between"
+            className="green-graph-tooltip-bg flex justify-center  lg:w-[143px]"
             onClick={() => setUploadModel(true)}
           >
             <img src={UploadIconBtn} alt="" />
-            <span className="white-color font-semibold text-base">Upload</span>
+            <span className="white-color font-semibold text-base mx-3">Upload</span>
           </Button>
+
           <ToggleButton
             isToggle={documentToggle}
             onTogglerClick={() => setDocumentToggle(!documentToggle)}
@@ -139,20 +146,29 @@ const InternDocument = () => {
         title={"Upload Documents"}
         footer={[
           <Button
-            className="teriary-color tertiory-btn"
+            className="teriary-color font-semibold text-base intern-cancel-btn"
             onClick={() => setUploadModel(false)}
           >
             Cancel
           </Button>,
           <Button
-            className="teriary-bg-color color-white white-color upload-button"
+            className="teriary-bg-color font-semibold text-base upload-button white-color"
             onClick={() => setUploadModel(false)}
           >
             Upload
           </Button>,
         ]}
       >
+
         <UploadDocument />
+        {selectData === "Intern Documents" ?
+          <div className="flex mt-5">
+            <CheckBox />
+            <p className="mx-3 text-teriary-color text-base">Share with intern</p>
+          </div>
+          : ""
+        }
+
       </PopUpModal>
     </div>
   );

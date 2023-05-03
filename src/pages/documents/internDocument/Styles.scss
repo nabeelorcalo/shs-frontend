@@ -12,8 +12,6 @@
   }
 
   .upload-button {
-    background-color: $teriary-bg-color;
-
     &:hover {
       background-color: $teriary-bg-color;
       outline: none !important;
@@ -22,10 +20,15 @@
     }
   }
 
+
   .document-dropdown {
     height: 48px !important;
   }
 }
+.intern-cancel-btn {
+  border: 1px solid $teriary-bg-color !important;
+}
+
 
 .outline-color {
   padding: 5px 0px;

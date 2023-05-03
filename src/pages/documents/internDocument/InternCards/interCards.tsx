@@ -70,12 +70,16 @@ const InterCards = () => {
               <Divider />
               <div className="flex justify-around">
                 <div className="text-sm">
-                  Date
+                  <p className="text-primary-color ">
+                    Date
+                  </p>
                   <p className="text-success-placeholder-color">{data.date}</p>
                 </div>
                 <Divider className="h-[40px]" type={"vertical"} />
                 <div className="text-sm">
-                  File Size
+                  <p className="text-primary-color ">
+                    File Size
+                  </p>
                   <p className="text-success-placeholder-color">
                     {data.fileSize}
                   </p>
