@@ -83,7 +83,7 @@ export const DropDown = (props: DropDownInterface) => {
           open={openRangePicker}
           setOpen={setOpenRangePicker}
           option={option}
-          onChange={(_: any, val: string[]) => { setValue(val.toString().split(',').join(' , ')); console.log(val) }}
+          onChange={(_: any, val: string[]) => { setValue(val.toString().split(',').join(' , ')); }}
         />,
         key: option
       }
