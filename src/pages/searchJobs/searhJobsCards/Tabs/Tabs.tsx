@@ -1,4 +1,4 @@
-import { Col, Row, Tabs, TabsProps, Divider } from "antd";
+import { Col, Row, Tabs, TabsProps } from "antd";
 import {
   TabIcon,
   TabIcon2,
@@ -18,17 +18,19 @@ const SearchJobTabs = () => {
     {
       key: "1",
       label: (
-        <center className="tab-style ">
-          <TabIcon />
-          <p>All</p>
-        </center>
+        <div className="first-tabs  px-6">
+          <center className="tab-style ">
+            <TabIcon />
+            <p>All</p>
+          </center>
+        </div>
       ),
       children: <SerarchTabs />,
     },
     {
       key: "2",
       label: (
-        <div className="px-6 ml-5 first-tabs">
+        <div className="">
           <center className="tab-style">
             <TabIcon2 />
             <p>Design & Development</p>
@@ -43,7 +45,6 @@ const SearchJobTabs = () => {
       label: (
         <center className="tab-style">
           <TabIcon3 />
-
           <p>Marketing & Communication</p>
         </center>
       ),
@@ -120,7 +121,7 @@ const SearchJobTabs = () => {
     <div className="my-7  inetrn-document-tabs">
       <Row>
         <Col xs={24}>
-          <Tabs size="small" items={items} onChange={() => { }} />
+          <Tabs size="small" items={items} onChange={() => { }}  />
         </Col>
       </Row>
     </div>

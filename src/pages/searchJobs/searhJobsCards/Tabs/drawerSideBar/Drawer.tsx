@@ -51,7 +51,7 @@ const DrawerBar = (props: any) => {
           >
             <div className="flex justify-between align-middle ">
               <p className="primary-color font-semibold text-2xl">Filter</p>
-              <CrossIcon onClick={() => setDrawer(false)} />
+              <CrossIcon onClick={() => setDrawer(false)} className="cursor-pointer" />
             </div>
             <div className="py-3">
               <label>Starting Point</label>
@@ -76,9 +76,8 @@ const DrawerBar = (props: any) => {
               {transportData.map((data: any, i: any) => (
                 <div
                   key={i}
-                  className={`transort ${
-                    data.id === selectedTransport ? "transport-focus" : ""
-                  }`}
+                  className={`transort ${data.id === selectedTransport ? "transport-focus" : ""
+                    }`}
                   onClick={() =>
                     setSelectedTransport(selectedTransport ? "" : data.id)
                   }
@@ -110,8 +109,8 @@ const DrawerBar = (props: any) => {
               <InputNumber className="w-full input-number" />
             </div>
             <div className="flex justify-end buttons-wrapper">
-              <Button className="Reset-button mx-3">Reset</Button>
-              <Button className="Apply-button">Apply</Button>
+              <Button className="Reset-button mx-3" onClick={() => setDrawer(false)}>Reset</Button>
+              <Button className="Apply-button" onClick={() => setDrawer(false)}>Apply</Button>
             </div>
           </Drawer>
         </Col>

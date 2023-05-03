@@ -49,10 +49,14 @@
   }
 }
 
-select {
-  width: 30px !important;
+.outline-color {
+  padding: 5px 0px;
+  border-radius: 6px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
 }
-
-option {
-  width: 200px !important;
+.anticon-eye{
+display: none !important;
+&:hover{
+  display: none !important;
+}
 }

@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Dropdown, Space, Image } from "antd";
 import {
   ArrowDownDark,
   CardViewIcon,
   TableViewIcon,
   UploadIconBtn,
   Frame,
+  Folder,
+  ArrowDoenIcon
 } from "../../../assets/images";
 import "./Styles.scss";
 import {
@@ -19,36 +21,43 @@ import { SelectData } from "./internHeader";
 import UserImage from "../../../assets/images/documents/Image.svg";
 import InterCards from "./InternCards/interCards";
 import UploadDocument from "../../../components/UploadDocument";
+import { DownOutlined } from '@ant-design/icons';
 import DocTable from "./DocsTable/docTable";
 
+
 const InternDocument = () => {
-  const [selectData, setSelectData] = useState("Intern Documents");
+  const [selectData, setSelectData] = useState("intern Document");
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
-
+  const items: any = [
+    {
+      label: <p onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
+      key: '0',
+      value: "Intern Documents"
+    },
+    {
+      label: <p onClick={() => setSelectData('Shared Documents')}>Shared Documents</p>,
+      key: '1',
+      value: "Shared Documents"
+    },
+  ];
   return (
     <div className="intern-header-wrapper">
       <div className="flex my-5">
-        <select
-        style={{width:"30px"}}
-          className="select-icon"
-          value={selectData}
-          onChange={(e: any) => setSelectData(e.target.value)}
-        >
-          <option style={{width:"100px"}} value="Intern Documents">Intern Documents</option>
-          <option value="Shared Documents">Shared Documents</option>
-        </select>
-
-
-
-        <p className="ml-3 mt-1 text-primary-  text-base font-medium">
+        <Dropdown menu={{ items }} className="px-3" trigger={['click']}>
+          <Space className="outline-color">
+            <img src={Folder} alt="icon" />
+            <img src={ArrowDoenIcon} alt="icon" className="pl-3 pr-2" />
+          </Space>
+        </Dropdown>
+        <p className="capitalize ml-3 mt-1 text-primary-  text-base font-medium">
           {selectData}
         </p>
       </div>
 
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => {}} />
+          <SearchBar handleChange={() => { }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4">
           <DropDownNew
@@ -93,7 +102,7 @@ const InternDocument = () => {
           </DropDownNew>
           {selectData === "Shared Documents" && (
             <DropDown
-              setValue={(e: string) => {}}
+              setValue={(e: string) => { }}
               options={[
                 "this week",
                 "last week",
