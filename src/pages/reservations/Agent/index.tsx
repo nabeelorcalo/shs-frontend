@@ -134,11 +134,11 @@ const ReservationsAgent = () => {
       <PageHeader title="Reservations" bordered={true} />
 
       <Row gutter={[0, 20]} justify={"space-between"}>
-        <Col xxl={6} xl={6} lg={8} md={9} sm={10} xs={24}>
-          <SearchBar handleChange={() => { }} />
+        <Col xl={6} md={24} sm={24} xs={24}>
+          <SearchBar handleChange={() => {}} />
         </Col>
 
-        <Col xxl={2} xl={3} lg={4} md={5} sm={4} xs={24} className="reservation-right">
+        <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end reservation-right">
           <Dropdown
             menu={{ items: statusItems }}
             trigger={["click"]}

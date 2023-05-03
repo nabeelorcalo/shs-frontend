@@ -105,7 +105,7 @@ const InternDocument = () => {
 
           {selectData === "Shared Documents" && (
             <DropDown
-            
+
               setValue={setSelectValue}
               value={selectValue}
               options={[

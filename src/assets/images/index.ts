@@ -502,6 +502,7 @@ export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.sv
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";
 export { default as Offerimg3 } from "./offers/offerImg3.svg";
+export { default as OfferProperty } from "./offers/offerproperty.svg";
 export { ReactComponent as DocumentIcon } from "./offers/documentIcon.svg";
 export { ReactComponent as DocTabsIcon } from "./offers/DocumentsTabs.svg";
 export { ReactComponent as UserTabsIcon } from "./offers/UserTabs.svg"
@@ -638,3 +639,5 @@ export { default as Frame } from '../../assets/images/documents/frame.svg';
 export { default as Pdf } from '../../assets/images/documents/pdf.svg';
 export { default as ArrowDoenIcon } from '../../assets/images/documents/Vector.svg';
 
+
+export {ReactComponent  as NoData} from '../../assets/images/other-imgs/NoData.svg'

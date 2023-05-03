@@ -10,7 +10,7 @@ interface ICard {
 const Card: FC<ICard> = (props) => {
   const { icon, title, count,iconBg } = props;
   return (
-    <div className="min-w-[220px]">
+    <div>
       <Row align="middle" className="gap-5">
         <div style={{ backgroundColor: iconBg }} className="flex items-center justify-center w-[44px] h-[44px] rounded-lg ">
           {icon}

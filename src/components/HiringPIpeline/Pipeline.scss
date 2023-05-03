@@ -1,26 +1,27 @@
 .pipeline-wrapper {
     display: flex;
+    // flex-wrap: wrap;
     .pipline-content {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        font-size: 12px !important;
+        cursor: pointer;
         color: black;
-        width: 170px;
+        width: 150px;
         height: 40px;
-        margin-left: -33px;
-        clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 25% 50%, 0% 0%);
-
+        -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+        clip-path: inset(10 10 10 10 round 10px);
         &:first-child {
-            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-            border-radius: 5px;
-        }
+            padding: 20px 10px;
+            -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+          }
+          &:last-child {
+            -webkit-clip-path: polygon(20px 50%, 0% 0%, 100%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
+          }
     }
 
-    @media only screen and (max-width:768px) {
-        flex-direction: column;
-        gap: 20px;
+    @media only screen and (max-width:1366px) {
+        flex-wrap: wrap;
+        gap: 10px;
         .pipline-content {
-            clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
             border-radius: 5px;
             margin-left: 0;
         }
