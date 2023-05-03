@@ -20,8 +20,8 @@ const Candidates = () => {
 
   return (
     <>
-      <PageHeader title="Candidates" />
-      <Row gutter={[20, 20]} className="candidate-main">
+      <PageHeader title="Candidates" bordered={true} />
+      <Row gutter={[20, 30]} className="candidate-main">
         <Col  xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(e) => { }} />
         </Col>

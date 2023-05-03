@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Col, Row } from 'antd/es/grid'
 import { Input } from 'antd'
 import HiringPipeline from '../../components/HiringPIpeline/hiringPipeline'
@@ -53,7 +53,7 @@ const HiringProcess = () => {
         </div>
       </div>
 
-      <div className="pipeline mt-10 ml-8">
+      <div className="pipeline mt-10">
         <HiringPipeline hiringList={['applied']} />
       </div>
 

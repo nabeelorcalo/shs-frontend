@@ -22,7 +22,7 @@ import {
 } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps, Row, Col } from 'antd';
 import useCustomHook from "./actionHandler";
-import UploadDocument from "../../../components/UploadDocument";
+// import UploadDocument from "../../../components/UploadDocument";
 import { STATUS_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
 
@@ -295,8 +295,8 @@ const InternsCompanyAdmin = () => {
 
   return (
     <>
-      <PageHeader title="Interns" />
-      <div className="flex flex-col gap-5 intern-main">
+      <PageHeader title="Interns" bordered={true} />
+      {/* <div className="flex flex-col gap-5 intern-main"> */}
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
@@ -434,8 +434,8 @@ const InternsCompanyAdmin = () => {
               <ToggleButton
                 isToggle={listandgrid}
                 onTogglerClick={() => { setListandgrid(!listandgrid) }}
-                FirstIcon={TableViewIcon}
-                LastIcon={CardViewIcon}
+                FirstIcon={CardViewIcon}
+                LastIcon={TableViewIcon}
                 className='w-[88px]'
               />
               <DropDown
@@ -451,43 +451,34 @@ const InternsCompanyAdmin = () => {
               />
             </div>
           </Col>
-        </Row>
+          <Col xs={24}>
+            <p className="font-semibold pb-4">Total Interns: 40</p>
+            {
+              listandgrid ? <BoxWrapper>
+                <GlobalTable columns={columns} tableData={newTableData} />
+                </BoxWrapper> : <div className="flex flex-row flex-wrap max-sm:flex-col">
+                {
+                  newTableData.map((items: any, idx: any) => {
+                    return (
+                      <InternsCard
+                        pupover={<PopOver />}
+                        statusBtn={items.status}
+                        name={items.name}
+                        posted_by={items.posted_by}
+                        title={items.title}
+                        department={items.department}
+                        joining_date={items.joining_date}
+                        date_of_birth={items.date_of_birth}
+                      />
+                    )
+                  })
+                }
+              </div>
 
-        <div className="pt-3">
-          <p className="font-semibold pb-4">Total Interns: 40</p>
-          {
-            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData.map((items: any, idx: any) => {
-                  return (
-                    <InternsCard
-                      pupover={<PopOver />}
-                      statusBtn={items.status}
-                      name={items.name}
-                      posted_by={items.posted_by}
-                      title={items.title}
-                      department={items.department}
-                      joining_date={items.joining_date}
-                      date_of_birth={items.date_of_birth}
-                    />
-                  )
-                })
-              }
-            </div>
-              :
-              <BoxWrapper>
-                <GlobalTable
-                  columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
-                  tableData={newTableData}
-                />
-              </BoxWrapper>
-          }
-        </div>
-      </div>
+            }
+          </Col>
+        </Row>
+      {/* </div> */}
       <PopUpModal
         open={assignManager}
         width={600}
@@ -546,7 +537,7 @@ const InternsCompanyAdmin = () => {
                 <p className="text-md text-teriary-color">Reason</p>
                 <TextArea
                   rows={5}
-                  placeholder="write your reason"
+                  placeholder="Write your reason"
                   disable={false}
                 />
               </div>

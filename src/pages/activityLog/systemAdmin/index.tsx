@@ -151,13 +151,13 @@ const ActivityLog = () => {
         {filterData.map((item: any, index) => {
           return (
             <div key={index}>
-              <div className="mb-2 text-primary-color font-medium text-base">
+              <div className="mb-2 text-primary-color font-medium text-base pl-2 pr-2">
                 {item.title}
               </div>
               <div className="flex flex-wrap mb-6">
                 {item.userRole.map((items: any, index: any) => {
                   return (
-                    <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer">
+                    <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer pl-2 pr-2">
                       {items}
                     </div>
                   );
