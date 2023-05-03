@@ -257,12 +257,14 @@ const InternPerformance = () => {
             type="circle"
             width={100}
           />
-
-          <div className="mt-10">
-            <MonthlyPerfomanceChart
-              heading="Perfomance Analytics"
-              data={monthlyPerformanceData}
-            />
+          <div className="mt-5">
+            <BoxWrapper>
+              <MonthlyPerfomanceChart
+                heading="Perfomance Analytics"
+                data={monthlyPerformanceData}
+                columnWidthRatio={ 0.5}
+              />
+            </BoxWrapper>
           </div>
         </div>
 
