@@ -39,7 +39,7 @@ const index: React.FC = () => {
   const [state, setState] = useState({
     openSidebar: false,
     status: 'Select',
-    isToggle: true,
+    isToggle: false,
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -52,8 +52,10 @@ const index: React.FC = () => {
           Profile
         </NavLink>
       </Menu.Item>
-      <Menu.Item>
-        Chat
+      <Menu.Item >
+        <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
+          Chat
+        </NavLink>
       </Menu.Item>
     </Menu>
   );

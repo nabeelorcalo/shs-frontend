@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { SettingAvater } from "../../../../../assets/images";
-import { BoxWrapper } from "../../../../../components";
+import { BoxWrapper, TimePickerComp } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import dayjs from "dayjs";
-import "./style.scss";
 import {
   Typography,
   Row,
@@ -12,7 +10,6 @@ import {
   Divider,
   Form,
   Radio,
-  TimePicker,
   RadioChangeEvent,
   Button,
   Space,
@@ -24,8 +21,10 @@ import { Breadcrumb } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import dayjs from "dayjs";
+import "./style.scss";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 dayjs.extend(customParseFormat);
 
 const AddShift: React.FC = () => {
@@ -63,26 +62,35 @@ const AddShift: React.FC = () => {
   ];
 
   const deselectArray: any = [];
-  const format = "HH:mm";
-  const [value, setValue] = useState(1);
-  const [openModal, setOpenModal] = useState<any>(false);
-  const [intern, setIntern] = useState<any>();
+  const [state, setState] = useState(
+    {
+      openFromTime: false,
+      openToTime: false,
+      openFromTimeValue: "",
+      openToTimeValue: "",
+      intern: [],
+      openModal: false,
+      internValue: 1,
+    });
 
   const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
+    const radioValue = e.target.value
     if (e.target.value === 2) {
-      setOpenModal(!openModal);
+      setState({
+        ...state, openModal: true, internValue: radioValue
+      })
     }
     else if (e.target.value === 1) {
-      setIntern(null)
+      setState({ ...state, internValue: radioValue, intern: [] })
     }
   };
-  const SelectInternHandler = (data: any) => {
-    console.log(data)
-    setIntern(data)
 
+  const openTimeFromHandler = () => {
+    setState({ ...state, openFromTime: !state.openFromTime })
   }
-
+  const openTimeToHandler = () => {
+    setState({ ...state, openToTime: !state.openToTime })
+  }
   return (
     <div className="leaves-add-policy">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -107,20 +115,40 @@ const AddShift: React.FC = () => {
                 rules={[{ required: true }, { type: "string" }]}
 
               >
-                <Input placeholder="Enter name" />
+                <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
-              <div className="flex flex-col md:flex-row justify-between w-full my-5 shift-time">
-                <div className="flex flex-col justify-between w-full md:pr-2 ">
-                  <label>Time From</label>
-                  <TimePicker
-                    className="h-[45px]"
-                    defaultValue={dayjs("12:08", format)}
-                    format={format}
-                  />
+              <div className="flex flex-col md:flex-row justify-between md:gap-5 w-full shift-time">
+                <div className="flex flex-col justify-between w-full">
+                  <Form.Item
+                    name="timeForm"
+                    required={false}
+                    rules={[{ required: true }, { type: "string" }]}
+                  >
+                    <TimePickerComp
+                      className="input-style"
+                      label={<p className='pb-[6px]'>Time From</p>}
+                      open={state.openFromTime}
+                      setOpen={openTimeFromHandler}
+                      value={state.openFromTimeValue}
+                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                    />
+                  </Form.Item>
                 </div>
-                <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
-                  <label>Time</label>
-                  <TimePicker defaultValue={dayjs('12:08', format)} format={format} />
+                <div className="flex flex-col w-full ">
+                  <Form.Item
+                    name="timeto"
+                    required={false}
+                    rules={[{ required: true }, { type: "string" }]}
+                  >
+                    <TimePickerComp
+                      className="input-style"
+                      label={<p className='pb-[6px]'>Time To</p>}
+                      open={state.openToTime}
+                      setOpen={openTimeToHandler}
+                      value={state.openToTimeValue}
+                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                    />
+                  </Form.Item>
                 </div>
               </div>
               <Form.Item
@@ -128,9 +156,8 @@ const AddShift: React.FC = () => {
                 label="Shift Duration"
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
-
               >
-                <Input placeholder="0" type="number" />
+                <Input placeholder="0" type="number" className="input-style" />
               </Form.Item>
               <Form.Item
                 name="roundOffCap"
@@ -139,7 +166,7 @@ const AddShift: React.FC = () => {
                 rules={[{ required: true }, { type: "string" }]}
 
               >
-                <Input placeholder="00:00:00" type="number" />
+                <Input placeholder="00:00:00" type="number" className="input-style" />
               </Form.Item>
             </Col>
           </Row>
@@ -153,31 +180,31 @@ const AddShift: React.FC = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
-                <Radio value={1}>All interns</Radio>
-                <Radio value={2}>Select Interns</Radio>
-              </Radio.Group>
+              <div className=" flex items-center">
+                <Radio.Group onChange={onChange} value={state.internValue}>
+                  <Radio value={1}>All interns</Radio>
+                  <Radio value={2}>Select Interns</Radio>
+                </Radio.Group>
                 <span >
-                  <AvatarGroup maxCount={6} list={intern} />
+                  <AvatarGroup maxCount={6} list={state.intern} />
                 </span>
               </div>
               <div className="my-5">
                 <Switch />
                 <span className="px-2">Apply to all new hires</span>
               </div>
-
             </Col>
           </Row>
           <Space className="flex justify-end">
             <Button danger size="middle" type="primary">
-              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`}>
+              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`} className="border-0">
                 Cancel
               </NavLink>
             </Button>
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
-            >
+              htmlType="submit">
               Add
             </Button>
           </Space>
@@ -186,10 +213,11 @@ const AddShift: React.FC = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        SelectInternHandler={SelectInternHandler}
-
+        openModal={state.openModal}
+        setOpenModal={setState}
+        state={state}
+        internValue={state.internValue}
+        intern={state.intern}
       />
     </div>
   );

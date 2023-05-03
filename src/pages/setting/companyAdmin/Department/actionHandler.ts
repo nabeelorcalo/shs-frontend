@@ -10,8 +10,8 @@ const useCustomHook = () => {
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
   const limit = 10
 
-  const getSettingDepartment = async (page: any): Promise<any> => {
-    const param = { page: page, limit: limit }
+  const getSettingDepartment = async (page: any, q: any): Promise<any> => {
+    const param = { page: page, limit: limit, q: q }
     const { data } = await api.get(SETTING_DAPARTMENT, param);
     setSettingDepartmentdata(data)
   };
@@ -24,17 +24,10 @@ const useCustomHook = () => {
     const { data } = await api.post(SETTING_DAPARTMENT, body);
   };
 
-  const GetSettingDepartmentById = async (id: number): Promise<any> => {
-    const { data } = await api.get(`${SETTING_DAPARTMENT}/${id}`);
-    console.log('filter ', data)
-    setSettingDepartmentdata(data)
-  };
-
   return {
     getSettingDepartment,
     deleteSettingDepartment,
     postSettingDepartment,
-    GetSettingDepartmentById
   };
 };
 

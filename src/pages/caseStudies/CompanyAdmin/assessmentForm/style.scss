@@ -7,9 +7,10 @@
 }
 
 .company-admin-assessment-form {
-  .ant-divider-horizontal{
+  .ant-divider-horizontal {
     background: $text-error-line-color !important;
   }
+
   .sign-btn {
     color: $text-success-placeholder-color
   }
@@ -28,7 +29,10 @@
   }
 
   .assessment-footer {
-  
+    .active {
+      border: none !important;
+    }
+
     .reject-btn {
       &:hover {
         background: $secondary-bg-color !important;
@@ -63,11 +67,11 @@
       background-color: $white-bg-color;
     }
   }
+
   @media screen and (max-width: 480px) {
     .ant-btn {
       min-width: 75px;
       padding: 0;
-  }
+    }
   }
 }
-

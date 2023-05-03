@@ -13,17 +13,16 @@ import {
   Switch,
 } from "antd";
 import { SettingAvater } from "../../../../../assets/images";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Breadcrumb, CommonDatePicker, BoxWrapper } from "../../../../../components";
+import { NavLink } from "react-router-dom";
+import { Breadcrumb, CommonDatePicker, BoxWrapper, TimePickerComp } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const { Paragraph } = Typography;
-
 const PayrollAddCategory = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "Add Category" },
     { name: "Setting" },
@@ -58,41 +57,40 @@ const PayrollAddCategory = () => {
   ];
 
   const deselectArray: any = [];
+  const [form] = Form.useForm();
+  const [state, setState] = useState(
+    {
+      openFromTime: false,
+      openToTime: false,
+      openFromTimeValue: "",
+      openToTimeValue: "",
+      intern: [],
+      openModal: false,
+      internValue: 1,
+    });
 
-  const [value, setValue] = useState(1);
-  const [openModal, setOpenModal] = useState<any>(false);
-  const [openDatePickerFrom, setOpenDatePickerFrom] = useState(false);
-  const [openDatePickerTo, setOpenDatePickerTo] = useState(false);
-  const [intern, setIntern] = useState<any>();
-  const [formValues, setFormValues] = useState<any>({
-    shiftName: "",
-    formDate: "",
-    toDate: "",
-    addInterns: "",
-    officeLocation: "",
-  });
+  const openTimeFromHandler = () => {
+    setState({ ...state, openFromTime: !state.openFromTime })
+  }
 
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
-  };
+  const openTimeToHandler = () => {
+    setState({ ...state, openToTime: !state.openToTime })
+  }
 
+  const onFinish = (values: any) => {
+    console.log("valies", values)
+  }
   const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
+    const radioValue = e.target.value
     if (e.target.value === 2) {
-      setOpenModal(!openModal);
+      setState({
+        ...state, openModal: true, internValue: radioValue
+      })
     }
     else if (e.target.value === 1) {
-      setIntern(null)
+      setState({ ...state, internValue: radioValue, intern: [] })
     }
-
   };
-
-  const SelectInternHandler = (data: any) => {
-    console.log(data)
-    setIntern(data)
-
-  }
 
   return (
     <div className="payroll-add-category">
@@ -100,7 +98,10 @@ const PayrollAddCategory = () => {
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical">
+        <Form layout="vertical"
+          form={form}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          onFinish={onFinish}>
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -112,31 +113,44 @@ const PayrollAddCategory = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
                 name="shiftName"
-                label="Shift Name"
-                rules={[{ message: "Please Enter your username!" }]}
+                label="Payroll Name"
+                required={false}
+                rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter Name" />
+                <Input placeholder="Enter Name" className="input-style" />
               </Form.Item>
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
                 <div className="flex flex-col justify-between w-full md:pr-2 ">
-                  <label>From</label>
-                  <CommonDatePicker
-                    name="Date Picker"
-                    open={openDatePickerFrom}
-                    onBtnClick={() => { }}
-                    setOpen={setOpenDatePickerFrom}
-                    setValue={function noRefCheck() { }}
-                  />
+                  <Form.Item
+                    name="from"
+                    required={false}
+                    rules={[{ required: true }, { type: "string" }]}
+                  >
+                    <TimePickerComp
+                      className="input-style"
+                      label={<p className='pb-[6px]'>Time From</p>}
+                      open={state.openFromTime}
+                      setOpen={openTimeFromHandler}
+                      value={state.openFromTimeValue}
+                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                    />
+                  </Form.Item>
                 </div>
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
-                  <label>To</label>
-                  <CommonDatePicker
-                    name="Date Picker"
-                    open={openDatePickerTo}
-                    onBtnClick={() => { }}
-                    setOpen={setOpenDatePickerTo}
-                    setValue={function noRefCheck() { }}
-                  />
+                  <Form.Item
+                    name="to"
+                    required={false}
+                    rules={[{ required: true }, { type: "string" }]}
+                  >
+                    <TimePickerComp
+                      className="input-style"
+                      label={<p className='pb-[6px]'>Time To</p>}
+                      open={state.openToTime}
+                      setOpen={openTimeToHandler}
+                      value={state.openToTimeValue}
+                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                    />
+                  </Form.Item>
                 </div>
               </div>
             </Col>
@@ -151,12 +165,13 @@ const PayrollAddCategory = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className=" flex items-center"> <Radio.Group onChange={onChange} value={value}>
-                <Radio value={1}>All interns</Radio>
-                <Radio value={2}>Select Interns</Radio>
-              </Radio.Group>
+            <div className=" flex items-center">
+                <Radio.Group onChange={onChange} value={state.internValue}>
+                  <Radio value={1}>All interns</Radio>
+                  <Radio value={2}>Select Interns</Radio>
+                </Radio.Group>
                 <span >
-                  <AvatarGroup maxCount={6} list={intern} />
+                  <AvatarGroup maxCount={6} list={state.intern} />
                 </span>
               </div>
               <div className="my-5">
@@ -173,7 +188,7 @@ const PayrollAddCategory = () => {
               </NavLink>
             </Button>
             <Button
-
+              htmlType="submit"
               size="middle"
               className="teriary-bg-color white-color add-button"
             >
@@ -185,9 +200,11 @@ const PayrollAddCategory = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        SelectInternHandler={SelectInternHandler}
+        openModal={state.openModal}
+        setOpenModal={setState}
+        state={state}
+        internValue={state.internValue}
+        intern={state.intern}
       />
     </div>
   );
