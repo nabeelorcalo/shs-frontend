@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Button, Dropdown, Space, Image } from "antd";
+import { Row, Col, Button, Dropdown, Space } from "antd";
 import {
   ArrowDownDark,
   CardViewIcon,
@@ -24,13 +24,13 @@ import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
 import { CheckBox } from "../../../components/Checkbox";
 
-
 const InternDocument = () => {
   const [selectData, setSelectData] = useState("Intern Documents");
-  const [selectValue, setSelectValue] = useState("")
-  const [selectedValue, setSelectedValue] = useState()
+  const [selectValue, setSelectValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
+  const [state, setState] = useState({ searchVal: '', dateRange: '' })
   const items: any = [
     {
       label: <p className="text-base font-medium" onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
@@ -56,10 +56,9 @@ const InternDocument = () => {
           {selectData}
         </p>
       </div>
-
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => setSelectedValue(e)} value={selectedValue} />
+          <SearchBar handleChange={(e: any) => setState({ ...state, searchVal: e })} value={state.searchVal} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex flex-wrap max-md:flex-col max-sm:flex-col justify-end gap-4">
           <DropDownNew
@@ -105,9 +104,8 @@ const InternDocument = () => {
 
           {selectData === "Shared Documents" && (
             <DropDown
-
-              setValue={setSelectValue}
-              value={selectValue}
+              setValue={(val: string) => setState({ ...state, dateRange: val })}
+              value={state.dateRange}
               options={[
                 "this week",
                 "last week",
@@ -136,7 +134,6 @@ const InternDocument = () => {
             className="w-[88px]"
           />
         </Col>
-
         <Col xs={24}>{documentToggle ? <DocTable /> : <InterCards />}</Col>
       </Row>
 
@@ -159,7 +156,6 @@ const InternDocument = () => {
           </Button>,
         ]}
       >
-
         <UploadDocument />
         {selectData === "Intern Documents" ?
           <div className="flex mt-5">
@@ -168,7 +164,6 @@ const InternDocument = () => {
           </div>
           : ""
         }
-
       </PopUpModal>
     </div>
   );
