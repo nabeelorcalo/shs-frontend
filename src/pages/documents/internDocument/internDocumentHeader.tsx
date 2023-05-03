@@ -26,8 +26,6 @@ import { CheckBox } from "../../../components/Checkbox";
 
 const InternDocument = () => {
   const [selectData, setSelectData] = useState("Intern Documents");
-  const [selectValue, setSelectValue] = useState("");
-  const [selectedValue, setSelectedValue] = useState("");
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
   const [state, setState] = useState({ searchVal: '', dateRange: '' })
