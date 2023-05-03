@@ -224,7 +224,7 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Action',
       key: 'action',
       render: (_: any, data: any) => (
-        <DropDownNew items={[
+        <DropDownNew placement="bottomRight" items={[
           (data.status === "Declined" && data.status === "Approved") &&
           { label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>View Details</p>, key: 'viewDetail' },
           { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
