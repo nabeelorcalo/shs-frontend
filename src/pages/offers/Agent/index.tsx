@@ -1,3 +1,4 @@
+import "./style.scss";
 import { useState } from "react";
 import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form } from "antd";
@@ -28,7 +29,6 @@ const OffersAgent = () => {
         title: values.select,
         disc: `${values.discount}%off-between ${values.offer} and ${values.qualify} bookings`,
       }
-
     )
     setData(copyCardData)
     setISOpen(false)
@@ -109,6 +109,7 @@ const OffersAgent = () => {
             // onChange={(value) => value}
             />
           </Form.Item>
+
           <div className="flex justify-end gap-4">
             <div>
               <Button
@@ -118,6 +119,7 @@ const OffersAgent = () => {
                 Cancel
               </Button>
             </div>
+
             <div>
               <Button htmlType="submit" className="green-graph-tooltip-bg white-color">
                 Save & Close
@@ -179,6 +181,7 @@ const OffersAgent = () => {
                       <div className="dashboard-primary-color font-semibold text-xl pb-4">
                         {item.title}
                       </div>
+                      
                       <div className="dashboard-primary-color font-normal text-sm pb-4">
                         {item.disc}
                       </div>

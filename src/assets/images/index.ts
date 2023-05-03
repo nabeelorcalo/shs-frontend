@@ -638,3 +638,5 @@ export { default as DoucmentCard1 } from '../../assets/images/documents/Document
 export { default as DocImage } from '../../assets/images/documents/Document Card (1).svg';
 export { default as Frame } from '../../assets/images/documents/frame.svg';
 export { default as Pdf } from '../../assets/images/documents/pdf.svg';
+
+export {ReactComponent  as NoData} from '../../assets/images/other-imgs/NoData.svg'

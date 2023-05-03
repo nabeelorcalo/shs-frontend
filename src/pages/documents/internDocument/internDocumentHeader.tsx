@@ -22,7 +22,11 @@ import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
 
 const InternDocument = () => {
-  const [selectData, setSelectData] = useState("Intern Documents");
+  const [selectData, setSelectData] = useState({
+    document: "Intern Documents",
+    timeFrame: '',
+    uploader: ''
+  });
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
 
@@ -31,24 +35,32 @@ const InternDocument = () => {
       <div className="flex my-5">
         <select
           className="select-icon"
-          value={selectData}
-          onChange={(e: any) => setSelectData(e.target.value)}
+          value={selectData.document}
+          onChange={(e: any) => setSelectData((prevState) => ({
+            ...prevState,
+            document: e.target.value,
+          }))}
         >
           <option value="Intern Documents">Intern Documents</option>
           <option value="Shared Documents">Shared Documents</option>
         </select>
         <p className="ml-3 mt-1 text-primary-color text-base font-medium">
-          {selectData}
+          {selectData.document}
         </p>
       </div>
 
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => {}} />
+          <SearchBar handleChange={() => { }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4">
           <DropDownNew
             className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown"
+            value={selectData.uploader}
+            setValue={(e: any) => setSelectData((prevState) => ({
+              ...prevState,
+              uploader: e,
+            }))}
             items={[
               {
                 label: (
@@ -71,11 +83,11 @@ const InternDocument = () => {
             <div className="flex items-center gap-3 ">
               <div className="user flex items-center gap-3">
                 <img
-                  src={selectData === "Shared Documents" ? Frame : UserImage}
+                  src={selectData.document === "Shared Documents" ? Frame : UserImage}
                   alt="icon"
                 />
                 <div>
-                  {selectData === "Shared Documents" ? (
+                  {selectData.document === "Shared Documents" ? (
                     <p className="text-success-placeholder-color">
                       Uploader (All)
                     </p>
@@ -87,17 +99,22 @@ const InternDocument = () => {
               <ArrowDownDark />
             </div>
           </DropDownNew>
-          {selectData === "Shared Documents" && (
+          {selectData.document === "Shared Documents" && (
             <DropDown
-              setValue={(e: string) => {}}
+              value={selectData.timeFrame}
+              setValue={(e: string) => setSelectData((prevState) => ({
+                ...prevState,
+                timeFrame: e,
+              }))}
               options={[
+                "All",
                 "this week",
                 "last week",
                 "this month",
                 "last month",
                 "date range",
               ]}
-              requireDatePicker
+              requireRangePicker
               showDatePickerOnVal={"date range"}
             />
           )}
