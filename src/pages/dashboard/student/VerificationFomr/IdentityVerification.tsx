@@ -1,19 +1,10 @@
 import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
-// import { BackButton,SHSLogo  } from "../../../../../assets/images";
 import "./verifications.scss";
 
 const IdentityVerification = (props: any) => {
 
-  const { Option } = Select;
   const { currentStep, setCurrentStep } = props;
-  // const prefixSelector = (
-  //   <Form.Item name="prefix" noStyle>
-  //     <Select style={{ width: 70 }}>
-  //       <Option value="86">+86</Option>
-  //       <Option value="87">+87</Option>
-  //     </Select>
-  //   </Form.Item>
-  // );
+
   return (
     <div className="identity">
       <Row gutter={[20, 20]} className="identity-style">
@@ -22,12 +13,11 @@ const IdentityVerification = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex items-center mt-3 mb-3">
                 <div className="mx-auto">
-                  <Typography.Title level={1}>
+                  <Typography className="main-heading-verify">
                     Identity Verification
-                  </Typography.Title>
+                  </Typography>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Verifying your identity makes it easier for employers to
                 shortlist candidates
@@ -90,7 +80,9 @@ const IdentityVerification = (props: any) => {
               <Col xs={24}>
                 <Row gutter={[20, 20]}>
                   <Col xs={24} md={24} lg={12} xl={8}>
-                    <Button className="btn-cancel btn-cancel-verification">
+                    <Button className="btn-cancel btn-cancel-verification"
+                      onClick={() => { setCurrentStep(2) }}
+                    >
                       Skip
                     </Button>
                   </Col>

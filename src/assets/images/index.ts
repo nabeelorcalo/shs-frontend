@@ -502,6 +502,7 @@ export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.sv
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";
 export { default as Offerimg3 } from "./offers/offerImg3.svg";
+export { default as OfferProperty } from "./offers/offerproperty.svg";
 export { ReactComponent as DocumentIcon } from "./offers/documentIcon.svg";
 export { ReactComponent as DocTabsIcon } from "./offers/DocumentsTabs.svg";
 export { ReactComponent as UserTabsIcon } from "./offers/UserTabs.svg"
@@ -606,8 +607,7 @@ export { ReactComponent as SearchIconJob } from './serachJobs/search-normal.svg'
 export { ReactComponent as LocationIconJob } from './serachJobs/location.svg';
 export { ReactComponent as SearchFilter } from './serachJobs/Filter.svg';
 export { ReactComponent as SeachJobArrow } from './serachJobs/Vector.svg';
-export { ReactComponent as TabIcon } from './serachJobs/tab1.svg';
-// export { default as TabIcon1 } from '../../assets/images/documents/tabcase.svg';
+export { ReactComponent as TabIcon } from './serachJobs/Internships1.svg';
 export { ReactComponent as TabIcon2 } from './serachJobs/tab2.svg';
 export { ReactComponent as TabIcon3 } from './serachJobs/tab3.svg';
 export { ReactComponent as TabIcon4 } from './serachJobs/tab4.svg';
@@ -633,6 +633,11 @@ export { default as Page404 } from '../../assets/images/404/404.svg';
 export { default as Folder } from '../../assets/images/documents/folder.svg';
 export { default as UploadIconBtn } from '../../assets/images/documents/document-upload.svg';
 export { default as Dots } from '../../assets/images/documents/dots.svg';
-export { default as DoucmentCard } from '../../assets/images/documents/Document Card.svg';
+export { default as DoucmentCard1 } from '../../assets/images/documents/Document Card.svg';
 export { default as DocImage } from '../../assets/images/documents/Document Card (1).svg';
 export { default as Frame } from '../../assets/images/documents/frame.svg';
+export { default as Pdf } from '../../assets/images/documents/pdf.svg';
+export { default as ArrowDoenIcon } from '../../assets/images/documents/Vector.svg';
+
+
+export {ReactComponent  as NoData} from '../../assets/images/other-imgs/NoData.svg'

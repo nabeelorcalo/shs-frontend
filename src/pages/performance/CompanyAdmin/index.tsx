@@ -7,7 +7,7 @@ import {
   PageHeader,
   TopPerformanceList,
   MonthChanger,
-  BoxWrapper,
+  BoxWrapper
 } from "../../../components";
 import data from "./data";
 import dayjs from "dayjs";
@@ -159,16 +159,19 @@ const CompanyAdminPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-              <MonthlyPerfomanceChart
-                heading="Summary"
-                data={data}
-                XField="department"
-                columnWidthRatio={0.5}
-                children={<MonthChanger
-                  month={month.selectedMonth}
-                  onClick={changeMonth}
-                />}
-              />
+              <BoxWrapper className="attendance-department">
+                <MonthlyPerfomanceChart
+                  heading="Summary"
+                  data={data}
+                  XField="department"
+                  columnWidthRatio={0.5}
+                  height='400px'
+                  children={<MonthChanger
+                    month={month.selectedMonth}
+                    onClick={changeMonth}
+                  />}
+                />
+              </BoxWrapper>
             </Col>
           </Row>
         </Col>

@@ -7,7 +7,8 @@ import {
   ToggleButton,
   FiltersButton,
   DropDown,
-  AttendanceCardDetail
+  AttendanceCardDetail,
+  NoDataFound
 } from "../../components";
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
@@ -42,9 +43,9 @@ const PopOver: any = () => {
   );
 };
 
-const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator",]
-const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"]
-const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months"]
+const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
+const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range", "All"]
+const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
   const navigate = useNavigate()
@@ -108,7 +109,7 @@ const Payroll = () => {
           <Avatar
             src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
           />,
-        name: item.name,
+        name: item.name, 
         // department: item.department,
         joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
         payroll_cycle: `${monthFrom} - ${monthTo}`,
@@ -151,6 +152,7 @@ const Payroll = () => {
       payrollCycle: value
     }))
   }
+
   return (
     <div className="payroll-wrapper-main">
       <PageHeader
@@ -234,24 +236,24 @@ const Payroll = () => {
             </React.Fragment>
           </Drawer>
           <div className="flex gap-4 justify-between">
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={handleToggle}
-            FirstIcon={TableViewIcon}
-            LastIcon={CardViewIcon}
-            className='w-[88px]'
-          />
-          <DropDown
-            options={[
-              'pdf',
-              'excel'
-            ]}
-            requiredDownloadIcon
-            setValue={() => {
-              downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
-            }}
-            value=""
-          />
+            <ToggleButton
+              isToggle={state.isToggle}
+              onTogglerClick={handleToggle}
+              FirstIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
+              className='w-[88px]'
+            />
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
+              }}
+              value=""
+            />
           </div>
         </Col>
         <Col xs={24}>
@@ -262,7 +264,7 @@ const Payroll = () => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
                   return (
-                    <AttendanceCardDetail
+                    payrollData.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
                       key={index}
                       index={1}
                       item={{
@@ -288,138 +290,6 @@ const Payroll = () => {
           }
         </Col>
       </Row>
-      {/* <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={changeHandler}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
-          </div>
-          <div className="flex flex-row gap-4 flex-wrap">
-            <FiltersButton
-              label="Filters"
-              onClick={handleDrawer}
-            />
-            <Drawer
-              closable
-              open={state.showDrawer}
-              onClose={handleDrawer}
-              title="Filters"
-            >
-              <React.Fragment key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Department</p>
-                    <DropDown
-                      name="select"
-                      options={departmentOptions}
-                      setValue={() => { updateDepartment(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.deparment}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Time Frame</p>
-                    <DropDown
-                      name="select"
-                      options={timeframeOptions}
-                      setValue={() => { updateTimeFrame(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.timeFrame}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Payroll Cycle</p>
-                    <DropDown
-                      name="select"
-                      options={payrollCycleOptions}
-                      setValue={() => { updatePayrollCycle(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.payrollCycle}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      type="default"
-                      size="middle"
-                      className="button-default-tertiary"
-                      onClick={() => { }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      type="primary"
-                      size="middle"
-                      className="button-tertiary"
-                      onClick={() => { }}
-                    >
-                      Apply
-                    </Button>
-                  </div>
-                </div>
-              </React.Fragment>
-            </Drawer>
-            <ToggleButton
-              isToggle={state.isToggle}
-              onTogglerClick={handleToggle}
-              // onTogglerClick={() => { setIsToggle(!isToggle) }}
-              FirstIcon={TableViewIcon}
-              LastIcon={CardViewIcon}
-              className='w-[88px]'
-            />
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
-              }}
-              value=""
-            />
-          </div>
-        </div>
-        <div className="pt-3">
-          {
-            state.isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData?.map((items: any, index: number) => {
-                  const monthFrom = dayjs(items.from).format("MMM");
-                  const monthTo = dayjs(items.to).format("MMM");
-                  return (
-                    <AttendanceCardDetail
-                      key={index}
-                      index={1}
-                      item={{
-                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-                        id: 1,
-                        name: items?.name,
-                        profession: 'Data Researcher',
-                      }}
-                      payrollCycle={`${monthFrom} - ${monthTo}`}
-                      menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
-                    />
-                  )
-                })
-              }
-            </div>
-              :
-              <BoxWrapper>
-                <GlobalTable
-                  columns={columns}
-                  tableData={newTableData}
-                />
-              </BoxWrapper>
-          }
-        </div>
-      </div> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { Col, Divider, Row } from 'antd'
+import { Col, Row } from 'antd'
 import { Likeshapethumbicon, } from '../../../assets/images'
 import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
@@ -23,18 +23,15 @@ const Internee = () => {
         title="Self Assessment"
       >
       </PageHeader>
-      <Row className=' items-center' gutter={[20, 20]}>
-        <Col xs={24} md={24} lg={6}>
-          <SearchBar className="SearchBar" handleChange={(e: any) => { console.log(e); }} />
+      <Row className='items-center' gutter={[20, 20]}>
+        <Col xl={6} md={24} sm={24} xs={24}>
+          <SearchBar  handleChange={(e: any) => { console.log(e); }} />
         </Col>
-        <Col xs={24} md={24} lg={18} >
-          <div className='flex items-center lg:justify-end view_history_button_wrapper'>
-            <div className="mr-4">
+        <Col xl={18} md={24} sm={24} xs={24} className='flex max-sm:flex-col justify-end gap-4'>
               <FiltersButton
                 label="Filters"
                 onClick={() => setOpenDrawer(true)}
               />
-            </div>
             <Button
               icon={<Likeshapethumbicon className="mr-1" />}
               label="New Assessment"
@@ -42,7 +39,6 @@ const Internee = () => {
               size="middle"
               className="self_assesment"
             />
-          </div>
         </Col>
         <Col xs={24}>
           <Row gutter={[20, 20]}>

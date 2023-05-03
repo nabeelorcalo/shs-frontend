@@ -80,27 +80,29 @@ const index = () => {
   return (
     <div className='manager-case-studies'>
       <PageHeader title="Case Studies" actions bordered />
-      <Row>
-        <Col></Col>
-        <Col></Col>
-      </Row>
-      <div className='flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row'>
-        <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
+      <Row gutter={[20, 30]}>
+        <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />
-        </div>
-        <div className='flex justify-end gap-2'>
+        </Col>
+        <Col xl={18} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
-            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ") 
-            Notifications({title:"Success", description:"Case-studies list downloaded ",type:'success'})}} 
+            setValue={() => {
+              action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ")
+              Notifications({ title: "Success", description: "Case-studies list downloaded ", type: 'success' })
+            }}
           />
-        </div>
-      </div>
-      <BoxWrapper className='mt-5'>
-        <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
-      </BoxWrapper>
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+          </BoxWrapper>
+        </Col>
+      </Row>
+
+
       <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}

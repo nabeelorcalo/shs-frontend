@@ -1,20 +1,13 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
-import {
-  DropDown,
-  SearchBar,
-  FiltersButton,
-  PageHeader,
-  InternshipProgressCard,
-  BoxWrapper
-} from '../../../components'
+import { DropDown, SearchBar, FiltersButton, PageHeader, InternshipProgressCard, BoxWrapper} from '../../../components'
 import Drawer from '../../../components/Drawer'
 import { Button, Col, Row } from 'antd'
 import '../../../scss/global-color/Global-colors.scss'
 import '../style.scss'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
-import UploadDocument from '../../../components/UploadDocument'
+// import UploadDocument from '../../../components/UploadDocument';
 
 const dummyResponse = {
   "statusCode": 200,
@@ -381,7 +374,8 @@ const InternshipsCompanyAdmin = () => {
                         'Published',
                         'Closed',
                         'Pending',
-                        'Draft'
+                        'Draft',
+                        'All'
                       ]}
                       setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
@@ -397,7 +391,8 @@ const InternshipsCompanyAdmin = () => {
                         'EidinBurg',
                         'Glasgow',
                         'London',
-                        'Virtual'
+                        'Virtual',
+                        'All'
                       ]}
                       setValue={() => { updateLocation(event) }}
                       showDatePickerOnVal="custom"
@@ -414,7 +409,8 @@ const InternshipsCompanyAdmin = () => {
                         'Research analyst',
                         'Accountant',
                         'Administrator',
-                        'HR Cordinator'
+                        'HR Cordinator',
+                        'All'
                       ]}
                       setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"

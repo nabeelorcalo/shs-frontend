@@ -1,14 +1,5 @@
 import { useState } from "react";
-import {
-  Drawer,
-  Slider,
-  InputNumber,
-  Progress,
-  Input,
-  Button,
-  Row,
-  Col,
-} from "antd";
+import { Drawer, Slider, InputNumber, Button, Row, Col } from "antd";
 import {
   CrossIcon,
   Home2,
@@ -20,7 +11,7 @@ import {
 } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
 import "./Styles.scss";
-import { DrawerWidth, DropDown, SearchBar } from "../../../../../components";
+import { DrawerWidth, DropDown } from "../../../../../components";
 
 const transportData = [
   {
@@ -45,7 +36,6 @@ const DrawerBar = (props: any) => {
   const [selectedTransport, setSelectedTransport] = useState("");
   const [workType, setWorkType] = useState("");
   const [selectedWorkType, setSelectedWorkType] = useState([]);
-  const formatter = (value: any) => `${value}%`;
   const mainDrawerWidth = DrawerWidth();
   return (
     <div className="drawer=-wrapper">
@@ -59,9 +49,9 @@ const DrawerBar = (props: any) => {
             onClose={() => setDrawer(false)}
             open={drawer}
           >
-            <div className="flex justify-between align-middle">
+            <div className="flex justify-between align-middle ">
               <p className="primary-color font-semibold text-2xl">Filter</p>
-              <CrossIcon />
+              <CrossIcon onClick={() => setDrawer(false)} className="cursor-pointer" />
             </div>
             <div className="py-3">
               <label>Starting Point</label>
@@ -82,12 +72,12 @@ const DrawerBar = (props: any) => {
             <label className="text-teriary-color font-normal text-base">
               Transport
             </label>
-            <div className="flex justify-around my-3">
-              {transportData.map((data: any) => (
+            <div className="flex justify-around my-3 cursor-pointer">
+              {transportData.map((data: any, i: any) => (
                 <div
-                  className={`transort ${
-                    data.id === selectedTransport ? "transport-focus" : ""
-                  }`}
+                  key={i}
+                  className={`transort ${data.id === selectedTransport ? "transport-focus" : ""
+                    }`}
                   onClick={() =>
                     setSelectedTransport(selectedTransport ? "" : data.id)
                   }
@@ -102,9 +92,9 @@ const DrawerBar = (props: any) => {
             </label>
             <div className="mt-3 mb-5">
               <DropDown
-                name="drop down with checkbox"
+                name="Select"
                 value={workType}
-                options={["All", "On-Site", "Hybrid", "Virtual"]}
+                options={["Paid", "Unpaid", "Part Time", "Full Time"]}
                 setValue={setWorkType}
                 requireCheckbox
                 selectedList={selectedWorkType}
@@ -116,16 +106,11 @@ const DrawerBar = (props: any) => {
               Duration
             </label>
             <div className="my-5">
-              {/* <InputField
-                placeholder={"Enter Months"}
-                className="input-filed my-3"
-                Type={"number"} */}
-              {/* /> */}
-              <InputNumber className="w-full input-number" />
+              <InputNumber placeholder="Enter months" className="w-full input-number" />
             </div>
             <div className="flex justify-end buttons-wrapper">
-              <Button className="Reset-button mx-3">Reset</Button>
-              <Button className="Apply-button">Apply</Button>
+              <Button className="Reset-button mx-3" onClick={() => setDrawer(false)}>Reset</Button>
+              <Button className="Apply-button" onClick={() => setDrawer(false)}>Apply</Button>
             </div>
           </Drawer>
         </Col>

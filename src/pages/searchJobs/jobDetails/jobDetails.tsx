@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Divider } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import { BoxWrapper } from "../../../components";
 import { jobDetailsData, typesDetails } from "./jobDetailsData";
 import "./Styles.scss";
@@ -9,7 +9,7 @@ const JobDetails = (props: any) => {
   const { tags = ["utility bills", "laundry", "meals", "others"] } = props;
   const navigate = useNavigate();
   return (
-    <>
+    <div className="job-details-wrapper">
       <div className="flex">
         <div className="details-heading">
           <p className="font-semibold text-2xl mx-2">Job Details</p>
@@ -22,9 +22,18 @@ const JobDetails = (props: any) => {
         className="mt-2"
       >
         <div className="p-7">
-          <div className="card-wrapper flex justify-between  flex-wrap">
-            {jobDetailsData.map((data: any) => (
-              <div className="flex align-middle">
+          <Row
+            className="card-wrapper flex justify-between  flex-wrap"
+            gutter={[20, 20]}
+          >
+            {jobDetailsData.map((data: any, i: any) => (
+              <Col
+                key={i}
+                md={18}
+                sm={24}
+                xs={24}
+                className="flex align-middle flex-wrap"
+              >
                 <div className="image-logo">
                   <img src={data.img} />
                 </div>
@@ -47,17 +56,17 @@ const JobDetails = (props: any) => {
                     ))}
                   </div>
                 </div>
-              </div>
+              </Col>
             ))}
-            <div className="flex justify-end">
+            <Col className="flex justify-end">
               <Button
-                className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color"
+                className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
                 onClick={() => navigate("/search-jobs")}
               >
                 Apply
               </Button>
-            </div>
-          </div>
+            </Col>
+          </Row>
           <div>
             <p className="text-primary-color text-lg font-semibold my-3">
               Description
@@ -136,8 +145,8 @@ const JobDetails = (props: any) => {
           </div>
 
           <div className="my-7">
-            {typesDetails.map((data: any) => (
-              <div className="flex my-3">
+            {typesDetails.map((data: any, i: any) => (
+              <div className="flex my-3" key={i}>
                 <p className="mx-2 font-medium text-primary-color">
                   {data.heading}:
                 </p>
@@ -147,7 +156,7 @@ const JobDetails = (props: any) => {
           </div>
         </div>
       </BoxWrapper>
-    </>
+    </div>
   );
 };
 

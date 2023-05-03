@@ -92,13 +92,13 @@ const Manager = () => {
               {
                 userLists.map((user) => (
                   <div key={user.id} className='user-list py-[10px]'>
-                    <div className="user p-[10px] flex items-start justify-between gap-3">
+                    <div className="user cursor-pointer flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3 capitalize">
-                        <img src={user.userImg} alt='icon' className='h-[48px] w-[48px]' />
+                        <img src={user.userImg} alt='icon' className='h-[40px] w-[40px]' />
                         <div>
                           <p className='user-name text-base'>{user.userName}</p>
                           <p className='user-designation text-sm'>{user.designation}</p>
-                        </div>
+                        </div>  
                       </div>
                       <span className='last-activity text-xs'>{user.lastActivity}</span>
                     </div>
@@ -111,7 +111,7 @@ const Manager = () => {
         <Col xxl={19} xl={17} lg={14} xs={24} className='h-full'>
           <div className="flex items-center justify-end gap-3 mb-[30px]">
             <DropDown
-              name='this week'
+              name='this week' 
               value={date}
               setValue={setDate}
               options={['this week', 'last week', 'this month', 'last month', 'date range']}

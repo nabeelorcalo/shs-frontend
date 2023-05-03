@@ -11,6 +11,7 @@ import {
   GlobalTable,
   Breadcrumb,
   Notifications,
+  BoxWrapper,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
@@ -273,6 +274,7 @@ const PerformanceHistory = () => {
   ];
 
   const timeFrameOptions = [
+    "Select",
     "This Week",
     "Last Week",
     "This Month",
@@ -281,6 +283,7 @@ const PerformanceHistory = () => {
   ];
 
   const departmentOptions = [
+    "All",
     "Design",
     "Business Analyst",
     "Data Scientist",
@@ -497,7 +500,9 @@ const PerformanceHistory = () => {
           />
         </Col>
         <Col xs={24}>
-          <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+          <BoxWrapper>
+            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+          </BoxWrapper>
         </Col>
       </Row>
       <AppreciationModal

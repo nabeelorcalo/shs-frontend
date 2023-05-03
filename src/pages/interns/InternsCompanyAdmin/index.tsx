@@ -22,7 +22,7 @@ import {
 } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps, Row, Col } from 'antd';
 import useCustomHook from "./actionHandler";
-import UploadDocument from "../../../components/UploadDocument";
+// import UploadDocument from "../../../components/UploadDocument";
 import { STATUS_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
 
@@ -295,8 +295,8 @@ const InternsCompanyAdmin = () => {
 
   return (
     <>
-      <PageHeader title="Interns" />
-      <div className="flex flex-col gap-5 intern-main">
+      <PageHeader title="Interns" bordered={true} />
+      {/* <div className="flex flex-col gap-5 intern-main"> */}
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
@@ -307,7 +307,7 @@ const InternsCompanyAdmin = () => {
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
-          <FiltersButton label="Filters"
+            <FiltersButton label="Filters"
               onClick={() => {
                 setShowDrawer(true);
               }}
@@ -326,7 +326,13 @@ const InternsCompanyAdmin = () => {
                     <p>Manager</p>
                     <DropDown
                       name="Select"
-                      options={["David miller", "Amila Clark", "Maria sanaid", "Mino Marino"]}
+                      options={[
+                        "David miller",
+                        "Amila Clark",
+                        "Maria sanaid",
+                        "Mino Marino",
+                        "All"
+                      ]}
                       setValue={() => { updateManager(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
@@ -341,6 +347,7 @@ const InternsCompanyAdmin = () => {
                         "Employed",
                         "Completed",
                         "Terminated",
+                        "All"
                       ]}
                       setValue={() => { updateStatus(event) }}
                       showDatePickerOnVal="custom"
@@ -358,6 +365,7 @@ const InternsCompanyAdmin = () => {
                         "Accountant",
                         "Administrator",
                         "HR Cordinator",
+                        "All"
                       ]}
                       setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
@@ -375,6 +383,7 @@ const InternsCompanyAdmin = () => {
                         "Abacus",
                         "Orcalo Holdings",
                         "Coding Hub",
+                        "All"
                       ]}
                       setValue={() => { updateUniversity(event) }}
                       showDatePickerOnVal="custom"
@@ -392,6 +401,7 @@ const InternsCompanyAdmin = () => {
                         "Abacus",
                         "Orcalo Holdings",
                         "Coding Hub",
+                        "All"
                       ]}
                       setValue={() => { updateDateOfJoining(event) }}
                       showDatePickerOnVal="custom"
@@ -421,63 +431,54 @@ const InternsCompanyAdmin = () => {
               </React.Fragment>
             </Drawer>
             <div className="flex justify-between gap-4">
-            <ToggleButton
-              isToggle={listandgrid}
-              onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
-              className='w-[88px]'
-            />
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-              }}
-              value=""
-            />
+              <ToggleButton
+                isToggle={listandgrid}
+                onTogglerClick={() => { setListandgrid(!listandgrid) }}
+                FirstIcon={CardViewIcon}
+                LastIcon={TableViewIcon}
+                className='w-[88px]'
+              />
+              <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+                }}
+                value=""
+              />
             </div>
           </Col>
+          <Col xs={24}>
+            <p className="font-semibold pb-4">Total Interns: 40</p>
+            {
+              listandgrid ? <BoxWrapper>
+                <GlobalTable columns={columns} tableData={newTableData} />
+                </BoxWrapper> : <div className="flex flex-row flex-wrap max-sm:flex-col">
+                {
+                  newTableData.map((items: any, idx: any) => {
+                    return (
+                      <InternsCard
+                        pupover={<PopOver />}
+                        statusBtn={items.status}
+                        name={items.name}
+                        posted_by={items.posted_by}
+                        title={items.title}
+                        department={items.department}
+                        joining_date={items.joining_date}
+                        date_of_birth={items.date_of_birth}
+                      />
+                    )
+                  })
+                }
+              </div>
+
+            }
+          </Col>
         </Row>
-       
-        <div className="pt-3">
-          <p className="font-semibold pb-4">Total Interns: 40</p>
-          {
-            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData.map((items: any, idx: any) => {
-                  return (
-                    <InternsCard
-                      pupover={<PopOver />}
-                      statusBtn={items.status}
-                      name={items.name}
-                      posted_by={items.posted_by}
-                      title={items.title}
-                      department={items.department}
-                      joining_date={items.joining_date}
-                      date_of_birth={items.date_of_birth}
-                    />
-                  )
-                })
-              }
-            </div>
-              :
-              <BoxWrapper>
-                <GlobalTable
-                  columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
-                  tableData={newTableData}
-                />
-              </BoxWrapper>
-          }
-        </div>
-      </div>
+      {/* </div> */}
       <PopUpModal
         open={assignManager}
         width={600}
@@ -493,15 +494,15 @@ const InternsCompanyAdmin = () => {
                 "Jenate Samson",
                 "Alen Juliet",
               ]}
-              setValue={() => { }}
+              setValue={() => { updateManager(event) }}
               showDatePickerOnVal="custom"
               startIcon=""
-              value=""
+              value={state.manager}
             />
           </div>
         }
         footer={
-          <div className="flex flex gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="middle"
@@ -536,7 +537,7 @@ const InternsCompanyAdmin = () => {
                 <p className="text-md text-teriary-color">Reason</p>
                 <TextArea
                   rows={5}
-                  placeholder="write your reason"
+                  placeholder="Write your reason"
                   disable={false}
                 />
               </div>
@@ -544,7 +545,7 @@ const InternsCompanyAdmin = () => {
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"
@@ -573,11 +574,11 @@ const InternsCompanyAdmin = () => {
               <div><SuccessIcon /></div>
               <div><h2>Success</h2></div>
             </div>
-            <p>Are you sure you want to terminate this intern?</p>
+            <p>Are you sure you want to mark the internship as complete for this intern?</p>
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"
@@ -597,7 +598,6 @@ const InternsCompanyAdmin = () => {
           </div>
         }
       />
-      <UploadDocument />
     </>
   );
 };

@@ -60,7 +60,7 @@ const ContractsStudent = () => {
 
   return (
     <div className="contract-student">
-      <Row gutter={[10, 10]}>
+      <Row gutter={[20,20]}>
         <Col>
           <div className="contract-student-title text-2xl font-semibold">
             Contracts
@@ -68,13 +68,13 @@ const ContractsStudent = () => {
         </Col>
         <Divider />
 
-        <Col className="mb-6" xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
+        <Col  xl={6} lg={12} md={12} sm={24} xs={24}>
           <SearchBar handleChange={handleChange} />
         </Col>
 
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+        <Col  xs={24}>
           <Row gutter={[20, 40]}>
-            <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
+            <Col  xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="contract-status">
                 <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
@@ -93,7 +93,7 @@ const ContractsStudent = () => {
               })}
             </Col>
 
-            <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
+            <Col  xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="contract-status">
                 <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
@@ -110,7 +110,7 @@ const ContractsStudent = () => {
               })}
             </Col>
 
-            <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
+            <Col  xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="contract-status">
                 <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
