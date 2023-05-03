@@ -1,4 +1,4 @@
-import { Rose } from '@ant-design/plots';
+import { Rose, Pie } from '@ant-design/plots';
 import { BoxWrapper } from '../../../components';
 
 interface Props {
@@ -26,7 +26,7 @@ const LeaveChart = (props: Props) => {
             value: 15,
         },
     ];
-    const config = {
+    const config: any = {
         data,
         xField: 'type',
         yField: 'value',
@@ -34,16 +34,15 @@ const LeaveChart = (props: Props) => {
         radius: 0.9,
         label: {
             offset: -15,
-            style: {
-                fill: '',
-                opacity: 0.6,
-                fontSize: 24
-            },
+            formatter: (v: any) => v.value,
+        },
+        legend: {
+            position: 'left',
         },
     };
     return <BoxWrapper>
         {heading && <p className='font-medium text-xl text-[#4E4B66]'>{heading}</p>}
-        <Rose {...config} limitInPlot height={222} autoFit />
+        <Rose {...config} height={220}/>
     </BoxWrapper>;
 };
 

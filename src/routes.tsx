@@ -99,6 +99,8 @@ const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const ManagerCaseStudiesAssessment = Loadable(
   lazy(() => import("./pages/caseStudies/Manager/assessmentForm"))
 );
+const ViewDetailsCaseStudies = Loadable(
+  lazy(() => import("./pages/caseStudies/Common/viewDetails")))
 const CompanyAdminCaseStudiesAssessment = Loadable(
   lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm"))
 );
@@ -536,6 +538,11 @@ const managerRoutes = [
         element: <ManagerCaseStudiesAssessment />,
       },
       {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        element: <ViewDetailsCaseStudies />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
@@ -546,8 +553,8 @@ const managerRoutes = [
         element: <ManagerAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <ManagerGrievancesDetails />,
       },
       {
@@ -859,8 +866,8 @@ const companyAdminRoutes = [
         element: <CompanyAdminAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <CompanyAdminGrievancesDetails />,
       },
       {
@@ -877,6 +884,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
         path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
         element: <CompanyAdminCaseStudiesAssessment />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        element: <ViewDetailsCaseStudies />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
@@ -1250,8 +1262,8 @@ const internRoutes = [
         element: <InternAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <InternGrievancesDetails />,
       },
       {

@@ -1,37 +1,58 @@
 @import '../../../../../../scss/colors';
-.offer-letter-new-template{
 
-    .ant-form-item .ant-form-item-control-input-content {
+.offer-letter-new-template {
 
-      .ant-input {
-        background: $text-input-bg-color;
-        border:2px solid $white-bg-color ;
-  
-        &:hover {
-          background: $white-bg-color;
-        }
-      }
+  .input-style {
+    background: $text-input-bg-color !important;
+    border-color: $white-bg-color;
+    border: 1px solid transparent;
+    opacity: 1;
+
+    &:hover {
+      border: 1px solid $input-hover-color !important;
+      background: $white-bg-color !important;
     }
-    .text-editor{
-      border: 2px solid $white-bg-color;
-      &:hover{
-        background-color: $white-bg-color;
-        border: 2px solid $input-hover-color;
-      }
+
+    &:focus {
+      box-shadow: none;
+      border: 1px solid $input-hover-color !important;
     }
-    .ql-container {
-        min-height: 10rem;
-        height: 100%;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        border-radius: 0px 0px 8px 8px ;
-        border: none;
-    
-      }
-      .ql-toolbar.ql-snow{
-        border-radius: 8px 8px 0px 0px;
-        border: none;
-      }
-     
+  }
+
+  .text-editor {
+    border: 2px solid $white-bg-color;
+
+    &:hover {
+      background-color: $white-bg-color;
+      border: 2px solid $input-hover-color;
+    }
+  }
+
+  .ql-container {
+    min-height: 10rem;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px 0px 8px 8px;
+    border: none;
+  }
+
+  .ql-toolbar.ql-snow {
+    border-radius: 8px 8px 0px 0px;
+    border: none;
+  }
+
+  .add-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
+    &:hover {
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
+    }
+  }
 }

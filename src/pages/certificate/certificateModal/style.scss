@@ -37,7 +37,7 @@
       .select-type-radio {
         color: $text-teriary-label-color;
 
-        &.active {
+        &.active-type {
           color: $text-primary-title-color;
         }
       }
@@ -61,7 +61,7 @@
         }
       }
 
-      &.active {
+      &.active-desc {
         pointer-events: initial;
 
         .label {

@@ -10,8 +10,8 @@ const useCustomHook = () => {
   const [settingLocationdata, setSettingLocationdata] = useRecoilState(settingLocationState);
   const limit = 10
 
-  const getSettingLocation = async (page: any): Promise<any> => {
-    const param = { page: page, limit: limit }
+  const getSettingLocation = async (page: any, q:any): Promise<any> => {
+    const param = { page: page, limit: limit , q: q }
     const { data } = await api.get(SETTING_LOCATION, param);
     setSettingLocationdata(data)
   };

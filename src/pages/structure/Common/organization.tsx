@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { Avatar} from "antd";
+import { Avatar } from "antd";
 import { UpOutlined } from "@ant-design/icons/lib/icons";
 import "../style.scss";
 import {
@@ -9,7 +9,7 @@ import {
   StructureCompanyAdminProfile2user,
 } from "../../../assets/images";
 
-function Organization ({ org, onCollapse, collapsed }: any) {
+function Organization({ org, onCollapse, collapsed }: any) {
   const [iconChange, setIconChange] = useState<boolean>(true);
 
   const [hideFooterButton, setHideFooterButton] = useState<any>(
@@ -24,7 +24,7 @@ function Organization ({ org, onCollapse, collapsed }: any) {
             className="borderLeft absolute w-[80px] lg:w-[115px] "
             style={{ border: `1px solid ${org.color}` }}
           ></div>
-          <div className="avater-content absolute left-[35%] lg:left-[40%] ">
+          <div className="avater-content absolute left-[35%] lg:left-[39%] ">
             <Avatar
               className=""
               size={48}
@@ -36,31 +36,31 @@ function Organization ({ org, onCollapse, collapsed }: any) {
               {org.tradingName}
             </div>
             <span className="my-5 text-sm font-normal">
-                {org.title}
-                </span>
+              {org.title}
+            </span>
             {hideFooterButton && (
-           <div className="w-[100px]  left-[18%] lg:left-[25%] lg:h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
-           <span>
-             <StructureCompanyAdminProfile2user />
-           </span>
-           <span className="font-medium text-sm mx-2 mt-0.5">
-               {`${_.size(
-             org.organizationChildRelationship
-           )}`}
-           </span>
-           <span
-             onClick={() => {
-               setIconChange(!iconChange), onCollapse();
-             }}
-             className="cursor-pointer"
-           >
-             {iconChange ? (
-               <StructureCompanyAdminDownward />
-             ) : (
-               <UpOutlined style={{ fontSize: "10px" }} />
-             )}
-           </span>
-         </div>
+              <div className="w-[100px]  left-[18%] lg:left-[25%] lg:h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
+                <span>
+                  <StructureCompanyAdminProfile2user />
+                </span>
+                <span className="font-medium text-sm mx-2 mt-0.5">
+                  {`${_.size(
+                    org.organizationChildRelationship
+                  )}`}
+                </span>
+                <span
+                  onClick={() => {
+                    setIconChange(!iconChange), onCollapse();
+                  }}
+                  className="cursor-pointer"
+                >
+                  {iconChange ? (
+                    <StructureCompanyAdminDownward />
+                  ) : (
+                    <UpOutlined style={{ fontSize: "10px" }} />
+                  )}
+                </span>
+              </div>
             )}
           </div>
         </div>

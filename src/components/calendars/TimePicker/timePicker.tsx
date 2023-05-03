@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { ClockDarkIcon } from '../../../assets/images';
 import './style.scss';
 
-const TimePickerComp = (props: any) => {
+export const TimePickerComp = (props: any) => {
   const { label, open, setOpen, value = dayjs('12:08', 'HH:mm'), setValue, popupclassName } = props;
 
   const format = 'HH:mm';

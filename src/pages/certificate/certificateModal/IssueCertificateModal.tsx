@@ -80,12 +80,12 @@ const IssueCertificate = (props: Props) => {
           <Space direction='vertical'>
             <Radio
               value={'appreciation'}
-              className={`select-type-radio ${type === 'appreciation' && 'active'}`}>
+              className={`select-type-radio ${type === 'appreciation' && 'active-type'}`}>
               Certificate of Appreciation
             </Radio>
             <Radio
               value={'completion'}
-              className={`select-type-radio ${type === 'completion' && 'active'}`}>
+              className={`select-type-radio ${type === 'completion' && 'active-type'}`}>
               Certificate of Completion
             </Radio>
           </Space>
@@ -111,7 +111,7 @@ const IssueCertificate = (props: Props) => {
         </Col>
       </Row>
 
-      <div className={`print-on-certificate mb-[30px] ${name && type ? 'active' : 'disabled'}`}>
+      <div className={`print-on-certificate mb-[30px] ${name && type ? 'active-desc' : 'disabled'}`}>
         <label className='label block mb-[10px]'>Print on Certificate</label>
         <textarea
           rows={5}
