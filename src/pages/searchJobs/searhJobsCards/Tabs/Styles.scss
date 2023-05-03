@@ -1,6 +1,7 @@
 @import "../../../../scss/colors";
 
 .inetrn-document-tabs {
+  border-top: 1px solid rgba(228, 229, 239, 1);
   .ant-tabs-tab-active {
     svg path {
       fill: #363565 !important;
