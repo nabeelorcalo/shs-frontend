@@ -21,17 +21,17 @@ import { SelectData } from "./internHeader";
 import UserImage from "../../../assets/images/documents/Image.svg";
 import InterCards from "./InternCards/interCards";
 import UploadDocument from "../../../components/UploadDocument";
-import { DownOutlined } from '@ant-design/icons';
 import DocTable from "./DocsTable/docTable";
 
 
 const InternDocument = () => {
-  const [selectData, setSelectData] = useState("intern Document");
+  const [selectData, setSelectData] = useState("intern Documents");
+  const [selectedValue, setSelectedValue] = useState()
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
   const items: any = [
     {
-      label: <p onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
+      label: <p className="text-base font-medium" onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
       key: '0',
       value: "Intern Documents"
     },
@@ -44,20 +44,20 @@ const InternDocument = () => {
   return (
     <div className="intern-header-wrapper">
       <div className="flex my-5">
-        <Dropdown menu={{ items }} className="px-3" trigger={['click']}>
+        <Dropdown className="px-3" menu={{ items }} trigger={['click']}>
           <Space className="outline-color">
             <img src={Folder} alt="icon" />
             <img src={ArrowDoenIcon} alt="icon" className="pl-3 pr-2" />
           </Space>
         </Dropdown>
-        <p className="capitalize ml-3 mt-1 text-primary-  text-base font-medium">
+        <p className="ml-[30px] capitalize mt-1 text-primary-color text-base font-medium">
           {selectData}
         </p>
       </div>
 
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => { }} />
+          <SearchBar handleChange={(e: any) => setSelectedValue(e)} value={selectedValue} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4">
           <DropDownNew
@@ -130,7 +130,7 @@ const InternDocument = () => {
           />
         </Col>
 
-        <Col xs={24}>{documentToggle ? <InterCards /> : <DocTable />}</Col>
+        <Col xs={24}>{documentToggle ? <DocTable /> : <InterCards />}</Col>
       </Row>
 
       <PopUpModal

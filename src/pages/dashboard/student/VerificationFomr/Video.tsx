@@ -12,6 +12,7 @@ const Video = (props: any) => {
     }
     return e?.fileList;
   };
+  
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
@@ -20,13 +21,12 @@ const Video = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton onClick={() => { setCurrentStep(6) }} />
                 </div>
                 <div className="mx-auto">
-                  <Typography.Title level={1}>Video</Typography.Title>
+                  <Typography className="main-heading-verify">Video</Typography>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Create your video interview to get hired
               </Typography>
@@ -46,7 +46,6 @@ const Video = (props: any) => {
                 </li>
               </ul>
             </div>
-
             <div className="sign-up-form-wrapper">
               <Form.Item
                 name="upload"
@@ -54,20 +53,22 @@ const Video = (props: any) => {
                 getValueFromEvent={normFile}
                 className="flex justify-center mt-10"
               >
- 
                 <Upload name="logo" action="/upload.do" listType="picture">
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
-                       <Round/>
+                        <Round className="absolute left-[13px] top-[14px]" />
                       </div>
                     </div>
                   </div>
                 </Upload>
               </Form.Item>
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xs={24} md={24} lg={12} xl={8}>
-                  <Button className="btn-cancel btn-cancel-verification"  >
+                  <Button className="btn-cancel btn-cancel-verification"
+                    onClick={() => {
+                      navigate('/')
+                    }} >
                     Skip
                   </Button>
                 </Col>

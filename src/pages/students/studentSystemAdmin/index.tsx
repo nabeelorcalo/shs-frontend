@@ -282,7 +282,7 @@ const StudentSystemAdmin = () => {
   }
   return (
     <>
-      <PageHeader title="Applications" />
+      <PageHeader title="Students" />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
@@ -327,7 +327,8 @@ const StudentSystemAdmin = () => {
                       name="Select"
                       options={[
                         "Hired",
-                        "Not hired"
+                        "Not hired",
+                        "All"
                       ]}
                       setValue={() => { updateTimeFrame(event) }}
                       showDatePickerOnVal="custom"
@@ -342,6 +343,7 @@ const StudentSystemAdmin = () => {
                       options={[
                         "Active",
                         "In-Active",
+                        "All"
                       ]}
                       setValue={() => { updateNatureOfWork(event) }}
                       showDatePickerOnVal="custom"
@@ -361,6 +363,7 @@ const StudentSystemAdmin = () => {
                         "Liverpool",
                         "Bristol",
                         "Leads",
+                        "All"
                       ]}
                       setValue={() => { updateTypeOfWork(event) }}
                       showDatePickerOnVal="custom"

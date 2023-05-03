@@ -1,11 +1,19 @@
 @import '../../../scss/colors';
-.uni-report-filter_main_wrapper{
-  .report-filter-footer{
+
+.uni-report-filter_main_wrapper {
+  .drop-down-wrapper {
+    background: $white-bg-color;
+    color: #a0a3bd;
+    border: 2px solid $input-hover-color ;
+  }
+
+  .report-filter-footer {
     .footer-cancel-btn {
       border: 1px solid $teriary-bg-color !important;
-      color: $teriary-bg-color !important ;
+      color: $teriary-bg-color !important;
       padding: 0px 20px;
     }
+
     .footer-submit-btn {
       background: $teriary-bg-color;
       border: 1px solid $teriary-bg-color;
@@ -13,6 +21,4 @@
       padding: 0px 20px;
     }
   }
-
-
 }

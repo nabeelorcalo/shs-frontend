@@ -82,19 +82,18 @@ const ReservationsAgent = () => {
       render: (_, row, index) => {
         return (
           <div
-            className={`shs-status-badge ${
-              row.status === "rejected"
-                ? "rejected"
-                : row.status === "pending"
+            className={`shs-status-badge ${row.status === "rejected"
+              ? "rejected"
+              : row.status === "pending"
                 ? "pending"
                 : "success"
-            }`}
+              }`}
           >
             {row.status === "rejected"
               ? "Rejected"
               : row.status === "pending"
-              ? "Pending"
-              : "Reserved"}
+                ? "Pending"
+                : "Reserved"}
           </div>
         );
       },
@@ -128,14 +127,15 @@ const ReservationsAgent = () => {
       label: "Rejected",
     },
   ];
+
   return (
     <div className="reservations">
-      <BookingModal open={isOpen} setOpen={setISOpen}/>
+      <BookingModal open={isOpen} setOpen={setISOpen} />
       <PageHeader title="Reservations" bordered={true} />
 
       <Row gutter={[0, 20]} justify={"space-between"}>
         <Col xxl={6} xl={6} lg={8} md={9} sm={10} xs={24}>
-          <SearchBar handleChange={() => {}} />
+          <SearchBar handleChange={() => { }} />
         </Col>
 
         <Col xxl={2} xl={3} lg={4} md={5} sm={4} xs={24} className="reservation-right">

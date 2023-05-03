@@ -1,4 +1,4 @@
-import { Col, Row, Tabs, TabsProps } from "antd";
+import { Col, Row, Tabs, TabsProps, Divider } from "antd";
 import {
   TabIcon,
   TabIcon2,
