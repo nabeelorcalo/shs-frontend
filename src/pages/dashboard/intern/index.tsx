@@ -15,7 +15,6 @@ import { Terrible, Sad, Neutral, Happy, Awesome } from "../../../assets/images";
 import CustomHook from "../actionHandler";
 import "../style.scss";
 import { gutter } from "..";
-
 const Intern = () => {
   const action = CustomHook;
 
@@ -69,7 +68,6 @@ const Intern = () => {
       comp: Awesome,
     },
   ];
-
   // move this dummy api to action handler
   const loadMoreData = () => {
     setState((prevState) => {
@@ -79,9 +77,7 @@ const Intern = () => {
       };
     });
 
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
+    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
       .then((res) => res.json())
       .then((body) => {
         setState((prevState) => {
@@ -94,7 +90,6 @@ const Intern = () => {
       })
       .catch(() => {});
   };
-
   useEffect(() => {
     loadMoreData();
   }, []);
@@ -117,13 +112,9 @@ const Intern = () => {
               <TimeTracking />
             </Col>
             <Col xs={24} xxl={12} className="xs:order-3 2xl:order-2">
-              <EmojiMoodRating
-                title="How are you feeling today?"
-                data={emojiData}
-                activeIconIndex={-1}
-              />
+              <EmojiMoodRating title="How are you feeling today?" data={emojiData} activeIconIndex={-1} />
             </Col>
-            <Col xs={24} xl={12} xxl={5} className="xs:order-2 2xl:order-3" >
+            <Col xs={24} xl={12} xxl={5} className="xs:order-2 2xl:order-3">
               <TodayWeather />
             </Col>
           </Row>
@@ -131,44 +122,27 @@ const Intern = () => {
         <Col xs={24}>
           <Row gutter={gutter}>
             <Col xs={24} xxl={7}>
-              <AnnouncementList
-                data={state.list}
-                loading={state.loading}
-                loadMoreData={loadMoreData}
-                height={460.74}
-              />
+              <AnnouncementList data={state.list} loading={state.loading} loadMoreData={loadMoreData} height={460.74} />
             </Col>
             <Col xs={24} xxl={12}>
               <Row gutter={gutter}>
                 <Col xs={24} xxl={24}>
                   <Row gutter={gutter}>
                     <Col flex={1} className="">
-                      <AttendanceDetail
-                        label="Avg Clock In"
-                        time="08:04am"
-                        colorClass="clock-in"
-                      />
+                      <AttendanceDetail label="Avg Clock In" time="08:04am" colorClass="clock-in" />
                     </Col>
 
                     <Col flex={1} className="">
-                      <AttendanceDetail
-                        label="Avg Clock Out"
-                        time="03:04pm"
-                        colorClass="clock-out"
-                      />
+                      <AttendanceDetail label="Avg Clock Out" time="03:04pm" colorClass="clock-out" />
                     </Col>
 
                     <Col flex={1}>
-                      <AttendanceDetail
-                        label="Avg Hours"
-                        time="05:48hrs"
-                        colorClass="avg-hours"
-                      />
+                      <AttendanceDetail label="Avg Hours" time="05:48hrs" colorClass="avg-hours" />
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} xxl={24}>
-                  <WorkingStatisticesChart heading="Working Statistices" styling={{height:268}} />
+                  <WorkingStatisticesChart heading="Working Statistices" styling={{ height: 268 }} />
                 </Col>
               </Row>
             </Col>
@@ -178,13 +152,7 @@ const Intern = () => {
                   <BirthdayWishes wishList={state.birthdayWishlist} user="Intern" />
                 </Col>
                 <Col xs={24} xl={12} xxl={24}>
-                  <LeaveDetails
-                    sickLeaves="02"
-                    casualLeaves="03"
-                    medicalLeaves="04"
-                    workFromHome="01"
-                    user="Intern"
-                  />
+                  <LeaveDetails sickLeaves="02" casualLeaves="03" medicalLeaves="04" workFromHome="01" user="Intern" />
                 </Col>
               </Row>
             </Col>
