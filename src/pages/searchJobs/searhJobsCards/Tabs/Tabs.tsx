@@ -28,7 +28,7 @@ const SearchJobTabs = () => {
     {
       key: "2",
       label: (
-        <div className="px-6 ml-5 first-tabs">
+        <div className="">
           <center className="tab-style">
             <TabIcon2 />
             <p className="text-sm">Design & Development</p>
@@ -120,7 +120,7 @@ const SearchJobTabs = () => {
     <div className="my-7 inetrn-document-tabs">
       <Row>
         <Col xs={24}>
-          <Tabs size="small" items={items} onChange={() => { }} />
+          <Tabs size="small" items={items} onChange={() => { }}  />
         </Col>
       </Row>
     </div>
