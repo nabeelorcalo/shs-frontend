@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Divider, Menu, Row } from 'antd'
+import { Col,Menu, Row } from 'antd'
 import { CardViewIcon, TableViewIcon } from '../../../../assets/images';
 import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
 import Filters from './filter';
@@ -104,9 +104,6 @@ const index: React.FC = () => {
           }
         </Col>
       </Row>
-
-
-
       <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}
