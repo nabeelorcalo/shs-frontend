@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Dropdown, Space } from "antd";
 import {
   ArrowDownDark,
   CardViewIcon,
   TableViewIcon,
   UploadIconBtn,
   Frame,
+  Folder,
+  ArrowDoenIcon
 } from "../../../assets/images";
 import "./Styles.scss";
 import {
@@ -20,47 +22,45 @@ import UserImage from "../../../assets/images/documents/Image.svg";
 import InterCards from "./InternCards/interCards";
 import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
+import { CheckBox } from "../../../components/Checkbox";
 
 const InternDocument = () => {
-  const [selectData, setSelectData] = useState({
-    document: "Intern Documents",
-    timeFrame: '',
-    uploader: ''
-  });
+  const [selectData, setSelectData] = useState("Intern Documents");
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
-
+  const [state, setState] = useState({ searchVal: '', dateRange: '' })
+  const items: any = [
+    {
+      label: <p className="text-base font-medium" onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
+      key: '0',
+      value: "Intern Documents"
+    },
+    {
+      label: <p onClick={() => setSelectData('Shared Documents')}>Shared Documents</p>,
+      key: '1',
+      value: "Shared Documents"
+    },
+  ];
   return (
     <div className="intern-header-wrapper">
       <div className="flex my-5">
-        <select
-          className="select-icon"
-          value={selectData.document}
-          onChange={(e: any) => setSelectData((prevState) => ({
-            ...prevState,
-            document: e.target.value,
-          }))}
-        >
-          <option value="Intern Documents">Intern Documents</option>
-          <option value="Shared Documents">Shared Documents</option>
-        </select>
-        <p className="ml-3 mt-1 text-primary-color text-base font-medium">
-          {selectData.document}
+        <Dropdown className="px-3 cursor-pointer" menu={{ items }} trigger={['click']}>
+          <Space className="outline-color">
+            <img src={Folder} alt="icon" />
+            <img src={ArrowDoenIcon} alt="icon" className="pl-3 pr-2" />
+          </Space>
+        </Dropdown>
+        <p className="ml-[30px] capitalize mt-1 text-secondary-color text-base font-medium">
+          {selectData}
         </p>
       </div>
-
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => { }} />
+          <SearchBar handleChange={(e: any) => setState({ ...state, searchVal: e })} value={state.searchVal} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col md:flex-row justify-end gap-4">
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex flex-wrap max-md:flex-col max-sm:flex-col justify-end gap-4">
           <DropDownNew
-            className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown"
-            value={selectData.uploader}
-            setValue={(e: any) => setSelectData((prevState) => ({
-              ...prevState,
-              uploader: e,
-            }))}
+            className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
             items={[
               {
                 label: (
@@ -83,11 +83,11 @@ const InternDocument = () => {
             <div className="flex items-center gap-3 ">
               <div className="user flex items-center gap-3">
                 <img
-                  src={selectData.document === "Shared Documents" ? Frame : UserImage}
+                  src={selectData === "Shared Documents" ? Frame : UserImage}
                   alt="icon"
                 />
                 <div>
-                  {selectData.document === "Shared Documents" ? (
+                  {selectData === "Shared Documents" ? (
                     <p className="text-success-placeholder-color">
                       Uploader (All)
                     </p>
@@ -99,32 +99,31 @@ const InternDocument = () => {
               <ArrowDownDark />
             </div>
           </DropDownNew>
-          {selectData.document === "Shared Documents" && (
+
+          {selectData === "Shared Documents" && (
             <DropDown
-              value={selectData.timeFrame}
-              setValue={(e: string) => setSelectData((prevState) => ({
-                ...prevState,
-                timeFrame: e,
-              }))}
+              setValue={(val: string) => setState({ ...state, dateRange: val })}
+              value={state.dateRange}
               options={[
-                "All",
                 "this week",
                 "last week",
                 "this month",
                 "last month",
                 "date range",
               ]}
+              name={"time range"}
               requireRangePicker
               showDatePickerOnVal={"date range"}
             />
           )}
           <Button
-            className="green-graph-tooltip-bg flex justify-between"
+            className="green-graph-tooltip-bg flex justify-center  lg:w-[143px]"
             onClick={() => setUploadModel(true)}
           >
             <img src={UploadIconBtn} alt="" />
-            <span className="white-color font-semibold text-base">Upload</span>
+            <span className="white-color font-semibold text-base mx-3">Upload</span>
           </Button>
+
           <ToggleButton
             isToggle={documentToggle}
             onTogglerClick={() => setDocumentToggle(!documentToggle)}
@@ -133,8 +132,7 @@ const InternDocument = () => {
             className="w-[88px]"
           />
         </Col>
-
-        <Col xs={24}>{documentToggle ? <InterCards /> : <DocTable />}</Col>
+        <Col xs={24}>{documentToggle ? <DocTable /> : <InterCards />}</Col>
       </Row>
 
       <PopUpModal
@@ -143,13 +141,13 @@ const InternDocument = () => {
         title={"Upload Documents"}
         footer={[
           <Button
-            className="teriary-color tertiory-btn"
+            className="teriary-color font-semibold text-base intern-cancel-btn"
             onClick={() => setUploadModel(false)}
           >
             Cancel
           </Button>,
           <Button
-            className="teriary-bg-color color-white white-color upload-button"
+            className="teriary-bg-color font-semibold text-base upload-button white-color"
             onClick={() => setUploadModel(false)}
           >
             Upload
@@ -157,6 +155,13 @@ const InternDocument = () => {
         ]}
       >
         <UploadDocument />
+        {selectData === "Intern Documents" ?
+          <div className="flex mt-5">
+            <CheckBox />
+            <p className="mx-3 text-teriary-color text-base">Share with intern</p>
+          </div>
+          : ""
+        }
       </PopUpModal>
     </div>
   );
