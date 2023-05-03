@@ -1,35 +1,50 @@
 import React, { useState } from 'react'
 import { Emoji1st, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray3rd, EmojiGray4th } from '../../../assets/images';
 const ManagerRemarks = () => {
-  const [hover1, setHover1] = useState(false)
-  const [hover2, setHover2] = useState(false)
-  const [hover3, setHover3] = useState(false)
-
+  const [hover, setHover] = useState(
+    {
+      sadEmoji: false,
+      smilyEmoji: false,
+      exceedEmoji: false,
+    }
+  )
   const SadIconHandler = () => {
-    setHover1(!hover1); 
+    setHover({
+      sadEmoji: true,
+      smilyEmoji: false,
+      exceedEmoji: false,
+    });
   }
   const SmileyIconHandler = () => {
-    setHover2(!hover2); 
+    setHover({
+      sadEmoji: false,
+      smilyEmoji: true,
+      exceedEmoji: false,
+    });
   }
   const ExceedIconHandler = () => {
-    setHover3(!hover3); 
+    setHover({
+      sadEmoji: false,
+      smilyEmoji: false,
+      exceedEmoji: true,
+    });
   }
 
   const managerRemarks = [{
     icon: <div className='assessment-form-image-container'>
-      <span onClick={SadIconHandler} > {hover1 ? <Emoji1st /> : <EmojiGray1st />} </span>
+      <span onClick={SadIconHandler} > {hover.sadEmoji ? <Emoji1st /> : <EmojiGray1st />} </span>
     </div>,
     content: "Does not meet expectations"
   },
   {
     icon: <div className='assessment-form-image-container'>
-      <span onClick={SmileyIconHandler} > {hover2 ? <Emoji3rd /> : <EmojiGray3rd />} </span>
+      <span onClick={SmileyIconHandler} > {hover.smilyEmoji ? <Emoji3rd /> : <EmojiGray3rd />} </span>
     </div>,
     content: "Meets expectations"
   },
   {
     icon: <div className='assessment-form-image-container'>
-      <span onClick={ExceedIconHandler} > {hover3 ? <Emoji4th /> : <EmojiGray4th />} </span>
+      <span onClick={ExceedIconHandler} > {hover.exceedEmoji ? <Emoji4th /> : <EmojiGray4th />} </span>
     </div>,
     content: "Exceeds expectations"
   },
@@ -43,7 +58,8 @@ const ManagerRemarks = () => {
             <span className=' text-sm text-center font-normal '>{data.content}</span>
           </div>
         )
-      })}</div>
+      })}
+    </div>
   )
 }
 

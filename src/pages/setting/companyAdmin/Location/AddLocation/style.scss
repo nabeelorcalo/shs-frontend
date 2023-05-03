@@ -34,7 +34,7 @@
 
   .input-style {
     background: $text-input-bg-color !important;
-    border-color: white;
+    border-color: $white-bg-color;
     border: 1px solid transparent;
     opacity: 1;
 
@@ -49,12 +49,28 @@
     }
   }
 
-  .post-code {
-    background: $white-bg-color !important;
+  .ant-select-selector {
+    background: $text-input-bg-color !important;
+    border: 1px solid transparent !important;
+    opacity: 1;
+
+    &:hover {
+      border: 1px solid $input-hover-color !important;
+      background: $white-bg-color !important;
+    }
+
   }
 
-  .ant-dropdown-trigger {
-    height: 48px !important;
+  :where(.css-dev-only-do-not-override-14oxq5) .ant-select-status-error:not(.ant-select-disabled) :not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
+    border-color: #e66372 !important;
+
+    &:hover {
+      border-color: $input-hover-color !important;
+    }
+  }
+
+  .post-code {
+    background: $white-bg-color !important;
   }
 
   .label {
@@ -62,23 +78,6 @@
     font-size: 16px;
     color: $text-teriary-label-color;
     margin-bottom: 4px;
-  }
-
-  select {
-    border: 2px solid $text-error-line-color !important;
-    border-radius: 8px;
-    font-size: 16px;
-    height: 48px;
-    color: $text-success-placeholder-color;
-    border-radius: 8px;
-
-    &:hover {
-      border: 2px solid $input-hover-color !important;
-    }
-
-    &:focus {
-      border: 2px solid $input-hover-color;
-    }
   }
 
   .add-button {
@@ -101,6 +100,18 @@
 
   .active {
     border: none !important;
-}
+  }
+
+  .dragger {
+    border: 2px dashed $text-teriary-label-color;
+    border-radius: 4px;
+    padding: 20px 0px;
+  }
+
+  .drag-drop-upload-style {
+    border: none;
+    background-color: $white-bg-color;
+    border-radius: 5px;
+  }
 
 }

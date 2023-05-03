@@ -1,9 +1,11 @@
 @import '../../../../scss/colors';
-.template-setting{
-    .ant-divider-horizontal{
+
+.template-setting {
+    .ant-divider-horizontal {
         background: $text-error-line-color !important;
-      }
-    .template-box-wrapper{
+    }
+
+    .template-box-wrapper {
         background-color: $white-bg-color;
         border-radius: 0px 10px;
         padding: 10px;
@@ -13,9 +15,22 @@
         &:hover {
             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1)
         }
-        .title{
-            color:$text-primary-title-color
-
+        .title {
+            color: $text-primary-title-color
         }
-    
-    }}
+    }
+}
+
+.template-add-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
+    &:hover {
+        opacity: 75%;
+        color: $white-bg-color !important;
+        outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+        border: none !important;
+    }
+
+}
