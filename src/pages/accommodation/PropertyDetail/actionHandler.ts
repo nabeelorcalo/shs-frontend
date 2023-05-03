@@ -11,7 +11,7 @@ const usePropertyHook = () => {
   const [property, setProperty] = useRecoilState(propertyState)
 
 
-  // Get Available Properties
+  // Get Property
   const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {

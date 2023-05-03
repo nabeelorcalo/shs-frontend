@@ -95,6 +95,7 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getProperty(propertyId, setLoading)
+    console.log("property detailLL:: ", property)
   }, [])
 
 

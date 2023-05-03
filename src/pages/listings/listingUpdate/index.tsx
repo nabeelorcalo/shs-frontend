@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { RadioChangeEvent, TabsProps } from 'antd';
 import { useParams } from "react-router-dom";
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
 import { PageHeader, SearchBar } from '../../../components';
-import { useRecoilValue} from "recoil";
-import usePropertyHook from "../../accommodation/PropertyDetail/actionHandler";
-import { propertyState } from "../../../store";
+import { useRecoilValue } from "recoil";
+import useListingsHook from "../actionHandler";
+import { listingState } from "../../../store";
+import showNotification from '../../../helpers/showNotification';
+import constants from '../../../config/constants'
 import { 
   IconLocations,
   IconPropertyDetail,
@@ -56,8 +58,8 @@ const ListingUpdate = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {listingId} = useParams()
-  const { getProperty } = usePropertyHook();
-  const property = useRecoilValue(propertyState);
+  const { getListing, updateListing } = useListingsHook();
+  const singleListing = useRecoilValue(listingState);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true)
@@ -124,9 +126,35 @@ const ListingUpdate = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getProperty(listingId, setLoading)
-    console.log('render:', property)
+    getListing(listingId, setLoading)
   }, [])
+
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleSubmission = useCallback(
+    (result:any) => {
+      if (result.error) {
+        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+      } else {
+        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+      }
+    },
+    [form]
+  );
+
+  const submitUpdateListing = useCallback(async () => {
+    let values;
+    try {
+      values = await form.validateFields();
+    } catch (errorInfo) {
+      return;
+    }
+    // setAddListingLoading(true);
+    const result = await updateListing(listingId, {"addressTwo": "Address Two"});
+    // setAddListingLoading(false);
+    handleSubmission(JSON.stringify(result));
+  }, [form, handleSubmission]);
 
 
 
@@ -187,17 +215,18 @@ const ListingUpdate = () => {
                     form={form}
                     layout="vertical"
                     name="updateLocation"
-                    initialValues={property}
-                    // initialValues={{
-                    //   'addressOne': property.addressOne,
-                    //   'addressTwo': property.addressTwo,
-                    //   'postalCode': property.postalCode,
-                    //   'isFurnished': property.isFurnished,
-                    // }}
+                    // initialValues={singleListing}
+                    initialValues={{
+                      'addressOne': singleListing.addressOne,
+                      'addressTwo': singleListing.addressTwo,
+                      'postCode': singleListing.postCode,
+                      'isFurnished': singleListing.isFurnished,
+                    }}
                     onValuesChange={(_, values) => {
                       setDisabled(false)
+                      console.log('Values;:: ', values)
                     }}
-                    onFinish={onUpdateLocation}
+                    onFinish={submitUpdateListing}
                   >
                     <Row gutter={30}>
                       <Col xs={24} md={24}>
@@ -211,7 +240,7 @@ const ListingUpdate = () => {
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={24} lg={12} xl={12}>
-                        <Form.Item name="postalCode" label="Postcode">
+                        <Form.Item name="postCode" label="Postcode">
                           <Input placeholder="Placeholder" />
                         </Form.Item>
                       </Col>
@@ -220,10 +249,10 @@ const ListingUpdate = () => {
                           <Radio.Group>
                             <Row gutter={[30,20]}>
                               <Col xs={24} md={24} lg={12} xl={12}>
-                                <Radio value="yes">Yes</Radio>
+                                <Radio value={true}>Yes</Radio>
                               </Col>
                               <Col xs={24} md={24} lg={12} xl={12}>
-                                <Radio value="no">No</Radio>
+                                <Radio value={false}>No</Radio>
                               </Col>
                             </Row>
                           </Radio.Group>

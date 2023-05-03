@@ -49,7 +49,7 @@ interface DataType {
   propertyType: string;
   totalBedrooms: number;
   verificationStatus: string;
-  monthlyRent: number;
+  rent: number;
   availability: any;
   publicationStatus: string;
   availabilityStart: any;
@@ -120,7 +120,13 @@ const Listings = () => {
     },
     {
       title: 'Rent',
-      dataIndex: 'monthlyRent',
+      dataIndex: 'rent',
+      render: (text, row, index) => {
+        return (
+          <>£ {text}</>
+        )
+        
+      }
     },
     {
       title: 'Availability',
@@ -174,10 +180,6 @@ const Listings = () => {
     getListings(setLoadingAllProperties)
   }, [])
 
-  useEffect(() => {
-    console.log('::: ', form.getFieldsValue())
-    
-  }, [modalAddListingOpen])
 
 
   /* ASYNC FUNCTIONS

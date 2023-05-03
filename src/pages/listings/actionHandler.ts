@@ -1,14 +1,40 @@
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilValue, useRecoilState } from "recoil";
-import { listingsState, listingLoadingState } from "../../store";
+import { listingsState, listingState } from "../../store";
 
 
 const useListingsHook = () => {
   const [allProperties, setAllProperties] = useRecoilState(listingsState)
-  const { GET_AGENT_PROPERTIES, ADD_PROPERTY } = endpoints
+  const [singleListing, setSingleListing] = useRecoilState(listingState)
+  const { GET_AGENT_PROPERTIES, ADD_PROPERTY, GET_PROPERTY, UPDATE_PROPERTY } = endpoints
 
-  // Get Agent Properties
+  // Create Agent Property
+  const createListing = async (data: any) => {
+    const submitRequest = async(reqBody:any) => {
+      try {
+        const res = await api.post(ADD_PROPERTY, reqBody)
+        return {response: res, error: undefined}
+      } catch (error) {
+        return { response: undefined, error: error };
+      }
+    }
+    return await submitRequest(data)
+  }
+
+  const updateListing = async (id:any, data: any) => {
+    const submitRequest = async(reqBody:any) => {
+      try {
+        const res = await api.patch(`${UPDATE_PROPERTY}${id}`, reqBody)
+        return {response: res, error: undefined}
+      } catch (error) {
+        return { response: undefined, error: error };
+      }
+    }
+    return await submitRequest(data)
+  }
+
+  // Get All Agent Properties
   const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
@@ -24,24 +50,28 @@ const useListingsHook = () => {
     }
   }
 
-  // Add Agent Properties
-  const createListing = async (data: any) => {
-
-    const submitRequest = async(reqBody:any) => {
-      try {
-        const res = await api.post(ADD_PROPERTY, reqBody)
-        return {response: res, error: undefined}
-      } catch (error) {
-        return { response: undefined, error: error };
-      }
+  // Get Single Property
+  const getListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      return api.get(`${GET_PROPERTY}${id}`).then(res => {
+        if(!res.error) {
+          console.log("Res.data::: ", res.data)
+          return setSingleListing(res.data)
+        }
+      })
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-
-    return await submitRequest(data)
   }
 
   return {
     createListing,
-    getListings
+    getListings,
+    getListing,
+    updateListing
   };
 };
 

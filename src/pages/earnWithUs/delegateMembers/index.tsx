@@ -224,17 +224,17 @@ const DelegateMembers = () => {
             <SearchBar handleChange={() => console.log('Search')} />
           </Col>
           <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="page-filterbar-right md:justify-end">
-          <Space size={20} className="page-filterbar">
-            <div className="requests-filterby-status">
-              <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
-                <Button className="button-sky-blue">Status<IconAngleDown /></Button>
-              </Dropdown>
-            </div>
-            <div className="dropdown-download">
-              <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
-                <Button className="button-sky-blue">Type<IconAngleDown /></Button>
-              </Dropdown>
-            </div>
+            <Space size={20} className="page-filterbar">
+              <div className="requests-filterby-status">
+                <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
+                  <Button className="button-sky-blue">Status<IconAngleDown /></Button>
+                </Dropdown>
+              </div>
+              <div className="dropdown-download">
+                <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
+                  <Button className="button-sky-blue">Type<IconAngleDown /></Button>
+                </Dropdown>
+              </div>
             </Space>
           </Col>
           <Col xs={24}>
