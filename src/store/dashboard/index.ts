@@ -25,3 +25,9 @@ export const agentDashboardWidgetsState = atom({
     totalOccupiedProperties: 0,
   }
 })
+
+// weather api
+export const weatherApiState: any = atom({
+  key: "weatherApiState",
+  default: {}
+})

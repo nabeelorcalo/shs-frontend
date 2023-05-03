@@ -10,7 +10,6 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
-  Success,
 } from "../../assets/images";
 
 import {

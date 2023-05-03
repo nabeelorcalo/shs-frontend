@@ -372,16 +372,12 @@ const Application = () => {
               closable
               width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
-              onClose={() => {
-                setShowStageStepper(false);
-              }}
-            >
+              onClose={() => { setShowStageStepper(false)}}>
               <StageStepper />
             </Drawer>
           </Col>
           <Col xs={24}>
             <BoxWrapper>
-
               {
                 listandgrid ? <div className="flex flex-row flex-wrap gap-6">
                   {

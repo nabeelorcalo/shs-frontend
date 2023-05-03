@@ -260,7 +260,7 @@ const InternPerformance = () => {
           <div className="mt-5">
             <BoxWrapper>
               <MonthlyPerfomanceChart
-                heading="Perfomance Analytics"
+                heading="Monthly Perfomance"
                 data={monthlyPerformanceData}
                 columnWidthRatio={ 0.5}
               />

@@ -11,7 +11,7 @@ import {
 
 import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, DownloadDocumentIcon, More, TableViewIcon } from "../../assets/images"
+import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
 import { Col, MenuProps, Row } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
@@ -188,46 +188,46 @@ const Interns = () => {
     <>
       <PageHeader title="Interns" />
       <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
+        <Row gutter={[20, 20]}>
+          <Col xl={6} md={24} sm={24} xs={24}>
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
-          </div>
-          <div className="flex flex-row gap-4">
-          {listandgrid? <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-              }}
-              value=""
-            />:null}
-            <ToggleButton
-              isToggle={listandgrid}
-              onTogglerClick={() => { setListandgrid(!listandgrid) }}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
-              className='w-[88px]'
-            />
-            {!listandgrid? <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-              }}
-              value=""
-            />:null}
-          </div>
-        </div>
-
+          </Col>
+          <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+            <div className="flex gap-4 justify-between">
+              {listandgrid ? <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+                }}
+                value=""
+              /> : null}
+              <ToggleButton
+                isToggle={listandgrid}
+                onTogglerClick={() => { setListandgrid(!listandgrid) }}
+                FirstIcon={CardViewIcon}
+                LastIcon={TableViewIcon}
+                className='w-[88px]'
+              />
+              {!listandgrid ? <DropDown
+                options={[
+                  'pdf',
+                  'excel'
+                ]}
+                requiredDownloadIcon
+                setValue={() => {
+                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
+                }}
+                value=""
+              /> : null}
+            </div>
+          </Col>
+        </Row>
         <div className="pt-3">
           {
-            // className="flex flex-row flex-wrap gap-6"
             !listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
                 newTableData.map((items: any, idx: any) => {
@@ -249,10 +249,6 @@ const Interns = () => {
               <BoxWrapper>
                 <GlobalTable
                   columns={columns}
-                  expandable={{
-                    expandedRowRender: () => { },
-                    rowExpandable: function noRefCheck() { }
-                  }}
                   tableData={newTableData}
                   hideTotal={true}
                 />

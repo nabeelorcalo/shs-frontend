@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import { Button } from "antd";
 import { BoxWrapper } from "../../../../../components";
-import "./Styles.scss";
 import { useParams } from "react-router-dom";
 import CoverPhoto from "../../../../../assets/images/serachJobs/logo.png";
+import "./Styles.scss";
 
 interface Props {
   maxWidth?: string;
@@ -44,18 +43,15 @@ const AllCardsTab = (props: any) => {
             </div>
             <div className="mx-5">
               <h2 className="comp-title font-normal text-base	m-0">{heading}</h2>
-              <span className="my-3 text-secondary-color">{location}</span>
-              <span className="mx-3 text-secondary-color">{time}</span>
+              <span className="my-3 text-secondary-color text-sm">{location}</span>
+              <span className="mx-3 text-secondary-color text-sm">{time}</span>
             </div>
           </div>
           <p className="comp-title font-medium text-xl my-3">{post}</p>
-          <p className="text-secondary-color">{description}</p>
+          <p className="text-secondary-color text-sm">{description}</p>
           <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
             {tags.map((tags: any | string, i: number) => (
-              <p
-                key={i}
-                className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag"
-              >
+              <p key={i} className="rounded-[4px] text-sm tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
                 {tags}
               </p>
             ))}
