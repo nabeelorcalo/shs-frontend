@@ -178,65 +178,66 @@ const StudentMain = () => {
   return (
     <>
       <PageHeader title="Students" />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-xl:flex-col">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
+      <Row gutter={[20, 20]} className="mt-5">
+        <Col xl={6} lg={6} md={24} sm={24} xs={24}>
+          <SearchBar
+            handleChange={() => { }}
+            name="search bar"
+            placeholder="Search"
+            size="middle"
+          />
+        </Col>
+        <Col xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-wrap gap-4 justify-end">
+          <CommonDatePicker
+            name="Date Picker"
+            open={openDatePicker}
+            onBtnClick={() => { console.log("date picker clicked") }}
+            setOpen={setOpenDatePicker}
+            setValue={function noRefCheck() { }}
+          />
+          <DropDown
+            name="this month"
+            options={[
+              'This week',
+              'Last week',
+              'This month',
+              'Last month',
+              'All'
+            ]}
+            setValue={() => { updateTimePeriod(event) }}
+            showDatePickerOnVal="custom"
+            value={state.time_period}
+          />
+          <div className="flex justify-between gap-4">
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
+              }}
+              value=""
             />
           </div>
-          <div className="flex flex-row max-xl:flex-col gap-4">
-            <div className="flex flex-row max-sm:flex-col gap-4">
-              <CommonDatePicker
-                name="Date Picker"
-                open={openDatePicker}
-                onBtnClick={() => { console.log("date picker clicked") }}
-                setOpen={setOpenDatePicker}
-                setValue={function noRefCheck() { }}
-              />
-              <DropDown
-                name="this month"
-                options={[
-                  'This week',
-                  'Last week',
-                  'This month',
-                  'Last month',
-                ]}
-                setValue={() => {updateTimePeriod(event)}}
-                showDatePickerOnVal="custom"
-                value={state.time_period}
-              />
-            </div>
-            <div className="flex flex-row gap-4">
-              <ToggleButton
-                isToggle={listandgrid}
-                onTogglerClick={() => { setListandgrid(!listandgrid) }}
-                FirstIcon={CardViewIcon}
-                LastIcon={TableViewIcon}
-                className='w-[88px]'
-              />
-              <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => {
-
-                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
-                }}
-                value=""
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-3">
+        </Col>
+        <Col xs={24}>
           {
-            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+            listandgrid ? <BoxWrapper>
+              <GlobalTable
+                columns={columns}
+                tableData={newTableData}
+              />
+            </BoxWrapper> : <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
                 newTableData.map((items: any, idx: any) => {
                   return (
@@ -252,17 +253,11 @@ const StudentMain = () => {
                 })
               }
             </div>
-              :
-              <BoxWrapper>
-                <GlobalTable
-                  columns={columns}
-                  tableData={newTableData}
-                />
-              </BoxWrapper>
-          }
-        </div>
 
-      </div>
+
+          }
+        </Col>
+      </Row>
     </>
   );
 };

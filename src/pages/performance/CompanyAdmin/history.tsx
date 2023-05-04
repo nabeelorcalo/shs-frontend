@@ -11,6 +11,7 @@ import {
   GlobalTable,
   Breadcrumb,
   Notifications,
+  BoxWrapper,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
@@ -499,7 +500,9 @@ const PerformanceHistory = () => {
           />
         </Col>
         <Col xs={24}>
-          <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+          <BoxWrapper>
+            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={true} />
+          </BoxWrapper>
         </Col>
       </Row>
       <AppreciationModal

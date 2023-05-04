@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./style.scss";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, PopUpModal } from "../../../components";
+import { Button, Col, Divider, Row, Select, TabsProps, } from "antd";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
@@ -306,11 +306,11 @@ const HelpDesk = () => {
         title="Filters"
       >
         <div className="mb-6">
-          <label>Issue Type</label>
+          <label className="mb-2 text-teriary-color font-medium text-base">Issue Type</label>
           <div className="mt-2">
             <Select
+              placeholder="Select"
               className="w-[100%]"
-              defaultValue=""
               onChange={handleChangeSelect}
               options={[
                 { value: "Payment", label: "Payment" },
@@ -326,11 +326,11 @@ const HelpDesk = () => {
         </div>
 
         <div className="mb-6">
-          <label>Priority</label>
+          <label className="mb-2 text-teriary-color font-medium text-base">Priority</label>
           <div className="mt-2 ">
             <Select
+              placeholder="Select"
               className="w-[100%]"
-              defaultValue=""
               onChange={handleChangeSelect}
               options={[
                 { value: "Highest", label: "Highest" },
@@ -343,19 +343,19 @@ const HelpDesk = () => {
         </div>
 
         <div className="mb-6">
+          <label className="mb-2 text-teriary-color font-medium text-base">Date</label>
           <CommonDatePicker
-            label="Date"
             setOpen={setOpenDrawerDate}
             open={openDrawerDate}
           />
         </div>
 
         <div className="mb-6">
-          <label>Status</label>
+          <label className="mb-2 text-teriary-color font-medium text-base">Status</label>
           <div className="mt-2">
             <Select
+              placeholder="Select"
               className="w-[100%]"
-              defaultValue=""
               onChange={handleChangeSelect}
               options={[
                 { value: "Pending", label: "Pending" },
@@ -391,12 +391,10 @@ const HelpDesk = () => {
           <div className="mb-2 text-teriary-color font-medium text-base">
             Assigned To
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap mb-4">
             {assignUser.map((user) => (
-              <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                <span className="text-[#6E7191] font-normal text-xs">
-                  {user.name}
-                </span>
+              <div className="flex items-center text-sm font-normal gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
+                {user.name}
                 <CloseCircleFilled
                   style={{ color: "#A3AED0", fontSize: "20px" }}
                   onClick={() => handleRemoveUser(user.id)}
@@ -405,7 +403,7 @@ const HelpDesk = () => {
             ))}
           </div>
 
-          <BoxWrapper className="border-2 ">
+          <BoxWrapper className="border-2">
             <div className="mb-4">
               <SearchBar size="small" handleChange={() => { }} />
             </div>
@@ -452,43 +450,28 @@ const HelpDesk = () => {
         <Divider />
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={[10, 10]}>
+          <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
 
-            <Col className="flex justify-end " xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
-              <div className="flex">
-                <div className="mr-4">
-                  <FiltersButton label="Filter" onClick={handleClick} />
-                </div>
+            <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+              <FiltersButton label="Filter" onClick={handleClick} />
+              <DropDown
+                options={['pdf', 'excel']}
+                requiredDownloadIcon
+                setValue={() => { action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail") }}
+              />
+            </Col>
 
-                <div>
-                  <DropDown
-                    options={[
-                      'pdf',
-                      'excel'
-                    ]}
-                    requiredDownloadIcon
-                    setValue={() => {
-
-                      action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail")
-                    }}
-                  />
-                </div>
-              </div>
+            <Col xs={24}>
+              <BoxWrapper>
+                <AppTabs items={items} onChange={(selectedTab: any) => {
+                  setSelectedTab(selectedTab)
+                }} />
+              </BoxWrapper>
             </Col>
           </Row>
-        </Col>
-      </Row>
-
-      <Row className="mt-8">
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper>
-            <AppTabs items={items} onChange={(selectedTab: any) => {
-              setSelectedTab(selectedTab)
-            }} />
-          </BoxWrapper>
         </Col>
       </Row>
     </div>

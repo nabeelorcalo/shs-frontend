@@ -99,6 +99,8 @@ const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const ManagerCaseStudiesAssessment = Loadable(
   lazy(() => import("./pages/caseStudies/Manager/assessmentForm"))
 );
+const ViewDetailsCaseStudies = Loadable(
+  lazy(() => import("./pages/caseStudies/Common/viewDetails")))
 const CompanyAdminCaseStudiesAssessment = Loadable(
   lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm"))
 );
@@ -325,6 +327,10 @@ const UniversitesInterns = Loadable(
 const UniversitesProfile = Loadable(
   lazy(() => import("./pages/universities/CompanyAdmin/Profile"))
 );
+const SystemDetailPage = Loadable(
+  lazy(() => import("./pages/universities/SystemAdmin/detailPage"))
+);
+
 
 export const publicRoutes = [
 
@@ -451,8 +457,8 @@ const managerRoutes = [
         element: <NewInternships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
       {
@@ -536,6 +542,11 @@ const managerRoutes = [
         element: <ManagerCaseStudiesAssessment />,
       },
       {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        element: <ViewDetailsCaseStudies />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
@@ -546,8 +557,8 @@ const managerRoutes = [
         element: <ManagerAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <ManagerGrievancesDetails />,
       },
       {
@@ -659,7 +670,7 @@ const systemAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
-        element: <UniversitesProfile />,
+        element: <SystemDetailPage />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
@@ -859,8 +870,8 @@ const companyAdminRoutes = [
         element: <CompanyAdminAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <CompanyAdminGrievancesDetails />,
       },
       {
@@ -877,6 +888,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
         path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
         element: <CompanyAdminCaseStudiesAssessment />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        element: <ViewDetailsCaseStudies />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
@@ -1250,8 +1266,8 @@ const internRoutes = [
         element: <InternAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <InternGrievancesDetails />,
       },
       {

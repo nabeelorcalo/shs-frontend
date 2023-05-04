@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Avatar, Dropdown, Progress, Space, MenuProps } from 'antd';
+import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from 'antd';
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
@@ -240,7 +240,46 @@ const ManagerPerformance = () => {
           </div>
         }
       />
-      <div className="flex performance-header">
+      <Row gutter={[20,20]}>
+        <Col xl={6} md={24} sm={24} xs={24}>
+          <SearchBar
+            handleChange={() => { }}
+            icon={<GlassMagnifier />}
+            name="searchBar"
+            placeholder="Search"
+          />
+        </Col>
+        <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+          <DropDown
+            name="time-frame"
+            options={timeFrameOptions}
+            setValue={() => timeFrameSelection(event)}
+            value={state.timeFrameVal}
+            showDatePickerOnVal='Date Range'
+            requireDatePicker
+            placement='topLeft'
+          />
+
+          <DropDown
+            name="profession"
+            options={professionOptions}
+            setValue={() => professionSelection(event)}
+            value={state.professionVal}
+          />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <div className="performace-history-list">
+              <GlobalTable
+                columns={columnNames}
+                tableData={evaluationHistoryData}
+                pagination={false}
+              />
+            </div>
+          </BoxWrapper>
+        </Col>
+      </Row>
+      {/* <div className="flex performance-header">
         <div className="w-[30%] performance-search-bar">
           <SearchBar
             handleChange={() => { }}
@@ -268,16 +307,8 @@ const ManagerPerformance = () => {
             value={state.professionVal}
           />
         </div>
-      </div>
-      <BoxWrapper>
-        <div className="performace-history-list">
-          <GlobalTable
-            columns={columnNames}
-            tableData={evaluationHistoryData}
-            pagination={false}
-          />
-        </div>
-      </BoxWrapper>
+      </div> */}
+
 
     </div>
   )

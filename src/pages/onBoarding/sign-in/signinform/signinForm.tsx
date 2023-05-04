@@ -30,7 +30,7 @@ const SigninForm = (props: any) => {
         email: Email,
         password: password,
       })
-      .then((data: any) => {
+      .then((data:any) => {
         console.log("data", data); //for debugging purpose
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })

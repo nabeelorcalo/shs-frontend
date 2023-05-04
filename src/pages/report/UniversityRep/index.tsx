@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react'
-import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar, Drawer, Notifications} from '../../../components'
+import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar, Drawer, Notifications } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg'
 import useCustomHook from '../actionHandler';
 import UniversityRepReportTable from './reportTable';
 import Filters from './filter';
+import { Col, Row } from 'antd';
 
 const index = () => {
   const action = useCustomHook();
@@ -62,33 +63,38 @@ const index = () => {
     },
   ]
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [value, setValue] = useState<any>()
-  const [selectedTab, setSelectedTab] = useState<any>(1)
+  // const [value, setValue] = useState<any>()
+  // const [selectedTab, setSelectedTab] = useState<any>(1)
   const handleChange = () => { };
   return (
     <div>
       <PageHeader title="Report" actions bordered />
-      <div className='flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row"'>
-      <div className="max-sm:w-full md:w-[50%] lg:w-[25%]"> <SearchBar size="middle" handleChange={handleChange} /></div> 
-        <div className='w-full flex flex-row md:justify-end gap-2 '>
-        <div> <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} /></div> 
-        <div> <DropDown
+      <Row gutter={[20,20]}>
+        <Col xl={6} md={24} sm={24} xs={24}>
+          <SearchBar size="middle" handleChange={handleChange} />
+        </Col>
+        <Col xl={18} md={24} sm={24} xs={24} className='flex max-sm:flex-col justify-end gap-4'>
+          <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
+          <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
-            setValue={() => { action.downloadPdfOrCsv(event, TableColumn, reportTableData, "Report")
-            Notifications({title:"Success", description:"Report list downloaded ",type:'success'})}}  
-          /></div> 
-        </div>
-      </div>
-      <BoxWrapper>
-        <UniversityRepReportTable reportTableData={reportTableData} />
-      </BoxWrapper>
+            setValue={() => {
+              action.downloadPdfOrCsv(event, TableColumn, reportTableData, "Report")
+              Notifications({ title: "Success", description: "Report list downloaded ", type: 'success' })
+            }}
+          />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <UniversityRepReportTable reportTableData={reportTableData} />
+          </BoxWrapper>
+        </Col>
+      </Row>
       <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}
         title="Filters"
-        open={showDrawer}
-      >
+        open={showDrawer}>
         <React.Fragment key=".0">
           <Filters />
         </React.Fragment>

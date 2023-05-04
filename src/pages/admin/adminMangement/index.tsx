@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   CloseCircleFilled,
   EllipsisOutlined,
-  NodeExpandOutlined,
   RightOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
@@ -11,7 +10,6 @@ import {
   Button,
   Checkbox,
   Col,
-  Divider,
   Form,
   Input,
   Menu,
@@ -61,12 +59,23 @@ const tableData = [
   },
 ];
 
+const cities =[
+  { value: "London", label: "London" },
+  { value: "Lacaster", label: "Lacaster" },
+  { value: "Birmingham", label: "Birmingham" },
+  { value: "Glassgow", label: "Glassgow" },
+]
+
 const AdminManagement = () => {
   const action = useCustomHook()
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
   const [isdate1, setIsDate1] = useState(false);
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -100,13 +109,11 @@ const AdminManagement = () => {
       key: "phoneNumber",
       title: "Phone Number",
     },
-
     {
       dataIndex: "date",
       key: "date",
       title: "Date",
     },
-
     {
       dataIndex: "status",
       render: (_: any, data: any) => (
@@ -128,7 +135,6 @@ const AdminManagement = () => {
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -167,14 +173,17 @@ const AdminManagement = () => {
               setValue={setValue}
             />
           </Form.Item>
-          <Form.Item label="City" name="city">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          <div className="mb-6">
+          <label>City</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={cities}
             />
-          </Form.Item>
+          </div>
+        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -191,23 +200,17 @@ const AdminManagement = () => {
         </Form>
       </Drawer>
       <Row>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div>
+        <Col xs={24}>
             <PageHeader title='Admin Management' bordered={true} />
-
-          </div>
         </Col>
       </Row>
 
-      <Row gutter={10}>
-        <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+      <Row gutter={[20,20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
-        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex justify-end items-center gap-3 mb-3 admin-right-menu">
-            <div className="filter-btn">
-              <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
-            </div>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
             <div className="w-25 download-btn">
               <DropDown
                 requiredDownloadIcon
@@ -227,7 +230,7 @@ const AdminManagement = () => {
               <UserAddOutlined className="text-base font-semibold" />
               Add User
             </Button>
-          </div>
+          
         </Col>
       </Row>
       <Row>

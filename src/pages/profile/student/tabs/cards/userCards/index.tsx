@@ -30,7 +30,7 @@ const CardUsers = (props: any) => {
       >
         <BoxWrapper className="justify-between box-wrapper-1 flex items-center">
           <div className="flex">
-            <img src={img} alt="icon" />
+            <img src={img} alt="icon"  />
             <div className="ml-3">
               <p className="text-base font-semibold">{title}</p>
               <span>{description}</span>

@@ -13,80 +13,118 @@
     }
   }
 
-  .grievances-box-wrapper {
-    background-color: $white-bg-color;
-    border-radius: 10px;
-    padding: 5px;
-    text-align: initial;
-    max-height: -webkit-fill-available;
-    box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
+  .card-share-wrapper {
+    position: relative;
+    height: 100%;
+    border-radius: 16px;
+    width: 100%;
+
+    .card-share {
+      background-color: $teriary-bg-color;
+      border-radius: 16px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 1px;
+      bottom: 0;
+      right: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 18px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+
+      &>svg {
+        margin-left: 8px;
+      }
+    }
 
     &:hover {
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+      .card-user-welcome {
+
+        &::before {
+          right: 116px;
+        }
+      }
     }
   }
 
-  .grievance-card {
-    box-shadow: 0px 2px 3px #E4E8F0;
-    overflow: hidden;
-    transition: all 0.2s ease-in-out;
-    position: relative;
+  .top-card {
+    border-radius: 16px;
+    box-shadow: 8 8 8px 1px rgba(9, 161, 218, 0.1);
+    background-color: #ffffff;
 
-    &:hover {
-      background-color: $text-success-hover-color;
-      transition: all 0.5s;
+    .top-card-inner {
+      display: flex;
+      padding: 0 30px;
+      border-color: $text-error-line-color;
+    }
 
-      .grievance-type {
-        display: flex;
-        flex-direction: column;
-      }
+    &.card-user-welcome {
+      height: 100%;
+      position: relative;
+      width: 100%;
+      background-color: transparent;
 
-      .box-wrapper {
-        margin: 0;
-        width: 100%;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      &>.ant-row {
+        height: 100%;
 
-        &:hover {
-          border-radius: 0 15px 15px 0;
-          width: 85%;
-        }
-
-        .grievance-type {
+        .top-card-inner {
+          height: 100%;
           display: flex;
-          flex-direction: column;
-        }
+          align-items: center;
+          padding-right: 0;
 
-        @media screen and (max-width: 480px) {
-          & {
-            width: 75%;
+          @media (min-width: 992px) {
+            min-height: 60px;
+          }
+
+          &.ref-number {
+            @media (min-width: 992px) {
+              padding-left: 0;
+            }
+          }
+
+          .user-welcome-text {
+            color: $primary-bg-color;
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.333333;
+
+            &>span {
+              color: $page-header-secondary;
+            }
+          }
+
+          .user-reference-no {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.5714285;
+            color: $text-secondary-body-color;
+
+            &>.discipline {
+              color: #F08D97;
+              font-size: 16px;
+              line-height: 1.5;
+              font-weight: 500;
+
+            }
           }
         }
       }
-
-      .view-all-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 20px;
-        color: $white-bg-color;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-      }
     }
+  }
 
-    .box-wrapper {
-      border-radius: 6px;
-      width: 100%;
-    }
+  .grievances-box-wrapper {
+    border-radius: 16px;
+    box-shadow: 8 8 8px 1px rgba(9, 161, 218, 0.1) !important;
+    background-color: #ffffff;
 
-    .view-all-btn {
-      position: absolute;
-      right: 0;
-      top: 0;
-      display: none;
-      height: 100%;
-      transition: all 0.2s ease-in-out;
+    &:hover {
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -143,7 +181,7 @@
   .footer-submit-btn {
     background: $teriary-bg-color;
     border: 1px solid $teriary-bg-color;
-    color: #fff;
+    color: $white-bg-color;
     padding: 0px 20px;
 
     &:hover {
@@ -153,4 +191,40 @@
       border: none !important;
     }
   }
+}
+
+.blow-Whistle-Form {
+  .drop-down-wrapper {
+    background: $white-bg-color;
+    border: 1px solid $text-error-line-color;
+
+    &:hover {
+      box-shadow: 0 0 0 2px rgb(90 89 128 / 50%);
+      border-color: rgba(90, 89, 128, 0.5);
+    }
+  }
+
+  .asignee-wrap {
+    .drop-down-with-imgs {
+      background: $white-bg-color;
+      border-radius: 8px;
+      display: block;
+      padding: 6px 12px;
+      color: $text-success-placeholder-color;
+      cursor: pointer;
+      text-transform: capitalize;
+      border: 1px solid $text-error-line-color;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+
+      &:hover,
+      &.active {
+        border: 2px solid $input-hover-color;
+        background-color: $white-bg-color;
+      }
+    }
+  }
+
 }

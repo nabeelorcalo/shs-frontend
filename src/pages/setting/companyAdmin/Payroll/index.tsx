@@ -30,7 +30,7 @@ const SettingPayroll: React.FC = () => {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const handleChange = () => { };
   return (
-    <div className="setting-shifts">
+    <div className="setting-payroll">
       <div>
         <div className="flex justify-between location-header">
           <SearchBar size="middle" handleChange={handleChange} />
@@ -50,27 +50,26 @@ const SettingPayroll: React.FC = () => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
               <BoxWrapper className="w-full">
-                <div className="flex">
-                  <div className="flex px-3 justify-between mt-2 w-full">
-                    <div className="flex flex-col">
-                    <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
-                        {data?.name}
-                      </Text>
-                      <Text className="text-base font-medium mb-1 text-teriary-color">
-                        {data.content}
-                      </Text>
-                      <Text className="text-sm font-normal content-text ">{data.payrollCyle}</Text>
-                      <Text className="text-sm font-normal content-text">{data.addedDate}</Text>
-                      <Text className="text-sm font-normal content-text">{data.addedBy}</Text>
-                    </div>
-
-                    <span className="float-right cursor-pointer w-[10px]">
-                      <DropDownForSetting
-                        link={"/settings/payroll/add-category"}
-                        showDeleteModal={showDeleteModal}
-                        setShowDeleteModal={setShowDeleteModal}
-                      />
-                    </span>
+                <div>
+                  <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
+                    {data?.name}
+                  </Text>
+                  <span className="float-right cursor-pointer ">
+                    <DropDownForSetting
+                      link={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}
+                      showDeleteModal={showDeleteModal}
+                      setShowDeleteModal={setShowDeleteModal}
+                    />
+                  </span>
+                </div>
+                <div className="flex justify-between mt-2 w-full">
+                  <div className="flex flex-col">
+                    <Text className="text-base font-medium mb-1 text-teriary-color">
+                      {data.content}
+                    </Text>
+                    <Text className="text-sm font-normal content-text ">{data.payrollCyle}</Text>
+                    <Text className="text-sm font-normal content-text">{data.addedDate}</Text>
+                    <Text className="text-sm font-normal content-text">{data.addedBy}</Text>
                   </div>
                 </div>
               </BoxWrapper>
