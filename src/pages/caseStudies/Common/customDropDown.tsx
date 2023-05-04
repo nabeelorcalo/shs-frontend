@@ -90,7 +90,7 @@ const CustomDropDownCaseStudies = (props: any) => {
                 </span>
                 : props.status === "Rejected" ?
                   <span className='hidden'>
-                    </span> : ""
+                  </span> : ""
           }
         </>
       ),

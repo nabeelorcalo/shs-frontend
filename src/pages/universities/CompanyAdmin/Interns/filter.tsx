@@ -5,7 +5,7 @@ import { CommonDatePicker, DropDown } from '../../../../components';
 import DropDownNew from '../../../../components/Dropdown/DropDownNew';
 import './style.scss'
 
-const Filters: React.FC = (props: any) => {
+const Filters = ({setShowDrawer}:any) => {
   const detailsData = [
     {
       userImg: UserAvatar,
@@ -47,13 +47,15 @@ const Filters: React.FC = (props: any) => {
     });
   }
 
-  const handleSubmit = () => {
-    const values = form.getFieldsValue();
+  const onFinish = (values: any)  => {
+    setShowDrawer(false)
   }
 
   return (
     <div className='uni-interns-filter_main_wrapper'>
-      <Form layout="vertical" form={form}>
+      <Form layout="vertical"
+        form={form}
+        onFinish={onFinish}>
         <Form.Item name="status" label="Status">
           <DropDown
             name={selectValue.status}
@@ -90,7 +92,7 @@ const Filters: React.FC = (props: any) => {
                 {
                   label: <div>{detailsData.map((item: any) => (
                     <div className="flex items-center gap-3 mb-[20px]"
-                      onClick={() => setSelectValue(item)}
+                      onClick={() => setSelectValue({ ...selectValue, userName: item.userName, userImg: item.userImg })}
                     >
                       <img src={item.userImg}
                         className='h-[24px] w-[24px] rounded-full object-cover'
@@ -114,7 +116,7 @@ const Filters: React.FC = (props: any) => {
           <Button key="Cancel" className="footer-cancel-btn" onClick={ResetHandler} >
             Reset
           </Button>
-          <Button key="submit" className="footer-submit-btn" onClick={handleSubmit}>
+          <Button key="submit" className="footer-submit-btn" htmlType="submit">
             Apply
           </Button>
         </div>

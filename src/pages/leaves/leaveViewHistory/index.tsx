@@ -120,12 +120,12 @@ const index = () => {
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-          alertType='warning'
+        type='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
-          cancelBtntxt={"Cancle"}
-          okBtntxt={"Submit"}
-          children={<p>Are you sure you want to delete this?</p>}
+          cancelBtntxt={"No"}
+          okBtntxt={"Yes"}
+          children={<p>Are you sure you want to Cancel this Request ?</p>}
         />}
     </div>
   )

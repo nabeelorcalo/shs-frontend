@@ -31,8 +31,8 @@ const BlowWhistleForm = (props: any) => {
 
   const [selectValue, setSelectValue] = useState(
     {
-      userImg: UserAvatar,
-      userName: 'amelia clark',
+      userImg: '',
+      userName: 'Select',
       grievanceType: "Select"
     }
   );
@@ -63,7 +63,7 @@ const BlowWhistleForm = (props: any) => {
           label="Description"
           name="description"
         >
-          <TextArea rows={6} placeholder="Write Something..." maxLength={6}
+          <TextArea rows={6} placeholder="Describe your problem" maxLength={6}
             id="description"
             name="description"
             size="small"
@@ -78,7 +78,7 @@ const BlowWhistleForm = (props: any) => {
                 {
                   label: <div>{detailsData.map((item: any) => (
                     <div className="flex items-center gap-3 mb-[20px]"
-                      onClick={() => setSelectValue(item)}
+                      onClick={() => setSelectValue({ ...selectValue, userName: item.userName, userImg: item.userImg })}
                     >
                       <img src={item.userImg}
                         className='h-[24px] w-[24px] rounded-full object-cover'
@@ -90,7 +90,7 @@ const BlowWhistleForm = (props: any) => {
                 }]}>
               <div className="drop-down-with-imgs flex items-center gap-3">
                 <div className="flex items-center gap-3 mr-[40px]">
-                  <img src={selectValue.userImg} />
+                  {selectValue.userImg != '' && <img src={selectValue.userImg} />}
                   <p>{selectValue.userName}</p>
                 </div>
                 <ArrowDownDark />
@@ -98,7 +98,7 @@ const BlowWhistleForm = (props: any) => {
             </DropDownNew>
           </div>
         </Form.Item>
-        <Form.Item name="mySelect" label="Escalate To">
+        <Form.Item name="mySelect" label="Attachment (Option)">
           <DragAndDropWide />
         </Form.Item>
         <div className="blow-whistle-footer flex justify-end mt-4 gap-2">
