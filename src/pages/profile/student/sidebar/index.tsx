@@ -95,7 +95,7 @@ const StudentSideBar = (props: any) => {
               <div className="intro">
                 <div className="ml-5 mb-3">
                   <Typography className="emp-name">Intro</Typography>
-                  <Typography className="emp-desgination">
+                  <Typography className="emp-desgination pt-1 pb-1">
                     Create your video interview to get hired
                   </Typography>
                 </div>
@@ -104,6 +104,7 @@ const StudentSideBar = (props: any) => {
                     onClick={() => {
                       setShowSideViewType('add-video');
                     }}
+                    className="pb-2 pt-2"
                   >
                     <img src={video} alt="" />
                     <Typography className="video-p">Add Video</Typography>
@@ -111,7 +112,7 @@ const StudentSideBar = (props: any) => {
                 </center>
               </div>
               <Divider />
-              <p className="a-tag-side"
+              <p className="a-tag-side pb-3"
                 onClick={() => {
                   setShowSideViewType('change-password')
                 }}

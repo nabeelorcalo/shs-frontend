@@ -17,6 +17,7 @@ const endpoints = {
   CHANGEPASSWORD:'/auth/change-password',
   FORGOTPASSWORD:'/auth/forgot-password',
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
-  VERIIFCATION_STUDENT:"/auth/veriff/{cognitoId}",
+  VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
+  PROFILE_CHANGE_PASSWORD:"/auth/change-password",
 }
 export default endpoints;
