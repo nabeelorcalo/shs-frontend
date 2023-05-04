@@ -16,7 +16,7 @@ const CaseStudiesTable = (props: any) => {
       {
         dataIndex: 'avater',
         key: 'avater',
-        title: 'Avater',
+        title: 'Avatar',
         render: (avater: any) => {
           return {
             children: (
@@ -59,9 +59,8 @@ const CaseStudiesTable = (props: any) => {
             children: (
               <div className='case-studies-table'>
                 <span
-                  className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'Pending' ? 'pending' :
-                    text === 'Approved' ? 'approved' : text === 'Rejected' ? 'rejected' : ''} `}
-                >
+                  className={`rounded-md px-2 py-1 text-white text-sm font-normal font-[outfit] ${text === 'Pending' ? 'pending' :
+                    text === 'Approved' ? 'approved' : text === 'Rejected' ? 'rejected' : ''} `}  >
                   {text}
                 </span>
               </div>
@@ -70,7 +69,7 @@ const CaseStudiesTable = (props: any) => {
         }
       },
       {
-        title: 'Action',
+        title: 'Actions',
         dataIndex: '',
         render: (_: any, data: any) => <CustomDropDownCaseStudies setState={setOpenDropdown}
           state={openDropdown} status={data.status} data={data.no} openWarningModal={openWarningModal} setOpenWarningModal={setOpenWarningModal} />
@@ -88,7 +87,7 @@ const CaseStudiesTable = (props: any) => {
         state={openWarningModal}
         setState={setOpenWarningModal}
         type="warning"
-        okBtntxt="Delete"
+        okBtntxt="Continue"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to reject this case study?</p>}
       />

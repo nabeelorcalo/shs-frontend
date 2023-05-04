@@ -17,7 +17,7 @@ const index = () => {
       ReportName: 'September 2022',
       department: 'Design',
       assessmentDate: '20/09/2022',
-      reportingManager: '+44 7700 900077',
+      reportingManager: 'Savannah Nguyen',
       status: 'Pending',
     },
     {
@@ -27,7 +27,7 @@ const index = () => {
       ReportName: 'September 2022',
       department: 'Research',
       assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
+      reportingManager: 'Annette Black',
       status: 'Pending',
     },
     {
@@ -37,7 +37,7 @@ const index = () => {
       ReportName: 'August 2022',
       department: 'Business',
       assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
+      reportingManager: 'Wade Warren',
       status: 'Pending',
     },
     {
@@ -47,7 +47,7 @@ const index = () => {
       ReportName: 'September 2022',
       department: 'Management',
       assessmentDate: '20/09/2022',
-      reportingManager: '+44 7700 900077',
+      reportingManager: 'Savannah Nguyen',
       status: 'Pending',
     },
     {
@@ -57,7 +57,7 @@ const index = () => {
       ReportName: 'University of London',
       department: 'Development',
       assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
+      reportingManager: 'Kathryn Murphy',
       status: 'Approved',
     },
     {
@@ -67,16 +67,25 @@ const index = () => {
       ReportName: 'August 2022',
       department: 'Development',
       assessmentDate: '20/09/2022',
-      reportingManager: '+44 2078 628009',
+      reportingManager: 'Albert Flores',
+      status: 'Rejected',
+    },
+    {
+      no: '07',
+      name: "Lindsey Mango",
+      avater: Image,
+      ReportName: 'August 2022',
+      department: 'Development',
+      assessmentDate: '20/09/2022',
+      reportingManager: 'Albert Flores',
       status: 'Rejected',
     },
   ]
   const TableColumn = ['No.', 'Avater', ' Name', 'Report Name', 'Department', 'Assessment Date', 'Reporting Manager', 'Status']
   const action = useCustomHook();
-
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  // const [value, setValue] = useState<any>()
   const handleChange = () => { };
+
   return (
     <div className='manager-case-studies'>
       <PageHeader title="Case Studies" actions bordered />
@@ -85,7 +94,7 @@ const index = () => {
           <SearchBar size="middle" handleChange={handleChange} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col justify-end gap-4'>
-          <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
+          <FiltersButton label="Filters" onClick={() => { setShowDrawer(!showDrawer) }} />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
@@ -107,7 +116,7 @@ const index = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters />
+          <Filters  setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>

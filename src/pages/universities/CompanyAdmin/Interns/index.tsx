@@ -111,7 +111,7 @@ const index: React.FC = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters />
+          <Filters setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>

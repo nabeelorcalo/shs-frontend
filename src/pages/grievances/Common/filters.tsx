@@ -2,31 +2,80 @@ import React, { useState } from 'react'
 import { Button, Form } from "antd";
 import { DropDown } from '../../../components';
 import './style.scss'
+import { ArrowDownDark, Avatar, UserAvatar } from '../../../assets/images';
+import DropDownNew from '../../../components/Dropdown/DropDownNew';
 
 const Filters: React.FC = (props: any) => {
   const [form] = Form.useForm();
+  const detailsData = [
+    {
+      userImg: UserAvatar,
+      userName: 'john doe'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'mina marino'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'clark'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'sarah joe'
+    },
+    {
+      userImg: <Avatar />,
+      userName: 'Other'
+    },
+  ]
   const timeFrame = ['This Week ', 'Last Week ', 'This Month', 'Last Month', 'range picker']
   const type = ["New", "In Progress", "Re-Open", "Resolved"]
   const status = ["Work", "Personal", "Discipline", "Other"]
-  const escalatedBy = ["Mino Marino", "David Miller", "Amila Clark"]
-  const [filterValue, setFilterValue] = useState({ type: "Select", timeFrame: "Select", status: "Select", escalatedBy: "Select" });
+  const [filterValue, setFilterValue] = useState({
+    type: "Select", timeFrame: "Select", status: "Select", escalatedBy: "Select", userImg: '',
+    userName: 'Select',
+  });
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
   }
   const ResetHandler = () => {
-    setFilterValue({ type: "Select", timeFrame: "Select", status: "Select", escalatedBy: "Select" });
+    setFilterValue({
+      type: "Select", timeFrame: "Select", status: "Select", escalatedBy: "Select", userImg: '',
+      userName: 'Select',
+    });
   }
   return (
     <div className='filter_main_wrapper'>
       <Form layout="vertical" form={form}>
         <Form.Item name="escalatedBy" label="Escalated By">
-          <DropDown
-            name={filterValue.escalatedBy}
-            value={filterValue.escalatedBy}
-            options={escalatedBy.map((item: any) => { return item })}
-            setValue={(e: string) => setFilterValue({ ...filterValue, escalatedBy: e })}
-          />
+          <div className='asignee-wrap w-[100%]'>
+            <DropDownNew
+              placement={'bottomRight'}
+              items={[
+                {
+                  label: <div>{detailsData.map((item: any) => (
+                    <div className="flex items-center gap-3 mb-[20px]"
+                      onClick={() => setFilterValue({ ...filterValue, userName: item.userName, userImg: item.userImg })}
+                    >
+                      <img src={item.userImg}
+                        className='h-[24px] w-[24px] rounded-full object-cover'
+                      />
+                      <p>{item.userName}</p>
+                    </div>))}
+                  </div>,
+                  key: 'users'
+                }]}>
+              <div className="drop-down-with-imgs flex items-center gap-3">
+                <div className="flex items-center gap-3 mr-[40px]">
+                  {filterValue.userImg != '' && <img src={filterValue.userImg} />}
+                  <p>{filterValue.userName}</p>
+                </div>
+                <ArrowDownDark />
+              </div>
+            </DropDownNew>
+          </div>
         </Form.Item>
         <Form.Item name="timeFrame" label="Time Frame" >
           <DropDown

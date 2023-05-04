@@ -105,6 +105,7 @@ const InternDocument = () => {
               setValue={(val: string) => setState({ ...state, dateRange: val })}
               value={state.dateRange}
               options={[
+                "All",
                 "this week",
                 "last week",
                 "this month",

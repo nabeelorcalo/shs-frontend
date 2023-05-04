@@ -27,12 +27,12 @@ const DetailHistory = () => {
 
   const evaluationHistoryColumnNames = [
     {
-      title: 'Date',
+      title: <span className="font-semibold text-secondary-color">Date</span>,
       key: 'date',
       dataIndex: 'date',
     },
     {
-      title: 'Performance',
+      title: <span className="font-semibold text-secondary-color">Performance</span>,
       key: 'performance',
       render: (_: any, data: any) => {
         return (
@@ -42,7 +42,7 @@ const DetailHistory = () => {
               percent={data.performance}
               strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
               format={(percent: any) =>
-                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
+                <p className={"myClass font-medium " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
                   {percent}%
                 </p>
               }
@@ -52,7 +52,7 @@ const DetailHistory = () => {
       },
     },
     {
-      title: 'Action',
+      title: <span className="font-semibold text-secondary-color">Action</span>,
       key: 'action',
       render: (_: any, data: any) => (
         <Space size="middle">
@@ -189,10 +189,10 @@ const DetailHistory = () => {
     }));
   }
   const progressData = [
-    { id:1,title: 'Overall', progressPercent: 81, progressColor: '#4783FF' },
-    { id:2,title: 'Learning Objectives', progressPercent: 85, progressColor: '#A1D8EA' },
-    { id:3,title: 'Discipline', progressPercent: 75, progressColor: '#F08D97' },
-    { id:4,title: 'Personal', progressPercent: 68, progressColor: '#78DAAC' },
+    { id: 1, title: 'Overall', progressPercent: 81, progressColor: '#4783FF' },
+    { id: 2, title: 'Learning Objectives', progressPercent: 85, progressColor: '#A1D8EA' },
+    { id: 3, title: 'Discipline', progressPercent: 75, progressColor: '#F08D97' },
+    { id: 4, title: 'Personal', progressPercent: 68, progressColor: '#78DAAC' },
   ]
   return (
     <>
@@ -201,16 +201,16 @@ const DetailHistory = () => {
         title={<Breadcrumb breadCrumbData={detailHistoryBreadCrumb} />}
       />
 
-      <Row gutter={[20, 20]} className="company-admin-detail-history-container">
+      <Row gutter={[25, 25]} className="company-admin-detail-history-container">
         <Col xs={24} md={24} xl={12}>
           <div className="performance-left-subcontainer ">
-            <BoxWrapper className="flex flex-col">
+            <BoxWrapper className="flex flex-col h-[379px]">
               <TopPerformanceCard
                 id={1}
                 name="Maria Sanoid"
-                nameClassName="text-2xl text-primary-color"
+                nameClassName="text-2xl text-primary-color font-medium"
                 profession="UI UX Designer"
-                className="bg-visible-btn evaluate-btn"
+                className="bg-visible-btn evaluate-btn font-medium"
                 icon={<ColorLessMedalIcon />}
                 btnTxt={role !== constants.UNIVERSITY && 'Evaluate'}
                 size={64}
@@ -218,29 +218,29 @@ const DetailHistory = () => {
                 avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
               />
               {progressData.map((item: any) => (
-                <div key={item.id}>
+                <div key={item.id} className="mt-2">
                   <p className="mt-4">{item.title}</p>
                   <Progress className="flex" percent={item.progressPercent} strokeColor={item.progressColor} />
                 </div>
               ))}
             </BoxWrapper>
-
-            <div className="my-4 h-[502px]">
+            <BoxWrapper className="my-6 h-[379px]">
               <MonthlyPerfomanceChart
-                heading="Summary"
+                heading="Monthly Performance"
                 data={data}
                 XField="department"
                 columnWidthRatio={0.5}
+                height='315px'
               />
-            </div>
+            </BoxWrapper>
           </div>
         </Col>
         <Col xs={24} md={24} xl={12}>
-          <div className="performance-right-subcontainer ">
-            <BoxWrapper >
-              <Typography.Title level={4} >
+          <div className="performance-right-subcontainer">
+            <BoxWrapper className="h-[785px]">
+              <p className="font-medium text-xl mb-4">
                 Evaluation History
-              </Typography.Title>
+              </p>
               <GlobalTable
                 columns={evaluationHistoryColumnNames}
                 tableData={evaluationHistoryData}

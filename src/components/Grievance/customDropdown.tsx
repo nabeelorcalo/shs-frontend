@@ -16,10 +16,10 @@ const GrievanceDropdown = (props: any) => {
         <Menu>
           <Menu.Item key="1">
             <NavLink
-              className="text-[#454545] hover:text-[#454545]"
+              className="text-[#454545] hover:text-[#454545] border-0"
               to={props?.link}
             >
-              View More
+              View Details
             </NavLink>
           </Menu.Item>
         </Menu>
