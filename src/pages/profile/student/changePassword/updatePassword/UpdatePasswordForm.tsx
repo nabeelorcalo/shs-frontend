@@ -1,11 +1,11 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Space, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../../actionHandler";
 
 const CreatePasswordForm = () => {
   const action = useCustomHook();
-  
+
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -21,11 +21,6 @@ const CreatePasswordForm = () => {
         currentPassword: currentPassword,
         newPassword: newPassword,
       })
-      .then((data: any) => {
-        console.log("data", data); //for debugging purpose
-        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-      })
-      .catch((err) => console.log(err));
   };
 
   return (
