@@ -8,7 +8,7 @@ import {
   TextArea,
 } from "../../../../components";
 import { useNavigate } from "react-router-dom";
-import { Row, Col, Button, Steps } from "antd";
+import { Row, Col, Button, Steps, } from "antd";
 import { Encryption, Signeddigital } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { CheckCircleFilled, EditFilled, EyeFilled } from "@ant-design/icons";
@@ -165,7 +165,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setDismissModal(false)}
-              className="change-mind-red-btn border-1 border-solid border-[#D83A52] w-[100%] text-error-color rounded-[8px]"
+              className="change-mind-red-btn border-1 border-solid border-[#d83a52] w-[100%] text-error-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -248,13 +248,14 @@ const Received = () => {
       <div>
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
-      <BoxWrapper >
+      <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Steps current={activeStep} onChange={handleStepChange}>
+            <Steps style={{ color: "red" }} current={activeStep} onChange={handleStepChange}>
               {steps.map((step) => (
                 <Steps.Step key={step.title} title={step.title} icon={step.icon} />
               ))}
+
             </Steps>
             <div className=" pt-4 font-semibold text-xl text-secondary-color">
               Contract
@@ -264,7 +265,6 @@ const Received = () => {
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <div ref={contentRef} className="scroll">
               <Row gutter={[0, 30]}>
-
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <div id="step1">
                     <Row gutter={[30, 24]}>

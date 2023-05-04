@@ -501,7 +501,7 @@ const PerformanceHistory = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={true} />
           </BoxWrapper>
         </Col>
       </Row>

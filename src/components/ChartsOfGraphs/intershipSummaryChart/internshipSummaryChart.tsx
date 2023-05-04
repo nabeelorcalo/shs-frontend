@@ -74,7 +74,7 @@ export const InternshipSummaryChart = (props: any) => {
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       {heading && (
-        <p className="text-secondary-color font-medium text-xl">{heading}</p>
+        <p className="text-secondary-color font-medium text-xl mb-4">{heading}</p>
       )}
       <RadialBar
         style={{ height: height ?? "300px", marginTop: "-15px" }}

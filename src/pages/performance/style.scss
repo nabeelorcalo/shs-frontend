@@ -77,6 +77,12 @@
       box-shadow: none;
     }
   }
+
+  .innerContent {
+    height: 600px;
+    overflow: auto;
+    overflow-x: hidden;
+  }
 }
 
 // Interm/performance-page
@@ -222,6 +228,11 @@
       min-width: 170px;
     }
   }
+
+}
+
+.performance-modal .ant-modal .ant-modal-header {
+  margin-bottom: 15px !important;
 }
 
 // Sidebar
@@ -297,6 +308,7 @@
 
   .ant-progress-text {
     font-size: 16px;
+    font-weight: 400;
     padding: 0 0 0 8px;
     margin: auto;
     color: $text-secondary-body-color;

@@ -24,10 +24,15 @@ const useCustomHook = () => {
     const { data } = await api.post(SETTING_DAPARTMENT, body);
   };
 
+  const patchSettingDepartment = async (body: any): Promise<any> => {
+    const { data } = await api.patch(SETTING_DAPARTMENT, body);
+  };
+
   return {
     getSettingDepartment,
     deleteSettingDepartment,
     postSettingDepartment,
+    patchSettingDepartment
   };
 };
 

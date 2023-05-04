@@ -31,7 +31,7 @@ const CompanyAdmin = () => {
       {
         avatar:
           "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "11 November", 
+        date: "11 November",
         id: 1,
         name: "Jennie Duncan",
       },
@@ -83,13 +83,13 @@ const CompanyAdmin = () => {
   }, []);
 
   return (
-    <> 
+    <>
       <PageHeader
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
             <span className="page-header-secondary-color">Maria Sanoid</span>
-          </div> 
+          </div>
         }
       />
       <Row gutter={gutter}>
@@ -114,7 +114,7 @@ const CompanyAdmin = () => {
             }}
             xField="name"
             yField="star"
-            height={315}
+            height={300}
           />
         </Col>
         <Col xs={24}>

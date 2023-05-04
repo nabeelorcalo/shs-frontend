@@ -1,0 +1,9 @@
+@import "../../../scss/colors";
+
+.error-page {
+  .back-to-home-btn {
+    &:hover {
+      color: $white-bg-color !important;
+    }
+  }
+}

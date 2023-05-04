@@ -30,12 +30,12 @@ const SettingDepartment: React.FC = () => {
   const action = useCustomHook();
   const departmentData = useRecoilState<any>(settingDepartmentState)
   const [form] = Form.useForm();
+  const [edit, setEdit] = useState<any>()
   const [state, setState] = useState<any>(
     {
       showEditModal: false,
       showDeleteModal: false,
       departmentId: "",
-      editData: ""
     }
   )
 
@@ -43,31 +43,42 @@ const SettingDepartment: React.FC = () => {
     action.getSettingDepartment(1, event)
   };
 
-  const initialValues = {
-    departmentName: state.editData?.name,
-    description: state.editData?.description,
-  };
+  if (edit?.isEdit === "isEdit") {
+    const formValues = { departmentName: edit?.name, description: edit?.description }
+    form.setFieldsValue(formValues)
+  }
 
   const onFinish = (values: any) => {
-    const { departmentName, description } = values
-    action.postSettingDepartment({
-      name: departmentName,
-      description: description
-    }).then(() => { action.getSettingDepartment(1, "") })
-    form.resetFields()
-    setState({ ...state, showEditModal: false })
+    if (edit?.isEdit === "isEdit") {
+
+    }
+    else {
+      const { departmentName, description } = values
+      action.postSettingDepartment({
+        name: departmentName,
+        description: description
+      }).then(() => { action.getSettingDepartment(1, "") })
+      form.resetFields()
+      setState({ ...state, showEditModal: false })
+    }
   };
+  console.log("Edit", edit)
 
   const SetId = (id: any) => {
     setState({ ...state, showDeleteModal: !state.showDeleteModal, departmentId: id })
   }
-  
-  const SetEditData = (edit: any) => {
-    setState({ ...state, showDeleteModal: false, editData: edit })
-  }
 
+  const SetEditData = (editdata: any) => {
+    setEdit(editdata)
+  }
   const DeleleHandler = () => {
     action.deleteSettingDepartment(state.departmentId)
+  }
+
+  const resetFormHandler = () => {
+    setState({ ...state, showEditModal: false })
+    form.resetFields()
+    setEdit("")
   }
 
   useEffect(() => {
@@ -146,7 +157,6 @@ const SettingDepartment: React.FC = () => {
             </div>
           </Col>
         }
-
       </Row>
       <PopUpModal
         open={state.showEditModal}
@@ -157,7 +167,6 @@ const SettingDepartment: React.FC = () => {
       >
         <Form
           layout="vertical"
-          initialValues={initialValues}
           form={form}
           onFinish={onFinish}
         >
@@ -185,7 +194,7 @@ const SettingDepartment: React.FC = () => {
           </Form.Item>
           <div className="setting-department-footer flex justify-end mt-4 gap-2">
             <Button key="Cancel" className="footer-cancel-btn "
-              onClick={() => { setState({ ...state, showEditModal: false }), form.resetFields() }}>
+              onClick={resetFormHandler}>
               Cancel
             </Button>
             <Button key="submit" className="footer-submit-btn" htmlType="submit">

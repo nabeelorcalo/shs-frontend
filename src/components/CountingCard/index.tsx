@@ -103,151 +103,65 @@ export const CountingCard: FC<ICountingCard> = (props) => {
   const { blueBg, greenBg, yellowBg, redBg } = IconBgColors;
 
   // counting handling card list on props basis
-  const handleCardList = (
-    icon: JSX.Element,
-    title: string,
-    count: string | number,
-    iconBg: string
-  ) => cardsList.push({ icon, title, count, iconBg });
+  const handleCardList = (icon: JSX.Element, title: string, count: string | number, iconBg: string) =>
+    cardsList.push({ icon, title, count, iconBg });
 
   // counting card list
   const cardsList: ICardsList[] = [];
 
   //manager dashboard
-  totalInterns &&
-    handleCardList(<PeopleIcon />, "Total Interns", totalInterns, blueBg);
+  totalInterns && handleCardList(<PeopleIcon />, "Total Interns", totalInterns, blueBg);
 
   present && handleCardList(<ProfileTick />, "Present", present, greenBg);
 
-  myInterns &&
-    handleCardList(<ProfileTwouserIcon />, "My Interns", myInterns, yellowBg);
+  myInterns && handleCardList(<ProfileTwouserIcon />, "My Interns", myInterns, yellowBg);
 
   onLeave && handleCardList(<ProfileRemoveIcon />, "On Leave", onLeave, redBg);
 
   //company admin dashboard
-  totalApplicants &&
-    handleCardList(<PeopleIcon />, "Total Applicants", totalApplicants, blueBg);
+  totalApplicants && handleCardList(<PeopleIcon />, "Total Applicants", totalApplicants, blueBg);
 
-  totalUniversities &&
-    handleCardList(
-      <UniversityIcon />,
-      "Total Universities",
-      totalUniversities,
-      greenBg
-    );
+  totalUniversities && handleCardList(<UniversityIcon />, "Total Universities", totalUniversities, greenBg);
 
-  totalInternsComapany &&
-    handleCardList(
-      <ProfileTwouserIcon />,
-      "Total Universities",
-      totalInternsComapany,
-      greenBg
-    );
+  totalInternsComapany && handleCardList(<ProfileTwouserIcon />, "Total Universities", totalInternsComapany, greenBg);
 
-  totalManagers &&
-    handleCardList(
-      <TotalManagersIcon />,
-      "Total Universities",
-      totalManagers,
-      redBg
-    );
+  totalManagers && handleCardList(<TotalManagersIcon />, "Total Universities", totalManagers, redBg);
 
   //agent dashboard
-  (totalListings || totalListings === 0) &&
-    handleCardList(<ListingIcon />, "Total Listings", totalListings, blueBg);
+  (totalListings || totalListings === 0) && handleCardList(<ListingIcon />, "Total Listings", totalListings, blueBg);
 
   (occupiedProperties || occupiedProperties === 0) &&
-    handleCardList(
-      <PropertiesIcon />,
-      "Occupied Properties",
-      occupiedProperties,
-      redBg
-    );
+    handleCardList(<PropertiesIcon />, "Occupied Properties", occupiedProperties, redBg);
 
   (reservedProperties || reservedProperties === 0) &&
-    handleCardList(
-      <ReservedProperties />,
-      "Reserved Properties",
-      reservedProperties,
-      yellowBg
-    );
+    handleCardList(<ReservedProperties />, "Reserved Properties", reservedProperties, yellowBg);
 
   (vacantProperties || vacantProperties === 0) &&
-    handleCardList(
-      <VacantProperties />,
-      "Vacant Propertiess",
-      vacantProperties,
-      greenBg
-    );
+    handleCardList(<VacantProperties />, "Vacant Propertiess", vacantProperties, greenBg);
 
   //delegate agent dashboard
-  totalMembers &&
-    handleCardList(<IconTotalMember />, "Total Members", totalMembers, blueBg);
+  totalMembers && handleCardList(<IconTotalMember />, "Total Members", totalMembers, blueBg);
 
-  activeMembers &&
-    handleCardList(
-      <IconActiveMember />,
-      "Active Members",
-      activeMembers,
-      blueBg
-    );
+  activeMembers && handleCardList(<IconActiveMember />, "Active Members", activeMembers, blueBg);
 
-  inActiveMembers &&
-    handleCardList(
-      <InactiveMembersIcon />,
-      "In-Active Members",
-      inActiveMembers,
-      blueBg
-    );
+  inActiveMembers && handleCardList(<InactiveMembersIcon />, "In-Active Members", inActiveMembers, blueBg);
 
   // university dashboard
-  registeredStudents &&
-    handleCardList(
-      <PeopleIcon />,
-      "Registered Students",
-      registeredStudents,
-      blueBg
-    );
+  registeredStudents && handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
 
-  hiredStudents &&
-    handleCardList(
-      <HiredStudentsIcon />,
-      "Hired Students",
-      hiredStudents,
-      greenBg
-    );
+  hiredStudents && handleCardList(<HiredStudentsIcon />, "Hired Students", hiredStudents, greenBg);
 
-  completedInternship &&
-    handleCardList(
-      <PresentInternsIcon />,
-      "Completed Internship",
-      completedInternship,
-      greenBg
-    );
+  completedInternship && handleCardList(<PresentInternsIcon />, "Completed Internship", completedInternship, greenBg);
 
-  ongoingInternship &&
-    handleCardList(
-      <OngoingIcon />,
-      "Ongoing Internship",
-      ongoingInternship,
-      redBg
-    );
+  ongoingInternship && handleCardList(<OngoingIcon />, "Ongoing Internship", ongoingInternship, redBg);
 
   return (
-    <Row
-      className={`${
-        isSeprate
-          ? `xs:gap-[16px] lg:gap-[20px] 2xl:gap-[30px]`
-          : `max-w-[510px]`
-      } counting-card`}
-    >
+    <Row className={`${isSeprate ? `xs:gap-[16px] lg:gap-[20px] 2xl:gap-[30px]` : `max-w-[510px]`} counting-card`}>
       {cardsList?.map(({ icon, iconBg, title, count }: any, index) => (
         <Col
           key={title}
           className={`${
-            isSeprate
-              ? "bg-white p-5 rounded-2xl wrapper-shadow"
-              : `basis-1/2 col-${index + 1} min-h-[150px]`
+            isSeprate ? "bg-white p-5 rounded-2xl wrapper-shadow" : `basis-1/2 col-${index + 1} min-h-[150px]`
           } flex-1 `}
         >
           <Card icon={icon} title={title} count={count} iconBg={iconBg} />
