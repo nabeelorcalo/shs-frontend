@@ -145,9 +145,9 @@ const CompanyAdminPerformance = () => {
           View History
         </Link>
       </PageHeader>
-      <Row gutter={[20, 20]} className="company-admin-performance-container">
+      <Row gutter={[25, 25]} className="company-admin-performance-container">
         <Col xs={24} md={24} xl={17}>
-          <Row gutter={[20, 20]}>
+          <Row gutter={[25, 25]}>
             <Col xs={24}>
               <OverAllPerfomance
                 heading="Overall Performance"
