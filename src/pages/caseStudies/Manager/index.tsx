@@ -70,6 +70,16 @@ const index = () => {
       reportingManager: '+44 2078 628009',
       status: 'Rejected',
     },
+    {
+      no: '06',
+      name: "Lindsey Mango",
+      avater: Image,
+      ReportName: 'August 2022',
+      department: 'Development',
+      assessmentDate: '20/09/2022',
+      reportingManager: '+44 2078 628009',
+      status: 'Rejected',
+    },
   ]
   const TableColumn = ['No.', 'Avater', ' Name', 'Report Name', 'Department', 'Assessment Date', 'Reporting Manager', 'Status']
   const action = useCustomHook();
@@ -110,7 +120,7 @@ const index = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters />
+          <Filters setShowDrawer={setShowDrawer}  />
         </React.Fragment>
       </Drawer>
     </div>
