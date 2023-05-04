@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Input, Radio } from "antd";
 import { PopUpModal } from "../../../components/Model";
-import { AvatarBox, Button, TextArea } from "../../../components";
+import { AvatarBox, Button, Notifications, TextArea } from "../../../components";
 import { Certificate1, Certificate2 } from "../../../assets/images";
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal";
 
@@ -58,12 +58,13 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
             <Form.Item name="type" label="Type" className="mt-4">
               <Radio.Group value={type} onChange={(e) => setType(e.target.value)}>
                 <Radio value="Email"><span className="text-primary-color">Email</span></Radio>
-                <Radio value="Certificates text-primary-color">Certificates</Radio>
+                <Radio value="Certificates"><span className="text-primary-color ">Certificate</span></Radio>
               </Radio.Group>
             </Form.Item>
 
+            {type === "Certificates" && <p className="text-teriary-color mb-2">Select Template</p>}
             {type === "Certificates" && (
-              <div className="flex items-center flex-wrap gap-4">
+              <div className="flex items-center flex-wrap gap-4 mb-7">
                 {templates.map(({ id, template }) => (
                   <img
                     key={id}
@@ -87,16 +88,16 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
                   label="Preview"
                   type="default"
                   onClick={() => setPreviewModal(!previewModal)}
-                  className="border-visible-btn mt-4 mr-2"
+                  className="border-visible-btn mt-4 mr-2 font-semibold"
                 />
               )}
-              <Button label="Cancel" type="default" onClick={onCancel} className="border-visible-btn mt-4" />
+              <Button label="Cancel" type="default" onClick={onCancel} className="border-visible-btn mt-4 font-semibold" />
 
               <Button
                 label={type === "Certificates" ? "Continue" : "Send"}
                 htmlType={type === "Certificates" ? "default" : "submit"}
-                onClick={() => (type === "Certificates" ? setSignatureModal(!signatureModal) : onCancel(false))}
-                className="bg-visible-btn mt-4 ml-2"
+                onClick={() => (type === "Certificates" ? setSignatureModal(!signatureModal) : Notifications({ title: 'Success', description: 'Appreciation Sent', type: 'success' }))}
+                className="bg-visible-btn mt-4 ml-2 font-semibold"
               />
             </Form.Item>
           </Form>
@@ -111,7 +112,12 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
         children={<img src={selectedTemplate.template} className="w-full object-cover" alt="template" />}
         footer={""}
       />
-      <SignatureAndUploadModal state={signatureModal} />
+      <SignatureAndUploadModal state={signatureModal} title='Signature' footer={
+        <>
+          <Button label="Cancel" type="default" onClick={() => setSignatureModal(!signatureModal)} className="border-visible-btn mt-4 font-semibold" />
+          <Button label="Sign" type="default" onClick={() => setPreviewModal(!previewModal)} className="bg-visible-btn mt-4 font-semibold" />
+        </>
+      } />
     </>
   );
 };

@@ -12,24 +12,25 @@ const onChange = (key: string) => {
 const items: TabsProps['items'] = [
   {
     key: '1',
-    label: `Draw`,
+    label: <span className='text-secondary-color font-normal'>Draw</span>,
     children: <DrawSignature />,
   },
   {
     key: '2',
-    label: `Type`,
+    label: <span className='text-secondary-color font-normal'>Type</span>,
     children: <TypeSignature />,
   },
   {
     key: '3',
-    label: `Upload`,
+    label:<span className='text-secondary-color font-normal'>Upload</span>,
     children: <DragAndDropUpload />,
   },
 ];
 export const SignatureAndUploadModal = (props: any) => {
   const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props
-  return (<PopUpModal title={title}
+  return (<PopUpModal title={<span className='text-primary-color text-xl font-medium'>{title}</span>}
     open={state} close={closeFunc}
+    wrapClassName='signature-modal'
     width={width}
     okBtntxt={okBtntxt}
     cancelBtntxt={cancelBtntxt}
