@@ -22,16 +22,17 @@ import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components
 import { NavLink } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import "./style.scss";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
+  const [form] = Form.useForm();
   const breadcrumbArray = [
-    { name: "New Template"},
-    { name: "Setting"  },
-    { name: "Template" , onClickNavigateTo:`/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Certificate of Completion" , onClickNavigateTo:`${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
+    { name: "New Template" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
-  const [value, setValue] = useState();
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
     toggle: false,
@@ -51,11 +52,6 @@ const NewTemplateCertiticationOfCompletion = () => {
     setTextEditorValue(e)
   }
 
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
-  };
-
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
   };
@@ -72,22 +68,17 @@ const NewTemplateCertiticationOfCompletion = () => {
     setBorderColorSecond({ color: "#FFFFFF" });
   };
 
-  const [form] = Form.useForm();
-  const handleSubmit = () => {
-    const values = form.getFieldsValue();
-    const formData = {
-      subject: values.subject,
-      templateName: values.templateName,
-      description: textEditorValue
-    }
-  };
+  const onFinish = (values: any) => { }
 
   return (
     <div className="certificate-of-appreciation-new-template">
-       <Breadcrumb breadCrumbData={breadcrumbArray}/>
-      <Divider/>
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
       <BoxWrapper>
-      <Form layout="vertical" form={form}>
+        <Form layout="vertical"
+          form={form}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          onFinish={onFinish}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -101,7 +92,7 @@ const NewTemplateCertiticationOfCompletion = () => {
                 required={false}
                 name="templateName"
                 label="Template Name"
-                rules={[{ required: true, message: "Please Enter your username!" }]}
+                rules={[{ required: true }, { type: "string" }]}
               >
                 <Input placeholder="Enter name" />
               </Form.Item>
@@ -109,7 +100,8 @@ const NewTemplateCertiticationOfCompletion = () => {
                 required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ required: true, message: "Please Enter your username!" }]}  >
+                rules={[{ required: true }, { type: "string" }]}
+              >
                 <Input placeholder="Enter subject" />
               </Form.Item>
               <Form.Item
@@ -136,81 +128,81 @@ const NewTemplateCertiticationOfCompletion = () => {
               <Row gutter={[16, 16]}>
                 <Col className="gutter relative" xs={24} lg={12} xl={12}>
                   <BoxWrapper>
-                  <div
-                    style={{ border: `2px solid ${borderColorfirst.color}` }}
-                    className="cursor-pointer certificate-card "
-                  >
-                    {borderColorfirst.toggle && (
-                      <CertificateTickCircle className="absolute certificate-tick-circle" />
-                    )}
+                    <div
+                      style={{ border: `2px solid ${borderColorfirst.color}` }}
+                      className="cursor-pointer certificate-card "
+                    >
+                      {borderColorfirst.toggle && (
+                        <CertificateTickCircle className="absolute certificate-tick-circle" />
+                      )}
 
-                    <div className="card-image-box ">
-                      <span className="flex justify-center p-5 image">
-                        <TemplateCertificateSmall className=" background-img" />
-                      </span>
-                      <div
-                        className="middle"
-                        onClick={() => {
-                          setShowEditModal(!showEditModal);
-                        }}
-                      >
-                     <CertificateEyeIcon className='eye-icon text'
+                      <div className="card-image-box ">
+                        <span className="flex justify-center p-5 image">
+                          <TemplateCertificateSmall className=" background-img" />
+                        </span>
+                        <div
+                          className="middle"
+                          onClick={() => {
+                            setShowEditModal(!showEditModal);
+                          }}
+                        >
+                          <CertificateEyeIcon className='eye-icon text'
                             height={70}
                             width={70}
                           />
+                        </div>
                       </div>
+                      <Divider />
+                      <p
+                        className="text-center"
+                        onClick={
+                          borderColorfirst.toggle
+                            ? NoBorderHandler
+                            : FirstBorderHandler
+                        }
+                      >
+                        Template 1
+                      </p>
                     </div>
-                    <Divider />
-                    <p
-                      className="text-center"
-                      onClick={
-                        borderColorfirst.toggle
-                          ? NoBorderHandler
-                          : FirstBorderHandler
-                      }
-                    >
-                      Template 1
-                    </p>
-                  </div>
                   </BoxWrapper>
                 </Col>
                 <Col className="gutter relative" xs={24} lg={12} xl={12}>
-                <BoxWrapper>
-                  <div
-                    style={{ border: `2px solid ${borderColorSecond.color}` }}
-                    className="cursor-pointer certificate-card "
-                  >
-                    {borderColorSecond.toggle && (
-                      <CertificateTickCircle className="absolute certificate-tick-circle" />
-                    )}
-                    <div className="card-image-box ">
-                      <span className="flex justify-center p-5 image">
-                        <TemplateCertificateSmall className=" background-img" />
-                      </span>
-                      <div
-                        className="middle"
-                        onClick={() => {
-                          setShowEditModal(!showEditModal);
-                        }}
-                      >
-                     <CertificateEyeIcon className='eye-icon text'
+                  <BoxWrapper>
+                    <div
+                      style={{ border: `2px solid ${borderColorSecond.color}` }}
+                      className="cursor-pointer certificate-card "
+                    >
+                      {borderColorSecond.toggle && (
+                        <CertificateTickCircle className="absolute certificate-tick-circle" />
+                      )}
+                      <div className="card-image-box ">
+                        <span className="flex justify-center p-5 image">
+                          <TemplateCertificateSmall className=" background-img" />
+                        </span>
+                        <div
+                          className="middle"
+                          onClick={() => {
+                            setShowEditModal(!showEditModal);
+                          }}
+                        >
+                          <CertificateEyeIcon className='eye-icon text'
                             height={70}
                             width={70}
                           />
+                        </div>
                       </div>
+                      <Divider />
+                      <p
+                        className="text-center"
+                        onClick={
+                          borderColorSecond.toggle
+                            ? NoBorderHandler1
+                            : SecondBorderHandler
+                        }
+                      >
+                        Template 2
+                      </p>
                     </div>
-                    <Divider />
-                    <p
-                      className="text-center"
-                      onClick={
-                        borderColorSecond.toggle
-                          ? NoBorderHandler1
-                          : SecondBorderHandler
-                      }
-                    >
-                      Template 2
-                    </p>
-                  </div>
                   </BoxWrapper>
                 </Col>
               </Row>
@@ -218,14 +210,14 @@ const NewTemplateCertiticationOfCompletion = () => {
           </Row>
           <Space className="flex justify-end pt-5">
             <Button danger size="middle" type="primary">
-            <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}> 
-             Cancel 
-             </NavLink>
+              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION} className="border-0">
+                Cancel
+              </NavLink>
             </Button>
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
-              onClick={handleSubmit}
+              htmlType="submit"
             >
               Add
             </Button>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "./settingModal";
 import { GlobalTable } from "../../../components";
@@ -235,7 +235,6 @@ const DigiVaultStudent = () => {
         </Col>
       </Row>
       <Divider />
-
       <Row gutter={[20, 10]} className="">
         <Col xxl={18} xl={16} lg={16} md={24} sm={24} xs={24}>
           <div className="manage-vault ">
@@ -263,24 +262,21 @@ const DigiVaultStudent = () => {
         </Col>
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
-            <Row gutter={[20, 10]} className="storage-bar-header">
-              <Col xxl={10} xl={12} lg={24} md={8} sm={8} xs={24}>
+            <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
+              <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
                 <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
               </Col>
-
-              <Col xxl={14} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
+              <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
                 <div className="available-storage  pb-4">Available Storage</div>
                 <div className="available-storage-value">130GB / 512GB</div>
               </Col>
             </Row>
-
             <div className="pt-2">
               <ColorfullIconsWithProgressbar arraydata={arraydata} />
             </div>
           </div>
         </Col>
       </Row>
-
       <Row className="pt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="recent-files">

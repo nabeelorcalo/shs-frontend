@@ -1,4 +1,4 @@
-import { Button, Col, Row, Space, Typography } from "antd";
+import { Button, Col, Row, Typography } from "antd";
 import { managerCar } from "./managerMock";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +13,10 @@ const ManagerInfo = () => {
         {managerCar.map((item, index) => {
           return (
             <>
-              <Col xxl={6} xl={6} lg={8} md={12} sm={24} xs={24}>
-                <div className="rounded-[10px] p-1 pt-2 pb-3  white-bg-color shadow-[0px 0px 8px 2px rgba(9, 161, 218, 0.1)] 
-                border-1 border-solid border-[#E6F4F9]">
+              <Col xxl={6} xl={8} lg={12} md={12} sm={24} xs={24}>
+                <div className="rounded-[10px] py-3  white-bg-color" style={{boxShadow:"0px 0px 8px 2px rgba(9, 161, 218, 0.1)"}}>
                   <center>
-                    <img src={item.img} alt="user-img" className="pt-3" />
+                    <img src={item.img} alt="user-img"/>
                     <Typography className="text-2xl  text-primary-color font-medium pt-3">
                       {item.managerName}
                     </Typography>

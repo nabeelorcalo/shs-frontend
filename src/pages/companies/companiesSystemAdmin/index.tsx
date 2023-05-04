@@ -270,7 +270,7 @@ const CompaniesSystemAdmin = () => {
   }
   return (
     <>
-      <PageHeader title="Applications" />
+      <PageHeader title="Companies" />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
@@ -316,6 +316,7 @@ const CompaniesSystemAdmin = () => {
                       options={[
                         "Active",
                         "Blocked",
+                        "All"
                       ]}
                       setValue={() => { updateNatureOfWork(event) }}
                       showDatePickerOnVal="custom"
@@ -335,6 +336,7 @@ const CompaniesSystemAdmin = () => {
                         "Liverpool",
                         "Bristol",
                         "Leads",
+                        "All"
                       ]}
                       setValue={() => { updateTypeOfWork(event) }}
                       showDatePickerOnVal="custom"

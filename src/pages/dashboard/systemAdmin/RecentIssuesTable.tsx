@@ -27,31 +27,31 @@ const handleStatusBg = (value: string) => {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: "Issue Id ",
+    title: <th className="text-sm font-medium text-secondary-color">Issue Id</th>,
     dataIndex: "issueId",
     key: "issueId",
     render: (text) => <p className="break-keep min-w-[60px] text-sm">{text}</p>,
   },
   {
-    title: "Reported By",
+    title: <th className="text-sm font-medium text-secondary-color">Reported By</th>,
     dataIndex: "reportedBy",
     key: "reportedBy",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Date",
+    title: <th className="text-sm font-medium text-secondary-color">Date</th>,
     dataIndex: "date",
     key: "date",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Time",
+    title: <th className="text-sm font-medium text-secondary-color">Time</th>,
     dataIndex: "time",
     key: "time",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: "Status",
+    title: <th className="text-sm font-medium text-secondary-color">Status</th>,
     dataIndex: "status",
     key: "status",
     render: (text) => (
@@ -61,7 +61,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: "Action",
+    title: <th className="text-sm font-medium text-secondary-color">Action</th>,
     dataIndex: "action",
     key: "index",
     render: (action) => (

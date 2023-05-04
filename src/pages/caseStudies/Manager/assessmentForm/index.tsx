@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BoxWrapper, Breadcrumb, Notifications, SignatureAndUploadModal } from '../../../../components'
 import { Divider, Button, Typography, Form, Input } from 'antd'
-const { TextArea } = Input;
 import ManagerRemarks from '../../Common/managerRemarks'
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import signature from "../../../../assets/images/Report/signature.svg"
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
 import './style.scss'
+const { TextArea } = Input;
 
 const index = () => {
   const breadcrumbArray = [
@@ -52,8 +52,7 @@ const index = () => {
   ]
   return (
     <div className='company-admin-assessment-form'>
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
-      <Divider />
+      <Breadcrumb breadCrumbData={breadcrumbArray} bordered={true}/>
 
       {/* for destop */}
       <div className='scroll '>
@@ -98,9 +97,9 @@ const index = () => {
           <div className='flex justify-end gap-5 my-5 assessment-footer'>
             <Button type='primary'
               className='text-error-bg-color white-color reject-btn' >
-              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
+              <Link to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
                 Reject
-              </NavLink>
+              </Link>
             </Button>
             <Button type='primary'
               className='white-bg-color teriary-color save-btn'>Save Draft</Button>
@@ -150,7 +149,7 @@ const index = () => {
             </div>
           </div>
         </Form>
-        <div className='flex justify-end xs:gap-1 sm :gap-5 my-5 assessment-footer'>
+        {/* <div className='flex justify-end xs:gap-1 sm :gap-5 my-5 assessment-footer'>
           <Button type='primary'
             className='text-error-bg-color white-color reject-btn  text-xs' >
             <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>
@@ -165,13 +164,13 @@ const index = () => {
               Notifications({ title: "Success", description: "Cade Study finalise ", type: 'success' }),
                 navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`)
             }}>Finalise</Button>
-        </div>
+        </div> */}
       </BoxWrapper>
       <SignatureAndUploadModal
         title=""
         width={500}
         state={openModal}
-        cancelBtntxt={() => { setOpenModal(false) }}
+        cancelBtntxt={() => {setOpenModal(false) }}
         okBtntxt="Upload"
         closeFunc={() => { setOpenModal(false) }}
         okBtnFunc={() => { }}
@@ -180,7 +179,7 @@ const index = () => {
             className='white-bg-color teriary-color'
           >
             Cancel
-          </Button>,
+          </Button>
           <Button
             type='primary'
             className='white-color teriary-bg-color  '

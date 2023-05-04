@@ -28,13 +28,22 @@
     border-radius: 12px 12px 0px 12px;
     white-space: pre-wrap;
   }
+
   .textarea-icon {
     width: -webkit-fill-available;
   }
+
   .chat-textarea {
-    &:hover{
+    &:hover {
       border: none !important;
       box-shadow: none;
     }
   }
+
+  .ant-input:hover,
+  .ant-input:focus {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
 }

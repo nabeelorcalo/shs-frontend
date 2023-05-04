@@ -177,8 +177,8 @@ const StudentMain = () => {
   }
   return (
     <>
-      <PageHeader title="Students"/>
-      <Row gutter={[20,20]} className="mt-5">
+      <PageHeader title="Students" />
+      <Row gutter={[20, 20]} className="mt-5">
         <Col xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar
             handleChange={() => { }}
@@ -188,50 +188,56 @@ const StudentMain = () => {
           />
         </Col>
         <Col xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-wrap gap-4 justify-end">
-              <CommonDatePicker
-                name="Date Picker"
-                open={openDatePicker}
-                onBtnClick={() => { console.log("date picker clicked") }}
-                setOpen={setOpenDatePicker}
-                setValue={function noRefCheck() { }}
-              />
-              <DropDown
-                name="this month"
-                options={[
-                  'This week',
-                  'Last week',
-                  'This month',
-                  'Last month',
-                ]}
-                setValue={() => { updateTimePeriod(event) }}
-                showDatePickerOnVal="custom"
-                value={state.time_period}
-              />
-            <div className="flex justify-between gap-4">
-              <ToggleButton
-                isToggle={listandgrid}
-                onTogglerClick={() => { setListandgrid(!listandgrid) }}
-                FirstIcon={CardViewIcon}
-                LastIcon={TableViewIcon}
-                className='w-[88px]'
-              />
-              <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => {
+          <CommonDatePicker
+            name="Date Picker"
+            open={openDatePicker}
+            onBtnClick={() => { console.log("date picker clicked") }}
+            setOpen={setOpenDatePicker}
+            setValue={function noRefCheck() { }}
+          />
+          <DropDown
+            name="this month"
+            options={[
+              'This week',
+              'Last week',
+              'This month',
+              'Last month',
+              'All'
+            ]}
+            setValue={() => { updateTimePeriod(event) }}
+            showDatePickerOnVal="custom"
+            value={state.time_period}
+          />
+          <div className="flex justify-between gap-4">
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
 
-                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
-                }}
-                value=""
-              />
-            </div>
+                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
+              }}
+              value=""
+            />
+          </div>
         </Col>
         <Col xs={24}>
-        {
-            listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
+          {
+            listandgrid ? <BoxWrapper>
+              <GlobalTable
+                columns={columns}
+                tableData={newTableData}
+              />
+            </BoxWrapper> : <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
                 newTableData.map((items: any, idx: any) => {
                   return (
@@ -247,10 +253,8 @@ const StudentMain = () => {
                 })
               }
             </div>
-              :
-              <BoxWrapper>
-                <GlobalTable columns={columns}  tableData={newTableData} />
-              </BoxWrapper>
+
+
           }
         </Col>
       </Row>

@@ -67,7 +67,7 @@ const MainDashboard = () => {
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
-              columnWidthRatio="0.3"
+              columnWidthRatio="0.4"
               marginRatio="1.5"
               color={["#4A9D77", "#E95060", "#FFC15D"]}
               data={graphData}
