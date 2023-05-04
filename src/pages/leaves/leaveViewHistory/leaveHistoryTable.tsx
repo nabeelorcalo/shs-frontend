@@ -225,11 +225,9 @@ const LeaveHistoryTable = (props: any) => {
       key: 'action',
       render: (_: any, data: any) => (
         <DropDownNew placement="bottomRight" items={[
-          (data.status === "Declined" && data.status === "Approved") &&
           { label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>View Details</p>, key: 'viewDetail' },
-          { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
-          { label: <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>Decline</p>, key: 'decline' },
-          { label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>View Details</p>, key: 'viewDetails' },
+          (data.status === "Pending") && { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
+          (data.status === "Pending") && { label: <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>Decline</p>, key: 'decline' },
         ]}>
           <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
         </DropDownNew>
