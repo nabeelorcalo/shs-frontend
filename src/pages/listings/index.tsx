@@ -349,18 +349,18 @@ const Listings = () => {
                 <Row gutter={30}>
                   <Col xs={8}>
                     <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                      <InputNumber min={1} max={10} />
+                      <InputNumber min={1} />
                     </Form.Item>
                   </Col>
                   <Col xs={8}>
                     <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                      <InputNumber min={1} max={10} />
+                      <InputNumber min={1} />
                     </Form.Item>
 
                   </Col>
                   <Col xs={8}>
                     <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber min={1} max={10} />
+                      <InputNumber min={1} />
                     </Form.Item>
                   </Col>
                 </Row>

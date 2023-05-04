@@ -23,15 +23,15 @@ const useListingsHook = () => {
   }
 
   const updateListing = async (id:any, data: any) => {
-    const submitRequest = async(reqBody:any) => {
+    const submitRequest = async(listingId:any, reqBody:any) => {
       try {
-        const res = await api.patch(`${UPDATE_PROPERTY}${id}`, reqBody)
+        const res = await api.post(`${UPDATE_PROPERTY}${listingId}`, reqBody)
         return {response: res, error: undefined}
       } catch (error) {
         return { response: undefined, error: error };
       }
     }
-    return await submitRequest(data)
+    return await submitRequest(id, data)
   }
 
   // Get All Agent Properties
