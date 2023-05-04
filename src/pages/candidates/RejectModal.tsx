@@ -15,7 +15,6 @@ const RejectModal = (props: any) => {
         title="Reject"
         open={open}
         onCancel={() => setOpen(false)} footer={''} >
-
         <div className='title'><p>Template (optional)</p></div>
         <DropDown value={value} setValue={setValue} options={['Template 01', 'Template 02', 'Template 03']} name='Select' />
         <div className='title'><p>Subject</p></div>
@@ -25,10 +24,9 @@ const RejectModal = (props: any) => {
         <div className='flex mt-3 justify-end gap-4'>
           <button onClick={() => setOpen(false)} className='cancel'>Cancel</button>
           <button onClick={handleReject} className='reject'>Reject</button>
-        </div>
+        </div>  
       </Modal>
     </div>
-  );
+  );  
 };
-
 export default RejectModal;
