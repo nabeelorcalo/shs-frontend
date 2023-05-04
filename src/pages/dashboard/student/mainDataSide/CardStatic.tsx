@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Col, Typography } from 'antd';
 import { Apply, InterView, LocationSun, Sun } from '../../../../assets/images';
+import { TodayWeather } from '../../../../components';
 
 const CardStatic = () => {
     return (
@@ -47,9 +48,8 @@ const CardStatic = () => {
                     </div>
                 </Col>
                 <Col xxl={8} xl={10} lg={12} md={12} sm={24} xs={24}>
-                    <div className='card-static three'>
+                    {/* <div className='card-static three'>
                         <div className='flex items-center gap-x-6'>
-
                             <Sun />
                             <Typography className='temp'>23 ° C</Typography>
                         </div>
@@ -58,7 +58,8 @@ const CardStatic = () => {
                             <Typography className='location'><LocationSun /> London</Typography>
                         </div>
 
-                    </div>
+                    </div> */}
+                    <TodayWeather/>
                 </Col>
             </Row>
         </div>

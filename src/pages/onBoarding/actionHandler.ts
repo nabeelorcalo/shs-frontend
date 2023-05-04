@@ -14,8 +14,17 @@ const useCustomHook = () => {
     return data;
   };
 
+  const { VERIIFCATION_STUDENT } = apiEndpints;
+  const verifcationStudent = async (body : any): Promise<any> => {
+    const { data } = await api.post(VERIIFCATION_STUDENT, body);
+    return data;
+  };
+
+
+
   return {
-    signup, 
+    signup,
+    verifcationStudent
   };
 };
 

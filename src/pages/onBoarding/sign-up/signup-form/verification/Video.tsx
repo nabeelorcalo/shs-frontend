@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
 import "../../../styles.scss";
 
-
 const Video = (props: any) => {
+  const { currentStep, setCurrentStep } = props;
   const navigate = useNavigate();
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -27,7 +27,10 @@ const Video = (props: any) => {
               <Typography className="steps">Step 7 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton
+                    onClick={() => {
+                      setCurrentStep(6);
+                    }} />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Video</Typography.Title>
@@ -63,7 +66,6 @@ const Video = (props: any) => {
                   <div className="main-box-video">
                     <div className="secondary-box-div">
                       <div className="inner-box-video">
-                        
                         <Round />
                       </div>
                     </div>
@@ -73,6 +75,9 @@ const Video = (props: any) => {
               <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
+                    onClick={() => {
+                      navigate('/')
+                    }}
                     className="btn-cancel btn-cancel-verification"
                   //htmlType="submit"
                   >
