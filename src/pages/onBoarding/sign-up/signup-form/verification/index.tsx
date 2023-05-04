@@ -23,11 +23,6 @@ function VerificationSteps(props: any) {
       country: country,
       documentType: documentType
     })
-      .then((data: any) => {
-        console.log("data", data); //for debugging purpose
-        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-      })
-      .catch((err) => console.log(err));
   };
 
   return (
