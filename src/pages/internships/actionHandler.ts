@@ -1,21 +1,29 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { useEffect } from "react";
+import { useRecoilState} from "recoil";
 import api from "../../api";
-import constants from "../../config/constants";
+import apiEndpints from "../../config/apiEndpoints";
+import { internshipDataState,internshipDetailsState } from '../../store';
 
 // Chat operation and save into store
 const useCustomHook = () => {
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
-
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
+  const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
+  const { GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS } = apiEndpints
+  const getAllInternshipsData = async () => {
+    const { data } = await api.get(GET_LIST_INTERNSHIP,{ companyId: 1 , page: 1, limit: 10 });
+    setInternshipData(data)
   };
-
+  const getInternshipDetails = async () => {
+    const { data } = await api.get( GET_INTERNSHIP_DETAILS ,{ id: 1 });
+    setInternshipDetails(data)
+  };
+  useEffect(()=>{
+    getAllInternshipsData();
+    getInternshipDetails();
+  },[])
   return {
-    getData,
+    internshipData,internshipDetails
   };
 };
 

@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertIcon } from '../../assets/images'
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Notifications } from '../Notification';
 import '../../scss/global-color/Global-colors.scss'
-import './style.scss';
 import { PopUpModal } from '../Model';
-import { useState } from 'react';
 import { ROUTES_CONSTANTS } from '../../config/constants';
+import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
   const { title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
@@ -23,12 +23,14 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS+"?status=" + status) }}>
+          <a rel="noopener noreferrer" onClick={() => {
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status)
+          }}>
             View details
           </a>
         ),
       },
-      status !== "Published" && status !== "Closed" ? {
+      status !== "PUBLISHED" && status !== "CLOSED" ? {
         key: '2',
         label: (
           <a
@@ -45,7 +47,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "Pending" && status !== "Draft" ? {
+      status !== "PENDING" && status !== "DRAFT" ? {
         key: '3',
         label: (
           <a rel="noopener noreferrer" onClick={() => { navigate('pipeline') }}>
@@ -53,7 +55,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "Pending" && status !== "Draft" && status !== "Closed" ? {
+      status !== "PENDING" && status !== "DRAFT" && status !== "CLOSED" ? {
         key: '4',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
@@ -61,7 +63,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "Published" && status !== "Draft" && status !== "Closed" ? {
+      status !== "PUBLISHED" && status !== "DRAFT" && status !== "CLOSED" ? {
         key: '5',
         label: (
           <a rel="noopener noreferrer" onClick={() => { setDecline(true) }}>
