@@ -26,7 +26,7 @@ export const AvatarBox: any = (props: AvatarBoxProps) => {
           src={avatar}
         />
 
-        <p className='px-2'>
+        <p className='px-2 text-primary-color'>
           {name}
         </p>
       </div>

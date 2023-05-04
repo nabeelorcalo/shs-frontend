@@ -57,8 +57,8 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
 
             <Form.Item name="type" label="Type" className="mt-4">
               <Radio.Group value={type} onChange={(e) => setType(e.target.value)}>
-                <Radio value="Email">Email</Radio>
-                <Radio value="Certificates">Certificates</Radio>
+                <Radio value="Email"><span className="text-primary-color">Email</span></Radio>
+                <Radio value="Certificates text-primary-color">Certificates</Radio>
               </Radio.Group>
             </Form.Item>
 
