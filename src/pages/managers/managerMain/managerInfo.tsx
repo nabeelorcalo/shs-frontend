@@ -1,8 +1,12 @@
 import { Button, Col, Row, Typography } from "antd";
 import { managerCar } from "./managerMock";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 const ManagerInfo = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div className="manager-info">
       <Row gutter={[30, 20]}>
@@ -27,13 +31,19 @@ const ManagerInfo = () => {
                         {item.interns}
                       </Typography>
                     </div>
-                    <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center ">
-                    <Button className="info-dark-bg-color text-info-color-dark text-base 
-                      font-semibold rounded-[8px] border-0 ">
-                        <a href={`${ROUTES_CONSTANTS.MANAGER_PROFILE}`}>Profile</a>
+                    <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center">
+                      <Button
+                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}`) }}
+                        style={{ minWidth: "0px" }}
+                        className="info-dark-bg-color text-info-color-dark text-base 
+                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">
+                        Profile
                       </Button>
-                      <Button className="text-green-color reset-bg-color text-base 
-                      ont-semibold rounded-[8px] border-0 ">
+                      <Button
+                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`) }}
+                        style={{ minWidth: "0px" }}
+                        className="text-green-color reset-bg-color text-base 
+                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">
                         Reset
                       </Button>
                     </div>
@@ -44,7 +54,7 @@ const ManagerInfo = () => {
           );
         })}
       </Row>
-   
+
     </div>
   );
 };

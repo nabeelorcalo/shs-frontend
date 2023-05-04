@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Button, Col, Form, Menu, Row, Space, } from "antd";
+import React, { useState } from "react";
+import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -59,11 +59,15 @@ const tableData = [
 ];
 
 const UniveristyMain = () => {
-  
+
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => {};
+  const searchValue = () => { };
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   const columns = [
     {
@@ -112,10 +116,10 @@ const UniveristyMain = () => {
               data.status === "Pending"
                 ? "#FFC15D"
                 : data.status === "Active"
-                ? "#3DC475"
-                : data.status === "Inactive"
-                ? "#D83A52"
-                : "",
+                  ? "#3DC475"
+                  : data.status === "Inactive"
+                    ? "#D83A52"
+                    : "",
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -125,7 +129,6 @@ const UniveristyMain = () => {
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -136,10 +139,9 @@ const UniveristyMain = () => {
       title: "Actions",
     },
   ];
-
   const menu2 = (
     <Menu>
-      <Menu.Item onClick={()=> navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
         <a href="create-password">Password Reset</a>
@@ -155,32 +157,44 @@ const UniveristyMain = () => {
         onClose={() => setOpenDrawer(false)}
       >
         <Form layout="vertical">
-          <Form.Item label="Status" name="status">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
-            />
-          </Form.Item>
-          <Form.Item label="City" name="city">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
-            />
-          </Form.Item>
+          <div className="mb-6">
+            <label>Status</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={[
+                  { value: "Active", label: "Active" },
+                  { value: "Inactive", label: "Inactive" },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="mb-6">
+            <label>City</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={[
+                  { value: "Active", label: "Active" },
+                  { value: "Inactive", label: "Inactive" },
+                ]}
+              />
+            </div>
+          </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-                Cancel
+                Reset
               </Button>
               <Button
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
-                Submit
+                Apply
               </Button>
             </Space>
           </div>
@@ -193,20 +207,20 @@ const UniveristyMain = () => {
           </div>
         </Col>
       </Row>
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)}/> 
-            <div className="w-25">
-              <DropDown
-                requiredDownloadIcon
-                options={["pdf", "excel"]}
-                value={value}
-                setValue={setValue}
-              />
-            </div>
+          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+          <div className="w-25">
+            <DropDown
+              requiredDownloadIcon
+              options={["pdf", "excel"]}
+              value={value}
+              setValue={setValue}
+            />
+          </div>
         </Col>
       </Row>
       <Row className="mt-4">
@@ -216,7 +230,6 @@ const UniveristyMain = () => {
           </div>
         </Col>
       </Row>
-      {/* <DetailPage/> */}
     </div>
   );
 };
