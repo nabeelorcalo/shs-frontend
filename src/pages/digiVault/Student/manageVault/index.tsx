@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import "./style.scss";
+import { useState } from "react";
 import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Input, Alert } from "../../../../components";
 import { Upload } from "../../../../assets/images";
@@ -8,6 +7,7 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
 import CustomDropDown from "../dropDownCustom";
+import "./style.scss";
 
 const tableData = [
   {
@@ -147,96 +147,61 @@ const ManageVault = (props: any) => {
         </Col>
         <Divider />
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={[10, 20]}>
-            <Col xxl={6} xl={6} lg={8} md={8} sm={24} xs={24}>
+          <Row gutter={[20, 20]}>
+            <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
-
-            <Col xxl={14} xl={12} lg={6} md={2} sm={0} xs={0}></Col>
-
-            <Col xxl={4} xl={6} lg={10} md={14} sm={24} xs={24}>
-              <Row gutter={[10, 10]}>
-                <Col
-                  className="flex justify-end"
-                  xxl={12}
-                  xl={12}
-                  lg={12}
-                  md={12}
-                  sm={24}
-                  xs={24}
+            <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+              <div>
+                <Button onClick={() => setISOpen(true)} className="folder-add-btn" >
+                  Create Folder
+                </Button>
+              </div>
+              <div className="div">
+                <Dropdown
+                  overlay={menu1}
+                  visible={visible}
+                  onVisibleChange={handleVisibleChange}
+                  trigger={["click"]}
                 >
-                  <Button
-                    onClick={() => setISOpen(true)}
-                    className="folder-add-btn "
-                  >
-                    Create Folder
+                  <Button className="manage-vault-btn flex items-center justify-center">
+                    <Space>
+                      <img
+                        className="flex items-center"
+                        src={Upload}
+                        alt="fileIcon"
+                      />
+                      <span>Upload</span>
+                    </Space>
                   </Button>
-                </Col>
-
-                <Col
-                  className="flex justify-end"
-                  xxl={12}
-                  xl={12}
-                  lg={12}
-                  md={12}
-                  sm={24}
-                  xs={24}
-                >
-                  <Dropdown
-                    overlay={menu1}
-                    visible={visible}
-                    onVisibleChange={handleVisibleChange}
-                    trigger={["click"]}
-                  >
-                    <Button className="manage-vault-btn flex items-center justify-center">
-                      <Space>
-                        <img
-                          className="flex items-center"
-                          src={Upload}
-                          alt="fileIcon"
-                        />
-                        <span>Upload</span>
-                      </Space>
-                    </Button>
-                  </Dropdown>
-                </Col>
-              </Row>
+                </Dropdown>
+              </div>
+            </Col>
+            <Col xs={24}>
+              <GlobalTable
+                pagination={false}
+                columns={columns}
+                tableData={tableData}
+              />
             </Col>
           </Row>
         </Col>
       </Row>
-      <Row className="mt-8">
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <GlobalTable
-            pagination={false}
-            columns={columns}
-            tableData={tableData}
-          />
-        </Col>
-      </Row>
-
       <Modal
         open={open}
         centered
-        closeIcon={
-          <CloseCircleFilled
-            className="text-[#A3AED0]"
-            onClick={() => setISOpen(false)}
-          />
-        }
+        closeIcon={ <CloseCircleFilled className="text-[#A3AED0]" onClick={() => setISOpen(false)} />}
         footer={[
           <Button
             className="change-mind-warning-btn teriary-color hover:teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
             onClick={() => setISOpen(false)}
-            key="Cancel"
-          >
+            key="Cancel">
             Cancel
           </Button>,
 
           <Button
             className="edit-request-btn teriary-bg-color white-color pr-4 border-1 border-solid border-[#4a9d77] hover:border-[#4a9d77]"
-            key="submit"
-          >
+            key="submit">
             Submit
           </Button>,
         ]}
