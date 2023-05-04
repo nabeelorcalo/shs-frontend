@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { Button, Col, Row, Form, Space } from 'antd';
+import { Button, Col, Row, Form, Space, Select } from 'antd';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
-import { User} from "../../../assets/images";
+import { User } from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
-// import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import ManagerInfo from "./managerInfo";
 import ManagerInfoTable from "./managerInfoTable";
 import Drawer from "../../../components/Drawer";
@@ -21,31 +20,52 @@ const ManagerMain = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
 
-  const searchValue = () => {};
+  const searchValue = () => { };
+  
   const handleClick = (buttonIndex:any) => {
     setActiveButton(buttonIndex);
   }
 
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="manager-main">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
-      <Form layout="vertical"> 
-          <Form.Item label="Status" name="status">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+      <Form layout="vertical">
+        <div className="mb-6">
+          <label>Status</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+               
+              ]}
             />
-          </Form.Item>
-          <Form.Item label="Department" name="department">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          </div>
+        </div>
+        <div className="mb-6">
+          <label>Department</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+                { value: "Publish", label: "Publish" },
+               
+              ]}
             />
-          </Form.Item>
+          </div>
+        </div>
+
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -63,67 +83,63 @@ const ManagerMain = () => {
       </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <PageHeader title='Managers' bordered={ true} />
+          <PageHeader title='Managers' bordered={true} />
         </Col>
       </Row>
-      <Row gutter={[10, 20]} className="flex items-center pb-5">
-        <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+      <Row gutter={[20, 30]} className="flex items-center pb-5">
+        <Col xl={6} lg={24} md={24} sm={24} xs={24}>
           <SearchBar placeholder="Search by name" handleChange={searchValue} />
         </Col>
-        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex items-center justify-center flex-wrap sm:flex-nowrap sm:justify-end gap-2">
-            <Button className="teriary-bg-color white-color flex items-center"
-              onClick={() => {
+        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+
+          <Button className="teriary-bg-color white-color flex items-center"
+            onClick={() => {
               navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
-              }}
-            >
-               <span className="flex items-center gap-3"><User/> New Manager</span> 
-            </Button>
-            <FiltersButton label='Filter' onClick={()=>setOpenDrawer(true)}/> 
+            }}
+          >
+            <span className="flex items-center gap-3"><User /> New Manager</span>
+          </Button>
+          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
+
+          <div className="flex justify-between flex-row gap-4">
             <div className="text-input-bg-color rounded-lg p-1 flex gap-2">
               <div
-               className={`button ${activeButton === 0 ? 'active' : ''}`}
+                className={`button ${activeButton === 0 ? 'active' : ''}`}
                 onClick={() => {
                   setShowGrid(true);
                   setShowTable(false);
                   handleClick(0);
                 }}
               >
-                <img src={listView} alt="" className='img-style' />
+                <img src={gridview} alt="grid-iocn" className='img-style' />
               </div>
               <div
-                  className={`button ${activeButton === 1 ? 'active' : ''}`}
-                 
+                className={`button ${activeButton === 1 ? 'active' : ''}`}
+
                 onClick={() => {
                   setShowTable(true);
                   setShowGrid(false);
                   handleClick(1);
                 }}
               >
-                <img src={gridview} alt="" className='img-style' />
+                {/* <img src={gridview} alt="grid-iocn" className='img-style' /> */}
+                <img src={listView} alt="list-icon" className='img-style' />
               </div>
             </div>
-            <div className="w-25">
-              <DropDown
-                requiredDownloadIcon
-                options={["pdf", "excel"]}
-                value={value}
-                setValue={setValue}
-              />
-            </div>
+            <DropDown
+              requiredDownloadIcon
+              options={["pdf", "excel"]}
+              value={value}
+              setValue={setValue}
+            />
           </div>
+
+        </Col>
+        <Col xs={24}>
+          {showGrid === true && (<ManagerInfo />)}
+          {showTable === true && (<ManagerInfoTable />)}
         </Col>
       </Row>
-      {showGrid === true && (
-        <div>
-          <ManagerInfoTable />
-        </div>
-      )}
-      {showTable === true && (
-        <div>
-            <ManagerInfo />
-        </div>
-      )}
     </div>
   );
 };

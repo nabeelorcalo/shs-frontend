@@ -75,11 +75,15 @@
 
   .top-card-inner {
     display: flex;
-    padding: 0 30px;
+    padding: 0 15px 0 30px;
     border-color: $text-error-line-color;
 
     &.with-divider {
       border-left: 1px solid $text-error-line-color;
+
+      @media (max-width: 767px) {
+        border-left: none;
+      }
     }
 
     .top-card-icon {

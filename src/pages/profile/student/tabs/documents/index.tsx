@@ -16,14 +16,17 @@ const Documents = () => {
       <div className='flex justify-end md:justify-center"'>
         <Button
           className="upload-button flex items-center justify-between teriary-bg-color white-color"
-          onClick={() => {setIsOpen(true)}} >
-          <img src={upload} alt="upload-btn"/> Upload
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
+          <img src={upload} alt="upload-btn" /> Upload
         </Button>
       </div>
 
       {documentArr.map((item, index) => {
         return (
-          <>
+          <div key={index}>
             <CardUsers
               img={item.img}
               title={item.name}
@@ -39,7 +42,7 @@ const Documents = () => {
             />
 
             <Divider />
-          </>
+          </div>
         );
       })}
       <Modal

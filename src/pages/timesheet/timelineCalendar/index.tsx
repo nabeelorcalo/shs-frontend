@@ -70,7 +70,7 @@ const RenderEventContent = (events: any) => {
 
 const TimelineCalendar = () => {
   return (
-    <BoxWrapper boxShadow={'0px 0px 8px 1px rgba(9, 161, 218, 0.1)'} className='timeline-calendar-wrapper'>
+    <BoxWrapper boxShadow={'0px 0px 8px 1px rgba(9, 161, 218, 0.1)'} className='timeline-calendar-wrapper my-[25px]'>
       <p className="text-xl font-medium">Timeline</p>
       <FullCalendar
         schedulerLicenseKey="CC-Attribution-NonCommercial-NoDerivatives"

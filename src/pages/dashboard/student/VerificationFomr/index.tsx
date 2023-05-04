@@ -10,7 +10,6 @@ import { Form } from "antd";
 import './verifications.scss';
 
 function VerificationForm(props: any) {
-
   const [currentStep, setCurrentStep] = useState(1);
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);

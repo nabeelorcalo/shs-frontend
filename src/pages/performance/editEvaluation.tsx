@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import { Col, Row, Typography } from "antd";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -112,9 +112,9 @@ const ViewPerformance = () => {
   }
 
   const detailedCards = [
-    { id:1,title: 'Learning Objectives', progressColor: '#9BD5E8' },
-    { id:2,title: 'Descipline', progressColor: '#E96F7C' },
-    { id:3,title: 'Personal', progressColor: '#6AAD8E' },
+    { id: 1, title: 'Learning Objectives', progressColor: '#9BD5E8' },
+    { id: 2, title: 'Discipline', progressColor: '#E96F7C' },
+    { id: 3, title: 'Personal', progressColor: '#6AAD8E' },
   ]
   return (
     <div className="view-evaluation">
@@ -128,7 +128,7 @@ const ViewPerformance = () => {
       <div className="flex flex-row items-center">
         <p className="evaluation-txt text-teriary-color">
           Evaluation Date:
-          <span className="mx-2 font-medium text-secondary-color">
+          <span className="mx-2 font-semibold text-secondary-color">
             June 16, 2019
           </span>
         </p>
@@ -143,77 +143,79 @@ const ViewPerformance = () => {
           icon={<DownloadIconWithBg />}
         />
       </div>
-      <Row gutter={[20, 10]}>
-        <Col xs={24} md={12} xxl={6}>
-          <EvaluationCard
-            name={user.name}
-            avatar={user.avatar}
-            profession={user.profession}
-          />
-        </Col>
-        {detailedCards.map((item: any) => (
-          <Col xs={24} md={12} xxl={6} key={item.id}>
-            <EvaluationStatsCard
-              name={item.title}
-              percentage={user.learningObjectives}
-              color={item.progressColor}
+      <div className="innerContent">
+        <Row gutter={[20, 10]}>
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationCard
+              name={user.name}
+              avatar={user.avatar}
+              profession={user.profession}
             />
           </Col>
-        ))}
-      </Row>
-      {
-        state.data.map((obj: any) => {
-          return (
-            <Row gutter={[20, 10]} key={obj.id}>
-              <Col xs={24}>
-                <div key={obj.name} className="mt-6 mb-2">
-                  <Typography.Title level={3} className="evaluation-heading">
-                    {obj.name}
-                  </Typography.Title>
-                </div>
-              </Col>
-              {obj.values.map((child: any) =>
-                <Col xs={24} xl={12} xxl={8} key={child.value}>
-                  <div key={child.title}>
-                    <EmojiMoodRating
-                      size={5}
-                      data={emojiData}
-                      title={child.title}
-                      activeIconIndex={child.value}
-                    />
+          {detailedCards.map((item: any) => (
+            <Col xs={24} md={12} xxl={6} key={item.id}>
+              <EvaluationStatsCard
+                name={item.title}
+                percentage={user.learningObjectives}
+                color={item.progressColor}
+              />
+            </Col>
+          ))}
+        </Row>
+        {
+          state.data.map((obj: any) => {
+            return (
+              <Row gutter={[20, 10]} key={obj.id}>
+                <Col xs={24}>
+                  <div key={obj.name} className="mt-6 mb-2">
+                    <Typography.Title level={3} className="evaluation-heading">
+                      {obj.name}
+                    </Typography.Title>
                   </div>
                 </Col>
-              )}
-            </Row>
-          )
-        })
-      }
-      <div className="my-4">
-        <Typography.Title level={3} className="evaluation-heading">
-          Comments
-        </Typography.Title>
+                {obj.values.map((child: any) =>
+                  <Col xs={24} xl={12} xxl={8} key={child.value}>
+                    <div key={child.title}>
+                      <EmojiMoodRating
+                        size={5}
+                        data={emojiData}
+                        title={child.title}
+                        activeIconIndex={child.value}
+                      />
+                    </div>
+                  </Col>
+                )}
+              </Row>
+            )
+          })
+        }
+        <div className="my-4">
+          <Typography.Title level={3} className="evaluation-heading">
+            Comments
+          </Typography.Title>
 
-        <TextArea
-          rows={6}
-          classNme='light-blue-bg-color text-primary-color'
-          placeholder="placeholder"
-          defaultValue='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
-        />
-      </div>
+          <TextArea
+            rows={6}
+            classNme='light-blue-bg-color text-primary-color'
+            placeholder="placeholder"
+            defaultValue='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
+          />
+        </div>
 
-      <div className="flex justify-end gap-4 my-4">
-        <Button
-          label="Cancel"
-          type="default"
-          onClick={onCancelClick}
-          className="border-visible-btn"
-        />
+        <div className="flex justify-end gap-4 my-4">
+          <Button
+            label="Cancel"
+            type="default"
+            onClick={onCancelClick}
+            className="border-visible-btn"
+          />
 
-        <Button
-          label="Save"
-          onClick={onSaveClick}
-          className="bg-visible-btn"
-        />
+          <Button
+            label="Save"
+            onClick={onSaveClick}
+            className="bg-visible-btn"
+          />
+        </div>
       </div>
     </div>
   )

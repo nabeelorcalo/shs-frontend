@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
-  Typography, Row, Col, Divider, Form,
+  Typography, Row, Col, Divider, Form, Select,
   Radio, RadioChangeEvent, Button, Space, Input,
 } from "antd";
 import {
   SettingAvater,
 } from "../../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Breadcrumb, DropDown, BoxWrapper, DragAndDropUpload, SettingCommonModal, SearchBar } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, DragAndDropUpload, SettingCommonModal, SearchBar } from "../../../../../components";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
@@ -46,21 +46,34 @@ const AddLocation: React.FC = () => {
       image: <SettingAvater />,
     },
   ];
+  const countrySelectValue = [
+    { value: '1', label: 'Pakistan' },
+    { value: '2', label: 'India' },
+    { value: '3', label: 'France' },
+  ]
+  const countryCodeSelectValue = [
+    { value: '1', label: '+92' },
+    { value: '2', label: '+001' },
+    { value: '3', label: '+021' },
+  ]
 
   const deselectArray: any = [];
   const [form] = Form.useForm();
-  const [value, setValue] = useState(1);
-  const [openModal, setOpenModal] = useState<any>(false);
-  const [intern, setIntern] = useState<any>();
-  const [selectValue, setSelectValue] = useState({ country: "Select", phoneCode: "+001" });
+  const [state, setState] = useState(
+    {
+      country: "",
+      phoneCode: "",
+      intern: [],
+      openModal: false,
+      internValue: 1,
+    });
 
   const onFinish = (values: any) => {
-    console.log("valies", values)
     const { address, email, locationName, phoneNumber, postCode, street, town } = values;
     let locationValues = {
-      intern: intern.length,
-      country: selectValue.country,
-      phoneCode: selectValue.phoneCode,
+      intern: state.intern.length,
+      country: state.country,
+      phoneCode: state.phoneCode,
       address,
       email,
       locationName,
@@ -69,23 +82,20 @@ const AddLocation: React.FC = () => {
       street,
       town
     };
-    console.log("obj", locationValues)
   }
 
   const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
+    const radioValue = e.target.value
     if (e.target.value === 2) {
-      setOpenModal(!openModal);
-    }
+      setState({
+        ...state, openModal: true, internValue: radioValue
+    })}
+    
     else if (e.target.value === 1) {
-      setIntern(null)
+      setState({ ...state,  internValue: radioValue, intern: []
+      })
     }
   };
-
-  const SelectInternHandler = (data: any) => {
-    console.log(data)
-    setIntern(data)
-  }
 
   const handleChange = () => { };
 
@@ -116,7 +126,7 @@ const AddLocation: React.FC = () => {
                 label="Location Name"
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter Last Name" className="input-style" />
+                <Input placeholder="Enter Title" className="input-style" />
               </Form.Item>
             </Col>
           </Row>
@@ -148,7 +158,7 @@ const AddLocation: React.FC = () => {
                   label="Address"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input placeholder="Enter Last Name" className="input-style" />
+                  <Input placeholder="Enter address line" className="input-style" />
                 </Form.Item>
 
                 <Form.Item
@@ -158,7 +168,7 @@ const AddLocation: React.FC = () => {
                   label="Street"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input placeholder="Enter Last Name" className="input-style" />
+                  <Input placeholder="Enter street or location" className="input-style" />
                 </Form.Item>
               </div>
               <div className="md:flex gap-2">
@@ -169,19 +179,20 @@ const AddLocation: React.FC = () => {
                   label="Town"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input placeholder="Enter Last Name" className="input-style" />
+                  <Input placeholder="Enter town" className="input-style" />
                 </Form.Item>
                 <div className="w-full">
                   <Form.Item
                     label="Country"
                     required={false}
-                    name="county"
+                    name="country"
+                    rules={[{ required: true }, { type: "string" }]}
                   >
-                    <DropDown
-                      name={selectValue.country}
-                      value={selectValue.country}
-                      options={["Pakistan", "India", "France"]}
-                      setValue={(e: string) => setSelectValue({ ...selectValue, country: e })}
+                    <Select
+                      showSearch
+                      placeholder="Select"
+                      onChange={(e: string) => setState({ ...state, country: e })}
+                      options={countrySelectValue}
                     />
                   </Form.Item>
                 </div>
@@ -208,16 +219,13 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     required={false}
                     name="phoneCode"
+                    rules={[{ required: true }, { type: "string" }]}
                   >
-                    <DropDown
-                      name={selectValue.phoneCode}
-                      value={selectValue.phoneCode}
-                      options={[
-                        '+92',
-                        '+93',
-                        '+94'
-                      ]}
-                      setValue={(e: string) => setSelectValue({ ...selectValue, phoneCode: e })}
+                    <Select
+                      showSearch
+                      placeholder="+44"
+                      onChange={(e: string) => setState({ ...state, phoneCode: e })}
+                      options={countryCodeSelectValue}
                     />
                   </Form.Item>
                 </div>
@@ -227,13 +235,13 @@ const AddLocation: React.FC = () => {
                   className="w-full pl-2"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input placeholder="Enter Last Name" className="input-style" />
+                  <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>
               </div>
               <Form.Item name="email"
                 label="Email (option)"
               >
-                <Input placeholder="Enter Last Name" className="input-style" />
+                <Input placeholder="Enter email" className="input-style" />
               </Form.Item>
             </Col>
           </Row>
@@ -248,7 +256,10 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item name="uploadImage">
-                <DragAndDropUpload />
+
+                <div className="dragger">
+                  <DragAndDropUpload />
+                </div>
               </Form.Item>
             </Col>
           </Row>
@@ -264,12 +275,12 @@ const AddLocation: React.FC = () => {
             <Col className="gutter-row  " xs={24} md={12} xxl={8} >
               <Form.Item name="intern">
                 <div className=" flex items-center">
-                  <Radio.Group onChange={onChange} value={value}>
+                  <Radio.Group onChange={onChange} value={state.internValue}>
                     <Radio value={1}>All interns</Radio>
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
                   <span >
-                    <AvatarGroup maxCount={6} list={intern} />
+                    <AvatarGroup maxCount={6} list={state.intern} />
                   </span>
                 </div>
               </Form.Item>
@@ -295,9 +306,11 @@ const AddLocation: React.FC = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        SelectInternHandler={SelectInternHandler}
+        openModal={state.openModal}
+        setOpenModal={setState}
+        state={state}
+        internValue={state.internValue}
+        intern={state.intern}
       />
     </div>
   );

@@ -1,58 +1,92 @@
 import React, { useState } from 'react'
-import { Select, Button, Form } from "antd";
-import { GrievancesAvater, IconAngleDown } from '../../../assets/images';
-import './style.scss'
+import { Button, Form } from "antd";
 import { DropDown } from '../../../components';
-import dayjs from "dayjs";
-const { Option } = Select;
+import './style.scss'
+import { ArrowDownDark, Avatar, UserAvatar } from '../../../assets/images';
+import DropDownNew from '../../../components/Dropdown/DropDownNew';
 
 const Filters: React.FC = (props: any) => {
   const [form] = Form.useForm();
-  const [value, setValue] = useState();
-  const [escalatedValue, setSscalatedValue] = useState("");
-
-  const options = [
-    { value: 'jessia', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>Jessica Alba</span></> },
-    { value: 'jean ella', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>jean ella</span></> },
-    { value: 'Mino Marina', src: <><GrievancesAvater className='w-[48px] px-2' />  <span>Mino Marina</span></> },
-  ];
-  const timeFrame = ['This Week ', 'Last Week ', 'This Month', 'Last Month', 'date Range']
+  const detailsData = [
+    {
+      userImg: UserAvatar,
+      userName: 'john doe'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'mina marino'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'clark'
+    },
+    {
+      userImg: UserAvatar,
+      userName: 'sarah joe'
+    },
+    {
+      userImg: <Avatar />,
+      userName: 'Other'
+    },
+  ]
+  const timeFrame = ['This Week ', 'Last Week ', 'This Month', 'Last Month', 'range picker']
   const type = ["New", "In Progress", "Re-Open", "Resolved"]
   const status = ["Work", "Personal", "Discipline", "Other"]
-  const renderOption = (option: any) => {
-    return (
-      <Option key={option.value} value={option.value} className="border-none">
-        {option.src}
-      </Option>
-    );
-  }
-  const [filterValue, setFilterValue] = useState({ type: "Select", timeFrame: "Select", status: "Select" });
-  function handleChange(value: any) {
-    setSscalatedValue(value)
-  }
+  const [filterValue, setFilterValue] = useState({
+    type: "Select", timeFrame: "Select", status: "Select", escalatedBy: "Select", userImg: '',
+    userName: 'Select',
+  });
+
   const handleSubmit = () => {
     const values = form.getFieldsValue();
   }
   const ResetHandler = () => {
-    setFilterValue({ type: "Select", timeFrame: "Select", status: "Select" });
+    setFilterValue({
+      type: "Select", timeFrame: "Select", status: "Select", escalatedBy: "Select", userImg: '',
+      userName: 'Select',
+    });
   }
   return (
     <div className='filter_main_wrapper'>
       <Form layout="vertical" form={form}>
-        <Form.Item name="mySelect" label="Escalated By">
-          <Select onChange={handleChange} placeholder="Select" suffixIcon={<IconAngleDown />}   >
-            {options.map(renderOption)}
-          </Select>
+        <Form.Item name="escalatedBy" label="Escalated By">
+          <div className='asignee-wrap w-[100%]'>
+            <DropDownNew
+              placement={'bottomRight'}
+              items={[
+                {
+                  label: <div>{detailsData.map((item: any) => (
+                    <div className="flex items-center gap-3 mb-[20px]"
+                      onClick={() => setFilterValue({ ...filterValue, userName: item.userName, userImg: item.userImg })}
+                    >
+                      <img src={item.userImg}
+                        className='h-[24px] w-[24px] rounded-full object-cover'
+                      />
+                      <p>{item.userName}</p>
+                    </div>))}
+                  </div>,
+                  key: 'users'
+                }]}>
+              <div className="drop-down-with-imgs flex items-center gap-3">
+                <div className="flex items-center gap-3 mr-[40px]">
+                  {filterValue.userImg != '' && <img src={filterValue.userImg} />}
+                  <p>{filterValue.userName}</p>
+                </div>
+                <ArrowDownDark />
+              </div>
+            </DropDownNew>
+          </div>
         </Form.Item>
-        <Form.Item name="timeFrame" label="Time Frame" style={{ background: "white" }}>
+        <Form.Item name="timeFrame" label="Time Frame" >
           <DropDown
             name={filterValue.timeFrame}
             value={filterValue.timeFrame}
             options={timeFrame.map((item: any) => { return item })}
+            requireRangePicker
+            placement='bottomLeft'
+            showDatePickerOnVal={'range picker'}
             setValue={(e: string) => setFilterValue({ ...filterValue, timeFrame: e })}
-            showDatePickerOnVal={'date Range'}
-            requireDatePicker
-            placement='bottomLeft' />
+          />
         </Form.Item>
         <Form.Item
           name="type"
@@ -86,7 +120,6 @@ const Filters: React.FC = (props: any) => {
             Apply
           </Button>
         </div>
-
       </Form>
     </div>
   )

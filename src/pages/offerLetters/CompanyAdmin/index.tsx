@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Row, Col, Dropdown, Button, MenuProps, Menu } from "antd";
-import "./style.scss";
+import { Row, Col, Menu } from "antd";
 import {
-  IconAngleDown,
   NewImg,
   PendingImg,
   RejectedImg,
@@ -18,6 +16,7 @@ import {
 import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
+import "./style.scss";
 
 const tableData = [
   {
@@ -295,7 +294,7 @@ const CompanyAdmin = () => {
         {
           ContractsCard.map((item) => {
             return (
-              <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+              <Col  xl={6} lg={12} md={12} xs={24}>
                 <BoxWrapper className="p-10 rounded-[16px]">
                   <div className="flex">
                     {item.img}
@@ -311,12 +310,11 @@ const CompanyAdmin = () => {
         }
       </Row>
 
-      <Row className="mt-8" gutter={[0, 20]} >
-        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-          <SearchBar className="w-[375px]" handleChange={() => { }} />
+      <Row className="mt-8" gutter={[20, 20]} >
+        <Col  xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar  handleChange={() => { }} />
         </Col>
-
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end offer-right-sec" >
+        <Col  xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireDatePicker placement="bottom"

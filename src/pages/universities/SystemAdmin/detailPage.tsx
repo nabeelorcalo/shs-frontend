@@ -106,19 +106,15 @@ const DetailPage = () => {
                 Location
               </Typography>
               <div className="mt-10">
-              <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11361.466148264095!2d-0.5635788254192343!3d53.22763683565447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48785b27c23b160d%3A0xd4016d4c2c43e9ae!2sUniversity%20of%20Lincoln!5e0!3m2!1sen!2sus!4v1680849119123!5m2!1sen!2sus"
-          className="border-0 w-full h-[500px]"
-          // style="border:0;"
-          // allowfullscreen=""
-          loading="lazy"
-        // referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11361.466148264095!2d-0.5635788254192343!3d53.22763683565447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48785b27c23b160d%3A0xd4016d4c2c43e9ae!2sUniversity%20of%20Lincoln!5e0!3m2!1sen!2sus!4v1680849119123!5m2!1sen!2sus"
+                  className="border-0 w-full h-[500px]"
+                  loading="lazy"
+                ></iframe>
               </div>
             </div>
           </div>
         </Col>
-
         <Col xxl={12} xl={16} lg={24} md={24} sm={24} xs={24}>
           <div>
             <div className="p-2">

@@ -79,13 +79,12 @@ const index: React.FC = () => {
     <div className='company-university '>
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]} >
-        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={handleChange} />
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end" >
-          <Select className='w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end" >
+          <Select className='md:w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
             {dropdownValue.map((item , index)=><Select.Option key={index} value={item}>{item}</Select.Option> )}
-          
           </Select>
           <DropDown
               requiredDownloadIcon

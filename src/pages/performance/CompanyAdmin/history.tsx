@@ -11,6 +11,7 @@ import {
   GlobalTable,
   Breadcrumb,
   Notifications,
+  BoxWrapper,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 // end
@@ -44,86 +45,86 @@ const PerformanceHistory = () => {
       title: "No.",
       key: "no",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.no}
-        </Link>
+        </Link> : data.no
       ),
     },
     {
       title: "Avatar",
       key: "avatar",
       render: (_: any, data: any) => (
-        <Space size="middle">
+        role !== constants.COMPANY_ADMIN ? <Space size="middle">
           <Link
             className="bread-crumb"
             to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
           >
             <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
           </Link>
-        </Space>
+        </Space> : <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
       ),
     },
     {
       title: "Name",
       key: "name",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.name}
-        </Link>
+        </Link> : data.name
       ),
     },
     {
       title: "Department",
       key: "department",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.department}
-        </Link>
+        </Link> : data.department
       ),
     },
     {
       title: "Last Evaluation",
       key: "date",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.date}
-        </Link>
+        </Link> : data.date
       ),
     },
     {
       title: "Evaluated By",
       key: "evaluatedBy",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.evaluatedBy}
-        </Link>
+        </Link> : data.evaluatedBy
       ),
     },
     {
       title: "Total Evaluations",
       key: "totalEvaluations",
       render: (_: any, data: any) => (
-        <Link
+        role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
           {data.totalEvaluations}
-        </Link>
+        </Link> : data.totalEvaluations
       ),
     },
     {
@@ -143,7 +144,7 @@ const PerformanceHistory = () => {
                 format={(percent: any) => (
                   <p
                     className={
-                      "myClass " +
+                      "myClass font-normal " +
                       (percent < 50 ? "secondary-color" : "teriary-color")
                     }
                   >
@@ -273,6 +274,7 @@ const PerformanceHistory = () => {
   ];
 
   const timeFrameOptions = [
+    "Select",
     "This Week",
     "Last Week",
     "This Month",
@@ -281,6 +283,7 @@ const PerformanceHistory = () => {
   ];
 
   const departmentOptions = [
+    "All",
     "Design",
     "Business Analyst",
     "Data Scientist",
@@ -373,15 +376,6 @@ const PerformanceHistory = () => {
     }));
   };
 
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
-  };
-
   const departmentSelection = (event: any) => {
     const value = event.target.innerText;
 
@@ -392,11 +386,17 @@ const PerformanceHistory = () => {
   };
 
   const onApplyFilterClick = () => {
-    alert("Apply Filter");
+    // alert("Apply Filter");
   };
 
   const onResetFilterClick = () => {
-    alert("Reset Filter");
+    // alert("Reset Filter");
+    setState((prevState) => ({
+      ...prevState,
+      timeFrameVal: "Select",
+      departmentVal: "Select",
+      evaluatedByVal: "Select",
+    }));
   };
 
   const onSubmitAppreciationForm = (values: any) => {
@@ -420,17 +420,15 @@ const PerformanceHistory = () => {
         title={<Breadcrumb breadCrumbData={historyBreadCrumb} />}
       />
       <Row gutter={[20, 20]}>
-        <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
-            className=""
             handleChange={() => { }}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="Search"
-          // size="small"
           />
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex justify-end right-sec gap-4">
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end  gap-4">
           <FiltersButton label="Filters" onClick={handleSidebarClick} />
           <IconButton
             size="large"
@@ -462,11 +460,14 @@ const PerformanceHistory = () => {
                   <DropDown
                     name="Select"
                     options={timeFrameOptions}
-                    setValue={() => timeFrameSelection(event)}
+                    setValue={(e: string) => setState((prevState) => ({
+                      ...prevState,
+                      timeFrameVal: e,
+                    }))}
                     value={state.timeFrameVal}
                     showDatePickerOnVal="Date Range"
-                    requireDatePicker
                     placement="topLeft"
+                    requireRangePicker
                   />
                 </div>
 
@@ -499,7 +500,9 @@ const PerformanceHistory = () => {
           />
         </Col>
         <Col xs={24}>
-          <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={false} />
+          <BoxWrapper>
+            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={true} />
+          </BoxWrapper>
         </Col>
       </Row>
       <AppreciationModal

@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   DropDown,
   SearchBar,
   GlobalTable,
   PageHeader,
   BoxWrapper,
-  FiltersButton,
   CommonDatePicker,
   Notifications,
 } from "../../components";
-import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
-import { Button, Dropdown, Space } from "antd";
-import { DownloadDocumentIcon, InternshipsIcon, More, Success } from "../../assets/images";
+import { Dropdown, Row, Col } from "antd";
+import { DownloadDocumentIcon, More } from "../../assets/images";
 import type { MenuProps } from 'antd';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useCustomHook from "./actionHandler";
+import "./style.scss";
 
 
 const tableData = [
@@ -77,10 +76,10 @@ const tableData = [
   },
 ]
 const Payments = () => {
-  const navigate = useNavigate()
-  const [value, setValue] = useState("")
-  const [showDatePicker, setShowDatePicker] = useState(false)
-  const [showDrawer, setShowDrawer] = useState(false)
+  // const navigate = useNavigate()
+  // const [value, setValue] = useState("")
+  // const [showDatePicker, setShowDatePicker] = useState(false)
+  // const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState({
     datePicker: false
   })
@@ -132,43 +131,43 @@ const Payments = () => {
     )
   }
 
-  const DownloadPopOver = () => {
-    const navigate = useNavigate()
-    const items: MenuProps['items'] = [
-      {
-        key: '1',
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => { }}
-          >
-            PDF
-          </a>
-        ),
-      },
-      {
-        key: '2',
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => { }}
-          >
-            Excel
-          </a>
-        ),
-      },
-    ];
-    return (
-      <Dropdown
-        menu={{ items }}
-        trigger={['click']}
-        placement="bottomRight"
-        overlayStyle={{ width: 180 }}
-      >
-        <DownloadDocumentIcon />
-      </Dropdown>
-    )
-  }
+  // const DownloadPopOver = () => {
+  //   const navigate = useNavigate()
+  //   const items: MenuProps['items'] = [
+  //     {
+  //       key: '1',
+  //       label: (
+  //         <a
+  //           rel="noopener noreferrer"
+  //           onClick={() => { }}
+  //         >
+  //           PDF
+  //         </a>
+  //       ),
+  //     },
+  //     {
+  //       key: '2',
+  //       label: (
+  //         <a
+  //           rel="noopener noreferrer"
+  //           onClick={() => { }}
+  //         >
+  //           Excel
+  //         </a>
+  //       ),
+  //     },
+  //   ];
+  //   return (
+  //     <Dropdown
+  //       menu={{ items }}
+  //       trigger={['click']}
+  //       placement="bottomRight"
+  //       overlayStyle={{ width: 180 }}
+  //     >
+  //       <DownloadDocumentIcon />
+  //     </Dropdown>
+  //   )
+  // }
 
   const columns = [
     {
@@ -220,53 +219,47 @@ const Payments = () => {
       }
     )
   })
-  const updateOpenCloseDatePicker = () => {
-    setState((prevState) => ({
-      ...prevState,
-      datePicker: !state.datePicker
-    }))
-  }
+  // const updateOpenCloseDatePicker = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     datePicker: !state.datePicker
+  //   }))
+  // }
   return (
     <>
-      <PageHeader
-        title="Payments"
-        bordered
-      />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              className=""
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="search"
-              size="middle"
-            />
-          </div>
-          <div className="flex flex-row gap-4">
-            <CommonDatePicker
-              name="name"
-              open={state.datePicker}
-              onBtnClick={() => {}}
-              picker="month"
-              setOpen={function noRefCheck() { }}
-              setValue={function noRefCheck() { }}
-            />
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Interns Payments")
-              }}
-              value=""
-            />
-          </div>
-        </div>
-        <BoxWrapper>
-          <div className="pt-3">
+      <PageHeader title="Payments" bordered />
+      <Row gutter={[20, 30]}>
+        <Col xl={6} md={24} sm={24} xs={24}>
+          <SearchBar
+            handleChange={() => { }}
+            name="search bar"
+            placeholder="Search"
+            size="middle"
+          />
+        </Col>
+        <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+          <CommonDatePicker
+            name="name"
+            open={state.datePicker}
+            onBtnClick={() => { }}
+            picker="month"
+            setOpen={function noRefCheck() { }}
+            setValue={function noRefCheck() { }}
+          />
+          <DropDown
+            options={[
+              'pdf',
+              'excel'
+            ]}
+            requiredDownloadIcon
+            setValue={() => {
+              action.downloadPdfOrCsv(event, csvAllColum, tableData, "Interns Payments")
+            }}
+            value=""
+          />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
             <GlobalTable
               columns={columns}
               expandable={{
@@ -275,9 +268,10 @@ const Payments = () => {
               }}
               tableData={newTableData}
             />
-          </div>
-        </BoxWrapper>
-      </div>
+          </BoxWrapper>
+        </Col>
+      </Row>
+
     </>
   );
 };

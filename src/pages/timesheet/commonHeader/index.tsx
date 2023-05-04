@@ -2,7 +2,7 @@ import { useState } from "react"
 import { ArrowDownDark, UserAvatar } from "../../../assets/images";
 import { DropDown, SearchBar } from "../../../components"
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
-
+import { Row, Col } from "antd"
 const CommonHeader = (props: any) => {
   const { hideUser, download, setDownload } = props;
   const [dateRange, setDateRange] = useState('');
@@ -16,9 +16,11 @@ const CommonHeader = (props: any) => {
   ]
 
   return (
-    <div className="common-header flex justify-between flex-wrap gap-3 mb-[30px]">
-      <SearchBar handleChange={() => { }} />
-      <div className="flex items-center gap-3 flex-wrap">
+    <Row gutter={[20, 20]} className="common-header">
+      <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+        <SearchBar handleChange={() => { }} />
+      </Col>
+      <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
         {!hideUser && <DropDownNew placement={'bottomRight'} items={[
           {
             label: <SearchBar handleChange={() => { }} />, key: 'search'
@@ -44,12 +46,12 @@ const CommonHeader = (props: any) => {
         </DropDownNew>}
         <DropDown name="This Week"
           options={['this week', 'last week', 'this month', 'last month', 'date range']}
-          requireDatePicker showDatePickerOnVal="date range"
+          requireRangePicker showDatePickerOnVal="date range"
           value={dateRange} setValue={setDateRange}
         />
         <DropDown requiredDownloadIcon options={['pdf', 'excel']} setValue={setDownload} value={download} />
-      </div>
-    </div>
+      </Col>
+    </Row>
   )
 }
 

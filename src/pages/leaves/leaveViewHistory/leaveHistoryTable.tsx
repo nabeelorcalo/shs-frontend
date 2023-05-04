@@ -1,13 +1,12 @@
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
-import { Dropdown, Space } from 'antd';
-import { BoxWrapper, Notifications } from '../../../components';
+import { Notifications } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';
 import constants from '../../../config/constants';
-
+import DropDownNew from "../../../components/Dropdown/DropDownNew";
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
   const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
@@ -99,44 +98,26 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Action',
       key: 'action',
       render: (_: any, data: any) => (
-        <Space size="middle">
-          <Dropdown
-            // open={visibale}
-            dropdownRender={() => {
-              return <BoxWrapper className=" action_dropDown">
-                <p onClick={() => {
-                  setOpenDrawer({ open: true, type: 'viewDetail' })
-
-                }}
-                  className="cursor-pointer"
-                >View Details</p>
-                {data.status === "Pending" &&
-                  <>
-                    <p onClick={() => {
-                      setOpenModal({ open: true, type: 'edit' })
-
-                    }}
-                      className="my-4 cursor-pointer">
-                      Edit
-                    </p>
-                    <p onClick={() => {
-                      setOpenModal({ open: true, type: 'cancel' });
-                    }}
-                      className="cursor-pointer">
-                      Cancel
-                    </p>
-                  </>
-                }
-              </BoxWrapper>
+        <DropDownNew items={[
+          {
+            label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
+              className="cursor-pointer">View Details</p>, key: 'viewDetail'
+          },
+          data.status === "Pending" && {
+            label: <p onClick={() => {
+              setOpenModal({ open: true, type: 'edit' })
             }}
-            trigger={['click']}
-            overlayClassName='menus_dropdown_main'
-            placement="bottomRight"
-          // onOpenChange={setVisibale}
-          >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-          </Dropdown >
-        </Space >
+              className="cursor-pointer my-[-10px]">Edit</p>, key: 'edit'
+          },
+          data.status === "Pending" && {
+            label: <p onClick={() => {
+              setOpenModal({ open: true, type: 'cancel' });
+            }}
+              className="cursor-pointer" >Cancel</p>, key: 'cancel'
+          },
+        ]}>
+          <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+        </DropDownNew>
       ),
     },
   ];
@@ -157,7 +138,7 @@ const LeaveHistoryTable = (props: any) => {
       )
     },
     {
-      title: 'Intrnee Name',
+      title: 'Intern Name',
       dataIndex: 'name',
       key: 'name',
     },
@@ -216,9 +197,9 @@ const LeaveHistoryTable = (props: any) => {
       key: 'leaveType',
     },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
+      title: 'Duration',
+      dataIndex: 'duration',
+      key: 'duration',
     },
     {
       title: 'Status',
@@ -243,35 +224,13 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Action',
       key: 'action',
       render: (_: any, data: any) => (
-        <Space size="middle">
-          <Dropdown
-            dropdownRender={() => {
-              return <BoxWrapper className=" action_dropDown">
-
-                {data.status === "Pending" &&
-                  <>
-                    <p onClick={()=>{{Notifications({title:'Approved',description:'Approved successfully',type:'success'})}}}
-                      className=" cursor-pointer">
-                      Approve
-                    </p>
-                    <p onClick={() => {Notifications({title:'Declined',description:'Declined sucessfully',type:'success'})}}
-                      className="cursor-pointer my-4">
-                      Decline
-                    </p>
-                  </>
-                }
-                <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
-                  className="cursor-pointer"
-                >View Details</p>
-              </BoxWrapper>
-            }}
-            trigger={['click']}
-            overlayClassName='menus_dropdown_main'
-            placement="bottomRight"
-          >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-          </Dropdown >
-        </Space >
+        <DropDownNew placement="bottomRight" items={[
+          { label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>View Details</p>, key: 'viewDetail' },
+          (data.status === "Pending") && { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
+          (data.status === "Pending") && { label: <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>Decline</p>, key: 'decline' },
+        ]}>
+          <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+        </DropDownNew>
       ),
     },
   ];
