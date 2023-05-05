@@ -7,12 +7,22 @@ import UniversityDetails from "./UniversityDetails";
 import Photograph from "./Photograph";
 import Video from "./Video";
 import { Form } from "antd";
+import useCustomHook from "../../../actionHandler";
 
 function VerificationSteps(props: any) {
 
   const [currentStep, setCurrentStep] = useState(1);
+  const action = useCustomHook();
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    console.log("Received values of verifcations: ", values);
+    const { firstName, lastName, country, documentType } = values;
+
+    action.verifcationStudent({
+      firstName: firstName,
+      lastName: lastName,
+      country: country,
+      documentType: documentType
+    })
   };
 
   return (
@@ -51,7 +61,8 @@ function VerificationSteps(props: any) {
         {currentStep == 5 && (
           <Address
             currentStep={currentStep}
-            setCurrentStep={setCurrentStep} />
+            setCurrentStep={setCurrentStep}
+          />
         )}
         {currentStep == 6 && (
           <Photograph
