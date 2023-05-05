@@ -483,9 +483,19 @@
   }
 }
 .description-wrapper {
-  height: 360px !important;
-  max-height: 360px !important;
-  overflow: scroll;
+  // height: 360px !important;
+  // max-height: 360px !important;
+  // overflow: scroll;
+
+  .text-editor {
+    border: 2px solid $white-bg-color;
+    border-radius: 2rem !important;
+
+    &:hover {
+      background-color: $white-bg-color;
+      border: 2px solid $input-hover-color;
+    }
+  }
 }
 
 .asignee-wrapper {
