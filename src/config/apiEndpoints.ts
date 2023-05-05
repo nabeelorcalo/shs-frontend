@@ -15,6 +15,8 @@ const endpoints = {
   SIGNUP: '/auth/signup',
   CHANGEPASSWORD:'/auth/change-password',
   FORGOTPASSWORD:'/auth/forgot-password',
-  TIMESHEET_FIND_ALL:'timesheet/category/findAll'
+  TIMESHEET_FIND_ALL:'timesheet/category/findAll',
+  STUDENT_INTRNE_SAWITCH:"auth/student-intern-switch",
+
 }
 export default endpoints;
