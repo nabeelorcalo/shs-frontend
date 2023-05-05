@@ -30,6 +30,7 @@ import {
   MenuProps,
   Typography,
 } from "antd";
+import apiEndpints from "../../../config/apiEndpoints";
 const { Search } = Input;
 const { Header } = Layout;
 
@@ -55,6 +56,7 @@ const data = [
 ];
 
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
+  const { LOGOUT } = apiEndpints;
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);

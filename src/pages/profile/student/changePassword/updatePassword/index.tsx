@@ -9,7 +9,6 @@ const CreatePassword = () => {
     <div>
       <div className="create-password">
           <UpdatePasswordForm />
-
       </div>
     </div>
   );

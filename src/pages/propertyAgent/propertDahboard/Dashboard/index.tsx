@@ -9,17 +9,19 @@ const MainDashboard = () => {
   const nivagate = useNavigate();
   return (
     <div className="main-dashboard">
-      <Row gutter={[20, 10]}>
-        {cardData.map((item, index) => {
-          return (
-            <>
-              <Col xxl={6} xl={6} lg={12} md={24} sm={24} xs={24}>
+      <div style={{ overflowX: "scroll" }}>
+        <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
+          {cardData.map((item, index) => {
+            return (
+              <div>
                 <div className="card-main">
-                  <div className="flex items-center p-2">
-                    <div className="img-bg">
-                      <img src={item.img} alt="" />
+                  <div className=" flex items-center p-2">
+                    <div className="rounded-[10px] h-[60px] w-[60px]"
+                      style={{ backgroundColor: `${item.bgColor}`, padding: '0.2rem' }}>
+                      <div className="img-bg pl-2 pt-2 pr-1">
+                        <img src={item.img} alt="" style={{ zIndex: 999 }} />
+                      </div>
                     </div>
-
                     <div className="ml-3">
                       <Typography className="card-title">
                         {item.cardTitle}
@@ -55,14 +57,13 @@ const MainDashboard = () => {
                     </>
                   )}
                 </div>
-              </Col>
-            </>
-          );
-        })}
-      </Row>
-
-      <Row gutter={[50,20]} className="mt-5">
-        <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <Row gutter={[50, 20]} className="mt-5">
+        <Col xxl={12} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
@@ -73,17 +74,17 @@ const MainDashboard = () => {
             />
           </div>
         </Col>
-        <Col xxl={6} xl={12} lg={24} md={24} sm={24} xs={24} className="recent-card">
+        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-card">
           <div >
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
             <div className="inner-activities flex mt-4">
-              <Row gutter={[20,20]}>
+              <Row gutter={[20, 20]}>
                 {activityData.map((item, index) => {
                   return (
                     <Col span={24}>
-                      <Row gutter={[0,20]}>
+                      <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
                           <Typography className="text-[#A0A3BD] text-sm font-normal font-[outfit]">
                             {item.date}
@@ -124,7 +125,7 @@ const MainDashboard = () => {
             </div>
           </div>
         </Col>
-        <Col xxl={6} xl={24} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
@@ -136,10 +137,10 @@ const MainDashboard = () => {
                         item.status === "Published"
                           ? nivagate("published")
                           : item.status === "Rejected"
-                          ? nivagate("rejected")
-                          : item.status === "Pending"
-                          ? nivagate("pending")
-                          : ""
+                            ? nivagate("rejected")
+                            : item.status === "Pending"
+                              ? nivagate("pending")
+                              : ""
                       }
                       className="inner-card"
                     >
@@ -176,10 +177,10 @@ const MainDashboard = () => {
                                 item.status === "Published"
                                   ? "#3DC575"
                                   : item.status === "Rejected"
-                                  ? "#D83A52"
-                                  : item.status === "Pending"
-                                  ? "#FFC15D"
-                                  : "",
+                                    ? "#D83A52"
+                                    : item.status === "Pending"
+                                      ? "#FFC15D"
+                                      : "",
                             }}
                           >
                             <Typography className="cursor-pointer text-xs font-normal text-white text-center ">

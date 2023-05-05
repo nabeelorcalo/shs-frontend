@@ -49,7 +49,7 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
 
         {
           action &&
-          <div className='flex items-center ml-auto'>
+          <div className='flex items-start ml-auto'>
             <MonthChanger
               month={state.selectedMonth}
               onClick={changeMonth}

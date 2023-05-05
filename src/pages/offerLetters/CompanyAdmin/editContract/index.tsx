@@ -22,6 +22,7 @@ import {
 } from "@ant-design/icons";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
+
 const senderInfo = [
   {
     label: "Full Name",
@@ -81,6 +82,9 @@ const details = [
 ];
 
 const EditOfferLetter = () => {
+
+  const navigate = useNavigate()
+
   const fontFamily = (
     <Menu>
       <Menu.Item>Roboto</Menu.Item>
@@ -110,15 +114,20 @@ const EditOfferLetter = () => {
       onClickNavigateTo: `/${ROUTES_CONSTANTS.OFFER_LETTER}`,
     },
   ];
+
+  const handleSign = () => {
+    navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+  }
+
   return (
     <div className="system-admin-offer-letter-edit-main">
       <div>
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
       <BoxWrapper>
-        <Row gutter={[0, 30]}>
+        <Row className="pb-6" gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
+            <div className="pb-6 pt-6 font-semibold text-xl text-secondary-color">
               Offer Letter
             </div>
           </Col>
@@ -261,13 +270,13 @@ const EditOfferLetter = () => {
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Row gutter={[24, 30]}>
                     <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Button className="system-admin-offer-letter-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+                      <Button onClick={handleSign} className="system-admin-offer-letter-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
                         Sign & Send
                       </Button>
                     </Col>
 
                     <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                      <Button className="system-admin-offer-letter-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                      <Button onClick={() => navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)} className="system-admin-offer-letter-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
                         Cancel
                       </Button>
                     </Col>
