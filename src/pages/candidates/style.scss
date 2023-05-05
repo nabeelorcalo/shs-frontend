@@ -1,8 +1,8 @@
-@import '../../scss/_colors.scss';
+@import "../../scss/_colors.scss";
 
 .candidate-main {
   .candidate-right-sec {
-    @media only screen and (max-width:575px) {
+    @media only screen and (max-width: 575px) {
       flex-direction: column;
     }
   }
@@ -57,7 +57,6 @@
   font-weight: 600;
   font-size: 16px;
   margin-top: 5px;
-
 }
 
 .candidate-table-wrapper {
@@ -164,11 +163,10 @@
 }
 
 .details-wrapper {
-
   border-right: 1px solid $text-error-line-color;
   height: 100%;
 
-  @media only screen and (max-width:768px) {
+  @media only screen and (max-width: 768px) {
     border-right: none;
   }
 
@@ -181,7 +179,6 @@
     width: 155px;
     height: 40px;
   }
-
 }
 
 .stage-apply {
@@ -208,7 +205,6 @@
       color: $white-bg-color;
     }
   }
-
 }
 
 .apllied-for {
@@ -265,7 +261,6 @@
   font-size: 16px;
   line-height: 24px;
   margin-bottom: 10px;
-
 }
 
 .contact {
@@ -304,19 +299,17 @@
     color: $text-primary-title-color;
     font-weight: 500;
     font-size: 16px;
-
   }
 
   .skills-para {
     background: $text-input-bg-color;
     border-radius: 14.5px;
   }
-
 }
 
 .advance-dropdown {
   border: 1px solid $text-error-line-color;
-  border-radius: 100px
+  border-radius: 100px;
 }
 
 .heading {
@@ -359,22 +352,20 @@
   }
 
   .persnol-para-text {
-
     font-weight: 400;
     font-size: 14px;
     color: $text-secondary-body-color;
-
   }
 
   .others {
     .other-item {
-      background-color: #E6F4F9;
+      background-color: #e6f4f9;
       border-radius: 20px;
       padding: 5px 10px;
       transition: all 0.2s linear;
 
       &:hover {
-        background-color: #14142A;
+        background-color: #14142a;
         color: white;
 
         .other-icon {
@@ -408,11 +399,9 @@
 
 .files {
   border-bottom: 1px solid $text-error-line-color;
-
 }
 
 .cv-heading {
-
   font-weight: 600;
   font-size: 16px;
   color: $text-primary-title-color;
@@ -442,7 +431,6 @@
   font-weight: 600;
   font-size: 18px;
   color: $text-primary-title-color;
-
 }
 
 .btn-icon {
@@ -456,7 +444,7 @@
   border-radius: 8px;
   border: none;
 
-  @media only screen and (max-width:1366px) {
+  @media only screen and (max-width: 1366px) {
     width: 100%;
   }
 
@@ -471,10 +459,7 @@
   color: $text-success-placeholder-color;
 }
 
-
-
 .asignee-wrap {
-
   width: 250px;
 
   .drop-down-with-imgs {
@@ -497,9 +482,13 @@
     }
   }
 }
+.description-wrapper {
+  height: 360px !important;
+  max-height: 360px !important;
+  overflow: scroll;
+}
 
 .asignee-wrapper {
-
   width: 100%;
 
   .drop-down-with-imgs {
@@ -516,7 +505,6 @@
     align-items: center;
     justify-content: space-between;
     border: 1px solid $text-error-line-color;
-
   }
 }
 
@@ -536,7 +524,6 @@
 .dateAndTime {
   border: 1px solid $text-error-line-color;
   border-radius: 8px;
-
 }
 
 .edit-icon {
@@ -553,7 +540,7 @@
 }
 
 .main-wrapperr:hover .interview-content {
-  background-color: #E6F4F9;
+  background-color: #e6f4f9;
   border-radius: 8px;
   transition: 0.8s;
 }
@@ -575,32 +562,29 @@
 }
 
 .headingg {
-  font-family: 'Outfit';
+  font-family: "Outfit";
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
-  color: #14142A;
+  color: #14142a;
 }
 
 .bottom-heading {
-  font-family: 'Outfit';
+  font-family: "Outfit";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #4E4B66;
-
+  color: #4e4b66;
 }
-
 
 .doc-wrapper {
   .files-wrap {
-
     .files {
       transition: all 0.2s linear;
       border-radius: 6px;
 
       &:hover {
-        background-color: #E6F4F9;
+        background-color: #e6f4f9;
 
         .icons-sec {
           display: flex;
