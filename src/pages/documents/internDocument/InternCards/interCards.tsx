@@ -52,7 +52,7 @@ const InterCards = () => {
         {DocsMockData.map((data: any) => (
           <Col lg={6} md={8} sm={12} xs={24}>
             <BoxWrapper
-              boxShadow={"box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);"}
+              box-shadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)"
             >
               <div className="flex justify-between">
                 <Rate count={1} />
@@ -92,5 +92,4 @@ const InterCards = () => {
     </>
   );
 };
-
 export default InterCards;
