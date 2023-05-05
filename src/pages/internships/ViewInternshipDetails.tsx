@@ -6,6 +6,7 @@ import { ROUTES_CONSTANTS } from '../../config/constants'
 import useCustomHook from './actionHandler'
 // import '../../scss/global-color/Global-colors.scss'
 import './style.scss'
+import { useEffect } from 'react'
 
 const tempArray = [
   { name: "Job Details" },
@@ -19,8 +20,10 @@ const ViewInternshipDetails = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams();
   const internshipStatus = searchParams.get('status')
-  const { internshipDetails }: any = useCustomHook()
-
+  const {getInternshipDetails,internshipDetails} : any = useCustomHook()
+  useEffect(() => {
+    getInternshipDetails()
+  }, [])
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

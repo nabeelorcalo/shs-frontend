@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import { DropDown, SearchBar, FiltersButton, PageHeader, InternshipProgressCard, BoxWrapper, NoDataFound } from '../../../components'
@@ -319,7 +319,7 @@ const InternshipsCompanyAdmin = () => {
     location: "",
     department: ""
   })
-  const { internshipData } = useCustomHook()
+  const { getAllInternshipsData, internshipData, changeHandler,deleteInternship } = useCustomHook()
   const handleDrawer = () => {
     setState((prevState) => ({
       ...prevState,
@@ -343,6 +343,10 @@ const InternshipsCompanyAdmin = () => {
     }))
   }
 
+  useEffect(() => {
+    getAllInternshipsData()
+  }, [])
+
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -350,7 +354,7 @@ const InternshipsCompanyAdmin = () => {
       department: value
     }))
   }
-  console.log(internshipData);
+  console.log("data", internshipData);
 
   return (
     <>
@@ -358,7 +362,7 @@ const InternshipsCompanyAdmin = () => {
       <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" size="middle" />
+            <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
             <FiltersButton
@@ -444,6 +448,7 @@ const InternshipsCompanyAdmin = () => {
               return (
                 <BoxWrapper key={idx} boxShadow>
                   <InternshipProgressCard
+                    id={item.id}
                     title={item.title}
                     status={item.status}
                     department={item.department}

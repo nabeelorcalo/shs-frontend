@@ -17,6 +17,8 @@ const endpoints = {
   FORGOTPASSWORD:'/auth/forgot-password',
   TIMESHEET_FIND_ALL:'timesheet/category/findAll',
   GET_LIST_INTERNSHIP:'/internship/listInternships',
-  GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail'
+  GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
+  DEL_INTERNSHIP:'/internship/deleteInternship',
+  POST_NEW_INTERNSHIP:'/internship/createInternship'
 }
 export default endpoints;

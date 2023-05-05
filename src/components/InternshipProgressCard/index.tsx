@@ -1,22 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertIcon } from '../../assets/images'
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { Notifications } from '../Notification';
-import '../../scss/global-color/Global-colors.scss'
 import { PopUpModal } from '../Model';
 import { ROUTES_CONSTANTS } from '../../config/constants';
+// import '../../scss/global-color/Global-colors.scss'
 import './style.scss';
+import useCustomHook from '../../pages/internships/actionHandler';
 
 export const InternshipProgressCard = (props: any) => {
-  const { title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
+  const { id, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
   const [decline, setDecline] = useState(false)
   const [deleteInternship, setDeleteInternship] = useState(false)
 
-  const filterCount = interns.filter((item: any, idx: any) => {
-    return item.stage === "hired"
-  })
+  // const filterCount = interns.filter((item: any, idx: any) => {
+  //   return item.stage === "hired"
+  // })
+  
+  const { deleteInternshipData } = useCustomHook();
+  const handelDelete = (id: any) => {
+    deleteInternshipData(id);
+    setDeleteInternship(false)
+  }
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -24,7 +31,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '1',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
-            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status)
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: id })
           }}>
             View details
           </a>
@@ -212,6 +219,7 @@ export const InternshipProgressCard = (props: any) => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
+              onClick={() => handelDelete(id)}
             >
               Delete
             </Button>
