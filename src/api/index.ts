@@ -3,14 +3,17 @@ import constants from "../config/constants";
 import { Notifications } from '../components';
 
 const baseURL = constants.APP_URL;
+
 const defaultHeaders = {
   'Content-Type': 'application/json',
   // Authorization: 'Bearer ' + accessToken,
 };
+
 const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
 });
+
 axiosInstance.interceptors.request.use(function (config) {
   // Do something before request is sent
   const accessToken = localStorage.getItem('accessToken');
@@ -19,7 +22,10 @@ axiosInstance.interceptors.request.use(function (config) {
   }
   return config;
 }, function (error) {
-  // Do something with request error
+  if (error.response?.status === 401) {
+    localStorage.removeItem('accessToken');
+    window.location.href = '/login'; // Redirect user to login page
+  }
   return Promise.reject(error);
 });
 
