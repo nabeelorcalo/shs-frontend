@@ -3,9 +3,7 @@ import { DocumentUpload } from '../../assets/images'
 import './style.scss'
 import SelectedUploadCard from '../SelectedUploadCard'
 
-
 export const DragAndDropUpload = () => {
-
   const [files, setFiles] = useState([])
   const inputRef: any = useRef();
   const handleDragOver = (event: any) => {
@@ -17,7 +15,6 @@ export const DragAndDropUpload = () => {
     setFiles(Array.from(event.dataTransfer.files))
     console.log("Dropped")
   }
-
   return (
     <>
       <div
@@ -27,13 +24,18 @@ export const DragAndDropUpload = () => {
         <div>
           <p>Drag & Drop files or <span className="text-[red] cursor-pointer" onClick={() => { inputRef.current.click() }}>Browse</span></p>
           <p className="text-sm">Supported jpeg, pdf oc doc files</p>
-          <input className='hiddenInput' hidden multiple type="file" ref={inputRef} onChange={(event: any) => { setFiles(Array.from(event.target.files)) }} />
+          <input
+            className='hiddenInput'
+            hidden
+            multiple
+            type="file"
+            ref={inputRef}
+            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }}
+          />
         </div>
         <div>
           <DocumentUpload />
         </div>
-
-
       </div>
       {
         files ?
