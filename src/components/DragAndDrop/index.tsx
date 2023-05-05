@@ -13,7 +13,6 @@ export const DragAndDropUpload = () => {
     console.log("Dragged")
   }
 
-
   return (
     <div
       onDragOver={handleDragOver}
