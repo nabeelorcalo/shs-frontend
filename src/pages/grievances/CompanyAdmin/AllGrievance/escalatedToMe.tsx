@@ -14,11 +14,11 @@ const EscalatedToMeTableColumn =
     {
       dataIndex: 'avater',
       key: 'avater',
-      title: 'Avater',
+      title: 'Avatar',
       render: (avater: any) => {
         return {
           children: (
-           <span> {avater}</span>
+            <span> {avater}</span>
           )
         }
       }
@@ -53,9 +53,8 @@ const EscalatedToMeTableColumn =
           children: (
             <div>
               <span
-                className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'New'? 'new':
-                 text === 'In Progess'? 'in-progress':text === 'Re-Opened'?'re-opened': text === 'Resolved' ? 'resolved' : ''} `}
-              >
+                className={`rounded-md px-2 py-1  text-white text-sm font-normal font-[outfit] ${text === 'New' ? 'new' :
+                  text === 'In Progess' ? 'in-progress' : text === 'Re-Opened' ? 're-opened' : text === 'Resolved' ? 'resolved' : ''} `} >
                 {text}
               </span>
             </div>
@@ -64,16 +63,16 @@ const EscalatedToMeTableColumn =
       },
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "Action",
       render: (_: any, data: any) => (
         <Space size="middle">
-          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_Details} />
+          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} />
         </Space>
       ),
     },
   ]
-const EscalatedToMe = (props:any) => {
+const EscalatedToMe = (props: any) => {
   return (
     <GlobalTable
       columns={EscalatedToMeTableColumn}

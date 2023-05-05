@@ -1,30 +1,37 @@
 @import '../../../scss/colors';
-.case-studies-table{
-    .pending{
-      background: $text-warning-color;
-    }
-    .rejected{
-      background: $text-error-color;
-    }
-    .approved{
-      background: $text-success-color;
+
+.case-studies-table {
+  .pending {
+    background: $text-warning-color;
+  }
+
+  .rejected {
+    background: $text-error-color;
+  }
+
+  .approved {
+    background: $text-success-color;
   }
 }
-.casestudies-filter_main_wrapper{
-  .drop-down-wrapper{
+
+.casestudies-filter_main_wrapper {
+  .drop-down-wrapper {
     background: $white-bg-color;
     border: 1px solid $text-primary-disabled-color;
   }
-  .ant-picker{
+
+  .ant-picker {
     background: $white-bg-color;
     border: 1px solid $text-primary-disabled-color;
   }
-  .filter-footer{
+
+  .filter-footer {
     .footer-cancel-btn {
       border: 1px solid $teriary-bg-color !important;
-      color: $teriary-bg-color !important ;
+      color: $teriary-bg-color !important;
       padding: 0px 20px;
     }
+
     .footer-submit-btn {
       background: $teriary-bg-color;
       border: 1px solid $teriary-bg-color;
@@ -32,5 +39,201 @@
       padding: 0px 20px;
     }
   }
+}
 
+.company-admin-assessment-form {
+  .ant-dropdown-menu-item ant-dropdown-menu-item-only-child {
+    padding: 0 !important
+  }
+
+  .ant-divider-horizontal {
+    background: $text-error-line-color !important;
+  }
+
+  .drop-down-wrapper {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    display: block;
+    padding: 12px 10px 12px 10px;
+    color: $text-success-placeholder-color;
+    cursor: pointer;
+    text-transform: capitalize;
+    border: 2px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &:hover,
+    &.active {
+      border: 2px solid $input-hover-color;
+      background-color: $white-bg-color;
+    }
+
+    &.pilled {
+      border-radius: 50px;
+    }
+  }
+
+  .sign-btn {
+    color: $text-success-placeholder-color
+  }
+
+  .scroll {
+    width: 100%;
+    overflow-x: scroll;
+  }
+
+  .destop-view {
+    min-width: 1000px;
+  }
+
+  .assessment-footer {
+    .reject-btn {
+      &:hover {
+        background: $secondary-bg-color !important;
+      }
+    }
+
+    .save-btn {
+      border: 1px solid $teriary-bg-color;
+
+      &:hover {
+        background: $white-bg-color !important;
+        color: $teriary-bg-color
+      }
+    }
+
+    .finalise-btn {
+      &:hover {
+        background: $teriary-bg-color !important;
+      }
+    }
+  }
+
+  .sign-box {
+    border: 1px solid $text-success-placeholder-color;
+    height: 150px;
+  }
+
+  .ant-input {
+    background-color: $text-input-bg-color;
+
+    &:hover {
+      background-color: $white-bg-color;
+    }
+  }
+}
+
+.manage-remark-image-container {
+  .image {
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.assessment-form-image-container {
+  &:hover {
+    transform: scale(1.3);
+  }
+}
+
+.company-admin-assessment-form {
+
+  .ant-divider-horizontal {
+    background: $text-error-line-color !important;
+  }
+
+  .sign-btn {
+    color: $text-success-placeholder-color
+  }
+
+  .scroll {
+    width: 100%;
+    overflow-x: scroll;
+  }
+
+  .destop-view {
+    min-width: 1000px;
+  }
+
+  .form-title {
+    color: $text-success-placeholder-color;
+    margin-left: 5px;
+  }
+
+  .assessment-footer {
+    .active {
+      border: none !important;
+    }
+
+    .reject-btn {
+      &:hover {
+        background: $secondary-bg-color !important;
+      }
+    }
+
+    .save-btn {
+      border: 1px solid $teriary-bg-color;
+
+      &:hover {
+        background: $white-bg-color !important;
+        color: $teriary-bg-color
+      }
+    }
+
+    .finalise-btn {
+      &:hover {
+        background: $teriary-bg-color !important;
+      }
+    }
+  }
+
+  .sign-box {
+    border: 1px solid $text-success-placeholder-color;
+    height: 150px;
+  }
+
+  .ant-input {
+    background-color: $text-input-bg-color;
+
+    &:hover {
+      background-color: $white-bg-color;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .ant-btn {
+      min-width: 75px;
+      padding: 0;
+    }
+  }
+}
+
+.assessment-form-signature-modal-sign-btn {
+  background: $teriary-bg-color;
+  border: 1px solid $teriary-bg-color;
+  color: $white-bg-color;
+  padding: 0px 20px;
+  border: unset;
+  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
+
+  &:hover {
+    color: $white-bg-color;
+    background: $teriary-bg-color !important;
+    opacity: 75%;
+    border: unset;
+    box-shadow: 0px 2px 0px rgba(226, 223, 223, 0.016);
+  }
+}
+
+.assessment-form-signature-modal-cancel-btn {
+  &:hover {
+    color: $teriary-bg-color !important;
+    opacity: 75%;
+    border: unset;
+    border: 1px solid $light-gray-thin-color !important;
+    box-shadow: 0px 2px 0px rgba(226, 223, 223, 0.016);
+
+  }
 }

@@ -28,13 +28,13 @@
 }
 
 .common-header {
-  .input-wrapper {
-    width: 300px;
-  }
+  // .input-wrapper {
+  //   width: 300px;
+  // }
 
   .drop-down-new {
     width: 250px;
-    @media only screen and (max-width:375px){
+    @media only screen and (max-width:639px){
       width: 100%;
     }
   }

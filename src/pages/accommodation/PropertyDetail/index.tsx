@@ -19,14 +19,12 @@ import "./style.scss";
 const { useBreakpoint } = Grid;
 
 // Temporary
-import thumb1 from '../../../assets/images/gallery/thumb1.png'
-import thumb2 from '../../../assets/images/gallery/thumb2.png'
-import thumb3 from '../../../assets/images/gallery/thumb3.png'
-import thumb4 from '../../../assets/images/gallery/thumb4.png'
-import thumb5 from '../../../assets/images/gallery/thumb5.png'
-import gal1 from '../../../assets/images/gallery/gal1.png'
-
-
+import thumb1 from "../../../assets/images/gallery/thumb1.png";
+import thumb2 from "../../../assets/images/gallery/thumb2.png";
+import thumb3 from "../../../assets/images/gallery/thumb3.png";
+import thumb4 from "../../../assets/images/gallery/thumb4.png";
+import thumb5 from "../../../assets/images/gallery/thumb5.png";
+import gal1 from "../../../assets/images/gallery/gal1.png";
 
 const images = [
   {
@@ -63,33 +61,31 @@ const AccPropertyDetail = () => {
   const [loading, setLoading] = useState(false);
   const anchorItems = [
     {
-      key: 'Overview',
-      href: '#Overview',
-      title: 'Overview',
+      key: "Overview",
+      href: "#Overview",
+      title: "Overview",
     },
     {
-      key: 'Pricing',
-      href: '#Pricing',
-      title: 'Pricing',
+      key: "Pricing",
+      href: "#Pricing",
+      title: "Pricing",
     },
     {
-      key: 'Cancellation-Policy',
-      href: '#Cancellation-Policy',
-      title: 'Cancellation Policy',
+      key: "Cancellation-Policy",
+      href: "#Cancellation-Policy",
+      title: "Cancellation Policy",
     },
     {
-      key: 'HowtoBookThisProperty',
-      href: '#HowtoBookThisProperty',
-      title: 'How to Book This Property',
+      key: "HowtoBookThisProperty",
+      href: "#HowtoBookThisProperty",
+      title: "How to Book This Property",
     },
     {
-      key: 'AgentDetail',
-      href: '#AgentDetail',
-      title: 'Agent Detail',
+      key: "AgentDetail",
+      href: "#AgentDetail",
+      title: "Agent Detail",
     },
-  ]
-
-
+  ];
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -117,6 +113,7 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="property-detail">
+      <PageHeader title="Accommodation" bordered />
       <PageHeader
         bordered
         title={
@@ -198,9 +195,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Cancellation Policy
                       </div>
-
                       <CancellationPolicy />
-
                     </div>
                   </div>
 
@@ -209,9 +204,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         How To Book This Property
                       </div>
-
                       <HowToBookPropperty />
-
                     </div>
                   </div>
 
@@ -220,9 +213,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-
                       <AgentDetail />
-
                     </div>
                   </div>
 
@@ -257,11 +248,10 @@ const AccPropertyDetail = () => {
               </div>
             </div>
           }
-          
         </div>
       </Spin>
     </div>
-  )
-}
+  );
+};
 
-export default AccPropertyDetail
+export default AccPropertyDetail;

@@ -98,7 +98,7 @@ const Manager = () => {
       <Row gutter={gutter}>
         <Col xs={24} sm={24} xl={17} xxl={19}>
           <Row className="rounded-2xl bg-white wrapper-shadow">
-            <Col xs={24} lg={8} xl={10} className="p-5">
+            <Col xs={24} lg={9} xl={10} className="p-5">
               <CountingCard
                 totalInterns={33}
                 present={6}
@@ -106,7 +106,7 @@ const Manager = () => {
                 onLeave={3}
               />
             </Col>
-            <Col xs={24} lg={16} xl={14}>
+            <Col xs={24} lg={15} xl={14}>
               <div className="p-5">
                 <MonthlyPerfomanceChart
                   XField="city"

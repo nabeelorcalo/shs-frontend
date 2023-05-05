@@ -30,8 +30,8 @@ const CertificateDetail = () => {
   return (
     <div className='certificate-detail-wrapper'>
       <Breadcrumb breadCrumbData={[{ name: 'Mino Marina' }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
-      <Row gutter={[15, 15]} className='flex-wrap'>
-        <Col xl={6} lg={6} md={24} xs={24}>
+      <Row gutter={[15, 15]} className='flex-wrap certificates-row'>
+        <Col xxl={6} xl={12} xs={24}>
           <BoxWrapper
             boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
             className='user-info flex items-center justify-center flex-col'>
@@ -45,20 +45,19 @@ const CertificateDetail = () => {
             <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col xxl={12} xl={24} lg={24} md={24} xs={24} className='over-all-performance'>
+        <Col xxl={12} xl={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
-            lg={5} md={12} xs={24}
             data={findUser?.performance}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xxl={6} xl={12} lg={24} xs={24}>
+        <Col xxl={6} xl={12} xs={24}>
           <LeaveChart heading='Leaves' />
         </Col>
       </Row>
       <div className="flex items-center justify-between gap-3 flex-wrap my-[30px]">
         <p className='font-semibold text-base total-certificates'>
-          Total Certificates:
+          Total Certificates:&nbsp;
           <span className='total-num'>
             {findUser?.certificates && findUser?.certificates?.length < 10 ?
               `0${findUser?.certificates?.length}` :
@@ -72,11 +71,11 @@ const CertificateDetail = () => {
       <div className="certificate-cards">
         <Row gutter={[15, 15]}>
           {findUser?.certificates ? findUser?.certificates?.map((certificate: any, i: number) => (
-            <Col lg={6} md={8} sm={12} xs={24} key={i}>
+            <Col xl={6} lg={8} sm={12} xs={24} key={i}>
               <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
                 <div className="flex items-center justify-between mb-[30px]">
                   <p className='font-medium title text-xl'>
-                    Certificate of
+                    Certificate of &nbsp;
                     <span className='capitalize'>{certificate?.certificateType}</span>
                   </p>
                   <DropDownNew items={[

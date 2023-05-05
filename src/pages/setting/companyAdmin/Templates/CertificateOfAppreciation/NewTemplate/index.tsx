@@ -19,20 +19,19 @@ import {
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
 import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 const { Title, Paragraph } = Typography;
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 
 const NewTemplateCertificationOfAppreciation = () => {
-  const navigate = useNavigate();
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}` },
   ];
-  const [value, setValue] = useState();
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
     toggle: false,
@@ -47,14 +46,7 @@ const NewTemplateCertificationOfAppreciation = () => {
   const onChangeHandler = (e: any) => {
     setTextEditorValue(e)
   }
-  const handleSubmit = () => {
-    const values = form.getFieldsValue();
-    const formData = {
-      subject: values.subject,
-      templateName: values.templateName,
-      description: textEditorValue
-    }
-  };
+  const onFinish = (values: any) => { }
 
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
@@ -77,7 +69,10 @@ const NewTemplateCertificationOfAppreciation = () => {
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical" form={form}>
+        <Form layout="vertical"
+          form={form}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          onFinish={onFinish}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -91,16 +86,16 @@ const NewTemplateCertificationOfAppreciation = () => {
                 required={false}
                 name="templateName"
                 label="Template Name"
-                rules={[{ required: true, message: "Please Enter your username!" }]}
+                rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter name" />
+                <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <Form.Item
                 required={false}
                 name="subject"
                 label="Subject"
-                rules={[{ required: true, message: "Please Enter your username!" }]}  >
-                <Input placeholder="Enter subject" />
+                rules={[{ required: true }, { type: "string" }]}  >
+                <Input placeholder="Enter subject" className="input-style" />
               </Form.Item>
               <Form.Item
                 name="description"
@@ -208,14 +203,14 @@ const NewTemplateCertificationOfAppreciation = () => {
           </Row>
           <Space className="flex justify-end pt-5">
             <Button danger size="middle" type="primary">
-              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}>
+              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION} className="border-0">
                 Cancel
               </NavLink>
             </Button>
             <Button
               size="middle"
               className="teriary-bg-color white-color add-button"
-              onClick={handleSubmit}
+              htmlType="submit"
             >
               Add
             </Button>

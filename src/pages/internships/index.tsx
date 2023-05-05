@@ -71,7 +71,7 @@ const Internships = () => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-internship-details") }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
             View details
           </a>
         ),
@@ -234,8 +234,14 @@ const Internships = () => {
                     <p>Location</p>
                     <DropDown
                       name="name"
-                      options={["EidinBurg", "Glasgow", "London", "Virtual"]}
-                      setValue={() => {updateLocation(event)}}
+                      options={[
+                        "EidinBurg",
+                        "Glasgow",
+                        "London",
+                        "Virtual",
+                        "All"
+                      ]}
+                      setValue={() => { updateLocation(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.location}
@@ -251,8 +257,9 @@ const Internships = () => {
                         "Accountant",
                         "Administrator",
                         "HR Cordinator",
+                        "All"
                       ]}
-                      setValue={() => {updateDepartment(event)}}
+                      setValue={() => { updateDepartment(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.department}
@@ -266,13 +273,12 @@ const Internships = () => {
               </React.Fragment>
             </Drawer>
             <Button
+              type="primary"
               size="middle"
-              className="flex gap-2 teriary-bg-color white-color"
-              onClick={() => {
-                navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP);
-              }}
+              icon={<InternshipsIcon />}
+              className="button-tertiary"
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
             >
-              <InternshipsIcon />
               New Internship
             </Button>
           </div>

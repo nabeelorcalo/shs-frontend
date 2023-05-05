@@ -218,10 +218,10 @@ const DelegateMembers = () => {
     <div className="delegate-members">
       <PageHeader title="Delegate Members" bordered  />
       <Row gutter={[20, 20]} className="page-filterbar">
-        <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+        <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={() => console.log('Search')} />
         </Col>
-        <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="flex md:justify-end gap-4 main-filter-btns">
+        <Col xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 main-filter-btns">
           <div className="requests-filterby-status">
             <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
               <Button className="button-sky-blue main-btn">Status<IconAngleDown /></Button>

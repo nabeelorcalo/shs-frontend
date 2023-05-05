@@ -220,22 +220,16 @@ const DelegateMembers = () => {
     <>
       <div className="earnwithus-delegate-members">
         <Row gutter={[20, 20]}>
-          <Col xxl={6} xl={6} md={24} sm={24} xs={24}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar handleChange={() => console.log('Search')} />
           </Col>
-          <Col xxl={18} xl={18} md={24} sm={24} xs={24} className="page-filterbar-right md:justify-end">
-            <Space size={20} className="page-filterbar">
-              <div className="requests-filterby-status">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
-                  <Button className="button-sky-blue">Status<IconAngleDown /></Button>
-                </Dropdown>
-              </div>
-              <div className="dropdown-download">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
-                  <Button className="button-sky-blue">Type<IconAngleDown /></Button>
-                </Dropdown>
-              </div>
-            </Space>
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+              <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
+                <Button className="md:w-[170px] button-sky-blue flex justify-between">Status<IconAngleDown /></Button>
+              </Dropdown>
+              <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
+                <Button className="md:w-[170px] button-sky-blue flex justify-between">Type<IconAngleDown /></Button>
+              </Dropdown>
           </Col>
           <Col xs={24}>
             <div className="shs-table-card table-delegate-members">

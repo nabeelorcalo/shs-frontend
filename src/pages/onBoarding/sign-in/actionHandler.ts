@@ -22,9 +22,16 @@ const useCustomHook = () => {
     return data;
   };
 
+  const { FORGOTPASSWORD } = apiEndpints;
+  const forgotpassword = async (body: any): Promise<any> => {
+    const { data } = await api.post(FORGOTPASSWORD, body);
+    return data;
+  };
+
   return {
     login,
     changepassword,
+    forgotpassword,
   };
 };
 

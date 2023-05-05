@@ -133,10 +133,10 @@ const index = () => {
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <Row gutter={[20, 20]}>
-        <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
+        <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />
         </Col>
-        <Col xxl={18} xl={18} md={18} sm={24} xs={24} className='w-full flex flex-row lg:justify-end gap-2'>
+        <Col xl={18} md={24} sm={24} xs={24} className='flex max-sm:flex-col flex-row justify-end gap-4'>
           <Button
             size="middle"
             onClick={() => {
@@ -155,17 +155,19 @@ const index = () => {
             options={["pdf", "excel"]}
             setValue={() => {
               action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
-              Notifications({title:"Success", description:"Grievance list downloaded ",type:'success'})}}
+              Notifications({ title: "Success", description: "Grievance list downloaded ", type: 'success' })
+            }}
           />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <AppTabs items={items} onChange={(selectedTab: any) => {
+              setSelectedTab(selectedTab)
+            }} />
+          </BoxWrapper>
         </Col>
       </Row>
 
-      <BoxWrapper className='my-5'>
-        <AppTabs items={items} onChange={(selectedTab: any) => {
-          setSelectedTab(selectedTab)
-        }} />
-
-      </BoxWrapper>
       <PopUpModal
         open={showBlowWhistleModal}
         title="Blow a Whistle"

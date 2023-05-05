@@ -1,6 +1,5 @@
 import { Input as AntInput } from "antd";
 import { GlassMagnifier } from "../../assets/images";
-
 import "./style.scss";
 
 interface Props {

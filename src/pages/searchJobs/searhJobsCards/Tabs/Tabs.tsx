@@ -18,11 +18,9 @@ const SearchJobTabs = () => {
     {
       key: "1",
       label: (
-        <center className="tab-style">
-          <div>
-            <TabIcon />
-            <p>All</p>
-          </div>
+        <center className="tab-style ">
+          <TabIcon />
+          <p className="text-sm">All</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -30,13 +28,15 @@ const SearchJobTabs = () => {
     {
       key: "2",
       label: (
-        <center className="tab-style">
-          <TabIcon2 />
-
-          <p>Design & Development</p>
-        </center>
+        <div className="">
+          <center className="tab-style">
+            <TabIcon2 />
+            <p className="text-sm">Design & Development</p>
+          </center>
+        </div>
       ),
       children: <SerarchTabs />,
+
     },
     {
       key: "3",
@@ -44,7 +44,7 @@ const SearchJobTabs = () => {
         <center className="tab-style">
           <TabIcon3 />
 
-          <p>Marketing & Communication</p>
+          <p className="text-sm">Marketing & Communication</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -55,7 +55,7 @@ const SearchJobTabs = () => {
         <center className="tab-style">
           <TabIcon4 />
 
-          <p>Project Management</p>
+          <p className="text-sm">Project Management</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -66,7 +66,7 @@ const SearchJobTabs = () => {
         <center>
           <TabIcon5 />
 
-          <p>Finance Management</p>
+          <p className="text-sm">Finance Management</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -77,7 +77,7 @@ const SearchJobTabs = () => {
         <center>
           <TabIcon6 />
 
-          <p>Human Resource Management</p>
+          <p className="text-sm">Human Resource Management</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -88,7 +88,7 @@ const SearchJobTabs = () => {
         <center>
           <TabIcon7 />
 
-          <p>Business & Consultancy</p>
+          <p className="text-sm">Business & Consultancy</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -99,7 +99,7 @@ const SearchJobTabs = () => {
         <center>
           <TabIcon8 />
 
-          <p>Administration</p>
+          <p className="text-sm">Administration</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -110,7 +110,7 @@ const SearchJobTabs = () => {
         <center>
           <TabIcon9 />
 
-          <p>Customer Success Management</p>
+          <p className="text-sm">Customer Success Management</p>
         </center>
       ),
       children: <SerarchTabs />,
@@ -120,7 +120,7 @@ const SearchJobTabs = () => {
     <div className="my-7 inetrn-document-tabs">
       <Row>
         <Col xs={24}>
-          <Tabs size="small" items={items} onChange={() => {}} />
+          <Tabs size="small" items={items} onChange={() => { }}  />
         </Col>
       </Row>
     </div>

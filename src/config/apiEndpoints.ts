@@ -16,6 +16,7 @@ const endpoints = {
   PAYROLL_FINDALL: "payroll/findAll",
   SIGNUP: '/auth/signup',
   CHANGEPASSWORD:'/auth/change-password',
+  FORGOTPASSWORD:'/auth/forgot-password',
   TIMESHEET_FIND_ALL:'timesheet/category/findAll'
 }
 export default endpoints;

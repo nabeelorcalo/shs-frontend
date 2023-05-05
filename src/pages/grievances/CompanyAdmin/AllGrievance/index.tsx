@@ -1,7 +1,7 @@
-import { Button, Divider, TabsProps } from 'antd'
+import { Button, Col, Divider, Row, TabsProps } from 'antd'
 import React, { useState } from 'react'
 import { BlowWistle } from '../../../../assets/images'
-import { Breadcrumb, DropDown, FiltersButton ,Drawer,AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from '../../../../components'
+import { Breadcrumb, DropDown, FiltersButton, Drawer, AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from '../../../../components'
 import BlowWhistleForm from '../../Common/blowWhistleForm'
 import Filters from '../../Common/filters'
 import EscalatedByMe from './escalatedByMe'
@@ -24,7 +24,7 @@ import useCustomHook from '../action.handler'
 const escalatedToMeTableData = [
   {
     no: '01',
-    avater: <GrievancesAvater1/>,
+    avater: <GrievancesAvater1 />,
     subject: 'Attendance Log Issue',
     type: 'Others',
     date: '22/09/2022',
@@ -33,7 +33,7 @@ const escalatedToMeTableData = [
   },
   {
     no: '02',
-    avater: <GrievancesAvater2/>,
+    avater: <GrievancesAvater2 />,
     subject: 'Working conditions',
     type: 'Discipline',
     date: '2/09/2022',
@@ -42,7 +42,7 @@ const escalatedToMeTableData = [
   },
   {
     no: '03',
-    avater:   <GrievancesAvater3/>,
+    avater: <GrievancesAvater3 />,
     subject: 'Bullying',
     type: 'Personal',
     date: '22/09/2022',
@@ -51,7 +51,7 @@ const escalatedToMeTableData = [
   },
   {
     no: '04',
-    avater:  <GrievancesAvater4/>,
+    avater: <GrievancesAvater4 />,
     subject: 'Attendance Log Issue',
     type: 'Work',
     date: '04/09/2022',
@@ -59,10 +59,10 @@ const escalatedToMeTableData = [
     status: 'Resolved',
   },
 ]
-const EscalatedByMeTableData =  [
+const EscalatedByMeTableData = [
   {
     no: '01',
-    subject:'Attendance Log Issue',
+    subject: 'Attendance Log Issue',
     type: 'Others',
     date: '22/09/2022',
     escalatedTo: 'Maria Sanoid',
@@ -70,7 +70,7 @@ const EscalatedByMeTableData =  [
   },
   {
     no: '02',
-    subject:'Working conditions',
+    subject: 'Working conditions',
     type: 'Discipline',
     date: '22/09/2022',
     escalatedTo: 'Zach Levery',
@@ -78,7 +78,7 @@ const EscalatedByMeTableData =  [
   },
   {
     no: '03',
-    subject:'Bullying',
+    subject: 'Bullying',
     type: 'Personal',
     date: '22/09/2022',
     escalatedTo: 'Mino Marina',
@@ -86,7 +86,7 @@ const EscalatedByMeTableData =  [
   },
   {
     no: '04',
-    subject:'Work Environment ',
+    subject: 'Work Environment ',
     type: 'Work',
     date: '22/09/2022',
     escalatedTo: 'Tom Hanks',
@@ -186,7 +186,7 @@ const index = () => {
       label: 'Escalated To Me'
     },
     {
-      children: <EscalatedByMe  EscalatedByMeTableData ={EscalatedByMeTableData}/>,
+      children: <EscalatedByMe EscalatedByMeTableData={EscalatedByMeTableData} />,
       key: '2',
       label: 'Escalated By Me'
     },
@@ -197,103 +197,99 @@ const index = () => {
       label: 'Intern Grievances'
     },
     {
-      children: <ManagerGrievances  managerGrievancesTableData ={managerGrievancesTableData}/>,
+      children: <ManagerGrievances managerGrievancesTableData={managerGrievancesTableData} />,
       key: '4',
       label: 'Manager Grievances'
     },
   ]
-  const TableColumn1 = ['No.' ,'Escalated By', 'Subject' , 'Type' , 'Date' , 'Status']
-  const TableColumn2 = ['No.' , 'Subject','Type', 'Date','Escalated To','Status']
-  const TableColumn3 = ['No.' ,'Escalated By', 'Subject','Type','Date','Escalated To', 'Status']
-  const TableColumn4 = ['No.'  ,'Escalated By', 'Subject','Type','Date', 'Escalated To' , 'Status']
+  const TableColumn1 = ['No.', 'Escalated By', 'Subject', 'Type', 'Date', 'Status']
+  const TableColumn2 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
+  const TableColumn3 = ['No.', 'Escalated By', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
+  const TableColumn4 = ['No.', 'Escalated By', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
   const action = useCustomHook();
   const breadcrumbArray = [
-    { name: "All Grievance"},
-    { name: "Grievances" , onClickNavigateTo:`/${ROUTES_CONSTANTS.GRIEVANCES}` },
+    { name: "All Grievances" },
+    { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<any>("1")
-  
+
   const downloadPdfCsvData = () => {
     if (selectedTab === "1") {
-     return escalatedToMeTableData
+      return escalatedToMeTableData
     } else if (selectedTab === "2") {
-     return EscalatedByMeTableData
+      return EscalatedByMeTableData
     } else if (selectedTab === "3") {
-     return internGrievancesTableData
+      return internGrievancesTableData
     } else if (selectedTab === "4") {
-     return managerGrievancesTableData
+      return managerGrievancesTableData
     } else {
-     null
+      null
     }
-      }
+  }
 
   const downloadPdfCsvColumn = () => {
     if (selectedTab === "1") {
-     return TableColumn1
+      return TableColumn1
     } else if (selectedTab === "2") {
-     return TableColumn2
+      return TableColumn2
     } else if (selectedTab === "3") {
-     return TableColumn3
+      return TableColumn3
     } else if (selectedTab === "4") {
-     return TableColumn4
+      return TableColumn4
     } else {
-     null
+      null
     }
-      }
+  }
   const handleChange = () => {
   }
   return (
     <div className='all-grievance'>
-       <Breadcrumb breadCrumbData={breadcrumbArray} />
-       <Divider/>
-
-      <div className="flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row">
-      <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Divider />
+      <Row gutter={[20,20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />
-        </div>
-        <div className='w-full flex flex-row lg:justify-end gap-1 md:gap-2' >
-          <div className='header-btn'>
-          <Button
-            size="middle"
-            onClick={() => {
-              setShowBlowWhistleModal(!showBlowWhistleModal);
-            }}
-            className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
-          >
-            <BlowWistle /> Blow a Whistle
-          </Button>
-          </div>
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
+            <Button
+              size="middle"
+              onClick={() => {
+                setShowBlowWhistleModal(!showBlowWhistleModal);
+              }}
+              className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
+            >
+              <BlowWistle /> Blow a Whistle
+            </Button>
+            <FiltersButton
+              label="Filters"
+              onClick={() => { setShowDrawer(!showDrawer) }}
+            />
           <div>
-          <FiltersButton
-            label="Filters"
-            onClick={() => {setShowDrawer(!showDrawer) }}
-          />
-          </div>
-          <div>
-          <DropDown
+            <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
               setValue={() => {
-                action.downloadPdfOrCsv(event , downloadPdfCsvColumn(),  downloadPdfCsvData(), "All Grievance",  selectedTab )
-                Notifications({title:"Success", description:"Grievance list downloaded ",type:'success'})}}
-              
+                action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
+                Notifications({ title: "Success", description: "Grievance list downloaded ", type: 'success' })
+              }}
             />
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
+
       <BoxWrapper className='my-5'>
-      <AppTabs items={items} onChange={(selectedTab: any) => {
-              setSelectedTab(selectedTab)
-            }} />
+        <AppTabs items={items} onChange={(selectedTab: any) => {
+          setSelectedTab(selectedTab)
+        }} />
 
       </BoxWrapper>
       <PopUpModal
         open={showBlowWhistleModal}
         title="Blow a Whistle"
         width={600}
-        close={() => {setShowBlowWhistleModal(false)}}
+        close={() => { setShowBlowWhistleModal(false) }}
         footer=""
       >
         <BlowWhistleForm setState={setShowBlowWhistleModal} />
@@ -305,7 +301,7 @@ const index = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters  />
+          <Filters />
         </React.Fragment>
       </Drawer>
 

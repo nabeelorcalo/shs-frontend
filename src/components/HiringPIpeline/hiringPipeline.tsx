@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import "./Pipeline.scss"
 
 const Array = [
@@ -51,7 +50,7 @@ const HiringPipeline = (props: any) => {
                     backgroundColor: hiringList.includes(item?.title) ? '#363565' : '#D2D6DC',
                     color: hiringList.includes(item?.title) ? '#fff' : ''
                 }}
-                    className={`pipline-content capitalize`}>
+                    className={`pipline-content capitalize flex justify-center items-center`}>
                     {item.title}
                 </div>
             ))

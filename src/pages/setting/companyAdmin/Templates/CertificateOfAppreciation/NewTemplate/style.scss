@@ -1,21 +1,29 @@
 @import "../../../../../../scss/colors";
+
 .certificate-of-appreciation-new-template {
   .eye-icon {
     path {
-        fill: $white-bg-color;
-    }
-}
-  .ant-form-item .ant-form-item-control-input-content {
-
-    .ant-input {
-      background: $text-input-bg-color;
-      border:2px solid $white-bg-color ;
-
-      &:hover {
-        background: $white-bg-color;
-      }
+      fill: $white-bg-color;
     }
   }
+
+  .input-style {
+    background: $text-input-bg-color !important;
+    border-color: $white-bg-color;
+    border: 1px solid transparent;
+    opacity: 1;
+
+    &:hover {
+      border: 1px solid $input-hover-color !important;
+      background: $white-bg-color !important;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border: 1px solid $input-hover-color !important;
+    }
+  }
+
   .certificate-card {
     background-color: $white-bg-color;
     border-radius: 10px;
@@ -25,7 +33,7 @@
     box-shadow: 0px 2px 3px $white-bg-color;
     border: 2px solid $white-bg-color;
 
-    .certificate-tick-circle{
+    .certificate-tick-circle {
       top: -16px;
       right: 0;
     }
@@ -33,12 +41,14 @@
     &:hover {
       border: 2px solid $text-primary-disabled-color;
     }
+
     .card-image-box {
       &:hover .image {
         opacity: 1;
         background: rgba($color: #424141, $alpha: 1);
         border-radius: 8px;
       }
+
       &:hover .background-img {
         opacity: 0.5;
         background: rgba($color: #424141, $alpha: 1);
@@ -48,6 +58,7 @@
       &:hover .middle {
         opacity: 100%;
       }
+
       .text {
         font-size: 40px;
         color: $white-bg-color;
@@ -60,6 +71,7 @@
         transition: 0.5s ease;
         backface-visibility: hidden;
       }
+
       .middle {
         transition: 0.5s ease;
         opacity: 0;
@@ -71,15 +83,17 @@
         text-align: center;
       }
     }
-    
   }
-  .text-editor{
+
+  .text-editor {
     border: 2px solid $white-bg-color;
-    &:hover{
+
+    &:hover {
       background-color: $white-bg-color;
       border: 2px solid $input-hover-color;
     }
   }
+
   .ql-container {
     min-height: 10rem;
     height: 100%;
@@ -89,8 +103,22 @@
     border-radius: 0px 0px 8px 8px;
     border: none;
   }
+
   .ql-toolbar.ql-snow {
     border-radius: 8px 8px 0px 0px;
     border: none;
+  }
+
+  .add-button {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Outfit';
+
+    &:hover {
+      opacity: 75%;
+      color: $white-bg-color !important;
+      outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+      border: none !important;
+    }
   }
 }

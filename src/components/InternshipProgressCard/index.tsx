@@ -23,7 +23,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS+"?status=" + status) }}>
             View details
           </a>
         ),
@@ -132,8 +132,8 @@ export const InternshipProgressCard = (props: any) => {
       <div>
         <InternshipProgressStepper status={status} interns={interns} />
       </div>
-      <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center'>
-        <div className='flex flex-row gap-3'>
+      <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
+        <div className='flex max-sm:flex-col md:flex-row  gap-3'>
           <p>Created on {createdAt}</p>
           <p>.</p>
           <p>Expected Closing Date {closingDate}</p>
@@ -162,7 +162,7 @@ export const InternshipProgressCard = (props: any) => {
           </div>
         }
         footer={
-          <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
+          <div className='flex flex-row pt-4 gap-3 justify-end max-sm:flex-col'>
             <Button
               type="default"
               size="small"
@@ -197,7 +197,7 @@ export const InternshipProgressCard = (props: any) => {
           </div>
         }
         footer={
-          <div className='flex flex-row gap-3 justify-end max-sm:flex-col'>
+          <div className='flex flex-row pt-4 gap-3 justify-end max-sm:flex-col'>
             <Button
               type="default"
               size="small"
@@ -211,7 +211,7 @@ export const InternshipProgressCard = (props: any) => {
               size="small"
               className="button-error max-sm:w-full"
             >
-              Decline
+              Delete
             </Button>
           </div>
         }
