@@ -187,9 +187,9 @@ const Listings = () => {
   const handleSubmission = useCallback(
     (result:any) => {
       if (result.error) {
-        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
       } else {
-        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+        showNotification("success", "Success", result.response?.message);
       }
     },
     [form]
@@ -292,10 +292,10 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="yes">Yes</Radio>
+                    <Radio value={true}>Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="no">No</Radio>
+                    <Radio value={false}>No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
