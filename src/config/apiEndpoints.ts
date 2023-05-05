@@ -1,5 +1,6 @@
 const endpoints = {
   LOGIN: "auth/login",
+  LOGOUT:"/auth/logout",
   INTERN_DASHBOARD: "dashboard",
   GET_AGENT_PROPERTIES: "property/get-agent-properties",
   ADD_PROPERTY: "property/add-property",
@@ -15,6 +16,8 @@ const endpoints = {
   SIGNUP: '/auth/signup',
   CHANGEPASSWORD:'/auth/change-password',
   FORGOTPASSWORD:'/auth/forgot-password',
-  TIMESHEET_FIND_ALL:'timesheet/category/findAll'
+  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
+  VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
+  PROFILE_CHANGE_PASSWORD:"/auth/change-password",
 }
 export default endpoints;
