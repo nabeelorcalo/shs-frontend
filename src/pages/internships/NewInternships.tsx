@@ -51,12 +51,12 @@ const durationOptions = [
   { value: '12 months', label: '12 months' }
 ]
 const frequencyOptions = [
-  { value: 'Hourly', label: 'Hourly' },
-  { value: 'Daily', label: 'Daily' },
-  { value: 'Weekly', label: 'Weekly' },
-  { value: 'Monthly', label: 'Monthly' },
-  { value: 'Quarterly', label: 'Quarterly' },
-  { value: 'Annually', label: 'Annually' }
+  { value: 'HOURLY', label: 'Hourly' },
+  { value: 'DAILY', label: 'Daily' },
+  { value: 'WEEKLY', label: 'Weekly' },
+  { value: 'MONTHLY', label: 'Monthly' },
+  { value: 'QUARTERLY', label: 'Quarterly' },
+  { value: 'ANNUALLY', label: 'Annually' }
 ]
 
 const NewInternships = () => {
@@ -237,27 +237,27 @@ const NewInternships = () => {
             <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-8 p-4'>
               {/* <div className='flex flex-col gap-2'> */}
               {/* <p>Type of work</p> */}
-              <Form.Item label="Type of work" name="typeofwork" rules={[{ required: true, message: 'Required Field' }]}>
+              <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'parttime'}>Part Time</Radio>
-                  <Radio value={'fulltime'}>Full Time</Radio>
+                  <Radio value={'PART_TIME'}>Part Time</Radio>
+                  <Radio value={'FULL_TIME'}>Full Time</Radio>
                 </Radio.Group>
               </Form.Item>
 
               {/* </div> */}
               {/* <div className='flex flex-col gap-2'> */}
               {/* <p>Internship Type</p> */}
-              <Form.Item label="Internship Type" name="internshiptype" rules={[{ required: true, message: 'Required Field' }]}>
+              <Form.Item label="Internship Type" name="internshiptype" >
                 <Radio.Group onChange={onChange1} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'unpaid'}>Unpaid</Radio>
-                  <Radio value={'paid'}>Paid</Radio>
+                  <Radio value={'UNPAID'}>Unpaid</Radio>
+                  <Radio value={'PAID'}>Paid</Radio>
                 </Radio.Group>
               </Form.Item>
               {/* </div> */}
-              {partAndFullTime === "fulltime" ?
+              {partAndFullTime === "FULL_TIME" ?
                 <div className='flex flex-col gap-2'>
                   {/* <p>Frequency <span className='text-error-color'>*</span></p> */}
-                  <Form.Item name="frequency" label="Frequency" rules={[{ required: true, message: 'Required Field' }]}>
+                  <Form.Item name="frequency" label="Frequency" >
                     <Select
                       placeholder="Select"
                       onChange={onGenderChange}
@@ -275,9 +275,9 @@ const NewInternships = () => {
                 :
                 null
               }
-              {paidAndUnpaid === "paid" ?
+              {paidAndUnpaid === "PAID" ?
                 <div className='flex flex-col gap-2'>
-                  <Form.Item label="Amount" name="amount" rules={[{ required: true, message: 'Required Field' }]}>
+                  <Form.Item label="Amount" name="amount">
                     <Space.Compact>
                       <Select
                         className='w-full'
@@ -300,18 +300,18 @@ const NewInternships = () => {
               }
               <div className='flex flex-col gap-2'>
                 {/* <p>Nature of work</p> */}
-                <Form.Item name="natureofwork" label="Nature of work" rules={[{ required: true, message: 'Required Field' }]}>
+                <Form.Item name="natureofwork" label="Nature of work">
                   <Radio.Group onChange={onChange2} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                    <Radio value={'virtual'}>Virtual</Radio>
-                    <Radio value={'onsite'}>On site</Radio>
-                    <Radio value={'hybrid'}>Hybrid</Radio>
+                    <Radio value={'VIRTUAL'}>Virtual</Radio>
+                    <Radio value={'ONSITE'}>On site</Radio>
+                    <Radio value={'HYBRIDE'}>Hybrid</Radio>
                   </Radio.Group>
                 </Form.Item>
               </div>
-              {remoteOnsite === "onsite" ?
+              {remoteOnsite === "ONSITE" ?
                 <div className='flex flex-col gap-2'>
                   {/* <p>Location <span className='text-error-color'>*</span></p> */}
-                  <Form.Item name="Location" label="Location" rules={[{ required: true, message: 'Required Field' }]}>
+                  <Form.Item name="location" label="Location">
                     <Select
                       placeholder="Select"
                       onChange={onGenderChange}
@@ -367,7 +367,7 @@ const NewInternships = () => {
               {/* <div className='flex flex-col gap-2'> */}
               <Form.Item label="Date">
                 <CommonDatePicker
-                  name="Date Picker"
+                  name="datePicker"
                   onBtnClick={() => { }}
                   open={openDataPicker}
                   setOpen={setOpenDataPicker}

@@ -20,27 +20,29 @@ const useCustomHook = () => {
   };
   //post new Internship
   const postNewInternshipsData = async (values:any) => {
+    const {title , department , description , responsibilities , 
+      requirements , typeofwork , internshiptype ,frequency, ammount , natureofwork , location, positions , datePicker , duration } = values
     const internshipData = {
       "companyId": 1,
-      "title": "Node JS",
+      "title": title,
       "departmentId": 1,
-      "description": "Description",
-      "responsibilities": "Responsibilities",
-      "requirements": "Requirements",
-      "internType": "PART_TIME",
-      "locationType": "ONSITE",
+      "description": description,
+      "responsibilities": responsibilities,
+      "requirements": requirements,
+      "internType": typeofwork,
+      "locationType": natureofwork,
       "locationId": 1,
       "salaryType": "PAID",
-      "salaryFrequency": "MONTHLY",
+      "salaryFrequency": frequency,
       "salaryCurrency": "$",
-      "salaryAmount": 200,
-      "totalPositions": 10,
-      "closingDate": "2023-05-12",
-      "duration": "6 months",
+      "salaryAmount": ammount,
+      "totalPositions": positions,
+      "closingDate": datePicker,
+      "duration": duration,
       "status": "PENDING"
     }
     const { data } = await api.post(POST_NEW_INTERNSHIP,internshipData);
-    console.log("data are " , data);
+    console.log("data are " , values);
     
     setInternshipData(data)
   };
