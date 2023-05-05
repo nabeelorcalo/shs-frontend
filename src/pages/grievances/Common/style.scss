@@ -135,6 +135,31 @@
 }
 
 .grievance-details {
+  .grievancesDetails-boxWrapper{
+    padding: 10px 20px;
+
+  }
+  .asignee-wrap {
+    .drop-down-with-imgs {
+      background: $white-bg-color;
+      // border-radius: 8px;
+      display: block;
+      padding: 6px 12px;
+      color: $text-success-placeholder-color;
+      cursor: pointer;
+      text-transform: capitalize;
+      // border: 1px solid $text-error-line-color;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 48px;
+    }
+  }
+  .grievance-details-scroll{
+    height: 70vh;
+    overflow: auto;
+    
+  }
   .ant-divider-horizontal {
     background: $text-error-line-color !important;
   }

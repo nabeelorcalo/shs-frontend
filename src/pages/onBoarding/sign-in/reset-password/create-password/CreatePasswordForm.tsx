@@ -1,31 +1,22 @@
-import React from "react";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Typography } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../actionHandler";
-import { useState } from "react";
-
 
 const CreatePasswordForm = () => {
   const action = useCustomHook();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
-
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const onFinish = (values: any) => {
     console.log("Received reset values of form: ", values);
     const { currentPassword, newPassword } = values;
     action
-    .changepassword({
-      currentpassword: newPassword,
-      // password: password,
-    })
-    .then((data) => {
-      console.log("data", data); //for debugging purpose
-      // data.accessToken && navigate("/dashboard");
-    })
-    .catch((err) => console.log(err));
+      .changepassword({
+        currentpassword: newPassword,
+      })
   };
 
   return (
@@ -63,7 +54,6 @@ const CreatePasswordForm = () => {
               <PasswordCritera value={password} />
             </div>
           )}
-
           <Form.Item
             label="Confirm  Password"
             name="confirmPassword"
@@ -82,16 +72,10 @@ const CreatePasswordForm = () => {
               onChange={(e) => {
                 console.log(e.target.value);
                 setConfirmPassword(e.target.value);
-
                 password === e.target.value
                   ? setMatchedPassMessage("Password Matched")
                   : setMatchedPassMessage("Password not matched");
               }}
-              //   onFocus={() => {
-              //     password === confirmPassword
-              //       ? setMatchedPassMessage("Password Matched")
-              //       : setMatchedPassMessage("Password not matched");
-              //   }}
             />
           </Form.Item>
           <Typography>{passwordMatchedMessage}</Typography>
@@ -100,9 +84,6 @@ const CreatePasswordForm = () => {
               type="primary"
               //htmlType="submit"
               className="login-form-button"
-              //   disabled={
-              //     password !== confirmPassword || !confirmPassword || !password
-              //   }
             >
               Sign In
             </Button>

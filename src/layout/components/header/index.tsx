@@ -57,6 +57,7 @@ const data = [
 ];
 
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
+  const { LOGOUT } = apiEndpints;
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);

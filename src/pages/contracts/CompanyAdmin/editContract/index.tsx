@@ -81,6 +81,8 @@ const details = [
 ];
 
 const EditContract = () => {
+  const navigate = useNavigate()
+
   const fontFamily = (
     <Menu>
       <Menu.Item>Roboto</Menu.Item>
@@ -110,15 +112,21 @@ const EditContract = () => {
       onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}`,
     },
   ];
+
+  const handleSign = () => {
+    navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
+  }
+
+
   return (
     <div className="system-admin-edit-contract">
       <div>
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
-      <BoxWrapper>
+      <BoxWrapper className="pb-10">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
+            <div className="pb-6 pt-4 font-semibold text-xl text-secondary-color">
               Contract
             </div>
           </Col>
@@ -262,13 +270,13 @@ const EditContract = () => {
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <Row gutter={[15, 20]}>
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="pt-4">
-                        <Button className="system-admin-contract-edit-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+                        <Button onClick={handleSign} className="system-admin-contract-edit-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
                           Sign & Send
                         </Button>
                       </Col>
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button className="system-admin-contract-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                        <Button onClick={() => navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)} className="system-admin-contract-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
                           Cancel
                         </Button>
                       </Col>
