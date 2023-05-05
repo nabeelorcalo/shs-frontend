@@ -82,10 +82,10 @@ const PendingViewDetail = () => {
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
 
-      <BoxWrapper>
+      <BoxWrapper className="pb-8">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="font-semibold text-xl text-secondary-color">
+            <div className="font-semibold text-xl text-secondary-color pb-6 pt-6">
               Contract
             </div>
           </Col>
@@ -198,7 +198,7 @@ const PendingViewDetail = () => {
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
                         <div className="p-4">
-                          {receiverInfo.map((item, index) => {
+                          {receiverInfo.map((item: any, index) => {
                             return (
                               <div key={index}>
                                 <div className="pb-4">
