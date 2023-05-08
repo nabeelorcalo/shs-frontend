@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Row, Col, Menu } from "antd";
 import {
   NewImg,
@@ -17,45 +17,47 @@ import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from 
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
+import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
 
-const tableData = [
-  {
-    No: "01",
-    Title: "Stenna Freddi",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 200",
-    contracts: false,
-    status: "pending",
-  },
-  {
-    No: "02",
-    Title: "Keith Thompson",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 170",
-    contracts: true,
-    status: "Signed",
-  },
-  {
-    No: "03",
-    Title: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 178",
-    contracts: false,
-    status: "rejected",
-  },
-  {
-    No: "04",
-    Title: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 178",
-    contracts: false,
-    status: "Changes requested",
-  },
-];
+// const tableData = [
+//   {
+//     No: "01",
+//     Title: "Stenna Freddi",
+//     address: "118-127 Park Ln, London W1K 7AF, UK",
+//     initiatedOn: "22/09/2022 - 22/09/2022",
+//     signedOn: "£ 200",
+//     contracts: false,
+//     status: "pending",
+//   },
+//   {
+//     No: "02",
+//     Title: "Keith Thompson",
+//     address: "118-127 Park Ln, London W1K 7AF, UK",
+//     initiatedOn: "22/09/2022 - 22/09/2022",
+//     signedOn: "£ 170",
+//     contracts: true,
+//     status: "Signed",
+//   },
+//   {
+//     No: "03",
+//     Title: "John Emple",
+//     address: "118-127 Park Ln, London W1K 7AF, UK",
+//     initiatedOn: "22/09/2022 - 22/09/2022",
+//     signedOn: "£ 178",
+//     contracts: false,
+//     status: "rejected",
+//   },
+//   {
+//     No: "04",
+//     Title: "John Emple",
+//     address: "118-127 Park Ln, London W1K 7AF, UK",
+//     initiatedOn: "22/09/2022 - 22/09/2022",
+//     signedOn: "£ 178",
+//     contracts: false,
+//     status: "Changes requested",
+//   },
+// ];
 
 const ContractsCard = [
   {
@@ -84,11 +86,14 @@ const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Mon
 const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
-  const [valueStatus, setValueStatus] = useState("")
-  const [valueDatePacker, setValueDatePacker] = useState("")
-
+  const [valueStatus, setValueStatus] = useState("");
+  const [valueDatePacker, setValueDatePacker] = useState("");
+  const { getData, contractList } = useCustomHook();
+  useEffect(() => {
+    getData()
+  }, [])
   const renderDropdown = (status: any) => {
     switch (status) {
       case 'rejected':
@@ -115,117 +120,96 @@ const CompanyAdmin = () => {
     {
       title: "Title",
       dataIndex: "Title",
-      align: "center",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div className="flex items-center justify-center">
-            {
-              row.status === "rejected" || row.status === "Changes requested" ?
-                (<img src={Rejected} alt="img" width={40} height={40} />) : row.status === "Signed" ?
-                  (<img src={Signed} alt="img" width={40} height={40} />) :
-                  (<img src={Recevied} alt="img" width={40} height={40} />)
-            }
-            <div className="text-start pl-4">
-              <div className="text-base">Offer Letter</div>
-              <div className="text-sm light-grey-color">From Power Source</div>
-            </div>
-          </div>
-
-        );
-      },
+      align: "center"
     },
     {
       title: "",
-      dataIndex: "address",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            <div className="flex gap-5 items-center pb-2">
-              <div>
-                <GreenErrow />
-              </div>
-              <div>
-                <GreenLock />
-              </div>
-              <div>David Miller</div>
-            </div>
-
-            <div className="flex gap-5 items-center">
-              <div><GreenEye /></div>
-              <div>
-                <RedLock />
-              </div>
-              <div>Maria Sanoid</div>
-            </div>
-          </div>
-        )
-      }
+      dataIndex: "address"
     },
     {
       title: "Initiated On",
-      dataIndex: "initiatedOn",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            <div>12:18 PM</div>
-            <div className="light-grey-color">06/10/2022</div>
-          </div>
-        )
-      }
+      dataIndex: "initiatedOn"
     },
     {
       title: "Signed On",
-      dataIndex: "signedOn",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            <div>12:18 PM</div>
-            <div className="light-grey-color">06/10/2022</div>
-          </div>
-        )
-      }
+      dataIndex: "signedOn"
     },
     {
       title: "Status",
       dataIndex: "status",
-      align: "center",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div
-            className={`offer-letter-company-admin-status-bage ${row.status === "rejected" || row.status === "Changes requested"
-              ? "rejected"
-              : row.status === "pending"
-                ? "pending"
-                : "success"
-              }`}
-          >
-            {row.status === "rejected"
-              ? "Rejected"
-              : row.status === "pending"
-                ? "Pending"
-                : row.status === "Signed"
-                  ? "Signed" : "Changes requested"}
-          </div>
-        );
-      },
+      align: "center"
     },
     {
       title: "Actions",
       dataIndex: "actions",
-      align: "center",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            {
-              renderDropdown(row.status)
-            }
-          </div>
-
-        );
-      },
+      align: "center"
     },
   ];
-
+  const newTableData = contractList?.map((item: any, index: number) => {
+    const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
+    const signedTime = dayjs(item.singedOn).format("hh:mm A");
+    const initiatedDate = dayjs(item.initiatedOn).format("DD/MM/YYYY");
+    const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
+    return (
+      {
+        No: contractList?.length < 10 && `0 ${index + 1}`,
+        Title: <div className="flex items-center justify-center">
+          {
+            item.status === "rejected" || item.status === "Changes requested" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "Signed" ?
+                (<img src={Signed} alt="img" width={40} height={40} />) :
+                (<img src={Recevied} alt="img" width={40} height={40} />)
+          }
+          <div className="text-start pl-4">
+            <div className="text-base">{item.title}</div>
+            <div className="text-sm light-grey-color">{item.content}</div>
+          </div>
+        </div>,
+        address: <div>
+          <div className="flex gap-5 items-center pb-2">
+            <div>
+              <GreenErrow />
+            </div>
+            <div>
+              <GreenLock />
+            </div>
+            <div>{item.sender.firstName}</div>
+          </div>
+          <div className="flex gap-5 items-center">
+            <div><GreenEye /></div>
+            <div>
+              <RedLock />
+            </div>
+            <div>{item.reciever.firstName}</div>
+          </div>
+        </div>,
+        initiatedOn: <div>
+          <div>{initiateTime}</div>
+          <div className="light-grey-color">{initiatedDate}</div>
+        </div>,
+        signedOn: <div>
+          <div>{signedTime}</div>
+          <div className="light-grey-color">{signedDate}</div>
+        </div>,
+        status: <div
+          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+            ? "REJECTED"
+            : item.status === "PENDING"
+              ? "PENDING"
+              : "SUCCESS"
+            }`}
+        >
+          {item.status === "REJECTED"
+            ? "REJECTED"
+            : item.status === "PENDING"
+              ? "PENDING"
+              : item.status === "SIGNED"
+                ? "SIGNED" : "CHANGEREQUEST"}
+        </div>,
+        actions: renderDropdown(item)
+      }
+    )
+  })
   const signed = (
     <Menu>
       <Menu.Item onClick={() => navigate("/signed-company-admin-offer")} key="1">View Details</Menu.Item>
@@ -335,7 +319,7 @@ const CompanyAdmin = () => {
         <BoxWrapper>
           <GlobalTable
             columns={tableColumns}
-            tableData={tableData}
+            tableData={newTableData}
           />
         </BoxWrapper>
       </div>

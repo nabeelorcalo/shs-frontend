@@ -18,6 +18,7 @@ const endpoints = {
   FORGOTPASSWORD: '/auth/forgot-password',
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   GET_CONTRACT_LIST: '/Contract/list',
+  GET_OFFER_LETTER_LIST: '/Contract/list',
   STUDENT_INTRNE_SAWITCH:"auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD:"/auth/change-password",

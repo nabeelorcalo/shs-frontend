@@ -1,8 +1,8 @@
 import { useRecoilState } from "recoil";
 import { contractsListData } from "../../store";
 import endpoints from "../../config/apiEndpoints";
-import api from "../../api";
 import { Notifications } from "../../components";
+import api from "../../api";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -10,7 +10,7 @@ const useCustomHook = () => {
   const [contractList, setContractList] = useRecoilState(contractsListData);
   //get contracts
   const getData = async () => {
-    const { data } = await api.get(GET_CONTRACT_LIST, { page: 1, limit: 10, currentDate: '2023-05-07', filterType: 'THIS_MONTH' });
+    const { data } = await api.get(GET_CONTRACT_LIST, { page: 1, limit: 10,type:'CONTRACT', currentDate: '2023-05-07', filterType: 'THIS_MONTH' });
     setContractList(data)
   };
   //search contracts
