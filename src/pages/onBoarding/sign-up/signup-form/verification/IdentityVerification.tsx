@@ -11,25 +11,39 @@ import {
 } from "antd";
 import { BackButton, IconCloseModal, SHSLogo, Step1, Step2, Step3 } from "../../../../../assets/images";
 import "../../../styles.scss";
-
+import { CaretDownOutlined } from '@ant-design/icons';
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 const { Option } = Select;
+
+const StatusOptions = [
+  {
+    key: "1",
+    value: "Id Card",
+  },
+  {
+    key: "2",
+    value: "Passport",
+  },
+  {
+    key: "3",
+    value: "Driving License",
+  },
+  {
+    key: "4",
+    value: "Residence Permit",
+  },
+];
 
 const IdentityVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const navigate = useNavigate();
+  const [statusValue, setStatusValue] = useState("Select");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
 
   return (
     <div className="identity">
@@ -43,8 +57,9 @@ const IdentityVerification = (props: any) => {
               <Typography className="steps">Step 1 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton
-                  />
+                  <BackButton onClick={() => {
+                    navigate(`/${ROUTES_CONSTANTS.SIGNUP}`)
+                  }} />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -90,7 +105,7 @@ const IdentityVerification = (props: any) => {
               </Row>
               <Form.Item
                 label="Country"
-                name="Country"
+                name="country"
                 rules={[
                   { required: true, message: "Please input your Country!" },
                 ]}
@@ -99,20 +114,34 @@ const IdentityVerification = (props: any) => {
               </Form.Item>
               <Form.Item
                 label="Document Type"
-                name="Document Type"
+                name="documentType"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please input your Document Type!",
                   },
                 ]}
               >
-                <Input placeholder="Document Type" className="input-style" />
+                <Select
+                  placeholder='Select document type'
+                  size="middle"
+                  style={{ width: "100%" }}
+                  suffixIcon={<CaretDownOutlined />}
+                >
+                  {StatusOptions.map((option: any) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
               </Form.Item>
-
               <Row gutter={[130, 10]}>
                 <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
                   <Button
+                    onClick={() => {
+                      // console.log('hello')
+                      setCurrentStep(2);
+                    }}
                     className="btn-cancel btn-cancel-verification"
                   //htmlType="submit"
                   >
@@ -127,7 +156,7 @@ const IdentityVerification = (props: any) => {
                         setCurrentStep(2);
                       }}
                       type="primary"
-                      //htmlType="submit"
+                      htmlType="submit"
                       className="login-form-button"
                     >
                       Next
@@ -143,7 +172,6 @@ const IdentityVerification = (props: any) => {
             </div>
           </div>
         </Col>
-
       </Row>
       <Modal
         centered
