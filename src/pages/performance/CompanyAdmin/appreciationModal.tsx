@@ -52,16 +52,13 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
               <Input type="hidden" />
             </Form.Item>
             {/* --End-- */}
-
             <AvatarBox label="Intern" name={name} size={24} avatar={avatar} />
-
             <Form.Item name="type" label="Type" className="mt-4">
               <Radio.Group value={type} onChange={(e) => setType(e.target.value)}>
                 <Radio value="Email"><span className="text-primary-color">Email</span></Radio>
                 <Radio value="Certificates"><span className="text-primary-color ">Certificate</span></Radio>
               </Radio.Group>
             </Form.Item>
-
             {type === "Certificates" && <p className="text-teriary-color mb-2">Select Template</p>}
             {type === "Certificates" && (
               <div className="flex items-center flex-wrap gap-4 mb-7">
@@ -77,11 +74,9 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
                 ))}
               </div>
             )}
-
             <Form.Item label="Description" name="description">
               <TextArea className="w-full" rows={4} />
             </Form.Item>
-
             <Form.Item style={{ marginBottom: 0 }} className="flex justify-end">
               {type === "Certificates" && selectedTemplate.id && (
                 <Button
@@ -92,7 +87,6 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
                 />
               )}
               <Button label="Cancel" type="default" onClick={onCancel} className="border-visible-btn mt-4 font-semibold" />
-
               <Button
                 label={type === "Certificates" ? "Continue" : "Send"}
                 htmlType={type === "Certificates" ? "default" : "submit"}

@@ -19,13 +19,11 @@ export const AvatarBox: any = (props: AvatarBoxProps) => {
           {label}
         </p>
       }
-
       <div className='avatar-box'>
         <Avatar
           size={size}
           src={avatar}
         />
-
         <p className='px-2 text-primary-color'>
           {name}
         </p>

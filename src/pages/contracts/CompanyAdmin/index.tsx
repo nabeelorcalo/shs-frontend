@@ -51,7 +51,6 @@ const tableData = [
 ];
 const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
 const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
-
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -74,7 +73,6 @@ const ContractsCard = [
     num: "02",
   },
 ]
-
 const CompanyAdmin = () => {
   const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
@@ -84,7 +82,6 @@ const CompanyAdmin = () => {
   useEffect(() => {
     getData()
   }, [])
-
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
@@ -106,7 +103,6 @@ const CompanyAdmin = () => {
       <Menu.Item onClick={() => navigate("/signed-company-admin")} key="1">View Details</Menu.Item>
     </Menu>
   };
-
   const ChangesRequested = (val: any) => {
     return <Menu>
       <Menu.Item onClick={() => navigate("/edit-contract")} key="1">Edit</Menu.Item>
@@ -120,9 +116,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
-
   const pending = (val: any) => {
-
     return <Menu>
       <Menu.Item onClick={() => navigate("/pending-view-details")} key="1">View Details</Menu.Item>
       <Menu.Item key="2" onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}>Resend</Menu.Item>
@@ -137,7 +131,6 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
-
   const rejected = (val:any) => {
 
     <Menu>
@@ -153,7 +146,6 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
-
   const tableColumns = [
     {
       title: "No",
@@ -219,7 +211,6 @@ const CompanyAdmin = () => {
             </div>
             <div>{item.sender.firstName}</div>
           </div>
-
           <div className="flex gap-5 items-center">
             <div><GreenEye /></div>
             <div>
@@ -301,7 +292,6 @@ const CompanyAdmin = () => {
             value={valueDatePacker}
             setValue={setValueDatePacker}
           />
-
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
             value={valueStatus}
