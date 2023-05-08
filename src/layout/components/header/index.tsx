@@ -3,10 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
-import constants, {ROUTES_CONSTANTS} from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
 import getUserRoleLable from "../../../helpers/roleLabel";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import "./style.scss";
 import {
   Logo,
@@ -30,6 +30,8 @@ import {
   MenuProps,
   Typography,
 } from "antd";
+import api from "../../../api";
+import apiEndpints from "../../../config/apiEndpoints";
 const { Search } = Input;
 const { Header } = Layout;
 
@@ -55,16 +57,18 @@ const data = [
 ];
 
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
+  const { LOGOUT } = apiEndpints;
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
+  const [open, setOpen] = useState(false);
   const [mobileSearch, setMobileSearch] = useState(false);
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
   const currentUser = useRecoilValue(currentUserState);
+  const [currentUserData, setcurrentUserData] = useRecoilState(currentUserState);
   const width = DrawerWidth();
-
   const menuStyle = {
     boxShadow: "none",
   };
@@ -73,7 +77,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       key: "1",
       label: "Profile",
       icon: <IconProfile />,
-      onClick: ()=> {
+      onClick: () => {
         navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
@@ -95,7 +99,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -116,6 +120,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const navigateToInbox = () => {
     navigate("/chat");
   };
+  const GoToSwitchRole = async () => {
+    const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
+    const { response } = await api.get(STUDENT_INTRNE_SAWITCH);
+    const userData = {
+      ...response,
+      role: response?.role
+    }
+    setcurrentUserData(userData);
+    setOpen(false);
+  }
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -132,9 +146,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           {/* Collapseable */}
           <div className="ikd-header-collapsebale">
             <div
-              className={`ikd-collapseable-button ${
-                collapsed ? "show" : "hide"
-              }`}
+              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"
+                }`}
               onClick={() => sidebarToggler()}
             >
               <div className="ikd-collapseable-button-toggle">
@@ -148,7 +161,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
             </div>
           </div>
           {/* Collapseable Ends */}
-
           {role === constants.INTERN && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
@@ -157,12 +169,10 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               </div>
             </div>
           )}
-
           {/* Global Search */}
           <div
-            className={`ikd-search-box ${
-              searchWidthToggle ? "expand" : "collapsed"
-            }`}
+            className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"
+              }`}
           >
             <Search
               placeholder="Search anything..."
@@ -171,7 +181,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               onSearch={onSearch}
             />
           </div>
-
           <div
             className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
           >
@@ -190,7 +199,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
           </div>
           {/* Global Search Ends */}
         </div>
-
         <div className="ikd-header-right">
           {(role === constants.INTERN ||
             role === constants.STUDENT ||
@@ -206,8 +214,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                 <MessageNotif />
               </div>
             </div>
-          )}
-
+            )}
           <div className="ikd-header-notification">
             <div
               className="notification-handler"
@@ -224,6 +231,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               trigger={["click"]}
               placement="bottomLeft"
               arrow
+              open={open}
+              onOpenChange={(open)=>{setOpen(open)}}
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">
@@ -242,14 +251,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
                   })}
                   {role === constants.STUDENT &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton customType="secondary" block>
+                      <ExtendedButton customType="secondary" onClick={GoToSwitchRole} block>
                         Switch to Intern
                       </ExtendedButton>
                     </div>
                   }
                   {role === constants.INTERN &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton customType="tertiary" block>
+                      <ExtendedButton customType="tertiary" onClick={GoToSwitchRole} block>
                         Switch to Student
                       </ExtendedButton>
                     </div>
@@ -258,9 +267,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               )}
             >
               <div className="loggedin-user-avatar">
-                  <Avatar size={48} src={currentUser?.avatar}>
-                    {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
-                  </Avatar>
+                <Avatar size={48} src={currentUser?.avatar}>
+                  {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
+                </Avatar>
               </div>
             </Dropdown>
           </div>
@@ -272,7 +281,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
         onClose={closeNotificationDrawer}
         open={openNotificationDrawer}
         closable={false}
-        width={width > 768 ? 380: 280}
+        width={width > 768 ? 380 : 280}
         className="notifications-drawer"
       >
         <List

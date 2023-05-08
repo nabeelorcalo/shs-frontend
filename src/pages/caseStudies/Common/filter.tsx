@@ -3,7 +3,7 @@ import { Button, Form } from "antd";
 import { CommonDatePicker, DropDown } from '../../../components';
 import './style.scss'
 
-const Filters: React.FC = (props: any) => {
+const Filters = ({ setShowDrawer }: any) => {
   const department = ["Design", "Research", "Management", "Development", "Business"]
   const status = ["Pending", "Approved", "Rejected"]
   const manager = ["Mino Marino", "David Miller", "Amila Clark"]
@@ -11,8 +11,8 @@ const Filters: React.FC = (props: any) => {
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [filterValue, setFilterValue] = useState({ manager: "Select", timeFrame: "Select", status: "Select", department: "Select" });
 
-  const handleSubmit = () => {
-    const values = form.getFieldsValue();
+  const onFinish = (values: any) => {
+    setShowDrawer(false)
   }
   const ResetHandler = () => {
     setFilterValue({ manager: "Select", timeFrame: "Select", status: "Select", department: "Select" });
@@ -20,7 +20,9 @@ const Filters: React.FC = (props: any) => {
 
   return (
     <div className='casestudies-filter_main_wrapper'>
-      <Form layout="vertical" form={form}>
+      <Form layout="vertical"
+        form={form}
+        onFinish={onFinish}>
         <Form.Item name="manager" label="Manager">
           <DropDown
             name={filterValue.manager}
@@ -61,7 +63,7 @@ const Filters: React.FC = (props: any) => {
           <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
           </Button>
-          <Button key="submit" className="footer-submit-btn" onClick={handleSubmit}>
+          <Button key="submit" className="footer-submit-btn" htmlType="submit">
             Apply
           </Button>
         </div>

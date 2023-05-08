@@ -2,12 +2,14 @@ import { useState } from "react";
 import { SearchBar,PageHeader,InternshipPipeLineCard,Breadcrumb,DropDown} from "../../../components";
 // import { useNavigate } from 'react-router-dom';
 // import type { MenuProps } from 'antd';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon } from '../../../assets/images'
-import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 import "../style.scss";
+import { useNavigate } from 'react-router-dom';
+// import type { MenuProps } from 'antd';
+import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships } from '../../../assets/images'
+import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
-
+// const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
+const navigate = useNavigate();
 const statusArray = [
   {
     status: 'Applied',
@@ -55,7 +57,7 @@ const cardArray = [
     status: "Applied",
     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
   },
-  
+
   {
     name: "Roman Akhmervo",
     rating: 2,
@@ -191,7 +193,15 @@ const InternshipPipeLine = () => {
       <PageHeader  bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <h3>UI/UX Designer</h3>
+          <div className="flex flex-row ">
+            <h3>UI/UX Designer</h3>
+            <span
+              className='pl-4 cursor-pointer'
+              onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP + '?id=1'); }}
+            >
+              <EditIconinternships />
+            </span>
+          </div>
           <div className="flex flex-row gap-4">
             <DropDown
               value={state.status}

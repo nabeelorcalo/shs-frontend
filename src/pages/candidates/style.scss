@@ -362,6 +362,24 @@
     color: $text-secondary-body-color;
 
   }
+  .others{
+    .other-item{
+      background-color: #E6F4F9;
+      border-radius: 20px;
+      padding: 5px 10px;
+      transition: all 0.2s linear;
+      &:hover{
+        background-color: #14142A;
+        color: white;
+        .other-icon{
+          display: flex;
+        }
+      }
+      .other-icon{
+        display: none;
+      }
+    }
+  }
 }
 
 ///document

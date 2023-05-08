@@ -19,7 +19,7 @@ export const WarnModal: any = (props: WarnProps) => {
       title={
         <div className="flex gap-2">
           <AlertIcon />
-          <Typography.Title level={2}>{title}</Typography.Title>
+          <p className="text-primary-color font-medium text-3xl">{title}</p>
         </div>
       }
       open={open}
@@ -34,16 +34,15 @@ export const WarnModal: any = (props: WarnProps) => {
           wrapperCol={{ span: 24 }}
           onFinish={(values) => onIssue(values)}
         >
-          <p className="mb-6">Are you sure you want to issue warning letter?</p>
+          <p className="mb-7 font-medium">Are you sure you want to issue warning letter?</p>
 
-          <Form.Item label="Description" name="description">
+          <Form.Item label={<span className="text-primary-color">Description</span>} name="description">
             <TextArea className="w-full" rows={6} />
           </Form.Item>
 
           <Form.Item style={{ marginBottom: 0 }} className="flex justify-end">
-            <Button label="Cancel" type="default" onClick={onCancel} className="border-red-visible-btn mt-4" />
-
-            <Button label="Issue" htmlType="submit" className="bg-red-visible-btn mt-4 ml-2" />
+            <Button label="Cancel" type="default" onClick={onCancel} className="text-error-color font-semibold text-base border-red-visible-btn mt-4 rounded-lg" />
+            <Button label="Issue" htmlType="submit" className="text-error-bg-color mt-4 ml-2 rounded-lg" />
           </Form.Item>
         </Form>
       }

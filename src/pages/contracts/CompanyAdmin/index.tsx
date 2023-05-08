@@ -285,7 +285,7 @@ const CompanyAdmin = () => {
           ContractsCard.map((item) => {
             return (
               <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                <BoxWrapper className="p-10 rounded-[16px]">
+                <BoxWrapper className="p-6 rounded-[16px]">
                   <div>
                     <div className="flex">
                       {item.img}
@@ -303,7 +303,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={() => { }} />
+          <SearchBar handleChange={() => { }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 

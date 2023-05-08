@@ -85,10 +85,10 @@ const PendingViewDetailOfferLetter = () => {
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
 
-      <BoxWrapper>
+      <BoxWrapper className="pb-8">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="font-semibold text-xl text-secondary-color">
+            <div className="font-semibold text-xl text-secondary-color pb-6 pt-6">
               Offer Letter
             </div>
           </Col>

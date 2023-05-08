@@ -59,12 +59,23 @@ const tableData = [
   },
 ];
 
+const cities =[
+  { value: "London", label: "London" },
+  { value: "Lacaster", label: "Lacaster" },
+  { value: "Birmingham", label: "Birmingham" },
+  { value: "Glassgow", label: "Glassgow" },
+]
+
 const AdminManagement = () => {
   const action = useCustomHook()
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
   const [isdate1, setIsDate1] = useState(false);
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -98,13 +109,11 @@ const AdminManagement = () => {
       key: "phoneNumber",
       title: "Phone Number",
     },
-
     {
       dataIndex: "date",
       key: "date",
       title: "Date",
     },
-
     {
       dataIndex: "status",
       render: (_: any, data: any) => (
@@ -126,7 +135,6 @@ const AdminManagement = () => {
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -165,14 +173,17 @@ const AdminManagement = () => {
               setValue={setValue}
             />
           </Form.Item>
-          <Form.Item label="City" name="city">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+          <div className="mb-6">
+          <label>City</label>
+          <div className="mt-2">
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={handleChangeSelect}
+              options={cities}
             />
-          </Form.Item>
+          </div>
+        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">

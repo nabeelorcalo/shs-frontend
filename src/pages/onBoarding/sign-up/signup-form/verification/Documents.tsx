@@ -22,7 +22,11 @@ const Documents = (props: any) => {
               <Typography className="steps">Step 4 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton
+                    onClick={() => {
+                        setCurrentStep(3);
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -99,6 +103,9 @@ const Documents = (props: any) => {
               <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
+                     onClick={() => {
+                      setCurrentStep(5);
+                  }}
                     className="btn-cancel btn-cancel-verification"
                   //htmlType="submit"
                   >

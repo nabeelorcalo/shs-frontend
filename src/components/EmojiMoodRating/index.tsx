@@ -16,9 +16,9 @@ const EmojiMoodRating = (props: EmojiProps) => {
   return (
     <BoxWrapper>
       <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
-        <Typography.Title className='emoji-heading' level={size}>
+        <p className='font-medium text-base'>
           {title}
-        </Typography.Title>
+        </p>
         <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
           {
             data.map((item: any, idx: any) => {

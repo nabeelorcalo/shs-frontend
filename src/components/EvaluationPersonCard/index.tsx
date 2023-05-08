@@ -24,9 +24,9 @@ export const EvaluationCard: any = (props: EvaluationProps) => {
         />
 
         <div className='flex flex-col gap-0'>
-          <Typography.Title level={3} className='evaluation-person-name text-primary-color'>
+          <p className='evaluation-person-name text-primary-color font-medium text-2xl'>
             {name}
-          </Typography.Title>
+          </p>
 
           <p className='font-medium text-secondary-color'>
             {profession}
