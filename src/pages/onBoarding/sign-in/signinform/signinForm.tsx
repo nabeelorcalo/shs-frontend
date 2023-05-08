@@ -37,7 +37,6 @@ const SigninForm = (props: any) => {
       .catch((err) => console.log(err));
   };
 
-  
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -57,7 +56,7 @@ const SigninForm = (props: any) => {
           <Form.Item
             label="Email"
             name="Email"
-            rules={[ { type: "email" },{ required: true }]}
+            rules={[{ type: "email" }, { required: true }]}
           >
             <Input
               placeholder="Enter Email"
@@ -132,7 +131,7 @@ const SigninForm = (props: any) => {
       <SelectUserType
         showModal={showModal}
         isModalOpen={isModalOpen}
-      setIsModalOpen={setIsModalOpen}
+        setIsModalOpen={setIsModalOpen}
       />
     </div>
   );

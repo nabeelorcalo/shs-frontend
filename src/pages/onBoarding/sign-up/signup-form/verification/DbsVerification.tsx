@@ -30,7 +30,9 @@ const DbsVerification = (props: any) => {
               <Typography className="steps">Step 2 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton   onClick={() => {
+                        setCurrentStep(1);
+                      }} />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -68,6 +70,9 @@ const DbsVerification = (props: any) => {
               <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
+                      onClick={() => {
+                        setCurrentStep(3);
+                      }}
                     className="btn-cancel btn-cancel-verification"
                   //htmlType="submit"
                   >

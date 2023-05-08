@@ -208,7 +208,7 @@ const index = () => {
   const TableColumn4 = ['No.', 'Escalated By', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
   const action = useCustomHook();
   const breadcrumbArray = [
-    { name: "All Grievance" },
+    { name: "All Grievances" },
     { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);

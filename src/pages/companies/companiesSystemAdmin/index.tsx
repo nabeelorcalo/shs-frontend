@@ -400,7 +400,7 @@ const CompaniesSystemAdmin = () => {
           </div>
         }
         footer={
-          <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
               size="small"

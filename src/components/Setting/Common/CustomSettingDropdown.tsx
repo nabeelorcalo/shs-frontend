@@ -29,7 +29,7 @@ export const DropDownForSetting = (props: any) => {
   }
 
   const editHandler = () => {
-    GetEditHandler(editData)
+    GetEditHandler({...editData , isEdit:"isEdit"})
     setShowEditModal({ ...state, showEditModal: !showEditModal }),
     setVisible(false);
   }
