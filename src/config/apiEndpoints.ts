@@ -18,6 +18,8 @@ const endpoints = {
   FORGOTPASSWORD:'/auth/forgot-password',
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
-  PROFILE_CHANGE_PASSWORD:"/auth/change-password",
+  PROFILE_CHANGE_PASSWORD: "/auth/change-password",
+  PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
+  PROPERTY_Get_TOTAL_AGENTS :"/property/get-property-agents",
 }
 export default endpoints;

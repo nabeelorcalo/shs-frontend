@@ -1,21 +1,38 @@
 import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
+import apiEndpints from "../../config/apiEndpoints";
 import constants from "../../config/constants";
-
-// Chat operation and save into store
+import { getListingState, getPropertAgents } from "../../store/getListingState";
+import { useRecoilState } from "recoil";
+import {useEffect} from 'react';
+            
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [propertListingData, setPropertListingData] = useRecoilState(getListingState);
+  const [totalData, setTotalData] = useRecoilState(getPropertAgents);
+ 
+  const { PROPERTY_GET_LISTING_STATS } = apiEndpints;
+  const propertgetlistingstata = async () => {
+    const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
+    setPropertListingData(data);
+  }
+    useEffect(() => {
+      propertgetlistingstata();
+    }, [])
+  
+  // propertagents
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
-
+  const { PROPERTY_Get_TOTAL_AGENTS } = apiEndpints;
+  const propertGetTotalAgents= async () => {
+    const { data } = await api.get(PROPERTY_Get_TOTAL_AGENTS );
+    setTotalData(data);
+  }
+    useEffect(() => {
+      propertGetTotalAgents();
+    }, [])
+  
   return {
-    getData,
+    propertListingData,
+    totalData,
   };
 };
 

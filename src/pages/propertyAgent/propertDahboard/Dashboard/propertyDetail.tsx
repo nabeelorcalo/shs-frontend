@@ -113,7 +113,7 @@ const PropertyDetail = () => {
                     {item.attachments.map((item, index) => {
                       return (
                         <>
-                          <img src={item.skill} alt="" />
+                          <img src={item.skill} alt="" style={{paddingTop:'1rem'}} />
                         </>
                       );
                     })}

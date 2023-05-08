@@ -1,4 +1,3 @@
-import people from '../../../../assets/images/profile/propertyagent/people.svg'
 import clip from '../../../../assets/images/profile/propertyagent/clip.svg';
 import uilcalender from '../../../../assets/images/profile/propertyagent/uilcalender.svg';
 import aproved from '../../../../assets/images/profile/propertyagent/aproved.svg'
@@ -14,89 +13,31 @@ import reject from '../../../../assets/images/profile/propertyagent/rejected.svg
 
 export const cardData = [
     {
-        img: people,
-        bgColor: "#4783FF0D",
-        cardTitle: 'Properties Agents',
-        cardNumber: "33",
-        status: [
-            {
-                statusDot: "Active",
-                number: "(20)",
-            },
-            {
-                statusDot: "In-active",
-                number: '(13)',
-            },
-        ]
-    },
-    {
         img: clip,
         bgColor: '#4783FF1A',
         cardTitle: 'Total Listing',
         cardNumber: "10",
-        status: [
-            {
-                statusDot: "Active",
-                number: "(20)",
-            },
-            {
-                statusDot: "In-active",
-                number: '(13)',
-            },
-        ]
     },
     {
         img: aproved,
-        bgColor: '#FFC15D4D',  
+        bgColor: '#FFC15D4D',
         cardTitle: 'Pending Listings',
         cardNumber: "06",
-        status: [
-            {
-                statusDot: "Active",
-                number: "(20)",
-            },
-            {
-                statusDot: "In-active",
-                number: '(13)',
-            },
-        ]
     },
     {
         img: uilcalender,
         bgColor: '#3DC5751A',
         cardTitle: 'Approved Listings',
         cardNumber: "01",
-        status: [
-            {
-                statusDot: "Active",
-                number: "(20)",
-            },
-            {
-                statusDot: "In-active",
-                number: '(13)',
-            },
-        ]
     },
     {
         img: reject,
         bgColor: '#D83A521A',
         cardTitle: 'Rejected Listings',
         cardNumber: "01",
-        status: [
-            {
-                statusDot: "Active",
-                number: "(20)",
-            },
-            {
-                statusDot: "In-active",
-                number: '(13)',
-            },
-        ]
     },
 
-
 ];
-
 
 export const innerCard = [
     {

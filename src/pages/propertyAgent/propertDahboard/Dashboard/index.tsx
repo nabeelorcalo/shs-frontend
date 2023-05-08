@@ -2,64 +2,138 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
-import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
+import { activityData, graphData, innerCard } from "./DashboardMock";
+import useCustomHook from "../../actionHandler";
+import { Approved, Clip, Pending, People, Reject } from "../../../../assets/images"; 
 import "../../style.scss";
 
 const MainDashboard = () => {
   const nivagate = useNavigate();
+
+  // property listing
+  const propertListingData = useCustomHook();
+  const propertyData = propertListingData.propertListingData;
+
+  // propertagents
+  const totalData = useCustomHook();
+  const totalAgent = totalData.totalData;
+
   return (
     <div className="main-dashboard">
-      <div style={{ overflowX: "scroll" }}>
-        <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
-          {cardData.map((item, index) => {
-            return (
-              <div>
-                <div className="card-main">
-                  <div className=" flex items-center p-2">
-                    <div className="rounded-[10px] h-[60px] w-[60px]"
-                      style={{ backgroundColor: `${item.bgColor}`, padding: '0.2rem' }}>
-                      <div className="img-bg pl-2 pt-2 pr-1">
-                        <img src={item.img} alt="" style={{ zIndex: 999 }} />
-                      </div>
-                    </div>
-                    <div className="ml-3">
-                      <Typography className="card-title">
-                        {item.cardTitle}
-                      </Typography>
-                      <Typography className="card-number">
-                        {item.cardNumber}
-                      </Typography>
-                    </div>
+      <div style={{ overflowX: "scroll", cursor: "pointer" }}>
+        <div className="flex items-center gap-3" >
+          <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
+            {totalAgent.map((item:any, index) => {
+              return (
+                <div className="card-main w-[100%] md:w-[350px]">
+              <div className=" flex items-center p-2">
+                <div className="rounded-[10px] h-[60px] w-[60px] bg-[#4783FF0D] p-[0.2rem]">
+                  <div className="img-bg pl-2 pt-2 pr-1">
+                    <People />
                   </div>
-                  {item.cardNumber === "33" && (
-                    <>
-                      {item.status.map((item, index) => {
-                        return (
-                          <>
-                            <div className="status flex justify-end items-center">
-                              <div
-                                className="status-dot"
-                                style={{
-                                  background:
-                                    item.statusDot === "Active"
-                                      ? "#3DC575"
-                                      : "#D83A52",
-                                }}
-                              ></div>
-                              <Typography className="status-card ml-2">
-                                {item.statusDot}
-                                <span className="ml-2">{item.number}</span>
-                              </Typography>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </>
-                  )}
+                </div>
+                <div className="ml-3">
+                  <Typography className="card-title ">
+                    Properties Agents
+                  </Typography>
+                  <Typography className="card-number pt-2">
+                    {item?.totalAgents}
+                  </Typography>
                 </div>
               </div>
-            );
-          })}
+              <div className="status flex justify-end items-center pr-3 pb-1">
+                <div className="status-dot-active mr-[0.8rem]"></div>
+                <Typography className="status-card ml-2">
+                  Active
+                  <span className="ml-2">({item?.activeAgents})</span>
+                </Typography>
+              </div>
+              <div className="status flex justify-end items-center pr-3">
+                <div className="status-dot-inactive"></div>
+                <Typography className="status-card ml-2">
+                  Inactive
+                  <span className="ml-2">({item?.inactiveAgents})</span>
+                </Typography>
+              </div>
+            </div>    
+              )
+            })}
+            {propertyData?.map((item: any, index) => {
+              return (
+                <>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] bg-[#4783FF1A] p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Clip />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Total Listing
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.totalListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px]"
+                        style={{ backgroundColor: '#FFC15D4D', padding: '0.2rem' }}>
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Pending />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Pending Listings
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.pendingListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] bg-[#3DC5751A] p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Approved />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Approved Listings
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.approvedListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] bg-[#D83A521A] p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Reject />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Rejected Listings
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.rejectedListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
         </div>
       </div>
       <Row gutter={[50, 20]} className="mt-5">
@@ -75,7 +149,7 @@ const MainDashboard = () => {
           </div>
         </Col>
         <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-card">
-          <div >
+          <div>
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
