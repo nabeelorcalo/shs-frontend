@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
 import { useLocation } from "react-router-dom";
 import { debounce } from "lodash";
+import { Notifications } from "../../components";
 
 const useCustomHook = () => {
   const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
@@ -42,30 +43,12 @@ const useCustomHook = () => {
       "status": "PENDING"
     }
     console.log(internshipData);
-
     const { data } = await api.post(POST_NEW_INTERNSHIP, internshipData);
     console.log("data are ", values);
-
     setInternshipData(data)
+    Notifications({title:"Success",description:"Internship Added", type:"success"})
   };
-  // "companyId": 1,
-  // "title": "Node JS",
-  // "departmentId": 1,
-  // "description": "Description",
-  // "responsibilities": "Responsibilities",
-  // "requirements": "Requirements",
-  // "internType": "PART_TIME",
-  // "locationType": "ONSITE",
-  // "locationId": 1,
-  // "salaryType": "PAID",
-  // "salaryFrequency": "MONTHLY",
-  // "salaryCurrency": "$",
-  // "salaryAmount": 200,
-  // "totalPositions": 10,
-  // "closingDate": "2023-05-12",
-  // "duration": "6 months",
-  // "status": "PENDING"
-  //get internship detail
+
   const getInternshipDetails = async () => {
     const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state });
     setInternshipDetails(data)
@@ -75,8 +58,7 @@ const useCustomHook = () => {
   const deleteInternshipData = async (val: any) => {
     const { data } = await api.delete(`${DEL_INTERNSHIP}?id=${val}`);
     getAllInternshipsData()
-    // setdeleteInternship(data)
-    console.log(data)
+    Notifications({title:"Success",description:"Internship deleted", type:"success"})
   }
 
   //search internship

@@ -1,15 +1,11 @@
 import { useState } from 'react'
 import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd'
-import {
-  CommonDatePicker,
-  PageHeader,
-  BoxWrapper,
-  Breadcrumb,
-} from '../../components'
+import { CommonDatePicker, PageHeader, BoxWrapper, Breadcrumb } from '../../components'
 import { useNavigate } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
+import './style.scss'
 const { TextArea } = Input;
 
 const departmentOptions = [
@@ -20,7 +16,6 @@ const departmentOptions = [
   { value: 'Administration', label: "Administration" },
   { value: 'Project Management', label: "Project Management" }
 ]
-
 const amountOptions = [
   {
     value: 'GBP',
@@ -73,7 +68,6 @@ const NewInternships = () => {
   //   expectedClosingDate: ""
   // })
   const { postNewInternshipsData } = useCustomHook()
-  console.log(postNewInternshipsData);
   const tempArray = [
     { name: "New Internship" },
     {
@@ -131,11 +125,12 @@ const NewInternships = () => {
 
   const onFinish = (values: any) => {
     console.log('Success:', values);
-    postNewInternshipsData(values)
+    postNewInternshipsData(values);
+    // navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS)
   };
-  // const { Option } = Select;
+
   const onGenderChange = (value: string) => {
-    console.log('hjkjhkj');
+    console.log('slected item');
   };
   return (
     <>
@@ -167,6 +162,7 @@ const NewInternships = () => {
               {/* <p>Department <span className='text-error-color'>*</span></p> */}
               <Form.Item name="department" label="Department" rules={[{ required: true, message: 'Required Field' }]}>
                 <Select
+                  rootClassName='input'
                   placeholder="Select"
                   onChange={onGenderChange}
                   allowClear
@@ -189,9 +185,10 @@ const NewInternships = () => {
                 {/* <p>Discription <span className='text-error-color'>*</span></p> */}
                 <Form.Item label="Description" name="description" rules={[{ required: true, message: 'Required Field' }]}>
                   <TextArea
+                    // className='input'
                     rows={6}
                     placeholder="Write your discription of internship"
-                    // maxLength={8}
+                  // maxLength={8}
                   />
                 </Form.Item>
               </div>
@@ -211,7 +208,7 @@ const NewInternships = () => {
                 <TextArea
                   rows={6}
                   placeholder="Write about responsibilies of internship"
-                  // maxLength={8}
+                // maxLength={8}
                 />
               </Form.Item>
               {/* </div> */}
@@ -221,7 +218,7 @@ const NewInternships = () => {
                 <TextArea
                   rows={6}
                   placeholder="Write about requirements of internship"
-                  // maxLength={8}
+                // maxLength={8}
                 />
               </Form.Item>
               {/* </div> */}
@@ -254,9 +251,29 @@ const NewInternships = () => {
                 </Radio.Group>
               </Form.Item>
               {/* </div> */}
-              {partAndFullTime === "FULL_TIME" ?
+              {/* {partAndFullTime === "FULL_TIME" ?
+                <div className='flex flex-col gap-2'> */}
+              {/* <p>Frequency <span className='text-error-color'>*</span></p> */}
+              {/* <Form.Item name="frequency" label="Frequency" >
+                    <Select
+                      placeholder="Select"
+                      onChange={onGenderChange}
+                      allowClear
+                      options={frequencyOptions}
+                    />
+                  </Form.Item> */}
+              {/* <DropDown
+                    name="Select"
+                    options={frequencyOptions}
+                    setValue={() => { updateFrequency(event) }}
+                    value={state.frequency}
+                  /> */}
+              {/* </div>
+                :
+                null
+              } */}
+              {paidAndUnpaid === "PAID" ?
                 <div className='flex flex-col gap-2'>
-                  {/* <p>Frequency <span className='text-error-color'>*</span></p> */}
                   <Form.Item name="frequency" label="Frequency" >
                     <Select
                       placeholder="Select"
@@ -265,25 +282,13 @@ const NewInternships = () => {
                       options={frequencyOptions}
                     />
                   </Form.Item>
-                  {/* <DropDown
-                    name="Select"
-                    options={frequencyOptions}
-                    setValue={() => { updateFrequency(event) }}
-                    value={state.frequency}
-                  /> */}
-                </div>
-                :
-                null
-              }
-              {paidAndUnpaid === "PAID" ?
-                <div className='flex flex-col gap-2'>
                   <Form.Item label="Amount" name="amount">
                     <Space.Compact>
                       <Select
                         className='w-full'
                         defaultValue="GBP"
                         options={amountOptions} />
-                      <Input defaultValue="0.00" />
+                      <Input type='number' placeholder='0.00' />
                     </Space.Compact>
                   </Form.Item>
                   {/* <p>Amount <span className='text-error-color'>*</span></p>
@@ -386,6 +391,7 @@ const NewInternships = () => {
               {/* <div className='flex flex-col gap-5'> */}
               <Form.Item label="Internship Duration" name="duration" rules={[{ required: true, message: 'Required Field' }]}>
                 <Select
+                  className='input'
                   placeholder="Select"
                   onChange={onGenderChange}
                   allowClear

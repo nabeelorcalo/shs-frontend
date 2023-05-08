@@ -319,7 +319,7 @@ const InternshipsCompanyAdmin = () => {
     location: "",
     department: ""
   })
-  const { getAllInternshipsData, internshipData, changeHandler,deleteInternship } = useCustomHook()
+  const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook()
   const handleDrawer = () => {
     setState((prevState) => ({
       ...prevState,
@@ -354,7 +354,6 @@ const InternshipsCompanyAdmin = () => {
       department: value
     }))
   }
-  console.log("data", internshipData);
 
   return (
     <>
@@ -365,17 +364,14 @@ const InternshipsCompanyAdmin = () => {
             <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
-            <FiltersButton
-              label="Filters"
-              onClick={handleDrawer}
-            />
+            <FiltersButton label="Filters"  onClick={handleDrawer} />
             <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <React.Fragment key=".0">
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
                     <p>Status</p>
                     <DropDown
-                      name="name"
+                      name="Select"
                       options={[
                         'Published',
                         'Closed',
@@ -392,7 +388,7 @@ const InternshipsCompanyAdmin = () => {
                   <div className="flex flex-col gap-2">
                     <p>Location</p>
                     <DropDown
-                      name="name"
+                      name="Select"
                       options={[
                         'EidinBurg',
                         'Glasgow',
@@ -409,7 +405,7 @@ const InternshipsCompanyAdmin = () => {
                   <div className="flex flex-col gap-2">
                     <p>Department</p>
                     <DropDown
-                      name="name"
+                      name="Select"
                       options={[
                         'Business analyst',
                         'Research analyst',
@@ -451,7 +447,7 @@ const InternshipsCompanyAdmin = () => {
                     id={item.id}
                     title={item.title}
                     status={item.status}
-                    department={item.department}
+                    department={item.departmentData.name}
                     internType={item.internType}
                     postedBy={item.postedBy}
                     locationType={item.locationType}

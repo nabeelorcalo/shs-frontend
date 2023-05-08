@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertIcon } from '../../assets/images'
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
@@ -6,20 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import { Notifications } from '../Notification';
 import { PopUpModal } from '../Model';
 import { ROUTES_CONSTANTS } from '../../config/constants';
-// import '../../scss/global-color/Global-colors.scss'
-import './style.scss';
 import useCustomHook from '../../pages/internships/actionHandler';
+import dayjs from 'dayjs';
+import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
   const { id, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
   const [decline, setDecline] = useState(false)
   const [deleteInternship, setDeleteInternship] = useState(false)
-
-  // const filterCount = interns.filter((item: any, idx: any) => {
-  //   return item.stage === "hired"
-  // })
-  
   const { deleteInternshipData } = useCustomHook();
+
   const handelDelete = (id: any) => {
     deleteInternshipData(id);
     setDeleteInternship(false)
@@ -114,8 +110,12 @@ export const InternshipProgressCard = (props: any) => {
       </Dropdown>
     )
   }
+  
+  const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
+  const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
+
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3 cursor-pointer'>
       <div className='flex flex-row justify-between'>
         <h3>{title}</h3>
         <PopOver />
@@ -143,14 +143,12 @@ export const InternshipProgressCard = (props: any) => {
       </div>
       <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
         <div className='flex max-sm:flex-col md:flex-row  gap-3'>
-          <p>Created on {createdAt}</p>
+          {createdAt===null?<p>Created on --</p>:<p>Created on {createdOn}</p>}
           <p>.</p>
-          <p>Expected Closing Date {closingDate}</p>
+          {(closingDate === null) ? <p>Expected Closing Date  -- </p>: <p>Expected Closing Date {expectedClosingDate}</p>}
         </div>
         <p>
-          <span
-            className={`${status} white-color px-3 py-1 rounded-lg`}
-          >
+          <span className={`${status} white-color px-3 py-1 rounded-lg`} >
             {status}
           </span>
         </p>

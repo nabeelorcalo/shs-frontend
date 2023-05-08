@@ -31,46 +31,45 @@ const ViewInternshipDetails = () => {
         <div className='flex flex-col gap-6'>
           <div className='flex flex-row justify-between  flex-wrap'>
             <div>
-              <h2 className='font-semibold dashboard-primary-color'>
+              <h2 className='dashboard-primary-color text-3xl font-medium'>
                 {internshipDetails.title}
-                <span
-                  className='pl-4 cursor-pointer'
+                <span className='pl-4 cursor-pointer'
                   onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
                 >
                   <EditIcon />
                 </span>
               </h2>
-              <p className='text-lg'>Design</p>
+              <p className='text-xl'>Design</p>
             </div>
             {internshipStatus == "PUBLISHED" || internshipStatus == "Closed" ?
               <div className='flex flex-row gap-10 flex-wrap'>
                 <div className='flex flex-row gap-6'>
                   <TotalApplicantIcon />
-                  <p>Total Applicants: <span>03</span></p>
+                  <p className='text-lg'>Total Applicants: <span>03</span></p>
                 </div>
                 <div className='flex flex-row gap-6'>
                   <HiredIcon />
-                  <p>Hired: <span>15</span></p>
+                  <p className='text-lg'>Hired: <span>15</span></p>
                 </div>
                 <div className='flex flex-row gap-6'>
                   <RejectedApplicantIcon />
-                  <p>Rejected: <span>15</span></p>
+                  <p className='text-lg'>Rejected: <span>15</span></p>
                 </div>
               </div> : null}
           </div>
           <div className='flex flex-col gap-2'>
-            <h3>Discription</h3>
-            <p>{internshipDetails.description}</p>
+            <h3 className='text-2xl font-medium'>Description</h3>
+            <p className='text-base'>{internshipDetails.description}</p>
           </div>
           <div className='flex flex-col gap-2'>
-            <h3>Responsibilities</h3>
-            <p>{internshipDetails.responsibilities}</p>
+            <h3 className='text-2xl font-medium'>Responsibilities</h3>
+            <p className='text-base'>{internshipDetails.responsibilities}</p>
           </div>
           <div className='flex flex-col gap-2'>
-            <h3>Requirments</h3>
+            <h3 className='text-2xl font-medium'>Requirments</h3>
             <div className='flex flex-col gap-3'>
               <div>
-                <p>{internshipDetails.requirements}</p>
+                <p className='text-base'>{internshipDetails.requirements}</p>
               </div>
               <div className='flex flex-row gap-6'>
                 <div className='flex flex-col gap-3'>

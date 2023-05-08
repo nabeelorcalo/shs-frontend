@@ -12,7 +12,4 @@ export const internshipDetailsState = atom({
   default: [], 
 });
 
-// //post internship details 
-// export const postInternshipState = atom({
-//   key: "postInternshipState",
-// });
+
