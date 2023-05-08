@@ -82,10 +82,10 @@ const Signed = () => {
         <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       </div>
 
-      <BoxWrapper>
+      <BoxWrapper className="pb-8">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
+            <div className="pb-6 pt-6 font-semibold text-xl text-secondary-color">
               Contract
             </div>
           </Col>

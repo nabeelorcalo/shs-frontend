@@ -281,6 +281,7 @@ const CompanyAdmin = () => {
   return (
     <div className="offer-letter-company-admin">
       <Alert
+        width="570px"
         state={showDelete}
         setState={setShowDelete}
         type="error"
@@ -294,8 +295,8 @@ const CompanyAdmin = () => {
         {
           ContractsCard.map((item) => {
             return (
-              <Col  xl={6} lg={12} md={12} xs={24}>
-                <BoxWrapper className="p-10 rounded-[16px]">
+              <Col xl={6} lg={12} md={12} xs={24}>
+                <BoxWrapper className="p-6 rounded-[16px]">
                   <div className="flex">
                     {item.img}
                     <div className="flex flex-col items-center pl-4">
@@ -311,10 +312,10 @@ const CompanyAdmin = () => {
       </Row>
 
       <Row className="mt-8" gutter={[20, 20]} >
-        <Col  xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={() => { }} />
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar handleChange={() => { }} />
         </Col>
-        <Col  xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireDatePicker placement="bottom"
