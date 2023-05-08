@@ -483,17 +483,24 @@
   }
 }
 .description-wrapper {
-  // height: 360px !important;
-  // max-height: 360px !important;
-  // overflow: scroll;
-
   .text-editor {
+    padding: 1rem 0.5rem 0.5rem;
     border: 2px solid $white-bg-color;
-    border-radius: 2rem !important;
-
-    &:hover {
-      background-color: $white-bg-color;
-      border: 2px solid $input-hover-color;
+    border-radius: 0.5rem !important;
+    outline: none;
+    border: none;
+    .ql-toolbar,
+    .ql-container {
+      border: none;
+    }
+    .ql-picker-label {
+      border: none !important;
+    }
+    .ql-formats:nth-child(1),
+    .ql-formats:nth-child(2) {
+      border: 1.5px solid rgb(147, 147, 147);
+      border-radius: 1rem;
+      padding: 0.25rem;
     }
   }
 }
@@ -563,7 +570,6 @@
 .hover-effect {
   transition: 0.8s;
   position: absolute;
-  // left: 300px;
   top: 0;
   display: flex;
   align-items: center;

@@ -38,9 +38,45 @@ const detailsData = [
     ],
   },
 ];
+
+const hiringList = [
+  {
+    title: "applied",
+    value: "0",
+    color: "#363565",
+  },
+  {
+    title: "interviewed",
+    value: "0",
+    color: "#D2D6DC",
+  },
+  {
+    title: "recommended",
+    value: "0",
+    color: "#D2D6DC",
+  },
+  {
+    title: "offer letter",
+    value: "0",
+    color: "#D2D6DC",
+  },
+  {
+    title: "contract",
+    value: "0",
+    color: "#D2D6DC",
+  },
+  {
+    title: "hired",
+    value: "0",
+    color: "#D2D6DC",
+  },
+];
+
 const HiringProcess = () => {
   const [open, setOpen] = useState(false);
+  const [hiringProcessStatusList, setHiringProcessStatusList] = useState(hiringList);
   const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
+  const [offerContractStatus, setOfferContractStatus] = useState({ pending: false, signed: false });
   const [isOfferLetterTemplateModal, setIsOfferLetterTemplateModal] = useState(false);
   const [selectTemplate, setSelectTemplate] = useState({ title: "Offer Letter", options: ["offer template 1"] });
   const [user, setUser] = useState({ userImg: UserAvatar, userName: "amelia clark" });
@@ -48,11 +84,11 @@ const HiringProcess = () => {
   const [hiringProcessList, setHiringProcessList] = useState(["applied"]);
 
   const handleResendOfferLetter = () => {
-    console.log("handleResendOfferLetter clicked");
+    Notifications({ title: "Success", description: "Offer letter and re-sent", type: "success" });
   };
 
   const handleResendContract = () => {
-    console.log("handleResendContract clicked");
+    Notifications({ title: "Success", description: "Contract and re-sent", type: "success" });
   };
 
   // check already processed
@@ -82,6 +118,7 @@ const HiringProcess = () => {
   // logic for contract
   const HandleContract = () => {
     if (!hiringProcessList.includes("contract") && hiringBtnText !== "Initiate Contract") {
+      setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
       return setHiringBtnText("Initiate Contract");
     }
     if (hiringBtnText === "Initiate Contract") {
@@ -93,11 +130,23 @@ const HiringProcess = () => {
 
   // logic for hired
   const handleHired = () => {
+    setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
+    setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
     return handleCheckList("hired");
   };
   // logic for rejected
   const handleRejected = () => {
-    return handleCheckList("rejected");
+    let list = hiringProcessStatusList?.filter((item) => item?.title !== "hired");
+    !list.some(({ title }) => title === "rejected") &&
+      list.push({
+        title: "rejected",
+        value: "0",
+        color: "#D83A52",
+      });
+    setHiringProcessStatusList(list);
+    setHiringProcessList(list.map(({ title }) => title));
+    setOpen(false);
+    return;
   };
 
   const handleHiringProcess = (pipeline?: string) => {
@@ -112,7 +161,6 @@ const HiringProcess = () => {
     }
     // pipline clicked flow
     if (pipeline) {
-      console.log("dsgvlb");
       pipeline === "interviewed" && hiringProcessList?.includes("applied") && handleInterviewed();
       pipeline === "recommended" && hiringProcessList?.includes("interviewed") && handleRecomended();
       pipeline === "offer letter" && hiringProcessList?.includes("recommended") && HandleOfferLetter();
@@ -148,10 +196,13 @@ const HiringProcess = () => {
   const handleOfferLetterTemplate = () => {
     if (selectTemplate?.title === "offer letter") {
       handleCheckList("offer letter");
-      Notifications({title:"", description:"",type:""})
+      Notifications({ title: "Success", description: "Offer letter signed and sent", type: "success" });
+      setOfferContractStatus({ ...offerContractStatus, pending: true });
     }
     if (selectTemplate?.title === "Contract") {
       handleCheckList("contract");
+      Notifications({ title: "Success", description: "Contract signed and sent", type: "success" });
+      setOfferContractStatus({ ...offerContractStatus, signed: false, pending: true });
     }
     setIsOfferLetterTemplateModal(false);
     setHiringBtnText("Resend");
@@ -159,25 +210,37 @@ const HiringProcess = () => {
 
   return (
     <div className="hiring-wrapper">
-      <div className="hiring flex flex-wrap justify-between">
-        <div>
-          <p className="heading mt-5">UI UX Designer</p>
-        </div>
-        <div className="rej-mov mt-4 gap-2 flex">
-          <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
-            Reject
-          </button>
-          <RejectModal setOpen={setOpen} open={open} />
-          {!hiringProcessList?.includes("hired") && (
-            <button className="move-btn" onClick={() => handleHiringProcess()}>
-              {hiringBtnText}
-            </button>
+      <div className="hiring flex flex-wrap justify-between items-center mt-5">
+        <div className="flex items-center gap-5">
+          <p className="heading ">UI UX Designer</p>
+          {offerContractStatus?.pending && (
+            <p className="text-sm text-white capitalize yellow-bg px-[10px] py-[2px] rounded-lg">pending</p>
+          )}
+          {offerContractStatus?.signed && (
+            <p className="text-sm text-white capitalize text-success-bg-color px-[10px] py-[2px] rounded-lg">signed</p>
           )}
         </div>
+        {!hiringProcessList?.includes("rejected") && (
+          <div className="rej-mov gap-2 flex">
+            <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
+              Reject
+            </button>
+            <RejectModal setOpen={setOpen} open={open} handleReject={handleRejected} />
+            {!hiringProcessList?.includes("hired") && (
+              <button className="move-btn" onClick={() => handleHiringProcess()}>
+                {hiringBtnText}
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="pipeline mt-10">
-        <HiringPipeline hiringList={hiringProcessList} handleHiringProcess={handleHiringProcess} />
+        <HiringPipeline
+          hiringList={hiringProcessList}
+          handleHiringProcess={handleHiringProcess}
+          hiringProcessStatusList={hiringProcessStatusList}
+        />
       </div>
 
       <div className="details mt-7 ">
