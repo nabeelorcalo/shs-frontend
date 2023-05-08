@@ -20,7 +20,7 @@ const endpoints = {
   GET_LIST_INTERNSHIP:'/internship/listInternships',
   GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
   DEL_INTERNSHIP:'/internship/deleteInternship',
-  POST_NEW_INTERNSHIP:'/internship/createInternship'
+  POST_NEW_INTERNSHIP:'/internship/createInternship',
   STUDENT_INTRNE_SAWITCH:"auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD:"/auth/change-password",
