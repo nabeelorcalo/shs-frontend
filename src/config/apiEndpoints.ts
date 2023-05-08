@@ -8,13 +8,14 @@ const endpoints = {
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
   POST_SAVE_PROPERTY: "property/save-property",
-  SETTING_LOCATION:"location",
-  SETTING_DAPARTMENT:"department",
-  AGENT_DASHBOARD_WIDGETS:"/property/get-agent-dashboard-widgets",
+  SETTING_LOCATION: "location",
+  SETTING_DAPARTMENT: "department",
+  AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   PAYROLL_FINDALL: "payroll/findAll",
   SIGNUP: '/auth/signup',
-  CHANGEPASSWORD:'/auth/change-password',
-  FORGOTPASSWORD:'/auth/forgot-password',
-  TIMESHEET_FIND_ALL:'timesheet/category/findAll'
+  CHANGEPASSWORD: '/auth/change-password',
+  FORGOTPASSWORD: '/auth/forgot-password',
+  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
+  GET_CONTRACT_LIST: '/Contract/list',
 }
 export default endpoints;
