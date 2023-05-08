@@ -10,67 +10,7 @@ import { ArrowDownDark, UserAvatar } from "../../assets/images";
 import { Notifications, SearchBar } from "../../components";
 import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
-
-const detailsData = [
-  { title: "Source", value: "Career Website" },
-  { title: "Owner", value: "David Miler", image: DocAvatar },
-  { title: "Internship Type", value: "Paid" },
-  { title: "Applied Date", value: "04/12/1996" },
-  {
-    title: "Assignee",
-    userData: [
-      {
-        userImg: UserAvatar,
-        userName: "john doe",
-      },
-      {
-        userImg: UserAvatar,
-        userName: "mina marino",
-      },
-      {
-        userImg: UserAvatar,
-        userName: "clark",
-      },
-      {
-        userImg: UserAvatar,
-        userName: "sarah joe",
-      },
-    ],
-  },
-];
-
-const hiringList = [
-  {
-    title: "applied",
-    value: "0",
-    color: "#363565",
-  },
-  {
-    title: "interviewed",
-    value: "0",
-    color: "#D2D6DC",
-  },
-  {
-    title: "recommended",
-    value: "0",
-    color: "#D2D6DC",
-  },
-  {
-    title: "offer letter",
-    value: "0",
-    color: "#D2D6DC",
-  },
-  {
-    title: "contract",
-    value: "0",
-    color: "#D2D6DC",
-  },
-  {
-    title: "hired",
-    value: "0",
-    color: "#D2D6DC",
-  },
-];
+import { detailsData, hiringList } from "./data";
 
 const HiringProcess = () => {
   const [open, setOpen] = useState(false);
