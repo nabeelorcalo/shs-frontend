@@ -42,11 +42,11 @@ export const Alert: any = (props: Props) => {
             onClick={() => { setState(!state) }}
             key="Cancel"
             className={
-              type === ERROR ? "white-bg-color text-error-color"
+              type === ERROR ? "button-default-error"
                 :
-                type === SUCCESS ? "white-bg-color teriary-color"
+                type === SUCCESS ? "button-default-tertiary"
                   :
-                  type === WARNING ? "white-bg-color text-warning-color"
+                  type === WARNING ? "button-default-warning"
                     :
                     "white-bg-color teriary-color"
             }
@@ -57,11 +57,11 @@ export const Alert: any = (props: Props) => {
             onClick={() => { okBtnFunc(type) }}
             key="submit"
             className={
-              type === ERROR ? "text-error-bg-color white-color"
+              type === ERROR ? "button-error"
                 :
-                type === SUCCESS ? "teriary-bg-color white-color"
+                type === SUCCESS ? "button-tertiary"
                   :
-                  type === WARNING ? "text-warning-bg-color white-color"
+                  type === WARNING ? "button-warning"
                     :
                     "teriary-bg-color white-color"
             }

@@ -307,6 +307,7 @@ export { ReactComponent as UniLogo } from "../images/profile/university/360.svg"
 export { ReactComponent as Check } from "../images/profile/delegateagent/check.svg";
 export { ReactComponent as Bank } from "../images/profile/delegateagent/bankh.svg";
 export { ReactComponent as Edit } from "../images/profile/delegateagent/Edit.svg";
+export { ReactComponent as EditIconinternships } from "../images/Internships/editIconinternshippipeline.svg";
 
 //System Admin Delegate Dashboard
 export { ReactComponent as People } from "../images/profile/propertyagent/people.svg";

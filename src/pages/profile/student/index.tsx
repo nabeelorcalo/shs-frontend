@@ -12,7 +12,7 @@ const Profile = () => {
 
   return (
     <div className="main-student-profile">
-      <Row gutter={10}>
+      <Row gutter={[10,10]}>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="title-bar">
             <PageHeader title="My Profile" bordered={true} />
