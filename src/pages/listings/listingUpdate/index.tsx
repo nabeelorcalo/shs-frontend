@@ -114,10 +114,6 @@ const ListingUpdate = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const onChangeSwitch = (checked: boolean) => {
-    setBillsIncluded(checked)
-  };
-
   function onChangeRadioProperty(e: RadioChangeEvent) {
     e.target.value === 'entireProperty'? setEntireProperty(true) : setEntireProperty(false)
   }
@@ -710,6 +706,7 @@ const ListingUpdate = () => {
                   <div className="tabs-pane-card-body">
                     <Form
                       form={form}
+                      requiredMark={false}
                       layout="vertical"
                       name="updateRulesPrefrences"
                       initialValues={singleListing}
@@ -721,7 +718,7 @@ const ListingUpdate = () => {
                     >
                       <Row gutter={30}>
                         <Col xs={24}>
-                          <Form.Item name="gender" label="Do you prefer tenants have a specific gender">
+                          <Form.Item name="gender" label="Do you prefer tenants have a specific gender" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Male">Male</Select.Option>
                               <Select.Option value="Female">Female</Select.Option>
@@ -730,7 +727,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="maxAgePreference" label="What is the maximum age of your preferred tenants?">
+                          <Form.Item name="maxAgePreference" label="What is the maximum age of your preferred tenants?" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Less than 60">Less than 60</Select.Option>
                               <Select.Option value="Less than 40">Less than 40</Select.Option>
@@ -739,7 +736,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="tenantsKind" label="What kind of  tenants would you prefer? ">
+                          <Form.Item name="tenantTypePreference" label="What kind of tenants would you prefer?" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Students">Students</Select.Option>
                               <Select.Option value="Working professionals">Working professionals</Select.Option>
@@ -748,7 +745,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="couplesAllowed" label="Are couples allowed to rent your property?">
+                          <Form.Item name="couplesAllowed" label="Are couples allowed to rent your property?" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} md={24} xl={12}>
@@ -762,7 +759,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="tenantsCanRegisterAddress" label="Can tenants register to your address?">
+                          <Form.Item name="tenantsCanRegisterAddress" label="Can tenants register to your address?" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} md={24} xl={12}>
@@ -776,7 +773,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="petsAllowed" label="Are tenants allowed to have pets in your property?">
+                          <Form.Item name="petsAllowed" label="Are tenants allowed to have pets in your property?" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} md={24} xl={12}>
@@ -790,7 +787,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="musicalInstrumentsAllowed" label="Can tenants play musical instrument in your property?">
+                          <Form.Item name="musicalInstrumentsAllowed" label="Can tenants play musical instrument in your property?" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} md={24} xl={12}>
@@ -808,7 +805,7 @@ const ListingUpdate = () => {
                             <Typography.Title level={3}>Documents From tenants</Typography.Title>
                             <Typography.Paragraph>Select document what you need from the tenants to accept their booking requests. If you do not select any option now, you can still ask tenants for these documents later when booking is confirmed</Typography.Paragraph>
                           </div>
-                          <Form.Item name="selectDocument">
+                          {/* <Form.Item name="selectDocument">
                             <Checkbox.Group>
                               <div className="select-doc-checkbox">
                                 <Checkbox value="proofOfIdentity">Proof of identity</Checkbox>
@@ -823,6 +820,24 @@ const ListingUpdate = () => {
                                 <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
                               </div>
                             </Checkbox.Group>
+                          </Form.Item> */}
+                          <Form.Item name="identityProofRequired" valuePropName="checked" rules={[{ required: true }]}>
+                            <div className="select-doc-checkbox">
+                              <Checkbox>Proof of identity</Checkbox>
+                              <div className="select-doc-checkbox-help">Government issued ID, passport, driver’s license.</div>
+                            </div>
+                          </Form.Item>
+                          <Form.Item name="occupationProofRequired" valuePropName="checked" rules={[{ required: true }]}>
+                            <div className="select-doc-checkbox">
+                              <Checkbox>Proof of occupation or enrollment</Checkbox>
+                              <div className="select-doc-checkbox-help">University enrolment certificate, Internship or employee contract. </div>
+                            </div>
+                          </Form.Item>
+                          <Form.Item name="incomeProofRequired" valuePropName="checked" rules={[{ required: true }]}>
+                            <div className="select-doc-checkbox">
+                              <Checkbox>Proof of income</Checkbox>
+                              <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
+                            </div>
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
@@ -862,6 +877,7 @@ const ListingUpdate = () => {
                   <div className="tabs-pane-card-body rental-condition-body">
                     <Form
                       form={form}
+                      requiredMark={false}
                       layout="vertical"
                       name="updateRentalConditions"
                       initialValues={singleListing}
@@ -873,11 +889,11 @@ const ListingUpdate = () => {
                     >
                       <Row gutter={30}>
                         <Col xs={24}>
-                          <Form.Item name="contractType" label="Contract type">
+                          <Form.Item name="contractType" label="Contract type" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                                  <Radio value="Daily">
+                                  <Radio value="day">
                                     <div className="radio-card-content">
                                       <div className="radio-card-label">Daily</div>
                                       <div className="radio-card-content-text">In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.</div>
@@ -885,15 +901,15 @@ const ListingUpdate = () => {
                                   </Radio>
                                 </Col>
                                 <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                                  <Radio value="Fortnightly">
+                                  <Radio value="week">
                                     <div className="radio-card-content">
-                                      <div className="radio-card-label">Fortnightly</div>
+                                      <div className="radio-card-label">Weekly</div>
                                       <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
                                     </div>
                                   </Radio>
                                 </Col>
                                 <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                                  <Radio value="Monthly">
+                                  <Radio value="month">
                                     <div className="radio-card-content">
                                       <div className="radio-card-label">Monthly</div>
                                       <div className="radio-card-content-text">The tenant will always pay the entire month's rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.</div>
@@ -905,11 +921,11 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="cancellationPolicy" label="Cancellation policy">
+                          <Form.Item name="cancellationPolicy" label="Cancellation policy" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
-                                  <Radio value="Standard Cancellation">
+                                  <Radio value="standard">
                                     <div className="radio-card-content">
                                       <div className="radio-card-label">Standard Cancellation</div>
                                       <div className="radio-card-content-text">
@@ -921,7 +937,7 @@ const ListingUpdate = () => {
                                   </Radio>
                                 </Col>
                                 <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
-                                  <Radio value="Flexible cancellation">
+                                  <Radio value="flexible">
                                     <div className="radio-card-content">
                                       <div className="radio-card-label">Flexible cancellation</div>
                                       <div className="radio-card-content-text">

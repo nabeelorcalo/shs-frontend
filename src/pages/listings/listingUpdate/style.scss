@@ -236,21 +236,21 @@
         }
       }
     }
+  }
 
-    .select-doc-checkbox {
-      margin-top: 22px;
-      .ant-checkbox-wrapper {
-        border: none;
-        padding: 0;
-        min-height: 0;
+  .select-doc-checkbox {
+    margin-top: 22px;
+    .ant-checkbox-wrapper {
+      border: none;
+      padding: 0;
+      min-height: 0;
 
-      }
-      .select-doc-checkbox-help {
-        color: $certificate-label-disabled;
-        font-size: 14px;
-        line-height: 17px;
-        margin-top: 12px;
-      }
+    }
+    .select-doc-checkbox-help {
+      color: $certificate-label-disabled;
+      font-size: 14px;
+      line-height: 17px;
+      margin-top: 12px;
     }
   }
 
