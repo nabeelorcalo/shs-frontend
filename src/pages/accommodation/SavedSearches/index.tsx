@@ -7,7 +7,7 @@ import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import { useRecoilValue} from "recoil";
 import { savedPropertiesState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
-
+import {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
 const SavedSearches = () => {
@@ -45,23 +45,26 @@ const SavedSearches = () => {
     <div className="saved-searches">
       <Spin spinning={loading}>
         <div className="shs-row placeholder-height">
-          {savedProperties?.map((property:any) => {
+          {savedProperties?.map((item:any) => {
+            let tags: any[] = [];
+            if(item.property.allBillsIncluded) tags.push('Utility Bils');
+            if(item.property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
+
             return (
-              <div key={property.id} className="shs-col-5">
+              <div key={item.id} className="shs-col-5">
                 <AccommodationCard
                   coverPhoto={thumb1}
-                  discount={'30'}
-                  autualPrice={"1200"}
-                  withDiscountPrice={"840"}
+                  offer={item.property.offer?.monthlyDiscount}
+                  rent={item.property.monthlyRent}
                   propertyAvailableFor={"week"}
-                  propertyType={property.propertyType}
-                  totalBeds={property.totalBedrooms}
-                  totalWashRoom={property.totalBathrooms}
-                  tags={['Utility Bills', 'Laundry', 'Meals']}
-                  location={property.addressOne}
-                  handleSaveClick={() => console.log('handle clik')}
-                  handleDetailClick={() => handleDetailClick(property.id)}
-                  handleChatClick={() => navigate('/chat')}
+                  propertyType={item.property.propertyType}
+                  totalBedrooms={item.property.totalBedrooms}
+                  totalBathrooms={item.property.totalBathrooms}
+                  address={item.property.addressOne}
+                  tags={tags}
+                  onSave={() => console.log('handle clik')}
+                  onDetail={() => handleDetailClick(item.property.id)}
+                  onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
             )
