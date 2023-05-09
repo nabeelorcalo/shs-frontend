@@ -6,7 +6,7 @@ import api from "../../api";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST } = endpoints;
+  const { GET_CONTRACT_LIST, DEL_CONTRACT } = endpoints;
   const [contractList, setContractList] = useRecoilState(contractsListData);
   //get contracts
   const getData = async () => {
@@ -20,7 +20,7 @@ const useCustomHook = () => {
   }
   //delete contract
   const deleteContractHandler = async (val: any) => {
-    await api.delete(`/Contract/delete/${val}`);
+    await api.delete(`${DEL_CONTRACT}/${val}`);
     getData();
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
