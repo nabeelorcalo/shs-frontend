@@ -3,11 +3,13 @@ import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
-import { PopUpModal } from "../../../../components";
 import SelectUserType from "../../userType";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { useRecoilState } from "recoil";
+import { rememberMeState } from "../../../../store";
 
 const SigninForm = (props: any) => {
+  const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -24,13 +26,13 @@ const SigninForm = (props: any) => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
     const { Email, password } = values;
-
     action
       .login({
         email: Email,
         password: password,
       })
-      .then((data:any) => {
+      .then((data: any) => {
+        localStorage.setItem("isrememberme", rememberMe);
         console.log("data", data); //for debugging purpose
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
@@ -94,7 +96,11 @@ const SigninForm = (props: any) => {
                 noStyle
                 className="text-center "
               >
-                <Checkbox >
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)
+                  }
+                >
                   <span className="text-teriary-color text-base font-normal">Remember me</span></Checkbox>
               </Form.Item>
             </Col>

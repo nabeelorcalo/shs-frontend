@@ -2,10 +2,13 @@ import { Button, Col, Row, Typography } from "antd";
 import { managerCar } from "./managerMock";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
+import useCustomHook from "../actionHandler";
 
 const ManagerInfo = () => {
-
   const navigate = useNavigate();
+  const getCuurentManager = useCustomHook();
+  const managerCard = getCuurentManager.getCuurentManager;
+  console.log("?>?>?>?>?>", managerCard)
 
   return (
     <div className="manager-info">
@@ -14,9 +17,9 @@ const ManagerInfo = () => {
           return (
             <>
               <Col xxl={6} xl={8} lg={12} md={12} sm={24} xs={24}>
-                <div className="rounded-[10px] py-3  white-bg-color" style={{boxShadow:"0px 0px 8px 2px rgba(9, 161, 218, 0.1)"}}>
+                <div className="rounded-[10px] py-3  white-bg-color" style={{ boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)" }}>
                   <center>
-                    <img src={item.img} alt="user-img"/>
+                    <img src={item.img} alt="user-img" />
                     <Typography className="text-2xl  text-primary-color font-medium pt-3">
                       {item.managerName}
                     </Typography>
@@ -54,7 +57,6 @@ const ManagerInfo = () => {
           );
         })}
       </Row>
-
     </div>
   );
 };

@@ -38,8 +38,9 @@ const { Header } = Layout;
 type HeaderProps = {
   collapsed: boolean;
   sidebarToggler: () => void;
-};
+  handleLogout: any;
 
+};
 
 const data = [
   {
@@ -56,8 +57,8 @@ const data = [
   },
 ];
 
-const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
-  const { LOGOUT } = apiEndpints;
+const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout}) => {
+  
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
@@ -69,6 +70,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const currentUser = useRecoilValue(currentUserState);
   const [currentUserData, setcurrentUserData] = useRecoilState(currentUserState);
   const width = DrawerWidth();
+ 
   const menuStyle = {
     boxShadow: "none",
   };
@@ -91,8 +93,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       label: "Logout",
       icon: <IconLogout />,
       onClick: (props) => {
-        localStorage.removeItem("accessToken");
-        navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+        handleLogout()
       },
     },
   ];

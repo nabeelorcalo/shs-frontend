@@ -4,11 +4,16 @@ import { Layout } from 'antd';
 import AppHeader from './components/header';
 import AppSidebar from './components/sidebar';
 import AppFooter from './components/footer';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { ROUTES_CONSTANTS } from '../config/constants';
+import apiEndpoints from '../config/apiEndpoints'
+import api from '../api';
+
 const { Content } = Layout;
 
-
 function AppLayout() {
+  const { LOGOUT } = apiEndpoints;
+  const navigate = useNavigate();
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
@@ -30,7 +35,11 @@ function AppLayout() {
     setCollapsed(broken);
   }
 
-  
+  const handleLogout = () => {
+    localStorage.clear();
+    api.get(LOGOUT);
+    navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+  }
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -41,6 +50,7 @@ function AppLayout() {
       <AppHeader
         collapsed={collapsed}
         sidebarToggler={collapsedSidebar}
+        handleLogout = {handleLogout}
       />
 
       <Layout>

@@ -15,15 +15,34 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
-import  constants  from '../../../config/constants';
+import constants from '../../../config/constants';
+import useCustomHook from "../actionHandler";
 
 const AddManager = () => {
   const navigate = useNavigate();
-
+  const action = useCustomHook();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    const { firstname, lastname, gender, email, phoneNumber, title, department, postCode, address, city,
+      country } = values;
+
+    action.addManagerCompany({
+      firstName: firstname,
+      lastName: lastname,
+      gender: gender,
+      email: email,
+      phoneNumber: phoneNumber,
+      title: title,
+      departmentId: department,
+      postCode: postCode,
+      address: address,
+      city: city,
+      country: country
+    })
+    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
   };
 
   return (
@@ -149,7 +168,8 @@ const AddManager = () => {
               </Form.Item>
               <Form.Item
                 label="Department"
-                rules={[{ type: "string" }, { required: true }]}
+                name='department'
+                rules={[{ type: "string" }, { required: false }]}
               >
                 <DropDown
                   name="Select"
@@ -174,7 +194,7 @@ const AddManager = () => {
               <Form.Item
                 label="Post Code"
                 name="postCode"
-                rules={[{ type: "string" }, { required: true }]}>
+                rules={[{ type: "string" }, { required: false }]}>
                 <DropDown
                   name="Enter Post Code"
                   value={value}
@@ -208,7 +228,7 @@ const AddManager = () => {
               <Form.Item
                 label="Country"
                 name="country"
-                rules={[{ type: "string" }, { required: true }]}
+                rules={[{ type: "string" }, { required: false }]}
               >
                 <DropDown
                   name="Select"
