@@ -50,8 +50,8 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['All','This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
-const statusDropdownData = ['All','New', 'Pending', 'Rejected', 'Signed']
+const timeFrameDropdownData = ['All', 'THIS_WEEK', 'LAST_WEEK', 'THIS_MONTH', 'LAST_MONTH', 'DATE_RANGE']
+const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -78,11 +78,11 @@ const CompanyAdmin = () => {
   const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
-  const [valueDatePacker, setValueDatePacker] = useState("");
+  const [valueDatePacker, setValueDatePacker] = useState("THIS_WEEK");
   const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(statusValueHandle)
+    getContractList(valueStatus,valueDatePacker)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -155,7 +155,11 @@ const CompanyAdmin = () => {
   };
   const statusValueHandle = (val: any) => {
     setValueStatus(val);
-    getContractList(val)
+    getContractList(val,valueDatePacker)
+  }
+  const handleTimeFrameValue = (val: any) => {
+    setValueDatePacker(val);
+    getContractList(valueStatus ,val)
   }
   const tableColumns = [
     {
@@ -302,7 +306,7 @@ const CompanyAdmin = () => {
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
             value={valueDatePacker}
-            setValue={setValueDatePacker}
+            setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"

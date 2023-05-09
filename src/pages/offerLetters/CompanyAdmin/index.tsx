@@ -52,10 +52,10 @@ const CompanyAdmin = () => {
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
-  const { getContractList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
+  const { getOfferLetterList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus)
+    getOfferLetterList(valueStatus)
   }, [])
 
   const renderDropdown = (item: any) => {
@@ -227,7 +227,7 @@ const CompanyAdmin = () => {
     )
   })
   const handleValueStatus = (val: any) => {
-    getContractList(val);
+    getOfferLetterList(val);
     setValueStatus(val)
   }
   return (
