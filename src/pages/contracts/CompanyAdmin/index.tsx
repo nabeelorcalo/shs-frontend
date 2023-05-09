@@ -80,7 +80,7 @@ const CompanyAdmin = () => {
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
   const { getData, contractList, searchHandler, deleteContractHandler } = useCustomHook();
-  
+
   useEffect(() => {
     getData()
   }, [])
@@ -121,7 +121,11 @@ const CompanyAdmin = () => {
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
-      <Menu.Item key="2" onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}>Resend</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => Notifications({
+          title: 'Success',
+          description: 'Contract sent', type: 'success'
+        })}>Resend</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
@@ -136,7 +140,8 @@ const CompanyAdmin = () => {
   const rejected = (val: any) => {
 
     <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">
+        View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
@@ -290,7 +295,7 @@ const CompanyAdmin = () => {
 
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
-            requireDatePicker placement="bottom"
+            requireRangePicker placement="bottom"
             value={valueDatePacker}
             setValue={setValueDatePacker}
           />

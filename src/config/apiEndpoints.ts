@@ -19,8 +19,6 @@ const endpoints = {
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   GET_CONTRACT_LIST: '/Contract/list',
   DEL_CONTRACT:'/Contract/delete',
-  GET_OFFER_LETTER_LIST: '/Contract/list',
-  DEL_OFFER_LETTER:'/Contract/delete',
   STUDENT_INTRNE_SAWITCH:"auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD:"/auth/change-password",

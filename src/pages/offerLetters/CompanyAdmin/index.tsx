@@ -91,15 +91,15 @@ const CompanyAdmin = () => {
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
-  const { getData, contractList } = useCustomHook();
-  
+  const { getData, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+
   useEffect(() => {
     getData()
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
-        return <CustomDroupDown menu1={rejected} />
+        return <CustomDroupDown menu1={rejected(item.id)} />
         break;
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item.id)} />
@@ -134,7 +134,10 @@ const CompanyAdmin = () => {
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
-      <Menu.Item key="2" onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}>Resend</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
+      >Resend</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
@@ -270,6 +273,7 @@ const CompanyAdmin = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
+        okBtnFunc={() => deleteContractHandler(showDelete?.id)}
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
@@ -296,7 +300,8 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => { }} />
+          <SearchBar handleChange={(e: any) => { searchHandler(e) }} />
+
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
