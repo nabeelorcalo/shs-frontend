@@ -69,13 +69,13 @@ const AvailableProperties = () => {
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
                   coverPhoto={thumb1}
-                  offer={property.offer?.monthlyDiscount}
-                  rent={property.monthlyRent}
+                  offer={property?.offer?.monthlyDiscount}
+                  rent={property?.monthlyRent}
                   propertyAvailableFor={"week"}
-                  propertyType={property.propertyType}
-                  totalBedrooms={property.totalBedrooms}
-                  totalBathrooms={property.totalBathrooms}
-                  address={property.addressOne}
+                  propertyType={property?.propertyType}
+                  totalBedrooms={property?.totalBedrooms}
+                  totalBathrooms={property?.totalBathrooms}
+                  address={property?.addressOne}
                   tags={tags}
                   onSave={() => postSaveProperty(property.id)}
                   onDetail={() => handleDetailClick(property.id)}

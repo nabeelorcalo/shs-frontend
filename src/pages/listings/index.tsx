@@ -1016,7 +1016,8 @@ const Listings = () => {
     })
     console.log('listingValues:: ', listingValues)
     setCurrent(current + 1);
-    setNextDisabled(true)
+    setNextDisabled(true);
+    console.log('listingValues:: ', listingValues)
 
     // if(current === 0) {
     //   setNextDisabled(true)
