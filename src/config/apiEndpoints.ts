@@ -17,8 +17,12 @@ const endpoints = {
   CHANGEPASSWORD:'/auth/change-password',
   FORGOTPASSWORD:'/auth/forgot-password',
   TIMESHEET_FIND_ALL:'timesheet/category/findAll',
-  STUDENT_INTRNE_SAWITCH:"auth/student-intern-switch",
+  STUDENT_INTRNE_SAWITCH:"/auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD:"/auth/change-password",
+  // End Point For Leaev Module For Intrne 
+  CREATE_LEAVE:"/Leaves/create",
+  GET_LEAEV_LIST:`/Leaves/list`,
+
 }
 export default endpoints;

@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
 import { leaveCardData, upcomingHolidayData } from './internMockdata';
 import "./style.scss" 
-
 const CardIcon = [
   { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
@@ -16,7 +15,6 @@ const CardIcon = [
 ]
 const index = () => {
   const navigate = useNavigate()
-
   return (
     <div className='intrne_main'>
       <PageHeader actions   bordered title="Leave">
