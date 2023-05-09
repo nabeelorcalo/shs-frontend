@@ -70,7 +70,7 @@ const AvailableProperties = () => {
                 <AccommodationCard
                   coverPhoto={thumb1}
                   offer={property.offer?.monthlyDiscount}
-                  rent={property.monthlyRent}
+                  rent={property?.monthlyRent}
                   propertyAvailableFor={"week"}
                   propertyType={property.propertyType}
                   totalBedrooms={property.totalBedrooms}
