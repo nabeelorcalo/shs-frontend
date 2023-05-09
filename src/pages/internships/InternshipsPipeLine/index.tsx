@@ -9,7 +9,7 @@ import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinte
 import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 
 // const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
-const navigate = useNavigate();
+
 const statusArray = [
   {
     status: 'Applied',
@@ -173,6 +173,7 @@ const tempArray = [
 ];
 
 const InternshipPipeLine = () => {
+  const navigate = useNavigate();
   // const navigate = useNavigate()
   const [state, setState] = useState({
     status: 'Published'

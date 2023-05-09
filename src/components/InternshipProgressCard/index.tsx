@@ -15,6 +15,8 @@ export const InternshipProgressCard = (props: any) => {
   const [decline, setDecline] = useState(false)
   const [deleteInternship, setDeleteInternship] = useState(false)
   const { deleteInternshipData } = useCustomHook();
+  const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
+  const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
   const handelDelete = (id: any) => {
     deleteInternshipData(id);
@@ -110,10 +112,6 @@ export const InternshipProgressCard = (props: any) => {
       </Dropdown>
     )
   }
-  
-  const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
-  const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
-
   return (
     <div className='flex flex-col gap-3 cursor-pointer'>
       <div className='flex flex-row justify-between'>
@@ -143,9 +141,9 @@ export const InternshipProgressCard = (props: any) => {
       </div>
       <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
         <div className='flex max-sm:flex-col md:flex-row  gap-3'>
-          {createdAt===null?<p>Created on --</p>:<p>Created on {createdOn}</p>}
+          {createdAt === null ? <p>Created on --</p> : <p>Created on {createdOn}</p>}
           <p>.</p>
-          {(closingDate === null) ? <p>Expected Closing Date  -- </p>: <p>Expected Closing Date {expectedClosingDate}</p>}
+          {(closingDate === null) ? <p>Expected Closing Date  -- </p> : <p>Expected Closing Date {expectedClosingDate}</p>}
         </div>
         <p>
           <span className={`${status} white-color px-3 py-1 rounded-lg`} >

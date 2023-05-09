@@ -1,12 +1,11 @@
+import { useEffect } from 'react'
 import { PageHeader, BoxWrapper, Breadcrumb } from '../../components'
 import { Button } from 'antd'
 import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ROUTES_CONSTANTS } from '../../config/constants'
-import useCustomHook from './actionHandler'
-// import '../../scss/global-color/Global-colors.scss'
+import useCustomHook from './actionHandler';
 import './style.scss'
-import { useEffect } from 'react'
 
 const tempArray = [
   { name: "Job Details" },
