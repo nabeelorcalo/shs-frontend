@@ -38,12 +38,14 @@ const AvailableProperties = () => {
     setLoading(true)
     const result = await saveProperty({propertyId: id});
     setLoading(false)
-    if (result.error) {
-      showNotification("error", constants.NOTIFICATION_DETAILS.error);
-    } else {
-      showNotification("success", constants.NOTIFICATION_DETAILS.success);
-    }
+    // if (result.error) {
+    //   showNotification("error", constants.NOTIFICATION_DETAILS.error);
+    // } else {
+    //   showNotification("success", constants.NOTIFICATION_DETAILS.success);
+    // }
   }
+
+  
 
 
   /* EVENT FUNCTIONS
@@ -77,7 +79,7 @@ const AvailableProperties = () => {
                   tags={tags}
                   onSave={() => postSaveProperty(property.id)}
                   onDetail={() => handleDetailClick(property.id)}
-                  onChat={() => navigate('/chat')}
+                  onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
             )

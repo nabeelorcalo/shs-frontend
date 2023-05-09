@@ -706,7 +706,7 @@ const Listings = () => {
           <Col xs={24}>
             <Form.Item
               name="electricityBillPayment"
-              label="Ho do you want to charge electricity bill?"
+              label="How do you want to charge electricity bill?"
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
@@ -1121,33 +1121,22 @@ const Listings = () => {
   }
 
   const onValuesChange = (changedValues:any, allValues:any) => {
-    console.log('All Values::: ', allValues)
     if(current === 0) {
       validateStepOne(allValues)
-    }
-
-    if(current === 1) {
+    } else if(current === 1) {
       validateStepTwo(allValues)
-    }
-
-    if(current === 2) {
+    } else if(current === 2) {
       validateStepThree(allValues)
       if(allValues.media !=null && allValues.media.length != 0) {
         setUploadDevice(true)
       } else {
         setUploadDevice(false)
       }
-    }
-
-    if(current === 3) {
+    } else if(current === 3) {
       validateStepFour(allValues)
-    }
-
-    if(current === 4) {
+    } else if(current === 4) {
       validateStepFive(allValues)
-    }
-
-    if(current === 5) {
+    }else if(current === 5) {
       validateStepSix(allValues)
     }
   };

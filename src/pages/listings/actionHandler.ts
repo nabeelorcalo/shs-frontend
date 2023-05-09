@@ -22,6 +22,7 @@ const useListingsHook = () => {
     return await submitRequest(data)
   }
 
+  // Update Agent Property
   const updateListing = async (id:any, data: any) => {
     const submitRequest = async(listingId:any, reqBody:any) => {
       try {
@@ -37,34 +38,22 @@ const useListingsHook = () => {
   // Get All Agent Properties
   const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    try {
-      const res = await api.get(GET_AGENT_PROPERTIES);
-      if(!res.error) {
-        const { data } = res;
+    const response = await api.get(GET_AGENT_PROPERTIES);
+      if(!response.error) {
+        const { data } = response;
         setAllProperties(data)
       }
-    } catch (error) {
-      return;
-    } finally {
       setLoading(false);
-    }
   }
 
   // Get Single Property
   const getListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    try {
-      return api.get(`${GET_PROPERTY}${id}`).then(res => {
-        if(!res.error) {
-          console.log("Res.data::: ", res.data)
-          return setSingleListing(res.data)
-        }
-      })
-    } catch (error) {
-      return;
-    } finally {
-      setLoading(false);
+    const res = await api.get(`${GET_PROPERTY}${id}`)
+    if(!res.error) {
+      setSingleListing(res.data)
     }
+    setLoading(false);
   }
 
   return {

@@ -7,6 +7,7 @@ import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import { useRecoilValue} from "recoil";
 import { savedPropertiesState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
+import {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
 
@@ -64,7 +65,7 @@ const SavedSearches = () => {
                   tags={tags}
                   onSave={() => console.log('handle clik')}
                   onDetail={() => handleDetailClick(item.property.id)}
-                  onChat={() => navigate('/chat')}
+                  onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
             )

@@ -125,10 +125,10 @@ const ListingUpdate = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getListing(listingId, setLoading)
+    console.log("UseEffect: ", singleListing);
   }, [])
 
   useEffect(() => {
-    console.log('Tab change')
     getListing(listingId, setLoading)
   }, [tabKey])
 
