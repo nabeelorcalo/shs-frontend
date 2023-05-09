@@ -14,9 +14,7 @@ const useCustomHook = () => {
   const { state } = useLocation();
 
   useEffect(() => {
-    return () => {
       debouncedResults.cancel();
-    };
   });
   //get all internship data
   const getAllInternshipsData = async () => {
@@ -61,7 +59,7 @@ const useCustomHook = () => {
 
   //delete internship
   const deleteInternshipData = async (val: any) => {
-    const { data } = await api.delete(`${DEL_INTERNSHIP}?id=${val}`);
+    await api.delete(`${DEL_INTERNSHIP}?id=${val}`);
     getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }

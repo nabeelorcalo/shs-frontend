@@ -18,10 +18,18 @@ export const InternshipProgressCard = (props: any) => {
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
+  const internStatus = {
+    published:'PUBLISHED',
+    closed:'CLOSED',
+    pending:'PENDING',
+    draft:'DRAFT',
+  }
+
   const handelDelete = (id: any) => {
     deleteInternshipData(id);
     setDeleteInternship(false)
   }
+
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -35,7 +43,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       },
-      status !== "PUBLISHED" && status !== "CLOSED" ? {
+      status !== internStatus?.published && status !== internStatus.closed ? {
         key: '2',
         label: (
           <a
@@ -52,7 +60,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "PENDING" && status !== "DRAFT" ? {
+      status !== internStatus.pending && status !== internStatus.draft ? {
         key: '3',
         label: (
           <a rel="noopener noreferrer" onClick={() => { navigate('pipeline') }}>
@@ -60,7 +68,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "PENDING" && status !== "DRAFT" && status !== "CLOSED" ? {
+      status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '4',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
@@ -68,7 +76,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "PUBLISHED" && status !== "DRAFT" && status !== "CLOSED" ? {
+      status !== internStatus.published && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '5',
         label: (
           <a rel="noopener noreferrer" onClick={() => { setDecline(true) }}>

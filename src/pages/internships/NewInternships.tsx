@@ -68,7 +68,9 @@ const NewInternships = () => {
   //   location: "",
   //   expectedClosingDate: ""
   // })
-  const { postNewInternshipsData } = useCustomHook()
+  const { postNewInternshipsData } = useCustomHook();
+  const [form] = Form.useForm();
+
   const tempArray = [
     { name: "New Internship" },
     {
@@ -127,6 +129,8 @@ const NewInternships = () => {
   const onFinish = (values: any) => {
     console.log('Success:', values);
     postNewInternshipsData(values);
+    form.resetFields();
+    navigate('/internships')
   };
 
   const onSelectChange = (value: string) => {
@@ -137,6 +141,7 @@ const NewInternships = () => {
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <BoxWrapper className='new-intern-main'>
         <Form
+          form={form}
           layout='vertical'
           onFinish={onFinish}
           initialValues={{ remember: false }}
