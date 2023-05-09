@@ -10,6 +10,7 @@ import "./style.scss";
 import { useRecoilValue} from "recoil";
 import { bookingRequestsState } from "../../../store";
 import useBookingRequests from "./actionHandler";
+import {ROUTES_CONSTANTS} from '../../../config/constants';
 interface DataType {
   key: React.Key;
   tenant: any;
@@ -26,12 +27,13 @@ interface DataType {
 const BookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const [modalViewContractOpen, setModalViewContractOpen] = useState(false)
-  const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false)
-  const bookingRequests = useRecoilValue(bookingRequestsState)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [modalViewContractOpen, setModalViewContractOpen] = useState(false);
+  const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false);
+  const bookingRequests = useRecoilValue(bookingRequestsState);
   const {getBookingRequests} = useBookingRequests();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const itemsPending: MenuProps['items'] = [
     {
@@ -157,15 +159,15 @@ const BookingRequests = () => {
     title: 'Actions',
     dataIndex: 'actions',
     align: 'center',
-    render: (_, row, index) => {
+    render: (text, record, index) => {
       return (
         <Dropdown
           overlayClassName="shs-dropdown" 
           placement="bottomRight"
           trigger={['click']}
           menu={{ 
-            items: row.contracts && row.status? itemsNoCntracted: row.status === 'pending' ? itemsPending : row.status === 'rejected' ? itemsRejected: itemsReserved,
-            onClick: ({key}) => handleActionItem(key, row.key) 
+            items: record.contracts && record.status? itemsNoCntracted: record.status === 'pending' ? itemsPending : record.status === 'rejected' ? itemsRejected: itemsReserved,
+            onClick: ({key}) => handleActionItem(key, record.property.id) 
           }}
         >
           <div className="dropdown-button">
@@ -183,6 +185,7 @@ const BookingRequests = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getBookingRequests(setLoading)
+    console.log('bookingRequests:: ', bookingRequests)
   }, [])
 
 
@@ -207,7 +210,7 @@ const BookingRequests = () => {
 
   function handleActionItem (key:any, id:any) {
     if(key === 'viewDetails') {
-      navigate(`/property/${id}`)
+      navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${id}`, {state: {from: location.pathname}})
     }
     if(key === 'viewContract') {
       openModalViewContract()

@@ -1,11 +1,11 @@
 import { notification } from "antd";
-import { Notifications } from "../components";
+
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-const showNotification = (type: NotificationType, details:any) => {
+const showNotification = (type: NotificationType, title:any, description:any) => {
   notification[type]({
-    message: details.message,
-    description: details.description,
+    message: title,
+    description: description,
   });
 };
 export default showNotification;
