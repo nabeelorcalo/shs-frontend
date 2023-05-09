@@ -13,12 +13,13 @@ import {
   GreenLock,
   RedLock,
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Notifications, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 // const tableData = [
 //   {
@@ -87,30 +88,79 @@ const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
-  const [showDelete, setShowDelete] = useState(false);
+  const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
   const { getData, contractList } = useCustomHook();
+  
   useEffect(() => {
     getData()
   }, [])
-  const renderDropdown = (status: any) => {
-    switch (status) {
-      case 'rejected':
+  const renderDropdown = (item: any) => {
+    switch (item.status) {
+      case 'REJECTED':
         return <CustomDroupDown menu1={rejected} />
         break;
-      case 'pending':
-        return <CustomDroupDown menu1={pending} />
+      case 'PENDING':
+        return <CustomDroupDown menu1={pending(item.id)} />
         break;
-      case 'Changes requested':
-        return <CustomDroupDown menu1={ChangesRequested} />
+      case 'CHANGEREQUEST':
+        return <CustomDroupDown menu1={ChangesRequested(item.id)} />
         break;
-      case 'Signed':
-        return <CustomDroupDown menu1={signed} />
+      case 'SIGNED':
+        return <CustomDroupDown menu1={signed(item.id)} />
         break;
     }
   }
+  const signed = (val: any) => (
+    <Menu>
+      <Menu.Item onClick={() => navigate("/signed-company-admin-offer")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Initiate Contract</Menu.Item>
+    </Menu>
+  );
+  const ChangesRequested = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="1">Edit</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const pending = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item key="2" onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}>Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const rejected = (val: any) => {
 
+    <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
+      <Menu.Item
+        key="3"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
   const tableColumns = [
     {
       title: "No",
@@ -155,8 +205,8 @@ const CompanyAdmin = () => {
         No: contractList?.length < 10 && `0 ${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
-            item.status === "rejected" || item.status === "Changes requested" ?
-              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "Signed" ?
+            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
                 (<img src={Signed} alt="img" width={40} height={40} />) :
                 (<img src={Recevied} alt="img" width={40} height={40} />)
           }
@@ -192,7 +242,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color">{signedDate}</div>
         </div>,
         status: <div
-          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"
@@ -210,63 +260,12 @@ const CompanyAdmin = () => {
       }
     )
   })
-  const signed = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/signed-company-admin-offer")} key="1">View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Initiate Contract</Menu.Item>
-    </Menu>
-  );
-
-  const ChangesRequested = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="1">Edit</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
-  const pending = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/pending-view-details-offer")} key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
-  const rejected = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/rejected-company-admin-offer")} key="1">View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Edit</Menu.Item>
-      <Menu.Item
-        key="3"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
 
   return (
     <div className="offer-letter-company-admin">
       <Alert
         width="570px"
-        state={showDelete}
+        state={showDelete.isToggle}
         setState={setShowDelete}
         type="error"
         okBtntxt="Delete"

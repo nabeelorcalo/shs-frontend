@@ -90,7 +90,8 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
               <Button
                 label={type === "Certificates" ? "Continue" : "Send"}
                 htmlType={type === "Certificates" ? "default" : "submit"}
-                onClick={() => (type === "Certificates" ? setSignatureModal(!signatureModal) : Notifications({ title: 'Success', description: 'Appreciation Sent', type: 'success' }))}
+                onClick={() => (type === "Certificates" ? setSignatureModal(!signatureModal) :
+                  Notifications({ title: 'Success', description: 'Appreciation Sent', type: 'success' }))}
                 className="bg-visible-btn mt-4 ml-2 font-semibold"
               />
             </Form.Item>
@@ -108,8 +109,10 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
       />
       <SignatureAndUploadModal state={signatureModal} title='Signature' footer={
         <>
-          <Button label="Cancel" type="default" onClick={() => setSignatureModal(!signatureModal)} className="border-visible-btn mt-4 font-semibold" />
-          <Button label="Sign" type="default" onClick={() => setPreviewModal(!previewModal)} className="bg-visible-btn mt-4 font-semibold" />
+          <Button label="Cancel" type="default" onClick={() => setSignatureModal(!signatureModal)}
+            className="border-visible-btn mt-4 font-semibold" />
+          <Button label="Sign" type="default" onClick={() => setPreviewModal(!previewModal)}
+            className="bg-visible-btn mt-4 font-semibold" />
         </>
       } />
     </>

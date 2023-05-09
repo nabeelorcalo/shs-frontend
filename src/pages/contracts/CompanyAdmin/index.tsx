@@ -6,6 +6,7 @@ import {
 } from "../../../assets/images";
 import { Alert, BoxWrapper, DropDown, GlobalTable, Notifications, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
@@ -79,6 +80,7 @@ const CompanyAdmin = () => {
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
   const { getData, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  
   useEffect(() => {
     getData()
   }, [])
@@ -100,12 +102,12 @@ const CompanyAdmin = () => {
   }
   const signed = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate("/signed-company-admin")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
     </Menu>
   };
   const ChangesRequested = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate("/edit-contract")} key="1">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
@@ -118,9 +120,9 @@ const CompanyAdmin = () => {
   };
   const pending = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate("/pending-view-details")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2" onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-contract")} key="3">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -131,11 +133,11 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
-  const rejected = (val:any) => {
+  const rejected = (val: any) => {
 
     <Menu>
-      <Menu.Item onClick={() => navigate("/rejected-company-admin")} key="1">View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-contract")} key="2">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
@@ -282,7 +284,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => {searchHandler(e)}} />
+          <SearchBar handleChange={(e: any) => { searchHandler(e) }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 
