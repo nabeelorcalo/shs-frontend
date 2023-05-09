@@ -2,7 +2,7 @@ import { useState } from 'react'
 import "./style.scss"
 import RequestDocModel from './requestDocModel';
 import { CvIcon, DbsIcon, UalIcon, PassportIcon, BrpIcon, PoaIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images"
-
+import Preview from "../../assets/images/candidates/preview.svg"
 const ReqDocData = [
 
   {
@@ -63,7 +63,7 @@ const DrawerDocuments = () => {
 
       <div className='files-wrap mt-6'>
         {ReqDocData.map((data: any) => (
-          <div className='files flex justify-between py-3'>
+          <div className='files flex justify-between py-3 px-3'>
             <div className="flex gap-4">
               {data.image}
               <div className="">
@@ -71,13 +71,16 @@ const DrawerDocuments = () => {
                 <p>{data.descr}</p>
               </div>
             </div>
-            <div className='flex gap-5'>
+            <div className='flex items-center gap-5'>
               <div>
                 <p>{data.date}</p>
                 <p className='ml-8'>{data.size}</p>
               </div>
-              <div>
-                <span className='h-[40px] w-[40px] rounded-[4px] '><DownloadDocumentIcon /></span>
+              <div className='icons-sec'>
+                <p className='h-[40px] w-[40px] flex items-center justify-center'> <img src={Preview} alt="" /></p>
+              </div>
+              <div className='icons-sec'>
+                <p className='h-[40px] w-[40px] flex items-center justify-center'><DownloadDocumentIcon /></p>
               </div>
             </div>
           </div>

@@ -49,7 +49,7 @@ interface DataType {
   propertyType: string;
   totalBedrooms: number;
   verificationStatus: string;
-  monthlyRent: number;
+  rent: number;
   availability: any;
   publicationStatus: string;
   availabilityStart: any;
@@ -120,7 +120,13 @@ const Listings = () => {
     },
     {
       title: 'Rent',
-      dataIndex: 'monthlyRent',
+      dataIndex: 'rent',
+      render: (text, row, index) => {
+        return (
+          <>£ {text}</>
+        )
+        
+      }
     },
     {
       title: 'Availability',
@@ -174,10 +180,6 @@ const Listings = () => {
     getListings(setLoadingAllProperties)
   }, [])
 
-  useEffect(() => {
-    console.log('::: ', form.getFieldsValue())
-    
-  }, [modalAddListingOpen])
 
 
   /* ASYNC FUNCTIONS
@@ -185,9 +187,9 @@ const Listings = () => {
   const handleSubmission = useCallback(
     (result:any) => {
       if (result.error) {
-        showNotification("error", constants.NOTIFICATION_DETAILS.error);
+        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
       } else {
-        showNotification("success", constants.NOTIFICATION_DETAILS.success);
+        showNotification("success", "Success", result.response?.message);
       }
     },
     [form]
@@ -290,10 +292,10 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="yes">Yes</Radio>
+                    <Radio value={true}>Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="no">No</Radio>
+                    <Radio value={false}>No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -312,8 +314,12 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="propertyType" label="How will you rent your property?">
-              <Radio.Group onChange={onChangeRadioProperty}>
+            <Form.Item 
+              name="propertyType"
+              label="How will you rent your property?"
+              rules={[{ required: true }]}
+            >
+              <Radio.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={24}>
                     <Radio value="EntireProperty">Entire Property</Radio>
@@ -343,18 +349,18 @@ const Listings = () => {
                 <Row gutter={30}>
                   <Col xs={8}>
                     <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                      <InputNumber min={1} max={10} />
+                      <InputNumber min={1} />
                     </Form.Item>
                   </Col>
                   <Col xs={8}>
                     <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                      <InputNumber min={1} max={10} />
+                      <InputNumber min={1} />
                     </Form.Item>
 
                   </Col>
                   <Col xs={8}>
                     <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber min={1} max={10} />
+                      <InputNumber min={1} />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -363,7 +369,11 @@ const Listings = () => {
           }
 
           <Col xs={24}>
-            <Form.Item name="hasAirConditioning" label="Does it have air conditioning?">
+            <Form.Item 
+              name="hasAirConditioning"
+              label="Does it have air conditioning?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="notAvailable">Not available</Select.Option>
                 <Select.Option value="central">Central</Select.Option>
@@ -372,7 +382,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="hasHeating" label="Heating">
+            <Form.Item 
+              name="hasHeating"
+              label="Heating"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatingNotAvailable">Not available</Select.Option>
                 <Select.Option value="centralProperty">Central Property</Select.Option>
@@ -381,7 +395,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="hasWaterHeating" label="Does it have heated water system?">
+            <Form.Item 
+              name="hasWaterHeating"
+              label="Does it have heated water system?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="heatedWaterSystemNo">No</Select.Option>
                 <Select.Option value="naturalGas">Natural gas</Select.Option>
@@ -513,7 +531,11 @@ const Listings = () => {
             </div>
           </Col>
           <Col xs={24}>
-            <Form.Item name="bedType" label="Bed Type">
+            <Form.Item 
+              name="bedType"
+              label="Bed Type"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="typeFuton">Futon</Select.Option>
                 <Select.Option value="typeAirbed">Airbed</Select.Option>
@@ -587,12 +609,28 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="monthlyRent" label="Monthly Rent">
-              <Input placeholder="Placeholder" />
+            <Form.Item
+              name="monthlyRent"
+              label="Monthly Rent"
+              rules={[{ required: true }]}
+            >
+              <InputNumber
+                placeholder="Placeholder"
+                min={0}
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+              />
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="paymentMethod" label="Payment Method">
+            <Form.Item
+              name="paymentMethod"
+              label="Payment Method"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="creditDebitCard">Credit/Debit card</Select.Option>
                 <Select.Option value="cash">Cash</Select.Option>
@@ -616,7 +654,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="kindOfDeposit" label="Which kind of deposit?">
+            <Form.Item
+              name="depositType"
+              label="Which kind of deposit?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="depositHalfMont">Half month</Select.Option>
                 <Select.Option value="depositfullMonth">Full month</Select.Option>
@@ -625,8 +667,35 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="minimumStay" label="Minimum Stay">
-              <InputNumber />
+            <Form.Item 
+              name="depositAmount"
+              label="Enter fixed amount"
+              rules={[{ required: true }]}
+            >
+              <InputNumber
+                min={0}
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item 
+              name="minimumStay"
+              label="Minimum Stay"
+              rules={[{ required: true }]}
+            >
+              <InputNumber
+                min={0}
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
+              />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -635,7 +704,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="chargeElectricityBill" label="Ho do you want to charge electricity bill?">
+            <Form.Item
+              name="electricityBillPayment"
+              label="How do you want to charge electricity bill?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="electricityIcluded">Included</Select.Option>
                 <Select.Option value="electricityIcludedLimit">Included(up to a limit)</Select.Option>
@@ -646,7 +719,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="chargeWaterBill" label="Ho do you want to charge water bill?">
+            <Form.Item 
+              name="waterBillPayment"
+              label="How do you want to charge water bill?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="waterIcluded">Included</Select.Option>
                 <Select.Option value="waterIcludedLimit">Included(up to a limit)</Select.Option>
@@ -657,7 +734,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="chargeGasBill" label="Ho do you want to charge gas bill?">
+            <Form.Item 
+              name="gasBillPayment" 
+              label="How do you want to charge gas bill?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="gasIcluded">Included</Select.Option>
                 <Select.Option value="gasIcludedLimit">Included(up to a limit)</Select.Option>
@@ -680,7 +761,11 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="specificGender" label="Do you prefer tenants have a specific gender">
+            <Form.Item 
+              name="gender"
+              label="Do you prefer tenants have a specific gender"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="genderMale">Male</Select.Option>
                 <Select.Option value="genderFemale">Female</Select.Option>
@@ -689,7 +774,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="maxAge" label="What is the maximum age of your preferred tenants?">
+            <Form.Item 
+              name="maxAgePreference"
+              label="What is the maximum age of your preferred tenants?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="less60">Less than 60</Select.Option>
                 <Select.Option value="less40">Less than 40</Select.Option>
@@ -698,7 +787,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="tenantsKind" label="What kind of  tenants would you prefer? ">
+            <Form.Item 
+              name="tenantTypePreference"
+              label="What kind of tenants would you prefer?"
+              rules={[{ required: true }]}
+            >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="tenantStudents">Students</Select.Option>
                 <Select.Option value="tenantProfessional">Working professionals</Select.Option>
@@ -707,56 +800,72 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="couplesAllowed" label="Are couples allowed to rent your property?">
+            <Form.Item 
+              name="couplesAllowed"
+              label="Are couples allowed to rent your property?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="couplesAllowedYes">Yes</Radio>
+                    <Radio value="yes">Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="couplesAllowedNo">No</Radio>
+                    <Radio value="no">No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="tenantsRegisterAddress" label="Can tenants register to your address?">
+            <Form.Item 
+              name="tenantsCanRegisterAddress"
+              label="Can tenants register to your address?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="tenantsRegisterAddressYes">Yes</Radio>
+                    <Radio value="yes">Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="tenantsRegisterAddressNo">No</Radio>
+                    <Radio value="no">No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="allowedPets" label="Are tenants allowed to have pets in your property?">
+            <Form.Item 
+              name="petsAllowed"
+              label="Are tenants allowed to have pets in your property?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="allowedYes">Yes</Radio>
+                    <Radio value="yes">Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="allowedNo">No</Radio>
+                    <Radio value="no">No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="allowedMusic" label="Can tenants play musical instrument in your property?">
+            <Form.Item 
+              name="musicalInstrumentsAllowed"
+              label="Can tenants play musical instrument in your property?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="allowedMusicYes">Yes</Radio>
+                    <Radio value="yes">Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="allowedMusicNo">No</Radio>
+                    <Radio value="no">No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -767,7 +876,7 @@ const Listings = () => {
               <Typography.Title level={3}>Documents From tenants</Typography.Title>
               <Typography.Paragraph>Select document what you need from the tenants to accept their booking requests. If you do not select any option now, you can still ask tenants for these documents later when booking is confirmed</Typography.Paragraph>
             </div>
-            <Form.Item name="selectDocument">
+            <Form.Item name="documents" rules={[{ required: true }]}>
               <Checkbox.Group>
                 <div className="select-doc-checkbox">
                   <Checkbox value="proofOfIdentity">Proof of identity</Checkbox>
@@ -797,11 +906,11 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
-            <Form.Item name="contractType" label="Contract type">
+            <Form.Item name="contractType" label="Contract type" rules={[{ required: true }]}>
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={8}>
-                    <Radio value="contractTypeDaily">
+                    <Radio value="daily">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Daily</div>
                         <div className="radio-card-content-text">In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.</div>
@@ -809,7 +918,7 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={8}>
-                    <Radio value="contractTypeFortnightly">
+                    <Radio value="fortnightly">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Fortnightly</div>
                         <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
@@ -817,7 +926,7 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={8}>
-                    <Radio value="contractTypeMonthly">
+                    <Radio value="monthly">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Monthly</div>
                         <div className="radio-card-content-text">The tenant will always pay the entire month's rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.</div>
@@ -829,7 +938,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="cancellationPolicy" label="Cancellation policy">
+            <Form.Item 
+              name="cancellationPolicy"
+              label="Cancellation policy"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
@@ -901,8 +1014,24 @@ const Listings = () => {
         ...form.getFieldsValue()
       }
     })
+    console.log('listingValues:: ', listingValues)
     setCurrent(current + 1);
     setNextDisabled(true)
+
+    // if(current === 0) {
+    //   setNextDisabled(true)
+    //   validateStepOne(listingValues)
+    // }
+
+    // if(current === 1) {
+    //   setNextDisabled(true)
+    //   validateStepTwo(listingValues)
+    // }
+
+    // if(current === 2) {
+    //   setNextDisabled(true)
+    //   validateStepThree(listingValues)
+    // }
   };
 
   function prev() {
@@ -937,7 +1066,54 @@ const Listings = () => {
 
   const validateStepThree = (values: any) => {
     const {media, bedType} = values;
-    if(bedType != null && bedType !== "") {
+    if(bedType != null && bedType !== ""
+      && media != null && media.length !== 0
+    ) {
+      setNextDisabled(false)
+    } else {
+      setNextDisabled(true)
+    }
+  }
+
+  const validateStepFour = (values: any) => {
+    const {monthlyRent, paymentMethod, depositType, depositAmount, minimumStay, electricityBillPayment, waterBillPayment, gasBillPayment} = values;
+    if(monthlyRent != null
+      && paymentMethod != null && paymentMethod !== ""
+      && depositType != null && depositType !== ""
+      && depositAmount != null
+      && minimumStay != null
+      && electricityBillPayment != null && electricityBillPayment !== ""
+      && waterBillPayment != null && waterBillPayment !== ""
+      && gasBillPayment != null && gasBillPayment !== ""
+    ) {
+      setNextDisabled(false)
+    } else {
+      setNextDisabled(true)
+    }
+  }
+
+  const validateStepFive = (values: any) => {
+    const {gender, maxAgePreference, tenantTypePreference , couplesAllowed, tenantsCanRegisterAddress, petsAllowed, musicalInstrumentsAllowed, documents } = values;
+    if(gender != null && gender !== ""
+      && maxAgePreference != null && maxAgePreference !== ""
+      && tenantTypePreference  != null && tenantTypePreference !== ""
+      && couplesAllowed != null && couplesAllowed !== ""
+      && tenantsCanRegisterAddress != null && tenantsCanRegisterAddress !== ""
+      && petsAllowed  != null && petsAllowed  !== ""
+      && musicalInstrumentsAllowed != null && musicalInstrumentsAllowed !== ""
+      && documents != null && documents !== ""
+    ) {
+      setNextDisabled(false)
+    } else {
+      setNextDisabled(true)
+    }
+  }
+
+  const validateStepSix = (values: any) => {
+    const {contractType, cancellationPolicy} = values;
+    if(contractType != null && contractType !== ""
+      && cancellationPolicy != null && cancellationPolicy !== ""
+    ) {
       setNextDisabled(false)
     } else {
       setNextDisabled(true)
@@ -945,22 +1121,23 @@ const Listings = () => {
   }
 
   const onValuesChange = (changedValues:any, allValues:any) => {
-    console.log('All Values::: ', allValues)
     if(current === 0) {
       validateStepOne(allValues)
-    }
-
-    if(current === 1) {
+    } else if(current === 1) {
       validateStepTwo(allValues)
-    }
-
-    if(current === 2) {
+    } else if(current === 2) {
       validateStepThree(allValues)
       if(allValues.media !=null && allValues.media.length != 0) {
         setUploadDevice(true)
       } else {
         setUploadDevice(false)
       }
+    } else if(current === 3) {
+      validateStepFour(allValues)
+    } else if(current === 4) {
+      validateStepFive(allValues)
+    } else if(current === 5) {
+      validateStepSix(allValues)
     }
   };
 
@@ -1011,14 +1188,12 @@ const Listings = () => {
       {/* MODAL: ADD LISTING 
       ***********************************************************************************/}
       <Modal
-        className="modal-add-listings"
+        wrapClassName="modal-add-listings"
         open={modalAddListingOpen}
         onCancel={closeModalAddListing}
-        closable={true}
+        closable={false}
         footer={null}
         width="100%"
-        mask={false}
-        maskClosable={false}
       >
         <Form
           requiredMark={false}
@@ -1026,8 +1201,6 @@ const Listings = () => {
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
-          // initialValues={{media: []}}
-          preserve={true}
           onValuesChange={onValuesChange}
           onFinish={submitAddListing}
         >
@@ -1050,13 +1223,13 @@ const Listings = () => {
           <div className="modal-add-listing-footer">
             <Space size={30}>
               {current < 1 &&
-                <Button className="button-tertiary" ghost onClick={closeModalAddListing}>Back</Button>
+                <Button className="button-tertiary" ghost onClick={() => closeModalAddListing()}>Back</Button>
               }
               {current > 0 &&
-                <Button className="button-tertiary" ghost onClick={prev}>Back</Button>
+                <Button className="button-tertiary" ghost onClick={() => prev()}>Back</Button>
               }
               {current < 6 &&
-                <Button disabled={nextDisabled} className="button-tertiary" onClick={next}>Next</Button>
+                <Button disabled={nextDisabled} className="button-tertiary" onClick={() => next()}>Next</Button>
               }
               {current === 6 &&
                 <Button htmlType="submit" className="button-tertiary">Publish</Button>

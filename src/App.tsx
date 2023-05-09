@@ -1,18 +1,21 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
 import { getRoutes } from "./routes";
 import "./App.scss";
 import constants, { ROUTES_CONSTANTS } from "./config/constants";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, notification } from "antd";
 import { themeState } from "./store";
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 import { currentUserState } from "./store/Signin";
+const Context = React.createContext({ name: 'Default' });
 
 function App() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const [api, contextHolder] = notification.useNotification();
+  const contextValue = useMemo(() => ({ name: 'Student Help Squad' }), []);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
@@ -36,15 +39,18 @@ function App() {
   -------------------------------------------------------------------------------------*/
   return (
     <>
-      <ConfigProvider theme={currentTheme}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          {accessToken
-            ? useRoutes(
-              getRoutes(currentUser.role).concat(getRoutes(constants.PUBLIC))
-            )
-            : useRoutes(getRoutes(constants.PUBLIC))}
-        </ErrorBoundary>
-      </ConfigProvider>
+      <Context.Provider value={contextValue}>
+        {contextHolder}
+        <ConfigProvider theme={currentTheme}>
+          <ErrorBoundary FallbackComponent={ErrorFallback}>
+            {accessToken
+              ? useRoutes(
+                getRoutes(currentUser.role).concat(getRoutes(constants.PUBLIC))
+              )
+              : useRoutes(getRoutes(constants.PUBLIC))}
+          </ErrorBoundary>
+        </ConfigProvider>
+      </Context.Provider>
     </>
   );
 }
