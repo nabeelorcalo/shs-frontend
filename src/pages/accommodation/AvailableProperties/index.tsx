@@ -38,12 +38,14 @@ const AvailableProperties = () => {
     setLoading(true)
     const result = await saveProperty({propertyId: id});
     setLoading(false)
-    if (result.error) {
-      showNotification("error", constants.NOTIFICATION_DETAILS.error);
-    } else {
-      showNotification("success", constants.NOTIFICATION_DETAILS.success);
-    }
+    // if (result.error) {
+    //   showNotification("error", constants.NOTIFICATION_DETAILS.error);
+    // } else {
+    //   showNotification("success", constants.NOTIFICATION_DETAILS.success);
+    // }
   }
+
+  
 
 
   /* EVENT FUNCTIONS
@@ -59,22 +61,25 @@ const AvailableProperties = () => {
       <Spin spinning={loading}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
+            let tags: any[] = [];
+            if(property.allBillsIncluded) tags.push('Utility Bils');
+            if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
+
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
                   coverPhoto={thumb1}
-                  discount={'30'}
-                  autualPrice={"1200"}
-                  withDiscountPrice={"840"}
+                  offer={property.offer?.monthlyDiscount}
+                  rent={property.monthlyRent}
                   propertyAvailableFor={"week"}
                   propertyType={property.propertyType}
-                  totalBeds={property.totalBedrooms}
-                  totalWashRoom={property.totalBathrooms}
-                  tags={['Utility Bills', 'Laundry', 'Meals']}
-                  location={property.addressOne}
-                  handleSaveClick={() => postSaveProperty(property.id)}
-                  handleDetailClick={() => handleDetailClick(property.id)}
-                  handleChatClick={() => navigate('/chat')}
+                  totalBedrooms={property.totalBedrooms}
+                  totalBathrooms={property.totalBathrooms}
+                  address={property.addressOne}
+                  tags={tags}
+                  onSave={() => postSaveProperty(property.id)}
+                  onDetail={() => handleDetailClick(property.id)}
+                  onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
             )
