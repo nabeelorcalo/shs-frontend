@@ -5,7 +5,7 @@ import './AccommodationCard.scss';
 interface Props {
     coverPhoto?: string;
     offer?: number;
-    rent?: number;
+    rent?: any;
     propertyAvailableFor?: string;
     propertyType?: string;
     totalBedrooms?: string;
