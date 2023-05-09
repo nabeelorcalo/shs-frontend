@@ -8,11 +8,14 @@ interface Props {
   open?: boolean;
   setOpen?: any;
   children?: ReactNode | ReactNode[];
+  selectedCandidate?:any,
   rest?: any;
 }
 
 const DetailDrawer = (props: Props) => {
-  const { open, setOpen, children, ...rest } = props;
+  const { open, setOpen, children,selectedCandidate, ...rest } = props;
+  console.log(selectedCandidate);
+  
   const width = DrawerWidth();
   return (
     <Drawer

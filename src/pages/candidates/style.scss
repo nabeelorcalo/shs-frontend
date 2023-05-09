@@ -58,7 +58,10 @@
   font-size: 16px;
   margin-top: 5px;
 }
-
+@mixin stage-style {
+  background-color: $dashboard-primary-bg-color;
+  color: $white-bg-color;
+}
 .candidate-table-wrapper {
   .stage-apply {
     color: $text-secondary-body-color;
@@ -78,8 +81,40 @@
 
     &.applied {
       &:nth-child(1) {
-        background-color: $dashboard-primary-bg-color;
-        color: $white-bg-color;
+        @include stage-style();
+      }
+    }
+    &.interviewed {
+      &:nth-child(-n + 2) {
+        @include stage-style();
+      }
+    }
+    &.recommended {
+      &:nth-child(-n + 3) {
+        @include stage-style();
+      }
+    }
+    &.offerLetter {
+      &:nth-child(-n + 4) {
+        @include stage-style();
+      }
+    }
+    &.contract {
+      &:nth-child(-n + 5) {
+        @include stage-style();
+      }
+    }
+    &.hired {
+      &:nth-child(-n + 6) {
+        @include stage-style();
+      }
+    }
+    &.rejected {
+      &:nth-child(-n + 6) {
+        @include stage-style();
+      }
+      &:last-child() {
+        background-color: $secondary-bg-color;
       }
     }
   }
@@ -178,32 +213,6 @@
   .ant-dropdown-trigger:nth-child(2) {
     width: 155px;
     height: 40px;
-  }
-}
-
-.stage-apply {
-  color: $text-secondary-body-color;
-  font-size: 13px;
-  height: 25px;
-  align-items: center;
-  background: $text-input-bg-color;
-  border-radius: 1px;
-  padding: 0px 20px;
-  margin: 0 1px;
-
-  &:first-child {
-    border-radius: 10px 1px 1px 10px;
-  }
-
-  &:last-child {
-    border-radius: 1px 10px 10px 1px;
-  }
-
-  &.applied {
-    &:nth-child(1) {
-      background-color: $dashboard-primary-bg-color;
-      color: $white-bg-color;
-    }
   }
 }
 
