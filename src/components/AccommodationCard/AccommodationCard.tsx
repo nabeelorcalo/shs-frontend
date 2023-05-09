@@ -53,7 +53,7 @@ export const AccommodationCard = (props: Props) => {
 						</span>
 						<span className='discount'>
 							<span className='bold text-2xl font-semibold mr-1'>
-								{offer ? Math.round(rent - ((offer / 100) * rent )) : `£${rent}`}
+								{offer ? Math.round(rent - ((offer / 100) * rent)) : `£${rent}`}
 							</span>
 							<span className='week'>/{propertyAvailableFor}</span>
 						</span>

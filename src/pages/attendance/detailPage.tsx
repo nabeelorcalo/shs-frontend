@@ -165,48 +165,51 @@ const Detail = () => {
 
   return (
     <div className="company-admin-detail-container">
-      <PageHeader
-        title={
-          <div className="font-medium">
-            {
-              role === constants.INTERN ?
-                <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
-                :
-                <Breadcrumb breadCrumbData={attendanceDetailBreadCrumb} />
-            }
-          </div>
-        }
-        children={
-          <div className="flex flex-row gap-4">
-            <DropDown
-              name="time-frame"
-              options={timeFrameOptions}
-              setValue={(e: string) => setState((prevState) => ({
-                ...prevState,
-                timeFrameVal: e,
-              }))}
-              value={state.timeFrameVal}
-              showDatePickerOnVal="Date Range"
-              requireRangePicker
-              placement="bottomRight"
-            />
 
-            <IconButton
-              size="large"
-              className="icon-btn download-btn"
-              icon={<DownlaodFileIcon />}
-              onClick={() => {
-                action.pdf('historyDetail', tableColumns, tableData);
-                Notifications({ title: "Success", description: "Download Done", type: 'success' })
-              }}
-            />
-          </div>
-        }
-        actions
-        bordered
-      />
-      <Row gutter={[20, 20]}>
-        <Col xxl={7} xl={10} md={24} xs={24} className="attendance-content">
+      <Row gutter={[20, 30]}>
+        <Col xs={24}>
+          <PageHeader
+            title={
+              <div className="font-medium">
+                {
+                  role === constants.INTERN ?
+                    <h3 className="primary-color text-2xl font-semibold">Attendance</h3>
+                    :
+                    <Breadcrumb breadCrumbData={attendanceDetailBreadCrumb} />
+                }
+              </div>
+            }
+            children={
+              <div className="flex flex-row gap-4">
+                <DropDown
+                  name="time-frame"
+                  options={timeFrameOptions}
+                  setValue={(e: string) => setState((prevState) => ({
+                    ...prevState,
+                    timeFrameVal: e,
+                  }))}
+                  value={state.timeFrameVal}
+                  showDatePickerOnVal="Date Range"
+                  requireRangePicker
+                  placement="bottomRight"
+                />
+
+                <IconButton
+                  size="large"
+                  className="icon-btn download-btn"
+                  icon={<DownlaodFileIcon />}
+                  onClick={() => {
+                    action.pdf('historyDetail', tableColumns, tableData);
+                    Notifications({ title: "Success", description: "Download Done", type: 'success' })
+                  }}
+                />
+              </div>
+            }
+            actions
+          // bordered
+          />
+        </Col>
+        <Col xl={5}  md={24} xs={24} className="attendance-content">
           <div className="left-container">
             {role === constants.INTERN ? (
               <TimeTracking vartical />
@@ -222,7 +225,7 @@ const Detail = () => {
             )}
           </div>
         </Col>
-        <Col xxl={17} xl={14} md={24} xs={24}>
+        <Col xl={19}  md={24} xs={24}>
           <Row gutter={[10, 0]}>
             <Col xxl={24} md={24} xs={24}>
               <BoxWrapper className="flex mb-6 main-cards">
@@ -244,7 +247,7 @@ const Detail = () => {
             <Col xxl={24} md={24}>
               <BoxWrapper>
                 <GlobalTable
-                className="attendance-detail-table"
+                  className="attendance-detail-table"
                   pagination={false}
                   columns={tableColumns}
                   tableData={tableData}

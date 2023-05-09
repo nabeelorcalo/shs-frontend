@@ -17,16 +17,16 @@ const Intern = () => {
 
   return (
     <div className="time-sheet-intern">
-
-      <PageHeader title='TimeSheet' bordered actions>
-        <Button
-          className="view-history text-base font-semibold"
-          onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}
-        >View History
-        </Button>
-      </PageHeader>
-
       <Row gutter={[25, 25]}>
+        <Col xs={24}>
+          <PageHeader title='TimeSheet' actions>
+            <Button
+              className="view-history text-base font-semibold"
+              onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}
+            >View History
+            </Button>
+          </PageHeader>
+        </Col>
         <Col xl={16} xs={24}>
           <BoxWrapper boxShadow={boxShadow} className="add-new-wrapper flex items-center justify-between flex-wrap gap-4">
             <div className="add-new-task flex items-center gap-3 cursor-pointer">
