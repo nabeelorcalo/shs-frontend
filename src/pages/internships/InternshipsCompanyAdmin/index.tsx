@@ -16,7 +16,12 @@ const InternshipsCompanyAdmin = () => {
     location: "",
     department: ""
   })
+
   const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook()
+  useEffect(() => {
+    getAllInternshipsData()
+  }, [])
+  
   const handleDrawer = () => {
     setState((prevState) => ({
       ...prevState,
@@ -44,10 +49,6 @@ const InternshipsCompanyAdmin = () => {
       department: value
     }))
   }
-
-  useEffect(() => {
-    getAllInternshipsData()
-  }, [])
 
   return (
     <>

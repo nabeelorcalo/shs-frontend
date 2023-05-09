@@ -68,14 +68,13 @@ const useCustomHook = () => {
 
   //search internship
   const changeHandler = async (val: any) => {
-    if (val) {
-      const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, search: val });
-      setInternshipData(data)
-    }
-    else {
-      const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10 });
-      setInternshipData(data)
-    }
+    const { data } = await api.get(
+      GET_LIST_INTERNSHIP,
+      val
+        ? { companyId: 1, page: 1, limit: 10, search: val }
+        : { companyId: 1, page: 1, limit: 10 }
+    );
+    setInternshipData(data);
   };
   const debouncedResults = useMemo(() => {
     return debounce(changeHandler, 500);
