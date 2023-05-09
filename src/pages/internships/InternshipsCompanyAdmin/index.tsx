@@ -326,7 +326,6 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
-
   const updateStatus = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -334,7 +333,6 @@ const InternshipsCompanyAdmin = () => {
       status: value
     }))
   }
-
   const updateLocation = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -342,11 +340,6 @@ const InternshipsCompanyAdmin = () => {
       location: value
     }))
   }
-
-  useEffect(() => {
-    getAllInternshipsData()
-  }, [])
-
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -354,6 +347,10 @@ const InternshipsCompanyAdmin = () => {
       department: value
     }))
   }
+
+  useEffect(() => {
+    getAllInternshipsData()
+  }, [])
 
   return (
     <>
@@ -364,7 +361,7 @@ const InternshipsCompanyAdmin = () => {
             <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
-            <FiltersButton label="Filters"  onClick={handleDrawer} />
+            <FiltersButton label="Filters" onClick={handleDrawer} />
             <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <React.Fragment key=".0">
                 <div className="flex flex-col gap-12">

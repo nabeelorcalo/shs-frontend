@@ -188,19 +188,20 @@ const ManageVault = (props: any) => {
         </Col>
       </Row>
       <Modal
+        className="folders-modal"
         open={open}
         centered
-        closeIcon={ <CloseCircleFilled className="text-[#A3AED0]" onClick={() => setISOpen(false)} />}
+        closeIcon={ <CloseCircleFilled className="text-success-placeholder-color" onClick={() => setISOpen(false)} />}
         footer={[
           <Button
-            className="change-mind-warning-btn teriary-color hover:teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="cancel-btn"
             onClick={() => setISOpen(false)}
             key="Cancel">
             Cancel
           </Button>,
 
           <Button
-            className="edit-request-btn teriary-bg-color white-color pr-4 border-1 border-solid border-[#4a9d77] hover:border-[#4a9d77]"
+            className="submit-btn"
             key="submit">
             Submit
           </Button>,
@@ -218,6 +219,7 @@ const ManageVault = (props: any) => {
       </Modal>
 
       <Modal
+        className="folders-modal"
         centered
         title="Upoad File"
         open={upLoadFile}
@@ -226,10 +228,10 @@ const ManageVault = (props: any) => {
         }}
         width={600}
         maskClosable={false}
-        closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
+        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
         footer={[
           <Button
-            className="change-mind-warning-btn teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="cancel-btn"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
@@ -238,7 +240,7 @@ const ManageVault = (props: any) => {
             Cancel
           </Button>,
           <Button
-            className="edit-request-btn white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="submit-btn"
             onClick={() => {
               setUpLoadFile(!upLoadFile);
             }}
@@ -252,6 +254,7 @@ const ManageVault = (props: any) => {
       </Modal>
 
       <Modal
+        className="folders-modal"
         centered
         title="Upoad Folder"
         open={upLoadFolder}
@@ -259,10 +262,10 @@ const ManageVault = (props: any) => {
           setUpLoadFolder(!upLoadFolder);
         }}
         maskClosable={false}
-        closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
+        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
         footer={[
           <Button
-            className="change-mind-warning-btn teriary-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="cancel-btn"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
@@ -272,7 +275,7 @@ const ManageVault = (props: any) => {
           </Button>,
 
           <Button
-            className="edit-request-btn white-color teriary-bg-color pr-4 border-1 border-solid border-[#4a9d77]"
+            className="submit-btn"
             onClick={() => {
               setUpLoadFolder(!upLoadFolder);
             }}
