@@ -53,7 +53,7 @@ const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { getProperty } = usePropertyHook();
-  const property = useRecoilValue(propertyState);
+  const property:any = useRecoilValue(propertyState);
   const screens = useBreakpoint();
   const navigate = useNavigate();
   const {state} = useLocation();

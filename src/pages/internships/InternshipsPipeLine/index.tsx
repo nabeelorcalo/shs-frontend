@@ -1,18 +1,14 @@
-import {
-  SearchBar,
-  PageHeader,
-  InternshipPipeLineCard,
-  Breadcrumb,
-  DropDown
-} from "../../../components";
+import { useState } from "react";
+import { SearchBar,PageHeader,InternshipPipeLineCard,Breadcrumb,DropDown} from "../../../components";
+// import { useNavigate } from 'react-router-dom';
+// import type { MenuProps } from 'antd';
 import "../style.scss";
 import { useNavigate } from 'react-router-dom';
-import type { MenuProps } from 'antd';
+// import type { MenuProps } from 'antd';
 import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships } from '../../../assets/images'
 import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
-import { useState } from "react";
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
+// const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
 const statusArray = [
   {
@@ -177,13 +173,14 @@ const tempArray = [
 ];
 
 const InternshipPipeLine = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  // const navigate = useNavigate()
   const [state, setState] = useState({
-    status: 'Publshed'
+    status: 'Published'
   })
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+  // const handleChange = (value: string) => {
+  //   console.log(`selected ${value}`);
+  // };
 
   const changeStatus = (event: any) => {
     const value = event.target.innerHTML
@@ -194,10 +191,7 @@ const InternshipPipeLine = () => {
   }
   return (
     <>
-      <PageHeader
-        bordered
-        title={<Breadcrumb breadCrumbData={tempArray} />}
-      />
+      <PageHeader  bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="flex flex-row ">
@@ -212,10 +206,7 @@ const InternshipPipeLine = () => {
           <div className="flex flex-row gap-4">
             <DropDown
               value={state.status}
-              options={[
-                "Published",
-                "Closed"
-              ]}
+              options={[ "Published","Closed" ]}
               setValue={() => { changeStatus(event) }}
             />
           </div>
