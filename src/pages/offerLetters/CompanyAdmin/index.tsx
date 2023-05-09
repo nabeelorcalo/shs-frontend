@@ -21,45 +21,6 @@ import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 
-// const tableData = [
-//   {
-//     No: "01",
-//     Title: "Stenna Freddi",
-//     address: "118-127 Park Ln, London W1K 7AF, UK",
-//     initiatedOn: "22/09/2022 - 22/09/2022",
-//     signedOn: "£ 200",
-//     contracts: false,
-//     status: "pending",
-//   },
-//   {
-//     No: "02",
-//     Title: "Keith Thompson",
-//     address: "118-127 Park Ln, London W1K 7AF, UK",
-//     initiatedOn: "22/09/2022 - 22/09/2022",
-//     signedOn: "£ 170",
-//     contracts: true,
-//     status: "Signed",
-//   },
-//   {
-//     No: "03",
-//     Title: "John Emple",
-//     address: "118-127 Park Ln, London W1K 7AF, UK",
-//     initiatedOn: "22/09/2022 - 22/09/2022",
-//     signedOn: "£ 178",
-//     contracts: false,
-//     status: "rejected",
-//   },
-//   {
-//     No: "04",
-//     Title: "John Emple",
-//     address: "118-127 Park Ln, London W1K 7AF, UK",
-//     initiatedOn: "22/09/2022 - 22/09/2022",
-//     signedOn: "£ 178",
-//     contracts: false,
-//     status: "Changes requested",
-//   },
-// ];
-
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -84,18 +45,19 @@ const ContractsCard = [
 ]
 
 const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
-const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
+const statusDropdownData = ['All','New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
-  const { getData, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  const { getContractList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
 
   useEffect(() => {
-    getData()
+    getContractList(valueStatus)
   }, [])
+
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
@@ -255,15 +217,19 @@ const CompanyAdmin = () => {
           {item.status === "REJECTED"
             ? "REJECTED"
             : item.status === "PENDING"
-              ? "PENDING"
-              : item.status === "SIGNED"
-                ? "SIGNED" : "CHANGEREQUEST"}
+              ? "PENDING" : item.status === "NEW"
+                ? "NEW"
+                : item.status === "SIGNED"
+                  ? "SIGNED" : "CHANGEREQUEST"}
         </div>,
         actions: renderDropdown(item)
       }
     )
   })
-
+  const handleValueStatus = (val: any) => {
+    getContractList(val);
+    setValueStatus(val)
+  }
   return (
     <div className="offer-letter-company-admin">
       <Alert
@@ -273,7 +239,7 @@ const CompanyAdmin = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteContractHandler(showDelete?.id)}
+        okBtnFunc={() => deleteOfferLetterHandler(showDelete?.id)}
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
@@ -300,7 +266,7 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { searchHandler(e) }} />
+          <SearchBar handleChange={(e: any) => { searchHandler(e , valueStatus) }} />
 
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
@@ -314,7 +280,7 @@ const CompanyAdmin = () => {
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
             value={valueStatus}
-            setValue={setValueStatus}
+            setValue={(e: any) => handleValueStatus(e)}
           />
         </Col>
       </Row>

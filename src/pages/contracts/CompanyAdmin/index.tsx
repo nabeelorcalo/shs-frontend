@@ -50,8 +50,8 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
-const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
+const timeFrameDropdownData = ['All','This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
+const statusDropdownData = ['All','New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -79,10 +79,10 @@ const CompanyAdmin = () => {
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("");
-  const { getData, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getData()
+    getContractList(statusValueHandle)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -153,6 +153,10 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  const statusValueHandle = (val: any) => {
+    setValueStatus(val);
+    getContractList(val)
+  }
   const tableColumns = [
     {
       title: "No",
@@ -245,9 +249,10 @@ const CompanyAdmin = () => {
           {item.status === "REJECTED"
             ? "REJECTED"
             : item.status === "PENDING"
-              ? "PENDING"
-              : item.status === "SIGNED"
-                ? "SIGNED" : "CHANGEREQUEST"}
+              ? "PENDING" : item.status === "NEW"
+                ? "NEW"
+                : item.status === "SIGNED"
+                  ? "SIGNED" : "CHANGEREQUEST"}
         </div>,
         actions: renderDropdown(item)
       }
@@ -289,7 +294,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { searchHandler(e) }} />
+          <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 
@@ -302,7 +307,7 @@ const CompanyAdmin = () => {
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
             value={valueStatus}
-            setValue={setValueStatus}
+            setValue={(e: any) => statusValueHandle(e)}
           />
         </Col>
         <Col xs={24}>

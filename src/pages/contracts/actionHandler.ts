@@ -8,24 +8,47 @@ import api from "../../api";
 const useCustomHook = () => {
   const { GET_CONTRACT_LIST, DEL_CONTRACT } = endpoints;
   const [contractList, setContractList] = useRecoilState(contractsListData);
-  //get contracts
-  const getData = async () => {
-    const { data } = await api.get(GET_CONTRACT_LIST, { page: 1, limit: 10,type:'CONTRACT', currentDate: '2023-05-07', filterType: 'THIS_MONTH' });
+
+  //get offer letter
+  const getContractList = async (val: any) => {
+    const params = {
+      page: 1,
+      limit: 10,
+      status: val,
+      type: 'OFFER_LETTER',
+      currentDate: '2023-05-07',
+      filterType: 'THIS_MONTH'
+    }
+    const { data } = await api.get(GET_CONTRACT_LIST, params);
     setContractList(data)
   };
-  //search contracts
-  const searchHandler = async (val: any) => {
-    const { data } = await api.get(GET_CONTRACT_LIST, { page: 1, limit: 10, currentDate: '2023-05-07', filterType: 'THIS_MONTH', search: val });
+
+  //search offer letter
+  const searchHandler = async (val: any, status: any) => {
+    const params = {
+      page: 1,
+      limit: 10,
+      status: status,
+      type: 'OFFER_LETTER',
+      currentDate: '2023-05-07',
+      filterType: 'THIS_MONTH',
+      search: val
+    }
+    const { data } = await api.get(GET_CONTRACT_LIST, params);
     setContractList(data);
   }
+
   //delete contract
   const deleteContractHandler = async (val: any) => {
-    await api.delete(`${DEL_CONTRACT}/${val}`);
-    getData();
+    const { data } = await api.delete(DEL_CONTRACT, `${DEL_CONTRACT}/${val}`);
+    getContractList(val);
+    console.log("delete data are ", data);
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
+    // if (message === 'Success') {
+    // }
   }
   return {
-    getData, contractList, searchHandler, deleteContractHandler
+    getContractList, contractList, searchHandler, deleteContractHandler
   };
 };
 
