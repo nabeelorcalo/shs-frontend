@@ -1014,6 +1014,7 @@ const Listings = () => {
         ...form.getFieldsValue()
       }
     })
+    console.log('listingValues:: ', listingValues)
     setCurrent(current + 1);
     setNextDisabled(true);
     console.log('listingValues:: ', listingValues)

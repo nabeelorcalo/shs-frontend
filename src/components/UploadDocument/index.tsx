@@ -62,6 +62,8 @@ const UploadDocument = (props: any) => {
               files?.map((item: any, idx: any) => {
                 return (
                   <SelectedUploadCard
+                    files={files}
+                    setFiles={setFiles}
                     key={idx}
                     filename={item.name}
                     filesize={Math.round(item.size / 1024)}

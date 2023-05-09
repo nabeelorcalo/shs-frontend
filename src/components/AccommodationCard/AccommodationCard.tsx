@@ -33,7 +33,6 @@ export const AccommodationCard = (props: Props) => {
 		onChat,
 	} = props;
 
-	// const getOff = (rentt: any, offers: any) => Math.round(rentt - ((offers / 100) * rentt))
 
 	return (
 		<Card className='relative accommodation-card-wrapper'
