@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SearchBar,PageHeader,InternshipPipeLineCard,Breadcrumb,DropDown} from "../../../components";
-// import { useNavigate } from 'react-router-dom';
-// import type { MenuProps } from 'antd';
-import "../style.scss";
 import { useNavigate } from 'react-router-dom';
-// import type { MenuProps } from 'antd';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships } from '../../../assets/images'
+import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships,ClosedStatus,SuccessStatus } from '../../../assets/images';
+
 import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
+import useCustomHook from "../actionHandler";
+import "../style.scss";
 
 // const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
@@ -174,10 +173,15 @@ const tempArray = [
 
 const InternshipPipeLine = () => {
   const navigate = useNavigate();
-  // const navigate = useNavigate()
   const [state, setState] = useState({
     status: 'Published'
   })
+  const {getInternshipDetails,internshipDetails} : any = useCustomHook()
+  useEffect(() => {
+    getInternshipDetails()
+  }, [])
+  console.log(internshipDetails);
+  
   // const handleChange = (value: string) => {
   //   console.log(`selected ${value}`);
   // };
@@ -195,7 +199,7 @@ const InternshipPipeLine = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="flex flex-row ">
-            <h3>UI/UX Designer</h3>
+            <h3>{internshipDetails.title}</h3>
             <span
               className='pl-4 cursor-pointer'
               onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP + '?id=1'); }}
@@ -219,11 +223,11 @@ const InternshipPipeLine = () => {
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <JobTimeIcon />
-              <p>Full Time</p>
+              <p>{internshipDetails.internType}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <LocationIconCm />
-              <p>London, United Kingdom</p>
+              <p>{internshipDetails.locationType}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <PostedByIcon />

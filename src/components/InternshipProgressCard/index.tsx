@@ -14,7 +14,7 @@ export const InternshipProgressCard = (props: any) => {
   const { id, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
   const [decline, setDecline] = useState(false)
   const [deleteInternship, setDeleteInternship] = useState(false)
-  const { deleteInternshipData } = useCustomHook();
+  const { deleteInternshipData,getDublicateInternship } = useCustomHook();
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
@@ -25,9 +25,12 @@ export const InternshipProgressCard = (props: any) => {
     draft:'DRAFT',
   }
 
-  const handelDelete = (id: any) => {
+  const handleDelete = (id: any) => {
     deleteInternshipData(id);
     setDeleteInternship(false)
+  }
+  const handleDublicate=(id:any)=>{
+    getDublicateInternship(id)
   }
 
   const PopOver = () => {
@@ -63,7 +66,7 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft ? {
         key: '3',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate('pipeline') }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate('pipeline',{ state: id }) }}>
             Pipeline
           </a>
         ),
@@ -103,7 +106,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '8',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={()=>{handleDublicate(id)}}>
             Duplicate
           </a>
         ),
@@ -223,7 +226,7 @@ export const InternshipProgressCard = (props: any) => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
-              onClick={() => handelDelete(id)}
+              onClick={() => handleDelete(id)}
             >
               Delete
             </Button>

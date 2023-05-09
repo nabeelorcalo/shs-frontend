@@ -9,13 +9,13 @@ import useCustomHook from '../actionHandler'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [state, setState] = useState({
     showDrawer: false,
     status: "",
     location: "",
     department: ""
-  })
+  });
 
   const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
   
@@ -156,7 +156,6 @@ const InternshipsCompanyAdmin = () => {
               )
             }):<NoDataFound /> 
           }
-
         </div>
       </div>
     </>

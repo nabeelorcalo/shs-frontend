@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { internshipDataState, internshipDetailsState } from '../../store';
+import { internshipDataState, internshipDetailsState, dublicateInternshipState } from '../../store';
 import { useLocation } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -10,16 +10,18 @@ import { Notifications } from "../../components";
 const useCustomHook = () => {
   const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
   const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
-  const { GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS, DEL_INTERNSHIP, POST_NEW_INTERNSHIP } = apiEndpints
+  // const [dublicateInternship, setDublicateInternship] = useRecoilState(dublicateInternshipState);
+  const { GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
+    DEL_INTERNSHIP, POST_NEW_INTERNSHIP, DUBLICATE_INTERNSHIP } = apiEndpints
   const { state } = useLocation();
 
   useEffect(() => {
-      debouncedResults.cancel();
+    debouncedResults.cancel();
   });
   //get all internship data
   const getAllInternshipsData = async () => {
     const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10 });
-    setInternshipData(data)
+    setInternshipData(data);
   };
   //post new Internship
   const postNewInternshipsData = async (values: any) => {
@@ -51,6 +53,14 @@ const useCustomHook = () => {
     setInternshipData(data)
     Notifications({ title: "Success", description: "Internship Added", type: "success" })
   };
+
+  //dublicate internship
+  const getDublicateInternship = async (val: any) => {
+    const { data } = await api.post(`${DUBLICATE_INTERNSHIP}?id=${val}`);
+    console.log("dublicated intership is", val);
+    setInternshipData(data)
+    // Notifications({ title: "Success", description: "Internship Dublicated", type: "success" })
+  }
 
   const getInternshipDetails = async () => {
     const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state });
@@ -85,7 +95,8 @@ const useCustomHook = () => {
     getInternshipDetails,
     deleteInternshipData,
     changeHandler,
-    postNewInternshipsData
+    postNewInternshipsData,
+    getDublicateInternship
   };
 };
 
