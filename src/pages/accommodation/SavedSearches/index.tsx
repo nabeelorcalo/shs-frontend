@@ -10,7 +10,6 @@ import useSavedPropertiesHook from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
-
 const SavedSearches = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/

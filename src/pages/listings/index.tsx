@@ -721,7 +721,7 @@ const Listings = () => {
           <Col xs={24}>
             <Form.Item 
               name="waterBillPayment"
-              label="Ho do you want to charge water bill?"
+              label="How do you want to charge water bill?"
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
@@ -736,7 +736,7 @@ const Listings = () => {
           <Col xs={24}>
             <Form.Item 
               name="gasBillPayment" 
-              label="Ho do you want to charge gas bill?"
+              label="How do you want to charge gas bill?"
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
@@ -1136,7 +1136,7 @@ const Listings = () => {
       validateStepFour(allValues)
     } else if(current === 4) {
       validateStepFive(allValues)
-    }else if(current === 5) {
+    } else if(current === 5) {
       validateStepSix(allValues)
     }
   };
@@ -1201,8 +1201,6 @@ const Listings = () => {
           className="modal-add-listing-content"
           layout="vertical"
           name="addListing"
-          // initialValues={{media: []}}
-          preserve={true}
           onValuesChange={onValuesChange}
           onFinish={submitAddListing}
         >

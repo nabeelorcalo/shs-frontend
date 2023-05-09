@@ -7,6 +7,7 @@ import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import { useRecoilValue} from "recoil";
 import { rentedPropertiesState } from "../../../store";
 import useRentedPropertiesHook from "./actionHandler";
+import {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
 const RentedProperties = () => {
@@ -64,7 +65,7 @@ const RentedProperties = () => {
                   tags={tags}
                   onSave={() => console.log('handle clik')}
                   onDetail={() => handleDetailClick(item.property.id)}
-                  onChat={() => navigate('/chat')}
+                  onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
             )

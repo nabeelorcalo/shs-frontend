@@ -130,6 +130,7 @@ const ListingUpdate = () => {
 
   useEffect(() => {
     getListing(listingId, setLoading)
+    console.log("UseEffect: ", singleListing);
   }, [tabKey])
 
 
@@ -217,6 +218,7 @@ const ListingUpdate = () => {
                   <div className="tabs-pane-card-body">
                     <Form
                       form={form}
+                      requiredMark={false}
                       layout="vertical"
                       name="updateLocation"
                       initialValues={singleListing}
@@ -227,7 +229,7 @@ const ListingUpdate = () => {
                     >
                       <Row gutter={30}>
                         <Col xs={24} md={24}>
-                          <Form.Item name="addressOne" label="Address">
+                          <Form.Item name="addressOne" label="Address" rules={[{ required: true }]}>
                             <Input placeholder="Placeholder" />
                           </Form.Item>
                         </Col>
@@ -237,12 +239,12 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12}>
-                          <Form.Item name="postCode" label="Postcode">
+                          <Form.Item name="postCode" label="Postcode" rules={[{ required: true }]}>
                             <InputNumber placeholder="Placeholder" />
                           </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24}>
-                          <Form.Item name="isFurnished" label="Is it furnished?">
+                          <Form.Item name="isFurnished" label="Is it furnished?" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30,20]}>
                                 <Col xs={24} md={24} lg={12} xl={12}>
@@ -271,7 +273,7 @@ const ListingUpdate = () => {
               key="propertyDetails"
               tab={
                 <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconPropertyDetail /> Property Details</div>
+                  <div className="listing-edit-nav-title"><IconPropertyDetail />Property Details</div>
                   <Typography.Paragraph>
                   Describe the property details, such as what type of property you want to rent out.
                   </Typography.Paragraph>
@@ -288,6 +290,7 @@ const ListingUpdate = () => {
                   <div className="tabs-pane-card-body">
                     <Form
                       form={form}
+                      requiredMark={false}
                       layout="vertical"
                       name="updatePropertyDetails"
                       initialValues={singleListing}
@@ -299,7 +302,7 @@ const ListingUpdate = () => {
                     >
                       <Row gutter={30}>
                         <Col xs={24}>
-                          <Form.Item name="propertyType" label="How will you rent your property?">
+                          <Form.Item name="propertyType" label="How will you rent your property?" rules={[{ required: true }]}>
                             <Radio.Group>
                               <Row gutter={[30, 30]}>
                                 <Col xs={24}>
@@ -315,33 +318,31 @@ const ListingUpdate = () => {
                             </Radio.Group>
                           </Form.Item>
                         </Col>
-                        {initValues.propertyType === "entireProperty" &&
-                        <>
+                        {singleListing?.propertyType === "Entire Property" &&
                         <Col xs={24}>
                           <Row gutter={[30,20]}>
                             <Col xs={24} md={24} lg={12} xl={8}>
                               <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                                <InputNumber min={1} max={10} />
+                                <InputNumber />
                               </Form.Item>
                             </Col>
                             <Col xs={24} md={24} lg={12} xl={8}>
                               <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                                <InputNumber min={1} max={10} />
+                                <InputNumber />
                               </Form.Item>
                               
                             </Col>
                             <Col xs={24} md={24} lg={24} xl={8}>
                               <Form.Item name="totalBathrooms" label="Bathrooms">
-                                <InputNumber min={1} max={10} />
+                                <InputNumber />
                               </Form.Item>
                             </Col>
                           </Row>
                         </Col>
-                        </>
                         }
                         
                         <Col xs={24}>
-                          <Form.Item name="hasAirConditioning" label="Does it have air conditioning?">
+                          <Form.Item name="hasAirConditioning" label="Does it have air conditioning?" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Not available">Not available</Select.Option>
                               <Select.Option value="Central">Central</Select.Option>
@@ -350,7 +351,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="hasHeating" label="Heating">
+                          <Form.Item name="hasHeating" label="Heating" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Not available">Not available</Select.Option>
                               <Select.Option value="Central Property">Central Property</Select.Option>
@@ -359,7 +360,7 @@ const ListingUpdate = () => {
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="hasWaterHeating" label="Does it have heated water system?">
+                          <Form.Item name="hasWaterHeating" label="Does it have heated water system?" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="No">No</Select.Option>
                               <Select.Option value="Natural gas">Natural gas</Select.Option>
