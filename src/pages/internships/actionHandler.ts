@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { internshipDataState, internshipDetailsState, dublicateInternshipState } from '../../store';
+import { internshipDataState, internshipDetailsState } from '../../store';
 import { useLocation } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -19,8 +19,8 @@ const useCustomHook = () => {
     debouncedResults.cancel();
   });
   //get all internship data
-  const getAllInternshipsData = async () => {
-    const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10 });
+  const getAllInternshipsData = async (event: any) => {
+    const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, status: event? event:null });
     setInternshipData(data);
   };
   //post new Internship
@@ -28,7 +28,7 @@ const useCustomHook = () => {
     const {
       title, department, description, responsibilities,
       requirements, typeofwork, internshiptype, frequency,
-      amount, natureofwork, location, positions, datePicker, duration } = values
+      amount, natureofwork, positions, datePicker, duration } = values
     const internshipData = {
       "companyId": 1,
       "title": title,
@@ -70,7 +70,7 @@ const useCustomHook = () => {
   //delete internship
   const deleteInternshipData = async (val: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${val}`);
-    getAllInternshipsData()
+    getAllInternshipsData
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
