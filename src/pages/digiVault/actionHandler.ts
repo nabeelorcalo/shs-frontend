@@ -2,7 +2,6 @@ import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 import { DigiVaultPasswordSate, DigiVaultState } from "../../store";
 import api from "../../api";
-// import constants from "../../config/constants";
 import { useRecoilState } from "recoil";
 import endpoints from "../../config/apiEndpoints";
 
@@ -14,7 +13,7 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async () => {
+  const getDigiVaultDashboard = async () => {
     const { data } = await api.get(STUDENT_DIGIVAULT);
     setStudentVault(data?.response)
   };
@@ -24,7 +23,7 @@ const useCustomHook = () => {
   };
   
   return {
-    getData,
+    getDigiVaultDashboard,
     studentVault,
     PostDigivalutData
   };

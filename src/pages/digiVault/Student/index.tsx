@@ -112,9 +112,10 @@ const DigiVaultStudent = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [newPass, setNewPass] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const { getData, studentVault }: any = useCustomHook();
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+
   useEffect(() => {
-    getData()
+    getDigiVaultDashboard()
   }, [])
   const studentStorage: any = studentVault?.storage;
 
