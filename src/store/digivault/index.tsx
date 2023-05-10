@@ -4,7 +4,7 @@ export const DigiVaultState=atom({
     key:"DigiVaultState",
     default:[]
 })
-export const DigiVaultPasswordSate=atom({
-    key:"DigiVaultPasswordSate",
+export const DigiVaultPasswordState=atom({
+    key:"DigiVaultPasswordState",
     default:[]
 })

@@ -113,11 +113,11 @@ const DigiVaultStudent = () => {
   const [newPass, setNewPass] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
     getDigiVaultDashboard()
   }, [])
-  const studentStorage: any = studentVault?.storage;
 
   const menu1 = (
     <Menu>

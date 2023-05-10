@@ -1,6 +1,6 @@
 import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-import { DigiVaultPasswordSate, DigiVaultState } from "../../store";
+import { DigiVaultPasswordState, DigiVaultState } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
 import endpoints from "../../config/apiEndpoints";
@@ -9,7 +9,7 @@ import endpoints from "../../config/apiEndpoints";
 const useCustomHook = () => {
   const { STUDENT_DIGIVAULT, POST_DIGIVAULT } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
-  const [newPassword, setNewPassword] = useRecoilState(DigiVaultPasswordSate);
+  const [newPassword, setNewPassword] = useRecoilState(DigiVaultPasswordState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
