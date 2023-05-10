@@ -8,7 +8,8 @@ import { useRecoilValue } from "recoil";
 import useListingsHook from "../actionHandler";
 import { listingState } from "../../../store";
 import showNotification from '../../../helpers/showNotification';
-import constants from '../../../config/constants'
+import LocationForm from "./LocationForm";
+import PropertyForm from "./PropertyForm";
 import { 
   IconLocations,
   IconPropertyDetail,
@@ -38,6 +39,8 @@ import {
   Spin
 } from 'antd'
 import "./style.scss";
+import BedroomForm from "./BedroomForm";
+
 
 
 const getBase64 = (file: RcFile): Promise<string> =>
@@ -60,8 +63,6 @@ const ListingUpdate = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true)
-  const [billsIncluded, setBillsIncluded] = useState(false)
-  const [entireProperty, setEntireProperty] = useState(false)
   const [uploadURL, setUploadURL] = useState(false)
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -73,12 +74,11 @@ const ListingUpdate = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getListing(listingId, setLoading)
-    console.log("UseEffect: ", singleListing);
+    getListing(listingId, setLoading);
   }, [])
 
   useEffect(() => {
-    getListing(listingId, setLoading)
+    getListing(listingId, setLoading);
     console.log("UseEffect: ", singleListing);
   }, [tabKey])
 
@@ -114,18 +114,6 @@ const ListingUpdate = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function onChangeRadioProperty(e: RadioChangeEvent) {
-    e.target.value === 'entireProperty'? setEntireProperty(true) : setEntireProperty(false)
-  }
-
-  const normFile = (e: any) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
   function onUpdateLocation(values: any) {
     console.log('Success:', values);
   }
@@ -164,54 +152,10 @@ const ListingUpdate = () => {
                     </Typography.Title>
                   </div>
                   <div className="tabs-pane-card-body">
-                    <Form
-                      form={form}
-                      requiredMark={false}
-                      layout="vertical"
-                      name="updateLocation"
-                      initialValues={singleListing}
-                      onValuesChange={(_, values) => {
-                        setDisabled(false)
-                      }}
-                      onFinish={submitUpdateListing}
-                    >
-                      <Row gutter={30}>
-                        <Col xs={24} md={24}>
-                          <Form.Item name="addressOne" label="Address" rules={[{ required: true }]}>
-                            <Input placeholder="Placeholder" />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={24} lg={12} xl={12}>
-                          <Form.Item name="addressTwo" label="Address  Line 2 (optional)">
-                            <Input placeholder="Placeholder" />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={24} lg={12} xl={12}>
-                          <Form.Item name="postCode" label="Postcode" rules={[{ required: true }]}>
-                            <InputNumber placeholder="Placeholder" />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={24} lg={24} xl={24}>
-                          <Form.Item name="isFurnished" label="Is it furnished?" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} lg={12} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={24} lg={24} xl={24}>
-                          <Form.Item className="form-btn-right">
-                            <Button disabled={disabled} loading={updateLoading} htmlType="submit" className="button-tertiary">Update</Button>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form>
+                    <LocationForm
+                      initValues={singleListing}
+                      listingId={listingId}
+                    />
                   </div>
                   </>
                   }
@@ -240,152 +184,10 @@ const ListingUpdate = () => {
                     </Typography.Title>
                   </div>
                   <div className="tabs-pane-card-body">
-                    <Form
-                      form={form}
-                      requiredMark={false}
-                      layout="vertical"
-                      name="updatePropertyDetails"
-                      initialValues={singleListing}
-                      onValuesChange={(_, values) => {
-                        setDisabled(false)
-                        console.log('all values::: ', values)
-                      }}
-                      onFinish={submitUpdateListing}
-                    >
-                      <Row gutter={30}>
-                        <Col xs={24}>
-                          <Form.Item name="propertyType" label="How will you rent your property?" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30, 30]}>
-                                <Col xs={24}>
-                                  <Radio value="Entire Property">Entire Property</Radio>
-                                </Col>
-                                <Col xs={24}>
-                                  <Radio value="Studio">Studio</Radio>
-                                </Col>
-                                <Col xs={24}>
-                                  <Radio value="Rooms In Shared Property">Rooms in shared property</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        {singleListing?.propertyType === "Entire Property" &&
-                        <Col xs={24}>
-                          <Row gutter={[30,20]}>
-                            <Col xs={24} md={24} lg={12} xl={8}>
-                              <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                                <InputNumber />
-                              </Form.Item>
-                            </Col>
-                            <Col xs={24} md={24} lg={12} xl={8}>
-                              <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                                <InputNumber />
-                              </Form.Item>
-                              
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={8}>
-                              <Form.Item name="totalBathrooms" label="Bathrooms">
-                                <InputNumber />
-                              </Form.Item>
-                            </Col>
-                          </Row>
-                        </Col>
-                        }
-                        
-                        <Col xs={24}>
-                          <Form.Item name="hasAirConditioning" label="Does it have air conditioning?" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Not available">Not available</Select.Option>
-                              <Select.Option value="Central">Central</Select.Option>
-                              <Select.Option value="Indvidual units">Indvidual units</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="hasHeating" label="Heating" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Not available">Not available</Select.Option>
-                              <Select.Option value="Central Property">Central Property</Select.Option>
-                              <Select.Option value="Central building">Central building</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="hasWaterHeating" label="Does it have heated water system?" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="No">No</Select.Option>
-                              <Select.Option value="Natural gas">Natural gas</Select.Option>
-                              <Select.Option value="Electric">Electric</Select.Option>
-                              <Select.Option value="Centeral property">Centeral property</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-
-                        <Col xs={24}>
-                          <div className="step-form-fields-title">
-                            The building has:
-                          </div>
-                          <Form.Item name="buildingHas">
-                            <Checkbox.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                                  <Checkbox value="Elevator">Elevator</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                                  <Checkbox value="Parking">Parking</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                                  <Checkbox value="PoolAccess">Pool Access</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                                  <Checkbox value="GYM">GYM</Checkbox>
-                                </Col>
-                              </Row>
-                            </Checkbox.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <div className="step-form-fields-title">
-                            The property has:
-                          </div>
-                          <Form.Item name="propertyHas">
-                            <Checkbox.Group>
-                              <Row gutter={[30, 20]}>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Balcony">Balcony</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="EquippedKitchen">Equipped Kitchen</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="ClothesDryer">Clothes Dryer</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="DishWasher">Dish Washer</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Oven">Oven</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="WashingMachine">Washing machine</Checkbox>
-                                </Col>
-                              </Row>
-                            </Checkbox.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="propertySize" label="Property Size(optional)">
-                            <InputNumber placeholder="Placeholder" />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item className="form-btn-right">
-                            <Button disabled={disabled} loading={updateLoading} htmlType="submit" className="button-tertiary">Update</Button>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form>
+                    <PropertyForm
+                      initValues={singleListing}
+                      listingId={listingId}
+                    />
                   </div>
                 </>
                 }
@@ -414,116 +216,10 @@ const ListingUpdate = () => {
                     </Typography.Title>
                   </div>
                   <div className="tabs-pane-card-body">
-                    <Form
-                      form={form}
-                      requiredMark={false}
-                      layout="vertical"
-                      name="updateBedroomDetails"
-                      initialValues={singleListing}
-                      onValuesChange={(_, values) => {
-                        setDisabled(false)
-                        console.log('all values::: ', values)
-                      }}
-                      onFinish={submitUpdateListing}
-                    >
-                      <Row gutter={30}>
-                        <Col xs={24}>
-                          <div className="bedromm-count">Bedroom 1</div>
-                          <div className="add-bedroom-photos-holder">
-                            <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
-                            <div className="add-bedroom-photos">
-                              <Form.Item
-                                name="media"
-                                valuePropName="fileList"
-                                getValueFromEvent={normFile}
-                              >
-                                <Upload
-                                  name="logo"
-                                  action="/upload.do"
-                                  listType="picture-card"
-                                  showUploadList={{showPreviewIcon: false, removeIcon: <IconRemoveAttachment />}}
-                                >
-                                  <div className="upload-device-btn">
-                                    <IconAddUpload />
-                                    <div className="label">Upload from device</div>
-                                  </div>
-                                </Upload>
-                              </Form.Item>
-                            </div>
-                          </div>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="bedType" label="Bed Type" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Futon">Futon</Select.Option>
-                              <Select.Option value="Airbed">Airbed</Select.Option>
-                              <Select.Option value="Waterbed">Waterbed</Select.Option>
-                              <Select.Option value="Queen bed">Queen bed</Select.Option>
-                              <Select.Option value="King bed">King bed</Select.Option>
-                              <Select.Option value="Twin XL">Twin XL</Select.Option>
-                              <Select.Option value="XL">XL</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="twoPeopleAllowed" label="Are two people allowed to live in this bedroom">
-                            <Radio.Group>
-                              <Row gutter={[30, 20]}>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="bedroomAmenities" label="What kind of amenities does bedroom 1 have? ">
-                            <Checkbox.Group>
-                              <Row gutter={[30, 30]}>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Chest of drawers">Chest of drawers</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Desk">Desk</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Private Bathroom">Private Bathroom</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Key or Locker">Key or Locker</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Wardrobe">Wardrobe</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Shelving">Shelving</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="TV">TV</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Wi-fi">Wi-fi</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Carpeted Floors">Carpeted Floors</Checkbox>
-                                </Col>
-                                <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                                  <Checkbox value="Other">Other</Checkbox>
-                                </Col>
-                              </Row>
-                            </Checkbox.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item className="form-btn-right">
-                            <Button disabled={disabled} loading={updateLoading} htmlType="submit" className="button-tertiary">Update</Button>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form>
+                    <BedroomForm
+                      initValues={singleListing}
+                      listingId={listingId}
+                    />
                   </div>
                 </>
                 }
@@ -560,7 +256,7 @@ const ListingUpdate = () => {
                       initialValues={singleListing}
                       onValuesChange={(_, values) => {
                         setDisabled(false)
-                        console.log('all values::: ', values)
+                        console.log('Rent & Billing : all values::: ', values)
                       }}
                       onFinish={submitUpdateListing}
                       >
@@ -712,7 +408,7 @@ const ListingUpdate = () => {
                       initialValues={singleListing}
                       onValuesChange={(_, values) => {
                         setDisabled(false)
-                        console.log('all values::: ', values)
+                        console.log('Rules & References ;; all values::: ', values)
                       }}
                       onFinish={submitUpdateListing}
                     >
@@ -883,7 +579,7 @@ const ListingUpdate = () => {
                       initialValues={singleListing}
                       onValuesChange={(_, values) => {
                         setDisabled(false)
-                        console.log('all values::: ', values)
+                        console.log('Rental Conditions all values::: ', values)
                       }}
                       onFinish={submitUpdateListing}
                     >
