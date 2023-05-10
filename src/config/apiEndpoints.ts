@@ -30,8 +30,9 @@ const endpoints = {
   GET_LIST_INTERNSHIP:'/internship/listInternships',
   GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
   DEL_INTERNSHIP:'/internship/deleteInternship',
-  DUBLICATE_INTERNSHIP:'/internship/duplicateInternship',
+  DUPLICATE_INTERNSHIP:'/internship/duplicateInternship',
   POST_NEW_INTERNSHIP:'/internship/createInternship',
+  EDIT_INTERNSHIP:'/internship/updateInternshipDetail',
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE:"/Leaves/create",
   GET_LEAEV_LIST:`/Leaves/list`,

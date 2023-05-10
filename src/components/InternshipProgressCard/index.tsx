@@ -14,7 +14,7 @@ export const InternshipProgressCard = (props: any) => {
   const { id, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
   const [decline, setDecline] = useState(false)
   const [deleteInternship, setDeleteInternship] = useState(false)
-  const { deleteInternshipData,getDublicateInternship } = useCustomHook();
+  const { deleteInternshipData,getDuplicateInternship } = useCustomHook();
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
@@ -30,7 +30,7 @@ export const InternshipProgressCard = (props: any) => {
     setDeleteInternship(false)
   }
   const handleDublicate=(id:any)=>{
-    getDublicateInternship(id)
+    getDuplicateInternship(id)
   }
 
   const PopOver = () => {

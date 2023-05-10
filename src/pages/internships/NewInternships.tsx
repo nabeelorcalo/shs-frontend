@@ -28,7 +28,7 @@ const amountOptions = [
   },
 ]
 const locationOptions = [
-  { valeu: 'Eidinburg', label: "Eidinburg" },
+  { value: 'Eidinburg', label: "Eidinburg" },
   { value: 'Glasgow', label: "Glasgow" },
   { value: 'London', label: "London" },
 ]
