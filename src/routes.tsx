@@ -1,7 +1,6 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Loader } from "./components";
 import Login from "./pages/onBoarding/sign-in";
 import Signup from "./pages/onBoarding/sign-up";
 import ForgotPassword from "./pages/onBoarding/sign-in/reset-password";
@@ -45,16 +44,15 @@ import EditOfferLetter from "./pages/offerLetters/CompanyAdmin/editContract";
 import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
 import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
+import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 // Lazy load required end
 
-const spinIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Spin indicator={spinIcon} />}>
-      <Component {...props} />
-    </Suspense>
-  );
+const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) => (
+  <Suspense fallback={<Loader />}>
+    <Component {...props} />
+  </Suspense>
+);
 //Internships Child Components
 const NewInternships = Loadable(
   lazy(() => import("./pages/internships/NewInternships"))
@@ -101,6 +99,8 @@ const CaseStudies = Loadable(lazy(() => import("./pages/caseStudies")));
 const ManagerCaseStudiesAssessment = Loadable(
   lazy(() => import("./pages/caseStudies/Manager/assessmentForm"))
 );
+const ViewDetailsCaseStudies = Loadable(
+  lazy(() => import("./pages/caseStudies/Common/viewDetails")))
 const CompanyAdminCaseStudiesAssessment = Loadable(
   lazy(() => import("./pages/caseStudies/CompanyAdmin/assessmentForm"))
 );
@@ -134,8 +134,10 @@ const WithDrawalRequest = Loadable(
 );
 const WithDrawals = Loadable(lazy(() => import("./pages/withdrawals")));
 const Students = Loadable(lazy(() => import("./pages/students")));
+const StudentSystemAdmin = Loadable(lazy(() => import("./pages/students/studentSystemAdmin")));
 const Universities = Loadable(lazy(() => import("./pages/universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
+const CompaniesSystemAdmin = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
 const DelegateAgent = Loadable(lazy(() => import("./pages/delegateAgent")));
 const PropertyAgent = Loadable(lazy(() => import("./pages/propertyAgent")));
@@ -325,6 +327,10 @@ const UniversitesInterns = Loadable(
 const UniversitesProfile = Loadable(
   lazy(() => import("./pages/universities/CompanyAdmin/Profile"))
 );
+const SystemDetailPage = Loadable(
+  lazy(() => import("./pages/universities/SystemAdmin/detailPage"))
+);
+
 
 export const publicRoutes = [
 
@@ -347,6 +353,11 @@ export const publicRoutes = [
     key: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     path: `${ROUTES_CONSTANTS.FORGOT_PASSWORD}`,
     element: <ForgotPassword />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
+    element: <ResetLink/>
   },
   // ------Remove below demo components------
   // Demo Graphs
@@ -446,8 +457,8 @@ const managerRoutes = [
         element: <NewInternships />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
       },
       {
@@ -531,6 +542,11 @@ const managerRoutes = [
         element: <ManagerCaseStudiesAssessment />,
       },
       {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        element: <ViewDetailsCaseStudies />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         path: `${ROUTES_CONSTANTS.GRIEVANCES}`,
         element: <Grievances />,
@@ -541,8 +557,8 @@ const managerRoutes = [
         element: <ManagerAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <ManagerGrievancesDetails />,
       },
       {
@@ -644,7 +660,7 @@ const systemAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,
         path: `${ROUTES_CONSTANTS.STUDENT}`,
-        element: <Students />,
+        element: <StudentSystemAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES}`,
@@ -654,12 +670,12 @@ const systemAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
         path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
-        element: <UniversitesProfile />,
+        element: <SystemDetailPage />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
         path: `${ROUTES_CONSTANTS.COMPANIES}`,
-        element: <Companies />,
+        element: <CompaniesSystemAdmin />,
       },
       {
         key: `${ROUTES_CONSTANTS.ADMIN}`,
@@ -854,8 +870,8 @@ const companyAdminRoutes = [
         element: <CompanyAdminAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <CompanyAdminGrievancesDetails />,
       },
       {
@@ -872,6 +888,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
         path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
         element: <CompanyAdminCaseStudiesAssessment />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        element: <ViewDetailsCaseStudies />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
@@ -1245,8 +1266,8 @@ const internRoutes = [
         element: <InternAllGrievances />,
       },
       {
-        key: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
-        path: `${ROUTES_CONSTANTS.GRIEVANCES_Details}`,
+        key: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.GRIEVANCES_DETAILS}`,
         element: <InternGrievancesDetails />,
       },
       {
@@ -1322,8 +1343,8 @@ const internRoutes = [
         ],
       },
       {
-        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
       },
       {
@@ -1332,8 +1353,8 @@ const internRoutes = [
         element: <Recipes />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}-detail`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}/:recipeId`,
         element: <RecipeDetails />,
       },
       {
@@ -1342,8 +1363,8 @@ const internRoutes = [
         element: <AddRecipe />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}Update`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}/:recipeId`,
         element: <EditRecipe />,
       },
       {
@@ -1480,8 +1501,8 @@ const studentRoutes = [
         ],
       },
       {
-        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}-detail`,
+        path: `${ROUTES_CONSTANTS.PROPERTY_DETAIL}/:propertyId`,
         element: <AccPropertyDetail />,
       },
       {
@@ -1490,8 +1511,8 @@ const studentRoutes = [
         element: <Recipes />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_DETAILS}-detail`,
+        path: `${ROUTES_CONSTANTS.RECIPE_DETAILS}/:recipeId`,
         element: <RecipeDetails />,
       },
       {
@@ -1500,8 +1521,8 @@ const studentRoutes = [
         element: <AddRecipe />,
       },
       {
-        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
-        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}`,
+        key: `${ROUTES_CONSTANTS.RECIPE_UPDATE}Update`,
+        path: `${ROUTES_CONSTANTS.RECIPE_UPDATE}/:recipeId`,
         element: <EditRecipe />,
       },
       {

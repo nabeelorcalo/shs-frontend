@@ -108,8 +108,10 @@ const AttendaceLog = (props: any) => {
                   <div className="mr-2">
                     <img src={item.avatar} alt="icon" />
                   </div>
+
                   <div>{item.name}</div>
                 </div>
+
                 <div
                   className="cursor-pointer light-grey-color text-xs"
                   onClick={() => handleAddUser(item)}
@@ -148,6 +150,7 @@ const AttendaceLog = (props: any) => {
                 </p>
               </Row>
             </Col>
+
             <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
               <StatusDropdown StatusOptions={StatusOptions} />
             </Col>
@@ -174,6 +177,7 @@ const AttendaceLog = (props: any) => {
                 />
               </div>
             </Col>
+
             <Col xs={24} xxl={12} xl={12} lg={12}>
               <div>
                 <label>User Role</label>
@@ -235,7 +239,6 @@ const AttendaceLog = (props: any) => {
                     <label>Assign</label>
                     <div className="border-[1px] border-solid border-[#DDE2E6] h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
                       <div>
-
                         <div className="flex items-center gap-2 flex-wrap">
                           {assignUser.map((user) => (
                             <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
@@ -251,17 +254,15 @@ const AttendaceLog = (props: any) => {
                         </div>
                       </div>
                       <DownOutlined className="text-sm ml-2" />
-
                     </div>
                   </div>
                 </Dropdown>
               </div>
-
-
             </Col>
+
             <Col xs={24}>
               <label>Log Time</label>
-              <Row gutter={[16,20]}>
+              <Row gutter={[16, 20]}>
                 <Col xs={24} xxl={8} xl={8} lg={8}>
                   <div>
                     <Input
@@ -291,6 +292,7 @@ const AttendaceLog = (props: any) => {
                     value=""
                   />
                 </Col>
+
                 <Col xs={24} xxl={8} xl={8} lg={8}>
                   <Input
                     className="input"
@@ -306,8 +308,9 @@ const AttendaceLog = (props: any) => {
                 </Col>
               </Row>
             </Col>
+
             <Col xs={24}>
-              <Row gutter={[16,20]}>
+              <Row gutter={[16, 20]}>
                 <Col xs={24} xxl={12}>
                   <div>
                     <label>Date</label>
@@ -324,6 +327,7 @@ const AttendaceLog = (props: any) => {
                     />
                   </div>
                 </Col>
+
                 <Col xs={24} xxl={12}>
                   <div>
                     <label>Reporting Time</label>
@@ -354,6 +358,7 @@ const AttendaceLog = (props: any) => {
                 />
               </div>
             </Col>
+
             <Col xs={24}>
               <label>Attachment (Optional)</label>
               <Row gutter={[20, 20]} className="pt-3">
@@ -413,6 +418,7 @@ const AttendaceLog = (props: any) => {
                 placeholder="Comment here"
                 className="w-full h-24 border-0 outline-0 resize-none"
               />
+
               <Row
                 justify="space-between"
                 align="middle"

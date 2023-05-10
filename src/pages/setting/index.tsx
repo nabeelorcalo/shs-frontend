@@ -3,17 +3,18 @@ import { Outlet } from "react-router-dom";
 import { Breadcrumb } from "../../components";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
 const Setting = (props: any) => {
   const breadcrumbArray = [
-    { name: props.title},
-    { name: "Setting"},
+    { name: props.title },
+    { name: "Setting" , onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`  },
   ];
   return (
     <div className="setting">
-     <Breadcrumb breadCrumbData={breadcrumbArray}  />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
-      <Row gutter={[20,20]} className="mt-5 settings-row">
+      <Row gutter={[20, 20]} className="mt-5 settings-row">
         <Col xs={24} sm={10} md={10} lg={6} xxl={5} className="flex flex-col">
           <div className="rounded-lg ">
             <SettingSidebar />

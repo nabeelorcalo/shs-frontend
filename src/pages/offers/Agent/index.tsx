@@ -1,8 +1,9 @@
+import "./style.scss";
 import { useState } from "react";
 import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form } from "antd";
 import { PlusCircleFilled} from "@ant-design/icons";
-import { Offerimg1} from "../../../assets/images";
+import { OfferProperty} from "../../../assets/images";
 // import { cardData } from "../../propertyAgent/propertDahboard/Dashboard/DashboardMock";
 import "./style.scss";
 
@@ -13,7 +14,7 @@ const OffersAgent = () => {
   const [offersCardData, setData] = useState<any>(
     [
       {
-        img: Offerimg1,
+        img: OfferProperty,
         title: "Boston Heights",
         disc: "15% off-between 1 and 6 months bookings",
       },
@@ -21,15 +22,13 @@ const OffersAgent = () => {
   )
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
     const copyCardData = [...offersCardData]
     copyCardData.push(
       {
-        img: Offerimg1,
+        img: OfferProperty,
         title: values.select,
         disc: `${values.discount}%off-between ${values.offer} and ${values.qualify} bookings`,
       }
-
     )
     setData(copyCardData)
     setISOpen(false)
@@ -110,6 +109,7 @@ const OffersAgent = () => {
             // onChange={(value) => value}
             />
           </Form.Item>
+
           <div className="flex justify-end gap-4">
             <div>
               <Button
@@ -119,6 +119,7 @@ const OffersAgent = () => {
                 Cancel
               </Button>
             </div>
+
             <div>
               <Button htmlType="submit" className="green-graph-tooltip-bg white-color">
                 Save & Close
@@ -174,12 +175,13 @@ const OffersAgent = () => {
                   <Card
                     key={item.id}
                     className="offer-card"
-                    cover={<img alt="img" src={item.img} height={195} />}
+                    cover={<img  src={item.img} alt="img"  />}
                   >
                     <div className="offer-card-body">
                       <div className="dashboard-primary-color font-semibold text-xl pb-4">
                         {item.title}
                       </div>
+                      
                       <div className="dashboard-primary-color font-normal text-sm pb-4">
                         {item.disc}
                       </div>

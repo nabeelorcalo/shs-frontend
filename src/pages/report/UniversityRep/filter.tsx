@@ -1,55 +1,56 @@
 import React, { useState } from 'react'
-import { Select, Button, Form } from "antd";
-import { GrievancesAvater, IconAngleDown } from '../../../assets/images';
+import { Button, Form } from "antd";
+import { DropDown } from '../../../components';
 import './style.scss'
 
-const { Option } = Select;
 const Filters: React.FC = (props: any) => {
-  let options = [
-    { value: 'jessia', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Jessica Alba</span></div> },
-    { value: 'jean ella', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>jean ella</span></div> },
-    { value: 'Mino Marina', src: <div className='flex'><GrievancesAvater className='w-[48px] px-2' />  <span className='mt-1'>Mino Marina</span></div> },
-  ];
-  const companySelectValue = ["Power DevSpot", "Abacus", "Orcalo Holdings", "Coding Hub"]
-  const departmentSelectValue = ["Design", "Research", "Management", "Development", "Business"]
+  const company = ["Power DevSpot", "Abacus", "Orcalo Holdings", "Coding Hub"]
+  const department = ["Design", "Research", "Management", "Development", "Business"]
+  const reviewer = ["Mino Marino", "David Miller", "Amila Clark"]
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
+  const [filterValue, setFilterValue] = useState({ company: "Select", department: "Select", reviewer: "Select" });
 
   const handleSubmit = () => {
     const values = form.getFieldsValue();
   }
-  const renderOption = (option: any) => {
-    return (
-      <Option key={option.value} value={option.value} className="border-none">
-        {option.src}
-      </Option>
-    );
+
+  const ResetHandler = () => {
+    setFilterValue({ company: "Select", department: "Select", reviewer: "Select" });
   }
-  function handleChange(value: any) { }
 
   return (
     <div className='uni-report-filter_main_wrapper'>
       <Form layout="vertical" form={form}>
-      <Form.Item name="company" label="Company">
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-          {companySelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
-          </Select>
+        <Form.Item name="company" label="Company">
+          <DropDown
+            name={filterValue.company}
+            value={filterValue.company}
+            options={company.map((item: any) => { return item })}
+            setValue={(e: string) => setFilterValue({ ...filterValue, company: e })}
+          />
         </Form.Item>
         <Form.Item
           name="department"
           label="Department"
         >
-          <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-          {departmentSelectValue.map((item) => <Select.Option value={item}>{item}</Select.Option>)}
-          </Select>
+          <DropDown
+            name={filterValue.department}
+            value={filterValue.department}
+            options={department.map((item: any) => { return item })}
+            setValue={(e: string) => setFilterValue({ ...filterValue, department: e })}
+          />
         </Form.Item>
-      <Form.Item name="reviewer" label="Reviewer">
-          <Select onChange={handleChange} placeholder="Select" suffixIcon={<IconAngleDown />}   >
-            {options.map(renderOption)}
-          </Select>
+        <Form.Item name="reviewer" label="Reviewer">
+          <DropDown
+            name={filterValue.reviewer}
+            value={filterValue.reviewer}
+            options={reviewer.map((item: any) => { return item })}
+            setValue={(e: string) => setFilterValue({ ...filterValue, reviewer: e })}
+          />
         </Form.Item>
         <div className="report-filter-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn " >
+          <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
           </Button>
           <Button key="submit" className="footer-submit-btn" onClick={handleSubmit}>

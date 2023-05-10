@@ -1,16 +1,10 @@
-import React, { useState } from "react";
-import {
-  EllipsisOutlined,
-  NodeExpandOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { useState } from "react";
+import { EllipsisOutlined } from "@ant-design/icons";
 import { BoxWrapper, FiltersButton, GlobalTable } from "../../../components";
-import { Button, Col, Row, Space, Form, Menu } from "antd";
-import { DropDown } from "../../../components";
+import { Button, Col, Row, Space, Form, Menu, Select } from 'antd';
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import '../style.scss';
-
 
 const columns = [
   {
@@ -115,7 +109,6 @@ const tableData = [
       </span>
     ),
     Rent: "£9,823",
-
     status: "Published",
     company: "kljdasfhuasd",
     propertyType: "Single Room",
@@ -132,7 +125,6 @@ const tableData = [
       </div>
     ),
     Rent: "£7,823",
-
     status: "Rejected",
     company: "kljdasfhuasd",
     propertyType: "Single Room",
@@ -146,31 +138,48 @@ const tableData = [
 const ListingRequest = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const handleChangeSelect = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
   return (
     <div className="listing-request">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
         <Form layout="vertical">
-          <Form.Item label="Agent" name="agent">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
-            />
-          </Form.Item>
-          <Form.Item label="Status" name="status">
-            <DropDown
-              name="Select"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
-            />
-          </Form.Item>
-
+          <div className="mb-6">
+            <label>Agent</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={[
+                  { value: "DarrelSteward", label: "DarrelSteward" },
+                  { value: "Inactive", label: "Inactive" },
+                ]}
+              />
+            </div>
+          </div>
+          <div className="mb-6">
+            <label>Status</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={[
+                  { value: "Active", label: "Active" },
+                  { value: "Inactive", label: "Inactive" },
+                  { value: "Publish", label: "Publish" },
+                ]}
+              />
+            </div>
+          </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-                Cancel
+                Reset
               </Button>
               <Button
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
@@ -182,19 +191,9 @@ const ListingRequest = () => {
           </div>
         </Form>
       </Drawer>
-      <Row gutter={[20,10]}>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="flex justify-end gap-2 mb-4">
-            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
-            {/* <div className="w-25">
-              <DropDown
-                requiredDownloadIcon
-                options={["pdf", "excel"]}
-                value={value}
-                setValue={setValue}
-              />
-            </div> */}
-          </div>
+      <Row gutter={[20, 20]}>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
+          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
@@ -202,7 +201,6 @@ const ListingRequest = () => {
           </BoxWrapper>
         </Col>
       </Row>
-
     </div>
   );
 };

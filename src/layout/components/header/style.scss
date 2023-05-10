@@ -9,6 +9,7 @@
   top: 0;
   width: 100%;
   z-index: 999;
+
   @media (max-width: 991px) {
     height: 70px;
   }
@@ -241,6 +242,7 @@
 
         .ant-dropdown-trigger.loggedin-user-avatar {
           cursor: pointer;
+          margin-right: 10px;        
         }
       }
       .ikd-header-notification {

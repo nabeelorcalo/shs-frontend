@@ -5,7 +5,7 @@ import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
 import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
-import { Button } from 'antd';
+import { Button, Col, Row } from 'antd';
 import './style.scss';
 
 const Certificates = () => {
@@ -24,14 +24,20 @@ const Certificates = () => {
   return (
     <div className='certificate-wrapper'>
       <PageHeader title='Certificates' bordered />
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <SearchBar size='middle' handleChange={setSearchVal} value={searchVal} className='' />
-        <div className='flex gap-4 items-end justify-end flex-wrap'>
+      <Row gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar  handleChange={setSearchVal} value={searchVal}  />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
           <IssueCertificateBtn className='w-full' onClick={() => setOpenIssueCertificate(true)} />
-        </div>
-      </div>
-      <CertificateTable />
+        </Col>
+        <Col xs={24}>
+          <CertificateTable />
+        </Col>
+      </Row>
+
+
 
       {openIssueCertificate &&
         <IssueCertificateModal

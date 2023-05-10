@@ -1,6 +1,6 @@
 import { GlobalTable } from '../../../components'
 import DropDownNew from '../../../components/Dropdown/DropDownNew'
-import { useNavigate } from 'react-router'
+// import { useNavigate } from 'react-router'
 import { ThreeDots } from '../../../assets/images'
 import { NavLink } from 'react-router-dom'
 import { ROUTES_CONSTANTS } from '../../../config/constants'

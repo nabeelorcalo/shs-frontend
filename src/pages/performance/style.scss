@@ -1,5 +1,20 @@
 @import '../../scss/_colors.scss';
 
+.company-admin-performance-container {
+  .overall-performance {
+    height: 256px;
+  }
+
+  .top-performance-list {
+    min-height: 788px;
+    overflow-y: auto;
+  }
+
+  .attendance-department {
+    min-height: 512px;
+  }
+}
+
 // Interm/ViewEvaluation-page
 .view-evaluation {
   .vertical-line {
@@ -61,6 +76,12 @@
     &:hover {
       box-shadow: none;
     }
+  }
+
+  .innerContent {
+    height: 600px;
+    overflow: auto;
+    overflow-x: hidden;
   }
 }
 
@@ -143,12 +164,6 @@
 // Company Admin: performance/history
 .company-admin-performance-history,
 .manager-performance-history {
-  .right-sec {
-    @media only screen and (max-width:475px) {
-      flex-direction: column;
-    }
-  }
-
   .performance-header {
     margin-bottom: 20px;
 
@@ -181,8 +196,10 @@
     background-color: #E6F4F9;
     margin: 0 8px;
 
-    @media only screen and (max-width:420px) {
+    @media only screen and (max-width:639px) {
+      padding: 10px !important;
       width: 100% !important;
+      justify-content: end;
       margin: 0;
     }
   }
@@ -211,6 +228,11 @@
       min-width: 170px;
     }
   }
+
+}
+
+.performance-modal .ant-modal .ant-modal-header {
+  margin-bottom: 15px !important;
 }
 
 // Sidebar
@@ -267,6 +289,14 @@
   }
 }
 
+.signature-modal .ant-modal .ant-modal-header {
+  margin-bottom: 0px !important;
+}
+.ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn span {
+    color: $text-primary-title-color !important;
+    font-weight: 400 !important;
+}
+
 // Detail History
 .company-admin-detail-history-container {
   .evaluate-btn {
@@ -286,6 +316,7 @@
 
   .ant-progress-text {
     font-size: 16px;
+    font-weight: 400;
     padding: 0 0 0 8px;
     margin: auto;
     color: $text-secondary-body-color;

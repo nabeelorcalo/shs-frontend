@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import "./style.scss"
 import RequestDocModel from './requestDocModel';
-import { CvIcon, DbsIcon, UalIcon, PassportIcon, BrpIcon, PoaIcon,DocumentIconD } from "../../assets/images"
+import { CvIcon, DbsIcon, UalIcon, PassportIcon, BrpIcon, PoaIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images"
 
 const ReqDocData = [
 
@@ -60,7 +60,7 @@ const DrawerDocuments = () => {
         </button>
         <RequestDocModel setOpen={setOpen} open={open} />
       </div>
-      
+
       <div className='files-wrap mt-6'>
         {ReqDocData.map((data: any) => (
           <div className='files flex justify-between py-3'>
@@ -71,9 +71,14 @@ const DrawerDocuments = () => {
                 <p>{data.descr}</p>
               </div>
             </div>
-            <div>
-              <p>{data.date}</p>
-              <p className='ml-8'>{data.size}</p>
+            <div className='flex gap-5'>
+              <div>
+                <p>{data.date}</p>
+                <p className='ml-8'>{data.size}</p>
+              </div>
+              <div>
+                <span className='h-[40px] w-[40px] rounded-[4px] '><DownloadDocumentIcon /></span>
+              </div>
             </div>
           </div>
 

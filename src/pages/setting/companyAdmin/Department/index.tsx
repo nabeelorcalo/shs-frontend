@@ -11,68 +11,78 @@ import { settingDepartmentState } from "../../../../store";
 import "./style.scss";
 
 const { TextArea } = Input;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const demoData = [
   {
-    name:"Finance",
-    description:"The finance department is responsible for the financial planning and management of the company."
+    name: "Finance",
+    description: "The finance department is responsible for the financial planning and management of the company."
   },
   {
-    name:"Human Resources",
-    description:"The human resources department is responsible for a company's most important asset: its people."
+    name: "Human Resources",
+    description: "The human resources department is responsible for a company's most important asset: its people."
   },
   {
-    name:"Design",
-    description:"Designers are responsible for the design and implementation of all the experiences."
+    name: "Design",
+    description: "Designers are responsible for the design and implementation of all the experiences."
   },
 ]
 const SettingDepartment: React.FC = () => {
   const action = useCustomHook();
   const departmentData = useRecoilState<any>(settingDepartmentState)
   const [form] = Form.useForm();
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [departmentId, setDepartmentId] = useState<any>();
-  const [editData, setEditData] = useState<any>();
+  const [edit, setEdit] = useState<any>()
+  const [state, setState] = useState<any>(
+    {
+      showEditModal: false,
+      showDeleteModal: false,
+      departmentId: "",
+    }
+  )
 
   const handleChange = (event: any) => {
-    if (event == "") {
-      action.getSettingDepartment(1)
-    }
-    else {
-      action.GetSettingDepartmentById(event)
-    }
+    action.getSettingDepartment(1, event)
   };
 
-  const initialValues = {
-    departmentName: editData?.name,
-    description: editData?.description,
-  };
+  if (edit?.isEdit === "isEdit") {
+    const formValues = { departmentName: edit?.name, description: edit?.description }
+    form.setFieldsValue(formValues)
+  }
 
   const onFinish = (values: any) => {
-    const { departmentName, description } = values
-    action.postSettingDepartment({
-      name: departmentName,
-      description: description
-    }).then(() => { action.getSettingDepartment(1) })
-    form.resetFields()
-    setShowEditModal(!showEditModal)
+    if (edit?.isEdit === "isEdit") {
+
+    }
+    else {
+      const { departmentName, description } = values
+      action.postSettingDepartment({
+        name: departmentName,
+        description: description
+      }).then(() => { action.getSettingDepartment(1, "") })
+      form.resetFields()
+      setState({ ...state, showEditModal: false })
+    }
   };
+  console.log("Edit", edit)
 
   const SetId = (id: any) => {
-    setDepartmentId(id)
-    setShowDeleteModal(!showDeleteModal)
-  }
-  const SetEditData = (edit: any) => {
-    setEditData(edit)
+    setState({ ...state, showDeleteModal: !state.showDeleteModal, departmentId: id })
   }
 
+  const SetEditData = (editdata: any) => {
+    setEdit(editdata)
+  }
   const DeleleHandler = () => {
-    action.deleteSettingDepartment(departmentId)
+    action.deleteSettingDepartment(state.departmentId)
+  }
+
+  const resetFormHandler = () => {
+    setState({ ...state, showEditModal: false })
+    form.resetFields()
+    setEdit("")
   }
 
   useEffect(() => {
-    action.getSettingDepartment(1)
+    action.getSettingDepartment(1, "")
   }, [])
 
   return (
@@ -81,17 +91,14 @@ const SettingDepartment: React.FC = () => {
         <SearchBar size="middle" handleChange={handleChange} />
         <Button
           size="middle"
-          onClick={() => {
-            setShowEditModal(!showDeleteModal);
-          }}
+          onClick={() => { setState({ ...state, showEditModal: !state.showEditModal }); }}
           className="flex gap-2 setting-add-button white-color teriary-bg-color"
         >
           <DepartmentAddIcon /> Add Department
         </Button>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {/* {Array.isArray(departmentData[0]) && departmentData[0]?.map((data: any, index) => { */}
-        {demoData.map((data: any, index:any) => {
+        {Array.isArray(departmentData[0]) && departmentData[0]?.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
               <div className="department-box-wrapper">
@@ -103,10 +110,10 @@ const SettingDepartment: React.FC = () => {
                   </div>
                   <div className="float-right cursor-pointer">
                     <DropDownForSetting
-                      showEditModal={showEditModal}
-                      showDeleteModal={showDeleteModal}
-                      setShowDeleteModal={setShowDeleteModal}
-                      setShowEditModal={setShowEditModal}
+                      showEditModal={state.showEditModal}
+                      showDeleteModal={state.showDeleteModal}
+                      setShowDeleteModal={setState}
+                      setShowEditModal={setState}
                       id={data?.id}
                       SetId={SetId}
                       editData={data}
@@ -123,42 +130,44 @@ const SettingDepartment: React.FC = () => {
         })
         }
         {
-          // departmentData[0] && !Array.isArray(departmentData[0]) && <Col className="gutter-row" xs={24} xl={12} xxl={8}>
-          //   <div className="department-box-wrapper">
-          //     <div className="flex justify-between">
-          //       <div><Title level={5}>{departmentData[0]?.name}</Title></div>
-          //       <div className="float-right cursor-pointer w-[40px]">
-          //         <DropDownForSetting
-          //           showEditModal={showEditModal}
-          //           showDeleteModal={showDeleteModal}
-          //           setShowDeleteModal={setShowDeleteModal}
-          //           setShowEditModal={setShowEditModal}
-          //           id={departmentData[0]?.id}
-          //           SetId={SetId}
-          //           SetEditData={SetEditData}
-          //         />
-          //       </div>
-          //     </div>
-          //     <Text className="text-sm font-normal">
-          //       {departmentData[0]?.description}
-          //     </Text>
-          //   </div>
-          // </Col>
+          departmentData[0] && !Array.isArray(departmentData[0]) && <Col className="gutter-row" xs={24} xl={12} xxl={8}>
+            <div className="department-box-wrapper">
+              <div className="flex justify-between">
+                <div>
+                  <Text className="text-lg font-semibold text-primary-color">
+                    {departmentData[0].name}
+                  </Text>
+                </div>
+                <div className="float-right cursor-pointer w-[40px]">
+                  <DropDownForSetting
+                    showEditModal={state.showEditModal}
+                    showDeleteModal={state.showDeleteModal}
+                    setShowDeleteModal={setState}
+                    setShowEditModal={setState}
+                    id={departmentData[0]?.id}
+                    SetId={SetId}
+                    SetEditData={SetEditData}
+                    state={state}
+                  />
+                </div>
+              </div>
+              <Text className="text-sm font-normal">
+                {departmentData[0]?.description}
+              </Text>
+            </div>
+          </Col>
         }
-
       </Row>
       <PopUpModal
-        open={showEditModal}
+        open={state.showEditModal}
         title="Department"
         width={600}
-        close={() => setShowEditModal(false)}
+        close={() => setState({ ...state, showEditModal: false })}
         footer=""
       >
         <Form
           layout="vertical"
-          initialValues={initialValues}
           form={form}
-          onValuesChange={() => form.resetFields()}
           onFinish={onFinish}
         >
           <Form.Item
@@ -168,7 +177,6 @@ const SettingDepartment: React.FC = () => {
             <Input
               className="input"
               id="departmentName"
-              name="departmentName"
               placeholder="Enter department name "
               size="middle"
               type="text"
@@ -186,7 +194,7 @@ const SettingDepartment: React.FC = () => {
           </Form.Item>
           <div className="setting-department-footer flex justify-end mt-4 gap-2">
             <Button key="Cancel" className="footer-cancel-btn "
-              onClick={() => { setShowEditModal(false), form.resetFields() }}>
+              onClick={resetFormHandler}>
               Cancel
             </Button>
             <Button key="submit" className="footer-submit-btn" htmlType="submit">
@@ -199,8 +207,8 @@ const SettingDepartment: React.FC = () => {
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
         okBtnFunc={DeleleHandler}
-        state={showDeleteModal}
-        setState={setShowDeleteModal}
+        state={state.showDeleteModal}
+        setState={setState}
         type="error"
         width={500}
         title=""

@@ -15,23 +15,11 @@ export const EvaluationStatsCard: any = (props: EvaluationStatProps) => {
   return (
     <BoxWrapper className={`evaluation-stats-card mt-4`}>
       <div className='flex flex-col'>
-
         <div className='flex flex-col'>
-          <Typography.Title
-            level={4}
-            className="evaluation-stats-name"
-          >
-            {name}
-          </Typography.Title>
-
-          <Typography.Title
-            level={2}
-            className="percentage-txt"
-            style={{ color: color }}
-          >
+          <p className="evaluation-stats-name text-xl font-medium" > {name} </p>
+          <p className="percentage-txt font-medium text-3xl" style={{ color: color }} >
             {percentage}%
-          </Typography.Title>
-
+          </p>
           <Progress
             percent={percentage}
             showInfo={false}

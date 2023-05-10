@@ -1,7 +1,6 @@
-import React from 'react'
-import { InternshipProgressStepper } from '../InternshipProgressStepper'
+// import { InternshipProgressStepper } from '../InternshipProgressStepper'
 import { StageProgressStepper } from '../StageProgressStepper'
-import { Avatar, Divider } from 'antd'
+import { Divider } from 'antd'
 import { IconEmail, IconPhone, IconLocation } from '../../assets/images'
 import './style.scss'
 
@@ -30,8 +29,8 @@ const statusArray = [
 
 export const StageStepper = () => {
   return (
-    <div className='flex flex-col gap-3'>
-      <div className="flex flex-col sm:flex-row  gap-3">
+    <div className='flex flex-col'>
+      <div className="flex flex-col sm:flex-row gap-4">
         <div className='img-box-shadow'>
           <img
             src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}

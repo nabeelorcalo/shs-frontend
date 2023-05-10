@@ -1,5 +1,4 @@
 import { Divider, Button } from "antd";
-import React from "react";
 
 const personalInfoData = [
   {
@@ -35,7 +34,7 @@ const personalInfoData = [
 ];
 
 const PersonalInfo = (props: any) => {
-    const {open, setOpen} = props
+  const { open, setOpen } = props
   return (
     <div>
       <div className="font-semibold text-[28px] text-primary-color pb-2">
@@ -48,6 +47,7 @@ const PersonalInfo = (props: any) => {
             <div className="text-primary-color text-base font-medium">
               {item.title}
             </div>
+
             <div className="text-primary-color text-base font-normal">
               {item.disc}
             </div>
@@ -75,6 +75,7 @@ const PersonalInfo = (props: any) => {
             Reject
           </Button>
         </div>
+
         <div>
           <Button htmlType="submit" className="green-graph-tooltip-bg white-color ">
             Accept

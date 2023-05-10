@@ -1,12 +1,18 @@
 import "./style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Form, Input } from "antd";
+import useCustomHook from "../../actionHandler";
 
 const NewPasswordModal = (props: any) => {
   const { newPass, setNewPass, setIsChecked } = props;
+const {PostDigivalutData}=useCustomHook();
 
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
 
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
+    PostDigivalutData(values)
+  };
   return (
     <div>
       <Modal
@@ -22,17 +28,12 @@ const NewPasswordModal = (props: any) => {
         <div className="text-center mt-6 mb-6">
           <h1 className="color-[#363565]">Create New Password</h1>
         </div>
-        <Form>
+        <Form onFinish={onFinish}>
           <div>
             <label>Password</label>
             <Form.Item
               name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
+           
             >
               <Input.Password size="large" />
             </Form.Item>
@@ -41,7 +42,7 @@ const NewPasswordModal = (props: any) => {
           <div>
             <label>Confirm Password</label>
             <Form.Item
-              name="confirm"
+              name="confirmPassword"
               dependencies={["password"]}
               rules={[
                 {
@@ -68,6 +69,7 @@ const NewPasswordModal = (props: any) => {
 
           <div>
             <Button
+              htmlType="submit"
               onClick={() => {
                 setNewPass(!newPass);
                 setIsChecked(true);

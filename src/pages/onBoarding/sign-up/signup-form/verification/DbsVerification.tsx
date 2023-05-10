@@ -30,7 +30,9 @@ const DbsVerification = (props: any) => {
               <Typography className="steps">Step 2 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton />
+                  <BackButton   onClick={() => {
+                        setCurrentStep(1);
+                      }} />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -38,7 +40,6 @@ const DbsVerification = (props: any) => {
                   </Typography.Title>
                 </div>
               </div>
-
               <Typography className="steps-description">
                 Provide your background details
               </Typography>
@@ -55,8 +56,8 @@ const DbsVerification = (props: any) => {
                 ]}
                 style={{ width: "100%", marginBottom: "20px" }}
               >
-             <div className="dragger">
-                   <DragAndDropUpload/>
+                <div className="dragger">
+                  <DragAndDropUpload />
                 </div>
               </Form.Item>
               <Typography style={{ marginBottom: "20px" }}>
@@ -66,11 +67,14 @@ const DbsVerification = (props: any) => {
                 You must be 16 or over to apply. It usually takes up to 14 days
                 to receive your certificate.
               </Typography>
-              <Row gutter={[10,10]}>
+              <Row gutter={[10, 10]}>
                 <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                   <Button
+                      onClick={() => {
+                        setCurrentStep(3);
+                      }}
                     className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                  //htmlType="submit"
                   >
                     Skip
                   </Button>

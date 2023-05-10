@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Modal, TimePicker } from 'antd';
-import "./style.scss"
+import { useState } from 'react';
+import { Button, Modal, TimePicker } from 'antd';
 import { ArrowDownDark, CloseCircleIcon, UserAvatar } from '../../assets/images';
 import { CommonDatePicker,  SearchBar } from '../../components';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import { CheckBox } from '../../components/Checkbox';
+import "./style.scss"
 
 const RequestDocModel = (props: any) => {
 
@@ -37,7 +37,8 @@ const RequestDocModel = (props: any) => {
         closeIcon={<img src={CloseCircleIcon} />}
         title="Schedule Interview"
         open={open}
-        onCancel={() => setOpen(false)} footer={''} >
+        onCancel={() => setOpen(false)} 
+        footer={false}>
 
         <div className='title'><p>Date</p></div>
         <div className='dateAndTime'>
@@ -103,16 +104,14 @@ const RequestDocModel = (props: any) => {
               </div>
             </div>
           </div>
-          <div className='title'><p>Description</p></div>
-          <textarea className='input' placeholder='Describe your problem' />
-
-
+          <label className='title' htmlFor="text-area">
+            <p>Description (optional)</p>
+          </label>
+          <textarea className='input' placeholder='Describe your problem'  id='text-area'/>
         </div>
-
-
         <div className='flex mt-3 justify-end gap-4'>
-          <button onClick={() => setOpen(false)} className='reqCancelBtn'>Cancel</button>
-          <button onClick={handleReject} className='reqSubmitBtn'>Submit</button>
+          <Button onClick={() => setOpen(false)} className='reqCancelBtn'>Cancel</Button>
+          <Button onClick={handleReject} className='reqSubmitBtn'>Submit</Button>
         </div>
       </Modal>
     </div>

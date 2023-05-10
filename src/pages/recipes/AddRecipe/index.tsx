@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Typography, Input, Row, Col, Upload, Space } from 'antd'
-import { ExtendedButton, PageHeader } from "../../../components";
+import { ExtendedButton, PageHeader, Breadcrumb } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
 
@@ -44,7 +44,14 @@ const AddRecipe = () => {
     <>
       <div className="add-new-recipe">
         <PageHeader
-          title={<>Add New Recipe <span>Recipes</span></>}
+          title={
+            <Breadcrumb 
+              breadCrumbData={[
+                { name: "Add New Recipe" },
+                { name: "Recipes", onClickNavigateTo: -1 },
+              ]}  
+            />
+          }
           bordered
         />
 

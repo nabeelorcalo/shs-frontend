@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Typography } from 'antd';
+import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { BoxWrapper } from '../../components';
-import { IconButton } from '../IconButton';
-import { ArrowToLeft, ArrowToRight1 } from '../../assets/images';
 import { TopPerformanceCard } from '../TopPerformanceCard';
 import { MonthChanger } from '../MonthChanger';
 import './style.scss';
@@ -52,7 +49,7 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
 
         {
           action &&
-          <div className='flex items-center ml-auto'>
+          <div className='flex items-start ml-auto'>
             <MonthChanger
               month={state.selectedMonth}
               onClick={changeMonth}

@@ -1,173 +1,173 @@
 @import '../../scss/_colors.scss';
 
 .issue-certificate {
-    background: $teriary-bg-color !important;
-    border: 1px solid $teriary-bg-color !important;
-    border-radius: 8px;
+  background: $teriary-bg-color !important;
+  border: 1px solid $teriary-bg-color !important;
+  border-radius: 8px;
 
-    &:hover {
-        border: 1px solid $teriary-bg-color;
-        box-shadow: 0px 0px 5px 5px $certificate-btn-shadow;
-        opacity: 0.8;
-    }
+  &:hover {
+    border: 1px solid $teriary-bg-color;
+    box-shadow: 0px 0px 5px 5px $certificate-btn-shadow;
+    opacity: 0.8;
+  }
 }
 
 .certificate-top-heading {
-    color: $primary-bg-color;
-    border-bottom: 1px solid $text-error-line-color;
+  color: $primary-bg-color;
+  border-bottom: 1px solid $text-error-line-color;
 }
 
 .certificate-wrapper {
-    .input-wrapper {
-        width: 400px;
+  .input-wrapper {
+    width: 400px;
 
-        @media screen and (max-width:710px) {
-            width: 100%;
-        }
+    @media screen and (max-width:710px) {
+      width: 100%;
     }
+  }
 
-    .drop-down-wrapper,
-    .issue-certificate {
-        @media screen and (max-width:420px) {
-            width: 100%;
-        }
+  .drop-down-wrapper,
+  .issue-certificate {
+    @media screen and (max-width:420px) {
+      width: 100%;
     }
+  }
 
-    .issue-certificate {
-        @media screen and (max-width:420px) {
-            display: flex;
-            justify-content: center;
-        }
+  .issue-certificate {
+    @media screen and (max-width:420px) {
+      display: flex;
+      justify-content: center;
     }
+  }
 
-    // table style
-    .box-wrapper {
-        .primary_table_wrapper {
-            .ant-table-content {
+  // table style
+  .box-wrapper {
+    .primary_table_wrapper {
+      .ant-table-content {
 
-                .ant-table-thead,
-                .ant-table-tbody {
-                    .ant-table-cell {
-                        text-align: start;
-                        text-transform: capitalize;
-                    }
-                }
-            }
+        .ant-table-thead,
+        .ant-table-tbody {
+          .ant-table-cell {
+            text-align: start;
+            text-transform: capitalize;
+          }
         }
+      }
     }
+  }
 
 }
 
 // certificate detail
 .certificate-detail-wrapper {
-    .certificates-row {
-        @media only screen and (max-width:1600px) {
-            .ant-col {
-                &:first-child {
-                    order: 0;
-                }
-
-                &:last-child {
-                    order: 1;
-                }
-
-                &:nth-child(2) {
-                    order: 2;
-                }
-            }
+  .certificates-row {
+    @media only screen and (max-width:1599px) {
+      .ant-col {
+        &:first-child {
+          order: 0;
         }
+
+        &:last-child {
+          order: 1;
+        }
+
+        &:nth-child(2) {
+          order: 2;
+        }
+      }
+    }
+  }
+
+  .seperator {
+    width: 1px;
+    height: 32px;
+    transform: translate(90deg);
+    background-color: $primary-bg-color;
+  }
+
+  .user-info {
+    .user-name {
+      color: $text-primary-title-color;
     }
 
-    .seperator {
-        width: 1px;
-        height: 32px;
-        transform: translate(90deg);
-        background-color: $primary-bg-color;
+    .department {
+      color: $text-secondary-body-color;
     }
 
-    .user-info {
-        .user-name {
-            color: $text-primary-title-color;
-        }
+    .view-profile-btn {
+      background-color: $text-input-bg-color;
+      color: $primary-light-bg-color;
+      border: none;
 
-        .department {
-            color: $text-secondary-body-color;
-        }
+      &:hover {
+        background-color: $primary-light-bg-color;
+        color: $white-bg-color;
+      }
+    }
+  }
 
-        .view-profile-btn {
-            background-color: $text-input-bg-color;
-            color: $primary-light-bg-color;
-            border: none;
+  .over-all-performance {
+    .box-wrapper {
+      box-shadow: 0px 0px 8px 1px $dropdown-overlay-shadow !important;
 
-            &:hover {
-                background-color: $primary-light-bg-color;
-                color: $white-bg-color;
-            }
-        }
+      p:nth-child(1) {
+        margin-bottom: 30px;
+        margin-top: 0px;
+      }
+
+      p {
+        margin-top: 30px;
+      }
+    }
+  }
+
+  .total-certificates {
+    color: $text-primary-title-color;
+
+    .total-num {
+      color: $text-secondary-body-color;
+    }
+  }
+
+  .certificate-cards {
+    .title {
+      color: $text-secondary-body-color;
     }
 
-    .over-all-performance {
-        .box-wrapper {
-            box-shadow: 0px 0px 8px 1px $dropdown-overlay-shadow !important;
-
-            p:nth-child(1) {
-                margin-bottom: 30px;
-                margin-top: 0px;
-            }
-
-            p {
-                margin-top: 30px;
-            }
-        }
+    .img-overlay {
+      display: none;
+      transition: all 0.2s linear;
     }
 
-    .total-certificates {
-        color: $text-primary-title-color;
+    .img-wrapper:hover .img-overlay {
+      background-color: $certificate-card-overlay;
+      display: flex;
 
-        .total-num {
-            color: $text-secondary-body-color;
+      .eye-icon {
+        path {
+          fill: $white-bg-color;
         }
+      }
     }
-
-    .certificate-cards {
-        .title {
-            color: $text-secondary-body-color;
-        }
-
-        .img-overlay {
-            display: none;
-            transition: all 0.2s linear;
-        }
-
-        .img-wrapper:hover .img-overlay {
-            background-color: $certificate-card-overlay;
-            display: flex;
-
-            .eye-icon {
-                path {
-                    fill: $white-bg-color;
-                }
-            }
-        }
-    }
+  }
 }
 
 .signature-cancel-btn {
-    background-color: $white-bg-color;
-    color: $green-graph-tooltip-color;
-    border-color: $green-graph-tooltip-color;
+  background-color: $white-bg-color;
+  color: $green-graph-tooltip-color;
+  border-color: $green-graph-tooltip-color;
 
-    &:hover {
-        border-color: $green-graph-tooltip-color !important;
-    }
+  &:hover {
+    border-color: $green-graph-tooltip-color !important;
+  }
 }
 
 .signature-submit-btn {
-    color: $white-bg-color;
-    background-color: $green-graph-tooltip-color;
-    border-color: $green-graph-tooltip-color;
+  color: $white-bg-color;
+  background-color: $green-graph-tooltip-color;
+  border-color: $green-graph-tooltip-color;
 
-    &:hover {
-        background-color: $green-graph-tooltip-color !important;
-    }
+  &:hover {
+    background-color: $green-graph-tooltip-color !important;
+  }
 }

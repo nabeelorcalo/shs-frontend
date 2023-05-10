@@ -1,16 +1,13 @@
-import { Divider } from "antd";
 import { useState } from "react";
-import SearchBarCards from "./searhJobsCards/Header";
+import SearchBarCards from "./searhJobsCards/header/Header";
 import SearchJobTabs from "./searhJobsCards/Tabs/Tabs";
-import "./style.scss";
+import { PageHeader } from "../../components";
 
 const SearchJobs = () => {
   const [drawer, setDrawer] = useState(false);
-
   return (
     <>
-      <p className="primary-color font-semibold text-2xl">SearchJobs</p>
-      <Divider className="my-7" />
+      <PageHeader title="Search jobs"/>
       <SearchBarCards setDrawer={setDrawer} drawer={drawer} />
       <SearchJobTabs />
     </>

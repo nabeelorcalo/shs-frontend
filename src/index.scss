@@ -251,6 +251,72 @@ svg {
   }
 }
 
+
+.ant-btn.button-warning {
+  background-color: $text-warning-color;
+  border-color: $text-warning-color;
+  color: $white-bg-color;
+
+  &>svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
+
+  &:hover {
+    background-color: $text-warning-color;
+    border-color: $text-warning-color;
+    color: $white-bg-color;
+    box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
+  }
+
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: $teriary-bg-color;
+  }
+
+  &.ant-btn-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $teriary-bg-color;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
+
+.ant-btn.button-default-warning {
+  background-color: $white-bg-color;
+  border-color: $text-warning-color;
+  color: $text-warning-color;
+
+  &>svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
+
+  &:hover {
+    background-color: $white-bg-color;
+    border-color: $text-warning-color;
+    color: $text-warning-color;
+    box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
+  }
+
+  &.ant-btn-background-ghost {
+    background-color: transparent;
+    color: $teriary-bg-color;
+  }
+
+  &.ant-btn-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: $teriary-bg-color;
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+}
 .ant-btn.button-sky-blue {
   min-width: 48px;
   background-color: $text-input-bg-color;
@@ -261,6 +327,22 @@ svg {
     background-color: #ffffff;
     border-color: rgba(90, 89, 128, 0.5);
     box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+  }
+}
+
+.ant-btn-default:disabled,
+.ant-btn.button-sky-blue:disabled,
+.ant-btn.button-default-tertiary:disabled,
+.ant-btn.button-secondary:disabled {
+  background-color: $off-white-color;
+  border-color: $light-gray-thin-color;
+  color: $text-primary-disabled-color;
+
+  &:hover {
+    background-color: $off-white-color;
+    border-color: $light-gray-thin-color;
+    color: $text-primary-disabled-color;
+    box-shadow: none;
   }
 }
 

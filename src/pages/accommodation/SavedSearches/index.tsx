@@ -13,10 +13,11 @@ import useSavedPropertiesHook from "./actionHandler";
 const SavedSearches = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
   const {getSavedProperties} = useSavedPropertiesHook();
-  const savedProperties= useRecoilValue(savedPropertiesState)
-  const [loading, setLoading] = useState(false)
+  const savedProperties= useRecoilValue(savedPropertiesState);
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -34,7 +35,7 @@ const SavedSearches = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`)
+  const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`, {state: {from: location.pathname}})
 
 
 

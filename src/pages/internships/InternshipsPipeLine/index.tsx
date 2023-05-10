@@ -1,13 +1,16 @@
 import {
   SearchBar,
   PageHeader,
-  InternshipPipeLineCard
+  InternshipPipeLineCard,
+  Breadcrumb,
+  DropDown
 } from "../../../components";
 import "../style.scss";
 import { useNavigate } from 'react-router-dom';
-import { Select, Divider } from 'antd';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon } from '../../../assets/images'
-import { STATUS_CONSTANTS } from "../../../config/constants";
+import type { MenuProps } from 'antd';
+import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships } from '../../../assets/images'
+import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
+import { useState } from "react";
 
 const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
@@ -51,6 +54,14 @@ const cardArray = [
     status: "Applied",
     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
   },
+  {
+    name: "Jane Cooper",
+    rating: 4,
+    time: "2 days ago",
+    status: "Applied",
+    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
+  },
+
   {
     name: "Roman Akhmervo",
     rating: 2,
@@ -156,29 +167,56 @@ const cardArray = [
     status: "Hired",
     img: "https://faces-img.xcdn.link/image-lorem-face-3621.jpg"
   },
-
 ]
+const tempArray = [
+  { name: "Pipeline" },
+  {
+    name: "Internships",
+    onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`,
+  },
+];
+
 const InternshipPipeLine = () => {
   const navigate = useNavigate()
+  const [state, setState] = useState({
+    status: 'Publshed'
+  })
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
 
+  const changeStatus = (event: any) => {
+    const value = event.target.innerHTML
+    setState((prevState) => ({
+      ...prevState,
+      status: value
+    }))
+  }
   return (
     <>
-      <PageHeader title="Internships Pipeline" bordered />
+      <PageHeader
+        bordered
+        title={<Breadcrumb breadCrumbData={tempArray} />}
+      />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <h3>UI/UX Designer</h3>
+          <div className="flex flex-row ">
+            <h3>UI/UX Designer</h3>
+            <span
+              className='pl-4 cursor-pointer'
+              onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP + '?id=1'); }}
+            >
+              <EditIconinternships />
+            </span>
+          </div>
           <div className="flex flex-row gap-4">
-            <Select
-              defaultValue="Published"
-              style={{ width: 120 }}
-              onChange={handleChange}
+            <DropDown
+              value={state.status}
               options={[
-                { value: 'Published', label: 'Published' },
-                { value: 'Closed', label: 'Closed' },
+                "Published",
+                "Closed"
               ]}
+              setValue={() => { changeStatus(event) }}
             />
           </div>
         </div>
@@ -221,13 +259,13 @@ const InternshipPipeLine = () => {
                       <p>{items.status}</p>
                     </div>
                     <div>
-                      <div className="h-5 w-5 rounded text-off-white-bg-color">
+                      <p className="h-5 w-6 text-sm text-center rounded text-input-bg-color text-teriary-color">
                         {
-                          cardArray.filter((value) => {
+                          ('0' + cardArray.filter((value) => {
                             return (value.status === items.status);
-                          }).length
+                          }).length).slice(-2)
                         }
-                      </div>
+                      </p>
                     </div>
                   </div>
                   <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">

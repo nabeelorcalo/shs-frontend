@@ -86,7 +86,7 @@
 }
 
 .drop-down-wrapper {
-  border: 1px solid $text-error-line-color;
+  // border: 1px solid $text-error-line-color;
   border-radius: 8px;
   padding: 8px, 16px, 8px, 16px;
   background-color: #e6f4f9;
@@ -361,6 +361,24 @@
     font-size: 14px;
     color: $text-secondary-body-color;
 
+  }
+  .others{
+    .other-item{
+      background-color: #E6F4F9;
+      border-radius: 20px;
+      padding: 5px 10px;
+      transition: all 0.2s linear;
+      &:hover{
+        background-color: #14142A;
+        color: white;
+        .other-icon{
+          display: flex;
+        }
+      }
+      .other-icon{
+        display: none;
+      }
+    }
   }
 }
 

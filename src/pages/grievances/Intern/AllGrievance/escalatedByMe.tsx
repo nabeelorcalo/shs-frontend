@@ -43,7 +43,7 @@ const escalatedByMeTableColumn =
           children: (
             <div>
               <span
-                className={`rounded-md px-2 py-1 text-white text-xs font-medium ${text === 'New' ? 'new' :
+                className={`rounded-md px-2 py-1  text-white text-sm font-normal font-[outfit]  ${text === 'New' ? 'new' :
                   text === 'In Progess' ? 'in-progress' : text === 'Re-Opened' ? 're-opened' : text === 'Resolved' ? 'resolved' : ''} `}
               >
                 {text}
@@ -54,16 +54,16 @@ const escalatedByMeTableColumn =
       },
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "Action",
       render: (_: any, data: any) => (
         <Space size="middle">
-          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_Details} />
+          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} />
         </Space>
       ),
     },
   ]
-const EscalatedByMe = (props:any) => {
+const EscalatedByMe = (props: any) => {
   return (
     <GlobalTable
       columns={escalatedByMeTableColumn}

@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import "./style.scss";
+import { useState } from "react";
 import { Button, Col, Divider, Row } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components";
 import { GlobalTable } from "../../../components";
 import useCustomHook from "../actionHandler"
-
-
-
+import "./style.scss";
 
 const tableData = [
   {
@@ -46,8 +43,6 @@ const tableData = [
 
   },
 ];
-
-
 
 const columns = [
   {
@@ -130,13 +125,11 @@ const filterData = [
   },
 ];
 
-
-
 const ActivityLog = () => {
 
   const action = useCustomHook();
 
-  const csvAllColum = ["Sr.No", "Name", "Email", "PhoneNumber", "University" ,"City" , "Hired","Status"]
+  const csvAllColum = ["Sr.No", "Name", "Email", "PhoneNumber", "University", "City", "Hired", "Status"]
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
@@ -158,13 +151,13 @@ const ActivityLog = () => {
         {filterData.map((item: any, index) => {
           return (
             <div key={index}>
-              <div className="mb-2 text-primary-color font-medium text-base">
+              <div className="mb-2 text-primary-color font-medium text-base pl-2 pr-2">
                 {item.title}
               </div>
               <div className="flex flex-wrap mb-6">
                 {item.userRole.map((items: any, index: any) => {
                   return (
-                    <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer">
+                    <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer pl-2 pr-2">
                       {items}
                     </div>
                   );
@@ -192,7 +185,7 @@ const ActivityLog = () => {
       </Drawer>
 
       <Row>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+        <Col xs={24}>
           <div className="text-2xl font-semibold text-[#363565]">
             Activity Log
           </div>
@@ -200,42 +193,26 @@ const ActivityLog = () => {
 
         <Divider />
 
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <Row gutter={[10, 10]}>
-            <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
+        <Col xs={24}>
+          <Row gutter={[20, 30]}>
+            <Col xl={6} lg={9} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
             </Col>
 
-            <Col className="flex justify-end " xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
-              <div className="flex">
-                <div className="mr-4">
-                  <FiltersButton label="Filter" onClick={handleClick} />
-                </div>
-
-                <div>
-                  <DropDown
-                    options={[
-                      'pdf',
-                      'excel'
-                    ]}
-                    requiredDownloadIcon
-                    setValue={() => {
-
-                      action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
-                    }}
-                  />
-                </div>
-              </div>
+            <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+              <FiltersButton label="Filter" onClick={handleClick} />
+              <DropDown
+                options={['pdf', 'excel']}
+                requiredDownloadIcon
+                setValue={() => { action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail") }}
+              />
+            </Col>
+            <Col xs={24}>
+              <BoxWrapper>
+                <GlobalTable columns={columns} tableData={tableData} />
+              </BoxWrapper>
             </Col>
           </Row>
-        </Col>
-      </Row>
-
-      <Row className="mt-8">
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <BoxWrapper>
-            <GlobalTable columns={columns} tableData={tableData} />
-          </BoxWrapper>
         </Col>
       </Row>
     </div>

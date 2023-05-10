@@ -191,7 +191,7 @@ const Accommodation = () => {
   const handleMenuClick: MenuProps['onClick'] = (item) => {
     if(item.key) {
       setSelectedKey(item.key)
-      navigate(item.key)
+      navigate(item.key,  {state: {from: location.pathname}})
     }
   };
 
@@ -396,7 +396,19 @@ const Accommodation = () => {
               </div>
                 
               <div className="dropdown-time-frame">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown
+                  overlayClassName="shs-dropdown"
+                  placement="bottomRight"
+                  trigger={['click']}
+                  menu={{ items: [
+                    {label: 'This Week', key: 'thisWeek', onClick: () => console.log("This week")},
+                    {label: 'Last Week', key: 'lastWeek', onClick: () => console.log("Last week")},
+                    {label: 'This Month', key: 'thisMonth', onClick: () => console.log("This Month")},
+                    {label: 'Last Month', key: 'lastMonth', onClick: () => console.log("Last Month")},
+                    {label: 'Date Range', key: 'dateRange', onClick: () => console.log("Last week")},
+                  ]
+                  }}
+                >
                   <Button className="button-sky-blue">Time Frame <IconAngleDown /></Button>
                 </Dropdown>
               </div>

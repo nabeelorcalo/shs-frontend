@@ -1,4 +1,3 @@
-import "./style.scss";
 import Internee from "./intern/index"
 import CompanyAdmin from "./companyAdmin/index"
 import Manger from "./manger/index"
@@ -12,7 +11,7 @@ const Leaves = () => {
     case COMPANY_ADMIN:
       return <CompanyAdmin />
     case MANAGER:
-      return <Manger userRole={role} />
+      return <Manger/>
     case INTERN:
       return <Internee />
     default:

@@ -17,7 +17,7 @@ const DrawSignature = () => {
       </div>
       <div className='flex flex-col justify-end '>
         <hr className="w-48 h-0.5 mx-auto my-1 bg-gray-100 border-0 rounded md:my-2 dark:bg-gray-700" />
-        <p className="text-sm text-center">Draw your signature here</p>
+        <p className="text-sm text-center text-success-placeholder-color font-medium">Draw your signature here</p>
       </div>
     </div>
   );

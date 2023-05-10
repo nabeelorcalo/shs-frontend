@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Rate, Typography } from 'antd';
+import { Typography } from 'antd';
 import { BoxWrapper } from '../../components';
 import './style.scss';
 
@@ -15,21 +14,17 @@ const EmojiMoodRating = (props: EmojiProps) => {
   const { title, data, size = 3, activeIconIndex = -1, onClick } = props;
 
   return (
-    <BoxWrapper className='wrapper-shadow'>
+    <BoxWrapper>
       <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
-        <Typography.Title className='emoji-heading' level={size}>
+        <p className='font-medium text-base'>
           {title}
-        </Typography.Title>
-        <div className="flex max-sm:flex-col md:flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
+        </p>
+        <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
           {
             data.map((item: any, idx: any) => {
               return (
                 <div className='emoji-container text-[#363565]'>
-                  <div
-                    key={idx}
-                    className={`flex flex-col items-center ${idx}`}
-                    onClick={onClick}
-                  >
+                  <div key={idx} className={`flex flex-col items-center ${idx}`} onClick={onClick}>
                     {
                       activeIconIndex === idx + 1 || activeIconIndex === -1 ?
                         <item.comp className='svgIcon' />

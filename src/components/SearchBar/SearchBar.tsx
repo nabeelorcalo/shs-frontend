@@ -1,6 +1,5 @@
 import { Input as AntInput } from "antd";
 import { GlassMagnifier } from "../../assets/images";
-
 import "./style.scss";
 
 interface Props {
@@ -14,7 +13,7 @@ interface Props {
 }
 
 export const SearchBar = ({
-  size,
+  size, 
   placeholder = "Search",
   icon = <GlassMagnifier />,
   name,
@@ -33,7 +32,7 @@ export const SearchBar = ({
         placeholder={placeholder}
         prefix={icon}
         onChange={(e) => handleChange(e.target.value)}
-        {...rest}
+        {...rest} 
       />
     </div>
   );

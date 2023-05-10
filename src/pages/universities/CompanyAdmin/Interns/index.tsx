@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Divider, Menu } from 'antd'
+import { Col,Menu, Row } from 'antd'
 import { CardViewIcon, TableViewIcon } from '../../../../assets/images';
-import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications } from '../../../../components'
+import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
@@ -39,7 +39,7 @@ const index: React.FC = () => {
   const [state, setState] = useState({
     openSidebar: false,
     status: 'Select',
-    isToggle: true,
+    isToggle: false,
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -52,8 +52,10 @@ const index: React.FC = () => {
           Profile
         </NavLink>
       </Menu.Item>
-      <Menu.Item>
-        Chat
+      <Menu.Item >
+        <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
+          Chat
+        </NavLink>
       </Menu.Item>
     </Menu>
   );
@@ -66,41 +68,42 @@ const index: React.FC = () => {
   }
   return (
     <div className='company-university '>
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
-      <Divider />
-      <div className="flex flex-row justify-between gap-3 max-sm:flex-col lg:flex-row">
-        <div className="max-sm:w-full md:w-[50%] lg:w-[25%]">
-          <SearchBar size="middle" handleChange={handleChange} />
-        </div>
-        <div className='w-full flex flex-row lg:justify-end gap-2 '>
-          <div>
-            <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
-            </div>
-          <div className="">
+      <Breadcrumb breadCrumbData={breadcrumbArray} bordered={true} />
+      <Row gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar size="middle" handleChange={handleChange} placeholder='Search by name' />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
+          <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
+          <div className="flex gap-4 justify-between">
             <ToggleButton
               isToggle={state.isToggle}
               onTogglerClick={togglerClick}
-              FirstIcon={CardViewIcon}
-              LastIcon={TableViewIcon}
+              LastIcon={CardViewIcon}
+              FirstIcon={TableViewIcon}
               className="w-[88px]"
             />
-          </div>
-          <div>
             <DropDown
               requiredDownloadIcon
               options={["pdf", "excel"]}
-              setValue={() => {action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")
-              Notifications({title:"Success", description:"University interns list downloaded ",type:'success'})}}
+              setValue={() => {
+                action.downloadPdfOrCsv(event, TableColumn, dummyData, "Interns ")
+                Notifications({ title: "Success", description: "University interns list downloaded ", type: 'success' })
+              }}
             />
           </div>
-        </div>
-      </div>
-      <div className='py-3'><span className='text-base'>Total Interns:</span> <span className='text-base font-semibold'>{dummyData.length}</span></div>
-      {state.isToggle ?
-        <InternTable dummyData={dummyData} menu={menu} />
-        :
-        <InternCard dummyData={dummyData} menu={menu} />
-      }
+        </Col>
+        <Col xs={24}>
+          <div className='py-3'><span className='text-base'>Total Interns:</span> <span className='text-base font-semibold'>{dummyData.length}</span></div>
+          {state.isToggle ?
+            <InternCard dummyData={dummyData} menu={menu} />
+            :
+            <BoxWrapper>
+              <InternTable dummyData={dummyData} menu={menu} />
+            </BoxWrapper>
+          }
+        </Col>
+      </Row>
       <Drawer
         closable={() => setShowDrawer(false)}
         onClose={() => setShowDrawer(false)}
@@ -108,7 +111,7 @@ const index: React.FC = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters />
+          <Filters setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>

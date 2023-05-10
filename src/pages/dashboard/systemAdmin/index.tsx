@@ -16,7 +16,7 @@ import { useState } from "react";
 import { gutter } from "..";
 
 const SystemAdmin = () => {
-  const [isOpenRangePicker, setIsOpenRangePicker] = useState(false)
+  const [isOpenRangePicker, setIsOpenRangePicker] = useState(false);
   return (
     <Row gutter={gutter}>
       <Col xs={24} xxl={12}>
@@ -28,20 +28,22 @@ const SystemAdmin = () => {
       <Col xs={24} xxl={14}>
         <GrowthAnalyticsGraph
           graphName={"Growth Analytics"}
-          styling={{ height: 437}}
+          styling={{ height: 437 }}
           isOpenRangePicker={isOpenRangePicker}
           setIsOpenRangePicker={setIsOpenRangePicker}
         />
       </Col>
       <Col xs={24} xxl={10}>
-        <Row gutter={gutter} className="bg-white rounded-2xl p-5 wrapper-shadow">
-          <Col xs={24} xl={12}>
-            <RegionCard regionData={regionData} />
-          </Col>
-          <Col xs={24} xl={12}>
-            <UKMapChart />
-          </Col>
-        </Row>
+        <div className="bg-white rounded-2xl p-5 wrapper-shadow">
+          <Row gutter={gutter}>
+            <Col xs={24} xl={12}>
+              <RegionCard regionData={regionData} />
+            </Col>
+            <Col xs={24} xl={12}>
+              <UKMapChart />
+            </Col>
+          </Row>
+        </div>
       </Col>
       <Col xs={24} xxl={14}>
         <Row gutter={gutter}>
@@ -50,7 +52,7 @@ const SystemAdmin = () => {
               barColor="#363565"
               bgColor="#ABAFB1"
               freeSpace="GB Free"
-              heading="System Storage"
+              heading={<span className="text-xl font-medium">System Storage</span>}
               height={65}
               memoryFree="55.5"
               memoryUsed="45.5"
@@ -70,8 +72,8 @@ const SystemAdmin = () => {
       </Col>
       <Col xs={24} xxl={10}>
         <Row gutter={gutter}>
-          <Col xs={24} xl={12} xxl={24} >
-            <GaugePlot style={{height:234}} />
+          <Col xs={24} xl={12} xxl={24}>
+            <GaugePlot style={{ height: 234 }} />
           </Col>
           <Col xs={24} xl={12} xxl={24}>
             <RecentIssuesTable />
