@@ -123,13 +123,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SAWITCH);
-    // console.log(data,"responseresponseresponseresponse");
-    const userData = {
-      ...data,
-      role: data?.role
-    }
-    setCurrentUser(userData);
-    setOpen(false);
+    console.log(data,"responseresponseresponseresponse");
+    // const userData = {
+    //   ...data,
+    //   role: data?.role
+    // }
+    // setCurrentUser(userData);
+    // setOpen(false);
   }
 
   /* RENDER APP
