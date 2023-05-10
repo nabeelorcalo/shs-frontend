@@ -68,7 +68,9 @@ const NewInternships = () => {
   //   location: "",
   //   expectedClosingDate: ""
   // })
-  const { postNewInternshipsData } = useCustomHook()
+  const { postNewInternshipsData } = useCustomHook();
+  const [form] = Form.useForm();
+
   const tempArray = [
     { name: "New Internship" },
     {
@@ -77,17 +79,17 @@ const NewInternships = () => {
     },
   ];
 
-  const onChange = (e: RadioChangeEvent) => {
+  const onWorkTypeChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPartAndFullTime(e.target.value);
   };
 
-  const onChange1 = (e: RadioChangeEvent) => {
+  const onInternshipTypeChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPaidAndUnpaid(e.target.value);
   };
 
-  const onChange2 = (e: RadioChangeEvent) => {
+  const onNatureChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setRemoteOnsite(e.target.value);
   };
@@ -127,16 +129,19 @@ const NewInternships = () => {
   const onFinish = (values: any) => {
     console.log('Success:', values);
     postNewInternshipsData(values);
+    form.resetFields();
+    navigate('/internships')
   };
 
   const onSelectChange = (value: string) => {
-    console.log('slected item');
+    console.log('slected item',value);
   };
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <BoxWrapper className='new-intern-main'>
         <Form
+          form={form}
           layout='vertical'
           onFinish={onFinish}
           initialValues={{ remember: false }}
@@ -145,11 +150,11 @@ const NewInternships = () => {
           <p>This information will be displayed publicly so be careful what you share</p>
           <Divider />
           <Row className='flex flex-row flex-wrap'>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>Description</h4>
-              <p >Describe the details of internship that will be reflected on internship portal</p>
+              <p>Describe the details of internship that will be reflected on internship portal</p>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className="flex flex-col gap-6 p-4">
+            <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
               <Form.Item name="title" label="Title" rules={[{ required: true }, { type: "string" }]}>
                 <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
@@ -166,15 +171,14 @@ const NewInternships = () => {
                 <TextArea rows={6} placeholder="Write your discription of internship" />
               </Form.Item>
             </Col>
-            <Col lg={{ span: 8 }} className='p-4'></Col>
           </Row>
           <Divider />
           <Row>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>Responsibilities and Requirements</h4>
               <p>Briefly define the responsibilities and requirements of the internship</p>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-6 p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-6 p-4'>
               <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write about responsibilies of internship" />
               </Form.Item>
@@ -185,19 +189,19 @@ const NewInternships = () => {
           </Row>
           <Divider />
           <Row>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>General</h4>
               <p>Provide the details of internship</p>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-8 p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
-                <Radio.Group onChange={onChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                   <Radio value={'PART_TIME'}>Part Time</Radio>
                   <Radio value={'FULL_TIME'}>Full Time</Radio>
                 </Radio.Group>
               </Form.Item>
               <Form.Item label="Internship Type" name="internshiptype" >
-                <Radio.Group onChange={onChange1} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                <Radio.Group onChange={onInternshipTypeChange} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                   <Radio value={'UNPAID'}>Unpaid</Radio>
                   <Radio value={'PAID'}>Paid</Radio>
                 </Radio.Group>
@@ -226,7 +230,7 @@ const NewInternships = () => {
                 null
               }
               <Form.Item name="natureofwork" label="Nature of work">
-                <Radio.Group onChange={onChange2} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                <Radio.Group onChange={onNatureChange} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                   <Radio value={'VIRTUAL'}>Virtual</Radio>
                   <Radio value={'ONSITE'}>On site</Radio>
                   <Radio value={'HYBRIDE'}>Hybrid</Radio>
@@ -247,15 +251,14 @@ const NewInternships = () => {
                 null
               }
             </Col>
-            <Col span={8} className='p-4'></Col>
           </Row>
           <Divider />
           <Row>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-4'>Additional Information</h4>
               <p>Enter the additional information related to internship</p>
             </Col>
-            <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-4 p-4'>
+            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
               <Form.Item label="Total Positions" name="positions" rules={[{ required: true }, { type: "string" }]}>
                 <Input className="input" placeholder="Enter number of positions" type="text" />
               </Form.Item>

@@ -9,15 +9,16 @@ import useCustomHook from '../actionHandler'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [state, setState] = useState({
     showDrawer: false,
     status: "",
     location: "",
     department: ""
-  })
+  });
 
-  const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook()
+  const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
+  
   useEffect(() => {
     getAllInternshipsData()
   }, [])
@@ -134,7 +135,7 @@ const InternshipsCompanyAdmin = () => {
           </Col>
         </Row>
         <div className='flex flex-col gap-7'>
-          {internshipData.length === 0 ? <NoDataFound /> :
+          {internshipData.length !== 0 ? 
             internshipData?.map((item: any, idx: any) => {
               return (
                 <BoxWrapper key={idx} boxShadow>
@@ -153,9 +154,8 @@ const InternshipsCompanyAdmin = () => {
                   />
                 </BoxWrapper>
               )
-            })
+            }):<NoDataFound /> 
           }
-
         </div>
       </div>
     </>
