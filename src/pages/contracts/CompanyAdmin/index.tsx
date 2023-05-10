@@ -50,7 +50,7 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['THIS_WEEK', 'LAST_WEEK', 'THIS_MONTH', 'LAST_MONTH', 'DATE_RANGE']
+const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
@@ -82,7 +82,7 @@ const CompanyAdmin = () => {
   const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker)
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ","_"))
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -176,11 +176,12 @@ const CompanyAdmin = () => {
   };
   const statusValueHandle = (val: any) => {
     setValueStatus(val);
-    getContractList(val, valueDatePacker)
+    getContractList(val, valueDatePacker);
   }
   const handleTimeFrameValue = (val: any) => {
     setValueDatePacker(val);
-    getContractList(valueStatus, val)
+    getContractList(valueStatus, val.toUpperCase().replace(" ","_"));
+    
   }
   const tableColumns = [
     {
@@ -325,7 +326,7 @@ const CompanyAdmin = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 
           <DropDown name="Time Frame" options={timeFrameDropdownData}
-            showDatePickerOnVal={'DATE_RANGE'}
+            showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
             value={valueDatePacker}
             setValue={(e: any) => handleTimeFrameValue(e)}
