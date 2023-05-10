@@ -1,47 +1,27 @@
-import { useState, useEffect, useCallback } from "react";
-import type { RadioChangeEvent, TabsProps } from 'antd';
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import type { UploadFile } from 'antd/es/upload/interface';
-import { PageHeader, SearchBar, Notifications } from '../../../components';
+import type { RcFile } from 'antd/es/upload';
+import { PageHeader } from '../../../components';
 import { useRecoilValue } from "recoil";
 import useListingsHook from "../actionHandler";
 import { listingState } from "../../../store";
-import showNotification from '../../../helpers/showNotification';
+import TabLabel from "./TabLabel";
 import LocationForm from "./LocationForm";
 import PropertyForm from "./PropertyForm";
+import BedroomForm from "./BedroomForm";
+import RentBillingForm from "./RentBillingForm";
+import RulesReferencesForm from "./RulesReferencesForm";
+import RentalConditionsForm from "./RentalConditionsForm";
+import {Typography, Tabs, Spin} from 'antd'
 import { 
   IconLocations,
   IconPropertyDetail,
   IconBedroomDetail,
   IconRentBilling,
   IconRulesRef,
-  IconAngleDown,
   IconRentalConditon,
-  IconAddUpload,
-  IconLink,
-  IconRemoveAttachment
 } from '../../../assets/images'
-import { 
-  Button,
-  Form,
-  Input,
-  Row,
-  Col,
-  Typography,
-  Radio,
-  Select,
-  Checkbox,
-  Upload,
-  InputNumber,
-  Switch,
-  Tabs,
-  Spin
-} from 'antd'
 import "./style.scss";
-import BedroomForm from "./BedroomForm";
-
-
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -58,17 +38,9 @@ const ListingUpdate = () => {
   -------------------------------------------------------------------------------------*/
   const {listingId} = useParams();
   const [tabKey, setTabKey] = useState('locations')
-  const { getListing, updateListing } = useListingsHook();
+  const { getListing } = useListingsHook();
   const singleListing:any = useRecoilValue(listingState);
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true)
-  const [uploadURL, setUploadURL] = useState(false)
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [updateLoading, setUpdateLoading] = useState<boolean>();
   
 
   /* EVENT LISTENERS
@@ -79,45 +51,16 @@ const ListingUpdate = () => {
 
   useEffect(() => {
     getListing(listingId, setLoading);
-    console.log("UseEffect: ", singleListing);
   }, [tabKey])
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleSubmission = useCallback(
-    (result:any) => {
-      if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
-      } else {
-        showNotification("success", "Success", result.response?.message);
-      }
-    },
-    [form]
-  );
-
-  const submitUpdateListing = useCallback(async () => {
-    var values;
-    try {
-      values = await form.validateFields();
-    } catch (errorInfo) {
-      return;
-    }
-    setUpdateLoading(true);
-    const result = await updateListing(listingId, values);
-    setDisabled(true)
-    setUpdateLoading(false);
-    handleSubmission(result);
-  }, [form, handleSubmission]);
 
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function onUpdateLocation(values: any) {
-    console.log('Success:', values);
-  }
-
   function onTabChange(activeKey:any) {
     setTabKey(activeKey)
   }
@@ -130,540 +73,42 @@ const ListingUpdate = () => {
       <div className="agent-listing-update">
         <PageHeader title="Edit Listing" />
         <div className="listing-edit-content">
-          <Tabs tabPosition="left" onChange={onTabChange}>
-            <Tabs.TabPane
-              key="locations" 
-              tab={
-                <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconLocations /> Locations</div>
-                  <Typography.Paragraph>
-                    Please enter the location you are interested in renting
-                  </Typography.Paragraph>
-                </div>
-              }
-            >
-              <div className="tabs-pane-card">
-                <Spin spinning={loading}>
-                  {singleListing?.length !== 0 &&
-                  <>
-                  <div className="tabs-pane-card-title">
-                    <Typography.Title level={4}>
-                      Location
-                    </Typography.Title>
-                  </div>
-                  <div className="tabs-pane-card-body">
-                    <LocationForm
-                      initValues={singleListing}
-                      listingId={listingId}
-                    />
-                  </div>
-                  </>
-                  }
-                </Spin>
-              </div>
-            </Tabs.TabPane>
-
-            <Tabs.TabPane 
-              key="propertyDetails"
-              tab={
-                <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconPropertyDetail />Property Details</div>
-                  <Typography.Paragraph>
-                  Describe the property details, such as what type of property you want to rent out.
-                  </Typography.Paragraph>
-                </div>
-              }
-            >
-              <div className="tabs-pane-card">
-                <Spin spinning={loading}>
-                {singleListing?.length !== 0 &&
-                <>
-                  <div className="tabs-pane-card-title">
-                    <Typography.Title level={4}>
-                      Property Details
-                    </Typography.Title>
-                  </div>
-                  <div className="tabs-pane-card-body">
-                    <PropertyForm
-                      initValues={singleListing}
-                      listingId={listingId}
-                    />
-                  </div>
-                </>
-                }
-                </Spin>
-              </div>
-            </Tabs.TabPane>
-
-            <Tabs.TabPane 
-              key="bedroomDetails"
-              tab={
-                <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconBedroomDetail />Bedroom Details</div>
-                  <Typography.Paragraph>
-                    Describe the bedroom in detail, such as what type of bed is available, No. of people are allowed to stay.
-                  </Typography.Paragraph>
-                </div>
-              }
-            >
-              <div className="tabs-pane-card">
-                <Spin spinning={loading}>
-                {singleListing?.length !== 0 &&
-                <>
-                  <div className="tabs-pane-card-title">
-                    <Typography.Title level={4}>
-                      Bedroom Details
-                    </Typography.Title>
-                  </div>
-                  <div className="tabs-pane-card-body">
-                    <BedroomForm
-                      initValues={singleListing}
-                      listingId={listingId}
-                    />
-                  </div>
-                </>
-                }
-                </Spin>
-              </div>
-            </Tabs.TabPane>
-
-            <Tabs.TabPane 
-              key="rentBillings"
-              tab={
-                <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconRentBilling />Rent & Billing</div>
-                  <Typography.Paragraph>
-                    Provide information about the monthly rental and preferred method of payment 
-                  </Typography.Paragraph>
-                </div>
-              }
-            >
-              <div className="tabs-pane-card">
-                <Spin spinning={loading}>
-                {singleListing?.length !== 0 &&
-                <>
-                  <div className="tabs-pane-card-title">
-                    <Typography.Title level={4}>
-                      Rent & Billing
-                    </Typography.Title>
-                  </div>
-                  <div className="tabs-pane-card-body">
-                    <Form
-                      form={form}
-                      requiredMark={false}
-                      layout="vertical"
-                      name="updateRentBilling"
-                      initialValues={singleListing}
-                      onValuesChange={(_, values) => {
-                        setDisabled(false)
-                        console.log('Rent & Billing : all values::: ', values)
-                      }}
-                      onFinish={submitUpdateListing}
-                      >
-                      <Row gutter={30}>
-                        <Col xs={24}>
-                          <Form.Item name="rentFrequency" label="Rent Frequency" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="day">Day</Select.Option>
-                              <Select.Option value="week">Week</Select.Option>
-                              <Select.Option value="month">Month</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="rent " label="Rent" rules={[{ required: true }]}>
-                            <InputNumber
-                              placeholder="Placeholder"
-                              onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                  event.preventDefault();
-                                }
-                              }}
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="paymentMethod" label="Payment Method" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Credit/Debit card">Credit/Debit card</Select.Option>
-                              <Select.Option value="Cash">Cash</Select.Option>
-                              <Select.Option value="Cheque">Cheque</Select.Option>
-                              <Select.Option value="IBFT">IBFT</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="hasSecurityDeposit" label="Is there security deposit?">
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="depositType" label="Which kind of deposit?">
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="halfMonth">Half month</Select.Option>
-                              <Select.Option value="fullMonth">Full month</Select.Option>
-                              <Select.Option value="fixed">Fixed</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="minimumStay" label="Minimum Stay" rules={[{ required: true }]}>
-                            <InputNumber
-                              placeholder="Placeholder"
-                              onKeyPress={(event) => {
-                                if (!/[0-9]/.test(event.key)) {
-                                  event.preventDefault();
-                                }
-                              }}
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
-                            <Switch size="small" />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="electricityBillPayment" label="Ho do you want to charge electricity bill?">
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Included">Included</Select.Option>
-                              <Select.Option value="Included(up to a limit)">Included(up to a limit)</Select.Option>
-                              <Select.Option value="Pay landlord(fixed amount)">Pay landlord(fixed amount)</Select.Option>
-                              <Select.Option value="Pay landlord(for amount used)">Pay landlord(for amount used)</Select.Option>
-                              <Select.Option value="Pay provider(for amount used)">Pay provider(for amount used)</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="waterBillPayment" label="Ho do you want to charge water bill?">
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Included">Included</Select.Option>
-                              <Select.Option value="Included(up to a limit)">Included(up to a limit)</Select.Option>
-                              <Select.Option value="Pay landlord(fixed amount)">Pay landlord(fixed amount)</Select.Option>
-                              <Select.Option value="Pay landlord(for amount used)">Pay landlord(for amount used)</Select.Option>
-                              <Select.Option value="Pay provider(for amount used)">Pay provider(for amount used)</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="gasBillPayment" label="Ho do you want to charge gas bill?">
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Included">Included</Select.Option>
-                              <Select.Option value="Included(up to a limit)">Included(up to a limit)</Select.Option>
-                              <Select.Option value="Pay landlord(fixed amount)">Pay landlord(fixed amount)</Select.Option>
-                              <Select.Option value="Pay landlord(for amount used)">Pay landlord(for amount used)</Select.Option>
-                              <Select.Option value="Pay provider(for amount used)">Pay provider(for amount used)</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item className="form-btn-right">
-                            <Button disabled={disabled} loading={updateLoading} htmlType="submit" className="button-tertiary">Update</Button>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </div>
-                </>
-                }
-                </Spin>
-              </div>
-            </Tabs.TabPane>
-
-            <Tabs.TabPane 
-              key="rulesReferences"
-              tab={
-                <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconRulesRef />Rules & References</div>
-                  <Typography.Paragraph>
-                    Provide details about any specific rules/preferences  for the rental property
-                  </Typography.Paragraph>
-                </div>
-              }
-            >
-              <div className="tabs-pane-card">
-                <Spin spinning={loading}>
-                {singleListing?.length !== 0 &&
-                <>
-                  <div className="tabs-pane-card-title">
-                    <Typography.Title level={4}>
-                      Rules & Prefrences
-                    </Typography.Title>
-                  </div>
-                  <div className="tabs-pane-card-body">
-                    <Form
-                      form={form}
-                      requiredMark={false}
-                      layout="vertical"
-                      name="updateRulesPrefrences"
-                      initialValues={singleListing}
-                      onValuesChange={(_, values) => {
-                        setDisabled(false)
-                        console.log('Rules & References ;; all values::: ', values)
-                      }}
-                      onFinish={submitUpdateListing}
-                    >
-                      <Row gutter={30}>
-                        <Col xs={24}>
-                          <Form.Item name="gender" label="Do you prefer tenants have a specific gender" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Male">Male</Select.Option>
-                              <Select.Option value="Female">Female</Select.Option>
-                              <Select.Option value="Mixed">Mixed</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="maxAgePreference" label="What is the maximum age of your preferred tenants?" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Less than 60">Less than 60</Select.Option>
-                              <Select.Option value="Less than 40">Less than 40</Select.Option>
-                              <Select.Option value="Less than 30">Less than 30</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="tenantTypePreference" label="What kind of tenants would you prefer?" rules={[{ required: true }]}>
-                            <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Students">Students</Select.Option>
-                              <Select.Option value="Working professionals">Working professionals</Select.Option>
-                              <Select.Option value="No preferences">No preferences</Select.Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="couplesAllowed" label="Are couples allowed to rent your property?" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="tenantsCanRegisterAddress" label="Can tenants register to your address?" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="petsAllowed" label="Are tenants allowed to have pets in your property?" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="musicalInstrumentsAllowed" label="Can tenants play musical instrument in your property?" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={true}>Yes</Radio>
-                                </Col>
-                                <Col xs={24} md={24} xl={12}>
-                                  <Radio value={false}>No</Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <div className="documents-from-tenants">
-                            <Typography.Title level={3}>Documents From tenants</Typography.Title>
-                            <Typography.Paragraph>Select document what you need from the tenants to accept their booking requests. If you do not select any option now, you can still ask tenants for these documents later when booking is confirmed</Typography.Paragraph>
-                          </div>
-                          {/* <Form.Item name="selectDocument">
-                            <Checkbox.Group>
-                              <div className="select-doc-checkbox">
-                                <Checkbox value="proofOfIdentity">Proof of identity</Checkbox>
-                                <div className="select-doc-checkbox-help">Government issued ID, passport, driver’s license.</div>
-                              </div>
-                              <div className="select-doc-checkbox">
-                                <Checkbox value="proofOfOccupationEnrollment">Proof of occupation or enrollment</Checkbox>
-                                <div className="select-doc-checkbox-help">University enrolment certificate, Internship or employee contract. </div>
-                              </div>
-                              <div className="select-doc-checkbox">
-                                <Checkbox value="proofOfIncome">Proof of income</Checkbox>
-                                <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
-                              </div>
-                            </Checkbox.Group>
-                          </Form.Item> */}
-                          <Form.Item name="identityProofRequired" valuePropName="checked" rules={[{ required: true }]}>
-                            <div className="select-doc-checkbox">
-                              <Checkbox>Proof of identity</Checkbox>
-                              <div className="select-doc-checkbox-help">Government issued ID, passport, driver’s license.</div>
-                            </div>
-                          </Form.Item>
-                          <Form.Item name="occupationProofRequired" valuePropName="checked" rules={[{ required: true }]}>
-                            <div className="select-doc-checkbox">
-                              <Checkbox>Proof of occupation or enrollment</Checkbox>
-                              <div className="select-doc-checkbox-help">University enrolment certificate, Internship or employee contract. </div>
-                            </div>
-                          </Form.Item>
-                          <Form.Item name="incomeProofRequired" valuePropName="checked" rules={[{ required: true }]}>
-                            <div className="select-doc-checkbox">
-                              <Checkbox>Proof of income</Checkbox>
-                              <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
-                            </div>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item className="form-btn-right">
-                            <Button disabled={disabled} loading={updateLoading} htmlType="submit" className="button-tertiary">Update</Button>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </div>
-                </>
-                }
-                </Spin>
-              </div>
-            </Tabs.TabPane>
-
-            <Tabs.TabPane 
-              key="rentalConditions"
-              tab={
-                <div className="listing-edit-nav-item">
-                  <div className="listing-edit-nav-title"><IconRentalConditon />Rental Conditions</div>
-                  <Typography.Paragraph>
-                    Provide details about any specific rules/preferences  for the rental property
-                  </Typography.Paragraph>
-                </div>
-              }
-            >
-              <div className="tabs-pane-card">
-                <Spin spinning={loading}>
-                {singleListing?.length !== 0 &&
-                <>
-                  <div className="tabs-pane-card-title">
-                    <Typography.Title level={4}>
-                      Rental Conditions
-                    </Typography.Title>
-                  </div>
-                  <div className="tabs-pane-card-body rental-condition-body">
-                    <Form
-                      form={form}
-                      requiredMark={false}
-                      layout="vertical"
-                      name="updateRentalConditions"
-                      initialValues={singleListing}
-                      onValuesChange={(_, values) => {
-                        setDisabled(false)
-                        console.log('Rental Conditions all values::: ', values)
-                      }}
-                      onFinish={submitUpdateListing}
-                    >
-                      <Row gutter={30}>
-                        <Col xs={24}>
-                          <Form.Item name="contractType" label="Contract type" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                                  <Radio value="day">
-                                    <div className="radio-card-content">
-                                      <div className="radio-card-label">Daily</div>
-                                      <div className="radio-card-content-text">In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.</div>
-                                    </div>
-                                  </Radio>
-                                </Col>
-                                <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                                  <Radio value="week">
-                                    <div className="radio-card-content">
-                                      <div className="radio-card-label">Weekly</div>
-                                      <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
-                                    </div>
-                                  </Radio>
-                                </Col>
-                                <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                                  <Radio value="month">
-                                    <div className="radio-card-content">
-                                      <div className="radio-card-label">Monthly</div>
-                                      <div className="radio-card-content-text">The tenant will always pay the entire month's rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.</div>
-                                    </div>
-                                  </Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item name="cancellationPolicy" label="Cancellation policy" rules={[{ required: true }]}>
-                            <Radio.Group>
-                              <Row gutter={[30,20]}>
-                                <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
-                                  <Radio value="standard">
-                                    <div className="radio-card-content">
-                                      <div className="radio-card-label">Standard Cancellation</div>
-                                      <div className="radio-card-content-text">
-                                        <div>if tenant cancels a booking:</div>
-                                        <div>- Within 24 hours of confirmation - Full refund of the first month's rent</div>
-                                        <div>- After 24 hours of confirmation - No refund</div>
-                                      </div>
-                                    </div>
-                                  </Radio>
-                                </Col>
-                                <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
-                                  <Radio value="flexible">
-                                    <div className="radio-card-content">
-                                      <div className="radio-card-label">Flexible cancellation</div>
-                                      <div className="radio-card-content-text">
-                                        <div>If tenant cancels a booking within 24 hours of confirmation</div>
-                                        <div>- Full refund of the first month's rent.</div>
-                                        <div>If the tenant cancels a booking when move-in date is:</div>
-                                        <div>- More than 30 days away - Fill refund of first month's rent</div>
-                                        <div>- 30 to 7 days away - 50% refund of first month's rent</div>
-                                      </div>
-                                    </div>
-                                  </Radio>
-                                </Col>
-                              </Row>
-                            </Radio.Group>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24}>
-                          <Form.Item className="form-btn-right">
-                            <Button disabled={disabled} loading={updateLoading} htmlType="submit" className="button-tertiary">Update</Button>
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                    </Form> 
-                  </div>
-                </>
-                }
-                </Spin>
-              </div>
-            </Tabs.TabPane>
-          </Tabs>
+          <Tabs 
+            tabPosition="left"
+            onChange={onTabChange}
+            items={[
+              {
+                key: 'locations',
+                label: <TabLabel icon={<IconLocations />} title="Locations" desc="Please enter the location you are interested in renting" />,
+                children: <LocationForm spin={loading} initValues={singleListing} listingId={listingId} />
+              },
+              {
+                key: 'propertyDetails',
+                label: <TabLabel icon={<IconPropertyDetail />} title="Property Details" desc="Describe the property details, such as what type of property you want to rent out." />,
+                children: <PropertyForm spin={loading} initValues={singleListing} listingId={listingId} />
+              },
+              {
+                key: 'bedroomDetails',
+                label: <TabLabel icon={<IconBedroomDetail />} title="Bedroom Details" desc="Describe the bedroom in detail, such as what type of bed is available, No. of people are allowed to stay." />,
+                children: <BedroomForm spin={loading} initValues={singleListing} listingId={listingId} />
+              },
+              {
+                key: 'rentBillings',
+                label: <TabLabel icon={<IconRentBilling />} title="Rent & Billing" desc="Provide information about the monthly rental and preferred method of payment " />,
+                children: <RentBillingForm spin={loading} initValues={singleListing} listingId={listingId} />
+              },
+              {
+                key: 'rulesReferences',
+                label: <TabLabel icon={<IconRulesRef />} title="Rules & References" desc="Provide details about any specific rules/preferences  for the rental property" />,
+                children: <RulesReferencesForm spin={loading} initValues={singleListing} listingId={listingId} />
+              },
+              {
+                key: 'rentalConditions',
+                label: <TabLabel icon={<IconRentalConditon />} title="Rental Conditions" desc="Describe the rental conditions, such as the type of contract and cancellation policy" />,
+                children: <RentalConditionsForm spin={loading} initValues={singleListing} listingId={listingId} />
+              },
+            ]}
+          />
         </div>
       </div>
     </>
