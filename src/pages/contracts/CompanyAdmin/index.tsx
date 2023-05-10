@@ -50,8 +50,8 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['All', 'THIS_WEEK', 'LAST_WEEK', 'THIS_MONTH', 'LAST_MONTH', 'DATE_RANGE']
-const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
+const timeFrameDropdownData = ['THIS_WEEK', 'LAST_WEEK', 'THIS_MONTH', 'LAST_MONTH', 'DATE_RANGE']
+const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -78,11 +78,11 @@ const CompanyAdmin = () => {
   const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
-  const [valueDatePacker, setValueDatePacker] = useState("THIS_WEEK");
-  const {getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
+  const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus,valueDatePacker)
+    getContractList(valueStatus, valueDatePacker)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -97,6 +97,9 @@ const CompanyAdmin = () => {
         break;
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
+        break;
+      case 'NEW':
+        return <CustomDroupDown menu1={news(item.id)} />
         break;
     }
   }
@@ -137,8 +140,26 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  const news = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => Notifications({
+          title: 'Success',
+          description: 'Contract sent', type: 'success'
+        })}>Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
   const rejected = (val: any) => {
-
     <Menu>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">
         View Details</Menu.Item>
@@ -155,11 +176,11 @@ const CompanyAdmin = () => {
   };
   const statusValueHandle = (val: any) => {
     setValueStatus(val);
-    getContractList(val,valueDatePacker)
+    getContractList(val, valueDatePacker)
   }
   const handleTimeFrameValue = (val: any) => {
     setValueDatePacker(val);
-    getContractList(valueStatus ,val)
+    getContractList(valueStatus, val)
   }
   const tableColumns = [
     {
@@ -262,6 +283,7 @@ const CompanyAdmin = () => {
       }
     )
   })
+  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0,10)}&endDate=${valueDatePacker.slice(13,23)}` : valueDatePacker)
   return (
     <div className="contract-company-admin">
       <Alert
@@ -303,7 +325,7 @@ const CompanyAdmin = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 
           <DropDown name="Time Frame" options={timeFrameDropdownData}
-            showDatePickerOnVal={'Date Range'}
+            showDatePickerOnVal={'DATE_RANGE'}
             requireRangePicker placement="bottom"
             value={valueDatePacker}
             setValue={(e: any) => handleTimeFrameValue(e)}
