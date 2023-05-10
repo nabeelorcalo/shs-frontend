@@ -52,6 +52,7 @@ export const ROUTES_CONSTANTS: any = {
   INTERNSHIP_PIPELINE: "internships/pipeline",
   NEW_INTERNSHIP: "new-internship",
   VIEW_INTERNSHIP_DETAILS: "view-internship-details",
+  EDIT_INTERNSHIP:"edit-internship",
   PAYROLL: "payroll",
   PAYROLL_DETAILS: "payroll/payroll-details",
   VIEW_PAYROLL_SALARY_SLIP: "payroll/payroll-details/view-payroll-details",

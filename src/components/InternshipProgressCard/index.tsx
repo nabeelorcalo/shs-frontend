@@ -66,7 +66,7 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft ? {
         key: '3',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate('pipeline',{ state: id }) }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,{ state: id }) }}>
             Pipeline
           </a>
         ),
@@ -90,7 +90,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '6',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.EDIT_INTERNSHIP,{ state: id }); }}>
             Edit
           </a>
         ),
