@@ -320,9 +320,8 @@ const Listings = () => {
               name="propertyType"
               label="How will you rent your property?"
               rules={[{ required: true }]}
-
             >
-              <Radio.Group onChange={onChangeRadioProperty}>
+              <Radio.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={24}>
                     <Radio value="Entire Property" >Entire Property</Radio>
@@ -390,8 +389,8 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="notAvailable">Not available</Select.Option>
-                <Select.Option value="central">Central</Select.Option>
+                <Select.Option value="Not available">Not available</Select.Option>
+                <Select.Option value="Central">Central</Select.Option>
                 <Select.Option value="indvidualUnits">Indvidual units</Select.Option>
               </Select>
             </Form.Item>
@@ -403,9 +402,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="heatingNotAvailable">Not available</Select.Option>
-                <Select.Option value="centralProperty">Central Property</Select.Option>
-                <Select.Option value="centralBuilding">Central building</Select.Option>
+                <Select.Option value="Not available">Not available</Select.Option>
+                <Select.Option value="Central">Central Property</Select.Option>
+                <Select.Option value="Indvidual units">Central building</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -416,10 +415,10 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="heatedWaterSystemNo">No</Select.Option>
-                <Select.Option value="naturalGas">Natural gas</Select.Option>
-                <Select.Option value="heatedWaterSystemElectric">Electric</Select.Option>
-                <Select.Option value="heatedWaterSystemCenteral">Centeral property</Select.Option>
+                <Select.Option value="No">No</Select.Option>
+                <Select.Option value="Natural gas">Natural gas</Select.Option>
+                <Select.Option value="Electric">Electric</Select.Option>
+                <Select.Option value="Centeral property">Centeral property</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -556,10 +555,10 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="typeFuton">Futon</Select.Option>
-                <Select.Option value="typeAirbed">Airbed</Select.Option>
-                <Select.Option value="typeWaterbed">Waterbed</Select.Option>
-                <Select.Option value="typeQueenBed">Queen bed</Select.Option>
+                <Select.Option value="Futon">Futon</Select.Option>
+                <Select.Option value="Airbed">Airbed</Select.Option>
+                <Select.Option value="Waterbed">Waterbed</Select.Option>
+                <Select.Option value="Queen bed">Queen bed</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -568,10 +567,10 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="allowedYes">Yes</Radio>
+                    <Radio value={true}>Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="allowedNo">No</Radio>
+                    <Radio value={false}>No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -628,9 +627,18 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
+            <Form.Item name="rentFrequency" label="Rent Frequency" rules={[{ required: true }]}>
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="day">Day</Select.Option>
+                <Select.Option value="week">Week</Select.Option>
+                <Select.Option value="month">Month</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
             <Form.Item
-              name="monthlyRent"
-              label="Monthly Rent"
+              name="rent"
+              label="Rent"
               rules={[{ required: true }]}
             >
               <InputNumber
@@ -651,10 +659,10 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="creditDebitCard">Credit/Debit card</Select.Option>
-                <Select.Option value="cash">Cash</Select.Option>
-                <Select.Option value="chegue">Cheque</Select.Option>
-                <Select.Option value="ibft">IBFT</Select.Option>
+                <Select.Option value="Credit/Debit Card">Credit/Debit card</Select.Option>
+                <Select.Option value="Cash">Cash</Select.Option>
+                <Select.Option value="Cheque">Cheque</Select.Option>
+                <Select.Option value="IBFT">IBFT</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -663,10 +671,10 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="yes">Yes</Radio>
+                    <Radio value={true}>Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="no">No</Radio>
+                    <Radio value={false}>No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -679,9 +687,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="depositHalfMont">Half month</Select.Option>
-                <Select.Option value="depositfullMonth">Full month</Select.Option>
-                <Select.Option value="depositFixed">Fixed</Select.Option>
+                <Select.Option value="Half month">Half month</Select.Option>
+                <Select.Option value="Full month">Full month</Select.Option>
+                <Select.Option value="Fixed">Fixed</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -718,8 +726,8 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
-              <Switch onChange={onChangeSwitch} checked={billsIncluded} size="small" />
+            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
+              <Switch size="small" />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -729,11 +737,11 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="electricityIcluded">Included</Select.Option>
-                <Select.Option value="electricityIcludedLimit">Included(up to a limit)</Select.Option>
-                <Select.Option value="electricityPayLandlordFixed">Pay landlord(fixed amount)</Select.Option>
-                <Select.Option value="electricityPayLandlordAmount">Pay landlord(for amount used)</Select.Option>
-                <Select.Option value="payProvider">Pay provider(for amount used)</Select.Option>
+                <Select.Option value="Included">Included</Select.Option>
+                <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -744,11 +752,11 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="waterIcluded">Included</Select.Option>
-                <Select.Option value="waterIcludedLimit">Included(up to a limit)</Select.Option>
-                <Select.Option value="waterPayLandlordFixed">Pay landlord(fixed amount)</Select.Option>
-                <Select.Option value="waterPayLandlordAmount">Pay landlord(for amount used)</Select.Option>
-                <Select.Option value="waterPayProvider">Pay provider(for amount used)</Select.Option>
+                <Select.Option value="Included">Included</Select.Option>
+                <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -759,11 +767,11 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="gasIcluded">Included</Select.Option>
-                <Select.Option value="gasIcludedLimit">Included(up to a limit)</Select.Option>
-                <Select.Option value="gasPayLandlordFixed">Pay landlord(fixed amount)</Select.Option>
-                <Select.Option value="gasPayLandlordAmount">Pay landlord(for amount used)</Select.Option>
-                <Select.Option value="gasPayProvider">Pay provider(for amount used)</Select.Option>
+                <Select.Option value="Included">Included</Select.Option>
+                <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -799,9 +807,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="Less than 60">Less than 60</Select.Option>
-                <Select.Option value="Less than 40">Less than 40</Select.Option>
                 <Select.Option value="Less than 30">Less than 30</Select.Option>
+                <Select.Option value="Less than 40">Less than 40</Select.Option>
+                <Select.Option value="Less than 60">Less than 60</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -812,9 +820,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="tenantStudents">Students</Select.Option>
-                <Select.Option value="tenantProfessional">Working professionals</Select.Option>
-                <Select.Option value="tenantsNoPreferences">No preferences</Select.Option>
+                <Select.Option value="Students">Students</Select.Option>
+                <Select.Option value="Working professionals">Working professionals</Select.Option>
+                <Select.Option value="No preferences">No preferences</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -953,7 +961,7 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={8}>
-                    <Radio value="daily">
+                    <Radio value="Daily">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Daily</div>
                         <div className="radio-card-content-text">In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.</div>
@@ -961,7 +969,7 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={8}>
-                    <Radio value="fortnightly">
+                    <Radio value="Fortnightly">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Fortnightly</div>
                         <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
@@ -969,7 +977,7 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={8}>
-                    <Radio value="monthly">
+                    <Radio value="Monthly">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Monthly</div>
                         <div className="radio-card-content-text">The tenant will always pay the entire month's rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.</div>
@@ -989,7 +997,7 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="standardCancellation">
+                    <Radio value="Standard Cancellation">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Standard Cancellation</div>
                         <div className="radio-card-content-text">
@@ -1001,9 +1009,9 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="clexibleCancellation">
+                    <Radio value="Flexible Cancellation">
                       <div className="radio-card-content">
-                        <div className="radio-card-label">Flexible cancellation</div>
+                        <div className="radio-card-label">Flexible Cancellation</div>
                         <div className="radio-card-content-text">
                           <div>If tenant cancels a booking within 24 hours of confirmation</div>
                           <div>- Full refund of the first month's rent.</div>
@@ -1024,6 +1032,7 @@ const Listings = () => {
     {
       key: 'step7',
       content: <div className="step-publish">
+        {JSON.stringify(listingValues)}
         <div className="step-content-header">
           <div className="step-content-header-title">All Ready to publish!</div>
           <Typography.Title level={2}>Before you finish....</Typography.Title>
@@ -1057,7 +1066,6 @@ const Listings = () => {
         ...form.getFieldsValue()
       }
     })
-    console.log('listingValues:: ', listingValues)
     setCurrent(current + 1);
     setNextDisabled(true);
     console.log('listingValues:: ', listingValues)
@@ -1120,8 +1128,9 @@ const Listings = () => {
   }
 
   const validateStepFour = (values: any) => {
-    const { monthlyRent, paymentMethod, depositType, depositAmount, minimumStay, electricityBillPayment, waterBillPayment, gasBillPayment } = values;
-    if (monthlyRent != null
+    const { rentFrequency, rent, paymentMethod, depositType, depositAmount, minimumStay, electricityBillPayment, waterBillPayment, gasBillPayment } = values;
+    if (rent != null
+      && rentFrequency != null && rentFrequency !== ""
       && paymentMethod != null && paymentMethod !== ""
       && depositType != null && depositType !== ""
       && depositAmount != null
@@ -1146,9 +1155,9 @@ const Listings = () => {
       && tenantsCanRegisterAddress != null
       && petsAllowed != null
       && musicalInstrumentsAllowed != null
-      && identityProofRequired != null
-      && occupationProofRequired != null
-      && incomeProofRequired != null
+      && (identityProofRequired != undefined
+      || occupationProofRequired != undefined
+      || incomeProofRequired != undefined)
     ) {
       setNextDisabled(false)
     } else {
@@ -1168,8 +1177,8 @@ const Listings = () => {
   }
 
   const onValuesChange = (changedValues: any, allValues: any) => {
-    // console.log(changedValues, " single Field changed  value ")
     console.log(allValues, "All form values ")
+    allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false)
     if (current === 0) {
       validateStepOne(allValues)
     } else if (current === 1) {
