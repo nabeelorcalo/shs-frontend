@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState, dublicateInternshipState } from '../../store';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
 
@@ -14,6 +14,7 @@ const useCustomHook = () => {
   const { GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP, DUBLICATE_INTERNSHIP } = apiEndpints
   const { state } = useLocation();
+  const navigate = useNavigate()
 
   useEffect(() => {
     debouncedResults.cancel();
@@ -26,8 +27,8 @@ const useCustomHook = () => {
   //post new Internship
   const postNewInternshipsData = async (values: any) => {
     const {
-      title, department, description, responsibilities,
-      requirements, typeofwork, internshiptype, frequency,
+      title, description, responsibilities,
+      requirements, typeofwork, frequency,
       amount, natureofwork, location, positions, datePicker, duration } = values
     const internshipData = {
       "companyId": 1,
@@ -46,20 +47,24 @@ const useCustomHook = () => {
       "totalPositions": Number(positions),
       "closingDate": datePicker,
       "duration": duration,
-      "status": "PENDING"
+      "status": "PENDING",
+      "location":{
+        "name":location
+      }
     }
-    const { data } = await api.post(POST_NEW_INTERNSHIP, internshipData);
+    await api.post(POST_NEW_INTERNSHIP, internshipData);
     console.log("data are ", values);
-    setInternshipData(data)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship Added", type: "success" })
+    navigate('/internships')
   };
 
   //dublicate internship
   const getDublicateInternship = async (val: any) => {
-    const { data } = await api.post(`${DUBLICATE_INTERNSHIP}?id=${val}`);
+    await api.post(`${DUBLICATE_INTERNSHIP}?id=${val}`);
     console.log("dublicated intership is", val);
-    setInternshipData(data)
-    // Notifications({ title: "Success", description: "Internship Dublicated", type: "success" })
+    getAllInternshipsData()
+    Notifications({ title: "Success", description: "Internship Dublicated", type: "success" })
   }
 
   const getInternshipDetails = async () => {
@@ -99,5 +104,6 @@ const useCustomHook = () => {
     getDublicateInternship
   };
 };
+
 
 export default useCustomHook;

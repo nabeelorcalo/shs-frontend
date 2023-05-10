@@ -28,7 +28,7 @@ const amountOptions = [
   },
 ]
 const locationOptions = [
-  { valeu: 'Eidinburg', label: "Eidinburg" },
+  { value: 'Eidinburg', label: "Eidinburg" },
   { value: 'Glasgow', label: "Glasgow" },
   { value: 'London', label: "London" },
 ]
@@ -130,7 +130,6 @@ const NewInternships = () => {
     console.log('Success:', values);
     postNewInternshipsData(values);
     form.resetFields();
-    navigate('/internships')
   };
 
   const onSelectChange = (value: string) => {

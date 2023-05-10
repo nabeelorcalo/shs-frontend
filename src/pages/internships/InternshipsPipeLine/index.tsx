@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { SearchBar,PageHeader,InternshipPipeLineCard,Breadcrumb,DropDown} from "../../../components";
+import { SearchBar, PageHeader, InternshipPipeLineCard, Breadcrumb, DropDown } from "../../../components";
 import { useNavigate } from 'react-router-dom';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships,ClosedStatus,SuccessStatus } from '../../../assets/images';
-
+import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships, ClosedStatus, SuccessStatus } from '../../../assets/images';
 import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import "../style.scss";
-
 // const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
 const statusArray = [
@@ -176,12 +174,12 @@ const InternshipPipeLine = () => {
   const [state, setState] = useState({
     status: 'Published'
   })
-  const {getInternshipDetails,internshipDetails} : any = useCustomHook()
+
+  const { getInternshipDetails, internshipDetails }: any = useCustomHook()
   useEffect(() => {
     getInternshipDetails()
   }, [])
-  console.log(internshipDetails);
-  
+
   // const handleChange = (value: string) => {
   //   console.log(`selected ${value}`);
   // };
@@ -195,7 +193,7 @@ const InternshipPipeLine = () => {
   }
   return (
     <>
-      <PageHeader  bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
+      <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="flex flex-row ">
@@ -237,7 +235,7 @@ const InternshipPipeLine = () => {
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
+            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" />
           </div>
           <div className="flex flex-row gap-4">
             Total Candidate: {cardArray.length}

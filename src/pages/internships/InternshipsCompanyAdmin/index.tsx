@@ -147,7 +147,7 @@ const InternshipsCompanyAdmin = () => {
                     internType={item.internType}
                     postedBy={item.postedBy}
                     locationType={item.locationType}
-                    locationName={item.locationName}
+                    location={item.location.name}
                     createdAt={item.createdAt}
                     closingDate={item.closingDate}
                     interns={item.interns}
