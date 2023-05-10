@@ -1,31 +1,52 @@
 /// <reference path="../../../jspdf.d.ts" />
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-// import html2canvas from "html2canvas";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
-import constants from "../../config/constants";
 import csv from '../../helpers/csv';
-// Chat operation and save into store
+import { useRecoilState } from 'recoil';
+import { getLeaveStateAtom } from '../../store/leave';
+import { useEffect } from 'react';
+import endpoints from '../../config/apiEndpoints';
+import dayjs from 'dayjs';
+const { GET_LEAEV_LIST } = endpoints;
+
+ /* Custom Hook For Functionalty 
+  -------------------------------------------------------------------------------------*/
+
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const date= dayjs().format("YYYY-MM-DD");
+  const [getLeaveState, setLeaevState] = useRecoilState(getLeaveStateAtom);
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
-  // Submit Leave Request Function For Intrnee
+
+ /* Get Data For Leave Calander 
+  -------------------------------------------------------------------------------------*/
+
+  useEffect(() => {
+    const getLeave = async () => {
+      const response: any = await api.get(GET_LEAEV_LIST, { page: 1, limit: 5, currentDate: `${date}`, filterType: "THIS_MONTH" })
+      setLeaevState(response?.data)
+    }
+    getLeave();
+  }, [])
+
+   /*  Submit Leave Request Function For Intrnee
+  -------------------------------------------------------------------------------------*/
+
   const submitLeaveRequest = () => {
     alert("Submit Leave Function goes here");
   }
+     /*  Download PDF Or CSV File InHIstory Table 
+  -------------------------------------------------------------------------------------*/
+
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -35,8 +56,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ key, 	requestDate, start, end,leaveType, description, status }: any) =>
-      [key, 	requestDate, start, end,leaveType, description, status ]
+    const body = data.map(({ key, requestDate, start, end, leaveType, description, status }: any) =>
+      [key, requestDate, start, end, leaveType, description, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -86,9 +107,9 @@ const useCustomHook = () => {
   };
   return {
     getData,
+    getLeaveState,
     submitLeaveRequest,
     downloadPdfOrCsv,
-    // handleDownloadPdfExcel
   };
 };
 

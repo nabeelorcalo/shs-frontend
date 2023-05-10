@@ -4,6 +4,8 @@ const endpoints = {
   INTERN_DASHBOARD: "dashboard",
   GET_AGENT_PROPERTIES: "property/get-agent-properties",
   ADD_PROPERTY: "property/add-property",
+  GET_PROPERTY: "property/get-property?propertyId=",
+  UPDATE_PROPERTY: "/property/update-property?propertyId=",
   GET_AVAILABLE_PROPERTIES: "property/get-available-properties",
   GET_SAVED_PROPERTIES: "property/get-saved-properties",
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
@@ -25,5 +27,14 @@ const endpoints = {
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT:"/digivault/reset-vault-password",
+  GET_LIST_INTERNSHIP:'/internship/listInternships',
+  GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
+  DEL_INTERNSHIP:'/internship/deleteInternship',
+  DUBLICATE_INTERNSHIP:'/internship/duplicateInternship',
+  POST_NEW_INTERNSHIP:'/internship/createInternship',
+  // End Point For Leaev Module For Intrne 
+  CREATE_LEAVE:"/Leaves/create",
+  GET_LEAEV_LIST:`/Leaves/list`,
+
 }
 export default endpoints;

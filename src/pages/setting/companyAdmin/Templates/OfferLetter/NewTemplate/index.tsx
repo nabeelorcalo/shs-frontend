@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  Divider,
-  Button,
-  Form,
-  Row,
-  Col,
-  Space,
-  Input,
-  Typography,
-} from "antd";
+import { Divider, Button, Form, Row, Col, Space, Input, Typography } from "antd";
 import ReactQuill, { Quill } from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
@@ -29,19 +20,16 @@ const NewTemplateOfferLetter = () => {
   const [form] = Form.useForm();
   const [textEditorValue, setTextEditorValue] = useState();
   const onChangeHandler = (e: any) => {
-    setTextEditorValue(e)
-  }
-  const onFinish = (values: any) => { }
+    setTextEditorValue(e);
+  };
+  const onFinish = (values: any) => {};
 
   return (
     <div className="offer-letter-new-template">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical"
-          form={form}
-          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+        <Form layout="vertical" form={form} validateMessages={DEFAULT_VALIDATIONS_MESSAGES} onFinish={onFinish}>
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -67,27 +55,25 @@ const NewTemplateOfferLetter = () => {
               >
                 <Input placeholder="Enter subject" className="input-style" />
               </Form.Item>
-              <Form.Item
-                name="description"
-                label="Description (optional)"
-              >
+              <Form.Item name="description" label="Description (optional)">
                 <div className="text-input-bg-color rounded-lg  my-2 text-editor">
-                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+                  <ReactQuill
+                    theme="snow"
+                    value={textEditorValue}
+                    onChange={onChangeHandler}
+                    modules={textEditorData}
+                  />
                 </div>
               </Form.Item>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-          <Button danger size="middle" type="primary" onClick={() => form.resetFields()}>
-              <NavLink to={ `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`} className="border-0">
+            <Button danger size="middle" type="primary" onClick={() => form.resetFields()}>
+              <NavLink to={`${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`} className="border-0">
                 Cancel
               </NavLink>
             </Button>
-            <Button
-              size="middle"
-              className="teriary-bg-color white-color add-button"
-              htmlType="submit"
-            >
+            <Button size="middle" className="teriary-bg-color white-color add-button" htmlType="submit">
               Add
             </Button>
           </Space>

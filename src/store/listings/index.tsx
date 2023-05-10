@@ -1,8 +1,8 @@
 import { atom, selector } from "recoil";
 
-export const listingLoadingState = atom({
-  key: 'listingLoadingState',
-  default: false
+export const listingState = atom({
+  key: 'listingState',
+  default: []
 })
 
 export const listingsState = atom({

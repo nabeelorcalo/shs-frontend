@@ -1,22 +1,35 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../../api";
-import constants from "../../../config/constants";
+import endpoints from "../../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { propertyState } from "../../../store";
 
-// Chat operation and save into store
-const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+const usePropertyHook = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const { GET_PROPERTY } = endpoints;
+  const [property, setProperty] = useRecoilState(propertyState)
+
+
+  // Get Property
+  const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`${GET_PROPERTY}${id}`);
+      if(!res.error) {
+        const { data } = res;
+        setProperty(data)
+      }
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return {
-    getData,
+    getProperty,
   };
 };
 
-export default useCustomHook;
+export default usePropertyHook;
