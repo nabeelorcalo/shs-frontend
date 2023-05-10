@@ -1,6 +1,6 @@
 const endpoints = {
   LOGIN: "auth/login",
-  LOGOUT:"/auth/logout",
+  LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
   GET_AGENT_PROPERTIES: "property/get-agent-properties",
   ADD_PROPERTY: "property/add-property",
@@ -18,10 +18,12 @@ const endpoints = {
   FORGOTPASSWORD: '/auth/forgot-password',
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   GET_CONTRACT_LIST: '/Contract/list',
-  DEL_CONTRACT:'/Contract/delete',
-  STUDENT_INTRNE_SAWITCH:"auth/student-intern-switch",
+  DEL_CONTRACT: '/Contract/delete',
+  STUDENT_INTRNE_SAWITCH: "auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
-  PROFILE_CHANGE_PASSWORD:"/auth/change-password",
-  STUDENT_DIGIVAULT:"/digivault/get-dashboard"
+  PROFILE_CHANGE_PASSWORD: "/auth/change-password",
+  STUDENT_DIGIVAULT: "/digivault/get-dashboard",
+  POST_DIGIVAULT: "/digivault/set-new-vault-password",
+  POST_REST_DIGIVAULT:"/digivault/reset-vault-password",
 }
 export default endpoints;

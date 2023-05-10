@@ -18,10 +18,6 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  Gallery,
-  Doc,
-  Video,
-  File,
   SettingIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "./dropDownCustom";
@@ -34,7 +30,7 @@ const manageVaultArr = [
     id: "1",
     titleImg: EducationImg,
     subImg: EducationImgSub,
-    Title: "Education",
+    title: "Education",
     subTitle: "Manage your educational documents",
     path: "education",
     bgcolor: "#4CA4FD",
@@ -43,7 +39,7 @@ const manageVaultArr = [
     id: "2",
     titleImg: BAnkingImg,
     subImg: BAnkingImgSub,
-    Title: "Banking",
+    title: "Banking",
     subTitle: "Manage your banking documents",
     path: "banking",
     bgcolor: "#5D89F2",
@@ -52,7 +48,7 @@ const manageVaultArr = [
     id: "3",
     titleImg: HealthImg,
     subImg: HealthImgSub,
-    Title: "Health",
+    title: "Health",
     subTitle: "Manage your health documents",
     path: "health",
     bgcolor: "#5D89F4",
@@ -61,7 +57,7 @@ const manageVaultArr = [
     id: "4",
     titleImg: TransImg,
     subImg: TransImgSub,
-    Title: "Transportation",
+    title: "Transportation",
     subTitle: "Manage your transportation documents",
     path: "transport",
     bgcolor: "#5D89F8",
@@ -70,7 +66,7 @@ const manageVaultArr = [
     id: "5",
     titleImg: GovImg,
     subImg: GovImgSub,
-    Title: "Government",
+    title: "Government",
     subTitle: "Manage your government documents",
     path: "government",
     bgcolor: "#5D89F8",
@@ -78,7 +74,7 @@ const manageVaultArr = [
   {
     id: "6",
     titleImg: Other,
-    Title: "Others",
+    title: "Others",
     subTitle: "Manage your others documents",
     path: "others",
     bgcolor: "#5D89F8",
@@ -121,6 +117,7 @@ const DigiVaultStudent = () => {
     getData()
   }, [])
   const studentStorage: any = studentVault?.storage;
+
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
@@ -215,20 +212,19 @@ const DigiVaultStudent = () => {
               Manage your vault
             </div>
             <Row gutter={[15, 15]} className="p-7">
-              {studentVault?.dashboardFolders?.map((item: any, index: number) => {
-                { console.log(item, "items") }
+              {manageVaultArr?.map((item: any, index: number) => {
+                {console.log(item,"items");}
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <p>{item.title}</p>
-
                     <DigivaultCard
-                      // index={index}
-                      // bgColor={item.bgcolor}
-                      // onClick={() => navigate()}
-                      // TitleImg={item.titleImg}
-                      // SubImg={item.subImg}
+                      index={index}
+                      bgColor={item.bgcolor}
+                      onClick={() => navigate(item.path)}
+                      TitleImg={item.titleImg}
+                      SubImg={item.subImg}
                       title={item.title}
-                    // subTitle={item.subTitle}
+                      subTitle={item.subTitle}
                     />
                   </Col>
                 );
