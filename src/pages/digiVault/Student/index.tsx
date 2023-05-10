@@ -116,9 +116,10 @@ const DigiVaultStudent = () => {
   const [isChecked, setIsChecked] = useState(false);
   const [newPass, setNewPass] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const { getData, studentVault }: any = useCustomHook();
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+
   useEffect(() => {
-    getData()
+    getDigiVaultDashboard()
   }, [])
   const studentStorage: any = studentVault?.storage;
   const menu1 = (
@@ -216,7 +217,6 @@ const DigiVaultStudent = () => {
             </div>
             <Row gutter={[15, 15]} className="p-7">
               {studentVault?.dashboardFolders?.map((item: any, index: number) => {
-                { console.log(item, "items") }
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <p>{item.title}</p>

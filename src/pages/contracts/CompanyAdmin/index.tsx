@@ -79,7 +79,7 @@ const CompanyAdmin = () => {
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("THIS_WEEK");
-  const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  const {getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
     getContractList(valueStatus,valueDatePacker)
