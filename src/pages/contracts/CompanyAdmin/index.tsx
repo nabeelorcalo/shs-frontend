@@ -228,8 +228,8 @@ const CompanyAdmin = () => {
         No: contractList?.length < 10 && `0 ${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
-            item.status === "rejected" || item.status === "Changes requested" ?
-              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "Signed" ?
+            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
                 (<img src={Signed} alt="img" width={40} height={40} />) :
                 (<img src={Recevied} alt="img" width={40} height={40} />)
           }

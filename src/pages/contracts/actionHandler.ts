@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { contractsListData } from "../../store";
 import endpoints from "../../config/apiEndpoints";
@@ -9,6 +10,7 @@ import dayjs from "dayjs";
 const useCustomHook = () => {
   const { GET_CONTRACT_LIST, DEL_CONTRACT } = endpoints;
   const [contractList, setContractList] = useRecoilState(contractsListData);
+  const [loading, setLoading] = useState(false);
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
   //get contracts
@@ -24,6 +26,9 @@ const useCustomHook = () => {
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
     const { data } = await api.get(GET_CONTRACT_LIST, query);
     setContractList(data)
+    if (data) {
+      setLoading(true)
+    }
   };
 
   //search contracts
@@ -39,18 +44,23 @@ const useCustomHook = () => {
     }
     const { data } = await api.get(GET_CONTRACT_LIST, params);
     setContractList(data);
+    if (data) {
+      setLoading(true)
+    }
   }
 
   //delete contracts
   const deleteContractHandler = async (val: any) => {
     const { data } = await api.delete(`${DEL_CONTRACT}/${val}`);
-    getContractList(null, 'THIS_MONTH')
-    let query = Object.entries(val).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-    console.log("delete data are ", data);
-    Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
+    if (data) {
+      getContractList(null, 'THIS_MONTH')
+      let query = Object.entries(val).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
+      Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
+      setLoading(true)
+    }
   }
   return {
-    getContractList, contractList, searchHandler, deleteContractHandler
+    getContractList, contractList, searchHandler, deleteContractHandler,loading
   };
 };
 
