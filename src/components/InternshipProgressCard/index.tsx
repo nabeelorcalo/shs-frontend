@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
-  const { id, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
+  const { item, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
   const [decline, setDecline] = useState(false)
   const [deleteInternship, setDeleteInternship] = useState(false)
   const { deleteInternshipData,getDuplicateInternship } = useCustomHook();
@@ -40,7 +40,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '1',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
-            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: id })
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: item.id })
           }}>
             View details
           </a>
@@ -66,7 +66,7 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft ? {
         key: '3',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,{ state: id }) }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,{ state: item.id }) }}>
             Pipeline
           </a>
         ),
@@ -90,9 +90,9 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '6',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.EDIT_INTERNSHIP,{ state: id }); }}>
-            Edit
-          </a>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP,{ state: item }); }}>
+          Edit
+        </a>
         ),
       },
       {
@@ -106,7 +106,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '8',
         label: (
-          <a rel="noopener noreferrer" onClick={()=>{handleDublicate(id)}}>
+          <a rel="noopener noreferrer" onClick={()=>{handleDublicate(item.id)}}>
             Duplicate
           </a>
         ),
@@ -226,7 +226,7 @@ export const InternshipProgressCard = (props: any) => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
-              onClick={() => handleDelete(id)}
+              onClick={() => handleDelete(item.id)}
             >
               Delete
             </Button>

@@ -173,7 +173,7 @@ const InternshipsCompanyAdmin = () => {
               return (
                 <BoxWrapper key={idx} boxShadow>
                   <InternshipProgressCard
-                    id={item.id}
+                    item={item}
                     title={item.title}
                     status={item.status}
                     department={item.departmentData.name}

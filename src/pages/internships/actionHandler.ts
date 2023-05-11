@@ -3,34 +3,33 @@ import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
 const useCustomHook = () => {
   const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
   const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
-
-  const { 
+  const navigate = useNavigate()
+  const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
-    DEL_INTERNSHIP, POST_NEW_INTERNSHIP, 
-    DUPLICATE_INTERNSHIP,EDIT_INTERNSHIP } = apiEndpints
+    DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
+    DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP } = apiEndpints
   const { state } = useLocation();
 
   useEffect(() => {
     debouncedResults.cancel();
   });
   //get all internship data
-  const getAllInternshipsData = async (event:any) => {
-    const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, status: event? event:null });
+  const getAllInternshipsData = async (event: any) => {
+    const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, status: event ? event : null });
     setInternshipData(data);
   };
   //post new Internship
   const postNewInternshipsData = async (values: any) => {
-    const {
-      title, description, responsibilities,
-      requirements, typeofwork,frequency,
-      amount, natureofwork, positions, datePicker, duration } = values
+    const { title, description, responsibilities, requirements, typeofwork, frequency,
+      amount, natureofwork, positions, closingDate, duration, internshiptype } = values
     const internshipData = {
       "companyId": 1,
       "title": title,
@@ -41,25 +40,31 @@ const useCustomHook = () => {
       "internType": typeofwork,
       "locationType": natureofwork,
       "locationId": 1,
-      "salaryType": "PAID",
+      "salaryType": internshiptype,
       "salaryFrequency": frequency,
       "salaryCurrency": "$",
       "salaryAmount": Number(amount),
       "totalPositions": Number(positions),
-      "closingDate": datePicker,
+      "closingDate": closingDate,
       "duration": duration,
       "status": "PENDING"
     }
-    await api.post(POST_NEW_INTERNSHIP, internshipData);
-    Notifications({ title: "Success", description: "Internship Added", type: "success" })
+
+    const { data } = await api.post(POST_NEW_INTERNSHIP, internshipData);
+    if (data) {
+      Notifications({ title: "Success", description: "Internship Added", type: "success" })
+      navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
+    }
+
+
   };
   // edit internship 
   const EditNewInternshipsData = async (values: any) => {
     const {
       title, description, responsibilities,
-      requirements, typeofwork,frequency,
-      amount, natureofwork, positions, 
-      datePicker, duration } = values
+      requirements, typeofwork, frequency,
+      amount, natureofwork, positions,
+      datePicker, duration, internshipType } = values
     const internshipData = {
       "companyId": 1,
       "title": title,
@@ -70,7 +75,7 @@ const useCustomHook = () => {
       "internType": typeofwork,
       "locationType": natureofwork,
       "locationId": 1,
-      "salaryType": "PAID",
+      "salaryType": internshipType,
       "salaryFrequency": frequency,
       "salaryCurrency": "$",
       "salaryAmount": Number(amount),
@@ -97,7 +102,7 @@ const useCustomHook = () => {
   };
 
   //delete internship
-  const deleteInternshipData = async (id: any, ) => {
+  const deleteInternshipData = async (id: any,) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
     getAllInternshipsData(null)
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
