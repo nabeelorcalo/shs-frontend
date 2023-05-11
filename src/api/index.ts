@@ -13,8 +13,6 @@ const axiosInstance = axios.create({
 });
 const accessToken = localStorage.getItem("accessToken");
 const rememberMe = localStorage.getItem("isrememberme");
-const refreshToken = localStorage.getItem("refreshToken");
-const cognitoId = localStorage.getItem("cognitoId");
 
 axiosInstance.interceptors.request.use(
   function (config) {
@@ -35,65 +33,6 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// set new code
-
-// axios.interceptors.response.use(
-//   (response) => response,
-
-//   async (error) => {
-//     const { config: originalReq, response } = error;
-
-//     const rememberMe = localStorage.getItem("isrememberme");
-
-//     const token = localStorage.getItem("accessToken");
-
-//     if (
-//       token &&
-//       originalReq.url !== `${'endpoints.rememberMe'}` &&
-//       !originalReq.isRetryAttempt &&
-//       response &&
-//       response.status === 401 &&
-//       rememberMe === "true"
-//     ) {
-//       const refreshToken = localStorage.getItem("refreshToken") ?? "";
-//       const  cognitoId  = localStorage.getItem('cognitoId');
-//       try {
-//         originalReq.isRetryAttempt = true;
-//         const response = await axios.post(
-//           `${baseURL}/${'endpoints.rememberMe'}`,
-//           { username: cognitoId, refreshToken: refreshToken }
-//         );
-//         localStorage.setItem("accessToken",response?.data?.data?.accessToken);
-//         originalReq.headers[
-//           "Authorization"
-//         ] = `Bearer ${response.data.data.accessToken}`;
-//         return await axios(originalReq);
-//       } catch (e: any) {
-//         if (
-//           (e.response && e.response.status === 401) ||
-//           e.response?.data?.message === "token_refresh_error"
-//         ) {
-//           window.localStorage.clear();
-
-//           return (window.location.href = `/signIn?message=session_expired`);
-//         }
-//         throw e;
-//       }
-//     } else {
-//       if (
-//         response?.data?.message === "token_decode_unauthorized" ||
-//         (response && response.status === 401)
-//       ) {
-//         window.localStorage.clear();
-
-//         return (window.location.href = `/signIn?message=session_expired`);
-//       }
-
-//       throw error;
-//     }
-//   }
-// );
 
 const handleResponse = (response: any) => response.data;
 const handleError = (error: any) => {

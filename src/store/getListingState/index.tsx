@@ -1,7 +1,5 @@
 import { atom, selector } from "recoil";
 
-
-
 export const getListingState = atom({
   key: 'getListingState',
   default: []

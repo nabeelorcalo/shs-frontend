@@ -6,8 +6,8 @@ import useCustomHook from "../actionHandler";
 
 const ManagerInfo = () => {
   const navigate = useNavigate();
-  const getCuurentManager = useCustomHook();
-  const managerCard = getCuurentManager.getCuurentManager;
+  const getCurentManager = useCustomHook();
+  const managerCard = getCurentManager.getCurentManager;
   console.log("?>?>?>?>?>", managerCard)
 
   return (

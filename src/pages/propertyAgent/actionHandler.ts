@@ -10,7 +10,7 @@ const useCustomHook = () => {
   const [propertListingData, setPropertListingData] = useRecoilState(getListingState);
   const [totalData, setTotalData] = useRecoilState(getPropertAgents);
  
-  const { PROPERTY_GET_LISTING_STATS } = apiEndpints;
+  const { PROPERTY_GET_LISTING_STATS,  PROPERTY_Get_TOTAL_AGENTS } = apiEndpints;
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
     setPropertListingData(data);
@@ -20,8 +20,6 @@ const useCustomHook = () => {
     }, [])
   
   // propertagents
-
-  const { PROPERTY_Get_TOTAL_AGENTS } = apiEndpints;
   const propertGetTotalAgents= async () => {
     const { data } = await api.get(PROPERTY_Get_TOTAL_AGENTS );
     setTotalData(data);

@@ -23,7 +23,7 @@ const endpoints = {
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
   PROPERTY_Get_TOTAL_AGENTS :"/property/get-property-agents",
-  STUDENT_INTRNE_SAWITCH: "auth/student-intern-switch",
+  STUDENT_INTRNE_SAWITCH: "/auth/student-intern-switch",
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN:"/manager_manager/get-company-manager-list"
 }

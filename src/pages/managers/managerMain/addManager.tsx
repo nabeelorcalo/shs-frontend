@@ -26,8 +26,7 @@ const AddManager = () => {
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    const { firstname, lastname, gender, email, phoneNumber, title, department, postCode, address, city,
-      country } = values;
+    const { firstname, lastname, gender, email, phoneNumber, title, department, postCode, address, city,country } = values;
 
     action.addManagerCompany({
       firstName: firstname,
@@ -42,7 +41,6 @@ const AddManager = () => {
       city: city,
       country: country
     })
-    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
   };
 
   return (

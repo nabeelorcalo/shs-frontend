@@ -98,8 +98,7 @@ const SigninForm = (props: any) => {
               >
                 <Checkbox
                   checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)
-                  }
+                  onChange={(e) => setRememberMe(e.target.checked)}
                 >
                   <span className="text-teriary-color text-base font-normal">Remember me</span></Checkbox>
               </Form.Item>
