@@ -21,7 +21,6 @@ const endpoints = {
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   GET_CONTRACT_LIST: '/Contract/list',
   DEL_CONTRACT: '/Contract/delete',
-  STUDENT_INTRNE_SAWITCH: "auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
@@ -32,6 +31,7 @@ const endpoints = {
   DEL_INTERNSHIP:'/internship/deleteInternship',
   DUBLICATE_INTERNSHIP:'/internship/duplicateInternship',
   POST_NEW_INTERNSHIP:'/internship/createInternship',
+  STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   // End Point For Leaev Module For Intrne 
 
   CREATE_LEAVE:"/Leaves/create",

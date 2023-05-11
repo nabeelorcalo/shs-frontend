@@ -77,7 +77,8 @@ const Calendar = () => {
                 title="Leave Request"
                 open={isAddModalOpen}
                 setIsAddModalOpen={setIsAddModalOpen}
-                subMitLeaveBtn={action.submitLeaveRequest}
+                onsubmitLeaveRequest={action.onsubmitLeaveRequest}
+                onLeaveFormValuesChange={action.onLeaveFormValuesChange}
             />
         </>
     )

@@ -8,13 +8,13 @@ import { getLeaveStateAtom } from '../../store/leave';
 import { useEffect } from 'react';
 import endpoints from '../../config/apiEndpoints';
 import dayjs from 'dayjs';
-const { CALANDER_LEAEV_LIST } = endpoints;
+const { CALANDER_LEAEV_LIST,CREATE_LEAVE } = endpoints;
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
 
 const useCustomHook = () => {
-  const date = dayjs().format("YYYY-MM-DD");
+  // const date = dayjs().format("YYYY-MM-DD");
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(getLeaveStateAtom);
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -22,11 +22,6 @@ const useCustomHook = () => {
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
-   const getCalendar = (date:any)=>{
-    console.log(date,"date");
-    
-
-   }
   const getCalendarLeaveList = async () => {
     const response: any = await api.get(CALANDER_LEAEV_LIST, { startDate: "2023-04-11", endDate: "2023-05-11", internId: "1" })
     setCalanderLeaevState(response?.data)
@@ -37,9 +32,26 @@ const useCustomHook = () => {
 
   /*  Submit Leave Request Function For Intrnee
  -------------------------------------------------------------------------------------*/
-
-  const submitLeaveRequest = () => {
-    alert("Submit Leave Function goes here");
+  const onLeaveFormValuesChange = async (singleValues: any, allValues: any) => {
+    // console.log(singleValues);
+    console.log(allValues, "allValues");
+  }
+  const onsubmitLeaveRequest = async (values:any) => {
+    const initailVal = {
+      internId :1,
+      companyId :1,
+      type : values?.type,
+      durationType : values?.durationType ,
+      dateFrom : dayjs(values?.dateFrom).format("YYYY-MM-DD"),
+      dateTo : dayjs(values?.dateTo).format("YYYY-MM-DD"),
+      timeFrom:values?.timeFrom,
+      timeTo: values?.timeTo,
+      reason : values?.reason,
+      // media: values?.media
+    }
+    console.log(initailVal,"valuesvalues from the form ");
+    const response: any = await api.post(CREATE_LEAVE,initailVal)
+    console.log(response,"response Create Leave");
   }
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
@@ -112,8 +124,8 @@ const useCustomHook = () => {
   return {
     getData,
     getCalanderLeaveState,
-    getCalendar,
-    submitLeaveRequest,
+    onLeaveFormValuesChange,
+    onsubmitLeaveRequest,
     downloadPdfOrCsv,
   };
 };

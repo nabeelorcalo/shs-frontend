@@ -32,10 +32,10 @@ const props: UploadProps = {
 };
 // Leave Request Form Select Oprion Array
 const leavRequestOptionDAta = [
-  { value: '1', label: 'Sick' },
-  { value: '2', label: 'Casual' },
-  { value: '3', label: 'Work From Home' },
-  { value: '4', label: 'Medical' },
+  { value: 'SICK', label: 'Sick' },
+  { value: 'CASUAL', label: 'Casual' },
+  { value: 'WFH', label: 'Work From Home' },
+  { value: 'MEDIAL', label: 'Medical' },
 ]
 
 //  Function to Change Uploaded  File Icon inLeave Request Form  
@@ -44,19 +44,19 @@ const leavRequestOptionDAta = [
 // };
 export const LeaveRequest = (props: any) => {
   const initailVal = {
-    leaveType: '',
-    leaveTypeDay: '',
-    start: '',
-    end: '',
+    type : '',
+    durationType : 'FULL_DAY',
+    dateFrom : '',
+    dateTo : '',
     days: '',
     timeFrom: '',
     timeTo: "",
     hours: '',
-    reason: "",
-    attachment: ''
+    reason : "",
+    media: ''
   }
 
-  const { title, open, setIsAddModalOpen, subMitLeaveBtn, data } = props;
+  const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data,onLeaveFormValuesChange } = props;
   // console.log(openModal);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
@@ -86,10 +86,13 @@ export const LeaveRequest = (props: any) => {
         layout='vertical'
         form={form}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        initialValues={initailVal}
+        onValuesChange={onLeaveFormValuesChange}
+        onFinish={onsubmitLeaveRequest}
       >
         <Form.Item
           label="Leave Type"
-          name="leavetype"
+          name="type"
           rules={[{ required: true }]}
         >
           <Select
@@ -101,16 +104,16 @@ export const LeaveRequest = (props: any) => {
           />
         </Form.Item>
         <Form.Item
-          name="radio"
+          name="durationType"
         >
-          <Radio.Group onChange={(e: any) => setRequestLeave(e.target.value)} defaultValue="FullDay">
-            <Radio value="FullDay">Full Day</Radio>
-            <Radio value="HalfDay">Half Day</Radio>
+          <Radio.Group onChange={(e: any) => setRequestLeave(e.target.value)} defaultValue="FULL_DAY">
+            <Radio value="FULL_DAY" defaultChecked>Full Day</Radio>
+            <Radio value="HALF_DAY">Half Day</Radio>
           </Radio.Group>
         </Form.Item>
         <Row gutter={[10, 10]}>
           <Col lg={8}>
-            <Form.Item name="datefrom" label="Date From" rules={[{ required: true }]}>
+            <Form.Item name="dateFrom" label="Date From" rules={[{ required: true }]}>
               <CommonDatePicker
                 name="Date Picker1"
                 open={openStartDate}
@@ -132,7 +135,7 @@ export const LeaveRequest = (props: any) => {
             </Form.Item>
           </Col>
           <Col lg={8}>
-            <Form.Item name="days" label="Days ">
+            <Form.Item  label="Days ">
               <Input
                 placeholder="enter a number "
                 maxLength={16}
@@ -141,7 +144,7 @@ export const LeaveRequest = (props: any) => {
             </Form.Item>
           </Col>
         </Row>
-        {requestLeave === "HalfDay" &&
+        {requestLeave === "HALF_DAY" &&
           <Row gutter={[10, 10]}>
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
@@ -164,7 +167,7 @@ export const LeaveRequest = (props: any) => {
               </Form.Item>
             </Col>
             <Col lg={8}>
-              <Form.Item name="hours" label="Hours">
+              <Form.Item  label="Hours">
                 <Input
                   placeholder="enter a number "
                   maxLength={16}
@@ -177,7 +180,7 @@ export const LeaveRequest = (props: any) => {
         <Form.Item name="reason" label='Reason' rules={[{ required: true }]} >
           <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
         </Form.Item>
-        <Form.Item label="Attachment" name='attachment'>
+        <Form.Item label="Attachment" name='media'>
           <Dragger
             accept={ROUTES_CONSTANTS.AcceptedFileTyp}
             beforeUpload={() => false}
@@ -195,7 +198,6 @@ export const LeaveRequest = (props: any) => {
         <Form.Item wrapperCol={{ offset: 13, span: 11 }}>
           <div className='flex items-center justify-between'>
             <Button
-
               className='Leave_request_Canclebtn'
               label="Cancle"
               onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
@@ -205,7 +207,6 @@ export const LeaveRequest = (props: any) => {
             <Button
               className='Leave_request_SubmitBtn'
               label="Submit"
-              onClick={subMitLeaveBtn}
               type="primary"
               htmlType="submit"
             />
