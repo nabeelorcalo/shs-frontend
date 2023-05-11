@@ -8,12 +8,10 @@ export const DragAndDropUpload = () => {
   const inputRef: any = useRef();
   const handleDragOver = (event: any) => {
     event.preventDefault()
-    console.log("drag over")
   }
   const handleDropped = (event: any) => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files))
-    console.log("Dropped")
   }
   return (
     <>

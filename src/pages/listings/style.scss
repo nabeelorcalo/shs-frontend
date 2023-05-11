@@ -12,176 +12,182 @@
   }
 }
 
-.ant-modal.modal-add-listings {
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-  height: calc(100vh - 80px);
+.ant-modal-wrap.modal-add-listings {
   top: 80px;
 
-  .ant-modal-content {
+  .ant-modal {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    position: static;
     height: 100%;
-    border-radius: 0;
-
-    .ant-modal-body {
+  
+    .ant-modal-content {
       height: 100%;
-    }
-  }
-
-  .modal-add-listing-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    .ant-radio-group {
-      display: block;
-
-      .ant-radio-wrapper {
-        display: block;
-        min-height: 48px;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        border: 1px solid $text-error-line-color;
-        border-radius: 8px;
-        padding: 6px 16px;
-
-        .ant-radio-inner {
-          height: 24px;
-          width: 24px;
-          border-color: $text-error-line-color;
-          background-color: $text-input-bg-color;
-        }
-
-        .ant-radio-checked {
-
-          .ant-radio-inner {
-            border-color: $primary-bg-color;
-
-            &::after {
-              background-color: $primary-bg-color;
-              transform: scale(1);
-            }
-          }
-        }
+      border-radius: 0;
+      padding: 0;
+  
+      .ant-modal-body {
+        height: 100%;
       }
     }
-
-    .ant-checkbox-group {
-      display: block;
-
-      .ant-checkbox-wrapper {
+  
+    .modal-add-listing-content {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+  
+      .ant-radio-group {
         display: block;
-        min-height: 48px;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        border: 1px solid $text-error-line-color;
-        border-radius: 8px;
-        padding: 6px 16px;
-
-        .ant-checkbox {
-          top: auto;
-          align-self: auto;
-
-          .ant-checkbox-inner {
-            border-radius: 8px;
+  
+        .ant-radio-wrapper {
+          display: block;
+          min-height: 48px;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          border: 1px solid $text-error-line-color;
+          border-radius: 8px;
+          padding: 6px 16px;
+  
+          .ant-radio-inner {
+            height: 24px;
+            width: 24px;
             border-color: $text-error-line-color;
             background-color: $text-input-bg-color;
           }
-
-          &.ant-checkbox-checked {
-            
-            .ant-checkbox-inner {
-              background-color: $primary-bg-color;
+  
+          .ant-radio-checked {
+  
+            .ant-radio-inner {
               border-color: $primary-bg-color;
-            }
-
-            &::after {
-              content: unset;
+  
+              &::after {
+                background-color: $primary-bg-color;
+                transform: scale(1);
+              }
             }
           }
         }
       }
-
-      .select-doc-checkbox {
-        margin-top: 22px;
-        .ant-checkbox-wrapper {
-          border: none;
-          padding: 0;
-          min-height: 0;
   
+      .ant-checkbox-group ,.SingelDocCheckbox {
+        display: block;
+  
+        .ant-checkbox-wrapper {
+          display: block;
+          min-height: 48px;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          border: 1px solid $text-error-line-color;
+          border-radius: 8px;
+          padding: 6px 16px;
+  
+          .ant-checkbox {
+            top: auto;
+            align-self: auto;
+  
+            .ant-checkbox-inner {
+              border-radius: 8px;
+              border-color: $text-error-line-color;
+              background-color: $text-input-bg-color;
+            }
+  
+            &.ant-checkbox-checked {
+              
+              .ant-checkbox-inner {
+                background-color: $primary-bg-color;
+                border-color: $primary-bg-color;
+              }
+  
+              &::after {
+                content: unset;
+              }
+            }
+          }
         }
-        .select-doc-checkbox-help {
-          color: $certificate-label-disabled;
-          font-size: 14px;
-          line-height: 17px;
-          margin-top: 12px;
+  
+        .select-doc-checkbox {
+          margin-top: 22px;
+          .ant-checkbox-wrapper {
+            border: none;
+            padding: 0;
+            min-height: 0;
+    
+          }
+          .select-doc-checkbox-help {
+            color: $certificate-label-disabled;
+            font-size: 14px;
+            line-height: 17px;
+            margin-top: 12px;
+          }
         }
       }
-    }
-
-    .ant-input-number {
-      display: block;
-      width: 100%;
-    }
-
-    .custom-input-switch {
-      .ant-form-item-control-input-content {
-        border: 1px solid $text-error-line-color;
-        height: 48px;
-        border-radius: 8px;
+  
+      .ant-input-number {
+        display: block;
+        width: 100%;
+      }
+  
+      .custom-input-switch {
+        .ant-form-item-control-input-content {
+          border: 1px solid $text-error-line-color;
+          height: 48px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          padding: 8px 16px;
+        }
+      }
+  
+      .step-form-fields-title {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.333333;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+  
+      .bedromm-count {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 1.333333;
+        margin-bottom: 12px;
+      }
+  
+      .modal-add-listing-body {
+        flex: 1;
+        padding-top: 72px;
+        padding-bottom: 30px;
+        max-width: 100%;
+        overflow: auto;
+  
+        .add-listing-inner-content {
+          padding: 0 30px;
+        }
+      }
+  
+      .modal-add-listing-footer {
+        padding: 30px;
+        border-top: 1px solid #E4E5EF;
         display: flex;
-        align-items: center;
-        padding: 8px 16px;
+        justify-content: flex-end;
       }
     }
-
-    .step-form-fields-title {
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 1.333333;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .bedromm-count {
-      font-size: 24px;
-      font-weight: 500;
-      line-height: 1.333333;
-      margin-bottom: 12px;
-    }
-
-    .modal-add-listing-body {
-      flex: 1;
-      padding-top: 72px;
-      padding-bottom: 30px;
-      max-width: 100%;
-      overflow: auto;
-
-      .add-listing-inner-content {
+  
+    .steps-content-outer {
+      max-width: 954px;
+      margin: 0 auto;
+  
+      .steps-content {
+        max-width: 800px;
         margin: 0 auto;
       }
     }
-
-    .modal-add-listing-footer {
-      padding: 30px 0 0;
-      border-top: 1px solid #E4E5EF;
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-
-  .steps-content-outer {
-    max-width: 954px;
-    margin: 0 auto;
-
-    .steps-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
   }
 }
+
 
 .ant-steps.add-listing-steps {
   max-width: 618px;

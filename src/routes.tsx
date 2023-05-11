@@ -45,6 +45,7 @@ import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pend
 import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
+import EditInternShip from "./pages/internships/EditInternship";
 // Lazy load required end
 
 
@@ -59,6 +60,9 @@ const NewInternships = Loadable(
 );
 const ViewInternshipDetails = Loadable(
   lazy(() => import("./pages/internships/ViewInternshipDetails"))
+);
+const EditInternship = Loadable(
+  lazy(() => import("./pages/internships/EditInternship"))
 );
 
 //Company admin Internships
@@ -462,6 +466,11 @@ const managerRoutes = [
         element: <ViewInternshipDetails />,
       },
       {
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.EDIT_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.EDIT_INTERNSHIP}`,
+        element: <EditInternShip />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.INTERNS}`,
         path: `${ROUTES_CONSTANTS.INTERNS}`,
         element: <Interns />,
@@ -777,6 +786,11 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS}`,
         element: <ViewInternshipDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.EDIT_INTERNSHIP}`,
+        path: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.EDIT_INTERNSHIP}`,
+        element: <EditInternShip />,
       },
       {
         key: `${ROUTES_CONSTANTS.PAYROLL}`,

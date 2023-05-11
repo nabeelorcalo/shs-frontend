@@ -54,6 +54,9 @@
 
         .address {
             color: $primary-light-bg-color;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .tags {

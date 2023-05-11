@@ -1,4 +1,3 @@
-import { useState } from "react";
 import AttendanceDetail from '../detailPage';
 import "../style.scss";
 

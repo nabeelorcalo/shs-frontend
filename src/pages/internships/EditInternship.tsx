@@ -55,18 +55,18 @@ const frequencyOptions = [
   { value: 'ANNUALLY', label: 'Annually' }
 ]
 
-const NewInternships = () => {
+const EditInternShip = () => {
   const navigate = useNavigate()
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
   const [remoteOnsite, setRemoteOnsite] = useState(null);
   const [openDataPicker, setOpenDataPicker] = useState(false);
 
-  const { postNewInternshipsData } = useCustomHook();
+  const { getAllInternshipsData,internshipData } = useCustomHook();
   const [form] = Form.useForm();
 
   const tempArray = [
-    { name: "New Internship" },
+    { name: "Edit Internship" },
     {
       name: "Internships",
       onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`,
@@ -88,41 +88,9 @@ const NewInternships = () => {
     setRemoteOnsite(e.target.value);
   };
 
-  // const updateDepartment = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     department: value
-  //   }))
-  // }
-
-  // const updateFrequency = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     frequency: value
-  //   }))
-  // }
-
-  // const updateLocation = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     location: value
-  //   }))
-  // }
-
-  // const updateInternshipDuration = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     internshipDuration: value
-  //   }))
-  // }
-
   const onFinish = (values: any) => {
     console.log('Success:', values);
-    postNewInternshipsData(values);
+    // postNewInternshipsData(values);
     form.resetFields();
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
   };
@@ -301,4 +269,4 @@ const NewInternships = () => {
   )
 }
 
-export default NewInternships;
+export default EditInternShip;
