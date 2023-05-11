@@ -12,7 +12,7 @@ import useCustomHook from "../../actionHandler";
 const Calendar = () => {
     const action = useCustomHook();
     // console.log(action.getCalanderLeaveState,"Leaev From Action ");
-    const calendarEvent = action.getCalanderLeaveState.map((item:any) => ({
+    const calendarEvent = action.getCalanderLeaveState?.map((item:any) => ({
         ...item,
         start: item?.dateFrom,
         end: item?.dateTo

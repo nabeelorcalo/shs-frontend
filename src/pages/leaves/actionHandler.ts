@@ -36,6 +36,7 @@ const useCustomHook = () => {
     // console.log(singleValues);
     console.log(allValues, "allValues");
   }
+
   const onsubmitLeaveRequest = async (values:any) => {
     const initailVal = {
       internId :1,
@@ -47,10 +48,11 @@ const useCustomHook = () => {
       timeFrom:values?.timeFrom,
       timeTo: values?.timeTo,
       reason : values?.reason,
-      // media: values?.media
+      media: values?.media
     }
-    console.log(initailVal,"valuesvalues from the form ");
-    const response: any = await api.post(CREATE_LEAVE,initailVal)
+    console.log("valuesvalues from the form: ", initailVal);
+    let headerConfig = {headers: {'Content-Type': 'multipart/form-data'}};
+    const response: any = await api.post(CREATE_LEAVE, initailVal, headerConfig);
     console.log(response,"response Create Leave");
   }
   /*  Download PDF Or CSV File InHIstory Table 
