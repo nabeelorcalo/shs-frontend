@@ -27,8 +27,11 @@ const endpoints = {
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD:"/auth/change-password",
   // End Point For Leaev Module For Intrne 
+
   CREATE_LEAVE:"/Leaves/create",
   GET_LEAEV_LIST:`/Leaves/list`,
+  CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
+
 
 }
 export default endpoints;

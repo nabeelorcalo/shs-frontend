@@ -8,37 +8,41 @@ import { getLeaveStateAtom } from '../../store/leave';
 import { useEffect } from 'react';
 import endpoints from '../../config/apiEndpoints';
 import dayjs from 'dayjs';
-const { GET_LEAEV_LIST } = endpoints;
+const { CALANDER_LEAEV_LIST } = endpoints;
 
- /* Custom Hook For Functionalty 
-  -------------------------------------------------------------------------------------*/
+/* Custom Hook For Functionalty 
+ -------------------------------------------------------------------------------------*/
 
 const useCustomHook = () => {
-  const date= dayjs().format("YYYY-MM-DD");
-  const [getLeaveState, setLeaevState] = useRecoilState(getLeaveStateAtom);
+  const date = dayjs().format("YYYY-MM-DD");
+  const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(getLeaveStateAtom);
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
- /* Get Data For Leave Calander 
-  -------------------------------------------------------------------------------------*/
+  /* Get Data For Leave Calander 
+   -------------------------------------------------------------------------------------*/
+   const getCalendar = (date:any)=>{
+    console.log(date,"date");
+    
 
+   }
+  const getCalendarLeaveList = async () => {
+    const response: any = await api.get(CALANDER_LEAEV_LIST, { startDate: "2023-04-11", endDate: "2023-05-11", internId: "1" })
+    setCalanderLeaevState(response?.data)
+  }
   useEffect(() => {
-    const getLeave = async () => {
-      const response: any = await api.get(GET_LEAEV_LIST, { page: 1, limit: 5, currentDate: `${date}`, filterType: "THIS_MONTH" })
-      setLeaevState(response?.data)
-    }
-    getLeave();
+    getCalendarLeaveList();
   }, [])
 
-   /*  Submit Leave Request Function For Intrnee
-  -------------------------------------------------------------------------------------*/
+  /*  Submit Leave Request Function For Intrnee
+ -------------------------------------------------------------------------------------*/
 
   const submitLeaveRequest = () => {
     alert("Submit Leave Function goes here");
   }
-     /*  Download PDF Or CSV File InHIstory Table 
-  -------------------------------------------------------------------------------------*/
+  /*  Download PDF Or CSV File InHIstory Table 
+-------------------------------------------------------------------------------------*/
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -107,7 +111,8 @@ const useCustomHook = () => {
   };
   return {
     getData,
-    getLeaveState,
+    getCalanderLeaveState,
+    getCalendar,
     submitLeaveRequest,
     downloadPdfOrCsv,
   };
