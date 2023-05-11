@@ -24,11 +24,11 @@ const HiringProcess = () => {
   const [hiringProcessList, setHiringProcessList] = useState(["applied"]);
 
   const handleResendOfferLetter = () => {
-    Notifications({ title: "Success", description: "Offer letter and re-sent", type: "success" });
+    Notifications({ title: "Success", description: "Offer letter re-sent successfully", type: "success" });
   };
 
   const handleResendContract = () => {
-    Notifications({ title: "Success", description: "Contract and re-sent", type: "success" });
+    Notifications({ title: "Success", description: "Contract re-sent successfully", type: "success" });
   };
 
   // check already processed
@@ -136,12 +136,12 @@ const HiringProcess = () => {
   const handleOfferLetterTemplate = () => {
     if (selectTemplate?.title === "offer letter") {
       handleCheckList("offer letter");
-      Notifications({ title: "Success", description: "Offer letter signed and sent", type: "success" });
+      Notifications({ title: "Success", description: "Offer letter sent successfully", type: "success" });
       setOfferContractStatus({ ...offerContractStatus, pending: true });
     }
     if (selectTemplate?.title === "Contract") {
       handleCheckList("contract");
-      Notifications({ title: "Success", description: "Contract signed and sent", type: "success" });
+      Notifications({ title: "Success", description: "Contract sent successfully", type: "success" });
       setOfferContractStatus({ ...offerContractStatus, signed: false, pending: true });
     }
     setIsOfferLetterTemplateModal(false);

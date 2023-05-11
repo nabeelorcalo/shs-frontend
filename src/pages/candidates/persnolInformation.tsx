@@ -1,44 +1,53 @@
 import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons'
 import { Col, Divider, Row } from 'antd'
-import { useState } from 'react'
+import dayjs from 'dayjs'
+import { FC, useState } from 'react'
 
-const PersnolInformationData = [
-  { title: 'First name', value: 'Phylis' },
-  { title: 'Last Name', value: 'Godley' },
-  { title: 'Gender', value: 'Female' },
-  { title: 'Date of Birth', value: '21stApril,1996' },
-  { title: 'Place of Birth', value: 'London,United Kingdom' },
-  { title: 'Nationality', value: 'British' },
-  { title: 'Persnol Email', value: 'phylis@gmail.com' },
-  { title: 'Phone Number', value: '+44 7700 900077' },
-  { title: 'national Insurance Number', value: 'AB12356A' },
-  { title: 'Visa Status', value: 'Post Study Work Visa PSW ' },
-]
-const AcademicData = [
-  { title: 'University', value: 'Imperial College London' },
-  { title: 'Course', value: 'Creatice Design' },
-  { title: 'University Email', value: 'maria.sanaid@icl.co.uk' },
-  { title: 'Post Code', value: 'SG121HW' },
-  { title: 'Address', value: '263 Eversholt' },
-  { title: 'City', value: 'London' },
-  { title: 'Country', value: 'United Kingdom' },
-  { title: 'University Contact Name ', value: 'Albert John' },
-  { title: 'Universty Contact Phone', value: '+44 20 7589 5111' },
-  { title: 'Internship Start Date', value: '01/01/2022' },
-  { title: 'Internship End Date', value: '30/12/2022' },
-  { title: 'Internship Duration', value: '12 months' },
-]
-const Address = [
-  { title: 'Post Code', value: 'SG12 1HW' },
-  { title: 'Address', value: '263 Evershalt' },
-  { title: 'City', value: 'London' },
-  { title: 'Country', value: 'United Kingdom' },
-]
 const Other = [
   'surfing', 'reading', 'sketching', 'video games', 'movies', 'travelling'
 ]
-const allergie = ['pollen Allergy','peanuts allergy'];
-const PersnolInformation = () => {
+const allergie = ['pollen Allergy', 'peanuts allergy'];
+interface IPersnolInformation {
+  selectedCandidate: any
+}
+const PersnolInformation: FC<IPersnolInformation> = (props) => {
+  const { selectedCandidate, selectedCandidate: { userDetail: { firstName, lastName, avatar, gender, DOB, phoneNumber, veriffStatus, postCode, email, address, country, city } } } = props;
+  console.log(selectedCandidate, "selectedCandidate");
+
+  const PersnolInformationData = [
+    { title: 'First name', value: firstName },
+    { title: 'Last Name', value: lastName },
+    { title: 'Gender', value: gender },
+    { title: 'Date of Birth', value: dayjs(DOB).format("DD MMMM, YYYY") },
+    { title: 'Place of Birth', value: 'London,United Kingdom' },
+    { title: 'Nationality', value: 'British' },
+    { title: 'Persnol Email', value: email },
+    { title: 'Phone Number', value: phoneNumber },
+    { title: 'national Insurance Number', value: 'AB12356A' },
+    { title: 'Visa Status', value: veriffStatus },
+  ]
+
+  const Address = [
+    { title: 'Post Code', value: postCode },
+    { title: 'Address', value: address },
+    { title: 'City', value: city },
+    { title: 'Country', value: country },
+  ]
+
+  const AcademicData = [
+    { title: 'University', value: 'Imperial College London' },
+    { title: 'Course', value: 'Creatice Design' },
+    { title: 'University Email', value: 'maria.sanaid@icl.co.uk' },
+    { title: 'Post Code', value: 'SG121HW' },
+    { title: 'Address', value: '263 Eversholt' },
+    { title: 'City', value: 'London' },
+    { title: 'Country', value: 'United Kingdom' },
+    { title: 'University Contact Name ', value: 'Albert John' },
+    { title: 'Universty Contact Phone', value: '+44 20 7589 5111' },
+    { title: 'Internship Start Date', value: '01/01/2022' },
+    { title: 'Internship End Date', value: '30/12/2022' },
+    { title: 'Internship Duration', value: '12 months' },
+  ]
 
   const [others, setOthers] = useState(Other);
   const [allergies, setAllergies] = useState(allergie);

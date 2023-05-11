@@ -8,18 +8,17 @@ interface Props {
   open?: boolean;
   setOpen?: any;
   children?: ReactNode | ReactNode[];
-  selectedCandidate?:any,
+  selectedCandidate?: any,
   rest?: any;
 }
 
 const DetailDrawer = (props: Props) => {
-  const { open, setOpen, children,selectedCandidate, ...rest } = props;
-  console.log(selectedCandidate);
-  
+  const { open, setOpen, children, selectedCandidate, selectedCandidate: { userDetail, rating, stage, internship: { title, internType }, createdAt }, ...rest } = props;
+
   const width = DrawerWidth();
   return (
     <Drawer
-      width={width>1400 ? 1283: width > 900 ? 900: width > 576?600:300}
+      width={width > 1400 ? 1283 : width > 900 ? 900 : width > 576 ? 600 : 300}
       headerStyle={{ display: 'none' }}
       placement="right"
       onClose={() => setOpen(false)}
@@ -28,10 +27,10 @@ const DetailDrawer = (props: Props) => {
     >
       <Row>
         <Col xs={24} lg={6}>
-          <IndividualDetails />
+          <IndividualDetails userDetail={userDetail} rating={rating} stage={stage} internshipTitle={title} internType={internType} AplliedDate={createdAt} />
         </Col>
         <Col xs={24} lg={18}>
-          <DrawerTabs />
+          <DrawerTabs selectedCandidate={selectedCandidate} />
         </Col>
       </Row>
     </Drawer>

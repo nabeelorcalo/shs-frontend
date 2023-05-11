@@ -1,9 +1,21 @@
-import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Intro, DrawerIcon,LocationIconNew, StarOutlinedIcon,PlayIconNew } from '../../assets/images';
+import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Intro, DrawerIcon, LocationIconNew, StarOutlinedIcon, PlayIconNew } from '../../assets/images';
 import "./style.scss"
 import DropDownNew from '../../components/Dropdown/DropDownNew'
-import { useState } from 'react'
+import { FC, useState } from 'react'
+import { Avatar } from "antd";
+import dayjs from 'dayjs';
 
-const IndividualDetails = () => {
+interface IIndividualDetails {
+  userDetail: any,
+  rating: number | string,
+  stage: string,
+  internshipTitle: string,
+  internType: string,
+  AplliedDate: string,
+}
+
+const IndividualDetails: FC<IIndividualDetails> = (props) => {
+  const { userDetail: { firstName, lastName, avatar,phoneNumber,email,address  }, rating, stage, internshipTitle, internType, AplliedDate } = props;
 
   const [rate, setRate] = useState(0);
 
@@ -18,14 +30,14 @@ const IndividualDetails = () => {
   const newSkillData = skillsData.slice(0, 6);
 
   const userinfoData = [
-    { img: Mail, title: "phyliis@gmail.com" },
-    { img: Call, title: "+44 7700 900077" },
-    { img: LocationIconNew, title: "263 Eversholt St, London NW11NB UK" },
+    { img: Mail, title: email },
+    { img: Call, title: phoneNumber},
+    { img: LocationIconNew, title:address },
   ]
 
   const dropdownData = [
     { heading: 'Current Stage' },
-    { title: 'Applied', color: '#363565' },
+    { title: stage, color: '#363565' },
     { heading: 'Move to' },
     { title: 'Interviewed', color: '#5879CE' },
     { title: 'Recommended', color: '#CC7FD4' },
@@ -40,8 +52,17 @@ const IndividualDetails = () => {
 
       <div className="user-info-main">
         <div className="user-info">
-          <DrawerIcon />
-          <p className='user-name'>Phylis Godley</p>
+          <Avatar
+            className="h-[80px] w-[80px] rounded-full object-cover relative"
+            src={avatar}
+            alt={firstName}
+            icon={
+              <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                {firstName[0]}{lastName[0]}
+              </span>
+            }
+          />
+          <p className='user-name capitalize'>{`${firstName} ${lastName}`}</p>
         </div>
 
         <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center">
@@ -57,7 +78,7 @@ const IndividualDetails = () => {
             }]}>
               <div className='flex justify-center gap-2 items-center dropdown-inpp cursor-pointer'>
                 <StarFilledIcon />
-                <p>{rate}</p>
+                <p>{rating}:0</p>
                 <ArrowDownDark />
               </div>
             </DropDownNew>
@@ -91,8 +112,8 @@ const IndividualDetails = () => {
       <div className="apllied-for">
         <p className='heading'>Apllied For</p>
         <div className="details">
-          <p className='p'>UI UX Designer</p>
-          <p className='p1'>Full Time <Dot /> 10 Nov 2022 </p>
+          <p className='p'>{internshipTitle}</p>
+          <p className='p1 capitalize'>{internType.replace("_"," ")} <Dot /> {dayjs(AplliedDate).format("DD MMM YYYY")}</p>
         </div>
 
       </div>
@@ -109,7 +130,7 @@ const IndividualDetails = () => {
       <div className="contact pt-4">
         {userinfoData.map((info, i) => (
           <div className="message flex items-center gap-5 my-3" key={i}>
-            <div ><info.img width={24} /></div>
+            <div><info.img width={24} /></div>
             <p className='m-0'>{info.title}</p>
           </div>
         ))}
@@ -128,12 +149,12 @@ const IndividualDetails = () => {
 
       <div className="intro">
         <p className='heading mt-8'>Intro</p>
-       <div className="main-div relative">
-       <div className='absolute' style={{zIndex:1,left:"43%", top:"45%"}}> <PlayIconNew /></div>
-        <div className="image mt-[10px] relative">
-          <Intro />
+        <div className="main-div relative">
+          <div className='absolute' style={{ zIndex: 1, left: "43%", top: "45%" }}> <PlayIconNew /></div>
+          <div className="image mt-[10px] relative">
+            <Intro />
+          </div>
         </div>
-       </div>
       </div>
     </div>
   )
