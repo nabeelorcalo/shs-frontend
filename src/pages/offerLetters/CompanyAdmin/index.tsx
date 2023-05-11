@@ -44,18 +44,18 @@ const ContractsCard = [
   },
 ]
 
-const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
-const statusDropdownData = ['All','New', 'Pending', 'Rejected', 'Signed']
+const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
+const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [valueStatus, setValueStatus] = useState("");
-  const [valueDatePacker, setValueDatePacker] = useState("");
+  const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
   const { getOfferLetterList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
 
   useEffect(() => {
-    getOfferLetterList(valueStatus)
+    getOfferLetterList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
   }, [])
 
   const renderDropdown = (item: any) => {
@@ -71,6 +71,9 @@ const CompanyAdmin = () => {
         break;
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
+        break;
+      case 'NEW':
+        return <CustomDroupDown menu1={newStatus(item.id)} />
         break;
     }
   }
@@ -94,6 +97,24 @@ const CompanyAdmin = () => {
     </Menu>
   };
   const pending = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
+      >Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const newStatus = (val: any) => {
     return <Menu>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
       <Menu.Item
@@ -227,8 +248,12 @@ const CompanyAdmin = () => {
     )
   })
   const handleValueStatus = (val: any) => {
-    getOfferLetterList(val);
+    getOfferLetterList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
     setValueStatus(val)
+  }
+  const handleTimeFrameValue = (val: any) => {
+    setValueDatePacker(val);
+    getOfferLetterList(valueStatus, val.toUpperCase().replace(" ", "_"));
   }
   return (
     <div className="offer-letter-company-admin">
@@ -266,7 +291,7 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { searchHandler(e , valueStatus) }} />
+          <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
 
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
@@ -274,7 +299,7 @@ const CompanyAdmin = () => {
             showDatePickerOnVal={'Date Range'}
             requireDatePicker placement="bottom"
             value={valueDatePacker}
-            setValue={setValueDatePacker}
+            setValue={(e: any) => handleTimeFrameValue(e)}
           />
 
           <DropDown name="Status" options={statusDropdownData}
