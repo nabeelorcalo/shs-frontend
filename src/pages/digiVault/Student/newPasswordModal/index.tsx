@@ -6,7 +6,7 @@ import useCustomHook from "../../actionHandler";
 const NewPasswordModal = (props: any) => {
   const { newPass, setNewPass, setIsChecked } = props;
   const { PostDigivalutData } = useCustomHook();
-  // const [form] = Form.useForm();
+  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     console.log('Success:', values);

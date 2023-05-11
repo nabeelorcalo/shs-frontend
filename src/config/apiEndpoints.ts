@@ -24,7 +24,7 @@ const endpoints = {
   STUDENT_INTRNE_SAWITCH: "auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
-  STUDENT_DIGIVAULT: "/digivault/get-dashboard",
+  GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT:"/digivault/reset-vault-password",
   GET_LIST_INTERNSHIP:'/internship/listInternships',

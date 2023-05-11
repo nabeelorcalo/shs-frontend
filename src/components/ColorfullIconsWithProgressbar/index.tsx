@@ -21,10 +21,10 @@ interface ColorfullIconsWithProgressbarProps {
 }[];
 
 export const ColorfullIconsWithProgressbar = () => {
-  const { getData, studentVault }: any = useCustomHook();
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
 
   useEffect(() => {
-    getData()
+    getDigiVaultDashboard()
   }, []);
 
   const storageData: any = [

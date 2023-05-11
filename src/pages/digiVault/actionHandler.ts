@@ -7,13 +7,13 @@ import endpoints from "../../config/apiEndpoints";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { STUDENT_DIGIVAULT, POST_DIGIVAULT } = endpoints;
+  const { GET_DIGIVAULT_DASHBOARD, POST_DIGIVAULT } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [newPassword, setNewPassword] = useRecoilState(DigiVaultPasswordState);
 
   const getDigiVaultDashboard = async () => {
-    const { data } = await api.get(STUDENT_DIGIVAULT);
-    setStudentVault(data?.response)
+    const { data } = await api.get(GET_DIGIVAULT_DASHBOARD,{password:newPassword});
+    setStudentVault(data?.response);
   };
   const PostDigivalutData = async (values: any) => {
     const { data } = await api.post(POST_DIGIVAULT,values);
