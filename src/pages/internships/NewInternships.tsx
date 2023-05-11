@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd';
 import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker } from '../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
@@ -58,6 +58,7 @@ const frequencyOptions = [
 
 const NewInternships = () => {
   const { state } = useLocation();
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
@@ -65,8 +66,16 @@ const NewInternships = () => {
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [internShipFormData, setInternShipFormData] = useState(state);
 
-  const { postNewInternshipsData } = useCustomHook();
-  const [form] = Form.useForm();
+  const { postNewInternshipsData, getAllDepartmentData, 
+    departmentsData,getAllLocationsData,locationsData } = useCustomHook();
+    console.log(departmentsData);
+    console.log(locationsData)
+
+    useEffect(() => {
+      getAllDepartmentData
+      getAllLocationsData
+    }, [])
+ 
 
   const tempArray = [
     { name: "New Internship" },
@@ -117,6 +126,7 @@ const NewInternships = () => {
     positions: internShipFormData?.totalPositions ?? '',
     duration: internShipFormData?.duration ?? ''
   }
+
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
-import { DropDown, SearchBar, FiltersButton, PageHeader, InternshipProgressCard, BoxWrapper, NoDataFound } from '../../../components'
+import {
+  DropDown, SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
+  BoxWrapper, NoDataFound
+} from '../../../components'
 import Drawer from '../../../components/Drawer'
 import { Button, Col, Row } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
@@ -18,6 +21,7 @@ const InternshipsCompanyAdmin = () => {
   });
 
   const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
+  console.log(internshipData);
 
   useEffect(() => {
     getAllInternshipsData(state.status)
@@ -29,40 +33,20 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
-  // const updateStatus = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     status: value
-  //   }))
-  // }
-  // const updateLocation = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     location: value
-  //   }))
-  // }
-  // const updateDepartment = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     department: value
-  //   }))
-  // }
+
   const handleStatus = (status: any) => {
     setState((prevState) => ({
       ...prevState,
       status: status
     }))
   }
-  const handleLocation=(event:any)=>{
+  const handleLocation = (event: any) => {
     setState((prevState) => ({
       ...prevState,
       location: event
     }))
   }
-  const handleDepartment=(event:any)=>{
+  const handleDepartment = (event: any) => {
     setState((prevState) => ({
       ...prevState,
       department: event
@@ -75,12 +59,12 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: false
     }))
   }
-  const handleResetFilter=()=>{
+  const handleResetFilter = () => {
     setState((prevState) => ({
       ...prevState,
       status: '',
-      location:'',
-      department:''
+      location: '',
+      department: ''
     }))
   }
   return (
@@ -107,7 +91,7 @@ const InternshipsCompanyAdmin = () => {
                         'Rejected',
                         'Draft',
                       ]}
-                      setValue={(event: any) => {handleStatus(event) }}
+                      setValue={(event: any) => { handleStatus(event) }}
                       showDatePickerOnVal="custom"
                       value={state.status}
                     />
@@ -123,7 +107,7 @@ const InternshipsCompanyAdmin = () => {
                         'Virtual',
                         'All'
                       ]}
-                      setValue={(event:any) => {handleLocation(event)}}
+                      setValue={(event: any) => { handleLocation(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.location}
@@ -141,7 +125,7 @@ const InternshipsCompanyAdmin = () => {
                         'HR Cordinator',
                         'All'
                       ]}
-                      setValue={(event:any) => { handleDepartment(event)}}
+                      setValue={(event: any) => { handleDepartment(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.department}
@@ -176,7 +160,7 @@ const InternshipsCompanyAdmin = () => {
                     item={item}
                     title={item.title}
                     status={item.status}
-                    department={item.departmentData.name}
+                    department={item.department.name}
                     internType={item.internType}
                     postedBy={item.postedBy}
                     locationType={item.locationType}

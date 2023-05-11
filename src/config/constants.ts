@@ -187,5 +187,6 @@ export const STATUS_CONSTANTS: any = {
   PENDING: "pending",
   CLOSED: "closed",
   REJECTED: "rejected",
+  DRAFT:"draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";

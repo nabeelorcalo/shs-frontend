@@ -1,22 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import {
-  DropDown,
-  SearchBar,
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  FiltersButton
+  DropDown, SearchBar, GlobalTable, PageHeader,
+  BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import "./style.scss";
-import "../../scss/global-color/Global-colors.scss"
-import { Avatar, Button, Divider, Dropdown } from "antd";
-import { InternshipsIcon, More } from "../../assets/images";
+import { Avatar, Button, Divider, Dropdown, Row, Col } from "antd";
 import type { MenuProps } from 'antd';
-import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../config/constants";
-import { useNavigate, Link } from "react-router-dom";
+import { InternshipsIcon, More } from "../../assets/images";
+import { ROUTES_CONSTANTS } from "../../config/constants";
+import useCustomHook from "./actionHandler";
+import "./style.scss";
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
+// const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
 
 const tableData = [
   {
@@ -56,17 +53,22 @@ const tableData = [
 
 const Internships = () => {
   const navigate = useNavigate()
-  // const [value, setValue] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState({
+    status: "",
     value: "",
     showDrawer: false,
     location: "",
     department: ""
   })
+  const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
+
+  useEffect(() => {
+    getAllInternshipsData(state.status)
+  }, [])
+
+  console.log(internshipData);
 
   const PopOver = () => {
-    const navigate = useNavigate()
     const items: MenuProps['items'] = [
       {
         key: '1',
@@ -140,34 +142,36 @@ const Internships = () => {
     }
   ]
 
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = internshipData.map((item: any,index:number) => {
+    const postingDate = dayjs(item.createdAt).format('DD/MM/YYYY');
+    const closingDate = dayjs(item.closingDate).format('DD/MM/YYYY');
     return (
       {
-        no: item.no,
+        no: item.id,
         title: item.title,
-        department: item.department,
-        posting_date: item.posting_date,
-        closing_date: item.closing_date,
+        department: item.department.name,
+        posting_date: postingDate,
+        closing_date: closingDate,
         location: item.location,
         status:
           <Button
             size="small"
             className={
-              `${item.status === ACTIVE ?
+              `${item.status === "PUBLISHED" ?
                 `text-success-bg-color`
                 :
-                item.status === PENDING ?
+                item.status === "PENDING" ?
                   `text-warning-bg-color`
                   :
-                  item.status === CLOSED ?
+                  item.status === "CLOSED" ?
                     `text-info-bg-color`
                     :
-                    item.status === REJECTED ?
+                    item.status === "REJECTED" ?
                       `text-error-bg-color`
-                      :
-                      `light-sky-blue-bg`
+                      : item.status === "DRAFT" ?
+                        `text-secondary-bg-disabled-color` : `light-sky-blue-bg`
               }  
-                text-[#fff]`
+                text-[#fff] status-btn`
             }
           >
             {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
@@ -205,90 +209,84 @@ const Internships = () => {
 
   return (
     <>
-      <PageHeader title="Internships" />
-      <Divider />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
-          </div>
-          <div className="flex max-sm:flex-col flex-row gap-4">
-            <FiltersButton
-              label="Filters"
-              onClick={handleDrawer}
-            />
-            <Drawer
-              closable
-              open={state.showDrawer}
-              onClose={handleDrawer}
-              title="Filters"
-            >
-              <React.Fragment key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Location</p>
-                    <DropDown
-                      name="name"
-                      options={[
-                        "EidinBurg",
-                        "Glasgow",
-                        "London",
-                        "Virtual",
-                        "All"
-                      ]}
-                      setValue={() => { updateLocation(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.location}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Department</p>
-                    <DropDown
-                      name="name"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                        "All"
-                      ]}
-                      setValue={() => { updateDepartment(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.department}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
-                  </div>
+      <PageHeader title="Internships" bordered />
+      <Row gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar  handleChange={changeHandler} name="search bar" placeholder="Search" />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+          <FiltersButton
+            label="Filters"
+            onClick={handleDrawer}
+          />
+          <Drawer
+            closable
+            open={state.showDrawer}
+            onClose={handleDrawer}
+            title="Filters"
+          >
+            <React.Fragment key=".0">
+              <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-2">
+                  <p>Location</p>
+                  <DropDown
+                    name="name"
+                    options={[
+                      "EidinBurg",
+                      "Glasgow",
+                      "London",
+                      "Virtual",
+                      "All"
+                    ]}
+                    setValue={() => { updateLocation(event) }}
+                    showDatePickerOnVal="custom"
+                    startIcon=""
+                    value={state.location}
+                  />
                 </div>
-              </React.Fragment>
-            </Drawer>
-            <Button
-              type="primary"
-              size="middle"
-              icon={<InternshipsIcon />}
-              className="button-tertiary"
-              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-            >
-              New Internship
-            </Button>
-          </div>
-        </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            <GlobalTable columns={columns} tableData={newTableData} />
-          </div>
-        </BoxWrapper>
-      </div>
+                <div className="flex flex-col gap-2">
+                  <p>Department</p>
+                  <DropDown
+                    name="name"
+                    options={[
+                      "Business analyst",
+                      "Research analyst",
+                      "Accountant",
+                      "Administrator",
+                      "HR Cordinator",
+                      "All"
+                    ]}
+                    setValue={() => { updateDepartment(event) }}
+                    showDatePickerOnVal="custom"
+                    startIcon=""
+                    value={state.department}
+                  />
+                </div>
+                <div className="flex flex-row gap-3 justify-end">
+                  <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
+                </div>
+              </div>
+            </React.Fragment>
+          </Drawer>
+          <Button
+            type="primary"
+            size="middle"
+            icon={<InternshipsIcon />}
+            className="button-tertiary"
+            onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
+          >
+            New Internship
+          </Button>
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <div className="Internships-table">
+              <GlobalTable columns={columns} tableData={newTableData} />
+            </div>
+          </BoxWrapper>
+        </Col>
+      </Row>
     </>
   );
 };

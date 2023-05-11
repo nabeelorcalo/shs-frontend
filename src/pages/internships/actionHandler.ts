@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
+import { settingDepartmentState,settingLocationState } from "../../store/Setting"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -11,21 +12,38 @@ import { ROUTES_CONSTANTS } from "../../config/constants";
 const useCustomHook = () => {
   const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
   const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
+  const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
+  const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
   const navigate = useNavigate()
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
-    DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP } = apiEndpints
+    DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
+    SETTING_DAPARTMENT,SETTING_LOCATION} = apiEndpints
   const { state } = useLocation();
 
   useEffect(() => {
     debouncedResults.cancel();
   });
+
   //get all internship data
   const getAllInternshipsData = async (event: any) => {
     const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, status: event ? event : null });
     setInternshipData(data);
   };
+
+  //get all department data
+  const getAllDepartmentData = async () => {
+    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10 });
+    setDepartmentsData(data)
+  };
+
+  //get all locations data
+  const getAllLocationsData = async () => {
+    const { data } = await api.get(SETTING_LOCATION, { page: 1, limit: 10 });
+    setLocationsData(data)
+  };
+
   //post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
@@ -123,6 +141,8 @@ const useCustomHook = () => {
   }, []);
 
   return {
+    departmentsData,
+    locationsData,
     internshipData,
     internshipDetails,
     getAllInternshipsData,
@@ -131,7 +151,9 @@ const useCustomHook = () => {
     changeHandler,
     postNewInternshipsData,
     getDuplicateInternship,
-    EditNewInternshipsData
+    EditNewInternshipsData,
+    getAllDepartmentData,
+    getAllLocationsData
   };
 };
 
