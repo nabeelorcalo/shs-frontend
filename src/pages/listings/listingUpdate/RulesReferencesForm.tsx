@@ -104,9 +104,9 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
                 <Col xs={24}>
                   <Form.Item name="maxAgePreference" label="What is the maximum age of your preferred tenants?" rules={[{ required: true }]}>
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                      <Select.Option value="Less than 60">Less than 60</Select.Option>
-                      <Select.Option value="Less than 40">Less than 40</Select.Option>
-                      <Select.Option value="Less than 30">Less than 30</Select.Option>
+                    <Select.Option value="Less than 30">Less than 30</Select.Option>
+                    <Select.Option value="Less than 40">Less than 40</Select.Option>
+                    <Select.Option value="Less than 60">Less than 60</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>

@@ -12,6 +12,7 @@ const useListingsHook = () => {
   // Create Agent Property
   const createListing = async (data: any) => {
     const submitRequest = async(reqBody:any) => {
+      const form = new FormData();
       try {
         const res = await api.post(ADD_PROPERTY, reqBody)
         return {response: res, error: undefined}
@@ -39,11 +40,11 @@ const useListingsHook = () => {
   const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     const response = await api.get(GET_AGENT_PROPERTIES);
-      if(!response.error) {
-        const { data } = response;
-        setAllProperties(data)
-      }
-      setLoading(false);
+    if(!response.error) {
+      const { data } = response;
+      setAllProperties(data)
+    }
+    setLoading(false);
   }
 
   // Get Single Property

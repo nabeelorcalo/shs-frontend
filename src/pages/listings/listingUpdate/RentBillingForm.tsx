@@ -117,7 +117,7 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                 <Col xs={24}>
                   <Form.Item name="paymentMethod" label="Payment Method" rules={[{ required: true }]}>
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                      <Select.Option value="Credit/Debit card">Credit/Debit card</Select.Option>
+                      <Select.Option value="Credit/Debit Card">Credit/Debit card</Select.Option>
                       <Select.Option value="Cash">Cash</Select.Option>
                       <Select.Option value="Cheque">Cheque</Select.Option>
                       <Select.Option value="IBFT">IBFT</Select.Option>
@@ -141,10 +141,26 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                 <Col xs={24}>
                   <Form.Item name="depositType" label="Which kind of deposit?">
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                      <Select.Option value="halfMonth">Half month</Select.Option>
-                      <Select.Option value="fullMonth">Full month</Select.Option>
-                      <Select.Option value="fixed">Fixed</Select.Option>
+                      <Select.Option value="Half month">Half month</Select.Option>
+                      <Select.Option value="Full month">Full month</Select.Option>
+                      <Select.Option value="Fixed">Fixed</Select.Option>
                     </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <Form.Item
+                    name="depositAmount"
+                    label="Enter fixed amount"
+                    rules={[{ required: true }]}
+                  >
+                    <InputNumber
+                      min={0}
+                      onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }}
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
@@ -168,10 +184,10 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Form.Item name="electricityBillPayment" label="Ho do you want to charge electricity bill?">
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Included">Included</Select.Option>
-                      <Select.Option value="Included(up to a limit)">Included(up to a limit)</Select.Option>
-                      <Select.Option value="Pay landlord(fixed amount)">Pay landlord(fixed amount)</Select.Option>
-                      <Select.Option value="Pay landlord(for amount used)">Pay landlord(for amount used)</Select.Option>
-                      <Select.Option value="Pay provider(for amount used)">Pay provider(for amount used)</Select.Option>
+                      <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                      <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                      <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                      <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -179,10 +195,10 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Form.Item name="waterBillPayment" label="Ho do you want to charge water bill?">
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Included">Included</Select.Option>
-                      <Select.Option value="Included(up to a limit)">Included(up to a limit)</Select.Option>
-                      <Select.Option value="Pay landlord(fixed amount)">Pay landlord(fixed amount)</Select.Option>
-                      <Select.Option value="Pay landlord(for amount used)">Pay landlord(for amount used)</Select.Option>
-                      <Select.Option value="Pay provider(for amount used)">Pay provider(for amount used)</Select.Option>
+                      <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                      <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                      <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                      <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -190,10 +206,10 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Form.Item name="gasBillPayment" label="Ho do you want to charge gas bill?">
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Included">Included</Select.Option>
-                      <Select.Option value="Included(up to a limit)">Included(up to a limit)</Select.Option>
-                      <Select.Option value="Pay landlord(fixed amount)">Pay landlord(fixed amount)</Select.Option>
-                      <Select.Option value="Pay landlord(for amount used)">Pay landlord(for amount used)</Select.Option>
-                      <Select.Option value="Pay provider(for amount used)">Pay provider(for amount used)</Select.Option>
+                      <Select.Option value="Included (Up to a limit">Included(up to a limit)</Select.Option>
+                      <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                      <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                      <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>

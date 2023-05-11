@@ -140,7 +140,7 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Not available">Not available</Select.Option>
                       <Select.Option value="Central">Central</Select.Option>
-                      <Select.Option value="Indvidual units">Indvidual units</Select.Option>
+                      <Select.Option value="indvidualUnits">Indvidual units</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -148,8 +148,8 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Form.Item name="hasHeating" label="Heating" rules={[{ required: true }]}>
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Not available">Not available</Select.Option>
-                      <Select.Option value="Central Property">Central Property</Select.Option>
-                      <Select.Option value="Central building">Central building</Select.Option>
+                      <Select.Option value="Central">Central Property</Select.Option>
+                      <Select.Option value="Indvidual units">Central building</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -172,16 +172,16 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                     <Checkbox.Group>
                       <Row gutter={[30,20]}>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                          <Checkbox value="Elevator">Elevator</Checkbox>
+                          <Checkbox value="elevator">Elevator</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                          <Checkbox value="Parking">Parking</Checkbox>
+                          <Checkbox value="parking">Parking</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                          <Checkbox value="PoolAccess">Pool Access</Checkbox>
+                          <Checkbox value="poolAccess">Pool Access</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={6}>
-                          <Checkbox value="GYM">GYM</Checkbox>
+                          <Checkbox value="gym">GYM</Checkbox>
                         </Col>
                       </Row>
                     </Checkbox.Group>
@@ -195,22 +195,22 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                     <Checkbox.Group>
                       <Row gutter={[30, 20]}>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                          <Checkbox value="Balcony">Balcony</Checkbox>
+                          <Checkbox value="balcony">Balcony</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                          <Checkbox value="EquippedKitchen">Equipped Kitchen</Checkbox>
+                          <Checkbox value="equippedKitchen">Equipped Kitchen</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                          <Checkbox value="ClothesDryer">Clothes Dryer</Checkbox>
+                          <Checkbox value="clothesDryer">Clothes Dryer</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                          <Checkbox value="DishWasher">Dish Washer</Checkbox>
+                          <Checkbox value="dishWasher">Dish Washer</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                          <Checkbox value="Oven">Oven</Checkbox>
+                          <Checkbox value="oven">Oven</Checkbox>
                         </Col>
                         <Col xs={24} md={24} lg={12} xl={12} xxl={8}>
-                          <Checkbox value="WashingMachine">Washing machine</Checkbox>
+                          <Checkbox value="washingMachine">Washing machine</Checkbox>
                         </Col>
                       </Row>
                     </Checkbox.Group>

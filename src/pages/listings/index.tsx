@@ -1,18 +1,14 @@
 import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
-import type { RadioChangeEvent } from 'antd'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { PageHeader, SearchBar } from '../../components'
 import useListingsHook from './actionHandler'
 import { listingsState } from "../../store";
 import { useRecoilValue } from "recoil";
 import dayjs from 'dayjs'
 import showNotification from '../../helpers/showNotification'
-import constants from '../../config/constants'
-
 import {
   IconAddListings,
   IconAngleDown,
@@ -74,11 +70,10 @@ const Listings = () => {
   const allProperties = useRecoilValue(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false)
   const [form] = Form.useForm();
-  const mediaValue = Form.useWatch('media', form);
   const navigate = useNavigate()
-  const [billsIncluded, setBillsIncluded] = useState(false)
+  const [loadingAddListing, setLoadingAddListing] = useState(false)
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false)
-  const [current, setCurrent] = useState(0)
+  const [stepCurrent, setStepCurrent] = useState(0)
   const [entireProperty, setEntireProperty] = useState(false)
   const [uploadURL, setUploadURL] = useState(false)
   const [uploadDevice, setUploadDevice] = useState(false)
@@ -86,7 +81,7 @@ const Listings = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [listingValues, setListingValues] = useState({});
+  const [previousValues, setPreviousValues] = useState<any>({});
   const [nextDisabled, setNextDisabled] = useState(true)
 
   const tableColumns: ColumnsType<DataType> = [
@@ -186,29 +181,7 @@ const Listings = () => {
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleSubmission = useCallback(
-    (result: any) => {
-      if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
-      } else {
-        showNotification("success", "Success", result.response?.message);
-      }
-    },
-    [form]
-  );
-
-  const submitAddListing = useCallback(async () => {
-    let values;
-    try {
-      values = await form.validateFields();
-    } catch (errorInfo) {
-      return;
-    }
-    // setAddListingLoading(true);
-    const result = await createListing(JSON.stringify(listingValues));
-    // setAddListingLoading(false);
-    handleSubmission(JSON.stringify(result));
-  }, [form, handleSubmission]);
+  
 
 
   /* EVENT FUNCTIONS
@@ -219,22 +192,9 @@ const Listings = () => {
 
   function closeModalAddListing() {
     form.resetFields();
-    setNextDisabled(true);
     setModalAddListingOpen(false);
+    setPreviousValues({})
   }
-
-  function onChangeRadioProperty(e: RadioChangeEvent) {
-    e.target.value === 'Entire Property' ? setEntireProperty(true) : setEntireProperty(false)
-  }
-
-  const onChangeSwitch = (checked: boolean) => {
-    setBillsIncluded(checked)
-  };
-
-  const onCheckboxChange = (e: CheckboxChangeEvent) => {
-    console.log("check:: ", e.target)
-    // setChecked(e.target.checked);
-  };
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -559,6 +519,9 @@ const Listings = () => {
                 <Select.Option value="Airbed">Airbed</Select.Option>
                 <Select.Option value="Waterbed">Waterbed</Select.Option>
                 <Select.Option value="Queen bed">Queen bed</Select.Option>
+                <Select.Option value="King bed">King bed</Select.Option>
+                <Select.Option value="Twin XL">Twin XL</Select.Option>
+                <Select.Option value="XL">XL</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -1032,7 +995,7 @@ const Listings = () => {
     {
       key: 'step7',
       content: <div className="step-publish">
-        {JSON.stringify(listingValues)}
+        {JSON.stringify(previousValues)}
         <div className="step-content-header">
           <div className="step-content-header-title">All Ready to publish!</div>
           <Typography.Title level={2}>Before you finish....</Typography.Title>
@@ -1059,145 +1022,90 @@ const Listings = () => {
     )
   });
 
-  function next() {
-    setListingValues((prev) => {
-      return {
-        ...prev,
-        ...form.getFieldsValue()
-      }
+  const next = () => {
+    form.validateFields().then((values) => {
+      console.log('validate fields;:', values)
+      setPreviousValues((old:any) => {
+        return {
+          ...old,
+          ...values
+        }
+      });
+      console.log('previousValues:: ', previousValues)
+      setStepCurrent(stepCurrent + 1);
     })
-    setCurrent(current + 1);
-    setNextDisabled(true);
-    console.log('listingValues:: ', listingValues)
-
-    // if(current === 0) {
-    //   setNextDisabled(true)
-    //   validateStepOne(listingValues)
-    // }
-
-    // if(current === 1) {
-    //   setNextDisabled(true)
-    //   validateStepTwo(listingValues)
-    // }
-
-    // if(current === 2) {
-    //   setNextDisabled(true)
-    //   validateStepThree(listingValues)
-    // }
   };
 
-  function prev() {
-    setCurrent(current - 1);
-    setNextDisabled(false)
+  const prev = () => {
+    setStepCurrent(stepCurrent - 1);
   };
-
-  const validateStepOne = (values: any) => {
-    const { addressOne, postCode, isFurnished } = values;
-    if (addressOne !== "" && addressOne != null
-      && postCode !== "" && postCode != null
-      && isFurnished != null
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepTwo = (values: any) => {
-    const { propertyType, hasAirConditioning, hasHeating, hasWaterHeating } = values;
-    if (propertyType !== "" && propertyType != null
-      && hasAirConditioning !== "" && hasAirConditioning != null
-      && hasHeating !== "" && hasHeating != null
-      && hasWaterHeating !== "" && hasWaterHeating != null
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepThree = (values: any) => {
-    const { media, bedType } = values;
-    if (bedType != null && bedType !== ""
-      && media != null && media.length !== 0
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepFour = (values: any) => {
-    const { rentFrequency, rent, paymentMethod, depositType, depositAmount, minimumStay, electricityBillPayment, waterBillPayment, gasBillPayment } = values;
-    if (rent != null
-      && rentFrequency != null && rentFrequency !== ""
-      && paymentMethod != null && paymentMethod !== ""
-      && depositType != null && depositType !== ""
-      && depositAmount != null
-      && minimumStay != null
-      && electricityBillPayment != null && electricityBillPayment !== ""
-      && waterBillPayment != null && waterBillPayment !== ""
-      && gasBillPayment != null && gasBillPayment !== ""
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepFive = (values: any) => {
-    const { gender, maxAgePreference, tenantTypePreference, couplesAllowed, tenantsCanRegisterAddress, petsAllowed,
-       musicalInstrumentsAllowed, identityProofRequired, occupationProofRequired, incomeProofRequired } = values;
-    if (gender != null && gender !== ""
-      && maxAgePreference != null && maxAgePreference !== ""
-      && tenantTypePreference != null && tenantTypePreference !== ""
-      && couplesAllowed != null
-      && tenantsCanRegisterAddress != null
-      && petsAllowed != null
-      && musicalInstrumentsAllowed != null
-      && (identityProofRequired != undefined
-      || occupationProofRequired != undefined
-      || incomeProofRequired != undefined)
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepSix = (values: any) => {
-    const { contractType, cancellationPolicy } = values;
-    if (contractType != null && contractType !== ""
-      && cancellationPolicy != null && cancellationPolicy !== ""
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
 
   const onValuesChange = (changedValues: any, allValues: any) => {
-    console.log(allValues, "All form values ")
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false)
-    if (current === 0) {
-      validateStepOne(allValues)
-    } else if (current === 1) {
-      validateStepTwo(allValues)
-    } else if (current === 2) {
-      validateStepThree(allValues)
-      if (allValues.media != null && allValues.media.length != 0) {
-        setUploadDevice(true)
-      } else {
-        setUploadDevice(false)
-      }
-    } else if (current === 3) {
-      validateStepFour(allValues)
-    } else if (current === 4) {
-      validateStepFive(allValues)
-    } else if (current === 5) {
-      validateStepSix(allValues)
-    }
   };
+
+  const handleSubmission = useCallback(
+    (result: any) => {
+      if (result.error) {
+        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
+      } else {
+        showNotification("success", "Success", result.response?.message);
+      }
+    },
+    [form]
+  );
+
+  const submitAddListing = async () => {
+    setLoadingAddListing(true);
+    const formData = new FormData();
+    formData.append('addressOne', previousValues.addressOne)
+    formData.append('addressTwo', previousValues.addressTwo)
+    formData.append('postCode', previousValues.postCode)
+    formData.append('isFurnished', previousValues.isFurnished)
+    formData.append('propertyType', previousValues.propertyType)
+    formData.append('hasHeating', previousValues.hasHeating)
+    formData.append('hasAirConditioning', previousValues.hasAirConditioning)
+    formData.append('hasWaterHeating', previousValues.hasWaterHeating)
+    formData.append('buildingHas', previousValues.buildingHas)
+    formData.append('propertyHas', previousValues.propertyHas)
+    formData.append('propertySize', previousValues.propertySize)
+    formData.append('totalBedrooms', previousValues.totalBedrooms)
+    formData.append('bedroomsForRent', previousValues.bedroomsForRent)
+    formData.append('totalBathrooms', previousValues.totalBathrooms)
+    formData.append('media', previousValues.media)
+    formData.append('bedType', previousValues.bedType)
+    formData.append('twoPeopleAllowed', previousValues.twoPeopleAllowed)
+    formData.append('bedroomAmenities', previousValues.bedroomAmenities)
+    formData.append('rentFrequency', previousValues.rentFrequency)
+    formData.append('rent', previousValues.rent)
+    formData.append('paymentMethod', previousValues.paymentMethod)
+    formData.append('hasSecurityDeposit', previousValues.hasSecurityDeposit)
+    formData.append('depositType', previousValues.depositType)
+    formData.append('depositAmount', previousValues.depositAmount)
+    formData.append('minimumStay', previousValues.minimumStay)
+    formData.append('allBillsIncluded', previousValues.allBillsIncluded)
+    formData.append('electricityBillPayment', previousValues.electricityBillPayment)
+    formData.append('waterBillPayment', previousValues.waterBillPayment)
+    formData.append('gasBillPayment', previousValues.gasBillPayment)
+    formData.append('gender', previousValues.gender)
+    formData.append('maxAgePreference', previousValues.maxAgePreference)
+    formData.append('tenantTypePreference', previousValues.tenantTypePreference)
+    formData.append('couplesAllowed', previousValues.couplesAllowed)
+    formData.append('tenantsCanRegisterAddress', previousValues.tenantsCanRegisterAddress)
+    formData.append('petsAllowed', previousValues.petsAllowed)
+    formData.append('musicalInstrumentsAllowed', previousValues.musicalInstrumentsAllowed)
+    formData.append('identityProofRequired', previousValues.identityProofRequired)
+    formData.append('occupationProofRequired', previousValues.occupationProofRequired)
+    formData.append('incomeProofRequired', previousValues.incomeProofRequired)
+    formData.append('contractType', previousValues.contractType)
+    formData.append('cancellationPolicy', previousValues.cancellationPolicy)
+    
+    const result = await createListing(formData);
+    setLoadingAddListing(false);
+    handleSubmission(result);
+    closeModalAddListing();
+    setStepCurrent(0)
+  }
 
 
 
@@ -1263,33 +1171,33 @@ const Listings = () => {
         >
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">
-              {current < 6 &&
+              {stepCurrent < 6 &&
                 <Steps
                   className="add-listing-steps"
-                  current={current}
+                  current={stepCurrent}
                   items={stepItems}
                   labelPlacement="vertical"
                   progressDot
                 />
               }
               <div className="steps-content-outer">
-                {steps[current].content}
+                {steps[stepCurrent].content}
               </div>
             </div>
           </div>
           <div className="modal-add-listing-footer">
             <Space size={30}>
-              {current < 1 &&
+              {stepCurrent < 1 &&
                 <Button className="button-tertiary" ghost onClick={() => closeModalAddListing()}>Back</Button>
               }
-              {current > 0 &&
+              {stepCurrent > 0 &&
                 <Button className="button-tertiary" ghost onClick={() => prev()}>Back</Button>
               }
-              {current < 6 &&
-                <Button disabled={nextDisabled} className="button-tertiary" onClick={() => next()}>Next</Button>
+              {stepCurrent < 6 &&
+                <Button className="button-tertiary" onClick={() => next()}>Next</Button>
               }
-              {current === 6 &&
-                <Button htmlType="submit" className="button-tertiary">Publish</Button>
+              {stepCurrent === 6 &&
+                <Button loading={loadingAddListing} htmlType="submit" className="button-tertiary">Publish</Button>
               }
             </Space>
           </div>

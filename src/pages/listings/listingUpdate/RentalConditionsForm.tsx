@@ -93,7 +93,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
                     <Radio.Group>
                       <Row gutter={[30,20]}>
                         <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                          <Radio value="day">
+                          <Radio value="Daily">
                             <div className="radio-card-content">
                               <div className="radio-card-label">Daily</div>
                               <div className="radio-card-content-text">In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.</div>
@@ -101,7 +101,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
                           </Radio>
                         </Col>
                         <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                          <Radio value="week">
+                          <Radio value="Fortnightly">
                             <div className="radio-card-content">
                               <div className="radio-card-label">Weekly</div>
                               <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
@@ -109,7 +109,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
                           </Radio>
                         </Col>
                         <Col xs={24} md={24}lg={24} xl={8} xxl={8}>
-                          <Radio value="month">
+                          <Radio value="Monthly">
                             <div className="radio-card-content">
                               <div className="radio-card-label">Monthly</div>
                               <div className="radio-card-content-text">The tenant will always pay the entire month's rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.</div>
@@ -125,7 +125,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
                     <Radio.Group>
                       <Row gutter={[30,20]}>
                         <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
-                          <Radio value="standard">
+                          <Radio value="Standard Cancellation">
                             <div className="radio-card-content">
                               <div className="radio-card-label">Standard Cancellation</div>
                               <div className="radio-card-content-text">
@@ -137,7 +137,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
                           </Radio>
                         </Col>
                         <Col xs={24} lg={24} md={24} xl={12} xxl={12}>
-                          <Radio value="flexible">
+                          <Radio value="Flexible Cancellation">
                             <div className="radio-card-content">
                               <div className="radio-card-label">Flexible cancellation</div>
                               <div className="radio-card-content-text">
