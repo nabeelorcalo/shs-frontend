@@ -82,7 +82,7 @@ const CompanyAdmin = () => {
   const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ","_"))
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -176,13 +176,13 @@ const CompanyAdmin = () => {
   };
   const statusValueHandle = (val: any) => {
     setValueStatus(val);
-    getContractList(val, valueDatePacker);
+    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
   }
   const handleTimeFrameValue = (val: any) => {
     setValueDatePacker(val);
-    getContractList(valueStatus, val.toUpperCase().replace(" ","_"));
-    
+    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"));
   }
+
   const tableColumns = [
     {
       title: "No",
@@ -284,7 +284,7 @@ const CompanyAdmin = () => {
       }
     )
   })
-  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0,10)}&endDate=${valueDatePacker.slice(13,23)}` : valueDatePacker)
+  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0, 10)}&endDate=${valueDatePacker.slice(13, 23)}` : valueDatePacker)
   return (
     <div className="contract-company-admin">
       <Alert
