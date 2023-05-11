@@ -8,13 +8,16 @@ import { getLeaveStateAtom } from '../../store/leave';
 import { useEffect } from 'react';
 import endpoints from '../../config/apiEndpoints';
 import dayjs from 'dayjs';
-const { CALANDER_LEAEV_LIST,CREATE_LEAVE } = endpoints;
+const { CALANDER_LEAEV_LIST, CREATE_LEAVE } = endpoints;
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
 
 const useCustomHook = () => {
   // const date = dayjs().format("YYYY-MM-DD");
+  const formate = (value: any, format: string) => {
+    return dayjs(value).format(format)
+  }
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(getLeaveStateAtom);
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -37,24 +40,31 @@ const useCustomHook = () => {
     console.log(allValues, "allValues");
   }
 
-  const onsubmitLeaveRequest = async (values:any) => {
-    const initailVal = {
-      internId :1,
-      companyId :1,
-      type : values?.type,
-      durationType : values?.durationType ,
-      dateFrom : dayjs(values?.dateFrom).format("YYYY-MM-DD"),
-      dateTo : dayjs(values?.dateTo).format("YYYY-MM-DD"),
-      timeFrom:values?.timeFrom,
+  const onsubmitLeaveRequest = async (values: any) => {
+    const initailVal:any = {
+      internId: 1,
+      companyId: 1,
+      type: values?.type,
+      durationType: values?.durationType,
+      dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
+      dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
+      timeFrom: values?.timeFrom,
       timeTo: values?.timeTo,
-      reason : values?.reason,
-      media: values?.media
+      reason: values?.reason,
+      // media: values?.media
     }
-    console.log("valuesvalues from the form: ", initailVal);
-    let headerConfig = {headers: {'Content-Type': 'multipart/form-data'}};
-    const response: any = await api.post(CREATE_LEAVE, initailVal, headerConfig);
-    console.log(response,"response Create Leave");
+    const file = new File([/* file contents */], 'example.png', { type: 'image/png' });
+    const formData = new FormData();
+    for (const key in initailVal) {
+      formData.append(key, initailVal[key]);
+    }
+    formData.append('media', file);
+    // console.log("values from the form: ", initailVal);
+    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const response: any = await api.post(CREATE_LEAVE, formData, headerConfig);
+    console.log(response, "response Create Leave");
   }
+
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 

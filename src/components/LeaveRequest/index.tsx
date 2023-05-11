@@ -178,7 +178,7 @@ export const LeaveRequest = (props: any) => {
           </Row>
         }
         <Form.Item name="reason" label='Reason' rules={[{ required: true }]} >
-          <TextArea rows={4} placeholder="Enter reason for leave" maxLength={6} />
+          <TextArea rows={4} placeholder="Enter reason for leave" />
         </Form.Item>
         <Form.Item label="Attachment" name='media'>
           <Dragger
