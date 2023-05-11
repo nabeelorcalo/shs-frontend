@@ -33,8 +33,11 @@ const endpoints = {
   DUBLICATE_INTERNSHIP:'/internship/duplicateInternship',
   POST_NEW_INTERNSHIP:'/internship/createInternship',
   // End Point For Leaev Module For Intrne 
+
   CREATE_LEAVE:"/Leaves/create",
   GET_LEAEV_LIST:`/Leaves/list`,
+  CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
+
 
 }
 export default endpoints;
