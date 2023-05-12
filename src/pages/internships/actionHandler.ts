@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
-import { settingDepartmentState,settingLocationState } from "../../store/Setting"
+import { settingDepartmentState, settingLocationState } from "../../store/Setting"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -19,32 +19,32 @@ const useCustomHook = () => {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
-    SETTING_DAPARTMENT,SETTING_LOCATION} = apiEndpints
+    SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints
   const { state } = useLocation();
 
   useEffect(() => {
     debouncedResults.cancel();
   });
 
-  //get all internship data
+  //Get all internship data
   const getAllInternshipsData = async (event: any) => {
     const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, status: event ? event : null });
     setInternshipData(data);
   };
 
-  //get all department data
+  //Get all department data
   const getAllDepartmentData = async () => {
     const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10 });
     setDepartmentsData(data)
   };
 
-  //get all locations data
+  //Get all locations data
   const getAllLocationsData = async () => {
     const { data } = await api.get(SETTING_LOCATION, { page: 1, limit: 10 });
     setLocationsData(data)
   };
 
-  //post new Internship
+  //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
       amount, natureofwork, positions, closingDate, duration, internshiptype } = values
@@ -76,7 +76,7 @@ const useCustomHook = () => {
 
 
   };
-  // edit internship 
+  // Edit internship 
   const EditNewInternshipsData = async (values: any) => {
     const {
       title, description, responsibilities,
@@ -107,11 +107,12 @@ const useCustomHook = () => {
     // setInternshipData
     // Notifications({ title: "Success", description: "Internship Added", type: "success" })
   };
-  //duplicate internship
+  //Duplicate internship
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
     console.log("dublicated intership is", val);
-    getAllInternshipsData
+    Notifications({ title: "Success", description: "Duplicate successfully", type: "success" })
+    getAllInternshipsData(null)
   }
 
   const getInternshipDetails = async () => {
@@ -119,7 +120,7 @@ const useCustomHook = () => {
     setInternshipDetails(data)
   };
 
-  //delete internship
+  //Delete internship
   const deleteInternshipData = async (id: any,) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
     getAllInternshipsData(null)

@@ -6,50 +6,12 @@ import {
   BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Divider, Dropdown, Row, Col } from "antd";
+import { Avatar, Button, Dropdown, Row, Col } from "antd";
 import type { MenuProps } from 'antd';
 import { InternshipsIcon, More } from "../../assets/images";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import "./style.scss";
-
-// const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
-
-const tableData = [
-  {
-    no: "01",
-    title: "Research Analyst",
-    department: "Business Analyst",
-    posting_date: "01/07/2022",
-    closing_date: "01/07/2022",
-    location: "virtual",
-    status: 'pending',
-    posted_by: 'T',
-
-  },
-  {
-    no: "02",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'active',
-    posted_by: 'U',
-
-  },
-  {
-    no: "03",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'rejected',
-    posted_by: 'U',
-
-  }
-]
 
 const Internships = () => {
   const navigate = useNavigate()
@@ -60,20 +22,25 @@ const Internships = () => {
     location: "",
     department: ""
   })
-  const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
+  const { getAllInternshipsData, internshipData, changeHandler,getDuplicateInternship } = useCustomHook();
 
   useEffect(() => {
     getAllInternshipsData(state.status)
   }, [])
-
+  const handleDublicate=(id:any)=>{
+    getDuplicateInternship(id)
+  }
   console.log(internshipData);
 
-  const PopOver = () => {
+  const PopOver = (props: any) => {
+    const { id } = props
+    console.log("my id is", id);
+
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: id }) }}>
             View details
           </a>
         ),
@@ -81,7 +48,7 @@ const Internships = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => {handleDublicate(id) }}>
             Duplicate
           </a>
         ),
@@ -142,17 +109,17 @@ const Internships = () => {
     }
   ]
 
-  const newTableData = internshipData.map((item: any,index:number) => {
+  const newTableData = internshipData.map((item: any, index: number) => {
     const postingDate = dayjs(item.createdAt).format('DD/MM/YYYY');
     const closingDate = dayjs(item.closingDate).format('DD/MM/YYYY');
     return (
       {
-        no: item.id,
+        no: index + 1,
         title: item.title,
         department: item.department.name,
         posting_date: postingDate,
         closing_date: closingDate,
-        location: item.location,
+        location: item.location ? item.location?.name : "___",
         status:
           <Button
             size="small"
@@ -179,7 +146,7 @@ const Internships = () => {
         posted_by: <Avatar
           src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
         />,
-        actions: <PopOver />
+        actions: <PopOver id={item.id} />
       }
     )
   })
@@ -212,7 +179,7 @@ const Internships = () => {
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={changeHandler} name="search bar" placeholder="Search" />
+          <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton

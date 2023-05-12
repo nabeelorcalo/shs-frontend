@@ -11,9 +11,10 @@ import dayjs from 'dayjs';
 import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
-  const { item, title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
-  const [decline, setDecline] = useState(false)
-  const [deleteInternship, setDeleteInternship] = useState(false)
+  const { item, title, status, department, internType, postedBy, locationType, 
+    locationName, createdAt, closingDate, interns } = props;
+  const [decline, setDecline] = useState(false);
+  const [deleteInternship, setDeleteInternship] = useState(false);
   const { deleteInternshipData,getDuplicateInternship } = useCustomHook();
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');

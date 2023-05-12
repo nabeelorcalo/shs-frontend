@@ -65,17 +65,29 @@ const NewInternships = () => {
   const [remoteOnsite, setRemoteOnsite] = useState(null);
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [internShipFormData, setInternShipFormData] = useState(state);
+  const typeOfWork = {
+    partTime: "PART_TIME",
+    fullTime: "FULL_TIME"
+  }
+  const internshipType = {
+    paid: "PAID",
+    unpaid: "UNPAID"
+  }
+  const natureofwork = {
+    virtual: "VIRTUAL",
+    onsite: "ONSITE",
+    hybride: "HYBRIDE",
+  }
+  const { postNewInternshipsData, getAllDepartmentData,
+    departmentsData, getAllLocationsData, locationsData } = useCustomHook();
+  console.log(departmentsData);
+  console.log(locationsData)
 
-  const { postNewInternshipsData, getAllDepartmentData, 
-    departmentsData,getAllLocationsData,locationsData } = useCustomHook();
-    console.log(departmentsData);
-    console.log(locationsData)
+  useEffect(() => {
+    getAllDepartmentData
+    getAllLocationsData
+  }, [])
 
-    useEffect(() => {
-      getAllDepartmentData
-      getAllLocationsData
-    }, [])
- 
 
   const tempArray = [
     { name: "New Internship" },
@@ -187,17 +199,17 @@ const NewInternships = () => {
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'PART_TIME'}>Part Time</Radio>
-                  <Radio value={'FULL_TIME'}>Full Time</Radio>
+                  <Radio value={typeOfWork.partTime}>Part Time</Radio>
+                  <Radio value={typeOfWork.fullTime}>Full Time</Radio>
                 </Radio.Group>
               </Form.Item>
               <Form.Item label="Internship Type" name="internshipType" >
                 <Radio.Group onChange={onInternshipTypeChange} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'UNPAID'}>Unpaid</Radio>
-                  <Radio value={'PAID'}>Paid</Radio>
+                  <Radio value={internshipType.unpaid}>Unpaid</Radio>
+                  <Radio value={internshipType.paid}>Paid</Radio>
                 </Radio.Group>
               </Form.Item>
-              {paidAndUnpaid === "PAID" ?
+              {paidAndUnpaid === internshipType.paid ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="frequency" label="Frequency" >
                     <Select
@@ -222,12 +234,12 @@ const NewInternships = () => {
               }
               <Form.Item name="natureofwork" label="Nature of work">
                 <Radio.Group onChange={onNatureChange} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'VIRTUAL'}>Virtual</Radio>
-                  <Radio value={'ONSITE'}>On site</Radio>
-                  <Radio value={'HYBRIDE'}>Hybrid</Radio>
+                  <Radio value={natureofwork.virtual}>Virtual</Radio>
+                  <Radio value={natureofwork.onsite}>On site</Radio>
+                  <Radio value={natureofwork.hybride}>Hybrid</Radio>
                 </Radio.Group>
               </Form.Item>
-              {remoteOnsite === "ONSITE" ?
+              {remoteOnsite === natureofwork.onsite ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="location" label="Location">
                     <Select
