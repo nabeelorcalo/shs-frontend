@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Row, Col, Menu } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Notifications, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
+import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
 import "./style.scss";
 
 const tableData = [
@@ -47,9 +50,8 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']
+const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
-
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -72,29 +74,113 @@ const ContractsCard = [
     num: "02",
   },
 ]
-
 const CompanyAdmin = () => {
   const navigate = useNavigate()
-  const [showDelete, setShowDelete] = useState(false);
-  const [valueStatus, setValueStatus] = useState("")
-  const [valueDatePacker, setValueDatePacker] = useState("")
+  const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
+  const [valueStatus, setValueStatus] = useState("");
+  const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
+  const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
-  const renderDropdown = (status: any) => {
-    switch (status) {
-      case 'rejected':
-        return <CustomDroupDown menu1={rejected} />
+  useEffect(() => {
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
+  }, [])
+  const renderDropdown = (item: any) => {
+    switch (item.status) {
+      case 'REJECTED':
+        return <CustomDroupDown menu1={rejected(item.id)} />
         break;
-      case 'pending':
-        return <CustomDroupDown menu1={pending} />
+      case 'PENDING':
+        return <CustomDroupDown menu1={pending(item.id)} />
         break;
-      case 'Changes requested':
-        return <CustomDroupDown menu1={ChangesRequested} />
+      case 'CHANGEREQUEST':
+        return <CustomDroupDown menu1={ChangesRequested(item.id)} />
         break;
-      case 'Signed':
-        return <CustomDroupDown menu1={signed} />
+      case 'SIGNED':
+        return <CustomDroupDown menu1={signed(item.id)} />
         break;
-
+      case 'NEW':
+        return <CustomDroupDown menu1={news(item.id)} />
+        break;
     }
+  }
+  const signed = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+    </Menu>
+  };
+  const ChangesRequested = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="1">Edit</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const pending = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => Notifications({
+          title: 'Success',
+          description: 'Contract sent', type: 'success'
+        })}>Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const news = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => Notifications({
+          title: 'Success',
+          description: 'Contract sent', type: 'success'
+        })}>Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const rejected = (val: any) => {
+    <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">
+        View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
+      <Menu.Item
+        key="3"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  };
+  const statusValueHandle = (val: any) => {
+    setValueStatus(val);
+    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
+  }
+  const handleTimeFrameValue = (val: any) => {
+    setValueDatePacker(val);
+    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"));
   }
 
   const tableColumns = [
@@ -107,175 +193,107 @@ const CompanyAdmin = () => {
     {
       title: "Title",
       dataIndex: "Title",
-      align: "center",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div className="flex items-center justify-center">
-            {
-              row.status === "rejected" || row.status === "Changes requested" ?
-                (<img src={Rejected} alt="img" width={40} height={40} />) : row.status === "Signed" ?
-                  (<img src={Signed} alt="img" width={40} height={40} />) :
-                  (<img src={Recevied} alt="img" width={40} height={40} />)
-            }
-            <div className="text-start pl-4">
-              <div className="text-base">Contract</div>
-              <div className="text-sm light-grey-color">From Power Source</div>
-            </div>
-          </div>
-        );
-      },
+      align: "center"
     },
     {
       title: "",
-      dataIndex: "address",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            <div className="flex gap-5 items-center pb-2">
-              <div>
-                <GreenErrow />
-              </div>
-              <div>
-                <GreenLock />
-              </div>
-              <div>David Miller</div>
-            </div>
-
-            <div className="flex gap-5 items-center">
-              <div><GreenEye /></div>
-              <div>
-                <RedLock />
-              </div>
-              <div>Maria Sanoid</div>
-            </div>
-          </div>
-        )
-      }
+      dataIndex: "address"
     },
     {
       title: "Initiated On",
-      dataIndex: "initiatedOn",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            <div>12:18 PM</div>
-            <div className="light-grey-color text-[14px]">06/10/2022</div>
-          </div>
-        )
-      }
+      dataIndex: "initiatedOn"
     },
     {
       title: "Signed On",
-      dataIndex: "signedOn",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            <div>12:18 PM</div>
-            <div className="light-grey-color">06/10/2022</div>
-          </div>
-        )
-      }
+      dataIndex: "signedOn"
     },
     {
       title: "Status",
       dataIndex: "status",
-      align: "center",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div
-            className={`contract-company-admin-status-bage ${row.status === "rejected" || row.status === "Changes requested"
-              ? "rejected"
-              : row.status === "pending"
-                ? "pending"
-                : "success"
-              }`}
-          >
-            {row.status === "rejected"
-              ? "Rejected"
-              : row.status === "pending"
-                ? "Pending"
-                : row.status === "Signed"
-                  ? "Signed" : "Changes requested"}
-          </div>
-        );
-      },
+      align: "center"
     },
     {
       title: "Actions",
       dataIndex: "actions",
       align: "center",
-      render: (_: any, row: any, index: any) => {
-        return (
-          <div>
-            {
-              renderDropdown(row.status)
-            }
-          </div>
-
-        );
-      },
     },
   ];
-
-  const signed = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/signed-company-admin")} key="1">View Details</Menu.Item>
-    </Menu>
-  );
-
-  const ChangesRequested = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/edit-contract")} key="1">Edit</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
-  const pending = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/pending-view-details")} key="1">View Details</Menu.Item>
-      <Menu.Item key="2">Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-contract")} key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
-  const rejected = (
-    <Menu>
-      <Menu.Item onClick={() => navigate("/rejected-company-admin")} key="1">View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate("/edit-contract")} key="2">Edit</Menu.Item>
-      <Menu.Item
-        key="3"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
+  const newTableData = contractList?.map((item: any, index: number) => {
+    const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
+    const signedTime = dayjs(item.singedOn).format("hh:mm A");
+    const initiatedDate = dayjs(item.initiatedOn).format("DD/MM/YYYY");
+    const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
+    return (
+      {
+        No: contractList?.length < 10 && `0 ${index + 1}`,
+        Title: <div className="flex items-center justify-center">
+          {
+            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
+                (<img src={Signed} alt="img" width={40} height={40} />) :
+                (<img src={Recevied} alt="img" width={40} height={40} />)
+          }
+          <div className="text-start pl-4">
+            <div className="text-base">{item.title}</div>
+            <div className="text-sm light-grey-color">{item.content}</div>
+          </div>
+        </div>,
+        address: <div>
+          <div className="flex gap-5 items-center pb-2">
+            <div>
+              <GreenErrow />
+            </div>
+            <div>
+              <GreenLock />
+            </div>
+            <div>{item.sender.firstName}</div>
+          </div>
+          <div className="flex gap-5 items-center">
+            <div><GreenEye /></div>
+            <div>
+              <RedLock />
+            </div>
+            <div>{item.reciever.firstName}</div>
+          </div>
+        </div>,
+        initiatedOn: <div>
+          <div>{initiateTime}</div>
+          <div className="light-grey-color">{initiatedDate}</div>
+        </div>,
+        signedOn: <div>
+          <div>{signedTime}</div>
+          <div className="light-grey-color">{signedDate}</div>
+        </div>,
+        status: <div
+          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+            ? "REJECTED"
+            : item.status === "PENDING"
+              ? "PENDING"
+              : "SUCCESS"
+            }`}
+        >
+          {item.status === "REJECTED"
+            ? "REJECTED"
+            : item.status === "PENDING"
+              ? "PENDING" : item.status === "NEW"
+                ? "NEW"
+                : item.status === "SIGNED"
+                  ? "SIGNED" : "CHANGEREQUEST"}
+        </div>,
+        actions: renderDropdown(item)
+      }
+    )
+  })
+  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0, 10)}&endDate=${valueDatePacker.slice(13, 23)}` : valueDatePacker)
   return (
     <div className="contract-company-admin">
       <Alert
-        state={showDelete}
+        state={showDelete.isToggle}
         setState={setShowDelete}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
+        okBtnFunc={() => deleteContractHandler(showDelete?.id)}
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
@@ -303,26 +321,25 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => { }} />
+          <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
-            requireDatePicker placement="bottom"
+            requireRangePicker placement="bottom"
             value={valueDatePacker}
-            setValue={setValueDatePacker}
+            setValue={(e: any) => handleTimeFrameValue(e)}
           />
-
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
             value={valueStatus}
-            setValue={setValueStatus}
+            setValue={(e: any) => statusValueHandle(e)}
           />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={tableColumns} tableData={tableData} />
+            <GlobalTable columns={tableColumns} tableData={newTableData} />
           </BoxWrapper>
         </Col>
       </Row>

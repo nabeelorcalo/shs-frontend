@@ -18,7 +18,7 @@ const CardIcon = [
   { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
 ]
 const index = (props: any) => {
-  const { userRole, hideTopBar } = props;
+  // const { userRole, hideTopBar } = props;
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
 

@@ -6,22 +6,32 @@ import './style.scss'
 import CalendarDataDrawer from "./calendarDataDrawer";
 import { LeaveRequest } from "../../../../components";
 import { Form } from "antd";
-import { calendarEventData } from "./calendarMockData";
+// import { calendarEventData } from "./calendarMockData";
 import useCustomHook from "../../actionHandler";
 
 const Calendar = () => {
     const action = useCustomHook();
+    console.log(action.getLeaveState,"Leaev From Action ");
+    const calendarEvent = action.getLeaveState.map((item:any) => ({
+        ...item,
+        start: item?.dateFrom,
+        end: item?.dateTo
+    }))  
+    console.log('calendarEvent', calendarEvent);
+    
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
-    const [eventData, setEventData] = useState({})
-    // console.log('eventData', eventData);
+    const [eventData, setEventData] = useState({});
+    console.log('eventData', eventData);
     const [form] = Form.useForm();
+   
     // console.log('isEditModalOpen', isEditModalOpen);
     const handleEventContent = (eventInfo: any) => {
         const events = eventInfo?.event?._def?.extendedProps;
-        const backgroundColor = events?.eventType === 'sick' ?
-            'rgba(76, 164, 253, 1)' : events?.eventType === 'casual' ?
-                'rgba(255, 193, 93, 1)' : events?.eventType === 'work from home' ?
+        console.log(events,"eventseventseventseventsevents");
+        const backgroundColor = events?.type === 'SICK' ?
+            'rgba(76, 164, 253, 1)' : events?.type === 'CASUAL' ?
+                'rgba(255, 193, 93, 1)' : events?.type === 'WFH' ?
                     'rgba(233, 111, 124, 1)' : 'rgba(74, 157, 119, 1)';
         return (
             <>
@@ -52,7 +62,7 @@ const Calendar = () => {
                         month: "short",
                         year: "numeric"
                     }}
-                    events={calendarEventData}
+                    events={calendarEvent}
                     eventContent={handleEventContent}
                     eventClick={(e) => { setIsOpenCalendarDrawer(true); setEventData(e) }}
                 // dateClick={() => setIsAddModalOpen(true)}

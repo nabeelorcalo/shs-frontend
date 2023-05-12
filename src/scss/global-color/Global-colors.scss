@@ -43,7 +43,9 @@
 .teriary-light-bg-color {
   background-color: $teriary-light-bg-color;
 }
-
+.bg-signature-border{
+  background-color: $signature-border;
+}
 .teriary-light-color {
   color: $teriary-light-bg-color;
 }
@@ -328,6 +330,9 @@ background-color: $accommodation-badge;
 }
 .accommodation-btn-info {
   color: $accommodation-btn-info;
+}
+.yellow-bg{
+  background-color: $yellow-status-color;
 }
 .organ-status-bg{
   color: $orange-status-color;

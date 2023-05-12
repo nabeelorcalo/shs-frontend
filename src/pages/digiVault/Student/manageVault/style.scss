@@ -25,6 +25,7 @@
     border-radius: 8px;
     color: $white-bg-color;
     &:hover {
+      border: 1px solid $green-graph-tooltip-color;
       color: $white-bg-color;
     }
   }
@@ -38,6 +39,7 @@
     border-radius: 8px;
     color: $green-graph-tooltip-color;
     &:hover {
+      border: 1px solid $green-graph-tooltip-color;
       color: $green-graph-tooltip-color;
     }
   }
@@ -56,4 +58,26 @@
     padding: 17px 30px;
     gap: 10px;
   }
+}
+.folders-modal{
+  .cancel-btn{
+    border-radius: 8px;
+    color: #4A9D77;
+    border: 1px solid #4A9D77;
+    &:hover{
+      border: 1px solid #4A9D77;
+      color: #4A9D77;
+    }
+  }
+  .submit-btn{
+    background-color: #4A9D77;
+    color: #fff;
+    border-radius: 8px;
+    &:hover{
+      border: 1px solid #4A9D77;
+      background-color: #4A9D77;
+      color: #fff;
+    }
+  }
+ 
 }

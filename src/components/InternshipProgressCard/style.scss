@@ -1,14 +1,17 @@
 @import '../../scss/_colors.scss';
 
-.Published {
+.PUBLISHED {
   background-color: $text-success-color;
 }
-.Pending {
+
+.PENDING {
   background-color: $text-warning-color;
 }
-.Draft {
+
+.DRAFT {
   background-color: $text-info-color;
 }
-.Closed {
+
+.CLOSED {
   background-color: $text-primary-disabled-color;
 }
