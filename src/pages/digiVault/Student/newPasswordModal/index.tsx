@@ -1,24 +1,30 @@
-import "./style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal, Form, Input, Switch } from "antd";
 import useCustomHook from "../../actionHandler";
+import "./style.scss";
 
 const NewPasswordModal = (props: any) => {
-  const { newPass, setNewPass, setIsChecked } = props;
-  const { PostDigivalutData } = useCustomHook();
-  const [form] = Form.useForm();
+  const { isModal, setIsModal, settingModal, setIsEnablePassword } = props;
+  const { postDigivaultPassword } = useCustomHook();
 
   const onFinish = (values: any) => {
+    values.isLock = settingModal.isLock
     console.log('Success:', values);
-    PostDigivalutData(values)
+    postDigivaultPassword(values)
   };
+  const onChange = (checked: boolean) => {
+    setIsModal(checked && true);
+    setIsEnablePassword(checked)
+    console.log("hfuehfiefuefuhfuhfih3 " , checked);
+    
+  }
   return (
     <div>
+      <Switch onChange={onChange} defaultChecked={true} />
       <Modal
-        open={newPass}
-        onCancel={() => {
-          setNewPass(!newPass);
-        }}
+        open={isModal}
+        onOk={() => setIsModal(false)}
+        onCancel={() => setIsModal(false)}
         width={500}
         maskClosable={false}
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
@@ -30,14 +36,10 @@ const NewPasswordModal = (props: any) => {
         <Form onFinish={onFinish}>
           <div>
             <label>Password</label>
-            <Form.Item
-              name="password"
-
-            >
+            <Form.Item name="password" >
               <Input.Password size="large" />
             </Form.Item>
           </div>
-
           <div>
             <label>Confirm Password</label>
             <Form.Item
@@ -70,8 +72,7 @@ const NewPasswordModal = (props: any) => {
             <Button
               htmlType="submit"
               onClick={() => {
-                setNewPass(!newPass);
-                setIsChecked(true);
+                setIsModal({ isToggle: false, isLock: true });
               }}
               className="create-passwor-btn primary-bg-color  min-w-full"
             >

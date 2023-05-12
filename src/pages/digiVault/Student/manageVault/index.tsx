@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Button, Col, Divider, Dropdown, Menu, Modal, Row, Space } from "antd";
-import { SearchBar, Input, Alert } from "../../../../components";
+import { Button, Col, Divider, Dropdown, Form, Menu, Modal, Row, Space, Input } from "antd";
+import { SearchBar, Alert } from "../../../../components";
 import { Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../config/validationMessages'
 import CustomDropDown from "../dropDownCustom";
 import "./style.scss";
+import useCustomHook from "../../actionHandler";
 
 const tableData = [
   {
@@ -33,12 +35,15 @@ const tableData = [
   },
 ];
 
-const ManageVault = (props: any) => {
+const ManageVault = () => {
   const [open, setISOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [upLoadFile, setUpLoadFile] = useState(false);
   const [upLoadFolder, setUpLoadFolder] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const [form] = Form.useForm();
+  const { state } = useLocation();
+  const { postCreateFolderFile } = useCustomHook();
 
   const columns = [
     {
@@ -118,7 +123,10 @@ const ManageVault = (props: any) => {
   const location = useLocation();
 
   const titleName = location.pathname.split("/");
-
+  const onFinish = (values: any) => {
+    values.root = state;
+    postCreateFolderFile(values)
+  }
   return (
     <div className="manage-vault-main">
       <Alert
@@ -191,30 +199,41 @@ const ManageVault = (props: any) => {
         className="folders-modal"
         open={open}
         centered
-        closeIcon={ <CloseCircleFilled className="text-success-placeholder-color" onClick={() => setISOpen(false)} />}
-        footer={[
-          <Button
-            className="cancel-btn"
-            onClick={() => setISOpen(false)}
-            key="Cancel">
-            Cancel
-          </Button>,
-
-          <Button
-            className="submit-btn"
-            key="submit">
-            Submit
-          </Button>,
-        ]}
+        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" onClick={() => setISOpen(false)} />}
+        footer={false}
         title="Create new folder"
       >
         <div className="mt-8 mb-8">
-          <label>Folder Name</label>
+          <Form form={form}
+            layout='vertical'
+            onFinish={onFinish}
+            initialValues={{ remember: false }}
+            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+            <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
+              <Input className="input" placeholder="Enter folder Name" type="text" />
+            </Form.Item>
+            <div className="d-flex justify-end items-center">
+              <Button
+                className="cancel-btn"
+                onClick={() => setISOpen(false)}
+                key="Cancel">
+                Cancel
+              </Button>,
+
+              <Button
+                htmlType="submit"
+                className="submit-btn"
+                key="submit">
+                Submit
+              </Button>
+            </div>
+          </Form>
+          {/* <label>Folder Name</label>
           <Input
             type="input"
             handleChange={handleChange}
             placeholder="Enter folder name"
-          />
+          /> */}
         </div>
       </Modal>
 

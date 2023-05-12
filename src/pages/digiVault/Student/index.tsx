@@ -18,12 +18,12 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  SettingIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "./dropDownCustom";
 import { Alert } from "../../../components";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
+import DigiVaultModals from "./Modals";
 
 const manageVaultArr = [
   {
@@ -108,18 +108,16 @@ const tableData = [
 ];
 
 const DigiVaultStudent = () => {
-  const [modal2Open, setModal2Open] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [newPass, setNewPass] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  const { getDigiVaultDashboard, studentVault }:any = useCustomHook();
+  const [isEnablePassowrd,setIsEnablePassword] = useState(false);
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard()
+    getDigiVaultDashboard(isEnablePassowrd)
   }, [])
-  
-console.log("storage are : ",studentVault);
+
+  console.log("storage are : ", studentStorage);
 
   const menu1 = (
     <Menu>
@@ -173,13 +171,6 @@ console.log("storage are : ",studentVault);
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
       />
-
-      <NewPasswordModal
-        newPass={newPass}
-        setNewPass={setNewPass}
-        setIsChecked={setIsChecked}
-      />
-      <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="digivault-title text-2xl font-semibold">
@@ -189,21 +180,7 @@ console.log("storage are : ",studentVault);
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center">
-              <p className="pr-2 text-teriary-color">Lock</p>
-              <Switch
-                checked={isChecked}
-                onClick={() => {
-                  setNewPass(true);
-                }}
-              />
-            </div>
-            <Button onClick={() => setModal2Open(true)} className="setting-btn">
-              <span className="setting-btn-text font-normal text-sm">
-                Settings
-              </span>
-              <img src={SettingIcon} alt="settIcon" width={24} height={24} />
-            </Button>
+            <DigiVaultModals setIsEnablePassword={setIsEnablePassword} />
           </div>
         </Col>
       </Row>
@@ -222,7 +199,7 @@ console.log("storage are : ",studentVault);
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path)}
+                      onClick={() => navigate(item.path, { state: item.title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.title}
