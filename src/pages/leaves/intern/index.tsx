@@ -5,16 +5,18 @@ import { BoxWrapper } from '../../../components';
 import Calendar from "./calendar"
 import { useNavigate } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../config/constants';
-import { leaveCardData, upcomingHolidayData } from './internMockdata';
+// import { leaveCardData, upcomingHolidayData } from './internMockdata';
 import "./style.scss" 
+import useCustomHook from '../actionHandler';
 const CardIcon = [
-  { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
   { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
-  { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" },
-  { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
+  { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" },
+  { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
+  { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" }
 ]
 const index = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const {getLeaevState,getHolidayLeaveState} = useCustomHook()
   return (
     <div className='intrne_main'>
       <PageHeader actions  title="Leave">
@@ -23,9 +25,9 @@ const index = () => {
         </div>
       </PageHeader>
       <Row gutter={[20, 20]} >
-        {leaveCardData.map((data: any, index: number) => (
+        {getLeaevState.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6} >
-            <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.leavType} total={data.leaveLength} pending={data.pending} approved={data.approved} declined={data.declined} />
+            <LeaveCard Icon={CardIcon[index].Icon} bg={CardIcon[index].bg} title={data.type} total={data.totalCount} pending={data.pending} approved={data.approved} declined={data.declined} />
           </Col>
         ))}
       </Row>
@@ -36,7 +38,7 @@ const index = () => {
           </BoxWrapper>
         </Col>
         <Col xs={24} md={12} xl={7} >
-          <UpcomingHolidayComp upcomingHolidayData={upcomingHolidayData} />
+          <UpcomingHolidayComp upcomingHolidayData={getHolidayLeaveState} />
         </Col>
       </Row>
     </div>

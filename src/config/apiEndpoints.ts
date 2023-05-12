@@ -37,6 +37,8 @@ const endpoints = {
   CREATE_LEAVE:"/Leaves/create",
   GET_LEAEV_LIST:`/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
+  HOLIDAY_LIST:"/Leaves/list-holiday",
+  LEAVE_STATE:"/Leaves/state",
 
 
 }

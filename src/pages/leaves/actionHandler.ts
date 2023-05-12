@@ -3,47 +3,75 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import { useRecoilState } from 'recoil';
-import { getLeaveStateAtom } from '../../store/leave';
-import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { geCalanderLeaveStateAtom, holidayListStateAtom, leaveStateAtom } from '../../store/leave';
+import { useEffect, useState } from 'react';
 import endpoints from '../../config/apiEndpoints';
 import dayjs from 'dayjs';
-const { CALANDER_LEAEV_LIST, CREATE_LEAVE } = endpoints;
+import { currentUserState } from '../../store';
+const { CALANDER_LEAEV_LIST, CREATE_LEAVE, HOLIDAY_LIST, LEAVE_STATE } = endpoints;
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
 
 const useCustomHook = () => {
-  // const date = dayjs().format("YYYY-MM-DD");
   const formate = (value: any, format: string) => {
     return dayjs(value).format(format)
   }
-  const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(getLeaveStateAtom);
+  const cruntUserState = useRecoilValue(currentUserState);
+  const internID = cruntUserState?.intern?.id;
+  const internJoiningDate = formate(cruntUserState?.intern?.joiningDate,"YYYY-MM-DD") ;
+  const cruntdate = dayjs(new Date()).format("YYYY-MM-DD")
+  // console.log(cruntdate,"date crunt");
+  const comapnyID = cruntUserState?.intern?.company?.id;
+  const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
+  const [getHolidayLeaveState, setHolidayLeaveState] = useRecoilState(holidayListStateAtom);
+  const [getLeaevState, setLeaevState] = useRecoilState(leaveStateAtom);
+  const [calndarDate, setCalendarDate] = useState({});
+
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
+  
+  /* To Get Data For Leaev Status Cards 
+   -------------------------------------------------------------------------------------*/
+
+  const getLeaveStateData = async () => {
+    const response = await api.get(LEAVE_STATE, { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID })
+    setLeaevState(response?.data)
+  }
+  useEffect(() => {
+    getLeaveStateData();
+  }, [])
+
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
+   const  getCalendarDate =(date:any) =>{
+    console.log(date,"date from calendar");
+    // setCalendarDate({startDate:formate(date.startStr, "YYYY-MM-DD"), endDate:formate(date.endStr, "YYYY-MM-DD")})
+}
+
   const getCalendarLeaveList = async () => {
-    const response: any = await api.get(CALANDER_LEAEV_LIST, { startDate: "2023-04-11", endDate: "2023-05-11", internId: "1" })
+    const response: any = await api.get(CALANDER_LEAEV_LIST, { startDate: "2023-04-11", endDate: "2023-05-11", internId: internID })
     setCalanderLeaevState(response?.data)
   }
   useEffect(() => {
     getCalendarLeaveList();
   }, [])
 
+
   /*  Submit Leave Request Function For Intrnee
  -------------------------------------------------------------------------------------*/
+
   const onLeaveFormValuesChange = async (singleValues: any, allValues: any) => {
     // console.log(singleValues);
-    console.log(allValues, "allValues");
+    console.log(allValues.media, "allValues");
   }
-
   const onsubmitLeaveRequest = async (values: any) => {
-    const initailVal:any = {
-      internId: 1,
-      companyId: 1,
+    const initailVal: any = {
+      internId: internID,
+      companyId: comapnyID,
       type: values?.type,
       durationType: values?.durationType,
       dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
@@ -51,19 +79,35 @@ const useCustomHook = () => {
       timeFrom: values?.timeFrom,
       timeTo: values?.timeTo,
       reason: values?.reason,
-      // media: values?.media
+      media: values?.media
     }
-    const file = new File([/* file contents */], 'example.png', { type: 'image/png' });
+    // const file = new File([/* file contents */], 'example.png', { type: 'image/png' });
     const formData = new FormData();
-    for (const key in initailVal) {
-      formData.append(key, initailVal[key]);
-    }
-    formData.append('media', file);
+    // for (const key in initailVal) {
+    //   formData.append(key, initailVal[key]);
+    // }
+    formData.append('media', values?.media?.fileList);
+
     // console.log("values from the form: ", initailVal);
+    const updatedVal = {
+      ...initailVal,
+      media: formData
+
+    }
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
-    const response: any = await api.post(CREATE_LEAVE, formData, headerConfig);
+    const response: any = await api.post(CREATE_LEAVE, updatedVal, headerConfig);
     console.log(response, "response Create Leave");
   }
+  /*  Holiday Leave List
+-------------------------------------------------------------------------------------*/
+  const getHolidayLeaveList = async () => {
+    const response: any = await api.get(HOLIDAY_LIST);
+    // console.log(response?.data,"responseresponse");
+    setHolidayLeaveState(response?.data)
+  }
+  useEffect(() => {
+    getHolidayLeaveList()
+  }, [])
 
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
@@ -135,7 +179,11 @@ const useCustomHook = () => {
   };
   return {
     getData,
+    formate,
+    getLeaevState,
     getCalanderLeaveState,
+    getHolidayLeaveState,
+    getCalendarDate,
     onLeaveFormValuesChange,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
