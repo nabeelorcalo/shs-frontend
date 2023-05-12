@@ -52,15 +52,6 @@ interface DataType {
   availabilityEnd: any;
 }
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    console.log('promise::: ', file)
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
-
 
 
 const Listings = () => {
@@ -77,13 +68,7 @@ const Listings = () => {
   const [entireProperty, setEntireProperty] = useState(false)
   const [uploadURL, setUploadURL] = useState(false)
   const [uploadDevice, setUploadDevice] = useState(false)
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previousValues, setPreviousValues] = useState<any>({});
-  const [nextDisabled, setNextDisabled] = useState(true)
-
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -351,7 +336,7 @@ const Listings = () => {
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="Not available">Not available</Select.Option>
                 <Select.Option value="Central">Central</Select.Option>
-                <Select.Option value="indvidualUnits">Indvidual units</Select.Option>
+                <Select.Option value="IndividualUnits">Indvidual units</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -364,7 +349,7 @@ const Listings = () => {
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="Not available">Not available</Select.Option>
                 <Select.Option value="Central">Central Property</Select.Option>
-                <Select.Option value="Indvidual units">Central building</Select.Option>
+                <Select.Option value="Individual units">Central building</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -378,7 +363,7 @@ const Listings = () => {
                 <Select.Option value="No">No</Select.Option>
                 <Select.Option value="Natural gas">Natural gas</Select.Option>
                 <Select.Option value="Electric">Electric</Select.Option>
-                <Select.Option value="Centeral property">Centeral property</Select.Option>
+                <Select.Option value="Central property">Centeral property</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -1024,14 +1009,12 @@ const Listings = () => {
 
   const next = () => {
     form.validateFields().then((values) => {
-      console.log('validate fields;:', values)
       setPreviousValues((old:any) => {
         return {
           ...old,
           ...values
         }
       });
-      console.log('previousValues:: ', previousValues)
       setStepCurrent(stepCurrent + 1);
     })
   };
@@ -1041,72 +1024,26 @@ const Listings = () => {
   };
 
   const onValuesChange = (changedValues: any, allValues: any) => {
-    allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false)
+    allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
+    allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
   };
-
-  const handleSubmission = useCallback(
-    (result: any) => {
-      if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
-      } else {
-        showNotification("success", "Success", result.response?.message);
-      }
-    },
-    [form]
-  );
 
   const submitAddListing = async () => {
     setLoadingAddListing(true);
     const formData = new FormData();
-    formData.append('addressOne', previousValues.addressOne)
-    formData.append('addressTwo', previousValues.addressTwo)
-    formData.append('postCode', previousValues.postCode)
-    formData.append('isFurnished', previousValues.isFurnished)
-    formData.append('propertyType', previousValues.propertyType)
-    formData.append('hasHeating', previousValues.hasHeating)
-    formData.append('hasAirConditioning', previousValues.hasAirConditioning)
-    formData.append('hasWaterHeating', previousValues.hasWaterHeating)
-    formData.append('buildingHas', previousValues.buildingHas)
-    formData.append('propertyHas', previousValues.propertyHas)
-    formData.append('propertySize', previousValues.propertySize)
-    formData.append('totalBedrooms', previousValues.totalBedrooms)
-    formData.append('bedroomsForRent', previousValues.bedroomsForRent)
-    formData.append('totalBathrooms', previousValues.totalBathrooms)
-    formData.append('media', previousValues.media)
-    formData.append('bedType', previousValues.bedType)
-    formData.append('twoPeopleAllowed', previousValues.twoPeopleAllowed)
-    formData.append('bedroomAmenities', previousValues.bedroomAmenities)
-    formData.append('rentFrequency', previousValues.rentFrequency)
-    formData.append('rent', previousValues.rent)
-    formData.append('paymentMethod', previousValues.paymentMethod)
-    formData.append('hasSecurityDeposit', previousValues.hasSecurityDeposit)
-    formData.append('depositType', previousValues.depositType)
-    formData.append('depositAmount', previousValues.depositAmount)
-    formData.append('minimumStay', previousValues.minimumStay)
-    formData.append('allBillsIncluded', previousValues.allBillsIncluded)
-    formData.append('electricityBillPayment', previousValues.electricityBillPayment)
-    formData.append('waterBillPayment', previousValues.waterBillPayment)
-    formData.append('gasBillPayment', previousValues.gasBillPayment)
-    formData.append('gender', previousValues.gender)
-    formData.append('maxAgePreference', previousValues.maxAgePreference)
-    formData.append('tenantTypePreference', previousValues.tenantTypePreference)
-    formData.append('couplesAllowed', previousValues.couplesAllowed)
-    formData.append('tenantsCanRegisterAddress', previousValues.tenantsCanRegisterAddress)
-    formData.append('petsAllowed', previousValues.petsAllowed)
-    formData.append('musicalInstrumentsAllowed', previousValues.musicalInstrumentsAllowed)
-    formData.append('identityProofRequired', previousValues.identityProofRequired)
-    formData.append('occupationProofRequired', previousValues.occupationProofRequired)
-    formData.append('incomeProofRequired', previousValues.incomeProofRequired)
-    formData.append('contractType', previousValues.contractType)
-    formData.append('cancellationPolicy', previousValues.cancellationPolicy)
-    
+    for(const name in previousValues) {
+      formData.append(name, previousValues[name])
+    }
+    formData.append('media', previousValues.media.map((file:any) => file.originFileObj))
     const result = await createListing(formData);
+    if(!result.error) {
+      showNotification("success", "Success", result.message);
+    }
     setLoadingAddListing(false);
-    handleSubmission(result);
     closeModalAddListing();
-    setStepCurrent(0)
+    setStepCurrent(0);
+    getListings(setLoadingAllProperties)
   }
-
 
 
   /* RENDER APP

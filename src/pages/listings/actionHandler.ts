@@ -11,16 +11,8 @@ const useListingsHook = () => {
 
   // Create Agent Property
   const createListing = async (data: any) => {
-    const submitRequest = async(reqBody:any) => {
-      const form = new FormData();
-      try {
-        const res = await api.post(ADD_PROPERTY, reqBody)
-        return {response: res, error: undefined}
-      } catch (error) {
-        return { response: undefined, error: error };
-      }
-    }
-    return await submitRequest(data)
+    const response = await api.post(ADD_PROPERTY, data)
+    return response
   }
 
   // Update Agent Property

@@ -140,7 +140,7 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Not available">Not available</Select.Option>
                       <Select.Option value="Central">Central</Select.Option>
-                      <Select.Option value="indvidualUnits">Indvidual units</Select.Option>
+                      <Select.Option value="IndividualUnits">Indvidual units</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -148,8 +148,8 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Form.Item name="hasHeating" label="Heating" rules={[{ required: true }]}>
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Not available">Not available</Select.Option>
-                      <Select.Option value="Central">Central Property</Select.Option>
-                      <Select.Option value="Indvidual units">Central building</Select.Option>
+                      <Select.Option value="Central">Central</Select.Option>
+                      <Select.Option value="Indvidual units">Individual units</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
@@ -159,7 +159,7 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                       <Select.Option value="No">No</Select.Option>
                       <Select.Option value="Natural gas">Natural gas</Select.Option>
                       <Select.Option value="Electric">Electric</Select.Option>
-                      <Select.Option value="Centeral property">Centeral property</Select.Option>
+                      <Select.Option value="Central property">Centeral property</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
