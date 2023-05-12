@@ -10,8 +10,6 @@ const useCustomHook = () => {
   const { STUDENT_DIGIVAULT, POST_DIGIVAULT } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [newPassword, setNewPassword] = useRecoilState(DigiVaultPasswordState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
   const getDigiVaultDashboard = async () => {
     const { data } = await api.get(STUDENT_DIGIVAULT);

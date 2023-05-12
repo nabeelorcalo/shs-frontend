@@ -10,14 +10,14 @@ const useCustomHook = () => {
   const [contractList, setContractList] = useRecoilState(contractsListData);
 
   //get offer letter
-  const getOfferLetterList = async (val: any) => {
+  const getOfferLetterList = async (status: any, time: any) => {
     const params = {
       page: 1,
       limit: 10,
-      status: val,
+      status: status ? status : null,
       type: 'OFFER_LETTER',
       currentDate: '2023-05-07',
-      filterType: 'THIS_MONTH'
+      filterType: time ? time : null
     }
     const { data } = await api.get(GET_CONTRACT_LIST, params);
     setContractList(data)
@@ -41,7 +41,7 @@ const useCustomHook = () => {
   //delete offer letter
   const deleteOfferLetterHandler = async (val: any) => {
     await api.delete(`${DEL_CONTRACT}/${val}`);
-    getOfferLetterList(val);
+    getOfferLetterList(null, null);
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
   return {
