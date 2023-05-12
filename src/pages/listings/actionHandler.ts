@@ -7,7 +7,7 @@ import { listingsState, listingState } from "../../store";
 const useListingsHook = () => {
   const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [singleListing, setSingleListing] = useRecoilState(listingState)
-  const { GET_AGENT_PROPERTIES, ADD_PROPERTY, GET_PROPERTY, UPDATE_PROPERTY } = endpoints
+  const { GET_AGENT_PROPERTIES, ADD_PROPERTY, GET_PROPERTY, UPDATE_PROPERTY, DELETE_PROPERTY } = endpoints
 
   // Create Agent Property
   const createListing = async (data: any) => {
@@ -49,11 +49,23 @@ const useListingsHook = () => {
     setLoading(false);
   }
 
+  // Delete Agent Property
+  const deleteListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    console.log("I am deleter")
+    setLoading(true)
+    await api.delete(`${DELETE_PROPERTY}${id}`)
+    setLoading(false)
+    setAllProperties(
+      allProperties.filter((property:any) => property.id !== id)
+    )
+  }
+
   return {
     createListing,
     getListings,
     getListing,
-    updateListing
+    updateListing,
+    deleteListing
   };
 };
 

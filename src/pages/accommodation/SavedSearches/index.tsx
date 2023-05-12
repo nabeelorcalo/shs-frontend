@@ -55,8 +55,8 @@ const SavedSearches = () => {
                 <AccommodationCard
                   coverPhoto={thumb1}
                   offer={item.property.offer?.monthlyDiscount}
-                  rent={item.property.monthlyRent}
-                  propertyAvailableFor={"week"}
+                  rent={item.property.rent}
+                  propertyAvailableFor={item.property.rentFrequency}
                   propertyType={item.property.propertyType}
                   totalBedrooms={item.property.totalBedrooms}
                   totalBathrooms={item.property.totalBathrooms}

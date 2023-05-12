@@ -29,6 +29,7 @@ const AvailableProperties = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getAvailableProperties(setLoading)
+    console.log('Available Prop::: ', availableProperties)
   }, [])
 
 
@@ -70,8 +71,8 @@ const AvailableProperties = () => {
                 <AccommodationCard
                   coverPhoto={thumb1}
                   offer={property?.offer?.monthlyDiscount}
-                  rent={property?.monthlyRent}
-                  propertyAvailableFor={"week"}
+                  rent={property?.rent}
+                  propertyAvailableFor={property?.rentFrequency}
                   propertyType={property?.propertyType}
                   totalBedrooms={property?.totalBedrooms}
                   totalBathrooms={property?.totalBathrooms}

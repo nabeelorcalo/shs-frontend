@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PageHeader, SearchBar } from '../../components'
+import { PageHeader, SearchBar, Alert } from '../../components'
 import useListingsHook from './actionHandler'
 import { listingsState } from "../../store";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import dayjs from 'dayjs'
 import showNotification from '../../helpers/showNotification'
 import {
@@ -46,7 +46,6 @@ interface DataType {
   totalBedrooms: number;
   verificationStatus: string;
   rent: number;
-  availability: any;
   publicationStatus: string;
   availabilityStart: any;
   availabilityEnd: any;
@@ -57,18 +56,22 @@ interface DataType {
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getListings, createListing } = useListingsHook()
-  const allProperties = useRecoilValue(listingsState)
-  const [loadingAllProperties, setLoadingAllProperties] = useState(false)
+  const { getListings, createListing, deleteListing } = useListingsHook();
+  const allProperties = useRecoilValue(listingsState);
+  // const [allProperties, setAllProperties] = useRecoilState(listingsState)
+  const [loadingAllProperties, setLoadingAllProperties] = useState(false);
+  const [loadingDelProperty, setLoadingDelProperty] = useState(false);
   const [form] = Form.useForm();
-  const navigate = useNavigate()
-  const [loadingAddListing, setLoadingAddListing] = useState(false)
-  const [modalAddListingOpen, setModalAddListingOpen] = useState(false)
-  const [stepCurrent, setStepCurrent] = useState(0)
-  const [entireProperty, setEntireProperty] = useState(false)
-  const [uploadURL, setUploadURL] = useState(false)
-  const [uploadDevice, setUploadDevice] = useState(false)
+  const navigate = useNavigate();
+  const [loadingAddListing, setLoadingAddListing] = useState(false);
+  const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
+  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [stepCurrent, setStepCurrent] = useState(0);
+  const [entireProperty, setEntireProperty] = useState(false);
+  const [uploadURL, setUploadURL] = useState(false);
+  const [uploadDevice, setUploadDevice] = useState(false);
   const [previousValues, setPreviousValues] = useState<any>({});
+  const [propertyID, setPropertyID] =useState('')
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -105,17 +108,7 @@ const Listings = () => {
         return (
           <>£ {text}</>
         )
-
       }
-    },
-    {
-      title: 'Availability',
-      dataIndex: 'availability',
-      render: (_, row, index) => {
-        return (
-          <>{dayjs(row.availabilityStart).format('DD/MM/YYYY')} - {dayjs(row.availabilityEnd).format('DD/MM/YYYY')}</>
-        );
-      },
     },
     {
       title: 'Publication Status',
@@ -142,7 +135,7 @@ const Listings = () => {
             menu={{
               items: [
                 { label: 'Edit', key: 'listingEdit', onClick: () => navigate(`/edit-listing/${row.id}`) },
-                { label: 'Remove', key: 'listingRemove', onClick: () => console.log('listingRemove') }
+                { label: 'Remove', key: 'listingRemove', onClick: () => openModalDeleteListing(row.id) }
               ]
             }}
           >
@@ -179,6 +172,16 @@ const Listings = () => {
     form.resetFields();
     setModalAddListingOpen(false);
     setPreviousValues({})
+  }
+
+  function openModalDeleteListing(id:any) {
+    setModalDeleteOpen(true)
+    setPropertyID(id)
+  }
+
+  function closeModalDeleteListing() {
+    setModalDeleteOpen(false)
+    setPropertyID('')
   }
 
   const normFile = (e: any) => {
@@ -1143,6 +1146,23 @@ const Listings = () => {
 
       {/* ENDS MODAL: ADD LISTING 
       ***********************************************************************************/}
+
+      <Alert
+        type={'warning'}
+        width={560}
+        state={modalDeleteOpen }
+        setState={setModalDeleteOpen}
+        cancelBtntxt={'Cancel'}
+        footer={[
+          <Button className="button-default-warning" onClick={() => closeModalDeleteListing()}>Cancel</Button>,
+          <Button loading={loadingDelProperty} className="button-warning" onClick={() => deleteListing(propertyID, setLoadingDelProperty)}>
+            Delete
+          </Button>
+        ]}
+      >
+        Are you sure want to delete this property
+      </Alert>
+      
     </>
   )
 }
