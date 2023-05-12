@@ -36,6 +36,7 @@ const endpoints = {
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE:"/Leaves/create",
   GET_LEAEV_LIST:`/Leaves/list`,
+  GET_ALL_INTERNS:"/candidate/listCandidates",
 
 }
 export default endpoints;

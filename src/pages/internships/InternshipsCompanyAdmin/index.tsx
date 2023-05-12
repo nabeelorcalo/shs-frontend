@@ -6,7 +6,7 @@ import {
   BoxWrapper, NoDataFound
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row } from 'antd'
+import { Button, Col, Row, Spin } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import '../style.scss'
@@ -20,7 +20,7 @@ const InternshipsCompanyAdmin = () => {
     department: ""
   });
 
-  const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
+  const { getAllInternshipsData, internshipData, changeHandler, isLoading } = useCustomHook();
   console.log(internshipData);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const InternshipsCompanyAdmin = () => {
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" />
           </Col>
-          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 internship-right-sec">
+          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4">
             <FiltersButton label="Filters" onClick={handleDrawer} />
             <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <React.Fragment key=".0">
@@ -92,7 +92,6 @@ const InternshipsCompanyAdmin = () => {
                         'Draft',
                       ]}
                       setValue={(event: any) => { handleStatus(event) }}
-                      showDatePickerOnVal="custom"
                       value={state.status}
                     />
                   </div>
@@ -151,7 +150,7 @@ const InternshipsCompanyAdmin = () => {
             </Button>
           </Col>
         </Row>
-        <div className='flex flex-col gap-7'>
+        {isLoading ? <div className='flex flex-col gap-7'>
           {internshipData.length !== 0 ?
             internshipData?.map((item: any, idx: any) => {
               return (
@@ -173,7 +172,8 @@ const InternshipsCompanyAdmin = () => {
               )
             }) : <NoDataFound />
           }
-        </div>
+        </div> : <Spin tip="Processing...." />}
+
       </div>
     </>
   )

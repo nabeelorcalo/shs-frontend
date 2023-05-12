@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
@@ -14,6 +14,7 @@ const useCustomHook = () => {
   const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
@@ -28,8 +29,9 @@ const useCustomHook = () => {
 
   //Get all internship data
   const getAllInternshipsData = async (event: any) => {
-    const { data } = await api.get(GET_LIST_INTERNSHIP, { companyId: 1, page: 1, limit: 10, status: event ? event : null });
+    const { data } = await api.get(GET_LIST_INTERNSHIP, { page: 1, limit: 10, status: event ? event : null });
     setInternshipData(data);
+    setIsLoading(true)
   };
 
   //Get all department data
@@ -76,6 +78,7 @@ const useCustomHook = () => {
 
 
   };
+
   // Edit internship 
   const EditNewInternshipsData = async (values: any) => {
     const {
@@ -107,6 +110,7 @@ const useCustomHook = () => {
     // setInternshipData
     // Notifications({ title: "Success", description: "Internship Added", type: "success" })
   };
+
   //Duplicate internship
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
@@ -127,10 +131,9 @@ const useCustomHook = () => {
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
-  //search internship
+  //Search internship
   const changeHandler = async (val: any) => {
-    const { data } = await api.get(
-      GET_LIST_INTERNSHIP,
+    const { data } = await api.get(GET_LIST_INTERNSHIP,
       val
         ? { companyId: 1, page: 1, limit: 10, search: val }
         : { companyId: 1, page: 1, limit: 10 }
@@ -146,6 +149,7 @@ const useCustomHook = () => {
     locationsData,
     internshipData,
     internshipDetails,
+    isLoading,
     getAllInternshipsData,
     getInternshipDetails,
     deleteInternshipData,
