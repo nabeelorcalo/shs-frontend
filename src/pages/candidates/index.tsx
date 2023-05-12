@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
-import DetailDrawer from "./viewDetails";
-import RejectModal from "./RejectModal";
 import actionHandler from "./actionHandler";
 import "./style.scss";
 import { interShipDropDown } from "./data";
@@ -19,10 +17,13 @@ const Candidates = () => {
     handleInternShipFilter,
     download,
     setDownload,
+    geInternShipList,
+    internShipList,
   } = actionHandler();
 
   useEffect(() => {
     getCadidatesData(params);
+    geInternShipList()
   }, []);
 
   return (
@@ -43,7 +44,7 @@ const Candidates = () => {
           />
           <DropDown
             name="Internship"
-            options={interShipDropDown}
+            options={internShipList}
             value={internship}
             setValue={handleInternShipFilter}
           />

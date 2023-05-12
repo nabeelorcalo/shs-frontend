@@ -6,7 +6,7 @@ import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST } = endpoints;
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -19,6 +19,7 @@ const useCustomHook = () => {
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
   const [selectedCandidate, setSelectedCandidate] = useState<any>({})
+  const [internShipList, setInternShipList] = useState<any>([])
   // filter states
   const [timeFrame, setTimeFrame] = useState("");
   const [internship, setInternship] = useState("");
@@ -85,13 +86,20 @@ const useCustomHook = () => {
         break;
     }
 
-  }
+  };
 
-  // time frame
+  // intenShip type filter
   const handleInternShipFilter = (value: string) => {
     setInternship(value)
   }
 
+  // internShip list
+  const geInternShipList = async () => {
+    await api.get(GET_LIST_INTERNSHIP, { companyId: 1 }).then(({ data }) => {
+      setInternShipList(data?.map(({ id, title }: any) => ({ id, title })))
+      console.log("datasssssssssssssssss", data)
+    })
+  }
   // funtion for update rating
   const handleRating = (rating: string | number) => {
     api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { rating }, { id }).then((res) => {
@@ -103,7 +111,7 @@ const useCustomHook = () => {
   };
 
   return {
-    cadidatesList, setCadidatesList, handleRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal,selectedCandidate, setSelectedCandidate, params
+    cadidatesList, setCadidatesList, handleRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, setSelectedCandidate, geInternShipList, internShipList, params
   };
 };
 
