@@ -15,7 +15,7 @@ interface IIndividualDetails {
 }
 
 const IndividualDetails: FC<IIndividualDetails> = (props) => {
-  const { userDetail: { firstName, lastName, avatar,phoneNumber,email,address  }, rating, stage, internshipTitle, internType, AplliedDate } = props;
+  const { userDetail: { firstName, lastName, avatar, phoneNumber, email, address }, rating, stage, internshipTitle, internType, AplliedDate } = props;
 
   const [rate, setRate] = useState(0);
 
@@ -31,8 +31,8 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
 
   const userinfoData = [
     { img: Mail, title: email },
-    { img: Call, title: phoneNumber},
-    { img: LocationIconNew, title:address },
+    { img: Call, title: phoneNumber },
+    { img: LocationIconNew, title: address },
   ]
 
   const dropdownData = [
@@ -113,9 +113,8 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <p className='heading'>Apllied For</p>
         <div className="details">
           <p className='p'>{internshipTitle}</p>
-          <p className='p1 capitalize'>{internType.replace("_"," ")} <Dot /> {dayjs(AplliedDate).format("DD MMM YYYY")}</p>
+          <p className='p1 capitalize'>{internType.replace("_", " ")} <Dot /> {dayjs(AplliedDate).format("DD MMM YYYY")}</p>
         </div>
-
       </div>
 
       <div className='stage-main'>

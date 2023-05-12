@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Row } from "antd";
+import { Col, Row, Select } from "antd";
 import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
@@ -42,6 +42,13 @@ const Candidates = () => {
             setValue={handleTimeFrameFilter}
             requireRangePicker
           />
+          
+          <Select
+            defaultValue="lucy"
+            style={{ width: 170 }}
+            options={internShipList}
+          />
+
           <DropDown
             name="Internship"
             options={internShipList}
