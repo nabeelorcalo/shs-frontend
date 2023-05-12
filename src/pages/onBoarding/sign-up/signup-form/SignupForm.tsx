@@ -43,9 +43,7 @@ const SignupForm = ({ signupRole }: any) => {
         return acc;
       }, {});
     action.signup(filteredBody)
-    console.log("new console: ", filteredBody);
-    navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
-    // navigate("/company-admin-verification");
+    // console.log("new console: ", filteredBody);
   };
 
   const prefixSelector = (

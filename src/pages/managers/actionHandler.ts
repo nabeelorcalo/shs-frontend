@@ -26,12 +26,6 @@ const useCustomHook = () => {
         type: "success",
       });
       navigate(`/${ROUTES_CONSTANTS.MANAGERS}`);
-    } else {
-      Notifications({
-        title: "Error",
-        description: "Data Is not Submit",
-        type: "error",
-      });
     }
     setCurrentManager(data.user);
     return data;
