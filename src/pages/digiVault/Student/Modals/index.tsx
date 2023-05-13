@@ -2,10 +2,11 @@ import { useState } from 'react'
 import NewPasswordModal from '../newPasswordModal';
 import SettingModal from '../settingModal';
 
-const DigiVaultModals = (props:any) => {
-    const [settingModal, setSettingModal] = useState({ isToggle: false, isLock: false });
+const DigiVaultModals = (props: any) => {
+    const [settingModal, setSettingModal] = useState({ isToggle: false, isLock: false, lockTime: '5' });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+    console.log("settingModal.lockTime", settingModal.lockTime);
+
     return (
         <>
             <NewPasswordModal setIsEnablePassword={props.setIsEnablePassword} isModal={isModalOpen} setIsModal={setIsModalOpen} settingModal={settingModal} />

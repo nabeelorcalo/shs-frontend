@@ -1,16 +1,43 @@
+import { useEffect } from "react";
+import { SliderMarks } from "antd/es/slider";
 import { SettingIcon } from "../../../../assets/images";
-import "./style.scss";
 import { Button, Col, Modal, Row, Slider, Switch } from "antd";
+import useCustomHook from "../../actionHandler";
+import "./style.scss";
 
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal, setIsModal } = props;
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+
+  useEffect(() => {
+    getDigiVaultDashboard(null)
+  }, [])
+
   const resetHandler = () => {
     setIsModal(true);
-    setSettingModal({ isToggle: false, isLock: false })
+    setSettingModal((prevState: any) => ({
+      ...prevState,
+      isToggle: false
+    }))
   }
+
+  const marks: SliderMarks = {
+    0: <strong>1 min</strong>,
+    25: <strong>5 min</strong>,
+    50: <strong>30 min</strong>,
+    75: <strong>1 hr</strong>,
+    100: <strong>1 day</strong>
+  };
+  const sliderHandler = (value: number) => {
+    setSettingModal((prevState: any) => ({
+      ...prevState,
+      lockTime: value
+    }))
+  };
+
   return (
     <>
-      <Button onClick={() => setSettingModal({ isToggle: true, isLock: false })} className="setting-btn">
+      <Button onClick={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: true }))} className="setting-btn">
         <span className="setting-btn-text font-normal text-sm">
           Settings
         </span>
@@ -26,7 +53,7 @@ const SettingModal = (props: any) => {
         <div className="modal-header flex justify-between pb-8">
           <div className="modal-title">Settings</div>
           <div
-            onClick={() => setSettingModal({ isToggle: false, isLock: true })}
+            onClick={() => setSettingModal((prevState:any) => ({ ...prevState, isToggle: false }))}
             className="modal-close flex justify-center items-center cursor-pointer"
           >
             x
@@ -39,14 +66,16 @@ const SettingModal = (props: any) => {
             <div className="modal-p">
               Automatically lock application after
               <span className="secondary-color pl-2 font-medium text-base">
-                15 minutes
+                {settingModal.lockTime} minutes
               </span>
             </div>
           </Col>
 
           <Col className="flex items-center justify-between text-teriary-color">
             <p className="pr-2">On</p>
-            <Switch onChange={(checked: any) => setSettingModal({ isToggle: true, isLock: checked })} />
+            <Switch
+              defaultChecked={studentVault?.lockResponse ? studentVault.lockResponse['isLock'] : false}
+              onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))} />
           </Col>
         </Row>
 
@@ -66,16 +95,9 @@ const SettingModal = (props: any) => {
             <p>|</p>
             <p>|</p>
           </div>
-          <Slider tooltip={{ formatter: null }} />
-          <div className="flex justify-between mb-8 mt-6">
-            <p>1 min</p>
-            <p>5 min</p>
-            <p>30 min</p>
-            <p>1hr</p>
-            <p>1 day</p>
-          </div>
+          <Slider tooltip={{ formatter: null }} marks={marks} onChange={(e: any) => sliderHandler(e)} />
         </div>
-        <div className="modal-reset-pass" onClick={resetHandler}>Reset Password</div>
+        <div className="modal-reset-pass mt-14" onClick={resetHandler}>Reset Password</div>
       </Modal>
     </>
   );
