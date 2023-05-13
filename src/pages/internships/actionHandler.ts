@@ -28,15 +28,23 @@ const useCustomHook = () => {
   });
 
   //Get all internship data
-  const getAllInternshipsData = async (event: any) => {
-    const { data } = await api.get(GET_LIST_INTERNSHIP, { page: 1, limit: 10, status: event ? event : null });
+  const getAllInternshipsData = async (status: any,  location: any,department: any,) => {
+    const params = {
+      limit: 10,
+      page: 1,
+      status: status ? status.toUpperCase() : undefined,
+      locationId: location ? location : undefined,
+      departmentId: department ? department : undefined
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    const { data } = await api.get(GET_LIST_INTERNSHIP, query);
     setInternshipData(data);
     setIsLoading(true)
   };
 
   //Get all department data
   const getAllDepartmentData = async () => {
-    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10 });
+    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
     setDepartmentsData(data)
   };
 
@@ -49,7 +57,7 @@ const useCustomHook = () => {
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
-      amount, natureofwork, positions, closingDate, duration, internshiptype } = values
+      amount, natureofwork, positions, closingDate, duration, salaryType } = values
     const internshipData = {
       "companyId": 1,
       "title": title,
@@ -60,7 +68,7 @@ const useCustomHook = () => {
       "internType": typeofwork,
       "locationType": natureofwork,
       "locationId": 1,
-      "salaryType": internshiptype,
+      "salaryType": salaryType,
       "salaryFrequency": frequency,
       "salaryCurrency": "$",
       "salaryAmount": Number(amount),
@@ -115,8 +123,8 @@ const useCustomHook = () => {
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
     console.log("dublicated intership is", val);
+    getAllInternshipsData(null,null,null)
     Notifications({ title: "Success", description: "Duplicate successfully", type: "success" })
-    getAllInternshipsData(null)
   }
 
   const getInternshipDetails = async () => {
@@ -125,9 +133,9 @@ const useCustomHook = () => {
   };
 
   //Delete internship
-  const deleteInternshipData = async (id: any,) => {
+  const deleteInternshipData = async (id: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData(null)
+    getAllInternshipsData(null,null,null)
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
@@ -135,8 +143,8 @@ const useCustomHook = () => {
   const changeHandler = async (val: any) => {
     const { data } = await api.get(GET_LIST_INTERNSHIP,
       val
-        ? { companyId: 1, page: 1, limit: 10, search: val }
-        : { companyId: 1, page: 1, limit: 10 }
+        ? { page: 1, limit: 10, search: val }
+        : { page: 1, limit: 10 }
     );
     setInternshipData(data);
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
@@ -6,7 +6,7 @@ import {
   BoxWrapper, NoDataFound
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Spin } from 'antd'
+import { Button, Col, Row, Spin, Select } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import '../style.scss'
@@ -15,16 +15,18 @@ const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
   const [state, setState] = useState({
     showDrawer: false,
-    status: "",
-    location: "",
-    department: ""
+    status: undefined,
+    location: undefined,
+    department: undefined
   });
 
-  const { getAllInternshipsData, internshipData, changeHandler, isLoading } = useCustomHook();
-  console.log(internshipData);
+  const { getAllInternshipsData, internshipData, changeHandler, isLoading,
+    getAllDepartmentData, getAllLocationsData, departmentsData, locationsData }: any = useCustomHook();
 
   useEffect(() => {
-    getAllInternshipsData(state.status)
+    getAllInternshipsData(state.status, state.location, state.department);
+    getAllDepartmentData();
+    getAllLocationsData();
   }, [])
 
   const handleDrawer = () => {
@@ -33,7 +35,6 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
-
   const handleStatus = (status: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -53,7 +54,7 @@ const InternshipsCompanyAdmin = () => {
     }))
   }
   const handleApplyFilter = () => {
-    getAllInternshipsData(state.status.toUpperCase());
+    getAllInternshipsData(state.status, state.location, state.department);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -62,9 +63,9 @@ const InternshipsCompanyAdmin = () => {
   const handleResetFilter = () => {
     setState((prevState) => ({
       ...prevState,
-      status: '',
-      location: '',
-      department: ''
+      status: undefined,
+      location: undefined,
+      department: undefined
     }))
   }
   return (
@@ -78,10 +79,10 @@ const InternshipsCompanyAdmin = () => {
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4">
             <FiltersButton label="Filters" onClick={handleDrawer} />
             <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
-              <React.Fragment key=".0">
+              <>
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
-                    <p>Status</p>
+                    <label>Status</label>
                     <DropDown
                       name="Select"
                       options={[
@@ -96,38 +97,27 @@ const InternshipsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p>Location</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        'EidinBurg',
-                        'Glasgow',
-                        'London',
-                        'Virtual',
-                        'All'
-                      ]}
-                      setValue={(event: any) => { handleLocation(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
+                    <label>Location</label>
+                    <Select
+                      className='my-select'
+                      placeholder="Select"
                       value={state.location}
+                      onChange={(event: any) => { handleLocation(event) }}
+                      options={locationsData?.map((item: any) => {
+                        return { value: item?.id, label: item?.name }
+                      })}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p>Department</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        'Business analyst',
-                        'Research analyst',
-                        'Accountant',
-                        'Administrator',
-                        'HR Cordinator',
-                        'All'
-                      ]}
-                      setValue={(event: any) => { handleDepartment(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
+                    <label>Department</label>
+                    <Select
+                      className='my-select'
+                      placeholder="Select"
                       value={state.department}
+                      onChange={(event: any) => { handleDepartment(event) }}
+                      options={departmentsData?.map((item: any) => {
+                        return { value: item?.id, label: item?.name }
+                      })}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
@@ -137,7 +127,7 @@ const InternshipsCompanyAdmin = () => {
                       onClick={handleApplyFilter}>Apply</Button>
                   </div>
                 </div>
-              </React.Fragment>
+              </>
             </Drawer>
             <Button
               type="primary"
@@ -173,7 +163,6 @@ const InternshipsCompanyAdmin = () => {
             }) : <NoDataFound />
           }
         </div> : <Spin tip="Processing...." />}
-
       </div>
     </>
   )

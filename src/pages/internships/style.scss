@@ -1,16 +1,10 @@
 @import '../../scss/_colors.scss';
 
-// .internship-details {
-  // .internship-right-sec {
-  //   @media only screen and (max-width:475px) {
-  //     flex-direction: column !important;
-  //     .main-btn {
-  //       display: flex;
-  //       justify-content: space-between;
-  //     }
-  //   }
-  // }
-// }
+.internship-details {
+  .ant-select-selector{
+    background-color: red !important;
+  }
+}
 
 .pipeline-heading-style {
   border: 1px solid $text-input-bg-color;

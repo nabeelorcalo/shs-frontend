@@ -5,8 +5,8 @@ import '../../scss/global-color/Global-colors.scss'
 import './style.scss'
 
 export const InternsCard = (props: any) => {
-  const { status_btn, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
-  console.log("props",props);
+  const { status, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
+  console.log("props",status);
   
   const navigate = useNavigate()
   return (
@@ -14,11 +14,10 @@ export const InternsCard = (props: any) => {
      max-lg:w-full max-xl:w-1/2 max-2xl:w-1/3 max-3xl:w-1/4 3xl:w-1/5'>
       <BoxWrapper className='interns-card'>
         <div className='flex flex-row justify-between'>
-          {status_btn ? status_btn : ''}
+          {status? status : ''}
           {pupover ? pupover : null}
         </div>
         <div className='flex flex-col gap-4 items-center main-card-jsx'>
-
           <div className='flex flex-col gap-2 items-center'>
             {posted_by}
             {name ? <p className='text-lg font-[700]'>{name}</p> : null}

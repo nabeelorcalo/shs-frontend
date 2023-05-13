@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal} from "../../../components";
+import {
+  GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal
+} from "../../../components";
 import { TextArea } from "../../../components";
 import { AlertIcon, CardViewIcon, More, SuccessIcon, TableViewIcon, } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin} from 'antd';
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 
@@ -29,14 +31,14 @@ const InternsCompanyAdmin = () => {
   })
 
   const { getAllInternsData, getAllInters,
-    changeHandler, downloadPdfOrCsv ,isLoading} = useCustomHook()
+    changeHandler, downloadPdfOrCsv, isLoading } = useCustomHook()
 
   useEffect(() => {
     getAllInternsData(state.status)
   }, [])
+  console.log(getAllInters);
 
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
-  console.log(getAllInters);
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -442,30 +444,30 @@ const InternsCompanyAdmin = () => {
           <p className="font-semibold pb-4">Total Interns:
             {newTableData.length < 10 ? `0${newTableData.length}` : newTableData.length}
           </p>
-          {isLoading?          
+          {isLoading ?
             listandgrid ? <BoxWrapper>
               <GlobalTable columns={columns} tableData={newTableData} />
-            </BoxWrapper> : 
-            <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData?.map((item: any,) => {
-                  return (
-                    <InternsCard
-                      pupover={<PopOver />}
-                      status_btn={item?.internStatus}
-                      name={item.name}
-                      posted_by={item.posted_by}
-                      title={item.title}
-                      department={item.internship?.department?.name}
-                      joining_date={item.joining_date}
-                      date_of_birth={item.date_of_birth}
-                    />
-                  )
-                })
-              }
-            </div>
+            </BoxWrapper> :
+              <div className="flex flex-row flex-wrap max-sm:flex-col">
+                {
+                  newTableData?.map((item: any,) => {
+                    return (
+                      <InternsCard
+                        pupover={<PopOver />}
+                        status={item.status}
+                        name={item.name}
+                        posted_by={item.posted_by}
+                        title={item.title}
+                        department={item.department}
+                        joining_date={item.joining_date}
+                        date_of_birth={item.date_of_birth}
+                      />
+                    )
+                  })
+                }
+              </div>
 
-          :<Spin  tip="Processing...."/>}
+            : <Spin tip="Processing...." />}
         </Col>
       </Row>
 

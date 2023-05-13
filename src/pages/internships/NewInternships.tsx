@@ -10,14 +10,6 @@ import './style.scss';
 
 const { TextArea } = Input;
 
-const departmentOptions = [
-  { value: 'Bussiness Analyst', label: "Bussiness Analyst" },
-  { value: 'Research', label: "Research" },
-  { value: 'Accounting', label: "Accounting" },
-  { value: 'Human Resources', label: "Human Resources" },
-  { value: 'Administration', label: "Administration" },
-  { value: 'Project Management', label: "Project Management" }
-]
 const amountOptions = [
   {
     value: 'GBP',
@@ -27,11 +19,6 @@ const amountOptions = [
     value: 'USD',
     label: 'USD',
   },
-]
-const locationOptions = [
-  { value: 'Eidinburg', label: "Eidinburg" },
-  { value: 'Glasgow', label: "Glasgow" },
-  { value: 'London', label: "London" },
 ]
 const durationOptions = [
   { value: '1 month', label: '1 month' },
@@ -69,10 +56,6 @@ const NewInternships = () => {
     partTime: "PART_TIME",
     fullTime: "FULL_TIME"
   }
-  const internshipType = {
-    paid: "PAID",
-    unpaid: "UNPAID"
-  }
   const natureofwork = {
     virtual: "VIRTUAL",
     onsite: "ONSITE",
@@ -80,8 +63,6 @@ const NewInternships = () => {
   }
   const { postNewInternshipsData, getAllDepartmentData,
     departmentsData, getAllLocationsData, locationsData } = useCustomHook();
-  console.log(departmentsData);
-  console.log(locationsData)
 
   useEffect(() => {
     getAllDepartmentData
@@ -119,7 +100,7 @@ const NewInternships = () => {
     setInternShipFormData({})
   };
 
-  const onSelectChange = (value: string) => {
+  const onSelectChange = (value: any) => {
     console.log('slected item', value);
   };
 
@@ -130,7 +111,7 @@ const NewInternships = () => {
     responsibilities: internShipFormData?.responsibilities ?? '',
     requirements: internShipFormData?.requirements ?? '',
     typeofwork: internShipFormData?.typeofwork ?? '',
-    internshiptype: internShipFormData?.internType ?? '',
+    salaryType: internShipFormData?.salaryType ?? '',
     frequency: internShipFormData?.frequency ?? '',
     amount: internShipFormData?.amount ?? '',
     natureofwork: internShipFormData?.natureofwork ?? '',
@@ -161,13 +142,15 @@ const NewInternships = () => {
               <Form.Item name="title" label="Title" rules={[{ required: true }, { type: "string" }]}>
                 <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
-              <Form.Item name="department" label="Department" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item name="department" label="Department" rules={[{ required: true }, { type: 'number' }]}>
                 <Select
                   rootClassName='input'
                   placeholder="Select"
                   onChange={onSelectChange}
                   allowClear
-                  options={departmentOptions}
+                  options={departmentsData.map((item: any) => {
+                    return { value: item.id, label: item.name }
+                  })}
                 />
               </Form.Item>
               <Form.Item label="Description" name="description" rules={[{ required: true }, { type: "string" }]}>
@@ -203,13 +186,13 @@ const NewInternships = () => {
                   <Radio value={typeOfWork.fullTime}>Full Time</Radio>
                 </Radio.Group>
               </Form.Item>
-              <Form.Item label="Internship Type" name="internshipType" >
+              <Form.Item label="Internship Type" name="salaryType" >
                 <Radio.Group onChange={onInternshipTypeChange} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={internshipType.unpaid}>Unpaid</Radio>
-                  <Radio value={internshipType.paid}>Paid</Radio>
+                  <Radio value={"UNPAID"}>Unpaid</Radio>
+                  <Radio value={"PAID"}>Paid</Radio>
                 </Radio.Group>
               </Form.Item>
-              {paidAndUnpaid === internshipType.paid ?
+              {paidAndUnpaid === "PAID" ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="frequency" label="Frequency" >
                     <Select
@@ -246,7 +229,9 @@ const NewInternships = () => {
                       placeholder="Select"
                       onChange={onSelectChange}
                       allowClear
-                      options={locationOptions}
+                      options={locationsData.map((item: any) => {
+                        return { value: item.id, label: item.name }
+                      })}
                     />
                   </Form.Item>
                 </div>
