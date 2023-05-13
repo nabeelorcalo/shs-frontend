@@ -26,16 +26,17 @@ const endpoints = {
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
-  POST_DIGIVAULT_PASSWORD:'digivault/enable-disable-lock',
-  POST_CREATE_FOLDER_FILE:'digivault/create-folder-file',
-  GET_LIST_INTERNSHIP:'/internship/listInternships',
-  GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
-  DEL_INTERNSHIP:'/internship/deleteInternship',
-  DUBLICATE_INTERNSHIP:'/internship/duplicateInternship',
-  POST_NEW_INTERNSHIP:'/internship/createInternship',
+  POST_DIGIVAULT_PASSWORD: 'digivault/enable-disable-lock',
+  POST_CREATE_FOLDER_FILE: 'digivault/create-folder-file',
+  DEL_FOLDER_FILE: 'digivault/delete-folder-file',
+  GET_LIST_INTERNSHIP: '/internship/listInternships',
+  GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',
+  DEL_INTERNSHIP: '/internship/deleteInternship',
+  DUBLICATE_INTERNSHIP: '/internship/duplicateInternship',
+  POST_NEW_INTERNSHIP: '/internship/createInternship',
   // End Point For Leaev Module For Intrne 
-  CREATE_LEAVE:"/Leaves/create",
-  GET_LEAEV_LIST:`/Leaves/list`,
+  CREATE_LEAVE: "/Leaves/create",
+  GET_LEAEV_LIST: `/Leaves/list`,
 
 }
 export default endpoints;

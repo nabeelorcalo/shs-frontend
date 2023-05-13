@@ -117,8 +117,6 @@ const DigiVaultStudent = () => {
     getDigiVaultDashboard(isEnablePassowrd)
   }, [])
 
-  console.log("storage are : ", studentStorage);
-
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
@@ -193,7 +191,6 @@ const DigiVaultStudent = () => {
             </div>
             <Row gutter={[15, 15]} className="p-7">
               {manageVaultArr?.map((item: any, index: number) => {
-                { console.log(item, "items"); }
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <DigivaultCard

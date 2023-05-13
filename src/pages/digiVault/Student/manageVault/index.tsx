@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Divider, Dropdown, Form, Menu, Modal, Row, Space, Input } from "antd";
 import { SearchBar, Alert } from "../../../../components";
 import { Upload } from "../../../../assets/images";
@@ -6,10 +6,10 @@ import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
-import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../config/validationMessages'
 import CustomDropDown from "../dropDownCustom";
 import "./style.scss";
 import useCustomHook from "../../actionHandler";
+import dayjs from "dayjs";
 
 const tableData = [
   {
@@ -42,9 +42,42 @@ const ManageVault = () => {
   const [upLoadFolder, setUpLoadFolder] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [form] = Form.useForm();
+  const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
   const { state } = useLocation();
-  const { postCreateFolderFile } = useCustomHook();
+  const stateData = state.toLowerCase();
 
+  useEffect(() => {
+    getDigiVaultDashboard(null)
+  }, [])
+
+  console.log("studnts are ", studentVault?.dashboardFolders[stateData]);
+  const menu2 = (
+    <Menu>
+      <Menu.Item key="1">View</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setShowDelete(!showDelete);
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+  const newTableData = studentVault?.dashboardFolders[stateData]?.map((item: any, index: number) => {
+    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+    return (
+      {
+        key: index,
+        Title: item.title,
+        datemodified: modifiedDate,
+        size: item.size ? item.size : '---',
+        // action: <Space size="middle">
+        //   <CustomDropDown menu1={menu2} />
+        // </Space>
+      }
+    )
+  })
   const columns = [
     {
       title: "Title",
@@ -65,6 +98,7 @@ const ManageVault = () => {
 
     {
       title: "Action",
+      dataIndex: "action",
       key: "Action",
       render: (_: any, data: any) => (
         <Space size="middle">
@@ -75,7 +109,7 @@ const ManageVault = () => {
   ];
 
   const handleChange = () => {
-    console.log("log");
+    // console.log("log");
   };
 
   const handleVisibleChange = (visible: any) => {
@@ -101,20 +135,6 @@ const ManageVault = () => {
         key="2"
       >
         Upload folder
-      </Menu.Item>
-    </Menu>
-  );
-
-  const menu2 = (
-    <Menu>
-      <Menu.Item key="1">View</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
       </Menu.Item>
     </Menu>
   );
@@ -189,7 +209,7 @@ const ManageVault = () => {
               <GlobalTable
                 pagination={false}
                 columns={columns}
-                tableData={tableData}
+                tableData={newTableData}
               />
             </Col>
           </Row>
@@ -208,7 +228,7 @@ const ManageVault = () => {
             layout='vertical'
             onFinish={onFinish}
             initialValues={{ remember: false }}
-            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+          >
             <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
               <Input className="input" placeholder="Enter folder Name" type="text" />
             </Form.Item>

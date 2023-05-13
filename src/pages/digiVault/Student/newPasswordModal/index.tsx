@@ -2,21 +2,19 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Form, Input, Switch } from "antd";
 import useCustomHook from "../../actionHandler";
 import "./style.scss";
+import { useEffect } from "react";
 
 const NewPasswordModal = (props: any) => {
   const { isModal, setIsModal, settingModal, setIsEnablePassword } = props;
-  const { postDigivaultPassword } = useCustomHook();
+  const { postDigivaultPassword }:any = useCustomHook();
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock
-    console.log('Success:', values);
     postDigivaultPassword(values)
   };
   const onChange = (checked: boolean) => {
     setIsModal(checked && true);
     setIsEnablePassword(checked)
-    console.log("hfuehfiefuefuhfuhfih3 " , checked);
-    
   }
   return (
     <div>
