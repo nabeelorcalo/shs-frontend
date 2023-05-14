@@ -1,12 +1,10 @@
 import { Progress } from "antd";
-import { useEffect } from "react";
 import {
   Gallery,
   Doc,
   Video,
   File,
 } from "../../assets/images";
-import useCustomHook from "../../pages/digiVault/actionHandler";
 import "./style.scss";
 
 
@@ -27,28 +25,28 @@ export const ColorfullIconsWithProgressbar = (props: any) => {
     {
       icon: Gallery,
       progressbarColor: "#4CA4FD",
-      progressbarValue: storage?.media,
+      progressbarValue: parseFloat(storage?.media.match(/\d+\.\d+/)[0]),
       media: storage?.media,
       title: "Media",
     },
     {
       icon: Video,
       progressbarColor: "#E96F7C",
-      progressbarValue: storage?.video,
+      progressbarValue: parseFloat(storage?.video.match(/\d+\.\d+/)[0]),
       media: storage?.video,
       title: "Video",
     },
     {
       icon: Doc,
       progressbarColor: "#FFC15D",
-      progressbarValue: storage?.document,
+      progressbarValue: parseFloat(storage?.document.match(/\d+\.\d+/)[0]),
       media: storage?.document,
       title: "Document",
     },
     {
       icon: File,
       progressbarColor: "#6AAD8E",
-      progressbarValue: storage?.otherFiles,
+      progressbarValue: parseFloat(storage?.otherFiles?.match(/\d+\.\d+/)[0]),
       media: storage?.otherFiles,
       title: "Other Files",
     },

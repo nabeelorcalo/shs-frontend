@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
-import SettingModal from "./settingModal";
-import { GlobalTable } from "../../../components";
+import { Col, Divider, Progress, Row, Menu, Alert as Alerts } from "antd";
+import { GlobalTable, Notifications } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
-import NewPasswordModal from "./newPasswordModal";
 import {
   EducationImg,
   EducationImgSub,
@@ -121,6 +119,10 @@ const DigiVaultStudent = () => {
     getDigiVaultDashboard(isEnablePassowrd)
   }, [])
 
+  if (!studentVault) {
+    Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
+  }
+  
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
