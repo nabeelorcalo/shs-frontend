@@ -5,11 +5,14 @@ import SettingModal from '../settingModal';
 const DigiVaultModals = (props: any) => {
     const [settingModal, setSettingModal] = useState({ isToggle: false, isLock: false, lockTime: '5' });
     const [isModalOpen, setIsModalOpen] = useState(false);
-    console.log("settingModal.lockTime", settingModal.lockTime);
 
     return (
         <>
-            <NewPasswordModal setIsEnablePassword={props.setIsEnablePassword} isModal={isModalOpen} setIsModal={setIsModalOpen} settingModal={settingModal} />
+            <NewPasswordModal
+                setIsEnablePassword={props.setIsEnablePassword}
+                isModal={isModalOpen}
+                setIsModal={setIsModalOpen}
+                settingModal={settingModal} />
             <SettingModal
                 settingModal={settingModal}
                 setSettingModal={setSettingModal}

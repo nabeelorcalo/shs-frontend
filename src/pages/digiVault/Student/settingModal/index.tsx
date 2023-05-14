@@ -49,15 +49,14 @@ const SettingModal = (props: any) => {
         open={settingModal.isToggle}
         footer={null}
         closable={false}
+        onCancel={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))}
       >
         <div className="modal-header flex justify-between pb-8">
           <div className="modal-title">Settings</div>
           <div
-            onClick={() => setSettingModal((prevState:any) => ({ ...prevState, isToggle: false }))}
+            onClick={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))}
             className="modal-close flex justify-center items-center cursor-pointer"
-          >
-            x
-          </div>
+          >x</div>
         </div>
 
         <div className="sub-title-modal mb-8">Security</div>

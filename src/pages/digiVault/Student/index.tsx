@@ -108,8 +108,12 @@ const tableData = [
 ];
 
 const DigiVaultStudent = () => {
+  const [state,setState] = useState({
+    isDeleteModal:false,
+    isEnablePassowrd:false
+  })
   const [showDelete, setShowDelete] = useState(false);
-  const [isEnablePassowrd,setIsEnablePassword] = useState(false);
+  const [isEnablePassowrd, setIsEnablePassword] = useState(false);
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
 

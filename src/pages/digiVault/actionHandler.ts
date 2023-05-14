@@ -36,7 +36,7 @@ const useCustomHook = () => {
       autoLockAfter: lockTime
     }
     const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
-    setStudentVault(data)
+    // setStudentVault(data)
     setNewPassword(data)
     getDigiVaultDashboard(null)
   };
@@ -46,13 +46,13 @@ const useCustomHook = () => {
     const { folderName, root } = values;
     const folderData = {
       title: folderName,
-      root: root,
+      root: root.toUpperCase(),
       mode: 'folder',
       folderId: '',
       file: ''
     }
-    const { data } = await api.post(POST_CREATE_FOLDER_FILE, folderData);
-    setStudentVault(data)
+    await api.post(POST_CREATE_FOLDER_FILE, folderData);
+    getDigiVaultDashboard(null)
   }
 
   //delete folder

@@ -21,10 +21,8 @@ const NewPasswordModal = (props: any) => {
       <Switch onChange={onChange} defaultChecked={true} />
       <Modal
         open={isModal}
-        onOk={() => setIsModal(false)}
         onCancel={() => setIsModal(false)}
         width={500}
-        maskClosable={false}
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={false}
       >
@@ -69,9 +67,7 @@ const NewPasswordModal = (props: any) => {
           <div>
             <Button
               htmlType="submit"
-              onClick={() => {
-                setIsModal({ isToggle: false, isLock: true });
-              }}
+              onClick={() => {setIsModal(false)}}
               className="create-passwor-btn primary-bg-color  min-w-full"
             >
               Continue
