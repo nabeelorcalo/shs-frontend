@@ -108,11 +108,11 @@ const tableData = [
 ];
 
 const DigiVaultStudent = () => {
-  const [state,setState] = useState({
-    isDeleteModal:false,
-    isEnablePassowrd:false
+  const [state, setState] = useState({
+    isDeleteModal: false,
+    isEnablePassowrd: false
   })
-  const [showDelete, setShowDelete] = useState(false);
+  // const [showDelete, setShowDelete] = useState(false);
   const [isEnablePassowrd, setIsEnablePassword] = useState(false);
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
@@ -127,7 +127,10 @@ const DigiVaultStudent = () => {
       <Menu.Item
         key="2"
         onClick={() => {
-          setShowDelete(!showDelete);
+          setState((prevState: any) => ({
+            ...prevState,
+            isDeleteModal: true
+          }))
         }}
       >
         Delete
@@ -166,8 +169,8 @@ const DigiVaultStudent = () => {
   return (
     <div className="digivault">
       <Alert
-        state={showDelete}
-        setState={setShowDelete}
+        state={state.isDeleteModal}
+        setState={setState}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
@@ -216,7 +219,12 @@ const DigiVaultStudent = () => {
           <div className="storage">
             <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
               <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
-                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
+                <Progress
+                  strokeLinecap="butt"
+                  strokeWidth={10}
+                  gapPosition="left"
+                  type="circle"
+                  percent={75} />
               </Col>
               <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
                 <div className="available-storage pb-4">Available Storage</div>
@@ -224,7 +232,7 @@ const DigiVaultStudent = () => {
               </Col>
             </Row>
             <div className="pt-2">
-              <ColorfullIconsWithProgressbar />
+              <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>
         </Col>

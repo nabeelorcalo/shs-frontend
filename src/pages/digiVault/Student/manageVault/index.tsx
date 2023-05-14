@@ -107,7 +107,7 @@ const ManageVault = () => {
           setState((prevState) => ({
             ...prevState,
             uploadFolder: true,
-            isVisible:false
+            isVisible: false
           }));
         }}
         key="2"
@@ -124,6 +124,7 @@ const ManageVault = () => {
   const onFinish = (values: any) => {
     values.root = state;
     postCreateFolderFile(values);
+    form.resetFields();
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false
@@ -191,30 +192,30 @@ const ManageVault = () => {
                     ...prevState,
                     isVisible: true
                   }))}
-                trigger={["click"]}
+                  trigger={["click"]}
                 >
-                <Button className="manage-vault-btn flex items-center justify-center">
-                  <Space>
-                    <img
-                      className="flex items-center"
-                      src={Upload}
-                      alt="fileIcon"
-                    />
-                    <span>Upload</span>
-                  </Space>
-                </Button>
-              </Dropdown>
-            </div>
+                  <Button className="manage-vault-btn flex items-center justify-center">
+                    <Space>
+                      <img
+                        className="flex items-center"
+                        src={Upload}
+                        alt="fileIcon"
+                      />
+                      <span>Upload</span>
+                    </Space>
+                  </Button>
+                </Dropdown>
+              </div>
+            </Col>
+            <Col xs={24}>
+              <GlobalTable
+                pagination={false}
+                columns={columns}
+                tableData={newTableData}
+              />
+            </Col>
+          </Row>
         </Col>
-        <Col xs={24}>
-          <GlobalTable
-            pagination={false}
-            columns={columns}
-            tableData={newTableData}
-          />
-        </Col>
-      </Row>
-    </Col>
       </Row >
       <Modal
         className="folders-modal"

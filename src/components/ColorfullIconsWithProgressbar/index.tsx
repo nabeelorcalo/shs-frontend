@@ -20,40 +20,36 @@ interface ColorfullIconsWithProgressbarProps {
   progressbarColor: string;
 }[];
 
-export const ColorfullIconsWithProgressbar = () => {
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
-
-  useEffect(() => {
-    getDigiVaultDashboard()
-  }, []);
+export const ColorfullIconsWithProgressbar = (props: any) => {
+  const { storage } = props;
 
   const storageData: any = [
     {
       icon: Gallery,
       progressbarColor: "#4CA4FD",
-      progressbarValue: 30,
-      media: studentVault?.storage?.media,
+      progressbarValue: storage?.media,
+      media: storage?.media,
       title: "Media",
     },
     {
       icon: Video,
       progressbarColor: "#E96F7C",
-      progressbarValue: 60,
-      media: studentVault?.storage?.video,
+      progressbarValue: storage?.video,
+      media: storage?.video,
       title: "Video",
     },
     {
       icon: Doc,
       progressbarColor: "#FFC15D",
-      progressbarValue: 50,
-      media: studentVault?.storage?.document,
+      progressbarValue: storage?.document,
+      media: storage?.document,
       title: "Document",
     },
     {
       icon: File,
       progressbarColor: "#6AAD8E",
-      progressbarValue: 80,
-      media: studentVault?.storage?.otherFiles,
+      progressbarValue: storage?.otherFiles,
+      media: storage?.otherFiles,
       title: "Other Files",
     },
   ];

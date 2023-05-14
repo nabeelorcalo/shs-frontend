@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../Student/style.scss";
 import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
 import SettingModal from "../Student/settingModal";
@@ -27,6 +27,8 @@ import {
 } from "../../../assets/images";
 import CustomDroupDown from "../Student/dropDownCustom";
 import { Alert } from "../../../components";
+import DigiVaultModals from "../Student/Modals";
+import useCustomHook from "../actionHandler";
 
 
 
@@ -145,10 +147,14 @@ const tableData = [
 ];
 
 const DigiVaultIntern = () => {
-  const [modal2Open, setModal2Open] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [newPass, setNewPass] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const studentStorage: any = studentVault?.storage;
+
+  useEffect(() => {
+    getDigiVaultDashboard(null)
+  }, [])
+
 
   const menu1 = (
     <Menu>
@@ -202,13 +208,6 @@ const DigiVaultIntern = () => {
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
       />
-
-      <NewPasswordModal
-        newPass={newPass}
-        setNewPass={setNewPass}
-        setIsChecked={setIsChecked}
-      />
-      <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="digivault-title text-2xl font-semibold">
@@ -218,21 +217,7 @@ const DigiVaultIntern = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center">
-              <p className="pr-2 text-teriary-color">Lock</p>
-              <Switch
-                checked={isChecked}
-                onClick={() => {
-                  setNewPass(true);
-                }}
-              />
-            </div>
-            <Button onClick={() => setModal2Open(true)} className="setting-btn">
-              <span className="setting-btn-text font-normal text-sm">
-                Settings
-              </span>
-              <img src={SettingIcon} alt="settIcon" width={24} height={24} />
-            </Button>
+            <DigiVaultModals />
           </div>
         </Col>
       </Row>
@@ -251,7 +236,7 @@ const DigiVaultIntern = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path)}
+                      onClick={() => navigate(item.path , {state:item.Title})}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.Title}
@@ -263,36 +248,19 @@ const DigiVaultIntern = () => {
             </Row>
           </div>
         </Col>
-
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
-            <Row gutter={4} className="storage-bar-header">
-              <Col xxl={10} xl={10} lg={24} md={8} sm={8} xs={24}>
-                <Progress
-                  strokeWidth={12}
-                  strokeColor={"#5D89F4"}
-                  strokeLinecap="butt"
-                  type="circle"
-                  percent={75}
-                />
+            <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
+              <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
+                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
               </Col>
-
-              <Col
-                xxl={14}
-                xl={14}
-                lg={24}
-                md={12}
-                sm={14}
-                xs={24}
-                className="flex flex-col justify-center"
-              >
-                <div className="available-storage  pb-4">Available Storage</div>
-                <div className="available-storage-value">130GB / 512GB</div>
+              <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
+                <div className="available-storage pb-4">Available Storage</div>
+                <div className="available-storage-value">{studentStorage?.availableStorage}</div>
               </Col>
             </Row>
-
             <div className="pt-2">
-              <ColorfullIconsWithProgressbar arraydata={arraydata} />
+              <ColorfullIconsWithProgressbar />
             </div>
           </div>
         </Col>

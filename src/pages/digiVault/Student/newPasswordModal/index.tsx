@@ -10,7 +10,8 @@ const NewPasswordModal = (props: any) => {
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;
     values.lockTime = settingModal.lockTime.toString();
-    postDigivaultPassword(values)
+    postDigivaultPassword(values);
+    values()
   };
   const onChange = (checked: boolean) => {
     setIsModal(checked && true);
@@ -29,16 +30,15 @@ const NewPasswordModal = (props: any) => {
         <div className="text-center mt-6 mb-6">
           <h1 className="color-[#363565]">Create New Password</h1>
         </div>
-        <Form onFinish={onFinish}>
+        <Form layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
           <div>
-            <label>Password</label>
-            <Form.Item name="password" >
+            <Form.Item name="password" label='password'>
               <Input.Password size="large" />
             </Form.Item>
           </div>
           <div>
-            <label>Confirm Password</label>
             <Form.Item
+              label='Confirm Password'
               name="confirmPassword"
               dependencies={["password"]}
               rules={[
@@ -67,7 +67,7 @@ const NewPasswordModal = (props: any) => {
           <div>
             <Button
               htmlType="submit"
-              onClick={() => {setIsModal(false)}}
+              onClick={() => { setIsModal(false) }}
               className="create-passwor-btn primary-bg-color  min-w-full"
             >
               Continue

@@ -94,7 +94,12 @@ const SettingModal = (props: any) => {
             <p>|</p>
             <p>|</p>
           </div>
-          <Slider tooltip={{ formatter: null }} marks={marks} onChange={(e: any) => sliderHandler(e)} />
+          <Slider
+            tooltip={{ formatter: null }}
+            marks={marks}
+            onChange={(e: any) => sliderHandler(e)}
+            defaultValue={studentVault?.lockResponse ? studentVault.lockResponse['autoLockAfter'] : '0'}
+            />
         </div>
         <div className="modal-reset-pass mt-14" onClick={resetHandler}>Reset Password</div>
       </Modal>
