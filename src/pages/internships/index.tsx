@@ -6,7 +6,7 @@ import {
   BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Dropdown, Row, Col } from "antd";
+import { Avatar, Button, Dropdown, Row, Col, Select } from "antd";
 import type { MenuProps } from 'antd';
 import { InternshipsIcon, More } from "../../assets/images";
 import { ROUTES_CONSTANTS } from "../../config/constants";
@@ -16,21 +16,25 @@ import "./style.scss";
 const Internships = () => {
   const navigate = useNavigate()
   const [state, setState] = useState({
-    status: "",
+    status: undefined,
     value: "",
     showDrawer: false,
-    location: "",
-    department: ""
+    location: undefined,
+    department: undefined
   })
-  const { getAllInternshipsData, internshipData, changeHandler,getDuplicateInternship } = useCustomHook();
+  const { getAllInternshipsData, internshipData, changeHandler,
+    getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
+    departmentsData, locationsData } = useCustomHook();
 
   useEffect(() => {
-    getAllInternshipsData(state.status)
+    getAllInternshipsData(state.status, state.location, state.department);
+    getAllDepartmentData();
+    getAllLocationsData();
   }, [])
-  const handleDublicate=(id:any)=>{
+
+  const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
-  console.log(internshipData);
 
   const PopOver = (props: any) => {
     const { id } = props
@@ -48,7 +52,7 @@ const Internships = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => {handleDublicate(id) }}>
+          <a rel="noopener noreferrer" onClick={() => { handleDublicate(id) }}>
             Duplicate
           </a>
         ),
@@ -65,7 +69,7 @@ const Internships = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No.",
+      title: "No",
     },
     {
       dataIndex: "title",
@@ -114,7 +118,7 @@ const Internships = () => {
     const closingDate = dayjs(item.closingDate).format('DD/MM/YYYY');
     return (
       {
-        no: index + 1,
+        no: internshipData.length < 10 ? `0${index + 1}` : `${index + 1}`,
         title: item.title,
         department: item.department.name,
         posting_date: postingDate,
@@ -159,21 +163,33 @@ const Internships = () => {
   }
 
   const updateLocation = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      location: value
+      location: event
     }))
   }
 
   const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      department: value
+      department: event
     }))
   }
-
+  const handleApplyFilter = () => {
+    getAllInternshipsData(state.status, state.location, state.department);
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: false
+    }))
+  }
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      status: undefined,
+      location: undefined,
+      department: undefined
+    }))
+  }
   return (
     <>
       <PageHeader title="Internships" bordered />
@@ -195,43 +211,34 @@ const Internships = () => {
             <React.Fragment key=".0">
               <div className="flex flex-col gap-12">
                 <div className="flex flex-col gap-2">
-                  <p>Location</p>
-                  <DropDown
-                    name="name"
-                    options={[
-                      "EidinBurg",
-                      "Glasgow",
-                      "London",
-                      "Virtual",
-                      "All"
-                    ]}
-                    setValue={() => { updateLocation(event) }}
-                    showDatePickerOnVal="custom"
-                    startIcon=""
+                  <label>Location</label>
+                  <Select
+                    className='my-select'
+                    placeholder="Select"
                     value={state.location}
+                    onChange={(event: any) => { updateLocation(event) }}
+                    options={locationsData?.map((item: any) => {
+                      return { value: item?.id, label: item?.name }
+                    })}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p>Department</p>
-                  <DropDown
-                    name="name"
-                    options={[
-                      "Business analyst",
-                      "Research analyst",
-                      "Accountant",
-                      "Administrator",
-                      "HR Cordinator",
-                      "All"
-                    ]}
-                    setValue={() => { updateDepartment(event) }}
-                    showDatePickerOnVal="custom"
-                    startIcon=""
-                    value={state.department}
-                  />
+                  <label>Department</label>
+                  <Select
+                      className='my-select'
+                      placeholder="Select"
+                      value={state.department}
+                      onChange={(event: any) => { updateDepartment(event)  }}
+                      options={departmentsData?.map((item: any) => {
+                        return { value: item?.id, label: item?.name }
+                      })}
+                    />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
-                  <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
+                  <Button type="default" size="middle" className="button-default-tertiary" 
+                   onClick={handleResetFilter}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary" 
+                 onClick={handleApplyFilter}>Apply</Button>
                 </div>
               </div>
             </React.Fragment>

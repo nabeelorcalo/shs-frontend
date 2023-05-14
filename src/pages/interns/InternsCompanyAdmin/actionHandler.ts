@@ -19,7 +19,7 @@ const useCustomHook = () => {
     debouncedResults.cancel();
   });
 
-  // Get all inters data
+  // Get all interns data
   const getAllInternsData = async (event:any) => {
     const { data } = await api.get(GET_ALL_INTERNS, { companyId: 1, userType: 'intern' ,InternStatus: event ? event : null})
     setGetAllInters(data);
@@ -40,11 +40,6 @@ const useCustomHook = () => {
     return debounce(changeHandler, 500);
   }, []);
 
-
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
-
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -53,7 +48,6 @@ const useCustomHook = () => {
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -113,11 +107,10 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
     downloadPdfOrCsv,
-    getAllInters,
     getAllInternsData,
     changeHandler,
+    getAllInters,
     isLoading
   };
 };

@@ -35,10 +35,10 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
-  const handleStatus = (status: any) => {
+  const handleStatus = (event: any) => {
     setState((prevState) => ({
       ...prevState,
-      status: status
+      status: event
     }))
   }
   const handleLocation = (event: any) => {
@@ -80,20 +80,17 @@ const InternshipsCompanyAdmin = () => {
             <FiltersButton label="Filters" onClick={handleDrawer} />
             <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <>
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
                     <label>Status</label>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        'Published',
-                        'Closed',
-                        'Pending',
-                        'Rejected',
-                        'Draft',
-                      ]}
-                      setValue={(event: any) => { handleStatus(event) }}
+                    <Select
+                      className='my-select'
+                      placeholder="Select"
                       value={state.status}
+                      onChange={(event: any) => {  handleStatus(event) }}
+                      options={internshipData?.map((item: any) => {
+                        return { value: item?.status, label: item?.status }
+                      })}
                     />
                   </div>
                   <div className="flex flex-col gap-2">

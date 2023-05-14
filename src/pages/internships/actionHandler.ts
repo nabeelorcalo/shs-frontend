@@ -4,6 +4,7 @@ import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
+import {internsDataState} from "../../store/interns/index"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -14,13 +15,14 @@ const useCustomHook = () => {
   const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
+  const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
-    SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints
+    SETTING_DAPARTMENT, SETTING_LOCATION,GET_ALL_INTERNS } = apiEndpints
   const { state } = useLocation();
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const useCustomHook = () => {
     const params = {
       limit: 10,
       page: 1,
-      status: status ? status.toUpperCase() : undefined,
+      status: status ? status : undefined,
       locationId: location ? location : undefined,
       departmentId: department ? department : undefined
     }
@@ -53,6 +55,13 @@ const useCustomHook = () => {
     const { data } = await api.get(SETTING_LOCATION, { page: 1, limit: 10 });
     setLocationsData(data)
   };
+
+   // Get all inters data
+   const getAllInternsData = async () => {
+    const { data } = await api.get(GET_ALL_INTERNS, { userType: 'intern' })
+    setGetAllInters(data);
+    setIsLoading(true);
+  }
 
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
@@ -153,20 +162,22 @@ const useCustomHook = () => {
   }, []);
 
   return {
-    departmentsData,
-    locationsData,
-    internshipData,
-    internshipDetails,
-    isLoading,
-    getAllInternshipsData,
-    getInternshipDetails,
-    deleteInternshipData,
-    changeHandler,
     postNewInternshipsData,
-    getDuplicateInternship,
     EditNewInternshipsData,
+    getDuplicateInternship,
     getAllDepartmentData,
-    getAllLocationsData
+    getAllInternshipsData,
+    deleteInternshipData,
+    getAllLocationsData,
+    getInternshipDetails,
+    getAllInternsData,
+    changeHandler,
+    departmentsData,
+    internshipDetails,
+    internshipData,
+    locationsData,
+    getAllInterns,
+    isLoading,
   };
 };
 

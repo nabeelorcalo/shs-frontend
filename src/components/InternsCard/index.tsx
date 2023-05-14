@@ -6,8 +6,6 @@ import './style.scss'
 
 export const InternsCard = (props: any) => {
   const { status, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
-  console.log("props",status);
-  
   const navigate = useNavigate()
   return (
     <div className='interns-card-main px-4 mb-8 max-sm:w-full max-md:w-1/2

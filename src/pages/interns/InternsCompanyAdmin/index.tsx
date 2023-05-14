@@ -9,13 +9,6 @@ import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 
-// import UploadDocument from "../../../components/UploadDocument";
-// import { STATUS_CONSTANTS } from "../../../config/constants";
-// const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
-// import "./style.scss";
-
-
-
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [assignManager, setAssignManager] = useState(false)
@@ -36,7 +29,7 @@ const InternsCompanyAdmin = () => {
   useEffect(() => {
     getAllInternsData(state.status)
   }, [])
-  console.log(getAllInters);
+
 
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
 
@@ -153,81 +146,6 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
-  // const tableData = [
-  //   {
-  //     no: "01",
-  //     name: "Maria Sanoid",
-  //     department: "Business Analyst",
-  //     joining_date: "01/07/2022",
-  //     date_of_birth: "01/07/2022",
-  //     status: "Terminated"
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Andrea Hiyahiya",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     date_of_birth: "01/07/2021",
-  //     status: "Terminated"
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Binaca Lalema",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     date_of_birth: "01/07/2021",
-  //     status: "Completed"
-  //   },
-  //   {
-  //     no: "01",
-  //     name: "Cody Nguyen",
-  //     department: "Business Analyst",
-  //     joining_date: "01/07/2022",
-  //     date_of_birth: "01/07/2022",
-  //     status: "Completed"
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Kristin Warren",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     date_of_birth: "01/07/2021",
-  //     status: "Employed"
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Mino Marina",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     date_of_birth: "01/07/2021",
-  //     status: "Terminated"
-  //   },
-  //   {
-  //     no: "01",
-  //     name: "Tom Hanks",
-  //     department: "Business Analyst",
-  //     joining_date: "01/07/2022",
-  //     date_of_birth: "01/07/2022",
-  //     status: "Employed"
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Wade Johnson",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     date_of_birth: "01/07/2021",
-  //     status: "Terminated"
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Julia Roberts",
-  //     department: "Scientist Analyst",
-  //     joining_date: "01/07/2023",
-  //     date_of_birth: "01/07/2021",
-  //     status: "Employed"
-  //   }
-  // ];
-
   const newTableData = getAllInters.map((item: any, index: any) => {
     const joiningDate = dayjs(item.joiningDate).format('DD/MM/YYYY');
     const dob = dayjs(item.userDetail?.DOB).format('DD/MM/YYYY');
@@ -251,7 +169,7 @@ const InternsCompanyAdmin = () => {
       ...prevState,
       manager: event
     }))
-  }
+  } 
 
   const updateStatus = (status: any) => {
     setState((prevState) => ({
@@ -280,10 +198,12 @@ const InternsCompanyAdmin = () => {
       dateOfJoining: event
     }))
   }
+
   const handleApplyFilter = () => {
     getAllInternsData(state.status);
     setShowDrawer(false)
   }
+  
   const handleResetFilter = () => {
     setState((prevState) => ({
       ...prevState,
@@ -294,6 +214,7 @@ const InternsCompanyAdmin = () => {
       dateOfJoining: ''
     }))
   }
+  
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
@@ -301,7 +222,7 @@ const InternsCompanyAdmin = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
             handleChange={changeHandler}
-            name="search bar"
+            name="search"
             placeholder="Search by name"
           />
         </Col>
@@ -436,7 +357,6 @@ const InternsCompanyAdmin = () => {
               setValue={() => {
                 downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns")
               }}
-              value=""
             />
           </div>
         </Col>
