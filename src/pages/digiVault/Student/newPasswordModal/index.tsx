@@ -5,8 +5,7 @@ import useCustomHook from "../../actionHandler";
 
 const NewPasswordModal = (props: any) => {
   const { newPass, setNewPass, setIsChecked } = props;
-const {PostDigivalutData}=useCustomHook();
-
+  const { PostDigivalutData } = useCustomHook();
   // const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
@@ -33,7 +32,7 @@ const {PostDigivalutData}=useCustomHook();
             <label>Password</label>
             <Form.Item
               name="password"
-           
+
             >
               <Input.Password size="large" />
             </Form.Item>

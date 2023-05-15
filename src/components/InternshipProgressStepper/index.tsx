@@ -48,7 +48,6 @@ export const InternshipProgressStepper = (props: any) => {
       className: "progress_reject"
     },
   ]
-  console.log(stepperObj[0].count)
   return (
     <ul className="progress_stepper">
       {

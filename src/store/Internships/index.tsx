@@ -12,10 +12,6 @@ export const internshipDetailsState = atom({
   default: [], 
 });
 
-export const dublicateInternshipState = atom({
-  key: "dublicateInternshipState",
-  default: [], 
-});
 
 
 

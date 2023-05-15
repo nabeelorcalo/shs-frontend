@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
-import { PageHeader, BoxWrapper, Breadcrumb } from '../../components'
-import { Button } from 'antd'
-import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ROUTES_CONSTANTS } from '../../config/constants'
+import { useEffect } from 'react';
+import { PageHeader, BoxWrapper, Breadcrumb } from '../../components';
+import { Button } from 'antd';
+import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
-import './style.scss'
+import './style.scss';
 
 const tempArray = [
   { name: "Job Details" },
@@ -20,9 +20,11 @@ const ViewInternshipDetails = () => {
   const [searchParams] = useSearchParams();
   const internshipStatus = searchParams.get('status')
   const {getInternshipDetails,internshipDetails} : any = useCustomHook()
+
   useEffect(() => {
     getInternshipDetails()
   }, [])
+  
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
@@ -40,7 +42,7 @@ const ViewInternshipDetails = () => {
               </h2>
               <p className='text-xl'>Design</p>
             </div>
-            {internshipStatus == "PUBLISHED" || internshipStatus == "Closed" ?
+            {internshipStatus == "PUBLISHED" || internshipStatus == "CLOSED" ?
               <div className='flex flex-row gap-10 flex-wrap'>
                 <div className='flex flex-row gap-6'>
                   <TotalApplicantIcon />
@@ -79,13 +81,13 @@ const ViewInternshipDetails = () => {
                   <p>Internship Duration: <span>{internshipDetails.duration}</span></p>
                 </div>
                 <div className='flex flex-col gap-3'>
-                  <p>Frequency: <span>{internshipDetails.salaryFrequency}</span></p>
+                  <p>Frequency: <span>{internshipDetails.salaryAmount} / {internshipDetails.salaryFrequency}</span></p>
                   <p>Location: <span>{internshipDetails.locationType}</span></p>
                 </div>
               </div>
             </div>
           </div>
-          {internshipStatus == "Published" || internshipStatus == "Closed" ?
+          {internshipStatus == "PUBLISHED" || internshipStatus == "CLOSED" ?
             <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
               <Button
                 type="default"

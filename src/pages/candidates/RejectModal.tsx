@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Input, Modal } from 'antd';
 import { DropDown } from '../../components';
 import "./style.scss"
@@ -20,7 +20,7 @@ const RejectModal = (props: any) => {
         <div className='title'><p>Subject</p></div>
         <Input placeholder='Enter subject' />
         <div className='title'><p>Reason</p></div>
-        <textarea className='input' placeholder='Write your reason' />
+        <Input.TextArea placeholder='Write your reason' rows={5}/>
         <div className='flex mt-3 justify-end gap-4'>
           <button onClick={() => setOpen(false)} className='cancel'>Cancel</button>
           <button onClick={handleReject} className='reject'>Reject</button>

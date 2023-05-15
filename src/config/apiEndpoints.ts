@@ -29,9 +29,10 @@ const endpoints = {
   GET_LIST_INTERNSHIP:'/internship/listInternships',
   GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
   DEL_INTERNSHIP:'/internship/deleteInternship',
-  DUBLICATE_INTERNSHIP:'/internship/duplicateInternship',
+  DUPLICATE_INTERNSHIP:'/internship/duplicateInternship',
   POST_NEW_INTERNSHIP:'/internship/createInternship',
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
+  EDIT_INTERNSHIP:'/internship/updateInternshipDetail',
   // End Point For Leaev Module For Intrne 
 
   CREATE_LEAVE:"/Leaves/create",
@@ -40,6 +41,7 @@ const endpoints = {
   HOLIDAY_LIST:"/Leaves/list-holiday",
   LEAVE_STATE:"/Leaves/state",
 
+  GET_ALL_INTERNS:"/candidate/listCandidates",
 
 }
 export default endpoints;
