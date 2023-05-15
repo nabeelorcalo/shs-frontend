@@ -15,3 +15,7 @@ export const holidayListStateAtom =atom({
   key:"holidayListStateAtom",
   default:[],
 })
+export const viewHistoryLeaveStateAtom =atom({
+  key:"viewHistoryLeaveStateAtom",
+  default:[],
+})

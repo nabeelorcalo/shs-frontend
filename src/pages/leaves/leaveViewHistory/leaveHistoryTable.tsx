@@ -7,73 +7,94 @@ import { data } from './LeaveMockData';
 import { GlobalTable } from '../../../components';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
+import useCustomHook from "../actionHandler";
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
+  const { viewHistoryLeaveState } = useCustomHook();
+  // console.log(viewHistoryLeaveState, 'viewHistoryLeaveState')
+  const statusBGRendar:any ={
+    "PENDING": "#FFC15E",
+    "DECLINE": "#D83A52",
+    "APPROVED": "#4ED185",
+  }
+  const renderSpanBG:any = {
+    "SICK" :"rgba(76, 164, 253, 1)",
+    "CASUAL":"rgba(255, 193, 93, 1)",
+    "WORK FROM HOME":"rgba(233, 111, 124, 1)",
+    "MEDICAL":"rgba(106, 173, 142, 1)",
+  }
+
   const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
   const intrneeColumData = [
     {
       title: 'No',
       dataIndex: 'key',
       key: 'key',
+      render: (_: any, data: any, index: any) => (
+        <div>{index < 9 ? `0${index + 1}` : index + 1}</div>
+      )
     },
     {
       title: 'Request Date',
-      dataIndex: 'requestDate',
-      key: 'requestDate',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       render: (_: any, data: any) => (
         <div
           className="status_container">
-          {formatDate(data.requestDate, "DD/MM/YYYY")}
+          {formatDate(data.createdAt, "DD/MM/YYYY")}
         </div>
       ),
 
     },
     {
       title: 'Date From',
-      dataIndex: 'start',
-      key: 'start',
+      dataIndex: 'dateFrom',
+      key: 'dateFrom',
       render: (_: any, data: any) => (
         <div
           className="status_container">
-          {formatDate(data.start, "DD/MM/YYYY")}
+          {formatDate(data.dateFrom, "DD/MM/YYYY")}
         </div>
       ),
 
     },
     {
       title: 'Date  To',
-      dataIndex: "end",
-      key: 'end',
+      dataIndex: "dateTo",
+      key: 'dateTo',
       render: (_: any, data: any) => (
         <div
           className="status_container">
-          {formatDate(data.end, "DD/MM/YYYY")}
+          {formatDate(data.dateTo, "DD/MM/YYYY")}
         </div>
       ),
     },
     {
       title: 'Leave Type',
       width: 180,
-      dataIndex: 'leaveType',
+      dataIndex: 'type',
       render: (_: any, data: any) => (
         <div
-          className="status_container px-[10px] py-[3px] relative text-left ">
+          className="status_container px-[10px] py-[3px] relative text-left capitalize">
           <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg " style={{
-            backgroundColor: data.leaveType === "sick" ?
-              "#4CA4FD" : data.leaveType === "casual" ?
-                "#FFC15D" : data.leaveType === "work from home" ? "#E96F7C" : "#6AAD8E",
+            backgroundColor: renderSpanBG[data.type],
             color: "#fff"
           }}></span>
-          {data.leaveType}
+          {data.type.toLowerCase()}
         </div>
       ),
 
-      key: 'leaveType',
+      key: 'type',
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+      render: (_: any, data: any) => (
+        <div>
+          {data.description ? data.description : "-"}
+        </div>
+      ),
     },
     {
       title: 'Status',
@@ -81,15 +102,13 @@ const LeaveHistoryTable = (props: any) => {
       width: 80,
       render: (_: any, data: any) => (
         <div
-          className="status_container px-[10px] py-[3px] rounded-lg "
+          className="status_container px-[10px] py-[3px] rounded-lg capitalize "
           style={{
-            backgroundColor: data.status === "Pending" ?
-              "#FFC15E" : data.status === "Declined" ?
-                "#D83A52" : "#4ED185",
+            backgroundColor: statusBGRendar[data.status],
             color: "#fff",
             textAlign: "center",
           }}>
-          {data.status}
+          {data.status.toLowerCase()}
         </div>
       ),
       key: 'status',
@@ -98,24 +117,24 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Action',
       key: 'action',
       render: (_: any, data: any) => (
-        <DropDownNew items={[
+        <DropDownNew  placement="bottomRight" items={[
           {
             label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
               className="cursor-pointer">View Details</p>, key: 'viewDetail'
           },
-          data.status === "Pending" && {
+          data.status === "PENDING" && {
             label: <p onClick={() => {
               setOpenModal({ open: true, type: 'edit' })
             }}
               className="cursor-pointer my-[-10px]">Edit</p>, key: 'edit'
           },
-          data.status === "Pending" && {
+          data.status === "PENDING" && {
             label: <p onClick={() => {
               setOpenModal({ open: true, type: 'cancel' });
             }}
               className="cursor-pointer" >Cancel</p>, key: 'cancel'
           },
-        ]}>
+        ]} >
           <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
         </DropDownNew>
       ),
@@ -226,8 +245,8 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => (
         <DropDownNew placement="bottomRight" items={[
           { label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>View Details</p>, key: 'viewDetail' },
-          (data.status === "Pending") && { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
-          (data.status === "Pending") && { label: <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>Decline</p>, key: 'decline' },
+          (data.status === "PENDING") && { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
+          (data.status === "PENDING") && { label: <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>Decline</p>, key: 'decline' },
         ]}>
           <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
         </DropDownNew>
@@ -239,11 +258,10 @@ const LeaveHistoryTable = (props: any) => {
   return (
     <GlobalTable
       id={id}
-      tableData={data}
+      tableData={viewHistoryLeaveState}
       pagination={true}
       columns={role === constants.INTERN ? intrneeColumData : managerColumData}
     />
   )
 }
-
 export default LeaveHistoryTable

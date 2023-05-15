@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Col, Row } from "antd";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import { currentUserRoleState, currentUserState } from "../../../store";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { BoxWrapper, DrawerWidth } from "../../../components";
 import { CalendarWhiteIcon } from "../../../assets/images";
@@ -23,56 +23,65 @@ const LeaveViewHistoryData = [
 ];
 
 const index = () => {
-  const action = useCustomHook();
+  const cruntUserState = useRecoilValue(currentUserState);
+  console.log(cruntUserState,"cruntUserStatecruntUserState");
+  
+  const {downloadPdfOrCsv,onsubmitLeaveRequest, onFilterLeaevHistory} = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
   const role = useRecoilValue(currentUserRoleState);
   const mainDrawerWidth = DrawerWidth();
+  console.log(selectedRow, "selectedRow");
+  const renderSpanBG:any = {
+    "SICK" :"rgba(76, 164, 253, 1)",
+    "CASUAL":"rgba(255, 193, 93, 1)",
+    "WORK FROM HOME":"rgba(233, 111, 124, 1)",
+    "MEDICAL":"rgba(106, 173, 142, 1)",
+  }
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
       <Divider />
-
       <Row className='items-center' gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={(e: any) => { console.log(e)}} />
+          <SearchBar handleChange={(e: any) => { console.log(e) }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
-              <FiltersButton
-                label="Filters"
-                onClick={() => setOpenDrawer({ type: 'filters', open: true })}
-              />
-            <div>
-              <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => { action.downloadPdfOrCsv(event, CsvImportData, data, "Leave History") }}
-              />
-            </div>
-            {
-              role === constants.INTERN &&
-              <Button
-                icon={<CalendarWhiteIcon className="mr-1" />}
-                label="Request Leave"
-                onClick={() => setOpenModal({ open: true, type: "addLeav" })}
-                size="middle"
-                className="Request_leave"
-              />}
+          <FiltersButton
+            label="Filters"
+            onClick={() => setOpenDrawer({ type: 'filters', open: true })}
+          />
+          <div>
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {downloadPdfOrCsv(event, CsvImportData, data, "Leave History") }}
+            />
+          </div>
+          {
+            role === constants.INTERN &&
+            <Button
+              icon={<CalendarWhiteIcon className="mr-1" />}
+              label="Request Leave"
+              onClick={() => setOpenModal({ open: true, type: "addLeav" })}
+              size="middle"
+              className="Request_leave"
+            />}
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow} id="LeaveHistoryTable" />
+            <LeaveHistoryTable setOpenDrawer={setOpenDrawer} setOpenModal={setOpenModal} setSelectedRow={setSelectedRow}  id="LeaveHistoryTable" />
           </BoxWrapper>
         </Col>
       </Row>
 
       {openDrawer.open && <DrawerComp
-        width={mainDrawerWidth>1400 ? 380:300}
+        width={mainDrawerWidth > 1400 ? 380 : 300}
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
         className={openDrawer.type === 'filters' ? "" : "Record_data"}
@@ -80,31 +89,29 @@ const index = () => {
         onClose={() => setOpenDrawer({ type: '', open: false })}
       >
         <div>
-          {openDrawer.type === 'filters' ? <FilterDrawerForm setOpenDrawer={setOpenDrawer} /> :
+          {openDrawer.type === 'filters' ? <FilterDrawerForm onFilterLeaevHistory={onFilterLeaevHistory} setOpenDrawer={setOpenDrawer}  /> :
             <CalendarDrawerInnerDetail
               img={selectedRow?.img}
-              name={selectedRow?.name}
-              designation={selectedRow?.designation}
-              email={selectedRow?.email}
-              requestedOn={selectedRow?.requestDate}
+              name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
+              designation={"UI UX Designer"}
+              email={cruntUserState?.email}
+              requestedOn={selectedRow?.createdAt}
               aprover={selectedRow?.aprover}
-              ApprovedBy={selectedRow?.ApprovedBy}
-              backgroundColor={selectedRow?.title === "Sick" ?
-                "rgba(76, 164, 253, 0.25)" : selectedRow?.title === "Casual" ?
-                  "rgba(255, 193, 93, 0.25)" : selectedRow?.title === "Work from home" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
-              spanBG={data?.title === "Sick" ?
-                "rgba(76, 164, 253, 1)" : selectedRow?.title === "Casual" ?
-                  "rgba(255, 193, 93, 1)" : selectedRow?.title === "Work from home" ? "rgba(233, 111, 124, 1)" : "rgba(106, 173, 142, 1)"}
-              title={selectedRow?.title}
-              dateFrom={selectedRow?.start}
-              dateTo={selectedRow?.end}
+              ApprovedBy={selectedRow?.ApprovedBy ? selectedRow?.ApprovedBy : "-"}
+              backgroundColor={selectedRow?.type === "SICK" ?
+                "rgba(76, 164, 253, 0.25)" : selectedRow?.type === "CASUAL" ?
+                  "rgba(255, 193, 93, 0.25)" : selectedRow?.type === "WORK FROM HOME" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
+              spanBG={renderSpanBG[selectedRow?.type]}
+              title={selectedRow?.type.toLowerCase()}
+              dateFrom={selectedRow?.dateFrom}
+              dateTo={selectedRow?.dateTo}
               timeFrom={selectedRow?.start}
               timeTo={selectedRow?.end}
               leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
               hours={selectedRow?.hours}
-              dur={selectedRow?.dur}
-              reqStatus={selectedRow?.status}
-              description={selectedRow?.fulldescription}
+              dur={selectedRow?.durationType}
+              reqStatus={selectedRow?.status.toLowerCase()}
+              description={selectedRow?.reason}
             />
           }
         </div>
@@ -115,12 +122,12 @@ const index = () => {
           open={openModal.open}
           data={selectedRow}
           setIsAddModalOpen={setOpenModal}
-          subMitLeaveBtn={action.submitLeaveRequest}
+          subMitLeaveBtn={onsubmitLeaveRequest}
           changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-        type='warning'
+          type='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"No"}

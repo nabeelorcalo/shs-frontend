@@ -24,9 +24,9 @@ const CalendarDrawerInnerDetail = (props: any) => {
         description
     } = props;
     const renderStatusColor: any = {
-        'Pending': 'rgba(255, 193, 93, 1)',
-        'Approved': '#4ED185',
-        'Decline': '#D83A52',
+        'pending': 'rgba(255, 193, 93, 1)',
+        'approved': '#4ED185',
+        'decline': '#D83A52',
     }
     const formatDate = (time: any, format: string) => dayjs(time).format(format)
     return (
@@ -66,10 +66,13 @@ const CalendarDrawerInnerDetail = (props: any) => {
                     </Col>
                     <Divider />
                 </Row>
-                <h4 className='leaveType font-semibold text-xl py-[10px] pl-4 relative ' style={{ backgroundColor: backgroundColor }}>
-                    <span className=' absolute top-0 left-0 bottom-0 w-[5px] rounded-tr-md rounded-br-md ' style={{
-                        backgroundColor: spanBG
-                    }}></span> {title}</h4>
+                <h4 className='leaveType font-semibold text-xl py-[10px] pl-4 relative capitalize ' style={{ backgroundColor: backgroundColor }}>
+                    <span
+                        className=' absolute top-0 left-0 bottom-0 w-[5px] rounded-tr-md rounded-br-md '
+                        style={{ backgroundColor: spanBG }}
+                    >
+                    </span> {title}
+                </h4>
                 <Row className='mt-10 ' gutter={[20, 20]}>
                     <Col lg={12}>
                         <div className='request_data'>
@@ -107,7 +110,7 @@ const CalendarDrawerInnerDetail = (props: any) => {
                     <Col lg={12}>
                         <div className='request_data'>
                             <h4 className=' font-medium text-base  '>Status</h4>
-                            <p className=' text-base font-normal inline p-1 rounded-lg status_style mt-2 Status  ' style={{ backgroundColor: renderStatusColor[reqStatus] }}>{reqStatus}</p>
+                            <p className=' text-base font-normal inline p-1 rounded-lg status_style mt-2 Status capitalize  ' style={{ backgroundColor: renderStatusColor[reqStatus] }}>{reqStatus}</p>
                         </div>
                     </Col>
                     <Divider />
