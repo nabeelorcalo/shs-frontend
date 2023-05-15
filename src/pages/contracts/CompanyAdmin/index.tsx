@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
+import Select from "../../../components/Select/Select";
 
 const tableData = [
   {
@@ -324,7 +325,6 @@ const CompanyAdmin = () => {
           <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
-
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"

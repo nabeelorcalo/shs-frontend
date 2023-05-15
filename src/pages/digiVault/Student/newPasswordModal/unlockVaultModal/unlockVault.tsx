@@ -1,9 +1,13 @@
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Form, Input, Switch } from "antd";
 import "./styles.scss";
+import useCustomHook from "../../../actionHandler";
 const UnlockVault = (props: any) => {
-    const { isModal, setIsModal, settingModal, setIsEnablePassword } = props
+    const { isModal, setIsModal, settingModal } = props;
+    const { postDigivaultPassword } = useCustomHook();
     const onFinish = (values: any) => {
+        values.isLock = settingModal.isLock
+        postDigivaultPassword(values);
     };
     return (
         <div>
@@ -22,6 +26,7 @@ const UnlockVault = (props: any) => {
                 <Form layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
                     <div>
                         <Form.Item
+                            name='unlockPassword'
                             label="Password"
                             className="label"
                             rules={[

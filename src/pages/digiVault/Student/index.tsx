@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Divider, Progress, Row, Menu, Alert as Alerts } from "antd";
+import { Col, Divider, Progress, Row, Menu } from "antd";
 import { GlobalTable, Notifications } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";

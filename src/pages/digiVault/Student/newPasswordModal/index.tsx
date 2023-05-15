@@ -79,7 +79,6 @@ const NewPasswordModal = (props: any) => {
           </div>
         </Form>
       </Modal>
-      <Button onClick={() => setUnlockVaultModal(true)}>click me</Button>
       <UnlockVault setUnlockVaultModal={setUnlockVaultModal} unlockVaultModal={unlockVaultModal} />
     </div>
   );

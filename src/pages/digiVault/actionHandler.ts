@@ -29,10 +29,10 @@ const useCustomHook = () => {
 
   //post passowrd for digivault password
   const postDigivaultPassword = async (values: any) => {
-    const { password, isLock, lockTime } = values;
+    const { password, isLock, lockTime, unlockPassword } = values;
     const postData = {
       isLock: isLock,
-      password: password,
+      password: unlockPassword ? unlockPassword : password,
       autoLockAfter: lockTime
     }
     const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
