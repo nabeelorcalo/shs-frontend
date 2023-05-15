@@ -5,7 +5,7 @@ import "./style.scss";
 
 const NewPasswordModal = (props: any) => {
   const { isModal, setIsModal, settingModal, setIsEnablePassword } = props;
-  const { postDigivaultPassword }: any = useCustomHook();
+  const { postDigivaultPassword, studentVault }: any = useCustomHook();
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;
@@ -19,7 +19,7 @@ const NewPasswordModal = (props: any) => {
   }
   return (
     <div>
-      <Switch onChange={onChange} defaultChecked={true} />
+      <Switch onChange={onChange} defaultChecked={studentVault ? true : false} />
       <Modal
         open={isModal}
         onCancel={() => setIsModal(false)}

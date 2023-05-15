@@ -57,7 +57,7 @@ const useCustomHook = () => {
 
   //delete folder
   const deleteFolderFile = async (itemId: any) => {
-    const { data } = await api.delete(`${DEL_FOLDER_FILE}?id=${itemId}`);
+    const { data } = await api.delete(DEL_FOLDER_FILE,{},{id:itemId});
     if (data) {
       getDigiVaultDashboard(null);
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
