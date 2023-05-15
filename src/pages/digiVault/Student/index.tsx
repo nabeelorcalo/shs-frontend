@@ -119,10 +119,12 @@ const DigiVaultStudent = () => {
     getDigiVaultDashboard(isEnablePassowrd)
   }, [])
 
-  if (!studentVault) {
+  if (studentVault === undefined) {
     Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
   }
-  
+  // if (studentVault === undefined) {
+  //   alert('hello')
+  // }
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
