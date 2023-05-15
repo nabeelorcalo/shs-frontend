@@ -7,16 +7,17 @@ import type { RadioChangeEvent } from 'antd';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
 import './style.scss';
+import dayjs from 'dayjs';
 
 const { TextArea } = Input;
 
 const amountOptions = [
   {
-    value: 'GBP',
+    value: '£',
     label: 'GBP',
   },
   {
-    value: 'USD',
+    value: '$',
     label: 'USD',
   },
 ]
@@ -47,11 +48,12 @@ const NewInternships = () => {
   const { state } = useLocation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [partAndFullTime, setPartAndFullTime] = useState(null);
-  const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
-  const [remoteOnsite, setRemoteOnsite] = useState(null);
-  const [openDataPicker, setOpenDataPicker] = useState(false);
   const [internShipFormData, setInternShipFormData] = useState(state);
+  const [partAndFullTime, setPartAndFullTime] = useState(null);
+  const [paidAndUnpaid, setPaidAndUnpaid] = useState(internShipFormData?.salaryType ?? null);
+  const [openDataPicker, setOpenDataPicker] = useState(false);
+  const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
+  const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
   const typeOfWork = {
     partTime: "PART_TIME",
     fullTime: "FULL_TIME"
@@ -62,7 +64,7 @@ const NewInternships = () => {
     hybride: "HYBRIDE",
   }
   const { postNewInternshipsData, getAllDepartmentData,
-    departmentsData, getAllLocationsData, locationsData } = useCustomHook();
+    departmentsData, EditNewInternshipsData, getAllLocationsData, locationsData } = useCustomHook();
 
   useEffect(() => {
     getAllDepartmentData
@@ -94,8 +96,17 @@ const NewInternships = () => {
   };
 
   const onFinish = (values: any) => {
+    const newVals={
+      ...values,
+      amount:amount.amount,
+      salaryAmount:amount.amountType
+    }
     console.log('Success:', values);
-    postNewInternshipsData(values);
+    if (internShipFormData) {
+      EditNewInternshipsData(newVals)
+    } else {
+      postNewInternshipsData(newVals);
+    }
     form.resetFields();
     setInternShipFormData({})
   };
@@ -105,19 +116,21 @@ const NewInternships = () => {
   };
 
   const initialValues = {
-    title: internShipFormData?.title ?? ' ',
-    department: internShipFormData?.department ?? ' ',
-    description: internShipFormData?.description ?? ' ',
+    title: internShipFormData?.title ?? '',
+    department: internShipFormData?.departmentId ?? undefined,
+    description: internShipFormData?.description ?? '',
     responsibilities: internShipFormData?.responsibilities ?? '',
     requirements: internShipFormData?.requirements ?? '',
-    typeofwork: internShipFormData?.typeofwork ?? '',
+    typeofwork: internShipFormData?.internType ?? '',
     salaryType: internShipFormData?.salaryType ?? '',
-    frequency: internShipFormData?.frequency ?? '',
-    amount: internShipFormData?.amount ?? '',
-    natureofwork: internShipFormData?.natureofwork ?? '',
-    location: internShipFormData?.location ?? '',
+    frequency: internShipFormData?.salaryFrequency ?? '',
+    amount: internShipFormData?.salaryAmount ?? '',
+    amountType: internShipFormData?.salaryCurrency ?? '',
+    natureofwork: internShipFormData?.locationType ?? '',
+    location: internShipFormData?.locationId ?? '',
     positions: internShipFormData?.totalPositions ?? '',
-    duration: internShipFormData?.duration ?? ''
+    duration: internShipFormData?.duration ?? undefined,
+    closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined
   }
 
   return (
@@ -202,13 +215,15 @@ const NewInternships = () => {
                       options={frequencyOptions}
                     />
                   </Form.Item>
-                  <Form.Item label="Amount" name="amount">
+                  <Form.Item label="Amount" name="amountType">
                     <Space.Compact>
                       <Select
                         className='w-full'
                         defaultValue="GBP"
+                        onChange={(e) => setAmount({ ...amount, amountType: e })}
+                        value={amount.amountType}
                         options={amountOptions} />
-                      <Input type='number' placeholder='0.00' />
+                      <Input type='number' value={amount.amount} onChange={(e) => setAmount({ ...amount, amount: e.target.value })} name="amount" placeholder='0.00' />
                     </Space.Compact>
                   </Form.Item>
                 </div>
@@ -247,7 +262,7 @@ const NewInternships = () => {
               <p>Enter the additional information related to internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
-              <Form.Item label="Total Positions" name="positions" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item label="Total Positions" name="positions" rules={[{ required: true }]}>
                 <Input className="input" placeholder="Enter number of positions" type="number" />
               </Form.Item>
               <Form.Item name='closingDate' label={<span>Expected Closing Date

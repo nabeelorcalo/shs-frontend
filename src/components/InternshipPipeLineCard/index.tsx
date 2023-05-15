@@ -1,4 +1,3 @@
-import React from 'react'
 import { Avatar, Divider, Rate } from 'antd';
 import './style.scss'
 

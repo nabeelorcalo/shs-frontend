@@ -117,7 +117,7 @@ const Interns = () => {
       <PageHeader title="Interns" />
       <Row gutter={[20, 20]}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search by name" />
+          <SearchBar handleChange={changeHandler} name="search" placeholder="Search by name" />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <div className="flex justify-between gap-4">

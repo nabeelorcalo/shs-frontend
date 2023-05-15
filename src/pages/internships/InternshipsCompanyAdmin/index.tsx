@@ -85,7 +85,6 @@ const InternshipsCompanyAdmin = () => {
                   <div className="flex flex-col gap-2">
                     <label>Status</label>
                     <Select
-                      className='my-select'
                       placeholder="Select"
                       value={state.status}
                       onChange={(event: any) => {  handleStatus(event) }}
@@ -97,7 +96,6 @@ const InternshipsCompanyAdmin = () => {
                   <div className="flex flex-col gap-2">
                     <label>Location</label>
                     <Select
-                      className='my-select'
                       placeholder="Select"
                       value={state.location}
                       onChange={(event: any) => { handleLocation(event) }}
@@ -109,7 +107,6 @@ const InternshipsCompanyAdmin = () => {
                   <div className="flex flex-col gap-2">
                     <label>Department</label>
                     <Select
-                      className='my-select'
                       placeholder="Select"
                       value={state.department}
                       onChange={(event: any) => { handleDepartment(event) }}

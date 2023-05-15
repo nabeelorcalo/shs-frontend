@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SearchBar, PageHeader, InternshipPipeLineCard, Breadcrumb, DropDown } from "../../../components";
+import { SearchBar, PageHeader, InternshipPipeLineCard, Breadcrumb } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import {
   DepartmentIcon, LocationIconCm, JobTimeIcon,
@@ -45,128 +45,7 @@ import "../style.scss";
 //     className: "text-success-hover-bg-color"
 //   }
 // ]
-// const cardArray = [
-//   {
-//     name: "Jane Cooper",
-//     rating: 4,
-//     time: "2 days ago",
-//     status: "Applied",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "Jane Cooper",
-//     rating: 4,
-//     time: "2 days ago",
-//     status: "Applied",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
 
-//   {
-//     name: "Roman Akhmervo",
-//     rating: 2,
-//     time: "2 days ago",
-//     status: "Hired",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5896.jpg"
-//   },
-//   {
-//     name: "janen gooper",
-//     rating: 4,
-//     time: "2 days ago",
-//     status: "Contract",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "Jane swister",
-//     rating: 5,
-//     time: "2 days ago",
-//     status: "Interviewed",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-975.jpg"
-//   },
-//   {
-//     name: "Laura gail",
-//     rating: 4,
-//     time: "2 days ago",
-//     status: "Recommended",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "Leopard cris",
-//     rating: 1,
-//     time: "2 days ago",
-//     status: "Recommended",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-1903.jpg"
-//   },
-//   {
-//     name: "Dineo meno",
-//     rating: 2,
-//     time: "2 days ago",
-//     status: "Hired",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "Clonde filte",
-//     rating: 4,
-//     time: "2 days ago",
-//     status: "OfferLetter",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-262.jpg"
-//   },
-//   {
-//     name: "loversa tripe",
-//     rating: 1,
-//     time: "2 days ago",
-//     status: "Contract",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "Nicobe mobal",
-//     rating: 3,
-//     time: "2 days ago",
-//     status: "OfferLetter",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-569.jpg"
-//   },
-//   {
-//     name: "diverdentine stlo",
-//     rating: 5,
-//     time: "2 days ago",
-//     status: "Applied",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "Desgino modu",
-//     rating: 1,
-//     time: "2 days ago",
-//     status: "Applied",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-4370.jpg"
-//   },
-//   {
-//     name: "Laiq faild",
-//     rating: 3,
-//     time: "2 days ago",
-//     status: "Interviewed",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-1196.jpg"
-//   },
-//   {
-//     name: "turba droped",
-//     rating: 2,
-//     time: "2 days ago",
-//     status: "Recommended",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5543.jpg"
-//   },
-//   {
-//     name: "calse doplin",
-//     rating: 5,
-//     time: "2 days ago",
-//     status: "Applied",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-//   },
-//   {
-//     name: "lowang eenal",
-//     rating: 1,
-//     time: "2 days ago",
-//     status: "Hired",
-//     img: "https://faces-img.xcdn.link/image-lorem-face-3621.jpg"
-//   },
-// ]
 const tempArray = [
   { name: "Pipeline" },
   {
@@ -189,8 +68,6 @@ const InternshipPipeLine = () => {
     getAllInternsData()
   }, [])
 
-  console.log("all interns candidates are", getAllInterns);
-
 
   const myStatus = [
     { label: 'Published', value: 'Published', icon: SuccessStatus },
@@ -202,6 +79,7 @@ const InternshipPipeLine = () => {
       status: event
     }))
   }
+
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

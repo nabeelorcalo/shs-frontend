@@ -22,6 +22,7 @@ const InternsCompanyAdmin = () => {
     university: undefined,
     dateOfJoining: undefined
   })
+
   const managerList = [
     { value: 'David', label: 'David miller' },
     { value: 'Amila', label: 'Amila Clark' },
@@ -34,7 +35,6 @@ const InternsCompanyAdmin = () => {
     { value: 'Terminated', label: 'Terminated' },
     { value: 'All', label: 'All' },
   ]
-
   const departmentsList = [
     { value: 'Business analyst', label: 'Business analyst' },
     { value: 'Research analyst', label: 'Research analyst' },
@@ -199,17 +199,17 @@ const InternsCompanyAdmin = () => {
     }))
   }
 
-  const updateStatus = (status: any) => {
+  const updateStatus = (event: any) => {
     setState((prevState) => ({
       ...prevState,
-      status: status
+      status: event
     }))
   }
 
   const updateDepartment = (event: any) => {
     setState((prevState) => ({
       ...prevState,
-      deparment: event
+      department: event
     }))
   }
 
@@ -270,7 +270,6 @@ const InternsCompanyAdmin = () => {
                 <div className="flex flex-col gap-2">
                   <label>Manager</label>
                   <Select
-                    className='my-select'
                     placeholder="Select"
                     value={state.manager}
                     onChange={(event: any) => { updateManager(event) }}
@@ -280,7 +279,6 @@ const InternsCompanyAdmin = () => {
                 <div className="flex flex-col gap-2">
                   <label>Status</label>
                   <Select
-                    className='my-select'
                     placeholder="Select"
                     value={state.status}
                     onChange={(event: any) => { updateStatus(event) }}
@@ -290,7 +288,6 @@ const InternsCompanyAdmin = () => {
                 <div className="flex flex-col gap-2">
                   <label>Department</label>
                   <Select
-                    className='my-select'
                     placeholder="Select"
                     value={state.department}
                     onChange={(event: any) => { updateDepartment(event) }}
@@ -300,7 +297,6 @@ const InternsCompanyAdmin = () => {
                 <div className="flex flex-col gap-2">
                   <label>University</label>
                   <Select
-                    className='my-select'
                     placeholder="Select"
                     value={state.university}
                     onChange={(event: any) => { updateUniversity(event) }}
