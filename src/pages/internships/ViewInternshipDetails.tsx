@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
-import { PageHeader, BoxWrapper, Breadcrumb } from '../../components'
-import { Button } from 'antd'
-import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ROUTES_CONSTANTS } from '../../config/constants'
+import { useEffect } from 'react';
+import { PageHeader, BoxWrapper, Breadcrumb } from '../../components';
+import { Button } from 'antd';
+import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
-import './style.scss'
+import './style.scss';
 
 const tempArray = [
   { name: "Job Details" },
@@ -20,9 +20,11 @@ const ViewInternshipDetails = () => {
   const [searchParams] = useSearchParams();
   const internshipStatus = searchParams.get('status')
   const {getInternshipDetails,internshipDetails} : any = useCustomHook()
+
   useEffect(() => {
     getInternshipDetails()
   }, [])
+  
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

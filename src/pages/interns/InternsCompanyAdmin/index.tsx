@@ -1,57 +1,72 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  GlobalTable,
-  SearchBar,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  DropDown,
-  FiltersButton,
-  Drawer,
-  PopUpModal,
+  GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal
 } from "../../../components";
 import { TextArea } from "../../../components";
-import { useNavigate } from 'react-router-dom';
-import {
-  AlertIcon,
-  CardViewIcon,
-  More,
-  SuccessIcon,
-  TableViewIcon,
-} from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col } from 'antd';
+import { AlertIcon, CardViewIcon, More, SuccessIcon, TableViewIcon, } from "../../../assets/images"
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select } from 'antd';
 import useCustomHook from "./actionHandler";
-// import UploadDocument from "../../../components/UploadDocument";
-import { STATUS_CONSTANTS } from "../../../config/constants";
-import "./style.scss";
-
-
-const { ERROR, SUCCESS, WARNING } = STATUS_CONSTANTS
+import dayjs from "dayjs";
 
 const InternsCompanyAdmin = () => {
-  const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   const [assignManager, setAssignManager] = useState(false)
   const [terminate, setTerminate] = useState(false)
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [state, setState] = useState({
-    manager: "",
-    status: "",
-    deparment: "",
-    university: "",
-    dateOfJoining: ""
+    manager: undefined,
+    status: undefined,
+    department: undefined,
+    university: undefined,
+    dateOfJoining: undefined
   })
+  const managerList = [
+    { value: 'David', label: 'David miller' },
+    { value: 'Amila', label: 'Amila Clark' },
+    { value: 'Mino', label: 'Mino Marino' },
+    { value: 'Maria', label: 'Maria sanaid' },
+  ]
+  const statusList = [
+    { value: 'Employed', label: 'Employed' },
+    { value: 'Completed', label: 'Completed' },
+    { value: 'Terminated', label: 'Terminated' },
+    { value: 'All', label: 'All' },
+  ]
 
-  const action = useCustomHook()
+  const departmentsList = [
+    { value: 'Business analyst', label: 'Business analyst' },
+    { value: 'Research analyst', label: 'Research analyst' },
+    { value: 'Accountant', label: 'Accountant' },
+    { value: 'Administrator', label: 'Administrator' },
+    { value: 'HR Cordinator', label: 'HR Cordinator' },
+    { value: 'All', label: 'All' },
+  ]
+  const universityList = [
+    { value: 'Power source', label: 'Power source' },
+    { value: 'Dev spot', label: 'Dev spot' },
+    { value: 'Abacus', label: 'Abacus' },
+    { value: 'Orcalo Holdings', label: 'Orcalo Holdings' },
+    { value: 'Coding Hub', label: 'Coding Hub' },
+    { value: 'All', label: 'All' },
+  ]
+
+  const { getAllInternsData, getAllInters,
+    changeHandler, downloadPdfOrCsv, isLoading } = useCustomHook()
+
+  useEffect(() => {
+    getAllInternsData(state.status)
+  }, [])
+
+
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
-      "Completed": "primary-bg-color",
-      "Employed": "text-success-bg-color",
-      "Terminated": "secondary-bg-color",
+      "completed": "primary-bg-color",
+      "employed": "text-success-bg-color",
+      "terminated": "secondary-bg-color",
     }
     return (
       <p>
@@ -63,7 +78,6 @@ const InternsCompanyAdmin = () => {
   }
 
   const PopOver = () => {
-    const navigate = useNavigate();
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -121,7 +135,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No.",
+      title: "No",
     },
     {
       dataIndex: "posted_by",
@@ -160,325 +174,227 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
-  const tableData = [
-    {
-      no: "01",
-      name: "Maria Sanoid",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      date_of_birth: "01/07/2022",
-      status: "Terminated"
-    },
-    {
-      no: "02",
-      name: "Andrea Hiyahiya",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-      status: "Terminated"
-    },
-    {
-      no: "02",
-      name: "Binaca Lalema",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-      status: "Completed"
-    },
-    {
-      no: "01",
-      name: "Cody Nguyen",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      date_of_birth: "01/07/2022",
-      status: "Completed"
-    },
-    {
-      no: "02",
-      name: "Kristin Warren",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-      status: "Employed"
-    },
-    {
-      no: "02",
-      name: "Mino Marina",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-      status: "Terminated"
-    },
-    {
-      no: "01",
-      name: "Tom Hanks",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      date_of_birth: "01/07/2022",
-      status: "Employed"
-    },
-    {
-      no: "02",
-      name: "Wade Johnson",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-      status: "Terminated"
-    },
-    {
-      no: "02",
-      name: "Julia Roberts",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-      status: "Employed"
-    }
-  ];
-
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = getAllInters.map((item: any, index: any) => {
+    const joiningDate = dayjs(item.joiningDate).format('DD/MM/YYYY');
+    const dob = dayjs(item.userDetail?.DOB).format('DD/MM/YYYY');
     return (
       {
-        no: item.no,
+        no: getAllInters.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
-          <Avatar
-            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-          />,
-        name: item.name,
-        department: item.department,
-        joining_date: item.joining_date,
-        date_of_birth: item.date_of_birth,
-        status: <ButtonStatus status={item.status} />,
+          <Avatar src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} />,
+        name: <p>{item.userDetail?.firstName} {item.userDetail?.lastName}</p>,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob,
+        status: <ButtonStatus status={item.internStatus} />,
         actions: <PopOver />
       }
     )
   })
 
   const updateManager = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      manager: value
+      manager: event
     }))
   }
 
-  const updateStatus = (event: any) => {
-    const value = event.target.innerText;
+  const updateStatus = (status: any) => {
     setState((prevState) => ({
       ...prevState,
-      status: value
+      status: status
     }))
   }
 
   const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      deparment: value
+      deparment: event
     }))
   }
 
   const updateUniversity = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      university: value
+      university: event
     }))
   }
 
   const updateDateOfJoining = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      dateOfJoining: value
+      dateOfJoining: event
+    }))
+  }
+
+  const handleApplyFilter = () => {
+    getAllInternsData(state.status);
+    setShowDrawer(false)
+  }
+
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      manager: undefined,
+      status: undefined,
+      university: undefined,
+      department: undefined,
+      dateOfJoining: undefined
     }))
   }
 
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
-      {/* <div className="flex flex-col gap-5 intern-main"> */}
-        <Row gutter={[20, 20]}>
-          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search by name"
-              size="middle"
-            />
-          </Col>
-          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
-            <FiltersButton label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
-            />
-            <Drawer
-              closable
-              open={showDrawer}
-              onClose={() => {
-                setShowDrawer(false);
-              }}
-              title="Filters"
-            >
-              <React.Fragment key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Manager</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "David miller",
-                        "Amila Clark",
-                        "Maria sanaid",
-                        "Mino Marino",
-                        "All"
-                      ]}
-                      setValue={() => { updateManager(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.manager}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Status</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Employed",
-                        "Completed",
-                        "Terminated",
-                        "All"
-                      ]}
-                      setValue={() => { updateStatus(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.status}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Department</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                        "All"
-                      ]}
-                      setValue={() => { updateDepartment(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.deparment}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>University</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Power source",
-                        "Dev spot",
-                        "Abacus",
-                        "Orcalo Holdings",
-                        "Coding Hub",
-                        "All"
-                      ]}
-                      setValue={() => { updateUniversity(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.university}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Joining Date</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Power source",
-                        "Dev spot",
-                        "Abacus",
-                        "Orcalo Holdings",
-                        "Coding Hub",
-                        "All"
-                      ]}
-                      setValue={() => { updateDateOfJoining(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.dateOfJoining}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      type="default"
-                      size="middle"
-                      className="button-default-tertiary"
-                      onClick={() => { }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      type="primary"
-                      size="middle"
-                      className="button-tertiary"
-                      onClick={() => { }}
-                    >
-                      Apply
-                    </Button>
-                  </div>
+      <Row gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar
+            handleChange={changeHandler}
+            name="search"
+            placeholder="Search by name"
+          />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
+          <FiltersButton label="Filters"
+            onClick={() => { setShowDrawer(true) }} />
+          <Drawer
+            closable
+            open={showDrawer}
+            onClose={() => {
+              setShowDrawer(false);
+            }}
+            title="Filters"
+          >
+            <>
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
+                  <label>Manager</label>
+                  <Select
+                    className='my-select'
+                    placeholder="Select"
+                    value={state.manager}
+                    onChange={(event: any) => { updateManager(event) }}
+                    options={managerList}
+                  />
                 </div>
-              </React.Fragment>
-            </Drawer>
-            <div className="flex justify-between gap-4">
-              <ToggleButton
-                isToggle={listandgrid}
-                onTogglerClick={() => { setListandgrid(!listandgrid) }}
-                FirstIcon={CardViewIcon}
-                LastIcon={TableViewIcon}
-                className='w-[88px]'
-              />
-              <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => {
-                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-                }}
-                value=""
-              />
-            </div>
-          </Col>
-          <Col xs={24}>
-            <p className="font-semibold pb-4">Total Interns: 40</p>
-            {
-              listandgrid ? <BoxWrapper>
-                <GlobalTable columns={columns} tableData={newTableData} />
-                </BoxWrapper> : <div className="flex flex-row flex-wrap max-sm:flex-col">
+                <div className="flex flex-col gap-2">
+                  <label>Status</label>
+                  <Select
+                    className='my-select'
+                    placeholder="Select"
+                    value={state.status}
+                    onChange={(event: any) => { updateStatus(event) }}
+                    options={statusList}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label>Department</label>
+                  <Select
+                    className='my-select'
+                    placeholder="Select"
+                    value={state.department}
+                    onChange={(event: any) => { updateDepartment(event) }}
+                    options={departmentsList}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label>University</label>
+                  <Select
+                    className='my-select'
+                    placeholder="Select"
+                    value={state.university}
+                    onChange={(event: any) => { updateUniversity(event) }}
+                    options={universityList}
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label>Joining Date</label>
+                  <DropDown
+                    name="status"
+                    options={[
+                      "Power source",
+                      "Dev spot",
+                      "Abacus",
+                      "Orcalo Holdings",
+                      "Coding Hub",
+                      "All"
+                    ]}
+                    setValue={(event: any) => { updateDateOfJoining(event) }}
+                    value={state.dateOfJoining}
+                  />
+                </div>
+                <div className="flex flex-row gap-3 justify-end">
+                  <Button
+                    type="default"
+                    size="middle"
+                    className="button-default-tertiary"
+                    onClick={handleResetFilter}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    type="primary"
+                    size="middle"
+                    className="button-tertiary"
+                    onClick={handleApplyFilter}
+                  >
+                    Apply
+                  </Button>
+                </div>
+              </div>
+            </>
+          </Drawer>
+          <div className="flex justify-between gap-4">
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns")
+              }}
+            />
+          </div>
+        </Col>
+        <Col xs={24}>
+          <p className="font-semibold pb-4">Total Interns:
+            {newTableData.length < 10 ? `0${newTableData.length}` : newTableData.length}
+          </p>
+          {isLoading ?
+            listandgrid ? <BoxWrapper>
+              <GlobalTable columns={columns} tableData={newTableData} />
+            </BoxWrapper> :
+              <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
-                  newTableData.map((items: any, idx: any) => {
+                  newTableData?.map((item: any,) => {
                     return (
                       <InternsCard
                         pupover={<PopOver />}
-                        statusBtn={items.status}
-                        name={items.name}
-                        posted_by={items.posted_by}
-                        title={items.title}
-                        department={items.department}
-                        joining_date={items.joining_date}
-                        date_of_birth={items.date_of_birth}
+                        status={item.status}
+                        name={item.name}
+                        posted_by={item.posted_by}
+                        title={item.title}
+                        department={item.department}
+                        joining_date={item.joining_date}
+                        date_of_birth={item.date_of_birth}
                       />
                     )
                   })
                 }
               </div>
 
-            }
-          </Col>
-        </Row>
-      {/* </div> */}
+            : <Spin tip="Processing...." />}
+        </Col>
+      </Row>
+
       <PopUpModal
         open={assignManager}
         width={600}

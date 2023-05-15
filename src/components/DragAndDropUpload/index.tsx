@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { DocumentUpload } from '../../assets/images'
 import SelectedUploadCard from '../SelectedUploadCard'
 import './style.scss'
@@ -12,20 +12,21 @@ export const DragAndDropUpload = () => {
   }
   const handleDropped = (event: any) => {
     event.preventDefault()
-    setFiles(Array.from(event.dataTransfer.files))
-    console.log("Dropped")
+    setFiles(Array.from(event.dataTransfer.files[0]))
   }
+  console.log(files);
+  
   return (
     <>
       <div onDragOver={handleDragOver} onDrop={handleDropped}
-        className="flex flex-col  justify-center gap-4 content-center items-center  drag-drop-upload-style">
+        className="flex flex-col  justify-center gap-4 content-center items-center  drag-drop-upload-style text-input-bg-color py-16">
         <div className='self-center '>
           <DocumentUpload />
         </div>
         <div className='self-center'>
-          <p className='text-center text-lg'>Drag & Drop files or <span className="red-graph-tooltip-color cursor-pointer"
+          <p className='text-center text-lg font-medium dashboard-primary-color'>Drag & Drop files or <span className="red-graph-tooltip-color cursor-pointer"
             onClick={() => { inputRef.current.click() }}>Browse</span></p>
-          <p className="text-sm text-center">Supported jpeg, pdf oc doc files</p>
+          <p className="text-sm text-center font-normal text-success-placeholder-color">Support jpeg,pdf and doc files</p>
           <input type="file" ref={inputRef} multiple hidden
             onChange={(event: any) => { setFiles(Array.from(event.target.files)) }} />
         </div>

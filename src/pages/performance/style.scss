@@ -289,6 +289,14 @@
   }
 }
 
+.signature-modal .ant-modal .ant-modal-header {
+  margin-bottom: 0px !important;
+}
+.ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-btn span {
+    color: $text-primary-title-color !important;
+    font-weight: 400 !important;
+}
+
 // Detail History
 .company-admin-detail-history-container {
   .evaluate-btn {
