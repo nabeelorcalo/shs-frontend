@@ -17,13 +17,13 @@ const NewPasswordModal = (props: any) => {
     postDigivaultPassword(values);
     values()
   };
-  const onChange = (checked: boolean) => {
-    setIsModal(checked && true);
-    setIsEnablePassword(checked)
-  }
+  // const onChange = (checked: boolean) => {
+  //   setIsModal(checked && true);
+  //   setIsEnablePassword(checked)
+  // }
   return (
     <div>
-      <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} />
+      {/* <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} /> */}
       <Modal
         open={isModal}
         onCancel={() => setIsModal(false)}

@@ -2,15 +2,15 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Form, Input, Switch } from "antd";
 import "./styles.scss";
 const UnlockVault = (props: any) => {
-    const { unlockVaultModal, setUnlockVaultModal } = props
+    const { isModal, setIsModal, settingModal, setIsEnablePassword } = props
     const onFinish = (values: any) => {
     };
     return (
         <div>
-            <Switch />
             <Modal
-                open={unlockVaultModal}
-                onCancel={() => setUnlockVaultModal(false)}
+                open={isModal}
+                onCancel={() => setIsModal(false)}
+                centered
                 width={500}
                 closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
                 footer={false}
@@ -42,7 +42,7 @@ const UnlockVault = (props: any) => {
                         <Button
 
                             htmlType="submit"
-                            onClick={() => { setUnlockVaultModal(false) }}
+                            onClick={() => setIsModal(false)}
                             className=" w-full create-passwor-btn primary-bg-color  min-w-full"
                         >
                             Continue
