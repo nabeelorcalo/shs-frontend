@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
-import {
-  DropDown, SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound
-} from '../../../components'
+import { SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
+  BoxWrapper, NoDataFound} from '../../../components'
 import Drawer from '../../../components/Drawer'
 import { Button, Col, Row, Spin, Select } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
@@ -28,6 +26,9 @@ const InternshipsCompanyAdmin = () => {
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
+
+  console.log('intership data is ', internshipData);
+  
 
   const handleDrawer = () => {
     setState((prevState) => ({
@@ -139,9 +140,9 @@ const InternshipsCompanyAdmin = () => {
         </Row>
         {isLoading ? <div className='flex flex-col gap-7'>
           {internshipData.length !== 0 ?
-            internshipData?.map((item: any, idx: any) => {
+            internshipData?.map((item: any, index: any) => {
               return (
-                <BoxWrapper key={idx} boxShadow>
+                <BoxWrapper key={index} boxShadow>
                   <InternshipProgressCard
                     item={item}
                     title={item.title}
@@ -150,7 +151,7 @@ const InternshipsCompanyAdmin = () => {
                     internType={item.internType}
                     postedBy={item.postedBy}
                     locationType={item.locationType}
-                    location={item.location.name}
+                    location={item?.location?.name}
                     createdAt={item.createdAt}
                     closingDate={item.closingDate}
                     interns={item.interns}
