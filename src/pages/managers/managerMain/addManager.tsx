@@ -19,6 +19,8 @@ import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { settingDepartmentState } from "../../../store";
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from 'react-phone-input-2';
 
 const AddManager = () => {
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ const AddManager = () => {
   }, []);
 
   const handleChange = (value: string) => {
-    console.log("id" , value);
+    console.log("id", value);
   };
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -158,17 +160,16 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item label="Phone Number" name="phoneNumber">
-                <Input.Group compact>
-                  <Select defaultValue="+92" style={{ width: "25%" }}>
-                    <Option value="+92">+92</Option>
-                    <Option value="+91">+91</Option>
-                  </Select>
-                  <AutoComplete
-                    style={{ width: "75%" }}
-                    placeholder="Phone Number"
-                  />
-                </Input.Group>
+              <Form.Item
+                name="phone"
+                label="Phone Number">
+                <PhoneInput
+                  country={'pk'}
+                  placeholder="Enter phone number"
+                  value={value}
+                  onChange={() => setValue}
+                  inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -196,7 +197,7 @@ const AddManager = () => {
               <Form.Item
                 label="Department"
                 name="department"
-                // rules={[{ type: "object" }, { required: false }]}
+              // rules={[{ type: "object" }, { required: false }]}
               >
                 <Select placeholder="Select" defaultValue="" onChange={handleChange}>
                   {departmentIds.map((item: any) => {
