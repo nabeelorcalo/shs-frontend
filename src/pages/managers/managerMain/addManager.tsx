@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -15,8 +15,10 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
-import constants from '../../../config/constants';
+import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { settingDepartmentState } from "../../../store";
 
 const AddManager = () => {
   const navigate = useNavigate();
@@ -24,9 +26,36 @@ const AddManager = () => {
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
 
+  const departmentData = useRecoilState<any>(settingDepartmentState);
+  console.log(departmentData, "for checking id");
+
+  const departmentIds = departmentData[0].map((department: any) => {
+    return { name: department.name, id: department.id };
+  });
+
+  console.log(departmentIds, "department");
+  useEffect(() => {
+    action.getSettingDepartment(1, "");
+  }, []);
+
+  const handleChange = (value: string) => {
+    console.log("id" , value);
+  };
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    const { firstname, lastname, gender, email, phoneNumber, title, department, postCode, address, city,country } = values;
+    const {
+      firstname,
+      lastname,
+      gender,
+      email,
+      phoneNumber,
+      title,
+      value,
+      postCode,
+      address,
+      city,
+      country,
+    } = values;
 
     action.addManagerCompany({
       firstName: firstname,
@@ -35,12 +64,12 @@ const AddManager = () => {
       email: email,
       phoneNumber: phoneNumber,
       title: title,
-      departmentId: department,
+      departmentId: value,
       postCode: postCode,
       address: address,
       city: city,
-      country: country
-    })
+      country: country,
+    });
   };
 
   return (
@@ -166,15 +195,14 @@ const AddManager = () => {
               </Form.Item>
               <Form.Item
                 label="Department"
-                name='department'
-                rules={[{ type: "string" }, { required: false }]}
+                name="department"
+                // rules={[{ type: "object" }, { required: false }]}
               >
-                <DropDown
-                  name="Select"
-                  value={value}
-                  options={constants.OPTIONS_DEPARTMENTS}
-                  setValue={setValue}
-                />
+                <Select placeholder="Select" defaultValue="" onChange={handleChange}>
+                  {departmentIds.map((item: any) => {
+                    return <Option value={item.id}>{item.name}</Option>;
+                  })}
+                </Select>
               </Form.Item>
             </Col>
           </Row>
@@ -192,7 +220,8 @@ const AddManager = () => {
               <Form.Item
                 label="Post Code"
                 name="postCode"
-                rules={[{ type: "string" }, { required: false }]}>
+                rules={[{ type: "string" }, { required: false }]}
+              >
                 <DropDown
                   name="Enter Post Code"
                   value={value}
@@ -239,8 +268,11 @@ const AddManager = () => {
           </Row>
           <Form.Item className="flex justify-center sm:justify-end items-center">
             <Button
-              onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`) }}
-              className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
+              onClick={() => {
+                navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+              }}
+              className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5"
+            >
               Cancel
             </Button>
             <Button

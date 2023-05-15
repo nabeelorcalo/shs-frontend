@@ -4,22 +4,26 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import apiEndPoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import {
-  addManagerDetail,
-  getManagerDetail,
+  addManagerDetailState,
+  getManagerDetailState,
 } from "../../store/managerCompanyAdmin";
 import { useNavigate } from "react-router-dom";
 import { Notifications } from "../../components";
+import { settingDepartmentState } from "../../store";
 
 const useCustomHook = () => {
   const navigate = useNavigate();
   // change name of state remeber
-  const [currentManager, setCurrentManager] = useRecoilState(addManagerDetail);
-  const [getCurentManager, setGetManager] = useRecoilState(getManagerDetail);
+  const [currentManager, setCurrentManager] = useRecoilState(addManagerDetailState);
+  const [getCurentManager, setGetManager] = useRecoilState(getManagerDetailState);
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState)  
+  const limit = 50
 
-  const { MANAGER_COMPANY_ADMIN, GET_MANAGER_COMPANY_ADMIN } = apiEndPoints;
+  const { MANAGER_COMPANY_ADMIN, GET_MANAGER_COMPANY_ADMIN,SETTING_DAPARTMENT } = apiEndPoints;
   const addManagerCompany = async (body: any): Promise<any> => {
     const { data } = await api.post(MANAGER_COMPANY_ADMIN, body);
     if (!data.error) {
+      setCurrentManager(data.user);
       Notifications({
         title: "Success",
         description: "Data Is Submit",
@@ -27,21 +31,26 @@ const useCustomHook = () => {
       });
       navigate(`/${ROUTES_CONSTANTS.MANAGERS}`);
     }
-    setCurrentManager(data.user);
     return data;
   };
 
-  const getManagerCompanyAdmin = async () => {
-    const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN);
+  const getManagerCompanyAdmin = async (page:any) => {
+    const param = { page: page, limit: limit ,currentDate:"2023-05-12T03:17:15Z" , filterType:"THIS_MONTH" }
+    const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN , param);
     setGetManager(data);
   };
-  useEffect(() => {
-    getManagerCompanyAdmin();
-  }, []);
 
+  const getSettingDepartment = async (page: any, q: any): Promise<any> => {
+    const param = { page: page, limit: limit, q: q }
+    const { data } = await api.get(SETTING_DAPARTMENT, param);
+    setSettingDepartmentdata(data)
+  };
+ 
   return {
     addManagerCompany,
-    getCurentManager,
+    getManagerCompanyAdmin,
+    getSettingDepartment
+    
   };
 };
 

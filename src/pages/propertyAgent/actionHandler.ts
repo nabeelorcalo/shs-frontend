@@ -15,22 +15,22 @@ const useCustomHook = () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
     setPropertListingData(data);
   }
-    useEffect(() => {
-      propertgetlistingstata();
-    }, [])
+    // useEffect(() => {
+    //   propertgetlistingstata();
+    // }, [])
   
   // propertagents
   const propertGetTotalAgents= async () => {
     const { data } = await api.get(PROPERTY_Get_TOTAL_AGENTS );
     setTotalData(data);
   }
-    useEffect(() => {
-      propertGetTotalAgents();
-    }, [])
+    // useEffect(() => {
+    //   propertGetTotalAgents();
+    // }, [])
   
   return {
-    propertListingData,
-    totalData,
+    propertgetlistingstata,
+    propertGetTotalAgents,
   };
 };
 

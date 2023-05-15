@@ -10,6 +10,7 @@ export const cardDelegate = [
     bgColor: "#4CA4FD1A",
     cardTitle: 'Total Agents',
     cardNumber: "10",
+    toolTip:true,
     toolTipData: [
       {
         label: "Total Universities ",
@@ -40,6 +41,7 @@ export const cardDelegate = [
     bgColor: "#E96F7C1A",
     cardTitle: 'In-app Agents',
     cardNumber: "02",
+    toolTip:true,
     toolTipData: [
       {
         label: "Total Universities ",
@@ -67,6 +69,7 @@ export const cardDelegate = [
     bgColor: "#FDC8711A",
     cardTitle: 'Distributed Rewards',
     cardNumber: "01",
+    toolTip:true,
     toolTipData: [
       {
         label: "Total Universities ",
@@ -97,6 +100,7 @@ export const cardDelegate = [
     bgColor: "#3DC5751A",
     cardTitle: 'Standalone Agents',
     cardNumber: "07",
+    toolTip:false,
     toolTipData: [
       {
         label: "Total Universities ",

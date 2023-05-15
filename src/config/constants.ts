@@ -29,11 +29,8 @@ export default {
   },
   OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration","Project Management"],
   OPTIONS_COUNTRIES: ["England", "Scotland", "Wales", "Ireland"],
-  OPTIONS_GENDER: ["Male", "Female", "others"],
-  
+  OPTIONS_GENDER: ["Male", 'Female', 'others'],
 };
-
-
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
@@ -6,24 +6,31 @@ import { activityData, graphData, innerCard } from "./DashboardMock";
 import useCustomHook from "../../actionHandler";
 import { Approved, Clip, Pending, People, Reject } from "../../../../assets/images"; 
 import "../../style.scss";
+import { useRecoilState } from "recoil";
+import { getListingState,getPropertAgents } from "../../../../store/getListingState";
 
 const MainDashboard = () => {
   const nivagate = useNavigate();
+  const action = useCustomHook();
+  const propertyData = useRecoilState<any>(getListingState);
+  const totalAgent = useRecoilState<any>(getPropertAgents);
 
   // property listing
-  const propertListingData = useCustomHook();
-  const propertyData = propertListingData.propertListingData;
+   useEffect(() => {
+      action.propertgetlistingstata();
+    }, [])
 
   // propertagents
-  const totalData = useCustomHook();
-  const totalAgent = totalData.totalData;
+  useEffect(() => {
+    action.propertGetTotalAgents();
+  }, [])
 
   return (
     <div className="main-dashboard">
       <div style={{ overflowX: "scroll", cursor: "pointer" }}>
         <div className="flex items-center gap-3" >
           <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
-            {totalAgent.map((item:any, index) => {
+            {totalAgent[0]?.map((item:any, index:any) => {
               return (
                 <div className="card-main w-[100%] md:w-[350px]">
               <div className=" flex items-center p-2">
@@ -58,7 +65,7 @@ const MainDashboard = () => {
             </div>    
               )
             })}
-            {propertyData?.map((item: any, index) => {
+            {propertyData[0]?.map((item: any, index:any) => {
               return (
                 <>
                   <div className="card-main w-[100%] md:w-[350px]">

@@ -7,7 +7,6 @@ import apiEndpoints from "../../config/apiEndpoints";
 import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
 
-
 // Auth operation and save into store
 const useCustomHook = () => {
 const navigate = useNavigate();

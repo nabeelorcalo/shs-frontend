@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { EllipsisOutlined, MoreOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
 import { GlobalTable } from "../../../components";
 import { Pf } from "../../../assets/images";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
 
 const tableData = [
   {
@@ -89,33 +92,59 @@ const tableData = [
 ];
 
 const ManagerInfoTable = () => {
+  const action = useCustomHook();
+  const managerCardData = useRecoilState<any>(getManagerDetailState);
+  console.log(managerCardData,'managerCardData');
+
+  useEffect(() => {
+    action.getManagerCompanyAdmin(1)
+  }, [])
   const columns = [
-    {
-      dataIndex: "no",
+    {dataIndex: "No",
+      render: (_: any, data: any) => (
+        <div>
+          {data.managerId}
+        </div>
+      ),
       key: "no",
       title: "No",
     },
     {
       dataIndex: "img",
+      render: (_: any, data: any) => (
+        <div >
+          <img src= {`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} alt="userImage"  style={{width:"45px"}}/>
+        </div>
+      ),
       key: "img",
       title: "Avatar",
     },
 
     {
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "Name",
+      render: (_: any, data: any) => (
+        <div>
+          {data.companyManager.firstName}   {data.companyManager.lastName}
+        </div>
+      ),
+      key: "firstName",
       title: "Name",
     },
 
     {
       dataIndex: "desgination",
+      render: (_: any, data: any) => (
+        <div>
+          {data.title}   
+        </div>
+      ),
       key: "desgination",
       title: "Desgination",
     },
 
     {
-      dataIndex: "noOfInterns",
-      key: "noOfInterns",
+      dataIndex: "assignedInterns",
+      key: "assignedInterns",
       title: "Assigned Interns",
     },
 
@@ -126,17 +155,17 @@ const ManagerInfoTable = () => {
           className="table-status-style text-center rounded white-color"
           style={{
             backgroundColor:
-              data.status === "Pending"
+              data.department?.status=== "Pending"
                 ? "#FFC15D"
-                : data.status === "Approved"
+                : data.department?.status === "ACTIVE"
                   ? "#3DC475"
-                  : data.status === "Rejected"
+                  : data.department?.status === "inACTIVE"
                     ? "#D83A52"
                     : "",
             padding: " 2px 3px 2px 3px",
           }}
         >
-          {data.status}
+          {data.department?.status}
         </div>
       ),
       key: "status",
@@ -162,7 +191,7 @@ const ManagerInfoTable = () => {
   return (
     <div className="manager-info-table">
       <div className="card-style p-2">
-        <GlobalTable tableData={tableData} columns={columns} />
+        <GlobalTable tableData={managerCardData[0]} columns={columns} />
       </div>
     </div>
   );
