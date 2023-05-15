@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { PageHeader, BoxWrapper, Breadcrumb } from '../../components';
 import { Button } from 'antd';
 import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
 import './style.scss';
@@ -17,6 +17,7 @@ const tempArray = [
 
 const ViewInternshipDetails = () => {
   const navigate = useNavigate()
+  const {state} = useLocation()
   const [searchParams] = useSearchParams();
   const internshipStatus = searchParams.get('status')
   const {getInternshipDetails,internshipDetails} : any = useCustomHook()
@@ -24,7 +25,9 @@ const ViewInternshipDetails = () => {
   useEffect(() => {
     getInternshipDetails()
   }, [])
-  
+
+  console.log('intern details are',state.data);
+
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
@@ -35,8 +38,7 @@ const ViewInternshipDetails = () => {
               <h2 className='dashboard-primary-color text-3xl font-medium'>
                 {internshipDetails.title}
                 <span className='pl-4 cursor-pointer'
-                  onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-                >
+                onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,{ state:state.data})}}>
                   <EditIcon />
                 </span>
               </h2>

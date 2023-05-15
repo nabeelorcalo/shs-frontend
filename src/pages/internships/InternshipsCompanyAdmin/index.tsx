@@ -18,6 +18,14 @@ const InternshipsCompanyAdmin = () => {
     department: undefined
   });
 
+  const statusArr =[
+    {value:"PUBLISHED",label:"Published"},
+    {value:"REJECTED",label:"Rejected"},
+    {value:"CLOSED",label:"Closed"},
+    {value:"PENDING",label:"Pending"},
+    {value:"DRAFT",label:"Draft"},
+  ]
+
   const { getAllInternshipsData, internshipData, changeHandler, isLoading,
     getAllDepartmentData, getAllLocationsData, departmentsData, locationsData }: any = useCustomHook();
 
@@ -87,10 +95,8 @@ const InternshipsCompanyAdmin = () => {
                     <Select
                       placeholder="Select"
                       value={state.status}
-                      onChange={(event: any) => {  handleStatus(event) }}
-                      options={internshipData?.map((item: any) => {
-                        return { value: item?.status, label: item?.status }
-                      })}
+                      onChange={(event: any) => {handleStatus(event) }}
+                      options={statusArr}
                     />
                   </div>
                   <div className="flex flex-col gap-2">

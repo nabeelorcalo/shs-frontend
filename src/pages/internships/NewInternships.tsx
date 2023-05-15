@@ -54,6 +54,7 @@ const NewInternships = () => {
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
   const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
+ 
   const typeOfWork = {
     partTime: "PART_TIME",
     fullTime: "FULL_TIME"
@@ -101,7 +102,6 @@ const NewInternships = () => {
       amount:amount.amount,
       salaryAmount:amount.amountType
     }
-    console.log('Success:', values);
     if (internShipFormData) {
       EditNewInternshipsData(newVals)
     } else {

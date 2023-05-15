@@ -18,12 +18,13 @@ const useCustomHook = () => {
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+  const { state } = useLocation();
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
-    SETTING_DAPARTMENT, SETTING_LOCATION, GET_ALL_INTERNS } = apiEndpints
-  const { state } = useLocation();
+    SETTING_DAPARTMENT, SETTING_LOCATION, GET_ALL_INTERNS } = apiEndpints;
+    
 
   useEffect(() => {
     debouncedResults.cancel();
@@ -32,7 +33,7 @@ const useCustomHook = () => {
   //Get all internship data
   const getAllInternshipsData = async (status: any, location: any, department: any,) => {
     const params = {
-      limit: 10,
+      limit: 100,
       page: 1,
       status: status ? status : undefined,
       locationId: location ? location : undefined,
@@ -123,7 +124,6 @@ const useCustomHook = () => {
       "status": status,
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id}`, internshipData);
-    console.log("edit data", state);
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     Notifications({ title: "Success", description: "Internship edited successfully", type: "success" })
   };

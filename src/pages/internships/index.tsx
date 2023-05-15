@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
-  DropDown, SearchBar, GlobalTable, PageHeader,
+  SearchBar, GlobalTable, PageHeader,
   BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
@@ -213,7 +213,6 @@ const Internships = () => {
                 <div className="flex flex-col gap-2">
                   <label>Location</label>
                   <Select
-                    className='my-select'
                     placeholder="Select"
                     value={state.location}
                     onChange={(event: any) => { updateLocation(event) }}
@@ -225,20 +224,19 @@ const Internships = () => {
                 <div className="flex flex-col gap-2">
                   <label>Department</label>
                   <Select
-                      className='my-select'
-                      placeholder="Select"
-                      value={state.department}
-                      onChange={(event: any) => { updateDepartment(event)  }}
-                      options={departmentsData?.map((item: any) => {
-                        return { value: item?.id, label: item?.name }
-                      })}
-                    />
+                    placeholder="Select"
+                    value={state.department}
+                    onChange={(event: any) => { updateDepartment(event) }}
+                    options={departmentsData?.map((item: any) => {
+                      return { value: item?.id, label: item?.name }
+                    })}
+                  />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button type="default" size="middle" className="button-default-tertiary" 
-                   onClick={handleResetFilter}>Reset</Button>
-                  <Button type="primary" size="middle" className="button-tertiary" 
-                 onClick={handleApplyFilter}>Apply</Button>
+                  <Button type="default" size="middle" className="button-default-tertiary"
+                    onClick={handleResetFilter}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary"
+                    onClick={handleApplyFilter}>Apply</Button>
                 </div>
               </div>
             </React.Fragment>
