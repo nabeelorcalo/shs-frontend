@@ -72,7 +72,6 @@ const NewInternships = () => {
     getAllLocationsData
   }, [])
 
-
   const tempArray = [
     { name: "New Internship" },
     {

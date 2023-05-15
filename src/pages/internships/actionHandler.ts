@@ -19,6 +19,8 @@ const useCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { state } = useLocation();
+
+  
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
@@ -131,13 +133,13 @@ const useCustomHook = () => {
   //Duplicate internship
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
-    console.log("dublicated intership is", val);
     getAllInternshipsData(null, null, null)
     Notifications({ title: "Success", description: "Duplicate successfully", type: "success" })
   }
 
   const getInternshipDetails = async () => {
-    const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state });
+    const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id });
+
     setInternshipDetails(data)
   };
 

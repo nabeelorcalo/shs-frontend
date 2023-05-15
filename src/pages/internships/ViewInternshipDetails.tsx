@@ -26,8 +26,6 @@ const ViewInternshipDetails = () => {
     getInternshipDetails()
   }, [])
 
-  console.log('intern details are',state.data);
-
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

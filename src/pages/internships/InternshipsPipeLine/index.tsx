@@ -7,7 +7,7 @@ import {
 } from '../../../assets/images';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import { Select, Avatar, Spin } from 'antd'
+import { Select, Avatar, Spin, Row, Col } from 'antd'
 import { UserOutlined } from '@ant-design/icons';
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -67,7 +67,6 @@ const InternshipPipeLine = () => {
     getInternshipDetails()
     getAllInternsData()
   }, [])
-
 
   const myStatus = [
     { label: 'Published', value: 'Published', icon: SuccessStatus },
@@ -132,11 +131,12 @@ const InternshipPipeLine = () => {
             Total Candidate: {getAllInterns.length < 10 ? `0${getAllInterns.length}` : getAllInterns.length}
           </div>
         </div>
-        <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
+        {/* <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0"> */}
+        <Row gutter={[20,20]}>
           {isLoading ?
             getAllInterns.map((items: any, index: any) => {
               return (
-                <div className="flex flex-col p-2 ">
+                <Col xl={5} lg={8} md={12} xs={24} className="">
                   <div key={index} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
                       <div className={`h-5 w-5 rounded ${items.className}`}></div>
@@ -165,7 +165,7 @@ const InternshipPipeLine = () => {
                             <InternshipPipeLineCard
                               key={index}
                               name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
-                              // rating={items.rating}
+                              rating={items.rating}
                               time={`${daysAgo} days ago`}
                               status={items.sage}
                               img={<Avatar size={'small'} icon={<UserOutlined />} />}
@@ -175,13 +175,14 @@ const InternshipPipeLine = () => {
                       })
                     }
                   </div>
-                </div>
+                </Col>
               )
             })
             : <Spin tip="Processing...." />}
-
-        </div>
+        </Row>
       </div>
+      {/* </div> */}
+
     </>
   )
 }

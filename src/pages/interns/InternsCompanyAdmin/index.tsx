@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound
 } from "../../../components";
 import { TextArea } from "../../../components";
 import { AlertIcon, CardViewIcon, More, SuccessIcon, TableViewIcon, } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select } from 'antd';
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
+import SelectComp from "../../../components/Select/Select";
 
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
@@ -174,7 +175,7 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
-  const newTableData = getAllInters.map((item: any, index: any) => {
+  const newTableData: any = getAllInters.map((item: any, index: any) => {
     const joiningDate = dayjs(item.joiningDate).format('DD/MM/YYYY');
     const dob = dayjs(item.userDetail?.DOB).format('DD/MM/YYYY');
     return (
@@ -268,36 +269,36 @@ const InternsCompanyAdmin = () => {
             <>
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
-                  <label>Manager</label>
-                  <Select
-                    placeholder="Select"
+                  <SelectComp
+                    label="Manager"
+                    placeholder='Select'
                     value={state.manager}
                     onChange={(event: any) => { updateManager(event) }}
                     options={managerList}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label>Status</label>
-                  <Select
-                    placeholder="Select"
+                  <SelectComp
+                    label="Status"
+                    placeholder='Select'
                     value={state.status}
                     onChange={(event: any) => { updateStatus(event) }}
                     options={statusList}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label>Department</label>
-                  <Select
-                    placeholder="Select"
+                  <SelectComp
+                    label="Department"
+                    placeholder='Select'
                     value={state.department}
                     onChange={(event: any) => { updateDepartment(event) }}
                     options={departmentsList}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label>University</label>
-                  <Select
-                    placeholder="Select"
+                  <SelectComp
+                    label="University"
+                    placeholder='Select'
                     value={state.university}
                     onChange={(event: any) => { updateUniversity(event) }}
                     options={universityList}
@@ -365,27 +366,29 @@ const InternsCompanyAdmin = () => {
             {newTableData.length < 10 ? `0${newTableData.length}` : newTableData.length}
           </p>
           {isLoading ?
-            listandgrid ? <BoxWrapper>
-              <GlobalTable columns={columns} tableData={newTableData} />
-            </BoxWrapper> :
-              <div className="flex flex-row flex-wrap max-sm:flex-col">
-                {
-                  newTableData?.map((item: any,) => {
-                    return (
-                      <InternsCard
-                        pupover={<PopOver />}
-                        status={item.status}
-                        name={item.name}
-                        posted_by={item.posted_by}
-                        title={item.title}
-                        department={item.department}
-                        joining_date={item.joining_date}
-                        date_of_birth={item.date_of_birth}
-                      />
-                    )
-                  })
-                }
-              </div>
+            listandgrid ?
+              <BoxWrapper>
+                <GlobalTable columns={columns} tableData={newTableData} />
+              </BoxWrapper> :
+              newTableData.length === 0 ? <NoDataFound />
+                : <div className="flex flex-row flex-wrap max-sm:flex-col">
+                  {
+                    newTableData?.map((item: any,) => {
+                      return (
+                        <InternsCard
+                          pupover={<PopOver />}
+                          status={item.status}
+                          name={item.name}
+                          posted_by={item.posted_by}
+                          title={item.title}
+                          department={item.department}
+                          joining_date={item.joining_date}
+                          date_of_birth={item.date_of_birth}
+                        />
+                      )
+                    })
+                  }
+                </div>
 
             : <Spin tip="Processing...." />}
         </Col>

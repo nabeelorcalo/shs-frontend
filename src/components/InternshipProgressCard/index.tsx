@@ -41,7 +41,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '1',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
-            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, {state: {id:item.id,data:item}})
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, {state: {data:item}})
           }}>
             View details
           </a>
