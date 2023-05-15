@@ -35,7 +35,7 @@ const useCustomHook = () => {
   
   /* To Get Data For Leaev Status Cards 
    -------------------------------------------------------------------------------------*/
-
+ let currentDate = dayjs().format('YYYY-MM-')
   const getLeaveStateData = async () => {
     const response = await api.get(LEAVE_STATE, { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID })
     setLeaevState(response?.data)
@@ -65,8 +65,7 @@ const useCustomHook = () => {
  -------------------------------------------------------------------------------------*/
 
   const onLeaveFormValuesChange = async (singleValues: any, allValues: any) => {
-    // console.log(singleValues);
-    console.log(allValues.media, "allValues");
+    console.log(allValues, "allValues");
   }
   const onsubmitLeaveRequest = async (values: any) => {
     const initailVal: any = {
@@ -82,20 +81,20 @@ const useCustomHook = () => {
       media: values?.media
     }
     // const file = new File([/* file contents */], 'example.png', { type: 'image/png' });
-    const formData = new FormData();
+    // const formData = new FormData();
     // for (const key in initailVal) {
     //   formData.append(key, initailVal[key]);
     // }
-    formData.append('media', values?.media?.fileList);
+    // formData.append('media', values?.media?.fileList);
 
     // console.log("values from the form: ", initailVal);
-    const updatedVal = {
-      ...initailVal,
-      media: formData
+    // const updatedVal = {
+    //   ...initailVal,
+    //   media: formData
 
-    }
+    // }
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
-    const response: any = await api.post(CREATE_LEAVE, updatedVal, headerConfig);
+    const response: any = await api.post(CREATE_LEAVE, initailVal, headerConfig);
     console.log(response, "response Create Leave");
   }
   /*  Holiday Leave List
