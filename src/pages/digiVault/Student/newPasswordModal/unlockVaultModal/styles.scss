@@ -1,0 +1,21 @@
+.unlock-vault-password {
+  label {
+    color: #6E7191 !important;
+  }
+  .ant-input-affix-wrapper {
+    background-color: #E6F4F9 !important;
+    border: none !important;
+
+    input {
+      background-color: #E6F4F9 !important;
+    }
+
+    &:hover {
+      background-color: transparent !important;
+
+      input {
+        background-color: transparent !important;
+      }
+    }
+  }
+}

@@ -21,12 +21,8 @@ interface Prop {
 
 const DigivaultCard = (props: any) => {
   const { onClick, TitleImg, SubImg, title, subTitle, bgColor, index } = props;
-
   const [isHovering, setIsHovering] = useState<any>();
   const [currentHover, setCurrentHover] = useState("");
-  console.log(isHovering, "ishovering");
-  console.log(title, "title");
-
 
   const handleMouseOver = () => {
     setIsHovering(true);

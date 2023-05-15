@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
-import SettingModal from "./settingModal";
-import { GlobalTable } from "../../../components";
+import { Col, Divider, Progress, Row, Menu, Alert as Alerts } from "antd";
+import { GlobalTable, Notifications } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
-import NewPasswordModal from "./newPasswordModal";
 import {
   EducationImg,
   EducationImgSub,
@@ -18,12 +16,12 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  SettingIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "./dropDownCustom";
 import { Alert } from "../../../components";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
+import DigiVaultModals from "./Modals";
 
 const manageVaultArr = [
   {
@@ -108,24 +106,35 @@ const tableData = [
 ];
 
 const DigiVaultStudent = () => {
-  const [modal2Open, setModal2Open] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [newPass, setNewPass] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  const [state, setState] = useState({
+    isDeleteModal: false,
+    isEnablePassowrd: false
+  })
+  // const [showDelete, setShowDelete] = useState(false);
+  const [isEnablePassowrd, setIsEnablePassword] = useState(false);
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard()
+    getDigiVaultDashboard(isEnablePassowrd)
   }, [])
 
+  if (studentVault === undefined) {
+    Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
+  }
+  // if (studentVault === undefined) {
+  //   alert('hello')
+  // }
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
-          setShowDelete(!showDelete);
+          setState((prevState: any) => ({
+            ...prevState,
+            isDeleteModal: true
+          }))
         }}
       >
         Delete
@@ -164,20 +173,13 @@ const DigiVaultStudent = () => {
   return (
     <div className="digivault">
       <Alert
-        state={showDelete}
-        setState={setShowDelete}
+        state={state.isDeleteModal}
+        setState={setState}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
       />
-
-      <NewPasswordModal
-        newPass={newPass}
-        setNewPass={setNewPass}
-        setIsChecked={setIsChecked}
-      />
-      <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="digivault-title text-2xl font-semibold">
@@ -187,21 +189,7 @@ const DigiVaultStudent = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center">
-              <p className="pr-2 text-teriary-color">Lock</p>
-              <Switch
-                checked={isChecked}
-                onClick={() => {
-                  setNewPass(true);
-                }}
-              />
-            </div>
-            <Button onClick={() => setModal2Open(true)} className="setting-btn">
-              <span className="setting-btn-text font-normal text-sm">
-                Settings
-              </span>
-              <img src={SettingIcon} alt="settIcon" width={24} height={24} />
-            </Button>
+            <DigiVaultModals setIsEnablePassword={setIsEnablePassword} />
           </div>
         </Col>
       </Row>
@@ -214,14 +202,12 @@ const DigiVaultStudent = () => {
             </div>
             <Row gutter={[15, 15]} className="p-7">
               {manageVaultArr?.map((item: any, index: number) => {
-                {console.log(item,"items");}
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <p>{item.title}</p>
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path)}
+                      onClick={() => navigate(item.path, { state: item.title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.title}
@@ -237,7 +223,12 @@ const DigiVaultStudent = () => {
           <div className="storage">
             <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
               <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
-                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
+                <Progress
+                  strokeLinecap="butt"
+                  strokeWidth={10}
+                  gapPosition="left"
+                  type="circle"
+                  percent={75} />
               </Col>
               <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
                 <div className="available-storage pb-4">Available Storage</div>
@@ -245,7 +236,7 @@ const DigiVaultStudent = () => {
               </Col>
             </Row>
             <div className="pt-2">
-              <ColorfullIconsWithProgressbar />
+              <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>
         </Col>

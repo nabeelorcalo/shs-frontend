@@ -51,16 +51,13 @@ const useCustomHook = () => {
 
   //delete contracts
   const deleteContractHandler = async (val: any) => {
-    const { data } = await api.delete(`${DEL_CONTRACT}/${val}`);
-    if (data) {
-      getContractList(null, 'THIS_MONTH')
-      let query = Object.entries(val).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-      Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
-      setLoading(true)
-    }
+    await api.delete(`${DEL_CONTRACT}/${val}`);
+    setLoading(true)
+    getContractList(null, 'THIS_MONTH')
+    Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
   return {
-    getContractList, contractList, searchHandler, deleteContractHandler,loading
+    getContractList, contractList, searchHandler, deleteContractHandler, loading
   };
 };
 

@@ -1,4 +1,5 @@
 @import "../../../scss/colors";
+
 .intern-header-wrapper {
   .tertiory-btn {
     border: 1px solid $teriary-bg-color;
@@ -9,6 +10,7 @@
       color: $teriary-bg-color !important;
     }
   }
+
   .upload-button {
     &:hover {
       background-color: $teriary-bg-color;
@@ -17,13 +19,31 @@
       border: 1px solid $teriary-bg-color !important;
     }
   }
+
   .document-dropdown {
     height: 48px !important;
   }
 }
+
 .intern-cancel-btn {
   border: 1px solid $teriary-bg-color !important;
+
+  &:hover {
+    color: #4A9D77 !important;
+    opacity: 0.8;
+  }
 }
+
+.intern-upload-button {
+  border: none !important;
+
+  &:hover {
+    color: white !important;
+    opacity: 0.8;
+    transition: 0.3s;
+  }
+}
+
 .outline-color {
   padding: 5px 0px;
   border-radius: 6px;
