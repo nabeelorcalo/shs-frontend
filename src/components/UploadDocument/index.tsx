@@ -7,10 +7,10 @@ const UploadDocument = (props: any) => {
   const { height = 80 } = props
   const [files, setFiles] = useState([])
   const inputRef: any = useRef();
+  const [file, setFile] = useState(null);
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
-    console.log("drag over")
   }
 
   const handleDropped = (event: any) => {
@@ -23,28 +23,28 @@ const UploadDocument = (props: any) => {
     <>
       <div
         onDragOver={handleDragOver}
-        onDrop={handleDropped}
-        className={`flex flex-col items-stretch justify-center gap-4 content-center items-center drag-drop-upload-style h-${height}`}
+        // onDrop={handleDropped}
+        className={`flex flex-col justify-center gap-4 content-center items-center drag-drop-upload-style h-${height}`}
       >
         <div className='self-center '>
           <DocumentUpload />
         </div>
         <div className='self-center'>
           <p
-            className='text-center text-lg'
+            className='text-center primary-color  text-xl font-medium'
           >
-            Drag & Drop files or
+            Drag & drop files or
             <span
-              className="browse-text cursor-pointer pl-1"
+              className="text-xl font-medium secondary-color cursor-pointer pl-1"
               onClick={() => { inputRef.current.click() }}
             >
               Browse
             </span>
           </p>
           <p
-            className="text-sm text-center"
+            className="text-sm light-grey-color text-center"
           >
-            Supported jpeg, pdf oc doc files
+            Support jpeg,pdf and doc files
           </p>
           <input
             type="file"
