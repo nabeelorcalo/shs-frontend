@@ -17,9 +17,9 @@ const CandidateTable = (props: any) => {
     setOpenRejectModal,
     selectedCandidate,
     setSelectedCandidate,
+    hiringProcessList,
   } = actionHandler();
   const { tableData = [] } = props;
-  // tr
   const data = tableData?.map((item: any, index: number) => ({
     id: item?.id,
     no: index + 1,
@@ -37,7 +37,11 @@ const CandidateTable = (props: any) => {
       label: (
         <div>
           {ratingCount.map((obj, i) => (
-            <div key={obj.count} onClick={() => handleRating(obj.count)} className="flex items-center ratings ">
+            <div
+              key={obj.count}
+              onClick={() => handleRating(data[i]?.id, obj.count)}
+              className="flex items-center ratings "
+            >
               <p className="title font-semibold text-base capitalize w-[120px] mb-[15px] ">{obj.title}</p>
               {Array.from(Array(obj.count).keys()).map((num) => (
                 <StarFilledIcon key={num} className="icons mx-[2px] mb-[15px] " />
@@ -117,9 +121,9 @@ const CandidateTable = (props: any) => {
       title: "Stage",
       width: "220px",
       render: (_: any, data: any) => (
-        <div className="flex ">
+        <div className="flex candidate-table-wrapper">
           <div className="flex flex-col">
-            <p className="capitalize">{data.stage}</p>
+            <p className="capitalize ">{data.stage}</p>
             <div className="flex items-center justify-center rounded-full overflow-hidden mt-[10px]">
               {[1, 2, 3, 4, 5, 6].map((val) => (
                 <p key={val} className={`stage-apply ${data.stage}`}>

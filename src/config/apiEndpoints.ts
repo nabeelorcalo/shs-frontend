@@ -23,22 +23,25 @@ const endpoints = {
   DEL_CONTRACT: '/Contract/delete',
   STUDENT_INTRNE_SAWITCH: "auth/student-intern-switch",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
-  PROFILE_CHANGE_PASSWORD:"/auth/change-password",
+  PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   //candidates 
-  CANDIDATE_LIST:`/candidate/listCandidates`,
-  UPDATE_CANDIDATE_DETAIL:`/candidate/updateCandidateDetail`,
+  CANDIDATE_LIST: `/candidate/listCandidates`,
+  UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
-  POST_REST_DIGIVAULT:"/digivault/reset-vault-password",
-  GET_LIST_INTERNSHIP:'/internship/listInternships',
-  GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
-  DEL_INTERNSHIP:'/internship/deleteInternship',
-  DUPLICATE_INTERNSHIP:'/internship/duplicateInternship',
-  POST_NEW_INTERNSHIP:'/internship/createInternship',
-  EDIT_INTERNSHIP:'/internship/updateInternshipDetail',
+  POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
+  GET_LIST_INTERNSHIP: '/internship/listInternships',
+  GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',
+  DEL_INTERNSHIP: '/internship/deleteInternship',
+  DUPLICATE_INTERNSHIP: '/internship/duplicateInternship',
+  POST_NEW_INTERNSHIP: '/internship/createInternship',
+  EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
+  //comment
+  GET_COMMENTS: '/comment/getComments',
+  ADD_COMMENT:`/comment/addComment`,
   // End Point For Leaev Module For Intrne 
-  CREATE_LEAVE:"/Leaves/create",
-  GET_LEAEV_LIST:`/Leaves/list`,
+  CREATE_LEAVE: "/Leaves/create",
+  GET_LEAEV_LIST: `/Leaves/list`,
 
 }
 export default endpoints;

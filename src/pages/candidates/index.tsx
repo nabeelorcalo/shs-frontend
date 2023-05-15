@@ -17,13 +17,14 @@ const Candidates = () => {
     handleInternShipFilter,
     download,
     setDownload,
-    geInternShipList,
+    getInternShipList,
     internShipList,
   } = actionHandler();
+  console.log(internShipList);
 
   useEffect(() => {
     getCadidatesData(params);
-    geInternShipList()
+    getInternShipList();
   }, []);
 
   return (
@@ -42,18 +43,14 @@ const Candidates = () => {
             setValue={handleTimeFrameFilter}
             requireRangePicker
           />
-          
-          <Select
-            defaultValue="lucy"
-            style={{ width: 170 }}
-            options={internShipList}
-          />
 
-          <DropDown
-            name="Internship"
+          <Select
+            value={internship ? internship : "Internship"}
+            placeholder="Internship"
+            className="internship-filter"
+            style={{ width: 170 }}
+            onChange={handleInternShipFilter}
             options={internShipList}
-            value={internship}
-            setValue={handleInternShipFilter}
           />
           <DropDown options={["PDF", "Excel"]} requiredDownloadIcon value={download} setValue={setDownload} />
         </Col>

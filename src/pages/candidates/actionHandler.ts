@@ -6,7 +6,7 @@ import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP } = endpoints;
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -19,7 +19,14 @@ const useCustomHook = () => {
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
   const [selectedCandidate, setSelectedCandidate] = useState<any>({})
+  // internship list
   const [internShipList, setInternShipList] = useState<any>([])
+  //rating 
+  const [rating, setRating] = useState<number | string>(0);
+  // comments list
+  const [commentsList, setCommentsList] = useState<any>([])
+  // hiring process list
+  const [hiringProcessList, setHiringProcessList] = useState([""]);
   // filter states
   const [timeFrame, setTimeFrame] = useState("");
   const [internship, setInternship] = useState("");
@@ -86,32 +93,82 @@ const useCustomHook = () => {
         break;
     }
 
-  };
+  }
 
-  // intenShip type filter
+  // time frame
   const handleInternShipFilter = (value: string) => {
+    console.log(value);
+    if (value) {
+      params.internshipId = value
+    } else {
+      delete params.internshipId
+    }
+    getCadidatesData(params)
     setInternship(value)
   }
 
-  // internShip list
-  const geInternShipList = async () => {
-    await api.get(GET_LIST_INTERNSHIP, { companyId: 1 }).then(({ data }) => {
-      setInternShipList(data?.map(({ id, title }: any) => ({ id, title })))
-      console.log("datasssssssssssssssss", data)
-    })
-  }
   // funtion for update rating
-  const handleRating = (rating: string | number) => {
+  const handleRating = (id: string | number, rating: string | number) => {
     api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { rating }, { id }).then((res) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
       );
+      setRating(rating)
       Notifications({ title: "Rating", description: "Rating updated successfully" });
     });
   };
 
+  // internship List
+  const getInternShipList = async () => {
+    await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
+      setInternShipList(data?.map(({ id, title }: { id: string, title: string }) => ({ value: id, label: title })))
+    }
+    )
+  }
+
+  // get comments
+  const getComments = async (candidateId: number | string) => {
+    console.log(candidateId, "candidateId ");
+    candidateId && await api.get(GET_COMMENTS, { candidateId }).then(({ data }) => setCommentsList(data))
+  }
+
+  // create comment
+  const handleCreateComment = async (candidateId: string | number, comment: string) => {
+    comment ? await api.post(ADD_COMMENT, { candidateId, comment }).then(({ data }) =>
+      setCommentsList([...commentsList, data])) : Notifications({ title: "Error", description: "Comment con't empity", type: "error" })
+  }
+  // intial pipline array
+  const handleInitialPiple = (stage: string) => {
+    let hiringProcessList: string[] = []
+    switch (stage) {
+      case "applied":
+        return (hiringProcessList = ["applied"]);
+      case "interviewed":
+        return (hiringProcessList = ["applied", "interviewed"]);
+      case "recommended":
+        return (hiringProcessList = ["applied", "interviewed", "recommended"]);
+      case "offer letter":
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter"]);
+      case "contract":
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract"]);
+      case "hired":
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract", "hired"]);
+      default:
+        break;
+    }
+    return hiringProcessList
+  }
+
+  // funtion for update stage
+  const handleStage = (id: string | number, stage: string | number) => {
+    api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res) => {
+      setCadidatesList(
+        cadidatesList?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
+      );
+    });
+  };
   return {
-    cadidatesList, setCadidatesList, handleRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, setSelectedCandidate, geInternShipList, internShipList, params
+    cadidatesList, setCadidatesList, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, getComments, handleCreateComment, commentsList, handleInitialPiple, handleStage, params
   };
 };
 

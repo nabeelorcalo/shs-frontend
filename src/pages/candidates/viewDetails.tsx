@@ -1,25 +1,39 @@
-import { ReactNode } from 'react';
-import { Drawer, Row, Col } from 'antd';
-import DrawerTabs from './drawerTabs';
-import IndividualDetails from './individualDetails';
-import { DrawerWidth } from '../../components';
+import { ReactNode } from "react";
+import { Drawer, Row, Col } from "antd";
+import DrawerTabs from "./drawerTabs";
+import IndividualDetails from "./individualDetails";
+import { DrawerWidth } from "../../components";
 
 interface Props {
   open?: boolean;
   setOpen?: any;
   children?: ReactNode | ReactNode[];
-  selectedCandidate?: any,
+  selectedCandidate?: any;
   rest?: any;
 }
 
 const DetailDrawer = (props: Props) => {
-  const { open, setOpen, children, selectedCandidate, selectedCandidate: { userDetail, rating, stage, internship: { title, internType }, createdAt }, ...rest } = props;
+  const {
+    open,
+    setOpen,
+    children,
+    selectedCandidate,
+    selectedCandidate: {
+      id,
+      userDetail,
+      rating,
+      stage,
+      internship: { title, internType },
+      createdAt,
+    },
+    ...rest
+  } = props;
 
   const width = DrawerWidth();
   return (
     <Drawer
       width={width > 1400 ? 1283 : width > 900 ? 900 : width > 576 ? 600 : 300}
-      headerStyle={{ display: 'none' }}
+      headerStyle={{ display: "none" }}
       placement="right"
       onClose={() => setOpen(false)}
       open={open}
@@ -27,7 +41,15 @@ const DetailDrawer = (props: Props) => {
     >
       <Row>
         <Col xs={24} lg={6}>
-          <IndividualDetails userDetail={userDetail} rating={rating} stage={stage} internshipTitle={title} internType={internType} AplliedDate={createdAt} />
+          <IndividualDetails
+            id={id}
+            userDetail={userDetail}
+            rating={rating}
+            stage={stage}
+            internshipTitle={title}
+            internType={internType}
+            AplliedDate={createdAt}
+          />
         </Col>
         <Col xs={24} lg={18}>
           <DrawerTabs selectedCandidate={selectedCandidate} />

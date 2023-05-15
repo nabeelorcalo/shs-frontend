@@ -40,7 +40,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
         <HiringIcon />
         <p>Hiring Process</p>
       </div>,
-      children: <HiringProcess />,
+      children: <HiringProcess selectedCandidate={selectedCandidate} />,
     },
     {
       key: '4',
