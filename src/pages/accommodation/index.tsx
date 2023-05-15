@@ -5,11 +5,11 @@ import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } fro
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import { Form, Select, Slider, Space, DatePicker, Dropdown, Button } from 'antd'
+import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox } from 'antd'
 import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
-import useBookingRequests from './BookingRequests/actionHandler'
+import useBookingRequests from './BookingRequests/actionHandler';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { availablePropertiesState } from "../../store";
@@ -122,6 +122,7 @@ const Accommodation = () => {
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
+  const [filterParams, setFilterParams] = useState({});
   const [loading, setLoading] = useState(false)
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const items = [
@@ -201,15 +202,39 @@ const Accommodation = () => {
 
   const closeAvailablePropertyFilters = () => {
     setAvailablePropertyFiltersOpen(false)
+    resetFormFields()
   }
 
   function applyFilterAvailableProperties(fieldsValue: any) {
+    console.log('fieldsValue', fieldsValue)
+    let params:any = {}
+    if(fieldsValue.priceRange !== undefined) {
+      params.minPrice = fieldsValue.priceRange[0];
+      params.maxPrice = fieldsValue.priceRange[1];
+    }
+    if(fieldsValue.offer !== undefined) {
+      if(fieldsValue.offer.includes('Discounts')) {
+        params.discount = fieldsValue.offer.includes('Discounts')
+      }
+      if(fieldsValue.offer.includes('No Deposit')) {
+        params.depositRequired = fieldsValue.offer.includes('No Deposit')
+      }
+    }
+    if(fieldsValue.accomodationType !== undefined) {
+      params.propertyType = fieldsValue.accomodationType
+    }
+    console.log('param:::: ', params)
     const values = {
       ...fieldsValue,
       'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
       'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
     }
     console.log('Success:', values);
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+      }
+    })
   }
 
   const resetFormFields = () => {
@@ -448,7 +473,24 @@ const Accommodation = () => {
             layout="vertical"
             name="availablePropertiesFilters"
             onValuesChange={(_, values) => {
-              console.log('Filter Values:: ', values)
+              // console.log('Filter Values:: ', values)
+              // let params:any = {}
+              // if(values.priceRange !== undefined) {
+              //   params.minPrice = values.priceRange[0];
+              //   params.maxPrice = values.priceRange[1];
+              // }
+              // if(values.offer !== undefined) {
+              //   if(values.offer.includes('Discounts')) {
+              //     params.discount = values.offer
+              //   }
+              //   if(values.offer.includes('No Deposit')) {
+              //     params.depositRequired = values.hasSecurityDeposit
+              //   }
+              // }
+              // if(values.accomodationType !== undefined) {
+              //   params.propertyType = values.accomodationType
+              // }
+              // console.log('param:::: ', params)
             }}
             onFinish={applyFilterAvailableProperties}
           >
@@ -456,6 +498,7 @@ const Accommodation = () => {
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
                 <Slider
+                  range={true}
                   min={0}
                   max={1000}
                   marks={{
@@ -488,18 +531,17 @@ const Accommodation = () => {
               </Form.Item>
 
               <Form.Item name="offer" label="Offer">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="discounts">Discounts</Select.Option>
-                  <Select.Option value="noDeposit">No Deposit</Select.Option>
+                <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
+                  <Select.Option value="Discounts">Discounts</Select.Option>
+                  <Select.Option value="No Deposit">No Deposit</Select.Option>
                 </Select>
               </Form.Item>
 
               <Form.Item name="accomodationType" label="Accomodation Type">
                 <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="privateRoom">Private Room</Select.Option>
-                  <Select.Option value="sharedRoom">Shared Room</Select.Option>
-                  <Select.Option value="apartment">Apartment</Select.Option>
-                  <Select.Option value="studio">Studio</Select.Option>
+                  <Select.Option value="Entire Property">Entire Property</Select.Option>
+                  <Select.Option value="Studio">Studio</Select.Option>
+                  <Select.Option value="Rooms in shared property">Rooms in shared property</Select.Option>
                 </Select>
               </Form.Item>
 
@@ -514,7 +556,7 @@ const Accommodation = () => {
             </div>
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost onClick={resetFormFields}>
+                <ExtendedButton customType="tertiary" ghost onClick={() => closeAvailablePropertyFilters()}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">

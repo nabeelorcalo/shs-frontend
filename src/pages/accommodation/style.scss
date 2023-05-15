@@ -33,6 +33,21 @@
   }
 }
 
+.ant-select-dropdown.offer-filter {
+  .ant-select-item {
+    padding-left: 0;
+    padding-right: 0;
+
+    .ant-select-item-option-state {
+      margin-right: 20px;
+    }
+
+    &.ant-select-item-option-selected {
+      background-color: #fff;
+    }
+  }
+}
+
 .page-filterbar{
   @media only screen and (max-width:1060px) {
     display: block;

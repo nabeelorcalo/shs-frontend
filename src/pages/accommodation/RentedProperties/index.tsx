@@ -70,7 +70,7 @@ const RentedProperties = () => {
               </div>
             )
           })}
-          {!rentedProperties.length && !loading &&
+          {!rentedProperties?.length && !loading &&
             <div className="shs-col-full ">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>

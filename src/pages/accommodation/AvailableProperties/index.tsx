@@ -28,8 +28,7 @@ const AvailableProperties = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAvailableProperties(setLoading)
-    console.log('Available Prop::: ', availableProperties)
+    getAvailableProperties(setLoading, {propertyType: 'Rooms In Shared Property'})
   }, [])
 
 
@@ -86,7 +85,7 @@ const AvailableProperties = () => {
             )
           })}
           {!availableProperties.length && !loading &&
-            <div className="shs-col-full ">
+            <div className="shs-col-full">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>
           }

@@ -103,7 +103,7 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
-                  <Form.Item name="rent " label="Rent" rules={[{ required: true }]}>
+                  <Form.Item name="rent" label="Rent" rules={[{ required: true }]}>
                     <InputNumber
                       placeholder="Placeholder"
                       onKeyPress={(event) => {
