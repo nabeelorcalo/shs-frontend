@@ -1,11 +1,15 @@
 import { CloseCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Form, Input, Switch } from "antd";
+import { useState } from "react";
 import useCustomHook from "../../actionHandler";
 import "./style.scss";
+import UnlockVault from "./unlockVaultModal/unlockVault";
 
 const NewPasswordModal = (props: any) => {
   const { isModal, setIsModal, settingModal, setIsEnablePassword } = props;
   const { postDigivaultPassword, studentVault }: any = useCustomHook();
+  const [unlockVaultModal, setUnlockVaultModal] = useState(false)
+  const [showUnlockModal, setShowUnlockModal] = useState(false);
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;
@@ -75,6 +79,8 @@ const NewPasswordModal = (props: any) => {
           </div>
         </Form>
       </Modal>
+      <Button onClick={() => setUnlockVaultModal(true)}>click me</Button>
+      <UnlockVault setUnlockVaultModal={setUnlockVaultModal} unlockVaultModal={unlockVaultModal} />
     </div>
   );
 };
