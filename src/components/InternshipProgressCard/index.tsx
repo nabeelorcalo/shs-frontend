@@ -11,8 +11,8 @@ import dayjs from 'dayjs';
 import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
-  const { item, title, status, department, internType, postedBy, locationType, 
-    locationName, createdAt, closingDate, interns } = props;
+  const { item, title, status, department, internType, postedBy, 
+    location, createdAt, closingDate, interns } = props;
   const [decline, setDecline] = useState(false);
   const [deleteInternship, setDeleteInternship] = useState(false);
   const { deleteInternshipData,getDuplicateInternship } = useCustomHook();
@@ -141,7 +141,7 @@ export const InternshipProgressCard = (props: any) => {
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
-          <p>{locationName}</p>
+          <p>{location}</p>
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />
