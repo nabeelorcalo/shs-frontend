@@ -18,8 +18,10 @@ const ManageVault = () => {
     uploadFolder: false,
     uploadFile: false,
     isOpenDelModal: false,
-    DelModalId: null
-  })
+    DelModalId: null,
+    fileName: '',
+  });
+  const [files, setFiles] = useState<any>([])
   const [form] = Form.useForm();
   const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
   const { state } = useLocation();
@@ -28,6 +30,17 @@ const ManageVault = () => {
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
+
+  const handleDropped = (event: any) => {
+    event.preventDefault()
+    setFiles(Array.from(event.dataTransfer.files))
+  }
+  if (files[0] && files[0].type === 'application/pdf') {
+    console.log('pdf')
+  } else {
+    console.log('png')
+  }
+
   const menu2 = (id: any) => (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
@@ -135,8 +148,20 @@ const ManageVault = () => {
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false,
+    }));
+  }
+  const upLoadModalHandler = () => {
+    const sendFile = {
+      root: stateData,
+      name: files[0].name,
+      size: files[0].size
+    }
+    postCreateFolderFile(sendFile)
+    setState((prevState: any) => ({
+      ...prevState,
       uploadFile: false,
-      uploadFolder: false
+      uploadFolder: false,
+      fileName: files[0]?.name
     }));
   }
 
@@ -232,7 +257,7 @@ const ManageVault = () => {
             onFinish={onFinish}
             initialValues={{ remember: false }}
           >
-            <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
+            <Form.Item name="name" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
               <Input className="input" placeholder="Enter folder Name" type="text" />
             </Form.Item>
             <div className="d-flex justify-end items-center">
@@ -276,14 +301,14 @@ const ManageVault = () => {
           </Button>,
           <Button
             className="submit-btn"
-            onClick={modalHandler}
+            onClick={upLoadModalHandler}
             key="submit"
           >
             Upload
           </Button>,
         ]}
       >
-        <UploadDocument />
+        <UploadDocument handleDropped={handleDropped} setFiles={setFiles} files={files} />
       </Modal>
 
       <Modal
@@ -309,14 +334,14 @@ const ManageVault = () => {
 
           <Button
             className="submit-btn"
-            onClick={modalHandler}
+            onClick={upLoadModalHandler}
             key="Upload"
           >
             Upload
           </Button>,
         ]}
       >
-        <UploadDocument />
+        <UploadDocument handleDropped={handleDropped} setFiles={setFiles} files={files} />
       </Modal>
     </div >
   );

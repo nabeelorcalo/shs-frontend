@@ -43,21 +43,22 @@ const useCustomHook = () => {
 
   // post create folder  / file
   const postCreateFolderFile = async (values: any) => {
-    const { folderName, root } = values;
+    const { name, root } = values;
     const folderData = {
-      title: folderName,
+      title: name,
       root: root.toUpperCase(),
-      mode: 'folder',
+      mode: 'file',
       folderId: '',
       file: ''
     }
     await api.post(POST_CREATE_FOLDER_FILE, folderData);
     getDigiVaultDashboard(null)
+    Notifications({ title: 'Successs', description: 'Folder/File added Successfully', type: 'success' })
   }
 
   //delete folder
   const deleteFolderFile = async (itemId: any) => {
-    const { data } = await api.delete(DEL_FOLDER_FILE,{},{id:itemId});
+    const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
       getDigiVaultDashboard(null);
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })

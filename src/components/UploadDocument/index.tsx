@@ -4,8 +4,8 @@ import SelectedUploadCard from "../SelectedUploadCard";
 import './style.scss'
 
 const UploadDocument = (props: any) => {
-  const { height = 80 } = props
-  const [files, setFiles] = useState([])
+  const { height = 80, handleDropped, setFiles, files } = props
+  // const [files, setFiles] = useState([])
   const inputRef: any = useRef();
 
   const handleDragOver = (event: any) => {
@@ -13,12 +13,12 @@ const UploadDocument = (props: any) => {
     console.log("drag over")
   }
 
-  const handleDropped = (event: any) => {
-    event.preventDefault()
-    setFiles(Array.from(event.dataTransfer.files))
-  }
+  // const handleDropped = (event: any) => {
+  //   event.preventDefault()
+  //   setFiles(Array.from(event.dataTransfer.files))
+  // }
 
-  console.log(files)
+  // console.log(files)
   return (
     <>
       <div
