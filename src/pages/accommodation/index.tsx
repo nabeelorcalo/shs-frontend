@@ -229,16 +229,19 @@ const Accommodation = () => {
       'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
       'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
     }
-    console.log('Success:', values);
+    
     setFilterParams((prev) => {
       return {
         ...prev,
+        ...params
       }
     })
+    console.log('submit filter params;: ', filterParams)
   }
 
   const resetFormFields = () => {
     form.resetFields()
+    setFilterParams({})
   }
 
   const openSavedSearchesFilters = () => {
