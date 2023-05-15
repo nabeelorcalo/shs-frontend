@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import './style.scss'
 import { Button } from 'antd';
 import { IconFilters, IconFiltersAngle } from '../../assets/images'
+import './style.scss'
 
 interface FiltersButtonProps {
   label: React.ReactNode;

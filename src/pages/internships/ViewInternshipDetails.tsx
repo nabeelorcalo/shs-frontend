@@ -20,9 +20,11 @@ const ViewInternshipDetails = () => {
   const [searchParams] = useSearchParams();
   const internshipStatus = searchParams.get('status')
   const {getInternshipDetails,internshipDetails} : any = useCustomHook()
+
   useEffect(() => {
     getInternshipDetails()
   }, [])
+  
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

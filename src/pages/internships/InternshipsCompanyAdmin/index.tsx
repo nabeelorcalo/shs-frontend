@@ -18,39 +18,71 @@ const InternshipsCompanyAdmin = () => {
   });
 
   const { getAllInternshipsData, internshipData, changeHandler } = useCustomHook();
-  
+
   useEffect(() => {
-    getAllInternshipsData()
+    getAllInternshipsData(state.status)
   }, [])
-  
+
   const handleDrawer = () => {
     setState((prevState) => ({
       ...prevState,
       showDrawer: !state.showDrawer
     }))
   }
-  const updateStatus = (event: any) => {
-    const value = event.target.innerText;
+  // const updateStatus = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     status: value
+  //   }))
+  // }
+  // const updateLocation = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     location: value
+  //   }))
+  // }
+  // const updateDepartment = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     department: value
+  //   }))
+  // }
+  const handleStatus = (status: any) => {
     setState((prevState) => ({
       ...prevState,
-      status: value
+      status: status
     }))
   }
-  const updateLocation = (event: any) => {
-    const value = event.target.innerText;
+  const handleLocation=(event:any)=>{
     setState((prevState) => ({
       ...prevState,
-      location: value
+      location: event
     }))
   }
-  const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
+  const handleDepartment=(event:any)=>{
     setState((prevState) => ({
       ...prevState,
-      department: value
+      department: event
     }))
   }
-
+  const handleApplyFilter = () => {
+    getAllInternshipsData(state.status.toUpperCase());
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: false
+    }))
+  }
+  const handleResetFilter=()=>{
+    setState((prevState) => ({
+      ...prevState,
+      status: '',
+      location:'',
+      department:''
+    }))
+  }
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -72,12 +104,11 @@ const InternshipsCompanyAdmin = () => {
                         'Published',
                         'Closed',
                         'Pending',
+                        'Rejected',
                         'Draft',
-                        'All'
                       ]}
-                      setValue={() => { updateStatus(event) }}
+                      setValue={(event: any) => {handleStatus(event) }}
                       showDatePickerOnVal="custom"
-                      startIcon=""
                       value={state.status}
                     />
                   </div>
@@ -92,7 +123,7 @@ const InternshipsCompanyAdmin = () => {
                         'Virtual',
                         'All'
                       ]}
-                      setValue={() => { updateLocation(event) }}
+                      setValue={(event:any) => {handleLocation(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.location}
@@ -110,15 +141,17 @@ const InternshipsCompanyAdmin = () => {
                         'HR Cordinator',
                         'All'
                       ]}
-                      setValue={() => { updateDepartment(event) }}
+                      setValue={(event:any) => { handleDepartment(event)}}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.department}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
+                    <Button type="default" size="middle"
+                      className="button-default-tertiary" onClick={handleResetFilter}>Reset</Button>
+                    <Button type="primary" size="middle" className="button-tertiary"
+                      onClick={handleApplyFilter}>Apply</Button>
                   </div>
                 </div>
               </React.Fragment>
@@ -135,7 +168,7 @@ const InternshipsCompanyAdmin = () => {
           </Col>
         </Row>
         <div className='flex flex-col gap-7'>
-          {internshipData.length !== 0 ? 
+          {internshipData.length !== 0 ?
             internshipData?.map((item: any, idx: any) => {
               return (
                 <BoxWrapper key={idx} boxShadow>
@@ -154,7 +187,7 @@ const InternshipsCompanyAdmin = () => {
                   />
                 </BoxWrapper>
               )
-            }):<NoDataFound /> 
+            }) : <NoDataFound />
           }
         </div>
       </div>

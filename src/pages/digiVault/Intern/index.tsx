@@ -88,7 +88,7 @@ const manageVaultArr = [
   },
 ];
 
-const arraydata = [
+const arraydata:any = [
   {
     icon: Gallery,
     progressbarColor: "#4CA4FD",
