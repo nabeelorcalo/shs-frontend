@@ -61,15 +61,15 @@ const AssessmentFormCaseStudies = () => {
             Mino Marina - September 2022
           </Typography>
           <div className='mt-5 flex gap-10'>
-            <span className='font-semibold text-xl lg:w-[200px] text-primary-color font-[outfit]'>
+            <span className='font-semibold text-xl lg:w-[200px] text-primary-color'>
               Learning Categories
             </span>
-            <span className='font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]'>
+            <span className='font-semibold text-xl lg:w-[400px] text-primary-color'>
               Learning Objectives</span>
-            <span className='font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]'
+            <span className='font-semibold text-xl lg:w-[400px] text-primary-color'
             >Evidence of Progress
             </span>
-            <span className='font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]'>
+            <span className='font-semibold text-xl lg:w-[400px] text-primary-color'>
               Manager’s Remarks
             </span>
           </div>
@@ -77,13 +77,13 @@ const AssessmentFormCaseStudies = () => {
           {mockData.map((item) => {
             return (
               <div className='mt-5 flex gap-10'>
-                <span className='text-base font-normal lg:w-[200px] font-[outfit]'>
+                <span className='text-base font-normal lg:w-[200px]'>
                   {item.learningCategories}
                 </span>
-                <span className='text-base font-normal lg:w-[400px] font-[outfit]'>
+                <span className='text-base font-normal lg:w-[400px]'>
                   {item.learningObjectives}
                 </span>
-                <span className='text-base font-normal lg:w-[400px] font-[outfit]'>
+                <span className='text-base font-normal lg:w-[400px]'>
                   {item.evidenceOfProgress}
                 </span>
                 <div className='lg:w-[400px]'> {item.managerRemarks}
