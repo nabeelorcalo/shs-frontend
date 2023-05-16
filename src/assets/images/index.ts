@@ -13,6 +13,7 @@ export { ReactComponent as IconGlobe } from "./header/global.svg";
 export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as IconCross } from "./header/icon-cross.svg";
+export { ReactComponent as Info } from "./profile/student/info.svg";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
