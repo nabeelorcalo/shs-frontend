@@ -9,8 +9,7 @@ interface NotificationProps {
   type: any;
 }
 export const Notifications: any = (props: NotificationProps) => {
-  const { type, title, description } = props;
-
+  const { type = "success", title, description } = props;
   const typeObj: any = {
     success: <Success />,
     warning: <WarningFilled className="text-warning-color" />,

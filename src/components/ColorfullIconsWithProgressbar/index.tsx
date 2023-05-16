@@ -20,7 +20,7 @@ interface ColorfullIconsWithProgressbarProps {
   progressbarColor: string;
 }[];
 
-export const ColorfullIconsWithProgressbar = () => {
+export const ColorfullIconsWithProgressbar: any = () => {
   const { getData, studentVault }: any = useCustomHook();
 
   useEffect(() => {
