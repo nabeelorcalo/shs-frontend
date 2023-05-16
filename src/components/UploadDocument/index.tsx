@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { DocumentUpload } from "../../assets/images";
 import SelectedUploadCard from "../SelectedUploadCard";
 import './style.scss'
@@ -17,7 +17,6 @@ const UploadDocument = (props: any) => {
   //   event.preventDefault()
   //   setFiles(Array.from(event.dataTransfer.files))
   // }
-
   // console.log(files)
   return (
     <>
