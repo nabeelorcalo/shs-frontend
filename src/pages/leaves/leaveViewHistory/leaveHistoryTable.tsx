@@ -12,16 +12,16 @@ const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
   const { viewHistoryLeaveState } = useCustomHook();
   // console.log(viewHistoryLeaveState, 'viewHistoryLeaveState')
-  const statusBGRendar:any ={
+  const statusBGRendar: any = {
     "PENDING": "#FFC15E",
     "DECLINE": "#D83A52",
     "APPROVED": "#4ED185",
   }
-  const renderSpanBG:any = {
-    "SICK" :"rgba(76, 164, 253, 1)",
-    "CASUAL":"rgba(255, 193, 93, 1)",
-    "WORK FROM HOME":"rgba(233, 111, 124, 1)",
-    "MEDICAL":"rgba(106, 173, 142, 1)",
+  const renderSpanBG: any = {
+    "SICK": "rgba(76, 164, 253, 1)",
+    "CASUAL": "rgba(255, 193, 93, 1)",
+    "WFH": "rgba(233, 111, 124, 1)",
+    "MEDICAL": "rgba(106, 173, 142, 1)",
   }
 
   const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
@@ -74,8 +74,7 @@ const LeaveHistoryTable = (props: any) => {
       width: 180,
       dataIndex: 'type',
       render: (_: any, data: any) => (
-        <div
-          className="status_container px-[10px] py-[3px] relative text-left capitalize">
+        <div className="status_container px-[10px] py-[3px] relative text-left capitalize">
           <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg " style={{
             backgroundColor: renderSpanBG[data.type],
             color: "#fff"
@@ -83,7 +82,6 @@ const LeaveHistoryTable = (props: any) => {
           {data.type.toLowerCase()}
         </div>
       ),
-
       key: 'type',
     },
     {
@@ -117,7 +115,7 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Action',
       key: 'action',
       render: (_: any, data: any) => (
-        <DropDownNew  placement="bottomRight" items={[
+        <DropDownNew placement="bottomRight" items={[
           {
             label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
               className="cursor-pointer">View Details</p>, key: 'viewDetail'

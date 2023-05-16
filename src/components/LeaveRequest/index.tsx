@@ -56,7 +56,7 @@ export const LeaveRequest = (props: any) => {
     media: ''
   }
 
-  const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data,onLeaveFormValuesChange } = props;
+  const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data } = props;
   // console.log(openModal);
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
@@ -87,7 +87,7 @@ export const LeaveRequest = (props: any) => {
         form={form}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         initialValues={initailVal}
-        onValuesChange={onLeaveFormValuesChange}
+        // onValuesChange={onLeaveFormValuesChange}
         onFinish={onsubmitLeaveRequest}
       >
         <Form.Item

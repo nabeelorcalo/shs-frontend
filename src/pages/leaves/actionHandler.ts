@@ -27,6 +27,7 @@ const useCustomHook = () => {
   const [getLeaevState, setLeaevState] = useRecoilState(leaveStateAtom);
   const [viewHistoryLeaveState, setViewHistoryLeaveState] = useRecoilState(viewHistoryLeaveStateAtom);
   const [calndarDate, setCalendarDate] = useState({});
+  const [filterValues, setFilterValues] = useState<any>();
 
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -43,7 +44,6 @@ const useCustomHook = () => {
   useEffect(() => {
     getLeaveStateData();
   }, [])
-
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
@@ -64,9 +64,9 @@ const useCustomHook = () => {
   /*  Submit Leave Request Function For Intrnee
  -------------------------------------------------------------------------------------*/
 
-  const onLeaveFormValuesChange = async (singleValues: any, allValues: any) => {
-    console.log(allValues, "allValues");
-  }
+  // const onLeaveFormValuesChange = async (singleValues: any, allValues: any) => {
+  //   console.log(allValues, "allValues");
+  // }
   const onsubmitLeaveRequest = async (values: any) => {
     const initailVal: any = {
       internId: internID,
@@ -82,7 +82,6 @@ const useCustomHook = () => {
     }
     const formData = new FormData();
     formData.append('media', values?.media?.fileList);
-
     console.log("values from the form: ", initailVal);
     const updatedVal = {
       ...initailVal,
@@ -103,20 +102,52 @@ const useCustomHook = () => {
     getHolidayLeaveList()
   }, [])
 
-  const onFilterLeaevHistory = (value:any)=>{
-    console.log(value,"onFilterLeaevHistoryonFilterLeaevHistoryonFilterLeaevHistory");
-    
-  }
 
+  /*  Filter Leave List Functionality 
+-------------------------------------------------------------------------------------*/
+
+  const onFilterLeaevHistory = (value: any, filterValue: any) => {
+    let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
+    let parmValues;
+    console.log(valToUpperCase);
+    
+    if (valToUpperCase!=='SELECT') {
+      if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
+        parmValues = { ...value, timeFrame: valToUpperCase }
+        setFilterValues(parmValues);
+      }
+      else {
+        var newDate = valToUpperCase.split("_");
+        var isQumaIndex = newDate.indexOf(",");
+        newDate.splice(isQumaIndex, 1);
+        let [filterStartDate, filterEndDate] = newDate
+        parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate }
+        setFilterValues(parmValues);
+      }
+    }
+  }
+  console.log(filterValues, "filterValues");
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const leaveListViewHistory = async () => {
-    const response: any = await api.get(GET_LEAEV_LIST, { page: 1, limit: 100, currentDate: "2023-05-15", filterType: "THIS_WEEK" });
-    setViewHistoryLeaveState(response?.data) 
+    const response: any = await api.get(GET_LEAEV_LIST,
+      {
+        page: 1,
+        limit: 100,
+        type: filterValues?.type ? filterValues?.type : null,
+        currentDate: currentDate,
+        filterType: filterValues?.timeFrame ? filterValues?.timeFrame : "THIS_WEEK",
+        status: filterValues?.status ? filterValues?.status : null,
+        startDate: filterValues?.startDate ? filterValues?.startDate : null,
+        endDate: filterValues?.startDate ? filterValues?.endDate : null,
+      });
+    setViewHistoryLeaveState(response?.data)
   }
+
+
   useEffect(() => {
     leaveListViewHistory()
-  }, [])
+  }, [filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 
@@ -194,7 +225,7 @@ const useCustomHook = () => {
     viewHistoryLeaveState,
     onFilterLeaevHistory,
     getCalendarDate,
-    onLeaveFormValuesChange,
+    // onLeaveFormValuesChange,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
   };

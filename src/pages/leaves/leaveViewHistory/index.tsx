@@ -26,10 +26,11 @@ const index = () => {
   const cruntUserState = useRecoilValue(currentUserState);
   console.log(cruntUserState,"cruntUserStatecruntUserState");
   
-  const {downloadPdfOrCsv,onsubmitLeaveRequest, onFilterLeaevHistory} = useCustomHook();
+  const {downloadPdfOrCsv,onsubmitLeaveRequest} = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
+  const [filterValue, setFilterValue] = useState("Select");
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
   const role = useRecoilValue(currentUserRoleState);
   const mainDrawerWidth = DrawerWidth();
@@ -89,7 +90,7 @@ const index = () => {
         onClose={() => setOpenDrawer({ type: '', open: false })}
       >
         <div>
-          {openDrawer.type === 'filters' ? <FilterDrawerForm onFilterLeaevHistory={onFilterLeaevHistory} setOpenDrawer={setOpenDrawer}  /> :
+          {openDrawer.type === 'filters' ? <FilterDrawerForm filterValue={filterValue} setFilterValue={setFilterValue} setOpenDrawer={setOpenDrawer}  /> :
             <CalendarDrawerInnerDetail
               img={selectedRow?.img}
               name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
