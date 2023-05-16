@@ -20,13 +20,13 @@ const useCustomHook = () => {
   const navigate = useNavigate()
   const { state } = useLocation();
 
-  
+
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
     SETTING_DAPARTMENT, SETTING_LOCATION, GET_ALL_INTERNS } = apiEndpints;
-    
+
 
   useEffect(() => {
     debouncedResults.cancel();
@@ -69,11 +69,10 @@ const useCustomHook = () => {
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
-      amount, natureofwork, positions, closingDate, duration, salaryType } = values
-    const internshipData = {
-      "companyId": 1,
+      amount, natureofwork, positions, closingDate, duration, salaryType, department,status } = values
+    const internshipData = { 
       "title": title,
-      "departmentId": 1,
+      "departmentId": department,
       "description": description,
       "responsibilities": responsibilities,
       "requirements": requirements,
@@ -87,7 +86,7 @@ const useCustomHook = () => {
       "totalPositions": Number(positions),
       "closingDate": closingDate,
       "duration": duration,
-      "status": "PENDING"
+      "status": status
     }
 
     const { data } = await api.post(POST_NEW_INTERNSHIP, internshipData);
@@ -103,9 +102,9 @@ const useCustomHook = () => {
   const EditNewInternshipsData = async (values: any) => {
     const {
       title, description, responsibilities,
-      requirements, typeofwork, frequency,amount, natureofwork, 
-      positions,closingDate, duration, internshipType, salaryAmount, 
-      departmentId, status,locationId } = values
+      requirements, typeofwork, frequency, amount, natureofwork,
+      positions, closingDate, duration, internshipType, salaryAmount,
+      departmentId, status, locationId } = values
     const internshipData = {
       "id": state.id,
       "title": title,
@@ -139,7 +138,6 @@ const useCustomHook = () => {
 
   const getInternshipDetails = async () => {
     const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id });
-
     setInternshipDetails(data)
   };
 

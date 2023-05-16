@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SearchBar, PageHeader, InternshipPipeLineCard, Breadcrumb } from "../../../components";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   DepartmentIcon, LocationIconCm, JobTimeIcon,
   PostedByIcon, EditIconinternships, ClosedStatus, SuccessStatus
@@ -13,38 +13,38 @@ import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
 import "../style.scss";
 
-// const statusArray = [
-//   {
-//     status: 'Applied',
-//     no: 3,
-//     className: "primary-bg-color"
-//   },
-//   {
-//     status: 'Interviewed',
-//     no: 5,
-//     className: "text-link-bg-color"
-//   },
-//   {
-//     status: 'Recommended',
-//     no: 2,
-//     className: "purple-bg"
-//   },
-//   {
-//     status: 'OfferLetter',
-//     no: 4,
-//     className: "light-purple-bg"
-//   },
-//   {
-//     status: 'Contract',
-//     no: 1,
-//     className: "line-bg"
-//   },
-//   {
-//     status: 'Hired',
-//     no: 5,
-//     className: "text-success-hover-bg-color"
-//   }
-// ]
+const statusArray = [
+  {
+    status: 'Applied',
+    no: 3,
+    className: "primary-bg-color"
+  },
+  {
+    status: 'Interviewed',
+    no: 5,
+    className: "text-link-bg-color"
+  },
+  {
+    status: 'Recommended',
+    no: 2,
+    className: "purple-bg"
+  },
+  {
+    status: 'OfferLetter',
+    no: 4,
+    className: "light-purple-bg"
+  },
+  {
+    status: 'Contract',
+    no: 1,
+    className: "line-bg"
+  },
+  {
+    status: 'Hired',
+    no: 5,
+    className: "text-success-hover-bg-color"
+  }
+]
 
 const tempArray = [
   { name: "Pipeline" },
@@ -57,16 +57,20 @@ const tempArray = [
 const InternshipPipeLine = () => {
   dayjs.extend(relativeTime);
   const navigate = useNavigate();
-  const [state, setState] = useState({
+  const { state }: any = useLocation()
+  const [states, setState] = useState({
     status: 'Published'
   })
-  const { getInternshipDetails, internshipDetails,
-    getAllInternsData, getAllInterns, isLoading }: any = useCustomHook()
+  console.log("data are", state);
+
+  const { getInternshipDetails, internshipDetails, isLoading }: any = useCustomHook()
 
   useEffect(() => {
     getInternshipDetails()
-    getAllInternsData()
   }, [])
+
+  console.log('pipeline data is', internshipDetails);
+
 
   const myStatus = [
     { label: 'Published', value: 'Published', icon: SuccessStatus },
@@ -78,6 +82,8 @@ const InternshipPipeLine = () => {
       status: event
     }))
   }
+  // const jobType = internshipDetails?.internType.replace("_", " ").toLowerCase()
+
 
   return (
     <>
@@ -85,17 +91,15 @@ const InternshipPipeLine = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="flex flex-row ">
-            <h3>{internshipDetails.title}</h3>
-            <span
-              className='pl-4 cursor-pointer'
-              onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP + '?id=1'); }}
-            >
+            <h3>{internshipDetails?.title}</h3>
+            <span className='pl-4 cursor-pointer'
+              onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`, { state: state.data }) }}>
               <EditIconinternships />
             </span>
           </div>
           <div className="flex flex-row gap-4">
             <Select
-              value={state.status}
+              value={states.status}
               options={myStatus?.map((item: any) => {
                 return { value: item.value, label: item?.label }
               })}
@@ -107,19 +111,19 @@ const InternshipPipeLine = () => {
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>
             <div className='flex flex-row gap-3 items-center'>
               <DepartmentIcon />
-              <p>Design</p>
+              <p>{internshipDetails?.departmentId}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <JobTimeIcon />
-              <p>{internshipDetails.internType}</p>
+              <p className="capitalize">{internshipDetails?.internType}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <LocationIconCm />
-              <p>{internshipDetails.locationType}</p>
+              <p>{internshipDetails?.locationId}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <PostedByIcon />
-              <p>Amelia Carl</p>
+              <p>{internshipDetails?.postedBy}</p>
             </div>
           </div>
         </div>
@@ -128,57 +132,68 @@ const InternshipPipeLine = () => {
             <SearchBar handleChange={() => { }} name="search bar" placeholder="Search" />
           </div>
           <div className="flex flex-row gap-4">
-            Total Candidate: {getAllInterns.length < 10 ? `0${getAllInterns.length}` : getAllInterns.length}
+            Total Candidate:
+            {internshipDetails?.interns?.length < 10 ?
+              `0${internshipDetails?.interns?.length}` : internshipDetails?.interns?.length}
           </div>
         </div>
         {/* <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0"> */}
-        <Row gutter={[20,20]}>
-          {isLoading ?
-            getAllInterns.map((items: any, index: any) => {
-              return (
-                <Col xl={5} lg={8} md={12} xs={24} className="">
-                  <div key={index} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
-                    <div className="flex flex-row gap-2">
-                      <div className={`h-5 w-5 rounded ${items.className}`}></div>
-                      <p>{items?.stage}</p>
-                    </div>
-                    <div>
-                      <p className="h-5 w-6 text-sm text-center rounded text-input-bg-color text-teriary-color">
-                        {
-                          ('0' + getAllInterns.filter((value: any) => {
-                            return (value.stage === items.stage);
-                          }).length).slice(-2)
-                        }
-                      </p>
-                    </div>
-                  </div>
-                  <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
-                    {
-                      getAllInterns.filter((item: any) => {
-                        return (item.stage === items.stage);
-                      }).map((items: any, index: any) => {
-                        const date = dayjs(items.createdAt); // Replace '2023-05-12' with your desired date
-                        const today = dayjs(); // Get the current date
-                        const daysAgo = today.diff(date, 'day');
-                        return (
-                          <>
-                            <InternshipPipeLineCard
-                              key={index}
-                              name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
-                              rating={items.rating}
-                              time={`${daysAgo} days ago`}
-                              status={items.sage}
-                              img={<Avatar size={'small'} icon={<UserOutlined />} />}
-                            />
-                          </>
-                        )
-                      })
-                    }
-                  </div>
-                </Col>
-              )
-            })
-            : <Spin tip="Processing...." />}
+        <Row gutter={[20, 20]}>
+          {/* {isLoading ? */}
+          {/* { internshipDetails?.map((items: any, index: any) => {
+              return ( */}
+          <div className="flex flex-row gap-2">
+            {statusArray.map((val: any) => {
+              return <>
+                <div className={`h-5 w-5 rounded ${val.className}`}>
+                </div>
+                <p>{val.status}</p>
+              </>
+            })}
+
+
+          </div>
+          <Col xl={5} lg={8} md={12} xs={24} className="">
+            <div className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
+
+              <div>
+                <p className="h-5 w-6 text-sm text-center rounded text-input-bg-color text-teriary-color">
+                  {
+                    ('0' + internshipDetails?.interns?.filter((value: any) => {
+                      return (value.interns?.stage === internshipDetails?.interns?.stage);
+                    }).length).slice(-2)
+                  }
+                </p>
+              </div>
+            </div>
+            <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
+              {
+                internshipDetails?.interns?.filter((item: any) => {
+                  return (item.stage === internshipDetails?.interns?.stage);
+                }).map((item: any, index: any) => {
+                  const date = dayjs(item.createdAt); // Replace '2023-05-12' with your desired date
+                  const today = dayjs(); // Get the current date
+                  const daysAgo = today.diff(date, 'day');
+
+                  return (
+                    <>
+                      <InternshipPipeLineCard
+                        key={index}
+                        name={`${item?.interns?.userDetail?.firstName} ${item?.userDetail?.interns?.lastName}`}
+                        rating={item.rating}
+                        time={`${daysAgo} days ago`}
+                        status={item.sage}
+                        img={<Avatar size={'small'} icon={<UserOutlined />} />}
+                      />
+                    </>
+                  )
+                })
+              }
+            </div>
+          </Col>
+          {/* )
+            })} */}
+          {/* // : <Spin tip="Processing...." />} */}
         </Row>
       </div>
       {/* </div> */}

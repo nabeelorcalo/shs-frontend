@@ -501,6 +501,7 @@ export { ReactComponent as LocationIconCm } from './ViewInternship/LocationIconC
 export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.svg';
 export { ReactComponent as SuccessStatus } from '../images/Internships/success-status.svg';
 export { ReactComponent as ClosedStatus } from '../images/Internships/closed-status.svg';
+export { ReactComponent as FullStop } from '../images/Internships/dot.svg';
 
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
