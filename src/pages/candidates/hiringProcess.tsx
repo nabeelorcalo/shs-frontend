@@ -43,8 +43,20 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     },
   } = props;
 
-  console.log(selectedCandidate);
+  const [open, setOpen] = useState(false);
+  const [hiringProcessStatusList, setHiringProcessStatusList] = useState(hiringList);
+  const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
+  const [offerContractStatus, setOfferContractStatus] = useState({ pending: false, signed: false });
+  const [isOfferLetterTemplateModal, setIsOfferLetterTemplateModal] = useState(false);
+  const [selectTemplate, setSelectTemplate] = useState({ title: "Offer Letter", options: ["offer template 1"] });
+  const [user, setUser] = useState({ userImg: UserAvatar, userName: "amelia clark" });
+  const [hiringBtnText, setHiringBtnText] = useState("Move");
+  // create comment State
+  const [comment, setComment] = useState<string>("");
 
+  const userData = useRecoilValue(currentUserState);
+
+  // custom hooks and states
   const {
     getComments,
     handleCreateComment,
@@ -54,21 +66,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     setHiringProcessList,
     handleStage,
   } = actionHandler();
-  console.log(commentsList);
-  const [open, setOpen] = useState(false);
-  const [hiringProcessStatusList, setHiringProcessStatusList] = useState(hiringList);
-  const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
-  const [offerContractStatus, setOfferContractStatus] = useState({ pending: false, signed: false });
-  const [isOfferLetterTemplateModal, setIsOfferLetterTemplateModal] = useState(false);
-  const [selectTemplate, setSelectTemplate] = useState({ title: "Offer Letter", options: ["offer template 1"] });
-  const [user, setUser] = useState({ userImg: UserAvatar, userName: "amelia clark" });
-  const [hiringBtnText, setHiringBtnText] = useState("Move");
-  const userData = useRecoilValue(currentUserState);
-  console.log(userData, "userDatauserData");
 
-  // create comment State
-  const [comment, setComment] = useState<string>("");
-
+  // assignee details
   const detailsData = [
     { title: "Source", value: "Career Website" },
     { title: "Owner", value: `${userData?.firstName} ${userData?.lastName}`, image: userData?.avatar ?? "avatar" },
@@ -97,10 +96,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     },
   ];
 
+  // resend offer letter
   const handleResendOfferLetter = () => {
     Notifications({ title: "Success", description: "Offer letter re-sent successfully", type: "success" });
   };
 
+  // resend contract
   const handleResendContract = () => {
     Notifications({ title: "Success", description: "Contract re-sent successfully", type: "success" });
   };
@@ -164,7 +165,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     setOpen(false);
     return;
   };
-
+  // move hiring process in flow
   const handleHiringProcess = (pipeline?: string) => {
     // resend offer letter and contract
     if (!pipeline && hiringBtnText === "Resend") {
@@ -203,12 +204,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       }
     }
   };
-
+  //select template for offer letter and contract
   const handleTemplate = () => {
     setIsOfferLetterTemplateModal(true);
     setIsSelectTemplateModal(false);
   };
-
+  // constomized or edit template for offer letter and contract
   const handleOfferLetterTemplate = () => {
     if (selectTemplate?.title === "offer letter") {
       handleCheckList("offer letter");

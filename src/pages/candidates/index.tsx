@@ -20,7 +20,6 @@ const Candidates = () => {
     getInternShipList,
     internShipList,
   } = actionHandler();
-  console.log(internShipList);
 
   useEffect(() => {
     getCadidatesData(params);

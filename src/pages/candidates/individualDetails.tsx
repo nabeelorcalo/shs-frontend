@@ -66,8 +66,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     { title: "Rejected", color: "#E94E5D" },
   ];
 
-  useEffect(() => setRating(ratingCount),[]);
-  console.log(rating, "ratingggggggggggggg");
+  useEffect(() => setRating(ratingCount), []);
 
   return (
     <div className="details-wrapper p-[5px] pr-[25px]">

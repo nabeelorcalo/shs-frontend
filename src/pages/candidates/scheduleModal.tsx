@@ -4,6 +4,7 @@ import { ArrowDownDark, CloseCircleIcon, UserAvatar } from "../../assets/images"
 import { CommonDatePicker, SearchBar } from "../../components";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
 import "./style.scss";
+import dayjs from "dayjs";
 
 const RequestDocModel = (props: any) => {
   const { open, setOpen, handleReject } = props;
@@ -20,6 +21,8 @@ const RequestDocModel = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (value: any) => {
+    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD")
+    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD")
     console.log(value, "form value");
 
     // message.success('Submit success!');
@@ -126,8 +129,8 @@ const RequestDocModel = (props: any) => {
             <label className="title" htmlFor="text-area">
               <p>Description (optional)</p>
             </label>
-            <Form.Item name="currentDate">
-              <textarea className="input" placeholder="Describe your problem" id="text-area" />
+            <Form.Item name="description">
+              <textarea className="input" name="description" placeholder="Describe your problem" id="text-area" />
             </Form.Item>
           </div>
           <div className="flex mt-3 justify-end gap-4">

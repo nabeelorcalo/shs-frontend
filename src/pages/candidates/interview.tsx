@@ -9,7 +9,6 @@ const Interview = () => {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false)
 
-
   const openModal = () => {
     setAlert(true)
   }
