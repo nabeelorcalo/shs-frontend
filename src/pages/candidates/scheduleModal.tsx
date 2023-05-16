@@ -21,8 +21,8 @@ const RequestDocModel = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (value: any) => {
-    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD")
-    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD")
+    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD");
+    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD");
     console.log(value, "form value");
 
     // message.success('Submit success!');

@@ -135,7 +135,7 @@ const useCustomHook = () => {
   // create comment
   const handleCreateComment = async (candidateId: string | number, comment: string) => {
     comment ? await api.post(ADD_COMMENT, { candidateId, comment }).then(({ data }) =>
-      setCommentsList([...commentsList, data])) : Notifications({ title: "Error", description: "Comment can't empety", type: "error" })
+      setCommentsList([...commentsList, data])) : Notifications({ title: "Error", description: "Comment can't empty", type: "error" })
   }
   // intial pipline array
   const handleInitialPiple = (stage: string) => {
