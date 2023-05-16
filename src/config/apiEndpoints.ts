@@ -40,8 +40,9 @@ const endpoints = {
   GET_COMMENTS: '/comment/getComments',
   ADD_COMMENT:`/comment/addComment`,
   // End Point For Leaev Module For Intrne 
-  CREATE_LEAVE: "/Leaves/create",
-  GET_LEAEV_LIST: `/Leaves/list`,
+  CREATE_LEAVE:"/Leaves/create",
+  GET_LEAEV_LIST:`/Leaves/list`,
+  GET_ALL_INTERNS:"/candidate/listCandidates",
 
 }
 export default endpoints;

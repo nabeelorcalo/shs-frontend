@@ -1,36 +1,25 @@
-import { useEffect, useState } from 'react'
-import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd'
-import { CommonDatePicker, PageHeader, BoxWrapper, Breadcrumb } from '../../components'
-import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages'
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd';
+import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker } from '../../components';
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
+import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
-import './style.scss'
+import './style.scss';
+import dayjs from 'dayjs';
+
 const { TextArea } = Input;
 
-const departmentOptions = [
-  { value: 'Bussiness Analyst', label: "Bussiness Analyst" },
-  { value: 'Research', label: "Research" },
-  { value: 'Accounting', label: "Accounting" },
-  { value: 'Human Resources', label: "Human Resources" },
-  { value: 'Administration', label: "Administration" },
-  { value: 'Project Management', label: "Project Management" }
-]
 const amountOptions = [
   {
-    value: 'GBP',
+    value: '£',
     label: 'GBP',
   },
   {
-    value: 'USD',
+    value: '$',
     label: 'USD',
   },
-]
-const locationOptions = [
-  { value: 'Eidinburg', label: "Eidinburg" },
-  { value: 'Glasgow', label: "Glasgow" },
-  { value: 'London', label: "London" },
 ]
 const durationOptions = [
   { value: '1 month', label: '1 month' },
@@ -56,14 +45,32 @@ const frequencyOptions = [
 ]
 
 const NewInternships = () => {
-  const navigate = useNavigate()
-  const [partAndFullTime, setPartAndFullTime] = useState(null);
-  const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
-  const [remoteOnsite, setRemoteOnsite] = useState(null);
-  const [openDataPicker, setOpenDataPicker] = useState(false);
-
-  const { postNewInternshipsData } = useCustomHook();
+  const { state } = useLocation();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [internShipFormData, setInternShipFormData] = useState(state);
+  const [partAndFullTime, setPartAndFullTime] = useState(null);
+  const [paidAndUnpaid, setPaidAndUnpaid] = useState(internShipFormData?.salaryType ?? null);
+  const [openDataPicker, setOpenDataPicker] = useState(false);
+  const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
+  const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
+  const typeOfWork = {
+    partTime: "PART_TIME",
+    fullTime: "FULL_TIME"
+  }
+  const natureofwork = {
+    virtual: "VIRTUAL",
+    onsite: "ONSITE",
+    hybride: "HYBRIDE",
+  }
+  const { postNewInternshipsData, getAllDepartmentData,
+    departmentsData, EditNewInternshipsData, getAllLocationsData, locationsData } = useCustomHook();
+
+  useEffect(() => {
+    getAllDepartmentData
+    getAllLocationsData
+  }, [])
+
 
   const tempArray = [
     { name: "New Internship" },
@@ -88,48 +95,44 @@ const NewInternships = () => {
     setRemoteOnsite(e.target.value);
   };
 
-  // const updateDepartment = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     department: value
-  //   }))
-  // }
-
-  // const updateFrequency = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     frequency: value
-  //   }))
-  // }
-
-  // const updateLocation = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     location: value
-  //   }))
-  // }
-
-  // const updateInternshipDuration = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     internshipDuration: value
-  //   }))
-  // }
-
   const onFinish = (values: any) => {
+    const newVals={
+      ...values,
+      amount:amount.amount,
+      salaryAmount:amount.amountType
+    }
     console.log('Success:', values);
-    postNewInternshipsData(values);
+    if (internShipFormData) {
+      EditNewInternshipsData(newVals)
+    } else {
+      postNewInternshipsData(newVals);
+    }
     form.resetFields();
-    navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
+    setInternShipFormData({})
   };
 
-  const onSelectChange = (value: string) => {
+  const onSelectChange = (value: any) => {
     console.log('slected item', value);
   };
+
+  const initialValues = {
+    title: internShipFormData?.title ?? '',
+    department: internShipFormData?.departmentId ?? undefined,
+    description: internShipFormData?.description ?? '',
+    responsibilities: internShipFormData?.responsibilities ?? '',
+    requirements: internShipFormData?.requirements ?? '',
+    typeofwork: internShipFormData?.internType ?? '',
+    salaryType: internShipFormData?.salaryType ?? '',
+    frequency: internShipFormData?.salaryFrequency ?? '',
+    amount: internShipFormData?.salaryAmount ?? '',
+    amountType: internShipFormData?.salaryCurrency ?? '',
+    natureofwork: internShipFormData?.locationType ?? '',
+    location: internShipFormData?.locationId ?? '',
+    positions: internShipFormData?.totalPositions ?? '',
+    duration: internShipFormData?.duration ?? undefined,
+    closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined
+  }
+
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
@@ -138,7 +141,7 @@ const NewInternships = () => {
           form={form}
           layout='vertical'
           onFinish={onFinish}
-          initialValues={{ remember: false }}
+          initialValues={initialValues}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
           <h4 className='upcomming_Holiday mb-4 text-2xl font-semibold'>Internship Details</h4>
           <p>This information will be displayed publicly so be careful what you share</p>
@@ -150,15 +153,17 @@ const NewInternships = () => {
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
               <Form.Item name="title" label="Title" rules={[{ required: true }, { type: "string" }]}>
-                <Input className="input" placeholder="Enter Title" type="text"/>
+                <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
-              <Form.Item name="department" label="Department" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item name="department" label="Department" rules={[{ required: true }, { type: 'number' }]}>
                 <Select
                   rootClassName='input'
                   placeholder="Select"
                   onChange={onSelectChange}
                   allowClear
-                  options={departmentOptions}
+                  options={departmentsData.map((item: any) => {
+                    return { value: item.id, label: item.name }
+                  })}
                 />
               </Form.Item>
               <Form.Item label="Description" name="description" rules={[{ required: true }, { type: "string" }]}>
@@ -190,14 +195,14 @@ const NewInternships = () => {
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'PART_TIME'}>Part Time</Radio>
-                  <Radio value={'FULL_TIME'}>Full Time</Radio>
+                  <Radio value={typeOfWork.partTime}>Part Time</Radio>
+                  <Radio value={typeOfWork.fullTime}>Full Time</Radio>
                 </Radio.Group>
               </Form.Item>
-              <Form.Item label="Internship Type" name="internshiptype" >
+              <Form.Item label="Internship Type" name="salaryType" >
                 <Radio.Group onChange={onInternshipTypeChange} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'UNPAID'}>Unpaid</Radio>
-                  <Radio value={'PAID'}>Paid</Radio>
+                  <Radio value={"UNPAID"}>Unpaid</Radio>
+                  <Radio value={"PAID"}>Paid</Radio>
                 </Radio.Group>
               </Form.Item>
               {paidAndUnpaid === "PAID" ?
@@ -210,13 +215,15 @@ const NewInternships = () => {
                       options={frequencyOptions}
                     />
                   </Form.Item>
-                  <Form.Item label="Amount" name="amount">
+                  <Form.Item label="Amount" name="amountType">
                     <Space.Compact>
                       <Select
                         className='w-full'
                         defaultValue="GBP"
+                        onChange={(e) => setAmount({ ...amount, amountType: e })}
+                        value={amount.amountType}
                         options={amountOptions} />
-                      <Input type='number' placeholder='0.00' />
+                      <Input type='number' value={amount.amount} onChange={(e) => setAmount({ ...amount, amount: e.target.value })} name="amount" placeholder='0.00' />
                     </Space.Compact>
                   </Form.Item>
                 </div>
@@ -225,19 +232,21 @@ const NewInternships = () => {
               }
               <Form.Item name="natureofwork" label="Nature of work">
                 <Radio.Group onChange={onNatureChange} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                  <Radio value={'VIRTUAL'}>Virtual</Radio>
-                  <Radio value={'ONSITE'}>On site</Radio>
-                  <Radio value={'HYBRIDE'}>Hybrid</Radio>
+                  <Radio value={natureofwork.virtual}>Virtual</Radio>
+                  <Radio value={natureofwork.onsite}>On site</Radio>
+                  <Radio value={natureofwork.hybride}>Hybrid</Radio>
                 </Radio.Group>
               </Form.Item>
-              {remoteOnsite === "ONSITE" ?
+              {remoteOnsite === natureofwork.onsite ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="location" label="Location">
                     <Select
                       placeholder="Select"
                       onChange={onSelectChange}
                       allowClear
-                      options={locationOptions}
+                      options={locationsData.map((item: any) => {
+                        return { value: item.id, label: item.name }
+                      })}
                     />
                   </Form.Item>
                 </div>
@@ -253,16 +262,16 @@ const NewInternships = () => {
               <p>Enter the additional information related to internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
-              <Form.Item label="Total Positions" name="positions" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item label="Total Positions" name="positions" rules={[{ required: true }]}>
                 <Input className="input" placeholder="Enter number of positions" type="number" />
               </Form.Item>
-              <Form.Item label={<span>Expected Closing Date <span className='text-slate-400'>(Optional)</span></span>}>
+              <Form.Item name='closingDate' label={<span>Expected Closing Date
+                <span className='text-slate-400'>(Optional)</span></span>}>
                 <CommonDatePicker
-                  name="datePicker"
-                  onBtnClick={() => { }}
+                  onBtnClick={onSelectChange}
                   open={openDataPicker}
                   setOpen={setOpenDataPicker}
-                  setValue={function noRefCheck() { }}
+                  setValue={() => { }}
                 />
               </Form.Item>
               <Form.Item label="Internship Duration" name="duration" rules={[{ required: true }, { type: "string" }]}>
@@ -288,7 +297,10 @@ const NewInternships = () => {
               type="default"
               size="middle"
               className="button-default-tertiary main-btn"
-              onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}>Cancel</Button>
+              onClick={() => {
+                navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS);
+                setInternShipFormData({})
+              }}>Cancel</Button>
             <Button
               type="primary"
               htmlType="submit"
