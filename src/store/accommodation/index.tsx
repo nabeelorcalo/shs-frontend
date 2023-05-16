@@ -10,6 +10,11 @@ export const availablePropertiesState = atom({
   default: []
 });
 
+export const filterParamsState = atom({
+  key: 'filterParamsState',
+  default: {}
+});
+
 export const savedPropertiesState = atom({
   key: 'savedPropertiesState',
   default: []

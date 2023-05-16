@@ -91,7 +91,7 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getProperty(propertyId, setLoading)
-    console.log("property detailLL:: ", property)
+    console.log("property DetailLL:: ", property)
   }, [])
 
 
@@ -130,27 +130,30 @@ const AccPropertyDetail = () => {
           {property &&
             <div className="property-detail-content">
               <div className="property-detail-content-left">
-                <div className="property-gallery">
-                  <ImageGallery
-                    items={images}
-                    showNav={false}
-                    thumbnailPosition={screens.lg ? 'left' : 'bottom'}
-                    showFullscreenButton={false}
-                    useBrowserFullscreen={false}
-                    showPlayButton={false}
-                    showBullets={true}
-                    autoPlay={false}
-                    disableThumbnailScroll={false}
-                    slideDuration={450}
-                    slideInterval={3000}
-                    onImageError={() => console.log('image error')}
-                    onThumbnailError={() => console.log('thumbanil errror')}
-                  />
-                </div>
+                {property.attachments?.length !== 0 &&
+                  <div className="property-gallery">
+                    <ImageGallery
+                      items={images}
+                      showNav={false}
+                      thumbnailPosition={screens.lg ? 'left' : 'bottom'}
+                      showFullscreenButton={false}
+                      useBrowserFullscreen={false}
+                      showPlayButton={false}
+                      showBullets={true}
+                      autoPlay={false}
+                      disableThumbnailScroll={false}
+                      slideDuration={450}
+                      slideInterval={3000}
+                      onImageError={() => console.log('image error')}
+                      onThumbnailError={() => console.log('thumbanil errror')}
+                    />
+                  </div>
+                }
+                
 
                 <div className="property-heading">
                   <Typography.Title level={3}>
-                    {property?.addressOne}
+                    {property?.properties?.addressOne}
                   </Typography.Title>
 
                   <div className="property-heading-location">
@@ -177,7 +180,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Overview
                       </div>
-                      <PropertyOverview data={property} />
+                      <PropertyOverview data={property?.properties} />
                     </div>
                   </div>
 
@@ -186,7 +189,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Pricing
                       </div>
-                      <PropertyPricing />
+                      <PropertyPricing data={property?.properties} />
                     </div>
                   </div>
 
@@ -213,7 +216,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-                      <AgentDetail />
+                      <AgentDetail data={property?.properties?.user} />
                     </div>
                   </div>
 

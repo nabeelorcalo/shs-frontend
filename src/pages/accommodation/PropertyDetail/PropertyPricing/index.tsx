@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 import './style.scss'
 import { IconStatusCheck } from '../../../../assets/images'
+interface PricingProps {
+  data: any
+}
 
-
-const PropertyPricing = () => {
+const PropertyPricing: FC<PricingProps> = ({data}) => {
   return (
     <>
       <div className="pricing-content">
@@ -14,15 +16,19 @@ const PropertyPricing = () => {
           <ul className="pricing-card-list">
             <li>
               <div className="pricing-item-title">Contract Type</div>
-              <div className="pricing-item-value monthly">Monthly</div>
+              <div className="pricing-item-value monthly">
+                {data?.rentFrequency === "Month" ? 'Monthly' : data?.rentFrequency === "Week" ? 'Weekly' : 'Daily'}
+              </div>
             </li>
             <li>
               <div className="pricing-item-title">Minimum stay</div>
-              <div className="pricing-item-value monthly">3 months</div>
+              <div className="pricing-item-value monthly">
+                {data?.minimumStay} {data?.rentFrequency === "Month" ? 'months' : data?.rentFrequency === "Week" ? 'weeks' : 'days'}
+              </div>
             </li>
             <li>
               <div className="pricing-item-title">Deposits</div>
-              <div className="pricing-item-value monthly">£3000</div>
+              <div className="pricing-item-value monthly">£{data?.depositAmount}</div>
             </li>
             <li>
               <div className="pricing-item-title">During your stay</div>
@@ -31,8 +37,10 @@ const PropertyPricing = () => {
                 <div className="during-your-stay-inner monthly-rent">
                   <div className="during-your-stay-title">Rent</div>
                   <div className="monthly-rent-row">
-                    <span className="monthly-rent-month">Monthly</span>
-                    <span className="monthly-rent-rent">£1990</span>
+                    <span className="monthly-rent-month">
+                      {data?.rentFrequency === "Month" ? 'Monthly' : data?.rentFrequency === "Week" ? 'Weekly' : 'Daily'}
+                    </span>
+                    <span className="monthly-rent-rent">£{data?.rent}</span>
                   </div>
                 </div>
 
@@ -45,7 +53,7 @@ const PropertyPricing = () => {
                       </div>
                       <div className="utilities-list-right">
                         <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                        <div className="utilities-list-item-value">Included</div>
+                        <div className="utilities-list-item-value">{data?.allBillsIncluded ? 'Included': data?.electricityBillPayment}</div>
                       </div>
                     </li>
                     <li>
@@ -54,7 +62,7 @@ const PropertyPricing = () => {
                       </div>
                       <div className="utilities-list-right">
                         <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                        <div className="utilities-list-item-value">Included</div>
+                        <div className="utilities-list-item-value">{data?.allBillsIncluded ? 'Included': data?.waterBillPayment}</div>
                       </div>
                     </li>
                     <li>
@@ -63,9 +71,10 @@ const PropertyPricing = () => {
                       </div>
                       <div className="utilities-list-right">
                         <div className="utilities-list-item-satus"><IconStatusCheck /></div>
-                        <div className="utilities-list-item-value">Included</div>
+                        <div className="utilities-list-item-value">{data?.allBillsIncluded ? 'Included': data?.gasBillPayment}</div>
                       </div>
                     </li>
+                    {data?.allBillsIncluded &&
                     <li>
                       <div className="utilities-list-title">
                         Internet
@@ -75,6 +84,8 @@ const PropertyPricing = () => {
                         <div className="utilities-list-item-value">Included</div>
                       </div>
                     </li>
+                    }
+                    
                     <li>
                       <div className="utilities-list-title">
                         Broadcasting fee

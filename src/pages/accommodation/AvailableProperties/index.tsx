@@ -4,8 +4,8 @@ import { AccommodationCard } from '../../../components';
 import "./style.scss";
 import {Empty, Spin} from 'antd';
 import thumb1 from '../../../assets/images/gallery/thumb1.png';
-import { useRecoilValue} from "recoil";
-import { availablePropertiesState } from "../../../store";
+import { useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
+import { availablePropertiesState, filterParamsState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import showNotification from '../../../helpers/showNotification'
@@ -20,6 +20,8 @@ const AvailableProperties = () => {
   const location = useLocation();
   const { getAvailableProperties } = useAvailablePropertiesHook();
   const availableProperties = useRecoilValue(availablePropertiesState);
+  const filterParams = useRecoilValue(filterParamsState);
+  const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
   const { saveProperty } = useAccommodationHook();
 
@@ -28,8 +30,13 @@ const AvailableProperties = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAvailableProperties(setLoading, {propertyType: 'Rooms In Shared Property'})
+    resetFilterParams()
+    getAvailableProperties(setLoading)
   }, [])
+
+  useEffect(() => {
+    getAvailableProperties(setLoading, filterParams)
+  }, [filterParams])
 
 
   /* ASYNC FUNCTIONS

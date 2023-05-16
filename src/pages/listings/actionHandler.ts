@@ -44,7 +44,7 @@ const useListingsHook = () => {
     setLoading(true);
     const res = await api.get(`${GET_PROPERTY}${id}`)
     if(!res.error) {
-      setSingleListing(res.data)
+      setSingleListing(res.data.data)
     }
     setLoading(false);
   }

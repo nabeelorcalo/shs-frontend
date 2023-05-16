@@ -12,7 +12,7 @@ import "./style.scss";
 import useBookingRequests from './BookingRequests/actionHandler';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { availablePropertiesState } from "../../store";
+import { availablePropertiesState, filterParamsState } from "../../store";
 import api from "../../api";
 
 
@@ -122,7 +122,7 @@ const Accommodation = () => {
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
-  const [filterParams, setFilterParams] = useState({});
+  const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
   const [loading, setLoading] = useState(false)
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const items = [
@@ -202,11 +202,9 @@ const Accommodation = () => {
 
   const closeAvailablePropertyFilters = () => {
     setAvailablePropertyFiltersOpen(false)
-    resetFormFields()
   }
 
   function applyFilterAvailableProperties(fieldsValue: any) {
-    console.log('fieldsValue', fieldsValue)
     let params:any = {}
     if(fieldsValue.priceRange !== undefined) {
       params.minPrice = fieldsValue.priceRange[0];
@@ -223,12 +221,12 @@ const Accommodation = () => {
     if(fieldsValue.accomodationType !== undefined) {
       params.propertyType = fieldsValue.accomodationType
     }
-    console.log('param:::: ', params)
-    const values = {
-      ...fieldsValue,
-      'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
-      'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
-    }
+    // console.log('param:::: ', params)
+    // const values = {
+    //   ...fieldsValue,
+    //   'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
+    //   'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
+    // }
     
     setFilterParams((prev) => {
       return {
@@ -236,7 +234,7 @@ const Accommodation = () => {
         ...params
       }
     })
-    console.log('submit filter params;: ', filterParams)
+    closeAvailablePropertyFilters()
   }
 
   const resetFormFields = () => {
@@ -544,7 +542,7 @@ const Accommodation = () => {
                 <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                   <Select.Option value="Entire Property">Entire Property</Select.Option>
                   <Select.Option value="Studio">Studio</Select.Option>
-                  <Select.Option value="Rooms in shared property">Rooms in shared property</Select.Option>
+                  <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
                 </Select>
               </Form.Item>
 
@@ -626,10 +624,9 @@ const Accommodation = () => {
 
               <Form.Item name="accomodationType" label="Accomodation Type">
                 <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="privateRoom">Private Room</Select.Option>
-                  <Select.Option value="sharedRoom">Shared Room</Select.Option>
-                  <Select.Option value="apartment">Apartment</Select.Option>
-                  <Select.Option value="studio">Studio</Select.Option>
+                  <Select.Option value="Entire Property">Entire Property</Select.Option>
+                  <Select.Option value="Studio">Studio</Select.Option>
+                  <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
                 </Select>
               </Form.Item>
 
