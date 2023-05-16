@@ -13,11 +13,10 @@ import { settingDepartmentState } from "../../store";
 
 const useCustomHook = () => {
   const navigate = useNavigate();
-  // change name of state remeber
   const [currentManager, setCurrentManager] = useRecoilState(addManagerDetailState);
   const [getCurentManager, setGetManager] = useRecoilState(getManagerDetailState);
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState)  
-  const limit = 50
+  const limit = 100
 
   const { MANAGER_COMPANY_ADMIN, GET_MANAGER_COMPANY_ADMIN,SETTING_DAPARTMENT } = apiEndPoints;
   const addManagerCompany = async (body: any): Promise<any> => {
@@ -49,8 +48,7 @@ const useCustomHook = () => {
   return {
     addManagerCompany,
     getManagerCompanyAdmin,
-    getSettingDepartment
-    
+    getSettingDepartment  
   };
 };
 

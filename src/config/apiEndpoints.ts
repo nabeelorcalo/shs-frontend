@@ -25,6 +25,7 @@ const endpoints = {
   PROPERTY_Get_TOTAL_AGENTS :"/property/get-property-agents",
   STUDENT_INTRNE_SAWITCH: "/auth/student-intern-switch",
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
-  GET_MANAGER_COMPANY_ADMIN:"/manager_manager/get-company-manager-list"
+  GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
+  GET_RECENT_LISTING: "/property/get-recent-listings",
 }
 export default endpoints;

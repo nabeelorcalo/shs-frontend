@@ -1,7 +1,8 @@
-import { Col, Divider, Row, Typography } from "antd";
 import React from "react";
+import { Col, Divider, Row, Typography } from "antd";
+import '../../../style.scss';
 
-const ListingDetails = () => {
+const ListingDetails = (props: any) => {
   return (
     <div className="listing-details">
       <Row>
@@ -11,23 +12,27 @@ const ListingDetails = () => {
           </div>
           <div className="mt-3 mb-3">
             <Typography className="listing-styles-secondary">
-              Address
+            Address
             </Typography>
             <Typography className="listing-description">
-              Near Giga Mall, Islamabad
+            { props.recentList[0].addressOne}
             </Typography>
           </div>
           <div className="mt-4 mb-3">
             <Typography className="listing-styles-secondary">
               Postal Code
             </Typography>
-            <Typography className="listing-description">4500</Typography>
+            <Typography className="listing-description">
+              {props.recentList[0].postCode}
+            </Typography>
           </div>
           <div className="mt-4 mb-3">
             <Typography className="listing-styles-secondary">
               Is it furnished
             </Typography>
-            <Typography className="listing-description">Yes</Typography>
+            <Typography className="listing-description">
+            {props.recentList[0]?.isFurnished.toString()}
+            </Typography>
           </div>
         </Col>
         <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
@@ -52,8 +57,8 @@ const ListingDetails = () => {
               Property Details
             </Typography>
           </div>
-          <div className="mt-3 mb-3">
-            <Typography className="listing-styles-secondary">
+          <div className="mt-3 mb-10">
+            <Typography className="listing-styles-secondary mb-2">
               How will you rent your property?
             </Typography>
             <Typography className="listing-description">
@@ -63,70 +68,82 @@ const ListingDetails = () => {
           <div>
             <Row gutter={15}>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
-                  <Typography className="listing-styles-secondary">
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary mb-2">
                     Bedrooms in total
                   </Typography>
-                  <Typography className="listing-description">2</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].totalBedrooms}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
-                  <Typography className="listing-styles-secondary">
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary mb-2">
                     Bedroom for rent
                   </Typography>
-                  <Typography className="listing-description">1</Typography>
+                  <Typography className="listing-description">
+                    {props.recentList[0].bedroomsForRent}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
-                  <Typography className="listing-styles-secondary">
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary mb-2">
                     Bathroom
                   </Typography>
-                  <Typography className="listing-description">1</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].totalBathrooms}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
-                  <Typography className="listing-styles-secondary">
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary mb-3">
                     Air Conditioning
                   </Typography>
-                  <Typography className="listing-description">Yes</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].hasAirConditioning}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Heating
                   </Typography>
-                  <Typography className="listing-description">Yes</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].hasHeating}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
-                  <Typography className="listing-styles-secondary">
+                <div className="mb-3">
+                  <Typography className="listing-styles-secondary ">
                     Water heating system
                   </Typography>
-                  <Typography className="listing-description">Yes</Typography>
+                  <Typography className="listing-description">
+                    {props.recentList[0].hasWaterHeating}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Building has
                   </Typography>
                   <Typography className="listing-description">
-                    Escalator
+                  {props.recentList[0].buildingHas}
                   </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={8} sm={8} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Property
                   </Typography>
                   <Typography className="listing-description">
-                    Balcony, Clothes Dryer, Dishwasher
+                  {props.recentList[0].propertyHas}
                   </Typography>
                 </div>
               </Col>
@@ -140,7 +157,7 @@ const ListingDetails = () => {
                     Bed Type
                   </Typography>
                   <Typography className="listing-description">
-                    King Bed
+                  {props.recentList[0].bedType}
                   </Typography>
                 </div>
               </Col>
@@ -150,7 +167,7 @@ const ListingDetails = () => {
                     Access to
                   </Typography>
                   <Typography className="listing-description">
-                    Balcony
+                  {props.recentList[0].propertyHas}
                   </Typography>
                 </div>
               </Col>
@@ -159,49 +176,57 @@ const ListingDetails = () => {
                   <Typography className="listing-styles-secondary">
                     Are two people allowed to live in this room
                   </Typography>
-                  <Typography className="listing-description">Yes</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].twoPeopleAllowed.toString()}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Typography className="listing-styles-main">
+                <Typography className="listing-styles-main mb-3">
                   Rent and Billing
                 </Typography>
               </Col>
 
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Monthly Rent
                   </Typography>
-                  <Typography className="listing-description">$9.28</Typography>
+                  <Typography className="listing-description">
+                    ${props.recentList[0].rent}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Payment
                   </Typography>
-                  <Typography className="listing-description">Cash</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].paymentMethod}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Is there any deposit?
                   </Typography>
-                  <Typography className="listing-description">Yes</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].hasSecurityDeposit.toString()}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Kind of Deposit
                   </Typography>
-                  <Typography className="listing-description">50%</Typography>
+                  <Typography className="listing-description">{props.recentList[0].depositType}</Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Bills
                   </Typography>
@@ -211,7 +236,7 @@ const ListingDetails = () => {
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Minimam Salary
                   </Typography>
@@ -221,66 +246,72 @@ const ListingDetails = () => {
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     How do you charg for electricity bill
                   </Typography>
                   <Typography className="listing-description">
-                    Included
+                  {props.recentList[0].electricityBillPayment}
                   </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     How do you charge for gas bill
                   </Typography>
-                  <Typography className="listing-description">Fixed</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].gasBillPayment}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Typography className="listing-styles-main">
+                <Typography className="listing-styles-main mb-3">
                   Rules and Refrence
                 </Typography>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Gender
                   </Typography>
-                  <Typography className="listing-description">Male</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].genderPreference.toString()}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Age Range
                   </Typography>
-                  <Typography className="listing-description">25-40</Typography>
+                  <Typography className="listing-description">
+                  {props.recentList[0].maxAgePreference}
+                  </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Preferable
                   </Typography>
                   <Typography className="listing-description">
-                    Stuents
+                    Students
                   </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Couples
                   </Typography>
                   <Typography className="listing-description">
-                    Allwoed
+                  {props.recentList[0].couplesAllowed.toString()}
                   </Typography>
                 </div>
               </Col>
               <Col xxl={4} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Allow to Registered
                   </Typography>
@@ -288,7 +319,7 @@ const ListingDetails = () => {
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Smoke
                   </Typography>
@@ -298,56 +329,55 @@ const ListingDetails = () => {
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Pets
                   </Typography>
                   <Typography className="listing-description">
-                    Allowed
+                  {props.recentList[0].petsAllowed.toString()}
                   </Typography>
                 </div>
               </Col>
               <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Musical Instruments
                   </Typography>
                   <Typography className="listing-description">
-                    Allowed
+                  {props.recentList[0].musicalInstrumentsAllowed.toString()}
                   </Typography>
                 </div>
               </Col>
 
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Typography className="listing-styles-main">
+                <Typography className="listing-styles-main mb-3">
                   Documents for Tenants
                 </Typography>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Proof of Income
                   </Typography>
                   <Typography className="listing-description">
-                    Salary Salip or bank statement from the tenant of their
-                    Sponsor
+                  {props.recentList[0].incomeProofRequired.toString()}
                   </Typography>
                 </div>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Typography className="listing-styles-main">
+                <Typography className="listing-styles-main mb-3">
                   Rental Conditions
                 </Typography>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <div>
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Contract Type
                   </Typography>
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                    <div>
-                      <Typography className="listing-styles-secondary">
-                        Daily
+                    <div className="mb-3">
+                      <Typography className="listing-styles-secondary mt-2 mb-1">
+                      {props.recentList[0].contractType}
                       </Typography>
                       <Typography className="listing-description">
                         In case a tenant moves in or moves out in the middle of
@@ -355,21 +385,20 @@ const ListingDetails = () => {
                         in hostel
                       </Typography>
                     </div>
-                  </Col>
-                 
+                  </Col>    
                 </div>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <Typography className="listing-styles-main">
+                <Typography className="listing-styles-main mb-3">
                 Cancelation Policy
                 </Typography>
               </Col>
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                    <div>
+                    <div className="mb-3">
                       <Typography className="listing-styles-secondary">
                         Standard Cancellation
                       </Typography>
-                      <Typography className="listing-description">
+                      <Typography className="listing-description mt-2 mb-1">
                         In case a tenant moves in or moves out in the middle of
                         the month they will charge for each day during they live
                         in hostel

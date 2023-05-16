@@ -4,68 +4,83 @@ import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
 import { activityData, graphData, innerCard } from "./DashboardMock";
 import useCustomHook from "../../actionHandler";
-import { Approved, Clip, Pending, People, Reject } from "../../../../assets/images"; 
+import { Approved, Clip, Pending, People, Reject } from "../../../../assets/images";
 import "../../style.scss";
 import { useRecoilState } from "recoil";
-import { getListingState,getPropertAgents } from "../../../../store/getListingState";
+import {
+  getListingState,
+  getPropertAgents,
+  getRecentListingState
+} from "../../../../store/getListingState";
+import dayjs from "dayjs";
 
 const MainDashboard = () => {
-  const nivagate = useNavigate();
+  const navigate = useNavigate();
   const action = useCustomHook();
   const propertyData = useRecoilState<any>(getListingState);
   const totalAgent = useRecoilState<any>(getPropertAgents);
+  const recentList = useRecoilState<any>(getRecentListingState);
+  const createdAt = "2023-05-12T06:28:48.848Z";
+  const simpleTime = dayjs(createdAt).format('HH:mm a');
 
   // property listing
-   useEffect(() => {
-      action.propertgetlistingstata();
-    }, [])
+  useEffect(() => {
+    action.propertgetlistingstata();
+  }, [])
 
   // propertagents
   useEffect(() => {
     action.propertGetTotalAgents();
   }, [])
 
+  // get listing
+
+  useEffect(() => {
+    action.getRecentListing()
+  }, [])
+
   return (
     <div className="main-dashboard">
+
       <div style={{ overflowX: "scroll", cursor: "pointer" }}>
         <div className="flex items-center gap-3" >
           <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
-            {totalAgent[0]?.map((item:any, index:any) => {
+            {totalAgent[0]?.map((item: any, index: any) => {
               return (
                 <div className="card-main w-[100%] md:w-[350px]">
-              <div className=" flex items-center p-2">
-                <div className="rounded-[10px] h-[60px] w-[60px] bg-[#4783FF0D] p-[0.2rem]">
-                  <div className="img-bg pl-2 pt-2 pr-1">
-                    <People />
+                  <div className=" flex items-center p-2">
+                    <div className="rounded-[10px] h-[60px] w-[60px] bg-[#4783FF0D] p-[0.2rem]">
+                      <div className="img-bg pl-2 pt-2 pr-1">
+                        <People />
+                      </div>
+                    </div>
+                    <div className="ml-3">
+                      <Typography className="card-title ">
+                        Properties Agents
+                      </Typography>
+                      <Typography className="card-number pt-2">
+                        {item?.totalAgents}
+                      </Typography>
+                    </div>
+                  </div>
+                  <div className="status flex justify-end items-center pr-3 pb-1">
+                    <div className="status-dot-active mr-[0.8rem]"></div>
+                    <Typography className="status-card ml-2">
+                      Active
+                      <span className="ml-2">({item?.activeAgents})</span>
+                    </Typography>
+                  </div>
+                  <div className="status flex justify-end items-center pr-3">
+                    <div className="status-dot-inactive"></div>
+                    <Typography className="status-card ml-2">
+                      Inactive
+                      <span className="ml-2">({item?.inactiveAgents})</span>
+                    </Typography>
                   </div>
                 </div>
-                <div className="ml-3">
-                  <Typography className="card-title ">
-                    Properties Agents
-                  </Typography>
-                  <Typography className="card-number pt-2">
-                    {item?.totalAgents}
-                  </Typography>
-                </div>
-              </div>
-              <div className="status flex justify-end items-center pr-3 pb-1">
-                <div className="status-dot-active mr-[0.8rem]"></div>
-                <Typography className="status-card ml-2">
-                  Active
-                  <span className="ml-2">({item?.activeAgents})</span>
-                </Typography>
-              </div>
-              <div className="status flex justify-end items-center pr-3">
-                <div className="status-dot-inactive"></div>
-                <Typography className="status-card ml-2">
-                  Inactive
-                  <span className="ml-2">({item?.inactiveAgents})</span>
-                </Typography>
-              </div>
-            </div>    
               )
             })}
-            {propertyData[0]?.map((item: any, index:any) => {
+            {propertyData[0]?.map((item: any, index: any) => {
               return (
                 <>
                   <div className="card-main w-[100%] md:w-[350px]">
@@ -210,17 +225,17 @@ const MainDashboard = () => {
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
-              {innerCard.map((item, index) => {
+              {recentList[0].map((item: any, index: any) => {
                 return (
                   <>
                     <div
                       onClick={() =>
-                        item.status === "Published"
-                          ? nivagate("published")
-                          : item.status === "Rejected"
-                            ? nivagate("rejected")
-                            : item.status === "Pending"
-                              ? nivagate("pending")
+                        item?.publicationStatus  === "published"
+                          ? navigate(`${item.id}`)
+                          : item?.publicationStatus  === "rejected"
+                            ? navigate(`${item.id}`)
+                            : item?.publicationStatus  === "pending"
+                              ? navigate(`${item.id}`)
                               : ""
                       }
                       className="inner-card"
@@ -229,10 +244,10 @@ const MainDashboard = () => {
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>
                             <span className="text-sm font-medium color-[#363565]">
-                              {item.name}
+                              {item?.user.firstName} {item?.user.lastName}
                             </span>
                             <span className="text-xs font-normal color-[#A0A3BD]">
-                              {item.recentActivity}
+                              &nbsp;Recent listed new property
                             </span>
                           </Typography>
                           <Typography>
@@ -240,32 +255,32 @@ const MainDashboard = () => {
                               Address:
                             </span>
                             <span className="text-xs font-normal color-[#4E4B66]">
-                              {item.address}
+                              {item?.addressOne}
                             </span>
                           </Typography>
                           <Typography className="text-xs font-normal color-[#A0A3BD]">
-                            {item.time}
+                            {simpleTime}
                           </Typography>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
                           <Typography className="flex justify-end font-medium text-base color-[#4E4B66]">
-                            {item.price}
+                            £{item.rent}
                           </Typography>
                           <div
                             className="p-1 mt-4 rounded-[6px]"
                             style={{
                               background:
-                                item.status === "Published"
+                                item?.publicationStatus === "published"
                                   ? "#3DC575"
-                                  : item.status === "Rejected"
+                                  : item?.publicationStatus === "rejected"
                                     ? "#D83A52"
-                                    : item.status === "Pending"
+                                    : item?.publicationStatus === "pending"
                                       ? "#FFC15D"
                                       : "",
                             }}
                           >
-                            <Typography className="cursor-pointer text-xs font-normal text-white text-center ">
-                              {item.status}
+                            <Typography className="cursor-pointer text-xs font-normal white-color text-center capitalize">
+                              {item?.publicationStatus}
                             </Typography>
                           </div>
                         </Col>

@@ -99,10 +99,10 @@
       padding-left: 1.5rem;
       font-family: "Outfit";
       font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
+      font-weight: 400 !important;
+      font-size: 14px !important;
       line-height: 22px;
-      color: $dashboard-primary-bg-color;
+      color: $dashboard-primary-bg-color !important;
     }
   }
 }
@@ -114,26 +114,26 @@
   .listing-styles-main {
     font-family: "Outfit";
     font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 28px;
-    color: $text-primary-title-color;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    line-height: 28px !important;
+    color: $text-primary-title-color !important;
   }
   .listing-styles-secondary {
     font-family: "Outfit";
     font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: $text-primary-title-color;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    color: $text-primary-title-color !important;
   }
   .listing-description {
     font-family: "Outfit";
     font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: $dashboard-primary-bg-color;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    color: $dashboard-primary-bg-color !important;
   }
 }
 .animate {

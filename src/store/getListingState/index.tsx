@@ -7,6 +7,10 @@ export const getListingState = atom({
 
 export const getPropertAgents = atom({
   key: "getPropertAgents",
-  default:[],
-  
+  default: []
+});
+
+export const getRecentListingState = atom({
+  key: "getRecentListing",
+  default: []
 })

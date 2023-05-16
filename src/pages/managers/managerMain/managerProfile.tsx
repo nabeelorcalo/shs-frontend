@@ -53,9 +53,7 @@ const commonObj = {
 };
 
 const ManagerProfile = () => {
-
   const navigate = useNavigate();
-
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
   const onFinish = (values: any) => {
