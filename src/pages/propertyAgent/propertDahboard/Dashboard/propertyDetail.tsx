@@ -32,7 +32,7 @@ const PropertyDetail = () => {
       <Row>
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div>
-            <Typography className="text-2xl font-semibold font-[Outfit] primary-color">
+            <Typography className="text-2xl font-semibold primary-color">
               Property Details
             </Typography>
           </div>
