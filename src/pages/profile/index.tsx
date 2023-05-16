@@ -1,9 +1,10 @@
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 import Student from "./student";
-import University from "./university";
+// import University from "./university";
 import constants from "../../config/constants";
 import "./style.scss";
+import UniversityProfile from "./university";
 
 const Profile = () => {
   const renderPage = () => {
@@ -17,7 +18,7 @@ const Profile = () => {
         return <Student />;
 
       case constants.UNIVERSITY:
-        return <University />;
+        return <UniversityProfile />;
       default:
         return <></>;
     }

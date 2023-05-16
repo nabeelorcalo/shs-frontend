@@ -27,10 +27,10 @@ export default {
       description: "Please try again later or email us",
     },
   },
-  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration","Project Management"],
+  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration", "Project Management"],
   OPTIONS_COUNTRIES: ["England", "Scotland", "Wales", "Ireland"],
   OPTIONS_GENDER: ["Male", "Female", "others"],
-  
+
 };
 
 
@@ -57,7 +57,7 @@ export const ROUTES_CONSTANTS: any = {
   VIEW_PAYROLL_SALARY_SLIP: "payroll/payroll-details/view-payroll-details",
   INTERNS: "interns",
   COMPLETE_INTERNS: "interns/complete",
-  INTERNS_PROFILE: "interns/profile",
+  INTERNS_PROFILE: "profile",
   INTERNS_CHAT: "interns/chat",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
@@ -74,7 +74,7 @@ export const ROUTES_CONSTANTS: any = {
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
   CASE_STUDIES_ASSESSMENT_FORM: "case-studies/assessment-form/:id",
-  CASE_STUDIES_VIEW_DETAILS:'case-studies/view-details/:id',
+  CASE_STUDIES_VIEW_DETAILS: 'case-studies/view-details/:id',
   GRIEVANCES: "grievances",
   CALENDAR: "calendar",
   DELEGATE_MEMEBERS: "delegate-members",
@@ -174,7 +174,7 @@ export const ROUTES_CONSTANTS: any = {
   GRIEVANCES_DETAILS: "/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
   UNIVERSITIES_INTERNS: "universities/interns",
-  UNIVERSITIES_PROFILE: "universities/profile",
+  UNIVERSITIES_PROFILE: "university/profile",
   AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
   JOBDETAILS: 'search-jobs/job-details',
 };
@@ -187,6 +187,6 @@ export const STATUS_CONSTANTS: any = {
   PENDING: "pending",
   CLOSED: "closed",
   REJECTED: "rejected",
-  DRAFT:"draft"
+  DRAFT: "draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
