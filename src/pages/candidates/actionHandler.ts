@@ -6,7 +6,7 @@ import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT } = endpoints;
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_COMPANY_MANAGER_LIST, CREATE_MEETING } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -31,9 +31,12 @@ const useCustomHook = () => {
   const [timeFrame, setTimeFrame] = useState("");
   const [internship, setInternship] = useState("");
   const [download, setDownload] = useState("");
+  // company manager list
+  const [companyManagerList, setCompanyManagerList] = useState<any>([])
   //modal states
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
+
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     await api.get(CANDIDATE_LIST, params).then((res) => setCadidatesList(res?.data));
@@ -167,8 +170,39 @@ const useCustomHook = () => {
       );
     });
   };
+
+  // get company manager list for schedule interview form attendees
+  const getCompanyManagerList: any = async (search?: string) => {
+    const params: any = {
+      page: 1,
+      limit: 100,
+      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
+      filterType: "THIS_MONTH",
+    }
+    search && (params.search = search)
+    await api.get(GET_COMPANY_MANAGER_LIST, params)
+      .then((res) => {
+        setCompanyManagerList(res?.data?.map(({ companyManager }: any) => companyManager))
+      })
+  }
+  // schedule interview
+  const scheduleInterview = async (values: any) => {
+    console.log(values);
+
+    values.companyId = 1;
+    values.title = "interviw";
+    values.recurrence = "DOES_NOT_REPEAT";
+    values.reapeatDay = 0;
+    values.address = "";
+    values.eventType = "INTERVIEW";
+    console.log(values);
+
+    await api.post(CREATE_MEETING, values).then(({ data }) => {
+      console.log(data);
+    })
+  }
   return {
-    cadidatesList, setCadidatesList, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, getComments, handleCreateComment, commentsList, handleInitialPiple, handleStage, params
+    cadidatesList, setCadidatesList, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, getComments, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, params
   };
 };
 

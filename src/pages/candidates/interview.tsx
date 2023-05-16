@@ -5,7 +5,7 @@ import { Schedule, DrawerIcon, IconEdit } from "../../assets/images";
 import { Alert } from "../../components";
 import ScheduleModal from "./scheduleModal";
 
-const Interview = () => {
+const Interview = ({candidateId}:any) => {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
 
@@ -31,7 +31,7 @@ const Interview = () => {
           <Schedule />
           <p className="btn-text">Schedule</p>
         </button>
-        <ScheduleModal setOpen={setOpen} open={open} />
+        <ScheduleModal setOpen={setOpen} open={open} candidateId={candidateId} />
       </div>
 
       <div className="onTime mt-8 mb-5">21 November 2022</div>
