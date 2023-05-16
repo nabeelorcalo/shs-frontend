@@ -61,7 +61,7 @@ const post = (url: any, data = {}, config: any = {}) =>
     .then(handleResponse)
     .catch(handleError);
 
-const put = (url: any, data = {}, config: any = {}) =>
+const put = (url: any, data =  {}, config: any = {}) =>
   axiosInstance
     .put(url, data, {
       ...config,
@@ -79,11 +79,12 @@ const patch = (url: any, data = {}, config: any = {}) =>
     .then(handleResponse)
     .catch(handleError);
 
-const del = (url: any, config: any = {}) =>
+const del = (url: any, config: any = {},data={}) =>
   axiosInstance
     .delete(url, {
       ...config,
       headers: { ...defaultHeaders, ...config.headers },
+      data
     })
     .then(handleResponse)
     .catch(handleError);

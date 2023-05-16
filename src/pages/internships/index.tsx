@@ -1,77 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import {
-  DropDown,
-  SearchBar,
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  FiltersButton
+  DropDown, SearchBar, GlobalTable, PageHeader,
+  BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import "./style.scss";
-import "../../scss/global-color/Global-colors.scss"
-import { Avatar, Button, Divider, Dropdown } from "antd";
-import { InternshipsIcon, More } from "../../assets/images";
+import { Avatar, Button, Dropdown, Row, Col, Select } from "antd";
 import type { MenuProps } from 'antd';
-import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../config/constants";
-import { useNavigate, Link } from "react-router-dom";
-
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
-
-const tableData = [
-  {
-    no: "01",
-    title: "Research Analyst",
-    department: "Business Analyst",
-    posting_date: "01/07/2022",
-    closing_date: "01/07/2022",
-    location: "virtual",
-    status: 'pending',
-    posted_by: 'T',
-
-  },
-  {
-    no: "02",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'active',
-    posted_by: 'U',
-
-  },
-  {
-    no: "03",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'rejected',
-    posted_by: 'U',
-
-  }
-]
+import { InternshipsIcon, More } from "../../assets/images";
+import { ROUTES_CONSTANTS } from "../../config/constants";
+import useCustomHook from "./actionHandler";
+import "./style.scss";
 
 const Internships = () => {
   const navigate = useNavigate()
-  // const [value, setValue] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
   const [state, setState] = useState({
+    status: undefined,
     value: "",
     showDrawer: false,
-    location: "",
-    department: ""
+    location: undefined,
+    department: undefined
   })
+  const { getAllInternshipsData, internshipData, changeHandler,
+    getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
+    departmentsData, locationsData } = useCustomHook();
 
-  const PopOver = () => {
-    const navigate = useNavigate()
+  useEffect(() => {
+    getAllInternshipsData(state.status, state.location, state.department);
+    getAllDepartmentData();
+    getAllLocationsData();
+  }, [])
+
+  const handleDublicate = (id: any) => {
+    getDuplicateInternship(id)
+  }
+
+  const PopOver = (props: any) => {
+    const { id } = props
+    console.log("my id is", id);
+
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: id }) }}>
             View details
           </a>
         ),
@@ -79,7 +52,7 @@ const Internships = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => { handleDublicate(id) }}>
             Duplicate
           </a>
         ),
@@ -96,7 +69,7 @@ const Internships = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No.",
+      title: "No",
     },
     {
       dataIndex: "title",
@@ -140,34 +113,36 @@ const Internships = () => {
     }
   ]
 
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = internshipData.map((item: any, index: number) => {
+    const postingDate = dayjs(item.createdAt).format('DD/MM/YYYY');
+    const closingDate = dayjs(item.closingDate).format('DD/MM/YYYY');
     return (
       {
-        no: item.no,
+        no: internshipData.length < 10 ? `0${index + 1}` : `${index + 1}`,
         title: item.title,
-        department: item.department,
-        posting_date: item.posting_date,
-        closing_date: item.closing_date,
-        location: item.location,
+        department: item.department.name,
+        posting_date: postingDate,
+        closing_date: closingDate,
+        location: item.location ? item.location?.name : "___",
         status:
           <Button
             size="small"
             className={
-              `${item.status === ACTIVE ?
+              `${item.status === "PUBLISHED" ?
                 `text-success-bg-color`
                 :
-                item.status === PENDING ?
+                item.status === "PENDING" ?
                   `text-warning-bg-color`
                   :
-                  item.status === CLOSED ?
+                  item.status === "CLOSED" ?
                     `text-info-bg-color`
                     :
-                    item.status === REJECTED ?
+                    item.status === "REJECTED" ?
                       `text-error-bg-color`
-                      :
-                      `light-sky-blue-bg`
+                      : item.status === "DRAFT" ?
+                        `text-secondary-bg-disabled-color` : `light-sky-blue-bg`
               }  
-                text-[#fff]`
+                text-[#fff] status-btn`
             }
           >
             {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
@@ -175,7 +150,7 @@ const Internships = () => {
         posted_by: <Avatar
           src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
         />,
-        actions: <PopOver />
+        actions: <PopOver id={item.id} />
       }
     )
   })
@@ -188,107 +163,104 @@ const Internships = () => {
   }
 
   const updateLocation = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      location: value
+      location: event
     }))
   }
 
   const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      department: value
+      department: event
     }))
   }
-
+  const handleApplyFilter = () => {
+    getAllInternshipsData(state.status, state.location, state.department);
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: false
+    }))
+  }
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      status: undefined,
+      location: undefined,
+      department: undefined
+    }))
+  }
   return (
     <>
-      <PageHeader title="Internships" />
-      <Divider />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
-          </div>
-          <div className="flex max-sm:flex-col flex-row gap-4">
-            <FiltersButton
-              label="Filters"
-              onClick={handleDrawer}
-            />
-            <Drawer
-              closable
-              open={state.showDrawer}
-              onClose={handleDrawer}
-              title="Filters"
-            >
-              <React.Fragment key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Location</p>
-                    <DropDown
-                      name="name"
-                      options={[
-                        "EidinBurg",
-                        "Glasgow",
-                        "London",
-                        "Virtual",
-                        "All"
-                      ]}
-                      setValue={() => { updateLocation(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.location}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Department</p>
-                    <DropDown
-                      name="name"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                        "All"
-                      ]}
-                      setValue={() => { updateDepartment(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.department}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
-                  </div>
+      <PageHeader title="Internships" bordered />
+      <Row gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+          <FiltersButton
+            label="Filters"
+            onClick={handleDrawer}
+          />
+          <Drawer
+            closable
+            open={state.showDrawer}
+            onClose={handleDrawer}
+            title="Filters"
+          >
+            <React.Fragment key=".0">
+              <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-2">
+                  <label>Location</label>
+                  <Select
+                    className='my-select'
+                    placeholder="Select"
+                    value={state.location}
+                    onChange={(event: any) => { updateLocation(event) }}
+                    options={locationsData?.map((item: any) => {
+                      return { value: item?.id, label: item?.name }
+                    })}
+                  />
                 </div>
-              </React.Fragment>
-            </Drawer>
-            <Button
-              type="primary"
-              size="middle"
-              icon={<InternshipsIcon />}
-              className="button-tertiary"
-              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-            >
-              New Internship
-            </Button>
-          </div>
-        </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            <GlobalTable columns={columns} tableData={newTableData} />
-          </div>
-        </BoxWrapper>
-      </div>
+                <div className="flex flex-col gap-2">
+                  <label>Department</label>
+                  <Select
+                      className='my-select'
+                      placeholder="Select"
+                      value={state.department}
+                      onChange={(event: any) => { updateDepartment(event)  }}
+                      options={departmentsData?.map((item: any) => {
+                        return { value: item?.id, label: item?.name }
+                      })}
+                    />
+                </div>
+                <div className="flex flex-row gap-3 justify-end">
+                  <Button type="default" size="middle" className="button-default-tertiary" 
+                   onClick={handleResetFilter}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary" 
+                 onClick={handleApplyFilter}>Apply</Button>
+                </div>
+              </div>
+            </React.Fragment>
+          </Drawer>
+          <Button
+            type="primary"
+            size="middle"
+            icon={<InternshipsIcon />}
+            className="button-tertiary"
+            onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
+          >
+            New Internship
+          </Button>
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <div className="Internships-table">
+              <GlobalTable columns={columns} tableData={newTableData} />
+            </div>
+          </BoxWrapper>
+        </Col>
+      </Row>
     </>
   );
 };

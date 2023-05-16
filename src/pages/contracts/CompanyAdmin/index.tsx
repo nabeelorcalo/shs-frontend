@@ -50,7 +50,7 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['THIS_WEEK', 'LAST_WEEK', 'THIS_MONTH', 'LAST_MONTH', 'DATE_RANGE']
+const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
@@ -82,7 +82,7 @@ const CompanyAdmin = () => {
   const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker)
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -176,12 +176,13 @@ const CompanyAdmin = () => {
   };
   const statusValueHandle = (val: any) => {
     setValueStatus(val);
-    getContractList(val, valueDatePacker)
+    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
   }
   const handleTimeFrameValue = (val: any) => {
     setValueDatePacker(val);
-    getContractList(valueStatus, val)
+    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"));
   }
+
   const tableColumns = [
     {
       title: "No",
@@ -227,8 +228,8 @@ const CompanyAdmin = () => {
         No: contractList?.length < 10 && `0 ${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
-            item.status === "rejected" || item.status === "Changes requested" ?
-              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "Signed" ?
+            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
                 (<img src={Signed} alt="img" width={40} height={40} />) :
                 (<img src={Recevied} alt="img" width={40} height={40} />)
           }
@@ -283,7 +284,7 @@ const CompanyAdmin = () => {
       }
     )
   })
-  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0,10)}&endDate=${valueDatePacker.slice(13,23)}` : valueDatePacker)
+  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0, 10)}&endDate=${valueDatePacker.slice(13, 23)}` : valueDatePacker)
   return (
     <div className="contract-company-admin">
       <Alert
@@ -325,7 +326,7 @@ const CompanyAdmin = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
 
           <DropDown name="Time Frame" options={timeFrameDropdownData}
-            showDatePickerOnVal={'DATE_RANGE'}
+            showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
             value={valueDatePacker}
             setValue={(e: any) => handleTimeFrameValue(e)}
