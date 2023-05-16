@@ -54,7 +54,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   // create comment State
   const [comment, setComment] = useState<string>("");
 
+  // logged in user data
   const userData = useRecoilValue(currentUserState);
+
+  useEffect(() => {
+    setHiringProcessList(handleInitialPiple(stage));
+    getComments(id);
+  }, []);
 
   // custom hooks and states
   const {
@@ -224,11 +230,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     setIsOfferLetterTemplateModal(false);
     setHiringBtnText("Resend");
   };
-
-  useEffect(() => {
-    setHiringProcessList(handleInitialPiple(stage));
-    getComments(id);
-  }, []);
 
   return (
     <div className="hiring-wrapper">

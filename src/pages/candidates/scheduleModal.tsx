@@ -21,8 +21,8 @@ const RequestDocModel = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (value: any) => {
-    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD");
-    value.currentDate = dayjs(value?.currentDate).format("YYYY-MM-DD");
+    value.dateFrom = dayjs(value?.dateFrom).format("YYYY-MM-DD");
+    value.dateTo = dayjs(value?.dateFrom).format("YYYY-MM-DD");
     console.log(value, "form value");
 
     // message.success('Submit success!');
@@ -62,13 +62,8 @@ const RequestDocModel = (props: any) => {
           <div className="title">
             <p>Date</p>
           </div>
-          <Form.Item name="currentDate" rules={[{ required: true }]}>
-            <CommonDatePicker
-              open={isOpenDate}
-              name={"currentDate"}
-              setOpen={setIsOpenDate}
-              setValue={setDateTimeVal}
-            />
+          <Form.Item name="dateFrom" rules={[{ required: true }]}>
+            <CommonDatePicker open={isOpenDate} name={"dateFrom"} setOpen={setIsOpenDate} setValue={setDateTimeVal} />
           </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
@@ -105,7 +100,7 @@ const RequestDocModel = (props: any) => {
             <div className="time-pick-wrapper flex flex-wrap justify-between mt-5">
               <div className="time-from">
                 <div className="heading mt-2 mb-3">Time From</div>
-                <Form.Item name="timeFrom" rules={[{ required: true }]}>
+                <Form.Item name="dateFrom" rules={[{ required: true }]}>
                   <TimePicker className="time-p" />
                 </Form.Item>
               </div>
