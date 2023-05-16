@@ -67,8 +67,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
-  const currentUser = useRecoilValue(currentUserState);
-  const [currentUserData, setcurrentUserData] = useRecoilState(currentUserState);
+  // const currentUser = useRecoilValue(currentUserState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
  
   const menuStyle = {
@@ -121,15 +121,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
   const navigateToInbox = () => {
     navigate("/chat");
   };
-  const GoToSwitchRole = async () => {
+  const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
-    const { response } = await api.get(STUDENT_INTRNE_SAWITCH);
-    const userData = {
-      ...response,
-      role: response?.role
-    }
-    setcurrentUserData(userData);
-    setOpen(false);
+    const { data } = await api.get(STUDENT_INTRNE_SAWITCH);
+    console.log(data,"responseresponseresponseresponse");
+    // const userData = {
+    //   ...data,
+    //   role: data?.role
+    // }
+    // setCurrentUser(userData);
+    // setOpen(false);
   }
 
   /* RENDER APP

@@ -56,7 +56,7 @@ const ListingUpdate = () => {
   const {listingId} = useParams();
   const [tabKey, setTabKey] = useState('locations')
   const { getListing, updateListing } = useListingsHook();
-  const singleListing = useRecoilValue(listingState);
+  const singleListing:any = useRecoilValue(listingState);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true)
@@ -68,58 +68,7 @@ const ListingUpdate = () => {
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [updateLoading, setUpdateLoading] = useState<boolean>();
-  const [initValues,  setInitValues] = useState({
-    "address": "12 Gibson Close, Waterbeach, CB25 9HY",
-    "address2": "",
-    "postcode": "WF1 2UP",
-    "isFurnished": "furnishedYes",
-    "propertyType": "entireProperty",
-    "bedroomsTotal": "3",
-    "bedroomsForRent": "3",
-    "bathrooms": "2",
-    "airConditioning": "central",
-    "heating": "centralProperty",
-    "heatedWaterSystem": "naturalGas",
-    "buildingHas": ["buildingElevator"],
-    "PropertyHas": ["propertyBalcony", "propertyClothesDryer"],
-    "bedroomPhotos": [
-      {
-        uid: '-1',
-        name: 'image_name_12312.png',
-        status: 'done',
-        url: 'https://placehold.co/600x400',
-      },
-      {
-        uid: '-2',
-        name: 'image.png',
-        status: 'done',
-        url: 'https://placehold.co/600x400',
-      },
-    ],
-    "bedType": "typeFuton",
-    "allowedTwoPeople": "allowedYes",
-    "kindOfAmenities": ["desk", "keyLocker"],
-    "paymentMethod": "cash",
-    "securityDeposit": "securityDepositYes",
-    "kindOfDeposit": "depositHalfMont",
-    "minimumStay": "2",
-    "allBillsIncluded": billsIncluded,
-    "chargeElectricityBill": "electricityIcluded",
-    "chargeWaterBill": "waterIcluded",
-    "chargeGasBill": "gasIcludedLimit",
-    "specificGender": "genderMale",
-    "maxAge": "less40",
-    "tenantsKind": "tenantStudents",
-    "couplesAllowed": "couplesAllowedNo",
-    "tenantsRegisterAddress": "tenantsRegisterAddressYes",
-    "allowedPets": "allowedYes",
-    "allowedMusic": "allowedMusicNo",
-    "selectDocument": ["proofOfIdentity"],
-    "contractType": "contractTypeDaily",
-    "cancellationPolicy": "standardCancellation"
-  })
   
-
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -156,6 +105,7 @@ const ListingUpdate = () => {
     }
     setUpdateLoading(true);
     const result = await updateListing(listingId, values);
+    setDisabled(true)
     setUpdateLoading(false);
     handleSubmission(result);
   }, [form, handleSubmission]);
@@ -210,6 +160,8 @@ const ListingUpdate = () => {
             >
               <div className="tabs-pane-card">
                 <Spin spinning={loading}>
+                  {singleListing?.length !== 0 &&
+                  <>
                   <div className="tabs-pane-card-title">
                     <Typography.Title level={4}>
                       Location
@@ -265,6 +217,8 @@ const ListingUpdate = () => {
                       </Row>
                     </Form>
                   </div>
+                  </>
+                  }
                 </Spin>
               </div>
             </Tabs.TabPane>
@@ -282,6 +236,8 @@ const ListingUpdate = () => {
             >
               <div className="tabs-pane-card">
                 <Spin spinning={loading}>
+                {singleListing?.length !== 0 &&
+                <>
                   <div className="tabs-pane-card-title">
                     <Typography.Title level={4}>
                       Property Details
@@ -435,6 +391,8 @@ const ListingUpdate = () => {
                       </Row>
                     </Form>
                   </div>
+                </>
+                }
                 </Spin>
               </div>
             </Tabs.TabPane>
@@ -452,6 +410,8 @@ const ListingUpdate = () => {
             >
               <div className="tabs-pane-card">
                 <Spin spinning={loading}>
+                {singleListing?.length !== 0 &&
+                <>
                   <div className="tabs-pane-card-title">
                     <Typography.Title level={4}>
                       Bedroom Details
@@ -460,6 +420,7 @@ const ListingUpdate = () => {
                   <div className="tabs-pane-card-body">
                     <Form
                       form={form}
+                      requiredMark={false}
                       layout="vertical"
                       name="updateBedroomDetails"
                       initialValues={singleListing}
@@ -496,7 +457,7 @@ const ListingUpdate = () => {
                           </div>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="bedType" label="Bed Type">
+                          <Form.Item name="bedType" label="Bed Type" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Futon">Futon</Select.Option>
                               <Select.Option value="Airbed">Airbed</Select.Option>
@@ -568,6 +529,8 @@ const ListingUpdate = () => {
                       </Row>
                     </Form>
                   </div>
+                </>
+                }
                 </Spin>
               </div>
             </Tabs.TabPane>
@@ -585,6 +548,8 @@ const ListingUpdate = () => {
             >
               <div className="tabs-pane-card">
                 <Spin spinning={loading}>
+                {singleListing?.length !== 0 &&
+                <>
                   <div className="tabs-pane-card-title">
                     <Typography.Title level={4}>
                       Rent & Billing
@@ -593,6 +558,7 @@ const ListingUpdate = () => {
                   <div className="tabs-pane-card-body">
                     <Form
                       form={form}
+                      requiredMark={false}
                       layout="vertical"
                       name="updateRentBilling"
                       initialValues={singleListing}
@@ -604,21 +570,28 @@ const ListingUpdate = () => {
                       >
                       <Row gutter={30}>
                         <Col xs={24}>
-                          <Form.Item name="rentFrequency" label="Rent Frequency">
+                          <Form.Item name="rentFrequency" label="Rent Frequency" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Day">Day</Select.Option>
-                              <Select.Option value="Week">Week</Select.Option>
-                              <Select.Option value="Month">Month</Select.Option>
+                              <Select.Option value="day">Day</Select.Option>
+                              <Select.Option value="week">Week</Select.Option>
+                              <Select.Option value="month">Month</Select.Option>
                             </Select>
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="rent " label="Rent">
-                            <InputNumber placeholder="Placeholder" />
+                          <Form.Item name="rent " label="Rent" rules={[{ required: true }]}>
+                            <InputNumber
+                              placeholder="Placeholder"
+                              onKeyPress={(event) => {
+                                if (!/[0-9]/.test(event.key)) {
+                                  event.preventDefault();
+                                }
+                              }}
+                            />
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="paymentMethod" label="Payment Method">
+                          <Form.Item name="paymentMethod" label="Payment Method" rules={[{ required: true }]}>
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                               <Select.Option value="Credit/Debit card">Credit/Debit card</Select.Option>
                               <Select.Option value="Cash">Cash</Select.Option>
@@ -644,20 +617,27 @@ const ListingUpdate = () => {
                         <Col xs={24}>
                           <Form.Item name="depositType" label="Which kind of deposit?">
                             <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                              <Select.Option value="Half month">Half month</Select.Option>
-                              <Select.Option value="Full month">Full month</Select.Option>
-                              <Select.Option value="Fixed">Fixed</Select.Option>
+                              <Select.Option value="halfMonth">Half month</Select.Option>
+                              <Select.Option value="fullMonth">Full month</Select.Option>
+                              <Select.Option value="fixed">Fixed</Select.Option>
                             </Select>
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="minimumStay" label="Minimum Stay">
-                            <InputNumber  />
+                          <Form.Item name="minimumStay" label="Minimum Stay" rules={[{ required: true }]}>
+                            <InputNumber
+                              placeholder="Placeholder"
+                              onKeyPress={(event) => {
+                                if (!/[0-9]/.test(event.key)) {
+                                  event.preventDefault();
+                                }
+                              }}
+                            />
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
-                          <Form.Item name="allBillsIncluded" label="All bills are included">
-                            <Switch onChange={onChangeSwitch} checked={billsIncluded} size="small" />
+                          <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
+                            <Switch size="small" />
                           </Form.Item>
                         </Col>
                         <Col xs={24}>
@@ -701,6 +681,8 @@ const ListingUpdate = () => {
                       </Row>
                     </Form>
                   </div>
+                </>
+                }
                 </Spin>
               </div>
             </Tabs.TabPane>
@@ -718,6 +700,8 @@ const ListingUpdate = () => {
             >
               <div className="tabs-pane-card">
                 <Spin spinning={loading}>
+                {singleListing?.length !== 0 &&
+                <>
                   <div className="tabs-pane-card-title">
                     <Typography.Title level={4}>
                       Rules & Prefrences
@@ -849,6 +833,8 @@ const ListingUpdate = () => {
                       </Row>
                     </Form>
                   </div>
+                </>
+                }
                 </Spin>
               </div>
             </Tabs.TabPane>
@@ -866,6 +852,8 @@ const ListingUpdate = () => {
             >
               <div className="tabs-pane-card">
                 <Spin spinning={loading}>
+                {singleListing?.length !== 0 &&
+                <>
                   <div className="tabs-pane-card-title">
                     <Typography.Title level={4}>
                       Rental Conditions
@@ -958,6 +946,8 @@ const ListingUpdate = () => {
                       </Row>
                     </Form> 
                   </div>
+                </>
+                }
                 </Spin>
               </div>
             </Tabs.TabPane>

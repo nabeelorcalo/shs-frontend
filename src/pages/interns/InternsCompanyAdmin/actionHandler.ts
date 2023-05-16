@@ -1,24 +1,44 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useEffect, useMemo, useState } from "react";
+import { useRecoilState } from "recoil";
+import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
-import constants from "../../../config/constants";
+import apiEndpints from "../../../config/apiEndpoints";
+import { internsDataState } from '../../../store/interns/index';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_ALL_INTERNS } = apiEndpints
+  const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
+  const[isLoading,setIsLoading] =useState(false);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  useEffect(() => {
+    debouncedResults.cancel();
+  });
+
+  // Get all interns data
+  const getAllInternsData = async (event:any) => {
+    const { data } = await api.get(GET_ALL_INTERNS, { companyId: 1, userType: 'intern' ,InternStatus: event ? event : null})
+    setGetAllInters(data);
+    setIsLoading(true);
+  }
+
+  //Search internships
+  const changeHandler = async (val: any) => {
+    const { data } = await api.get(
+      GET_ALL_INTERNS,
+      val
+        ? { companyId: 1, userType: 'intern', search: val }
+        : { companyId: 1, userType: 'intern' }
+    );
+    setGetAllInters(data);
   };
-
+  const debouncedResults = useMemo(() => {
+    return debounce(changeHandler, 500);
+  }, []);
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -26,9 +46,8 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -37,8 +56,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, title, department, joining_date, date_of_birth}: any) =>
-      [ no, title, department, joining_date, date_of_birth]
+    const body = data.map(({ no, title, department, joining_date, date_of_birth }: any) =>
+      [no, title, department, joining_date, date_of_birth]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -88,8 +107,11 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
     downloadPdfOrCsv,
+    getAllInternsData,
+    changeHandler,
+    getAllInters,
+    isLoading
   };
 };
 

@@ -18,11 +18,11 @@ const PasswordSuccess = () => {
             </div>
             <div className="main-wrapper">
               <Typography
-                className="text-[#363565] text-3xl font-medium text-center font-[outfit]">
+                className="text-[#363565] text-3xl font-medium text-center">
                 Password Reset Successful
               </Typography>
               <Typography
-                className="text-[#4E4B66] text-base font-medium text-center font-[outfit]">
+                className="text-[#4E4B66] text-base font-medium text-center">
                 Your password has been reset successfully.
               </Typography>
             </div>

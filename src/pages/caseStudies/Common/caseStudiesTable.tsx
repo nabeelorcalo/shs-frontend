@@ -59,7 +59,7 @@ const CaseStudiesTable = (props: any) => {
             children: (
               <div className='case-studies-table'>
                 <span
-                  className={`rounded-md px-2 py-1 text-white text-sm font-normal font-[outfit] ${text === 'Pending' ? 'pending' :
+                  className={`rounded-md px-2 py-1 text-white text-sm font-normal ${text === 'Pending' ? 'pending' :
                     text === 'Approved' ? 'approved' : text === 'Rejected' ? 'rejected' : ''} `}  >
                   {text}
                 </span>

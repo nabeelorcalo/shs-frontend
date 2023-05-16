@@ -10,20 +10,17 @@ const Template: ComponentStory<typeof AccommodationCard> = (args) => <Accommodat
 
 export const AccommodationCardView = Template.bind({});
 AccommodationCardView.args = {
-    id: '1',
-    maxWidth: '350px',
     coverPhoto: 'https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-    discount: '30',
-    autualPrice: '1800',
-    withDiscountPrice: '1200',
+    offer: 30,
+    rent: 0,
     propertyAvailableFor: 'week',
-    propertyType: 'apartment',
-    totalBeds: '2',
-    totalWashRoom: '2',
+    propertyType: "Studio",
+    totalBedrooms: 2,
+    totalBathrooms: 2,
+    address: "118-127 Park Ln, London W1K 7AF, UK",
     tags: ['utility bills', 'laundry', 'meals'],
-    location: 'location',
-    handleChatClick() { },
-    handleDetailClick() { },
-    handleSaveClick() { },
+    onChat: ()=> { },
+    onDetail: ()=> { },
+    onSave: ()=> { },
 }
 

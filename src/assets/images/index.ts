@@ -503,6 +503,9 @@ export { ReactComponent as DepartmentIcon } from './ViewInternship/DepartmentIco
 export { ReactComponent as JobTimeIcon } from './ViewInternship/JobTimeIcon.svg';
 export { ReactComponent as LocationIconCm } from './ViewInternship/LocationIconCm.svg';
 export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.svg';
+export { ReactComponent as SuccessStatus } from '../images/Internships/success-status.svg';
+export { ReactComponent as ClosedStatus } from '../images/Internships/closed-status.svg';
+
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
 export { default as Offerimg2 } from "./offers/offerImg2.svg";

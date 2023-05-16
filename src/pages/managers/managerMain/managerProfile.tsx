@@ -76,13 +76,13 @@ const ManagerProfile = () => {
           <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
               <Pf />
-              <Typography className="font-semibold text-xl text-primary-color font-[outfit]">
+              <Typography className="font-semibold text-xl text-primary-color">
                 {commonObj.personName}
               </Typography>
-              <Typography className="font-medium text-base text-secondary-color  font-[outfit]">
+              <Typography className="font-medium text-base text-secondary-color">
                 UI/UX Designer
               </Typography>
-              <Typography className="font-medium text-base text-secondary-color  font-[outfit]">
+              <Typography className="font-medium text-base text-secondary-color">
                 Design
               </Typography>
             </center>
@@ -90,19 +90,19 @@ const ManagerProfile = () => {
             <div className="social-info">
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <IconEmail />
-                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
+                <Typography className="font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
-                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
+                <Typography className="font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.phone}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
                 <IconLocation />
-                <Typography className=" font-[outfit] font-normal text-sm text-secondary-color  ml-4">
+                <Typography className="font-normal text-sm text-secondary-color  ml-4">
                   {commonObj.location}
                 </Typography>
               </div>

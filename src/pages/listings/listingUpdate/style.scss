@@ -259,6 +259,17 @@
     width: 100%;
   }
 
+  .custom-input-switch {
+    .ant-form-item-control-input-content {
+      border: 1px solid $text-error-line-color;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 8px 16px;
+    }
+  }
+
   .form-btn-right {
     text-align: right;
   }

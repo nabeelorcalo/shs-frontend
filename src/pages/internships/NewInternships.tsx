@@ -1,75 +1,76 @@
-import { useState } from 'react'
-import { Button, Col, Divider, Row, Radio, Space, Select, Input } from 'antd'
-import {
-  CommonDatePicker,
-  DropDown,
-  PageHeader,
-  BoxWrapper,
-  Breadcrumb,
-} from '../../components'
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd';
+import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker } from '../../components';
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
+import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
 import { ROUTES_CONSTANTS } from '../../config/constants';
+import useCustomHook from './actionHandler';
+import './style.scss';
+import dayjs from 'dayjs';
+
 const { TextArea } = Input;
-const departmentOptions = [
-  'search',
-  'Bussiness Analyst',
-  'Research',
-  'Accounting',
-  'Human Resources',
-  'Administration',
-  'Project Management'
-]
+
 const amountOptions = [
   {
-    value: 'GBP',
+    value: '£',
     label: 'GBP',
   },
   {
-    value: 'USD',
+    value: '$',
     label: 'USD',
   },
 ]
-const locationOptions = [
-  'Eidinburg',
-  'Glasgow',
-  'London',
-]
 const durationOptions = [
-  '1 month',
-  '2 months',
-  '3 months',
-  '4 months',
-  '5 months',
-  '6 months',
-  '7 months',
-  '8 months',
-  '9 months',
-  '10 months',
-  '11 months',
-  '12 months'
+  { value: '1 month', label: '1 month' },
+  { value: '2 months', label: '2 months' },
+  { value: '3 months', label: '3 months' },
+  { value: '4 months', label: '4 months' },
+  { value: '5 months', label: '5 months' },
+  { value: '6 months', label: '6 months' },
+  { value: '7 months', label: '7 months' },
+  { value: '8 months', label: '8 months' },
+  { value: '9 months', label: '9 months' },
+  { value: '10 months', label: '10 months' },
+  { value: '11 months', label: '11 months' },
+  { value: '12 months', label: '12 months' }
 ]
 const frequencyOptions = [
-  'Hourly',
-  'Daily',
-  'Weekly',
-  'Monthly',
-  'Quarterly',
-  'Annually'
+  { value: 'HOURLY', label: 'Hourly' },
+  { value: 'DAILY', label: 'Daily' },
+  { value: 'WEEKLY', label: 'Weekly' },
+  { value: 'MONTHLY', label: 'Monthly' },
+  { value: 'QUARTERLY', label: 'Quarterly' },
+  { value: 'ANNUALLY', label: 'Annually' }
 ]
 
 const NewInternships = () => {
-  const navigate = useNavigate()
+  const { state } = useLocation();
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [internShipFormData, setInternShipFormData] = useState(state);
   const [partAndFullTime, setPartAndFullTime] = useState(null);
-  const [paidAndUnpaid, setPaidAndUnpaid] = useState(null);
-  const [remoteOnsite, setRemoteOnsite] = useState(null);
-  const [state, setState] = useState({
-    department: "",
-    frequency: "",
-    internshipDuration: "",
-    location: "",
-    expectedClosingDate: ""
-  })
+  const [paidAndUnpaid, setPaidAndUnpaid] = useState(internShipFormData?.salaryType ?? null);
+  const [openDataPicker, setOpenDataPicker] = useState(false);
+  const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
+  const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
+  const typeOfWork = {
+    partTime: "PART_TIME",
+    fullTime: "FULL_TIME"
+  }
+  const natureofwork = {
+    virtual: "VIRTUAL",
+    onsite: "ONSITE",
+    hybride: "HYBRIDE",
+  }
+  const { postNewInternshipsData, getAllDepartmentData,
+    departmentsData, EditNewInternshipsData, getAllLocationsData, locationsData } = useCustomHook();
+
+  useEffect(() => {
+    getAllDepartmentData
+    getAllLocationsData
+  }, [])
+
 
   const tempArray = [
     { name: "New Internship" },
@@ -79,251 +80,234 @@ const NewInternships = () => {
     },
   ];
 
-  const onChange = (e: RadioChangeEvent) => {
+  const onWorkTypeChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPartAndFullTime(e.target.value);
   };
 
-  const onChange1 = (e: RadioChangeEvent) => {
+  const onInternshipTypeChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setPaidAndUnpaid(e.target.value);
   };
 
-  const onChange2 = (e: RadioChangeEvent) => {
+  const onNatureChange = (e: RadioChangeEvent) => {
     console.log('radio checked', e.target.value);
     setRemoteOnsite(e.target.value);
   };
 
-  const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      department: value
-    }))
-  }
+  const onFinish = (values: any) => {
+    const newVals={
+      ...values,
+      amount:amount.amount,
+      salaryAmount:amount.amountType
+    }
+    console.log('Success:', values);
+    if (internShipFormData) {
+      EditNewInternshipsData(newVals)
+    } else {
+      postNewInternshipsData(newVals);
+    }
+    form.resetFields();
+    setInternShipFormData({})
+  };
 
-  const updateFrequency = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      frequency: value
-    }))
-  }
+  const onSelectChange = (value: any) => {
+    console.log('slected item', value);
+  };
 
-  const updateLocation = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      location: value
-    }))
-  }
-
-  const updateInternshipDuration = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      internshipDuration: value
-    }))
+  const initialValues = {
+    title: internShipFormData?.title ?? '',
+    department: internShipFormData?.departmentId ?? undefined,
+    description: internShipFormData?.description ?? '',
+    responsibilities: internShipFormData?.responsibilities ?? '',
+    requirements: internShipFormData?.requirements ?? '',
+    typeofwork: internShipFormData?.internType ?? '',
+    salaryType: internShipFormData?.salaryType ?? '',
+    frequency: internShipFormData?.salaryFrequency ?? '',
+    amount: internShipFormData?.salaryAmount ?? '',
+    amountType: internShipFormData?.salaryCurrency ?? '',
+    natureofwork: internShipFormData?.locationType ?? '',
+    location: internShipFormData?.locationId ?? '',
+    positions: internShipFormData?.totalPositions ?? '',
+    duration: internShipFormData?.duration ?? undefined,
+    closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined
   }
 
   return (
     <>
-      <PageHeader
-        bordered
-        title={<Breadcrumb  breadCrumbData={tempArray} />}
-      />
+      <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <BoxWrapper className='new-intern-main'>
-        <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Internship Details</h4>
-        <p>This information will be displayed publicly so be careful what you share</p>
-        <Divider />
-        <Row className='flex flex-row flex-wrap'>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
-            <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Description</h4>
-            <p>Describe the details of internship that will be reflected on internship portal</p>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className="flex flex-col gap-6 p-4">
-            <div className='flex flex-col gap-2'>
-              <p>Title <span className='text-error-color'>*</span></p>
-              <Input
-                className="input"
-                onChange={() => { }}
-                id=""
-                name="name"
-                required
-                placeholder="Enter Title"
-                size="large"
-                type="text"
-              />
-            </div>
-            <div className='flex flex-col gap-2'>
-              <p>Department <span className='text-error-color'>*</span></p>
-              <DropDown
-                name="Select"
-                options={departmentOptions}
-                setValue={() => { updateDepartment(event) }}
-                value={state.department}
-              />
-            </div>
-            <div className='flex flex-col gap-2'>
-              <p>Discription <span className='text-error-color'>*</span></p>
-              <TextArea
-                rows={6}
-                placeholder="Write your discription of internship"
-                maxLength={8}
-              />
-            </div>
-          </Col>
-          <Col lg={{ span: 8 }} className='p-4'></Col>
-        </Row>
-        <Divider />
-        <Row>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
-            <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Responsibilities and Requirements</h4>
-            <p>Briefly define the responsibilities and requirements of the internship</p>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-6 p-4'>
-            <div className='flex flex-col gap-2'>
-              <p>Responsibilities <span className='text-error-color'>*</span></p>
-              <TextArea
-                rows={6}
-                placeholder="Write about responsibilies of internship"
-                maxLength={8}
-              />
-            </div>
-            <div className='flex flex-col gap-2'>
-              <p>Requirements <span className='text-error-color'>*</span></p>
-              <TextArea
-                rows={6}
-                placeholder="Write about requirements of internship"
-                maxLength={8}
-              />
-            </div>
-          </Col>
-          <Col span={8} className='p-4'></Col>
-        </Row>
-        <Divider />
-        <Row>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
-            <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>General</h4>
-            <p>Provide the details of internship</p>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-8 p-4'>
-            <div className='flex flex-col gap-2'>
-              <p>Type of work</p>
-              <Radio.Group onChange={onChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                <Radio value={'parttime'}>Part Time</Radio>
-                <Radio value={'fulltime'}>Full Time</Radio>
-              </Radio.Group>
-            </div>
-            <div className='flex flex-col gap-2'>
-              <p>Internship Type</p>
-              <Radio.Group onChange={onChange1} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                <Radio value={'unpaid'}>Unpaid</Radio>
-                <Radio value={'paid'}>Paid</Radio>
-              </Radio.Group>
-            </div>
-            {partAndFullTime === "fulltime" ?
-              <div className='flex flex-col gap-2'>
-                <p>Frequency <span className='text-error-color'>*</span></p>
-                <DropDown
-                  name="Select"
-                  options={frequencyOptions}
-                  setValue={() => { updateFrequency(event) }}
-                  value={state.frequency}
+        <Form
+          form={form}
+          layout='vertical'
+          onFinish={onFinish}
+          initialValues={initialValues}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+          <h4 className='upcomming_Holiday mb-4 text-2xl font-semibold'>Internship Details</h4>
+          <p>This information will be displayed publicly so be careful what you share</p>
+          <Divider />
+          <Row className='flex flex-row flex-wrap'>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>Description</h4>
+              <p>Describe the details of internship that will be reflected on internship portal</p>
+            </Col>
+            <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
+              <Form.Item name="title" label="Title" rules={[{ required: true }, { type: "string" }]}>
+                <Input className="input" placeholder="Enter Title" type="text" />
+              </Form.Item>
+              <Form.Item name="department" label="Department" rules={[{ required: true }, { type: 'number' }]}>
+                <Select
+                  rootClassName='input'
+                  placeholder="Select"
+                  onChange={onSelectChange}
+                  allowClear
+                  options={departmentsData.map((item: any) => {
+                    return { value: item.id, label: item.name }
+                  })}
                 />
-              </div>
-              :
-              null
-            }
-            {paidAndUnpaid === "paid" ?
-              <div className='flex flex-col gap-2'>
-                <p>Amount <span className='text-error-color'>*</span></p>
-                <Space.Compact>
-                  <Select
-                    defaultValue="GBP"
-                    options={amountOptions} />
-                  <Input defaultValue="0.00" />
-                </Space.Compact>
-              </div>
-              :
-              null
-            }
-            <div className='flex flex-col gap-2'>
-              <p>Nature of work</p>
-              <Radio.Group onChange={onChange2} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
-                <Radio value={'virtual'}>Virtual</Radio>
-                <Radio value={'onsite'}>On site</Radio>
-                <Radio value={'hybrid'}>Hybrid</Radio>
-              </Radio.Group>
-            </div>
-            {remoteOnsite === "onsite" ?
-              <div className='flex flex-col gap-2'>
-                <p>Location <span className='text-error-color'>*</span></p>
-                <DropDown
-                  name="Select"
-                  options={locationOptions}
-                  setValue={() => { updateLocation(event) }}
-                  value={state.location}
+              </Form.Item>
+              <Form.Item label="Description" name="description" rules={[{ required: true }, { type: "string" }]}>
+                <TextArea rows={6} placeholder="Write your discription of internship" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider />
+          <Row>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>Responsibilities and Requirements</h4>
+              <p>Briefly define the responsibilities and requirements of the internship</p>
+            </Col>
+            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-6 p-4'>
+              <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: true }, { type: "string" }]}>
+                <TextArea rows={6} placeholder="Write about responsibilies of internship" />
+              </Form.Item>
+              <Form.Item label="Requirements" name="requirements" rules={[{ required: true }, { type: "string" }]}>
+                <TextArea rows={6} placeholder="Write about requirements of internship" />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider />
+          <Row>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>General</h4>
+              <p>Provide the details of internship</p>
+            </Col>
+            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
+              <Form.Item label="Type of work" name="typeofwork" >
+                <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                  <Radio value={typeOfWork.partTime}>Part Time</Radio>
+                  <Radio value={typeOfWork.fullTime}>Full Time</Radio>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item label="Internship Type" name="salaryType" >
+                <Radio.Group onChange={onInternshipTypeChange} value={paidAndUnpaid} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                  <Radio value={"UNPAID"}>Unpaid</Radio>
+                  <Radio value={"PAID"}>Paid</Radio>
+                </Radio.Group>
+              </Form.Item>
+              {paidAndUnpaid === "PAID" ?
+                <div className='flex flex-col gap-2'>
+                  <Form.Item name="frequency" label="Frequency" >
+                    <Select
+                      placeholder="Select"
+                      onChange={onSelectChange}
+                      allowClear
+                      options={frequencyOptions}
+                    />
+                  </Form.Item>
+                  <Form.Item label="Amount" name="amountType">
+                    <Space.Compact>
+                      <Select
+                        className='w-full'
+                        defaultValue="GBP"
+                        onChange={(e) => setAmount({ ...amount, amountType: e })}
+                        value={amount.amountType}
+                        options={amountOptions} />
+                      <Input type='number' value={amount.amount} onChange={(e) => setAmount({ ...amount, amount: e.target.value })} name="amount" placeholder='0.00' />
+                    </Space.Compact>
+                  </Form.Item>
+                </div>
+                :
+                null
+              }
+              <Form.Item name="natureofwork" label="Nature of work">
+                <Radio.Group onChange={onNatureChange} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                  <Radio value={natureofwork.virtual}>Virtual</Radio>
+                  <Radio value={natureofwork.onsite}>On site</Radio>
+                  <Radio value={natureofwork.hybride}>Hybrid</Radio>
+                </Radio.Group>
+              </Form.Item>
+              {remoteOnsite === natureofwork.onsite ?
+                <div className='flex flex-col gap-2'>
+                  <Form.Item name="location" label="Location">
+                    <Select
+                      placeholder="Select"
+                      onChange={onSelectChange}
+                      allowClear
+                      options={locationsData.map((item: any) => {
+                        return { value: item.id, label: item.name }
+                      })}
+                    />
+                  </Form.Item>
+                </div>
+                :
+                null
+              }
+            </Col>
+          </Row>
+          <Divider />
+          <Row>
+            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-4'>Additional Information</h4>
+              <p>Enter the additional information related to internship</p>
+            </Col>
+            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
+              <Form.Item label="Total Positions" name="positions" rules={[{ required: true }]}>
+                <Input className="input" placeholder="Enter number of positions" type="number" />
+              </Form.Item>
+              <Form.Item name='closingDate' label={<span>Expected Closing Date
+                <span className='text-slate-400'>(Optional)</span></span>}>
+                <CommonDatePicker
+                  onBtnClick={onSelectChange}
+                  open={openDataPicker}
+                  setOpen={setOpenDataPicker}
+                  setValue={() => { }}
                 />
-              </div>
-              :
-              null
-            }
-          </Col>
-          <Col span={8} className='p-4'></Col>
-        </Row>
-        <Divider />
-        <Row>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='p-4'>
-            <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Additional Information</h4>
-            <p>Enter the additional information related to internship</p>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }} className='flex flex-col gap-4 p-4'>
-            <div className='flex flex-col gap-2'>
-              <p>Total positions <span className='text-error-color'>*</span></p>
-
-              <Input
-                className="input"
-                onChange={() => { }}
-                id=""
-                // label="Title"
-                name="name"
-                required
-                placeholder="Enter number of positions"
-                size="large"
-                type="text"
-              />
-            </div>
-            <div className='flex flex-col gap-2'>
-              <p>Expected Closing Date<span className='text-error-color'>*</span></p>
-
-              <CommonDatePicker
-                name="Date Picker"
-                onBtnClick={() => { }}
-                setOpen={function noRefCheck() { }}
-                setValue={function noRefCheck() { }}
-              />
-            </div>
-            <p>Internship Duration<span className='text-error-color'>*</span></p>
-            <div className='flex flex-col gap-5'>
-              <DropDown
-                name="Select"
-                options={durationOptions}
-                setValue={() => { updateInternshipDuration(event) }}
-                value={state.internshipDuration}
-              />
-            </div>
-          </Col>
-          <Col span={8}></Col>
-        </Row>
-        <Divider />
-        <Row className="flex my-3 flex-row gap-4 md:justify-end">
-          <Button type="link" size="middle" className="new-intern-btn white-bg-color teriary-color main-btn" onClick={() => { }}>
-            Save Draft
-          </Button>
-          <Button type="default" size="middle" className="button-default-tertiary main-btn" onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}>Cancel</Button>
-          <Button type="primary" size="middle" className="button-tertiary main-btn" onClick={() => { }}>Submit</Button>
-        </Row>
+              </Form.Item>
+              <Form.Item label="Internship Duration" name="duration" rules={[{ required: true }, { type: "string" }]}>
+                <Select
+                  className='input'
+                  placeholder="Select"
+                  onChange={onSelectChange}
+                  allowClear
+                  options={durationOptions}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider />
+          <Row className="flex my-3 flex-row gap-4 md:justify-end">
+            <Button
+              type="link"
+              size="middle"
+              className="new-intern-btn white-bg-color teriary-color main-btn">
+              Save Draft
+            </Button>
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary main-btn"
+              onClick={() => {
+                navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS);
+                setInternShipFormData({})
+              }}>Cancel</Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="middle"
+              className="button-tertiary main-btn">Submit</Button>
+          </Row>
+        </Form>
       </BoxWrapper>
     </>
   )

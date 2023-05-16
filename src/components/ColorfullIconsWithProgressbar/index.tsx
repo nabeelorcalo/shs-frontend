@@ -1,20 +1,65 @@
 import { Progress } from "antd";
+import { useEffect } from "react";
+import {
+  Gallery,
+  Doc,
+  Video,
+  File,
+} from "../../assets/images";
+import useCustomHook from "../../pages/digiVault/actionHandler";
 import "./style.scss";
+
+
 
 interface ColorfullIconsWithProgressbarProps {
   icon?: string;
   title: string;
-  storage: string;
+  media: string;
   alt?: string;
   progressbarValue: number;
   progressbarColor: string;
 }[];
 
-export const ColorfullIconsWithProgressbar = (props: any) => {
-  const { arraydata } = props;
+export const ColorfullIconsWithProgressbar: any = () => {
+  const { getData, studentVault }: any = useCustomHook();
+
+  useEffect(() => {
+    getData()
+  }, []);
+
+  const storageData: any = [
+    {
+      icon: Gallery,
+      progressbarColor: "#4CA4FD",
+      progressbarValue: 30,
+      media: studentVault?.storage?.media,
+      title: "Media",
+    },
+    {
+      icon: Video,
+      progressbarColor: "#E96F7C",
+      progressbarValue: 60,
+      media: studentVault?.storage?.video,
+      title: "Video",
+    },
+    {
+      icon: Doc,
+      progressbarColor: "#FFC15D",
+      progressbarValue: 50,
+      media: studentVault?.storage?.document,
+      title: "Document",
+    },
+    {
+      icon: File,
+      progressbarColor: "#6AAD8E",
+      progressbarValue: 80,
+      media: studentVault?.storage?.otherFiles,
+      title: "Other Files",
+    },
+  ];
   return (
     <>
-      {arraydata.map((item: ColorfullIconsWithProgressbarProps, index: any) => {
+      {storageData.map((item: ColorfullIconsWithProgressbarProps, index: any) => {
         return (
           <div
             key={index}
@@ -27,7 +72,7 @@ export const ColorfullIconsWithProgressbar = (props: any) => {
                   {item.title}
                 </span>
                 <span className="font-normal text-sm storage-value">
-                  {item.storage}
+                  {item?.media}
                 </span>
               </div>
               <span className="w-full pb-6">

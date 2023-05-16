@@ -1,34 +1,53 @@
+import { useState } from 'react';
 import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertIcon } from '../../assets/images'
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Notifications } from '../Notification';
-import '../../scss/global-color/Global-colors.scss'
-import './style.scss';
 import { PopUpModal } from '../Model';
-import { useState } from 'react';
 import { ROUTES_CONSTANTS } from '../../config/constants';
+import useCustomHook from '../../pages/internships/actionHandler';
+import dayjs from 'dayjs';
+import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
-  const { title, status, department, internType, postedBy, locationType, locationName, createdAt, closingDate, interns } = props
-  const [decline, setDecline] = useState(false)
-  const [deleteInternship, setDeleteInternship] = useState(false)
+  const { item, title, status, department, internType, postedBy, 
+    location, createdAt, closingDate, interns } = props;
+  const [decline, setDecline] = useState(false);
+  const [deleteInternship, setDeleteInternship] = useState(false);
+  const { deleteInternshipData,getDuplicateInternship } = useCustomHook();
+  const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
+  const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
-  const filterCount = interns.filter((item: any, idx: any) => {
-    return item.stage === "hired"
-  })
+  const internStatus = {
+    published:'PUBLISHED',
+    closed:'CLOSED',
+    pending:'PENDING',
+    draft:'DRAFT',
+  }
+
+  const handleDelete = (id: any) => {
+    deleteInternshipData(id);
+    setDeleteInternship(false)
+  }
+  const handleDublicate=(id:any)=>{
+    getDuplicateInternship(id)
+  }
+
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS+"?status=" + status) }}>
+          <a rel="noopener noreferrer" onClick={() => {
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: item.id })
+          }}>
             View details
           </a>
         ),
       },
-      status !== "Published" && status !== "Closed" ? {
+      status !== internStatus?.published && status !== internStatus.closed ? {
         key: '2',
         label: (
           <a
@@ -45,15 +64,15 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "Pending" && status !== "Draft" ? {
+      status !== internStatus.pending && status !== internStatus.draft ? {
         key: '3',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate('pipeline') }}>
+          <a rel="noopener noreferrer" onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,{ state: item.id }) }}>
             Pipeline
           </a>
         ),
       } : null,
-      status !== "Pending" && status !== "Draft" && status !== "Closed" ? {
+      status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '4',
         label: (
           <a rel="noopener noreferrer" onClick={() => { }}>
@@ -61,7 +80,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== "Published" && status !== "Draft" && status !== "Closed" ? {
+      status !== internStatus.published && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '5',
         label: (
           <a rel="noopener noreferrer" onClick={() => { setDecline(true) }}>
@@ -72,9 +91,9 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '6',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}>
-            Edit
-          </a>
+          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP,{ state: item }); }}>
+          Edit
+        </a>
         ),
       },
       {
@@ -88,7 +107,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '8',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={()=>{handleDublicate(item.id)}}>
             Duplicate
           </a>
         ),
@@ -106,7 +125,7 @@ export const InternshipProgressCard = (props: any) => {
     )
   }
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3 cursor-pointer'>
       <div className='flex flex-row justify-between'>
         <h3>{title}</h3>
         <PopOver />
@@ -122,7 +141,7 @@ export const InternshipProgressCard = (props: any) => {
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
-          <p>{locationType}, {locationName}</p>
+          <p>{location}</p>
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />
@@ -134,14 +153,12 @@ export const InternshipProgressCard = (props: any) => {
       </div>
       <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
         <div className='flex max-sm:flex-col md:flex-row  gap-3'>
-          <p>Created on {createdAt}</p>
+          {createdAt === null ? <p>Created on --</p> : <p>Created on {createdOn}</p>}
           <p>.</p>
-          <p>Expected Closing Date {closingDate}</p>
+          {(closingDate === null) ? <p>Expected Closing Date  -- </p> : <p>Expected Closing Date {expectedClosingDate}</p>}
         </div>
         <p>
-          <span
-            className={`${status} white-color px-3 py-1 rounded-lg`}
-          >
+          <span className={`${status} white-color px-3 py-1 rounded-lg`} >
             {status}
           </span>
         </p>
@@ -210,6 +227,7 @@ export const InternshipProgressCard = (props: any) => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
+              onClick={() => handleDelete(item.id)}
             >
               Delete
             </Button>

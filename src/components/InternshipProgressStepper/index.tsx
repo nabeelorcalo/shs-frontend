@@ -48,13 +48,12 @@ export const InternshipProgressStepper = (props: any) => {
       className: "progress_reject"
     },
   ]
-  console.log(stepperObj[0].count)
   return (
     <ul className="progress_stepper">
       {
         stepperObj.map((item: any, idx: any) => {
           return (
-            <li key={idx} className={`progress_stepper__item ${status === "Draft" || status === "Pending" ? " progress_grayed-out" : item.className}`}>
+            <li key={idx} className={`progress_stepper__item ${status === "DRAFT" || status === "PENDING" ? " progress_grayed-out" : item.className}`}>
               <p>{status === "Draft" || status === "Pending" ? 0 : item.count}</p>
               <p>{item.name}</p>
             </li>
