@@ -116,7 +116,7 @@ const DigiVaultStudent = () => {
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard(isEnablePassowrd)
+    getDigiVaultDashboard()
   }, [])
 
   if (studentVault === undefined) {

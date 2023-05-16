@@ -10,7 +10,7 @@ const SettingModal = (props: any) => {
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
 
   useEffect(() => {
-    getDigiVaultDashboard(null)
+    getDigiVaultDashboard()
   }, [])
 
   const resetHandler = () => {

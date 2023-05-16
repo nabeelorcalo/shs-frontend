@@ -26,6 +26,7 @@ const endpoints = {
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
+  POST_NEW_VAULT_PASSWORD: '/digivault/set-new-vault-password',
   POST_DIGIVAULT_PASSWORD: 'digivault/enable-disable-lock',
   POST_CREATE_FOLDER_FILE: 'digivault/create-folder-file',
   DEL_FOLDER_FILE: 'digivault/delete-folder-file',
@@ -35,9 +36,9 @@ const endpoints = {
   DUBLICATE_INTERNSHIP: '/internship/duplicateInternship',
   POST_NEW_INTERNSHIP: '/internship/createInternship',
   // End Point For Leaev Module For Intrne 
-  CREATE_LEAVE:"/Leaves/create",
-  GET_LEAEV_LIST:`/Leaves/list`,
-  GET_ALL_INTERNS:"/candidate/listCandidates",
+  CREATE_LEAVE: "/Leaves/create",
+  GET_LEAEV_LIST: `/Leaves/list`,
+  GET_ALL_INTERNS: "/candidate/listCandidates",
 
 }
 export default endpoints;

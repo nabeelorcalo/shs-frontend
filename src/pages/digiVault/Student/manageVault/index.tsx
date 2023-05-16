@@ -28,7 +28,7 @@ const ManageVault = () => {
   const stateData = state.toLowerCase();
 
   useEffect(() => {
-    getDigiVaultDashboard(null)
+    getDigiVaultDashboard()
   }, [])
 
   const handleDropped = (event: any) => {

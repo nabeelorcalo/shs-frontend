@@ -16,7 +16,7 @@ const DigiVaultModals = (props: any) => {
     return (
         <>
             <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} />
-            {studentVault === undefined ?
+            {(studentVault || studentVault === undefined) ?
                 <UnlockVault
                     setIsEnablePassword={props.setIsEnablePassword}
                     isModal={isModalOpen}

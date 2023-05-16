@@ -6,10 +6,9 @@ import "./style.scss";
 import UnlockVault from "./unlockVaultModal/unlockVault";
 
 const NewPasswordModal = (props: any) => {
-  const { isModal, setIsModal, settingModal, setIsEnablePassword } = props;
-  const { postDigivaultPassword, studentVault }: any = useCustomHook();
+  const { isModal, setIsModal, settingModal } = props;
+  const { postDigivaultPassword }: any = useCustomHook();
   const [unlockVaultModal, setUnlockVaultModal] = useState(false)
-  const [showUnlockModal, setShowUnlockModal] = useState(false);
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;

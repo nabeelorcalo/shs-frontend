@@ -6,20 +6,20 @@ import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_DIGIVAULT_DASHBOARD, POST_DIGIVAULT_PASSWORD, POST_CREATE_FOLDER_FILE, DEL_FOLDER_FILE } = endpoints;
+  const {
+    GET_DIGIVAULT_DASHBOARD,
+    POST_DIGIVAULT_PASSWORD,
+    POST_CREATE_FOLDER_FILE,
+    DEL_FOLDER_FILE,
+    POST_NEW_VAULT_PASSWORD } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [newPassword, setNewPassword] = useRecoilState<any>(DigiVaultPasswordState);
 
   //get digivault password
-  const getDigiVaultDashboard = async (checkEnabled: any) => {
-    if (!checkEnabled) {
+  const getDigiVaultDashboard = async () => {
       const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
       setStudentVault(data?.response);
     }
-    else {
-      Notifications({ title: 'Error', description: 'Please set your vault password', type: 'error' })
-    }
-  };
 
   //search Folder File
   // const SearchFolderFile = async () => {
@@ -29,16 +29,22 @@ const useCustomHook = () => {
 
   //post passowrd for digivault password
   const postDigivaultPassword = async (values: any) => {
-    const { password, isLock, lockTime, unlockPassword } = values;
+    const { password, isLock, lockTime } = values;
     const postData = {
       isLock: isLock,
-      password: unlockPassword ? unlockPassword : password,
+      password: password,
       autoLockAfter: lockTime
     }
     const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
-    // setStudentVault(data)
     setNewPassword(data)
-    getDigiVaultDashboard(null)
+  };
+
+  //post new vault password
+  const postNewVaultPassword = async (values: any) => {
+    const { password } = values;
+    const { data } = await api.post(POST_NEW_VAULT_PASSWORD, { password: password });
+    setNewPassword(data)
+    getDigiVaultDashboard()
   };
 
   // post create folder  / file
@@ -52,7 +58,7 @@ const useCustomHook = () => {
       file: ''
     }
     await api.post(POST_CREATE_FOLDER_FILE, folderData);
-    getDigiVaultDashboard(null)
+    getDigiVaultDashboard()
     Notifications({ title: 'Successs', description: 'Folder/File added Successfully', type: 'success' })
   }
 
@@ -60,7 +66,7 @@ const useCustomHook = () => {
   const deleteFolderFile = async (itemId: any) => {
     const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
-      getDigiVaultDashboard(null);
+      getDigiVaultDashboard();
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
     }
     else {
@@ -68,8 +74,9 @@ const useCustomHook = () => {
     }
   }
   return {
-    getDigiVaultDashboard,
     studentVault,
+    getDigiVaultDashboard,
+    postNewVaultPassword,
     postDigivaultPassword,
     postCreateFolderFile,
     deleteFolderFile
