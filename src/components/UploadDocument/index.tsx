@@ -50,15 +50,15 @@ const UploadDocument = (props: any) => {
             ref={inputRef}
             multiple
             hidden
-            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }}
+            onChange={(event: any) => {setFiles({...files,files:Array.from(event.target.files)}) }}
           />
         </div>
       </div>
       {
-        files ?
+        files?.files ?
           <div className='flex flex-row flex-wrap'>
             {
-              files?.map((item: any, idx: any) => {
+              files?.files?.map((item: any, idx: any) => {
                 return (
                   <SelectedUploadCard
                     files={files}

@@ -17,9 +17,9 @@ const useCustomHook = () => {
 
   //get digivault password
   const getDigiVaultDashboard = async () => {
-      const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
-      setStudentVault(data?.response);
-    }
+    const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
+    setStudentVault(data?.response);
+  }
 
   //search Folder File
   // const SearchFolderFile = async () => {
@@ -57,9 +57,10 @@ const useCustomHook = () => {
       folderId: '',
       file: ''
     }
-    await api.post(POST_CREATE_FOLDER_FILE, folderData);
-    getDigiVaultDashboard()
-    Notifications({ title: 'Successs', description: 'Folder/File added Successfully', type: 'success' })
+    const { data } = await api.post(POST_CREATE_FOLDER_FILE, folderData);
+    setNewPassword(data)
+    getDigiVaultDashboard();
+    Notifications({ title: 'Sucess', description: 'File / Folder added successfully', type: 'success' })
   }
 
   //delete folder

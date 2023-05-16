@@ -7,8 +7,6 @@ import {
 } from "../../assets/images";
 import "./style.scss";
 
-
-
 interface ColorfullIconsWithProgressbarProps {
   icon?: string;
   title: string;

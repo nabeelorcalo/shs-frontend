@@ -78,6 +78,7 @@ const manageVaultArr = [
     bgcolor: "#5D89F8",
   },
 ];
+
 const tableData = [
   {
     id: "1",
@@ -106,12 +107,7 @@ const tableData = [
 ];
 
 const DigiVaultStudent = () => {
-  const [state, setState] = useState({
-    isDeleteModal: false,
-    isEnablePassowrd: false
-  })
-  // const [showDelete, setShowDelete] = useState(false);
-  const [isEnablePassowrd, setIsEnablePassword] = useState(false);
+  const [state, setState] = useState(false)
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
 
@@ -122,9 +118,7 @@ const DigiVaultStudent = () => {
   if (studentVault === undefined) {
     Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
   }
-  // if (studentVault === undefined) {
-  //   alert('hello')
-  // }
+
   const menu1 = (
     <Menu>
       <Menu.Item key="1">View</Menu.Item>
@@ -173,7 +167,7 @@ const DigiVaultStudent = () => {
   return (
     <div className="digivault">
       <Alert
-        state={state.isDeleteModal}
+        state={state}
         setState={setState}
         type="error"
         okBtntxt="Delete"
@@ -189,7 +183,7 @@ const DigiVaultStudent = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals setIsEnablePassword={setIsEnablePassword} />
+            <DigiVaultModals />
           </div>
         </Col>
       </Row>

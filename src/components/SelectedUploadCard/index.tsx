@@ -6,7 +6,7 @@ const SelectedUploadCard = (props: any) => {
   const { files, setFiles, filename, filesize, idx, } = props
   const extension = filename.slice(-3)
   const handleDelete = (idx: any) => {
-    setFiles(files.splice(idx, 1));
+    setFiles({...files,files:files?.files.splice(idx, 1)});
   }
   return (
     <div className="flex w-6/12 ">

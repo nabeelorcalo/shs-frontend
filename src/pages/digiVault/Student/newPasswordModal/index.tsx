@@ -22,7 +22,6 @@ const NewPasswordModal = (props: any) => {
   // }
   return (
     <div>
-      {/* <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} /> */}
       <Modal
         open={isModal}
         onCancel={() => setIsModal(false)}

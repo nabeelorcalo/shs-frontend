@@ -6,36 +6,45 @@ import UnlockVault from '../newPasswordModal/unlockVaultModal/unlockVault';
 import { Switch } from 'antd';
 
 const DigiVaultModals = (props: any) => {
-    const [settingModal, setSettingModal] = useState({ isToggle: false, isLock: false, lockTime: '5' });
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const { studentVault } = useCustomHook();
-    const onChange = (checked: boolean) => {
-        setIsModalOpen(checked && true);
-    }
+  const [state, setState] = useState(
+    {
+      isModalOpen: false,
+      isToggle: false,
+      isLock: false,
+      lockTime: '5'
+    });
+  const { studentVault } = useCustomHook();
 
-    return (
-        <>
-            <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} />
-            {(studentVault || studentVault === undefined) ?
-                <UnlockVault
-                    setIsEnablePassword={props.setIsEnablePassword}
-                    isModal={isModalOpen}
-                    setIsModal={setIsModalOpen}
-                    settingModal={settingModal} />
-                :
-                <NewPasswordModal
-                    setIsEnablePassword={props.setIsEnablePassword}
-                    isModal={isModalOpen}
-                    setIsModal={setIsModalOpen}
-                    settingModal={settingModal} />
-            }
+  const onChange = (checked: boolean) => {
+    setState((prevState: any) => ({
+      ...prevState,
+      isModalOpen: checked && true
+    }));
+  }
 
-            <SettingModal
-                settingModal={settingModal}
-                setSettingModal={setSettingModal}
-                setIsModal={setIsModalOpen} />
-        </>
-    )
+  return (
+    <>
+      <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} />
+      {(studentVault || studentVault === undefined) ?
+        <UnlockVault
+          setIsEnablePassword={props.setIsEnablePassword}
+          isModal={state.isModalOpen}
+          setIsModal={setState}
+          settingModal={state} />
+        :
+        <NewPasswordModal
+          setIsEnablePassword={props.setIsEnablePassword}
+          isModal={state.isModalOpen}
+          setIsModal={setState}
+          settingModal={state} />
+      }
+
+      <SettingModal
+        settingModal={state}
+        setSettingModal={setState}
+        setIsModal={setState} />
+    </>
+  )
 }
 
 export default DigiVaultModals

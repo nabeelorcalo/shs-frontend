@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Divider, Dropdown, Form, Menu, Modal, Row, Space, Input } from "antd";
 import { SearchBar, Alert } from "../../../../components";
-import { Upload } from "../../../../assets/images";
+import { FolderIcon, FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
@@ -12,33 +12,36 @@ import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 
 const ManageVault = () => {
-  const [isState, setState] = useState({
+  const [isState, setState] = useState<any>({
     isOpenModal: false,
     isVisible: false,
     uploadFolder: false,
     uploadFile: false,
     isOpenDelModal: false,
     DelModalId: null,
+    files: [],
     fileName: '',
   });
-  const [files, setFiles] = useState<any>([])
+  // const [files, setFiles] = useState<any>([])
   const [form] = Form.useForm();
   const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
   const { state } = useLocation();
   const stateData = state.toLowerCase();
+  const router = useNavigate();
+  const location = useLocation();
+  const titleName = location.pathname.split("/");
 
   useEffect(() => {
     getDigiVaultDashboard()
   }, [])
+  console.log(isState.files);
 
   const handleDropped = (event: any) => {
     event.preventDefault()
-    setFiles(Array.from(event.dataTransfer.files))
-  }
-  if (files[0] && files[0].type === 'application/pdf') {
-    console.log('pdf')
-  } else {
-    console.log('png')
+    setState((prevState: any) => ({
+      ...prevState,
+      files: Array.from(event.dataTransfer.files)
+    }))
   }
 
   const menu2 = (id: any) => (
@@ -61,9 +64,12 @@ const ManageVault = () => {
   const newTableData = studentVault?.dashboardFolders[stateData]?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
-      {
+      { 
         key: index,
-        Title: item.title,
+        Title: <p>
+          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span className="ml-2">{item.title}</span>
+        </p>,
         datemodified: modifiedDate,
         size: item.size ? item.size : '---',
         action: <Space size="middle">
@@ -117,7 +123,7 @@ const ManageVault = () => {
       </Menu.Item>
       <Menu.Item
         onClick={() => {
-          setState((prevState) => ({
+          setState((prevState: any) => ({
             ...prevState,
             uploadFolder: true,
             isVisible: false
@@ -130,10 +136,6 @@ const ManageVault = () => {
     </Menu>
   );
 
-  const router = useNavigate();
-  const location = useLocation();
-
-  const titleName = location.pathname.split("/");
   const onFinish = (values: any) => {
     values.root = state;
     postCreateFolderFile(values);
@@ -150,18 +152,19 @@ const ManageVault = () => {
       isOpenModal: false,
     }));
   }
+
   const upLoadModalHandler = () => {
     const sendFile = {
       root: stateData,
-      name: files[0].name,
-      size: files[0].size
+      name: isState?.files[0]?.name,
+      size: isState.files[0].size
     }
     postCreateFolderFile(sendFile)
     setState((prevState: any) => ({
       ...prevState,
       uploadFile: false,
       uploadFolder: false,
-      fileName: files[0]?.name
+      fileName: isState.files[0]?.name
     }));
   }
 
@@ -308,7 +311,7 @@ const ManageVault = () => {
           </Button>,
         ]}
       >
-        <UploadDocument handleDropped={handleDropped} setFiles={setFiles} files={files} />
+        <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
       </Modal>
 
       <Modal
@@ -341,7 +344,7 @@ const ManageVault = () => {
           </Button>,
         ]}
       >
-        <UploadDocument handleDropped={handleDropped} setFiles={setFiles} files={files} />
+        <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
       </Modal>
     </div >
   );

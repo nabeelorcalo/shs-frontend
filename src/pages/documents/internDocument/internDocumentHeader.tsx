@@ -35,7 +35,6 @@ const InternDocument = () => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files))
   }
-  console.log(files,"files");
   
   const items: any = [
     {
@@ -155,7 +154,7 @@ const InternDocument = () => {
           >
             Cancel
           </Button>,
-          <Button
+          <Button 
             className="teriary-bg-color font-semibold text-base upload-button white-color intern-upload-button"
             onClick={() => setUploadModel(false)}
           >
