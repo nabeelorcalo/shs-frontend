@@ -159,28 +159,23 @@ const searchValue =(value:any)=>{
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
-
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
     const unit = 'pt';
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-
     const body = data.map(({ key, requestDate, start, end, leaveType, description, status }: any) =>
       [key, requestDate, start, end, leaveType, description, status]
     );
-
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
-
     doc.autoTable({
       head: [header],
       body: body,
