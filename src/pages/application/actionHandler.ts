@@ -1,10 +1,12 @@
 /// <reference path="../../../jspdf.d.ts" />
+import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
-import apiEndpints from "../../config/apiEndpoints";
-import { applicationDataState } from '../../store/applications/index';
+import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
+import apiEndpints from "../../config/apiEndpoints";
+import { applicationDataState } from '../../store/applications/index';
 import csv from '../../helpers/csv';
 
 
@@ -13,12 +15,24 @@ const useCustomHook = () => {
   const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
   const { GET_APPLICATIONS } = apiEndpints
 
+  useEffect(() => {
+    debouncedResults.cancel();
+  });
 
   const getApplicationsData = async (): Promise<any> => {
     const { data } = await api.get(GET_APPLICATIONS);
     setApplicationsData(data)
   };
 
+  //Search applications
+  const SearchApplications = async (val: any) => {
+    const { data } = await api.get(
+      GET_APPLICATIONS, { search: val });
+    setApplicationsData(data);
+  };
+  const debouncedResults: any = useMemo(() => {
+    return debounce(SearchApplications, 500);
+  }, []);
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -28,7 +42,6 @@ const useCustomHook = () => {
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -89,8 +102,9 @@ const useCustomHook = () => {
 
   return {
     getApplicationsData,
-    applicationsData,
     downloadPdfOrCsv,
+    SearchApplications,
+    applicationsData,
   };
 };
 

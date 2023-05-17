@@ -27,45 +27,7 @@ const ButtonStatus = (props: any) => {
   )
 }
 
-const PopOver = ({ state }: any) => {
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            state(true);
-          }}
-        >
-          View Details
-        </a>
-      ),
-    },
 
-  ];
-  return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
-  );
-};
-
-const CompanyData = ({ companyName, companyNature }: any) => {
-  return (
-    <div className="flex flex-row align-center gap-2">
-      <Avatar
-        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-      />
-      <div>
-        <p className="font-medium">{companyName}</p>
-        <p className="text-sm">{companyNature}</p>
-      </div>
-    </div>
-  )
-}
-
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const Application = () => {
   const [showDrawer, setShowDrawer] = useState(false)
@@ -78,13 +40,54 @@ const Application = () => {
     stage: ""
   })
 
-  const { applicationsData, getApplicationsData, downloadPdfOrCsv } = useCustomHook();
+  const { applicationsData, getApplicationsData, downloadPdfOrCsv, SearchApplications } = useCustomHook();
 
   useEffect(() => {
     getApplicationsData()
   }, [])
 
   console.log('applications data', applicationsData);
+
+  const PopOver = ({ state }: any) => {
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              state(true);
+            }}
+          >
+            View Details
+          </a>
+        ),
+      },
+
+    ];
+    return (
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
+    );
+  };
+
+  const CompanyData = ({ companyName, companyDetail, avatar }: any) => {
+    return (
+      <div className="flex gap-2" style={{ alignItems: "center" }}>
+        <Avatar size={50} src={avatar}>
+          {companyName.charAt(0)}
+          {/* {companyDetail.charAt(0)} */}
+        </Avatar>
+        <div>
+          <p className="font-medium">{companyName}</p>
+          <p className="text-sm">{companyDetail}</p>
+        </div>
+      </div>
+    )
+  }
+
+  const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
@@ -136,125 +139,121 @@ const Application = () => {
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      date_applied: "01/07/2022",
-      company: { name: "Alphabet Inc.", details: "Software Agency" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "On site",
-      position: "UI/UX Designer",
-      status: "Hired",
+  // const tableData = [
+  //   {
+  //     no: "01",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "Alphabet Inc.", details: "Software Agency" },
+  //     type_of_work: "Part Time",
+  //     internship_type: "Un-Paid",
+  //     nature_of_work: "On site",
+  //     position: "UI/UX Designer",
+  //     status: "Hired",
 
-    },
-    {
-      no: "02",
-      date_applied: "01/07/2022",
-      company: { name: "Intuit Inc.", details: "Sports" },
-      type_of_work: "Full Time",
-      internship_type: "Paid",
-      nature_of_work: "Hybrid (London)",
-      position: "Business Analyst",
-      status: "Offer Letter",
-    },
-    {
-      no: "03",
-      date_applied: "01/07/2022",
-      company: { name: "ServiceNOW", details: "Software Solutions" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "Virtual",
-      position: "SQA",
-      status: "Rejected",
-    },
-    {
-      no: "04",
-      date_applied: "01/07/2022",
-      company: { name: "kla Corporation Inc.", details: "Logistics" },
-      type_of_work: "Full Time",
-      internship_type: "Paid",
-      nature_of_work: "Hybrid (London)",
-      position: "Business Analyst",
-      status: "Short Listed",
-    },
-    {
-      no: "05",
-      date_applied: "01/07/2022",
-      company: { name: "SnowFlake Inc.", details: "Software Tech" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "Virtual",
-      position: "SQA",
-      status: "Interviewed",
-    },
-    {
-      no: "06",
-      date_applied: "01/07/2022",
-      company: { name: "WorkDay Inc.", details: "Design Tech" },
-      type_of_work: "Full Time",
-      internship_type: "Paid",
-      nature_of_work: "Hybrid (London)",
-      position: "Business Analyst",
-      status: "Rejected",
-    },
-    {
-      no: "07",
-      date_applied: "01/07/2022",
-      company: { name: "Fortinet Inc.", details: "Game Agency" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "Virtual",
-      position: "SQA",
-      status: "Applied",
-    },
-  ];
+  //   },
+  //   {
+  //     no: "02",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "Intuit Inc.", details: "Sports" },
+  //     type_of_work: "Full Time",
+  //     internship_type: "Paid",
+  //     nature_of_work: "Hybrid (London)",
+  //     position: "Business Analyst",
+  //     status: "Offer Letter",
+  //   },
+  //   {
+  //     no: "03",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "ServiceNOW", details: "Software Solutions" },
+  //     type_of_work: "Part Time",
+  //     internship_type: "Un-Paid",
+  //     nature_of_work: "Virtual",
+  //     position: "SQA",
+  //     status: "Rejected",
+  //   },
+  //   {
+  //     no: "04",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "kla Corporation Inc.", details: "Logistics" },
+  //     type_of_work: "Full Time",
+  //     internship_type: "Paid",
+  //     nature_of_work: "Hybrid (London)",
+  //     position: "Business Analyst",
+  //     status: "Short Listed",
+  //   },
+  //   {
+  //     no: "05",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "SnowFlake Inc.", details: "Software Tech" },
+  //     type_of_work: "Part Time",
+  //     internship_type: "Un-Paid",
+  //     nature_of_work: "Virtual",
+  //     position: "SQA",
+  //     status: "Interviewed",
+  //   },
+  //   {
+  //     no: "06",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "WorkDay Inc.", details: "Design Tech" },
+  //     type_of_work: "Full Time",
+  //     internship_type: "Paid",
+  //     nature_of_work: "Hybrid (London)",
+  //     position: "Business Analyst",
+  //     status: "Rejected",
+  //   },
+  //   {
+  //     no: "07",
+  //     date_applied: "01/07/2022",
+  //     company: { name: "Fortinet Inc.", details: "Game Agency" },
+  //     type_of_work: "Part Time",
+  //     internship_type: "Un-Paid",
+  //     nature_of_work: "Virtual",
+  //     position: "SQA",
+  //     status: "Applied",
+  //   },
+  // ];
   const newTableData = applicationsData.map((item: any, index: number) => {
     const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
-    const typeOfWork = item?.internship?.internType?.replace("_"," ").toLowerCase();
+    const typeOfWork = item?.internship?.internType?.replace("_", " ").toLowerCase();
+
     return (
       {
-        no: index + 1,
+        no: applicationsData.length < 10 ? `0${index + 1}` : `${index + 1}`,
         date_applied: dateFormat,
-        company: <CompanyData companyName={item.company?.name} companyNature={item.company?.details} />,
+        company: <CompanyData companyName={item?.internship?.company?.businessName}
+          companyDetail={item?.internship?.company?.businessType} avatar={''} />,
         type_of_work: <span className="capitalize">{typeOfWork}</span>,
         internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
         nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
         position: item.position,
-        status: <ButtonStatus status={item.status} />,
-        actions:
-          <PopOver
-            state={setShowStageStepper}
-          />
+        status: <ButtonStatus status={item?.stage} />,
+        actions: <PopOver state={setShowStageStepper} />
       }
     )
   })
+
   const updateTimeFrame = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      timeFrame: value
+      timeFrame: event
     }))
   }
   const updateNatureOfWork = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      natureOfWork: value
+      natureOfWork: event
     }))
   }
   const updateTypeOfWork = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      typeOfWork: value
+      typeOfWork: event
     }))
   }
   const updateStage = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      stage: value
+      stage: event
     }))
   }
   return (
@@ -264,18 +263,15 @@ const Application = () => {
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
-              handleChange={() => { }}
-              name="search bar"
+              handleChange={SearchApplications}
+              name="search"
               placeholder="Search"
-              size="middle"
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
             <FiltersButton
               label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+              onClick={() => { setShowDrawer(true) }}
             />
             <DropDown
               options={[
@@ -284,7 +280,7 @@ const Application = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Students Applications")
               }}
               value=""
             />
