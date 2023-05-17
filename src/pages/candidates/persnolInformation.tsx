@@ -1,4 +1,4 @@
-import { CloseCircleOutlined, CloseOutlined } from '@ant-design/icons'
+import { CloseOutlined } from '@ant-design/icons'
 import { Col, Divider, Row } from 'antd'
 import { useState } from 'react'
 

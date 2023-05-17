@@ -71,7 +71,7 @@ const InternsCompanyAdmin = () => {
     }
     return (
       <p>
-        <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
+        <span className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]}`} >
           {props.status}
         </span>
       </p>
@@ -182,12 +182,14 @@ const InternsCompanyAdmin = () => {
       {
         no: getAllInters.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
-          <Avatar src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} />,
-        name: <p>{item.userDetail?.firstName} {item.userDetail?.lastName}</p>,
+          <Avatar size={50} src={item?.avatar}>
+            {item?.userDetail?.firstName.charAt(0)}{item?.userDetail?.lastName.charAt(0)}
+          </Avatar>,
+        name: <p>{item?.userDetail?.firstName} {item?.userDetail?.lastName}</p>,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
-        status: <ButtonStatus status={item.internStatus} />,
+        status: <ButtonStatus status={item?.internStatus} />,
         actions: <PopOver />
       }
     )
@@ -377,13 +379,13 @@ const InternsCompanyAdmin = () => {
                       return (
                         <InternsCard
                           pupover={<PopOver />}
-                          status={item.status}
-                          name={item.name}
-                          posted_by={item.posted_by}
-                          title={item.title}
-                          department={item.department}
-                          joining_date={item.joining_date}
-                          date_of_birth={item.date_of_birth}
+                          status={item?.status}
+                          name={item?.name}
+                          posted_by={item?.posted_by}
+                          title={item?.title}
+                          department={item?.department}
+                          joining_date={item?.joining_date}
+                          date_of_birth={item?.date_of_birth}
                         />
                       )
                     })

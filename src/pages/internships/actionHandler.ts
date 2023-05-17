@@ -12,7 +12,7 @@ import { ROUTES_CONSTANTS } from "../../config/constants";
 
 const useCustomHook = () => {
   const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
-  const [internshipDetails, setInternshipDetails] = useRecoilState(internshipDetailsState);
+  const [internshipDetails, setInternshipDetails] = useRecoilState<any>(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
@@ -69,8 +69,8 @@ const useCustomHook = () => {
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
-      amount, natureofwork, positions, closingDate, duration, salaryType, department,status } = values
-    const internshipData = { 
+      amount, natureofwork, positions, closingDate, duration, salaryType, department, status } = values
+    const internshipData = {
       "title": title,
       "departmentId": department,
       "description": description,
@@ -136,6 +136,7 @@ const useCustomHook = () => {
     Notifications({ title: "Success", description: "Duplicate successfully", type: "success" })
   }
 
+  //Internship details
   const getInternshipDetails = async () => {
     const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id });
     setInternshipDetails(data)
@@ -148,7 +149,7 @@ const useCustomHook = () => {
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
-  //Search internship
+  //Search internships
   const changeHandler = async (val: any) => {
     const { data } = await api.get(GET_LIST_INTERNSHIP,
       val

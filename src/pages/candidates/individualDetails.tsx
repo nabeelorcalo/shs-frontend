@@ -1,11 +1,12 @@
-import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Intro, DrawerIcon,LocationIconNew, StarOutlinedIcon,PlayIconNew } from '../../assets/images';
+import { ArrowDownDark, StarFilledIcon, Dot, Mail, Call, Intro, DrawerIcon, LocationIconNew, StarOutlinedIcon, PlayIconNew } from '../../assets/images';
 import "./style.scss"
 import DropDownNew from '../../components/Dropdown/DropDownNew'
 import { useState } from 'react'
 
-const IndividualDetails = () => {
+const IndividualDetails = (props: any) => {
+  const { email, phone, address,rating } = props
 
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState(rating);
 
   const skillsData = [
     'User Interface Design',
@@ -18,9 +19,9 @@ const IndividualDetails = () => {
   const newSkillData = skillsData.slice(0, 6);
 
   const userinfoData = [
-    { img: Mail, title: "phyliis@gmail.com" },
-    { img: Call, title: "+44 7700 900077" },
-    { img: LocationIconNew, title: "263 Eversholt St, London NW11NB UK" },
+    { img: Mail, title: email },
+    { img: Call, title: phone },
+    { img: LocationIconNew, title: address },
   ]
 
   const dropdownData = [
@@ -128,12 +129,12 @@ const IndividualDetails = () => {
 
       <div className="intro">
         <p className='heading mt-8'>Intro</p>
-       <div className="main-div relative">
-       <div className='absolute' style={{zIndex:1,left:"43%", top:"45%"}}> <PlayIconNew /></div>
-        <div className="image mt-[10px] relative">
-          <Intro />
+        <div className="main-div relative">
+          <div className='absolute' style={{ zIndex: 1, left: "43%", top: "45%" }}> <PlayIconNew /></div>
+          <div className="image mt-[10px] relative">
+            <Intro />
+          </div>
         </div>
-       </div>
       </div>
     </div>
   )

@@ -11,8 +11,8 @@ import type { MenuProps } from 'antd';
 import { InternshipsIcon, More } from "../../assets/images";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
-import "./style.scss";
 import SelectComp from "../../components/Select/Select";
+import "./style.scss";
 
 const Internships = () => {
   const navigate = useNavigate()

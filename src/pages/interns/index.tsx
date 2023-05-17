@@ -103,7 +103,9 @@ const Interns = () => {
       {
         no: getAllInterns.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
-          <Avatar src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} />,
+          <Avatar size={50} src={item?.avatar}>
+            {item?.userDetail?.firstName.charAt(0)}{item?.userDetail?.lastName.charAt(0)}
+          </Avatar>,
         name: <p>{item.userDetail?.firstName} {item.userDetail?.lastName}</p>,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
