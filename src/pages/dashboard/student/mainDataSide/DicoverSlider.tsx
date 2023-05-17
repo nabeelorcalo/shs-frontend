@@ -1,12 +1,10 @@
 import React from 'react'
+import { Row, Col, Typography } from 'antd';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import bgSlider from '../../../../assets/images/dashboard/studentdashboard/bgslider.svg'
-import { Row, Col, Typography } from 'antd';
 import { WebArrow } from '../../../../assets/images';
-
-
 
 const data = [
     { id: '001', avatar: bgSlider, title: 'Austin Wade' },
@@ -34,7 +32,7 @@ const DicoverSlider = () => {
            <Typography className='main-title pl-5'>Discover</Typography>
           <Row gutter={[20,10]} className='flex items-center'>
              
-              <Col xxl={20} xl={20} lg={18} md={18} sm={18} xs={24}>
+              <Col xxl={20} xl={20} lg={18} md={24} sm={24} xs={24}>
     <Slider {...settings}>
     {data.map((item) => {
       return (
@@ -51,14 +49,12 @@ const DicoverSlider = () => {
         })}
 </Slider>
               </Col>
-              <Col xxl={4} xl={4} lg={5} md={5} sm={5} xs={24}>
-                  
+              <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}> 
                   <div className='website-box   text-center'>
                       <div className='w-24'>
                       <Typography className='pt-10 web-color'>Go To Website</Typography>
                      <WebArrow /> 
-                      </div>
-                   
+                      </div>  
                   </div>
               </Col>
           </Row>

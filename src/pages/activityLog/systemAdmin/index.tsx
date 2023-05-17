@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Divider, Row } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
@@ -6,43 +6,6 @@ import { BoxWrapper } from "../../../components";
 import { GlobalTable } from "../../../components";
 import useCustomHook from "../actionHandler"
 import "./style.scss";
-
-const tableData = [
-  {
-    ID: "01",
-    Users: "Subject kmy cc",
-    UserRole: "john",
-    Activity: "issue Name",
-    PerformedBy: "kljdasfhuasd",
-    Priority: "high",
-    DateTime: "22/09/2013",
-    PerformerRole: "amila clark",
-  },
-  {
-
-    ID: "02",
-    Users: "file2",
-    UserRole: "john",
-    Activity: "issue Name",
-    PerformedBy: "kljdasfhuasd",
-    Priority: "high",
-    DateTime: "22/09/2013",
-    PerformerRole: "amila clark",
-
-  },
-  {
-
-    ID: "03",
-    Users: "file3",
-    UserRole: "john",
-    PerformedBy: "kljdasfhuasd",
-    Activity: "issue Name",
-    Priority: "high",
-    DateTime: "22/09/2013",
-    PerformerRole: "amila clark",
-
-  },
-];
 
 const columns = [
   {
@@ -127,7 +90,11 @@ const filterData = [
 
 const ActivityLog = () => {
 
-  const action = useCustomHook();
+  const { downloadPdfOrCsv, logDetails, getLogDetails } = useCustomHook();
+
+  useEffect(() => {
+    getLogDetails()
+  }, [])
 
   const csvAllColum = ["Sr.No", "Name", "Email", "PhoneNumber", "University", "City", "Hired", "Status"]
 
@@ -141,6 +108,60 @@ const ActivityLog = () => {
   const handleClick = () => {
     setOpenDrawer(true);
   };
+  // const newTableData = logDetails?.map((item: any, index: number) => {
+  //   // const monthFrom = dayjs(item.from).format("MMM");
+  //   return (
+  //     {
+  //       key: index,
+  //       no: payrollData?.length < 10 && `0 ${index + 1}`,
+  //       avatar:
+  //         <Avatar
+  //           src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+  //         />,
+  //       name: item.name, 
+  //       // department: item.department,
+  //       joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
+  //       payroll_cycle: `${monthFrom} - ${monthTo}`,
+  //       actions: <PopOver />
+  //     }
+  //   )
+  // })
+  const tableData = [
+    {
+      ID: "01",
+      Users: "Subject kmy cc",
+      UserRole: "john",
+      Activity: "issue Name",
+      PerformedBy: "kljdasfhuasd",
+      Priority: "high",
+      DateTime: "22/09/2013",
+      PerformerRole: "amila clark",
+    },
+    {
+  
+      ID: "02",
+      Users: "file2",
+      UserRole: "john",
+      Activity: "issue Name",
+      PerformedBy: "kljdasfhuasd",
+      Priority: "high",
+      DateTime: "22/09/2013",
+      PerformerRole: "amila clark",
+  
+    },
+    {
+  
+      ID: "03",
+      Users: "file3",
+      UserRole: "john",
+      PerformedBy: "kljdasfhuasd",
+      Activity: "issue Name",
+      Priority: "high",
+      DateTime: "22/09/2013",
+      PerformerRole: "amila clark",
+  
+    },
+  ];
   return (
     <div className="activity-log">
       <Drawer
@@ -204,7 +225,7 @@ const ActivityLog = () => {
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail") }}
               />
             </Col>
             <Col xs={24}>

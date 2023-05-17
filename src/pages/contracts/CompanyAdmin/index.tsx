@@ -83,7 +83,7 @@ const CompanyAdmin = () => {
   const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -259,11 +259,11 @@ const CompanyAdmin = () => {
         </div>,
         initiatedOn: <div>
           <div>{initiateTime}</div>
-          <div className="light-grey-color">{initiatedDate}</div>
+          <div className="light-grey-color text-sm">{initiatedDate}</div>
         </div>,
         signedOn: <div>
           <div>{signedTime}</div>
-          <div className="light-grey-color">{signedDate}</div>
+          <div className="light-grey-color text-sm">{signedDate}</div>
         </div>,
         status: <div
           className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
@@ -304,7 +304,7 @@ const CompanyAdmin = () => {
           ContractsCard.map((item) => {
             return (
               <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                <BoxWrapper className="p-6 rounded-[16px]">
+                <BoxWrapper className="p-6 rounded-[16px] h-[150px]">
                   <div>
                     <div className="flex">
                       {item.img}
@@ -321,10 +321,10 @@ const CompanyAdmin = () => {
         }
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
-        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+        <Col xl={7} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
+        <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"

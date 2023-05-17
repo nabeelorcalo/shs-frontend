@@ -6,12 +6,14 @@ import useCustomHook from "../../../actionHandler";
 
 const UnlockVault = (props: any) => {
   const { isModal, setIsModal } = props;
-  const { postNewVaultPassword } = useCustomHook();
+  const { postDigivaultPassword } = useCustomHook();
 
   const onFinish = (values: any) => {
     values.toString();
+    values.isLock= true;
     console.log(values);
-    postNewVaultPassword(values);
+    
+    postDigivaultPassword(values);
   };
 
   return (
