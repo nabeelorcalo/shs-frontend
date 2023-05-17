@@ -24,6 +24,7 @@ import DemoCard from "./components/ContractCard/demoCard";
 // Lazy load required start
 import Chat from "./pages/chat";
 import ManageVault from "./pages/digiVault/Student/manageVault";
+import ManageViewVault from "./pages/digiVault/Student/manageVault/file-view";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 import ActivityData from "./pages/propertyAgent/propertDahboard/Dashboard/activityData";
 import AddManager from "./pages/managers/managerMain/addManager";
@@ -151,7 +152,7 @@ const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const SearchJobsDetails = Loadable(lazy(() => import("./pages/searchJobs/jobDetails/jobDetails")));
 const Application = Loadable(lazy(() => import("./pages/application")));
-const Profile = Loadable(lazy(() => import("./pages/profile/")));
+const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(
   lazy(() => import("./pages/accommodation/AvailableProperties"))
@@ -750,6 +751,11 @@ const companyAdminRoutes = [
         element: <Dashboard />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
         key: `graphs`,
         path: `graphs`,
         element: <Graph />,
@@ -1278,8 +1284,13 @@ const internRoutes = [
       },
       {
         key: `manageVault`,
-        path: `digivault/:id`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id`,
         element: <ManageVault />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        element: <ManageViewVault />,
       },
       {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
@@ -1450,8 +1461,13 @@ const studentRoutes = [
       },
       {
         key: `manageVault`,
-        path: `digivault/:id`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id`,
         element: <ManageVault />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        element: <ManageViewVault />,
       },
       {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
