@@ -1,6 +1,7 @@
 import axios from "axios";
 import constants from "../config/constants";
 import { Notifications } from "../components";
+
 const baseURL = constants.APP_URL;
 
 const defaultHeaders = {
@@ -12,7 +13,6 @@ const axiosInstance = axios.create({
   headers: defaultHeaders,
 });
 const accessToken = localStorage.getItem("accessToken");
-const rememberMe = localStorage.getItem("isrememberme");
 
 axiosInstance.interceptors.request.use(
   function (config) {
@@ -25,7 +25,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     if (error.response?.status === 401) {
-      if (accessToken && rememberMe) {
+      if (accessToken ) {
       }
       localStorage.removeItem("accessToken");
       window.location.href = "/login"; // Redirect user to login page

@@ -9,6 +9,7 @@ import { ROUTES_CONSTANTS } from "../config/constants";
 import apiEndpoints from "../config/apiEndpoints";
 import api from "../api";
 import { Notifications } from "../components";
+import { log } from "console";
 
 const { Content } = Layout;
 
@@ -36,9 +37,9 @@ function AppLayout() {
   };
 
   const handleLogout = () => {
-    if (LOGOUT) {
+    const res: any = api.get(LOGOUT);
+    if (res.statusCode === 200) {
       localStorage.clear();
-      api.get(LOGOUT);
       Notifications({
         title: "Success",
         description: "LogOut Successfully",
