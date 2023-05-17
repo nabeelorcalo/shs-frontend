@@ -1,65 +1,64 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { DocumentUpload } from "../../assets/images";
 import SelectedUploadCard from "../SelectedUploadCard";
 import './style.scss'
 
 const UploadDocument = (props: any) => {
-  const { height = 80 } = props
-  const [files, setFiles] = useState([])
+  const { height = 80, handleDropped, setFiles, files } = props
+  // const [files, setFiles] = useState([])
   const inputRef: any = useRef();
+  const [file, setFile] = useState(null);
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
-    console.log("drag over")
   }
 
-  const handleDropped = (event: any) => {
-    event.preventDefault()
-    setFiles(Array.from(event.dataTransfer.files))
-  }
-
-  console.log(files)
+  // const handleDropped = (event: any) => {
+  //   event.preventDefault()
+  //   setFiles(Array.from(event.dataTransfer.files))
+  // }
+  // console.log(files)
   return (
     <>
       <div
         onDragOver={handleDragOver}
-        onDrop={handleDropped}
-        className={`flex flex-col items-stretch justify-center gap-4 content-center items-center drag-drop-upload-style h-${height}`}
+        // onDrop={handleDropped}
+        className={`flex flex-col justify-center gap-4 content-center items-center drag-drop-upload-style h-${height}`}
       >
         <div className='self-center '>
           <DocumentUpload />
         </div>
         <div className='self-center'>
           <p
-            className='text-center text-lg'
+            className='text-center primary-color  text-xl font-medium'
           >
-            Drag & Drop files or
+            Drag & drop files or
             <span
-              className="browse-text cursor-pointer pl-1"
+              className="text-xl font-medium secondary-color cursor-pointer pl-1"
               onClick={() => { inputRef.current.click() }}
             >
               Browse
             </span>
           </p>
           <p
-            className="text-sm text-center"
+            className="text-sm light-grey-color text-center"
           >
-            Supported jpeg, pdf oc doc files
+            Support jpeg,pdf and doc files
           </p>
           <input
             type="file"
             ref={inputRef}
             multiple
             hidden
-            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }}
+            onChange={(event: any) => {setFiles({...files,files:Array.from(event.target.files)}) }}
           />
         </div>
       </div>
       {
-        files ?
+        files?.files ?
           <div className='flex flex-row flex-wrap'>
             {
-              files?.map((item: any, idx: any) => {
+              files?.files?.map((item: any, idx: any) => {
                 return (
                   <SelectedUploadCard
                     files={files}

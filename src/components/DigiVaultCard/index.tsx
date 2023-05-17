@@ -5,10 +5,8 @@ import {
   BankingWhiteSub,
   HealthWhiteSub,
   TransWhiteSub,
-  EducationIcon
 } from "../../assets/images";
 import "./style.scss";
-
 interface Prop {
   title?: string;
   subTitle?: string;
@@ -21,13 +19,8 @@ interface Prop {
 
 const DigivaultCard = (props: any) => {
   const { onClick, TitleImg, SubImg, title, subTitle, bgColor, index } = props;
-
   const [isHovering, setIsHovering] = useState<any>();
   const [currentHover, setCurrentHover] = useState("");
-  console.log(isHovering, "ishovering");
-  console.log(title, "title");
-
-
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -60,7 +53,6 @@ const DigivaultCard = (props: any) => {
           {(title === "Others" || isHovering) ? "" : <SubImg />}
         </div>
         <h4>{title}</h4>
-
         <h6>{subTitle}</h6>
       </div>
     </div>

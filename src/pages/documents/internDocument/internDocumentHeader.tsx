@@ -26,9 +26,16 @@ import { CheckBox } from "../../../components/Checkbox";
 
 const InternDocument = () => {
   const [selectData, setSelectData] = useState("Intern Documents");
+  const [files,setFiles]=useState([]);
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
-  const [state, setState] = useState({ searchVal: '', dateRange: '' })
+  const [state, setState] = useState({ searchVal: '', dateRange: '' });
+
+  const handleDropped = (event: any) => {
+    event.preventDefault()
+    setFiles(Array.from(event.dataTransfer.files))
+  }
+  
   const items: any = [
     {
       label: <p className="text-base font-medium" onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
@@ -147,15 +154,16 @@ const InternDocument = () => {
           >
             Cancel
           </Button>,
-          <Button
-            className="teriary-bg-color font-semibold text-base upload-button white-color"
+          <Button 
+            className="teriary-bg-color font-semibold text-base upload-button white-color intern-upload-button"
             onClick={() => setUploadModel(false)}
           >
             Upload
           </Button>,
         ]}
       >
-        <UploadDocument />
+        <UploadDocument setFiles={setFiles} handleDropped={handleDropped} files={files} />
+        <p>{files[0] === ""}</p>
         {selectData === "Intern Documents" ?
           <div className="flex mt-5">
             <CheckBox />
