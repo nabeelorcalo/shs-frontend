@@ -23,25 +23,14 @@ const MainDashboard = () => {
   const createdAt = "2023-05-12T06:28:48.848Z";
   const simpleTime = dayjs(createdAt).format('HH:mm a');
 
-  // property listing
   useEffect(() => {
     action.propertgetlistingstata();
-  }, [])
-
-  // propertagents
-  useEffect(() => {
     action.propertGetTotalAgents();
-  }, [])
-
-  // get listing
-
-  useEffect(() => {
-    action.getRecentListing()
+    action.getRecentListing();
   }, [])
 
   return (
     <div className="main-dashboard">
-
       <div style={{ overflowX: "scroll", cursor: "pointer" }}>
         <div className="flex items-center gap-3" >
           <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
@@ -49,7 +38,7 @@ const MainDashboard = () => {
               return (
                 <div className="card-main w-[100%] md:w-[350px]">
                   <div className=" flex items-center p-2">
-                    <div className="rounded-[10px] h-[60px] w-[60px] bg-[#4783FF0D] p-[0.2rem]">
+                    <div className="rounded-[10px] h-[60px] w-[60px] light-gray-bg-color p-[0.2rem]">
                       <div className="img-bg pl-2 pt-2 pr-1">
                         <People />
                       </div>
@@ -85,7 +74,7 @@ const MainDashboard = () => {
                 <>
                   <div className="card-main w-[100%] md:w-[350px]">
                     <div className=" flex items-center p-2">
-                      <div className="rounded-[10px] h-[60px] w-[60px] bg-[#4783FF1A] p-[0.2rem]">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-gray-bg-color p-[0.2rem]">
                         <div className="img-bg pl-2 pt-2 pr-1">
                           <Clip />
                         </div>
@@ -102,8 +91,7 @@ const MainDashboard = () => {
                   </div>
                   <div className="card-main w-[100%] md:w-[350px]">
                     <div className=" flex items-center p-2">
-                      <div className="rounded-[10px] h-[60px] w-[60px]"
-                        style={{ backgroundColor: '#FFC15D4D', padding: '0.2rem' }}>
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-yellow-bg-color p-[0.2rem]">
                         <div className="img-bg pl-2 pt-2 pr-1">
                           <Pending />
                         </div>
@@ -120,7 +108,7 @@ const MainDashboard = () => {
                   </div>
                   <div className="card-main w-[100%] md:w-[350px]">
                     <div className=" flex items-center p-2">
-                      <div className="rounded-[10px] h-[60px] w-[60px] bg-[#3DC5751A] p-[0.2rem]">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-green-bg-color p-[0.2rem]">
                         <div className="img-bg pl-2 pt-2 pr-1">
                           <Approved />
                         </div>
@@ -137,7 +125,7 @@ const MainDashboard = () => {
                   </div>
                   <div className="card-main w-[100%] md:w-[350px]">
                     <div className=" flex items-center p-2">
-                      <div className="rounded-[10px] h-[60px] w-[60px] bg-[#D83A521A] p-[0.2rem]">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-red-bg-color p-[0.2rem]">
                         <div className="img-bg pl-2 pt-2 pr-1">
                           <Reject />
                         </div>
@@ -230,11 +218,11 @@ const MainDashboard = () => {
                   <>
                     <div
                       onClick={() =>
-                        item?.publicationStatus  === "published"
+                        item?.publicationStatus === "published"
                           ? navigate(`${item.id}`)
-                          : item?.publicationStatus  === "rejected"
+                          : item?.publicationStatus === "rejected"
                             ? navigate(`${item.id}`)
-                            : item?.publicationStatus  === "pending"
+                            : item?.publicationStatus === "pending"
                               ? navigate(`${item.id}`)
                               : ""
                       }
@@ -243,32 +231,33 @@ const MainDashboard = () => {
                       <Row>
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>
-                            <span className="text-sm font-medium color-[#363565]">
+                            <span className="text-sm font-medium primary-color">
                               {item?.user.firstName} {item?.user.lastName}
                             </span>
-                            <span className="text-xs font-normal color-[#A0A3BD]">
+                            <span className="text-xs font-normal text-success-placeholder-color">
                               &nbsp;Recent listed new property
                             </span>
                           </Typography>
                           <Typography>
-                            <span className="text-xs font-normal color-[#A0A3BD]">
+                            <span className="text-xs font-normal text-success-placeholder-color">
                               Address:
                             </span>
-                            <span className="text-xs font-normal color-[#4E4B66]">
+                            <span className="text-xs font-normal text-secondary-color ">
                               {item?.addressOne}
                             </span>
                           </Typography>
-                          <Typography className="text-xs font-normal color-[#A0A3BD]">
+                          <Typography className="text-xs font-normal text-success-placeholder-color">
                             {simpleTime}
                           </Typography>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-                          <Typography className="flex justify-end font-medium text-base color-[#4E4B66]">
+                          <Typography className="flex justify-end font-medium text-base text-secondary-color">
                             £{item.rent}
                           </Typography>
                           <div
                             className="p-1 mt-4 rounded-[6px]"
-                            style={{
+                            style=
+                            {{
                               background:
                                 item?.publicationStatus === "published"
                                   ? "#3DC575"

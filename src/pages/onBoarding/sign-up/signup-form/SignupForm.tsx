@@ -15,9 +15,6 @@ const SignupForm = ({ signupRole }: any) => {
   const action = useCustomHook();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-    console.log('date', value);
-
     const body: any = {
       "email": values.Email,
       "firstName": values.firstName,

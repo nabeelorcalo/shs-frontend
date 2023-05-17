@@ -26,15 +26,12 @@ const AddManager = () => {
   const action = useCustomHook();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
-
   const departmentData = useRecoilState<any>(settingDepartmentState);
-  console.log(departmentData, "for checking id");
 
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };
   });
 
-  console.log(departmentIds, "department");
   useEffect(() => {
     action.getSettingDepartment(1, "");
   }, []);
@@ -43,7 +40,6 @@ const AddManager = () => {
     console.log("id", value);
   };
   const onFinish = (values: any) => {
-    console.log("Success:", values);
     const {
       firstname,
       lastname,

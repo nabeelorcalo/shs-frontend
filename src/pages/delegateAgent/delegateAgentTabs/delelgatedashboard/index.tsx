@@ -34,29 +34,29 @@ const Dashboard = () => {
                       item.toolTip &&
                       (
                         <Tooltip
-                        placement='bottom'
-                        color='#363565'
-                        title=
-                        {
-                          <div className='p-3'>
-                            <Row gutter={[15, 15]} className='pt-1 pb-2'>
-                              {item.toolTipData?.map((toolData) => {
-                                return (
-                                  <>
-                                    <Col xxl={12} xl={12} lg={12} md={12} xs={12} >
-                                      <Typography className='white-color font-normal text-xs'>{toolData.label}</Typography>
-                                      <Typography className='white-color font-normal text-xs'>£{toolData.totalNumber}</Typography>
-                                    </Col>
-                                  </>
-                                )
-                              })}
-                            </Row>
-                          </div>
-                        }
-                      >
-                        <InfoCircleFilled className='text-lg text-info-color cursor-pointer relative' />
+                          placement='bottom'
+                          color='#363565'
+                          title=
+                          {
+                            <div className='p-3'>
+                              <Row gutter={[15, 15]} className='pt-1 pb-2'>
+                                {item.toolTipData?.map((toolData) => {
+                                  return (
+                                    <>
+                                      <Col xxl={12} xl={12} lg={12} md={12} xs={12} >
+                                        <Typography className='white-color font-normal text-xs'>{toolData.label}</Typography>
+                                        <Typography className='white-color font-normal text-xs'>£{toolData.totalNumber}</Typography>
+                                      </Col>
+                                    </>
+                                  )
+                                })}
+                              </Row>
+                            </div>
+                          }
+                        >
+                          <InfoCircleFilled className='text-lg text-info-color cursor-pointer relative' />
                         </Tooltip>
-                      )     
+                      )
                     }
                   </div>
                   <div className="flex p-2">

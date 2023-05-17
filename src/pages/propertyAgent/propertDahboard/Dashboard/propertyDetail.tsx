@@ -22,7 +22,6 @@ const PropertyDetail = () => {
   const status = location.pathname.split("/");
   const recentList = useRecoilState<any>(getRecentListingState);
 
-  console.log("mapppp", recentList[0])
   const recentlists = recentList[0].filter((item: any) =>
     item.id == params.id
   )

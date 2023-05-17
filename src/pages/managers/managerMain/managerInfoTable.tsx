@@ -9,11 +9,11 @@ import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
 const ManagerInfoTable = () => {
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
-  console.log(managerCardData, 'managerCardData');
 
   useEffect(() => {
     action.getManagerCompanyAdmin(1)
   }, [])
+
   const columns = [
     {
       dataIndex: "No",

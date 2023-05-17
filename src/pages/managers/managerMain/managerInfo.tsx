@@ -10,7 +10,6 @@ const ManagerInfo = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
-  console.log(managerCardData, 'managerCardData');
 
   useEffect(() => {
     action.getManagerCompanyAdmin(1)
