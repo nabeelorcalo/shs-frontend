@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 import "./style.scss";
 import useBookingRequests from './BookingRequests/actionHandler';
 import endpoints from "../../config/apiEndpoints";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { availablePropertiesState, filterParamsState } from "../../store";
 import api from "../../api";
 
@@ -113,7 +113,7 @@ const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const downloadBookingRequest = useBookingRequests()
-  const [form] = Form.useForm();
+  const [avaiablePropertiesForm] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
   const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
@@ -123,6 +123,7 @@ const Accommodation = () => {
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
   const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
+  const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false)
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const items = [
@@ -204,7 +205,7 @@ const Accommodation = () => {
     setAvailablePropertyFiltersOpen(false)
   }
 
-  function applyFilterAvailableProperties(fieldsValue: any) {
+  function submitFilters(fieldsValue: any) {
     let params:any = {}
     if(fieldsValue.priceRange !== undefined) {
       params.minPrice = fieldsValue.priceRange[0];
@@ -215,18 +216,33 @@ const Accommodation = () => {
         params.discount = fieldsValue.offer.includes('Discounts')
       }
       if(fieldsValue.offer.includes('No Deposit')) {
-        params.depositRequired = fieldsValue.offer.includes('No Deposit')
+        params.securityDeposit = fieldsValue.offer.includes('No Deposit')
       }
     }
+
     if(fieldsValue.accomodationType !== undefined) {
-      params.propertyType = fieldsValue.accomodationType
+      if(fieldsValue.accomodationType.includes('Entire Property')) {
+        params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
+      }
+      if(fieldsValue.accomodationType.includes('Studio')) {
+        params.studio = fieldsValue.accomodationType.includes('Studio')
+      }
+      if(fieldsValue.accomodationType.includes('Rooms In Shared Property')) {
+        params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
+      }
     }
-    // console.log('param:::: ', params)
-    // const values = {
-    //   ...fieldsValue,
-    //   'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
-    //   'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
-    // }
+
+    if(fieldsValue.facilities !== undefined) {
+      if(fieldsValue.facilities.includes('bills')) {
+        params.bills = fieldsValue.facilities.includes('bills')
+      }
+      if(fieldsValue.facilities.includes('Wi-fi')) {
+        params.wifi = fieldsValue.facilities.includes('Wi-fi')
+      }
+      if(fieldsValue.facilities.includes('laundary')) {
+        params.laundary = fieldsValue.facilities.includes('laundary')
+      }
+    }
     
     setFilterParams((prev) => {
       return {
@@ -238,8 +254,8 @@ const Accommodation = () => {
   }
 
   const resetFormFields = () => {
-    form.resetFields()
-    setFilterParams({})
+    avaiablePropertiesForm.resetFields()
+    resetFilterParams()
   }
 
   const openSavedSearchesFilters = () => {
@@ -470,30 +486,13 @@ const Accommodation = () => {
       >
         <div className="shs-filter-form">
           <Form
-            form={form}
+            form={avaiablePropertiesForm}
             layout="vertical"
             name="availablePropertiesFilters"
             onValuesChange={(_, values) => {
-              // console.log('Filter Values:: ', values)
-              // let params:any = {}
-              // if(values.priceRange !== undefined) {
-              //   params.minPrice = values.priceRange[0];
-              //   params.maxPrice = values.priceRange[1];
-              // }
-              // if(values.offer !== undefined) {
-              //   if(values.offer.includes('Discounts')) {
-              //     params.discount = values.offer
-              //   }
-              //   if(values.offer.includes('No Deposit')) {
-              //     params.depositRequired = values.hasSecurityDeposit
-              //   }
-              // }
-              // if(values.accomodationType !== undefined) {
-              //   params.propertyType = values.accomodationType
-              // }
-              // console.log('param:::: ', params)
+              console.log('Available Properties Filter::: ', values)
             }}
-            onFinish={applyFilterAvailableProperties}
+            onFinish={submitFilters}
           >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
@@ -509,7 +508,7 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            <div className="shs-form-group">
+            {/* <div className="shs-form-group">
 
               <div className="form-group-title">Availability</div>
 
@@ -530,34 +529,35 @@ const Accommodation = () => {
                   showToday={false}
                 />
               </Form.Item>
+            </div> */}
 
-              <Form.Item name="offer" label="Offer">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
-                  <Select.Option value="Discounts">Discounts</Select.Option>
-                  <Select.Option value="No Deposit">No Deposit</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="offer" label="Offer">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
+                <Select.Option value="Discounts">Discounts</Select.Option>
+                <Select.Option value="No Deposit">No Deposit</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="accomodationType" label="Accomodation Type">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="Entire Property">Entire Property</Select.Option>
-                  <Select.Option value="Studio">Studio</Select.Option>
-                  <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="accomodationType" label="Accomodation Type">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+                <Select.Option value="Entire Property">Entire Property</Select.Option>
+                <Select.Option value="Studio">Studio</Select.Option>
+                <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="facilities" label="Facilities">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="bills">Bills</Select.Option>
-                  <Select.Option value="Wi-fi">Wi-fi</Select.Option>
-                  <Select.Option value="laundary">Laundary</Select.Option>
-                  <Select.Option value="meals">Meals</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
+            <Form.Item name="facilities" label="Facilities">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+                <Select.Option value="bills">Bills</Select.Option>
+                <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                <Select.Option value="laundary">Laundary</Select.Option>
+                <Select.Option value="meals">Meals</Select.Option>
+              </Select>
+            </Form.Item>
+            
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost onClick={() => closeAvailablePropertyFilters()}>
+                <ExtendedButton customType="tertiary" ghost onClick={() => resetFormFields()}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
@@ -577,10 +577,13 @@ const Accommodation = () => {
         onClose={closeSavedSearchesFilters}
       >
         <div className="shs-filter-form">
-          <Form layout="vertical" name="sevedSearchesFilters" onFinish={onFinish}>
+          <Form 
+            layout="vertical"
+            name="sevedSearchesFilters"
+            onFinish={onFinish}
+          >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
-
               <Form.Item name="priceRange">
                 <Slider
                   min={0}
@@ -592,9 +595,8 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            <div className="shs-form-group">
+            {/* <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
-
               <Form.Item name="moveInDate" label="Move in Date">
                 <DatePicker
                   className="filled"
@@ -614,31 +616,32 @@ const Accommodation = () => {
                   showToday={false}
                 />
               </Form.Item>
+            </div> */}
 
-              <Form.Item name="offer" label="Offer">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="discounts">Discounts</Select.Option>
-                  <Select.Option value="noDeposit">No Deposit</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="offer" label="Offer">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="discounts">Discounts</Select.Option>
+                <Select.Option value="noDeposit">No Deposit</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="accomodationType" label="Accomodation Type">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="Entire Property">Entire Property</Select.Option>
-                  <Select.Option value="Studio">Studio</Select.Option>
-                  <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="accomodationType" label="Accomodation Type">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="Entire Property">Entire Property</Select.Option>
+                <Select.Option value="Studio">Studio</Select.Option>
+                <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="facilities" label="Facilities">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="bills">Bills</Select.Option>
-                  <Select.Option value="Wi-fi">Wi-fi</Select.Option>
-                  <Select.Option value="laundary">Laundary</Select.Option>
-                  <Select.Option value="meals">Meals</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
+            <Form.Item name="facilities" label="Facilities">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="bills">Bills</Select.Option>
+                <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                <Select.Option value="laundary">Laundary</Select.Option>
+                <Select.Option value="meals">Meals</Select.Option>
+              </Select>
+            </Form.Item>
+            
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
                 <ExtendedButton customType="tertiary" ghost>

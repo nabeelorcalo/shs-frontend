@@ -47,23 +47,23 @@ const SavedSearches = () => {
         <div className="shs-row placeholder-height">
           {savedProperties?.map((item:any) => {
             let tags: any[] = [];
-            if(item.property.allBillsIncluded) tags.push('Utility Bils');
-            if(item.property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
+            if(item.allBillsIncluded) tags.push('Utility Bils');
+            if(item.propertyHas?.includes("washingMachine")) tags.push("Laundry");
 
             return (
               <div key={item.id} className="shs-col-5">
                 <AccommodationCard
                   coverPhoto={thumb1}
-                  offer={item.property.offer?.monthlyDiscount}
-                  rent={item.property.rent}
-                  propertyAvailableFor={item.property.rentFrequency}
-                  propertyType={item.property.propertyType}
-                  totalBedrooms={item.property.totalBedrooms}
-                  totalBathrooms={item.property.totalBathrooms}
-                  address={item.property.addressOne}
+                  offer={item.offer?.monthlyDiscount}
+                  rent={item.rent}
+                  propertyAvailableFor={item.rentFrequency}
+                  propertyType={item.propertyType}
+                  totalBedrooms={item.totalBedrooms}
+                  totalBathrooms={item.totalBathrooms}
+                  address={item.addressOne}
                   tags={tags}
                   onSave={() => console.log('handle clik')}
-                  onDetail={() => handleDetailClick(item.property.id)}
+                  onDetail={() => handleDetailClick(item.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>

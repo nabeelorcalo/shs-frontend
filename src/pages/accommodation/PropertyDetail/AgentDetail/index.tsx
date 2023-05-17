@@ -8,7 +8,6 @@ interface AgentProps {
 }
 
 const AgentDetail: FC<AgentProps> = ({data}) => {
-  console.log('agent detail:::: ', data)
   return (
     <div className="property-agent-detail">
       <div className='agent-profile-info'>

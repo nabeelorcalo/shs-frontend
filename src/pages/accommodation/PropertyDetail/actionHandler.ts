@@ -15,7 +15,7 @@ const usePropertyHook = () => {
   const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     const {data} = await api.get(`${GET_PROPERTY}${id}`);
-    setProperty(data.data)
+    setProperty(data)
     setLoading(false);
   }
 

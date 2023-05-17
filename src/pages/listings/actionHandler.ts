@@ -44,14 +44,13 @@ const useListingsHook = () => {
     setLoading(true);
     const res = await api.get(`${GET_PROPERTY}${id}`)
     if(!res.error) {
-      setSingleListing(res.data.data)
+      setSingleListing(res.data)
     }
     setLoading(false);
   }
 
   // Delete Agent Property
   const deleteListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    console.log("I am deleter")
     setLoading(true)
     await api.delete(`${DELETE_PROPERTY}${id}`)
     setLoading(false)

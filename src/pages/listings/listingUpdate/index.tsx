@@ -23,14 +23,6 @@ import {
 } from '../../../assets/images'
 import "./style.scss";
 
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    console.log('promise::: ', file)
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
 
 
 const ListingUpdate = () => {
@@ -42,7 +34,7 @@ const ListingUpdate = () => {
   const singleListing:any = useRecoilValue(listingState);
   const [loading, setLoading] = useState(false);
   
-
+  
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {

@@ -57,7 +57,7 @@ const AccPropertyDetail = () => {
   const screens = useBreakpoint();
   const navigate = useNavigate();
   const {state} = useLocation();
-  const {propertyId} = useParams()
+  const {propertyId} = useParams();
   const [loading, setLoading] = useState(false);
   const anchorItems = [
     {
@@ -91,37 +91,28 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getProperty(propertyId, setLoading)
-    console.log("property DetailLL:: ", property)
+    console.log('Property::: ', property)
   }, [])
 
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const breadcrumbLink = () => {
-    if(state == null) return navigate('/')
-    return (
-      state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}` ? 'Available Properties'
-      :state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}/${ROUTES_CONSTANTS.RENTED_PROPERTIES}` ? 'Rented Properties'
-      : state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}/${ROUTES_CONSTANTS.SAVED_SEARCHES}` ? 'Saved Searches'
-      : 'Booking Requests'
-    )
-  }
+
 
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
     <div className="property-detail">
-      <PageHeader title="Accommodation" bordered />
       <PageHeader
         bordered
         title={
           <Breadcrumb 
             breadCrumbData={[
               { name: "Accommodation" },
-              { name: breadcrumbLink(), onClickNavigateTo: -1 },
-            ]}  
+              { name: "Available Properties", onClickNavigateTo: `/${ROUTES_CONSTANTS.ACCOMMODATION}` },
+            ]}
           />
         }
       />
@@ -153,7 +144,7 @@ const AccPropertyDetail = () => {
 
                 <div className="property-heading">
                   <Typography.Title level={3}>
-                    {property?.properties?.addressOne}
+                    {property?.addressOne}
                   </Typography.Title>
 
                   <div className="property-heading-location">
@@ -180,7 +171,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Overview
                       </div>
-                      <PropertyOverview data={property?.properties} />
+                      <PropertyOverview data={property} />
                     </div>
                   </div>
 
@@ -189,7 +180,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Pricing
                       </div>
-                      <PropertyPricing data={property?.properties} />
+                      <PropertyPricing data={property} />
                     </div>
                   </div>
 
@@ -216,7 +207,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-                      <AgentDetail data={property?.properties?.user} />
+                      <AgentDetail data={property?.user} />
                     </div>
                   </div>
 

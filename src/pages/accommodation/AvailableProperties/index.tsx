@@ -38,7 +38,6 @@ const AvailableProperties = () => {
     getAvailableProperties(setLoading, filterParams)
   }, [filterParams])
 
-
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const postSaveProperty = async (id:any) => {

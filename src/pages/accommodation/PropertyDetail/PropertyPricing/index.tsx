@@ -106,7 +106,7 @@ const PropertyPricing: FC<PricingProps> = ({data}) => {
                 </div>
               </div>
               <div className="pricing-table-discount-offer">
-              15 % off between 1 and 6 months Bookings
+                15 % off between 1 and 6 months Bookings
               </div>
             </li>
           </ul>
