@@ -25,6 +25,7 @@ const endpoints = {
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
+  GET_FOLDER_CONTENT:'/digivault/get-folder-content',
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
   POST_NEW_VAULT_PASSWORD: '/digivault/set-new-vault-password',
   POST_DIGIVAULT_PASSWORD: 'digivault/enable-disable-lock',

@@ -1,8 +1,9 @@
-import { DigiVaultPasswordState, DigiVaultState } from "../../store";
+import { DigiVaultPasswordState, DigiVaultState, DigiFileContent } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
+import { Education } from "../../assets/images";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -11,8 +12,9 @@ const useCustomHook = () => {
     POST_DIGIVAULT_PASSWORD,
     POST_CREATE_FOLDER_FILE,
     DEL_FOLDER_FILE,
-    POST_NEW_VAULT_PASSWORD } = endpoints;
+    GET_FOLDER_CONTENT } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
+  const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
   const [newPassword, setNewPassword] = useRecoilState<any>(DigiVaultPasswordState);
 
   //get digivault password
@@ -21,6 +23,16 @@ const useCustomHook = () => {
     setStudentVault(data?.response);
   }
 
+  // get folder content
+  const getFolderContent = async (values: any) => {
+    const { folderId, search, root } = values;
+    const params = {
+      root: root,
+      folderId: folderId
+    }
+    const { data } = await api.get(GET_FOLDER_CONTENT, params);
+    setFolderContent(data);
+  }
   //search Folder File
   // const SearchFolderFile = async () => {
   //     const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
@@ -41,17 +53,20 @@ const useCustomHook = () => {
 
   // post create folder  / file
   const postCreateFolderFile = async (values: any) => {
-    const { name, root } = values;
+    const { name, root, folderId, folderName } = values;
+    console.log("folderNamefolderNamefolderNamefolderNamefolderName", values);
+
     const folderData = {
-      title: name,
+      title: folderName ? folderName : name,
       root: root.toUpperCase(),
-      mode: 'file',
-      folderId: '',
+      mode: folderName ? 'folder' : 'file',
+      folderId: folderId ? folderId.toString() : '',
       file: ''
     }
     const { data } = await api.post(POST_CREATE_FOLDER_FILE, folderData);
     setNewPassword(data)
     getDigiVaultDashboard();
+    getFolderContent(null)
     Notifications({ title: 'Sucess', description: 'File / Folder added successfully', type: 'success' })
   }
 
@@ -68,7 +83,9 @@ const useCustomHook = () => {
   }
   return {
     studentVault,
+    folderContent,
     getDigiVaultDashboard,
+    getFolderContent,
     postDigivaultPassword,
     postCreateFolderFile,
     deleteFolderFile

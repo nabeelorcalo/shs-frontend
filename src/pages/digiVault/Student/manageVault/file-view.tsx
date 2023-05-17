@@ -21,16 +21,21 @@ const ManageVault = () => {
     files: [],
     fileName: '',
   });
-  const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile }: any = useCustomHook();
   const { state } = useLocation();
+  const { folderId, title } = state;
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
 
+  const getContentParams = {
+    folderId: folderId,
+    search: '',
+    root: title
+  }
   useEffect(() => {
-    getDigiVaultDashboard()
+    getFolderContent(getContentParams)
   }, [])
-  console.log(state);
 
   const handleDropped = (event: any) => {
     event.preventDefault()
@@ -57,13 +62,13 @@ const ManageVault = () => {
       </Menu.Item>
     </Menu>
   );
-  const newTableData = studentVault?.recentFiles?.map((item: any, index: number) => {
+  const newTableData = folderContent?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
       {
         key: index,
         Title: <p>
-          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span><FileIcon /></span>
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
@@ -112,11 +117,12 @@ const ManageVault = () => {
 
   const upLoadModalHandlers = () => {
     const sendFile = {
-      root: state.title,
+      folderId: folderId,
+      root: title,
       name: isState?.files[0]?.name,
     }
     console.log(sendFile);
-    
+
     postCreateFolderFile(sendFile)
     setState((prevState: any) => ({
       ...prevState,
@@ -141,7 +147,15 @@ const ManageVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">
             <span className="manage-vault-title-text mr-2 capitalize">
-              {titleName[2]}
+              {/* {titleName[2]} */}
+              View
+            </span>
+            <span className="dash-vault-line">|</span>
+            <span
+              onClick={() => router(`/digivault/${title}`, { state: title })}
+              className="manage-vault-title-text-sub ml-2 cursor-pointer"
+            >
+              {title}
             </span>
             <span className="dash-vault-line">|</span>
             <span

@@ -44,23 +44,28 @@ const ManageVault = () => {
     }))
   }
 
-  const menu2 = (id: any) => (
-    <Menu>
-      <Menu.Item key="1" onClick={() => router(`/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`, { state: { id: id, title: stateData } })}>View</Menu.Item>
+  const menu2 = (val: any) => {
+    return <Menu>
+      {val.mode === 'folder' && <Menu.Item
+        key="1"
+        onClick={() => router(
+          `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+          { state: { folderId: val.id, title: stateData } })}>
+        View</Menu.Item>}
       <Menu.Item
         key="2"
         onClick={() => {
           setState((prevState: any) => ({
             ...prevState,
             isOpenDelModal: true,
-            DelModalId: id
+            DelModalId: val.id
           }));
         }}
       >
         Delete
       </Menu.Item>
     </Menu>
-  );
+  };
   const newTableData = studentVault?.dashboardFolders[stateData]?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
@@ -73,7 +78,7 @@ const ManageVault = () => {
         datemodified: modifiedDate,
         size: item.size ? item.size : '---',
         action: <Space size="middle">
-          <CustomDropDown menu1={menu2(item.id)} />
+          <CustomDropDown menu1={menu2(item)} />
         </Space>
       }
     )
@@ -109,6 +114,8 @@ const ManageVault = () => {
 
   const onFinish = (values: any) => {
     values.root = state;
+    console.log(values);
+
     postCreateFolderFile(values);
     form.resetFields();
     setState((prevState: any) => ({
@@ -226,7 +233,7 @@ const ManageVault = () => {
             onFinish={onFinish}
             initialValues={{ remember: false }}
           >
-            <Form.Item name="name" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
+            <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
               <Input className="input" placeholder="Enter folder Name" type="text" />
             </Form.Item>
             <div className="d-flex justify-end items-center">
