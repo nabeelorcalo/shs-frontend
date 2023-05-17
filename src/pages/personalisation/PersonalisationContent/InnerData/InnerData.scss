@@ -1,0 +1,23 @@
+@import '../../../../scss/colors';
+
+.personalisation-content {
+    .personalisation-content-title {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 16px;
+        color: $primary-bg-color;
+    }
+
+    .sidebar {
+        height: 45rem;
+        overflow: hidden
+    }
+
+    .box-wrapper {
+        background-color: $white-bg-color;
+    }
+
+    .box-wrapper-preview {
+        padding: 20px 0px;
+    }
+}
