@@ -54,8 +54,6 @@ const useCustomHook = () => {
   // post create folder  / file
   const postCreateFolderFile = async (values: any) => {
     const { name, root, folderId, folderName } = values;
-    console.log("folderNamefolderNamefolderNamefolderNamefolderName", values);
-
     const folderData = {
       title: folderName ? folderName : name,
       root: root.toUpperCase(),

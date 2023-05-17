@@ -43,7 +43,6 @@ const ManageVault = () => {
       files: Array.from(event.dataTransfer.files)
     }))
   }
-
   const menu2 = (val: any) => {
     return <Menu>
       {val.mode === 'folder' && <Menu.Item
@@ -114,8 +113,6 @@ const ManageVault = () => {
 
   const onFinish = (values: any) => {
     values.root = state;
-    console.log(values);
-
     postCreateFolderFile(values);
     form.resetFields();
     setState((prevState: any) => ({

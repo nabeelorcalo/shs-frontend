@@ -121,8 +121,6 @@ const ManageVault = () => {
       root: title,
       name: isState?.files[0]?.name,
     }
-    console.log(sendFile);
-
     postCreateFolderFile(sendFile)
     setState((prevState: any) => ({
       ...prevState,
