@@ -1,7 +1,7 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import './style.scss'
 import CalendarDataDrawer from "./calendarDataDrawer";
 import { LeaveRequest } from "../../../../components";
@@ -10,11 +10,22 @@ import { Form } from "antd";
 import useCustomHook from "../../actionHandler";
 import { currentUserState } from "../../../../store";
 import { useRecoilValue } from "recoil";
+import dayjs from "dayjs";
 
+let newDate: any;
 const Calendar = () => {
     const action = useCustomHook();
+    const getCalendarDate = (date: any) => {
+        let newDate = { start: dayjs(date?.startStr).format('YYYY-MM-DD'), end: dayjs(date?.endStr).format('YYYY-MM-DD') }
+        // action.getCalendarLeaveList(newDate)
+    }
+    // useEffect(() => {
+    //     if (!newDate) {
+    //         action.getCalendarLeaveList()
+    //         newDate = new Date()
+    //     };
+    // }, [newDate])
     const cruntUserState = useRecoilValue(currentUserState);
-    console.log(cruntUserState, "Leaev From Action ");
     const calendarEvent = action.getCalanderLeaveState?.map((item: any) => ({
         id: item?.id,
         title: item?.type,
@@ -22,7 +33,7 @@ const Calendar = () => {
         start: item?.dateFrom,
         end: item?.dateTo,
         leaveTypeDay: item?.durationType,
-        dur: "01 day",
+        dur: "01 day" ,
         hours: "04:00",
         // img: LeaveProfileImg,
         name: `${cruntUserState?.firstName} ${cruntUserState?.lastName} `,
@@ -33,7 +44,7 @@ const Calendar = () => {
         status: item?.status,
         description: item?.reason
     }))
-    // console.log('calendarEvent', calendarEvent);
+    console.log('calendarEvent', calendarEvent);
 
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
@@ -80,10 +91,11 @@ const Calendar = () => {
                     }}
                     // events={calendarEvent}
 
-                    events={(date, successCallback) => {
+                    events={(info, successCallback) => {
                         successCallback(calendarEvent);
-                        action.getCalendarDate(date);
+                        getCalendarDate(info);
                     }}
+
                     eventContent={handleEventContent}
                     eventClick={(e) => { setIsOpenCalendarDrawer(true); setEventData(e) }}
                 // dateClick={() => setIsAddModalOpen(true)}
@@ -99,7 +111,7 @@ const Calendar = () => {
                 open={isAddModalOpen}
                 setIsAddModalOpen={setIsAddModalOpen}
                 onsubmitLeaveRequest={action.onsubmitLeaveRequest}
-                // onLeaveFormValuesChange={action.onLeaveFormValuesChange}
+            // onLeaveFormValuesChange={action.onLeaveFormValuesChange}
             />
         </>
     )

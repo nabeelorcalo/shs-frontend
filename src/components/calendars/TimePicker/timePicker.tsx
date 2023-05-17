@@ -5,7 +5,7 @@ import { ClockDarkIcon } from '../../../assets/images';
 import './style.scss';
 
 export const TimePickerComp = (props: any) => {
-  const { label, open, setOpen, value = dayjs('12:08', 'HH:mm'), setValue, popupclassName } = props;
+  const { label, open, setOpen, value, setValue, popupclassName } = props;
 
   const format = 'HH:mm';
 

@@ -10,6 +10,7 @@ import { ROUTES_CONSTANTS } from '../../config/constants';
 import TimePickerComp from '../calendars/TimePicker/timePicker';
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+import dayjs from 'dayjs';
 const { Dragger } = Upload;
 const props: UploadProps = {
   name: 'file',
@@ -44,15 +45,15 @@ const leavRequestOptionDAta = [
 // };
 export const LeaveRequest = (props: any) => {
   const initailVal = {
-    type : '',
-    durationType : 'FULL_DAY',
-    dateFrom : '',
-    dateTo : '',
+    type: '',
+    durationType: 'FULL_DAY',
+    dateFrom: '',
+    dateTo: '',
     days: '',
     timeFrom: '',
     timeTo: "",
     hours: '',
-    reason : "",
+    reason: "",
     media: ''
   }
 
@@ -74,7 +75,7 @@ export const LeaveRequest = (props: any) => {
     <Modal
       title={title}
       open={open}
-      onCancel={() => setIsAddModalOpen(false)}
+      onCancel={() => { setIsAddModalOpen(false), form.resetFields() }}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
@@ -88,7 +89,7 @@ export const LeaveRequest = (props: any) => {
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         initialValues={initailVal}
         // onValuesChange={onLeaveFormValuesChange}
-        onFinish={onsubmitLeaveRequest}
+        onFinish={(values) => { onsubmitLeaveRequest(values, setIsAddModalOpen), form.resetFields() }}
       >
         <Form.Item
           label="Leave Type"
@@ -135,7 +136,7 @@ export const LeaveRequest = (props: any) => {
             </Form.Item>
           </Col>
           <Col lg={8}>
-            <Form.Item  label="Days ">
+            <Form.Item label="Days ">
               <Input
                 placeholder="enter a number "
                 maxLength={16}
@@ -151,8 +152,9 @@ export const LeaveRequest = (props: any) => {
                 <TimePickerComp
                   popupclassName={'leave-time-picker'}
                   open={time.from}
+                  setValue={(value: any) => console.log(value)}
                   setOpen={() => setTime({ from: !time.from, to: false })}
-                // value={initailVal.timeFrom}
+                  value={dayjs(initailVal.timeFrom).format()}
                 />
               </Form.Item>
             </Col>
@@ -162,12 +164,13 @@ export const LeaveRequest = (props: any) => {
                   popupclassName={'leave-time-picker'}
                   open={time.to}
                   setOpen={() => setTime({ to: !time.to, from: false })}
-                // value={initailVal.timeTo}
+                  value={dayjs(initailVal.timeTo).format()}
+                  setValue={(value: any) => console.log(value)}
                 />
               </Form.Item>
             </Col>
             <Col lg={8}>
-              <Form.Item  label="Hours">
+              <Form.Item label="Hours">
                 <Input
                   placeholder="enter a number "
                   maxLength={16}

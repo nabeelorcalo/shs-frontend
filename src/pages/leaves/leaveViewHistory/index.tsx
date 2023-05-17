@@ -26,7 +26,7 @@ const index = () => {
   const cruntUserState = useRecoilValue(currentUserState);
   console.log(cruntUserState,"cruntUserStatecruntUserState");
   
-  const {downloadPdfOrCsv,onsubmitLeaveRequest} = useCustomHook();
+  const {downloadPdfOrCsv,onsubmitLeaveRequest, searchValue} = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
@@ -47,7 +47,7 @@ const index = () => {
       <Divider />
       <Row className='items-center' gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { console.log(e) }} />
+          <SearchBar handleChange={(e: any)=>searchValue(e)} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
           <FiltersButton
