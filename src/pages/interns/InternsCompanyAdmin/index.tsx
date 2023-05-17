@@ -36,14 +36,14 @@ const InternsCompanyAdmin = () => {
     { value: 'Terminated', label: 'Terminated' },
     { value: 'All', label: 'All' },
   ]
-  const departmentsList = [
-    { value: 'Business analyst', label: 'Business analyst' },
-    { value: 'Research analyst', label: 'Research analyst' },
-    { value: 'Accountant', label: 'Accountant' },
-    { value: 'Administrator', label: 'Administrator' },
-    { value: 'HR Cordinator', label: 'HR Cordinator' },
-    { value: 'All', label: 'All' },
-  ]
+  // const departmentsList = [
+  //   { value: 'Business analyst', label: 'Business analyst' },
+  //   { value: 'Research analyst', label: 'Research analyst' },
+  //   { value: 'Accountant', label: 'Accountant' },
+  //   { value: 'Administrator', label: 'Administrator' },
+  //   { value: 'HR Cordinator', label: 'HR Cordinator' },
+  //   { value: 'All', label: 'All' },
+  // ]
   const universityList = [
     { value: 'Power source', label: 'Power source' },
     { value: 'Dev spot', label: 'Dev spot' },
@@ -54,10 +54,11 @@ const InternsCompanyAdmin = () => {
   ]
 
   const { getAllInternsData, getAllInters,
-    changeHandler, downloadPdfOrCsv, isLoading } = useCustomHook()
+    changeHandler, downloadPdfOrCsv, isLoading, getAllDepartmentData, departmentsData }: any = useCustomHook()
 
   useEffect(() => {
     getAllInternsData(state.status)
+    getAllDepartmentData();
   }, [])
 
 
@@ -294,7 +295,9 @@ const InternsCompanyAdmin = () => {
                     placeholder='Select'
                     value={state.department}
                     onChange={(event: any) => { updateDepartment(event) }}
-                    options={departmentsList}
+                    options={departmentsData?.map((item: any) => {
+                      return { value: item?.id, label: item?.name }
+                    })}
                   />
                 </div>
                 <div className="flex flex-col gap-2">

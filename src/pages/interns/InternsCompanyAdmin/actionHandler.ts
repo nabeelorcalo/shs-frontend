@@ -8,20 +8,22 @@ import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
 import { internsDataState } from '../../../store/interns/index';
+import { settingDepartmentState } from "../../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS } = apiEndpints
+  const { GET_ALL_INTERNS, SETTING_DAPARTMENT } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
-  const[isLoading,setIsLoading] =useState(false);
+  const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     debouncedResults.cancel();
   });
 
   // Get all interns data
-  const getAllInternsData = async (event:any) => {
-    const { data } = await api.get(GET_ALL_INTERNS, { companyId: 1, userType: 'intern' ,InternStatus: event ? event : null})
+  const getAllInternsData = async (event: any) => {
+    const { data } = await api.get(GET_ALL_INTERNS, { userType: 'intern', InternStatus: event ? event : null })
     setGetAllInters(data);
     setIsLoading(true);
   }
@@ -31,8 +33,8 @@ const useCustomHook = () => {
     const { data } = await api.get(
       GET_ALL_INTERNS,
       val
-        ? { companyId: 1, userType: 'intern', search: val }
-        : { companyId: 1, userType: 'intern' }
+        ? { userType: 'intern', search: val }
+        : { userType: 'intern' }
     );
     setGetAllInters(data);
   };
@@ -40,6 +42,11 @@ const useCustomHook = () => {
     return debounce(changeHandler, 500);
   }, []);
 
+  //Get all department data
+  const getAllDepartmentData = async () => {
+    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
+    setDepartmentsData(data)
+  };
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -107,10 +114,12 @@ const useCustomHook = () => {
   };
 
   return {
+    getAllDepartmentData,
     downloadPdfOrCsv,
     getAllInternsData,
     changeHandler,
     getAllInters,
+    departmentsData,
     isLoading
   };
 };
