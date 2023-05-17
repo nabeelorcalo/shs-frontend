@@ -67,7 +67,7 @@ const managerGrievancesColumn =
           children: (
             <div>
               <span
-                className={`rounded-md px-2 py-1  text-white text-sm font-normal font-[outfit] ${text === 'New' ? 'new' :
+                className={`rounded-md px-2 py-1  text-white text-sm font-normal ${text === 'New' ? 'new' :
                   text === 'In Progess' ? 'in-progress' : text === 'Re-Opened' ? 're-opened' : text === 'Resolved' ? 'resolved' : ''} `}
               >
                 {text}

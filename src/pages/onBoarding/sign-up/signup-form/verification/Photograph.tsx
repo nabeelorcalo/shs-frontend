@@ -51,7 +51,6 @@ const Photograph = (props: any) => {
                 style={{
                   fontSize: "24px",
                   fontWeight: 600,
-                  fontFamily: "Outfit",
                   color: "#14142A",
                 }}
               >

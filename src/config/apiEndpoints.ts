@@ -35,6 +35,16 @@ const endpoints = {
   DEL_INTERNSHIP: '/internship/deleteInternship',
   DUBLICATE_INTERNSHIP: '/internship/duplicateInternship',
   POST_NEW_INTERNSHIP: '/internship/createInternship',
+  //candidates 
+  CANDIDATE_LIST: `/candidate/listCandidates`,
+  UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
+  STUDENT_DIGIVAULT: "/digivault/get-dashboard",
+  POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
+  DUPLICATE_INTERNSHIP: '/internship/duplicateInternship',
+  EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
+  //comment
+  GET_COMMENTS: '/comment/getComments',
+  ADD_COMMENT:`/comment/addComment`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,

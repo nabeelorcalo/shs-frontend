@@ -86,23 +86,23 @@ const MainDashboard = () => {
                     <Col span={24}>
                       <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
-                          <Typography className="text-[#A0A3BD] text-sm font-normal font-[outfit]">
+                          <Typography className="text-[#A0A3BD] text-sm font-normal">
                             {item.date}
                           </Typography>
                         </Col>
                         <hr />
                         <Col xxl={16} xl={16} lg={15} md={18} sm={17} xs={19}>
                           <div className="ml-2">
-                            <Typography className="text-primary-color text-sm font-semibold font-[outfit]">
+                            <Typography className="text-primary-color text-sm font-semibold">
                               {item.userStatus}
                             </Typography>
                             <div className="flex ">
                               <img src={item.img} alt="1" />
-                              <Typography className="text-teriary-color text-sm font-normal font-[outfit] mr-10 ml-3">
+                              <Typography className="text-teriary-color text-sm font-normal mr-10 ml-3">
                                 {item.detail}
                               </Typography>
                             </div>
-                            <Typography className="text-teriary-color text-sm font-normal font-[outfit]">
+                            <Typography className="text-teriary-color text-sm font-normal">
                               {item.time}
                             </Typography>
                           </div>
