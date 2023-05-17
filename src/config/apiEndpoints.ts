@@ -30,6 +30,7 @@ const endpoints = {
   POST_DIGIVAULT_PASSWORD: 'digivault/enable-disable-lock',
   POST_CREATE_FOLDER_FILE: 'digivault/create-folder-file',
   DEL_FOLDER_FILE: 'digivault/delete-folder-file',
+  GET_GENERAL_LOG:'/general/activity',
   GET_LIST_INTERNSHIP: '/internship/listInternships',
   GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',
   DEL_INTERNSHIP: '/internship/deleteInternship',
