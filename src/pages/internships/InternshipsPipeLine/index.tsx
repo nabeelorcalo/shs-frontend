@@ -328,11 +328,11 @@ const InternshipPipeLine = () => {
           }
         </div>
       </div>
-      <DetailDrawer 
-      userData={states.userData} 
+      {/* <DetailDrawer 
+      // userData={states.userData} 
       open={states.isOpen} 
       setOpen={() => setState({ ...states, isOpen: !states.isOpen })} 
-      />
+      /> */}
     </>
   )
 }

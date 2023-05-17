@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { contractsListData } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
 import dayjs from "dayjs";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -36,31 +37,36 @@ const useCustomHook = () => {
     const params = {
       page: 1,
       limit: 10,
-      status: status,
+      status: status ? status : null,
       type: 'CONTRACT',
-      currentDate: '2023-05-09',
+      currentDate: '2023-05-10',
       filterType: 'THIS_MONTH',
-      search: searchVal
+      search: searchVal ? searchVal : null
     }
-    const { data } = await api.get(GET_CONTRACT_LIST, params);
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
+    const { data } = await api.get(GET_CONTRACT_LIST, query);
     setContractList(data);
-    if (data) {
-      setLoading(true)
-    }
   }
+
+  const debouncedResults = useMemo(() => {
+    return debounce(searchHandler, 500);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
 
   //delete contracts
   const deleteContractHandler = async (val: any) => {
-    const { data } = await api.delete(`${DEL_CONTRACT}/${val}`);
-    if (data) {
-      getContractList(null, 'THIS_MONTH')
-      let query = Object.entries(val).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-      Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
-      setLoading(true)
-    }
+    await api.delete(`${DEL_CONTRACT}/${val}`);
+    setLoading(true)
+    getContractList(null, 'THIS_MONTH')
+    Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
   return {
-    getContractList, contractList, searchHandler, deleteContractHandler,loading
+    getContractList, contractList, searchHandler, deleteContractHandler, loading
   };
 };
 
