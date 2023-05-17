@@ -1,22 +1,22 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useRecoilState } from "recoil";
+import apiEndpints from "../../config/apiEndpoints";
+import { applicationDataState } from '../../store/applications/index';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import constants from "../../config/constants";
+
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
+  const { GET_APPLICATIONS } = apiEndpints
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+
+  const getApplicationsData = async (): Promise<any> => {
+    const { data } = await api.get(GET_APPLICATIONS);
+    setApplicationsData(data)
   };
 
 
@@ -26,7 +26,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
 
@@ -37,8 +37,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status}: any) =>
-      [ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
+    const body = data.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status }: any) =>
+      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -88,7 +88,8 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getApplicationsData,
+    applicationsData,
     downloadPdfOrCsv,
   };
 };

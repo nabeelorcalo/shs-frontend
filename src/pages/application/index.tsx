@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth } from "../../components";
 import { useNavigate } from 'react-router-dom';
 import { More } from "../../assets/images"
 import { Button, MenuProps, Dropdown, Avatar, Row, Col } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
-import '../../scss/global-color/Global-colors.scss'
 import "./style.scss";
+import dayjs from "dayjs";
 
 const ButtonStatus = (props: any) => {
+
   const btnStyle: any = {
     "Applied": "primary-bg-color",
     "Interviewed": "text-info-bg-color",
@@ -19,9 +20,7 @@ const ButtonStatus = (props: any) => {
   }
   return (
     <p>
-      <span
-        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-      >
+      <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
         {props.status}
       </span>
     </p>
@@ -29,7 +28,6 @@ const ButtonStatus = (props: any) => {
 }
 
 const PopOver = ({ state }: any) => {
-  const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -69,11 +67,7 @@ const CompanyData = ({ companyName, companyNature }: any) => {
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-
-
-
 const Application = () => {
-  const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
@@ -84,7 +78,13 @@ const Application = () => {
     stage: ""
   })
 
-  const action = useCustomHook()
+  const { applicationsData, getApplicationsData, downloadPdfOrCsv } = useCustomHook();
+
+  useEffect(() => {
+    getApplicationsData()
+  }, [])
+
+  console.log('applications data', applicationsData);
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
@@ -209,15 +209,17 @@ const Application = () => {
       status: "Applied",
     },
   ];
-  const newTableData = tableData.map((item: any, idx: any) => {
+  const newTableData = applicationsData.map((item: any, index: number) => {
+    const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
+    const typeOfWork = item?.internship?.internType?.replace("_"," ").toLowerCase();
     return (
       {
-        no: item.no,
-        date_applied: item.date_applied,
+        no: index + 1,
+        date_applied: dateFormat,
         company: <CompanyData companyName={item.company?.name} companyNature={item.company?.details} />,
-        type_of_work: item.type_of_work,
-        internship_type: item.internship_type,
-        nature_of_work: item.nature_of_work,
+        type_of_work: <span className="capitalize">{typeOfWork}</span>,
+        internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
+        nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
         position: item.position,
         status: <ButtonStatus status={item.status} />,
         actions:
@@ -259,7 +261,7 @@ const Application = () => {
     <>
       <PageHeader title="Applications" />
       <div className="flex flex-col gap-5">
-        <Row gutter={[20,20]}>
+        <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
             <SearchBar
               handleChange={() => { }}
@@ -282,7 +284,7 @@ const Application = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
+                downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
               }}
               value=""
             />
@@ -301,7 +303,7 @@ const Application = () => {
                     <DropDown
                       name="Select"
                       options={["This weak", "Last weak", "This month", "Last month", "All"]}
-                      setValue={() => {updateTimeFrame(event)}}
+                      setValue={() => { updateTimeFrame(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.timeFrame}
@@ -372,7 +374,7 @@ const Application = () => {
               closable
               width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
-              onClose={() => { setShowStageStepper(false)}}>
+              onClose={() => { setShowStageStepper(false) }}>
               <StageStepper />
             </Drawer>
           </Col>

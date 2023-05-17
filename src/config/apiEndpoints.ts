@@ -50,6 +50,7 @@ const endpoints = {
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
-
+  //Applications for student
+  GET_APPLICATIONS :'/application/listApplications'
 }
 export default endpoints;
