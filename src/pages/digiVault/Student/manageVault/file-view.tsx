@@ -21,20 +21,19 @@ const ManageVault = () => {
     files: [],
     fileName: '',
   });
-  const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile }: any = useCustomHook();
+  const { postCreateFolderFile,
+    getFolderContent,
+    folderContent,
+    deleteFolderFile,
+    SearchFolderContent }: any = useCustomHook();
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
 
-  const getContentParams = {
-    folderId: folderId,
-    search: '',
-    root: title
-  }
   useEffect(() => {
-    getFolderContent(getContentParams)
+    getFolderContent(folderId,title)
   }, [])
 
   const handleDropped = (event: any) => {
@@ -104,10 +103,6 @@ const ManageVault = () => {
     },
   ];
 
-  const handleChange = () => {
-    // console.log("log");
-  };
-
   const modalHandler = () => {
     setState((prevState: any) => ({
       ...prevState,
@@ -137,7 +132,7 @@ const ManageVault = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteFolderFile(isState.DelModalId)}
+        okBtnFunc={() => deleteFolderFile(isState.DelModalId , folderId, title)}
       >
         <p>Are you sure you want to delete this?</p>
       </Alert>
@@ -168,7 +163,9 @@ const ManageVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={handleChange} />
+              <SearchBar
+                size="middle"
+                handleChange={(e: any) => SearchFolderContent(e, folderId, title)} />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div className="div">

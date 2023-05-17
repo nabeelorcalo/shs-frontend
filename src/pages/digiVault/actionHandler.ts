@@ -4,6 +4,8 @@ import { useRecoilState } from "recoil";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import { Education } from "../../assets/images";
+import { useEffect, useMemo } from "react";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -24,20 +26,40 @@ const useCustomHook = () => {
   }
 
   // get folder content
-  const getFolderContent = async (values: any) => {
-    const { folderId, search, root } = values;
+  const getFolderContent = async (folderIdVal: any, rootVal: any) => {
     const params = {
-      root: root,
-      folderId: folderId
+      root: rootVal,
+      folderId: folderIdVal
     }
     const { data } = await api.get(GET_FOLDER_CONTENT, params);
     setFolderContent(data);
   }
-  //search Folder File
-  // const SearchFolderFile = async () => {
-  //     const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
-  //     setStudentVault(data?.response);
-  // };
+
+  // search Folder File
+  const SearchFolderContent = async (values: any) => {
+    const { search, folderId, title } = values;
+    console.log(values);
+
+    const params = {
+      root: title,
+      search: search ? search : null,
+      folderId: folderId
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
+    const { data } = await api.get(GET_FOLDER_CONTENT, query);
+    setFolderContent(data);
+  };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(SearchFolderContent, 500);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+
 
   //post passowrd for digivault password
   const postDigivaultPassword = async (values: any) => {
@@ -64,15 +86,16 @@ const useCustomHook = () => {
     const { data } = await api.post(POST_CREATE_FOLDER_FILE, folderData);
     setNewPassword(data)
     getDigiVaultDashboard();
-    getFolderContent(null)
+    getFolderContent(folderId, root)
     Notifications({ title: 'Sucess', description: 'File / Folder added successfully', type: 'success' })
   }
 
   //delete folder
-  const deleteFolderFile = async (itemId: any) => {
+  const deleteFolderFile = async (itemId: any, folderId: any, title: any) => {
     const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
       getDigiVaultDashboard();
+      getFolderContent(folderId, title)
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
     }
     else {
@@ -84,6 +107,7 @@ const useCustomHook = () => {
     folderContent,
     getDigiVaultDashboard,
     getFolderContent,
+    SearchFolderContent,
     postDigivaultPassword,
     postCreateFolderFile,
     deleteFolderFile
