@@ -105,7 +105,23 @@ const tableData = [
     Actions: "fduhguisd",
   },
 ];
-
+// const newTableData = studentVault?.dashboardFolders[stateData]?.map((item: any, index: number) => {
+//   const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+//   return (
+//     { 
+//       key: index,
+//       Title: <p>
+//         <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+//         <span className="ml-2">{item.title}</span>
+//       </p>,
+//       datemodified: modifiedDate,
+//       size: item.size ? item.size : '---',
+//       action: <Space size="middle">
+//         <CustomDropDown menu1={menu2(item.id)} />
+//       </Space>
+//     }
+//   )
+// })
 const DigiVaultStudent = () => {
   const [state, setState] = useState(false)
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();

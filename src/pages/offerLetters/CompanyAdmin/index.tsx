@@ -221,11 +221,11 @@ const CompanyAdmin = () => {
         </div>,
         initiatedOn: <div>
           <div>{initiateTime}</div>
-          <div className="light-grey-color">{initiatedDate}</div>
+          <div className="light-grey-color text-sm">{initiatedDate}</div>
         </div>,
         signedOn: <div>
           <div>{signedTime}</div>
-          <div className="light-grey-color">{signedDate}</div>
+          <div className="light-grey-color text-sm">{signedDate}</div>
         </div>,
         status: <div
           className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
@@ -274,7 +274,7 @@ const CompanyAdmin = () => {
           ContractsCard.map((item) => {
             return (
               <Col xl={6} lg={12} md={12} xs={24}>
-                <BoxWrapper className="p-6 rounded-[16px]">
+                <BoxWrapper className="p-6 rounded-[16px] h-[150px]">
                   <div className="flex">
                     {item.img}
                     <div className="flex flex-col items-center pl-4">
@@ -290,11 +290,10 @@ const CompanyAdmin = () => {
       </Row>
 
       <Row className="mt-8" gutter={[20, 20]} >
-        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+        <Col xl={7} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
-
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
+        <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireDatePicker placement="bottom"
@@ -305,7 +304,8 @@ const CompanyAdmin = () => {
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
             value={valueStatus}
-            setValue={(e: any) => handleValueStatus(e)}
+            setValue={(e: any) => handleValueStatus(e)
+            }
           />
         </Col>
       </Row>
