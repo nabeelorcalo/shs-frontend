@@ -39,14 +39,6 @@ const useCustomHook = () => {
     setNewPassword(data)
   };
 
-  //post new vault password
-  const postNewVaultPassword = async (values: any) => {
-    const { password } = values;
-    const { data } = await api.post(POST_NEW_VAULT_PASSWORD, { password: password });
-    setNewPassword(data)
-    getDigiVaultDashboard()
-  };
-
   // post create folder  / file
   const postCreateFolderFile = async (values: any) => {
     const { name, root } = values;
@@ -77,7 +69,6 @@ const useCustomHook = () => {
   return {
     studentVault,
     getDigiVaultDashboard,
-    postNewVaultPassword,
     postDigivaultPassword,
     postCreateFolderFile,
     deleteFolderFile
