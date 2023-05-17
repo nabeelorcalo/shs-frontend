@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import PersonalisationContent from "./PersonalisationContent/PersonalisationContent";
 import "./style.scss";
 
 const Personalisation = () => {
-  return (
-    <p>Personalisation</p>
-  )
-}
+  return <PersonalisationContent />;
+};
 
-export default Personalisation
+export default Personalisation;

@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
-import { SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound} from '../../../components'
+import {
+  SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
+  BoxWrapper, NoDataFound
+} from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Spin, Select } from 'antd'
+import { Button, Col, Row, Spin } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import '../style.scss'
+import SelectComp from '../../../components/Select/Select'
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
@@ -15,8 +18,16 @@ const InternshipsCompanyAdmin = () => {
     showDrawer: false,
     status: undefined,
     location: undefined,
-    department: undefined
+    department: undefined,
   });
+
+  const statusArr = [
+    { value: "PUBLISHED", label: "Published" },
+    { value: "REJECTED", label: "Rejected" },
+    { value: "CLOSED", label: "Closed" },
+    { value: "PENDING", label: "Pending" },
+    { value: "DRAFT", label: "Draft" },
+  ]
 
   const { getAllInternshipsData, internshipData, changeHandler, isLoading,
     getAllDepartmentData, getAllLocationsData, departmentsData, locationsData }: any = useCustomHook();
@@ -27,8 +38,6 @@ const InternshipsCompanyAdmin = () => {
     getAllLocationsData();
   }, [])
 
-  console.log('intership data is ', internshipData);
-  
 
   const handleDrawer = () => {
     setState((prevState) => ({
@@ -83,20 +92,18 @@ const InternshipsCompanyAdmin = () => {
               <>
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
-                    <label>Status</label>
-                    <Select
-                      placeholder="Select"
+                    <SelectComp
+                      label="Status"
+                      placeholder='Select'
                       value={state.status}
-                      onChange={(event: any) => {  handleStatus(event) }}
-                      options={internshipData?.map((item: any) => {
-                        return { value: item?.status, label: item?.status }
-                      })}
+                      options={statusArr}
+                      onChange={(event: any) => { handleStatus(event) }}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label>Location</label>
-                    <Select
-                      placeholder="Select"
+                    <SelectComp
+                      label="Location"
+                      placeholder='Select'
                       value={state.location}
                       onChange={(event: any) => { handleLocation(event) }}
                       options={locationsData?.map((item: any) => {
@@ -105,9 +112,9 @@ const InternshipsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label>Department</label>
-                    <Select
-                      placeholder="Select"
+                    <SelectComp
+                      label="Department"
+                      placeholder='Select'
                       value={state.department}
                       onChange={(event: any) => { handleDepartment(event) }}
                       options={departmentsData?.map((item: any) => {

@@ -8,7 +8,7 @@ export const InternsCard = (props: any) => {
   const { status, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
   const navigate = useNavigate()
   return (
-    <div className='interns-card-main px-4 mb-8 max-sm:w-full max-md:w-1/2
+    <div className='interns-card-main  flex mb-8 max-sm:w-full max-md:w-1/2
      max-lg:w-full max-xl:w-1/2 max-2xl:w-1/3 max-3xl:w-1/4 3xl:w-1/5'>
       <BoxWrapper className='interns-card'>
         <div className='flex flex-row justify-between'>

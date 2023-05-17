@@ -49,7 +49,7 @@ export const InternshipProgressStepper = (props: any) => {
     },
   ]
   return (
-    <ul className="progress_stepper">
+    <ul className="progress_stepper text-lg text-secondary-color">
       {
         stepperObj.map((item: any, idx: any) => {
           return (

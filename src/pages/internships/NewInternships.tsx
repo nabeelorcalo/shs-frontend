@@ -48,12 +48,14 @@ const NewInternships = () => {
   const { state } = useLocation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [status, setStatus] = useState("PENDING");
   const [internShipFormData, setInternShipFormData] = useState(state);
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(internShipFormData?.salaryType ?? null);
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
   const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
+
   const typeOfWork = {
     partTime: "PART_TIME",
     fullTime: "FULL_TIME"
@@ -70,7 +72,6 @@ const NewInternships = () => {
     getAllDepartmentData
     getAllLocationsData
   }, [])
-
 
   const tempArray = [
     { name: "New Internship" },
@@ -96,12 +97,12 @@ const NewInternships = () => {
   };
 
   const onFinish = (values: any) => {
-    const newVals={
+    const newVals = {
       ...values,
-      amount:amount.amount,
-      salaryAmount:amount.amountType
+      amount: amount.amount,
+      salaryAmount: amount.amountType,
+      status,
     }
-    console.log('Success:', values);
     if (internShipFormData) {
       EditNewInternshipsData(newVals)
     } else {
@@ -123,11 +124,11 @@ const NewInternships = () => {
     requirements: internShipFormData?.requirements ?? '',
     typeofwork: internShipFormData?.internType ?? '',
     salaryType: internShipFormData?.salaryType ?? '',
-    frequency: internShipFormData?.salaryFrequency ?? '',
-    amount: internShipFormData?.salaryAmount ?? '',
-    amountType: internShipFormData?.salaryCurrency ?? '',
+    frequency: internShipFormData?.salaryFrequency ?? undefined,
+    amount: internShipFormData?.salaryAmount ?? undefined,
+    amountType: internShipFormData?.salaryCurrency ?? undefined,
     natureofwork: internShipFormData?.locationType ?? '',
-    location: internShipFormData?.locationId ?? '',
+    location: internShipFormData?.locationId ?? undefined,
     positions: internShipFormData?.totalPositions ?? '',
     duration: internShipFormData?.duration ?? undefined,
     closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined
@@ -143,12 +144,12 @@ const NewInternships = () => {
           onFinish={onFinish}
           initialValues={initialValues}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
-          <h4 className='upcomming_Holiday mb-4 text-2xl font-semibold'>Internship Details</h4>
+          <h4 className='upcomming_Holiday mb-1 text-2xl font-semibold text-primary-color'>Internship Details</h4>
           <p>This information will be displayed publicly so be careful what you share</p>
           <Divider />
           <Row className='flex flex-row flex-wrap'>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
-              <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>Description</h4>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Description</h4>
               <p>Describe the details of internship that will be reflected on internship portal</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
@@ -167,14 +168,14 @@ const NewInternships = () => {
                 />
               </Form.Item>
               <Form.Item label="Description" name="description" rules={[{ required: true }, { type: "string" }]}>
-                <TextArea rows={6} placeholder="Write your discription of internship" />
+                <TextArea rows={6} placeholder="Write your description of internship" />
               </Form.Item>
             </Col>
           </Row>
           <Divider />
           <Row>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
-              <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>Responsibilities and Requirements</h4>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Responsibilities and Requirements</h4>
               <p>Briefly define the responsibilities and requirements of the internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-6 p-4'>
@@ -189,12 +190,12 @@ const NewInternships = () => {
           <Divider />
           <Row>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
-              <h4 className='upcomming_Holiday font-semibold text-xl mb-4 '>General</h4>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>General</h4>
               <p>Provide the details of internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
-                <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
+                <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row  lg:gap-20'>
                   <Radio value={typeOfWork.partTime}>Part Time</Radio>
                   <Radio value={typeOfWork.fullTime}>Full Time</Radio>
                 </Radio.Group>
@@ -218,12 +219,13 @@ const NewInternships = () => {
                   <Form.Item label="Amount" name="amountType">
                     <Space.Compact>
                       <Select
+                        placeholder='Currency'
                         className='w-full'
-                        defaultValue="GBP"
                         onChange={(e) => setAmount({ ...amount, amountType: e })}
                         value={amount.amountType}
                         options={amountOptions} />
-                      <Input type='number' value={amount.amount} onChange={(e) => setAmount({ ...amount, amount: e.target.value })} name="amount" placeholder='0.00' />
+                      <Input type='number' value={amount.amount}
+                        onChange={(e) => setAmount({ ...amount, amount: e.target.value })} name="amount" placeholder='0.00' />
                     </Space.Compact>
                   </Form.Item>
                 </div>
@@ -258,7 +260,7 @@ const NewInternships = () => {
           <Divider />
           <Row>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
-              <h4 className='upcomming_Holiday font-semibold text-xl mb-4'>Additional Information</h4>
+              <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Additional Information</h4>
               <p>Enter the additional information related to internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
@@ -266,7 +268,7 @@ const NewInternships = () => {
                 <Input className="input" placeholder="Enter number of positions" type="number" />
               </Form.Item>
               <Form.Item name='closingDate' label={<span>Expected Closing Date
-                <span className='text-slate-400'>(Optional)</span></span>}>
+                <span className='text-slate-400'> (Optional)</span></span>}>
                 <CommonDatePicker
                   onBtnClick={onSelectChange}
                   open={openDataPicker}
@@ -290,6 +292,8 @@ const NewInternships = () => {
             <Button
               type="link"
               size="middle"
+              htmlType="submit"
+              onClick={() => setStatus('DRAFT')}
               className="new-intern-btn white-bg-color teriary-color main-btn">
               Save Draft
             </Button>
@@ -305,7 +309,7 @@ const NewInternships = () => {
               type="primary"
               htmlType="submit"
               size="middle"
-              className="button-tertiary main-btn">Submit</Button>
+              className="button-tertiary main-btn">Publish</Button>
           </Row>
         </Form>
       </BoxWrapper>
