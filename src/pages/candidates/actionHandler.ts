@@ -1,17 +1,23 @@
 import api from "../../api";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cadidatesListState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_COMPANY_MANAGER_LIST, CREATE_MEETING } = endpoints;
+import { currentUserState } from "../../store";
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, GET_ALL_TEMPLATES } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  // geting current logged-in user company
+  const { company: { id: companyId } } = useRecoilValue(currentUserState)
+  console.log(companyId, "company from hook");
+
+  // candidates list params
   let params: any = {
-    companyId: 1,
+    companyId: companyId,
     userType: "candidate",
     limit: 10,
     page: 1,
@@ -48,7 +54,7 @@ const useCustomHook = () => {
     id = userId
   }
 
-  //search 
+  //search for candidates
   const handleSearch = (search: string) => {
     if (search) {
       params.search = search
@@ -131,7 +137,6 @@ const useCustomHook = () => {
 
   // get comments
   const getComments = async (candidateId: number | string) => {
-    console.log(candidateId, "candidateId ");
     candidateId && await api.get(GET_COMMENTS, { candidateId }).then(({ data }) => setCommentsList(data))
   }
 
@@ -185,24 +190,37 @@ const useCustomHook = () => {
         setCompanyManagerList(res?.data?.map(({ companyManager }: any) => companyManager))
       })
   }
+
   // schedule interview
   const scheduleInterview = async (values: any) => {
-    console.log(values);
-
-    values.companyId = 1;
-    values.title = "interviw";
+    values.companyId = companyId;
+    values.title = "interview";
     values.recurrence = "DOES_NOT_REPEAT";
     values.reapeatDay = 0;
     values.address = "";
     values.eventType = "INTERVIEW";
-    console.log(values);
-
     await api.post(CREATE_MEETING, values).then(({ data }) => {
       console.log(data);
     })
   }
+
+  // get schedule interview list
+  const getScheduleInterviews = async (userId: string | number) => {
+    let params: any = {
+      companyId: companyId,
+      userId,
+      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
+      filterType: "THIS_MONTH",
+    }
+    await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res) => { })
+  }
+
+  // get templates
+  const getTemplates = async () => {
+    await api.get(GET_ALL_TEMPLATES).then((res) => { })
+  }
   return {
-    cadidatesList, setCadidatesList, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, getComments, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, params
+    cadidatesList, setCadidatesList, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, getComments, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, getTemplates, params
   };
 };
 

@@ -43,6 +43,9 @@ const endpoints = {
   GET_COMPANY_MANAGER_LIST: `/manager_manager/get-company-manager-list`,
   //event
   CREATE_MEETING: `/Event/create-meeting`,
+  ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
+  // template
+  GET_ALL_TEMPLATES:`/template/findAll`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,

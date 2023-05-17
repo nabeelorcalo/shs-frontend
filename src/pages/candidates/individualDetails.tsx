@@ -58,11 +58,13 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
   const dropdownData = [
     { heading: "Current Stage" },
     { title: stage, color: "#363565" },
-    { heading: "Move to" },
+    { heading: "Stages" },
+    { title: "Applied", color: "#363565" },
     { title: "Interviewed", color: "#5879CE" },
     { title: "Recommended", color: "#CC7FD4" },
     { title: "OfferLetter", color: "#C0ACFF" },
     { title: "Contract", color: "#4A9D77" },
+    { title: "Hired", color: "#4A9D77" },
     { title: "Rejected", color: "#E94E5D" },
   ];
 

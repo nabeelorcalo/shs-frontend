@@ -9,13 +9,11 @@ import dayjs from "dayjs";
 import actionHandler from "./actionHandler";
 
 const ScheduleInterviewModal = (props: any) => {
-  const { open, setOpen, handleReject, candidateId } = props;
-  const [user, setUser] = useState({ userName: "Select" });
+  const { open, setOpen, candidateId } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
-  const [dateTimeVal, setDateTimeVal] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const [value, setValue] = useState(1);
+  // const [value, setValue] = useState(1);
   const { companyManagerList = [], getCompanyManagerList, scheduleInterview } = actionHandler();
 
   const [assignUser, setAssignUser] = useState<any[]>([]);
@@ -43,13 +41,15 @@ const ScheduleInterviewModal = (props: any) => {
     }
   };
 
-  const onFinish = (value: any) => {
-    value.dateFrom = dayjs(value?.dateFrom).format("YYYY-MM-DD");
-    value.dateTo = dayjs(value?.dateFrom).format("YYYY-MM-DD");
-    value.timeTo = dayjs(value?.timeTo).format("HH:MM");
-    value.timeFrom = dayjs(value?.timeFrom).format("HH:MM");
-    value.attendees = [candidateId, ...assignUser?.map(({ id }) => id)];
-    scheduleInterview(value);
+  const onFinish = (values: any) => {
+    // modifying values obj according to create schedule request body
+    values.dateFrom = dayjs(values?.dateFrom).format("YYYY-MM-DD");
+    values.dateTo = dayjs(values?.dateFrom).format("YYYY-MM-DD");
+    values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:MM:ss.SSS");
+    values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:MM:ss.SSS");
+    values.attendees = [candidateId, ...assignUser?.map(({ id }) => id)];
+    // custom hook for create schedule
+    scheduleInterview(values);
   };
 
   const opriorityOption = (
@@ -101,7 +101,7 @@ const ScheduleInterviewModal = (props: any) => {
             <p>Date</p>
           </div>
           <Form.Item name="dateFrom" rules={[{ required: true }]}>
-            <CommonDatePicker open={isOpenDate} name={"dateFrom"} setOpen={setIsOpenDate} setValue={setDateTimeVal} />
+            <CommonDatePicker open={isOpenDate} name={"dateFrom"} setOpen={setIsOpenDate} />
           </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
@@ -167,13 +167,13 @@ const ScheduleInterviewModal = (props: any) => {
             <div className="time-pick-wrapper flex flex-wrap justify-between mt-5">
               <div className="time-from">
                 <div className="heading mt-2 mb-3">Time From</div>
-                <Form.Item name="timeFrom" rules={[{ required: true }]}>
+                <Form.Item name="endTime" rules={[{ required: true }]}>
                   <TimePicker className="time-p" />
                 </Form.Item>
               </div>
               <div className="time-to">
                 <div className="heading mt-2 mb-3">Time To</div>
-                <Form.Item name="timeTo" rules={[{ required: true }]}>
+                <Form.Item name="startTime" rules={[{ required: true }]}>
                   <TimePicker className="time-p" />
                 </Form.Item>
               </div>
@@ -182,7 +182,7 @@ const ScheduleInterviewModal = (props: any) => {
             <div className="location-wrapper">
               <p className="heading mb-2 ">Location</p>
               <Form.Item name="location" rules={[{ required: true }]}>
-                <Radio.Group value={value}>
+                <Radio.Group>
                   <Radio value={"virtual"}>Virtual</Radio>
                   <Radio value={"onSite"}>On Site</Radio>
                 </Radio.Group>
