@@ -23,7 +23,7 @@ function AppLayout() {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -36,13 +36,13 @@ function AppLayout() {
     setCollapsed(broken);
   };
 
-  const handleLogout = () => {
-    const res: any = api.get(LOGOUT);
+  const handleLogout = async () => {
+    const res: any = await api.get(LOGOUT);
     if (res.statusCode === 200) {
       localStorage.clear();
       Notifications({
         title: "Success",
-        description: "LogOut Successfully",
+        description: "Logout Successfully",
         type: "success",
       });
       navigate(`/${ROUTES_CONSTANTS.LOGIN}`);

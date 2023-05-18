@@ -34,7 +34,7 @@ const useCustomHook = () => {
   };
 
   const getManagerCompanyAdmin = async (page:any) => {
-    const param = { page: page, limit: limit ,currentDate:"2023-05-12T03:17:15Z" , filterType:"THIS_MONTH" }
+    const param = { page: page, limit: limit }
     const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN , param);
     setGetManager(data);
   };
