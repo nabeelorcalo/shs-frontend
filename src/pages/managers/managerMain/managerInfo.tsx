@@ -10,7 +10,7 @@ const ManagerInfo = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
- 
+
   useEffect(() => {
     action.getManagerCompanyAdmin(1)
   }, [])
@@ -27,10 +27,10 @@ const ManagerInfo = () => {
                   style={{ boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)" }}>
                   <center>
                     <div className="rounded-full h-[90px] w-[90px]">
-                    <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-                      alt="userImage"
-                      style={{ width: "80px" }}
-                    />
+                      <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+                        alt="userImage"
+                        style={{ width: "80px" }}
+                      />
                     </div>
                     <div className="flex justify-center gap-2">
                       <Typography className="text-2xl  text-primary-color font-medium pt-3">

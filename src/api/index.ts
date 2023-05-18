@@ -26,9 +26,9 @@ axiosInstance.interceptors.request.use(
   function (error) {
     if (error.response?.status === 401) {
       if (accessToken ) {
+        localStorage.removeItem("accessToken");
+        window.location.href = "/login"; // Redirect user to login page
       }
-      localStorage.removeItem("accessToken");
-      window.location.href = "/login"; // Redirect user to login page
     }
     return Promise.reject(error);
   }
