@@ -56,6 +56,6 @@ const endpoints = {
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
-
+  GET_PERFORMANCE_LIST: "/performance/evaluation/list",
 }
 export default endpoints;
