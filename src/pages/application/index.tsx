@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth } from "../../components";
-import { useNavigate } from 'react-router-dom';
+import {
+  GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
+  FiltersButton, DropDown, StageStepper, DrawerWidth
+} from "../../components";
 import { More } from "../../assets/images"
 import { Button, MenuProps, Dropdown, Avatar, Row, Col } from 'antd';
 import Drawer from "../../components/Drawer";
@@ -11,12 +13,13 @@ import dayjs from "dayjs";
 const ButtonStatus = (props: any) => {
 
   const btnStyle: any = {
-    "Applied": "primary-bg-color",
-    "Interviewed": "text-info-bg-color",
-    "Short Listed": "purple-bg",
-    "Offer Letter": "light-purple-bg",
-    "Hired": "text-success-bg-color",
-    "Rejected": "secondary-bg-color",
+    "applied": "primary-bg-color",
+    "interviewed": "text-info-bg-color",
+    "short Listed": "purple-bg",
+    "offer Letter": "light-purple-bg",
+    "hired": "text-success-bg-color",
+    "rejected": "secondary-bg-color",
+    "recommended": "secondary-bg-color"
   }
   return (
     <p>
@@ -28,11 +31,10 @@ const ButtonStatus = (props: any) => {
 }
 
 
-
 const Application = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  const [listandgrid, setListandgrid] = useState(false)
+  // const [listandgrid, setListandgrid] = useState(false)
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
@@ -87,7 +89,7 @@ const Application = () => {
     )
   }
 
-  const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  // const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
@@ -139,79 +141,7 @@ const Application = () => {
       title: "Actions",
     },
   ];
-  // const tableData = [
-  //   {
-  //     no: "01",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "Alphabet Inc.", details: "Software Agency" },
-  //     type_of_work: "Part Time",
-  //     internship_type: "Un-Paid",
-  //     nature_of_work: "On site",
-  //     position: "UI/UX Designer",
-  //     status: "Hired",
 
-  //   },
-  //   {
-  //     no: "02",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "Intuit Inc.", details: "Sports" },
-  //     type_of_work: "Full Time",
-  //     internship_type: "Paid",
-  //     nature_of_work: "Hybrid (London)",
-  //     position: "Business Analyst",
-  //     status: "Offer Letter",
-  //   },
-  //   {
-  //     no: "03",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "ServiceNOW", details: "Software Solutions" },
-  //     type_of_work: "Part Time",
-  //     internship_type: "Un-Paid",
-  //     nature_of_work: "Virtual",
-  //     position: "SQA",
-  //     status: "Rejected",
-  //   },
-  //   {
-  //     no: "04",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "kla Corporation Inc.", details: "Logistics" },
-  //     type_of_work: "Full Time",
-  //     internship_type: "Paid",
-  //     nature_of_work: "Hybrid (London)",
-  //     position: "Business Analyst",
-  //     status: "Short Listed",
-  //   },
-  //   {
-  //     no: "05",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "SnowFlake Inc.", details: "Software Tech" },
-  //     type_of_work: "Part Time",
-  //     internship_type: "Un-Paid",
-  //     nature_of_work: "Virtual",
-  //     position: "SQA",
-  //     status: "Interviewed",
-  //   },
-  //   {
-  //     no: "06",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "WorkDay Inc.", details: "Design Tech" },
-  //     type_of_work: "Full Time",
-  //     internship_type: "Paid",
-  //     nature_of_work: "Hybrid (London)",
-  //     position: "Business Analyst",
-  //     status: "Rejected",
-  //   },
-  //   {
-  //     no: "07",
-  //     date_applied: "01/07/2022",
-  //     company: { name: "Fortinet Inc.", details: "Game Agency" },
-  //     type_of_work: "Part Time",
-  //     internship_type: "Un-Paid",
-  //     nature_of_work: "Virtual",
-  //     position: "SQA",
-  //     status: "Applied",
-  //   },
-  // ];
   const newTableData = applicationsData.map((item: any, index: number) => {
     const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const typeOfWork = item?.internship?.internType?.replace("_", " ").toLowerCase();
@@ -225,7 +155,7 @@ const Application = () => {
         type_of_work: <span className="capitalize">{typeOfWork}</span>,
         internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
         nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
-        position: item.position,
+        position: item?.internship?.title,
         status: <ButtonStatus status={item?.stage} />,
         actions: <PopOver state={setShowStageStepper} />
       }
@@ -315,10 +245,11 @@ const Application = () => {
                         "Hybrid",
                         "Virtual",
                       ]}
-                      setValue={() => { updateNatureOfWork(event) }}
+                      setValue={(event:any) => { updateNatureOfWork(event); console.log(event);
+                       }}
                       requireCheckbox
                       showDatePickerOnVal="custom"
-                      startIcon=""
+                      // startIcon=""
                       value={state.natureOfWork}
                     />
                   </div>
@@ -376,7 +307,7 @@ const Application = () => {
           </Col>
           <Col xs={24}>
             <BoxWrapper>
-              {
+              {/* {
                 listandgrid ? <div className="flex flex-row flex-wrap gap-6">
                   {
                     cardDummyArray.map((items: any, idx: any) => {
@@ -386,12 +317,12 @@ const Application = () => {
                     })
                   }
                 </div>
-                  :
+                  : */}
                   <GlobalTable
                     columns={columns}
                     tableData={newTableData}
                   />
-              }
+              {/* // } */}
 
             </BoxWrapper>
           </Col>

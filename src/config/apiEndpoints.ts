@@ -30,7 +30,7 @@ const endpoints = {
   POST_DIGIVAULT_PASSWORD: 'digivault/enable-disable-lock',
   POST_CREATE_FOLDER_FILE: 'digivault/create-folder-file',
   DEL_FOLDER_FILE: 'digivault/delete-folder-file',
-  GET_GENERAL_LOG:'/general/activity',
+  GET_GENERAL_LOG: '/general/activity',
   GET_LIST_INTERNSHIP: '/internship/listInternships',
   GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',
   DEL_INTERNSHIP: '/internship/deleteInternship',
@@ -45,12 +45,14 @@ const endpoints = {
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   //comment
   GET_COMMENTS: '/comment/getComments',
-  ADD_COMMENT:`/comment/addComment`,
+  ADD_COMMENT: `/comment/addComment`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
   //Applications for student
-  GET_APPLICATIONS :'/application/listApplications'
+  GET_APPLICATIONS: '/application/listApplications',
+  GET_COMPANY_MANAGERS_LIST: "/manager_manager/get-company-manager-list",
+  GET_ALL_UNIVERSITIES: "/university/findAll"
 }
 export default endpoints;

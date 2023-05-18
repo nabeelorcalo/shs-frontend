@@ -9,8 +9,8 @@ import Drawer from '../../../components/Drawer'
 import { Button, Col, Row, Spin } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
-import '../style.scss'
 import SelectComp from '../../../components/Select/Select'
+import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ const InternshipsCompanyAdmin = () => {
     status: undefined,
     location: undefined,
     department: undefined,
-  });
-
+  }); 
+  
   const statusArr = [
     { value: "PUBLISHED", label: "Published" },
     { value: "REJECTED", label: "Rejected" },
@@ -144,7 +144,7 @@ const InternshipsCompanyAdmin = () => {
         </Row>
         {isLoading ? <div className='flex flex-col gap-7'>
           {internshipData.length !== 0 ?
-            internshipData?.map((item: any, index: any) => {
+            internshipData?.map((item: any, index: any) => { 
               return (
                 <BoxWrapper key={index} boxShadow>
                   <InternshipProgressCard

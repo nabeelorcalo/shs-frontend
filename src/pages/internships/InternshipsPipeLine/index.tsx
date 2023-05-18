@@ -40,10 +40,11 @@ const InternshipPipeLine = () => {
     getInternshipDetails()
   }, [])
 
+  console.log('intership pipeline data', internshipDetails);
+
+
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage.toLowerCase() === status.toLowerCase());
-    console.log(statusData, 'fafafaffafafa');
-
     return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
   }
   console.log(internshipDetails?.interns);
@@ -132,19 +133,21 @@ const InternshipPipeLine = () => {
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>
             <div className='flex flex-row gap-3 items-center'>
               <DepartmentIcon />
-              <p>Design</p>
+              <p>{internshipDetails?.department?.name}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <JobTimeIcon />
-              {/* <p className="capitalize">{internshipDetails?.internType.replace('_', " ").toLowerCase()}</p> */}
+              <p className="capitalize">{internshipDetails?.internType.replace('_', " ").toLowerCase()}</p>
             </div>
-            <div className='flex flex-row gap-3 items-center'>
-              <LocationIconCm />
-              <p>London, United Kingdom</p>
-            </div>
+            {internshipDetails?.location?.name &&
+              <div className='flex flex-row gap-3 items-center'>
+                <LocationIconCm />
+                <p>{internshipDetails?.location?.name}</p>
+              </div>
+            }
             <div className='flex flex-row gap-3 items-center'>
               <PostedByIcon />
-              <p>Amelia Carl</p>
+              <p className="capitalize">{`${internshipDetails?.jobPoster?.firstName} ${internshipDetails?.jobPoster?.lastName}`}</p>
             </div>
           </div>
         </div>

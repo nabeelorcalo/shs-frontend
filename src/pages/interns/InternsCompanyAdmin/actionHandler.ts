@@ -8,13 +8,17 @@ import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
 import { internsDataState } from '../../../store/interns/index';
-import { settingDepartmentState } from "../../../store";
+import { settingDepartmentState, universityDataState } from "../../../store";
+import { managersState } from "../../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS, SETTING_DAPARTMENT } = apiEndpints
+  const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
+    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
+  const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
+  const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +27,14 @@ const useCustomHook = () => {
 
   // Get all interns data
   const getAllInternsData = async (event: any) => {
-    const { data } = await api.get(GET_ALL_INTERNS, { userType: 'intern', InternStatus: event ? event : null })
+    const { data } = await api.get(GET_ALL_INTERNS,
+      {
+        userType: 'intern',
+        InternStatus: event.status ?? null,
+        departmentId: event.department ?? null,
+        assignedManager: event.manager ?? null,
+        userUniversityId: event.university ?? null,
+      })
     setGetAllInters(data);
     setIsLoading(true);
   }
@@ -47,6 +58,20 @@ const useCustomHook = () => {
     const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
     setDepartmentsData(data)
   };
+
+  // Get all Managers
+  const getAllManagersData = async () => {
+    const { data } = await api.get(GET_COMPANY_MANAGERS_LIST)
+    setGetAllManagers(data);
+  }
+
+  //Get all universities data
+  const getAllUniuversitiesData = async (val: any) => {
+    const { data } = await api.get(GET_ALL_UNIVERSITIES, { page: 1, limit: 100, });
+    setGetAllUniversities(data)
+  };
+
+
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -63,8 +88,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, title, department, joining_date, date_of_birth }: any) =>
-      [no, title, department, joining_date, date_of_birth]
+    const body = data.map(({ no,posted_by, name, department, joining_date, date_of_birth,status }: any) =>
+      [no, posted_by,name, department, joining_date, date_of_birth,status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -118,6 +143,10 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     getAllInternsData,
     changeHandler,
+    getAllManagersData,
+    getAllUniuversitiesData,
+    getAllUniversities,
+    getAllManagers,
     getAllInters,
     departmentsData,
     isLoading

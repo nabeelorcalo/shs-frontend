@@ -9,6 +9,7 @@ import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
+import '../style.scss'
 
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
@@ -24,45 +25,26 @@ const InternsCompanyAdmin = () => {
     dateOfJoining: undefined
   })
 
-  const managerList = [
-    { value: 'David', label: 'David miller' },
-    { value: 'Amila', label: 'Amila Clark' },
-    { value: 'Mino', label: 'Mino Marino' },
-    { value: 'Maria', label: 'Maria sanaid' },
-  ]
   const statusList = [
     { value: 'Employed', label: 'Employed' },
     { value: 'Completed', label: 'Completed' },
     { value: 'Terminated', label: 'Terminated' },
     { value: 'All', label: 'All' },
   ]
-  // const departmentsList = [
-  //   { value: 'Business analyst', label: 'Business analyst' },
-  //   { value: 'Research analyst', label: 'Research analyst' },
-  //   { value: 'Accountant', label: 'Accountant' },
-  //   { value: 'Administrator', label: 'Administrator' },
-  //   { value: 'HR Cordinator', label: 'HR Cordinator' },
-  //   { value: 'All', label: 'All' },
-  // ]
-  const universityList = [
-    { value: 'Power source', label: 'Power source' },
-    { value: 'Dev spot', label: 'Dev spot' },
-    { value: 'Abacus', label: 'Abacus' },
-    { value: 'Orcalo Holdings', label: 'Orcalo Holdings' },
-    { value: 'Coding Hub', label: 'Coding Hub' },
-    { value: 'All', label: 'All' },
-  ]
 
   const { getAllInternsData, getAllInters,
-    changeHandler, downloadPdfOrCsv, isLoading, getAllDepartmentData, departmentsData }: any = useCustomHook()
+    changeHandler, downloadPdfOrCsv, isLoading,
+    getAllDepartmentData, departmentsData,
+    getAllManagersData, getAllManagers,
+    getAllUniuversitiesData, getAllUniversities }: any = useCustomHook()
 
   useEffect(() => {
-    getAllInternsData(state.status)
+    getAllInternsData(state);
     getAllDepartmentData();
+    getAllManagersData();
+    getAllUniuversitiesData()
   }, [])
 
-
-  const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -232,7 +214,7 @@ const InternsCompanyAdmin = () => {
   }
 
   const handleApplyFilter = () => {
-    getAllInternsData(state.status);
+    getAllInternsData(state);
     setShowDrawer(false)
   }
 
@@ -276,8 +258,15 @@ const InternsCompanyAdmin = () => {
                     label="Manager"
                     placeholder='Select'
                     value={state.manager}
-                    onChange={(event: any) => { updateManager(event) }}
-                    options={managerList}
+                    onChange={(event: any) => {
+                      updateManager(event);
+                    }}
+                    options={getAllManagers?.map((item: any) => {
+                      return {
+                        value: item?.id,
+                        label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
+                      }
+                    })}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -306,7 +295,9 @@ const InternsCompanyAdmin = () => {
                     placeholder='Select'
                     value={state.university}
                     onChange={(event: any) => { updateUniversity(event) }}
-                    options={universityList}
+                    options={getAllUniversities?.map((item: any) => {
+                      return { value: item?.university?.id, label: item?.university?.name }
+                    })}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -361,7 +352,7 @@ const InternsCompanyAdmin = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns")
+                downloadPdfOrCsv(event, columns, newTableData, "Company Admin Interns")
               }}
             />
           </div>
@@ -406,18 +397,17 @@ const InternsCompanyAdmin = () => {
         title="Assign Manager"
         children={
           <div className="flex flex-col gap-2">
-            <p>Manager</p>
-            <DropDown
-              name="Select"
-              options={[
-                "Maria Sanoid",
-                "Jenate Samson",
-                "Alen Juliet",
-              ]}
-              setValue={() => { updateManager(event) }}
-              showDatePickerOnVal="custom"
-              startIcon=""
-              value={state.manager}
+            <SelectComp
+              label="Manager"
+              placeholder='Select'
+              value={state.status}
+              onChange={(event: any) => { updateStatus(event) }}
+              options={getAllManagers?.map((item: any) => {
+                return {
+                  value: item?.id,
+                  label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
+                }
+              })}
             />
           </div>
         }

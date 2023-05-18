@@ -69,7 +69,7 @@ const useCustomHook = () => {
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
-      amount, natureofwork, positions, closingDate, duration, salaryType, department, status } = values
+      amount, natureofwork, positions, closingDate, duration, salaryType, department, status, location } = values
     const internshipData = {
       "title": title,
       "departmentId": department,
@@ -78,7 +78,7 @@ const useCustomHook = () => {
       "requirements": requirements,
       "internType": typeofwork,
       "locationType": natureofwork,
-      "locationId": 1,
+      "locationId": location,
       "salaryType": salaryType,
       "salaryFrequency": frequency,
       "salaryCurrency": "$",
@@ -104,9 +104,11 @@ const useCustomHook = () => {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
       positions, closingDate, duration, internshipType, salaryAmount,
-      departmentId, status, locationId } = values
+      departmentId, status, locationId, id } = values
+    console.log(id);
+
     const internshipData = {
-      "id": state.id,
+      "id": state?.id ? state?.id : id,
       "title": title,
       "departmentId": departmentId,
       "description": description,
@@ -124,7 +126,7 @@ const useCustomHook = () => {
       "duration": duration,
       "status": status,
     }
-    await api.put(`${EDIT_INTERNSHIP}?id=${state?.id}`, internshipData);
+    await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     Notifications({ title: "Success", description: "Internship edited successfully", type: "success" })
   };

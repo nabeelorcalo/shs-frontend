@@ -56,10 +56,6 @@ const NewInternships = () => {
   const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
   const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
 
-  const typeOfWork = {
-    partTime: "PART_TIME",
-    fullTime: "FULL_TIME"
-  }
   const natureofwork = {
     virtual: "VIRTUAL",
     onsite: "ONSITE",
@@ -196,8 +192,8 @@ const NewInternships = () => {
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row  lg:gap-20'>
-                  <Radio value={typeOfWork.partTime}>Part Time</Radio>
-                  <Radio value={typeOfWork.fullTime}>Full Time</Radio>
+                  <Radio value={'PART_TIME'}>Part Time</Radio>
+                  <Radio value={'FULL_TIME'}>Full Time</Radio>
                 </Radio.Group>
               </Form.Item>
               <Form.Item label="Internship Type" name="salaryType" >
