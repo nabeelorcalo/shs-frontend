@@ -24,9 +24,13 @@ import {
 } from "../../../assets/images";
 import avatar from "../../../assets/images/header/avatar.svg";
 import constants from "../../../config/constants";
+import getUserRoleLable from "../../../helpers/roleLabel";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 const { Content } = Layout;
 
 const PersonalisationContent = () => {
+  const role = useRecoilValue(currentUserRoleState);
   const { useToken } = theme;
   const { token } = useToken();
   const [imageUrl, setImageUrl] = useState<string>();
@@ -50,7 +54,6 @@ const PersonalisationContent = () => {
         <Col xs={24} md={24} xl={18}>
           <BoxWrapper>
             <h4 className="font-medium text-xl mb-4 m-2">Preview</h4>
-
             <Layout className="sidebar">
               <AppHeader imageUrl={imageUrl} />
               <Layout>
@@ -67,7 +70,7 @@ const PersonalisationContent = () => {
                             Maria Sanoid
                           </Typography.Title>
                           <div className="sidebar-user-profile-role">
-                            {constants.USER_ROLE}
+                            {getUserRoleLable(role)}
                           </div>
                         </div>
                       </div>
@@ -125,8 +128,8 @@ const PersonalisationContent = () => {
                   <Col xs={18} md={12} xl={18}>
                     <Content className="ant-layout-content-preview">
                       <InnerData
-                        buttonPrimaryColor={buttonPrimaryColor}  
-                        buttonSecondaryColor={buttonSecondaryColor}          
+                        buttonPrimaryColor={buttonPrimaryColor}
+                        buttonSecondaryColor={buttonSecondaryColor}
                       />
                     </Content>
                   </Col>
