@@ -1,48 +1,58 @@
 import axios from "axios";
 import constants from "../config/constants";
-import { Notifications } from '../components';
+import { Notifications } from "../components";
 
 const baseURL = constants.APP_URL;
+
 const defaultHeaders = {
-  'Content-Type': 'application/json',
+  "Content-Type": "application/json",
   // Authorization: 'Bearer ' + accessToken,
 };
 const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
 });
-axiosInstance.interceptors.request.use(function (config) {
-  // Do something before request is sent
-  const accessToken = localStorage.getItem('accessToken');
-  if (accessToken) {
-    config.headers.Authorization = 'Bearer ' + accessToken;
+const accessToken = localStorage.getItem("accessToken");
+
+axiosInstance.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+
+    if (accessToken) {
+      config.headers.Authorization = "Bearer " + accessToken;
+    }
+    return config;
+  },
+  function (error) {
+    if (error.response?.status === 401) {
+      if (accessToken ) {
+        localStorage.removeItem("accessToken");
+        window.location.href = "/login"; // Redirect user to login page
+      }
+    }
+    return Promise.reject(error);
   }
-  return config;
-}, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
+);
 
 const handleResponse = (response: any) => response.data;
-
 const handleError = (error: any) => {
   let errorMessage;
   if (error?.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
-    errorMessage = error.response.data?.message
+    errorMessage = error.response.data?.message;
     // console.error(error?.response.status);
     // console.error(error?.response.headers);
   } else if (error?.request) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
-    errorMessage = error?.request
+    errorMessage = error?.request;
   } else {
     // Something happened in setting up the request that triggered an Error
-    errorMessage = error?.message
+    errorMessage = error?.message;
   }
-  Notifications({ title: 'Error', description: errorMessage, type: 'error' })
+  Notifications({ title: "Error", description: errorMessage, type: "error" });
   // return Promise.reject(error.response || error.message);
 };
 

@@ -25,8 +25,6 @@ function App() {
   /* HOOKS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    console.log(pathname);
-
     if (accessToken && pathname === (`/${ROUTES_CONSTANTS.LOGIN}`)) {
       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
     }

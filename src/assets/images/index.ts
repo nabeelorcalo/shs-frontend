@@ -313,6 +313,10 @@ export { ReactComponent as EditIconinternships } from "../images/Internships/edi
 
 //System Admin Delegate Dashboard
 export { ReactComponent as People } from "../images/profile/propertyagent/people.svg";
+export { ReactComponent as Clip } from './profile/propertyagent/clip.svg';
+export { ReactComponent as Approved } from './profile/propertyagent/aproved.svg';
+export { ReactComponent as Pending } from './profile/propertyagent/uilcalender.svg';
+export { ReactComponent as Reject } from './profile/propertyagent/reject.svg';
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
 
 // Manager Dashboard
