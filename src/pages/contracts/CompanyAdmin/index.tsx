@@ -12,44 +12,6 @@ import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
 
-const tableData = [
-  {
-    No: "01",
-    Title: "Stenna Freddi",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 200",
-    contracts: false,
-    status: "pending",
-  },
-  {
-    No: "02",
-    Title: "Keith Thompson",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 170",
-    contracts: true,
-    status: "Signed",
-  },
-  {
-    No: "03",
-    Title: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 178",
-    contracts: false,
-    status: "rejected",
-  },
-  {
-    No: "04",
-    Title: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 178",
-    contracts: false,
-    status: "Changes requested",
-  },
-];
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
@@ -77,11 +39,11 @@ const ContractsCard = [
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const [state, setState] = useState({
-    search: '',
+  const [state, setState] = useState<any>({
+    search: null,
+    status: null,
+    datePicker: 'THIS_MONTH',
   })
-  const [valueStatus, setValueStatus] = useState("");
-  const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
   const {
     contractList,
     getContractList,
@@ -90,7 +52,7 @@ const CompanyAdmin = () => {
   } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),state.search)
+    getContractList(state.status, state?.datePicker.toUpperCase().replace(" ", "_"), state.search)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -184,16 +146,16 @@ const CompanyAdmin = () => {
   };
   const searchBarHandler = (val: any) => {
     setState({ ...state, search: val })
-    searchHandler(val, valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
+    searchHandler(val, state.status, state.datePicker.toUpperCase().replace(" ", "_"))
   }
 
   const statusValueHandle = (val: any) => {
-    setValueStatus(val);
-    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"),state.search);
+    setState({ ...state, status: val });
+    getContractList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
   }
   const handleTimeFrameValue = (val: any) => {
-    setValueDatePacker(val);
-    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"),state.search);
+    setState({ ...state, datePicker: val });
+    getContractList(state.status, val.toUpperCase().replace(" ", "_"), state.search);
   }
 
   const tableColumns = [
@@ -297,7 +259,7 @@ const CompanyAdmin = () => {
       }
     )
   })
-  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0, 10)}&endDate=${valueDatePacker.slice(13, 23)}` : valueDatePacker)
+
   return (
     <div className="contract-company-admin">
       <Alert
@@ -340,12 +302,12 @@ const CompanyAdmin = () => {
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
-            value={valueDatePacker}
+            value={state.datePicker}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
-            value={valueStatus}
+            value={state.status}
             setValue={(e: any) => statusValueHandle(e)}
           />
         </Col>
