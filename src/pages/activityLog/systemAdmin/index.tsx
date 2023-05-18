@@ -6,6 +6,8 @@ import { BoxWrapper } from "../../../components";
 import { GlobalTable } from "../../../components";
 import useCustomHook from "../actionHandler"
 import "./style.scss";
+import dayjs from "dayjs";
+import { replace } from "lodash";
 
 const columns = [
   {
@@ -96,8 +98,6 @@ const ActivityLog = () => {
     getLogDetails()
   }, [])
 
-  const csvAllColum = ["Sr.No", "Name", "Email", "PhoneNumber", "University", "City", "Hired", "Status"]
-
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
 
@@ -108,60 +108,23 @@ const ActivityLog = () => {
   const handleClick = () => {
     setOpenDrawer(true);
   };
-  // const newTableData = logDetails?.map((item: any, index: number) => {
-  //   // const monthFrom = dayjs(item.from).format("MMM");
-  //   return (
-  //     {
-  //       key: index,
-  //       no: payrollData?.length < 10 && `0 ${index + 1}`,
-  //       avatar:
-  //         <Avatar
-  //           src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-  //         />,
-  //       name: item.name, 
-  //       // department: item.department,
-  //       joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
-  //       payroll_cycle: `${monthFrom} - ${monthTo}`,
-  //       actions: <PopOver />
-  //     }
-  //   )
-  // })
-  const tableData = [
-    {
-      ID: "01",
-      Users: "Subject kmy cc",
-      UserRole: "john",
-      Activity: "issue Name",
-      PerformedBy: "kljdasfhuasd",
-      Priority: "high",
-      DateTime: "22/09/2013",
-      PerformerRole: "amila clark",
-    },
-    {
-  
-      ID: "02",
-      Users: "file2",
-      UserRole: "john",
-      Activity: "issue Name",
-      PerformedBy: "kljdasfhuasd",
-      Priority: "high",
-      DateTime: "22/09/2013",
-      PerformerRole: "amila clark",
-  
-    },
-    {
-  
-      ID: "03",
-      Users: "file3",
-      UserRole: "john",
-      PerformedBy: "kljdasfhuasd",
-      Activity: "issue Name",
-      Priority: "high",
-      DateTime: "22/09/2013",
-      PerformerRole: "amila clark",
-  
-    },
-  ];
+  console.log(logDetails)
+  const logsTableData = logDetails?.map((item: any, index: number) => {
+    const dateTime = dayjs(item.createdAt).format("DD/MM/YYYY, hh:mm A");
+    return (
+      {
+        key: index,
+        ID: logDetails?.length < 10 && `0 ${index + 1}`,
+        Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
+        UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
+        Activity: item?.activity,
+        PerformedBy: `${item?.performedByuser.firstName} ${item?.performedByuser.lastName}`,
+        PerformerRole: item?.performedByuser.role?.replace("_", " ").toLowerCase(),
+        DateTime: dateTime
+      }
+    )
+  })
+
   return (
     <div className="activity-log">
       <Drawer
@@ -214,7 +177,7 @@ const ActivityLog = () => {
 
         <Divider />
 
-        <Col xs={24}>
+        <Col xs={24} className='logs-content'>
           <Row gutter={[20, 30]}>
             <Col xl={6} lg={9} md={24} sm={24} xs={24}>
               <SearchBar size="middle" handleChange={handleChange} />
@@ -225,12 +188,12 @@ const ActivityLog = () => {
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, columns, logsTableData, "Activity Log Detail") }}
               />
             </Col>
             <Col xs={24}>
               <BoxWrapper>
-                <GlobalTable columns={columns} tableData={tableData} />
+                <GlobalTable columns={columns} tableData={logsTableData} />
               </BoxWrapper>
             </Col>
           </Row>
