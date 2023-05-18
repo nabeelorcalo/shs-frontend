@@ -113,10 +113,11 @@ const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const downloadBookingRequest = useBookingRequests()
-  const [avaiablePropertiesForm] = Form.useForm();
+  const [ropertiesFilterForm] = Form.useForm();
+  const [savedPropertiesForm] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
-  const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
+  const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
   const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
@@ -197,12 +198,12 @@ const Accommodation = () => {
     }
   };
 
-  const openAvailablePropertyFilters = () => {
-    setAvailablePropertyFiltersOpen(true)
+  const openPropertyFilters = () => {
+    setPropertyFiltersOpen(true)
   }
 
-  const closeAvailablePropertyFilters = () => {
-    setAvailablePropertyFiltersOpen(false)
+  const closePropertyFilters = () => {
+    setPropertyFiltersOpen(false)
   }
 
   function submitFilters(fieldsValue: any) {
@@ -250,11 +251,11 @@ const Accommodation = () => {
         ...params
       }
     })
-    closeAvailablePropertyFilters()
+    closePropertyFilters()
   }
 
   const resetFormFields = () => {
-    avaiablePropertiesForm.resetFields()
+    ropertiesFilterForm.resetFields()
     resetFilterParams()
   }
 
@@ -338,13 +339,13 @@ const Accommodation = () => {
             {location.pathname === '/accommodation' &&
               <FiltersButton
                 label="Filters"
-                onClick={() => openAvailablePropertyFilters()}
+                onClick={() => openPropertyFilters()}
               />
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <FiltersButton
                 label="Filters"
-                onClick={() => openSavedSearchesFilters()}
+                onClick={() => openPropertyFilters()}
               />
             }
             {location.pathname === '/accommodation/booking-requests' &&
@@ -481,17 +482,14 @@ const Accommodation = () => {
       ***********************************************************************************/}
       <Drawer
         title="Filters"
-        open={availablePropertyFiltersOpen}
-        onClose={closeAvailablePropertyFilters}
+        open={propertyFiltersOpen}
+        onClose={closePropertyFilters}
       >
         <div className="shs-filter-form">
           <Form
-            form={avaiablePropertiesForm}
+            form={ropertiesFilterForm}
             layout="vertical"
-            name="availablePropertiesFilters"
-            onValuesChange={(_, values) => {
-              console.log('Available Properties Filter::: ', values)
-            }}
+            name="propertiesFilters"
             onFinish={submitFilters}
           >
             <div className="shs-form-group">
@@ -577,7 +575,8 @@ const Accommodation = () => {
         onClose={closeSavedSearchesFilters}
       >
         <div className="shs-filter-form">
-          <Form 
+          <Form
+            form={savedPropertiesForm}
             layout="vertical"
             name="sevedSearchesFilters"
             onFinish={onFinish}
@@ -586,6 +585,7 @@ const Accommodation = () => {
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
                 <Slider
+                  range={true}
                   min={0}
                   max={1000}
                   marks={{
@@ -619,14 +619,14 @@ const Accommodation = () => {
             </div> */}
 
             <Form.Item name="offer" label="Offer">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="discounts">Discounts</Select.Option>
-                <Select.Option value="noDeposit">No Deposit</Select.Option>
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
+                <Select.Option value="Discounts">Discounts</Select.Option>
+                <Select.Option value="No Deposit">No Deposit</Select.Option>
               </Select>
             </Form.Item>
 
             <Form.Item name="accomodationType" label="Accomodation Type">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
                 <Select.Option value="Entire Property">Entire Property</Select.Option>
                 <Select.Option value="Studio">Studio</Select.Option>
                 <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
@@ -634,7 +634,7 @@ const Accommodation = () => {
             </Form.Item>
 
             <Form.Item name="facilities" label="Facilities">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
                 <Select.Option value="bills">Bills</Select.Option>
                 <Select.Option value="Wi-fi">Wi-fi</Select.Option>
                 <Select.Option value="laundary">Laundary</Select.Option>
@@ -644,14 +644,14 @@ const Accommodation = () => {
             
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost>
+                <ExtendedButton customType="tertiary" ghost onClick={() => resetFormFields()}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
                   Apply
                 </ExtendedButton>
               </Space>
-            </Form.Item> 
+            </Form.Item>
           </Form>
         </div>
       </Drawer>

@@ -4,8 +4,8 @@ import {Empty, Spin} from 'antd'
 import { AccommodationCard } from '../../../components'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
-import { useRecoilValue} from "recoil";
-import { savedPropertiesState } from "../../../store";
+import { useRecoilValue, useResetRecoilState} from "recoil";
+import { savedPropertiesState, filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants'
 
@@ -17,6 +17,8 @@ const SavedSearches = () => {
   const location = useLocation();
   const {getSavedProperties} = useSavedPropertiesHook();
   const savedProperties= useRecoilValue(savedPropertiesState);
+  const filterParams = useRecoilValue(filterParamsState);
+  const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
 
 
@@ -24,8 +26,13 @@ const SavedSearches = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
+    resetFilterParams()
     getSavedProperties(setLoading)
   }, [])
+
+  useEffect(() => {
+    getSavedProperties(setLoading, filterParams)
+  }, [filterParams])
 
 
   /* ASYNC FUNCTIONS
