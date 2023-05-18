@@ -36,17 +36,13 @@ const useCustomHook = () => {
   }
 
   // search Folder File
-  const SearchFolderContent = async (values: any) => {
-    const { search, folderId, title } = values;
-    console.log(values);
-
+  const SearchFolderContent = async (title: any, search: any, folderId: any) => {
     const params = {
       root: title,
-      search: search ? search : null,
+      search: search,
       folderId: folderId
     }
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-    const { data } = await api.get(GET_FOLDER_CONTENT, query);
+    const { data } = await api.get(GET_FOLDER_CONTENT, params);
     setFolderContent(data);
   };
 

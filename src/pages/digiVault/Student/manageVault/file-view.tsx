@@ -11,7 +11,7 @@ import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
 
-const ManageVault = () => {
+const ManageViewVault = () => {
   const [isState, setState] = useState<any>({
     isOpenModal: false,
     isVisible: false,
@@ -21,19 +21,19 @@ const ManageVault = () => {
     files: [],
     fileName: '',
   });
-  const { postCreateFolderFile,
+  const {
+    postCreateFolderFile,
     getFolderContent,
     folderContent,
     deleteFolderFile,
-    SearchFolderContent }: any = useCustomHook();
+    SearchFolderContent
+  }: any = useCustomHook();
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
-  const location = useLocation();
-  const titleName = location.pathname.split("/");
 
   useEffect(() => {
-    getFolderContent(folderId,title)
+    getFolderContent(folderId, title)
   }, [])
 
   const handleDropped = (event: any) => {
@@ -71,7 +71,7 @@ const ManageVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size : '---',
+        size: item.size ? item.size + ' KB' : '---',
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item.id)} />
         </Space>
@@ -132,7 +132,7 @@ const ManageVault = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteFolderFile(isState.DelModalId , folderId, title)}
+        okBtnFunc={() => deleteFolderFile(isState.DelModalId, folderId, title)}
       >
         <p>Are you sure you want to delete this?</p>
       </Alert>
@@ -164,8 +164,7 @@ const ManageVault = () => {
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
-                size="middle"
-                handleChange={(e: any) => SearchFolderContent(e, folderId, title)} />
+                handleChange={(e: any) => SearchFolderContent(title,e,folderId)} />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div className="div">
@@ -181,7 +180,7 @@ const ManageVault = () => {
                       src={Upload}
                       alt="fileIcon"
                     />
-                    <span>Upload Files</span>
+                    <span>Upload</span>
                   </Space>
                 </Button>
               </div>
@@ -232,4 +231,4 @@ const ManageVault = () => {
   );
 };
 
-export default ManageVault;
+export default ManageViewVault;

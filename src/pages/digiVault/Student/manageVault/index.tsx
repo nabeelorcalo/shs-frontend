@@ -25,7 +25,13 @@ const ManageVault = () => {
   });
   // const [files, setFiles] = useState<any>([])
   const [form] = Form.useForm();
-  const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  const {
+    postCreateFolderFile,
+    getDigiVaultDashboard,
+    studentVault,
+    deleteFolderFile,
+    SearchFolderContent
+  }: any = useCustomHook();
   const { state } = useLocation();
   const stateData = state.toLowerCase();
   const router = useNavigate();
@@ -75,7 +81,7 @@ const ManageVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size : '---',
+        size: item.size ? item.size + ' KB' : '---',
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item)} />
         </Space>
@@ -174,7 +180,7 @@ const ManageVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={handleChange} />
+              <SearchBar size="middle" handleChange={(e: any) => SearchFolderContent(stateData, e)} />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div>
@@ -200,7 +206,7 @@ const ManageVault = () => {
                       src={Upload}
                       alt="fileIcon"
                     />
-                    <span>Upload Files</span>
+                    <span>Upload</span>
                   </Space>
                 </Button>
               </div>
