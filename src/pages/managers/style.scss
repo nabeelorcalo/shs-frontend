@@ -1,4 +1,4 @@
-@import '../../scss/colors';
+@import "../../scss/colors";
 
 .manager-main {
   .button {
@@ -12,8 +12,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    
   }
+
   .active {
     background-color: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
@@ -22,12 +22,12 @@
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
   }
 
-  .img-style{
+  .img-style {
     width: 26px;
-    height: 26px; 
+    height: 26px;
   }
 
   .card-style {
@@ -35,9 +35,9 @@
     box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
   }
-
 }
-.manager-profile{
+
+.manager-profile {
   .card-style {
     background: $white-bg-color;
     // box-shadow: $accommodation-card-shadow;
@@ -45,3 +45,12 @@
   }
 }
 
+.add-manager {
+  .ant-select .ant-select-selector {
+    background-color: $text-input-bg-color !important;
+  }
+
+  .ant-select .ant-select-selector :hover {
+    background-color: $white-bg-color !important;
+  }
+}
