@@ -10,5 +10,6 @@ export * from "./Contract"
 export * from "./digivault";
 export * from "./Internships";
 export * from "./ActivityLog";
+export * from "./Reservation";
 
 

@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
 });
-const accessToken = localStorage.getItem("accessToken");
+const accessToken = localStorage.getItem("accessToken")
 
 axiosInstance.interceptors.request.use(
   function (config) {
@@ -25,7 +25,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     if (error.response?.status === 401) {
-      if (accessToken ) {
+      if (accessToken) {
         localStorage.removeItem("accessToken");
         window.location.href = "/login"; // Redirect user to login page
       }

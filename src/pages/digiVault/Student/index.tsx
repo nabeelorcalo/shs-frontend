@@ -165,7 +165,6 @@ const DigiVaultStudent = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      // render: (_: any, data: any) => <CustomDroupDown menu1={menu1} />,
     },
   ];
   const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
