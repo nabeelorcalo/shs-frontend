@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
-import Select from "../../../components/Select/Select";
 
 const tableData = [
   {
@@ -51,8 +50,8 @@ const tableData = [
     status: "Changes requested",
   },
 ];
-const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
-const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
+const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
+const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -76,14 +75,22 @@ const ContractsCard = [
   },
 ]
 const CompanyAdmin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
+  const [state, setState] = useState({
+    search: '',
+  })
   const [valueStatus, setValueStatus] = useState("");
   const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
-  const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  const {
+    contractList,
+    getContractList,
+    searchHandler,
+    deleteContractHandler
+  } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),)
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),null)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -175,13 +182,18 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  const searchBarHandler = (val: any) => {
+    setState({ ...state, search: val })
+    searchHandler(val, valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
+  }
+
   const statusValueHandle = (val: any) => {
     setValueStatus(val);
-    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
+    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"),state.search);
   }
   const handleTimeFrameValue = (val: any) => {
     setValueDatePacker(val);
-    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"));
+    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"),state.search);
   }
 
   const tableColumns = [
@@ -322,7 +334,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
+          <SearchBar handleChange={(e: any) => searchBarHandler(e)} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}

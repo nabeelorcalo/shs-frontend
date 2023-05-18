@@ -14,15 +14,22 @@ const useCustomHook = () => {
   const [loading, setLoading] = useState(false);
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+
   //get contracts
-  const getContractList = async (status: any, time: any) => {
+  const getContractList = async (status: any, time: any, search: any) => {
     const params = {
       page: 1,
       limit: 10,
-      status: status ? status : null,
+      status: status === 'All' ? null : status,
       type: 'CONTRACT',
       currentDate: todayDate,
-      filterType: time ? time : null,
+      filterType: time ?? null,
+      search: search ?? null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
     const { data } = await api.get(GET_CONTRACT_LIST, query);
@@ -33,15 +40,15 @@ const useCustomHook = () => {
   };
 
   //search contracts
-  const searchHandler = async (searchVal: any, status: any) => {
+  const searchHandler = async (searchVal: any, status: any, datePicker: any) => {
     const params = {
       page: 1,
       limit: 10,
-      status: status ? status : null,
+      search: searchVal ?? null,
+      status: status === 'All' ? null : status,
       type: 'CONTRACT',
-      currentDate: '2023-05-10',
-      filterType: 'THIS_MONTH',
-      search: searchVal ? searchVal : null
+      currentDate: todayDate,
+      filterType: datePicker ? datePicker : null,
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
     const { data } = await api.get(GET_CONTRACT_LIST, query);
@@ -52,17 +59,11 @@ const useCustomHook = () => {
     return debounce(searchHandler, 500);
   }, []);
 
-  useEffect(() => {
-    return () => {
-      debouncedResults.cancel();
-    };
-  });
-
   //delete contracts
   const deleteContractHandler = async (val: any) => {
     await api.delete(`${DEL_CONTRACT}/${val}`);
     setLoading(true)
-    getContractList(null, 'THIS_MONTH')
+    getContractList(null, 'THIS_MONTH', null)
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
   return {
