@@ -113,6 +113,7 @@ export const ROUTES_CONSTANTS: any = {
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",
+  VIEW_DIGIVAULT:'view',
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",

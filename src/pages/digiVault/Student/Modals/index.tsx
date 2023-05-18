@@ -9,15 +9,17 @@ const DigiVaultModals = (props: any) => {
   const [state, setState] = useState(
     {
       isModalOpen: false,
+      isEnable:false,
       isToggle: false,
       isLock: false,
-      lockTime: '5'
+      lockTime: '15',
     });
   const { studentVault } = useCustomHook();
 
   const onChange = (checked: boolean) => {
     setState((prevState: any) => ({
       ...prevState,
+      isEnable: checked,
       isModalOpen: checked && true
     }));
   }

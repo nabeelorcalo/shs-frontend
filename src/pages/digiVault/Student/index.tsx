@@ -129,7 +129,6 @@ const DigiVaultStudent = () => {
 
   const menu1 = (id: any) => {
     return <Menu>
-      <Menu.Item key="1">View</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {

@@ -1,8 +1,11 @@
-import { DigiVaultPasswordState, DigiVaultState } from "../../store";
+import { DigiVaultPasswordState, DigiVaultState, DigiFileContent } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
+import { Education } from "../../assets/images";
+import { useEffect, useMemo } from "react";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -11,21 +14,47 @@ const useCustomHook = () => {
     POST_DIGIVAULT_PASSWORD,
     POST_CREATE_FOLDER_FILE,
     DEL_FOLDER_FILE,
-    POST_NEW_VAULT_PASSWORD } = endpoints;
+    GET_FOLDER_CONTENT } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
+  const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
   const [newPassword, setNewPassword] = useRecoilState<any>(DigiVaultPasswordState);
 
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+  
   //get digivault password
   const getDigiVaultDashboard = async () => {
     const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
     setStudentVault(data?.response);
   }
 
-  //search Folder File
-  // const SearchFolderFile = async () => {
-  //     const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
-  //     setStudentVault(data?.response);
-  // };
+  // get folder content
+  const getFolderContent = async (folderIdVal: any, rootVal: any) => {
+    const params = {
+      root: rootVal,
+      folderId: folderIdVal
+    }
+    const { data } = await api.get(GET_FOLDER_CONTENT, params);
+    setFolderContent(data);
+  }
+
+  // search Folder File
+  const SearchFolderContent = async (title: any, search: any, folderId: any) => {
+    const params = {
+      root: title,
+      search: search,
+      folderId: folderId
+    }
+    const { data } = await api.get(GET_FOLDER_CONTENT, params);
+    setFolderContent(data);
+  };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(SearchFolderContent, 500);
+  }, []);
 
   //post passowrd for digivault password
   const postDigivaultPassword = async (values: any) => {
@@ -41,25 +70,27 @@ const useCustomHook = () => {
 
   // post create folder  / file
   const postCreateFolderFile = async (values: any) => {
-    const { name, root } = values;
+    const { name, root, folderId, folderName } = values;
     const folderData = {
-      title: name,
+      title: folderName ? folderName : name,
       root: root.toUpperCase(),
-      mode: 'file',
-      folderId: '',
+      mode: folderName ? 'folder' : 'file',
+      folderId: folderId ? folderId.toString() : '',
       file: ''
     }
     const { data } = await api.post(POST_CREATE_FOLDER_FILE, folderData);
     setNewPassword(data)
     getDigiVaultDashboard();
+    getFolderContent(folderId, root)
     Notifications({ title: 'Sucess', description: 'File / Folder added successfully', type: 'success' })
   }
 
   //delete folder
-  const deleteFolderFile = async (itemId: any) => {
+  const deleteFolderFile = async (itemId: any, folderId: any, title: any) => {
     const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
       getDigiVaultDashboard();
+      getFolderContent(folderId, title)
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
     }
     else {
@@ -68,7 +99,10 @@ const useCustomHook = () => {
   }
   return {
     studentVault,
+    folderContent,
     getDigiVaultDashboard,
+    getFolderContent,
+    SearchFolderContent,
     postDigivaultPassword,
     postCreateFolderFile,
     deleteFolderFile

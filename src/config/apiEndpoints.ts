@@ -30,6 +30,7 @@ const endpoints = {
   GET_CONTRACT_LIST: '/Contract/list',
   DEL_CONTRACT: '/Contract/delete',
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
+  GET_FOLDER_CONTENT:'/digivault/get-folder-content',
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
   POST_NEW_VAULT_PASSWORD: '/digivault/set-new-vault-password',
   POST_DIGIVAULT_PASSWORD: 'digivault/enable-disable-lock',

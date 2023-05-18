@@ -243,7 +243,7 @@ const index = () => {
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Type a messages…"
-                    autoSize={{ minRows: 6, maxRows: 6 }}
+                    autoSize={{ minRows: 4, maxRows: 6 }}
                   ></TextArea>
                 </div>
 

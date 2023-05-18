@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
-  DropDown, SearchBar, GlobalTable, PageHeader,
+  SearchBar, GlobalTable, PageHeader,
   BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Dropdown, Row, Col, Select } from "antd";
+import { Avatar, Button, Dropdown, Row, Col } from "antd";
 import type { MenuProps } from 'antd';
 import { InternshipsIcon, More } from "../../assets/images";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
+import SelectComp from "../../components/Select/Select";
 import "./style.scss";
 
 const Internships = () => {
@@ -37,14 +38,13 @@ const Internships = () => {
   }
 
   const PopOver = (props: any) => {
-    const { id } = props
-    console.log("my id is", id);
-
+    const { item } = props
+    console.log("my id is", item);
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: id }) }}>
+          <a rel="noopener noreferrer" onClick={() => navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item} })}>
             View details
           </a>
         ),
@@ -52,7 +52,7 @@ const Internships = () => {
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { handleDublicate(id) }}>
+          <a rel="noopener noreferrer" onClick={() => { handleDublicate(item.id) }}>
             Duplicate
           </a>
         ),
@@ -150,7 +150,7 @@ const Internships = () => {
         posted_by: <Avatar
           src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
         />,
-        actions: <PopOver id={item.id} />
+        actions: <PopOver item={item} />
       }
     )
   })
@@ -208,13 +208,12 @@ const Internships = () => {
             onClose={handleDrawer}
             title="Filters"
           >
-            <React.Fragment key=".0">
-              <div className="flex flex-col gap-12">
+            <>
+              <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
-                  <label>Location</label>
-                  <Select
-                    className='my-select'
-                    placeholder="Select"
+                  <SelectComp
+                    label="Location"
+                    placeholder='Select'
                     value={state.location}
                     onChange={(event: any) => { updateLocation(event) }}
                     options={locationsData?.map((item: any) => {
@@ -223,25 +222,24 @@ const Internships = () => {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label>Department</label>
-                  <Select
-                      className='my-select'
-                      placeholder="Select"
-                      value={state.department}
-                      onChange={(event: any) => { updateDepartment(event)  }}
-                      options={departmentsData?.map((item: any) => {
-                        return { value: item?.id, label: item?.name }
-                      })}
-                    />
+                  <SelectComp
+                    label="Department"
+                    placeholder='Select'
+                    value={state.department}
+                    onChange={(event: any) => { updateDepartment(event) }}
+                    options={departmentsData?.map((item: any) => {
+                      return { value: item?.id, label: item?.name }
+                    })}
+                  />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button type="default" size="middle" className="button-default-tertiary" 
-                   onClick={handleResetFilter}>Reset</Button>
-                  <Button type="primary" size="middle" className="button-tertiary" 
-                 onClick={handleApplyFilter}>Apply</Button>
+                  <Button type="default" size="middle" className="button-default-tertiary"
+                    onClick={handleResetFilter}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary"
+                    onClick={handleApplyFilter}>Apply</Button>
                 </div>
               </div>
-            </React.Fragment>
+            </>
           </Drawer>
           <Button
             type="primary"

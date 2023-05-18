@@ -73,7 +73,7 @@ const SettingModal = (props: any) => {
           <Col className="flex items-center justify-between text-teriary-color">
             <p className="pr-2">On</p>
             <Switch
-              defaultChecked={studentVault?.lockResponse ? studentVault.lockResponse['isLock'] : false}
+              defaultChecked={studentVault?.lockResponse ? studentVault.lockResponse['isLock'] : settingModal.isEnable}
               onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))} />
           </Col>
         </Row>
