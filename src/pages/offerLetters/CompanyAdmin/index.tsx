@@ -58,7 +58,7 @@ const CompanyAdmin = () => {
   const { getOfferLetterList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
 
   useEffect(() => {
-    getOfferLetterList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
+    getOfferLetterList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"), state.search)
   }, [])
 
   const renderDropdown = (item: any) => {
@@ -250,17 +250,17 @@ const CompanyAdmin = () => {
       }
     )
   })
-  const searchBarHandler = (val:any) => {
-    setState({ ...state, search: val})
-    searchHandler(val,valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"));
+  const searchBarHandler = (val: any) => {
+    setState({ ...state, search: val })
+    searchHandler(val, valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"));
   }
   const handleValueStatus = (val: any) => {
-    getOfferLetterList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
+    getOfferLetterList(val, valueDatePacker.toUpperCase().replace(" ", "_"), state.search);
     setValueStatus(val)
   }
   const handleTimeFrameValue = (val: any) => {
     setValueDatePacker(val);
-    getOfferLetterList(valueStatus, val.toUpperCase().replace(" ", "_"));
+    getOfferLetterList(valueStatus, val.toUpperCase().replace(" ", "_"), state.search);
   }
   return (
     <div className="offer-letter-company-admin">

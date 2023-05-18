@@ -48,7 +48,7 @@ const useCustomHook = () => {
       status: status === 'All' ? null : status,
       type: 'CONTRACT',
       currentDate: todayDate,
-      filterType: datePicker ? datePicker : null,
+      filterType: datePicker ?? null,
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
     const { data } = await api.get(GET_CONTRACT_LIST, query);

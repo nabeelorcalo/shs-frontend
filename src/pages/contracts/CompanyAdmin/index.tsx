@@ -90,7 +90,7 @@ const CompanyAdmin = () => {
   } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),null)
+    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),state.search)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
