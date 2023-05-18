@@ -107,7 +107,7 @@ const ReservationsAgent = () => {
       }
     )
   })
-  const statusItems = ["","Pending", "Reserved", "Rejected"];
+  const statusItems = ["All","Pending", "Reserved", "Rejected"];
 
   return (
     <div className="reservations">
