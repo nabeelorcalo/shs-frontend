@@ -19,6 +19,12 @@ const useCustomHook = () => {
   const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
   const [newPassword, setNewPassword] = useRecoilState<any>(DigiVaultPasswordState);
 
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+  
   //get digivault password
   const getDigiVaultDashboard = async () => {
     const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
@@ -49,13 +55,6 @@ const useCustomHook = () => {
   const debouncedResults = useMemo(() => {
     return debounce(SearchFolderContent, 500);
   }, []);
-
-  useEffect(() => {
-    return () => {
-      debouncedResults.cancel();
-    };
-  });
-
 
   //post passowrd for digivault password
   const postDigivaultPassword = async (values: any) => {
