@@ -18,6 +18,8 @@ const Profile = () => {
 
       case constants.UNIVERSITY:
         return <University />;
+      case constants.COMPANY_ADMIN:
+        return <Student />;
       default:
         return <></>;
     }

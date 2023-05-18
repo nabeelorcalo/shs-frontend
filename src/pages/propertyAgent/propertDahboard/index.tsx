@@ -7,7 +7,6 @@ import MainDashboard from './Dashboard'
 import '../style.scss';
 import { PageHeader } from '../../../components'
 
-
 const items = [
     {
         key: '1',
@@ -33,7 +32,6 @@ const PropertyDashboard = () => {
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <PageHeader title='Property Agent' bordered={true}/>
               </Col>
-             
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <AppTabs items={items} />
               </Col>

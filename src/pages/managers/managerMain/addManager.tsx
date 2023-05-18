@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  AutoComplete,
   Button,
   Col,
   Divider,
@@ -15,15 +14,59 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
-import  constants  from '../../../config/constants';
+import constants from "../../../config/constants";
+import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { settingDepartmentState } from "../../../store";
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from 'react-phone-input-2';
 
 const AddManager = () => {
   const navigate = useNavigate();
-
+  const action = useCustomHook();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
+  const departmentData = useRecoilState<any>(settingDepartmentState);
+
+  const departmentIds = departmentData[0].map((department: any) => {
+    return { name: department.name, id: department.id };
+  });
+
+  useEffect(() => {
+    action.getSettingDepartment(1, "");
+  }, []);
+
+  const handleChange = (value: string) => {
+    console.log("id", value);
+  };
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    const {
+      firstname,
+      lastname,
+      gender,
+      email,
+      phoneNumber,
+      title,
+      value,
+      postCode,
+      address,
+      city,
+      country,
+    } = values;
+
+    action.addManagerCompany({
+      firstName: firstname,
+      lastName: lastname,
+      gender: gender,
+      email: email,
+      phoneNumber: phoneNumber,
+      title: title,
+      departmentId: value,
+      postCode: postCode,
+      address: address,
+      city: city,
+      country: country,
+    });
   };
 
   return (
@@ -112,17 +155,16 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item label="Phone Number" name="phoneNumber">
-                <Input.Group compact>
-                  <Select defaultValue="+92" style={{ width: "25%" }}>
-                    <Option value="+92">+92</Option>
-                    <Option value="+91">+91</Option>
-                  </Select>
-                  <AutoComplete
-                    style={{ width: "75%" }}
-                    placeholder="Phone Number"
-                  />
-                </Input.Group>
+              <Form.Item
+                name="phone"
+                label="Phone Number">
+                <PhoneInput
+                  country={'pk'}
+                  placeholder="Enter phone number"
+                  value={value}
+                  onChange={() => setValue}
+                  inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -149,14 +191,14 @@ const AddManager = () => {
               </Form.Item>
               <Form.Item
                 label="Department"
-                rules={[{ type: "string" }, { required: true }]}
+                name="department"
+              // rules={[{ type: "object" }, { required: false }]}
               >
-                <DropDown
-                  name="Select"
-                  value={value}
-                  options={constants.OPTIONS_DEPARTMENTS}
-                  setValue={setValue}
-                />
+                <Select placeholder="Select" defaultValue="" onChange={handleChange}>
+                  {departmentIds.map((item: any) => {
+                    return <Option value={item.id}>{item.name}</Option>;
+                  })}
+                </Select>
               </Form.Item>
             </Col>
           </Row>
@@ -174,7 +216,8 @@ const AddManager = () => {
               <Form.Item
                 label="Post Code"
                 name="postCode"
-                rules={[{ type: "string" }, { required: true }]}>
+                rules={[{ type: "string" }, { required: false }]}
+              >
                 <DropDown
                   name="Enter Post Code"
                   value={value}
@@ -208,7 +251,7 @@ const AddManager = () => {
               <Form.Item
                 label="Country"
                 name="country"
-                rules={[{ type: "string" }, { required: true }]}
+                rules={[{ type: "string" }, { required: false }]}
               >
                 <DropDown
                   name="Select"
@@ -221,8 +264,11 @@ const AddManager = () => {
           </Row>
           <Form.Item className="flex justify-center sm:justify-end items-center">
             <Button
-              onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`) }}
-              className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5">
+              onClick={() => {
+                navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+              }}
+              className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5"
+            >
               Cancel
             </Button>
             <Button

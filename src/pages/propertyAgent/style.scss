@@ -1,11 +1,10 @@
 @import "../../scss/colors";
 
 .main-dashboard {
- 
   ::-webkit-scrollbar-thumb {
-    background: $white-bg-color !important; 
-    
+    background: $white-bg-color !important;
   }
+
   .card-main {
     background: $white-bg-color;
     border: 1px solid $text-error-line-color;
@@ -13,9 +12,8 @@
     border-radius: 16px;
     padding: 5px;
     height: 170px;
-    width: 350px;
-   
   }
+
   .card-title {
     font-style: normal;
     font-weight: 600;
@@ -24,6 +22,7 @@
     color: $dashboard-primary-bg-color;
     margin-top: 5px;
   }
+
   .card-number {
     font-style: normal;
     font-weight: 500;
@@ -31,6 +30,7 @@
     line-height: 46px;
     color: $dashboard-primary-bg-color;
   }
+
   .status-card {
     font-style: normal;
     font-weight: 400;
@@ -38,24 +38,35 @@
     line-height: 22px;
     color: $dashboard-primary-bg-color;
   }
-  .status-dot {
+
+  .status-dot-active {
+    background: $text-success-color;
+    border-radius: 4px;
+    width: 12px;
+    height: 12px;
+  }
+
+  .status-dot-inactive {
     background: $text-error-color;
     border-radius: 4px;
     width: 12px;
     height: 12px;
   }
+
   .graph-card {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 1rem;
   }
+
   .recent-card {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 1rem;
   }
+
   .recent-card-typo {
     font-style: normal;
     font-weight: 500;
@@ -63,6 +74,7 @@
     line-height: 28px;
     color: $dashboard-primary-bg-color;
   }
+
   .recent-card-listing {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
@@ -71,9 +83,11 @@
     height: 55vh;
     overflow-y: scroll;
   }
+
   .recent-card-listing::-webkit-scrollbar {
     width: 0px;
   }
+
   .inner-card {
     background: $white-bg-color;
     border: 1px solid $text-error-line-color;
@@ -83,6 +97,7 @@
     margin-top: 10px;
   }
 }
+
 .propert-detail {
   .social-info {
     margin: 1.5rem;
@@ -90,10 +105,10 @@
     .emp-social {
       padding-left: 1.5rem;
       font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
+      font-weight: 400 !important;
+      font-size: 14px !important;
       line-height: 22px;
-      color: $dashboard-primary-bg-color;
+      color: $dashboard-primary-bg-color !important;
     }
   }
 }
@@ -104,32 +119,36 @@
 
   .listing-styles-main {
     font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 28px;
-    color: $text-primary-title-color;
+    font-weight: 600 !important;
+    font-size: 20px !important;
+    line-height: 28px !important;
+    color: $text-primary-title-color !important;
   }
+
   .listing-styles-secondary {
     font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: $text-primary-title-color;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    color: $text-primary-title-color !important;
   }
+
   .listing-description {
     font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: $dashboard-primary-bg-color;
+    font-weight: 400 !important;
+    font-size: 16px !important;
+    line-height: 24px !important;
+    color: $dashboard-primary-bg-color !important;
   }
 }
+
 .animate {
   background: "$white-bg-color";
   border-radius: 8px;
   padding: 1rem;
   margin-top: 20px;
 }
+
 .animate:hover {
   background-color: $text-input-bg-color;
 }
@@ -157,6 +176,7 @@
     line-height: 32px;
     color: $primary-bg-color;
   }
+
   .activity-data-table {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
@@ -164,18 +184,21 @@
     padding: 10px;
   }
 }
+
 .listing-details::-webkit-scrollbar {
   width: 0px;
 }
 
 .property-agent-table {
-  .agent-right-menu{
+  .agent-right-menu {
     flex-wrap: wrap;
-    @media only screen and (max-width:768px) {
+
+    @media only screen and (max-width: 768px) {
       margin: 10px 0px;
       flex-basis: 100%;
     }
   }
+
   .inner-agent-table {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
@@ -183,8 +206,9 @@
     padding: 10px;
   }
 }
-.listing-request{
-  .table-status-style{
-      color: $white-bg-color;
+
+.listing-request {
+  .table-status-style {
+    color: $white-bg-color;
   }
 }
