@@ -91,9 +91,9 @@ const Calendar = () => {
                     }}
                     // events={calendarEvent}
 
-                    events={(info, successCallback) => {
+                    events={(date, successCallback) => {
                         successCallback(calendarEvent);
-                        getCalendarDate(info);
+                        getCalendarDate(date);
                     }}
 
                     eventContent={handleEventContent}

@@ -49,7 +49,6 @@ const useCustomHook = () => {
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
   const getCalendarLeaveList = async (date?: any) => {
-    // console.log(date,"dateeeeeeeeeee");
     const response: any = await api.get(CALANDER_LEAEV_LIST, { startDate: "2023-04-11", endDate: "2023-05-11", internId: internID })
     setCalanderLeaevState(response?.data)
   }
@@ -114,8 +113,9 @@ const searchValue =(value:any)=>{
 
   const onFilterLeaevHistory = (value: any, filterValue: any,) => {
     let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
+    // .replace(" ", "_");
     let parmValues;
-    console.log(valToUpperCase);
+    // console.log(valToUpperCase);
 
     if (valToUpperCase !== 'SELECT') {
       if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {

@@ -33,13 +33,17 @@ const endpoints = {
   POST_NEW_INTERNSHIP:'/internship/createInternship',
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   EDIT_INTERNSHIP:'/internship/updateInternshipDetail',
-  // End Point For Leaev Module For Intrne 
 
+  // End Point For Leaev Module For Intrne 
   CREATE_LEAVE:"/Leaves/create",
   GET_LEAEV_LIST:`/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST:"/Leaves/list-holiday",
   LEAVE_STATE:"/Leaves/state",
+  
+  // Endpoints for Dreamup Api
+  GET_GOALS:"/dreamup/get-goals",
+  DELETE_GOAL:"/dreamup/delete-goal",
 
   GET_ALL_INTERNS:"/candidate/listCandidates",
 
