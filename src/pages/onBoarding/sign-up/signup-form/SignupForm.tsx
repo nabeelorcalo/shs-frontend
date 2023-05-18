@@ -6,24 +6,20 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessa
 import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from '../../actionHandler';
-
-const { Option } = Select;
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from 'react-phone-input-2';
 
 const SignupForm = ({ signupRole }: any) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
   const action = useCustomHook();
-  const navigate = useNavigate();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-    console.log('date', value);
-
     const body: any = {
       "email": values.Email,
       "firstName": values.firstName,
       "lastName": values.lastName,
-      "phoneNumber": '090009i090',
+      "phoneNumber": values.phone,
       "password": values.password,
       "referenceNo": values.refrenceNumber,
       "gender": values.gender,
@@ -43,19 +39,7 @@ const SignupForm = ({ signupRole }: any) => {
         return acc;
       }, {});
     action.signup(filteredBody)
-    console.log("new console: ", filteredBody);
-    navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
-    // navigate("/company-admin-verification");
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 100 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
 
   return (
     <div className="sign-up-form-wrapper">
@@ -74,7 +58,7 @@ const SignupForm = ({ signupRole }: any) => {
               name="firstName"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <Input placeholder="First Name" className="input-style" />
+              <Input placeholder="Enter First Name" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -83,23 +67,25 @@ const SignupForm = ({ signupRole }: any) => {
               name="lastName"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <Input placeholder="Last Name" className="input-style" />
+              <Input placeholder="Enter Last Name" className="input-style" />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item
-          label="Country"
-          name="country"
-          rules={[{ required: true }, { type: "string" }]}>
-          <Input placeholder="country" className="input-style" />
-        </Form.Item>
+        {[constants.STUDENT].includes(signupRole) && (
+          <Form.Item
+            label="Country"
+            name="country"
+            rules={[{ required: true }, { type: "string" }]}>
+            <Input placeholder="Enter Country" className="input-style" />
+          </Form.Item>
+        )}
         <Form.Item
           label={signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
           name="Email"
           rules={[{ required: true }, { type: "email" }]}>
           <Input
             placeholder={
-              signupRole == constants.UNIVERSITY ? "University Email" : "Email"
+              signupRole == constants.UNIVERSITY ? "Enter University Email" : "Enter Email"
             }
             className="input-style"
           />
@@ -173,11 +159,21 @@ const SignupForm = ({ signupRole }: any) => {
             </Col>
           </Row>
         )}
-        <Form.Item
-          name="phone"
-          label="Phone Number">
-          <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
-        </Form.Item>
+        <Row>
+          <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
+            <Form.Item
+              name="phone"
+              label="Phone Number">
+              <PhoneInput
+                country={'pk'}
+                placeholder="Enter phone number"
+                value={value}
+                onChange={() => setValue}
+                inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
         <Row gutter={20}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item
@@ -194,13 +190,13 @@ const SignupForm = ({ signupRole }: any) => {
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item
-              label="Conifirm Password"
+              label="Confirm Password"
               name="confirmpassword"
               rules={[{ required: true }, { min: 8 }]}
             >
               <Input.Password
                 type="confirmpassword"
-                placeholder="confirmpassword"
+                placeholder="Re-enter Password"
                 className="input-style"
               />
             </Form.Item>
@@ -224,10 +220,18 @@ const SignupForm = ({ signupRole }: any) => {
           </Typography>
         </div>
         <div style={{ marginTop: "1.5rem" }}>
-          <Typography>
+          <Typography className="text-teriary-color font-normal text-base">
             By continuing to create account your are agree to Student Help
-            Squad? <span style={{ fontWeight: 600 }}>Term and Condition </span>
-            and <span style={{ fontWeight: 600 }}>Privacy</span>
+            Squad's ? &nbsp;
+            <a href={`${ROUTES_CONSTANTS.SIGNUP}`}
+              className='text-link-color font-semibold'>
+              Term and Condition
+            </a>
+            &nbsp; and &nbsp;
+            <a href={`${ROUTES_CONSTANTS.SIGNUP}`}
+              className='text-link-color font-semibold'>
+              Privacy
+            </a>
           </Typography>
         </div>
       </Form>

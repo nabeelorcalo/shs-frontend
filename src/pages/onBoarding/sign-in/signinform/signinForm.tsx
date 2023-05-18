@@ -3,11 +3,13 @@ import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
-import { PopUpModal } from "../../../../components";
 import SelectUserType from "../../userType";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { useRecoilState } from "recoil";
+import { rememberMeState } from "../../../../store";
 
 const SigninForm = (props: any) => {
+  const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -24,14 +26,12 @@ const SigninForm = (props: any) => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
     const { Email, password } = values;
-
     action
       .login({
         email: Email,
         password: password,
       })
-      .then((data:any) => {
-        console.log("data", data); //for debugging purpose
+      .then((data: any) => {
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
       .catch((err) => console.log(err));
@@ -94,8 +94,12 @@ const SigninForm = (props: any) => {
                 noStyle
                 className="text-center "
               >
-                <Checkbox >
-                  <span className="text-teriary-color text-base font-normal">Remember me</span></Checkbox>
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                >
+                  <span className="text-teriary-color text-base font-normal">Remember me</span>
+                </Checkbox>
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -109,7 +113,6 @@ const SigninForm = (props: any) => {
               </Form.Item>
             </Col>
           </Row>
-
           <Form.Item>
             <Button
               type="primary"
