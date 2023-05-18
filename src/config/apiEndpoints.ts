@@ -40,9 +40,10 @@ const endpoints = {
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST:"/Leaves/list-holiday",
   LEAVE_STATE:"/Leaves/state",
-  
+
   // Endpoints for Dreamup Api
   GET_GOALS:"/dreamup/get-goals",
+  ADD_GOALS:"/dreamup/add-goal",
   DELETE_GOAL:"/dreamup/delete-goal",
 
   GET_ALL_INTERNS:"/candidate/listCandidates",

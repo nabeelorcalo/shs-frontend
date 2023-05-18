@@ -1,6 +1,6 @@
 
 import { Col, Row } from 'antd/es/grid';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AddGoalIcon, AddGoalPlusIcon, CircleMinusIcon, CirclePlusIcon, GoalHeaderCalanderIcon, MoreIcon, TaskSquareIcon, TickCircleGrayIcon, TickCircleGreenIcon } from '../../../assets/images';
 import { Alert, BoxWrapper, Button, PageHeader, SearchBar } from '../../../components'
 import useCustomHook from '../actionHandler';
@@ -11,7 +11,8 @@ import { Collapse, Divider, Dropdown, MenuProps, Progress } from 'antd';
 import { AddEditGoalTaskModal } from './addEditGoalTaskModal';
 const { Panel } = Collapse;
 const AllGoals = () => {
-  const action = useCustomHook();
+  const {getGoalState,getGolas,addGoals,addGoalTask}:any = useCustomHook();
+  
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [openAddGoalTask, setOpenAddGoalTask] = useState(false)
   const [selectedGoal, setSelectedGoal] = useState<any>(goalsData[0]?.details);
@@ -20,6 +21,14 @@ const AllGoals = () => {
   const calculatePercentage = Math.floor(((newArr.length) / selectedGoal.length) * 100);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, id: '' })
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
+  useEffect(() => {
+    getGolas();
+  }, [])
+  const myGoalData = getGoalState?.response;
+  console.log(myGoalData,"myGoalData");
+  
+
+  
   const customExpandIcon = ({ isActive }: any) => {
     const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
     return <span className="custom-expand-icon">{icon}</span>;
@@ -78,19 +87,19 @@ const AllGoals = () => {
           <Col xs={24} lg={11} xl={7}>
             <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab wrapper' >
               <h1 className='font-medium text-xl mb-5 '>My Goals</h1>
-              {goalsData.length === 0 ?
+              {myGoalData.length === 0 ?
                 <div className='h-full flex items-center justify-center Goals_tab_no_task'>
                   <p>You haven't added any goal yet.</p>
                 </div>
                 :
                 <div className='goals_main_wrapper overflow-y-auto '>
-                  {goalsData.map((data: any) => (
-                    <div className='goal_card rounded-lg px-[20px] py-[18px] cursor-pointer mb-3' key={data.id} onClick={() => setSelectedGoal(data?.details)}>
+                  {myGoalData.map((data: any) => (
+                    <div className='goal_card rounded-lg px-[20px] py-[18px] cursor-pointer mb-3' key={data?.id} onClick={() => setSelectedGoal(data?.tasks)}>
                       <div className='date_status flex items-center justify-between'>
-                        <span className='date text-sm'>{data.date}</span>
-                        <span className='status_wraper px-3 py-1 rounded-lg capitalize ' style={{ backgroundColor: data.status === "Active" ? "#4783FF" : "#4ED185" }}>{data.status}</span>
+                        <span className='date text-sm'>{data?.createdAt}</span>
+                        <span className='status_wraper px-3 py-1 rounded-lg capitalize ' style={{ backgroundColor: data?.status === "active" ? "#4783FF" : "#4ED185" }}>{data?.status}</span>
                       </div>
-                      <p className='Goal_name mt-[]'>{data.goalName}</p>
+                      <p className='Goal_name mt-[] capitalize'>{data?.name}</p>
                     </div>
                   ))}
                 </div>
@@ -169,13 +178,13 @@ const AllGoals = () => {
         title={"Set a Goal"}
         open={openAdGoal}
         setOpenAddGoal={setOpenAddGoal}
-        submitAddGoal={action.addGoals}
+        submitAddGoal={addGoals}
       />}
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
         open={openAddGoalTask}
         setOpenAddEditGoalTask={setOpenAddGoalTask}
-        submitGoalTask={action.addGoalTask}
+        submitGoalTask={addGoalTask}
       />
       {deletaAlert.isToggle && <Alert
         type={"error"}

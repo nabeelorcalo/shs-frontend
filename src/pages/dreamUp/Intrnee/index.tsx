@@ -35,11 +35,6 @@ const DreamUp = () => {
   const { getGoalState, getGolas, deleteGoal }: any = useCustomHook();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [id, setID] = useState('');
-
-  const handleDelete = (id: string) => {
-    setIsDeleteOpen(!isDeleteOpen);
-
-  }
   // const tableData = useRecoilValue(getGoalsSelector);
   useEffect(() => {
     getGolas();
@@ -50,6 +45,9 @@ const DreamUp = () => {
       title: 'No.',
       dataIndex: 'id',
       key: 'id',
+      render: (_: any, data: any, index: any) => (
+        <div>{index < 9 ? `0${index + 1}` : index + 1}</div>
+      )
     },
     {
       title: 'Goal Name',
