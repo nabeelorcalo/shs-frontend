@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd';
-import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker } from '../../components';
+import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker, Notifications } from '../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
@@ -289,7 +289,10 @@ const NewInternships = () => {
               type="link"
               size="middle"
               htmlType="submit"
-              onClick={() => setStatus('DRAFT')}
+              onClick={() => {
+                setStatus('DRAFT');
+                Notifications({ title: "Success", description: "Internship saved as draft", type: "success" })
+              }}
               className="new-intern-btn white-bg-color teriary-color main-btn">
               Save Draft
             </Button>

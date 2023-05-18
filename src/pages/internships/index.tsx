@@ -33,18 +33,20 @@ const Internships = () => {
     getAllLocationsData();
   }, [])
 
+  console.log('data',internshipData);
+  
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
 
   const PopOver = (props: any) => {
-    const { item } = props
-    console.log("my id is", item);
+    const { item } = props    
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item} })}>
+          <a rel="noopener noreferrer" onClick={() =>
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item } })}>
             View details
           </a>
         ),
@@ -147,9 +149,9 @@ const Internships = () => {
           >
             {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
           </Button>,
-        posted_by: <Avatar
-          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        />,
+        posted_by: <Avatar size={50} src={item?.avatar}>
+          {item?.jobPoster?.firstName?.charAt(0)}{item?.jobPoster?.lastName?.charAt(0)}
+        </Avatar>,
         actions: <PopOver item={item} />
       }
     )

@@ -91,7 +91,7 @@ const useCustomHook = () => {
 
     const { data } = await api.post(POST_NEW_INTERNSHIP, internshipData);
     if (data) {
-      Notifications({ title: "Success", description: "Internship Added", type: "success" })
+      Notifications({ title: "Success", description: "Internship published", type: "success" })
       navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     }
 
@@ -135,7 +135,7 @@ const useCustomHook = () => {
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
     getAllInternshipsData(null, null, null)
-    Notifications({ title: "Success", description: "Duplicate successfully", type: "success" })
+    Notifications({ title: "Success", description: "Internship duplicated", type: "success" })
   }
 
   //Internship details

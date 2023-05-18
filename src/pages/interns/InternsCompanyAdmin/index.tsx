@@ -4,12 +4,17 @@ import {
   ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound
 } from "../../../components";
 import { TextArea } from "../../../components";
-import { AlertIcon, CardViewIcon, More, SuccessIcon, TableViewIcon, } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin } from 'antd';
+import {
+  AlertIcon, CardViewIcon, More, SuccessIcon,
+  TableViewIcon, UserAvatar, ArrowDownDark
+} from "../../../assets/images"
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select, Space, Input } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
 import '../style.scss'
+
+
 
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
@@ -36,15 +41,19 @@ const InternsCompanyAdmin = () => {
     changeHandler, downloadPdfOrCsv, isLoading,
     getAllDepartmentData, departmentsData,
     getAllManagersData, getAllManagers,
-    getAllUniuversitiesData, getAllUniversities }: any = useCustomHook()
+    getAllUniuversitiesData, getAllUniversities,
+    updateInterns, updateCandidatesRecords }: any = useCustomHook()
+
 
   useEffect(() => {
     getAllInternsData(state);
     getAllDepartmentData();
     getAllManagersData();
-    getAllUniuversitiesData()
+    getAllUniuversitiesData();
   }, [])
 
+  console.log('all interns data are', getAllInters);
+  console.log('all manager data are', getAllManagers);
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -61,7 +70,8 @@ const InternsCompanyAdmin = () => {
     )
   }
 
-  const PopOver = () => {
+  const PopOver = (props: any) => {
+    const { item } = props
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -70,6 +80,7 @@ const InternsCompanyAdmin = () => {
             rel="noopener noreferrer"
             onClick={() => {
               setAssignManager(true)
+              console.log("popover data", item)
             }}
           >
             Assign Manager
@@ -158,22 +169,21 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
-  const newTableData: any = getAllInters.map((item: any, index: any) => {
-    const joiningDate = dayjs(item.joiningDate).format('DD/MM/YYYY');
-    const dob = dayjs(item.userDetail?.DOB).format('DD/MM/YYYY');
+  const newTableData: any = getAllInters?.map((item: any, index: any) => {
+    const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
     return (
       {
         no: getAllInters.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by:
-          <Avatar size={50} src={item?.avatar}>
-            {item?.userDetail?.firstName.charAt(0)}{item?.userDetail?.lastName.charAt(0)}
-          </Avatar>,
+        posted_by: <Avatar size={50} src={item?.avatar}>
+          {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+        </Avatar>,
         name: <p>{item?.userDetail?.firstName} {item?.userDetail?.lastName}</p>,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
         status: <ButtonStatus status={item?.internStatus} />,
-        actions: <PopOver />
+        actions: <PopOver item={item} />
       }
     )
   })
@@ -206,12 +216,12 @@ const InternsCompanyAdmin = () => {
     }))
   }
 
-  const updateDateOfJoining = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      dateOfJoining: event
-    }))
-  }
+  // const updateDateOfJoining = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     dateOfJoining: event
+  //   }))
+  // }
 
   const handleApplyFilter = () => {
     getAllInternsData(state);
@@ -227,6 +237,12 @@ const InternsCompanyAdmin = () => {
       department: undefined,
       dateOfJoining: undefined
     }))
+  }
+  const { Option } = Select;
+
+
+  const handleSearch = (value: any) => {
+    console.log('Search:', value);
   }
 
   return (
@@ -254,6 +270,44 @@ const InternsCompanyAdmin = () => {
             <>
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
+                  <label>Manager</label>
+                  <Select
+                    suffixIcon={<ArrowDownDark />}
+                    // showSearch
+                    style={{ width: '100%' }}
+                    placeholder="Select"
+                    value={state.manager}
+                    onChange={(event: any) => {
+                      updateManager(event);
+                    }}
+                    // optionFilterProp="children"
+                    // onSearch={handleSearch}
+                    // filterOption={(input: any, option: any) =>
+                    //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    // }
+                    dropdownRender={(menu) => (
+                      <div>
+                        <div style={{ padding: '8px', borderBottom: '1px solid #f0f0f0' }}>
+                          <Input
+                            placeholder="Search"
+                            onPressEnter={(e: any) => handleSearch(e.target.value)}
+                          />
+                        </div>
+                        {menu}
+                      </div>
+                    )}
+                  >
+                    {getAllManagers.map((item: any) => {
+                      return <Option value={item?.id}>
+                        <Space>
+                          <img src={UserAvatar} alt="avatar" />
+                          {`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}
+                        </Space>
+                      </Option>
+                    })}
+                  </Select>
+                </div>
+                {/* <div className="flex flex-col gap-2">
                   <SelectComp
                     label="Manager"
                     placeholder='Select'
@@ -268,40 +322,43 @@ const InternsCompanyAdmin = () => {
                       }
                     })}
                   />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <SelectComp
-                    label="Status"
-                    placeholder='Select'
-                    value={state.status}
-                    onChange={(event: any) => { updateStatus(event) }}
-                    options={statusList}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <SelectComp
-                    label="Department"
-                    placeholder='Select'
-                    value={state.department}
-                    onChange={(event: any) => { updateDepartment(event) }}
-                    options={departmentsData?.map((item: any) => {
-                      return { value: item?.id, label: item?.name }
-                    })}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <SelectComp
-                    label="University"
-                    placeholder='Select'
-                    value={state.university}
-                    onChange={(event: any) => { updateUniversity(event) }}
-                    options={getAllUniversities?.map((item: any) => {
-                      return { value: item?.university?.id, label: item?.university?.name }
-                    })}
-                  />
-                </div>
+                </div> */}
+                <SelectComp
+                  label="Status"
+                  placeholder='Select'
+                  value={state.status}
+                  onChange={(event: any) => { updateStatus(event) }}
+                  options={statusList}
+                />
+                <SelectComp
+                  label="Department"
+                  placeholder='Select'
+                  value={state.department}
+                  onChange={(event: any) => { updateDepartment(event) }}
+                  options={departmentsData?.map((item: any) => {
+                    return { value: item?.id, label: item?.name }
+                  })}
+                />
+                <SelectComp
+                  label="University"
+                  placeholder='Select'
+                  value={state.university}
+                  onChange={(event: any) => { updateUniversity(event) }}
+                  options={getAllUniversities?.map((item: any) => {
+                    return { value: item?.university?.id, label: item?.university?.name }
+                  })}
+                />
                 <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
+                  <DropDown
+                    name="Select"
+                    options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                    showDatePickerOnVal={"Date Range"}
+                    // value={timeFrame}
+                    // setValue={handleTimeFrameFilter}
+                    requireRangePicker
+                  />
+                  {/* <label>Joining Date</label>
                   <DropDown
                     name="status"
                     options={[
@@ -314,7 +371,7 @@ const InternsCompanyAdmin = () => {
                     ]}
                     setValue={(event: any) => { updateDateOfJoining(event) }}
                     value={state.dateOfJoining}
-                  />
+                  /> */}
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -372,7 +429,7 @@ const InternsCompanyAdmin = () => {
                     newTableData?.map((item: any,) => {
                       return (
                         <InternsCard
-                          pupover={<PopOver />}
+                          pupover={<PopOver item={item} />}
                           status={item?.status}
                           name={item?.name}
                           posted_by={item?.posted_by}
@@ -397,19 +454,57 @@ const InternsCompanyAdmin = () => {
         title="Assign Manager"
         children={
           <div className="flex flex-col gap-2">
-            <SelectComp
-              label="Manager"
-              placeholder='Select'
-              value={state.status}
-              onChange={(event: any) => { updateStatus(event) }}
-              options={getAllManagers?.map((item: any) => {
-                return {
-                  value: item?.id,
-                  label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
-                }
+            <label>Manager</label>
+            <Select
+              suffixIcon={<ArrowDownDark />}
+              // showSearch
+              style={{ width: '100%' }}
+              placeholder="Select"
+              value={state.manager}
+              onChange={(event: any) => {
+                updateManager(event);
+              }}
+              // optionFilterProp="children"
+              // onSearch={handleSearch}
+              // filterOption={(input: any, option: any) =>
+              //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              // }
+              dropdownRender={(menu) => (
+                <div>
+                  <div style={{ padding: '8px', borderBottom: '1px solid #f0f0f0' }}>
+                    <Input
+                      placeholder="Search"
+                      onPressEnter={(e: any) => handleSearch(e.target.value)}
+                    />
+                  </div>
+                  {menu}
+                </div>
+              )}
+            >
+              {getAllManagers.map((item: any) => {
+                return <Option value={item?.id}>
+                  <Space>
+                    <img src={UserAvatar} alt="avatar" />
+                    {`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}
+                  </Space>
+                </Option>
               })}
-            />
+            </Select>
           </div>
+          // <div className="flex flex-col gap-2">
+          //   <SelectComp
+          //     label="Manager"
+          //     placeholder='Select'
+          //     value={state.status}
+          //     onChange={(event: any) => { updateStatus(event) }}
+          //     options={getAllManagers?.map((item: any) => {
+          //       return {
+          //         value: item?.id,
+          //         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
+          //       }
+          //     })}
+          //   />
+          // </div>
         }
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
@@ -422,6 +517,9 @@ const InternsCompanyAdmin = () => {
               Cancel
             </Button>
             <Button
+              onClick={(id: any) => {
+                updateCandidatesRecords();
+              }}
               type="default"
               size="middle"
               className="button-tertiary max-sm:w-full"

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { PopUpModal } from '../Model';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from '../../pages/internships/actionHandler';
+import { Notifications } from '../../components/Notification';
 import dayjs from 'dayjs';
 import './style.scss';
 
@@ -47,6 +48,7 @@ export const InternshipProgressCard = (props: any) => {
     setDecline(false);
     handleUpdateStatus('REJECTED')
     getAllInternshipsData(null, null, null)
+    Notifications({ title: "Success", description: "Internship declined", type: "success" })
   }
   const PopOver = () => {
     const navigate = useNavigate()
@@ -83,7 +85,10 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '4',
         label: (
-          <a rel="noopener noreferrer" onClick={() => handleUpdateStatus('CLOSED')}>
+          <a rel="noopener noreferrer" onClick={() => {
+            handleUpdateStatus('CLOSED');
+            Notifications({ title: "Success", description: "Internship closed", type: "success" })
+          }}>
             Close
           </a>
         ),

@@ -10,15 +10,18 @@ import apiEndpints from "../../../config/apiEndpoints";
 import { internsDataState } from '../../../store/interns/index';
 import { settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
+import { cadidatesListState } from "../../../store/candidates";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
-    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES } = apiEndpints
+    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
+    UPDATE_CANDIDATE_DETAIL } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
   const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
+  const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState)
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -71,6 +74,12 @@ const useCustomHook = () => {
     setGetAllUniversities(data)
   };
 
+  // update candidate data 
+  const updateCandidatesRecords = async (val: any) => {
+    const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
+    setUpdateInterns(data);
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -88,8 +97,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no,posted_by, name, department, joining_date, date_of_birth,status }: any) =>
-      [no, posted_by,name, department, joining_date, date_of_birth,status]
+    const body = data.map(({ no, posted_by, name, department, joining_date, date_of_birth, status }: any) =>
+      [no, posted_by, name, department, joining_date, date_of_birth, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -145,6 +154,8 @@ const useCustomHook = () => {
     changeHandler,
     getAllManagersData,
     getAllUniuversitiesData,
+    updateCandidatesRecords,
+    updateInterns,
     getAllUniversities,
     getAllManagers,
     getAllInters,
