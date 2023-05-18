@@ -107,7 +107,7 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
                       <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
                       <div className="add-bedroom-photos">
                         <Form.Item
-                          name="media"
+                          name="attachments"
                           valuePropName="fileList"
                           getValueFromEvent={normFile}
                         >

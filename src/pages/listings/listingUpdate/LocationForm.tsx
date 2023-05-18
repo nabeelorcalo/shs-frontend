@@ -11,6 +11,7 @@ import {
   Spin,
   Typography
 } from 'antd'
+import { Notifications } from '../../../components';
 interface Props {
   initValues: any
   listingId: any
@@ -39,7 +40,8 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
       if (result.error) {
         showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
       } else {
-        showNotification("success", "Success", result.response?.message);
+        return Notifications({ title: 'Success', description: result.response?.message, type: 'success' })
+        // showNotification("success", "Success", result.response?.message);
       }
     },
     [form]

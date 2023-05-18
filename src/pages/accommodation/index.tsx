@@ -213,10 +213,10 @@ const Accommodation = () => {
     }
     if(fieldsValue.offer !== undefined) {
       if(fieldsValue.offer.includes('Discounts')) {
-        params.discount = fieldsValue.offer.includes('Discounts')
+        params.offer = fieldsValue.offer.includes('Discounts')
       }
       if(fieldsValue.offer.includes('No Deposit')) {
-        params.securityDeposit = fieldsValue.offer.includes('No Deposit')
+        params.depositRequired = fieldsValue.offer.includes('No Deposit')
       }
     }
 
@@ -234,13 +234,13 @@ const Accommodation = () => {
 
     if(fieldsValue.facilities !== undefined) {
       if(fieldsValue.facilities.includes('bills')) {
-        params.bills = fieldsValue.facilities.includes('bills')
+        params.billsIncluded = fieldsValue.facilities.includes('bills')
       }
       if(fieldsValue.facilities.includes('Wi-fi')) {
-        params.wifi = fieldsValue.facilities.includes('Wi-fi')
+        params.hasWifi = fieldsValue.facilities.includes('Wi-fi')
       }
       if(fieldsValue.facilities.includes('laundary')) {
-        params.laundary = fieldsValue.facilities.includes('laundary')
+        params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
       }
     }
     

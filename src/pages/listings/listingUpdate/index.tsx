@@ -34,7 +34,7 @@ const ListingUpdate = () => {
   const singleListing:any = useRecoilValue(listingState);
   const [loading, setLoading] = useState(false);
   
-  
+  console.log('singleListing::: ', singleListing)
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {

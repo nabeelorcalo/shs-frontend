@@ -45,25 +45,25 @@ const SavedSearches = () => {
     <div className="saved-searches">
       <Spin spinning={loading}>
         <div className="shs-row placeholder-height">
-          {savedProperties?.map((item:any) => {
+          {savedProperties?.map((property:any) => {
             let tags: any[] = [];
-            if(item.allBillsIncluded) tags.push('Utility Bils');
-            if(item.propertyHas?.includes("washingMachine")) tags.push("Laundry");
+            if(property.allBillsIncluded) tags.push('Utility Bils');
+            if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
 
             return (
-              <div key={item.id} className="shs-col-5">
+              <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={thumb1}
-                  offer={item.offer?.monthlyDiscount}
-                  rent={item.rent}
-                  propertyAvailableFor={item.rentFrequency}
-                  propertyType={item.propertyType}
-                  totalBedrooms={item.totalBedrooms}
-                  totalBathrooms={item.totalBathrooms}
-                  address={item.addressOne}
+                  coverPhoto={property?.coverImageData?.mediaUrl}
+                  offer={property.offer?.monthlyDiscount}
+                  rent={property.rent}
+                  propertyAvailableFor={property.rentFrequency}
+                  propertyType={property.propertyType}
+                  totalBedrooms={property.totalBedrooms}
+                  totalBathrooms={property.totalBathrooms}
+                  address={property.addressOne}
                   tags={tags}
                   onSave={() => console.log('handle clik')}
-                  onDetail={() => handleDetailClick(item.id)}
+                  onDetail={() => handleDetailClick(property.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>

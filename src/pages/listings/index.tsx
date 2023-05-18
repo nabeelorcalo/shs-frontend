@@ -449,7 +449,7 @@ const Listings = () => {
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
-                  name="media"
+                  name="attachments"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                 >
@@ -740,7 +740,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <Form.Item
-              name="gender"
+              name="genderPreference"
               label="Do you prefer tenants have a specific gender"
               rules={[{ required: true }]}
             >
@@ -1148,20 +1148,15 @@ const Listings = () => {
       ***********************************************************************************/}
 
       <Alert
-        type={'warning'}
-        width={560}
-        state={modalDeleteOpen }
+        type="error"
+        width={570}
+        state={modalDeleteOpen}
         setState={setModalDeleteOpen}
-        cancelBtntxt={'Cancel'}
-        footer={[
-          <Button className="button-default-warning" onClick={() => closeModalDeleteListing()}>Cancel</Button>,
-          <Button loading={loadingDelProperty} className="button-warning" onClick={() => deleteListing(propertyID, setLoadingDelProperty)}>
-            Delete
-          </Button>
-        ]}
-      >
-        Are you sure want to delete this property
-      </Alert>
+        cancelBtntxt={'No'}
+        okBtntxt={'Yes'}
+        okBtnFunc={() => {deleteListing(propertyID, setLoadingDelProperty); closeModalDeleteListing();}}
+        children={<p>Do you really want to delete this property?</p>}
+      />
       
     </>
   )

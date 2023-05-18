@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AccommodationCard } from '../../../components';
+import { AccommodationCard, Notifications } from '../../../components';
 import "./style.scss";
 import {Empty, Spin} from 'antd';
 import thumb1 from '../../../assets/images/gallery/thumb1.png';
@@ -42,13 +42,14 @@ const AvailableProperties = () => {
   -------------------------------------------------------------------------------------*/
   const postSaveProperty = async (id:any) => {
     setLoading(true)
-    const result = await saveProperty({propertyId: id});
+    const { response } = await saveProperty({propertyId: id});
+    console.log('save response;:: ', response)
     setLoading(false)
-    // if (result.error) {
-    //   showNotification("error", constants.NOTIFICATION_DETAILS.error);
-    // } else {
-    //   showNotification("success", constants.NOTIFICATION_DETAILS.success);
-    // }
+    if(!response.error) {
+      return (
+        Notifications({ title: 'Success', description: response.message, type: 'success' })
+      )
+    }
   }
 
   
@@ -67,6 +68,7 @@ const AvailableProperties = () => {
       <Spin spinning={loading}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
+            console.log('Available row::: ', property)
             let tags: any[] = [];
             if(property.allBillsIncluded) tags.push('Utility Bils');
             if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
@@ -74,7 +76,7 @@ const AvailableProperties = () => {
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={thumb1}
+                  coverPhoto={property?.coverImageData?.mediaUrl}
                   offer={property?.offer?.monthlyDiscount}
                   rent={property?.rent}
                   propertyAvailableFor={property?.rentFrequency}

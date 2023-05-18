@@ -93,7 +93,7 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
             >
               <Row gutter={30}>
                 <Col xs={24}>
-                  <Form.Item name="gender" label="Do you prefer tenants have a specific gender" rules={[{ required: true }]}>
+                  <Form.Item name="genderPreference" label="Do you prefer tenants have a specific gender" rules={[{ required: true }]}>
                     <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                       <Select.Option value="Male">Male</Select.Option>
                       <Select.Option value="Female">Female</Select.Option>
