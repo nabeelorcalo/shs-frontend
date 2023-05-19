@@ -14,12 +14,11 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
-import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { settingDepartmentState } from "../../../store";
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from 'react-phone-input-2';
+import PhoneInput from "react-phone-input-2";
 
 const AddManager = () => {
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ const AddManager = () => {
   }, []);
 
   const handleChange = (value: string) => {
-    console.log("id", value);
+    console.log("data", value);
   };
   const onFinish = (values: any) => {
     const {
@@ -47,7 +46,7 @@ const AddManager = () => {
       email,
       phoneNumber,
       title,
-      value,
+      department,
       postCode,
       address,
       city,
@@ -61,8 +60,8 @@ const AddManager = () => {
       email: email,
       phoneNumber: phoneNumber,
       title: title,
-      departmentId: value,
-      postCode: postCode,
+      departmentId: department,
+      postCode: null,
       address: address,
       city: city,
       country: country,
@@ -137,13 +136,18 @@ const AddManager = () => {
               <Form.Item
                 label="Gender"
                 rules={[{ type: "string" }, { required: true }]}
+                name="gender"
               >
-                <DropDown
-                  name="Select"
-                  value={value}
-                  options={constants.OPTIONS_GENDER}
-                  setValue={setValue}
-                />
+                <Select
+                  placeholder="Select"
+                  defaultValue=""
+                  onChange={handleChange}
+                >
+                  <Option value="Male">Male</Option>
+                  <Option value="Female">Female</Option>
+                  <Option value="Others">Others</Option>
+                </Select>
+               
               </Form.Item>
               <Form.Item
                 label="Email"
@@ -155,15 +159,17 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item
-                name="phone"
-                label="Phone Number">
+              <Form.Item name="phone" label="Phone Number">
                 <PhoneInput
-                  country={'pk'}
+                  country={"pk"}
                   placeholder="Enter phone number"
                   value={value}
                   onChange={() => setValue}
-                  inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
+                  inputStyle={{
+                    width: "100%",
+                    height: "48px",
+                    background: "#e6f4f9",
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -192,9 +198,13 @@ const AddManager = () => {
               <Form.Item
                 label="Department"
                 name="department"
-              // rules={[{ type: "object" }, { required: false }]}
+                // rules={[{ type: "object" }, { required: false }]}
               >
-                <Select placeholder="Select" defaultValue="" onChange={handleChange}>
+                <Select
+                  placeholder="Select"
+                  defaultValue=""
+                  onChange={handleChange}
+                >
                   {departmentIds.map((item: any) => {
                     return <Option value={item.id}>{item.name}</Option>;
                   })}
@@ -253,12 +263,17 @@ const AddManager = () => {
                 name="country"
                 rules={[{ type: "string" }, { required: false }]}
               >
-                <DropDown
-                  name="Select"
-                  value={value}
-                  options={constants.OPTIONS_COUNTRIES}
-                  setValue={setValue}
-                />
+                 <Select
+                  placeholder="Select"
+                  defaultValue=""
+                  onChange={handleChange}
+                >
+                  <Option value="England">England</Option>
+                  <Option value="Scotland">Scotland</Option>
+                  <Option value="Wales">Wales</Option>
+                  <Option value="Ireland">Ireland</Option>
+                </Select>
+                
               </Form.Item>
             </Col>
           </Row>
