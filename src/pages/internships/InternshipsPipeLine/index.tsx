@@ -137,7 +137,7 @@ const InternshipPipeLine = () => {
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <JobTimeIcon />
-              <p className="capitalize">{internshipDetails?.internType.replace('_', " ").toLowerCase()}</p>
+              <p className="capitalize">{internshipDetails?.internType?.replace('_', " ").toLowerCase()}</p>
             </div>
             {internshipDetails?.location?.name &&
               <div className='flex flex-row gap-3 items-center'>
