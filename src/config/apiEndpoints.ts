@@ -57,5 +57,12 @@ const endpoints = {
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
+
+  // RECIPES
+  GET_ALL_RECIPES: "/recipe/get-recipies",
+  GET_RECIPE: "/recipe/get-recipie",
+  CREATE_RECIPE: "/recipe/add-recipe",
+  UPDATE_RECIPE: "/recipe/edit-recipe",
+  DELETE_RECIPE: "/recipe/delete-recipe"
 }
 export default endpoints;

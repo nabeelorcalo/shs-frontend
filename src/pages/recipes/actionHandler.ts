@@ -1,22 +1,73 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-import api from "../../api";
-import constants from "../../config/constants";
+import api from '../../api';
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { allRecipesState, recipeState } from "../../store";
+import { Notifications } from '../../components';
 
-// Chat operation and save into store
-const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+const useRecipesHook = () => {
+  const [allRecipes, setAllRecipes] = useRecoilState(allRecipesState)
+  const [recipe, setRecipe] = useRecoilState(recipeState)
+  const { CREATE_RECIPE, GET_ALL_RECIPES, GET_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } = endpoints
+
+  // Create Recipe
+  const createRecipe = async (data: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response = await api.post(CREATE_RECIPE, data);
+    if(!response.error) {
+      Notifications({title: "Success", description: response.message, type: 'success'});
+    }
+    setLoading(false);
+  }
+
+  // Read Recipes
+  const getAllRecipes = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response = await api.get(GET_ALL_RECIPES);
+    if(!response.error) {
+      const { data } = response;
+      setAllRecipes(data);
+    }
+    setLoading(false);
+  }
+
+  // Read Single Recipe
+  const getRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response = await api.get(`${GET_RECIPE}${id}`);
+    if(!response.error) {
+      setRecipe(response.data)
+    }
+    setLoading(false);
+  }
+
+  // Update Recipe
+  const updateRecipe = async (id:any, reqBody: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response =await api.post(`${UPDATE_RECIPE}${id}`, reqBody);
+    Notifications({title: "Success", description: response.message, type: 'success'});
+    const updatedData:any = response.data;
+    setAllRecipes(updatedData);
+    setLoading(false);
+  }
+
+  // Delete Agent Property
+  const deleteRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    const response = await api.delete(`${DELETE_RECIPE}${id}`);
+    Notifications({title: "Success", description: response.message, type: 'success'});
+    const updatedRecipes = allRecipes.filter((item:any) => item.id !== id);
+    setAllRecipes(updatedRecipes);
+    setLoading(false);
+  }
 
   return {
-    getData,
+    createRecipe,
+    getAllRecipes,
+    getRecipe,
+    updateRecipe,
+    deleteRecipe
   };
 };
 
-export default useCustomHook;
+export default useRecipesHook;

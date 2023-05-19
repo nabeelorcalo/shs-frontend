@@ -11,4 +11,4 @@ export * from "./digivault";
 export * from "./Internships";
 export * from "./ActivityLog";
 export * from "./Performance";
-
+export * from "./recipes";
