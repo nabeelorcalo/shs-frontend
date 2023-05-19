@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Row, Space, Tag } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components";
@@ -7,7 +7,7 @@ import { GlobalTable } from "../../../components";
 import useCustomHook from "../actionHandler"
 import "./style.scss";
 import dayjs from "dayjs";
-import { replace } from "lodash";
+import CheckableTag from "antd/es/tag/CheckableTag";
 
 const columns = [
   {
@@ -92,7 +92,7 @@ const filterData = [
 
 const ActivityLog = () => {
 
-  const { downloadPdfOrCsv, logDetails, getLogDetails } = useCustomHook();
+  const { downloadPdfOrCsv, logDetails, getLogDetails, searchHandler } = useCustomHook();
 
   useEffect(() => {
     getLogDetails()
@@ -100,15 +100,13 @@ const ActivityLog = () => {
 
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
-
-  const handleChange = () => {
-    console.log("change");
-  };
+  const [selectedTag, setSelectedTag] = useState<any>('');
+  const { CheckableTag } = Tag;
 
   const handleClick = () => {
     setOpenDrawer(true);
   };
-  console.log(logDetails)
+
   const logsTableData = logDetails?.map((item: any, index: number) => {
     const dateTime = dayjs(item.createdAt).format("DD/MM/YYYY, hh:mm A");
     return (
@@ -118,12 +116,21 @@ const ActivityLog = () => {
         Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
         UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
         Activity: item?.activity,
-        PerformedBy: `${item?.performedByuser.firstName} ${item?.performedByuser.lastName}`,
-        PerformerRole: item?.performedByuser.role?.replace("_", " ").toLowerCase(),
+        PerformedBy: `${item?.performedByuser?.firstName} ${item?.performedByuser?.lastName}`,
+        PerformerRole: item?.performedByuser?.role?.replace("_", " ").toLowerCase(),
         DateTime: dateTime
       }
     )
   })
+
+  const handleSelectedTags = (tag: string, checked: boolean) => {
+    console.log(tag, checked);
+
+    // const nextSelectedTags = checked ? tag : selectedTag.filter((t:any) => t !== tag);
+    setSelectedTag(checked && tag);
+  };
+  const newArr: any = logDetails?.map((item: any) => item?.user?.role)
+  const uniqueArray = [...new Set(newArr)];
 
   return (
     <div className="activity-log">
@@ -132,24 +139,23 @@ const ActivityLog = () => {
         open={openDrawer}
         title="Filters"
       >
-        {filterData.map((item: any, index) => {
-          return (
-            <div key={index}>
-              <div className="mb-2 text-primary-color font-medium text-base pl-2 pr-2">
-                {item.title}
-              </div>
-              <div className="flex flex-wrap mb-6">
-                {item.userRole.map((items: any, index: any) => {
-                  return (
-                    <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 mr-2 mb-2 cursor-pointer pl-2 pr-2">
-                      {items}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+        <div className="mb-2 text-primary-color font-medium text-base pl-2 pr-2">
+          User Role
+        </div>
+        <div className="flex flex-wrap gap-2 mb-7">
+          {uniqueArray.map((item: any, index) => {
+            return (
+              <CheckableTag
+                key={index}
+                checked={selectedTag}
+                onChange={(checked) => handleSelectedTags(item, checked)}
+                className="text-input-bg-color rounded-xl text-sm font-normal cursor-pointer"
+              >
+                {item}
+              </CheckableTag>
+            );
+          })}
+        </div>
         <div>
           <CommonDatePicker
             label="Date"
@@ -180,7 +186,7 @@ const ActivityLog = () => {
         <Col xs={24} className='logs-content'>
           <Row gutter={[20, 30]}>
             <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={handleChange} />
+              <SearchBar size="middle" handleChange={(e: any) => searchHandler(e)} />
             </Col>
 
             <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">

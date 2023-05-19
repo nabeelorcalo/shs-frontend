@@ -75,7 +75,7 @@ const ReservationsAgent = () => {
       align: "center",
     },
   ];
-  const reservationTableData = reservations.map((item: any, index: number) => {
+  const reservationTableData = reservations?.map((item: any, index: number) => {
     const startDate = dayjs(item.bookingStartDate).format("DD/MM/YYYY")
     const endDate = dayjs(item.bookingEndDate).format("DD/MM/YYYY")
     return (

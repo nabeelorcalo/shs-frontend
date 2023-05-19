@@ -1,5 +1,9 @@
 @import "../../../scss/colors";
 
+.ant-tag-checkable-checked {
+  background-color: #5A5980 !important;
+}
+
 .logs-content .ant-table .ant-table-cell {
   text-transform: capitalize;
 }

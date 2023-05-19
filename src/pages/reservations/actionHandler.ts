@@ -18,7 +18,7 @@ const useCustomHook = () => {
 
   //get reservation data
   const getReservationData = async (status: any, search: any) => {
-    const { data } = await api.get(GET_RESERVATIONS, { status: status === 'All' ? '' : status, search: search });
+    const { data } = await api.get(GET_RESERVATIONS, { status: status === 'All' ? '' : status, search: search ?? null });
     setReservations(data)
   };
 

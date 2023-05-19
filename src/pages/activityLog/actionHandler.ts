@@ -13,11 +13,18 @@ const useCustomHook = () => {
   const { GET_GENERAL_LOG } = endpoints;
   const [logDetails, setLogDetails] = useRecoilState(generalActivityDetails);
 
+  //get activity logs
   const getLogDetails = async () => {
     const { data } = await api.get(GET_GENERAL_LOG);
     setLogDetails(data)
   };
 
+  //search activity logs
+  const searchHandler = async (search: any) => {
+    console.log(search);
+    const { data } = await api.get(GET_GENERAL_LOG,{ search: search });
+    setLogDetails(data)
+  };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -90,6 +97,7 @@ const useCustomHook = () => {
     logDetails,
     getLogDetails,
     downloadPdfOrCsv,
+    searchHandler
   };
 };
 
