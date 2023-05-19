@@ -1,5 +1,5 @@
 import axios from "axios";
-import constants from "../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../config/constants";
 import { Notifications } from "../components";
 
 const baseURL = constants.APP_URL;
@@ -12,11 +12,11 @@ const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
 });
-const accessToken = localStorage.getItem("accessToken")
 
 axiosInstance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       config.headers.Authorization = "Bearer " + accessToken;
     }
@@ -24,17 +24,19 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     if (error.response?.status === 401) {
+      const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         localStorage.removeItem("accessToken");
-        window.location.href = "/login"; // Redirect user to login page
+        Notifications({ title: "Error", description: "Session expired", type: "error" });
+        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
       }
     }
     return Promise.reject(error);
   }
 );
 
-const handleResponse = (response: any) => response.data;
-const handleError = (error: any) => {
+const handleResponse = async (response: any) => await response.data;
+const handleError = async (error: any) => {
   let errorMessage;
   if (error?.response) {
     // The request was made and the server responded with a status code

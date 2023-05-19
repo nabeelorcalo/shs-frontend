@@ -13,7 +13,8 @@ const AppFooter: FC = () => {
   }
 
   return (
-    <Footer className='ant-layout-footer-preview'>
+    <div className='personlization-footer'>
+  <Footer className='ant-layout-footer-preview'>
       <ul className='social-links'>
         <li><Link to=""><IconFacebook /></Link></li>
         <li><Link to=""><IconTwitter /></Link></li>
@@ -32,6 +33,8 @@ const AppFooter: FC = () => {
         Copyrights &copy; {currentYear()} All Rights Reserved by <span>Student Help Squad</span>
       </div>
     </Footer>
+    </div>
+  
   )
 }
 
