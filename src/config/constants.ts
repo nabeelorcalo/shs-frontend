@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
@@ -190,3 +191,4 @@ export const STATUS_CONSTANTS: any = {
   DRAFT:"draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
+export const formatDate = (value: any, format: string) => dayjs(value).format(format);

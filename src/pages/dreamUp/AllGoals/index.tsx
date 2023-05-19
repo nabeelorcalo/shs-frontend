@@ -11,23 +11,23 @@ import { Collapse, Divider, Dropdown, MenuProps, Progress } from 'antd';
 import { AddEditGoalTaskModal } from './addEditGoalTaskModal';
 const { Panel } = Collapse;
 const AllGoals = () => {
-  const {getGoalState,getGolas,addGoals,addGoalTask}:any = useCustomHook();
-  
+  const {getGoalState,getGolas,addGoalTask}:any = useCustomHook();
+
+  // const myGoalData = useState(getGoalState?.response)
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [openAddGoalTask, setOpenAddGoalTask] = useState(false)
-  const [selectedGoal, setSelectedGoal] = useState<any>(goalsData[0]?.details);
+  const [selectedGoal, setSelectedGoal] = useState<any>(getGoalState?.response ? getGoalState?.response?.[0]?.tasks:[]);
+  const [mainGoalId, setMainGoalId] = useState<any>(getGoalState?.response? getGoalState?.response[0]?.id:"");
+  console.log(selectedGoal, "completedcompleted");
+  console.log(mainGoalId, "mainGoalId ");
   const newArr: any = []
-  selectedGoal.map((data: any) => data.isCompleted ? newArr.push(data) : []) 
+  selectedGoal.map((data: any) => data.completed ? newArr.push(data) : []) 
   const calculatePercentage = Math.floor(((newArr.length) / selectedGoal.length) * 100);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, id: '' })
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
   useEffect(() => {
     getGolas();
   }, [])
-  const myGoalData = getGoalState?.response;
-  console.log(myGoalData,"myGoalData");
-  
-
   
   const customExpandIcon = ({ isActive }: any) => {
     const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
@@ -46,7 +46,7 @@ const AllGoals = () => {
     {
       label: <span onClick={handleCompleted} >Mark as Completed</span>,
       key: '0',
-      disabled: dropdownDataRecord.isCompleted ? true : false,
+      disabled: dropdownDataRecord.completed ? true : false,
     },
     {
       label: <span onClick={() => { setOpenAddGoalTask(true) }} >Edit</span>,
@@ -87,14 +87,14 @@ const AllGoals = () => {
           <Col xs={24} lg={11} xl={7}>
             <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab wrapper' >
               <h1 className='font-medium text-xl mb-5 '>My Goals</h1>
-              {myGoalData.length === 0 ?
+              {getGoalState?.response && getGoalState?.response?.length === 0 ?
                 <div className='h-full flex items-center justify-center Goals_tab_no_task'>
                   <p>You haven't added any goal yet.</p>
                 </div>
                 :
                 <div className='goals_main_wrapper overflow-y-auto '>
-                  {myGoalData.map((data: any) => (
-                    <div className='goal_card rounded-lg px-[20px] py-[18px] cursor-pointer mb-3' key={data?.id} onClick={() => setSelectedGoal(data?.tasks)}>
+                  {getGoalState?.response && getGoalState?.response.map((data: any) => (
+                    <div className='goal_card rounded-lg px-[20px] py-[18px] cursor-pointer mb-3' key={data?.id} onClick={() => {setSelectedGoal(data?.tasks);setMainGoalId(data?.id)}}>
                       <div className='date_status flex items-center justify-between'>
                         <span className='date text-sm'>{data?.createdAt}</span>
                         <span className='status_wraper px-3 py-1 rounded-lg capitalize ' style={{ backgroundColor: data?.status === "active" ? "#4783FF" : "#4ED185" }}>{data?.status}</span>
@@ -131,9 +131,9 @@ const AllGoals = () => {
                   className="Request_leave flex items-center justify-center"
                 />
               </div>
-              {selectedGoal?.length === 0 || goalsData.length === 0 ?
+              {selectedGoal?.length === 0 || getGoalState?.response?.length === 0 ?
                 <>
-                  <h1 className='font-medium text-xl '>hello</h1>
+                  {/* <h1 className='font-medium text-xl '>hello</h1>  */}
                   <div className='h-full flex items-center justify-center'>
                     <div className=' text-center Goals_tab_details_no_task'>
                       <p className='main font-semibold text-xs'>Your task list is empty</p>
@@ -146,13 +146,13 @@ const AllGoals = () => {
                   {
                     selectedGoal?.map((goalDetail: any, i: number) => {
                       return <div className="flex gap-4" key={i}>
-                        <span className='mt-5' >{goalDetail?.isCompleted ? <TickCircleGreenIcon /> : <TickCircleGrayIcon />}</span>
+                        <span className='mt-5' >{goalDetail?.completed ? <TickCircleGreenIcon /> : <TickCircleGrayIcon />}</span>
                         <Collapse accordion className='collaps_main flex-1' expandIcon={customExpandIcon} bordered={false} collapsible={'icon'}>
                           <Panel key={i}
                             header={<div className='goals_task_Accordion flex items-center justify-between'>
                               <span className='heading_date flex flex-col'>
-                                <span className='Heading'>{goalDetail?.title}</span>
-                                <span className='date text-sm'>{goalDetail?.date}</span>
+                                <span className='Heading'>{goalDetail?.name}</span>
+                                <span className='date text-sm'>{goalDetail?.startingDate}</span>
                               </span>
                               <Dropdown
                                 menu={{ items }}
@@ -162,7 +162,7 @@ const AllGoals = () => {
                               </Dropdown>
                             </div>
                             } className='mb-5'>
-                            <p>{goalDetail?.description}</p>
+                            <p>{goalDetail?.note}</p>
                           </Panel>
                         </Collapse>
                       </div>
@@ -178,13 +178,14 @@ const AllGoals = () => {
         title={"Set a Goal"}
         open={openAdGoal}
         setOpenAddGoal={setOpenAddGoal}
-        submitAddGoal={addGoals}
+        // submitAddGoal={addGoals}
       />}
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
         open={openAddGoalTask}
         setOpenAddEditGoalTask={setOpenAddGoalTask}
         submitGoalTask={addGoalTask}
+        mainGoalId= {mainGoalId}
       />
       {deletaAlert.isToggle && <Alert
         type={"error"}

@@ -45,6 +45,7 @@ const endpoints = {
   GET_GOALS:"/dreamup/get-goals",
   ADD_GOALS:"/dreamup/add-goal",
   DELETE_GOAL:"/dreamup/delete-goal",
+  ADD_GOALS_TASK:'/dreamup/add-task',
 
   GET_ALL_INTERNS:"/candidate/listCandidates",
 

@@ -8,19 +8,25 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages
 // const { RangePicker } = DatePicker;
 // import { Input } from '../../../components';
 import Checkbox from 'antd/es/checkbox';
+import useCustomHook from '../actionHandler';
 // Leave Request Form Select Oprion Array
 export const AddEditGoalTaskModal = (props: any) => {
+ const {mainGoalId} = props
+//  console.log(mainGoalId,"mainGoalId from form ");
+ 
+  const { addGoalTask } = useCustomHook();
   const initailVal = {
-    taskName: '',
-    notes: '',
-    date: '',
+    goalId:mainGoalId,
+    name: '',
+    note: '',
+    startingDate: '',
+    completed: false,
   }
   const { title, open, setOpenAddEditGoalTask, submitGoalTask, data } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
   const [formVal, setFormVal] = useState(initailVal)
   const [form] = Form.useForm();
   // console.log(formVal);
-
   // const handleTimeChange = (time: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
@@ -44,30 +50,38 @@ export const AddEditGoalTaskModal = (props: any) => {
         layout='vertical'
         form={form}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        initialValues={initailVal}
+        // onValuesChange={onValueChangesAddGoalTask}
+        onFinish={(values) => { addGoalTask(values,formVal), form.resetFields(); setOpenAddEditGoalTask(false); }}
       >
         <Form.Item
           label="Task Name"
-          name="taskName"
+          name="name"
         >
           <Input
             id="01"
             type="text"
-            name="taskName"
-            value={formVal.taskName} placeholder={"Enter your goal task name"}
-          // onChange={(e: any) => setFormVal({ ...formVal, goalName: e.target.value })}
+            name="name"
+            value={formVal.name}
+            placeholder={"Enter your goal task name"}
+            onChange={(e: any) => setFormVal({ ...formVal, name: e.target.value })}
           />
         </Form.Item >
-        <Form.Item label="Notes" >
-          <TextArea rows={6} placeholder="Type a message" maxLength={8} valuue={formVal.notes} />
+        <Form.Item label="Notes" name="note" >
+          <TextArea rows={6}
+            placeholder="Type a message"
+            maxLength={8} valuue={formVal.note}
+            onChange={(e: any) => setFormVal({ ...formVal, name: e.target.value })}
+          />
         </Form.Item>
         <Form.Item
-          name="dateTo"
+          name="startingDate"
           label="Date To"  >
           <CommonDatePicker
             name="Date Picker"
             open={openStartDate}
             setOpen={setOpenStartDate}
-            setValue={(e: any) => console.log(e)}
+            setValue={(e: any) => setFormVal({ ...formVal, startingDate: e })}
             placement={'bottomLeft'}
           />
         </Form.Item>
@@ -83,7 +97,7 @@ export const AddEditGoalTaskModal = (props: any) => {
             <Button
               className='Leave_request_SubmitBtn'
               label="Submit"
-              onClick={submitGoalTask}
+              // onClick={submitGoalTask}
               type="primary"
               htmlType="submit"
             />

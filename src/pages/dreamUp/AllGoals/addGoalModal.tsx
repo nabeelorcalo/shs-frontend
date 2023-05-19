@@ -8,21 +8,24 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages
 // const { RangePicker } = DatePicker;
 // import { Input } from '../../../components';
 import Checkbox from 'antd/es/checkbox';
+import useCustomHook from '../actionHandler';
 // Leave Request Form Select Oprion Array
 export const SetGoal = (props: any) => {
+  const {addGoals} =useCustomHook();
   const initailVal = {
-    goalName: '',
+    name: '',
     startDate: '',
     endDate: '',
-    MainGoal: '',
+    mainGoal: true,
   }
-  const { title, open, setOpenAddGoal, submitAddGoal, data } = props;
+  const { title, open, setOpenAddGoal, data } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [formVal, setFormVal] = useState(initailVal)
+  // const [date, setDate] = useState({startDate:"",endDate:""})
+  // console.log(date,"date from calander");
   const [form] = Form.useForm();
-  console.log(formVal);
-
+  // console.log(formVal);
   // const handleTimeChange = (time: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
@@ -46,24 +49,26 @@ export const SetGoal = (props: any) => {
         layout='vertical'
         form={form}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        initialValues={initailVal}
+        // onValuesChange={onValueChangesAddGoal}
+        onFinish={ (values) => { addGoals(values), form.resetFields(); setOpenAddGoal(false); }}
       >
         <Form.Item
           label="Goal Name"
-          name="goalName"
+          name="name"
         >
           <Input
             id="01"
             type="text"
-            name="goalName"
-            value={formVal.goalName} placeholder={"Enter Goal Name"}
-            onChange={(e: any) => setFormVal({ ...formVal, goalName: e.target.value })}
+            value={formVal.name} placeholder={"Enter Goal Name"}
+            onChange={(e: any) => setFormVal({ ...formVal, name: e.target.value })}
           />
         </Form.Item>
         <Row gutter={[10, 10]}>
           <Col lg={12}>
             <Form.Item name="startDate" label="Start Date">
               <CommonDatePicker
-                name="Date Picker1"
+                name={formVal.startDate}
                 open={openStartDate}
                 setOpen={setOpenStartDate}
                 setValue={(e: any) => setFormVal({ ...formVal, startDate: e })}
@@ -74,7 +79,7 @@ export const SetGoal = (props: any) => {
           <Col lg={12}>
             <Form.Item name="endDate" label="End Date"  >
               <CommonDatePicker
-                name="Date Picker"
+                name={formVal.endDate}
                 open={openEndDate}
                 setOpen={setOpenEndDate}
                 setValue={(e: any) => setFormVal({ ...formVal, endDate: e })}
@@ -83,8 +88,8 @@ export const SetGoal = (props: any) => {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item  >
-          <Checkbox onChange={(e: any) => setFormVal({ ...formVal, MainGoal: e.target.checked })}>Mark as main goal.</Checkbox>
+        <Form.Item name="mainGoal"  >
+          <Checkbox onChange={(e: any) => setFormVal({ ...formVal, mainGoal: e.target.checked })} checked ={formVal.mainGoal}>Mark as main goal.</Checkbox>
         </Form.Item>
         <Form.Item >
           <div className='flex items-center justify-end gap-3'>
@@ -98,7 +103,7 @@ export const SetGoal = (props: any) => {
             <Button
               className='Leave_request_SubmitBtn'
               label="Submit"
-              onClick={submitAddGoal}
+              // onClick={submitAddGoal}
               type="primary"
               htmlType="submit"
             />
