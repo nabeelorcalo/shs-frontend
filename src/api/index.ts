@@ -17,7 +17,6 @@ const accessToken = localStorage.getItem("accessToken");
 axiosInstance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-
     if (accessToken) {
       config.headers.Authorization = "Bearer " + accessToken;
     }
@@ -25,7 +24,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     if (error.response?.status === 401) {
-      if (accessToken ) {
+      if (accessToken) {
         localStorage.removeItem("accessToken");
         window.location.href = "/login"; // Redirect user to login page
       }
@@ -57,10 +56,10 @@ const handleError = (error: any) => {
 };
 
 const get = (url: any, params = {}, headers = {}) =>
-  axiosInstance
-    .get(url, { headers, params })
-    .then(handleResponse)
-    .catch(handleError);
+    axiosInstance
+      .get(url, { headers, params })
+      .then(handleResponse)
+      .catch(handleError);
 
 const post = (url: any, data = {}, config: any = {}) =>
   axiosInstance

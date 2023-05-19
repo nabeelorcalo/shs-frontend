@@ -28,6 +28,9 @@ function App() {
     if (accessToken && pathname === (`/${ROUTES_CONSTANTS.LOGIN}`)) {
       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
     }
+    else if(!accessToken && pathname != (`/${ROUTES_CONSTANTS.SIGNUP}`)){
+      navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+    }
   }, [pathname]);
 
   /* EVENT FUNCTIONS
