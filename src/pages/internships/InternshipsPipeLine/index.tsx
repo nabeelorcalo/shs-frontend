@@ -34,7 +34,7 @@ const InternshipPipeLine = () => {
     userData: {}
   })
 
-  const { getInternshipDetails, internshipDetails, changeHandler } = useCustomHook();
+  const { getInternshipDetails, internshipDetails, searchCandidates } = useCustomHook();
 
   useEffect(() => {
     getInternshipDetails()
@@ -149,7 +149,7 @@ const InternshipPipeLine = () => {
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search by name" size="middle" />
+            <SearchBar handleChange={searchCandidates} name="search bar" placeholder="Search by name" size="middle" />
           </div>
           <div className="flex flex-row gap-4">
             <span className="font-semibold">Total Candidates:</span>{internshipDetails?.interns?.length < 10 ?

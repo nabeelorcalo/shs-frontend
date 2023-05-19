@@ -30,6 +30,7 @@ const useCustomHook = () => {
 
   useEffect(() => {
     debouncedResults.cancel();
+    serachResults.cancel();
   });
 
   //Get all internship data
@@ -153,15 +154,32 @@ const useCustomHook = () => {
 
   //Search internships
   const changeHandler = async (val: any) => {
-    const { data } = await api.get(GET_LIST_INTERNSHIP,
-      val
-        ? { page: 1, limit: 10, search: val }
-        : { page: 1, limit: 10 }
-    );
+    const params = {
+      page: 1,
+      limit: 10,
+      search: val ?? null
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    const { data } = await api.get(GET_LIST_INTERNSHIP, query);
     setInternshipData(data);
   };
   const debouncedResults = useMemo(() => {
     return debounce(changeHandler, 500);
+  }, []);
+
+  //Search candidates in pipeline
+  const searchCandidates = async (val: any) => {
+    const params = {
+      page: 1,
+      limit: 10,
+      search: val ?? null
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    const { data } = await api.get(GET_ALL_INTERNS, query);
+    setGetAllInters(data);
+  };
+  const serachResults = useMemo(() => {
+    return debounce(searchCandidates, 500);
   }, []);
 
   return {
@@ -175,6 +193,7 @@ const useCustomHook = () => {
     getInternshipDetails,
     getAllInternsData,
     changeHandler,
+    searchCandidates,
     departmentsData,
     internshipDetails,
     internshipData,
