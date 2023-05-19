@@ -40,14 +40,10 @@ const InternshipPipeLine = () => {
     getInternshipDetails()
   }, [])
 
-  console.log('intership pipeline data', internshipDetails);
-
-
   const getStatus = (status: string) => {
-    let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage.toLowerCase() === status.toLowerCase());
+    let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
     return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
   }
-  console.log(internshipDetails?.interns);
 
   const statusArray = [
     {
@@ -189,7 +185,7 @@ const InternshipPipeLine = () => {
                               time={dateFormat(item?.createdAt)}
                               status={item?.stage}
                               img={<Avatar size={50} src={item?.avatar}>
-                                {item?.userDetail?.firstName.charAt(0)}{item?.userDetail?.lastName.charAt(0)}
+                                {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                               </Avatar>}
                               handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
                             /> : <NoDataFound />

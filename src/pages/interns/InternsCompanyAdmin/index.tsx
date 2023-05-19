@@ -52,9 +52,6 @@ const InternsCompanyAdmin = () => {
     getAllUniuversitiesData();
   }, [])
 
-  console.log('all interns data are', getAllInters);
-  console.log('all manager data are', getAllManagers);
-
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "completed": "primary-bg-color",
@@ -174,7 +171,7 @@ const InternsCompanyAdmin = () => {
     const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
     return (
       {
-        no: getAllInters.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by: <Avatar size={50} src={item?.avatar}>
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
@@ -307,22 +304,6 @@ const InternsCompanyAdmin = () => {
                     })}
                   </Select>
                 </div>
-                {/* <div className="flex flex-col gap-2">
-                  <SelectComp
-                    label="Manager"
-                    placeholder='Select'
-                    value={state.manager}
-                    onChange={(event: any) => {
-                      updateManager(event);
-                    }}
-                    options={getAllManagers?.map((item: any) => {
-                      return {
-                        value: item?.id,
-                        label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
-                      }
-                    })}
-                  />
-                </div> */}
                 <SelectComp
                   label="Status"
                   placeholder='Select'
@@ -457,7 +438,6 @@ const InternsCompanyAdmin = () => {
             <label>Manager</label>
             <Select
               suffixIcon={<ArrowDownDark />}
-              // showSearch
               style={{ width: '100%' }}
               placeholder="Select"
               value={state.manager}
