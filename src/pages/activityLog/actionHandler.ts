@@ -7,24 +7,42 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import { useEffect, useMemo } from "react";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_GENERAL_LOG } = endpoints;
   const [logDetails, setLogDetails] = useRecoilState(generalActivityDetails);
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
 
   //get activity logs
-  const getLogDetails = async () => {
-    const { data } = await api.get(GET_GENERAL_LOG);
+  const getLogDetails = async (values: any) => {
+    const { role, activity, performerRole, dateTime } = values;
+    const params = {
+      userRole: role,
+      activity: activity,
+      performerRole: performerRole,
+      date: dateTime
+    }
+    const { data } = await api.get(GET_GENERAL_LOG, params);
     setLogDetails(data)
   };
 
-  //search activity logs
+  // search activity logs
   const searchHandler = async (search: any) => {
     console.log(search);
-    const { data } = await api.get(GET_GENERAL_LOG,{ search: search });
+    const { data } = await api.get(GET_GENERAL_LOG, { search: search });
     setLogDetails(data)
   };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(searchHandler, 500);
+  }, []);
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
