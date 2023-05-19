@@ -19,26 +19,34 @@ import actionHandler from "./actionHandler";
 interface IIndividualDetails {
   userDetail: any;
   id: number | string;
+  userId: number | string;
   rating: number | string;
   stage: string;
   internshipTitle: string;
   internType: string;
   AplliedDate: string;
+  skills: string[];
 }
 
 const IndividualDetails: FC<IIndividualDetails> = (props) => {
   const {
     id,
+    userId,
     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
     rating: ratingCount,
     stage,
     internshipTitle,
     internType,
     AplliedDate,
+    skills
   } = props;
-  const { rating, setRating, handleRating } = actionHandler();
+  const {
+    rating,
+    setRating,
+    handleRating,
+  } = actionHandler();
 
-  const skillsData = [
+  const skillsData = skills ?? [
     "User Interface Design",
     "Illustrator",
     "Documentation",
@@ -68,7 +76,9 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     { title: "Rejected", color: "#E94E5D" },
   ];
 
-  useEffect(() => setRating(ratingCount), []);
+  useEffect(() => {
+    setRating(ratingCount);
+  }, []);
 
   return (
     <div className="details-wrapper p-[5px] pr-[25px]">
@@ -184,7 +194,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
       <div className="skills-main">
         <p className="heading mt-8 mb-4">Skills</p>
         <div className="skills flex items-center flex-wrap gap-2 ">
-          {newSkillData.map((skill, i) => (
+          {newSkillData.map((skill: string, i: number) => (
             <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
               {skill}
             </p>

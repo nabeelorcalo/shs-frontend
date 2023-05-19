@@ -7,13 +7,12 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, GET_ALL_TEMPLATES } = endpoints;
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, GET_ALL_TEMPLATES, STUDENT_PROFILE } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue(currentUserState)
-  console.log(companyId, "company from hook");
 
   // candidates list params
   let params: any = {
@@ -24,6 +23,7 @@ const useCustomHook = () => {
   };
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
+  const [studentDetails, setStudentDetails] = useState<any>();
   const [selectedCandidate, setSelectedCandidate] = useState<any>({})
   // internship list
   const [internShipList, setInternShipList] = useState<any>([])
@@ -31,6 +31,8 @@ const useCustomHook = () => {
   const [rating, setRating] = useState<number | string>(0);
   // comments list
   const [commentsList, setCommentsList] = useState<any>([])
+  // create comment State
+  const [comment, setComment] = useState<string>("");
   // hiring process list
   const [hiringProcessList, setHiringProcessList] = useState([""]);
   // filter states
@@ -39,6 +41,10 @@ const useCustomHook = () => {
   const [download, setDownload] = useState("");
   // company manager list
   const [companyManagerList, setCompanyManagerList] = useState<any>([])
+  //interview event list
+  const [interviewList, setInterviewList] = useState<any>([])
+  //interview event list
+  const [templateList, setTemplateList] = useState<any>([])
   //modal states
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
@@ -47,7 +53,10 @@ const useCustomHook = () => {
   const getCadidatesData = async (params: any) => {
     await api.get(CANDIDATE_LIST, params).then((res) => setCadidatesList(res?.data));
   };
-
+  // get student details
+  const getStudentDetails = async (userId: any) => {
+    await api.get(STUDENT_PROFILE, { userId }).then(({ data }) => { setStudentDetails(data) })
+  }
   //user id for update methods
   let id: string | number = "";
   const getUserId = (userId: string | number) => {
@@ -106,7 +115,6 @@ const useCustomHook = () => {
 
   // time frame
   const handleInternShipFilter = (value: string) => {
-    console.log(value);
     if (value) {
       params.internshipId = value
     } else {
@@ -117,8 +125,8 @@ const useCustomHook = () => {
   }
 
   // funtion for update rating
-  const handleRating = (id: string | number, rating: string | number) => {
-    api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { rating }, { id }).then((res) => {
+  const handleRating = async (id: string | number, rating: string | number) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { rating }, { id }).then((res) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
       );
@@ -142,8 +150,11 @@ const useCustomHook = () => {
 
   // create comment
   const handleCreateComment = async (candidateId: string | number, comment: string) => {
-    comment ? await api.post(ADD_COMMENT, { candidateId, comment }).then(({ data }) =>
-      setCommentsList([...commentsList, data])) : Notifications({ title: "Error", description: "Comment can't empty", type: "error" })
+    comment ? await api.post(ADD_COMMENT, { candidateId, comment }).then(({ data }) => {
+      setComment("")
+      setCommentsList([...commentsList, selectedCandidate])
+    })
+      : Notifications({ title: "Error", description: "Comment can't be empty", type: "error" })
   }
   // intial pipline array
   const handleInitialPiple = (stage: string) => {
@@ -168,24 +179,25 @@ const useCustomHook = () => {
   }
 
   // funtion for update stage
-  const handleStage = (id: string | number, stage: string | number) => {
-    api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res) => {
+  const handleStage = async (id: string | number, stage: string) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
       );
     });
   };
 
+  // funtion for update stage
+  const HandleAssignee = async (id: string | number, assignedManager: string) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res) => {
+      console.log(res);
+      res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
+    }).catch((err) => { console.log("err", err) });
+  };
+
   // get company manager list for schedule interview form attendees
   const getCompanyManagerList: any = async (search?: string) => {
-    const params: any = {
-      page: 1,
-      limit: 100,
-      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
-      filterType: "THIS_MONTH",
-    }
-    search && (params.search = search)
-    await api.get(GET_COMPANY_MANAGER_LIST, params)
+    await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res) => {
         setCompanyManagerList(res?.data?.map(({ companyManager }: any) => companyManager))
       })
@@ -200,7 +212,7 @@ const useCustomHook = () => {
     values.address = "";
     values.eventType = "INTERVIEW";
     await api.post(CREATE_MEETING, values).then(({ data }) => {
-      console.log(data);
+      Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
     })
   }
 
@@ -212,15 +224,22 @@ const useCustomHook = () => {
       currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
       filterType: "THIS_MONTH",
     }
-    await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res) => { })
+    await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res) => {
+      setInterviewList(res?.data)
+    })
   }
 
   // get templates
-  const getTemplates = async () => {
-    await api.get(GET_ALL_TEMPLATES).then((res) => { })
+  const getTemplates = async (query: string) => {
+    let params: any = {
+      page: 1,
+      limit: 0
+    }
+    query && (params.q = query)
+    await api.get(GET_ALL_TEMPLATES, params).then((res) => { setTemplateList(res?.data) })
   }
   return {
-    cadidatesList, setCadidatesList, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, getComments, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, getTemplates, params
+    cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, getTemplates, templateList, params
   };
 };
 

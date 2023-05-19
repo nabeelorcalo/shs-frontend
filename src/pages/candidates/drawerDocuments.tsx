@@ -12,53 +12,69 @@ import {
   DownloadDocumentIcon,
 } from "../../assets/images";
 import Preview from "../../assets/images/candidates/preview.svg";
-const ReqDocData = [
-  {
-    image: <CvIcon />,
-    title: "Cv",
-    descr: "Resume.pdf",
-    date: "01/07/2022",
-    size: "2.3 MB",
-  },
-  {
-    image: <DbsIcon />,
-    title: "DBS",
-    descr: "Resume.pdf",
-    date: "01/07/2022",
-    size: "2.3 MB",
-  },
-  {
-    image: <UalIcon />,
-    title: "University Approved Letter",
-    descr: "Resume.pdf",
-    date: "01/07/2022",
-    size: "2.3 MB",
-  },
-  {
-    image: <PassportIcon />,
-    title: "Passport",
-    descr: "Resume.pdf",
-    date: "01/07/2022",
-    size: "2.3 MB",
-  },
-  {
-    image: <BrpIcon />,
-    title: "BRP",
-    descr: "Resume.pdf",
-    date: "01/07/2022",
-    size: "2.3 MB",
-  },
-  {
-    image: <PoaIcon />,
-    title: "Proof of Address",
-    descr: "Resume.pdf",
-    date: "01/07/2022",
-    size: "2.3 MB",
-  },
-];
-
-const DrawerDocuments = () => {
+import dayjs from "dayjs";
+import constants from "../../config/constants";
+import PdfPreviewModal from "./PdfPreviewModal";
+const DrawerDocuments = ({ documents }: any) => {
+  console.log("documents", documents);
+  const ReqDocData = documents
+    ? documents?.map((docItem: any) => ({
+        image: <CvIcon />,
+        title: docItem?.filename,
+        descr: `${docItem?.filename}.${docItem?.metaData?.extension}`,
+        date: dayjs(docItem?.createdAt).format("DD/MMM/YYYY"),
+        size: docItem?.mediaSize,
+        fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
+      }))
+    : [];
+  const ReqDocData1 = [
+    {
+      image: <CvIcon />,
+      title: "Cv",
+      descr: "Resume.pdf",
+      date: "01/07/2022",
+      size: "2.3 MB",
+    },
+    {
+      image: <DbsIcon />,
+      title: "DBS",
+      descr: "Resume.pdf",
+      date: "01/07/2022",
+      size: "2.3 MB",
+    },
+    {
+      image: <UalIcon />,
+      title: "University Approved Letter",
+      descr: "Resume.pdf",
+      date: "01/07/2022",
+      size: "2.3 MB",
+    },
+    {
+      image: <PassportIcon />,
+      title: "Passport",
+      descr: "Resume.pdf",
+      date: "01/07/2022",
+      size: "2.3 MB",
+    },
+    {
+      image: <BrpIcon />,
+      title: "BRP",
+      descr: "Resume.pdf",
+      date: "01/07/2022",
+      size: "2.3 MB",
+    },
+    {
+      image: <PoaIcon />,
+      title: "Proof of Address",
+      descr: "Resume.pdf",
+      date: "01/07/2022",
+      size: "2.3 MB",
+    },
+  ];
   const [open, setOpen] = useState(false);
+  const [openPreview, setOpenPreview] = useState(false);
+  console.log(constants);
+
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
@@ -86,13 +102,17 @@ const DrawerDocuments = () => {
               </div>
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center">
-                  {" "}
-                  <img src={Preview} alt="" />
+                  <img src={Preview} alt="" onClick={() => setOpenPreview(true)} />
+                  <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} url={`${constants?.MEDIA_URL}/${data?.fileUrl}`} />
                 </p>
               </div>
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center">
-                  <DownloadDocumentIcon />
+                  {/* <Link> */}
+                  {/* </Link> */}
+                  <a href={`${constants?.MEDIA_URL}/${data?.fileUrl}`}>
+                    <DownloadDocumentIcon />
+                  </a>
                 </p>
               </div>
             </div>

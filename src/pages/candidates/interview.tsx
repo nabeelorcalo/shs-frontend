@@ -5,17 +5,27 @@ import { Schedule, DrawerIcon, IconEdit } from "../../assets/images";
 import { Alert } from "../../components";
 import ScheduleModal from "./scheduleModal";
 import actionHandler from "./actionHandler";
+let updateData: any = {};
 const Interview = ({ candidateId }: any) => {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
-  const { getScheduleInterviews } = actionHandler();
+  // const [updateData, setUpdateData] = useState({});
+  const { interviewList, getScheduleInterviews } = actionHandler();
 
   useEffect(() => {
     getScheduleInterviews(candidateId);
   }, []);
-  
+  console.log(interviewList, "interviewList");
+  console.log(updateData, "updateData");
+
   const openModal = () => {
     setAlert(true);
+  };
+
+  const handleEdit = (data: any) => {
+    console.log(data);
+    updateData = data;
+    data && setOpen(true);
   };
 
   const ReqDocData = [
@@ -36,42 +46,49 @@ const Interview = ({ candidateId }: any) => {
           <Schedule />
           <p className="btn-text">Schedule</p>
         </button>
-        <ScheduleModal setOpen={setOpen} open={open} candidateId={candidateId} />
+        <ScheduleModal
+          setOpen={setOpen}
+          open={open}
+          candidateId={candidateId}
+          data={updateData}
+          // setUpdateData={setUpdateData}
+          handleEdit={handleEdit}
+        />
       </div>
       <>
         <div className="onTime mt-8 mb-5">21 November 2022</div>
         <div className="main-wrapperr pb-6 relative">
-          {ReqDocData.map((data: any) => (
+          {interviewList?.map((data: any) => (
             <div className="interview-content px-4 py-4">
               <Row gutter={[20, 20]} align="middle">
                 <Col xl={6} lg={6} md={6}>
                   <div className="inteview-wrapper flex items-center gap-2">
-                    <div>{data.image}</div>
+                    <div>{data?.image}</div>
                     <div>
-                      <h2 className="m-0 text-sm headingg">{data.username}</h2>
-                      <p className="bottom-heading ">{data.designation}</p>
+                      <h2 className="m-0 text-sm headingg">{data?.username}</h2>
+                      <p className="bottom-heading ">{data?.designation}</p>
                     </div>
                   </div>
                 </Col>
                 <Col xl={6} lg={6} md={6}>
                   <div className="inteview-wrapper ">
                     <h2 className="text-sm m-0 headingg">
-                      Suhedule by <span>{data.schBy}</span>
+                      Suhedule by <span>{data?.schBy}</span>
                     </h2>
-                    <p className="bottom-heading">{data.loc}</p>
+                    <p className="bottom-heading">{data?.loc}</p>
                   </div>
                 </Col>
                 <Col xl={6} lg={6} md={6}>
                   <div className="inteview-wrapper ">
-                    <h2 className="text-sm	m-0 headingg">{data.time}</h2>
-                    <p className="bottom-heading">{data.timeLine}</p>
+                    <h2 className="text-sm	m-0 headingg">{data?.time}</h2>
+                    <p className="bottom-heading">{data?.timeLine}</p>
                   </div>
                 </Col>
                 <Col xl={6} lg={6} md={6}>
                   <div className="hover-effect">
                     <div className=" flex gap-4 items-center h-[55px]">
                       <div className="edit-icon h-[40px] w-[40px] flex justify-center items-center ">
-                        <IconEdit onClick={() => setOpen(true)} className="cursor-pointer" />
+                        <IconEdit onClick={() => handleEdit(data)} className="cursor-pointer" />
                       </div>
                       <div
                         onClick={openModal}

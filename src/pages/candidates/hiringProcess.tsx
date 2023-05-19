@@ -5,7 +5,7 @@ import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
 import BtnIcon from "../../assets/images/Button-icon.png";
 import RejectModal from "./RejectModal";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
-import { ArrowDownDark, Dot, UserAvatar } from "../../assets/images";
+import { ArrowDownDark, Dot } from "../../assets/images";
 import { NoDataFound, Notifications, SearchBar } from "../../components";
 import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
@@ -19,27 +19,11 @@ interface IHiringProcess {
 }
 const HiringProcess: FC<IHiringProcess> = (props) => {
   const {
-    selectedCandidate,
     selectedCandidate: { id },
     selectedCandidate: {
       internship: { title: internshipTitle, internType },
       stage,
       createdAt,
-      userDetail: {
-        // id,
-        firstName,
-        lastName,
-        avatar,
-        gender,
-        DOB,
-        phoneNumber,
-        veriffStatus,
-        postCode,
-        email,
-        address,
-        country,
-        city,
-      },
     },
   } = props;
 
@@ -51,8 +35,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const [selectTemplate, setSelectTemplate] = useState({ title: "Offer Letter", options: ["offer template 1"] });
   const [assignee, setAssignee] = useState<any>();
   const [hiringBtnText, setHiringBtnText] = useState("Move");
-  // create comment State
-  const [comment, setComment] = useState<string>("");
 
   // logged in user data
   const userData = useRecoilValue(currentUserState);
@@ -68,6 +50,11 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     handleStage,
     companyManagerList = [],
     getCompanyManagerList,
+    HandleAssignee,
+    comment,
+    setComment,
+    getTemplates,
+    templateList,
   } = actionHandler();
 
   useEffect(() => {
@@ -87,7 +74,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       userData: companyManagerList,
     },
   ];
-  console.log(companyManagerList, "companyManagerList");
 
   // resend offer letter
   const handleResendOfferLetter = () => {
@@ -219,7 +205,18 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    setAssignee(item);
+    console.log(item);
+    if (item.id) {
+      HandleAssignee(id, item.id).then(() => setAssignee(item));
+    }
+  };
+
+  const [formValues, setValueFormValues] = useState({ subject: "", description: "" });
+  const [selecteTemplate, setSelecteTemplate] = useState();
+  const handleSelectTemplate = (value: number | string) => {
+    let selectedTemplate = templateList?.find(({ id }: { id: string }) => id === value);
+    setSelecteTemplate(selectedTemplate?.name);
+    setValueFormValues({ subject: selectedTemplate?.subject, description: selectedTemplate?.description });
   };
 
   return (
@@ -306,27 +303,31 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                         },
                       ]}
                     >
-                      <div className="drop-down-with-imgs flex items-center gap-3">
-                        <div className="flex items-center gap-3 mr-[40px]">
-                          <Avatar
-                            className="h-[32px] w-[32px] rounded-full object-cover relative"
-                            src={assignee?.avatar}
-                            alt={assignee?.firstName}
-                            icon={
-                              <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                {assignee?.firstName[0]}
-                                {assignee?.lastName[0]}
-                              </span>
-                            }
-                          />
-                          <p>{`${assignee?.firstName} ${assignee?.lastName}`}</p>
-                        </div>
+                      <div className="drop-down-with-imgs flex items-center gap-3 h-12">
+                        {assignee ? (
+                          <div className="flex items-center gap-3 mr-[40px]">
+                            <Avatar
+                              className="h-[32px] w-[32px] rounded-full object-cover relative"
+                              src={assignee?.avatar}
+                              alt={assignee?.firstName}
+                              icon={
+                                <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                                  {assignee?.firstName[0]}
+                                  {assignee?.lastName[0]}
+                                </span>
+                              }
+                            />
+                            <p>{`${assignee?.firstName} ${assignee?.lastName}`}</p>
+                          </div>
+                        ) : (
+                          <p>Select</p>
+                        )}
                         <ArrowDownDark />
                       </div>
                     </DropDownNew>
                   ) : (
                     <div className={`flex ${item.title === "Owner" ? "gap-2" : ""}`}>
-                      {item?.image && assignee ? (
+                      {item?.image ? (
                         <>
                           <Avatar
                             className="h-[32px] w-[32px] rounded-full object-cover relative"
@@ -361,12 +362,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         <div className="icon ">
           <Avatar
             className="h-[48px] w-[48px] rounded-full object-cover relative"
-            src={avatar}
-            alt={firstName}
+            src={userData?.avatar}
+            alt={userData?.firstName}
             icon={
               <span className="uppercase text-[18px] leading-[22px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                {firstName[0]}
-                {lastName[0]}
+                {userData?.firstName[0]}
+                {userData?.lastName[0]}
               </span>
             }
           />
@@ -381,7 +382,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
           ></Input>
         </div>
 
-        <button className="btn-icon" onClick={() => handleCreateComment(id, comment)}>
+        <button className="btn-icon cursor-pointer" onClick={() => handleCreateComment(id, comment)}>
           <img src={BtnIcon} alt="btn-icon" />
         </button>
       </div>
@@ -425,7 +426,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         setOpen={setIsSelectTemplateModal}
         handleTemplate={handleTemplate}
         title={selectTemplate.title}
-        options={selectTemplate.options}
+        selecteTemplate={selecteTemplate}
+        handleSelectTemplate={handleSelectTemplate}
       />
       <OfferLetterTemplateModal
         open={isOfferLetterTemplateModal}

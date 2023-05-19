@@ -1,6 +1,7 @@
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
+  MEDIA_URL: "http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -27,10 +28,10 @@ export default {
       description: "Please try again later or email us",
     },
   },
-  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration","Project Management"],
+  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration", "Project Management"],
   OPTIONS_COUNTRIES: ["England", "Scotland", "Wales", "Ireland"],
   OPTIONS_GENDER: ["Male", "Female", "others"],
-  
+
 };
 
 
@@ -74,7 +75,7 @@ export const ROUTES_CONSTANTS: any = {
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
   CASE_STUDIES_ASSESSMENT_FORM: "case-studies/assessment-form/:id",
-  CASE_STUDIES_VIEW_DETAILS:'case-studies/view-details/:id',
+  CASE_STUDIES_VIEW_DETAILS: 'case-studies/view-details/:id',
   GRIEVANCES: "grievances",
   CALENDAR: "calendar",
   DELEGATE_MEMEBERS: "delegate-members",
@@ -187,6 +188,6 @@ export const STATUS_CONSTANTS: any = {
   PENDING: "pending",
   CLOSED: "closed",
   REJECTED: "rejected",
-  DRAFT:"draft"
+  DRAFT: "draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";

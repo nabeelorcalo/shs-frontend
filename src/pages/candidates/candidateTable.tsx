@@ -17,7 +17,6 @@ const CandidateTable = (props: any) => {
     setOpenRejectModal,
     selectedCandidate,
     setSelectedCandidate,
-    hiringProcessList,
   } = actionHandler();
   const { tableData = [] } = props;
   const data = tableData?.map((item: any, index: number) => ({
@@ -36,7 +35,7 @@ const CandidateTable = (props: any) => {
     {
       label: (
         <div>
-          {ratingCount.map((obj, i) => (
+          {ratingCount?.map((obj, i) => (
             <div
               key={obj.count}
               onClick={() => handleRating(data[i]?.id, obj.count)}
