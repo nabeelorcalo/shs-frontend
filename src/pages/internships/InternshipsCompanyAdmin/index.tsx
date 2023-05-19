@@ -6,7 +6,7 @@ import {
   BoxWrapper, NoDataFound
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Spin } from 'antd'
+import { Button, Col, Row, Spin, Input } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import SelectComp from '../../../components/Select/Select'
@@ -14,6 +14,7 @@ import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     showDrawer: false,
     status: undefined,
@@ -29,14 +30,19 @@ const InternshipsCompanyAdmin = () => {
     { value: "DRAFT", label: "Draft" },
   ]
 
-  const { getAllInternshipsData, internshipData, changeHandler, isLoading,
-    getAllDepartmentData, getAllLocationsData, departmentsData, locationsData }: any = useCustomHook();
+  const { getAllInternshipsData, internshipData, isLoading,
+    getAllDepartmentData, getAllLocationsData, departmentsData,
+    locationsData, debouncedSearch }: any = useCustomHook(searchValue);
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    // getAllInternshipsData(state.status, state.location, state.department);
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
+  
+  useEffect(() => {
+    getAllInternshipsData(state.status, state.location, state.department);
+  }, [searchValue])
 
 
   const handleDrawer = () => {
@@ -78,13 +84,18 @@ const InternshipsCompanyAdmin = () => {
       department: undefined
     }))
   }
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader bordered title="Internships" />
       <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" />
+            {/* <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" /> */}
+            <Input placeholder="search" onChange={debouncedResults} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4">
             <FiltersButton label="Filters" onClick={handleDrawer} />

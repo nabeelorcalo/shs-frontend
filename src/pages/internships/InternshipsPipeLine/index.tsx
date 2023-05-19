@@ -12,7 +12,7 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 // import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import SelectComp from "../../../components/Select/Select";
-import { Avatar } from "antd";
+import { Avatar,Input } from "antd";
 import dayjs from 'dayjs';
 import "../style.scss";
 
@@ -28,17 +28,18 @@ const tempArray = [
 const InternshipPipeLine = () => {
   const navigate = useNavigate();
   const { state }: any = useLocation()
+  const [searchValue, setSearchValue] = useState('')
   const [states, setState] = useState({
     status: 'Published',
     isOpen: false,
     userData: {}
   })
 
-  const { getInternshipDetails, internshipDetails, searchCandidates } = useCustomHook();
+  const { getInternshipDetails, internshipDetails,debouncedSearch } = useCustomHook(searchValue);
 
   useEffect(() => {
     getInternshipDetails()
-  }, [])
+  }, [searchValue])
 
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
@@ -96,6 +97,11 @@ const InternshipPipeLine = () => {
       status: event
     }))
   }
+
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader
@@ -149,7 +155,8 @@ const InternshipPipeLine = () => {
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={searchCandidates} name="search bar" placeholder="Search by name" size="middle" />
+            {/* <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search by name" size="middle" /> */}
+            <Input placeholder="search" onChange={debouncedResults} />
           </div>
           <div className="flex flex-row gap-4">
             <span className="font-semibold">Total Candidates:</span>{internshipDetails?.interns?.length < 10 ?
