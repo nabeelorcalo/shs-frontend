@@ -1,6 +1,6 @@
-import { Col, Row, Dropdown, Button, MenuProps } from "antd";
+import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import { Documentcard, IconAngleDown } from "../../../assets/images";
+import { Documentcard } from "../../../assets/images";
 import { DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType } from "antd/es/table";
 import { EyeFilled } from "@ant-design/icons";
@@ -101,7 +101,7 @@ const ReservationsAgent = () => {
         </div>,
         contracts: item?.contract ? <Documentcard /> : "-",
         actions: <div onClick={() => setISOpen(true)}>
-          <EyeFilled className=" cursor-pointer text-2xl light-grey-color"
+          <EyeFilled className="cursor-pointer text-2xl light-grey-color"
           />
         </div>
       }
@@ -111,7 +111,7 @@ const ReservationsAgent = () => {
 
   return (
     <div className="reservations">
-      <BookingModal open={isOpen} setOpen={setISOpen} />
+      <BookingModal open={isOpen} setOpen={setISOpen} data={reservations} />
       <PageHeader title="Reservations" bordered={true} />
 
       <Row gutter={[0, 20]} justify={"space-between"}>

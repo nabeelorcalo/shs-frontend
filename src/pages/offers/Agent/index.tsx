@@ -1,38 +1,43 @@
 import "./style.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form } from "antd";
-import { PlusCircleFilled} from "@ant-design/icons";
-import { OfferProperty} from "../../../assets/images";
-// import { cardData } from "../../propertyAgent/propertDahboard/Dashboard/DashboardMock";
+import { PlusCircleFilled } from "@ant-design/icons";
+import { OfferProperty } from "../../../assets/images";
 import "./style.scss";
-
-
+import useCustomHook from "../actionHandler";
 
 const OffersAgent = () => {
   const [isOpen, setISOpen] = useState<any>(false);
-  const [offersCardData, setData] = useState<any>(
-    [
-      {
-        img: OfferProperty,
-        title: "Boston Heights",
-        disc: "15% off-between 1 and 6 months bookings",
-      },
-    ]
-  )
+  const [id, setId] = useState(null);
+  const { getOffersDetails, offersData, postOffersDetails, editOffersDetails } = useCustomHook();
+  const [offers, setOffers] = useState(offersData)
+
+  useEffect(() => {
+    getOffersDetails()
+  }, [offers])
 
   const onFinish = (values: any) => {
-    const copyCardData = [...offersCardData]
-    copyCardData.push(
-      {
-        img: OfferProperty,
-        title: values.select,
-        disc: `${values.discount}%off-between ${values.offer} and ${values.qualify} bookings`,
-      }
-    )
-    setData(copyCardData)
+    if (offers) {
+      values.offerId = id
+      editOffersDetails(values)
+    }
+    else {
+    }
+    postOffersDetails(values)
+    setOffers(values)
     setISOpen(false)
   };
+
+  let initialValues = {}
+  offers ? offers : offersData?.map((item: any) => {
+    initialValues = {
+      propertyId: item.id,
+      minStayMonths: item.minStayMonths,
+      maxStayMonths: item.maxStayMonths,
+      monthlyDiscount: item.monthlyDiscount
+    }
+  })
 
   return (
     <div className="offers-agent">
@@ -42,10 +47,10 @@ const OffersAgent = () => {
         close={() => setISOpen(false)}
         footer={false}
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
           <Form.Item label="Select your property" name="select" className="flex flex-col mb-8">
             <Select
-              defaultValue="Select"
+              placeholder="Select"
               // onChange={(value) => value}
               options={[
                 { value: "Boston Heights", label: "Boston Heights" },
@@ -62,38 +67,37 @@ const OffersAgent = () => {
             />
           </Form.Item>
 
-          <Form.Item label="Minimum stay to qualify for offer" name="offer" className="flex flex-col mb-8">
+          <Form.Item label="Minimum stay to qualify for offer" name="minStayMonths" className="flex flex-col mb-8">
             <Select
-              defaultValue="Select"
+              placeholder="Select"
               // onChange={(value) => value}
               options={[
-                { value: "1 months", label: "1 months" },
+                { value: "1", label: "1 months" },
                 {
-                  value: "2months",
+                  value: "2",
                   label: "2months",
                 },
-                { value: "3months", label: "3 months" },
+                { value: "3", label: "3 months" },
                 {
-                  value: "4 months",
+                  value: "4",
                   label: "4 months",
                 },
               ]}
             />
           </Form.Item>
 
-          <Form.Item label="Maximum stay to qualify for offer (optional)" name="qualify" className="flex flex-col mb-8">
+          <Form.Item label="Maximum stay to qualify for offer (optional)" name="maxStayMonths" className="flex flex-col mb-8">
             <Select
-              defaultValue="Select"
-              // onChange={(value) => value}
+              placeholder="Select"
               options={[
-                { value: "1 months", label: "1 months" },
+                { value: "1", label: "1 months" },
                 {
-                  value: "2months",
+                  value: "2",
                   label: "2months",
                 },
-                { value: "3months", label: "3 months" },
+                { value: "3", label: "3 months" },
                 {
-                  value: "4 months",
+                  value: "4",
                   label: "4 months",
                 },
               ]}
@@ -103,7 +107,7 @@ const OffersAgent = () => {
           <Form.Item label="Monthly discount" name="discount" className="flex flex-col">
             <InputNumber
               style={{ width: "100%" }}
-              defaultValue={1}
+              // defaultValue={1}
               formatter={(value) => `${value}%`}
               parser={(value: any) => value!.replace("%", "")}
             // onChange={(value) => value}
@@ -131,7 +135,7 @@ const OffersAgent = () => {
 
       <PageHeader title="Offers" bordered={true} />
 
-      {offersCardData.length === 0 ? (
+      {offersData?.length === 0 ? (
         <div className="offers-agent-body flex justify-center items-center flex-col h-[50vh] text-center">
           <div className="font-medium text-4xl text-primary-color mb-4">
             No Offers Yet
@@ -169,25 +173,25 @@ const OffersAgent = () => {
           </div>
 
           <Row gutter={[20, 20]}>
-            {offersCardData.map((item: any, index: any) => {
+            {offersData?.map((item: any, index: any) => {
               return (
                 <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
                   <Card
                     key={item.id}
                     className="offer-card"
-                    cover={<img  src={item.img} alt="img"  />}
+                    cover={<img src={OfferProperty} alt="img" />}
                   >
                     <div className="offer-card-body">
                       <div className="dashboard-primary-color font-semibold text-xl pb-4">
-                        {item.title}
+                        {item.propertyId}
                       </div>
-                      
+
                       <div className="dashboard-primary-color font-normal text-sm pb-4">
-                        {item.disc}
+                        {item.monthlyDiscount}% off-between {item.minStayMonths} and {item.maxStayMonths} months bookings
                       </div>
 
                       <div className="w-[100%] inline-grid">
-                        <Button onClick={() => setISOpen(true)} className="offer-card-btn">
+                        <Button onClick={() => { setISOpen(true), setId(item.id), setOffers(item) }} className="offer-card-btn">
                           Edit
                         </Button>
                       </div>

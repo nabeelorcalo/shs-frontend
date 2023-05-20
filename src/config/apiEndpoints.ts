@@ -43,6 +43,9 @@ const endpoints = {
   DEL_INTERNSHIP: '/internship/deleteInternship',
   DUBLICATE_INTERNSHIP: '/internship/duplicateInternship',
   POST_NEW_INTERNSHIP: '/internship/createInternship',
+  POST_OFFERS:'/property/create-offer',
+  GET_OFFERS: '/property/get-offers',
+  EDIT_OFFERS:'/property/edit-offer',
   //candidates 
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,

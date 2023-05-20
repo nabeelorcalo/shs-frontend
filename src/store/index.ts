@@ -12,4 +12,5 @@ export * from "./Internships";
 export * from "./ActivityLog";
 export * from "./Reservation";
 export * from "./Performance";
+export * from "./Offers";
 
