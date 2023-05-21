@@ -37,6 +37,7 @@ const endpoints = {
   POST_CREATE_FOLDER_FILE: 'digivault/create-folder-file',
   DEL_FOLDER_FILE: 'digivault/delete-folder-file',
   GET_RESERVATIONS:'/property/get-reservations',
+  UPDATE_STATUS_RESERVATION:'/property/approve-reject-booking-request',
   GET_GENERAL_LOG:'/general/activity',
   GET_LIST_INTERNSHIP: '/internship/listInternships',
   GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',

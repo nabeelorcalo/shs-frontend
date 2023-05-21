@@ -7,13 +7,13 @@ import PersonalInfo from "../PersonalInfo/personalInfo";
 import "./style.scss";
 
 const BookingModal = (props: any) => {
-  const { open, setOpen, data } = props;
-  
+  const { open, setOpen } = props;
+
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: (<div className="flex items-center"><UserTabsIcon /><span className="pl-1">Personal Information</span></div>),
-      children: <PersonalInfo open={open} setOpen={setOpen} data={data} />,
+      children: <PersonalInfo data={open.viewReservations} setOpen={setOpen} />,
     },
     {
       key: "2",
@@ -25,7 +25,7 @@ const BookingModal = (props: any) => {
     <div>
       <PopUpModal
         title="Bookings"
-        open={open}
+        open={open.openViewModal}
         close={() => setOpen(false)}
         footer={false}
       >
