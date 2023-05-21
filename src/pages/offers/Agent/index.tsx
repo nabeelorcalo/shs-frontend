@@ -1,26 +1,26 @@
-import "./style.scss";
 import { useEffect, useState } from "react";
 import { PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card, Select, InputNumber, Form } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { OfferProperty } from "../../../assets/images";
-import "./style.scss";
 import useCustomHook from "../actionHandler";
+import "./style.scss";
 
 const OffersAgent = () => {
+  const [form] = Form.useForm();
   const [isOpen, setISOpen] = useState<any>(false);
-  const [id, setId] = useState(null);
+  const [offers, setOffers] = useState<any>({})
   const { getOffersDetails, offersData, postOffersDetails, editOffersDetails } = useCustomHook();
-  const [offers, setOffers] = useState(offersData)
 
   useEffect(() => {
     getOffersDetails()
-  }, [offers])
+  }, [])
 
   const onFinish = (values: any) => {
     if (offers) {
-      values.offerId = id
+      values.offerId = offers.id
       editOffersDetails(values)
+      setOffers({})
     }
     else {
     }
@@ -29,25 +29,28 @@ const OffersAgent = () => {
     setISOpen(false)
   };
 
-  let initialValues = {}
-  offers ? offers : offersData?.map((item: any) => {
-    initialValues = {
-      propertyId: item.id,
-      minStayMonths: item.minStayMonths,
-      maxStayMonths: item.maxStayMonths,
-      monthlyDiscount: item.monthlyDiscount
-    }
-  })
+  const editHanlder = (value: any) => {
+    setISOpen(true),
+      setOffers(value)
+  }
+  console.log(offers);
+
+  const initialValues = {
+    select: offers?.id ?? null,
+    minStayMonths: offers?.minStayMonths ?? null,
+    maxStayMonths: offers?.maxStayMonths ?? null,
+    discount: offers?.monthlyDiscount ?? null
+  }
 
   return (
     <div className="offers-agent">
       <PopUpModal
         title="New Offer"
         open={isOpen}
-        close={() => setISOpen(false)}
+        close={() => { setISOpen(false), setOffers({}) }}
         footer={false}
       >
-        <Form layout="vertical" onFinish={onFinish} initialValues={initialValues}>
+        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues}>
           <Form.Item label="Select your property" name="select" className="flex flex-col mb-8">
             <Select
               placeholder="Select"
@@ -117,7 +120,7 @@ const OffersAgent = () => {
           <div className="flex justify-end gap-4">
             <div>
               <Button
-                onClick={() => setISOpen(false)}
+                onClick={() => { setISOpen(false), setOffers({}) }}
                 className="teriary-color"
               >
                 Cancel
@@ -191,7 +194,9 @@ const OffersAgent = () => {
                       </div>
 
                       <div className="w-[100%] inline-grid">
-                        <Button onClick={() => { setISOpen(true), setId(item.id), setOffers(item) }} className="offer-card-btn">
+                        <Button
+                          onClick={() => editHanlder(item)}
+                          className="offer-card-btn">
                           Edit
                         </Button>
                       </div>

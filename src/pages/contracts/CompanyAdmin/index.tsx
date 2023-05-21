@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu } from "antd";
+import { Row, Col, Menu, Spin } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
@@ -46,6 +46,7 @@ const CompanyAdmin = () => {
   })
   const {
     contractList,
+    loading,
     getContractList,
     searchHandler,
     deleteContractHandler
@@ -313,7 +314,9 @@ const CompanyAdmin = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={tableColumns} tableData={newTableData} />
+            {loading ? <Spin className="flex justify-center" /> :
+              <GlobalTable columns={tableColumns} tableData={newTableData} />
+            }
           </BoxWrapper>
         </Col>
       </Row>
