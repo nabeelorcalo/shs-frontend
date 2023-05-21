@@ -9,8 +9,8 @@ import Drawer from '../../../components/Drawer'
 import { Button, Col, Row, Spin } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
-import '../style.scss'
 import SelectComp from '../../../components/Select/Select'
+import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
@@ -143,22 +143,22 @@ const InternshipsCompanyAdmin = () => {
           </Col>
         </Row>
         {isLoading ? <div className='flex flex-col gap-7'>
-          {internshipData.length !== 0 ?
+          {internshipData?.length !== 0 ?
             internshipData?.map((item: any, index: any) => {
               return (
                 <BoxWrapper key={index} boxShadow>
                   <InternshipProgressCard
                     item={item}
-                    title={item.title}
-                    status={item.status}
-                    department={item.department.name}
-                    internType={item.internType}
-                    postedBy={item.postedBy}
-                    locationType={item.locationType}
+                    title={item?.title}
+                    status={item?.status}
+                    department={item?.department?.name}
+                    internType={item?.internType}
+                    postedBy={item?.postedBy}
+                    locationType={item?.locationType}
                     location={item?.location?.name}
-                    createdAt={item.createdAt}
-                    closingDate={item.closingDate}
-                    interns={item.interns}
+                    createdAt={item?.createdAt}
+                    closingDate={item?.closingDate}
+                    interns={item?.interns}
                   />
                 </BoxWrapper>
               )

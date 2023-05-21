@@ -3,10 +3,10 @@ import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertI
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { Notifications } from '../Notification';
 import { PopUpModal } from '../Model';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from '../../pages/internships/actionHandler';
+import { Notifications } from '../../components/Notification';
 import dayjs from 'dayjs';
 import './style.scss';
 
@@ -24,6 +24,7 @@ export const InternshipProgressCard = (props: any) => {
     closed: 'CLOSED',
     pending: 'PENDING',
     draft: 'DRAFT',
+    rejected: 'REJECTED',
   }
 
   const handleDelete = (id: any) => {
@@ -33,7 +34,22 @@ export const InternshipProgressCard = (props: any) => {
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
+  const { EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
 
+  const handleUpdateStatus = (updateStatus: any) => {
+    const Obj = {
+      ...item,
+      status: updateStatus ? updateStatus : status
+    }
+    EditNewInternshipsData(Obj)
+    getAllInternshipsData(null, null, null)
+  }
+  const handleDeclineInternship = () => {
+    setDecline(false);
+    handleUpdateStatus('REJECTED')
+    getAllInternshipsData(null, null, null)
+    Notifications({ title: "Success", description: "Internship declined", type: "success" })
+  }
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -52,14 +68,7 @@ export const InternshipProgressCard = (props: any) => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              Notifications({
-                title: "Success",
-                description: "Internship Published",
-                type: 'success'
-              })
-            }}
-          >
+            onClick={() => handleUpdateStatus('PUBLISHED')}>
             Publish
           </a>
         ),
@@ -68,7 +77,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '3',
         label: (
           <a rel="noopener noreferrer"
-           onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`, { state: { data: item } }) }}>
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`, { state: { data: item } }) }}>
             Pipeline
           </a>
         ),
@@ -76,7 +85,10 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '4',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => {
+            handleUpdateStatus('CLOSED');
+            Notifications({ title: "Success", description: "Internship closed", type: "success" })
+          }}>
             Close
           </a>
         ),
@@ -138,12 +150,12 @@ export const InternshipProgressCard = (props: any) => {
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <JobTimeIcon />
-          <p className='capitalize'>{internType?.replace('_',' ').toLowerCase()}</p>
+          <p className='capitalize'>{internType?.replace('_', ' ').toLowerCase()}</p>
         </div>
-        <div className='flex flex-row gap-3 items-center'>
+        {location && <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
-          <p>{location}</p>
-        </div>
+          <p>{location ? location : '---'}</p>
+        </div>}
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />
           <p>{postedBy}</p>
@@ -193,6 +205,7 @@ export const InternshipProgressCard = (props: any) => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
+              onClick={handleDeclineInternship}
             >
               Decline
             </Button>

@@ -96,17 +96,17 @@ const Interns = () => {
     },
   ];
 
-  const newTableData = getAllInterns.map((item: any, index: number) => {
-    const joiningDate = dayjs(item.joiningDate).format('DD/MM/YYYY');
-    const dob = dayjs(item.userDetail?.DOB).format('DD/MM/YYYY');
+  const newTableData = getAllInterns?.map((item: any, index: number) => {
+    const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
     return (
       {
-        no: getAllInterns.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
           <Avatar size={50} src={item?.avatar}>
-            {item?.userDetail?.firstName.charAt(0)}{item?.userDetail?.lastName.charAt(0)}
+            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
           </Avatar>,
-        name: <p>{item.userDetail?.firstName} {item.userDetail?.lastName}</p>,
+        name: <p>{item?.userDetail?.firstName} {item?.userDetail?.lastName}</p>,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
@@ -145,18 +145,18 @@ const Interns = () => {
         <Col xs={24}>
           {isLoading ?
             !listandgrid ?
-              newTableData.length === 0 ? <NoDataFound /> : <div className="flex flex-row flex-wrap max-sm:flex-col">
+              newTableData?.length === 0 ? <NoDataFound /> : <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
                   newTableData.map((items: any, idx: any) => {
                     return (
                       <InternsCard
-                        statusBtn={items.status}
-                        name={items.name}
-                        posted_by={items.posted_by}
-                        title={items.title}
-                        department={items.department}
-                        joining_date={items.joining_date}
-                        date_of_birth={items.date_of_birth}
+                        statusBtn={items?.status}
+                        name={items?.name}
+                        posted_by={items?.posted_by}
+                        title={items?.title}
+                        department={items?.department}
+                        joining_date={items?.joining_date}
+                        date_of_birth={items?.date_of_birth}
                       />
                     )
                   })

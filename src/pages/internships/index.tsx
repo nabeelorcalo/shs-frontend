@@ -33,18 +33,20 @@ const Internships = () => {
     getAllLocationsData();
   }, [])
 
+  console.log('data',internshipData);
+  
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
 
   const PopOver = (props: any) => {
-    const { item } = props
-    console.log("my id is", item);
+    const { item } = props    
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item} })}>
+          <a rel="noopener noreferrer" onClick={() =>
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item } })}>
             View details
           </a>
         ),
@@ -114,42 +116,42 @@ const Internships = () => {
   ]
 
   const newTableData = internshipData.map((item: any, index: number) => {
-    const postingDate = dayjs(item.createdAt).format('DD/MM/YYYY');
-    const closingDate = dayjs(item.closingDate).format('DD/MM/YYYY');
+    const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
+    const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
     return (
       {
-        no: internshipData.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        title: item.title,
-        department: item.department.name,
+        no: internshipData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        title: item?.title,
+        department: item?.department?.name,
         posting_date: postingDate,
         closing_date: closingDate,
-        location: item.location ? item.location?.name : "___",
+        location: item?.location ? item.location?.name : "___",
         status:
           <Button
             size="small"
             className={
-              `${item.status === "PUBLISHED" ?
+              `${item?.status === "PUBLISHED" ?
                 `text-success-bg-color`
                 :
-                item.status === "PENDING" ?
+                item?.status === "PENDING" ?
                   `text-warning-bg-color`
                   :
-                  item.status === "CLOSED" ?
+                  item?.status === "CLOSED" ?
                     `text-info-bg-color`
                     :
-                    item.status === "REJECTED" ?
+                    item?.status === "REJECTED" ?
                       `text-error-bg-color`
-                      : item.status === "DRAFT" ?
+                      : item?.status === "DRAFT" ?
                         `text-secondary-bg-disabled-color` : `light-sky-blue-bg`
               }  
                 text-[#fff] status-btn`
             }
           >
-            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+            {item?.status?.charAt(0).toUpperCase() + item?.status?.slice(1)}
           </Button>,
-        posted_by: <Avatar
-          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        />,
+        posted_by: <Avatar size={50} src={item?.avatar}>
+          {item?.jobPoster?.firstName?.charAt(0)}{item?.jobPoster?.lastName?.charAt(0)}
+        </Avatar>,
         actions: <PopOver item={item} />
       }
     )

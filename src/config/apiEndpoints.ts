@@ -55,11 +55,15 @@ const endpoints = {
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   //comment
   GET_COMMENTS: '/comment/getComments',
-  ADD_COMMENT:`/comment/addComment`,
+  ADD_COMMENT: `/comment/addComment`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
+  //Applications for student
+  GET_APPLICATIONS: '/application/listApplications',
+  GET_COMPANY_MANAGERS_LIST: "/manager_manager/get-company-manager-list",
+  GET_ALL_UNIVERSITIES: "/university/findAll",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
 }
 export default endpoints;
