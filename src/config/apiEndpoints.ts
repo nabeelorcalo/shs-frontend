@@ -66,5 +66,6 @@ const endpoints = {
   GET_COMPANY_MANAGERS_LIST: "/manager_manager/get-company-manager-list",
   GET_ALL_UNIVERSITIES: "/university/findAll",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
+  GET_COMPANYADMIN_UNIVERSITES:"/university",
 }
 export default endpoints;

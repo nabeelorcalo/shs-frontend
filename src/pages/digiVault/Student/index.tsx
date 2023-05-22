@@ -115,6 +115,8 @@ const DigiVaultStudent = () => {
     delId: null
   })
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  console.log(getDigiVaultDashboard,"getDigiVaultDashboard");
+  
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
