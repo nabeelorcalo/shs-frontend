@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../Student/style.scss";
-import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
-import SettingModal from "../Student/settingModal";
+import {Col, Divider, Progress, Row, Menu } from "antd";
 import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
-import NewPasswordModal from "../Student/newPasswordModal";
 import {
   EducationImg,
   EducationImgSub,
@@ -19,18 +17,11 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  Gallery,
-  Doc,
-  Video,
-  File,
-  SettingIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "../Student/dropDownCustom";
 import { Alert } from "../../../components";
 import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
-
-
 
 const manageVaultArr = [
   {
@@ -85,37 +76,6 @@ const manageVaultArr = [
     subTitle: "Manage your others documents",
     path: "others",
     bgcolor: "#5D89F8",
-  },
-];
-
-const arraydata: any = [
-  {
-    icon: Gallery,
-    progressbarColor: "#4CA4FD",
-    progressbarValue: 30,
-    storage: "123GB",
-    title: "Media",
-  },
-  {
-    icon: Video,
-    progressbarColor: "#E96F7C",
-    progressbarValue: 60,
-    storage: "126GB",
-    title: "Video",
-  },
-  {
-    icon: Doc,
-    progressbarColor: "#FFC15D",
-    progressbarValue: 50,
-    storage: "28GB",
-    title: "Document",
-  },
-  {
-    icon: File,
-    progressbarColor: "#6AAD8E",
-    progressbarValue: 80,
-    storage: "128GB",
-    title: "Other Files",
   },
 ];
 
@@ -194,7 +154,7 @@ const DigiVaultIntern = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      render: (_: any, data: any) => <CustomDroupDown menu1={menu1} />,
+      render: (_: any) => <CustomDroupDown menu1={menu1} />,
     },
   ];
 

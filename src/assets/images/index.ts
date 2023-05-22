@@ -169,6 +169,8 @@ export { ReactComponent as TransWhiteSub } from "../images/digivault/manageVault
 export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
 export { default as Video } from "../images/ColorfullIconsProgressbar/video.svg";
 export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
+export {ReactComponent as FileIcon} from "../images/digivault/manageVault/document-icon.svg";
+export {ReactComponent as FolderIcon} from "../images/digivault/manageVault/folder-icon.svg";
 //export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
 
@@ -312,6 +314,10 @@ export { ReactComponent as EditIconinternships } from "../images/Internships/edi
 
 //System Admin Delegate Dashboard
 export { ReactComponent as People } from "../images/profile/propertyagent/people.svg";
+export { ReactComponent as Clip } from './profile/propertyagent/clip.svg';
+export { ReactComponent as Approved } from './profile/propertyagent/aproved.svg';
+export { ReactComponent as Pending } from './profile/propertyagent/uilcalender.svg';
+export { ReactComponent as Reject } from './profile/propertyagent/reject.svg';
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
 
 // Manager Dashboard
@@ -502,6 +508,7 @@ export { ReactComponent as LocationIconCm } from './ViewInternship/LocationIconC
 export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.svg';
 export { ReactComponent as SuccessStatus } from '../images/Internships/success-status.svg';
 export { ReactComponent as ClosedStatus } from '../images/Internships/closed-status.svg';
+export { ReactComponent as FullStop } from '../images/Internships/dot.svg';
 
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
@@ -643,4 +650,9 @@ export { default as DocImage } from '../../assets/images/documents/Document Card
 export { default as Frame } from '../../assets/images/documents/frame.svg';
 export { default as Pdf } from '../../assets/images/documents/pdf.svg';
 export { default as ArrowDoenIcon } from '../../assets/images/documents/Vector.svg';
-export {ReactComponent  as NoData} from '../../assets/images/other-imgs/NoData.svg'
+export { ReactComponent as NoData } from '../../assets/images/other-imgs/NoData.svg';
+
+// Personalization
+
+export { ReactComponent as OrcaloLogo } from './Personlization/orcalologo.svg';
+export { ReactComponent as EditPen } from './Personlization/editpen.svg';

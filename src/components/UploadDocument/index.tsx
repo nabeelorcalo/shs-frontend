@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { DocumentUpload } from "../../assets/images";
 import SelectedUploadCard from "../SelectedUploadCard";
 import './style.scss'
@@ -11,13 +11,14 @@ const UploadDocument = (props: any) => {
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
+    console.log(event);
+    
   }
 
   // const handleDropped = (event: any) => {
   //   event.preventDefault()
   //   setFiles(Array.from(event.dataTransfer.files))
   // }
-
   // console.log(files)
   return (
     <>
@@ -51,15 +52,15 @@ const UploadDocument = (props: any) => {
             ref={inputRef}
             multiple
             hidden
-            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }}
+            onChange={(event: any) => {setFiles({...files,files:Array.from(event.target.files)}) }}
           />
         </div>
       </div>
       {
-        files ?
+        files?.files ?
           <div className='flex flex-row flex-wrap'>
             {
-              files?.map((item: any, idx: any) => {
+              files?.files?.map((item: any, idx: any) => {
                 return (
                   <SelectedUploadCard
                     files={files}

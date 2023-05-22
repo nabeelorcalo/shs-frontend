@@ -41,8 +41,7 @@ const InternDocument = () => {
     }
 
   }
-  console.log(files, "files");
-
+  
   const items: any = [
     {
       label: <p className="text-base font-medium" onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
@@ -161,7 +160,7 @@ const InternDocument = () => {
           >
             Cancel
           </Button>,
-          <Button
+          <Button 
             className="teriary-bg-color font-semibold text-base upload-button white-color intern-upload-button"
             onClick={() => { setUploadModel(false); handleDropped }}
           >

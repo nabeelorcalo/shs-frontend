@@ -6,10 +6,9 @@ import "./style.scss";
 import UnlockVault from "./unlockVaultModal/unlockVault";
 
 const NewPasswordModal = (props: any) => {
-  const { isModal, setIsModal, settingModal, setIsEnablePassword } = props;
-  const { postDigivaultPassword, studentVault }: any = useCustomHook();
+  const { isModal, setIsModal, settingModal } = props;
+  const { postDigivaultPassword }: any = useCustomHook();
   const [unlockVaultModal, setUnlockVaultModal] = useState(false)
-  const [showUnlockModal, setShowUnlockModal] = useState(false);
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;
@@ -17,13 +16,12 @@ const NewPasswordModal = (props: any) => {
     postDigivaultPassword(values);
     values()
   };
-  const onChange = (checked: boolean) => {
-    setIsModal(checked && true);
-    setIsEnablePassword(checked)
-  }
+  // const onChange = (checked: boolean) => {
+  //   setIsModal(checked && true);
+  //   setIsEnablePassword(checked)
+  // }
   return (
     <div>
-      <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} />
       <Modal
         open={isModal}
         onCancel={() => setIsModal(false)}
@@ -79,7 +77,6 @@ const NewPasswordModal = (props: any) => {
           </div>
         </Form>
       </Modal>
-      <Button onClick={() => setUnlockVaultModal(true)}>click me</Button>
       <UnlockVault setUnlockVaultModal={setUnlockVaultModal} unlockVaultModal={unlockVaultModal} />
     </div>
   );

@@ -8,20 +8,36 @@ import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
 import { internsDataState } from '../../../store/interns/index';
+import { settingDepartmentState, universityDataState } from "../../../store";
+import { managersState } from "../../../store";
+import { cadidatesListState } from "../../../store/candidates";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS } = apiEndpints
+  const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
+    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
+    UPDATE_CANDIDATE_DETAIL } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
-  const[isLoading,setIsLoading] =useState(false);
+  const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
+  const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
+  const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
+  const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState)
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     debouncedResults.cancel();
   });
 
   // Get all interns data
-  const getAllInternsData = async (event:any) => {
-    const { data } = await api.get(GET_ALL_INTERNS, { companyId: 1, userType: 'intern' ,InternStatus: event ? event : null})
+  const getAllInternsData = async (event: any) => {
+    const { data } = await api.get(GET_ALL_INTERNS,
+      {
+        userType: 'intern',
+        InternStatus: event.status ?? null,
+        departmentId: event.department ?? null,
+        assignedManager: event.manager ?? null,
+        userUniversityId: event.university ?? null,
+      })
     setGetAllInters(data);
     setIsLoading(true);
   }
@@ -31,14 +47,39 @@ const useCustomHook = () => {
     const { data } = await api.get(
       GET_ALL_INTERNS,
       val
-        ? { companyId: 1, userType: 'intern', search: val }
-        : { companyId: 1, userType: 'intern' }
+        ? { userType: 'intern', search: val }
+        : { userType: 'intern' }
     );
     setGetAllInters(data);
   };
   const debouncedResults = useMemo(() => {
     return debounce(changeHandler, 500);
   }, []);
+
+  //Get all department data
+  const getAllDepartmentData = async () => {
+    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
+    setDepartmentsData(data)
+  };
+
+  // Get all Managers
+  const getAllManagersData = async () => {
+    const { data } = await api.get(GET_COMPANY_MANAGERS_LIST)
+    setGetAllManagers(data);
+  }
+
+  //Get all universities data
+  const getAllUniuversitiesData = async (val: any) => {
+    const { data } = await api.get(GET_ALL_UNIVERSITIES, { page: 1, limit: 100, });
+    setGetAllUniversities(data)
+  };
+
+  // update candidate data 
+  const updateCandidatesRecords = async (val: any) => {
+    const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
+    setUpdateInterns(data);
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -56,8 +97,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, title, department, joining_date, date_of_birth }: any) =>
-      [no, title, department, joining_date, date_of_birth]
+    const body = data.map(({ no, posted_by, name, department, joining_date, date_of_birth, status }: any) =>
+      [no, posted_by, name, department, joining_date, date_of_birth, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -107,10 +148,18 @@ const useCustomHook = () => {
   };
 
   return {
+    getAllDepartmentData,
     downloadPdfOrCsv,
     getAllInternsData,
     changeHandler,
+    getAllManagersData,
+    getAllUniuversitiesData,
+    updateCandidatesRecords,
+    updateInterns,
+    getAllUniversities,
+    getAllManagers,
     getAllInters,
+    departmentsData,
     isLoading
   };
 };

@@ -12,6 +12,8 @@ const useCustomHook = () => {
   const login = async (body: any): Promise<any> => {
     const { data } = await api.post(LOGIN, body);
     localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem("cognitoId", data?.user?.cognitoId)
     setCurrentUser(data.user);
     return data;
   };

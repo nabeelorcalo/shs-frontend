@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from "antd";
-// import all reusable componets from component/index.ts
+import dayjs from 'dayjs';
 import {
   PageHeader,
   SearchBar,
@@ -12,9 +13,8 @@ import {
   Breadcrumb,
   Notifications,
   BoxWrapper,
+  Drawer
 } from "../../../components";
-import Drawer from "../../../components/Drawer";
-// end
 import {
   DownlaodFileIcon,
   GlassMagnifier,
@@ -25,46 +25,61 @@ import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { AppreciationModal } from "./appreciationModal";
 import { WarnModal } from "./warnModel";
-import useCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
-import { currentUserRoleState } from "../../../store";
-import { useRecoilValue } from "recoil";
+import { currentUserRoleState, allPerformanceState } from "../../../store";
 
 const PerformanceHistory = () => {
+  const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
+  const id = 1;
+  const limit = 10;
+
+  const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+
   const historyBreadCrumb = [
     { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
-  const id = 1;
-  const action = useCustomHook();
 
   const columnNames = [
     {
       title: "No.",
       key: "no",
-      render: (_: any, data: any) => (
+      render: (_: any, data: any, index: any) => (
         role !== constants.COMPANY_ADMIN ? <Link
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
-          {data.no}
-        </Link> : data.no
+          {index + 1}
+        </Link> : index + 1
       ),
     },
     {
       title: "Avatar",
       key: "avatar",
       render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ? <Space size="middle">
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-          >
-            <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
-          </Link>
-        </Space> : <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
+        role !== constants.COMPANY_ADMIN ?
+          <Space size="middle">
+            <Link
+              className="bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+            >
+              <Avatar
+                size={32}
+                alt="avatar"
+                src={<img src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />}
+              />
+              {/* <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} /> */}
+            </Link>
+          </Space> :
+          <Avatar
+            size={32}
+            alt="avatar"
+            src={<img src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />}
+          />
+        // <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
       ),
     },
     {
@@ -75,8 +90,8 @@ const PerformanceHistory = () => {
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
-          {data.name}
-        </Link> : data.name
+          {data.userName}
+        </Link> : data.userName
       ),
     },
     {
@@ -99,8 +114,8 @@ const PerformanceHistory = () => {
           className="bread-crumb"
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
         >
-          {data.date}
-        </Link> : data.date
+          {dayjs(data.lastEvaluationDate).format('DD/MM/YYYY')}
+        </Link> : dayjs(data.lastEvaluationDate).format('DD/MM/YYYY')
       ),
     },
     {
@@ -131,6 +146,8 @@ const PerformanceHistory = () => {
       title: "Overall Performance",
       key: "overallPerformance",
       render: (_: any, data: any) => {
+        let val = Math.round(data.sumOverallRating);
+
         return (
           <Space size="middle">
             <Link
@@ -139,18 +156,22 @@ const PerformanceHistory = () => {
             >
               <Progress
                 size={[200, 13]}
-                percent={data.performance}
-                strokeColor={data.performance < 50 ? "#E95060" : "#4A9D77"}
-                format={(percent: any) => (
-                  <p
-                    className={
-                      "myClass font-normal " +
-                      (percent < 50 ? "secondary-color" : "teriary-color")
-                    }
-                  >
-                    {percent}%
-                  </p>
-                )}
+                percent={val}
+                strokeColor={val < 50 ? "#E95060" : "#4A9D77"}
+                format={(percent: any) => {
+                  let val = Math.round(percent);
+
+                  return (
+                    <p
+                      className={
+                        "myClass font-normal " +
+                        (val < 50 ? "secondary-color" : "teriary-color")
+                      }
+                    >
+                      {val}%
+                    </p>
+                  )
+                }}
               />
               {data.isBadge ? <TalentBadge /> : ""}
             </Link>
@@ -290,6 +311,7 @@ const PerformanceHistory = () => {
     "Product Manager",
     "Developer",
   ];
+
   let items: MenuProps["items"] = [
     {
       label: (
@@ -347,6 +369,7 @@ const PerformanceHistory = () => {
       key: "3",
     },
   ];
+
   if (role === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -3)
   }
@@ -358,7 +381,13 @@ const PerformanceHistory = () => {
     evaluatedByVal: "Select",
     openAprreciationModal: false,
     openWarnModal: false,
+    page: 1,
   });
+
+  useEffect(() => {
+    const params = { page: state.page, limit: limit };
+    action.getData(params);
+  }, [state.page])
 
   const handleSidebarClick = () => {
     setState((prevState) => ({
@@ -501,7 +530,7 @@ const PerformanceHistory = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={columnNames} tableData={evaluationHistoryData} pagination={true} />
+            <GlobalTable columns={columnNames} tableData={allPerformance} pagination={true} />
           </BoxWrapper>
         </Col>
       </Row>

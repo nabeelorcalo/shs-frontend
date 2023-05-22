@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Divider, Dropdown, Form, Menu, Modal, Row, Space, Input } from "antd";
 import { SearchBar, Alert } from "../../../../components";
-import { Upload } from "../../../../assets/images";
+import { FolderIcon, FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
@@ -10,64 +10,80 @@ import CustomDropDown from "../dropDownCustom";
 import "./style.scss";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const ManageVault = () => {
-  const [isState, setState] = useState({
+  const [isState, setState] = useState<any>({
     isOpenModal: false,
     isVisible: false,
     uploadFolder: false,
     uploadFile: false,
     isOpenDelModal: false,
     DelModalId: null,
+    files: [],
     fileName: '',
   });
-  const [files, setFiles] = useState<any>([])
+  // const [files, setFiles] = useState<any>([])
   const [form] = Form.useForm();
-  const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  const {
+    postCreateFolderFile,
+    getDigiVaultDashboard,
+    studentVault,
+    deleteFolderFile,
+    SearchFolderContent
+  }: any = useCustomHook();
   const { state } = useLocation();
   const stateData = state.toLowerCase();
+  const router = useNavigate();
+  const location = useLocation();
+  const titleName = location.pathname.split("/");
 
   useEffect(() => {
-    getDigiVaultDashboard(null)
+    getDigiVaultDashboard()
   }, [])
 
   const handleDropped = (event: any) => {
     event.preventDefault()
-    setFiles(Array.from(event.dataTransfer.files))
+    setState((prevState: any) => ({
+      ...prevState,
+      files: Array.from(event.dataTransfer.files)
+    }))
   }
-  if (files[0] && files[0].type === 'application/pdf') {
-    console.log('pdf')
-  } else {
-    console.log('png')
-  }
-
-  const menu2 = (id: any) => (
-    <Menu>
-      <Menu.Item key="1">View</Menu.Item>
+  const menu2 = (val: any) => {
+    return <Menu>
+      {val.mode === 'folder' && <Menu.Item
+        key="1"
+        onClick={() => router(
+          `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+          { state: { folderId: val.id, title: stateData } })}>
+        View</Menu.Item>}
       <Menu.Item
         key="2"
         onClick={() => {
           setState((prevState: any) => ({
             ...prevState,
             isOpenDelModal: true,
-            DelModalId: id
+            DelModalId: val.id
           }));
         }}
       >
         Delete
       </Menu.Item>
     </Menu>
-  );
+  };
   const newTableData = studentVault?.dashboardFolders[stateData]?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
       {
         key: index,
-        Title: item.title,
+        Title: <p>
+          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span className="ml-2">{item.title}</span>
+        </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size : '---',
+        size: item.size ? item.size + ' KB' : '---',
         action: <Space size="middle">
-          <CustomDropDown menu1={menu2(item.id)} />
+          <CustomDropDown menu1={menu2(item)} />
         </Space>
       }
     )
@@ -101,39 +117,6 @@ const ManageVault = () => {
     // console.log("log");
   };
 
-  const menu1 = (
-    <Menu>
-      <Menu.Item
-        onClick={() => {
-          setState((prevState: any) => ({
-            ...prevState,
-            uploadFile: true,
-            isVisible: false
-          }));
-        }}
-        key="1"
-      >
-        Upload files
-      </Menu.Item>
-      <Menu.Item
-        onClick={() => {
-          setState((prevState) => ({
-            ...prevState,
-            uploadFolder: true,
-            isVisible: false
-          }));
-        }}
-        key="2"
-      >
-        Upload folder
-      </Menu.Item>
-    </Menu>
-  );
-
-  const router = useNavigate();
-  const location = useLocation();
-
-  const titleName = location.pathname.split("/");
   const onFinish = (values: any) => {
     values.root = state;
     postCreateFolderFile(values);
@@ -150,18 +133,23 @@ const ManageVault = () => {
       isOpenModal: false,
     }));
   }
+
   const upLoadModalHandler = () => {
-    const sendFile = {
-      root: stateData,
-      name: files[0].name,
-      size: files[0].size
-    }
-    postCreateFolderFile(sendFile)
+    console.log(stateData, isState);
+    isState?.files?.map((item: any) => {
+      const sendFile = {
+        root: stateData,
+        name: item?.name,
+        size: item?.size
+      }
+      console.log(sendFile);
+
+      return postCreateFolderFile(sendFile)
+    })
     setState((prevState: any) => ({
       ...prevState,
       uploadFile: false,
-      uploadFolder: false,
-      fileName: files[0]?.name
+      files: []
     }));
   }
 
@@ -196,7 +184,7 @@ const ManageVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={handleChange} />
+              <SearchBar size="middle" handleChange={(e: any) => SearchFolderContent(stateData, e)} />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div>
@@ -210,26 +198,21 @@ const ManageVault = () => {
                 </Button>
               </div>
               <div className="div">
-                <Dropdown
-                  overlay={menu1}
-                  visible={isState.isVisible}
-                  onVisibleChange={() => setState((prevState: any) => ({
+                <Button className="manage-vault-btn flex items-center justify-center" onClick={() =>
+                  setState((prevState: any) => ({
                     ...prevState,
-                    isVisible: true
+                    uploadFile: true,
                   }))}
-                  trigger={["click"]}
                 >
-                  <Button className="manage-vault-btn flex items-center justify-center">
-                    <Space>
-                      <img
-                        className="flex items-center"
-                        src={Upload}
-                        alt="fileIcon"
-                      />
-                      <span>Upload</span>
-                    </Space>
-                  </Button>
-                </Dropdown>
+                  <Space>
+                    <img
+                      className="flex items-center"
+                      src={Upload}
+                      alt="fileIcon"
+                    />
+                    <span>Upload</span>
+                  </Space>
+                </Button>
               </div>
             </Col>
             <Col xs={24}>
@@ -257,7 +240,7 @@ const ManageVault = () => {
             onFinish={onFinish}
             initialValues={{ remember: false }}
           >
-            <Form.Item name="name" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
+            <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
               <Input className="input" placeholder="Enter folder Name" type="text" />
             </Form.Item>
             <div className="d-flex justify-end items-center">
@@ -308,40 +291,7 @@ const ManageVault = () => {
           </Button>,
         ]}
       >
-        <UploadDocument handleDropped={handleDropped} setFiles={setFiles} files={files} />
-      </Modal>
-
-      <Modal
-        className="folders-modal"
-        centered
-        title="Upoad Folder"
-        open={isState.uploadFolder}
-        onCancel={() => {
-          setState((prevState: any) => ({
-            ...prevState,
-            uploadFolder: false
-          }));
-        }}
-        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
-        footer={[
-          <Button
-            className="cancel-btn"
-            onClick={modalHandler}
-            key="Cancel"
-          >
-            Cancel
-          </Button>,
-
-          <Button
-            className="submit-btn"
-            onClick={upLoadModalHandler}
-            key="Upload"
-          >
-            Upload
-          </Button>,
-        ]}
-      >
-        <UploadDocument handleDropped={handleDropped} setFiles={setFiles} files={files} />
+        <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
       </Modal>
     </div >
   );

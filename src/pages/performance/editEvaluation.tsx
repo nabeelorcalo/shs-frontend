@@ -30,11 +30,13 @@ import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
   const action = useCustomHook();
+  
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
+
   const user = {
     name: 'Calvin Grayson',
     profession: 'Manager',
@@ -43,6 +45,12 @@ const ViewPerformance = () => {
     discipline: '61',
     personal: '92',
   };
+
+  const detailedCards = [
+    { id: 0, title: 'Learning Objectives', progressColor: '#9BD5E8' },
+    { id: 1, title: 'Discipline', progressColor: '#E96F7C' },
+    { id: 2, title: 'Personal', progressColor: '#6AAD8E' },
+  ];
 
   const emojiData = [
     {
@@ -67,55 +75,76 @@ const ViewPerformance = () => {
     },
   ];
 
+  const data = [
+    // {
+    //   id: 0,
+    //   name: "Learning Objectives",
+    //   values: [
+    //     { id: 0, title: "Works to full potential", value: 0 },
+    //     { id: 1, title: "Quality of work", value: 1 },
+    //     { id: 2, title: "Work Consistency", value: 2 },
+    //     { id: 3, title: "Independency in work", value: 3 },
+    //     { id: 4, title: "Business skills", value: 4 },
+    //     { id: 5, title: "Technical skills", value: 5 },
+    //   ]
+    // },
+    {
+      id: 1,
+      name: "Discipline",
+      values: [
+        { id: 6, title: "Punctuality", value: 1 },
+        { id: 7, title: "Attendance", value: 3 },
+        { id: 8, title: "Coworker relationship", value: 2 },
+        { id: 9, title: "Team work", value: 0 }
+      ]
+    },
+    // {
+    //   id: 2,
+    //   name: "Personal",
+    //   values: [
+    //     { id: 10, title: "Creativity", value: 1 },
+    //     { id: 11, title: "Honesty", value: 2 },
+    //     { id: 12, title: "Integrity", value: 4 },
+    //     { id: 13, title: "Communication skills", value: 1 },
+    //     { id: 14, title: "Task Initiatives", value: 3 }
+    //   ]
+    // },
+  ]
+
   const [state, setState] = useState({
-    data: [
-      {
-        id: 1,
-        name: "Learning Objectives",
-        values: [
-          { title: "Works to full potential", value: 1 },
-          { title: "Quality of work", value: 2 },
-          { title: "Work Consistency", value: 3 },
-          { title: "Independency in work", value: 4 },
-          { title: "Business skills", value: 2 },
-          { title: "Technical skills", value: 3 },
-        ]
-      },
-      {
-        id: 2,
-        name: "Discipline",
-        values: [
-          { title: "Punctuality", value: 4 },
-          { title: "Attendance", value: 3 },
-          { title: "Coworker relationship", value: 2 },
-          { title: "Team work", value: 1 }
-        ]
-      },
-      {
-        id: 3,
-        name: "Personal",
-        values: [
-          { title: "Creativity", value: 1 },
-          { title: "Honesty", value: 2 },
-          { title: "Integrity", value: 4 },
-          { title: "Communication skills", value: 1 },
-          { title: "Task Initiatives", value: 3 }
-        ]
-      },
-    ]
+    data: data,
   });
+
+  const emojiClick = (e: any) => {
+    const newData = [...data];
+    const classList = e.currentTarget.classList;
+    let lastClassName = classList[classList.length - 1];
+    let [cardIndex, performanceId, val] = lastClassName.split("_");
+
+    const performanceIndex = newData[cardIndex].values.findIndex(item =>
+      item.id === parseInt(performanceId)
+    );
+
+    const updatedValueItem = {
+      ...newData[cardIndex].values[performanceIndex],
+      value: val,
+    };
+
+    newData[cardIndex].values[performanceIndex] = updatedValueItem;
+
+    console.log(JSON.stringify(newData, null, 4));
+
+    // setState({data: newData});
+  }
+
   const onSaveClick = () => {
     alert("Save");
   }
+
   const onCancelClick = () => {
     alert("Cancel");
   }
 
-  const detailedCards = [
-    { id: 1, title: 'Learning Objectives', progressColor: '#9BD5E8' },
-    { id: 2, title: 'Discipline', progressColor: '#E96F7C' },
-    { id: 3, title: 'Personal', progressColor: '#6AAD8E' },
-  ]
   return (
     <div className="view-evaluation">
       <PageHeader
@@ -163,7 +192,7 @@ const ViewPerformance = () => {
           ))}
         </Row>
         {
-          state.data.map((obj: any) => {
+          state.data.map((obj: any, index: number) => {
             return (
               <Row gutter={[20, 10]} key={obj.id}>
                 <Col xs={24}>
@@ -177,10 +206,12 @@ const ViewPerformance = () => {
                   <Col xs={24} xl={12} xxl={8} key={child.value}>
                     <div key={child.title}>
                       <EmojiMoodRating
+                        id={`${index}_${child.id}`}
                         size={5}
                         data={emojiData}
                         title={child.title}
                         activeIconIndex={child.value}
+                        onClick={emojiClick}
                       />
                     </div>
                   </Col>

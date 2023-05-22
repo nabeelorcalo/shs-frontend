@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound
 } from "../../../components";
 import { TextArea } from "../../../components";
-import { AlertIcon, CardViewIcon, More, SuccessIcon, TableViewIcon, } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select } from 'antd';
+import {
+  AlertIcon, CardViewIcon, More, SuccessIcon,
+  TableViewIcon, UserAvatar, ArrowDownDark
+} from "../../../assets/images"
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select, Space, Input } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
+import SelectComp from "../../../components/Select/Select";
+import '../style.scss'
+
+
 
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
@@ -23,44 +30,27 @@ const InternsCompanyAdmin = () => {
     dateOfJoining: undefined
   })
 
-  const managerList = [
-    { value: 'David', label: 'David miller' },
-    { value: 'Amila', label: 'Amila Clark' },
-    { value: 'Mino', label: 'Mino Marino' },
-    { value: 'Maria', label: 'Maria sanaid' },
-  ]
   const statusList = [
     { value: 'Employed', label: 'Employed' },
     { value: 'Completed', label: 'Completed' },
     { value: 'Terminated', label: 'Terminated' },
     { value: 'All', label: 'All' },
   ]
-  const departmentsList = [
-    { value: 'Business analyst', label: 'Business analyst' },
-    { value: 'Research analyst', label: 'Research analyst' },
-    { value: 'Accountant', label: 'Accountant' },
-    { value: 'Administrator', label: 'Administrator' },
-    { value: 'HR Cordinator', label: 'HR Cordinator' },
-    { value: 'All', label: 'All' },
-  ]
-  const universityList = [
-    { value: 'Power source', label: 'Power source' },
-    { value: 'Dev spot', label: 'Dev spot' },
-    { value: 'Abacus', label: 'Abacus' },
-    { value: 'Orcalo Holdings', label: 'Orcalo Holdings' },
-    { value: 'Coding Hub', label: 'Coding Hub' },
-    { value: 'All', label: 'All' },
-  ]
 
   const { getAllInternsData, getAllInters,
-    changeHandler, downloadPdfOrCsv, isLoading } = useCustomHook()
+    changeHandler, downloadPdfOrCsv, isLoading,
+    getAllDepartmentData, departmentsData,
+    getAllManagersData, getAllManagers,
+    getAllUniuversitiesData, getAllUniversities,
+    updateInterns, updateCandidatesRecords }: any = useCustomHook()
+
 
   useEffect(() => {
-    getAllInternsData(state.status)
+    getAllInternsData(state);
+    getAllDepartmentData();
+    getAllManagersData();
+    getAllUniuversitiesData();
   }, [])
-
-
-  const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -70,14 +60,15 @@ const InternsCompanyAdmin = () => {
     }
     return (
       <p>
-        <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
+        <span className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]}`} >
           {props.status}
         </span>
       </p>
     )
   }
 
-  const PopOver = () => {
+  const PopOver = (props: any) => {
+    const { item } = props
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -86,6 +77,7 @@ const InternsCompanyAdmin = () => {
             rel="noopener noreferrer"
             onClick={() => {
               setAssignManager(true)
+              console.log("popover data", item)
             }}
           >
             Assign Manager
@@ -174,20 +166,21 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
-  const newTableData = getAllInters.map((item: any, index: any) => {
-    const joiningDate = dayjs(item.joiningDate).format('DD/MM/YYYY');
-    const dob = dayjs(item.userDetail?.DOB).format('DD/MM/YYYY');
+  const newTableData: any = getAllInters?.map((item: any, index: any) => {
+    const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
     return (
       {
-        no: getAllInters.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by:
-          <Avatar src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} />,
-        name: <p>{item.userDetail?.firstName} {item.userDetail?.lastName}</p>,
+        no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        posted_by: <Avatar size={50} src={item?.avatar}>
+          {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+        </Avatar>,
+        name: <p>{item?.userDetail?.firstName} {item?.userDetail?.lastName}</p>,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
-        status: <ButtonStatus status={item.internStatus} />,
-        actions: <PopOver />
+        status: <ButtonStatus status={item?.internStatus} />,
+        actions: <PopOver item={item} />
       }
     )
   })
@@ -220,15 +213,15 @@ const InternsCompanyAdmin = () => {
     }))
   }
 
-  const updateDateOfJoining = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      dateOfJoining: event
-    }))
-  }
+  // const updateDateOfJoining = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     dateOfJoining: event
+  //   }))
+  // }
 
   const handleApplyFilter = () => {
-    getAllInternsData(state.status);
+    getAllInternsData(state);
     setShowDrawer(false)
   }
 
@@ -241,6 +234,12 @@ const InternsCompanyAdmin = () => {
       department: undefined,
       dateOfJoining: undefined
     }))
+  }
+  const { Option } = Select;
+
+
+  const handleSearch = (value: any) => {
+    console.log('Search:', value);
   }
 
   return (
@@ -270,41 +269,77 @@ const InternsCompanyAdmin = () => {
                 <div className="flex flex-col gap-2">
                   <label>Manager</label>
                   <Select
+                    suffixIcon={<ArrowDownDark />}
+                    // showSearch
+                    style={{ width: '100%' }}
                     placeholder="Select"
                     value={state.manager}
-                    onChange={(event: any) => { updateManager(event) }}
-                    options={managerList}
-                  />
+                    onChange={(event: any) => {
+                      updateManager(event);
+                    }}
+                    // optionFilterProp="children"
+                    // onSearch={handleSearch}
+                    // filterOption={(input: any, option: any) =>
+                    //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                    // }
+                    dropdownRender={(menu) => (
+                      <div>
+                        <div style={{ padding: '8px', borderBottom: '1px solid #f0f0f0' }}>
+                          <Input
+                            placeholder="Search"
+                            onPressEnter={(e: any) => handleSearch(e.target.value)}
+                          />
+                        </div>
+                        {menu}
+                      </div>
+                    )}
+                  >
+                    {getAllManagers.map((item: any) => {
+                      return <Option value={item?.id}>
+                        <Space>
+                          <img src={UserAvatar} alt="avatar" />
+                          {`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}
+                        </Space>
+                      </Option>
+                    })}
+                  </Select>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label>Status</label>
-                  <Select
-                    placeholder="Select"
-                    value={state.status}
-                    onChange={(event: any) => { updateStatus(event) }}
-                    options={statusList}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label>Department</label>
-                  <Select
-                    placeholder="Select"
-                    value={state.department}
-                    onChange={(event: any) => { updateDepartment(event) }}
-                    options={departmentsList}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label>University</label>
-                  <Select
-                    placeholder="Select"
-                    value={state.university}
-                    onChange={(event: any) => { updateUniversity(event) }}
-                    options={universityList}
-                  />
-                </div>
+                <SelectComp
+                  label="Status"
+                  placeholder='Select'
+                  value={state.status}
+                  onChange={(event: any) => { updateStatus(event) }}
+                  options={statusList}
+                />
+                <SelectComp
+                  label="Department"
+                  placeholder='Select'
+                  value={state.department}
+                  onChange={(event: any) => { updateDepartment(event) }}
+                  options={departmentsData?.map((item: any) => {
+                    return { value: item?.id, label: item?.name }
+                  })}
+                />
+                <SelectComp
+                  label="University"
+                  placeholder='Select'
+                  value={state.university}
+                  onChange={(event: any) => { updateUniversity(event) }}
+                  options={getAllUniversities?.map((item: any) => {
+                    return { value: item?.university?.id, label: item?.university?.name }
+                  })}
+                />
                 <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
+                  <DropDown
+                    name="Select"
+                    options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                    showDatePickerOnVal={"Date Range"}
+                    // value={timeFrame}
+                    // setValue={handleTimeFrameFilter}
+                    requireRangePicker
+                  />
+                  {/* <label>Joining Date</label>
                   <DropDown
                     name="status"
                     options={[
@@ -317,7 +352,7 @@ const InternsCompanyAdmin = () => {
                     ]}
                     setValue={(event: any) => { updateDateOfJoining(event) }}
                     value={state.dateOfJoining}
-                  />
+                  /> */}
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -355,7 +390,7 @@ const InternsCompanyAdmin = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns")
+                downloadPdfOrCsv(event, columns, newTableData, "Company Admin Interns")
               }}
             />
           </div>
@@ -365,27 +400,29 @@ const InternsCompanyAdmin = () => {
             {newTableData.length < 10 ? `0${newTableData.length}` : newTableData.length}
           </p>
           {isLoading ?
-            listandgrid ? <BoxWrapper>
-              <GlobalTable columns={columns} tableData={newTableData} />
-            </BoxWrapper> :
-              <div className="flex flex-row flex-wrap max-sm:flex-col">
-                {
-                  newTableData?.map((item: any,) => {
-                    return (
-                      <InternsCard
-                        pupover={<PopOver />}
-                        status={item.status}
-                        name={item.name}
-                        posted_by={item.posted_by}
-                        title={item.title}
-                        department={item.department}
-                        joining_date={item.joining_date}
-                        date_of_birth={item.date_of_birth}
-                      />
-                    )
-                  })
-                }
-              </div>
+            listandgrid ?
+              <BoxWrapper>
+                <GlobalTable columns={columns} tableData={newTableData} />
+              </BoxWrapper> :
+              newTableData.length === 0 ? <NoDataFound />
+                : <div className="flex flex-row flex-wrap max-sm:flex-col">
+                  {
+                    newTableData?.map((item: any,) => {
+                      return (
+                        <InternsCard
+                          pupover={<PopOver item={item} />}
+                          status={item?.status}
+                          name={item?.name}
+                          posted_by={item?.posted_by}
+                          title={item?.title}
+                          department={item?.department}
+                          joining_date={item?.joining_date}
+                          date_of_birth={item?.date_of_birth}
+                        />
+                      )
+                    })
+                  }
+                </div>
 
             : <Spin tip="Processing...." />}
         </Col>
@@ -398,20 +435,56 @@ const InternsCompanyAdmin = () => {
         title="Assign Manager"
         children={
           <div className="flex flex-col gap-2">
-            <p>Manager</p>
-            <DropDown
-              name="Select"
-              options={[
-                "Maria Sanoid",
-                "Jenate Samson",
-                "Alen Juliet",
-              ]}
-              setValue={() => { updateManager(event) }}
-              showDatePickerOnVal="custom"
-              startIcon=""
+            <label>Manager</label>
+            <Select
+              suffixIcon={<ArrowDownDark />}
+              style={{ width: '100%' }}
+              placeholder="Select"
               value={state.manager}
-            />
+              onChange={(event: any) => {
+                updateManager(event);
+              }}
+              // optionFilterProp="children"
+              // onSearch={handleSearch}
+              // filterOption={(input: any, option: any) =>
+              //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              // }
+              dropdownRender={(menu) => (
+                <div>
+                  <div style={{ padding: '8px', borderBottom: '1px solid #f0f0f0' }}>
+                    <Input
+                      placeholder="Search"
+                      onPressEnter={(e: any) => handleSearch(e.target.value)}
+                    />
+                  </div>
+                  {menu}
+                </div>
+              )}
+            >
+              {getAllManagers.map((item: any) => {
+                return <Option value={item?.id}>
+                  <Space>
+                    <img src={UserAvatar} alt="avatar" />
+                    {`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}
+                  </Space>
+                </Option>
+              })}
+            </Select>
           </div>
+          // <div className="flex flex-col gap-2">
+          //   <SelectComp
+          //     label="Manager"
+          //     placeholder='Select'
+          //     value={state.status}
+          //     onChange={(event: any) => { updateStatus(event) }}
+          //     options={getAllManagers?.map((item: any) => {
+          //       return {
+          //         value: item?.id,
+          //         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
+          //       }
+          //     })}
+          //   />
+          // </div>
         }
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
@@ -424,6 +497,9 @@ const InternsCompanyAdmin = () => {
               Cancel
             </Button>
             <Button
+              onClick={(id: any) => {
+                updateCandidatesRecords();
+              }}
               type="default"
               size="middle"
               className="button-tertiary max-sm:w-full"

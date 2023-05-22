@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Divider, Progress, Row, Menu, Alert as Alerts } from "antd";
+import { Col, Divider, Progress, Row, Menu, Space } from "antd";
 import { GlobalTable, Notifications } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
@@ -16,12 +16,15 @@ import {
   GovImg,
   GovImgSub,
   Other,
+  FileIcon,
+  FolderIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "./dropDownCustom";
 import { Alert } from "../../../components";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 import DigiVaultModals from "./Modals";
+import dayjs from "dayjs";
 
 const manageVaultArr = [
   {
@@ -78,6 +81,7 @@ const manageVaultArr = [
     bgcolor: "#5D89F8",
   },
 ];
+
 const tableData = [
   {
     id: "1",
@@ -107,43 +111,38 @@ const tableData = [
 
 const DigiVaultStudent = () => {
   const [state, setState] = useState({
-    isDeleteModal: false,
-    isEnablePassowrd: false
+    isToggle: false,
+    delId: null
   })
-  // const [showDelete, setShowDelete] = useState(false);
-  const [isEnablePassowrd, setIsEnablePassword] = useState(false);
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard(isEnablePassowrd)
+    getDigiVaultDashboard()
   }, [])
 
   if (studentVault === undefined) {
     Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
   }
-  // if (studentVault === undefined) {
-  //   alert('hello')
-  // }
-  const menu1 = (
-    <Menu>
-      <Menu.Item key="1">View</Menu.Item>
+
+  const navigate = useNavigate();
+
+  const menu1 = (id: any) => {
+    return <Menu>
       <Menu.Item
         key="2"
         onClick={() => {
-          setState((prevState: any) => ({
-            ...prevState,
-            isDeleteModal: true
-          }))
+          setState(
+            {
+              isToggle: true,
+              delId: id
+            })
         }}
       >
         Delete
       </Menu.Item>
     </Menu>
-  );
-
-  const navigate = useNavigate();
-
+  }
   const columns = [
     {
       title: "Title",
@@ -166,19 +165,36 @@ const DigiVaultStudent = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      render: (_: any, data: any) => <CustomDroupDown menu1={menu1} />,
     },
   ];
+  const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
+    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+    return (
+      {
+        key: index,
+        Title: <p>
+          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span className="ml-2">{item.title}</span>
+        </p>,
+        datemodified: modifiedDate,
+        size: item.size ? item.size : '---',
+        Action: <Space size="middle">
+          <CustomDroupDown menu1={menu1(item.id)} />
+        </Space>
+      }
+    )
+  })
 
   return (
     <div className="digivault">
       <Alert
-        state={state.isDeleteModal}
+        state={state.isToggle}
         setState={setState}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
+        okBtnFunc={() => deleteFolderFile(state.delId)}
       />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -189,7 +205,7 @@ const DigiVaultStudent = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals setIsEnablePassword={setIsEnablePassword} />
+            <DigiVaultModals />
           </div>
         </Col>
       </Row>
@@ -251,7 +267,7 @@ const DigiVaultStudent = () => {
               <GlobalTable
                 pagination={false}
                 columns={columns}
-                tableData={tableData}
+                tableData={newTableData}
               />
             </div>
           </div>

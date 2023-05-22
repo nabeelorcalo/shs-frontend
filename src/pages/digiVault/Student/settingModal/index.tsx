@@ -10,7 +10,7 @@ const SettingModal = (props: any) => {
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
 
   useEffect(() => {
-    getDigiVaultDashboard(null)
+    getDigiVaultDashboard()
   }, [])
 
   const resetHandler = () => {
@@ -34,6 +34,7 @@ const SettingModal = (props: any) => {
       lockTime: value
     }))
   };
+  console.log("setting lock is",settingModal.isLock);
 
   return (
     <>
@@ -73,8 +74,12 @@ const SettingModal = (props: any) => {
           <Col className="flex items-center justify-between text-teriary-color">
             <p className="pr-2">On</p>
             <Switch
-              defaultChecked={studentVault?.lockResponse ? studentVault.lockResponse['isLock'] : false}
-              onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))} />
+              // defaultChecked={studentVault?.lockResponse ?
+              //   settingModal.isLock : studentVault.lockResponse['isLock']}
+              defaultChecked={settingModal?.isLock}
+              checked={settingModal.isLock}
+              onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))}
+              />
           </Col>
         </Row>
 
@@ -97,9 +102,11 @@ const SettingModal = (props: any) => {
           <Slider
             tooltip={{ formatter: null }}
             marks={marks}
+            min={0}
+            max={1447}
             onChange={(e: any) => sliderHandler(e)}
             defaultValue={studentVault?.lockResponse ? studentVault.lockResponse['autoLockAfter'] : '0'}
-            />
+          />
         </div>
         <div className="modal-reset-pass mt-14" onClick={resetHandler}>Reset Password</div>
       </Modal>

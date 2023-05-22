@@ -1,12 +1,14 @@
-import { Col, Row, Dropdown, Button, MenuProps } from "antd";
-import React, { useState } from "react";
-import { Documentcard, IconAngleDown } from "../../../assets/images";
-import { GlobalTable, PageHeader, SearchBar } from "../../../components";
+import { Col, Row } from "antd";
+import React, { useEffect, useState } from "react";
+import { Documentcard } from "../../../assets/images";
+import { DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType } from "antd/es/table";
 import { EyeFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
 import BookingModal from "./BookingModal";
 import "./style.scss";
+import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
 
 interface DataType {
   key: React.Key;
@@ -18,39 +20,29 @@ interface DataType {
   status: string;
 }
 
-const tableData = [
-  {
-    key: "1",
-    Tenant: "Stenna Freddi",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    ReservedDates: "22/09/2022 - 22/09/2022",
-    rent: "£ 200",
-    contracts: false,
-    status: "pending",
-  },
-  {
-    key: "2",
-    Tenant: "Keith Thompson",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    ReservedDates: "22/09/2022 - 22/09/2022",
-    rent: "£ 170",
-    contracts: true,
-    status: "Reserved",
-  },
-  {
-    key: "3",
-    Tenant: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    ReservedDates: "22/09/2022 - 22/09/2022",
-    rent: "£ 178",
-    contracts: false,
-    status: "rejected",
-  },
-];
-
 const ReservationsAgent = () => {
-  const [isOpen, setISOpen] = useState(false);
+  // const [isOpen, setISOpen] = useState(false);
+  const [state, setState] = useState<any>({
+    openViewModal: false,
+    status: '',
+    search: '',
+    viewReservations: {}
+  })
+  const { reservations, getReservationData, SearchReservations } = useCustomHook();
 
+  useEffect(() => {
+    getReservationData(state.status, state.search)
+  }, [])
+
+  const statusValueHandle = (val: any) => {
+    setState({ ...state, status: val });
+    getReservationData(val, state.search);
+  }
+
+  const searchHandler = (val: any) => {
+    setState({ ...state, search: val });
+    SearchReservations(val, state.status)
+  }
   const tableColumns: ColumnsType<DataType> = [
     {
       title: "Tenant",
@@ -73,82 +65,70 @@ const ReservationsAgent = () => {
       title: "Contracts",
       dataIndex: "contracts",
       align: "center",
-      render: (_, row, index) => (row.contracts ? <Documentcard /> : "-"),
     },
     {
       title: "Status",
       dataIndex: "status",
-      align: "center",
-      render: (_, row, index) => {
-        return (
-          <div
-            className={`shs-status-badge ${row.status === "rejected"
-              ? "rejected"
-              : row.status === "pending"
-                ? "pending"
-                : "success"
-              }`}
-          >
-            {row.status === "rejected"
-              ? "Rejected"
-              : row.status === "pending"
-                ? "Pending"
-                : "Reserved"}
-          </div>
-        );
-      },
+      align: "center"
     },
     {
       title: "Actions",
       dataIndex: "actions",
       align: "center",
-      render: (_, row, index) => {
-        return (
-          <div onClick={() => setISOpen(true)}>
-            <EyeFilled className=" cursor-pointer text-2xl light-grey-color"
-            />
-          </div>
-        );
-      },
     },
   ];
+  const reservationTableData = reservations?.map((item: any, index: number) => {
+    const startDate = dayjs(item.bookingStartDate).format("DD/MM/YYYY")
+    const endDate = dayjs(item.bookingEndDate).format("DD/MM/YYYY")
+    return (
+      {
+        key: index,
+        Tenant: `${item?.tenant?.firstName} ${item?.tenant?.lastName}`,
+        address: item?.property?.addressOne,
+        ReservedDates: `${startDate} - ${endDate}`,
+        rent: item?.rent,
+        status: <div
+          className={`shs-status-badge ${item?.status === "rejected"
+            ? "rejected"
+            : item?.status === "pending"
+              ? "pending"
+              : "success"
+            }`}
+        >
+          {item?.status === "rejected"
+            ? "Rejected"
+            : item?.status === "pending"
+              ? "Pending"
+              : "Reserved"}
+        </div>,
+        contracts: item?.contract ? <Documentcard /> : "-",
+        actions: <div onClick={() => setState({ ...state, openViewModal: true, viewReservations: item })}>
+          <EyeFilled className="cursor-pointer text-2xl light-grey-color"
+          />
+        </div>
+      }
+    )
+  })
+  console.log(state.viewReservations);
 
-  const statusItems: MenuProps["items"] = [
-    {
-      key: "pending",
-      label: "Pending",
-    },
-    {
-      key: "reserved",
-      label: "Reserved",
-    },
-    {
-      key: "rejected",
-      label: "Rejected",
-    },
-  ];
+  const statusItems = ["All", "Pending", "Reserved", "Rejected"];
 
   return (
     <div className="reservations">
-      <BookingModal open={isOpen} setOpen={setISOpen} />
+      <BookingModal open={state} setOpen={setState} />
       <PageHeader title="Reservations" bordered={true} />
 
       <Row gutter={[0, 20]} justify={"space-between"}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => {}} />
+          <SearchBar handleChange={(e: any) => searchHandler(e)} />
         </Col>
 
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end reservation-right">
-          <Dropdown
-            menu={{ items: statusItems }}
-            trigger={["click"]}
-            placement="bottomRight"
-          >
-            <Button className="button-sky-blue main-btn">
-              Status
-              <IconAngleDown />
-            </Button>
-          </Dropdown>
+          <DropDown name="Status" options={statusItems}
+            placement="bottom"
+            value={state.status}
+            setValue={(e: any) => statusValueHandle(e)}
+          />
         </Col>
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -156,7 +136,7 @@ const ReservationsAgent = () => {
             <GlobalTable
               pagination={false}
               columns={tableColumns}
-              tableData={tableData}
+              tableData={reservationTableData}
             />
           </BoxWrapper>
         </Col>

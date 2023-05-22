@@ -33,12 +33,19 @@
   textarea,
   .input .ant-select-selector {
     background-color: rgba(230, 244, 249, 1);
+    border: none;
+    &:hover {
+      background-color: #fff;
+    }
+  }
+  .common-date-picker-wrapper .ant-picker{
+    background-color: rgba(230, 244, 249, 1);
+    border: none;
 
     &:hover {
       background-color: #fff;
     }
   }
-
   .main-btn {
     @media only screen and (max-width:475px) {
       width: 100%;

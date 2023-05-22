@@ -4,11 +4,17 @@ const { persistAtom } = recoilPersist();
 
 export const currentUserState = atom({
   key: "currentUserState",
-  default: {},   // {} || [] 
+  default: {},
   effects_UNSTABLE: [persistAtom],
 });
 
 export const currentUserRoleState = selector({
   key: 'currentUserRoleState',
   get: ({get}) => get(currentUserState).role,
+});
+
+export const rememberMeState = atom({
+  key: "rememberMeState",
+  default: true,
+  effects_UNSTABLE: [persistAtom],
 });

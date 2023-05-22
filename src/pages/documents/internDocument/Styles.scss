@@ -29,7 +29,7 @@
   border: 1px solid $teriary-bg-color !important;
 
   &:hover {
-    color: #4A9D77 !important;
+    color: $green-graph-tooltip-color !important;
     opacity: 0.8;
   }
 }
@@ -38,7 +38,7 @@
   border: none !important;
 
   &:hover {
-    color: white !important;
+    color: $white-bg-color !important;
     opacity: 0.8;
     transition: 0.3s;
   }
