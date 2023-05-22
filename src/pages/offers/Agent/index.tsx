@@ -8,46 +8,51 @@ import "./style.scss";
 
 const OffersAgent = () => {
   const [form] = Form.useForm();
-  const [isOpen, setISOpen] = useState<any>(false);
-  const [offers, setOffers] = useState<any>({})
+  const [state, setState] = useState<any>({ isToggle: false, data: {} });
+  // const [offers, setOffers] = useState<any>({})
   const { getOffersDetails, offersData, postOffersDetails, editOffersDetails } = useCustomHook();
 
   useEffect(() => {
     getOffersDetails()
-  }, [])
+  }, [state.data])
 
   const onFinish = (values: any) => {
-    if (offers) {
-      values.offerId = offers.id
+    if (state?.data?.id) {
+      values.offerId = state?.data?.id
       editOffersDetails(values)
-      setOffers({})
+      form.resetFields();
+      setState({ isToggle: false, data: {} })
     }
     else {
+      // setOffers(values)
+      form.resetFields();
+      setState({ isToggle: false, data: {} })
     }
     postOffersDetails(values)
-    setOffers(values)
-    setISOpen(false)
   };
 
   const editHanlder = (value: any) => {
-    setISOpen(true),
-      setOffers(value)
+    setState({ isToggle: true, data: value });
+    // setState(true);
   }
-  console.log(offers);
+  console.log(state?.data);
 
   const initialValues = {
-    select: offers?.id ?? null,
-    minStayMonths: offers?.minStayMonths ?? null,
-    maxStayMonths: offers?.maxStayMonths ?? null,
-    discount: offers?.monthlyDiscount ?? null
+    select: state?.data?.id ? state?.data?.id : undefined,
+    minStayMonths: state?.data?.minStayMonths ? state?.data?.minStayMonths : undefined,
+    maxStayMonths: state?.data?.maxStayMonths ? state?.data?.maxStayMonths : undefined,
+    discount: state?.data?.monthlyDiscount ? state?.data?.monthlyDiscount : undefined
   }
 
   return (
     <div className="offers-agent">
       <PopUpModal
         title="New Offer"
-        open={isOpen}
-        close={() => { setISOpen(false), setOffers({}) }}
+        open={state.isToggle}
+        close={() => {
+          form.resetFields();
+          setState({ ...state, isToggle: false });
+        }}
         footer={false}
       >
         <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues}>
@@ -120,7 +125,10 @@ const OffersAgent = () => {
           <div className="flex justify-end gap-4">
             <div>
               <Button
-                onClick={() => { setISOpen(false), setOffers({}) }}
+                onClick={() => {
+                  form.resetFields();
+                  setState({ ...state, isToggle: false });
+                }}
                 className="teriary-color"
               >
                 Cancel
@@ -149,7 +157,7 @@ const OffersAgent = () => {
 
           <div className="">
             <Button
-              onClick={() => setISOpen(true)}
+              onClick={() => setState({ ...state, isToggle: true })}
               className="add-offers-btn flex items-center"
             >
               <PlusCircleFilled className="white-color green-graph-tooltip-bg rounded-[80%]"
@@ -164,7 +172,7 @@ const OffersAgent = () => {
         <div className="offers-main">
           <div className="flex justify-end mb-4">
             <Button
-              onClick={() => setISOpen(true)}
+              onClick={() => setState({ ...state, isToggle: true })}
               className="add-offers-btn flex items-center"
             >
               <PlusCircleFilled className="white-color green-graph-tooltip-bg rounded-[80%]"
