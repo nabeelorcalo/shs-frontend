@@ -26,90 +26,87 @@ const CreatePasswordForm = () => {
           onFinish={onFinish}
         >
           <div className="w-1/2">
-          <Form.Item
-            label="Old Password"
-            name="oldPassword"
-            rules={[
-              { required: true, message: "Please enter your old password!" },
-            ]}
-          >
-            <Input.Password
-              value={oldPassword}
-              type="password"
-              placeholder="Enter Password"
-              className="input-style"
-              onFocus={() => setShowPassCriteria(true)}
-              onChange={(e) => {
-                console.log(e.target.value);
-                setOldPassword(e.target.value);
-              }}
-            />
-          </Form.Item>
+            <Form.Item
+              label="Old Password"
+              name="oldPassword"
+              rules={[
+                { required: true, message: "Please enter your old password!" },
+              ]}
+            >
+              <Input.Password
+                value={oldPassword}
+                type="password"
+                placeholder="Enter Password"
+                className="input-style"
+                onFocus={() => setShowPassCriteria(true)}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setOldPassword(e.target.value);
+                }}
+              />
+            </Form.Item>
 
-          <Form.Item
-            label="New Password"
-            name="password"
-            rules={[
-              { required: true, message: "Please enter new your password!" },
-            ]}
-          >
-            <Input.Password
-              value={password}
-              type="password"
-              placeholder="Enter Password"
-              className="input-style"
-              onFocus={() => setShowPassCriteria(true)}
-              onChange={(e) => {
-                console.log(e.target.value);
-                setPassword(e.target.value);
-              }}
-            />
-          </Form.Item>
+            <Form.Item
+              label="New Password"
+              name="password"
+              rules={[
+                { required: true, message: "Please enter new your password!" },
+              ]}
+            >
+              <Input.Password
+                value={password}
+                type="password"
+                placeholder="Enter Password"
+                className="input-style"
+                onFocus={() => setShowPassCriteria(true)}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setPassword(e.target.value);
+                }}
+              />
+            </Form.Item>
 
-          {showPassCriteria && (
-            <div style={{ marginTop: "22px" }}>
-              <PasswordCritera value={password} />
-            </div>
-          )}
+            {showPassCriteria && (
+              <div style={{ marginTop: "22px" }}>
+                <PasswordCritera value={password} />
+              </div>
+            )}
 
-          <Form.Item
-            label="Confirm  Password"
-            name="confirmPassword"
-            rules={[
-              {
-                required: true,
-                message: "Password is required",
-              },
-            ]}
-          >
-            <Input.Password
-              value={confirmPassword}
-              type="password"
-              placeholder="Enter Password"
-              className="input-style"
-              onChange={(e) => {
-                console.log(e.target.value);
-                setConfirmPassword(e.target.value);
+            <Form.Item
+              label="Confirm  Password"
+              name="confirmPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Password is required",
+                },
+              ]}
+            >
+              <Input.Password
+                value={confirmPassword}
+                type="password"
+                placeholder="Enter Password"
+                className="input-style"
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  setConfirmPassword(e.target.value);
 
-                password === e.target.value
-                  ? setMatchedPassMessage("Password Matched")
-                  : setMatchedPassMessage("Password not matched");
-              }}
-            />
-          </Form.Item>
-          <Typography>{passwordMatchedMessage}</Typography>
+                  password === e.target.value
+                    ? setMatchedPassMessage("Password Matched")
+                    : setMatchedPassMessage("Password not matched");
+                }}
+              />
+            </Form.Item>
+            <Typography>{passwordMatchedMessage}</Typography>
 
           </div>
-         
-          <div className="flex justify-end items-end  w-full">
+
+          <div className="flex justify-end items-end w-full">
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 className=""
-                //   disabled={
-                //     password !== confirmPassword || !confirmPassword || !password
-                //   }
               >
                 Update
               </Button>

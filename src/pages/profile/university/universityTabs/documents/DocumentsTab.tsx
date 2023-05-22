@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrpIcon, CvIcon, DbsIcon, DownloadDocumentIcon, PassportIcon, PoaIcon, UalIcon } from '../../../../../assets/images'
 import Preview from "../../../../../assets/images/candidates/preview.svg";
+import "./Styles.scss";
 
 const DocumentsTab = () => {
 

@@ -57,7 +57,7 @@ export const ROUTES_CONSTANTS: any = {
   VIEW_PAYROLL_SALARY_SLIP: "payroll/payroll-details/view-payroll-details",
   INTERNS: "interns",
   COMPLETE_INTERNS: "interns/complete",
-  INTERNS_PROFILE: "profile",
+  INTERNS_PROFILE: "interns/profile",
   INTERNS_CHAT: "interns/chat",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
@@ -102,7 +102,7 @@ export const ROUTES_CONSTANTS: any = {
   SIGNED_CompanyAdmin: "signed-company-admin",
   PENDING_VIEW: "pending-view-details",
   EDIT_CONTRACT: "edit-contract",
-  //ComapnyAdmin offerLetter
+  //ComapnyAdmin offerLettermin
   REJECTED_CompanyAdmin: "rejected-company-admin",
   PENDING_OFFER_VIEW: "pending-view-details-offer",
   EDIT_OFFER_CONTRACT: "edit-offer-letter",
@@ -174,9 +174,12 @@ export const ROUTES_CONSTANTS: any = {
   GRIEVANCES_DETAILS: "/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
   UNIVERSITIES_INTERNS: "universities/interns",
-  UNIVERSITIES_PROFILE: "university/profile",
+  UNIVERSITIES_PROFILE: "universities/profile",
   AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
   JOBDETAILS: 'search-jobs/job-details',
+  COMPANYPROFILEUNI: "/companies/profile",
+  STUDENTPROFILE: "/students/profile",
+  AGENTPROFILE:"/agent-profile"
 };
 
 export const STATUS_CONSTANTS: any = {

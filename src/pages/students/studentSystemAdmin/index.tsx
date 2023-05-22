@@ -63,7 +63,7 @@ const StudentSystemAdmin = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              // state(true);
+              navigate({ pathname: "/students/student-profile" })
             }}
           >
             View Details

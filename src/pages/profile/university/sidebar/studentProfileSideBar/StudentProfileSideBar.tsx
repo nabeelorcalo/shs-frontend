@@ -14,6 +14,8 @@ import DropDownNew from "../../../../../components/Dropdown/DropDownNew";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
 import { Divider } from "antd"
+import "./Styles.scss";
+import { BoxWrapper } from "../../../../../components";
 //   import actionHandler from "./actionHandler";
 
 const StudentProfileSideBar = (props: any) => {
@@ -58,7 +60,7 @@ const StudentProfileSideBar = (props: any) => {
 
     // useEffect(() => setRating(ratingCount), []);
     return (
-        <div>
+        <BoxWrapper>
             <div className="details-wrapper p-[5px] pr-[25px]">
                 <div className="user-info-main">
                     <div className="user-info flex flex-col items-center">
@@ -75,14 +77,16 @@ const StudentProfileSideBar = (props: any) => {
                             }
                         />
                         {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
-                        <p>Maria Sanoid</p>
-                        <p>UI UX Designer</p>
-                        <p>Design</p>
+                        <div className="py-4 text-center">
+                            <p className="text-xl font-semibold text-primary-color">Maria Sanoid</p>
+                            <p className="text-secondary-color font-medium text-base">UI UX Designer</p>
+                            <p className="text-secondary-color font-medium text-base">Design</p>
+                        </div>
                     </div>
                     <Divider />
 
-                    <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center">
-                        {/* <div className="flex advance-dropdown ">
+                    {/* <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center"> */}
+                    {/* <div className="flex advance-dropdown ">
                             <DropDownNew
                                 items={[
                                     {
@@ -106,7 +110,7 @@ const StudentProfileSideBar = (props: any) => {
                                 </div>
                             </DropDownNew>
                         </div> */}
-                        {/* <div className="flex advance-dropdown ">
+                    {/* <div className="flex advance-dropdown ">
                             <DropDownNew
                                 items={[
                                     {
@@ -139,7 +143,7 @@ const StudentProfileSideBar = (props: any) => {
                                 </div>
                             </DropDownNew>
                         </div> */}
-                    </div>
+                    {/* </div> */}
                 </div>
 
                 {/* <div className="apllied-for">
@@ -165,18 +169,18 @@ const StudentProfileSideBar = (props: any) => {
 
                 <div className="contact pt-4">
                     {userinfoData.map((info, i) => (
-                        <div className="message flex items-center gap-5 my-3" key={i}>
+                        <div className="message  text-secondary-color flex items-center gap-5 my-5" key={i}>
                             <div>
                                 <info.img width={24} />
                             </div>
-                            <p className="m-0">{info.title}</p>
+                            <p className="m-0 ">{info.title}</p>
                         </div>
                     ))}
                 </div>
                 <Divider />
 
                 <div className="skills-main">
-                    <p className="heading mt-8 mb-4">Skills</p>
+                    <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
                     <div className="skills flex items-center flex-wrap gap-2 ">
                         {newSkillData.map((skill, i) => (
                             <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
@@ -186,14 +190,11 @@ const StudentProfileSideBar = (props: any) => {
                         {<p className="plus rounded-[14px] py-[2px] px-[12px]">+{skillsData.length - newSkillData.length}</p>}
                     </div>
                 </div>
-                <Divider/>
-
-
+                <Divider />
                 <div className="intro">
-                    <p className="heading mt-8">Intro</p>
+                    <p className="heading mt-8 font-semibold">Intro</p>
                     <div className="main-div relative">
                         <div className="absolute" style={{ zIndex: 1, left: "43%", top: "45%" }}>
-                            {" "}
                             <PlayIconNew />
                         </div>
                         <div className="image mt-[10px] relative">
@@ -202,7 +203,7 @@ const StudentProfileSideBar = (props: any) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </BoxWrapper>
     )
 }
 

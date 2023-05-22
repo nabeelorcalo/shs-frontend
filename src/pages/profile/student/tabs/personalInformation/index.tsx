@@ -18,12 +18,9 @@ import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import '../../../style.scss';
-
-
 import { Option } from "antd/es/mentions";
 
 const PersonalInformation = () => {
-
   const [value, setValue] = useState('');
   const [isdate1, setIsDate1] = useState(false);
   const [isDependents, setIsDependents] = React.useState(2);

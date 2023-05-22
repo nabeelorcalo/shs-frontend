@@ -13,6 +13,7 @@ import { More } from "../../../assets/images"
 import { MenuProps } from 'antd';
 import { Dropdown, Avatar, Row, Col } from 'antd';
 import useCustomHook from "../actionHandler";
+import CompanyProfile from "./CompanyProfileTabs";
 
 const btnStyle = {
   "applied": "p-1 rounded-lg primary-bg-color white-color",
@@ -22,48 +23,6 @@ const btnStyle = {
   "hired": "p-1 rounded-lg text-success-bg-color white-color",
   "rejected": "p-1 rounded-lg secondary-bg-color white-color",
 }
-
-const PopOver = ({ state }: any) => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("profile");
-          }}
-        >
-          Profile
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("chat");
-          }}
-        >
-          Chat
-        </a>
-      ),
-    },
-  ];
-  return (
-    <Dropdown
-      menu={{ items }}
-      placement="bottomRight"
-      trigger={[`click`]}
-      overlayStyle={{ width: 180 }}
-    >
-      <More className="cursor-pointer" />
-    </Dropdown>
-  );
-};
 
 const CompanyData = ({ companyName, companyNature }: any) => {
   return (
@@ -93,10 +52,41 @@ const CompaniesMain = () => {
   const action = useCustomHook()
   const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
 
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: (
+        <a
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate(`/companies/profile/${action?.selectedProfile?.id}`);
+          }}
+        >
+          Profile
+        </a>
+
+      ),
+    },
+
+    {
+      key: "2",
+      label: (
+        <a
+          rel="noopener noreferrer"
+          onClick={() => {
+            navigate(`chat/${action?.selectedProfile?.id} `);
+          }}
+        >
+          Chat
+        </a>
+      ),
+    },
+  ];
+
   const columns = [
     {
-      dataIndex: "no",
-      key: "no",
+      dataIndex: "id",
+      key: "id",
       title: "No.",
     },
     {
@@ -128,11 +118,23 @@ const CompaniesMain = () => {
       dataIndex: "actions",
       key: "actions",
       title: "Actions",
+      render: (_: any, object: any) => {
+        return <Dropdown
+          menu={{ items }}
+          placement="bottomRight"
+          trigger={[`click`]}
+          overlayStyle={{ width: 180 }}
+        >
+          <More onClick={() => action?.setSelectedProfile(object)} className="cursor-pointer" />
+        </Dropdown>
+      }
+
     },
   ];
+
   const tableData = [
     {
-      no: "01",
+      id: "01",
       company: { name: "Alphabet Inc.", details: "Software Agency" },
       company_rep: "Deing Jim M",
       email: "deing.jing@gmail.com",
@@ -140,7 +142,7 @@ const CompaniesMain = () => {
       students_hired: 14,
     },
     {
-      no: "02",
+      id: "02",
       company: { name: "Intuit Inc.", details: "Sports" },
       company_rep: "Robbert Patenson",
       email: "robert.patenson@gmail.com",
@@ -148,7 +150,7 @@ const CompaniesMain = () => {
       students_hired: 4,
     },
     {
-      no: "02",
+      id: "03",
       company: { name: "ServiceNOW", details: "Software Solutions" },
       company_rep: "Silwa Kreig",
       email: "silwa.kreig@gmail.com",
@@ -156,7 +158,7 @@ const CompaniesMain = () => {
       students_hired: 12,
     },
     {
-      no: "01",
+      id: "04",
       company: { name: "Alphabet Inc.", details: "Software Agency" },
       company_rep: "Deing Jim M",
       email: "deing.jing@gmail.com",
@@ -164,7 +166,7 @@ const CompaniesMain = () => {
       students_hired: 14,
     },
     {
-      no: "02",
+      id: "05",
       company: { name: "Intuit Inc.", details: "Sports" },
       company_rep: "Robbert Patenson",
       email: "robert.patenson@gmail.com",
@@ -172,7 +174,7 @@ const CompaniesMain = () => {
       students_hired: 4,
     },
     {
-      no: "02",
+      id: "06",
       company: { name: "ServiceNOW", details: "Software Solutions" },
       company_rep: "Silwa Kreig",
       email: "silwa.kreig@gmail.com",
@@ -180,10 +182,11 @@ const CompaniesMain = () => {
       students_hired: 12,
     },
   ];
-  const newTableData = tableData.map((item, idx) => {
+
+  const newTableData = tableData.map((item) => {
     return (
       {
-        no: item.no,
+        id: item.id,
         company:
           <CompanyData
             companyName={item.company?.name}
@@ -193,41 +196,42 @@ const CompaniesMain = () => {
         email: item.email,
         phone_no: item.phone_no,
         students_hired: item.students_hired,
-        actions: <PopOver state={setShowStageStepper} />
+        actions: ""
       }
     )
   })
   return (
     <>
       <PageHeader title="Applications" />
-        <Row gutter={[20, 20]}>
-          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
-          </Col>
-          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
-            <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
-              requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Companies Applications")
-              }}
-              value=""
-            />
-          </Col>
-          <Col xs={24}>
-            <BoxWrapper>
-              <GlobalTable columns={columns} tableData={newTableData} />
-            </BoxWrapper>
-          </Col>
-        </Row>
+      <Row gutter={[20, 20]}>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar
+            handleChange={() => { }}
+            name="search bar"
+            placeholder="Search"
+            size="middle"
+          />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
+          <DropDown
+            options={[
+              'pdf',
+              'excel'
+            ]}
+            requiredDownloadIcon
+            setValue={() => {
+              action.downloadPdfOrCsv(event, csvAllColum, tableData, "Companies Applications")
+            }}
+            value=""
+          />
+        </Col>
+        <Col xs={24}>
+          <BoxWrapper>
+            <GlobalTable columns={columns} tableData={newTableData} />
+          </BoxWrapper>
+        </Col>
+      </Row>
+
     </>
   );
 };

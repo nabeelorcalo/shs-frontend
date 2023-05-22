@@ -48,13 +48,13 @@ const GenralInformationTab = (props: any) => {
     ]
     return (
         <div>
-            <p className="persnol-para mb-4">Academic Details</p>
+            <p className="text-primary-color font-semibold text-xl mb-4">Academic Details</p>
             <Row gutter={[30, 20]}>
                 {PersnolInformationData.map((item: any) => (
                     <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
-                        <div className="personal-information-wrap">
-                            <h2 className="m-0 font-medium text-base title">{item.title}</h2>
-                            <p className="m-0">{item.value}</p>
+                        <div className="personal-information-wrap text-primary-color">
+                            <h2 className="m-0 text-base  title font-medium">{item.title}</h2>
+                            <p className="m-0 text-teriary-color text-lg">{item.value}</p>
                         </div>
                     </Col>
                 ))}
@@ -64,8 +64,8 @@ const GenralInformationTab = (props: any) => {
                 {Address.map((item: any) => (
                     <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                         <div className="personal-information-wrap ">
-                            <h2 className="m-0 font-medium text-base title">{item.title}</h2>
-                            <p className="m-0">{item.value}</p>
+                            <h2 className="m-0 text-base  title font-medium title">{item.title}</h2>
+                            <p className="m-0 text-teriary-color text-lg">{item.value}</p>
                         </div>
                     </Col>
                 ))}
@@ -76,8 +76,8 @@ const GenralInformationTab = (props: any) => {
                 {countryData.map((item: any) => (
                     <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                         <div className="personal-information-wrap ">
-                            <h2 className="m-0 font-medium text-base title">{item.title}</h2>
-                            <p className="m-0">{item.value}</p>
+                            <h2 className="m-0 text-base title font-medium title">{item.title}</h2>
+                            <p className="m-0 text-teriary-color text-lg">{item.value}</p>
 
                         </div>
                     </Col>
