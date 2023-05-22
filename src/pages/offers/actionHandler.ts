@@ -1,8 +1,8 @@
+import { log } from 'console';
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import { offerdetails } from "../../store";
 import endpoints from "../../config/apiEndpoints";
-import { constant } from "lodash";
 import { Notifications } from "../../components";
 
 // Chat operation and save into store
@@ -14,29 +14,32 @@ const useCustomHook = () => {
     const { data } = await api.get(GET_OFFERS);
     setOfferData(data)
   };
+
   const postOffersDetails = async (values: any) => {
-    const { minStayMonths, maxStayMonths, discount } = values;
+    const { minStayMonths, maxStayMonths, discount, propertyId } = values;
     const sendData = {
-      propertyId: 26,
+      propertyId: propertyId,
       minStayMonths: +minStayMonths,
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
     api.post(POST_OFFERS, sendData);
     getOffersDetails()
-    Notifications({ title: 'Succes', description: 'Offer added successfully', type: 'success' })
+    Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
   }
 
   const editOffersDetails = async (values: any) => {
     const { offerId, minStayMonths, maxStayMonths, discount } = values;
     const sendData = {
       offerId: offerId,
-      minStayMonths: +minStayMonths,
+      minStayMonths: +minStayMonths, 
       maxStayMonths: +maxStayMonths,
-      monthlyDiscount: discount
+      monthlyDiscount: discount 
     }
-    api.patch(EDIT_OFFERS, sendData);
+    const res:any = api.patch(EDIT_OFFERS, sendData);
     getOffersDetails()
+    Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
+    console.log(res?.state);
   }
 
   return {

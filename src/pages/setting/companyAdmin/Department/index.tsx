@@ -49,6 +49,8 @@ const SettingDepartment: React.FC = () => {
   }
 
   const onFinish = (values: any) => {
+    console.log(values);
+
     if (edit?.isEdit === "isEdit") {
 
     }

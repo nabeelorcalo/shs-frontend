@@ -1,143 +1,23 @@
 import { useEffect, useState } from "react";
 import { PageHeader, PopUpModal } from "../../../components";
-import { Button, Row, Col, Card, Select, InputNumber, Form } from "antd";
+import { Button, Row, Col, Card } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { OfferProperty } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
+import NewOfferModal from "./newOffer";
 
 const OffersAgent = () => {
-  const [form] = Form.useForm();
-  const [isOpen, setISOpen] = useState<any>(false);
-  const [offers, setOffers] = useState<any>({})
-  const { getOffersDetails, offersData, postOffersDetails, editOffersDetails } = useCustomHook();
+  const [state, setState] = useState<any>({ isToggle: false, data: {} });
+  const { getOffersDetails, offersData } = useCustomHook();
 
   useEffect(() => {
     getOffersDetails()
   }, [])
 
-  const onFinish = (values: any) => {
-    if (offers) {
-      values.offerId = offers.id
-      editOffersDetails(values)
-      setOffers({})
-    }
-    else {
-    }
-    postOffersDetails(values)
-    setOffers(values)
-    setISOpen(false)
-  };
-
-  const editHanlder = (value: any) => {
-    setISOpen(true),
-      setOffers(value)
-  }
-  console.log(offers);
-
-  const initialValues = {
-    select: offers?.id ?? null,
-    minStayMonths: offers?.minStayMonths ?? null,
-    maxStayMonths: offers?.maxStayMonths ?? null,
-    discount: offers?.monthlyDiscount ?? null
-  }
-
   return (
     <div className="offers-agent">
-      <PopUpModal
-        title="New Offer"
-        open={isOpen}
-        close={() => { setISOpen(false), setOffers({}) }}
-        footer={false}
-      >
-        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues}>
-          <Form.Item label="Select your property" name="select" className="flex flex-col mb-8">
-            <Select
-              placeholder="Select"
-              // onChange={(value) => value}
-              options={[
-                { value: "Boston Heights", label: "Boston Heights" },
-                {
-                  value: "Gregory Maxwell Hall",
-                  label: "Gregory Maxwell Hall",
-                },
-                { value: "8th Sapphire Avenue", label: "8th Sapphire Avenue" },
-                {
-                  value: "The Mesa at Hastings Highlands",
-                  label: "The Mesa at Hastings Highlands",
-                },
-              ]}
-            />
-          </Form.Item>
-
-          <Form.Item label="Minimum stay to qualify for offer" name="minStayMonths" className="flex flex-col mb-8">
-            <Select
-              placeholder="Select"
-              // onChange={(value) => value}
-              options={[
-                { value: "1", label: "1 months" },
-                {
-                  value: "2",
-                  label: "2months",
-                },
-                { value: "3", label: "3 months" },
-                {
-                  value: "4",
-                  label: "4 months",
-                },
-              ]}
-            />
-          </Form.Item>
-
-          <Form.Item label="Maximum stay to qualify for offer (optional)" name="maxStayMonths" className="flex flex-col mb-8">
-            <Select
-              placeholder="Select"
-              options={[
-                { value: "1", label: "1 months" },
-                {
-                  value: "2",
-                  label: "2months",
-                },
-                { value: "3", label: "3 months" },
-                {
-                  value: "4",
-                  label: "4 months",
-                },
-              ]}
-            />
-          </Form.Item>
-
-          <Form.Item label="Monthly discount" name="discount" className="flex flex-col">
-            <InputNumber
-              style={{ width: "100%" }}
-              // defaultValue={1}
-              formatter={(value) => `${value}%`}
-              parser={(value: any) => value!.replace("%", "")}
-            // onChange={(value) => value}
-            />
-          </Form.Item>
-
-          <div className="flex justify-end gap-4">
-            <div>
-              <Button
-                onClick={() => { setISOpen(false), setOffers({}) }}
-                className="teriary-color"
-              >
-                Cancel
-              </Button>
-            </div>
-
-            <div>
-              <Button htmlType="submit" className="green-graph-tooltip-bg white-color">
-                Save & Close
-              </Button>
-            </div>
-          </div>
-        </Form>
-      </PopUpModal>
-
       <PageHeader title="Offers" bordered={true} />
-
       {offersData?.length === 0 ? (
         <div className="offers-agent-body flex justify-center items-center flex-col h-[50vh] text-center">
           <div className="font-medium text-4xl text-primary-color mb-4">
@@ -149,7 +29,7 @@ const OffersAgent = () => {
 
           <div className="">
             <Button
-              onClick={() => setISOpen(true)}
+              onClick={() => setState({ isToggle: true, data: {} })}
               className="add-offers-btn flex items-center"
             >
               <PlusCircleFilled className="white-color green-graph-tooltip-bg rounded-[80%]"
@@ -164,7 +44,7 @@ const OffersAgent = () => {
         <div className="offers-main">
           <div className="flex justify-end mb-4">
             <Button
-              onClick={() => setISOpen(true)}
+              onClick={() => setState({ isToggle: true, data: {} })}
               className="add-offers-btn flex items-center"
             >
               <PlusCircleFilled className="white-color green-graph-tooltip-bg rounded-[80%]"
@@ -195,7 +75,7 @@ const OffersAgent = () => {
 
                       <div className="w-[100%] inline-grid">
                         <Button
-                          onClick={() => editHanlder(item)}
+                          onClick={() => setState({ isToggle: true, data: item })}
                           className="offer-card-btn">
                           Edit
                         </Button>
@@ -208,6 +88,7 @@ const OffersAgent = () => {
           </Row>
         </div>
       )}
+      {state.isToggle && <NewOfferModal state={state} setState={setState} />}
     </div>
   );
 };
