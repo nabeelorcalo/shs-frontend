@@ -109,7 +109,6 @@ const ReservationsAgent = () => {
       }
     )
   })
-  console.log(state.viewReservations);
 
   const statusItems = ["All", "Pending", "Reserved", "Rejected"];
 

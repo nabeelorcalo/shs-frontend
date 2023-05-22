@@ -4,28 +4,34 @@ import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
 import { settingDepartmentState } from "../../../../store";
 
-// Chat operation and save into store
 const useCustomHook = () => {
   const { SETTING_DAPARTMENT } = apiEndpints;
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
-  const limit = 10
 
+  // get setting departments
   const getSettingDepartment = async (page: any, q: any): Promise<any> => {
-    const param = { page: page, limit: limit, q: q }
+    const param = { page: page, limit: 100, q: q }
     const { data } = await api.get(SETTING_DAPARTMENT, param);
     setSettingDepartmentdata(data)
   };
 
-  const deleteSettingDepartment = async (id: number): Promise<any> => {
-    const { data } = await api.delete(`${SETTING_DAPARTMENT}/${id}`);
+  // delete setting departments
+  const deleteSettingDepartment = async (id: number) => {
+    await api.delete(`${SETTING_DAPARTMENT}/${id}`);
+    getSettingDepartment(null, null)
   };
 
-  const postSettingDepartment = async (body: any): Promise<any> => {
-    const { data } = await api.post(SETTING_DAPARTMENT, body);
+  // post setting departments
+  const postSettingDepartment = async (body: any) => {
+    await api.post(SETTING_DAPARTMENT, body);
+    getSettingDepartment(null, null)
   };
 
-  const patchSettingDepartment = async (body: any): Promise<any> => {
-    const { data } = await api.patch(SETTING_DAPARTMENT, body);
+  // edit setting departments
+  const patchSettingDepartment = async (body: any) => {
+    console.log(body);
+    await api.patch(SETTING_DAPARTMENT, body);
+    getSettingDepartment(null, null)
   };
 
   return {
