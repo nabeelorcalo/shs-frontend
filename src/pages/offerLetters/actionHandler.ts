@@ -15,7 +15,7 @@ const useCustomHook = () => {
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
   //get offer letter
-  const getOfferLetterList = async (status: any, time: any, search: any) => {
+  const getOfferLetterList = async (status: any, time: any, search: any = null) => {
     setLoading(true)
     const params = {
       page: 1,
@@ -33,7 +33,7 @@ const useCustomHook = () => {
   };
 
   //search contracts
-  const searchHandler = async (search: any, status: any, time: any) => {
+  const searchHandler = async (search: any, status: any, time: any = null) => {
     setLoading(true)
     const params = {
       page: 1,
