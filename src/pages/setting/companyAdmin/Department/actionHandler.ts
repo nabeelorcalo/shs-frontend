@@ -7,17 +7,17 @@ import { settingDepartmentState } from "../../../../store";
 // Chat operation and save into store
 const useCustomHook = () => {
   const { SETTING_DAPARTMENT } = apiEndpints;
-  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
-  const limit = 10
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState); 
 
   const getSettingDepartment = async (page: any, q: any): Promise<any> => {
-    const param = { page: page, limit: limit, q: q }
+    const param = { page: page, limit: 10, q: q }
     const { data } = await api.get(SETTING_DAPARTMENT, param);
     setSettingDepartmentdata(data)
   };
 
-  const deleteSettingDepartment = async (id: number): Promise<any> => {
-    const { data } = await api.delete(`${SETTING_DAPARTMENT}/${id}`);
+  const deleteSettingDepartment = async (id: number) => {
+    await api.delete(`${SETTING_DAPARTMENT}/${id}`);
+    getSettingDepartment(null, null)
   };
 
   const postSettingDepartment = async (body: any): Promise<any> => {
