@@ -24,7 +24,7 @@ const useCustomHook = () => {
     }
     api.post(POST_OFFERS, sendData);
     getOffersDetails()
-    Notifications({ title: 'Succes', description: 'Offer added successfully', type: 'success' })
+    Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
   }
 
   const editOffersDetails = async (values: any) => {

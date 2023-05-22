@@ -1,11 +1,7 @@
 @import "../../../scss/colors";
 
 .active {
-  background-color: #A0A3BD !important;
-}
-
-.ant-tag-checkable-checked {
-  background-color: #5A5980 !important;
+  background-color: $text-success-placeholder-color !important;
 }
 
 .logs-content .ant-table .ant-table-cell {
