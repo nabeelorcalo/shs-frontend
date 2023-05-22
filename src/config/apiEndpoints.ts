@@ -46,9 +46,13 @@ const endpoints = {
   CREATE_MEETING: `/Event/create-meeting`,
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
   // template
-  GET_ALL_TEMPLATES:`/template/findAll`,
+  GET_ALL_TEMPLATES: `/template/findAll`,
   //student
-  STUDENT_PROFILE:`/student/profile`,
+  STUDENT_PROFILE: `/student/profile`,
+  //documents
+  DOCUMENT_REQUEST: `/Document/request`,
+  //case-studies
+  CASE_STUDIES:`case-studies`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,

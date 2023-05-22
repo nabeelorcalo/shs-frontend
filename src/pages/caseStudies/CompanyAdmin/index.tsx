@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BoxWrapper, Drawer, DropDown, FiltersButton, Notifications, PageHeader, SearchBar } from '../../../components'
 import Image from '../../../assets/images/Grievances/avater-1.svg';
 import CaseStudiesTable from '../Common/caseStudiesTable';
@@ -9,78 +9,83 @@ import { Row, Col } from 'antd';
 import './style.scss'
 
 const index = () => {
-  const caseStudyTableData = [
-    {
-      no: '01',
-      avater: Image,
-      name: "Mino Marina",
-      ReportName: 'September 2022',
-      department: 'Design',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Savannah Nguyen',
-      status: 'Pending',
-    },
-    {
-      no: '02',
-      name: "Craig Donin",
-      avater: Image,
-      ReportName: 'September 2022',
-      department: 'Research',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Annette Black',
-      status: 'Pending',
-    },
-    {
-      no: '03',
-      name: "Gustavo Korsgaard",
-      avater: Image,
-      ReportName: 'August 2022',
-      department: 'Business',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Wade Warren',
-      status: 'Pending',
-    },
-    {
-      no: '04',
-      name: "Omar Schleifer",
-      avater: Image,
-      ReportName: 'September 2022',
-      department: 'Management',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Savannah Nguyen',
-      status: 'Pending',
-    },
-    {
-      no: '05',
-      avater: Image,
-      name: "Adison Donin",
-      ReportName: 'University of London',
-      department: 'Development',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Kathryn Murphy',
-      status: 'Approved',
-    },
-    {
-      no: '06',
-      name: "Lindsey Mango",
-      avater: Image,
-      ReportName: 'August 2022',
-      department: 'Development',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Albert Flores',
-      status: 'Rejected',
-    },
-    {
-      no: '07',
-      name: "Lindsey Mango",
-      avater: Image,
-      ReportName: 'August 2022',
-      department: 'Development',
-      assessmentDate: '20/09/2022',
-      reportingManager: 'Albert Flores',
-      status: 'Rejected',
-    },
-  ]
+  const { getData, downloadPdfOrCsv, caseStudyData } = useCustomHook();
+  useEffect(() => {
+    getData();
+  }, []);
+  const caseStudyTableData = caseStudyData?.data
+  //  [
+  //   {
+  //     no: '01',
+  //     avater: Image,
+  //     name: "Mino Marina",
+  //     ReportName: 'September 2022',
+  //     department: 'Design',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Savannah Nguyen',
+  //     status: 'Pending',
+  //   },
+  //   {
+  //     no: '02',
+  //     name: "Craig Donin",
+  //     avater: Image,
+  //     ReportName: 'September 2022',
+  //     department: 'Research',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Annette Black',
+  //     status: 'Pending',
+  //   },
+  //   {
+  //     no: '03',
+  //     name: "Gustavo Korsgaard",
+  //     avater: Image,
+  //     ReportName: 'August 2022',
+  //     department: 'Business',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Wade Warren',
+  //     status: 'Pending',
+  //   },
+  //   {
+  //     no: '04',
+  //     name: "Omar Schleifer",
+  //     avater: Image,
+  //     ReportName: 'September 2022',
+  //     department: 'Management',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Savannah Nguyen',
+  //     status: 'Pending',
+  //   },
+  //   {
+  //     no: '05',
+  //     avater: Image,
+  //     name: "Adison Donin",
+  //     ReportName: 'University of London',
+  //     department: 'Development',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Kathryn Murphy',
+  //     status: 'Approved',
+  //   },
+  //   {
+  //     no: '06',
+  //     name: "Lindsey Mango",
+  //     avater: Image,
+  //     ReportName: 'August 2022',
+  //     department: 'Development',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Albert Flores',
+  //     status: 'Rejected',
+  //   },
+  //   {
+  //     no: '07',
+  //     name: "Lindsey Mango",
+  //     avater: Image,
+  //     ReportName: 'August 2022',
+  //     department: 'Development',
+  //     assessmentDate: '20/09/2022',
+  //     reportingManager: 'Albert Flores',
+  //     status: 'Rejected',
+  //   },
+  // ]
   const TableColumn = ['No.', 'Avater', ' Name', 'Report Name', 'Department', 'Assessment Date', 'Reporting Manager', 'Status']
   const action = useCustomHook();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);

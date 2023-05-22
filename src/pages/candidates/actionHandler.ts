@@ -7,7 +7,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, GET_ALL_TEMPLATES, STUDENT_PROFILE } = endpoints;
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, GET_ALL_TEMPLATES, STUDENT_PROFILE, DOCUMENT_REQUEST } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -21,6 +21,8 @@ const useCustomHook = () => {
     limit: 10,
     page: 1,
   };
+  // loader
+  const [loading, setLoading] = useState(false);
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
   const [studentDetails, setStudentDetails] = useState<any>();
@@ -51,7 +53,8 @@ const useCustomHook = () => {
 
   // get cadidates data
   const getCadidatesData = async (params: any) => {
-    await api.get(CANDIDATE_LIST, params).then((res) => setCadidatesList(res?.data));
+    setLoading(true)
+    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); setLoading(false) });
   };
   // get student details
   const getStudentDetails = async (userId: any) => {
@@ -125,8 +128,10 @@ const useCustomHook = () => {
   }
 
   // funtion for update rating
-  const handleRating = async (id: string | number, rating: string | number) => {
-    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { rating }, { id }).then((res) => {
+  const handleRating = async (selectedId: string | number, rating: string | number) => {
+    console.log(id, "iddd");
+
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
       );
@@ -141,6 +146,12 @@ const useCustomHook = () => {
       setInternShipList(data?.map(({ id, title }: { id: string, title: string }) => ({ value: id, label: title })))
     }
     )
+  }
+
+  // request documents
+  const handleRequestDocument = async (body: any) => {
+    const res = await api.post(DOCUMENT_REQUEST, body).then((res) => console.log("res", res))
+    console.log("resres", res);
   }
 
   // get comments
@@ -190,16 +201,15 @@ const useCustomHook = () => {
   // funtion for update stage
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res) => {
-      console.log(res);
       res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
-    }).catch((err) => { console.log("err", err) });
+    });
   };
 
   // get company manager list for schedule interview form attendees
   const getCompanyManagerList: any = async (search?: string) => {
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res) => {
-        setCompanyManagerList(res?.data?.map(({ companyManager }: any) => companyManager))
+        setCompanyManagerList(res?.data)
       })
   }
 
@@ -239,7 +249,7 @@ const useCustomHook = () => {
     await api.get(GET_ALL_TEMPLATES, params).then((res) => { setTemplateList(res?.data) })
   }
   return {
-    cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, getTemplates, templateList, params
+    loading, setLoading, cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, handleRequestDocument, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, getTemplates, templateList, params
   };
 };
 

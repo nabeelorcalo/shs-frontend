@@ -5,20 +5,26 @@ import { CloseCircleIcon } from "../../assets/images";
 import actionHandler from "./actionHandler";
 
 const SelectTemplateModal = (props: any) => {
-  const { open, setOpen, handleTemplate, title, selecteTemplate, handleSelectTemplate } = props;
+  const { open, setOpen, handleTemplate, title, selecteTemplate, setSelecteTemplate, setTemplateValues } = props;
   const { getTemplates, templateList } = actionHandler();
   useEffect(() => {
     getTemplates(title.toLowerCase() === "contract" ? "contract" : "offerLetter");
   }, [title]);
+
+  const handleSelectTemplate = (value: number | string) => {
+    let selectedTemplate = templateList?.find(({ id }: { id: string }) => id === value);
+    setSelecteTemplate(selectedTemplate?.name);
+    setTemplateValues({ subject: selectedTemplate?.subject, description: selectedTemplate?.description });
+  };
+  const onCancel = () => {
+    setOpen(false);
+    setSelecteTemplate(undefined);
+  };
+  console.log("selecteTemplate", selecteTemplate);
+
   return (
     <div className="Modal">
-      <Modal
-        closeIcon={<img src={CloseCircleIcon} />}
-        title={title}
-        open={open}
-        onCancel={() => setOpen(false)}
-        footer={""}
-      >
+      <Modal closeIcon={<img src={CloseCircleIcon} />} title={title} open={open} onCancel={onCancel} footer={""}>
         <div className="title">
           <p>Template </p>
         </div>
@@ -30,7 +36,7 @@ const SelectTemplateModal = (props: any) => {
           options={templateList?.map((item: any) => ({ value: item?.id, label: item?.name }))}
         />
         <div className="flex mt-7 justify-end gap-4">
-          <button onClick={() => setOpen(false)} className="reqCancelBtn">
+          <button onClick={onCancel} className="reqCancelBtn">
             Cancel
           </button>
           <button onClick={handleTemplate} className="reqSubmitBtn">

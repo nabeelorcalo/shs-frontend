@@ -1,21 +1,35 @@
-/// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import endpoints from '../../config/apiEndpoints';
+import { useState } from 'react';
+import dayjs from 'dayjs';
 
-// Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  //table data 
+  const [caseStudyData, setCaseStudyData] = useState<any>({ count: 0, data: [], pagination: {} })
+  const { CASE_STUDIES } = endpoints
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getData = async (params?: any) => {
+    let res = await api.get(CASE_STUDIES).then((
+      { count, data, pagination }
+    ): any => {
+      setCaseStudyData({
+        count,
+        data: data?.map((obj: any, index: number) => ({
+          no: index,
+          avater: Image,
+          name: `${obj?.intern?.userDetail?.firstName} ${obj?.intern?.userDetail?.lastName}`,
+          ReportName: obj?.title,
+          department: obj?.intern?.internship?.department?.name,
+          assessmentDate: dayjs(obj?.createdAt).format("DD/MM/YYYY"),
+          reportingManager: `${obj?.remarked?.firstName} ${obj?.remarked?.lastName}`,
+          status: obj?.supervisorStatus,
+        })),
+        pagination
+      })
+    });
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -34,8 +48,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, avatar , name, ReportName, department , assessmentDate,reportingManager, status }: any) =>
-      [  no, '' , name, ReportName, department , assessmentDate,reportingManager, status  ]
+    const body = data.map(({ no, avatar, name, ReportName, department, assessmentDate, reportingManager, status }: any) =>
+      [no, '', name, ReportName, department, assessmentDate, reportingManager, status]
     );
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
@@ -86,6 +100,8 @@ const useCustomHook = () => {
   return {
     getData,
     downloadPdfOrCsv,
+    //table data
+    caseStudyData
   };
 };
 

@@ -36,6 +36,9 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const [assignee, setAssignee] = useState<any>();
   const [hiringBtnText, setHiringBtnText] = useState("Move");
 
+  const [templateValues, setTemplateValues] = useState({ subject: "", description: "" });
+  const [selecteTemplate, setSelecteTemplate] = useState();
+
   // logged in user data
   const userData = useRecoilValue(currentUserState);
 
@@ -74,6 +77,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       userData: companyManagerList,
     },
   ];
+  console.log("companyManagerList", companyManagerList);
 
   // resend offer letter
   const handleResendOfferLetter = () => {
@@ -185,11 +189,16 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   //select template for offer letter and contract
   const handleTemplate = () => {
-    setIsOfferLetterTemplateModal(true);
-    setIsSelectTemplateModal(false);
+    if (templateValues?.subject !== "" && templateValues?.description !== "") {
+      setIsOfferLetterTemplateModal(true);
+      setIsSelectTemplateModal(false);
+    } else {
+      Notifications({ title: "Error", description: "Please select Template", type: "error" });
+    }
   };
   // constomized or edit template for offer letter and contract
   const handleOfferLetterTemplate = () => {
+    setTemplateValues({ subject: "", description: "" });
     if (selectTemplate?.title === "offer letter") {
       handleCheckList("offer letter");
       Notifications({ title: "Success", description: "Offer letter sent successfully", type: "success" });
@@ -206,17 +215,10 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   // select assignee
   const handleSelectAssignee = (item: any) => {
     console.log(item);
-    if (item.id) {
-      HandleAssignee(id, item.id).then(() => setAssignee(item));
-    }
-  };
 
-  const [formValues, setValueFormValues] = useState({ subject: "", description: "" });
-  const [selecteTemplate, setSelecteTemplate] = useState();
-  const handleSelectTemplate = (value: number | string) => {
-    let selectedTemplate = templateList?.find(({ id }: { id: string }) => id === value);
-    setSelecteTemplate(selectedTemplate?.name);
-    setValueFormValues({ subject: selectedTemplate?.subject, description: selectedTemplate?.description });
+    if (item.id) {
+      HandleAssignee(id, item.id).then(() => setAssignee(item?.companyManager));
+    }
   };
 
   return (
@@ -283,17 +285,17 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                                     <div className="mr-2">
                                       <Avatar
                                         className="h-[32px] w-[32px] rounded-full object-cover relative"
-                                        src={item?.avatar}
-                                        alt={item?.firstName}
+                                        src={item?.companyManager?.avatar}
+                                        alt={item?.companyManager?.firstName}
                                         icon={
                                           <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                            {item?.firstName[0]}
-                                            {item?.lastName[0]}
+                                            {item?.companyManager?.firstName[0]}
+                                            {item?.companyManager?.lastName[0]}
                                           </span>
                                         }
                                       />
                                     </div>
-                                    <div>{`${item?.firstName} ${item?.lastName}`}</div>
+                                    <div>{`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}</div>
                                   </div>
                                 </div>
                               ))}
@@ -427,12 +429,15 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         handleTemplate={handleTemplate}
         title={selectTemplate.title}
         selecteTemplate={selecteTemplate}
-        handleSelectTemplate={handleSelectTemplate}
+        setSelecteTemplate={setSelecteTemplate}
+        setTemplateValues={setTemplateValues}
       />
       <OfferLetterTemplateModal
         open={isOfferLetterTemplateModal}
         setOpen={setIsOfferLetterTemplateModal}
         handleOfferLetterTemplate={handleOfferLetterTemplate}
+        setTemplateValues={setTemplateValues}
+        templateValues={templateValues}
       />
     </div>
   );

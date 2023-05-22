@@ -1,22 +1,12 @@
 import { useState } from "react";
 import "./style.scss";
 import RequestDocModel from "./requestDocModel";
-import {
-  CvIcon,
-  DbsIcon,
-  UalIcon,
-  PassportIcon,
-  BrpIcon,
-  PoaIcon,
-  DocumentIconD,
-  DownloadDocumentIcon,
-} from "../../assets/images";
+import { CvIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images";
 import Preview from "../../assets/images/candidates/preview.svg";
 import dayjs from "dayjs";
 import constants from "../../config/constants";
 import PdfPreviewModal from "./PdfPreviewModal";
-const DrawerDocuments = ({ documents }: any) => {
-  console.log("documents", documents);
+const DrawerDocuments = ({ documents,email }: any) => {
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
         image: <CvIcon />,
@@ -27,53 +17,9 @@ const DrawerDocuments = ({ documents }: any) => {
         fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
       }))
     : [];
-  const ReqDocData1 = [
-    {
-      image: <CvIcon />,
-      title: "Cv",
-      descr: "Resume.pdf",
-      date: "01/07/2022",
-      size: "2.3 MB",
-    },
-    {
-      image: <DbsIcon />,
-      title: "DBS",
-      descr: "Resume.pdf",
-      date: "01/07/2022",
-      size: "2.3 MB",
-    },
-    {
-      image: <UalIcon />,
-      title: "University Approved Letter",
-      descr: "Resume.pdf",
-      date: "01/07/2022",
-      size: "2.3 MB",
-    },
-    {
-      image: <PassportIcon />,
-      title: "Passport",
-      descr: "Resume.pdf",
-      date: "01/07/2022",
-      size: "2.3 MB",
-    },
-    {
-      image: <BrpIcon />,
-      title: "BRP",
-      descr: "Resume.pdf",
-      date: "01/07/2022",
-      size: "2.3 MB",
-    },
-    {
-      image: <PoaIcon />,
-      title: "Proof of Address",
-      descr: "Resume.pdf",
-      date: "01/07/2022",
-      size: "2.3 MB",
-    },
-  ];
+
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
-  console.log(constants);
 
   return (
     <div className="doc-wrapper">
@@ -82,7 +28,7 @@ const DrawerDocuments = ({ documents }: any) => {
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
         </button>
-        <RequestDocModel setOpen={setOpen} open={open} />
+        <RequestDocModel setOpen={setOpen} open={open} candidateEmail={email} />
       </div>
 
       <div className="files-wrap mt-6">
@@ -103,13 +49,15 @@ const DrawerDocuments = ({ documents }: any) => {
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center">
                   <img src={Preview} alt="" onClick={() => setOpenPreview(true)} />
-                  <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} url={`${constants?.MEDIA_URL}/${data?.fileUrl}`} />
+                  <PdfPreviewModal
+                    setOpen={setOpenPreview}
+                    open={openPreview}
+                    url={`${constants?.MEDIA_URL}/${data?.fileUrl}`}
+                  />
                 </p>
               </div>
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center">
-                  {/* <Link> */}
-                  {/* </Link> */}
                   <a href={`${constants?.MEDIA_URL}/${data?.fileUrl}`}>
                     <DownloadDocumentIcon />
                   </a>

@@ -25,6 +25,10 @@ const ScheduleInterviewModal = (props: any) => {
   };
 
   const handleAddUser = (user: any) => {
+    console.log(user);
+    console.log(companyManagerList);
+    console.log(assignUser);
+    
     const filtered = assignUser.find((u: any) => u.id === user.id) ? true : false;
     if (!filtered) {
       setAssignUser([...assignUser, user]);
@@ -104,17 +108,17 @@ const ScheduleInterviewModal = (props: any) => {
                 <div className="mr-2">
                   <Avatar
                     className="h-[32px] w-[32px] rounded-full object-cover relative"
-                    src={item?.avatar}
-                    alt={item?.firstName}
+                    src={item?.companyManager?.avatar}
+                    alt={item?.companyManager?.firstName}
                     icon={
                       <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                        {item?.firstName[0]}
-                        {item?.lastName[0]}
+                        {item?.companyManager?.firstName[0]}
+                        {item?.companyManager?.lastName[0]}
                       </span>
                     }
                   />
                 </div>
-                <div>{`${item?.firstName} ${item?.lastName}`}</div>
+                <div>{`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}</div>
               </div>
               <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
                 Add
@@ -165,7 +169,7 @@ const ScheduleInterviewModal = (props: any) => {
                             className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]"
                           >
                             <span className="text-teriary-color font-normal text-xs whitespace-nowrap	">
-                              {`${user?.firstName} ${user?.lastName}`}
+                              {`${user?.companyManager?.firstName} ${user?.companyManager?.lastName}`}
                             </span>
                             <CloseCircleFilled
                               className="text-[20px] gray-color w-5 h-5"
