@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
-import { internsDataState } from "../../store/interns/index"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -15,31 +14,25 @@ const useCustomHook = () => {
   const [internshipDetails, setInternshipDetails] = useRecoilState<any>(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
-  const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
   const { state } = useLocation();
-
 
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
-    SETTING_DAPARTMENT, SETTING_LOCATION, GET_ALL_INTERNS } = apiEndpints;
-
-
-  useEffect(() => {
-    debouncedResults.cancel();
-  });
+    SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
 
   //Get all internship data
-  const getAllInternshipsData = async (status: any, location: any, department: any,) => {
+  const getAllInternshipsData = async (status: any = null, location: any = null, department: any = null, searchValue: any = null) => {
     const params = {
       limit: 100,
       page: 1,
       status: status ? status : undefined,
       locationId: location ? location : undefined,
-      departmentId: department ? department : undefined
+      departmentId: department ? department : undefined,
+      search: searchValue ? searchValue : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_LIST_INTERNSHIP, query);
@@ -58,13 +51,6 @@ const useCustomHook = () => {
     const { data } = await api.get(SETTING_LOCATION, { page: 1, limit: 10 });
     setLocationsData(data)
   };
-
-  // Get all inters data
-  const getAllInternsData = async () => {
-    const { data } = await api.get(GET_ALL_INTERNS, { userType: 'intern' })
-    setGetAllInters(data);
-    setIsLoading(true);
-  }
 
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
@@ -105,8 +91,6 @@ const useCustomHook = () => {
       requirements, typeofwork, frequency, amount, natureofwork,
       positions, closingDate, duration, internshipType, salaryAmount,
       departmentId, status, locationId, id } = values
-    console.log(id);
-
     const internshipData = {
       "id": state?.id ? state?.id : id,
       "title": title,
@@ -134,35 +118,29 @@ const useCustomHook = () => {
   //Duplicate internship
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
-    getAllInternshipsData(null, null, null)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship duplicated", type: "success" })
   }
 
   //Internship details
-  const getInternshipDetails = async () => {
-    const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id });
+  const getInternshipDetails = async (searchValue: any) => {
+    const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id, search: searchValue ? searchValue : null });
     setInternshipDetails(data)
   };
 
   //Delete internship
   const deleteInternshipData = async (id: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData(null, null, null)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
-  //Search internships
-  const changeHandler = async (val: any) => {
-    const { data } = await api.get(GET_LIST_INTERNSHIP,
-      val
-        ? { page: 1, limit: 10, search: val }
-        : { page: 1, limit: 10 }
-    );
-    setInternshipData(data);
-  };
-  const debouncedResults = useMemo(() => {
-    return debounce(changeHandler, 500);
-  }, []);
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
+
 
   return {
     postNewInternshipsData,
@@ -173,13 +151,11 @@ const useCustomHook = () => {
     deleteInternshipData,
     getAllLocationsData,
     getInternshipDetails,
-    getAllInternsData,
-    changeHandler,
+    debouncedSearch,
     departmentsData,
     internshipDetails,
     internshipData,
     locationsData,
-    getAllInterns,
     isLoading,
   };
 };
