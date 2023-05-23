@@ -11,37 +11,26 @@ import csv from '../../helpers/csv';
 
 
 // Chat operation and save into store
-const useCustomHook = () => {
+const useCustomHook = (searchValue: any) => {
   const { GET_ALL_INTERNS } = apiEndpints
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    debouncedResults.cancel();
-  });
-
   // Get all inters data
   const getAllInternsData = async () => {
-    const { data } = await api.get(GET_ALL_INTERNS, { userType: 'intern' })
+    const { data } = await api.get(GET_ALL_INTERNS,
+      {
+        userType: 'intern',
+        search: searchValue ? searchValue : null
+      })
     setGetAllInters(data);
     setIsLoading(true);
   }
 
-  //Search internships
-  const changeHandler = async (val: any) => {
-    const { data } = await api.get(
-      GET_ALL_INTERNS,
-      val
-        ? { userType: 'intern', search: val }
-        : { userType: 'intern' }
-    );
-    setGetAllInters(data);
-  };
-  const debouncedResults = useMemo(() => {
-    return debounce(changeHandler, 500);
-  }, []);
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
 
- 
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -113,7 +102,7 @@ const useCustomHook = () => {
   return {
     downloadPdfOrCsv,
     getAllInternsData,
-    changeHandler,
+    debouncedSearch,
     getAllInterns,
     isLoading
   };

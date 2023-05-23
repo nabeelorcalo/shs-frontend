@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
-  SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
+  FiltersButton, PageHeader, InternshipProgressCard,
   BoxWrapper, NoDataFound
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
@@ -10,6 +10,7 @@ import { Button, Col, Row, Spin, Input } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import SelectComp from '../../../components/Select/Select'
+import { GlassMagnifier } from "../../../assets/images";
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
@@ -35,15 +36,13 @@ const InternshipsCompanyAdmin = () => {
     locationsData, debouncedSearch }: any = useCustomHook(searchValue);
 
   useEffect(() => {
-    // getAllInternshipsData(state.status, state.location, state.department);
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
-  
+
   useEffect(() => {
     getAllInternshipsData(state.status, state.location, state.department);
   }, [searchValue])
-
 
   const handleDrawer = () => {
     setState((prevState) => ({
@@ -51,6 +50,7 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
+  // getting filters data
   const handleStatus = (event: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -69,6 +69,7 @@ const InternshipsCompanyAdmin = () => {
       department: event
     }))
   }
+  // handle apply filters 
   const handleApplyFilter = () => {
     getAllInternshipsData(state.status, state.location, state.department);
     setState((prevState) => ({
@@ -76,6 +77,7 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: false
     }))
   }
+  // handle reset filters 
   const handleResetFilter = () => {
     setState((prevState) => ({
       ...prevState,
@@ -84,6 +86,7 @@ const InternshipsCompanyAdmin = () => {
       department: undefined
     }))
   }
+  // handle search internships 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
@@ -93,9 +96,13 @@ const InternshipsCompanyAdmin = () => {
       <PageHeader bordered title="Internships" />
       <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
-          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            {/* <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" /> */}
-            <Input placeholder="search" onChange={debouncedResults} />
+          <Col xl={6} lg={9} md={24} sm={24} xs={24} className='input-wrapper'>
+            <Input
+              className='search-bar'
+              placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />}
+            />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4">
             <FiltersButton label="Filters" onClick={handleDrawer} />

@@ -1,38 +1,32 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useMemo } from "react";
+// import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { applicationDataState } from '../../store/Applications/index';
+import { applicationDataState } from '../../store/applications';
 import csv from '../../helpers/csv';
 
 
 // Chat operation and save into store
-const useCustomHook = () => {
+const useCustomHook = (searchValue: any) => {
   const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
   const { GET_APPLICATIONS } = apiEndpints
 
-  useEffect(() => {
-    debouncedResults.cancel();
-  });
-
   const getApplicationsData = async (): Promise<any> => {
-    const { data } = await api.get(GET_APPLICATIONS);
+    const { data } = await api.get(GET_APPLICATIONS, {
+      search: searchValue ? searchValue : null
+    });
     setApplicationsData(data)
   };
 
-  //Search applications
-  const SearchApplications = async (val: any) => {
-    const { data } = await api.get(
-      GET_APPLICATIONS, { search: val });
-    setApplicationsData(data);
-  };
-  const debouncedResults: any = useMemo(() => {
-    return debounce(SearchApplications, 500);
-  }, []);
+  //Search applications 
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -103,7 +97,7 @@ const useCustomHook = () => {
   return {
     getApplicationsData,
     downloadPdfOrCsv,
-    SearchApplications,
+    debouncedSearch,
     applicationsData,
   };
 };

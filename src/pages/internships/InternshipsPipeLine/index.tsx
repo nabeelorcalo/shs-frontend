@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import {
-  SearchBar,
   PageHeader,
   InternshipPipeLineCard,
   Breadcrumb,
   NoDataFound,
 } from "../../../components";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships } from '../../../assets/images'
+import {
+  DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon,
+  EditIconinternships, GlassMagnifier
+} from '../../../assets/images'
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 // import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import SelectComp from "../../../components/Select/Select";
-import { Avatar,Input } from "antd";
+import { Avatar, Input } from "antd";
 import dayjs from 'dayjs';
 import "../style.scss";
 
@@ -30,16 +32,23 @@ const InternshipPipeLine = () => {
   const { state }: any = useLocation()
   const [searchValue, setSearchValue] = useState('')
   const [states, setState] = useState({
-    status: 'Published',
+    status: undefined,
     isOpen: false,
     userData: {}
   })
-
-  const { getInternshipDetails, internshipDetails,debouncedSearch } = useCustomHook(searchValue);
+  const statusArry = [
+    { value: 'PUBLISHED', label: 'Published' },
+    { value: 'CLOSED', label: 'Closed' },
+    { value: 'REJECTED', label: 'Rejected' },
+  ]
+  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook(searchValue);
 
   useEffect(() => {
     getInternshipDetails()
   }, [searchValue])
+
+  console.log('pipeline data', internshipDetails);
+
 
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
@@ -91,13 +100,13 @@ const InternshipPipeLine = () => {
     return `${today.diff(date, 'day')} days ago`;
   }
 
-  const changeStatus = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      status: event
-    }))
-  }
-
+  // const changeStatus = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     status: event
+  //   }))
+  // }
+  // Search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
@@ -123,12 +132,8 @@ const InternshipPipeLine = () => {
             </span>
           </div>
           <SelectComp
-            value={states.status}
-            options={[
-              { label: "Published", value: "published" },
-              { label: "Closed", value: "close" },
-            ]}
-            onChange={(event: any) => { changeStatus(event) }}
+            value={internshipDetails?.status}
+            options={statusArry}
           />
         </div>
         <div>
@@ -154,9 +159,12 @@ const InternshipPipeLine = () => {
           </div>
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <div className="max-sm:w-full md:w-[25%]">
-            {/* <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search by name" size="middle" /> */}
-            <Input placeholder="search" onChange={debouncedResults} />
+          <div className="max-sm:w-full md:w-[25%] input-wrapper">
+            <Input
+              className="search-bar"
+              placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />} />
           </div>
           <div className="flex flex-row gap-4">
             <span className="font-semibold">Total Candidates:</span>{internshipDetails?.interns?.length < 10 ?

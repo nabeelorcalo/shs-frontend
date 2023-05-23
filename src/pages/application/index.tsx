@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-  GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
+  GlobalTable, PageHeader, BoxWrapper, InternsCard,
   FiltersButton, DropDown, StageStepper, DrawerWidth
 } from "../../components";
-import { More } from "../../assets/images"
-import { Button, MenuProps, Dropdown, Avatar, Row, Col } from 'antd';
+import { GlassMagnifier, More } from "../../assets/images"
+import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import "./style.scss";
@@ -34,7 +34,7 @@ const ButtonStatus = (props: any) => {
 const Application = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  // const [listandgrid, setListandgrid] = useState(false)
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
@@ -42,13 +42,14 @@ const Application = () => {
     stage: ""
   })
 
-  const { applicationsData, getApplicationsData, downloadPdfOrCsv, SearchApplications } = useCustomHook();
+  const { applicationsData, getApplicationsData,
+    downloadPdfOrCsv, debouncedSearch } = useCustomHook(searchValue);
 
   useEffect(() => {
     getApplicationsData()
-  }, [])
+  }, [searchValue])
 
-  console.log('applications data', applicationsData);
+
 
   const PopOver = ({ state }: any) => {
     const items: MenuProps["items"] = [
@@ -186,16 +187,22 @@ const Application = () => {
       stage: event
     }))
   }
+  // handle search  
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader title="Applications" />
       <div className="flex flex-col gap-5">
         <Row gutter={[20, 20]}>
-          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar
-              handleChange={SearchApplications}
-              name="search"
+          <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
+            <Input
+              className='search-bar'
               placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />}
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
@@ -245,11 +252,10 @@ const Application = () => {
                         "Hybrid",
                         "Virtual",
                       ]}
-                      setValue={(event:any) => { updateNatureOfWork(event); console.log(event);
-                       }}
+                      setValue={(event: any) => {
+                        updateNatureOfWork(event); console.log(event);
+                      }}
                       requireCheckbox
-                      showDatePickerOnVal="custom"
-                      // startIcon=""
                       value={state.natureOfWork}
                     />
                   </div>
@@ -318,10 +324,10 @@ const Application = () => {
                   }
                 </div>
                   : */}
-                  <GlobalTable
-                    columns={columns}
-                    tableData={newTableData}
-                  />
+              <GlobalTable
+                columns={columns}
+                tableData={newTableData}
+              />
               {/* // } */}
 
             </BoxWrapper>

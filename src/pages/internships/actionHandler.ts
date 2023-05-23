@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { internshipDataState, internshipDetailsState } from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
-// import { internsDataState } from "../../store/interns/index"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { Notifications } from "../../components";
@@ -15,24 +14,15 @@ const useCustomHook = (searchValue?: any) => {
   const [internshipDetails, setInternshipDetails] = useRecoilState<any>(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
-  // const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [isLoading, setIsLoading] = useState(false)
-
   const navigate = useNavigate()
   const { state } = useLocation();
-
 
   const {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
     SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
-
-
-  // useEffect(() => {
-  //   debouncedResults.cancel();
-    // pipelineInternDebounce.cancel();
-  // });
 
   //Get all internship data
   const getAllInternshipsData = async (status: any, location: any, department: any,) => {
@@ -42,7 +32,7 @@ const useCustomHook = (searchValue?: any) => {
       status: status ? status : undefined,
       locationId: location ? location : undefined,
       departmentId: department ? department : undefined,
-      search:searchValue?searchValue:null
+      search: searchValue ? searchValue : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_LIST_INTERNSHIP, query);
@@ -61,13 +51,6 @@ const useCustomHook = (searchValue?: any) => {
     const { data } = await api.get(SETTING_LOCATION, { page: 1, limit: 10 });
     setLocationsData(data)
   };
-
-  // Get all inters data
-  // const getAllInternsData = async () => {
-  //   const { data } = await api.get(GET_ALL_INTERNS, { userType: 'intern' })
-  //   setGetAllInters(data);
-  //   setIsLoading(true);
-  // }
 
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
@@ -108,8 +91,6 @@ const useCustomHook = (searchValue?: any) => {
       requirements, typeofwork, frequency, amount, natureofwork,
       positions, closingDate, duration, internshipType, salaryAmount,
       departmentId, status, locationId, id } = values
-    console.log(id);
-
     const internshipData = {
       "id": state?.id ? state?.id : id,
       "title": title,
@@ -154,27 +135,7 @@ const useCustomHook = (searchValue?: any) => {
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
-  //Search internships
-  // const changeHandler = async (val: any) => {
-  //   const params = {
-  //     page: 1,
-  //     limit: 10,
-  //     search: val ? val : null
-  //   }
-  //   let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-  //   const { data } = await api.get(GET_LIST_INTERNSHIP, query);
-  //   setInternshipData(data);
-  // };
-  // const debouncedResults = useMemo(() => {
-  //   return debounce(changeHandler, 500);
-  // }, []);
-
-  // const debouncedSearch = debounce((searchValue, setSearchValue) => {
-  //   setSearchValue(searchValue);
-  //   console.log(searchValue);
-
-  // }, 500);
-
+  //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
@@ -190,14 +151,11 @@ const useCustomHook = (searchValue?: any) => {
     deleteInternshipData,
     getAllLocationsData,
     getInternshipDetails,
-    // getAllInternsData,
     debouncedSearch,
-    // changeHandler,
     departmentsData,
     internshipDetails,
     internshipData,
     locationsData,
-    // getAllInterns,
     isLoading,
   };
 };

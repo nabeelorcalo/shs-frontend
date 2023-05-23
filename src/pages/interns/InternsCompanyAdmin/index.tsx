@@ -6,7 +6,7 @@ import {
 import { TextArea } from "../../../components";
 import {
   AlertIcon, CardViewIcon, More, SuccessIcon,
-  TableViewIcon, UserAvatar, ArrowDownDark
+  TableViewIcon, UserAvatar, ArrowDownDark, GlassMagnifier
 } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select, Space, Input } from 'antd';
 import useCustomHook from "./actionHandler";
@@ -14,14 +14,13 @@ import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
 import '../style.scss'
 
-
-
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [assignManager, setAssignManager] = useState(false)
   const [terminate, setTerminate] = useState(false)
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     manager: undefined,
     status: undefined,
@@ -38,20 +37,24 @@ const InternsCompanyAdmin = () => {
   ]
 
   const { getAllInternsData, getAllInters,
-    changeHandler, downloadPdfOrCsv, isLoading,
+    downloadPdfOrCsv, isLoading,
     getAllDepartmentData, departmentsData,
     getAllManagersData, getAllManagers,
     getAllUniuversitiesData, getAllUniversities,
-    updateInterns, updateCandidatesRecords }: any = useCustomHook()
+    updateCandidatesRecords,
+    debouncedSearch }: any = useCustomHook(searchValue)
 
+    useEffect(() => {
+      getAllDepartmentData();
+      getAllManagersData();
+      getAllUniuversitiesData();
+    }, [])
 
-  useEffect(() => {
-    getAllInternsData(state);
-    getAllDepartmentData();
-    getAllManagersData();
-    getAllUniuversitiesData();
-  }, [])
+    useEffect(() => {
+      getAllInternsData(state);
+    }, [searchValue])
 
+    
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "completed": "primary-bg-color",
@@ -242,15 +245,22 @@ const InternsCompanyAdmin = () => {
     console.log('Search:', value);
   }
 
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
+
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar
-            handleChange={changeHandler}
-            name="search"
-            placeholder="Search by name"
+          <Input
+            className='search-bar'
+            placeholder="Search"
+            onChange={debouncedResults}
+            prefix={<GlassMagnifier />}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
@@ -498,7 +508,7 @@ const InternsCompanyAdmin = () => {
             </Button>
             <Button
               onClick={(id: any) => {
-                updateCandidatesRecords();
+                updateCandidatesRecords(id);
               }}
               type="default"
               size="middle"
