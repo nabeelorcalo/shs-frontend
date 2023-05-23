@@ -6,22 +6,23 @@ import UniversityTable from './universityTable';
 import useCustomHook from './actionHandler';
 import DropDownNew from '../../../components/Dropdown/DropDownNew'
 import { ThreeDots } from '../../../assets/images'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './style.scss'
 import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const index: React.FC = () => {
-  const [Country,setCountry]=useState("");
+  const [Country, setCountry] = useState("");
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
   const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
 
+  const navigate = useNavigate()
   const { getUniversities, universitiesData }: any = useCustomHook();
 
   useEffect(() => {
     getUniversities(Country)
   }, [])
-
+  console.log(universitiesData, "universitiesData");
 
   const UniversityTableColumn =
     [
@@ -69,14 +70,28 @@ const index: React.FC = () => {
       },
       {
         title: 'Action',
-        dataIndex: '',
-        render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
+        dataIndex: 'action',
+      },
+    ]
+
+  const univertyTableData = universitiesData?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        no: universitiesData?.length < 10 && `0${index + 1}`,
+        id: item?.id,
+        universityName: item?.university?.name,
+        universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
+        email: item?.university?.email,
+        contact: item?.university?.phoneNumber,
+        city: item?.university?.city,
+        action: <DropDownNew placement={'bottomRight'}
           items={[
             {
               label:
-                <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`}>
+                <p onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`, { state: item?.id })}>
                   View Details
-                </NavLink>,
+                </p>,
               key: 'interns'
             },
             {
@@ -95,23 +110,14 @@ const index: React.FC = () => {
           ]}>
           <ThreeDots className='cursor-pointer' />
         </DropDownNew>
-      },
-    ]
-
-  const univertyTableData = universitiesData?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        no: universitiesData?.length < 10 && `0${index + 1}`,
-        universityName: item?.name,
-        email: item?.email,
-        contact: item?.phoneNumber,
-        city: item?.city,
       }
     )
   })
 
-  const handleChange = () => { };
+
+  const handleChange = (e:any) => {
+    
+   };
 
   return (
     <div className='company-university '>

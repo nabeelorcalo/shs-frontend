@@ -7,19 +7,23 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../../api";
 import csv from "../../../../helpers/csv";
-
-
+import endpoints from "../../../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { universityIntersDataState } from "../../../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_UNIVERSITYINTERNS } = endpoints;
+  const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getUniIntersTableData = async (id: any) => {
+    const params = {
+      userUniversityId: id,
+      //  interName:search
+    }
+    const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
+    setUniversityIntersData(data)
   };
-
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -35,8 +39,8 @@ const useCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ id, avater,  name, department, joiningDate , dateOfBirth  }: any) =>
-      [ id, '',  name, department, joiningDate , dateOfBirth  ]
+    const body = data.map(({ id, avater, name, department, joiningDate, dateOfBirth }: any) =>
+      [id, '', name, department, joiningDate, dateOfBirth]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -86,7 +90,9 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getUniIntersTableData,
+    universityIntersData,
+    setUniversityIntersData,
     downloadPdfOrCsv,
   };
 };
