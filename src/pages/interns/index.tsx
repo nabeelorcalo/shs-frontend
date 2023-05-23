@@ -17,10 +17,10 @@ const Interns = () => {
   const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
   const navigate = useNavigate();
   const { getAllInterns, getAllInternsData,
-    downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook(searchValue)
+    downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook()
 
   useEffect(() => {
-    getAllInternsData();
+    getAllInternsData(searchValue);
   }, [searchValue])
 
   const PopOver = () => {

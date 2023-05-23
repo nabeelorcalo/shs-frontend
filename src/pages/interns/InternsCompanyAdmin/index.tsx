@@ -42,7 +42,7 @@ const InternsCompanyAdmin = () => {
     getAllManagersData, getAllManagers,
     getAllUniuversitiesData, getAllUniversities,
     updateCandidatesRecords,
-    debouncedSearch }: any = useCustomHook(searchValue)
+    debouncedSearch }: any = useCustomHook()
 
     useEffect(() => {
       getAllDepartmentData();
@@ -51,7 +51,7 @@ const InternsCompanyAdmin = () => {
     }, [])
 
     useEffect(() => {
-      getAllInternsData(state);
+      getAllInternsData(state,searchValue);
     }, [searchValue])
 
     

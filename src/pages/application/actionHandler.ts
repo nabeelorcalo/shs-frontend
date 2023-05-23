@@ -6,20 +6,27 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { applicationDataState } from "../../store";
+import { applicationDataState, applicationDetailState } from "../../store";
 import csv from '../../helpers/csv';
 
 
 // Chat operation and save into store
-const useCustomHook = (searchValue: any) => {
+const useCustomHook = () => {
   const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
-  const { GET_APPLICATIONS } = apiEndpints
+  const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
+  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints
 
-  const getApplicationsData = async (): Promise<any> => {
+  const getApplicationsData = async (searchValue: any) => {
     const { data } = await api.get(GET_APPLICATIONS, {
       search: searchValue ? searchValue : null
     });
     setApplicationsData(data)
+  };
+
+  // get application details list 
+  const getApplicationsDetails = async (val: any) => {
+    const { data } = await api.get(GET_APPLICATIONS_DETAILS, { id: val });
+    setapplicationDetailsState(data)
   };
 
   //Search applications 
@@ -96,7 +103,9 @@ const useCustomHook = (searchValue: any) => {
 
   return {
     getApplicationsData,
+    getApplicationsDetails,
     downloadPdfOrCsv,
+    applicationDetailsState,
     debouncedSearch,
     applicationsData,
   };

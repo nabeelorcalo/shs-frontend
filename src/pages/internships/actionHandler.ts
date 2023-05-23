@@ -9,7 +9,7 @@ import { debounce } from "lodash";
 import { Notifications } from "../../components";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 
-const useCustomHook = (searchValue?: any) => {
+const useCustomHook = () => {
   const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
   const [internshipDetails, setInternshipDetails] = useRecoilState<any>(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
@@ -25,7 +25,7 @@ const useCustomHook = (searchValue?: any) => {
     SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
 
   //Get all internship data
-  const getAllInternshipsData = async (status: any, location: any, department: any,) => {
+  const getAllInternshipsData = async (status: any, location: any, department: any,searchValue:any) => {
     const params = {
       limit: 100,
       page: 1,
@@ -118,12 +118,12 @@ const useCustomHook = (searchValue?: any) => {
   //Duplicate internship
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
-    getAllInternshipsData(null, null, null)
+    getAllInternshipsData(null, null, null,null)
     Notifications({ title: "Success", description: "Internship duplicated", type: "success" })
   }
 
   //Internship details
-  const getInternshipDetails = async () => {
+  const getInternshipDetails = async (searchValue:any) => {
     const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id, search: searchValue ? searchValue : null });
     setInternshipDetails(data)
   };
@@ -131,7 +131,7 @@ const useCustomHook = (searchValue?: any) => {
   //Delete internship
   const deleteInternshipData = async (id: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData(null, null, null)
+    getAllInternshipsData(null, null, null,null)
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 

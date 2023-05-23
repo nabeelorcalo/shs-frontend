@@ -41,10 +41,10 @@ const InternshipPipeLine = () => {
     { value: 'CLOSED', label: 'Closed' },
     { value: 'REJECTED', label: 'Rejected' },
   ]
-  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook(searchValue);
+  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getInternshipDetails()
+    getInternshipDetails(searchValue)
   }, [searchValue])
 
   console.log('pipeline data', internshipDetails);

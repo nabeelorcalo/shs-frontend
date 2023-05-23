@@ -27,7 +27,7 @@ const Internships = () => {
   })
   const { getAllInternshipsData, internshipData,
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
-    departmentsData, locationsData, debouncedSearch } = useCustomHook(searchValue);
+    departmentsData, locationsData, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
     getAllDepartmentData();
@@ -35,7 +35,7 @@ const Internships = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    getAllInternshipsData(state.status, state.location, state.department,searchValue);
   }, [searchValue])
 
   const handleDublicate = (id: any) => {
@@ -183,7 +183,7 @@ const Internships = () => {
     }))
   }
   const handleApplyFilter = () => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    getAllInternshipsData(state.status, state.location, state.department,searchValue);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false

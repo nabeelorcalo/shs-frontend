@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import apiEndpints from "../../config/apiEndpoints";
@@ -11,13 +11,13 @@ import csv from '../../helpers/csv';
 
 
 // Chat operation and save into store
-const useCustomHook = (searchValue: any) => {
+const useCustomHook = () => {
   const { GET_ALL_INTERNS } = apiEndpints
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [isLoading, setIsLoading] = useState(false);
 
   // Get all inters data
-  const getAllInternsData = async () => {
+  const getAllInternsData = async (searchValue: any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',

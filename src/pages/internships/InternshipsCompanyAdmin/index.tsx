@@ -33,7 +33,7 @@ const InternshipsCompanyAdmin = () => {
 
   const { getAllInternshipsData, internshipData, isLoading,
     getAllDepartmentData, getAllLocationsData, departmentsData,
-    locationsData, debouncedSearch }: any = useCustomHook(searchValue);
+    locationsData, debouncedSearch }: any = useCustomHook();
 
   useEffect(() => {
     getAllDepartmentData();
@@ -41,7 +41,7 @@ const InternshipsCompanyAdmin = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    getAllInternshipsData(state.status, state.location, state.department,searchValue);
   }, [searchValue])
 
   const handleDrawer = () => {
