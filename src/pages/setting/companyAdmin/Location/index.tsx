@@ -10,44 +10,29 @@ import { settingLocationState } from "../../../../store";
 import { useRecoilState } from "recoil";
 const { Text } = Typography;
 
-// const demoData = [
-//   {
-//     name: "London",
-//     address: "United Kingdom",
-//     companyId: "25 Employees"
-//   },
-//   {
-//     name: "Bistol",
-//     address: "United Kingdom",
-//     companyId: "25 Employees"
-//   },
-// ]
-
 const SettingLocation: React.FC = () => {
-  const action = useCustomHook();
   const settingLocation = useRecoilState(settingLocationState)
-  const imageUrl = "http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/31eb391d-3b73-41dc-ba04-41e0c9de6cb8.svg"
-  const [state , setState] = useState<any>(
+  const [state, setState] = useState<any>(
     {
-      showDeleteModal:false,
-      locationId:""
+      isDeleteModal: false,
+      id: null
     }
   )
+  const { deleteSettingLocation, getSettingLocation } = useCustomHook();
+
   const handleChange = (event: any) => {
-    action.getSettingLocation(1, event)
+    getSettingLocation(event)
   };
 
+  console.log(state);
+
   const SetId = (id: any) => {
-    setState({...state, locationId:id})
-    setState({...state,showDeleteModal:!state.showDeleteModal})
-  }
-  const DeleleHandler = () => {
-    action.deleteSettingLocation(state.locationId)
-    setState({...state, showDeleteModal:false})
+    setState({ ...state, locationId: id })
+    setState({ ...state, isDeleteModal: true })
   }
 
   useEffect(() => {
-    action.getSettingLocation(1,"")
+    getSettingLocation("")
   }, [])
 
   return (
@@ -78,10 +63,11 @@ const SettingLocation: React.FC = () => {
                         <span className="float-right cursor-pointer">
                           <DropDownForSetting
                             link={`${ROUTES_CONSTANTS.ADD_LOCATION}`}
-                            showDeleteModal={state.showDeleteModal}
-                            setShowDeleteModal={setState}
+                            state={state}
+                            setState={setState}
                             id={data?.id}
-                            SetId={SetId}
+                            editData={data}
+                            // SetEditData={setEdit}
                           />
                         </span>
                       </div>
@@ -105,13 +91,13 @@ const SettingLocation: React.FC = () => {
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
-        okBtnFunc={DeleleHandler}
-        state={state.showDeleteModal}
+        state={state.isDeleteModal}
         setState={setState}
         type="error"
         width={500}
         title=""
         children={<p>Are you sure you want to delete this?</p>}
+        okBtnFunc={() => deleteSettingLocation(state.id)}
       />
     </div>
   );

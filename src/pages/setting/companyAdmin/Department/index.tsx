@@ -18,7 +18,7 @@ const SettingDepartment: React.FC = () => {
       search: '',
       isEditModal: false,
       isDeleteModal: false,
-      departmentId: null,
+      id: null,
     }
   )
 
@@ -80,7 +80,7 @@ const SettingDepartment: React.FC = () => {
         width={500}
         title=""
         children={<p>Are you sure you want to delete this?</p>}
-        okBtnFunc={() => deleteSettingDepartment(state.departmentId)}
+        okBtnFunc={() => deleteSettingDepartment(state.id)}
       />
     </div>
   );

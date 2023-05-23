@@ -29,8 +29,8 @@ export const DropDownForSetting = (props: any) => {
   }
 
   const deleteHandler = () => {
-    setState({ ...state, isDeleteModal: true, departmentId: editData?.id }),
-      setVisible(false)
+    setState({ ...state, isDeleteModal: true, id: editData?.id });
+    setVisible(false)
   }
 
   const items: MenuProps['items'] = [
