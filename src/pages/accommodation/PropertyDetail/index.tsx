@@ -12,51 +12,20 @@ import PropertyPricing from "./PropertyPricing";
 import BookingRequest from "./BookingRequest";
 import { useRecoilValue} from "recoil";
 import usePropertyHook from "./actionHandler";
-import { propertyState } from "../../../store";
+import { propertyState, galleryState } from "../../../store";
 import { IconWebLocation, IconArrowDown } from '../../../assets/images';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
 const { useBreakpoint } = Grid;
 
-// Temporary
-import thumb1 from "../../../assets/images/gallery/thumb1.png";
-import thumb2 from "../../../assets/images/gallery/thumb2.png";
-import thumb3 from "../../../assets/images/gallery/thumb3.png";
-import thumb4 from "../../../assets/images/gallery/thumb4.png";
-import thumb5 from "../../../assets/images/gallery/thumb5.png";
-import gal1 from "../../../assets/images/gallery/gal1.png";
-
-const images = [
-  {
-    original: gal1,
-    thumbnail: thumb1,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb2,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb3,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb4,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb5,
-  },
-];
 
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { getProperty } = usePropertyHook();
   const property:any = useRecoilValue(propertyState);
+  const gallery = useRecoilValue(galleryState);
   const screens = useBreakpoint();
-  const navigate = useNavigate();
-  const {state} = useLocation();
   const {propertyId} = useParams();
   const [loading, setLoading] = useState(false);
   const anchorItems = [
@@ -91,7 +60,6 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getProperty(propertyId, setLoading)
-    console.log('Property::: ', property)
   }, [])
 
 
@@ -121,24 +89,28 @@ const AccPropertyDetail = () => {
           {property &&
             <div className="property-detail-content">
               <div className="property-detail-content-left">
-                {property.attachments?.length !== 0 &&
-                  <div className="property-gallery">
-                    <ImageGallery
-                      items={images}
-                      showNav={false}
-                      thumbnailPosition={screens.lg ? 'left' : 'bottom'}
-                      showFullscreenButton={false}
-                      useBrowserFullscreen={false}
-                      showPlayButton={false}
-                      showBullets={true}
-                      autoPlay={false}
-                      disableThumbnailScroll={false}
-                      slideDuration={450}
-                      slideInterval={3000}
-                      onImageError={() => console.log('image error')}
-                      onThumbnailError={() => console.log('thumbanil errror')}
-                    />
-                  </div>
+                {property?.attachments?.length !== 0 ?
+                  (
+                    <div className="property-gallery">
+                      <ImageGallery
+                        items={gallery}
+                        showNav={false}
+                        thumbnailPosition={screens.lg ? 'left' : 'bottom'}
+                        showFullscreenButton={false}
+                        useBrowserFullscreen={false}
+                        showPlayButton={false}
+                        showBullets={true}
+                        autoPlay={false}
+                        disableThumbnailScroll={false}
+                        slideDuration={450}
+                        slideInterval={3000}
+                        onImageError={() => console.log('image error')}
+                        onThumbnailError={() => console.log('thumbanil errror')}
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )
                 }
                 
 
@@ -214,7 +186,11 @@ const AccPropertyDetail = () => {
                 </div>
               </div>
               <div className="property-detail-content-right">
-                <BookingRequest />
+                <BookingRequest
+                  propertyId={property?.id}
+                  rent={property?.rent}
+                  rentFrequency={property?.rentFrequency}
+                />
 
                 <div className="booking-request-faq">
                   <Collapse

@@ -11,7 +11,7 @@ const useListingsHook = () => {
 
   // Create Agent Property
   const createListing = async (data: any) => {
-    const response = await api.post(ADD_PROPERTY, data)
+    const response = await api.post(ADD_PROPERTY, data, {headers: {'Content-Type': 'multipart/form-data'}})
     return response
   }
 
@@ -42,9 +42,17 @@ const useListingsHook = () => {
   // Get Single Property
   const getListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const res = await api.get(`${GET_PROPERTY}${id}`)
+    const res:any = await api.get(`${GET_PROPERTY}${id}`)
     if(!res.error) {
-      setSingleListing(res.data)
+      let {data} = res;
+      const attachments = data?.attachments?.map(({
+        mediaUrl: url,
+        ...rest
+        }:any) => ({
+        url,
+        ...rest
+        }));
+      setSingleListing({...data, attachments})
     }
     setLoading(false);
   }

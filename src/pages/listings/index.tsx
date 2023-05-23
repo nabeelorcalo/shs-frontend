@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PageHeader, SearchBar, Alert } from '../../components'
-import useListingsHook from './actionHandler'
+import { PageHeader, SearchBar, Alert } from '../../components';
+import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
 import { useRecoilValue, useRecoilState } from "recoil";
-import dayjs from 'dayjs'
-import showNotification from '../../helpers/showNotification'
+import dayjs from 'dayjs';
+import showNotification from '../../helpers/showNotification';
 import {
   IconAddListings,
   IconAngleDown,
@@ -468,8 +468,7 @@ const Listings = () => {
                       <div className="button-upload-from-device">
                         <Button className="button-tertiary">Upload from device</Button>
                       </div>
-                    )
-                    }
+                    )}
                   </Upload>
                 </Form.Item>
                 {!uploadDevice &&
@@ -740,7 +739,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <Form.Item
-              name="genderPreference"
+              name="gender"
               label="Do you prefer tenants have a specific gender"
               rules={[{ required: true }]}
             >
@@ -878,7 +877,7 @@ const Listings = () => {
                 </div>
               </div>
             </Form.Item>
-            <Form.Item name="occupationProofRequired " rules={[{ required: true }]} valuePropName="checked">
+            <Form.Item name="occupationProofRequired" rules={[{ required: true }]} valuePropName="checked">
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
                   <Checkbox >Proof of occupation or enrollment</Checkbox>
@@ -1029,6 +1028,7 @@ const Listings = () => {
   const onValuesChange = (changedValues: any, allValues: any) => {
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
     allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
+    console.log("Valuessss:: ", allValues)
   };
 
   const submitAddListing = async () => {
@@ -1037,15 +1037,14 @@ const Listings = () => {
     for(const name in previousValues) {
       formData.append(name, previousValues[name])
     }
-    formData.append('media', previousValues.media.map((file:any) => file.originFileObj))
+    formData.append('attachments', previousValues.attachments.map((file:any) => file.originFileObj))
     const result = await createListing(formData);
-    if(!result.error) {
-      showNotification("success", "Success", result.message);
-    }
+   
     setLoadingAddListing(false);
+    showNotification("success", "Success", result.message);
     closeModalAddListing();
     setStepCurrent(0);
-    getListings(setLoadingAllProperties)
+    // getListings(setLoadingAllProperties)
   }
 
 
@@ -1157,7 +1156,6 @@ const Listings = () => {
         okBtnFunc={() => {deleteListing(propertyID, setLoadingDelProperty); closeModalDeleteListing();}}
         children={<p>Do you really want to delete this property?</p>}
       />
-      
     </>
   )
 }

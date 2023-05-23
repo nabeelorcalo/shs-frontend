@@ -5,6 +5,7 @@ const endpoints = {
   GET_AGENT_PROPERTIES: "property/get-agent-properties",
   ADD_PROPERTY: "property/add-property",
   GET_PROPERTY: "property/get-property?propertyId=",
+  CHECK_PROPERTY_AVAILABILITY: "/property/check-property-availability",
   UPDATE_PROPERTY: "/property/update-property?propertyId=",
   DELETE_PROPERTY: "property/delete-property?propertyId=",
   GET_AVAILABLE_PROPERTIES: "property/get-available-properties",
