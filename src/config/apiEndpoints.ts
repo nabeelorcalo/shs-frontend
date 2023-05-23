@@ -11,8 +11,8 @@ const endpoints = {
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
   POST_SAVE_PROPERTY: "property/save-property",
-  SETTING_LOCATION: "location",
-  SETTING_DAPARTMENT: "department",
+  LOCATION: "location",
+  DAPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   PAYROLL_FINDALL: "payroll/findAll",
   SIGNUP: '/auth/signup',
@@ -53,6 +53,8 @@ const endpoints = {
   DOCUMENT_REQUEST: `/Document/request`,
   //case-studies
   CASE_STUDIES:`case-studies`,
+  // intern
+  INTERN_LIST:`/intern/list`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,

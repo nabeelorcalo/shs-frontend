@@ -538,13 +538,13 @@ const managerRoutes = [
         element: <CaseStudies />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
         element: <ManagerCaseStudiesAssessment />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}/:id`,
         element: <ViewDetailsCaseStudies />,
       },
       {
@@ -886,13 +886,13 @@ const companyAdminRoutes = [
         element: <CaseStudies />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
         element: <CompanyAdminCaseStudiesAssessment />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}/:id`,
         element: <ViewDetailsCaseStudies />,
       },
       {

@@ -18,7 +18,10 @@ const index = () => {
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [value, setValue] = useState<any>();
-  const handleChange = () => {};
+  // search
+  const handleChange = (value: any) => {
+    getData({ search: value });
+  };
 
   return (
     <div className="manager-case-studies">
