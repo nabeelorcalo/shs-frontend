@@ -25,7 +25,7 @@ const useCustomHook = () => {
     SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
 
   //Get all internship data
-  const getAllInternshipsData = async (status: any, location: any, department: any,searchValue:any) => {
+  const getAllInternshipsData = async (status: any = null, location: any = null, department: any = null, searchValue: any = null) => {
     const params = {
       limit: 100,
       page: 1,
@@ -118,12 +118,12 @@ const useCustomHook = () => {
   //Duplicate internship
   const getDuplicateInternship = async (val: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
-    getAllInternshipsData(null, null, null,null)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship duplicated", type: "success" })
   }
 
   //Internship details
-  const getInternshipDetails = async (searchValue:any) => {
+  const getInternshipDetails = async (searchValue: any) => {
     const { data } = await api.get(GET_INTERNSHIP_DETAILS, { id: state.data.id, search: searchValue ? searchValue : null });
     setInternshipDetails(data)
   };
@@ -131,7 +131,7 @@ const useCustomHook = () => {
   //Delete internship
   const deleteInternshipData = async (id: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData(null, null, null,null)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
