@@ -6,8 +6,8 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessa
 import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from '../../actionHandler';
-// import "react-phone-input-2/lib/style.css";
-// import PhoneInput from 'react-phone-input-2';
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from 'react-phone-input-2';
 
 const SignupForm = ({ signupRole }: any) => {
   const [open, setOpen] = useState(false);
@@ -19,7 +19,7 @@ const SignupForm = ({ signupRole }: any) => {
       "email": values.Email,
       "firstName": values.firstName,
       "lastName": values.lastName,
-      // "phoneNumber": values.phone,
+      "phoneNumber": values.phone,
       "password": values.password,
       "referenceNo": values.refrenceNumber,
       "gender": values.gender,
@@ -159,7 +159,7 @@ const SignupForm = ({ signupRole }: any) => {
             </Col>
           </Row>
         )}
-        {/* <Row>
+        <Row>
           <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
             <Form.Item
               name="phone"
@@ -173,7 +173,7 @@ const SignupForm = ({ signupRole }: any) => {
               />
             </Form.Item>
           </Col>
-        </Row> */}
+        </Row>
         <Row gutter={20}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item
