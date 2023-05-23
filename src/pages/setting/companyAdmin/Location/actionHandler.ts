@@ -1,23 +1,26 @@
-import React from "react";
 import { useRecoilState } from "recoil";
 import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
 import { settingLocationState } from "../../../../store";
+import { Notifications } from "../../../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { SETTING_LOCATION } = apiEndpints;
+  const { LOCATION } = apiEndpints;
   const [settingLocationdata, setSettingLocationdata] = useRecoilState(settingLocationState);
-  const limit = 10
 
-  const getSettingLocation = async (page: any, q:any): Promise<any> => {
-    const param = { page: page, limit: limit , q: q }
-    const { data } = await api.get(SETTING_LOCATION, param);
+  // get setting locations
+  const getSettingLocation = async (q: any) => {
+    const params = { page: 1, limit: 10, q: q }
+    const { data } = await api.get(LOCATION, params);
     setSettingLocationdata(data)
   };
 
-  const deleteSettingLocation = async (id: number): Promise<any> => {
-    const { data } = await api.delete(`${SETTING_LOCATION}/${id}`);
+  // delete location
+  const deleteSettingLocation = async (id: number) => {
+    await api.delete(`${LOCATION}/${id}`);
+    getSettingLocation(null)
+    Notifications({ title: 'Success', description: 'Lcation deleted successfully', type: 'success' })
   };
 
   return {

@@ -18,7 +18,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 const LeavesAddPolicy: React.FC = () => {
   const breadcrumbArray = [
     { name: "Add Policy" },
-    { name: "Setting" },
+    { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
   ];
   const selectArray = [

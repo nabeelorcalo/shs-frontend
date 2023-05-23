@@ -11,6 +11,8 @@ const UploadDocument = (props: any) => {
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
+    console.log(event);
+    
   }
 
   // const handleDropped = (event: any) => {

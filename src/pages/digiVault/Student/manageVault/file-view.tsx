@@ -110,20 +110,35 @@ const ManageViewVault = () => {
     }));
   }
 
-  const upLoadModalHandlers = () => {
-    const sendFile = {
-      folderId: folderId,
-      root: title,
-      name: isState?.files[0]?.name,
-    }
-    postCreateFolderFile(sendFile)
+  // const upLoadModalHandlers = () => {
+  //   const sendFile = {
+  //     folderId: folderId,
+  //     root: title,
+  //     name: isState?.files[0]?.name,
+  //   }
+  //   postCreateFolderFile(sendFile)
+  //   setState((prevState: any) => ({
+  //     ...prevState,
+  //     uploadFile: false,
+  //     fileName: isState.files[0]?.name
+  //   }));
+  // }
+  const upLoadModalHandler = () => {
+    console.log(title, isState);
+    isState?.files?.map((item: any) => {
+      const sendFile = {
+        folderId: folderId,
+        root: title,
+        name: item?.name
+      }
+      return postCreateFolderFile(sendFile)
+    })
     setState((prevState: any) => ({
       ...prevState,
       uploadFile: false,
-      fileName: isState.files[0]?.name
+      files: []
     }));
   }
-
   return (
     <div className="manage-vault-main">
       <Alert
@@ -164,7 +179,7 @@ const ManageViewVault = () => {
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
-                handleChange={(e: any) => SearchFolderContent(title,e,folderId)} />
+                handleChange={(e: any) => SearchFolderContent(title, e, folderId)} />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div className="div">
@@ -218,7 +233,7 @@ const ManageViewVault = () => {
           </Button>,
           <Button
             className="submit-btn"
-            onClick={upLoadModalHandlers}
+            onClick={upLoadModalHandler}
             key="submit"
           >
             Upload

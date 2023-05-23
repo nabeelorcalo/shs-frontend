@@ -1,146 +1,24 @@
 import { useEffect, useState } from "react";
 import {
-  SearchBar,
   PageHeader,
   InternshipPipeLineCard,
   Breadcrumb,
   NoDataFound,
 } from "../../../components";
 import { useLocation, useNavigate } from 'react-router-dom';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships } from '../../../assets/images'
+import {
+  DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon,
+  EditIconinternships, GlassMagnifier
+} from '../../../assets/images'
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import DetailDrawer from "../../candidates/viewDetails";
+// import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import SelectComp from "../../../components/Select/Select";
-import { Avatar } from "antd";
+import { Avatar, Input } from "antd";
 import dayjs from 'dayjs';
 import "../style.scss";
 
-// const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
-
-const cardArray = [
-  {
-    name: "Jane Cooper",
-    rating: 4,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Jane Cooper",
-    rating: 4,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-
-  {
-    name: "Roman Akhmervo",
-    rating: 2,
-    time: "2 days ago",
-    status: "Hired",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5896.jpg"
-  },
-  {
-    name: "janen gooper",
-    rating: 4,
-    time: "2 days ago",
-    status: "Contract",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Jane swister",
-    rating: 5,
-    time: "2 days ago",
-    status: "Interviewed",
-    img: "https://faces-img.xcdn.link/image-lorem-face-975.jpg"
-  },
-  {
-    name: "Laura gail",
-    rating: 4,
-    time: "2 days ago",
-    status: "Recommended",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Leopard cris",
-    rating: 1,
-    time: "2 days ago",
-    status: "Recommended",
-    img: "https://faces-img.xcdn.link/image-lorem-face-1903.jpg"
-  },
-  {
-    name: "Dineo meno",
-    rating: 2,
-    time: "2 days ago",
-    status: "Hired",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Clonde filte",
-    rating: 4,
-    time: "2 days ago",
-    status: "OfferLetter",
-    img: "https://faces-img.xcdn.link/image-lorem-face-262.jpg"
-  },
-  {
-    name: "loversa tripe",
-    rating: 1,
-    time: "2 days ago",
-    status: "Contract",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Nicobe mobal",
-    rating: 3,
-    time: "2 days ago",
-    status: "OfferLetter",
-    img: "https://faces-img.xcdn.link/image-lorem-face-569.jpg"
-  },
-  {
-    name: "diverdentine stlo",
-    rating: 5,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Desgino modu",
-    rating: 1,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-4370.jpg"
-  },
-  {
-    name: "Laiq faild",
-    rating: 3,
-    time: "2 days ago",
-    status: "Interviewed",
-    img: "https://faces-img.xcdn.link/image-lorem-face-1196.jpg"
-  },
-  {
-    name: "turba droped",
-    rating: 2,
-    time: "2 days ago",
-    status: "Recommended",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5543.jpg"
-  },
-  {
-    name: "calse doplin",
-    rating: 5,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "lowang eenal",
-    rating: 1,
-    time: "2 days ago",
-    status: "Hired",
-    img: "https://faces-img.xcdn.link/image-lorem-face-3621.jpg"
-  },
-]
 const tempArray = [
   { name: "Pipeline" },
   {
@@ -152,25 +30,30 @@ const tempArray = [
 const InternshipPipeLine = () => {
   const navigate = useNavigate();
   const { state }: any = useLocation()
+  const [searchValue, setSearchValue] = useState('')
   const [states, setState] = useState({
-    status: 'Published',
+    status: undefined,
     isOpen: false,
     userData: {}
   })
-
-  const { getInternshipDetails, internshipDetails,changeHandler } = useCustomHook();
+  const statusArry = [
+    { value: 'PUBLISHED', label: 'Published' },
+    { value: 'CLOSED', label: 'Closed' },
+    { value: 'REJECTED', label: 'Rejected' },
+  ]
+  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getInternshipDetails()
-  }, [])
+    getInternshipDetails(searchValue)
+  }, [searchValue])
+
+  console.log('pipeline data', internshipDetails);
+
 
   const getStatus = (status: string) => {
-    let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage.toLowerCase() === status.toLowerCase());
-    console.log(statusData, 'fafafaffafafa');
-
+    let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
     return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
   }
-  console.log(internshipDetails?.interns);
 
   const statusArray = [
     {
@@ -217,12 +100,17 @@ const InternshipPipeLine = () => {
     return `${today.diff(date, 'day')} days ago`;
   }
 
-  const changeStatus = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      status: event
-    }))
-  }
+  // const changeStatus = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     status: event
+  //   }))
+  // }
+  // Search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader
@@ -244,37 +132,39 @@ const InternshipPipeLine = () => {
             </span>
           </div>
           <SelectComp
-            value={states.status}
-            options={[
-              { label: "Published", value: "published" },
-              { label: "Closed", value: "close" },
-            ]}
-            onChange={(event: any) => { changeStatus(event) }}
+            value={internshipDetails?.status}
+            options={statusArry}
           />
         </div>
         <div>
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>
             <div className='flex flex-row gap-3 items-center'>
               <DepartmentIcon />
-              <p>Design</p>
+              <p>{internshipDetails?.department?.name}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <JobTimeIcon />
-              {/* <p className="capitalize">{internshipDetails?.internType.replace('_', " ").toLowerCase()}</p> */}
+              <p className="capitalize">{internshipDetails?.internType?.replace('_', " ").toLowerCase()}</p>
             </div>
-            <div className='flex flex-row gap-3 items-center'>
-              <LocationIconCm />
-              <p>London, United Kingdom</p>
-            </div>
+            {internshipDetails?.location?.name &&
+              <div className='flex flex-row gap-3 items-center'>
+                <LocationIconCm />
+                <p>{internshipDetails?.location?.name}</p>
+              </div>
+            }
             <div className='flex flex-row gap-3 items-center'>
               <PostedByIcon />
-              <p>Amelia Carl</p>
+              <p className="capitalize">{`${internshipDetails?.jobPoster?.firstName} ${internshipDetails?.jobPoster?.lastName}`}</p>
             </div>
           </div>
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search by name" size="middle" />
+          <div className="max-sm:w-full md:w-[25%] input-wrapper">
+            <Input
+              className="search-bar"
+              placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />} />
           </div>
           <div className="flex flex-row gap-4">
             <span className="font-semibold">Total Candidates:</span>{internshipDetails?.interns?.length < 10 ?
@@ -290,7 +180,7 @@ const InternshipPipeLine = () => {
                   <div className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
                       <div className={`h-5 w-5 rounded ${items.className}`}></div>
-                      <p>{items.status}</p>
+                      <p className="text-primary-title-color font-medium">{items.status}</p>
                     </div>
                     <div>
                       <p className="h-5 w-6 text-sm text-center rounded text-input-bg-color text-teriary-color">
@@ -310,7 +200,7 @@ const InternshipPipeLine = () => {
                               time={dateFormat(item?.createdAt)}
                               status={item?.stage}
                               img={<Avatar size={50} src={item?.avatar}>
-                                {item?.userDetail?.firstName.charAt(0)}{item?.userDetail?.lastName.charAt(0)}
+                                {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                               </Avatar>}
                               handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
                             /> : <NoDataFound />

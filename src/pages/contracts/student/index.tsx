@@ -11,7 +11,7 @@ const ContractsStudent = () => {
   const { getContractList, contractList, searchHandler, loading } = useCustomHook();
 
   useEffect(() => {
-    getContractList(null, 'THIS_MONTH')
+    getContractList(null , null, null)
   }, [])
 
   return (
@@ -25,7 +25,7 @@ const ContractsStudent = () => {
         <Divider />
 
         <Col xl={6} lg={12} md={12} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => searchHandler(e, null)} />
+          <SearchBar handleChange={(e: any) => searchHandler(e, null, null)} />
         </Col>
 
         <Col xs={24}>
