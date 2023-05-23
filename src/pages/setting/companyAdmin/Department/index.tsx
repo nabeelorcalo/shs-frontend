@@ -18,7 +18,7 @@ const SettingDepartment: React.FC = () => {
     {
       isEditModal: false,
       isDeleteModal: false,
-      departmentId: "",
+      departmentId: null,
     }
   )
 
@@ -103,13 +103,13 @@ const SettingDepartment: React.FC = () => {
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
-        okBtnFunc={() => deleteSettingDepartment(state.departmentId)}
         state={state.isDeleteModal}
         setState={setState}
         type="error"
         width={500}
         title=""
         children={<p>Are you sure you want to delete this?</p>}
+        okBtnFunc={() => deleteSettingDepartment(state.departmentId)}
       />
     </div>
   );

@@ -8,19 +8,18 @@ import TextArea from 'antd/es/input/TextArea';
 const AddNewDepaertmentModal = (props: any) => {
     const { state, setState, edit, setEdit } = props;
     const [form] = Form.useForm();
-    const { postSettingDepartment, getSettingDepartment, patchSettingDepartment } = useCustomHook();
+    const { postSettingDepartment, patchSettingDepartment } = useCustomHook();
 
     const onFinish = (values: any) => {
-        if (edit) {
+        if (edit?.id) {
             patchSettingDepartment(values, edit?.id)
             form.resetFields()
             setState({ ...state, isEditModal: false })
         }
         else {
-            const { departmentName, description } = values
             postSettingDepartment({
-                name: departmentName,
-                description: description
+                name: values?.departmentName,
+                description: values?.description
             })
             setState({ ...state, isEditModal: false })
             form.resetFields()
