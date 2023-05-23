@@ -18,7 +18,7 @@ const useCustomHook = () => {
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState)  
   const limit = 100
 
-  const { MANAGER_COMPANY_ADMIN, GET_MANAGER_COMPANY_ADMIN,SETTING_DAPARTMENT } = apiEndPoints;
+  const { MANAGER_COMPANY_ADMIN, GET_MANAGER_COMPANY_ADMIN, SETTING_DAPARTMENT } = apiEndPoints;
   const addManagerCompany = async (body: any): Promise<any> => {
     const { data } = await api.post(MANAGER_COMPANY_ADMIN, body);
     if (!data.error) {
