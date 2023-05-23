@@ -17,27 +17,16 @@ import { PlusOutlined, PlusCircleFilled, DeleteFilled } from '@ant-design/icons'
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
-
-
-import { Option } from "antd/es/mentions";
+import constants from "../../../../../config/constants";
 
 const PersonalInformation = () => {
-
   const [value, setValue] = useState('');
   const [isdate1, setIsDate1] = useState(false);
   const [isDependents, setIsDependents] = React.useState(2);
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70, height: "48px" }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -84,7 +73,7 @@ const PersonalInformation = () => {
               <DropDown
                 name='Select'
                 value={value}
-                options={['item 1', 'item 2', 'item 3']}
+                options={['Male', 'Female', 'others']}
                 setValue={setValue}
               />
             </Form.Item>
@@ -107,7 +96,15 @@ const PersonalInformation = () => {
               <DropDown
                 name='Select'
                 value={value}
-                options={['item 1', 'item 2', 'item 3']}
+                options=
+                {
+                  ['Afghanistan',
+                    'America',
+                    'British',
+                    'Canadian',
+                    'German'
+                  ]
+                }
                 setValue={setValue}
               />
             </Form.Item>
@@ -143,18 +140,13 @@ const PersonalInformation = () => {
               label="Phone Number"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <Input.Group compact>
-                <Select defaultValue="+92" style={{ width: '25%' }}>
-                  <Option value="+44">+44</Option>
-                  <Option value="+92">+92</Option>
-                </Select>
-                <AutoComplete
-                  style={{ width: '75%' }}
-                  placeholder="xxxxxxx-xxx"
-                  options={[{ value: 'text 1' }, { value: 'text 2' }]}
-                />
-              </Input.Group>
-
+              <PhoneInput
+                country={'pk'}
+                placeholder="Enter phone number"
+                value={value}
+                onChange={() => setValue}
+                inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -175,7 +167,14 @@ const PersonalInformation = () => {
               <DropDown
                 name='Select'
                 value={value}
-                options={['item 1', 'item 2', 'item 3']}
+                options=
+                {
+                  ['Student Visa',
+                    'Post Study Work Visa',
+                    'Work Permit',
+                    'Dependent on Work Permit'
+                  ]
+                }
                 setValue={setValue}
               />
             </Form.Item>
@@ -255,7 +254,7 @@ const PersonalInformation = () => {
               <DropDown
                 name='Select'
                 value={value}
-                options={['item 1', 'item 2', 'item 3']}
+                options={constants.OPTIONS_COUNTRIES}
                 setValue={setValue}
               />
             </Form.Item>

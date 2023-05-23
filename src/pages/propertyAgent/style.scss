@@ -65,6 +65,8 @@
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 1rem;
+    height: 55vh;
+    overflow-y: scroll;
   }
 
   .recent-card-typo {

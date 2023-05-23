@@ -5,11 +5,14 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
+import { useParams } from 'react-router-dom';
 
 const ManagerInfo = () => {
+
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
+  console.log(managerCardData, 'ffffffff')
 
   useEffect(() => {
     action.getManagerCompanyAdmin(1)
@@ -53,7 +56,7 @@ const ManagerInfo = () => {
                     </div>
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center">
                       <Button
-                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}`) }}
+                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`) }}
                         style={{ minWidth: "0px" }}
                         className="info-dark-bg-color text-info-color-dark text-base 
                         font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">

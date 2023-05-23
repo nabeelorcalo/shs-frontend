@@ -13,12 +13,23 @@ import { settingDepartmentState } from "../../store";
 
 const useCustomHook = () => {
   const navigate = useNavigate();
-  const [currentManager, setCurrentManager] = useRecoilState(addManagerDetailState);
-  const [getCurentManager, setGetManager] = useRecoilState(getManagerDetailState);
-  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState)  
-  const limit = 100
+  const [currentManager, setCurrentManager] = useRecoilState(
+    addManagerDetailState
+  );
+  const [getCurentManager, setGetManager] = useRecoilState(
+    getManagerDetailState
+  );
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
+    settingDepartmentState
+  );
+  const limit = 100;
 
-  const { MANAGER_COMPANY_ADMIN, GET_MANAGER_COMPANY_ADMIN, SETTING_DAPARTMENT } = apiEndPoints;
+  const {
+    MANAGER_COMPANY_ADMIN,
+    GET_MANAGER_COMPANY_ADMIN,
+    SETTING_DAPARTMENT,
+    GET_MANAGER_DETAIL_ID,
+  } = apiEndPoints;
   const addManagerCompany = async (body: any): Promise<any> => {
     const { data } = await api.post(MANAGER_COMPANY_ADMIN, body);
     if (!data.error) {
@@ -33,22 +44,27 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getManagerCompanyAdmin = async (page:any) => {
-    const param = { page: page, limit: limit }
-    const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN , param);
+  const getManagerCompanyAdmin = async (page: any) => {
+    const param = { page: page, limit: limit };
+    const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN, param);
     setGetManager(data);
+  };
+  const getManagerDetailId = async (id: any) => {
+    const { data } = await api.get(GET_MANAGER_DETAIL_ID + "/" + id);
+    return data;
   };
 
   const getSettingDepartment = async (page: any, q: any): Promise<any> => {
-    const param = { page: page, limit: limit, q: q }
+    const param = { page: page, limit: limit, q: q };
     const { data } = await api.get(SETTING_DAPARTMENT, param);
-    setSettingDepartmentdata(data)
+    setSettingDepartmentdata(data);
   };
- 
+
   return {
     addManagerCompany,
     getManagerCompanyAdmin,
-    getSettingDepartment  
+    getSettingDepartment,
+    getManagerDetailId,
   };
 };
 
