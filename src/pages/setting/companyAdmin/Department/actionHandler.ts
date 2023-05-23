@@ -1,4 +1,3 @@
-import React from "react";
 import { useRecoilState } from "recoil";
 import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
@@ -6,25 +5,27 @@ import { settingDepartmentState } from "../../../../store";
 import { Notifications } from "../../../../components";
 
 const useCustomHook = () => {
-  const { SETTING_DAPARTMENT } = apiEndpints;
+  const { DAPARTMENT } = apiEndpints;
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
 
   // get setting departments
   const getSettingDepartment = async (q: any): Promise<any> => {
     const param = { page: 1, limit: 10, q: q }
-    const { data } = await api.get(SETTING_DAPARTMENT, param);
+    const { data } = await api.get(DAPARTMENT, param);
     setSettingDepartmentdata(data)
   };
 
   const deleteSettingDepartment = async (id: number) => {
-    await api.delete(`${SETTING_DAPARTMENT}/${id}`);
+    await api.delete(`${DAPARTMENT}/${id}`);
     getSettingDepartment(null)
+    Notifications({ title: 'Success', description: 'Department deleted successfully', type: 'success' })
   };
 
   // post setting departments
   const postSettingDepartment = async (body: any) => {
-    await api.post(SETTING_DAPARTMENT, body);
+    await api.post(DAPARTMENT, body);
     getSettingDepartment(null)
+    Notifications({ title: 'Success', description: 'Department added successfully', type: 'success' })
   };
 
   // edit setting departments
@@ -33,12 +34,13 @@ const useCustomHook = () => {
       name: values.departmentName,
       description: values.description
     }
-    await api.patch(`${SETTING_DAPARTMENT}/${id}`, params);
+    await api.patch(`${DAPARTMENT}/${id}`, params);
     getSettingDepartment(null)
-    Notifications({ title: 'Success', description: 'Department edited successfully', 'type': 'success' })
+    Notifications({ title: 'Success', description: 'Department edited successfully', type: 'success' })
   };
 
   return {
+    settingDepartmentdata,
     getSettingDepartment,
     deleteSettingDepartment,
     postSettingDepartment,
