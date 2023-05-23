@@ -42,12 +42,12 @@ export const InternshipProgressCard = (props: any) => {
       status: updateStatus ? updateStatus : status
     }
     EditNewInternshipsData(Obj)
-    getAllInternshipsData(null, null, null,null)
+    getAllInternshipsData()
   }
   const handleDeclineInternship = () => {
     setDecline(false);
     handleUpdateStatus('REJECTED')
-    getAllInternshipsData(null, null, null,null)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship declined", type: "success" })
   }
   const PopOver = () => {
