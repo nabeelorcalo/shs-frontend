@@ -135,17 +135,21 @@ const ManageVault = () => {
   }
 
   const upLoadModalHandler = () => {
-    const sendFile = {
-      root: stateData,
-      name: isState?.files[0]?.name,
-      size: isState.files[0].size
-    }
-    postCreateFolderFile(sendFile)
+    console.log(stateData, isState);
+    isState?.files?.map((item: any) => {
+      const sendFile = {
+        root: stateData,
+        name: item?.name,
+        size: item?.size
+      }
+      console.log(sendFile);
+
+      return postCreateFolderFile(sendFile)
+    })
     setState((prevState: any) => ({
       ...prevState,
       uploadFile: false,
-      uploadFolder: false,
-      fileName: isState.files[0]?.name
+      files: []
     }));
   }
 
@@ -282,39 +286,6 @@ const ManageVault = () => {
             className="submit-btn"
             onClick={upLoadModalHandler}
             key="submit"
-          >
-            Upload
-          </Button>,
-        ]}
-      >
-        <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
-      </Modal>
-
-      <Modal
-        className="folders-modal"
-        centered
-        title="Upoad Folder"
-        open={isState.uploadFolder}
-        onCancel={() => {
-          setState((prevState: any) => ({
-            ...prevState,
-            uploadFolder: false
-          }));
-        }}
-        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
-        footer={[
-          <Button
-            className="cancel-btn"
-            onClick={modalHandler}
-            key="Cancel"
-          >
-            Cancel
-          </Button>,
-
-          <Button
-            className="submit-btn"
-            onClick={upLoadModalHandler}
-            key="Upload"
           >
             Upload
           </Button>,

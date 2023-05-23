@@ -17,10 +17,6 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  Gallery,
-  Doc,
-  Video,
-  File,
 } from "../../../assets/images";
 import CustomDroupDown from "../Student/dropDownCustom";
 import { Alert } from "../../../components";
@@ -82,37 +78,6 @@ const manageVaultArr = [
     bgcolor: "#5D89F8",
   },
 ];
-
-// const arraydata:any = [
-//   {
-//     icon: Gallery,
-//     progressbarColor: "#4CA4FD",
-//     progressbarValue: 30,
-//     storage: "123GB",
-//     title: "Media",
-//   },
-//   {
-//     icon: Video,
-//     progressbarColor: "#E96F7C",
-//     progressbarValue: 60,
-//     storage: "126GB",
-//     title: "Video",
-//   },
-//   {
-//     icon: Doc,
-//     progressbarColor: "#FFC15D",
-//     progressbarValue: 50,
-//     storage: "28GB",
-//     title: "Document",
-//   },
-//   {
-//     icon: File,
-//     progressbarColor: "#6AAD8E",
-//     progressbarValue: 80,
-//     storage: "128GB",
-//     title: "Other Files",
-//   },
-// ];
 
 const tableData = [
   {

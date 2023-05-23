@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu } from "antd";
+import { Row, Col, Menu, Spin } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
@@ -11,48 +11,9 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
-import Select from "../../../components/Select/Select";
 
-const tableData = [
-  {
-    No: "01",
-    Title: "Stenna Freddi",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 200",
-    contracts: false,
-    status: "pending",
-  },
-  {
-    No: "02",
-    Title: "Keith Thompson",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 170",
-    contracts: true,
-    status: "Signed",
-  },
-  {
-    No: "03",
-    Title: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 178",
-    contracts: false,
-    status: "rejected",
-  },
-  {
-    No: "04",
-    Title: "John Emple",
-    address: "118-127 Park Ln, London W1K 7AF, UK",
-    initiatedOn: "22/09/2022 - 22/09/2022",
-    signedOn: "£ 178",
-    contracts: false,
-    status: "Changes requested",
-  },
-];
-const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
-const statusDropdownData = ['New', 'Pending', 'Rejected', 'Signed']
+const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
+const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const ContractsCard = [
   {
     img: <NewImg />,
@@ -76,14 +37,23 @@ const ContractsCard = [
   },
 ]
 const CompanyAdmin = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const [valueStatus, setValueStatus] = useState("");
-  const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
-  const { getContractList, contractList, searchHandler, deleteContractHandler } = useCustomHook();
+  const [state, setState] = useState<any>({
+    search: null,
+    status: null,
+    datePicker: 'THIS_MONTH',
+  })
+  const {
+    contractList,
+    loading,
+    getContractList,
+    searchHandler,
+    deleteContractHandler
+  } = useCustomHook();
 
   useEffect(() => {
-    getContractList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"),)
+    getContractList(state.status, state?.datePicker.toUpperCase().replace(" ", "_"), state.search)
   }, [])
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -175,13 +145,18 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  const searchBarHandler = (val: any) => {
+    setState({ ...state, search: val })
+    searchHandler(val, state.status, state.datePicker.toUpperCase().replace(" ", "_"))
+  }
+
   const statusValueHandle = (val: any) => {
-    setValueStatus(val);
-    getContractList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
+    setState({ ...state, status: val });
+    getContractList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
   }
   const handleTimeFrameValue = (val: any) => {
-    setValueDatePacker(val);
-    getContractList(valueStatus, val.toUpperCase().replace(" ", "_"));
+    setState({ ...state, datePicker: val });
+    getContractList(state.status, val.toUpperCase().replace(" ", "_"), state.search);
   }
 
   const tableColumns = [
@@ -285,7 +260,7 @@ const CompanyAdmin = () => {
       }
     )
   })
-  console.log(valueDatePacker.includes(',') ? `DATE_RANGE&startDate=${valueDatePacker.slice(0, 10)}&endDate=${valueDatePacker.slice(13, 23)}` : valueDatePacker)
+
   return (
     <div className="contract-company-admin">
       <Alert
@@ -322,24 +297,26 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
+          <SearchBar handleChange={(e: any) => searchBarHandler(e)} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
-            value={valueDatePacker}
+            value={state.datePicker}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
-            value={valueStatus}
+            value={state.status}
             setValue={(e: any) => statusValueHandle(e)}
           />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={tableColumns} tableData={newTableData} />
+            {loading ? <Spin className="flex justify-center" /> :
+              <GlobalTable columns={tableColumns} tableData={newTableData} />
+            }
           </BoxWrapper>
         </Col>
       </Row>

@@ -49,13 +49,16 @@ const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
+  const [state, setState] = useState<any>({
+    search: null,
+    status:null,
+    datePicker:'THIS_MONTH'
+  })
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const [valueStatus, setValueStatus] = useState("");
-  const [valueDatePacker, setValueDatePacker] = useState("THIS_MONTH");
   const { getOfferLetterList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
 
   useEffect(() => {
-    getOfferLetterList(valueStatus, valueDatePacker.toUpperCase().replace(" ", "_"))
+    getOfferLetterList(state.status, state.datePicker.toUpperCase().replace(" ", "_"), state.search)
   }, [])
 
   const renderDropdown = (item: any) => {
@@ -247,13 +250,17 @@ const CompanyAdmin = () => {
       }
     )
   })
+  const searchBarHandler = (val: any) => {
+    setState({ ...state, search: val })
+    searchHandler(val, state.status, state.datePicker.toUpperCase().replace(" ", "_"));
+  }
   const handleValueStatus = (val: any) => {
-    getOfferLetterList(val, valueDatePacker.toUpperCase().replace(" ", "_"));
-    setValueStatus(val)
+    getOfferLetterList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
+    setState({...state, status:val})
   }
   const handleTimeFrameValue = (val: any) => {
-    setValueDatePacker(val);
-    getOfferLetterList(valueStatus, val.toUpperCase().replace(" ", "_"));
+    setState({...state, datePicker:val});
+    getOfferLetterList(state.status, val.toUpperCase().replace(" ", "_"), state.search);
   }
   return (
     <div className="offer-letter-company-admin">
@@ -291,19 +298,19 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { searchHandler(e, valueStatus) }} />
+          <SearchBar handleChange={(e: any) => searchBarHandler(e)} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireDatePicker placement="bottom"
-            value={valueDatePacker}
+            value={state.datePicker}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
 
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
-            value={valueStatus}
+            value={state.status}
             setValue={(e: any) => handleValueStatus(e)
             }
           />

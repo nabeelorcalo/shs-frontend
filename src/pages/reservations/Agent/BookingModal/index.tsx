@@ -1,10 +1,10 @@
-import "./style.scss";
 import { TabsProps } from "antd";
 import { DocTabsIcon, UserTabsIcon } from "../../../../assets/images";
 import { PopUpModal } from "../../../../components";
 import AppTabs from "../../../../components/Tabs";
 import Documents from "../DocumentAgent";
 import PersonalInfo from "../PersonalInfo/personalInfo";
+import "./style.scss";
 
 const BookingModal = (props: any) => {
   const { open, setOpen } = props;
@@ -12,12 +12,12 @@ const BookingModal = (props: any) => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: (<div className="flex items-center"><UserTabsIcon/><span className="pl-1">Personal Information</span></div>),
-      children: <PersonalInfo open={open} setOpen={setOpen} />,
+      label: (<div className="flex items-center"><UserTabsIcon /><span className="pl-1">Personal Information</span></div>),
+      children: <PersonalInfo data={open.viewReservations} setOpen={setOpen} />,
     },
     {
       key: "2",
-      label: (<div className="flex items-center"><DocTabsIcon/><span className="pl-1">Documents</span></div>),
+      label: (<div className="flex items-center"><DocTabsIcon /><span className="pl-1">Documents</span></div>),
       children: <Documents />,
     },
   ];
@@ -25,7 +25,7 @@ const BookingModal = (props: any) => {
     <div>
       <PopUpModal
         title="Bookings"
-        open={open}
+        open={open.openViewModal}
         close={() => setOpen(false)}
         footer={false}
       >

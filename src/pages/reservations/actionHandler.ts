@@ -1,21 +1,58 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import React, { useEffect, useMemo } from "react";
+import { useRecoilState } from "recoil";
+import { reservationData } from "../../store";
+import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
-import constants from "../../config/constants";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_RESERVATIONS, UPDATE_STATUS_RESERVATION } = endpoints;
+  const [reservations, setReservations] = useRecoilState(reservationData);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+    };
+  });
+
+  //get reservation data
+  const getReservationData = async (status: any, search: any) => {
+    const { data } = await api.get(GET_RESERVATIONS, { status: status === 'All' ? '' : status, search: search ?? null });
+    setReservations(data)
   };
 
+  //status approve / reject reservations
+  const updateReservations = async (id: any, status: any) => {
+    const params = {
+      bookingId: id,
+      status: status
+    }
+    const { data } = await api.patch(UPDATE_STATUS_RESERVATION, params);
+    setReservations(data)
+    getReservationData(null, null)
+  }
+
+  // search reservations
+  const SearchReservations = async (search: any, status: any) => {
+    const params = {
+      search: search,
+      status: status === 'All' ? '' : status
+    }
+    const { data } = await api.get(GET_RESERVATIONS, params);
+    setReservations(data);
+  };
+
+  const debouncedResults = useMemo(() => {
+    return debounce(SearchReservations, 500);
+  }, []);
+
+
   return {
-    getData,
+    reservations,
+    getReservationData,
+    SearchReservations,
+    updateReservations
   };
 };
 
