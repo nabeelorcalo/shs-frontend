@@ -16,16 +16,34 @@ const useCustomHook = () => {
     setSettingLocationdata(data)
   };
 
+  // post location
+  const postSettingLocation = async (values: any) => {
+    const { address, country, email, intern, locationName, phoneCode, phoneNumber, postCode, street, town } = values;
+    const params = {
+      name: locationName,
+      postCode: postCode,
+      address: address,
+      street: street,
+      town: town,
+      country: 'Pakistan',
+      phoneCode: phoneCode,
+      phoneNumber: phoneNumber,
+      email
+    }
+    await api.post(LOCATION, params)
+  }
+
   // delete location
   const deleteSettingLocation = async (id: number) => {
     await api.delete(`${LOCATION}/${id}`);
     getSettingLocation(null)
-    Notifications({ title: 'Success', description: 'Lcation deleted successfully', type: 'success' })
+    Notifications({ title: 'Success', description: 'Location deleted successfully', type: 'success' })
   };
 
   return {
     getSettingLocation,
-    deleteSettingLocation
+    deleteSettingLocation,
+    postSettingLocation
   };
 };
 
