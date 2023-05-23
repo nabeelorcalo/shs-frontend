@@ -6,11 +6,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-<<<<<<< HEAD
-import { applicationDataState } from '../../store/applications';
-=======
 import { applicationDataState } from "../../store";
->>>>>>> dev
 import csv from '../../helpers/csv';
 
 
