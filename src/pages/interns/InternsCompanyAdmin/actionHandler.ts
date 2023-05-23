@@ -25,7 +25,7 @@ const useCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Get all interns data
-  const getAllInternsData = async (event: any,searchValue: any) => {
+  const getAllInternsData = async (event: any, searchValue: any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
@@ -59,7 +59,8 @@ const useCustomHook = () => {
 
   // update candidate data 
   const updateCandidatesRecords = async (val: any) => {
-    const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
+    // const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
+    const { data } = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${val}`)
     setUpdateInterns(data);
   }
   //Search

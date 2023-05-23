@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard,
+  GlobalTable, PageHeader, BoxWrapper, InternsCard,
   ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound
 } from "../../../components";
 import { TextArea } from "../../../components";
@@ -44,17 +44,16 @@ const InternsCompanyAdmin = () => {
     updateCandidatesRecords,
     debouncedSearch }: any = useCustomHook()
 
-    useEffect(() => {
-      getAllDepartmentData();
-      getAllManagersData();
-      getAllUniuversitiesData();
-    }, [])
+  useEffect(() => {
+    getAllDepartmentData();
+    getAllManagersData();
+    getAllUniuversitiesData();
+  }, [])
 
-    useEffect(() => {
-      getAllInternsData(state,searchValue);
-    }, [searchValue])
+  useEffect(() => {
+    getAllInternsData(state, searchValue);
+  }, [searchValue])
 
-    
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "completed": "primary-bg-color",
@@ -71,18 +70,16 @@ const InternsCompanyAdmin = () => {
   }
 
   const PopOver = (props: any) => {
-    const { item } = props
+    const { data } = props;
+    console.log('popover Data', data);
+
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              setAssignManager(true)
-              console.log("popover data", item)
-            }}
-          >
+            onClick={() => { setAssignManager(true); }}>
             Assign Manager
           </a>
         ),
@@ -92,10 +89,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              setTerminate(true)
-            }}
-          >
+            onClick={() => { setTerminate(true) }} >
             Terminate
           </a>
         ),
@@ -105,10 +99,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              setComplete(true)
-            }}
-          >
+            onClick={() => { setComplete(true) }} >
             Complete Internship
           </a>
         ),
@@ -183,7 +174,7 @@ const InternsCompanyAdmin = () => {
         joining_date: joiningDate,
         date_of_birth: dob,
         status: <ButtonStatus status={item?.internStatus} />,
-        actions: <PopOver item={item} />
+        actions: <PopOver data={item} />
       }
     )
   })
@@ -407,27 +398,29 @@ const InternsCompanyAdmin = () => {
         </Col>
         <Col xs={24}>
           <p className="font-semibold pb-4">Total Interns:
-            {newTableData.length < 10 ? `0${newTableData.length}` : newTableData.length}
+            {newTableData?.length < 10 ? `0${newTableData?.length}` : newTableData?.length}
           </p>
           {isLoading ?
             listandgrid ?
               <BoxWrapper>
                 <GlobalTable columns={columns} tableData={newTableData} />
               </BoxWrapper> :
-              newTableData.length === 0 ? <NoDataFound />
-                : <div className="flex flex-row flex-wrap max-sm:flex-col">
+              newTableData?.length === 0 ? <NoDataFound />
+                : <div className="flex flex-wrap gap-4">
                   {
-                    newTableData?.map((item: any,) => {
+                    getAllInters?.map((item: any,) => {
+                      console.log('abdullah data', item);
+
                       return (
                         <InternsCard
-                          pupover={<PopOver item={item} />}
-                          status={item?.status}
-                          name={item?.name}
+                          pupover={<PopOver data={item} />}
+                          status={item?.stage}
+                          name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={item?.posted_by}
                           title={item?.title}
                           department={item?.department}
-                          joining_date={item?.joining_date}
-                          date_of_birth={item?.date_of_birth}
+                          joining_date={item?.userDetail?.updatedAt}
+                          date_of_birth={item?.userDetail?.DOB}
                         />
                       )
                     })
