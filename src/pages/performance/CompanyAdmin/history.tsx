@@ -28,15 +28,22 @@ import { WarnModal } from "./warnModel";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
-import { currentUserRoleState, allPerformanceState } from "../../../store";
+import usePerformanceHook from "../actionHandler";
+import { allPerformanceState, currentUserRoleState } from "../../../store";
 
 const PerformanceHistory = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const { getAllPerformance } = usePerformanceHook();
+  const allPerformance = useRecoilValue(allPerformanceState);
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false)
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const id = 1;
   const limit = 10;
+  console.log("allPerformance::: ", allPerformance)
 
-  const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+  // const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
 
   const historyBreadCrumb = [
     { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
@@ -384,10 +391,12 @@ const PerformanceHistory = () => {
     page: 1,
   });
 
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    const params = { page: state.page, limit: limit };
-    action.getData(params);
-  }, [state.page])
+    const params = { page: 1, limit: 5 };
+    getAllPerformance(setLoadingAllPerformance, params)
+  }, [])
 
   const handleSidebarClick = () => {
     setState((prevState) => ({
@@ -530,7 +539,11 @@ const PerformanceHistory = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable columns={columnNames} tableData={allPerformance} pagination={true} />
+            <GlobalTable 
+              columns={columnNames} 
+              tableData={allPerformance}
+              pagination={true}
+            />
           </BoxWrapper>
         </Col>
       </Row>

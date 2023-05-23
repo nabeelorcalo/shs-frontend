@@ -3,8 +3,36 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
+import { allPerformanceState } from "../../store";
+import { useRecoilState } from "recoil";
+import endPoints from "../../config/apiEndpoints";
 
-const useCustomHook = () => {
+const usePerformanceHook = () => {
+  const { GET_PERFORMANCE_LIST } = endPoints;
+  const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+
+  // Get All Performance
+  const getAllPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
+    setLoading(true);
+    const response = await api.get(GET_PERFORMANCE_LIST, params);
+    console.log(response)
+    if(!response.error) {
+      const { data } = response;
+      setAllPerformance(data);
+    }
+    setLoading(false);
+  }
+
+  const getPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response = await api.get(GET_PERFORMANCE_LIST);
+    console.log(response)
+    if(!response.error) {
+      const { data } = response;
+      setAllPerformance(data);
+    }
+    setLoading(false);
+  }
 
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -102,11 +130,12 @@ const useCustomHook = () => {
     });
     doc.save('table.pdf');
   };
+
   return {
-    getData,
+    getAllPerformance,
     downloadPdf,
     downloadHistoryDataPdf
   };
 };
 
-export default useCustomHook;
+export default usePerformanceHook;
