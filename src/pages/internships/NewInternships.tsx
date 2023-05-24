@@ -8,6 +8,8 @@ import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
 import './style.scss';
 import dayjs from 'dayjs';
+import UserSelector from '../../components/UserSelector';
+import { getRoutes } from '../../routes';
 
 const { TextArea } = Input;
 
@@ -130,6 +132,15 @@ const NewInternships = () => {
     closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined
   }
 
+  // const filteredData = departmentsData?.map((item: any, index: number) => {
+  //   return (
+  //     {
+  //       key: index,
+  //       value: item?.id,
+  //       label: item?.name
+  //     }
+  //   )
+  // })
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
@@ -153,11 +164,17 @@ const NewInternships = () => {
                 <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
               <Form.Item name="department" label="Department" rules={[{ required: true }, { type: 'number' }]}>
+                {/* <UserSelector
+                  placeholder='Select'
+                  className='input'
+                  hasSearch={true}
+                  searchPlaceHolder='Search'
+                  options={filteredData}
+                /> */}
                 <Select
                   rootClassName='input'
                   placeholder="Select"
                   onChange={onSelectChange}
-                  allowClear
                   options={departmentsData.map((item: any) => {
                     return { value: item.id, label: item.name }
                   })}
@@ -206,23 +223,33 @@ const NewInternships = () => {
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="frequency" label="Frequency" >
                     <Select
+                      className='input'
                       placeholder="Select"
                       onChange={onSelectChange}
-                      allowClear
                       options={frequencyOptions}
                     />
                   </Form.Item>
                   <Form.Item label="Amount" name="amountType">
-                    <Space.Compact>
+                    {/* <Space.Compact> */}
+                    <div className='flex gap-1'>
                       <Select
                         placeholder='Currency'
-                        className='w-full'
+                        className='currency-select input'
                         onChange={(e) => setAmount({ ...amount, amountType: e })}
                         value={amount.amountType}
                         options={amountOptions} />
-                      <Input type='number' value={amount.amount}
-                        onChange={(e) => setAmount({ ...amount, amount: e.target.value })} name="amount" placeholder='0.00' />
-                    </Space.Compact>
+
+                      <Input
+                        type='number'
+                        value={amount.amount}
+                        onChange={(e) => setAmount({ ...amount, amount: e.target.value })}
+                        name="amount"
+                        placeholder='0.00'
+
+                      />
+                    </div>
+
+                    {/* </Space.Compact> */}
                   </Form.Item>
                 </div>
                 :
@@ -239,9 +266,9 @@ const NewInternships = () => {
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="location" label="Location">
                     <Select
+                      className='input'
                       placeholder="Select"
                       onChange={onSelectChange}
-                      allowClear
                       options={locationsData.map((item: any) => {
                         return { value: item.id, label: item.name }
                       })}
@@ -277,7 +304,6 @@ const NewInternships = () => {
                   className='input'
                   placeholder="Select"
                   onChange={onSelectChange}
-                  allowClear
                   options={durationOptions}
                 />
               </Form.Item>
@@ -293,13 +319,13 @@ const NewInternships = () => {
                 setStatus('DRAFT');
                 Notifications({ title: "Success", description: "Internship saved as draft", type: "success" })
               }}
-              className="new-intern-btn white-bg-color teriary-color main-btn">
+              className="new-intern-btn white-bg-color teriary-color main-btn font-medium">
               Save Draft
             </Button>
             <Button
               type="default"
               size="middle"
-              className="button-default-tertiary main-btn"
+              className="button-default-tertiary main-btn font-medium"
               onClick={() => {
                 navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS);
                 setInternShipFormData({})
@@ -308,7 +334,7 @@ const NewInternships = () => {
               type="primary"
               htmlType="submit"
               size="middle"
-              className="button-tertiary main-btn">Publish</Button>
+              className="button-tertiary main-btn font-medium">Publish</Button>
           </Row>
         </Form>
       </BoxWrapper>

@@ -35,7 +35,6 @@ const InternsCompanyAdmin = () => {
     { value: 'Employed', label: 'Employed' },
     { value: 'Completed', label: 'Completed' },
     { value: 'Terminated', label: 'Terminated' },
-    { value: 'All', label: 'All' },
   ]
 
   const { getAllInternsData, getAllInters,
@@ -205,13 +204,22 @@ const InternsCompanyAdmin = () => {
   };
 
 
-  const filteredData = getAllManagers?.map((item: any, index: number) => {
+  const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
         avatar: <UserAvatar />
+      }
+    )
+  })
+  const filteredStatusData = statusList?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.value,
+        label: item?.label,
       }
     )
   })
@@ -240,26 +248,24 @@ const InternsCompanyAdmin = () => {
             title="Filters"
           >
             <>
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-2">
-                  <UserSelector
-                    label="Manager"
-                    placeholder="Select"
-                    value={state.manager}
-                    onChange={(event: any) => {
-                      setState({
-                        ...state,
-                        manager: event
-                      })
-                    }}
-                    options={filteredData}
-                    hasSearch={false}
-                    handleSearch={(e: any) => console.log(e)}
-                  />
-                </div>
-                <SelectComp
+              <div className="flex flex-col gap-4">
+                <UserSelector
+                  label="Manager"
+                  placeholder="Select"
+                  value={state.manager}
+                  onChange={(event: any) => {
+                    setState({
+                      ...state,
+                      manager: event
+                    })
+                  }}
+                  options={filteredManagersData}
+                  hasSearch={false}
+                  handleSearch={(e: any) => console.log(e)}
+                />
+                <UserSelector
                   label="Status"
-                  placeholder='Select'
+                  placeholder="Select"
                   value={state.status}
                   onChange={(event: any) => {
                     setState((prevState) => ({
@@ -267,7 +273,7 @@ const InternsCompanyAdmin = () => {
                       status: event
                     }))
                   }}
-                  options={statusList}
+                  options={filteredStatusData}
                 />
                 <SelectComp
                   label="Department"
@@ -367,14 +373,14 @@ const InternsCompanyAdmin = () => {
         </Col>
         <Col xs={24}>
           <p className="font-semibold pb-4">Total Interns:
-            {newTableData?.length < 10 ? `0${newTableData?.length}` : newTableData?.length}
+            {getAllInters?.length < 10 ? `0${getAllInters?.length}` : getAllInters?.length}
           </p>
           {isLoading ?
             listandgrid ?
               <BoxWrapper>
                 <GlobalTable columns={columns} tableData={newTableData} />
               </BoxWrapper> :
-              newTableData?.length === 0 ? <NoDataFound />
+              getAllInters?.length === 0 ? <NoDataFound />
                 : <div className="flex flex-wrap gap-5">
                   {
                     getAllInters?.map((item: any) => {
@@ -416,7 +422,7 @@ const InternsCompanyAdmin = () => {
                   assignedManager: event
                 })
               }}
-              options={filteredData}
+              options={filteredManagersData}
               hasSearch={true}
               searchPlaceHolder="Search by name"
             />

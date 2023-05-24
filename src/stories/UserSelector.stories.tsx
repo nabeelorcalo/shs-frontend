@@ -12,6 +12,7 @@ const Template: ComponentStory<typeof UserSelector> = (args) => <UserSelector {.
 
 export const SimpleSelect = Template.bind({})
 SimpleSelect.args = {
+  className: 'className',
   label: 'label',
   value: 'value',
   setState: 'setState({})',
@@ -23,6 +24,7 @@ SimpleSelect.args = {
 
 export const AvatarSelect = Template.bind({})
 AvatarSelect.args = {
+  className: 'className',
   label: 'label',
   value: 'value',
   setState: 'setState({})',
@@ -34,6 +36,7 @@ AvatarSelect.args = {
 
 export const AvatarSearchSelect = Template.bind({})
 AvatarSearchSelect.args = {
+  className: 'className',
   label: 'label',
   value: 'value',
   setState: 'setState({})',

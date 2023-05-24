@@ -5,8 +5,8 @@ import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
-import './style.scss';
 import dayjs from 'dayjs';
+import './style.scss';
 
 const tempArray = [
   { name: "Job Details" },
