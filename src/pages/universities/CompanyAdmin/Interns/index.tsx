@@ -118,7 +118,7 @@ const index: React.FC = () => {
         <Col xs={24}>
           <div className='py-3'><span className='text-base'>Total Interns:</span> <span className='text-base font-semibold'>{univertyTableData.length}</span></div>
           {states.isToggle ?
-            <InternCard menu={menu} universityIntersData={univertyTableData} />
+            <InternCard searchValue={searchValue} setSearchValue={setSearchValue} menu={menu} universityIntersData={univertyTableData} />
             :
             <BoxWrapper>
               <InternTable menu={menu} universityIntersData={univertyTableData} />

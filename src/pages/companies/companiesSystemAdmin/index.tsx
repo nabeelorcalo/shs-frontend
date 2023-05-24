@@ -8,6 +8,7 @@ import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import '../../../scss/global-color/Global-colors.scss'
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const ButtonStatus = (props: any) => {
   const btnStyle: any = {
@@ -53,7 +54,7 @@ const CompaniesSystemAdmin = () => {
     terminate: false
   })
 
-  const PopOver = ({ state,id }: any) => {
+  const PopOver = ({ state, id }: any) => {
     const navigate = useNavigate();
     const items: MenuProps["items"] = [
       {
@@ -62,7 +63,7 @@ const CompaniesSystemAdmin = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              navigate({ pathname: `/universities/profile/${id}` })
+              navigate(`${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${id}`)
             }}
           >
             View Details

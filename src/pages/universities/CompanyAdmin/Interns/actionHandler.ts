@@ -18,11 +18,11 @@ const useCustomHook = () => {
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
 
   const getUniIntersTableData = async (id: any, searchValue: any) => {
-    search: searchValue ? searchValue : null
     const params = {
       userUniversityId: id,
       page: 2,
-      limit: 2
+      limit: 2,
+      search: searchValue
     }
     const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
     setUniversityIntersData(data)

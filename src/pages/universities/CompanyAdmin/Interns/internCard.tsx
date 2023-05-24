@@ -15,23 +15,19 @@ interface IDUMMYDATA {
 
 const InternCard = (props: any) => {
   const navigate = useNavigate();
-  const { menu } = props;
+  const { menu, setSearchValue, searchValue } = props;
   const ProfileHandler = () => {
     navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`)
   }
   const { state } = useLocation();
-  useEffect(() => {
-    getUniIntersTableData(state)
-  }, [])
+
   const ChatHandler = () => {
     navigate(`/${ROUTES_CONSTANTS.CHAT}`)
   }
   const { getUniIntersTableData, universityIntersData } = useCustomHook();
-
   useEffect(() => {
-    getUniIntersTableData(state)
+    getUniIntersTableData(state, searchValue)
   }, [])
-
   console.log(universityIntersData, "universityIntersData");
 
 
