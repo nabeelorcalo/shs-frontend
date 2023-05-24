@@ -53,7 +53,7 @@ const commonObj = {
 const index = () => {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   return (
-    <div className="university-profile-detail-page">
+    <div className="university-profile-detail-page ">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Breadcrumb breadCrumbData={breadcrumbArray} />

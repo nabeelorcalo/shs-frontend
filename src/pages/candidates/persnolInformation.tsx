@@ -65,6 +65,7 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
 
   const [others, setOthers] = useState(Other);
   const [allergies, setAllergies] = useState(allergie);
+  
   return (
     <div className="persnol-main">
       <p className="persnol-para mb-4">Personal Details</p>
