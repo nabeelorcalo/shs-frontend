@@ -15,9 +15,7 @@ import { Alert, SearchBar, DropDownForSetting } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-
-const { TextArea } = Input;
-const { Title, Text } = Typography;
+const {Text } = Typography;
 
 let overview = [
   {
