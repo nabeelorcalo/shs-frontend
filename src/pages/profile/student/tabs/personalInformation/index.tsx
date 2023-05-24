@@ -19,6 +19,7 @@ import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
+import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
 
 const PersonalInformation = () => {

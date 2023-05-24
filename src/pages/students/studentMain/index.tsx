@@ -119,7 +119,7 @@ const StudentMain = () => {
       date_of_joining: "01/07/2021",
     },
     {
-      no: "02",
+      no: "03",
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
@@ -127,7 +127,7 @@ const StudentMain = () => {
       date_of_joining: "01/07/2021",
     },
     {
-      no: "01",
+      no: "04",
       name: "Deing Jing Me",
       title: "Business Analyst",
       companyrep: "Anika john",
@@ -135,7 +135,7 @@ const StudentMain = () => {
       date_of_joining: "01/07/2022",
     },
     {
-      no: "02",
+      no: "05",
       name: "Ronald Richard",
       title: "Scientist Analyst",
       companyrep: "Borsa Lewa",
@@ -143,7 +143,7 @@ const StudentMain = () => {
       date_of_joining: "01/07/2021",
     },
     {
-      no: "02",
+      no: "06",
       name: "Selan Klien",
       title: "Scientist Analyst",
       companyrep: "Pablo pau",
@@ -168,6 +168,8 @@ const StudentMain = () => {
       }
     )
   })
+  console.log(newTableData,"newTableData");
+  
   const updateTimePeriod = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -248,6 +250,7 @@ const StudentMain = () => {
                       joining_date={items.date_of_joining}
                       date_of_birth={items.companyrep}
                       company={items.company}
+                      id={items.no}
                     />
                   )
                 })
