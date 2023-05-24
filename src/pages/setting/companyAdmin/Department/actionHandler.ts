@@ -4,7 +4,7 @@ import apiEndpints from "../../../../config/apiEndpoints";
 import { settingDepartmentState } from "../../../../store";
 import { Notifications } from "../../../../components";
 
-const useCustomHook = () => {
+const UseDepartmentCustomHook = () => {
   const { DAPARTMENT } = apiEndpints;
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
 
@@ -48,4 +48,4 @@ const useCustomHook = () => {
   };
 };
 
-export default useCustomHook;
+export default UseDepartmentCustomHook;

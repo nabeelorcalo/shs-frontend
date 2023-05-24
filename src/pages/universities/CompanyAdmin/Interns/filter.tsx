@@ -1,54 +1,67 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form } from "antd";
 import { ArrowDownDark, UserAvatar } from '../../../../assets/images';
 import { CommonDatePicker, DropDown } from '../../../../components';
 import DropDownNew from '../../../../components/Dropdown/DropDownNew';
 import './style.scss'
+import useCustomHook from './actionHandler';
+import UseDepartmentCustomHook from '../../../setting/companyAdmin/Department/actionHandler';
 
-const Filters = ({setShowDrawer}:any) => {
-  const detailsData = [
-    {
-      userImg: UserAvatar,
-      userName: 'john doe'
-    },
-    {
-      userImg: UserAvatar,
-      userName: 'mina marino'
-    },
-    {
-      userImg: UserAvatar,
-      userName: 'clark'
-    },
-    {
-      userImg: UserAvatar,
-      userName: 'sarah joe'
-    },
-  ]
-  const status = ["Pending", "Approved", "Rejected",]
-  const department = ["Design", "Research", "Management", "Development", "Business"]
+const detailsData = [
+  {
+    userImg: UserAvatar,
+    userName: 'john doe'
+  },
+  {
+    userImg: UserAvatar,
+    userName: 'mina marino'
+  },
+  {
+    userImg: UserAvatar,
+    userName: 'clark'
+  },
+  {
+    userImg: UserAvatar,
+    userName: 'sarah joe'
+  },
+]
+const status = ["Pending", "Approved", "Rejected",]
+const Filters = ({ setShowDrawer }: any) => {
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
-  const [selectValue, setSelectValue] = useState(
+  const [selectValue, setSelectValue] = useState<any>(
     {
       userImg: '',
-      userName: 'Select',
-      status: "Select",
-      department: "Select",
-      joiningDate: "Select"
+      userName: null,
+      status: null,
+      department: null,
+      joiningDate: null
     }
   );
+  const { getUniIntersTableData } = useCustomHook();
+  const { getSettingDepartment, settingDepartmentdata }: any = UseDepartmentCustomHook();
+  useEffect(() => {
+    // getUniIntersTableData(selectValue.status, selectValue.joiningDate, selectValue.department)
+    getSettingDepartment(null)
+  }, [])
+
+
+
   const ResetHandler = () => {
     setSelectValue({
-      department: "Select",
-      status: "Select",
-      joiningDate: "Select",
+      department: null,
+      status: null,
+      joiningDate: null,
       userImg: '',
-      userName: "Select"
+      userName: null
     });
   }
 
-  const onFinish = (values: any)  => {
+  const onFinish = (values: any) => {
+    console.log(values);
+
     setShowDrawer(false)
+    getUniIntersTableData(null, null, selectValue)
   }
 
   return (
@@ -71,7 +84,7 @@ const Filters = ({setShowDrawer}:any) => {
           <DropDown
             name={selectValue.department}
             value={selectValue.department}
-            options={department.map((item: any) => { return item })}
+            options={settingDepartmentdata.map((item: any) => item?.name)}
             setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
           />
         </Form.Item>
@@ -92,7 +105,7 @@ const Filters = ({setShowDrawer}:any) => {
                 {
                   label: <div>{detailsData.map((item: any) => (
                     <div className="flex items-center gap-3 mb-[20px]"
-                      onClick={() => setSelectValue({ ...selectValue, userName: item.userName, userImg: item.userImg })}
+                      onClick={() => setSelectValue({ ...selectValue, userName: item.name, userImg: item.userImg })}
                     >
                       <img src={item.userImg}
                         className='h-[24px] w-[24px] rounded-full object-cover'

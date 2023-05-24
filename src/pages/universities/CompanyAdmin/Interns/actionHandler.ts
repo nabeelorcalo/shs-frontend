@@ -17,12 +17,15 @@ const useCustomHook = () => {
   const { GET_UNIVERSITYINTERNS } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
 
-  const getUniIntersTableData = async (id: any, searchValue: any) => {
+  const getUniIntersTableData = async (id: any = null, searchValue: any = null, selectValue: any) => {
     const params = {
       userUniversityId: id,
-      page: 2,
-      limit: 2,
-      search: searchValue
+      page: 1,
+      limit: 100,
+      search: searchValue,
+      internStatus: selectValue?.status ? selectValue?.status : null,
+      joiningDate: selectValue?.joiningDate,
+      department: selectValue?.department
     }
     const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
     setUniversityIntersData(data)
@@ -31,6 +34,7 @@ const useCustomHook = () => {
   const debouncedSearch = debounce((value: any, setSearchName: any) => {
     setSearchName(value);
   }, 500);
+
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 

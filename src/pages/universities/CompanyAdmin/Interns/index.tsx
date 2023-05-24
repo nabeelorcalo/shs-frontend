@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Menu, Row, Input } from 'antd'
-import { CardViewIcon, TableViewIcon } from '../../../../assets/images';
+import { CardViewIcon, GlassMagnifier, TableViewIcon } from '../../../../assets/images';
 import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
@@ -14,7 +14,6 @@ import dayjs from 'dayjs';
 
 const index: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
-
   const { getUniIntersTableData, universityIntersData, debouncedSearch } = useCustomHook();
 
   const breadcrumbArray = [
@@ -31,16 +30,10 @@ const index: React.FC = () => {
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [value, setValue] = useState("")
   const { state } = useLocation();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue)
+    getUniIntersTableData(state, searchValue,null)
   }, [searchValue])
-
-  // const debouncedResults = (event: any) => {
-  //   const { value } = event.target;
-
-  // };
 
   const menu = (
     <Menu>
@@ -63,7 +56,7 @@ const index: React.FC = () => {
         no: universityIntersData?.length < 10 && `0${index + 1}`,
         id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        department: item?.userDetail?.department ? item?.userDetail?.department : "--",
+        department: item?.internship?.department?.description ? item?.internship?.department?.description : "--",
         joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "--",
         dateOfBirth: item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "--",
       }
@@ -73,8 +66,6 @@ const index: React.FC = () => {
   const handleChangeSearch = (e: any) => {
     debouncedSearch(e.target.value, setSearchValue)
   };
-
-
 
   const togglerClick = (event: any) => {
     setStates({
@@ -92,7 +83,7 @@ const index: React.FC = () => {
             className='search-bar'
             placeholder="Search"
             onChange={handleChangeSearch}
-          // prefix={<GlassMagnifier />}
+            prefix={<GlassMagnifier />}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
