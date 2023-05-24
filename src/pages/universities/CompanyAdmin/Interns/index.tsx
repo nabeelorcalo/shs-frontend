@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Menu, Row } from 'antd'
+import { Col, Menu, Row, Input } from 'antd'
 import { CardViewIcon, TableViewIcon } from '../../../../assets/images';
 import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
 import Filters from './filter';
@@ -13,7 +13,9 @@ import { NavLink, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 const index: React.FC = () => {
-  const { getUniIntersTableData, universityIntersData } = useCustomHook();
+  const [searchValue, setSearchValue] = useState('');
+
+  const { getUniIntersTableData, universityIntersData, debouncedSearch } = useCustomHook();
 
   const breadcrumbArray = [
     { name: "Interns" },
@@ -29,12 +31,16 @@ const index: React.FC = () => {
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [value, setValue] = useState<any>()
+  const [value, setValue] = useState("")
   const { state } = useLocation();
   useEffect(() => {
-    getUniIntersTableData(state)
-  }, [])
-  console.log(universityIntersData, "universityIntersData");
+    getUniIntersTableData(state, searchValue)
+  }, [searchValue])
+
+  // const debouncedResults = (event: any) => {
+  //   const { value } = event.target;
+
+  // };
 
   const menu = (
     <Menu>
@@ -64,8 +70,12 @@ const index: React.FC = () => {
     )
   })
 
-  const handleChange = () => { };
-  
+  const handleChangeSearch = (e: any) => {
+    debouncedSearch(e.target.value, setSearchValue)
+  };
+
+
+
   const togglerClick = (event: any) => {
     setStates({
       ...states,
@@ -77,7 +87,13 @@ const index: React.FC = () => {
       <Breadcrumb breadCrumbData={breadcrumbArray} bordered={true} />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar size="middle" handleChange={handleChange} placeholder='Search by name' />
+          {/* <SearchBar onChange={debouncedResults} size="middle" handleChange={handleChange} placeholder='Search by name' /> */}
+          <Input
+            className='search-bar'
+            placeholder="Search"
+            onChange={handleChangeSearch}
+          // prefix={<GlassMagnifier />}
+          />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />

@@ -5,9 +5,7 @@ import { useState } from "react";
 import { BoxWrapper } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 
-const onFinish = (values: any) => {
-  console.log("Received values of form: ", values);
-};
+
 const ChangePassword = (props: any) => {
   const { showSideViewType, setShowSideViewType } = props
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
@@ -16,6 +14,9 @@ const ChangePassword = (props: any) => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const onFinish = (values: any) => {
+    console.log("Received values of form: ", values);
+  };
 
   return (
     <BoxWrapper>

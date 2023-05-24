@@ -10,20 +10,27 @@ import csv from "../../../../helpers/csv";
 import endpoints from "../../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { universityIntersDataState } from "../../../../store";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_UNIVERSITYINTERNS } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
 
-  const getUniIntersTableData = async (id: any) => {
+  const getUniIntersTableData = async (id: any, searchValue: any) => {
+    search: searchValue ? searchValue : null
     const params = {
       userUniversityId: id,
-      //  interName:search
+      page: 2,
+      limit: 2
     }
     const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
     setUniversityIntersData(data)
   };
+
+  const debouncedSearch = debounce((value: any, setSearchName: any) => {
+    setSearchName(value);
+  }, 500);
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -94,6 +101,7 @@ const useCustomHook = () => {
     universityIntersData,
     setUniversityIntersData,
     downloadPdfOrCsv,
+    debouncedSearch
   };
 };
 
