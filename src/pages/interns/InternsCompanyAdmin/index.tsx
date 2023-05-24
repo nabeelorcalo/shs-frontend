@@ -1,25 +1,25 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound, Loader
 } from "../../../components";
 import { TextArea } from "../../../components";
 import {
   AlertIcon, CardViewIcon, More, SuccessIcon,
-  TableViewIcon, UserAvatar, ArrowDownDark, GlassMagnifier
+  TableViewIcon, GlassMagnifier, UserAvatar
 } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Spin, Select, Space, Input } from 'antd';
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
 import '../style.scss'
-const { Option } = Select;
+import UserSelector from "../../../components/UserSelector";
 
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
-  const [assignManager, setAssignManager] = useState({ isToggle: false, id: undefined })
+  const [assignManager, setAssignManager] = useState({ isToggle: false, id: undefined, assignedManager: undefined })
   const [terminate, setTerminate] = useState({ isToggle: false, id: undefined })
-  const [complete, setComplete] = useState(false)
+  const [complete, setComplete] = useState({ isToggle: false, id: undefined })
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
@@ -28,7 +28,7 @@ const InternsCompanyAdmin = () => {
     department: undefined,
     university: undefined,
     dateOfJoining: undefined,
-    termReason: ''
+    termReason: '',
   })
 
   const statusList = [
@@ -80,7 +80,7 @@ const InternsCompanyAdmin = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              setAssignManager({ isToggle: true, id: data?.id })
+              setAssignManager({ ...assignManager, isToggle: true, id: data?.id })
             }}>
             Assign Manager
           </a>
@@ -101,7 +101,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { setComplete(true) }} >
+            onClick={() => { setComplete({ ...complete, isToggle: true, id: data?.id }) }} >
             Complete Internship
           </a>
         ),
@@ -181,40 +181,6 @@ const InternsCompanyAdmin = () => {
     )
   })
 
-  // const updateManager = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     manager: event
-  //   }))
-  // }
-
-  const updateStatus = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      status: event
-    }))
-  }
-
-  const updateDepartment = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      department: event
-    }))
-  }
-
-  const updateUniversity = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      university: event
-    }))
-  }
-
-  // const updateDateOfJoining = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     dateOfJoining: event
-  //   }))
-  // }
 
   const handleApplyFilter = () => {
     getAllInternsData(state);
@@ -231,15 +197,24 @@ const InternsCompanyAdmin = () => {
       dateOfJoining: undefined
     }))
   }
-  const handleSearch = (value: any) => {
-    console.log('Search:', value);
-  }
 
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
+
+  const filteredData = getAllManagers?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
+        avatar: <UserAvatar />
+      }
+    )
+  })
 
   return (
     <>
@@ -267,11 +242,8 @@ const InternsCompanyAdmin = () => {
             <>
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
-                  <label>Manager</label>
-                  <Select
-                    suffixIcon={<ArrowDownDark />}
-                    // showSearch
-                    style={{ width: '100%' }}
+                  <UserSelector
+                    label="Manager"
                     placeholder="Select"
                     value={state.manager}
                     onChange={(event: any) => {
@@ -280,45 +252,35 @@ const InternsCompanyAdmin = () => {
                         manager: event
                       })
                     }}
-                    // optionFilterProp="children"
-                    // onSearch={handleSearch}
-                    // filterOption={(input: any, option: any) =>
-                    //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    // }
-                    dropdownRender={(menu) => (
-                      <div>
-                        <div style={{ padding: '8px', borderBottom: '1px solid #f0f0f0' }}>
-                          <Input
-                            placeholder="Search"
-                            onPressEnter={(e: any) => handleSearch(e.target.value)}
-                          />
-                        </div>
-                        {menu}
-                      </div>
-                    )}
-                  >
-                    {getAllManagers.map((item: any) => {
-                      return <Option value={item?.id}>
-                        <Space>
-                          <img src={UserAvatar} alt="avatar" />
-                          {`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}
-                        </Space>
-                      </Option>
-                    })}
-                  </Select>
+                    options={filteredData}
+                    hasSearch={false}
+                    handleSearch={(e: any) => console.log(e)}
+                  />
                 </div>
                 <SelectComp
                   label="Status"
                   placeholder='Select'
                   value={state.status}
-                  onChange={(event: any) => { updateStatus(event) }}
+                  onChange={(event: any) => {
+                    setState((prevState) => ({
+                      ...prevState,
+                      status: event
+                    }))
+                  }}
                   options={statusList}
                 />
                 <SelectComp
                   label="Department"
                   placeholder='Select'
                   value={state.department}
-                  onChange={(event: any) => { updateDepartment(event) }}
+                  onChange={(event: any) => {
+
+                    setState((prevState) => ({
+                      ...prevState,
+                      department: event
+                    }))
+
+                  }}
                   options={departmentsData?.map((item: any) => {
                     return { value: item?.id, label: item?.name }
                   })}
@@ -327,7 +289,12 @@ const InternsCompanyAdmin = () => {
                   label="University"
                   placeholder='Select'
                   value={state.university}
-                  onChange={(event: any) => { updateUniversity(event) }}
+                  onChange={(event: any) => {
+                    setState((prevState) => ({
+                      ...prevState,
+                      university: event
+                    }))
+                  }}
                   options={getAllUniversities?.map((item: any) => {
                     return { value: item?.university?.id, label: item?.university?.name }
                   })}
@@ -429,7 +396,7 @@ const InternsCompanyAdmin = () => {
                   }
                 </div>
 
-            : <Spin tip="Processing...." />}
+            : <Loader />}
         </Col>
       </Row>
 
@@ -439,41 +406,20 @@ const InternsCompanyAdmin = () => {
         title="Assign Manager"
         children={
           <div className="flex flex-col gap-2">
-            <label>Manager</label>
-            <Select
-              suffixIcon={<ArrowDownDark />}
-              style={{ width: '100%' }}
+            <UserSelector
+              label="Manager"
               placeholder="Select"
-              value={state.manager}
+              value={assignManager.assignedManager}
               onChange={(event: any) => {
-                setState({ ...state, manager: event })
+                setAssignManager({
+                  ...assignManager,
+                  assignedManager: event
+                })
               }}
-              // optionFilterProp="children"
-              // onSearch={handleSearch}
-              // filterOption={(input: any, option: any) =>
-              //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              // }
-              dropdownRender={(menu) => (
-                <div>
-                  <div style={{ padding: '8px', borderBottom: '1px solid #f0f0f0' }}>
-                    <Input
-                      placeholder="Search"
-                      onPressEnter={(e: any) => handleSearch(e.target.value)}
-                    />
-                  </div>
-                  {menu}
-                </div>
-              )}
-            >
-              {getAllManagers.map((item: any) => {
-                return <Option value={item?.id}>
-                  <Space>
-                    <img src={UserAvatar} alt="avatar" />
-                    {`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}
-                  </Space>
-                </Option>
-              })}
-            </Select>
+              options={filteredData}
+              hasSearch={true}
+              searchPlaceHolder="Search by name"
+            />
           </div>
         }
         footer={
@@ -482,13 +428,13 @@ const InternsCompanyAdmin = () => {
               type="default"
               size="middle"
               className="button-default-tertiary max-sm:w-full"
-              onClick={() => setAssignManager({ ...assignManager, isToggle: false })}
-            >
+              onClick={() => setAssignManager({ ...assignManager, isToggle: false, assignedManager: undefined })}>
               Cancel
             </Button>
             <Button
               onClick={() => {
-                updateCandidatesRecords(assignManager.id, state.manager);
+                updateCandidatesRecords(assignManager.id, assignManager.assignedManager);
+                setAssignManager({ ...assignManager, isToggle: false })
               }}
               type="default"
               size="middle"
@@ -496,10 +442,10 @@ const InternsCompanyAdmin = () => {
             >
               Assign
             </Button>
-          </div>
+          </div >
         }
       />
-      <PopUpModal open={terminate.isToggle}
+      < PopUpModal open={terminate.isToggle}
         width={500}
         close={() => { setTerminate({ ...terminate, isToggle: false }) }}
         children={
@@ -516,7 +462,6 @@ const InternsCompanyAdmin = () => {
                   value={state.termReason}
                   rows={5}
                   placeholder="Write your reason"
-                  // disable={false}
                   onChange={(event: any) => {
                     setState({
                       ...state,
@@ -526,10 +471,10 @@ const InternsCompanyAdmin = () => {
                 />
               </div>
             </div>
-          </div>
+          </div >
         }
         footer={
-          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
             <Button
               type="default"
               size="small"
@@ -543,34 +488,35 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-error max-sm:w-full"
               onClick={() => {
-                updateCandidatesRecords(terminate.id, state.termReason);
+                updateCandidatesRecords(terminate.id, null, state.termReason);
+                setTerminate({ ...terminate, isToggle: false })
               }}
             >
               Terminate
             </Button>
-          </div>
+          </div >
         }
       />
-      <PopUpModal
-        open={complete}
+      < PopUpModal
+        open={complete.isToggle}
         width={500}
-        close={() => { setComplete(false) }}
+        close={() => { setComplete({ ...complete, isToggle: false }) }}
         children={
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5" >
             <div className='flex flex-row items-center gap-3'>
               <div><SuccessIcon /></div>
               <div><h2>Success</h2></div>
             </div>
             <p>Are you sure you want to mark the internship as complete for this intern?</p>
-          </div>
+          </div >
         }
         footer={
-          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
             <Button
               type="default"
               size="small"
               className="button-default-tertiary max-sm:w-full"
-              onClick={() => setComplete(false)}
+              onClick={() => { setComplete({ ...complete, isToggle: false }) }}
             >
               Cancel
             </Button>
@@ -578,11 +524,15 @@ const InternsCompanyAdmin = () => {
               type="primary"
               size="small"
               className="button-tertiary max-sm:w-full"
-              onClick={() => { alert("hello") }}
+              onClick={() => {
+                updateCandidatesRecords(complete.id, null, null, 'completed')
+                setComplete({ ...complete, isToggle: false })
+
+              }}
             >
               Complete
             </Button>
-          </div>
+          </div >
         }
       />
     </>
