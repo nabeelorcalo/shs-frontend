@@ -1,6 +1,7 @@
 import { Col, Row, Typography } from "antd";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import {
   PageHeader,
   IconButton,
@@ -9,6 +10,7 @@ import {
   TextArea,
   Breadcrumb,
   Notifications,
+  EvaluationRating
 } from "../../components";
 import {
   Sad,
@@ -24,13 +26,14 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
-import { currentUserRoleState } from "../../store"
+import { currentUserRoleState, evaluationState } from "../../store"
 import "./style.scss";
-import { useRecoilValue } from "recoil";
 
 const ViewPerformance = () => {
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
+  const evaluation = useRecoilValue(evaluationState);
+  console.log("singleEvaluation:: ", evaluation)
 
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
@@ -123,7 +126,7 @@ const ViewPerformance = () => {
         <p className="evaluation-txt text-teriary-color">
           Evaluation Date:
           <span className="mx-2 font-semibold text-secondary-color">
-            June 16, 2019
+            {evaluation.evalDate}
           </span>
         </p>
 
@@ -141,48 +144,101 @@ const ViewPerformance = () => {
         <Row gutter={[20, 10]}>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationCard
-              name={user.name}
-              avatar={user.avatar}
-              profession={user.profession}
+              name={evaluation.evaluatedBy.name}
+              avatar={evaluation.evaluatedBy.avatar}
+              profession={evaluation.evaluatedBy.role}
             />
           </Col>
-          {detailedCards.map((item: any) => (
-            <Col xs={24} md={12} xxl={6} key={item.id}>
-              <EvaluationStatsCard
-                name={item.title}
-                percentage={user.learningObjectives}
-                color={item.progressColor}
-              />
-            </Col>
-          ))}
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={"Learning Objectives"}
+              percentage={evaluation.learningObjectives.percentage}
+              color={'#9BD5E8'}
+            />
+          </Col>
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={"Discipline"}
+              percentage={evaluation.discipline.percentage}
+              color={'#E96F7C'}
+            />
+          </Col>
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={"Personal"}
+              percentage={evaluation.personal.percentage}
+              color={'#6AAD8E'}
+            />
+          </Col>
         </Row>
-        {
-          data.map((obj: any) => {
-            return (
-              <Row gutter={[20, 10]} key={obj.id}>
-                <Col xs={24}>
-                  <div key={obj.name} className="mt-6 mb-2">
-                    <Typography.Title level={3} className="evaluation-heading">
-                      {obj.name}
-                    </Typography.Title>
-                  </div>
-                </Col>
-                {obj.values.map((child: any) =>
-                  <Col xs={24} xl={12} xxl={8} key={child.value}>
-                    <div key={child.title}>
-                      <EmojiMoodRating
-                        size={5}
-                        data={emojiData}
-                        title={child.title}
-                        activeIconIndex={child.value}
-                      />
-                    </div>
-                  </Col>
-                )}
-              </Row>
-            )
-          })
-        }
+        
+    
+        <Row gutter={[20, 10]}>
+          <Col xs={24}>
+            <div className="mt-6 mb-2">
+              <Typography.Title level={3} className="evaluation-heading">
+                Learning Objectives
+              </Typography.Title>
+            </div>
+          </Col>
+          {evaluation.learningObjectives.questions.map((question: any, index) =>
+            <Col xs={24} xl={12} xxl={8} key={index}>
+              <div>
+                <EvaluationRating
+                  size={5}
+                  data={emojiData}
+                  title={question.title}
+                  value={question.value}
+                />
+              </div>
+            </Col>
+          )}
+        </Row>
+
+        <Row gutter={[20, 10]}>
+          <Col xs={24}>
+            <div className="mt-6 mb-2">
+              <Typography.Title level={3} className="evaluation-heading">
+                Discipline
+              </Typography.Title>
+            </div>
+          </Col>
+          {evaluation.discipline.questions.map((question: any, index) =>
+            <Col xs={24} xl={12} xxl={8} key={index}>
+              <div>
+                <EmojiMoodRating
+                  size={5}
+                  data={emojiData}
+                  title={question.title}
+                  activeIconIndex={question.value}
+                />
+              </div>
+            </Col>
+          )}
+        </Row>
+
+        <Row gutter={[20, 10]}>
+          <Col xs={24}>
+            <div className="mt-6 mb-2">
+              <Typography.Title level={3} className="evaluation-heading">
+                Personal
+              </Typography.Title>
+            </div>
+          </Col>
+          {evaluation.personal.questions.map((question: any, index) =>
+            <Col xs={24} xl={12} xxl={8} key={index}>
+              <div>
+                <EmojiMoodRating
+                  size={5}
+                  data={emojiData}
+                  title={question.title}
+                  activeIconIndex={question.value}
+                />
+              </div>
+            </Col>
+          )}
+        </Row>
+  
         <div className="my-4">
           <Typography.Title level={3} className="evaluation-heading">
             Comments

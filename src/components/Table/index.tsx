@@ -1,4 +1,5 @@
 import { Table } from 'antd';
+import {Loader} from '../../components'
 import "./style.scss"
 interface TableProps {
   columns?: any[];
@@ -13,9 +14,10 @@ interface TableProps {
   id?: any
   hideTotal?: any
   className?: any
+  loading?: any
 }
 export const GlobalTable = (props: TableProps) => {
-  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, ...rest } = props
+  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading, ...rest } = props
 
   return (
     <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
@@ -26,6 +28,7 @@ export const GlobalTable = (props: TableProps) => {
         pagination={pagination}
         scroll={{ x: "max-content", y: height }}
         id={id}
+        loading={{spinning: loading, indicator: <Loader />}}
         {...rest} />
       {
         pagination && hideTotal == false ?

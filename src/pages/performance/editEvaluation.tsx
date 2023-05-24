@@ -30,7 +30,6 @@ import useCustomHook from "./actionHandler";
 
 const ViewPerformance = () => {
   const action = useCustomHook();
-  
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
