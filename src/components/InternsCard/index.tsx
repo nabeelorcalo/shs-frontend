@@ -4,11 +4,10 @@ import { BoxWrapper } from '../../components'
 import constants from '../../config/constants'
 import '../../scss/global-color/Global-colors.scss'
 import './style.scss'
-
+import { ROUTES_CONSTANTS } from '../../config/constants'
 export const InternsCard = (props: any) => {
   const { id, status, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
-  console.log(id, "iddddd");
-
+  const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
   return (
     <div className='interns-card-main  flex mb-8 max-sm:w-full max-md:w-1/2
@@ -41,13 +40,13 @@ export const InternsCard = (props: any) => {
             <Button
               className="border-0 accommodation-btn-info-bg text-info-color-dark"
               size="small"
-              onClick={() => navigate(`/students/profile/${id}`)}>
+              onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
               Profile
             </Button>
             <Button
               className='border-0 light-green-bg-color text-success-hover-color'
               size="small"
-              onClick={() => navigate(`chat/${id}`)}>
+              onClick={() => navigate(`${CHAT}/${id}`)}>
               Chat
             </Button>
           </div>

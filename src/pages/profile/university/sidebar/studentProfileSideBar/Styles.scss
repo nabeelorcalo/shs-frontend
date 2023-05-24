@@ -60,6 +60,8 @@
             background-color: $text-input-bg-color;
         }
 
+
+
         .plus {
             background-color: $text-success-placeholder-color;
             color: $white-bg-color;
@@ -79,18 +81,24 @@
         }
     }
 
+    .intro-bar {
+        z-index: 1 !important;
+        left: 43% !important;
+        top: 45% !important;
+    }
+
 }
 
 .others {
     .other-item {
-        background-color: #e6f4f9 !important;
+        background-color: $text-input-bg-color !important;
         border-radius: 20px;
         padding: 5px 10px;
         transition: all 0.2s linear;
 
         &:hover {
-            background-color: #14142a !important;
-            color: white;
+            background-color: $text-primary-title-color !important;
+            color: $white-bg-color;
 
             .other-icon {
                 display: flex;

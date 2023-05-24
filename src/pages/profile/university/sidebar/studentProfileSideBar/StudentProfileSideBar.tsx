@@ -1,13 +1,13 @@
 import {
-    ArrowDownDark,
-    StarFilledIcon,
-    Dot,
-    Mail,
-    Call,
-    Intro,
-    LocationIconNew,
-    StarOutlinedIcon,
-    PlayIconNew,
+  ArrowDownDark,
+  StarFilledIcon,
+  Dot,
+  Mail,
+  Call,
+  Intro,
+  LocationIconNew,
+  StarOutlinedIcon,
+  PlayIconNew,
 } from "../../../../../assets/images";
 import DropDownNew from "../../../../../components/Dropdown/DropDownNew";
 //   import { FC, useEffect } from "react";
@@ -19,74 +19,74 @@ import { BoxWrapper } from "../../../../../components";
 //   import actionHandler from "./actionHandler";
 
 const StudentProfileSideBar = (props: any) => {
-    // const {
-    //     id,
-    //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
-    //     rating: ratingCount,
-    //     stage,
-    //     internshipTitle,
-    //     internType,
-    //     AplliedDate,
-    // } = props;
-    // const { rating, setRating, handleRating } = actionHandler();
+  // const {
+  //     id,
+  //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
+  //     rating: ratingCount,
+  //     stage,
+  //     internshipTitle,
+  //     internType,
+  //     AplliedDate,
+  // } = props;
+  // const { rating, setRating, handleRating } = actionHandler();
 
-    const skillsData = [
-        "User Interface Design",
-        "Illustrator",
-        "Documentation",
-        "Visual Design",
-        "Sketch",
-        "UX Strategy",
-        "Web Design",
-    ];
-    const newSkillData = skillsData.slice(0, 6);
+  const skillsData = [
+    "User Interface Design",
+    "Illustrator",
+    "Documentation",
+    "Visual Design",
+    "Sketch",
+    "UX Strategy",
+    "Web Design",
+  ];
+  const newSkillData = skillsData.slice(0, 6);
 
-    const userinfoData = [
-        { img: Mail, title: "email", value: "maria@studenthelpsquad.com" },
-        { img: Call, title: "phoneNumber", value: "+44 7700 900077" },
-        { img: LocationIconNew, title: "address", value: "263 Eversholt St, London NW11NB, UK" },
-    ];
+  const userinfoData = [
+    { img: Mail, title: "email", value: "maria@studenthelpsquad.com" },
+    { img: Call, title: "phoneNumber", value: "+44 7700 900077" },
+    { img: LocationIconNew, title: "address", value: "263 Eversholt St, London NW11NB, UK" },
+  ];
 
-    const dropdownData = [
-        { heading: "Current Stage" },
-        { title: "stage", color: "#363565" },
-        { heading: "Move to" },
-        { title: "Interviewed", color: "#5879CE" },
-        { title: "Recommended", color: "#CC7FD4" },
-        { title: "OfferLetter", color: "#C0ACFF" },
-        { title: "Contract", color: "#4A9D77" },
-        { title: "Rejected", color: "#E94E5D" },
-    ];
+  const dropdownData = [
+    { heading: "Current Stage" },
+    { title: "stage", color: "#363565" },
+    { heading: "Move to" },
+    { title: "Interviewed", color: "#5879CE" },
+    { title: "Recommended", color: "#CC7FD4" },
+    { title: "OfferLetter", color: "#C0ACFF" },
+    { title: "Contract", color: "#4A9D77" },
+    { title: "Rejected", color: "#E94E5D" },
+  ];
 
-    // useEffect(() => setRating(ratingCount), []);
-    return (
-        <BoxWrapper>
-            <div className="details-wrapper p-[5px] pr-[25px]">
-                <div className="user-info-main">
-                    <div className="user-info flex flex-col items-center">
-                        <Avatar
-                            className="h-[80px] w-[80px] rounded-full object-cover relative"
-                            // src={avatar}
-                            alt={"firstName"}
-                            icon={
-                                <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+  // useEffect(() => setRating(ratingCount), []);
+  return (
+    <BoxWrapper>
+      <div className="details-wrapper p-[5px] pr-[25px]">
+        <div className="user-info-main">
+          <div className="user-info flex flex-col items-center">
+            <Avatar
+              className="h-[80px] w-[80px] rounded-full object-cover relative"
+              // src={avatar}
+              alt={"firstName"}
+              icon={
+                <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
 
-                                    {/* {"firstName"[0]} */}
-                                    {/* {"lastName"[0]} */}
-                                </span>
-                            }
-                        />
-                        {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
-                        <div className="py-4 text-center">
-                            <p className="text-xl font-semibold text-primary-color">Maria Sanoid</p>
-                            <p className="text-secondary-color font-medium text-base">UI UX Designer</p>
-                            <p className="text-secondary-color font-medium text-base">Design</p>
-                        </div>
-                    </div>
-                    <Divider />
+                  {/* {"firstName"[0]} */}
+                  {/* {"lastName"[0]} */}
+                </span>
+              }
+            />
+            {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
+            <div className="py-4 text-center">
+              <p className="text-xl font-semibold text-primary-color">Maria Sanoid</p>
+              <p className="text-secondary-color font-medium text-base">UI UX Designer</p>
+              <p className="text-secondary-color font-medium text-base">Design</p>
+            </div>
+          </div>
+          <Divider />
 
-                    {/* <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center"> */}
-                    {/* <div className="flex advance-dropdown ">
+          {/* <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center"> */}
+          {/* <div className="flex advance-dropdown ">
                             <DropDownNew
                                 items={[
                                     {
@@ -110,7 +110,7 @@ const StudentProfileSideBar = (props: any) => {
                                 </div>
                             </DropDownNew>
                         </div> */}
-                    {/* <div className="flex advance-dropdown ">
+          {/* <div className="flex advance-dropdown ">
                             <DropDownNew
                                 items={[
                                     {
@@ -143,10 +143,10 @@ const StudentProfileSideBar = (props: any) => {
                                 </div>
                             </DropDownNew>
                         </div> */}
-                    {/* </div> */}
-                </div>
+          {/* </div> */}
+        </div>
 
-                {/* <div className="apllied-for">
+        {/* <div className="apllied-for">
                     <p className="heading">Apllied For</p>
                     <div className="details">
                         <p className="p">{"internshipTitle"}</p>
@@ -156,7 +156,7 @@ const StudentProfileSideBar = (props: any) => {
                     </div>
                 </div> */}
 
-                {/* <div className="stage-main">
+        {/* <div className="stage-main">
                     <p className="capitalize stage-para">Stage</p>
                     <div className="flex 2xl:gap-0 gap-1  flex-wrap 2xl:flex-nowrap items-center justify-center rounded-full ">
                         {[1, 2, 3, 4, 5, 6].map((val) => (
@@ -167,44 +167,44 @@ const StudentProfileSideBar = (props: any) => {
                     </div>
                 </div> */}
 
-                <div className="contact pt-4">
-                    {userinfoData.map((info, i) => (
-                        <div className="message  text-secondary-color flex items-center gap-5 my-5" key={i}>
-                            <div>
-                                <info.img width={24} />
-                            </div>
-                            <p className="m-0 ">{info.title}</p>
-                        </div>
-                    ))}
-                </div>
-                <Divider />
-
-                <div className="skills-main">
-                    <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
-                    <div className="skills flex items-center flex-wrap gap-2 ">
-                        {newSkillData.map((skill, i) => (
-                            <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
-                                {skill}
-                            </p>
-                        ))}
-                        {<p className="plus rounded-[14px] py-[2px] px-[12px]">+{skillsData.length - newSkillData.length}</p>}
-                    </div>
-                </div>
-                <Divider />
-                <div className="intro">
-                    <p className="heading mt-8 font-semibold">Intro</p>
-                    <div className="main-div relative">
-                        <div className="absolute" style={{ zIndex: 1, left: "43%", top: "45%" }}>
-                            <PlayIconNew />
-                        </div>
-                        <div className="image mt-[10px] relative">
-                            <Intro />
-                        </div>
-                    </div>
-                </div>
+        <div className="contact pt-4">
+          {userinfoData.map((info, i) => (
+            <div className="message  text-secondary-color flex items-center gap-5 my-5" key={i}>
+              <div>
+                <info.img width={24} />
+              </div>
+              <p className="m-0 ">{info.title}</p>
             </div>
-        </BoxWrapper>
-    )
+          ))}
+        </div>
+        <Divider />
+
+        <div className="skills-main">
+          <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
+          <div className="skills flex items-center flex-wrap gap-2 ">
+            {newSkillData.map((skill, i) => (
+              <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
+                {skill}
+              </p>
+            ))}
+            {<p className="plus rounded-[14px] py-[2px] px-[12px]">+{skillsData.length - newSkillData.length}</p>}
+          </div>
+        </div>
+        <Divider />
+        <div className="intro">
+          <p className="heading mt-8 font-semibold">Intro</p>
+          <div className="main-div relative">
+            <div className="absolute intro-bar">
+              <PlayIconNew />
+            </div>
+            <div className="image mt-[10px] relative">
+              <Intro />
+            </div>
+          </div>
+        </div>
+      </div>
+    </BoxWrapper>
+  )
 }
 
 export default StudentProfileSideBar

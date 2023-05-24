@@ -3,6 +3,8 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import { useState } from "react";
+import { BoxWrapper } from "../../../../../components";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -16,7 +18,7 @@ const CreatePasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   return (
-    <div>
+    <BoxWrapper className="h-[92vh]">
       <div className="form-wrapper">
         <Form
           layout="vertical"
@@ -24,14 +26,16 @@ const CreatePasswordForm = () => {
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={onFinish}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <div className="w-1/2">
             <Form.Item
               label="Old Password"
               name="oldPassword"
-              rules={[
-                { required: true, message: "Please enter your old password!" },
-              ]}
+              // rules={[
+              //   { required: true, message: "Please enter your old password!" },
+              // ]}
+                  rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
                 value={oldPassword}
@@ -49,9 +53,10 @@ const CreatePasswordForm = () => {
             <Form.Item
               label="New Password"
               name="password"
-              rules={[
-                { required: true, message: "Please enter new your password!" },
-              ]}
+              // rules={[
+              //   { required: true, message: "Please enter new your password!" },
+              // ]}
+                  rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
                 value={password}
@@ -75,12 +80,13 @@ const CreatePasswordForm = () => {
             <Form.Item
               label="Confirm  Password"
               name="confirmPassword"
-              rules={[
-                {
-                  required: true,
-                  message: "Password is required",
-                },
-              ]}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Password is required",
+              //   },
+              // ]}
+                  rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
                 value={confirmPassword}
@@ -101,12 +107,11 @@ const CreatePasswordForm = () => {
 
           </div>
 
-          <div className="flex justify-end items-end w-full">
+          <div className="flex justify-end items-end w-full h-[50vh]">
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
-                className=""
               >
                 Update
               </Button>
@@ -114,7 +119,7 @@ const CreatePasswordForm = () => {
           </div>
         </Form>
       </div>
-    </div>
+    </BoxWrapper>
   );
 };
 

@@ -14,6 +14,7 @@ import { MenuProps } from 'antd';
 import { Dropdown, Avatar, Row, Col } from 'antd';
 import useCustomHook from "../actionHandler";
 import CompanyProfile from "./CompanyProfileTabs";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const btnStyle = {
   "applied": "p-1 rounded-lg primary-bg-color white-color",
@@ -41,6 +42,7 @@ const CompanyData = ({ companyName, companyNature }: any) => {
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const CompaniesMain = () => {
+  const { CHAT,COMPANYPROFILEUNI } = ROUTES_CONSTANTS
   const navigate = useNavigate()
   // const [value, setValue] = useState("")
   const [showDrawer, setShowDrawer] = useState(false)
@@ -59,7 +61,7 @@ const CompaniesMain = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate(`/companies/profile/${action?.selectedProfile?.id}`);
+            navigate(`${COMPANYPROFILEUNI}/${action?.selectedProfile?.id}`);
           }}
         >
           Profile
@@ -74,7 +76,7 @@ const CompaniesMain = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate(`chat/${action?.selectedProfile?.id} `);
+            navigate(`${CHAT}/${action?.selectedProfile?.id} `);
           }}
         >
           Chat

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Button, Divider, Typography } from "antd";
-// import '../../style.scss';
+import { Divider, Typography } from "antd";
 import { EllipsisOutlined } from '@ant-design/icons';
 import profile from "../../../assets/images/profile/student/profiled.svg";
 import iconEmail from "../../../assets/images/profile/student/email.svg";
