@@ -8,14 +8,16 @@
     line-height: 32px;
     color: $primary-bg-color;
   }
+
   .studdnt-dash {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 1rem;
-    height: 81vh;
+    height: 92vh;
     overflow-y: scroll;
     overflow-x: hidden;
+
     .ant-tabs-tab-active {
       svg {
         path {
@@ -24,10 +26,12 @@
       }
     }
   }
+
   .studdnt-dash::-webkit-scrollbar {
     width: 0px;
   }
 }
+
 .student-side-bar {
   .main-student-side-bar {
     background: $white-bg-color;
@@ -36,6 +40,7 @@
     margin: 5px;
     padding: 5px;
     height: 100%;
+
     .emp-name {
       font-style: normal;
       font-weight: 600;
@@ -43,6 +48,7 @@
       line-height: 28px;
       color: $text-primary-title-color;
     }
+
     .emp-desgination {
       font-style: normal;
       font-weight: 500;
@@ -50,6 +56,7 @@
       line-height: 24px;
       color: $text-secondary-body-color;
     }
+
     .emp-role {
       font-style: normal;
       font-weight: 400;
@@ -57,6 +64,7 @@
       line-height: 24px;
       color: $text-secondary-body-color;
     }
+
     .upload-box {
       background: #ffffff;
       border: 2px solid #d9dbe9;
@@ -68,6 +76,7 @@
       top: 17px;
       right: 10px;
     }
+
     .social-info {
       margin: 1.5rem;
 
@@ -80,6 +89,7 @@
         color: $text-secondary-body-color;
       }
     }
+
     .poper {
       background: $white-bg-color;
       border: 2px solid #d9dbe9;
@@ -87,6 +97,7 @@
       border-radius: 8px;
       padding: 1rem;
     }
+
     .option-style {
       font-weight: 400;
       font-size: 16px;
@@ -95,12 +106,14 @@
       margin-bottom: 0.3rem;
       cursor: pointer;
     }
+
     .main-skill-box {
       display: flex;
       flex-wrap: wrap;
       margin-left: 20px;
       column-gap: 35px;
       row-gap: 8px;
+
       .skill-box {
         background: $text-input-bg-color;
         border-radius: 14.5px;
@@ -108,6 +121,7 @@
         padding-right: 7px;
         padding-top: 13px;
         padding-bottom: 7px;
+
         .skills-typography {
           font-style: normal;
           font-weight: 400;
@@ -117,8 +131,10 @@
         }
       }
     }
+
     .intro {
       margin-bottom: 2rem;
+
       .video-p {
         font-style: normal;
         font-weight: 400;
@@ -127,6 +143,7 @@
         color: $light-grey-color;
       }
     }
+
     .a-tag-side {
       font-style: normal;
       font-weight: 600;
@@ -144,6 +161,7 @@
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
   }
+
   .main-label {
     font-weight: 600;
     font-size: 20px;
@@ -151,11 +169,13 @@
     color: $text-secondary-body-color;
     padding-bottom: 1rem;
   }
+
   .input-style {
     background: $text-input-bg-color;
     border-radius: 8px;
     color: $text-primary-disabled-color;
   }
+
   .btn-cancle {
     background: $white-bg-color;
     border: 1px solid $teriary-bg-color;
@@ -163,18 +183,21 @@
     border-radius: 8px;
     color: $teriary-bg-color;
   }
+
   .btn-save {
     background: $teriary-bg-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
     color: $white-bg-color;
   }
+
   .animate {
     background: "#FFFFFF";
     border-radius: 8px;
     padding: 1rem;
     margin-top: 20px;
   }
+
   .animate:hover {
     background-color: $text-input-bg-color;
   }
@@ -191,10 +214,10 @@
 
   .title {
     font-style: normal;
-    font-weight: 600;
+    font-weight: 600 !important;
     font-size: 20px;
     line-height: 28px;
-    color: $text-primary-title-color;
+    color: $text-primary-title-color !important;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
@@ -223,6 +246,7 @@
     border-radius: 8px;
     color: $text-primary-disabled-color;
   }
+
   .title {
     font-style: normal;
     font-weight: 600;
@@ -233,12 +257,14 @@
     margin-bottom: 1rem;
   }
 }
+
 .general-information {
   .input-style {
     background: $text-input-bg-color;
     border-radius: 8px;
     color: $text-primary-disabled-color;
   }
+
   .title {
     font-style: normal;
     font-weight: 600;
@@ -248,4 +274,25 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
   }
+}
+
+.immigration-status {
+  .job-title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-primary-title-color;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .code-box {
+    height: 90px;
+    width: 361px;
+    background-color: $white-bg-color;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+  }
+
 }

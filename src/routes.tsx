@@ -865,7 +865,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}/:id`,
         element: <ManagerProfile />,
       },
       {

@@ -43,8 +43,8 @@ const UniversityProfileForm = (props: any) => {
 
   };
   return (
-    <BoxWrapper>
-      <div className="uni-profile-form ">
+    <BoxWrapper >
+      <div className="uni-profile-form">
         <div className="profile-style">
           <Form
             layout="vertical"
@@ -55,7 +55,7 @@ const UniversityProfileForm = (props: any) => {
             autoComplete="off"
           >
             <div className="p-4">
-              <Typography className="main-label">Basic Information</Typography>
+              <Typography className="main-label font-semibold text-xl text-primary-title-color mb-3">Basic Information</Typography>
               <Row gutter={[15, 15]}>
                 <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
                   <Form.Item
@@ -94,7 +94,7 @@ const UniversityProfileForm = (props: any) => {
                 </Col>
               </Row>
               <Divider />
-              <Typography className="main-label">Address</Typography>
+              <Typography className=" font-semibold text-xl text-primary-title-color mb-3">Address</Typography>
               <Row gutter={[15, 15]}>
                 <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
                   <Form.Item
@@ -147,7 +147,7 @@ const UniversityProfileForm = (props: any) => {
                 </Col>
               </Row>
               <Divider />
-              <Typography className="main-label">About University</Typography>
+              <Typography className=" font-semibold text-xl text-primary-title-color mb-3">About University</Typography>
               <Row>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Form.Item

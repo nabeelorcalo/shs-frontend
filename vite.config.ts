@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import reactRefresh from '@vitejs/plugin-react-refresh';
 import svgr from 'vite-plugin-svgr'
 import dotenv from 'dotenv';
 
@@ -13,7 +14,7 @@ export default defineConfig({
       usePolling: true,
     },
   },
-  plugins: [svgr(), react()],
+  plugins: [svgr(), react(),reactRefresh()],
   optimizeDeps: {
     exclude: ['react-icons']
   }

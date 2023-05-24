@@ -47,7 +47,6 @@ const useCustomHook = () => {
     return debounce(SearchReservations, 500);
   }, []);
 
-
   return {
     reservations,
     getReservationData,

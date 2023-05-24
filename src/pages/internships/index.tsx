@@ -2,20 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
-  SearchBar, GlobalTable, PageHeader,
+  GlobalTable, PageHeader,
   BoxWrapper, FiltersButton
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Dropdown, Row, Col } from "antd";
+import { Avatar, Button, Dropdown, Row, Col, Input } from "antd";
 import type { MenuProps } from 'antd';
-import { InternshipsIcon, More } from "../../assets/images";
+import { GlassMagnifier, InternshipsIcon, More } from "../../assets/images";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import SelectComp from "../../components/Select/Select";
 import "./style.scss";
 
+
 const Internships = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     status: undefined,
     value: "",
@@ -23,24 +25,25 @@ const Internships = () => {
     location: undefined,
     department: undefined
   })
-  const { getAllInternshipsData, internshipData, changeHandler,
+  const { getAllInternshipsData, internshipData,
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
-    departmentsData, locationsData } = useCustomHook();
+    departmentsData, locationsData, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department);
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
 
-  console.log('data',internshipData);
-  
+  useEffect(() => {
+    getAllInternshipsData(state.status, state.location, state.department,searchValue);
+  }, [searchValue])
+
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
 
   const PopOver = (props: any) => {
-    const { item } = props    
+    const { item } = props
     const items: MenuProps['items'] = [
       {
         key: '1',
@@ -118,6 +121,7 @@ const Internships = () => {
   const newTableData = internshipData.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
+    const currentStatus = item?.status
     return (
       {
         no: internshipData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
@@ -128,26 +132,27 @@ const Internships = () => {
         location: item?.location ? item.location?.name : "___",
         status:
           <Button
+
             size="small"
             className={
-              `${item?.status === "PUBLISHED" ?
+              `${currentStatus === "PUBLISHED" ?
                 `text-success-bg-color`
                 :
-                item?.status === "PENDING" ?
+                currentStatus === "PENDING" ?
                   `text-warning-bg-color`
                   :
-                  item?.status === "CLOSED" ?
+                  currentStatus === "CLOSED" ?
                     `text-info-bg-color`
                     :
-                    item?.status === "REJECTED" ?
+                    currentStatus === "REJECTED" ?
                       `text-error-bg-color`
-                      : item?.status === "DRAFT" ?
+                      : currentStatus === "DRAFT" ?
                         `text-secondary-bg-disabled-color` : `light-sky-blue-bg`
               }  
                 text-[#fff] status-btn`
             }
           >
-            {item?.status?.charAt(0).toUpperCase() + item?.status?.slice(1)}
+            {currentStatus?.charAt(0).toUpperCase() + currentStatus?.slice(1)}
           </Button>,
         posted_by: <Avatar size={50} src={item?.avatar}>
           {item?.jobPoster?.firstName?.charAt(0)}{item?.jobPoster?.lastName?.charAt(0)}
@@ -178,7 +183,7 @@ const Internships = () => {
     }))
   }
   const handleApplyFilter = () => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    getAllInternshipsData(state.status, state.location, state.department,searchValue);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -192,12 +197,22 @@ const Internships = () => {
       department: undefined
     }))
   }
+  // handle search internships 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]}>
-        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" />
+        <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
+          <Input
+            className='search-bar'
+            placeholder="Search"
+            onChange={debouncedResults}
+            prefix={<GlassMagnifier />}
+          />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton

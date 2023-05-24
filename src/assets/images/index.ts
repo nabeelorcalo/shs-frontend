@@ -613,6 +613,7 @@ export { ReactComponent as GeneralInfo } from '../../assets/images/profile/stude
 export { ReactComponent as ProfileDoc } from '../../assets/images/profile/student/document-text.svg';
 export { ReactComponent as Imigration } from '../../assets/images/profile/student/Immigration.svg';
 export { ReactComponent as ProfileCards } from '../../assets/images/profile/student/cards.svg';
+export { ReactComponent as Printer } from '../images/profile/student/Printer.svg';
 
 //search Jobs
 export { ReactComponent as SearchIconJob } from './serachJobs/search-normal.svg';

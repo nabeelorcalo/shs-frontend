@@ -17,7 +17,7 @@ const { Paragraph } = Typography;
 const AddLocation: React.FC = () => {
   const breadcrumbArray = [
     { name: "Add Location" },
-    { name: "Setting" },
+    { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
     { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
   const selectArray = [
@@ -69,10 +69,11 @@ const AddLocation: React.FC = () => {
     });
 
   const onFinish = (values: any) => {
-    const { address, email, locationName, phoneNumber, postCode, street, town } = values;
+    // console.log(values);
+    const { address, email, locationName, phoneNumber, postCode, street,country, town } = values;
     let locationValues = {
       intern: state.intern.length,
-      country: state.country,
+      country: country,
       phoneCode: state.phoneCode,
       address,
       email,
@@ -82,6 +83,8 @@ const AddLocation: React.FC = () => {
       street,
       town
     };
+    console.log(locationValues);
+    
   }
 
   const onChange = (e: RadioChangeEvent) => {
@@ -89,10 +92,12 @@ const AddLocation: React.FC = () => {
     if (e.target.value === 2) {
       setState({
         ...state, openModal: true, internValue: radioValue
-    })}
-    
+      })
+    }
+
     else if (e.target.value === 1) {
-      setState({ ...state,  internValue: radioValue, intern: []
+      setState({
+        ...state, internValue: radioValue, intern: []
       })
     }
   };
