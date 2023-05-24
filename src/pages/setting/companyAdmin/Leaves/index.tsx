@@ -55,10 +55,15 @@ let overview = [
 ];
 
 const SettingLeave = () => {
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<any>(null);
+  const [state, setState] = useState<any>(
+    {
+      isDeleteModal: false,
+      id: null
+    }
+  )
 
-  const { getSettingLeaves, settingLeaveData } = useLeavesCustomHook();
+  const { getSettingLeaves, settingLeaveData, deleteSettingLeaves } = useLeavesCustomHook();
 
   useEffect(() => {
     getSettingLeaves(searchValue)
@@ -105,8 +110,10 @@ const SettingLeave = () => {
                 <div className="float-right place-items-end cursor-pointer flex justify-end">
                   <DropDownForSetting
                     link={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}
-                    showDeleteModal={showDeleteModal}
-                    setShowDeleteModal={setShowDeleteModal}
+                    state={state}
+                    setState={setState}
+                    id={data?.id}
+                    editData={data}
                   />
                 </div>
                 <div className="flex ">
@@ -123,11 +130,12 @@ const SettingLeave = () => {
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
-        state={showDeleteModal}
-        setState={setShowDeleteModal}
+        state={state.isDeleteModal}
+        setState={setState}
         type="error"
         width={500}
         title=""
+        okBtnFunc={() => deleteSettingLeaves(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />
     </div>

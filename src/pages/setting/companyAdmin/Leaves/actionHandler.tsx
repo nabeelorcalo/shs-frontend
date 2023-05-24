@@ -27,7 +27,7 @@ const useLeaveCustomHook = () => {
       entitlement: entitlement,
       maxCarryForward: carryforward,
       carryForwardExpiry: carryforwardexpiration,
-      applyToNewHires: applyForNewHire,
+      applyToNewHires: false,
       interns: []
     }
     await api.post(GET_LEAVE_POLICY, params);
@@ -35,10 +35,18 @@ const useLeaveCustomHook = () => {
     Notifications({ title: "Success", description: 'Leave Policy added successfully', type: 'success' })
   };
 
+  // get setting departments
+  const deleteSettingLeaves = async (id: any) => {
+    await api.delete(`${GET_LEAVE_POLICY}/${id}`);
+    getSettingLeaves()
+    Notifications({ title: "Success", description: 'Leave deleted successfully', type: 'success' })
+  };
+
   return {
     settingLeaveData,
     getSettingLeaves,
-    postSettingLeaves
+    postSettingLeaves,
+    deleteSettingLeaves
   };
 };
 

@@ -19,17 +19,10 @@ const SettingLocation: React.FC = () => {
     }
   )
   const { deleteSettingLocation, getSettingLocation } = useCustomHook();
-
+  
   const handleChange = (event: any) => {
     getSettingLocation(event)
   };
-
-  console.log(state);
-
-  const SetId = (id: any) => {
-    setState({ ...state, locationId: id })
-    setState({ ...state, isDeleteModal: true })
-  }
 
   useEffect(() => {
     getSettingLocation("")
@@ -65,9 +58,7 @@ const SettingLocation: React.FC = () => {
                             link={`${ROUTES_CONSTANTS.ADD_LOCATION}`}
                             state={state}
                             setState={setState}
-                            id={data?.id}
                             editData={data}
-                            // SetEditData={setEdit}
                           />
                         </span>
                       </div>
