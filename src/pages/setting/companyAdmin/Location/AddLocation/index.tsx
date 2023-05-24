@@ -12,9 +12,12 @@ import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useCustomHook from "../actionHandler";
 const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
+  const { postSettingLocation } = useCustomHook();
+
   const breadcrumbArray = [
     { name: "Add Location" },
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
@@ -70,7 +73,7 @@ const AddLocation: React.FC = () => {
 
   const onFinish = (values: any) => {
     // console.log(values);
-    const { address, email, locationName, phoneNumber, postCode, street,country, town } = values;
+    const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
     let locationValues = {
       intern: state.intern.length,
       country: country,
@@ -83,8 +86,8 @@ const AddLocation: React.FC = () => {
       street,
       town
     };
-    console.log(locationValues);
-    
+    postSettingLocation(locationValues)
+
   }
 
   const onChange = (e: RadioChangeEvent) => {
