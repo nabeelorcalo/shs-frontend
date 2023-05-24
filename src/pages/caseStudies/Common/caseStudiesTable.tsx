@@ -7,7 +7,6 @@ import "./style.scss";
 const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-  console.log("afsonb");
   
   const caseStudyColumnData = [
     {
@@ -88,8 +87,6 @@ const CaseStudiesTable = (props: any) => {
       title: "Actions",
       dataIndex: "",
       render: (_: any, data: any) => {
-        // console.log("datadatadata",data);
-        
         return (
         <CustomDropDownCaseStudies
           setState={setOpenDropdown}

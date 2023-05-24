@@ -10,56 +10,60 @@ import actionHandler from "./actionHandler";
 const ScheduleInterviewModal = (props: any) => {
   const { open, setOpen, candidateId, data, handleEdit } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
-  const [isOnchange, setIsOnchange] = useState(false);
-  const { companyManagerList = [], getCompanyManagerList, scheduleInterview } = actionHandler();
+  const { companyManagerList = [], getCompanyManagerList, scheduleInterview, handleUpdateInterview } = actionHandler();
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [form] = Form.useForm();
-  const fields = form.getFieldsValue();
+
+  const [values, setValues] = useState<any>({
+    dateFrom: "",
+    dateTo: "",
+    attendees: [],
+    startTime: "",
+    endTime: "",
+    location: "",
+  });
 
   useEffect(() => {
     getCompanyManagerList();
   }, []);
 
   const handleRemoveUser = (id: string) => {
-    setAssignUser(assignUser.filter((user: any) => user.id !== id));
+    setAssignUser(assignUser?.filter((user: any) => user.id !== id) ?? []);
+    setValues({ ...values, attendees: assignUser?.filter((user: any) => user.id !== id) });
   };
 
   const handleAddUser = (user: any) => {
-    console.log(user);
-    console.log(companyManagerList);
-    console.log(assignUser);
-    
-    const filtered = assignUser.find((u: any) => u.id === user.id) ? true : false;
+    const filtered = assignUser?.find((u: any) => u.id === user.id) ? true : false;
     if (!filtered) {
       setAssignUser([...assignUser, user]);
+      setValues({ ...values, attendees: [...assignUser, user] });
     }
   };
 
-  let initialValues = {
-    dateFrom: "",
-    dateTo: "",
-    startTime: "",
-    endTime: "",
-    attendees: [""],
-    location: "",
-    description: "",
+  const onFinish = () => {
+    // modifying values obj according to create schedule request body
+    values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+    values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+    values.attendees = [candidateId, ...assignUser?.map(({ id }) => id)];
+    // custom hook for create schedule
+    if (data) {
+      handleUpdateInterview(data?.id, values).then(() => {
+        // empty fields after form submitting
+        form.resetFields();
+        setOpen(false);
+        handleEdit({});
+      });
+    } else {
+      scheduleInterview(values).then(() => {
+        // empty fields after form submitting
+        form.resetFields();
+        setOpen(false);
+      });
+    }
   };
 
-  const onFinish = (values: any) => {
-    // modifying values obj according to create schedule request body
-    values.dateFrom = dayjs(values?.dateFrom).format("YYYY-MM-DD");
-    values.dateTo = dayjs(values?.dateFrom).format("YYYY-MM-DD");
-    values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:MM:ss.SSS");
-    values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:MM:ss.SSS");
-    values.attendees = [candidateId, ...assignUser?.map(({ id }) => id)];
-    console.log(values);
-    handleEdit({});
-    // custom hook for create schedule
-    // scheduleInterview(values).then(() => {
-    //   // empty fields after form submitting
-    //   form.resetFields();
-    //   setOpen(false);
-    // });
+  const handleValue = (value: any) => {
+    value && setValues({ ...values, dateFrom: value, dateTo: value });
   };
 
   const onCancel = () => {
@@ -74,24 +78,18 @@ const ScheduleInterviewModal = (props: any) => {
   };
 
   useEffect(() => {
+    console.log(data);
     if (data) {
-      form.setFieldValue("dateFrom", dayjs(data?.dateFrom).format("YYYY-MM-DD"));
-      form.setFieldValue("dateTo", dayjs(data?.dateTo).format("YYYY-MM-DD"));
-      form.setFieldValue("startTime", dayjs(data?.startTime).format("HH:mm:ss"));
-      form.setFieldValue("endTime", dayjs(data?.endTime).format("HH:mm:ss"));
-      form.setFieldValue("attendees", data?.attendees ?? []);
-      form.setFieldValue("location", data?.location);
-      form.setFieldValue("description", data?.description);
-      setAssignUser(data?.attendees);
-      // initialValues = {
-      //   dateFrom: "",
-      //   dateTo: "",
-      //   startTime: "",
-      //   endTime: "",
-      //   attendees: [""],
-      //   location: "",
-      //   description: data?.description,
-      // };
+      setValues({
+        dateFrom: data?.dateFrom,
+        dateTo: data?.dateTo,
+        startTime: dayjs(data?.startTime).format("HH:mm:ss"),
+        endTime: dayjs(data?.endTime).format("HH:mm:ss"),
+        attendees: data?.attendees ?? [],
+        location: data?.locationType,
+        description: data?.description,
+      });
+      setAssignUser(data?.attendees ?? []);
     }
   }, [data]);
 
@@ -103,8 +101,8 @@ const ScheduleInterviewModal = (props: any) => {
       {companyManagerList?.map((item: any) => {
         return (
           <Menu.Item key={item.id}>
-            <div className="flex justify-between ">
-              <div className="flex">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
                 <div className="mr-2">
                   <Avatar
                     className="h-[32px] w-[32px] rounded-full object-cover relative"
@@ -139,18 +137,16 @@ const ScheduleInterviewModal = (props: any) => {
         onCancel={onCancel}
         footer={false}
       >
-        <Form form={form} onFinish={onFinish} autoComplete="off" initialValues={initialValues}>
+        <Form form={form} onFinish={onFinish} autoComplete="off">
           <div className="title">
             <p>Date</p>
           </div>
-          <Form.Item name="dateFrom" rules={[{ required: true }]} valuePropName={"date"}>
-            <CommonDatePicker open={isOpenDate} name={"dateFrom"} setOpen={setIsOpenDate} />
-          </Form.Item>
+          <CommonDatePicker open={isOpenDate} setValue={handleValue} name={"dateFrom"} setOpen={setIsOpenDate} />
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
               <p>Attendees</p>
             </div>
-            <Form.Item name="attendees" rules={[{ required: false }]}>
+            <Form.Item name="attendees" rules={[{ required: false, message: "Please select Attendees" }]}>
               <Dropdown
                 placement="bottomRight"
                 overlay={opriorityOption}
@@ -190,26 +186,33 @@ const ScheduleInterviewModal = (props: any) => {
             <div className="time-pick-wrapper flex flex-wrap justify-between mt-5">
               <div className="time-from">
                 <div className="heading mt-2 mb-3">Time From</div>
-                <Form.Item name="endTime" rules={[{ required: true }]} valuePropName={"date"}>
+                <Form.Item
+                  name="startTime"
+                  rules={[{ required: true, message: "Please select start time" }]}
+                  valuePropName={"date"}
+                >
                   <TimePicker
+                    name="startTime"
                     className="time-p"
-                    value={fields?.startTime && dayjs(fields?.startTime, "HH:mm:ss")}
+                    value={dayjs(values?.startTime, "HH:mm:ss").utc()}
                     format={"HH:mm:ss"}
+                    onChange={(e) => setValues({ ...values, startTime: e })}
                   />
                 </Form.Item>
               </div>
               <div className="time-to">
                 <div className="heading mt-2 mb-3">Time To</div>
-                <Form.Item name="startTime" rules={[{ required: true }]} valuePropName={"date"}>
+                <Form.Item
+                  name="endTime"
+                  rules={[{ required: true, message: "Please select end time" }]}
+                  valuePropName={"date"}
+                >
                   <TimePicker
-                    name="startTime"
+                    name="endTime"
                     className="time-p"
-                    value={fields?.endTime && !isOnchange && dayjs(fields?.endTime, "HH:mm:ss")}
                     format={"HH:mm:ss"}
-                    onChange={(e) => {
-                      setIsOnchange(true);
-                      form.setFieldValue("dateTo", e);
-                    }}
+                    value={dayjs(values?.endTime, "HH:mm:ss").utc()}
+                    onChange={(e) => setValues({ ...values, endTime: e })}
                   />
                 </Form.Item>
               </div>
@@ -217,12 +220,16 @@ const ScheduleInterviewModal = (props: any) => {
 
             <div className="location-wrapper">
               <p className="heading mb-2 ">Location</p>
-              <Form.Item name="location" rules={[{ required: true }]}>
-                <Radio.Group>
-                  <Radio checked={true} value={"VIRTUAL"}>
+              <Form.Item name="location" rules={[{ required: true, message: "Please select location" }]}>
+                <Radio.Group
+                  name="location"
+                  value={values?.location}
+                  onChange={(e) => setValues({ ...values, location: e?.target?.value })}
+                >
+                  <Radio checked={values?.location === "VIRTUAL"} value={"VIRTUAL"}>
                     Virtual
                   </Radio>
-                  <Radio checked={fields?.location === "ONSITE"} value={"ONSITE"}>
+                  <Radio checked={values?.location === "ONSITE"} value={"ONSITE"}>
                     On Site
                   </Radio>
                 </Radio.Group>
@@ -233,12 +240,14 @@ const ScheduleInterviewModal = (props: any) => {
             </label>
             <Form.Item name="description">
               <textarea
+                onChange={(e) => setValues({ ...values, description: e?.target?.innerHTML })}
                 className="input"
-                value={fields?.description}
                 name="description"
                 placeholder="Describe your problem"
                 id="text-area"
-              />
+              >
+                {values?.description}
+              </textarea>
             </Form.Item>
           </div>
           <div className="flex mt-3 justify-end gap-4">

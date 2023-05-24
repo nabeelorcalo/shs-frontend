@@ -45,6 +45,8 @@ const endpoints = {
   //event
   CREATE_MEETING: `/Event/create-meeting`,
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
+  DELETE_MEETING:`/Event/delete-meeting`,
+  UPDATE_MEETING:`/Event/update-meeting`,
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
   //student

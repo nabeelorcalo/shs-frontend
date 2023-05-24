@@ -7,7 +7,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, GET_ALL_TEMPLATES, STUDENT_PROFILE, DOCUMENT_REQUEST } = endpoints;
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING, DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE, DOCUMENT_REQUEST } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -222,6 +222,7 @@ const useCustomHook = () => {
     values.address = "";
     values.eventType = "INTERVIEW";
     await api.post(CREATE_MEETING, values).then(({ data }) => {
+      setInterviewList([...interviewList, data])
       Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
     })
   }
@@ -239,6 +240,23 @@ const useCustomHook = () => {
     })
   }
 
+  // UPDATE interview
+  const handleUpdateInterview = async (meetingId: string | number, values: any) => {
+    values.companyId = companyId;
+    await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }) => {
+      setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
+      Notifications({ title: "Interview", description: "Intervie meeting updated!" })
+    })
+  }
+
+  // delete interview
+  const deleteInterview = async (meetingId: string | number) => {
+    await api.delete(`${DELETE_MEETING}/${meetingId}`).then(() => {
+      setInterviewList(interviewList?.filter(({ id }: any) => id !== meetingId))
+      Notifications({ title: "Interview", description: "Intervie meeting deleted!" })
+    });
+  }
+
   // get templates
   const getTemplates = async (query: string) => {
     let params: any = {
@@ -249,7 +267,7 @@ const useCustomHook = () => {
     await api.get(GET_ALL_TEMPLATES, params).then((res) => { setTemplateList(res?.data) })
   }
   return {
-    loading, setLoading, cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, handleRequestDocument, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, getTemplates, templateList, params
+    loading, setLoading, cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, handleRequestDocument, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, handleUpdateInterview, deleteInterview, getTemplates, templateList, params
   };
 };
 

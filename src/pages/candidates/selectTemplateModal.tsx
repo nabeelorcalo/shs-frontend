@@ -7,6 +7,7 @@ import actionHandler from "./actionHandler";
 const SelectTemplateModal = (props: any) => {
   const { open, setOpen, handleTemplate, title, selecteTemplate, setSelecteTemplate, setTemplateValues } = props;
   const { getTemplates, templateList } = actionHandler();
+  
   useEffect(() => {
     getTemplates(title.toLowerCase() === "contract" ? "contract" : "offerLetter");
   }, [title]);

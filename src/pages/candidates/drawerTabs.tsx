@@ -12,7 +12,7 @@ interface IDrawerTabs {
   studentDetails: any;
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
-  const { selectedCandidate, studentDetails } = props;  
+  const { selectedCandidate, studentDetails } = props;
 
   const items: TabsProps["items"] = [
     {
@@ -54,7 +54,15 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Interview</p>
         </div>
       ),
-      children: <Interview candidateId={selectedCandidate?.id} />,
+      children: (
+        <Interview
+          candidateId={selectedCandidate?.id}
+          candidateFirstName={selectedCandidate?.userDetail?.firstName}
+          candidateLastName={selectedCandidate?.userDetail?.lastName}
+          candidateAvatar={selectedCandidate?.userDetail?.avatar}
+          candidateDesignation={selectedCandidate?.internship?.title}
+        />
+      ),
     },
   ];
   return (
