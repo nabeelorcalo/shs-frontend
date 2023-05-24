@@ -31,6 +31,25 @@ const useCustomHook = () => {
       email
     }
     await api.post(LOCATION, params)
+    Notifications({ title: 'Success', description: 'Location added successfully', type: 'success' })
+  }
+
+  // post location
+  const editSettingLocation = async (id: any, values: any) => {
+    const { address, country, email, intern, locationName, phoneCode, phoneNumber, postCode, street, town } = values;
+    const params = {
+      name: locationName,
+      postCode: postCode,
+      address: address,
+      street: street,
+      town: town,
+      country: 'Pakistan',
+      phoneCode: phoneCode,
+      phoneNumber: phoneNumber,
+      email
+    }
+    await api.patch(`${LOCATION}/${id}`, params)
+    Notifications({ title: 'Success', description: 'Location edited successfully', type: 'success' })
   }
 
   // delete location
@@ -43,7 +62,8 @@ const useCustomHook = () => {
   return {
     getSettingLocation,
     deleteSettingLocation,
-    postSettingLocation
+    postSettingLocation,
+    editSettingLocation
   };
 };
 
