@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { DigiVaultPasswordState, DigiVaultState, DigiFileContent } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
@@ -18,16 +19,17 @@ const useCustomHook = () => {
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
   const [newPassword, setNewPassword] = useRecoilState<any>(DigiVaultPasswordState);
+  console.log("new password are ", newPassword);
 
   useEffect(() => {
     return () => {
       debouncedResults.cancel();
     };
   });
-  
+
   //get digivault password
-  const getDigiVaultDashboard = async () => {
-    const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: newPassword?.password });
+  const getDigiVaultDashboard = async (value: any) => {
+    const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: value });
     setStudentVault(data?.response);
   }
 
@@ -78,9 +80,8 @@ const useCustomHook = () => {
       folderId: folderId ? folderId.toString() : '',
       file: ''
     }
-    const { data } = await api.post(POST_CREATE_FOLDER_FILE, folderData);
-    setNewPassword(data)
-    getDigiVaultDashboard();
+    await api.post(POST_CREATE_FOLDER_FILE, folderData);
+    getDigiVaultDashboard(null);
     getFolderContent(folderId, root)
     Notifications({ title: 'Sucess', description: 'File / Folder added successfully', type: 'success' })
   }
@@ -89,7 +90,7 @@ const useCustomHook = () => {
   const deleteFolderFile = async (itemId: any, folderId: any, title: any) => {
     const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
-      getDigiVaultDashboard();
+      getDigiVaultDashboard(null);
       getFolderContent(folderId, title)
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
     }

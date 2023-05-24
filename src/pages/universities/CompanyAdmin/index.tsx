@@ -1,80 +1,124 @@
-import React, { useState } from 'react'
-import { Select,Row,Col } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Select, Row, Col } from 'antd'
 import { IconAngleDown } from '../../../assets/images';
 import { BoxWrapper, DropDown, Notifications, PageHeader, SearchBar } from '../../../components'
-import flag from '../../../assets/images/universities/flag.svg'
-import flag2 from '../../../assets/images/universities/flag2.svg'
-import flag3 from '../../../assets/images/universities/flag3.svg'
-import flag4 from '../../../assets/images/universities/flag4.svg'
-import flag5 from '../../../assets/images/universities/flag5.svg'
-import flag6 from '../../../assets/images/universities/flag6.svg'
 import UniversityTable from './universityTable';
 import useCustomHook from './actionHandler';
+import DropDownNew from '../../../components/Dropdown/DropDownNew'
+import { ThreeDots } from '../../../assets/images'
+import { NavLink, useNavigate } from 'react-router-dom'
 import './style.scss'
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const index: React.FC = () => {
+  const [Country, setCountry] = useState("");
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
-  const escalatedByMeTableData = [
-    {
-      no: '01',
-      logo: flag,
-      universityName: 'University of Lincoln',
-      universityRep: 'Mino Marina',
-      email: 'enquiries@linclon.ac.uk',
-      contact: '+44 7700 900077',
-      city: 'Linclon',
-    },
-    {
-      no: '02',
-      logo: flag2,
-      universityName: 'University of London',
-      universityRep: 'Craig Donin',
-      email: 'enquiries@london.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'London',
-    },
-    {
-      no: '03',
-      logo: flag3,
-      universityName: 'University of Birmingham',
-      universityRep: 'Omar Schleifer',
-      email: 'enquiries@birmingham.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'Birmingham',
-    },
-    {
-      no: '04',
-      logo: flag4,
-      universityName: 'University of Lincoln',
-      universityRep: 'Mino Marina',
-      email: 'enquiries@linclon.ac.uk',
-      contact: '+44 7700 900077',
-      city: 'Linclon',
-    },
-    {
-      no: '05',
-      logo: flag5,
-      universityName: 'University of London',
-      universityRep: 'Craig Donin',
-      email: 'enquiries@london.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'London',
-    },
-    {
-      no: '06',
-      logo: flag6,
-      universityName: 'University of Birmingham',
-      universityRep: 'Omar Schleifer',
-      email: 'enquiries@birmingham.ac.uk',
-      contact: '+44 2078 628009',
-      city: 'Birmingham',
-    },
-
-  ]
   const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
-  // const [value, setValue] = useState<any>()
-  const handleChange = () => { };
+
+  const navigate = useNavigate()
+  const { getUniversities, universitiesData }: any = useCustomHook();
+
+  useEffect(() => {
+    getUniversities(Country)
+  }, [])
+  console.log(universitiesData, "universitiesData");
+
+  const UniversityTableColumn =
+    [
+      {
+        dataIndex: 'no',
+        key: 'no',
+        title: 'No'
+      },
+      {
+        dataIndex: 'logo',
+        key: 'logo',
+        title: 'Logo',
+        render: (logo: any) => {
+          return {
+            children: (
+              <img src={logo} alt="logo" />
+            )
+          }
+        }
+      },
+      {
+        dataIndex: 'universityName',
+        key: 'universityName',
+        title: 'University Name'
+      },
+      {
+        dataIndex: 'universityRep',
+        key: 'universityRep',
+        title: 'University Rep'
+      },
+      {
+        dataIndex: 'email',
+        key: 'email',
+        title: 'Email'
+      },
+      {
+        dataIndex: 'contact',
+        key: 'contact',
+        title: 'Contact'
+      },
+      {
+        dataIndex: 'city',
+        key: 'city',
+        title: 'City',
+      },
+      {
+        title: 'Action',
+        dataIndex: 'action',
+      },
+    ]
+
+  const univertyTableData = universitiesData?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        no: universitiesData?.length < 10 && `0${index + 1}`,
+        id: item?.id,
+        universityName: item?.university?.name,
+        universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
+        email: item?.university?.email,
+        contact: item?.university?.phoneNumber,
+        city: item?.university?.city,
+        action: <DropDownNew placement={'bottomRight'}
+          items={[
+            {
+              label:
+                <p onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`, { state: item?.id })}>
+                  View Details
+                </p>,
+              key: 'interns'
+            },
+            {
+              label:
+                <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
+                  Profile
+                </NavLink>,
+              key: 'profile'
+            },
+            {
+              label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
+                Chat
+              </NavLink>,
+              key: 'chat'
+            }
+          ]}>
+          <ThreeDots className='cursor-pointer' />
+        </DropDownNew>
+      }
+    )
+  })
+
+
+  const handleChange = (e:any) => {
+    
+   };
+
   return (
     <div className='company-university '>
       <PageHeader title="Universities" actions bordered />
@@ -82,20 +126,22 @@ const index: React.FC = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={handleChange} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end" >
-          <Select className='md:w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
-            {dropdownValue.map((item , index)=><Select.Option key={index} value={item}>{item}</Select.Option> )}
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+          <Select onChange={(e: any) => setCountry(e)} className='md:w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
+            {dropdownValue.map((item, index) => <Select.Option key={index} value={item}>{item}</Select.Option>)}
           </Select>
           <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              setValue={()=>{action.downloadPdfOrCsv(event,TableColumn,escalatedByMeTableData,"Report" )
-              Notifications({title:"Success", description:"University list downloaded ",type:'success'})}}
-            />
+            requiredDownloadIcon
+            options={["pdf", "excel"]}
+            setValue={() => {
+              action.downloadPdfOrCsv(event, UniversityTableColumn, univertyTableData, "Report")
+              Notifications({ title: "Success", description: "University list downloaded ", type: 'success' })
+            }}
+          />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <UniversityTable escalatedByMeTableData={escalatedByMeTableData}  />
+            <UniversityTable UniversityTableColumn={UniversityTableColumn} univertyTableData={univertyTableData} />
           </BoxWrapper>
         </Col>
       </Row>

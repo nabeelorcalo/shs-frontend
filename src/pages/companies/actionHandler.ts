@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
+import React, { useState } from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 
@@ -14,6 +14,7 @@ const useCustomHook = () => {
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [selectedProfile, setSelectedProfile] = useState<any>({})
 
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -25,7 +26,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -35,7 +36,7 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, company, company_rep, email, phone_no, students_hired}: any) =>
+    const body = data.map(({ no, company, company_rep, email, phone_no, students_hired }: any) =>
       [no, company, company_rep, email, phone_no, students_hired]
     );
 
@@ -88,6 +89,7 @@ const useCustomHook = () => {
   return {
     getData,
     downloadPdfOrCsv,
+     selectedProfile, setSelectedProfile
   };
 };
 

@@ -25,6 +25,7 @@ import "./style.scss";
 import useCustomHook from "../actionHandler";
 import DigiVaultModals from "./Modals";
 import dayjs from "dayjs";
+import UnlockVault from "./newPasswordModal/unlockVaultModal/unlockVault";
 
 const manageVaultArr = [
   {
@@ -82,48 +83,26 @@ const manageVaultArr = [
   },
 ];
 
-const tableData = [
-  {
-    id: "1",
-    key: "01",
-    Title: "file",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "2",
-    key: "02",
-    Title: "file2",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "3",
-    key: "03",
-    Title: "file3",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-];
-
 const DigiVaultStudent = () => {
   const [state, setState] = useState({
     isToggle: false,
     delId: null
   })
+  // const [unlockPassword, setUnlockPassword] = useState(null)
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  console.log(getDigiVaultDashboard,"getDigiVaultDashboard");
+  
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard()
+    getDigiVaultDashboard(null)
   }, [])
 
-  if (studentVault === undefined) {
-    Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
-  }
+  // if (studentVault === undefined) {
+  //   // Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
+  //   // <UnlockVault />
+  //   // setState({ ...state, unlockVault: true })
+  // }
 
   const navigate = useNavigate();
 
@@ -134,6 +113,7 @@ const DigiVaultStudent = () => {
         onClick={() => {
           setState(
             {
+              ...state,
               isToggle: true,
               delId: id
             })

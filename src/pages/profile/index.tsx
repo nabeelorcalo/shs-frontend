@@ -1,9 +1,10 @@
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 import Student from "./student";
-import University from "./university";
 import constants from "../../config/constants";
 import "./style.scss";
+import UniversityProfile from "./university";
+import AgentProfile from "./agentProfile";
 
 const Profile = () => {
   const renderPage = () => {
@@ -12,14 +13,20 @@ const Profile = () => {
     switch (role) {
       case constants.STUDENT:
         return <Student />;
-
       case constants.INTERN:
         return <Student />;
-
       case constants.UNIVERSITY:
-        return <University />;
+        return <UniversityProfile />;
       case constants.COMPANY_ADMIN:
-        return <Student />;
+        return <UniversityProfile />;
+      // case constants.AGENT:
+      //   return <UniversityProfile />;
+      case constants.DELEGATE_AGENT:
+        return <UniversityProfile />;
+      case constants.SYSTEM_ADMIN:
+        return <UniversityProfile />;
+      case constants.AGENT:
+        return <AgentProfile />;
       default:
         return <></>;
     }
