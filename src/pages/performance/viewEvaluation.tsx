@@ -185,10 +185,9 @@ const ViewPerformance = () => {
             <Col xs={24} xl={12} xxl={8} key={index}>
               <div>
                 <EvaluationRating
-                  size={5}
-                  data={emojiData}
                   title={question.title}
                   value={question.value}
+                  disabled={true}
                 />
               </div>
             </Col>

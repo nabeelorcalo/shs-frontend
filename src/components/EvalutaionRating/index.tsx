@@ -15,40 +15,48 @@ import type { RadioChangeEvent } from 'antd';
 interface EmojiProps {
   title: string,
   value: number
-  data: any,
-  size?: any,
-  activeIconIndex?: number,
-  onClick?: any,
-  id?: string,
+  disabled?: boolean
 }
 
 
 export const EvaluationRating = (props: EmojiProps) => {
-  const { title, value, data, size = 3, activeIconIndex = -1, onClick, id } = props;
+  const { title, value, disabled=false } = props;
 
   return (
-    <BoxWrapper>
+    <BoxWrapper className="evaluation-card">
       <div className="flex flex-col gap-2 w-full h-full emoji-mood-container">
         <p className='font-medium text-base'>
           {title}
         </p>
         <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
-        <Radio.Group defaultValue={value} disabled>
+        <Radio.Group defaultValue={value} disabled={disabled}>
           <Radio.Button value={1}>
-            <div><SadGray /><SadSelected /></div>
-            <p className='name-font-size'>Unsatisfactory</p>
+            <div className="emoji-icons">
+              <SadGray />
+              <SadSelected className='selected' />
+            </div>
+            <p className='emoji-icon-title'>Unsatisfactory</p>
           </Radio.Button>
           <Radio.Button value={2}>
-            <NeutralGray />
-            <NeutralSelected />
+            <div className="emoji-icons">
+              <NeutralGray />
+              <NeutralSelected className='selected' />
+            </div>
+            <p className='emoji-icon-title'>Still Learning</p>
           </Radio.Button>
           <Radio.Button value={3}>
-            <HappyGray />
-            <HappySelected />
+            <div className="emoji-icons">
+              <HappyGray />
+              <HappySelected className='selected' />
+            </div>
+            <p className='emoji-icon-title'>Meeting Expectations</p>
           </Radio.Button>
           <Radio.Button value={4}>
-            <AwesomeGray />
-            <AwesomeSelected />
+            <div className="emoji-icons">
+              <AwesomeGray />
+              <AwesomeSelected className='selected' />
+            </div>
+            <p className='emoji-icon-title'>Exceeding Expectations</p>
           </Radio.Button>
         </Radio.Group>
           {/* {

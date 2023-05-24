@@ -1,11 +1,106 @@
 @import "../../scss/colors";
-.svgIcon {
-  padding: 0 15px 0 15px;
-  height: 100px;
-  width: 100px;
-  transition: padding 0.2s ease-in-out;
+
+.evaluation-card {
+  .ant-radio-group {
+    display: flex;
+    flex-wrap: wrap;
+
+    .ant-radio-button-wrapper {
+      border: none;
+      flex-shrink: 0;
+      width: 100%;
+      max-width: 100%;
+      padding-left: 15px;
+      padding-right: 15px;
+      flex: 0 0 auto;
+      width: 25%;
+      height: auto;
+      line-height: auto;
+
+      .emoji-icons {
+        position: relative;
+        height: 70px;
+        width: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+
+        .selected {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          height: 48px;
+          width: 48px;
+          visibility: hidden;
+          transition: all 0.35s;
+        }
+
+        &:hover {
+          .selected {
+            height: 68px;
+            width: 68px;
+            visibility: visible;
+          }
+        }
+      }
+      
+
+      &::before {
+        display: none;
+      }
+
+      &.ant-radio-button-wrapper-checked {
+        &::before {
+          display: none !important;
+        }
+
+        .emoji-icons {
+  
+          .selected {
+            visibility: visible;
+          }
+
+          &:hover {
+            .selected {
+              height: 48px;
+              width: 48px;
+            }
+          }
+        }
+
+      }
+
+      &.ant-radio-button-wrapper-disabled {
+        background-color: transparent;
+        cursor: auto;
+
+        .emoji-icons {
+
+          &:hover {
+            .selected {
+              height: 48px;
+              width: 48px;
+              visibility: hidden;
+            }
+          }
+        }
+      }
+
+      .emoji-icon-title {
+        font-size: 12px;
+        line-height: 1;
+        font-weight: 400;
+        color: $text-teriary-label-color;
+        margin-top: 10px;
+        text-align: center;
+      }
+    }
+  }
 }
-.emoji-mood-container{
+
+.emoji-mood-container {
   @media only screen and (max-width:768px) {
     .emoji-wrapper{
       flex-wrap: wrap;
@@ -14,18 +109,4 @@
       }
     }
   }
-}
-
-.svgIcon:hover {
-  padding: 0 5px 0 5px;
-  cursor: pointer;
-}
-
-.name-font-size {
-  font-size: 12px;
-  font-weight: 500;
-
-  // @screen md {
-  //   font-size: 16px;
-  // }
 }
