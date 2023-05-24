@@ -12,6 +12,8 @@ import PhoneInput from 'react-phone-input-2';
 const SignupForm = ({ signupRole }: any) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
+  const [codeValue, setCodeValue] = useState<any>(undefined);
+
   const action = useCustomHook();
 
   const onFinish = (values: any) => {
@@ -167,8 +169,8 @@ const SignupForm = ({ signupRole }: any) => {
               <PhoneInput
                 country={'pk'}
                 placeholder="Enter phone number"
-                value={value}
-                onChange={() => setValue}
+                value={codeValue}
+                onChange={(phoneValue) => setCodeValue(phoneValue)}
                 inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
               />
             </Form.Item>

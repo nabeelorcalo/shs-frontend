@@ -13,8 +13,8 @@ import { itemsUniversity } from "./menuUniversity";
 import { itemsSystemAdmin } from "./menuSystemAdmin";
 import { itemsDelegateAgent } from "./menuDelegateAgent";
 import { itemsPropertyAgent } from "./menuPropertyAgent";
-import { currentUserRoleState, currentUserState } from "../../../store";
-import { useRecoilValue } from "recoil";
+import { currentUserRoleState, currentUserState, themeState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
 import getUserRoleLable from "../../../helpers/roleLabel";
 const { Sider } = Layout;
 
@@ -34,6 +34,9 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
   const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
+  const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
+
+  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
 
   // const {role } =useCurrentUserRole()
 
@@ -88,7 +91,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      style={{ backgroundColor: token.colorPrimary }}
+      style={{ backgroundColor: currentTheme.colorPrimary }}
       breakpoint="md"
       onBreakpoint={onBreakpoint}
     >
@@ -101,14 +104,13 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
           <div className="sidebar-user-profile-role">{getUserRoleLable(role)}</div>
         </div>
       </div>
-
       <Menu
         items={menuSwitcher(role)}
         onClick={handleMenuClick}
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
         theme="dark"
-        style={{ backgroundColor: token.colorPrimary }}
+        style={{ backgroundColor: currentTheme.colorPrimary }}
       />
     </Sider>
   );
