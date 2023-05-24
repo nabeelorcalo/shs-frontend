@@ -375,7 +375,7 @@ const InternsCompanyAdmin = () => {
                 <GlobalTable columns={columns} tableData={newTableData} />
               </BoxWrapper> :
               newTableData?.length === 0 ? <NoDataFound />
-                : <div className="flex flex-wrap gap-4">
+                : <div className="flex flex-wrap gap-5">
                   {
                     getAllInters?.map((item: any) => {
                       return (
