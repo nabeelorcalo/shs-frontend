@@ -58,10 +58,16 @@ const useCustomHook = () => {
   };
 
   // update candidate data 
-  const updateCandidatesRecords = async (val: any) => {
-    // const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
-    const { data } = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${val}`)
-    setUpdateInterns(data);
+  const updateCandidatesRecords = async (internId: any = null, 
+    mangerId: any = null, 
+    terminationReson: any = null) => {
+    const id = Number(internId)
+    const params = {
+      "assignedManager": mangerId
+    }
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, params)
+    // setUpdateInterns(data);
+    // const { data } = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${val}`)
   }
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {

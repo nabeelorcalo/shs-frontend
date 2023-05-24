@@ -13,11 +13,12 @@ import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
 import '../style.scss'
+const { Option } = Select;
 
 const InternsCompanyAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
-  const [assignManager, setAssignManager] = useState(false)
-  const [terminate, setTerminate] = useState(false)
+  const [assignManager, setAssignManager] = useState({ isToggle: false, id: undefined })
+  const [terminate, setTerminate] = useState({ isToggle: false, id: undefined })
   const [complete, setComplete] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
@@ -26,7 +27,8 @@ const InternsCompanyAdmin = () => {
     status: undefined,
     department: undefined,
     university: undefined,
-    dateOfJoining: undefined
+    dateOfJoining: undefined,
+    termReason: ''
   })
 
   const statusList = [
@@ -71,15 +73,15 @@ const InternsCompanyAdmin = () => {
 
   const PopOver = (props: any) => {
     const { data } = props;
-    console.log('popover Data', data);
-
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { setAssignManager(true); }}>
+            onClick={() => {
+              setAssignManager({ isToggle: true, id: data?.id })
+            }}>
             Assign Manager
           </a>
         ),
@@ -89,7 +91,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { setTerminate(true) }} >
+            onClick={() => { setTerminate({ ...terminate, isToggle: true, id: data?.id }) }} >
             Terminate
           </a>
         ),
@@ -179,12 +181,12 @@ const InternsCompanyAdmin = () => {
     )
   })
 
-  const updateManager = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      manager: event
-    }))
-  }
+  // const updateManager = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     manager: event
+  //   }))
+  // }
 
   const updateStatus = (event: any) => {
     setState((prevState) => ({
@@ -229,9 +231,6 @@ const InternsCompanyAdmin = () => {
       dateOfJoining: undefined
     }))
   }
-  const { Option } = Select;
-
-
   const handleSearch = (value: any) => {
     console.log('Search:', value);
   }
@@ -276,7 +275,10 @@ const InternsCompanyAdmin = () => {
                     placeholder="Select"
                     value={state.manager}
                     onChange={(event: any) => {
-                      updateManager(event);
+                      setState({
+                        ...state,
+                        manager: event
+                      })
                     }}
                     // optionFilterProp="children"
                     // onSearch={handleSearch}
@@ -408,19 +410,19 @@ const InternsCompanyAdmin = () => {
               newTableData?.length === 0 ? <NoDataFound />
                 : <div className="flex flex-wrap gap-4">
                   {
-                    getAllInters?.map((item: any,) => {
-                      console.log('abdullah data', item);
-
+                    getAllInters?.map((item: any) => {
                       return (
                         <InternsCard
                           pupover={<PopOver data={item} />}
-                          status={item?.stage}
+                          status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                          posted_by={item?.posted_by}
+                          posted_by={<Avatar size={50} src={item?.avatar}>
+                            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+                          </Avatar>}
                           title={item?.title}
-                          department={item?.department}
-                          joining_date={item?.userDetail?.updatedAt}
-                          date_of_birth={item?.userDetail?.DOB}
+                          department={item?.internship?.department?.name}
+                          joining_date={dayjs(item?.userDetail?.updatedAt)?.format('DD/MM/YYYY')}
+                          date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
                         />
                       )
                     })
@@ -431,10 +433,9 @@ const InternsCompanyAdmin = () => {
         </Col>
       </Row>
 
-      <PopUpModal
-        open={assignManager}
+      <PopUpModal open={assignManager.isToggle}
         width={600}
-        close={() => { setAssignManager(false) }}
+        close={() => { setAssignManager({ ...assignManager, isToggle: false }) }}
         title="Assign Manager"
         children={
           <div className="flex flex-col gap-2">
@@ -445,7 +446,7 @@ const InternsCompanyAdmin = () => {
               placeholder="Select"
               value={state.manager}
               onChange={(event: any) => {
-                updateManager(event);
+                setState({ ...state, manager: event })
               }}
               // optionFilterProp="children"
               // onSearch={handleSearch}
@@ -474,20 +475,6 @@ const InternsCompanyAdmin = () => {
               })}
             </Select>
           </div>
-          // <div className="flex flex-col gap-2">
-          //   <SelectComp
-          //     label="Manager"
-          //     placeholder='Select'
-          //     value={state.status}
-          //     onChange={(event: any) => { updateStatus(event) }}
-          //     options={getAllManagers?.map((item: any) => {
-          //       return {
-          //         value: item?.id,
-          //         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`
-          //       }
-          //     })}
-          //   />
-          // </div>
         }
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
@@ -495,13 +482,13 @@ const InternsCompanyAdmin = () => {
               type="default"
               size="middle"
               className="button-default-tertiary max-sm:w-full"
-              onClick={() => setAssignManager(false)}
+              onClick={() => setAssignManager({ ...assignManager, isToggle: false })}
             >
               Cancel
             </Button>
             <Button
-              onClick={(id: any) => {
-                updateCandidatesRecords(id);
+              onClick={() => {
+                updateCandidatesRecords(assignManager.id, state.manager);
               }}
               type="default"
               size="middle"
@@ -512,10 +499,9 @@ const InternsCompanyAdmin = () => {
           </div>
         }
       />
-      <PopUpModal
-        open={terminate}
+      <PopUpModal open={terminate.isToggle}
         width={500}
-        close={() => { setTerminate(false) }}
+        close={() => { setTerminate({ ...terminate, isToggle: false }) }}
         children={
           <div>
             <div className="flex flex-col gap-5">
@@ -527,9 +513,16 @@ const InternsCompanyAdmin = () => {
               <div className="flex flex-col gap-2">
                 <p className="text-md text-teriary-color">Reason</p>
                 <TextArea
+                  value={state.termReason}
                   rows={5}
                   placeholder="Write your reason"
-                  disable={false}
+                  // disable={false}
+                  onChange={(event: any) => {
+                    setState({
+                      ...state,
+                      termReason: event.target.value
+                    })
+                  }}
                 />
               </div>
             </div>
@@ -541,7 +534,7 @@ const InternsCompanyAdmin = () => {
               type="default"
               size="small"
               className="button-default-error max-sm:w-full"
-              onClick={() => setTerminate(false)}
+              onClick={() => { setTerminate({ ...terminate, isToggle: false }) }}
             >
               Cancel
             </Button>
@@ -549,6 +542,9 @@ const InternsCompanyAdmin = () => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
+              onClick={() => {
+                updateCandidatesRecords(terminate.id, state.termReason);
+              }}
             >
               Terminate
             </Button>

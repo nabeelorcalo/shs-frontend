@@ -98,8 +98,8 @@ const Interns = () => {
   ];
 
   const newTableData = getAllInterns?.map((item: any, index: number) => {
-    const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
-    const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
+    const joiningDate = dayjs(item?.joiningDate)?.format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY');
     return (
       {
         no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
