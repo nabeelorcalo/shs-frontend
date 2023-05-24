@@ -3,7 +3,7 @@ import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components";
 import {
   Typography, Row, Col, Divider, Form, Radio, Select,
-  RadioChangeEvent, Button, Space, Input, Switch,
+  RadioChangeEvent, Button, Space, Input, Switch, DatePicker,
 } from "antd";
 import { Breadcrumb, CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
@@ -11,11 +11,15 @@ const { TextArea } = Input;
 const { Paragraph } = Typography;
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useLeaveCustomHook from "../actionHandler";
 
 const LeavesAddPolicy: React.FC = () => {
+  const navigate = useNavigate()
+  const { postSettingLeaves } = useLeaveCustomHook()
+
   const breadcrumbArray = [
     { name: "Add Policy" },
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
@@ -73,7 +77,7 @@ const LeavesAddPolicy: React.FC = () => {
       carryforward: "",
       assignDate: "",
       accrualFrequency: "",
-      openDatePicker:false,
+      openDatePicker: false,
       intern: [],
       openModal: false,
       internValue: 1,
@@ -95,12 +99,15 @@ const LeavesAddPolicy: React.FC = () => {
     }
   };
   const openDatePickerHandler = () => {
-    setState({...state, openDatePicker: !state.openDatePicker
-  })
+    setState({
+      ...state, openDatePicker: !state.openDatePicker
+    })
   }
 
   const onFinish = (values: any) => {
     console.log("valies", values)
+    postSettingLeaves(values)
+    navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
   }
   return (
     <div className="leaves-add-policy">
@@ -129,15 +136,19 @@ const LeavesAddPolicy: React.FC = () => {
               >
                 <Input placeholder="Enter name" />
               </Form.Item>
-              <div className="mt-3 flex flex-col">
-                <label>Description (optional)</label>
+              <Form.Item
+                name="description"
+                label="Description (optional)"
+                required={false}
+                rules={[{ required: true }, { type: "string" }]}
+              >
                 <TextArea
                   className="text-input-bg-color"
                   rows={6}
                   placeholder="Write Something..."
                   maxLength={6}
                 />
-              </div>
+              </Form.Item>
             </Col>
           </Row>
           <Divider />
@@ -214,16 +225,15 @@ const LeavesAddPolicy: React.FC = () => {
               </Form.Item>
               <Form.Item
                 label="Carry Forward Expiration"
-                required={false}
                 name="carryforwardexpiration"
-                rules={[{ required: true }, { type: "string" }]}
+              // rules={[{ required: true }, { type: "string" }]}
               >
                 <CommonDatePicker
-                  onBtnClick={() => { }}
                   open={state.openDatePicker}
                   setOpen={openDatePickerHandler}
-                  setValue={function noRefCheck() { }}
+                  setValue={(e: any) => console.log(e)}
                 />
+                {/* <DatePicker  /> */}
               </Form.Item>
             </Col>
           </Row>
@@ -250,8 +260,10 @@ const LeavesAddPolicy: React.FC = () => {
                 </div>
               </Form.Item>
               <div className="my-5">
-                <Switch />
-                <span className="px-3 ">Apply to all new hires</span>
+                <Form.Item name='applyForNewHire'>
+                  <Switch onChange={(e: any) => console.log(e)} />
+                  <span className="px-3 ">Apply to all new hires</span>
+                </Form.Item>
               </div>
             </Col>
           </Row>

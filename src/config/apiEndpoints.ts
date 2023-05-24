@@ -47,6 +47,7 @@ const endpoints = {
   POST_OFFERS: '/property/create-offer',
   GET_OFFERS: '/property/get-offers',
   EDIT_OFFERS: '/property/edit-offer',
+  GET_LEAVE_POLICY: '/leave-policy',
   //candidates 
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
