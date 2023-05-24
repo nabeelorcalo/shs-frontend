@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
-import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from "antd";
+import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col, Form, Select, Button } from "antd";
 import dayjs from 'dayjs';
 import {
   PageHeader,
@@ -8,7 +8,6 @@ import {
   FiltersButton,
   IconButton,
   DropDown,
-  Button,
   GlobalTable,
   Breadcrumb,
   Notifications,
@@ -20,6 +19,7 @@ import {
   GlassMagnifier,
   MoreIcon,
   TalentBadge,
+  IconAngleDown
 } from "../../../assets/images";
 import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -29,21 +29,22 @@ import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
 import usePerformanceHook from "../actionHandler";
-import { allPerformanceState, currentUserRoleState } from "../../../store";
+import { allPerformanceState, allPerformancesfilterParamsState, currentUserRoleState } from "../../../store";
 
 const PerformanceHistory = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { getAllPerformance } = usePerformanceHook();
   const allPerformance = useRecoilValue(allPerformanceState);
-  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false)
+  const [filterParams, setFilterParams] = useRecoilState(allPerformancesfilterParamsState);
+  const resetFilterParams = useResetRecoilState(allPerformancesfilterParamsState);
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
+  const [filterForm] = Form.useForm();
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const id = 1;
   const limit = 10;
-  console.log("allPerformance::: ", allPerformance)
 
-  // const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
 
   const historyBreadCrumb = [
     { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
@@ -394,10 +395,12 @@ const PerformanceHistory = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    const params = { page: 1, limit: 5 };
-    getAllPerformance(setLoadingAllPerformance, params)
+    getAllPerformance(setLoadingAllPerformance, filterParams)
   }, [])
 
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   const handleSidebarClick = () => {
     setState((prevState) => ({
       ...prevState,
@@ -451,6 +454,32 @@ const PerformanceHistory = () => {
     }));
   };
 
+  const onValuesChange = (changedValue: any, allValues: any) => {
+    setFilterParams((old) => {
+      return {
+        ...old,
+        ...changedValue
+      }
+    })
+  };
+
+  const resetFilterForm = () => {
+    filterForm.resetFields();
+    resetFilterParams();
+  }
+
+  const handleApplyFilter = () => {
+    getAllPerformance(setLoadingAllPerformance, filterParams);
+    setState({
+      ...state,
+      openSidebar: false
+    });
+    resetFilterForm()
+  }
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="company-admin-performance-history">
       <PageHeader
@@ -482,58 +511,104 @@ const PerformanceHistory = () => {
             open={state.openSidebar}
             onClose={handleSidebarClick}
             children={
-              <div className="flex flex-col">
-                <div className="flex flex-col my-2 gap-2">
-                  <p className="sidebar-label">Evaluated By</p>
-                  <DropDown
-                    name="Select"
-                    options={evaluatedByOptions}
-                    setValue={() => evaluatedBySelection(event)}
-                    value={state.evaluatedByVal}
-                  />
-                </div>
+              <>
+              <Form
+                form={filterForm}
+                layout="vertical"
+                name="performanceFilter"
+                onValuesChange={onValuesChange}
+              >
+                <Form.Item name="evaluatedBy" label="Evaluated By">
+                  <Select placeholder="Select" suffixIcon={<IconAngleDown />} className="filled">
+                    <Select.Option value={1}>User ID 1</Select.Option>
+                    <Select.Option value={8}>User ID 8</Select.Option>
+                  </Select>
+                </Form.Item>
 
-                <div className="flex flex-col my-2 gap-2">
-                  <p className="sidebar-label">Time Frame</p>
-                  <DropDown
-                    name="Select"
-                    options={timeFrameOptions}
-                    setValue={(e: string) => setState((prevState) => ({
-                      ...prevState,
-                      timeFrameVal: e,
-                    }))}
-                    value={state.timeFrameVal}
-                    showDatePickerOnVal="Date Range"
-                    placement="topLeft"
-                    requireRangePicker
-                  />
-                </div>
+                <Form.Item name="filterType" label="Time Frame">
+                  <Select placeholder="Select" suffixIcon={<IconAngleDown />} className="filled">
+                    <Select.Option value={'THIS_WEEK'}>This Week</Select.Option>
+                    <Select.Option value={'LAST_WEEK'}>Last Week</Select.Option>
+                    <Select.Option value={'THIS_MONTH'}>This Month</Select.Option>
+                    <Select.Option value={'LAST_MONTH'}>Last Month</Select.Option>
+                    <Select.Option value={'DATE_RANGE'}>Date Range</Select.Option>
+                  </Select>
+                </Form.Item>
 
-                <div className="flex flex-col my-2 gap-2">
-                  <p className="sidebar-label">Department</p>
-                  <DropDown
-                    name="Select"
-                    options={departmentOptions}
-                    setValue={() => departmentSelection(event)}
-                    value={state.departmentVal}
-                  />
-                </div>
+                <Form.Item name="department" label="Department">
+                  <Select placeholder="Select" suffixIcon={<IconAngleDown />} className="filled">
+                    <Select.Option value={1}>Design</Select.Option>
+                    <Select.Option value={2}>Business Analyst</Select.Option>
+                    <Select.Option value={3}>Data Scientist</Select.Option>
+                    <Select.Option value={4}>Product Manager</Select.Option>
+                    <Select.Option value={5}>Developer</Select.Option>
+                  </Select>
+                </Form.Item>
 
-                <div className="flex ml-auto my-2 gap-2">
-                  <Button
-                    label="Reset"
-                    type="default"
-                    onClick={onResetFilterClick}
-                    className="border-visible-btn"
-                  />
-
-                  <Button
-                    label="Apply"
-                    onClick={onApplyFilterClick}
-                    className="bg-visible-btn"
-                  />
-                </div>
+                <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <Space align="end" size={20}>
+                    <Button className="button-tertiary" ghost onClick={() => resetFilterForm()}>
+                      Reset
+                    </Button>
+                    <Button className="button-tertiary" onClick={() => handleApplyFilter()}>
+                      Apply
+                    </Button>
+                  </Space>
+                </Form.Item>
+            </Form>
+            {/* <div className="flex flex-col">
+               <div className="flex flex-col my-2 gap-2">
+                <p className="sidebar-label">Evaluated By</p>
+                <DropDown
+                  name="Select"
+                  options={evaluatedByOptions}
+                  setValue={() => evaluatedBySelection(event)}
+                  value={state.evaluatedByVal}
+                />
               </div>
+
+              <div className="flex flex-col my-2 gap-2">
+                <p className="sidebar-label">Time Frame</p>
+                <DropDown
+                  name="Select"
+                  options={timeFrameOptions}
+                  setValue={(e: string) => setState((prevState) => ({
+                    ...prevState,
+                    timeFrameVal: e,
+                  }))}
+                  value={state.timeFrameVal}
+                  showDatePickerOnVal="Date Range"
+                  placement="topLeft"
+                  requireRangePicker
+                />
+              </div>
+
+              <div className="flex flex-col my-2 gap-2">
+                <p className="sidebar-label">Department</p>
+                <DropDown
+                  name="Select"
+                  options={departmentOptions}
+                  setValue={() => departmentSelection(event)}
+                  value={state.departmentVal}
+                />
+              </div>
+
+              <div className="flex ml-auto my-2 gap-2">
+                <Button
+                  label="Reset"
+                  type="default"
+                  onClick={onResetFilterClick}
+                  className="border-visible-btn"
+                />
+
+                <Button
+                  label="Apply"
+                  onClick={onApplyFilterClick}
+                  className="bg-visible-btn"
+                />
+              </div>
+            </div> */}
+            </>
             }
           />
         </Col>
@@ -543,6 +618,7 @@ const PerformanceHistory = () => {
               columns={columnNames} 
               tableData={allPerformance}
               pagination={true}
+              loading={loadingAllPerformance}
             />
           </BoxWrapper>
         </Col>
@@ -555,7 +631,7 @@ const PerformanceHistory = () => {
           description: "hello world",
           avatar:
             "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        }}
+          }}
         onSave={onSubmitAppreciationForm}
         onCancel={() => {
           setState((prevState) => ({
