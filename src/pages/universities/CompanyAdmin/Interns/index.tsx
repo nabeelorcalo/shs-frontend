@@ -32,7 +32,7 @@ const index: React.FC = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state } = useLocation();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue,null)
+    getUniIntersTableData(state, searchValue,null,null)
   }, [searchValue])
 
   const menu = (

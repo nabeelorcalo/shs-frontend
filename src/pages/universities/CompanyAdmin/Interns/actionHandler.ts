@@ -17,7 +17,7 @@ const useCustomHook = () => {
   const { GET_UNIVERSITYINTERNS } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
 
-  const getUniIntersTableData = async (id: any = null, searchValue: any = null, selectValue: any) => {
+  const getUniIntersTableData = async (id: any = null, searchValue: any = null, selectValue: any, assignedManager: any) => {
     const params = {
       userUniversityId: id,
       page: 1,
@@ -25,7 +25,8 @@ const useCustomHook = () => {
       search: searchValue,
       internStatus: selectValue?.status ? selectValue?.status : null,
       joiningDate: selectValue?.joiningDate,
-      department: selectValue?.department
+      department: selectValue?.department,
+      assignedManager: assignedManager
     }
     const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
     setUniversityIntersData(data)

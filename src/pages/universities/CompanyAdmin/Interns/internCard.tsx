@@ -26,7 +26,7 @@ const InternCard = (props: any) => {
   }
   const { getUniIntersTableData, universityIntersData } = useCustomHook();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue,null)
+    getUniIntersTableData(state, searchValue,null,null)
   }, [])
   console.log(universityIntersData, "universityIntersData");
 

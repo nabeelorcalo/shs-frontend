@@ -6,7 +6,7 @@ import DropDownNew from '../../../../components/Dropdown/DropDownNew';
 import './style.scss'
 import useCustomHook from './actionHandler';
 import UseDepartmentCustomHook from '../../../setting/companyAdmin/Department/actionHandler';
-
+import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHandler";
 const detailsData = [
   {
     userImg: UserAvatar,
@@ -32,7 +32,7 @@ const Filters = ({ setShowDrawer }: any) => {
   const [selectValue, setSelectValue] = useState<any>(
     {
       userImg: '',
-      userName: null,
+      assignedManager: null,
       status: null,
       department: null,
       joiningDate: null
@@ -40,10 +40,15 @@ const Filters = ({ setShowDrawer }: any) => {
   );
   const { getUniIntersTableData } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata }: any = UseDepartmentCustomHook();
+  const { getAllManagersData, getAllManagers } = UseManagerCustomHook();
+
   useEffect(() => {
-    // getUniIntersTableData(selectValue.status, selectValue.joiningDate, selectValue.department)
     getSettingDepartment(null)
+    getAllManagersData()
   }, [])
+
+  console.log(getAllManagers, "getAllManagers");
+
 
 
 
@@ -53,7 +58,7 @@ const Filters = ({ setShowDrawer }: any) => {
       status: null,
       joiningDate: null,
       userImg: '',
-      userName: null
+      assignedManager: null
     });
   }
 
@@ -61,7 +66,7 @@ const Filters = ({ setShowDrawer }: any) => {
     console.log(values);
 
     setShowDrawer(false)
-    getUniIntersTableData(null, null, selectValue)
+    getUniIntersTableData(null, null,null, selectValue)
   }
 
   return (
@@ -105,12 +110,12 @@ const Filters = ({ setShowDrawer }: any) => {
                 {
                   label: <div>{detailsData.map((item: any) => (
                     <div className="flex items-center gap-3 mb-[20px]"
-                      onClick={() => setSelectValue({ ...selectValue, userName: item.name, userImg: item.userImg })}
+                      onClick={() => setSelectValue({ ...selectValue, assignedManager: item.assignedManager, userImg: item.userImg })}
                     >
                       <img src={item.userImg}
                         className='h-[24px] w-[24px] rounded-full object-cover'
                       />
-                      <p>{item.userName}</p>
+                      <p>{item.assignedManager}</p>
                     </div>))}
                   </div>,
                   key: 'users'
@@ -118,7 +123,7 @@ const Filters = ({ setShowDrawer }: any) => {
               <div className="drop-down-with-imgs flex items-center gap-3">
                 <div className="flex items-center gap-3 mr-[40px]">
                   {selectValue.userImg != '' && <img src={selectValue.userImg} />}
-                  <p>{selectValue.userName}</p>
+                  <p>{selectValue.assignedManager}</p>
                 </div>
                 <ArrowDownDark />
               </div>

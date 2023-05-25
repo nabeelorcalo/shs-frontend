@@ -13,7 +13,7 @@ import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
 
 // Chat operation and save into store
-const useCustomHook = () => {
+const UseManagerCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
     GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
     UPDATE_CANDIDATE_DETAIL } = apiEndpints
@@ -25,7 +25,7 @@ const useCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Get all interns data
-  const getAllInternsData = async (event: any,searchValue: any) => {
+  const getAllInternsData = async (event: any, searchValue: any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
@@ -150,4 +150,4 @@ const useCustomHook = () => {
   };
 };
 
-export default useCustomHook;
+export default UseManagerCustomHook;
