@@ -6,12 +6,19 @@ export const allPerformanceState = atom({
   default: [],
 });
 
+export const internEvaluationHistoryState = atom({
+  key: 'internEvaluationHistoryState',
+  default: [],
+});
+
+export const topPerformersState = atom({
+  key: 'topPerformersState',
+  default: [],
+});
+
 export const allPerformancesfilterParamsState = atom({
   key: 'allPerformancesfilterParamsState',
-  default: {
-    page: 1,
-    limit: 5
-  },
+  default: {},
 });
 
 const data = {
@@ -96,7 +103,7 @@ const data = {
       },
     ]
   },
-  comment: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
+  comment: 'He is dedicated to his work and has the potential to improve further. More experience with communication skills and confidence will groom further.'
 }
 
 export const evaluationState = atom({

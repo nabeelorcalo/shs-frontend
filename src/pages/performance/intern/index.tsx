@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from "antd";
 import {
   OverAllPerfomance,
@@ -10,8 +10,25 @@ import { MoreIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import usePerformanceHook from "../actionHandler";
+import { internEvaluationHistoryState, currentUserState, allPerformanceState } from "../../../store";
+import { useRecoilValue } from "recoil";
+import dayjs from 'dayjs';
+import { useNavigate } from "react-router-dom"
 
 const InternPerformance = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate()
+  const { getInternEvaluationHistory } = usePerformanceHook();
+  const internEvalHistory = useRecoilValue(internEvaluationHistoryState);
+  const userDetail = useRecoilValue(currentUserState);
+  const [actionType, setActionType] = useState({ type: "", id: "" });
+  const [openDrawer, setOpenDrawer] = useState({ open: false, type: "" });
+  const [evalHistoryLoading, setEvalHistoryLoading] = useState(false)
+  const { getAllPerformance } = usePerformanceHook();
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
+  const allPerformance = useRecoilValue(allPerformanceState);
   const performanceData = [
     {
       percent: "85",
@@ -35,31 +52,34 @@ const InternPerformance = () => {
     },
   ];
 
-  const evaluationHistoryColumnNames = [
+  const columns = [
     {
       title: "Date",
-      key: "date",
-      dataIndex: "date",
+      key: "updatedAt",
+      render: (text:any, row:any) => (
+        <>{dayjs(row.updatedAt).format('DD/MM/YYYY')}</>
+      ),
     },
     {
       title: "Manager",
       key: "avatar",
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <Avatar size={32} alt="avatar" src={<img src={data.src} />} />
-        </Space>
+      align: 'center',
+      render: (text:any, row:any) => (
+        <Avatar size={32} src={row?.ratedBy?.avatar}>
+          {row.ratedBy.firstName.charAt(0)}{row.ratedBy.lastName.charAt(0)}
+        </Avatar>
       ),
     },
     {
       title: "Performance",
-      key: "performance",
-      render: (_: any, data: any) => {
+      key: "overallRating",
+      render: (text:any, row: any) => {
         return (
           <Space size="middle">
             <Progress
               size={[200, 13]}
-              percent={data.performance}
-              strokeColor={data.performance < 50 ? "#E95060" : "#4A9D77"}
+              percent={row.overallRating}
+              strokeColor={row.overallRating < 50 ? "#E95060" : "#4A9D77"}
               format={(percent: any) => (
                 <p
                   className={
@@ -78,54 +98,23 @@ const InternPerformance = () => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, data: any) => (
+      render: (tex:any, row: any) => (
         <Space size="middle">
           <Dropdown
-            menu={{ items }}
+            menu={{
+              items: [
+                { label: 'View', key: 'View', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}/${row.id}`)},
+                { label: 'Download', key: 'Download', onClick: () => console.log('Download')}
+              ]
+            }}
             trigger={["click"]}
             placement="bottomRight"
             overlayClassName="menus_dropdown_main"
           >
-            <MoreIcon
-              className="cursor-pointer"
-              onClick={() => setActionType({ ...actionType, id: data.key })}
-            />
+            <MoreIcon className="cursor-pointer" />
           </Dropdown>
         </Space>
       ),
-    },
-  ];
-
-  const evaluationHistoryData = [
-    {
-      id: 1,
-      date: "22/09/2022",
-      src: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 40,
-    },
-    {
-      id: 2,
-      date: "22/09/2022",
-      src: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 80,
-    },
-    {
-      id: 3,
-      date: "22/09/2022",
-      src: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 50,
-    },
-    {
-      id: 4,
-      date: "22/09/2022",
-      src: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 30,
-    },
-    {
-      id: 5,
-      date: "22/09/2022",
-      src: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 100,
     },
   ];
 
@@ -218,31 +207,18 @@ const InternPerformance = () => {
     },
   ];
 
-  const [actionType, setActionType] = useState({ type: "", id: "" });
-  const [openDrawer, setOpenDrawer] = useState({ open: false, type: "" });
 
-  const items: MenuProps["items"] = [
-    {
-      label: (
-        <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`}
-        >
-          View
-        </Link>
-      ),
-      key: "0",
-    },
-    {
-      label: (
-        <p onClick={() => setActionType({ ...actionType, type: "download" })}>
-          Download
-        </p>
-      ),
-      key: "1",
-    },
-  ];
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getInternEvaluationHistory(setEvalHistoryLoading, userDetail.id)
+    getAllPerformance(setLoadingAllPerformance, {page: 1, limit: 25})
+  }, [])
+  console.log('internEvalHistory:: ', internEvalHistory)
+  console.log('allPerformance::: ', allPerformance)
 
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <>
       <PageHeader title="Performance" />
@@ -251,11 +227,32 @@ const InternPerformance = () => {
         <div className="performance-left-subcontainer ">
           <OverAllPerfomance
             heading="Overall Performance"
-            data={performanceData}
             trailColor="#E6F4F9"
             strokeWidth={10}
             type="circle"
             width={100}
+            data={[
+              {
+                percent: internEvalHistory[0]['overallRating'],
+                strokeColor: "#4783FF",
+                title: "Overall",
+              },
+              {
+                percent: internEvalHistory[0]['learningObjectiveRating'],
+                strokeColor: "#9BD5E8",
+                title: "Learning",
+              },
+              {
+                percent: internEvalHistory[0]['disciplineRating'],
+                strokeColor: "#F08D97",
+                title: "Discipline",
+              },
+              {
+                percent: internEvalHistory[0]['overallRating'],
+                strokeColor: "#78DAAC",
+                title: "Personal",
+              },
+            ]}
           />
           <div className="mt-5">
             <BoxWrapper>
@@ -272,9 +269,10 @@ const InternPerformance = () => {
           <BoxWrapper>
             <Typography.Title level={4}>Evaluation History</Typography.Title>
             <GlobalTable
-              columns={evaluationHistoryColumnNames}
-              tableData={evaluationHistoryData}
+              columns={columns}
+              tableData={internEvalHistory}
               pagination={false}
+              loading={evalHistoryLoading}
             />
           </BoxWrapper>
         </div>

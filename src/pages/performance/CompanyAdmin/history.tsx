@@ -395,10 +395,10 @@ const PerformanceHistory = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAllPerformance(setLoadingAllPerformance, filterParams)
+    getAllPerformance(setLoadingAllPerformance, {...filterParams, limit: 8, page: 1})
   }, [])
 
-
+console.log("allPerformance:: ", allPerformance)
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handleSidebarClick = () => {

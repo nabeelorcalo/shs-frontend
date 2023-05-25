@@ -3,22 +3,33 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
-import { allPerformanceState } from "../../store";
+import { allPerformanceState, internEvaluationHistoryState, topPerformersState } from "../../store";
 import { useRecoilState } from "recoil";
 import endPoints from "../../config/apiEndpoints";
 
 const usePerformanceHook = () => {
-  const { GET_PERFORMANCE_LIST } = endPoints;
+  const { GET_PERFORMANCE_LIST, GET_INTERN_EVALUATION_HISTORY } = endPoints;
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+  const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
+  const [topPerformers, setTopPerformers] = useRecoilState(topPerformersState);
 
   // Get All Performance
   const getAllPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
     setLoading(true);
     const response = await api.get(GET_PERFORMANCE_LIST, params);
-    console.log(response)
     if(!response.error) {
       const { data } = response;
       setAllPerformance(data);
+    }
+    setLoading(false);
+  }
+
+  const getTopPerformers = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response = await api.get(GET_PERFORMANCE_LIST, {sortByPerformance: true});
+    if(!response.error) {
+      const { data } = response;
+      setTopPerformers(data);
     }
     setLoading(false);
   }
@@ -30,6 +41,16 @@ const usePerformanceHook = () => {
     if(!response.error) {
       const { data } = response;
       setAllPerformance(data);
+    }
+    setLoading(false);
+  }
+
+  const getInternEvaluationHistory = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
+    setLoading(true);
+    const response = await api.get(`${GET_INTERN_EVALUATION_HISTORY}/${id}`);
+    if(!response.error) {
+      const { data } = response;
+      setInternEvalHistory(data);
     }
     setLoading(false);
   }
@@ -132,7 +153,9 @@ const usePerformanceHook = () => {
   };
 
   return {
+    getTopPerformers,
     getAllPerformance,
+    getInternEvaluationHistory,
     downloadPdf,
     downloadHistoryDataPdf
   };

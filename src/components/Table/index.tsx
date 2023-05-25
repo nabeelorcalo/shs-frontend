@@ -17,7 +17,7 @@ interface TableProps {
   loading?: any
 }
 export const GlobalTable = (props: TableProps) => {
-  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading, ...rest } = props
+  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading=false, ...rest } = props
 
   return (
     <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>

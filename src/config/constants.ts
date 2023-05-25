@@ -65,7 +65,7 @@ export const ROUTES_CONSTANTS: any = {
   PERFORMANCE: "performance",
   VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
   DETAIL: "detail",
-  EVALUATION_FORM: "evaluation-form",
+  EVALUATION_FORM: "evaluation",
   EVALUATE: "evaluate",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",

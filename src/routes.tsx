@@ -1244,7 +1244,7 @@ const internRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}/:evalId`,
         element: <ViewPerformance />,
       },
       {

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useRecoilValue } from "recoil";
+import usePerformanceHook from "../actionHandler";
+import { topPerformersState, allPerformanceState } from "../../../store";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
@@ -15,6 +18,14 @@ import { Row, Col } from "antd";
 import "../style.scss";
 
 const CompanyAdminPerformance = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const { getTopPerformers, getAllPerformance } = usePerformanceHook();
+  const topPerformers = useRecoilValue(topPerformersState);
+  const allPerformance = useRecoilValue(allPerformanceState);
+  console.log('allPerformanceaaa:: ', allPerformance)
+  const [loadingTopPerformers, setLoadingTopPerformers] = useState(false)
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [state, setState] = useState({
     topPerformanceList: [
       {
@@ -135,6 +146,28 @@ const CompanyAdminPerformance = () => {
     }));
   };
 
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getTopPerformers(setLoadingTopPerformers)
+    getAllPerformance(setLoadingAllPerformance, {})
+  }, [])
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const overAllPerData = () => {
+    if(allPerformance != null) {
+      let overall = 0;
+      let learning = 0
+    for(let i = 0; i < allPerformance?.length; i++  ) {
+      overall += allPerformance[i]['sumOverallRating']
+    }
+    return overall
+    }
+    
+  }
+  console.log("sum:", overAllPerData())
   return (
     <>
       <PageHeader actions title="Performance">
@@ -176,7 +209,12 @@ const CompanyAdminPerformance = () => {
           </Row>
         </Col>
         <Col xs={24} md={24} xl={7}>
-          <TopPerformanceList heading="Top Performers" data={state.topPerformanceList} action={true} />
+          <TopPerformanceList
+            heading="Top Performers"
+            data={topPerformers}
+            loading={loadingTopPerformers}
+            action={true} 
+          />
         </Col>
       </Row>
     </>

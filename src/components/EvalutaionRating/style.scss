@@ -46,7 +46,6 @@
         }
       }
       
-
       &::before {
         display: none;
       }
@@ -57,7 +56,6 @@
         }
 
         .emoji-icons {
-  
           .selected {
             visibility: visible;
           }
@@ -69,7 +67,6 @@
             }
           }
         }
-
       }
 
       &.ant-radio-button-wrapper-disabled {
@@ -77,12 +74,19 @@
         cursor: auto;
 
         .emoji-icons {
-
           &:hover {
             .selected {
               height: 48px;
               width: 48px;
               visibility: hidden;
+            }
+          }
+        }
+
+        &.ant-radio-button-wrapper-checked {
+          .emoji-icons {
+            .selected {
+              visibility: visible;
             }
           }
         }
@@ -98,6 +102,15 @@
       }
     }
   }
+}
+
+.comment-area-box {
+  padding: 16px;
+  min-height: 163px;
+  background-color: #E6F4F9;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .emoji-mood-container {

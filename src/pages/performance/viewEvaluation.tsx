@@ -2,6 +2,11 @@ import { Col, Row, Typography } from "antd";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { header, tableData } from "./CompanyAdmin/pdfData";
+import useCustomHook from "./actionHandler";
+import { currentUserRoleState, evaluationState } from "../../store";
+import EmojiMoodRating from "../../components/EmojiMoodRating";
+import "./style.scss";
 import {
   PageHeader,
   IconButton,
@@ -23,13 +28,11 @@ import {
   SatisfiedColorLessIcon,
   DownloadIconWithBg,
 } from '../../assets/images';
-import EmojiMoodRating from "../../components/EmojiMoodRating";
-import { header, tableData } from "./CompanyAdmin/pdfData";
-import useCustomHook from "./actionHandler";
-import { currentUserRoleState, evaluationState } from "../../store"
-import "./style.scss";
+
 
 const ViewPerformance = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const evaluation = useRecoilValue(evaluationState);
@@ -113,6 +116,12 @@ const ViewPerformance = () => {
     { id: 2, title: 'Discipline', progressColor: '#E96F7C' },
     { id: 3, title: 'Personal', progressColor: '#6AAD8E' },
   ]
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="view-evaluation">
       <PageHeader
@@ -140,6 +149,7 @@ const ViewPerformance = () => {
           icon={<DownloadIconWithBg />}
         />
       </div>
+
       <div className="innerContent">
         <Row gutter={[20, 10]}>
           <Col xs={24} md={12} xxl={6}>
@@ -172,7 +182,6 @@ const ViewPerformance = () => {
           </Col>
         </Row>
         
-    
         <Row gutter={[20, 10]}>
           <Col xs={24}>
             <div className="mt-6 mb-2">
@@ -183,13 +192,11 @@ const ViewPerformance = () => {
           </Col>
           {evaluation.learningObjectives.questions.map((question: any, index) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
-              <div>
-                <EvaluationRating
-                  title={question.title}
-                  value={question.value}
-                  disabled={true}
-                />
-              </div>
+              <EvaluationRating
+                title={question.title}
+                value={question.value}
+                disabled={true}
+              />
             </Col>
           )}
         </Row>
@@ -204,14 +211,11 @@ const ViewPerformance = () => {
           </Col>
           {evaluation.discipline.questions.map((question: any, index) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
-              <div>
-                <EmojiMoodRating
-                  size={5}
-                  data={emojiData}
-                  title={question.title}
-                  activeIconIndex={question.value}
-                />
-              </div>
+              <EvaluationRating
+                title={question.title}
+                value={question.value}
+                disabled={true}
+              />
             </Col>
           )}
         </Row>
@@ -226,14 +230,11 @@ const ViewPerformance = () => {
           </Col>
           {evaluation.personal.questions.map((question: any, index) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
-              <div>
-                <EmojiMoodRating
-                  size={5}
-                  data={emojiData}
-                  title={question.title}
-                  activeIconIndex={question.value}
-                />
-              </div>
+              <EvaluationRating
+                title={question.title}
+                value={question.value}
+                disabled={true}
+              />
             </Col>
           )}
         </Row>
@@ -243,13 +244,17 @@ const ViewPerformance = () => {
             Comments
           </Typography.Title>
 
-          <TextArea
+          <div className="comment-area-box">
+            {evaluation.comment}
+          </div>
+
+          {/* <TextArea
             disabled
             rows={6}
             classNme='light-blue-bg-color text-primary-color'
             placeholder="placeholder"
             defaultValue='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
-          />
+          /> */}
         </div>
       </div>
     </div>

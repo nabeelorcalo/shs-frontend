@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Col, Row, Typography } from "antd";
+import { Col, Row, Typography, Form } from "antd";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 import {
@@ -10,7 +10,8 @@ import {
   TextArea,
   Button,
   Breadcrumb,
-  Notifications
+  Notifications,
+  EvaluationRating
 } from "../../components";
 import {
   Sad,
@@ -27,9 +28,15 @@ import {
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import useCustomHook from "./actionHandler";
+import { evaluationState } from "../../store";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 
 const ViewPerformance = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const [form] = Form.useForm();
   const action = useCustomHook();
+  const evaluation = useRecoilValue(evaluationState);
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
@@ -114,6 +121,13 @@ const ViewPerformance = () => {
     data: data,
   });
 
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   const emojiClick = (e: any) => {
     const newData = [...data];
     const classList = e.currentTarget.classList;
@@ -144,6 +158,12 @@ const ViewPerformance = () => {
     alert("Cancel");
   }
 
+  const onFinish = (values:any) => {
+    console.log('Values::: ', values)
+  }
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="view-evaluation">
       <PageHeader
@@ -175,50 +195,86 @@ const ViewPerformance = () => {
         <Row gutter={[20, 10]}>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationCard
-              name={user.name}
-              avatar={user.avatar}
-              profession={user.profession}
+              name={evaluation.evaluatedBy.name}
+              avatar={evaluation.evaluatedBy.avatar}
+              profession={evaluation.evaluatedBy.role}
             />
           </Col>
-          {detailedCards.map((item: any) => (
-            <Col xs={24} md={12} xxl={6} key={item.id}>
-              <EvaluationStatsCard
-                name={item.title}
-                percentage={user.learningObjectives}
-                color={item.progressColor}
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={"Learning Objectives"}
+              percentage={evaluation.learningObjectives.percentage}
+              color={'#9BD5E8'}
+            />
+          </Col>
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={"Discipline"}
+              percentage={evaluation.discipline.percentage}
+              color={'#E96F7C'}
+            />
+          </Col>
+          <Col xs={24} md={12} xxl={6}>
+            <EvaluationStatsCard
+              name={"Personal"}
+              percentage={evaluation.personal.percentage}
+              color={'#6AAD8E'}
+            />
+          </Col>
+        </Row>
+        <Row gutter={[20, 10]}>
+          <Col xs={24}>
+            <div className="mt-6 mb-2">
+              <Typography.Title level={3} className="evaluation-heading">
+                Learning Objectives
+              </Typography.Title>
+            </div>
+          </Col>
+          {evaluation.learningObjectives.questions.map((question: any, index) =>
+            <Col xs={24} xl={12} xxl={8} key={index}>
+              <EvaluationRating
+                title={question.title}
+                value={question.value}
               />
             </Col>
-          ))}
+          )}
         </Row>
-        {
-          state.data.map((obj: any, index: number) => {
-            return (
-              <Row gutter={[20, 10]} key={obj.id}>
-                <Col xs={24}>
-                  <div key={obj.name} className="mt-6 mb-2">
-                    <Typography.Title level={3} className="evaluation-heading">
-                      {obj.name}
-                    </Typography.Title>
-                  </div>
-                </Col>
-                {obj.values.map((child: any) =>
-                  <Col xs={24} xl={12} xxl={8} key={child.value}>
-                    <div key={child.title}>
-                      <EmojiMoodRating
-                        id={`${index}_${child.id}`}
-                        size={5}
-                        data={emojiData}
-                        title={child.title}
-                        activeIconIndex={child.value}
-                        onClick={emojiClick}
-                      />
-                    </div>
-                  </Col>
-                )}
-              </Row>
-            )
-          })
-        }
+
+        <Row gutter={[20, 10]}>
+          <Col xs={24}>
+            <div className="mt-6 mb-2">
+              <Typography.Title level={3} className="evaluation-heading">
+                Discipline
+              </Typography.Title>
+            </div>
+          </Col>
+          {evaluation.discipline.questions.map((question: any, index) =>
+            <Col xs={24} xl={12} xxl={8} key={index}>
+              <EvaluationRating
+                title={question.title}
+                value={question.value}
+              />
+            </Col>
+          )}
+        </Row>
+
+        <Row gutter={[20, 10]}>
+          <Col xs={24}>
+            <div className="mt-6 mb-2">
+              <Typography.Title level={3} className="evaluation-heading">
+                Personal
+              </Typography.Title>
+            </div>
+          </Col>
+          {evaluation.personal.questions.map((question: any, index) =>
+            <Col xs={24} xl={12} xxl={8} key={index}>
+              <EvaluationRating
+                title={question.title}
+                value={question.value}
+              />
+            </Col>
+          )}
+        </Row>
         <div className="my-4">
           <Typography.Title level={3} className="evaluation-heading">
             Comments
@@ -246,6 +302,7 @@ const ViewPerformance = () => {
             className="bg-visible-btn"
           />
         </div>
+        
       </div>
     </div>
   )
