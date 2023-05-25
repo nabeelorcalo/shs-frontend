@@ -232,6 +232,7 @@ const ManageVault = () => {
         centered
         closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
         footer={false}
+        width={700}
         title="Create new folder"
       >
         <div className="mt-8 mb-8">
@@ -243,7 +244,7 @@ const ManageVault = () => {
             <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
               <Input className="input" placeholder="Enter folder Name" type="text" />
             </Form.Item>
-            <div className="d-flex justify-end items-center">
+            <div className="flex justify-end items-center gap-3">
               <Button
                 className="cancel-btn"
                 onClick={modalHandler}
@@ -254,7 +255,7 @@ const ManageVault = () => {
                 htmlType="submit"
                 className="submit-btn"
                 key="submit">
-                Submit
+                Create
               </Button>
             </div>
           </Form>
@@ -272,7 +273,7 @@ const ManageVault = () => {
             uploadFile: false
           }));
         }}
-        width={600}
+        width={705}
         closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
         footer={[
           <Button
