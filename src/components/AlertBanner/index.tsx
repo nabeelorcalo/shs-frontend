@@ -5,11 +5,12 @@ interface bannerProps {
     type: any;
     showIcon?: boolean;
     closable?: boolean;
-    actions?: any
+    actions?: any;
+    hasAction?: boolean
 
 }
 const AlertBanner = (props: bannerProps) => {
-    const { className, message, type, showIcon, closable, actions } = props
+    const { className, message, type, showIcon, closable, actions, hasAction } = props
     return (
         <Alert
             className={className}
@@ -17,7 +18,7 @@ const AlertBanner = (props: bannerProps) => {
             type={type}
             showIcon={showIcon}
             closable={closable}
-            action={actions}
+            action={hasAction && actions}
         />
     )
 }
