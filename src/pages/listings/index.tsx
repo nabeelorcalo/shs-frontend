@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PageHeader, SearchBar, Alert } from '../../components';
+import { PageHeader, SearchBar, Alert, Loader } from '../../components';
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -982,7 +982,6 @@ const Listings = () => {
     {
       key: 'step7',
       content: <div className="step-publish">
-        {JSON.stringify(previousValues)}
         <div className="step-content-header">
           <div className="step-content-header-title">All Ready to publish!</div>
           <Typography.Title level={2}>Before you finish....</Typography.Title>
@@ -1019,6 +1018,7 @@ const Listings = () => {
       });
       setStepCurrent(stepCurrent + 1);
     })
+    console.log("prev vali::: ", previousValues)
   };
 
   const prev = () => {
@@ -1028,7 +1028,6 @@ const Listings = () => {
   const onValuesChange = (changedValues: any, allValues: any) => {
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
     allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
-    console.log("Valuessss:: ", allValues)
   };
 
   const submitAddListing = async () => {
@@ -1037,9 +1036,12 @@ const Listings = () => {
     for(const name in previousValues) {
       formData.append(name, previousValues[name])
     }
-    formData.append('attachments', previousValues.attachments.map((file:any) => file.originFileObj))
-    const result = await createListing(formData);
-   
+    for (let i = 0; i < previousValues.attachments.length; i++) {
+      var file = previousValues.attachments[i]['originFileObj']
+      formData.append('attachments', file)
+    }
+    
+    const result = await createListing(formData); 
     setLoadingAddListing(false);
     showNotification("success", "Success", result.message);
     closeModalAddListing();
@@ -1077,7 +1079,7 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
-                    loading={loadingAllProperties}
+                    loading={{spinning: loadingAllProperties, indicator: <Loader />}}
                     columns={tableColumns}
                     dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
