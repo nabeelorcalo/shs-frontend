@@ -27,8 +27,6 @@ const ViewInternshipDetails = () => {
     getInternshipDetails()
   }, [])
 
-  console.log('internship details are', internshipDetails);
-
   const closingDate = dayjs(internshipDetails?.closingDate).format('DD/MM/YYYY');
 
   return (
@@ -36,7 +34,7 @@ const ViewInternshipDetails = () => {
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <BoxWrapper>
         <div className='flex flex-col gap-6'>
-          <div className='flex flex-row justify-between  flex-wrap'>
+          <div className='flex flex-row justify-between flex-wrap'>
             <div>
               <h2 className='dashboard-primary-color text-3xl font-medium'>
                 {internshipDetails.title}

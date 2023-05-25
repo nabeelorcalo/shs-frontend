@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Button, Col, Divider, Row, Radio, Space, Select, Input, Form } from 'antd';
+import { Button, Col, Divider, Row, Radio, Select, Input, Form } from 'antd';
 import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker, Notifications } from '../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
-import { ROUTES_CONSTANTS } from '../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
 import './style.scss';
 import dayjs from 'dayjs';
 import UserSelector from '../../components/UserSelector';
-import { getRoutes } from '../../routes';
+import { useRecoilValue } from 'recoil';
+import { currentUserRoleState } from '../../store';
 
 const { TextArea } = Input;
 
@@ -47,10 +48,12 @@ const frequencyOptions = [
 ]
 
 const NewInternships = () => {
+  const role = useRecoilValue(currentUserRoleState);
+
   const { state } = useLocation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [status, setStatus] = useState("PENDING");
+  const [status, setStatus] = useState(role === constants.COMPANY_ADMIN ? "PUBLISHED" : "PENDING");
   const [internShipFormData, setInternShipFormData] = useState(state);
   const [partAndFullTime, setPartAndFullTime] = useState(null);
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(internShipFormData?.salaryType ?? null);
@@ -95,6 +98,7 @@ const NewInternships = () => {
   };
 
   const onFinish = (values: any) => {
+    console.log(values);
     const newVals = {
       ...values,
       amount: amount.amount,
@@ -129,18 +133,27 @@ const NewInternships = () => {
     location: internShipFormData?.locationId ?? undefined,
     positions: internShipFormData?.totalPositions ?? '',
     duration: internShipFormData?.duration ?? undefined,
-    closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined
+    closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined,
+    status: status
   }
 
-  // const filteredData = departmentsData?.map((item: any, index: number) => {
-  //   return (
-  //     {
-  //       key: index,
-  //       value: item?.id,
-  //       label: item?.name
-  //     }
-  //   )
-  // })
+  const filteredData = departmentsData?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: item?.name
+      }
+    )
+  })
+
+  const validatePositiveNumber = (rule: any, value: any, callback: any) => {
+    if (value < 0) {
+      callback('Negative values are not allowed');
+    } else {
+      callback();
+    }
+  };
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
@@ -164,20 +177,13 @@ const NewInternships = () => {
                 <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
               <Form.Item name="department" label="Department" rules={[{ required: true }, { type: 'number' }]}>
-                {/* <UserSelector
+                <UserSelector
                   placeholder='Select'
                   className='input'
                   hasSearch={true}
                   searchPlaceHolder='Search'
                   options={filteredData}
-                /> */}
-                <Select
-                  rootClassName='input'
-                  placeholder="Select"
                   onChange={onSelectChange}
-                  options={departmentsData.map((item: any) => {
-                    return { value: item.id, label: item.name }
-                  })}
                 />
               </Form.Item>
               <Form.Item label="Description" name="description" rules={[{ required: true }, { type: "string" }]}>
@@ -221,7 +227,9 @@ const NewInternships = () => {
               </Form.Item>
               {paidAndUnpaid === "PAID" ?
                 <div className='flex flex-col gap-2'>
-                  <Form.Item name="frequency" label="Frequency" >
+                  <Form.Item name="frequency" label="Frequency"
+                    rules={[{ required: paidAndUnpaid === "PAID" ? true : false }, { type: "string" }]}
+                  >
                     <Select
                       className='input'
                       placeholder="Select"
@@ -229,8 +237,10 @@ const NewInternships = () => {
                       options={frequencyOptions}
                     />
                   </Form.Item>
-                  <Form.Item label="Amount" name="amountType">
-                    {/* <Space.Compact> */}
+                  <Form.Item label="Amount" name="amountType"
+                    rules={[{ required: paidAndUnpaid === "PAID" ? true : false }, { type: "string" }, {
+                      validator: validatePositiveNumber,
+                    }]}>
                     <div className='flex gap-1'>
                       <Select
                         placeholder='Currency'
@@ -248,8 +258,6 @@ const NewInternships = () => {
 
                       />
                     </div>
-
-                    {/* </Space.Compact> */}
                   </Form.Item>
                 </div>
                 :
@@ -264,7 +272,8 @@ const NewInternships = () => {
               </Form.Item>
               {remoteOnsite === natureofwork.onsite ?
                 <div className='flex flex-col gap-2'>
-                  <Form.Item name="location" label="Location">
+                  <Form.Item name="location" label="Location"
+                    rules={[{ required: remoteOnsite === natureofwork.onsite ? true : false }]}>
                     <Select
                       className='input'
                       placeholder="Select"
@@ -287,16 +296,24 @@ const NewInternships = () => {
               <p>Enter the additional information related to internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
-              <Form.Item label="Total Positions" name="positions" rules={[{ required: true }]}>
-                <Input className="input" placeholder="Enter number of positions" type="number" />
+              <Form.Item label="Total Positions" name="positions"
+                rules={[
+                  { required: true },
+                  {
+                    validator: validatePositiveNumber,
+                  }]}>
+                <Input className="input" placeholder="Enter number of positions" type="number" min={1} />
               </Form.Item>
-              <Form.Item name='closingDate' label={<span>Expected Closing Date
-                <span className='text-slate-400'> (Optional)</span></span>}>
+              <Form.Item name='closingDate'
+                label={<span>Expected Closing Date
+                  <span className='text-slate-400'> (Optional)</span></span>}
+              >
                 <CommonDatePicker
                   onBtnClick={onSelectChange}
                   open={openDataPicker}
                   setOpen={setOpenDataPicker}
                   setValue={() => { }}
+
                 />
               </Form.Item>
               <Form.Item label="Internship Duration" name="duration" rules={[{ required: true }, { type: "string" }]}>
@@ -314,7 +331,6 @@ const NewInternships = () => {
             <Button
               type="link"
               size="middle"
-              htmlType="submit"
               onClick={() => {
                 setStatus('DRAFT');
                 Notifications({ title: "Success", description: "Internship saved as draft", type: "success" })
@@ -334,7 +350,9 @@ const NewInternships = () => {
               type="primary"
               htmlType="submit"
               size="middle"
-              className="button-tertiary main-btn font-medium">Publish</Button>
+              className="button-tertiary main-btn font-medium">
+              {role === constants.COMPANY_ADMIN ? "Publish" : "Submit"}
+            </Button>
           </Row>
         </Form>
       </BoxWrapper>

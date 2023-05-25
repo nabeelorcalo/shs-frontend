@@ -140,8 +140,8 @@ const InternshipsCompanyAdmin = () => {
                     <UserSelector
                       label='Status'
                       placeholder='Select'
-                      value={state.status}
-                      onChange={(event: any) => { handleStatus(event) }}
+                      // value={state.status}
+                      // onChange={(event: any) => { handleStatus(event) }}
                       options={filteredStatusData}
                     />
                   </div>
@@ -149,8 +149,8 @@ const InternshipsCompanyAdmin = () => {
                     <UserSelector
                       label="Location"
                       placeholder="Select"
-                      value={state.location}
-                      onChange={(event: any) => { handleLocation(event) }}
+                      // value={state.location}
+                      // onChange={(event: any) => { handleLocation(event) }}
                       options={filteredLocationData}
                     />
                   </div>
@@ -158,8 +158,8 @@ const InternshipsCompanyAdmin = () => {
                     <UserSelector
                       label="Department"
                       placeholder="Select"
-                      value={state.department}
-                      onChange={(event: any) => { handleDepartment(event) }}
+                      // value={state.department}
+                      // onChange={(event: any) => { handleDepartment(event) }}
                       options={filteredDeparmentsData}
                     />
                   </div>

@@ -120,8 +120,6 @@ const Internships = () => {
   ]
 
   const newTableData = internshipData?.map((item: any, index: number) => {
-    console.log('internship data', item);
-
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
     const currentStatus = item?.status
