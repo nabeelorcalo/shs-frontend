@@ -1,19 +1,18 @@
 import { Input, Select, Space } from 'antd';
 import { GlassMagnifier } from '../../assets/images';
 import './styles.scss'
-import { useState } from 'react';
 
 const { Option } = Select;
 
 interface UserSelectorProps {
   className?: string;
   label?: any;
-  // value?: any;
-  // setState?: any;
+  value?: any;
+  setState?: any;
   options?: any;
   placeholder?: string;
   searchPlaceHolder?: string;
-  // onChange?: any;
+  onChange?: any;
   handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
@@ -21,23 +20,11 @@ interface UserSelectorProps {
 }
 
 const UserSelector = (props: UserSelectorProps) => {
-  const { label, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className } = props;
-
-  const [state, setState] = useState({ value: 'select', label: 'select' })
+  const { label, value, onChange, handleSearch,
+    placeholder, options, hasSearch, searchPlaceHolder, className } = props
 
   const handleInputSearch = (event: any) => {
     handleSearch(event.target.value)
-  }
-
-  const onChange = (value: any) => {
-    let label = options.find((obj: any) => obj.value === value).label;
-    console.log(JSON.stringify(label, null, 4));
-    setState((prevState) => ({
-      ...prevState,
-      value: value,
-      label: label
-    }))
   }
 
   return (
@@ -46,8 +33,8 @@ const UserSelector = (props: UserSelectorProps) => {
       <Select
         className={className}
         placeholder={placeholder}
-        value={state.value}
-        onChange={(event) => onChange(event)}
+        value={value}
+        onChange={onChange}
         dropdownRender={(menu) => (
           <div className='input-wrapper'>
             {hasSearch && <div className='select-search'>

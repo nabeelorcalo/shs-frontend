@@ -59,7 +59,10 @@ const NewInternships = () => {
   const [paidAndUnpaid, setPaidAndUnpaid] = useState(internShipFormData?.salaryType ?? null);
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [remoteOnsite, setRemoteOnsite] = useState(internShipFormData?.locationType ?? null);
-  const [amount, setAmount] = useState({ amountType: internShipFormData?.salaryCurrency ?? null, amount: internShipFormData?.salaryAmount ?? null });
+  const [amount, setAmount] = useState({
+    amountType: internShipFormData?.salaryCurrency ?? null,
+    amount: internShipFormData?.salaryAmount ?? null
+  });
 
   const natureofwork = {
     virtual: "VIRTUAL",

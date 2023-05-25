@@ -8,20 +8,27 @@ import {
   AlertIcon, CardViewIcon, More, SuccessIcon,
   TableViewIcon, GlassMagnifier, UserAvatar
 } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input } from 'antd';
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Modal, Form } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
-import '../style.scss'
 import UserSelector from "../../../components/UserSelector";
+import PreviewModal from "../../certificate/certificateModal/PreviewModal";
+import '../style.scss'
+
 
 const InternsCompanyAdmin = () => {
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [assignManager, setAssignManager] = useState({ isToggle: false, id: undefined, assignedManager: undefined })
-  const [terminate, setTerminate] = useState({ isToggle: false, id: undefined })
-  const [complete, setComplete] = useState({ isToggle: false, id: undefined })
-  const [listandgrid, setListandgrid] = useState(false)
+  const csvAllColum = ["No", "Posted By", "Name", "Department",
+    "Joining Date", "Date of Birth", 'Status'];
+  const [assignManager, setAssignManager] = useState(
+    { isToggle: false, id: undefined, assignedManager: undefined });
+  const [terminate, setTerminate] = useState({ isToggle: false, id: undefined });
+  const [complete, setComplete] = useState({ isToggle: false, id: undefined });
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [certificateModal, setCertificateModal] = useState(false);
+  const [previewModal, setPreviewModal] = useState(false);
   const [state, setState] = useState({
     manager: undefined,
     status: undefined,
@@ -29,7 +36,9 @@ const InternsCompanyAdmin = () => {
     university: undefined,
     dateOfJoining: undefined,
     termReason: '',
-  })
+  });
+  console.log('ajggsajhsgaj', certificateModal);
+
 
   const statusList = [
     { value: 'Employed', label: 'Employed' },
@@ -113,7 +122,7 @@ const InternsCompanyAdmin = () => {
         placement="bottomRight"
         overlayStyle={{ width: 180 }}
       >
-        <More />
+        <More className="cursor-pointer" />
       </Dropdown>
     );
   };
@@ -161,6 +170,14 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
+  const handleOk = () => {
+    setCertificateModal(false);
+  };
+
+  const handleCancel = () => {
+    setCertificateModal(false);
+  };
+
   const newTableData: any = getAllInters?.map((item: any, index: any) => {
     const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
     const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
@@ -170,7 +187,7 @@ const InternsCompanyAdmin = () => {
         posted_by: <Avatar size={50} src={item?.avatar}>
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
-        name: <p>{item?.userDetail?.firstName} {item?.userDetail?.lastName}</p>,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
@@ -361,12 +378,12 @@ const InternsCompanyAdmin = () => {
             />
             <DropDown
               options={[
-                'pdf',
-                'excel'
+                'PDF',
+                'Excel'
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, columns, newTableData, "Company Admin Interns")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns")
               }}
             />
           </div>
@@ -503,7 +520,7 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      < PopUpModal
+      <PopUpModal
         open={complete.isToggle}
         width={500}
         close={() => { setComplete({ ...complete, isToggle: false }) }}
@@ -531,9 +548,11 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
-                updateCandidatesRecords(complete.id, null, null, 'completed')
                 setComplete({ ...complete, isToggle: false })
-
+                setCertificateModal(true)
+                // setPreviewModal(true)
+                // updateCandidatesRecords(complete.id, null, null, 'completed')
+                // setComplete({ ...complete, isToggle: false })
               }}
             >
               Complete
@@ -541,6 +560,61 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
+      {previewModal &&
+        <PreviewModal
+          open={previewModal}
+          setOpen={setPreviewModal}
+          name="akjskajs"
+          type="completion"
+          desc="ksahkasdhjaskdsajhdkjh"
+        />
+      }
+      {certificateModal &&
+        <Modal
+          title="Issue Certificate"
+          open={certificateModal}
+          centered
+          footer={false}
+          onCancel={handleCancel}
+        >
+          <Form layout="vertical">
+            <Form.Item label="Intern">
+              <UserSelector
+                placeholder="Select"
+                hasSearch={true}
+              />
+            </Form.Item>
+            <Form.Item label="Print on Certificate">
+              <TextArea />
+            </Form.Item>
+            <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
+              <Button
+                type="default"
+                size="small"
+                className="button-default-tertiary max-sm:w-full"
+                onClick={() => { }}
+              >
+                Preview
+              </Button>
+              <Button
+                type="default"
+                size="small"
+                className="button-default-tertiary max-sm:w-full"
+                onClick={() => { }}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="primary"
+                size="small"
+                className="button-tertiary max-sm:w-full"
+                onClick={() => { }}>
+                Continue
+              </Button>
+            </div >
+          </Form>
+        </Modal>
+      }
     </>
   );
 };
