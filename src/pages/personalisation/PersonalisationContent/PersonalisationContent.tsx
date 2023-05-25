@@ -33,6 +33,8 @@ const PersonalisationContent = () => {
   const { useToken } = theme;
   const { token } = useToken();
   const [imageUrl, setImageUrl] = useState<string>();
+  console.log("inner token.colorPrimary ======================> ",token.colorPrimary);
+  
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
@@ -57,7 +59,7 @@ const PersonalisationContent = () => {
                     <Col xs={0} md={12} xl={6} lg={9}>
                       <div
                         className={`h-full`}
-                        style={{ backgroundColor: sideBarColor }}
+                        style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
                       >
                         <div className="sidebar-user-profile">
                           <Avatar size={48} src={avatar} />

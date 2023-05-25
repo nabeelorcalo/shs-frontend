@@ -5,17 +5,36 @@ import {
   Typography, Row, Col, Divider, Form, Radio, Select,
   RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
-import { Breadcrumb, CommonDatePicker, DropDown, SearchBar } from "../../../../../components";
+import { Breadcrumb, CommonDatePicker } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-const { TextArea } = Input;
-const { Paragraph } = Typography;
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useLeaveCustomHook from "../actionHandler";
 
 const LeavesAddPolicy: React.FC = () => {
+  const [states, setState] = useState(
+    {
+      carryforward: "",
+      assignDate: "",
+      accrualFrequency: "",
+      openDatePicker: false,
+      intern: [],
+      openModal: false,
+      internValue: 1,
+      applyForNewHire: false
+    });
+
+  const navigate = useNavigate()
+  const { postSettingLeaves, editSettingLeaves } = useLeaveCustomHook()
+  const { TextArea } = Input;
+  const { Paragraph } = Typography;
+  const { state } = useLocation()
+  const [form] = Form.useForm();
+  const deselectArray: any = [];
+
   const breadcrumbArray = [
     { name: "Add Policy" },
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
@@ -65,19 +84,6 @@ const LeavesAddPolicy: React.FC = () => {
     { value: 'Yearly', label: 'Yearly' },
   ]
 
-  const deselectArray: any = [];
-  const [form] = Form.useForm();
-  // const [openDatePicker, setOpenDatePicker] = useState(false);
-  const [state, setState] = useState(
-    {
-      carryforward: "",
-      assignDate: "",
-      accrualFrequency: "",
-      openDatePicker:false,
-      intern: [],
-      openModal: false,
-      internValue: 1,
-    });
 
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
@@ -95,13 +101,34 @@ const LeavesAddPolicy: React.FC = () => {
     }
   };
   const openDatePickerHandler = () => {
-    setState({...state, openDatePicker: !state.openDatePicker
-  })
+    setState({
+      ...states, openDatePicker: !states.openDatePicker
+    })
   }
 
   const onFinish = (values: any) => {
-    console.log("valies", values)
+    values.applyToNewHires = states.applyForNewHire;
+    console.log("valies", values.applyToNewHires)
+    if (state) {
+      editSettingLeaves(state.id, values)
+    }
+    else {
+      postSettingLeaves(values)
+    }
+    // navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
   }
+  const initialValues = {
+    policyName: state?.name,
+    description: state?.description,
+    // carryforwardexpiration: state?.carryForwardExpiry,
+    applyForNewHire: state?.applyToNewHires,
+    intern: [],
+    entitlement: state?.entitlement,
+    carryforward: state?.maxCarryForward,
+    assignDate: state?.assignedDate,
+    accrualFrequency: state?.accrualFrequency
+  }
+
   return (
     <div className="leaves-add-policy">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -110,6 +137,7 @@ const LeavesAddPolicy: React.FC = () => {
         <Form layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          initialValues={initialValues}
           onFinish={onFinish}>
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
@@ -129,15 +157,18 @@ const LeavesAddPolicy: React.FC = () => {
               >
                 <Input placeholder="Enter name" />
               </Form.Item>
-              <div className="mt-3 flex flex-col">
-                <label>Description (optional)</label>
+              <Form.Item
+                name="description"
+                label="Description (optional)"
+                required={false}
+                rules={[{ required: true }, { type: "string" }]}
+              >
                 <TextArea
                   className="text-input-bg-color"
                   rows={6}
                   placeholder="Write Something..."
-                  maxLength={6}
                 />
-              </div>
+              </Form.Item>
             </Col>
           </Row>
           <Divider />
@@ -159,7 +190,7 @@ const LeavesAddPolicy: React.FC = () => {
                 <Select
                   className="w-full"
                   placeholder="Select"
-                  onChange={(e: string) => setState({ ...state, assignDate: e })}
+                  onChange={(e: string) => setState({ ...states, assignDate: e })}
                   options={assignDateSelectValue}
                 />
               </Form.Item>
@@ -172,7 +203,7 @@ const LeavesAddPolicy: React.FC = () => {
                 <Select
                   className="w-full"
                   placeholder="Select"
-                  onChange={(e: string) => setState({ ...state, accrualFrequency: e })}
+                  onChange={(e: string) => setState({ ...states, accrualFrequency: e })}
                   options={accrualFrequencySelectValue}
                 />
               </Form.Item>
@@ -208,22 +239,21 @@ const LeavesAddPolicy: React.FC = () => {
                 <Select
                   className="w-full"
                   placeholder="Select"
-                  onChange={(e: string) => setState({ ...state, carryforward: e })}
+                  onChange={(e: string) => setState({ ...states, carryforward: e })}
                   options={carryForwardSelectValue}
                 />
               </Form.Item>
               <Form.Item
                 label="Carry Forward Expiration"
-                required={false}
                 name="carryforwardexpiration"
-                rules={[{ required: true }, { type: "string" }]}
+              // rules={[{ required: true }, { type: "string" }]}
               >
                 <CommonDatePicker
-                  onBtnClick={() => { }}
-                  open={state.openDatePicker}
+                  open={states.openDatePicker}
                   setOpen={openDatePickerHandler}
-                  setValue={function noRefCheck() { }}
+                  setValue={(e: any) => console.log(e)}
                 />
+                {/* <DatePicker  /> */}
               </Form.Item>
             </Col>
           </Row>
@@ -240,18 +270,20 @@ const LeavesAddPolicy: React.FC = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item name="intern">
                 <div className=" flex items-center">
-                  <Radio.Group onChange={onChange} value={state.internValue}>
+                  <Radio.Group onChange={onChange} value={states.internValue}>
                     <Radio value={1}>All interns</Radio>
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
                   <span >
-                    <AvatarGroup maxCount={6} list={state.intern} />
+                    <AvatarGroup maxCount={6} list={states.intern} />
                   </span>
                 </div>
               </Form.Item>
               <div className="my-5">
-                <Switch />
-                <span className="px-3 ">Apply to all new hires</span>
+                <Form.Item name='applyForNewHire'>
+                  <Switch checked={state?.applyToNewHires} onChange={(e: any) => setState({ ...states, applyForNewHire: e })} />
+                  <span className="px-3 ">Apply to all new hires</span>
+                </Form.Item>
               </div>
             </Col>
           </Row>
@@ -274,11 +306,11 @@ const LeavesAddPolicy: React.FC = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={state.openModal}
+        openModal={states.openModal}
         setOpenModal={setState}
-        state={state}
-        internValue={state.internValue}
-        intern={state.intern}
+        state={states}
+        internValue={states.internValue}
+        intern={states.intern}
       />
     </div>
   );

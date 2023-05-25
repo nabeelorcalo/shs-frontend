@@ -11,6 +11,8 @@ import { internsDataState } from '../../../store/interns/index';
 import { settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
+import dayjs from "dayjs";
+import { Notifications } from "../../../components";
 
 // Chat operation and save into store
 const UseManagerCustomHook = () => {
@@ -58,14 +60,31 @@ const UseManagerCustomHook = () => {
   };
 
   // update candidate data 
-  const updateCandidatesRecords = async (val: any) => {
-    const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
-    setUpdateInterns(data);
+  const updateCandidatesRecords = async (internId: any, mangerId?: any, terminateReason?: any, status?: string) => {
+    const id = Number(internId)
+    const params: any = {}
+    if (status === 'completed') {
+      params["internStatus"] = 'completed'
+      params["internshipEndDate"] = dayjs()
+    } else if (terminateReason) {
+      params["terminationReason"] = terminateReason
+    } else {
+      params["assignedManager"] = mangerId
+    }
+
+    const res: any = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, params)
+    if (res === 'Success') {
+      Notifications({ title: "Success", description: "Updated successfully", type: "success" })
+    }
   }
+
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
+
+
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;

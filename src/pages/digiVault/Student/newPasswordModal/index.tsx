@@ -14,7 +14,6 @@ const NewPasswordModal = (props: any) => {
     values.isLock = settingModal.isLock;
     values.lockTime = settingModal.lockTime.toString();
     postDigivaultPassword(values);
-    values()
   };
   // const onChange = (checked: boolean) => {
   //   setIsModal(checked && true);

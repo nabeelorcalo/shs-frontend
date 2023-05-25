@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound
+  BoxWrapper, NoDataFound, Loader
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Spin, Input } from 'antd'
+import { Button, Col, Row, Input } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import SelectComp from '../../../components/Select/Select'
@@ -41,7 +41,7 @@ const InternshipsCompanyAdmin = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department,searchValue);
+    getAllInternshipsData(state.status, state.location, state.department, searchValue);
   }, [searchValue])
 
   const handleDrawer = () => {
@@ -182,7 +182,7 @@ const InternshipsCompanyAdmin = () => {
               )
             }) : <NoDataFound />
           }
-        </div> : <Spin tip="Processing...." />}
+        </div> : <Loader />}
       </div>
     </>
   )

@@ -66,7 +66,7 @@ const Filters = ({ setShowDrawer }: any) => {
     console.log(values);
 
     setShowDrawer(false)
-    getUniIntersTableData(null, null,null, selectValue)
+    getUniIntersTableData(null, null, null, selectValue)
   }
 
   return (
@@ -108,14 +108,14 @@ const Filters = ({ setShowDrawer }: any) => {
               placement={'bottomRight'}
               items={[
                 {
-                  label: <div>{detailsData.map((item: any) => (
+                  label: <div>{getAllManagers.map((item: any) => (
                     <div className="flex items-center gap-3 mb-[20px]"
                       onClick={() => setSelectValue({ ...selectValue, assignedManager: item.assignedManager, userImg: item.userImg })}
                     >
                       <img src={item.userImg}
                         className='h-[24px] w-[24px] rounded-full object-cover'
                       />
-                      <p>{item.assignedManager}</p>
+                      <p>{item?.companyManager?.firstName} {item?.companyManager?.lastName}</p>
                     </div>))}
                   </div>,
                   key: 'users'

@@ -103,7 +103,6 @@ const SettingModal = (props: any) => {
             tooltip={{ formatter: null }}
             marks={marks}
             min={0}
-            max={1447}
             onChange={(e: any) => sliderHandler(e)}
             defaultValue={studentVault?.lockResponse ? studentVault.lockResponse['autoLockAfter'] : '0'}
           />

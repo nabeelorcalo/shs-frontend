@@ -3,18 +3,29 @@ import {
   Typography, Row, Col, Divider, Form, Select,
   Radio, RadioChangeEvent, Button, Space, Input,
 } from "antd";
-import {
-  SettingAvater,
-} from "../../../../../assets/images";
-import { NavLink } from "react-router-dom";
+import { SettingAvater } from "../../../../../assets/images";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper, DragAndDropUpload, SettingCommonModal, SearchBar } from "../../../../../components";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useCustomHook from "../actionHandler";
 const { Paragraph } = Typography;
+import "./style.scss";
 
 const AddLocation: React.FC = () => {
+  const { postSettingLocation, editSettingLocation } = useCustomHook();
+  const navigate = useNavigate()
+  const [states, setState] = useState(
+    {
+      country: "",
+      phoneCode: "",
+      intern: [],
+      openModal: false,
+      internValue: 1,
+    });
+  const { state } = useLocation()
+
   const breadcrumbArray = [
     { name: "Add Location" },
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
@@ -59,22 +70,13 @@ const AddLocation: React.FC = () => {
 
   const deselectArray: any = [];
   const [form] = Form.useForm();
-  const [state, setState] = useState(
-    {
-      country: "",
-      phoneCode: "",
-      intern: [],
-      openModal: false,
-      internValue: 1,
-    });
 
   const onFinish = (values: any) => {
-    // console.log(values);
-    const { address, email, locationName, phoneNumber, postCode, street,country, town } = values;
+    const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
     let locationValues = {
-      intern: state.intern.length,
+      intern: states.intern.length,
       country: country,
-      phoneCode: state.phoneCode,
+      phoneCode: states.phoneCode,
       address,
       email,
       locationName,
@@ -83,21 +85,37 @@ const AddLocation: React.FC = () => {
       street,
       town
     };
-    console.log(locationValues);
-    
+    if (state?.id) {
+      editSettingLocation(state?.id, locationValues)
+    }
+    else {
+      postSettingLocation(locationValues);
+    }
+    navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`)
   }
-
+  const initialValues = {
+    intern: state?.intern,
+    country: state?.country,
+    phoneCode: state?.phoneCode,
+    address: state?.address,
+    email: state?.email,
+    locationName: state?.name,
+    phoneNumber: state?.phoneNumber,
+    postCode: state?.postCode,
+    street: state?.street,
+    town: state?.town
+  }
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
       setState({
-        ...state, openModal: true, internValue: radioValue
+        ...states, openModal: true, internValue: radioValue
       })
     }
 
     else if (e.target.value === 1) {
       setState({
-        ...state, internValue: radioValue, intern: []
+        ...states, internValue: radioValue, intern: []
       })
     }
   };
@@ -113,6 +131,7 @@ const AddLocation: React.FC = () => {
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
+          initialValues={initialValues}
         >
           {/*------------------------ Office----------------------------- */}
           <Row >
@@ -196,7 +215,7 @@ const AddLocation: React.FC = () => {
                     <Select
                       showSearch
                       placeholder="Select"
-                      onChange={(e: string) => setState({ ...state, country: e })}
+                      onChange={(e: string) => setState({ ...states, country: e })}
                       options={countrySelectValue}
                     />
                   </Form.Item>
@@ -229,7 +248,7 @@ const AddLocation: React.FC = () => {
                     <Select
                       showSearch
                       placeholder="+44"
-                      onChange={(e: string) => setState({ ...state, phoneCode: e })}
+                      onChange={(e: string) => setState({ ...states, phoneCode: e })}
                       options={countryCodeSelectValue}
                     />
                   </Form.Item>
@@ -280,12 +299,12 @@ const AddLocation: React.FC = () => {
             <Col className="gutter-row  " xs={24} md={12} xxl={8} >
               <Form.Item name="intern">
                 <div className=" flex items-center">
-                  <Radio.Group onChange={onChange} value={state.internValue}>
+                  <Radio.Group onChange={onChange} value={states.internValue}>
                     <Radio value={1}>All interns</Radio>
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
                   <span >
-                    <AvatarGroup maxCount={6} list={state.intern} />
+                    <AvatarGroup maxCount={6} list={states.intern} />
                   </span>
                 </div>
               </Form.Item>
@@ -311,11 +330,11 @@ const AddLocation: React.FC = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={state.openModal}
+        openModal={states.openModal}
         setOpenModal={setState}
-        state={state}
-        internValue={state.internValue}
-        intern={state.intern}
+        state={states}
+        internValue={states.internValue}
+        intern={states.intern}
       />
     </div>
   );

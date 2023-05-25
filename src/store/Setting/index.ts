@@ -2,11 +2,15 @@ import { atom } from "recoil";
 
 export const settingLocationState = atom({
   key: "settingLocationState",
-  default: [], 
+  default: [],
 });
 
 export const settingDepartmentState = atom({
   key: "settingDepartmentState",
-  default: [], 
+  default: [],
 });
 
+export const settingLeaveState = atom({
+  key: "settingLeaveState",
+  default: [],
+});

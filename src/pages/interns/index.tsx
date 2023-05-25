@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader
 } from "../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
-import { Col, MenuProps, Row, Spin, Input } from 'antd';
+import { Col, MenuProps, Row, Input } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
@@ -98,8 +98,8 @@ const Interns = () => {
   ];
 
   const newTableData = getAllInterns?.map((item: any, index: number) => {
-    const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
-    const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
+    const joiningDate = dayjs(item?.joiningDate)?.format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY');
     return (
       {
         no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
@@ -182,7 +182,7 @@ const Interns = () => {
                   hideTotal={true}
                 />
               </BoxWrapper>
-            : <Spin tip="Processing...." />}
+            : <Loader />}
         </Col>
       </Row>
     </>

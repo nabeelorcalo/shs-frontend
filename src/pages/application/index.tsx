@@ -64,11 +64,6 @@ const Application = () => {
             onClick={() => {
               state(true)
               getApplicationsDetails(item?.id)
-              // setState({
-              //   ...state,
-              //   detailsId: item?.id,
-              // })
-
             }}
           >
             View Details
