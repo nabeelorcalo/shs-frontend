@@ -6,11 +6,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
 import constants, { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
-import './style.scss';
 import dayjs from 'dayjs';
 import UserSelector from '../../components/UserSelector';
 import { useRecoilValue } from 'recoil';
 import { currentUserRoleState } from '../../store';
+import './style.scss';
 
 const { TextArea } = Input;
 

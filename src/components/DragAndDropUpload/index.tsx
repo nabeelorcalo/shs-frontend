@@ -3,7 +3,8 @@ import { DocumentUpload } from '../../assets/images'
 import SelectedUploadCard from '../SelectedUploadCard'
 import './style.scss'
 
-export const DragAndDropUpload = () => {
+export const DragAndDropUpload = (props: any) => {
+  const { certificateDetails, setCertificateDetails } = props
   const [files, setFiles] = useState([])
   const inputRef: any = useRef();
   const handleDragOver = (event: any) => {
@@ -15,7 +16,7 @@ export const DragAndDropUpload = () => {
     setFiles(Array.from(event.dataTransfer.files[0]))
   }
   console.log(files);
-  
+
   return (
     <>
       <div onDragOver={handleDragOver} onDrop={handleDropped}

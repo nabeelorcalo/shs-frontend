@@ -51,7 +51,7 @@ const Internships = () => {
         label: (
           <a rel="noopener noreferrer" onClick={() =>
             navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item } })}>
-            View details
+            View Details
           </a>
         ),
       },

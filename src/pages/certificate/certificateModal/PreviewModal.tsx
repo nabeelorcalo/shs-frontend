@@ -7,10 +7,11 @@ interface Props {
     name?: string;
     type?: string;
     desc?: string;
+    signature?: any
 }
 
 const PreviewModal = (props: Props) => {
-    const { open, setOpen, certificateImg = CertificateLayout, name, type, desc } = props;
+    const { open, setOpen, certificateImg = CertificateLayout, name, type, desc,signature } = props;
     return (
         <CommonModal title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
             <div className='relative overflow-hidden'>
@@ -19,6 +20,7 @@ const PreviewModal = (props: Props) => {
                     <p className='absolute top-[110px] mb-[150px] text-2xl font-light font-sans'>of <span className='capitalize font-sans'>{type}</span></p>
                     <p className='absolute top-[200px] capitalize mb-[20px] text-[#4A4F4D] italic'>{name}</p>
                     <p className='absolute top-[230px] capitalize w-[60%] text-center'>{desc}</p>
+                    <p className='absolute top-[350px] right-[-125px] capitalize w-[60%] text-center'>{signature}</p>
                 </div>
             </div>
         </CommonModal>
