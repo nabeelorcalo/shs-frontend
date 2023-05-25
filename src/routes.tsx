@@ -46,6 +46,7 @@ import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pend
 import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
+import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 
 // Lazy load required end
 
@@ -333,6 +334,13 @@ const SystemDetailPage = Loadable(
   lazy(() => import("./pages/universities/SystemAdmin/detailPage"))
 );
 
+const CompanyProfileUni = Loadable(
+  lazy(() => import("./pages/companies/companiesMain/CompanyProfileTabs"))
+);
+const StudentProfileUni = Loadable(
+  lazy(() => import("./pages/profile/university/universityTabs/profileTabsMain"))
+);
+
 
 export const publicRoutes = [
 
@@ -359,7 +367,7 @@ export const publicRoutes = [
   {
     key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
     path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
-    element: <ResetLink/>
+    element: <ResetLink />
   },
   // ------Remove below demo components------
   // Demo Graphs
@@ -609,6 +617,11 @@ const delegateAgentRoutes = [
         element: <Dashboard />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
         path: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
         element: <DelegateMembers />,
@@ -658,6 +671,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
+        element: <StudentProfileUni />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,
@@ -745,6 +763,11 @@ const companyAdminRoutes = [
       </AuthGuard>
     ),
     children: [
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
       {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
@@ -842,7 +865,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}/:id`,
         element: <ManagerProfile />,
       },
       {
@@ -1607,9 +1630,19 @@ const universityRoutes = [
     ),
     children: [
       {
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        element: <StudentProfileUni />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.PROFILE}`,
@@ -1617,8 +1650,8 @@ const universityRoutes = [
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
-        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
+        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}/:id`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}/:id`,
         element: <Chat />,
       },
       {
@@ -1632,14 +1665,19 @@ const universityRoutes = [
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
-        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
+        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}/:id`,
         element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
         path: `${ROUTES_CONSTANTS.COMPANIES}`,
         element: <Companies />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPANYPROFILEUNI}/:id`,
+        path: `${ROUTES_CONSTANTS.COMPANYPROFILEUNI}/:id`,
+        element: <CompanyProfileUni />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
@@ -1724,6 +1762,11 @@ const agentRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.LISTINGS}`,

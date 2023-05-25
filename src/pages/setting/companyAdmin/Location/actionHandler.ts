@@ -34,7 +34,7 @@ const useCustomHook = () => {
     Notifications({ title: 'Success', description: 'Location added successfully', type: 'success' })
   }
 
-  // post location
+  // edit location
   const editSettingLocation = async (id: any, values: any) => {
     const { address, country, email, intern, locationName, phoneCode, phoneNumber, postCode, street, town } = values;
     const params = {
@@ -60,6 +60,7 @@ const useCustomHook = () => {
   };
 
   return {
+    settingLocationdata,
     getSettingLocation,
     deleteSettingLocation,
     postSettingLocation,

@@ -1,5 +1,5 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import jsPDF from 'jspdf';
@@ -11,6 +11,8 @@ import { internsDataState } from '../../../store/interns/index';
 import { settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
+import dayjs from "dayjs";
+import { Notifications } from "../../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -24,12 +26,8 @@ const useCustomHook = () => {
   const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState)
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    debouncedResults.cancel();
-  });
-
   // Get all interns data
-  const getAllInternsData = async (event: any) => {
+  const getAllInternsData = async (event: any, searchValue: any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
@@ -37,24 +35,11 @@ const useCustomHook = () => {
         departmentId: event.department ?? null,
         assignedManager: event.manager ?? null,
         userUniversityId: event.university ?? null,
+        search: searchValue ? searchValue : null
       })
     setGetAllInters(data);
     setIsLoading(true);
   }
-
-  //Search internships
-  const changeHandler = async (val: any) => {
-    const { data } = await api.get(
-      GET_ALL_INTERNS,
-      val
-        ? { userType: 'intern', search: val }
-        : { userType: 'intern' }
-    );
-    setGetAllInters(data);
-  };
-  const debouncedResults = useMemo(() => {
-    return debounce(changeHandler, 500);
-  }, []);
 
   //Get all department data
   const getAllDepartmentData = async () => {
@@ -75,10 +60,30 @@ const useCustomHook = () => {
   };
 
   // update candidate data 
-  const updateCandidatesRecords = async (val: any) => {
-    const { data } = await api.put(UPDATE_CANDIDATE_DETAIL, { id: val })
-    setUpdateInterns(data);
+  const updateCandidatesRecords = async (internId: any, mangerId?: any, terminateReason?: any, status?: string) => {
+    const id = Number(internId)
+    const params: any = {}
+    if (status === 'completed') {
+      params["internStatus"] = 'completed'
+      params["internshipEndDate"] = dayjs()
+    } else if (terminateReason) {
+      params["terminationReason"] = terminateReason
+    } else {
+      params["assignedManager"] = mangerId
+    }
+
+    const res: any = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, params)
+    if (res === 'Success') {
+      Notifications({ title: "Success", description: "Updated successfully", type: "success" })
+    }
   }
+
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
+
 
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -151,7 +156,7 @@ const useCustomHook = () => {
     getAllDepartmentData,
     downloadPdfOrCsv,
     getAllInternsData,
-    changeHandler,
+    debouncedSearch,
     getAllManagersData,
     getAllUniuversitiesData,
     updateCandidatesRecords,

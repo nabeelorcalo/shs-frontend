@@ -1,38 +1,39 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useMemo } from "react";
+// import { useEffect, useMemo } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { applicationDataState } from "../../store";
+import { applicationDataState, applicationDetailState } from "../../store";
 import csv from '../../helpers/csv';
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
-  const { GET_APPLICATIONS } = apiEndpints
+  const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
+  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints
 
-  useEffect(() => {
-    debouncedResults.cancel();
-  });
-
-  const getApplicationsData = async (): Promise<any> => {
-    const { data } = await api.get(GET_APPLICATIONS);
+  const getApplicationsData = async (searchValue: any) => {
+    const { data } = await api.get(GET_APPLICATIONS, {
+      search: searchValue ? searchValue : null
+    });
     setApplicationsData(data)
   };
 
-  //Search applications
-  const SearchApplications = async (val: any) => {
-    const { data } = await api.get(
-      GET_APPLICATIONS, { search: val });
-    setApplicationsData(data);
+  // get application details list 
+  const getApplicationsDetails = async (val: any) => {
+    const { data } = await api.get(GET_APPLICATIONS_DETAILS, { id: val });
+    setapplicationDetailsState(data)
   };
-  const debouncedResults: any = useMemo(() => {
-    return debounce(SearchApplications, 500);
-  }, []);
+
+  //Search applications 
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -102,8 +103,10 @@ const useCustomHook = () => {
 
   return {
     getApplicationsData,
+    getApplicationsDetails,
     downloadPdfOrCsv,
-    SearchApplications,
+    applicationDetailsState,
+    debouncedSearch,
     applicationsData,
   };
 };

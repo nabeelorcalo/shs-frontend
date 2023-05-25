@@ -42,12 +42,12 @@ export const InternshipProgressCard = (props: any) => {
       status: updateStatus ? updateStatus : status
     }
     EditNewInternshipsData(Obj)
-    getAllInternshipsData(null, null, null)
+    getAllInternshipsData()
   }
   const handleDeclineInternship = () => {
     setDecline(false);
     handleUpdateStatus('REJECTED')
-    getAllInternshipsData(null, null, null)
+    getAllInternshipsData()
     Notifications({ title: "Success", description: "Internship declined", type: "success" })
   }
   const PopOver = () => {
@@ -104,7 +104,8 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '6',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP, { state: item }) }}>
+          <a rel="noopener noreferrer"
+           onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP, { state: item }) }}>
             Edit
           </a>
         ),
@@ -154,7 +155,7 @@ export const InternshipProgressCard = (props: any) => {
         </div>
         {location && <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
-          <p>{location ? location : '---'}</p>
+          <p>{location}</p>
         </div>}
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />

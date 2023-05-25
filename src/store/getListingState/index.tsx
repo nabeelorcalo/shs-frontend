@@ -13,4 +13,9 @@ export const getPropertAgents = atom({
 export const getRecentListingState = atom({
   key: "getRecentListing",
   default: []
+});
+
+export const getRecentActivities = atom({
+  key: "getRecentActivities",
+  default: [],
 })

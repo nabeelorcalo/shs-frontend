@@ -7,16 +7,29 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from "../../../helpers/csv";
+import { universityDataState } from "../../../store";
+import { useRecoilState } from "recoil";
+import endpoints from "../../../config/apiEndpoints";
+
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const { GET_COMPANYADMIN_UNIVERSITES } = endpoints;
+
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
+  const [universitiesData, setuniversitiesData] = useRecoilState(universityDataState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getUniversities = async (Country:any) => {
+    const params = {
+      page: 1,
+      limit: 9,
+    }
+    // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    const { data } = await api.get(GET_COMPANYADMIN_UNIVERSITES, params);
+    setuniversitiesData(data);
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -34,8 +47,8 @@ const useCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ no, logo,  universityName, universityRep, email , contact, city  }: any) =>
-      [ no, '' , universityName, universityRep, email , contact, city]
+    const body = data.map(({ no, logo, universityName, universityRep, email, contact, city }: any) =>
+      [no, '', universityName, universityRep, email, contact, city]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -85,8 +98,10 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getUniversities,
     downloadPdfOrCsv,
+    setuniversitiesData,
+    universitiesData
   };
 };
 
