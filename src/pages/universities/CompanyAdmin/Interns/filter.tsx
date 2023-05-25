@@ -7,6 +7,7 @@ import './style.scss'
 import useCustomHook from './actionHandler';
 import UseDepartmentCustomHook from '../../../setting/companyAdmin/Department/actionHandler';
 import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHandler";
+import UserSelector from '../../../../components/UserSelector';
 const detailsData = [
   {
     userImg: UserAvatar,
@@ -49,6 +50,16 @@ const Filters = ({ setShowDrawer }: any) => {
 
   console.log(getAllManagers, "getAllManagers");
 
+  const filteredData = getAllManagers?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
+        avatar: <UserAvatar />
+      }
+    )
+  })
 
 
 
@@ -62,11 +73,16 @@ const Filters = ({ setShowDrawer }: any) => {
     });
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = () => {
+    const values = {
+      assignedManager: selectValue.assignedManager,
+      status: selectValue.status,
+      department: selectValue.department,
+      joiningDate: selectValue.joiningDate
+    }
     console.log(values);
-
     setShowDrawer(false)
-    getUniIntersTableData(null, null, null, selectValue)
+    getUniIntersTableData(null, null, selectValue)
   }
 
   return (
@@ -81,6 +97,19 @@ const Filters = ({ setShowDrawer }: any) => {
             options={status.map((item: any) => { return item })}
             setValue={(e: string) => setSelectValue({ ...selectValue, status: e })}
           />
+          {/* <UserSelector
+            placeholder="Select"
+            value={selectValue.status}
+            onChange={(event: any) => {
+              setSelectValue({
+                ...selectValue,
+                status: event
+              })
+            }}
+            options={filteredData}
+            hasSearch={false}
+            handleSearch={(e: any) => console.log(e)}
+          /> */}
         </Form.Item>
         <Form.Item
           name="department"
@@ -92,6 +121,19 @@ const Filters = ({ setShowDrawer }: any) => {
             options={settingDepartmentdata.map((item: any) => item?.name)}
             setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
           />
+          {/* <UserSelector
+            placeholder="Select"
+            value={selectValue.department}
+            onChange={(event: any) => {
+              setSelectValue({
+                ...selectValue,
+                department: event
+              })
+            }}
+            options={filteredData}
+            hasSearch={false}
+            handleSearch={(e: any) => console.log(e)}
+          /> */}
         </Form.Item>
         <Form.Item label="Joining Date">
           <CommonDatePicker
@@ -104,7 +146,7 @@ const Filters = ({ setShowDrawer }: any) => {
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
           <div className='asignee-wrap w-[100%]'>
-            <DropDownNew
+            {/* <DropDownNew
               placement={'bottomRight'}
               items={[
                 {
@@ -127,11 +169,24 @@ const Filters = ({ setShowDrawer }: any) => {
                 </div>
                 <ArrowDownDark />
               </div>
-            </DropDownNew>
+            </DropDownNew> */}
+            <UserSelector
+              placeholder="Select"
+              value={selectValue.assignedManager}
+              onChange={(event: any) => {
+                setSelectValue({
+                  ...selectValue,
+                  assignedManager: event
+                })
+              }}
+              options={filteredData}
+              hasSearch={false}
+              handleSearch={(e: any) => console.log(e)}
+            />
           </div>
         </Form.Item>
         <div className="company-admin-filter-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn" onClick={ResetHandler} >
+          <Button key="Cancel" className="footer-cancel-btn" onClick={ResetHandler}>
             Reset
           </Button>
           <Button key="submit" className="footer-submit-btn" htmlType="submit">
