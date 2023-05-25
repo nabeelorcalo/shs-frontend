@@ -12,6 +12,8 @@ const { Content } = Layout
 import { Button } from '../../../../components/Button'
 import { Collapse } from 'antd';
 import { MinusCircleOutlined, MinusOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { themeState } from '../../../../store';
+import { useRecoilState } from 'recoil';
 
 const { Panel } = Collapse;
 
@@ -28,6 +30,10 @@ const InnerData = (
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
+
+  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+
+  
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -82,18 +88,18 @@ const InnerData = (
       </Collapse>
       <div className="flex justify-center md:justify-end gap-4 px-6 mt-10">
         <Button
-          className='min-w-20 w-20'
+          className='min-w-20 w-50'
           label="Reset"
-          onClick={() => { }}
+          onClick={() => {setCurrentTheme({...currentTheme, colorPrimary:'#363565'}) }}
           type="default"
-          size="small"
+          size="large"
         />
         <Button
-          className='min-w-20 w-20 text-success-bg-color'
+          className='min-w-20 w-20 text-success-bg-color p-'
           label="Apply"
-          onClick={() => { }}
+          onClick={() => setCurrentTheme({...currentTheme, colorPrimary:sideBarColor})}
           type="primary"
-          size="small"
+          size="large"
         />
       </div>
     </div>

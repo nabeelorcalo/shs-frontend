@@ -15,11 +15,11 @@ function SideMenuIconsColor() {
   const [secondaryColor, setSecondaryColor] = useState('#000000')
 
   const handleColorChangeSecondary = (event: any) => {
-    setPrimaryColor(event.target.value)
+    setSecondaryColor(event.target.value)
   }
 
   const handleRefreshSecondary = () => {
-    setPrimaryColor('#000000')
+    setSecondaryColor('#000000')
   }
   return (
     <div >
@@ -70,8 +70,8 @@ function SideMenuIconsColor() {
           <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
             <input
               type="text"
-              value={primaryColor}
-              onChange={handleColorChangePrimary}
+              value={secondaryColor}
+              onChange={handleColorChangeSecondary}
               className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
             />
           </Col>
@@ -80,7 +80,7 @@ function SideMenuIconsColor() {
               className="min-h-10 h-10 sky-blue-color-bg p-0 shadow-none"
               style={{ minWidth: "0px" }}
               icon={<ReloadOutlined />}
-              onClick={handleRefreshPrimary}
+              onClick={handleRefreshSecondary}
               type="primary"
             />
           </Col>
