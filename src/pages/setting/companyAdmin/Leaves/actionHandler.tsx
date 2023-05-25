@@ -28,7 +28,7 @@ const useLeaveCustomHook = () => {
       maxCarryForward: carryforward,
       carryForwardExpiry: carryforwardexpiration,
       applyToNewHires: applyToNewHires,
-      interns: []
+      interns: intern
     }
     await api.post(GET_LEAVE_POLICY, params);
     getSettingLeaves()
@@ -37,7 +37,6 @@ const useLeaveCustomHook = () => {
 
   // post setting departments
   const editSettingLeaves = async (id: any, values: any) => {
-    console.log(values);
     const { policyName, description, carryforwardexpiration, applyToNewHires, intern, entitlement, carryforward, assignDate, accrualFrequency } = values;
     const params = {
       name: policyName,
@@ -48,7 +47,7 @@ const useLeaveCustomHook = () => {
       maxCarryForward: carryforward,
       carryForwardExpiry: carryforwardexpiration,
       applyToNewHires: applyToNewHires,
-      interns: []
+      interns: intern
     }
     await api.patch(`${GET_LEAVE_POLICY}/${id}`, params);
     getSettingLeaves()

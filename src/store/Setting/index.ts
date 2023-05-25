@@ -14,3 +14,8 @@ export const settingLeaveState = atom({
   key: "settingLeaveState",
   default: [],
 });
+
+export const settingPerformanceState = atom({
+  key: "settingPerformanceState",
+  default: [],
+});
