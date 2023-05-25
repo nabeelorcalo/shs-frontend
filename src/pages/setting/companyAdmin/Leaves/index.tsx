@@ -81,11 +81,6 @@ const SettingLeave = () => {
         return <MedicalLeave />
     }
   }
-
-  // const handleChange = (event: any) => {
-  //   const { name, value } = event.target;
-  //   setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
-  // };
   return (
     <div className="setting-leaves">
       <div>
@@ -112,7 +107,6 @@ const SettingLeave = () => {
                     link={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}
                     state={state}
                     setState={setState}
-                    id={data?.id}
                     editData={data}
                   />
                 </div>

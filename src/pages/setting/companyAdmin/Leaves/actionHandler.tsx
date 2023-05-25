@@ -17,8 +17,8 @@ const useLeaveCustomHook = () => {
 
   // post setting departments
   const postSettingLeaves = async (values: any) => {
-    console.log(values);
-    const { policyName, description, carryforwardexpiration, applyForNewHire, intern, entitlement, carryforward, assignDate, accrualFrequency } = values;
+    console.log(values.applyForNewHire);
+    const { policyName, description, carryforwardexpiration, applyToNewHires, intern, entitlement, carryforward, assignDate, accrualFrequency } = values;
     const params = {
       name: policyName,
       description: description,
@@ -27,26 +27,47 @@ const useLeaveCustomHook = () => {
       entitlement: entitlement,
       maxCarryForward: carryforward,
       carryForwardExpiry: carryforwardexpiration,
-      applyToNewHires: false,
+      applyToNewHires: applyToNewHires,
       interns: []
     }
     await api.post(GET_LEAVE_POLICY, params);
     getSettingLeaves()
-    Notifications({ title: "Success", description: 'Leave Policy added successfully', type: 'success' })
+    Notifications({ title: "Success", description: 'Policy added', type: 'success' })
+  };
+
+  // post setting departments
+  const editSettingLeaves = async (id: any, values: any) => {
+    console.log(values);
+    const { policyName, description, carryforwardexpiration, applyToNewHires, intern, entitlement, carryforward, assignDate, accrualFrequency } = values;
+    const params = {
+      name: policyName,
+      description: description,
+      assignedDate: assignDate,
+      accrualFrequency: accrualFrequency,
+      entitlement: entitlement,
+      maxCarryForward: carryforward,
+      carryForwardExpiry: carryforwardexpiration,
+      applyToNewHires: applyToNewHires,
+      interns: []
+    }
+    await api.patch(`${GET_LEAVE_POLICY}/${id}`, params);
+    getSettingLeaves()
+    Notifications({ title: "Success", description: 'Policy updated', type: 'success' })
   };
 
   // get setting departments
   const deleteSettingLeaves = async (id: any) => {
     await api.delete(`${GET_LEAVE_POLICY}/${id}`);
     getSettingLeaves()
-    Notifications({ title: "Success", description: 'Leave deleted successfully', type: 'success' })
+    Notifications({ title: "Success", description: 'Policy deleted', type: 'success' })
   };
 
   return {
     settingLeaveData,
     getSettingLeaves,
     postSettingLeaves,
-    deleteSettingLeaves
+    deleteSettingLeaves,
+    editSettingLeaves
   };
 };
 

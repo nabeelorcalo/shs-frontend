@@ -24,10 +24,11 @@ const LeavesAddPolicy: React.FC = () => {
       intern: [],
       openModal: false,
       internValue: 1,
+      applyForNewHire: false
     });
 
   const navigate = useNavigate()
-  const { postSettingLeaves } = useLeaveCustomHook()
+  const { postSettingLeaves, editSettingLeaves } = useLeaveCustomHook()
   const { TextArea } = Input;
   const { Paragraph } = Typography;
   const { state } = useLocation()
@@ -106,15 +107,21 @@ const LeavesAddPolicy: React.FC = () => {
   }
 
   const onFinish = (values: any) => {
-    console.log("valies", values)
-    postSettingLeaves(values)
-    navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
+    values.applyToNewHires = states.applyForNewHire;
+    console.log("valies", values.applyToNewHires)
+    if (state) {
+      editSettingLeaves(state.id, values)
+    }
+    else {
+      postSettingLeaves(values)
+    }
+    // navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
   }
   const initialValues = {
     policyName: state?.name,
     description: state?.description,
     // carryforwardexpiration: state?.carryForwardExpiry,
-    applyForNewHire: true,
+    applyForNewHire: state?.applyToNewHires,
     intern: [],
     entitlement: state?.entitlement,
     carryforward: state?.maxCarryForward,
@@ -160,7 +167,6 @@ const LeavesAddPolicy: React.FC = () => {
                   className="text-input-bg-color"
                   rows={6}
                   placeholder="Write Something..."
-                  maxLength={6}
                 />
               </Form.Item>
             </Col>
@@ -275,7 +281,7 @@ const LeavesAddPolicy: React.FC = () => {
               </Form.Item>
               <div className="my-5">
                 <Form.Item name='applyForNewHire'>
-                  <Switch onChange={(e: any) => console.log(e)} />
+                  <Switch checked={state?.applyToNewHires} onChange={(e: any) => setState({ ...states, applyForNewHire: e })} />
                   <span className="px-3 ">Apply to all new hires</span>
                 </Form.Item>
               </div>
