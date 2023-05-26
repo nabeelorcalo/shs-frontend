@@ -19,3 +19,8 @@ export const settingPerformanceState = atom({
   key: "settingPerformanceState",
   default: [],
 });
+
+export const settingsTemplateState = atom({
+  key: "settingsTemplateState",
+  default: [],
+});

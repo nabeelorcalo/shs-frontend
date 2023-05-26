@@ -76,5 +76,6 @@ const endpoints = {
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
   SETTING_PERFORMANCE: '/performance',
+  SETTINGS_TEMPLATES: '/template/findAll'
 }
 export default endpoints;
