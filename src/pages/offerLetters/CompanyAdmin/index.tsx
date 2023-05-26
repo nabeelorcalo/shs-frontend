@@ -51,8 +51,8 @@ const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [state, setState] = useState<any>({
     search: null,
-    status:null,
-    datePicker:'THIS_MONTH'
+    status: null,
+    datePicker: 'THIS_MONTH'
   })
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const { getOfferLetterList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
@@ -86,8 +86,8 @@ const CompanyAdmin = () => {
       <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Initiate Contract</Menu.Item>
     </Menu>
   );
-  const ChangesRequested = (val: any) => {
-    return <Menu>
+  const ChangesRequested = (val: any) => (
+    <Menu>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
@@ -98,47 +98,46 @@ const CompanyAdmin = () => {
         Delete
       </Menu.Item>
     </Menu>
-  };
-  const pending = (val: any) => {
-    return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
-      >Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
-  const newStatus = (val: any) => {
-    return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
-      >Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
-  const rejected = (val: any) => {
-
+  )
+  const pending = (val: any) => (
     <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
+      >Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  );
+  const newStatus = (val: any) => (
+    <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
+      >Resend</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  )
+  const rejected = (val: any) => {
+    return <Menu>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
@@ -150,6 +149,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+
   const tableColumns = [
     {
       title: "No",
@@ -256,10 +256,10 @@ const CompanyAdmin = () => {
   }
   const handleValueStatus = (val: any) => {
     getOfferLetterList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
-    setState({...state, status:val})
+    setState({ ...state, status: val })
   }
   const handleTimeFrameValue = (val: any) => {
-    setState({...state, datePicker:val});
+    setState({ ...state, datePicker: val });
     getOfferLetterList(state.status, val.toUpperCase().replace(" ", "_"), state.search);
   }
   return (

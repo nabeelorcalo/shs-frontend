@@ -1,0 +1,112 @@
+@import "../../../../../scss/colors";
+
+.details-wrapper {
+    // border-right: 1px solid $text-error-line-color;
+    height: 100%;
+
+    @media only screen and (max-width: 768px) {
+        border-right: none;
+    }
+
+    .ant-dropdown-trigger:nth-child(1) {
+        width: 93px;
+        height: 40px;
+    }
+
+    .ant-dropdown-trigger:nth-child(2) {
+        width: 155px;
+        height: 40px;
+    }
+
+    .heading {
+        color: $text-primary-title-color;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .user-info-main {
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .image {
+            height: 80px;
+            width: 80px;
+            background-size: 100% 100%;
+            border-radius: 100px;
+        }
+    }
+
+    .plus {
+        background-color: $text-success-placeholder-color;
+        color: $white-bg-color;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .skills-main {
+        min-height: 210px;
+        border-bottom: 1px solid $text-error-line-color;
+        padding-bottom: 20px;
+
+        .skill-text {
+            background-color: $text-input-bg-color;
+        }
+
+
+
+        .plus {
+            background-color: $text-success-placeholder-color;
+            color: $white-bg-color;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .heading {
+            color: $text-primary-title-color;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .skills-para {
+            background: $text-input-bg-color;
+            border-radius: 14.5px;
+        }
+    }
+
+    .intro-bar {
+        z-index: 1 !important;
+        left: 43% !important;
+        top: 45% !important;
+    }
+
+}
+
+.others {
+    .other-item {
+        background-color: $text-input-bg-color !important;
+        border-radius: 20px;
+        padding: 5px 10px;
+        transition: all 0.2s linear;
+
+        &:hover {
+            background-color: $text-primary-title-color !important;
+            color: $white-bg-color;
+
+            .other-icon {
+                display: flex;
+            }
+        }
+
+        .other-icon {
+            display: none;
+        }
+    }
+}

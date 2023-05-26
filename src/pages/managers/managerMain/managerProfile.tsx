@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -12,9 +12,10 @@ import {
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
 import { Breadcrumb, DropDown, PageHeader } from "../../../components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import useCustomHook from "../actionHandler";
 
 const breadcrumbArray = [
   { name: 'Amelia Parker' },
@@ -53,15 +54,24 @@ const commonObj = {
 };
 
 const ManagerProfile = () => {
+  const { id } = useParams();
+  const [managerIdData, setManagerIdData] = useState<any>();
+  const action = useCustomHook();
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    action.getManagerDetailId(id).then((data: any) => {
+      setManagerIdData(data);
+      const initialFormValues = { firstName: 'hello' };
+      // Set the initial values in the form using setFieldsValue
+      // setFieldsValue(initialFormValues);
+    })
+  }, [])
+
   const onFinish = (values: any) => {
     console.log("Success:", values);
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
   };
   return (
     <div className="manager-profile">
@@ -77,13 +87,13 @@ const ManagerProfile = () => {
             <center>
               <Pf />
               <Typography className="font-semibold text-xl text-primary-color">
-                {commonObj.personName}
+                {managerIdData?.companyManager?.firstName}{managerIdData?.companyManager?.lastName}
               </Typography>
               <Typography className="font-medium text-base text-secondary-color">
-                UI/UX Designer
+                {managerIdData?.title}
               </Typography>
               <Typography className="font-medium text-base text-secondary-color">
-                Design
+                {managerIdData?.department.description}
               </Typography>
             </center>
             <Divider />
@@ -91,19 +101,19 @@ const ManagerProfile = () => {
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <IconEmail />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {commonObj.email}
+                  {managerIdData?.companyManager?.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {commonObj.phone}
+                  {managerIdData?.companyManager?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
                 <IconLocation />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {commonObj.location}
+                  {managerIdData?.companyManager?.address}
                 </Typography>
               </div>
             </div>
@@ -113,9 +123,10 @@ const ManagerProfile = () => {
           <div className="pl-4 pr-4 pt-6 pb-6 card-style">
             <Form
               layout="vertical"
-              initialValues={{ remember: true }}
+              initialValues={{
+                rememberMe: true
+              }}
               onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
               autoComplete="off"
             >
               <Row gutter={[10, 15]}>
@@ -247,8 +258,8 @@ const ManagerProfile = () => {
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
                 <Button
-                onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`) }}
-                className="border-1 border-solid border-[#4a9d77] 
+                  onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`) }}
+                  className="border-1 border-solid border-[#4a9d77] 
                 text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel
                 </Button>

@@ -11,7 +11,7 @@ const StudentSideBar = (props: any) => {
   const [hide, setHide] = useState(false);
 
   return (
-    <div className="student-side-bar">
+    <div className="student-side-bar h-[97vh]">
       <div className="main-student-side-bar">
         {profileInfo.map((item, index) => {
           return (

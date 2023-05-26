@@ -74,6 +74,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
   const menuStyle = {
     boxShadow: "none",
   };
+
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
@@ -124,7 +125,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SAWITCH);
-    console.log(data,"responseresponseresponseresponse");
+    console.log(data, "responseresponseresponseresponse");
     // const userData = {
     //   ...data,
     //   role: data?.role
@@ -234,7 +235,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
               placement="bottomLeft"
               arrow
               open={open}
-              onOpenChange={(open)=>{setOpen(open)}}
+              onOpenChange={(open) => { setOpen(open) }}
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">

@@ -1,33 +1,39 @@
-// import { InternshipProgressStepper } from '../InternshipProgressStepper'
 import { StageProgressStepper } from '../StageProgressStepper'
 import { Divider } from 'antd'
 import { IconEmail, IconPhone, IconLocation } from '../../assets/images'
 import './style.scss'
+import dayjs from 'dayjs'
 
-const statusArray = [
-  {
-    title: 'Applied Date',
-    data: "10/11/2022",
-  },
-  {
-    title: 'Position',
-    data: "UI/UX Designer",
-  },
-  {
-    title: 'Type of Work',
-    data: "Part Time",
-  },
-  {
-    title: 'Internship Type',
-    data: "Paid",
-  },
-  {
-    title: 'Nature of Word',
-    data: "On-site",
-  },
-]
+interface drawerProps {
+  data?: any
+}
+export const StageStepper = (props: drawerProps) => {
+  const { data } = props
+  console.log(data);
 
-export const StageStepper = () => {
+  const appliedDate = dayjs(data?.createdAt).format("DD/MM/YYYY")
+  const statusArray = [
+    {
+      title: 'Applied Date',
+      data: appliedDate,
+    },
+    {
+      title: 'Position',
+      data: data?.internship?.title,
+    },
+    {
+      title: 'Type of Work',
+      data: data?.internship?.internType,
+    },
+    {
+      title: 'Internship Type',
+      data: data?.internship?.salaryType,
+    },
+    {
+      title: 'Nature of Word',
+      data: data?.internship?.locationType,
+    },
+  ]
   return (
     <div className='flex flex-col'>
       <div className="flex flex-col sm:flex-row gap-4">
@@ -39,7 +45,10 @@ export const StageStepper = () => {
           />
         </div>
         <div className='flex flex-col justify-between gap-3'>
-          <p className='text-lg font-semibold'>Intuit Inc. Software Agency</p>
+          <p className='text-lg font-semibold'>
+            {data?.internship?.company?.businessName}.
+            {data?.internship?.company?.businessSector}
+          </p>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconEmail />
             <p>intuit.inc@gmail.com</p>
@@ -50,7 +59,7 @@ export const StageStepper = () => {
           </div>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconLocation />
-            <p>263 Eversholt St. London NW11NB, UK</p>
+            <p>{data?.internship?.company?.ownerAddress}</p>
           </div>
         </div>
       </div>

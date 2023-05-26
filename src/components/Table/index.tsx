@@ -33,7 +33,7 @@ export const GlobalTable = (props: TableProps) => {
       {
         pagination && hideTotal == false ?
           <span className='Counter'>
-            Total: {tableData?.length}
+            Total: {tableData?.length < 10 && `0${tableData.length}`}
           </span>
           :
           null

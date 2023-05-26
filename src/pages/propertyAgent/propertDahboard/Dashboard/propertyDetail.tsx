@@ -21,7 +21,7 @@ const PropertyDetail = () => {
   const locate = useLocation();
   const status = location.pathname.split("/");
   const recentList = useRecoilState<any>(getRecentListingState);
-
+console.log(recentList,'jjjjj')
   const recentlists = recentList[0].filter((item: any) =>
     item.id == params.id
   )
@@ -98,10 +98,10 @@ const PropertyDetail = () => {
                     <div className="grid mx-auto justify-items-center">
                       <img src={pf} alt="" />
                       <Typography className="primary-color text-xl font-semibold text-center">
-                        {item?.user.firstName} {item?.user.lastName}
+                        {item?.user?.firstName} {item?.user?.lastName}
                       </Typography>
                       <Typography className="text-base font-medium text-secondary-color ">
-                        {item?.user.role}
+                        {item?.user?.role}
                       </Typography>
                     </div>
                   </div>
@@ -110,13 +110,13 @@ const PropertyDetail = () => {
                     <div className="social-icon flex items-center mt-3">
                       <IconEmail />
                       <Typography className="emp-social">
-                        {item?.user.email}
+                        {item?.user?.email}
                       </Typography>
                     </div>
                     <div className="social-icon flex items-center mt-3">
                       <IconPhone />
                       <Typography className="emp-social">
-                        {item?.user.phoneNumber}
+                        {item?.user?.phoneNumber}
                       </Typography>
                     </div>
                     <div className="social-icon flex items-center mt-3 mb-1">

@@ -16,6 +16,7 @@ const { GET_LEAEV_LIST } = endpoints;
 const useCustomHook = () => {
   const date= dayjs().format("YYYY-MM-DD");
   const [getLeaveState, setLeaevState] = useRecoilState(getLeaveStateAtom);
+  
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };

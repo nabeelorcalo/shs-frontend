@@ -8,6 +8,7 @@ import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import '../../../scss/global-color/Global-colors.scss'
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const ButtonStatus = (props: any) => {
   const btnStyle: any = {
@@ -42,7 +43,6 @@ const CompanyData = ({ companyName, companyNature }: any) => {
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const CompaniesSystemAdmin = () => {
-  const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
@@ -54,7 +54,7 @@ const CompaniesSystemAdmin = () => {
     terminate: false
   })
 
-  const PopOver = ({ state }: any) => {
+  const PopOver = ({ state, id }: any) => {
     const navigate = useNavigate();
     const items: MenuProps["items"] = [
       {
@@ -63,7 +63,7 @@ const CompaniesSystemAdmin = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              // state(true);
+              navigate(`${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${id}`)
             }}
           >
             View Details
