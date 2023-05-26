@@ -13,6 +13,7 @@ export { ReactComponent as IconGlobe } from "./header/global.svg";
 export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as IconCross } from "./header/icon-cross.svg";
+export { ReactComponent as Info } from "./profile/student/info.svg";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
@@ -612,6 +613,7 @@ export { ReactComponent as GeneralInfo } from '../../assets/images/profile/stude
 export { ReactComponent as ProfileDoc } from '../../assets/images/profile/student/document-text.svg';
 export { ReactComponent as Imigration } from '../../assets/images/profile/student/Immigration.svg';
 export { ReactComponent as ProfileCards } from '../../assets/images/profile/student/cards.svg';
+export { ReactComponent as Printer } from '../images/profile/student/Printer.svg';
 
 //search Jobs
 export { ReactComponent as SearchIconJob } from './serachJobs/search-normal.svg';
@@ -649,4 +651,9 @@ export { default as DocImage } from '../../assets/images/documents/Document Card
 export { default as Frame } from '../../assets/images/documents/frame.svg';
 export { default as Pdf } from '../../assets/images/documents/pdf.svg';
 export { default as ArrowDoenIcon } from '../../assets/images/documents/Vector.svg';
-export {ReactComponent  as NoData} from '../../assets/images/other-imgs/NoData.svg'
+export { ReactComponent as NoData } from '../../assets/images/other-imgs/NoData.svg';
+
+// Personalization
+
+export { ReactComponent as OrcaloLogo } from './Personlization/orcalologo.svg';
+export { ReactComponent as EditPen } from './Personlization/editpen.svg';

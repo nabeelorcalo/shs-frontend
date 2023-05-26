@@ -1,23 +1,38 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+// import { useEffect, useMemo } from "react";
+import { useRecoilState } from "recoil";
+import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
+import apiEndpints from "../../config/apiEndpoints";
+import { applicationDataState, applicationDetailState } from "../../store";
 import csv from '../../helpers/csv';
-import constants from "../../config/constants";
+
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
+  const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
+  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getApplicationsData = async (searchValue: any) => {
+    const { data } = await api.get(GET_APPLICATIONS, {
+      search: searchValue ? searchValue : null
+    });
+    setApplicationsData(data)
   };
+
+  // get application details list 
+  const getApplicationsDetails = async (val: any) => {
+    const { data } = await api.get(GET_APPLICATIONS_DETAILS, { id: val });
+    setapplicationDetailsState(data)
+  };
+
+  //Search applications 
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
 
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -26,9 +41,8 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -37,8 +51,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status}: any) =>
-      [ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
+    const body = data.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status }: any) =>
+      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -88,8 +102,12 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getApplicationsData,
+    getApplicationsDetails,
     downloadPdfOrCsv,
+    applicationDetailsState,
+    debouncedSearch,
+    applicationsData,
   };
 };
 

@@ -1,53 +1,58 @@
 import { Divider, Button } from "antd";
-
-const personalInfoData = [
-  {
-    id: "1",
-    title: "Name",
-    disc: "Firs Cottage, Adams Road, Kirk Langley, DE6 4LW",
-  },
-  {
-    id: "2",
-    title: "Phone",
-    disc: "070 4531 9507",
-  },
-  {
-    id: "3",
-    title: "Address",
-    disc: "Firs Cottage, Adams Road, Kirk Langley, DE6 4LW",
-  },
-  {
-    id: "4",
-    title: "Email",
-    disc: "tranthuy.nute@gmail.com",
-  },
-  {
-    id: "5",
-    title: "Occupation",
-    disc: "Accountant",
-  },
-  {
-    id: "6",
-    title: "Booking Dates",
-    disc: "22/09/2022 - 22/09/2022",
-  },
-];
+import dayjs from "dayjs";
+import useCustomHook from "../../actionHandler";
+import { useState } from "react";
 
 const PersonalInfo = (props: any) => {
-  const { open, setOpen } = props
+  const { data, setOpen } = props
+  const [state, setState] = useState('')
+  const { updateReservations } = useCustomHook();
+
+  const dataEndPoint = data.tenant;
+  const startDate = dayjs(data?.bookingStartDate).format("DD/MM/YYYY")
+  const endDate = dayjs(data?.bookingEndDate).format("DD/MM/YYYY")
+  const personalInfoData = [
+    {
+      title: "Name",
+      disc: `${dataEndPoint?.firstName} ${dataEndPoint?.lastName}`,
+    },
+    {
+      title: "Phone",
+      disc: dataEndPoint?.phoneNumber,
+    },
+    {
+      title: "Address",
+      disc: data?.property?.addressOne,
+    },
+    {
+      title: "Email",
+      disc: dataEndPoint?.email,
+    },
+    {
+      title: "Occupation",
+      disc: "Accountant",
+    },
+    {
+      title: "Booking Dates",
+      disc: `${startDate} - ${endDate}`,
+    },
+  ];
+
+  const updateHandler = () => {
+    updateReservations(data?.id, state)
+  }
   return (
     <div>
       <div className="font-semibold text-[28px] text-primary-color pb-2">
         Personal Information
       </div>
 
-      {personalInfoData.map((item) => {
+      {personalInfoData.map((item: any, index: number) => {
         return (
-          <div className="pb-4" key={item.id}>
+          <div className="pb-4" key={index + 1}>
             <div className="text-primary-color text-base font-medium">
               {item.title}
             </div>
-
             <div className="text-primary-color text-base font-normal">
               {item.disc}
             </div>
@@ -60,24 +65,22 @@ const PersonalInfo = (props: any) => {
         <div className="font-semibold text-xl pb-2">Message Details</div>
         <div className="text-base font-normal text-teriary-color pb-2">Message</div>
         <div className="text-input-bg-color rounded-[8px] p-4">
-          Hi all, I wonder if anyone knows (and can advice how to prevent) why
-          paragraphs in XD expand as a single line text box in Figma, when
-          copying as SVG? Thanks!
+          {data?.tenantMessage}
         </div>
       </div>
 
       <div className="flex justify-end gap-4 mt-4">
         <div>
           <Button
-            onClick={() => setOpen(false)}
             className="white-color page-header-secondary-bg-color"
+            onClick={() => { updateHandler(), setState('rejected') }}
           >
             Reject
           </Button>
         </div>
 
         <div>
-          <Button htmlType="submit" className="green-graph-tooltip-bg white-color ">
+          <Button value='reserved' htmlType="submit" className="green-graph-tooltip-bg white-color" onClick={() => { updateHandler(), setState('reserved') }}>
             Accept
           </Button>
         </div>

@@ -23,7 +23,6 @@ import {
   Logo,
 } from "../../../assets/images";
 import avatar from "../../../assets/images/header/avatar.svg";
-import constants from "../../../config/constants";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../../store";
@@ -34,13 +33,11 @@ const PersonalisationContent = () => {
   const { useToken } = theme;
   const { token } = useToken();
   const [imageUrl, setImageUrl] = useState<string>();
+  console.log("inner token.colorPrimary ======================> ",token.colorPrimary);
+  
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
-  const [buttonPrimaryColor, setButtonPrimaryColor] = useState(
-    token.colorPrimary
-  );
-  const [buttonSecondaryColor, setButtonSecondaryColor] = useState(
-    token.colorBorderSecondary
-  );
+  const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
+  const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
 
   return (
     <div className="personalisation-content">
@@ -51,97 +48,98 @@ const PersonalisationContent = () => {
         <Divider />
       </Row>
       <Row className="second_row" gutter={[15, 15]}>
-        <Col xs={24} md={24} xl={18}>
-          <BoxWrapper>
-            <h4 className="font-medium text-xl mb-4 m-2">Preview</h4>
-            <Layout className="sidebar">
-              <AppHeader imageUrl={imageUrl} />
-              <Layout>
-                <Row>
-                  <Col xs={6} md={12} xl={5}>
-                    <div
-                      className={`h-full`}
-                      style={{ backgroundColor: sideBarColor }}
-                    >
-                      <div className="sidebar-user-profile">
-                        <Avatar size={48} src={avatar} />
-                        <div className="sidebar-user-profile-content">
-                          <Typography.Title level={3}>
-                            Maria Sanoid
-                          </Typography.Title>
-                          <div className="sidebar-user-profile-role">
-                            {getUserRoleLable(role)}
+        <Col xs={24} md={24} xl={18} xxl={18}>
+          <BoxWrapper className="h-[100vh] xl:h-[82vh]">
+            <h4 className="font-medium text-xl pb-1 pt-1">Preview</h4>
+            <div className="innner-screen p-1">
+              <Layout className="sidebar">
+                <AppHeader imageUrl={imageUrl} />
+                <Layout>
+                  <Row>
+                    <Col xs={0} md={12} xl={6} lg={9}>
+                      <div
+                        className={`h-full`}
+                        style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
+                      >
+                        <div className="sidebar-user-profile">
+                          <Avatar size={48} src={avatar} />
+                          <div className="sidebar-user-profile-content">
+                            <Typography.Title level={3}>
+                              Maria Sanoid
+                            </Typography.Title>
+                            <div className="sidebar-user-profile-role">
+                              {getUserRoleLable(role)}
+                            </div>
                           </div>
                         </div>
+                        <ul className="white-color pl-4  list-none">
+                          <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
+                            <IconDashboard /> Dashboard
+                          </li>
+                        </ul>
+                        <ul className="white-color pl-4  list-none">
+                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
+                            People
+                          </p>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconPeoples /> Candidates
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconClipboardTick /> Offer Letter
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconTaskSquare /> Contracts
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconProfileUsers /> Interns
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconProfileCircle /> Managers
+                          </li>
+                        </ul>
+                        <ul className="white-color pl-3  list-none">
+                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
+                            Organisation
+                          </p>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconCourtHouse /> Universities
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconData /> Structure
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            {" "}
+                            <IconCalendarTick /> Attendance
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconCalendarRemove /> Leaves
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconTimer /> Timesheet
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconChart /> Documents
+                          </li>
+                        </ul>
                       </div>
-                      <ul className="white-color p-4  list-none">
-                        <li className="mt-4 mb-1 text-sm font-normal">
-                          <IconDashboard /> Dashboard
-                        </li>
-                      </ul>
-                      <ul className="white-color pl-2  list-none">
-                        <p className="side-bar-text mt-1 mb-2  text-sm font-normal">
-                          People
-                        </p>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconPeoples /> Candidates
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconClipboardTick /> Offer Letter
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconTaskSquare /> Contracts
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconProfileUsers /> Interns
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconProfileCircle /> Managers
-                        </li>
-                      </ul>
-                      <ul className="white-color pl-3  list-none">
-                        <p className="side-bar-text mt-1 mb-2 text-sm font-normal">
-                          Organisation
-                        </p>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconCourtHouse /> Universities
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconData /> Structure
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          {" "}
-                          <IconCalendarTick /> Attendance
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconCalendarRemove /> Leaves
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconTimer /> Timesheet
-                        </li>
-                        <li className="mt-1 mb-3 ml-4 text-sm font-normal">
-                          <IconChart /> Documents
-                        </li>
-                      </ul>
-                    </div>
-                  </Col>
-                  <Col xs={18} md={12} xl={18}>
-                    <Content className="ant-layout-content-preview">
-                      <InnerData
-                        buttonPrimaryColor={buttonPrimaryColor}
-                        buttonSecondaryColor={buttonSecondaryColor}
-                      />
-                    </Content>
-                  </Col>
-                </Row>
+                    </Col>
+                    <Col xs={24} md={12} xl={18} lg={15}>
+                      <Content className="ant-layout-content-preview">
+                        <InnerData
+                          buttonPrimaryColor={buttonPrimaryColor}
+                          buttonSecondaryColor={buttonSecondaryColor}
+                        />
+                      </Content>
+                    </Col>
+                  </Row>
+                </Layout>
+                <AppFooter />
               </Layout>
-
-              <AppFooter />
-            </Layout>
+            </div>
           </BoxWrapper>
         </Col>
-        <Col xs={24} md={24} xl={5}>
-          <BoxWrapper className="left-box">
+        <Col xs={24} md={24} xl={6} xxl={6}>
+          <BoxWrapper className="left-box h-[100vh] xl:h-[82vh]  overflow-x-scroll">
             <CustomisationContent
               imageUrl={imageUrl}
               setImageUrl={setImageUrl}
@@ -154,6 +152,7 @@ const PersonalisationContent = () => {
             />
           </BoxWrapper>
         </Col>
+
       </Row>
     </div>
   );

@@ -13,6 +13,7 @@ import {
   getRecentListingState
 } from "../../../../store/getListingState";
 import dayjs from "dayjs";
+import { getRecentActivities } from "../../../../store/getListingState";
 
 const MainDashboard = () => {
   const navigate = useNavigate();
@@ -20,13 +21,15 @@ const MainDashboard = () => {
   const propertyData = useRecoilState<any>(getListingState);
   const totalAgent = useRecoilState<any>(getPropertAgents);
   const recentList = useRecoilState<any>(getRecentListingState);
-  const createdAt = "2023-05-12T06:28:48.848Z";
-  const simpleTime = dayjs(createdAt).format('HH:mm a');
+  const recentActivity = useRecoilState<any>(getRecentActivities)
 
+  console.log(recentList,'gggggg')
+  
   useEffect(() => {
     action.propertgetlistingstata();
     action.propertGetTotalAgents();
     action.getRecentListing();
+    action.generalActivityData();
   }, [])
 
   return (
@@ -159,35 +162,57 @@ const MainDashboard = () => {
           </div>
         </Col>
         <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-card">
-          <div>
+          <div >
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
             <div className="inner-activities flex mt-4">
               <Row gutter={[20, 20]}>
-                {activityData.map((item, index) => {
+                {recentActivity[0]?.map((item: any, index: any) => {
                   return (
                     <Col span={24}>
                       <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
-                          <Typography className="text-[#A0A3BD] text-sm font-normal">
-                            {item.date}
+                          <Typography className="text-[#A0A3BD] text-xs font-normal">
+                            {dayjs(item?.createdAt).format('DD/MMM')}
                           </Typography>
                         </Col>
                         <hr />
                         <Col xxl={16} xl={16} lg={15} md={18} sm={17} xs={19}>
                           <div className="ml-2">
                             <Typography className="text-primary-color text-sm font-semibold">
-                              {item.userStatus}
+                              {item?.activity}
                             </Typography>
                             <div className="flex ">
-                              <img src={item.img} alt="1" />
-                              <Typography className="text-teriary-color text-sm font-normal mr-10 ml-3">
-                                {item.detail}
+                              <img
+                                src={item?.performedByuser?.profileImage?.metaData?.mimetype ?
+                                  `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.performedByuser?.profileImage.mediaId}.${item?.performedByuser?.profileImage.metaData.extension}`
+                                  :
+                                  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                }
+                                alt="userImage"
+                                style={{ width: "27px" }}
+                              />
+                              <Typography className="text-teriary-color text-sm font-normal mr-8 ml-2">
+                                {
+                                  item?.activity === "user sign up" ?
+                                    item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' registerd successfully'
+                                    :
+                                    item?.activity === 'addAssement' ?
+                                      item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' add assesment'
+                                      :
+                                      item?.activity === 'create internship' ?
+                                        item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' created internship'
+                                        :
+                                        item?.activity === 'create company manager' ?
+                                          item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName+ ' added company manager'
+                                          :
+                                          null
+                                }
                               </Typography>
                             </div>
                             <Typography className="text-teriary-color text-sm font-normal">
-                              {item.time}
+                              {dayjs(item?.createdAt).format('HH:mm a')}
                             </Typography>
                           </div>
                         </Col>
@@ -232,7 +257,7 @@ const MainDashboard = () => {
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>
                             <span className="text-sm font-medium primary-color">
-                              {item?.user.firstName} {item?.user.lastName}
+                              {item?.user?.firstName} {item?.user?.lastName}
                             </span>
                             <span className="text-xs font-normal text-success-placeholder-color">
                               &nbsp;Recent listed new property
@@ -247,7 +272,7 @@ const MainDashboard = () => {
                             </span>
                           </Typography>
                           <Typography className="text-xs font-normal text-success-placeholder-color">
-                            {simpleTime}
+                            {dayjs(item?.createdAt).format('HH:mm a')}
                           </Typography>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>

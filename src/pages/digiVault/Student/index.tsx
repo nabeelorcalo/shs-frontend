@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Divider, Progress, Row, Menu, Space } from "antd";
-import { GlobalTable, Notifications } from "../../../components";
+import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
@@ -82,48 +82,19 @@ const manageVaultArr = [
   },
 ];
 
-const tableData = [
-  {
-    id: "1",
-    key: "01",
-    Title: "file",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "2",
-    key: "02",
-    Title: "file2",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "3",
-    key: "03",
-    Title: "file3",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-];
-
 const DigiVaultStudent = () => {
   const [state, setState] = useState({
     isToggle: false,
     delId: null
   })
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  console.log(getDigiVaultDashboard,"getDigiVaultDashboard");
+  
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard()
+    getDigiVaultDashboard(null)
   }, [])
-
-  if (studentVault === undefined) {
-    Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
-  }
 
   const navigate = useNavigate();
 
@@ -134,6 +105,7 @@ const DigiVaultStudent = () => {
         onClick={() => {
           setState(
             {
+              ...state,
               isToggle: true,
               delId: id
             })
@@ -165,7 +137,6 @@ const DigiVaultStudent = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      // render: (_: any, data: any) => <CustomDroupDown menu1={menu1} />,
     },
   ];
   const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
@@ -199,7 +170,7 @@ const DigiVaultStudent = () => {
       />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-          <div className="digivault-title text-2xl font-semibold">
+          <div className="digivault-title text-2xl font-semibold ml-4">
             DigiVault
           </div>
         </Col>
@@ -252,7 +223,7 @@ const DigiVaultStudent = () => {
                 <div className="available-storage-value">{studentStorage?.availableStorage}</div>
               </Col>
             </Row>
-            <div className="pt-2">
+            <div className="mt-4">
               <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>

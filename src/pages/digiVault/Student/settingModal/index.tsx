@@ -49,6 +49,8 @@ const SettingModal = (props: any) => {
         open={settingModal.isToggle}
         footer={null}
         closable={false}
+        width={647}
+        // height={348}
         onCancel={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))}
       >
         <div className="modal-header flex justify-between pb-8">
@@ -73,8 +75,10 @@ const SettingModal = (props: any) => {
           <Col className="flex items-center justify-between text-teriary-color">
             <p className="pr-2">On</p>
             <Switch
-              defaultChecked={studentVault?.lockResponse ? studentVault.lockResponse['isLock'] : settingModal.isEnable}
-              onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))} />
+              defaultChecked={settingModal?.isLock}
+              checked={settingModal.isLock}
+              onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))}
+              />
           </Col>
         </Row>
 
@@ -98,7 +102,6 @@ const SettingModal = (props: any) => {
             tooltip={{ formatter: null }}
             marks={marks}
             min={0}
-            max={1447}
             onChange={(e: any) => sliderHandler(e)}
             defaultValue={studentVault?.lockResponse ? studentVault.lockResponse['autoLockAfter'] : '0'}
           />

@@ -6,33 +6,40 @@ import UnlockVault from '../newPasswordModal/unlockVaultModal/unlockVault';
 import { Switch } from 'antd';
 
 const DigiVaultModals = (props: any) => {
+  const { studentVault }: any = useCustomHook();
   const [state, setState] = useState(
     {
-      isModalOpen: false,
-      isEnable:false,
+      isModalOpen: studentVault === undefined ? true : false,
+      isEnable: false,
       isToggle: false,
-      isLock: false,
       lockTime: '15',
+      isLock: studentVault?.lockResponse && studentVault?.lockResponse['isLock']
     });
-  const { studentVault } = useCustomHook();
 
   const onChange = (checked: boolean) => {
     setState((prevState: any) => ({
       ...prevState,
-      isEnable: checked,
+      isLock: checked,
       isModalOpen: checked && true
     }));
   }
 
   return (
     <>
-      <Switch onChange={onChange} defaultChecked={studentVault === undefined ? false : true} />
-      {(studentVault || studentVault === undefined) ?
+      Lock <Switch onChange={onChange}
+        //  defaultChecked={studentVault === undefined ? false : state.isLock}
+        checked={state.isLock}
+        defaultChecked={state.isLock}
+      />
+      {(studentVault?.lockResponse || studentVault === undefined) ?
         <UnlockVault
-          setIsEnablePassword={props.setIsEnablePassword}
+          // setIsEnablePassword={props.setIsEnablePassword}
           isModal={state.isModalOpen}
           setIsModal={setState}
-          settingModal={state} />
+          setUnlockPassword={props.setUnlockPassword}
+          unlockPassword={props.unlockPassword}
+        // settingModal={state}
+        />
         :
         <NewPasswordModal
           setIsEnablePassword={props.setIsEnablePassword}

@@ -38,15 +38,14 @@ function AppLayout() {
 
   const handleLogout = async () => {
     const res: any = await api.get(LOGOUT);
-    if (res.statusCode === 200) {
-      localStorage.clear();
-      Notifications({
-        title: "Success",
-        description: "Logout Successfully",
-        type: "success",
-      });
-      navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
-    }
+
+    localStorage.clear();
+    Notifications({
+      title: "Success",
+      description: "Logout Successfully",
+      type: "success",
+    });
+    navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
   };
 
   /* RENDER APP
