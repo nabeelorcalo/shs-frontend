@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { DocumentUpload } from '../../assets/images'
 import SelectedUploadCard from '../SelectedUploadCard'
 import './style.scss'
 
-export const DragAndDropUpload = (props?: any) => {
-  const { certificateDetails, setCertificateDetails } = props
-  const [files, setFiles] = useState([])
+export const DragAndDropUpload = (props: any) => {
+  const { files, setFiles } = props
+  // const [files, setFiles] = useState([])
   const inputRef: any = useRef();
 
   const handleDragOver = (event: any) => {

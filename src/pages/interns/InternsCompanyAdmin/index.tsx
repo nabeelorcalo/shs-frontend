@@ -21,6 +21,7 @@ import '../style.scss'
 
 const InternsCompanyAdmin = () => {
   const [form] = Form.useForm();
+  const [files, setFiles] = useState([])
   const csvAllColum = ["No", "Posted By", "Name", "Department",
     "Joining Date", "Date of Birth", 'Status'];
   const [assignManager, setAssignManager] = useState(
@@ -263,6 +264,9 @@ const InternsCompanyAdmin = () => {
     if (action === 'preview') setPreviewModal(true)
     else setSignatureModal(true)
   }
+
+  console.log('certficate files', files);
+
 
   return (
     <>
@@ -664,7 +668,7 @@ const InternsCompanyAdmin = () => {
                 type="default"
                 size="small"
                 className="white-bg-color teriary-color font-medium max-sm:w-full"
-                onClick={() => handleCertificateSubmition(null,'preview')}
+                onClick={() => handleCertificateSubmition(null, 'preview')}
               >
                 Preview
               </Button>
@@ -701,6 +705,8 @@ const InternsCompanyAdmin = () => {
           state={signatureModal}
           closeFunc={() => setSignatureModal(false)}
           okBtntxt='Sign'
+          files={files}
+          setFiles={setFiles}
           footer={<div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
             <Button
               type="default"

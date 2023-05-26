@@ -30,9 +30,7 @@ export const SignatureAndUploadModal = (props: any) => {
     {
       key: '3',
       label: <span className='text-secondary-color font-normal'>Upload</span>,
-      children: <DragAndDropUpload
-        certificateDetails={certificateDetails}
-        setCertificateDetails={setCertificateDetails} />,
+      children: <DragAndDropUpload files={props.files} setFiles={props.setFiles} />,
     },
   ];
   return (<PopUpModal title={<span className='text-primary-color text-xl font-medium'>{title}</span>}
