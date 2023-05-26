@@ -7,7 +7,7 @@ import "./style.scss";
 const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-  
+
   const caseStudyColumnData = [
     {
       dataIndex: "no",
@@ -26,7 +26,7 @@ const CaseStudiesTable = (props: any) => {
           icon={
             <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
               {data?.name[0]}
-              {data?.name?.split("  ")[1][0]}
+              {data?.name && data?.name?.split(" ")[1][0]}
             </span>
           }
         />
@@ -88,15 +88,16 @@ const CaseStudiesTable = (props: any) => {
       dataIndex: "",
       render: (_: any, data: any) => {
         return (
-        <CustomDropDownCaseStudies
-          setState={setOpenDropdown}
-          state={openDropdown}
-          status={data.status}
-          data={data.id}
-          openWarningModal={openWarningModal}
-          setOpenWarningModal={setOpenWarningModal}
-        />
-      )},
+          <CustomDropDownCaseStudies
+            setState={setOpenDropdown}
+            state={openDropdown}
+            status={data.status}
+            data={data.id}
+            openWarningModal={openWarningModal}
+            setOpenWarningModal={setOpenWarningModal}
+          />
+        );
+      },
     },
   ];
 

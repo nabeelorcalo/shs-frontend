@@ -60,22 +60,9 @@ const CustomDropDownCaseStudies = (props: any) => {
     {
       key: "1",
       label: (
-        <>
-          {" "}
-          {props.status === "Pending" ? (
-            <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/${props.data}`)}>
-              Give Feedback
-            </span>
-          ) : props.status === "Approved" ? (
-            <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES_VIEW_DETAILS}/${props.data}`)}>
-              View Details
-            </span>
-          ) : (
-            <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/${props.data}`)}>
-              Give Feedback
-            </span>
-          )}
-        </>
+        <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/${props.data}`)}>
+          {props.status === "Approved" ? " View Details" : "Give Feedback"}
+        </span>
       ),
     },
     {

@@ -64,15 +64,6 @@ const ViewDetails: React.FC = () => {
         <BoxWrapper className='my-5 hidden destop-view lg:block'>
           <div className='flex justify-between'>
             <Typography className='md:text-3xl font-medium primary-color'>Mino Marina - September 2022</Typography>
-
-            {/* <div className='mr-[-5px] drop-down-wrapper'
-              onClick={() => {
-                action.downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ")
-                Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: 'success' })
-              }}
-            >
-              <DownloadIconLeave />
-            </div> */}
           </div>
           <div className='mt-5 flex gap-10'>
             <span className='font-semibold text-xl lg:w-[200px]'>Learning Categories</span>

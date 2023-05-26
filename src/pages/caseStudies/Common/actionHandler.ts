@@ -66,13 +66,42 @@ const useCustomHookforAssment = () => {
     console.log(value);
     signPad = value
   }
+
+  const urlToFile = (url: any) => {
+    let arr = url.split(",");
+    // console.log(arr) 
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    let dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+    return file;
+  };
+  // const formatIntoPng = (isClear: boolean) => {
+  //   if (isClear) { return null; }
+  //   else {
+  //     if (sigCanvas.current) {
+  //       const dataURL = sigCanvas.current.toDataURL();
+
+  //     }
+  //   }
+  // };
+
   const cancelDrawaSign = () => {
     signPad?.clear();
+    setSignature("")
   };
   const handleSignatue = () => {
     // setState({ trimmedDataURL: sigPad.getTrimmedCanvas().toDataURL("image/png") });
-    console.log(signPad?.getTrimmedCanvas()?.toDataURL("image/png"));
-    console.log(signPad);
+    let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
+    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
+    console.log(file, "fileee");
+
+    // return file;
     setSignature(signPad?.getTrimmedCanvas()?.toDataURL("image/png"))
   };
 

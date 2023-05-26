@@ -9,6 +9,7 @@ import useCustomHook from "../actionHandler";
 import useCommonCustomHook from "./actionHandler";
 import "./style.scss";
 import dayjs from "dayjs";
+import { Emoji3rd } from "../../../assets/images";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {
@@ -24,11 +25,32 @@ const AssessmentFormCaseStudies = () => {
     supervisorStatus: "",
     feedback: "",
   });
-  console.log(formData);
+  // console.log(formData);
 
   useEffect(() => {
     getSelectedCasStudyData(getParamId(pathname));
   }, []);
+
+  useEffect(() => {
+    setFormData({
+      ...formData,
+      feedback: selectedCasStudyData?.feedback ?? "",
+      supervisorSig: (selectedCasStudyData?.supervisorSig || signature) ?? "",
+      supervisorStatus: selectedCasStudyData?.supervisorStatus ?? "",
+    });
+  }, [selectedCasStudyData]);
+
+  const proImage = new Image();
+  // console.log("proImage", proImage);
+
+  useEffect(() => {
+    proImage.src = signature ?? "";
+    document.body.appendChild(proImage);
+    setFormData({
+      ...formData,
+      supervisorSig: signature ?? "",
+    });
+  }, [signature]);
 
   const breadcrumbArray = [
     { name: "Assessment Form" },
@@ -45,7 +67,7 @@ const AssessmentFormCaseStudies = () => {
       managerRemarks: obj?.supervisorRemarks,
       id: obj?.id,
     })) ?? [];
-  // console.log("selectedCasStudyData", selectedCasStudyData);
+  console.log("selectedCasStudyData", selectedCasStudyData);
   const remarked = selectedCasStudyData?.remarked;
   const userDetail = selectedCasStudyData?.intern?.userDetail;
   const onFinish = (values: any) => {
@@ -64,6 +86,7 @@ const AssessmentFormCaseStudies = () => {
           : [...formData?.assessmentForm, { id, supervisorRemarks }],
     });
   };
+  const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
 
   return (
     <div className="company-admin-assessment-form">
@@ -97,29 +120,46 @@ const AssessmentFormCaseStudies = () => {
                 <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.learningObjectives}</span>
                 <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.evidenceOfProgress}</span>
                 <div className="lg:w-[400px]">
-                  <ManagerRemarks
-                    managerRemarks={item?.managerRemarks}
-                    id={item?.id}
-                    handleManagerRemarks={handleManagerRemarks}
-                  />
+                  {managerStatus === "approved" ? (
+                    <ManagerRemarks
+                      image={<Emoji3rd />}
+                      remarksStatus={selectedCasStudyData?.supervisorStatus}
+                      id={item?.id}
+                      managerRemarks={item?.managerRemarks}
+                    />
+                  ) : (
+                    <ManagerRemarks
+                      managerRemarks={item?.managerRemarks}
+                      id={item?.id}
+                      handleManagerRemarks={handleManagerRemarks}
+                    />
+                  )}
                 </div>
               </div>
             );
           })}
           <Form layout="vertical" form={form} onFinish={onFinish}>
-            <Typography className="text-xl font-semibold my-1">
-              Feedback
-              <span className="form-title font-medium">(Optional)</span>
-            </Typography>
-            <Form.Item name="feedback">
-              <TextArea
-                value={formData?.feedback}
-                onChange={(e) => setFormData({ ...formData, feedback: e?.target?.innerHTML })}
-                rows={6}
-                placeholder="Type here..."
-                maxLength={6}
-              />
-            </Form.Item>
+            {managerStatus === "approved" ? (
+              <>
+                <Typography className="text-xl font-semibold my-1">Feedback</Typography>
+                <span className="text-base font-normal lg:w-[400px] font-[outfit]">{formData?.feedback}</span>
+              </>
+            ) : (
+              <>
+                <Typography className="text-xl font-semibold my-1">
+                  Feedback
+                  <span className="form-title font-medium">(Optional)</span>
+                </Typography>
+
+                <TextArea
+                  value={formData?.feedback}
+                  onChange={(e) => setFormData({ ...formData, feedback: e?.target?.value })}
+                  rows={6}
+                  placeholder="Type here..."
+                />
+              </>
+            )}
+
             <div className="flex gap-10">
               <div className="w-full">
                 <Typography className="text-xl font-semibold mt-5 capitalize">
@@ -127,33 +167,49 @@ const AssessmentFormCaseStudies = () => {
                 </Typography>
                 <div className="sign-box w-full rounded-lg flex justify-center items-center">
                   <p>{selectedCasStudyData?.internSig}</p>
-                  {/* <img src={signature} /> */}
+                  {/* <img src={img} /> */}
                 </div>
               </div>
               <div className="w-full">
                 <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
                 <div className="sign-box w-full rounded-lg flex items-center justify-around">
-                  <span onClick={() => setOpenModal(true)} className="sign-btn cursor-pointer">
-                    Click here to sign
-                  </span>
+                  {managerStatus === "approved" ? (
+                    <>{/* <img src={img} /> */} signature</>
+                  ) : (
+                    <span onClick={() => setOpenModal(true)} className="sign-btn cursor-pointer">
+                      Click here to sign
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
           </Form>
           <div className="flex justify-end gap-5 my-5 assessment-footer">
-            <Button type="primary" className="text-error-bg-color white-color reject-btn font-semibold">
-              <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>Reject</NavLink>
-            </Button>
-            <Button type="primary" className="white-bg-color teriary-color save-btn font-semibold ">
-              Save Draft
-            </Button>
-            <Button
-              type="primary"
-              className="teriary-bg-color  white-color  finalise-btn font-semibold  "
-              onClick={onFinish}
-            >
-              Finalise
-            </Button>
+            {managerStatus === "approved" ? (
+              <Button
+                onClick={() => navigate(-1)}
+                type="primary"
+                className="white-bg-color teriary-color save-btn font-semibold "
+              >
+                Back
+              </Button>
+            ) : (
+              <>
+                <Button type="primary" className="text-error-bg-color white-color reject-btn font-semibold">
+                  <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>Reject</NavLink>
+                </Button>
+                <Button type="primary" className="white-bg-color teriary-color save-btn font-semibold ">
+                  Save Draft
+                </Button>
+                <Button
+                  type="primary"
+                  className="teriary-bg-color  white-color  finalise-btn font-semibold  "
+                  onClick={onFinish}
+                >
+                  Finalise
+                </Button>
+              </>
+            )}
           </div>
         </BoxWrapper>
       </div>
