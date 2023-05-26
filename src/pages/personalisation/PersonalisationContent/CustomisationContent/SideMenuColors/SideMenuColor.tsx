@@ -1,14 +1,24 @@
 import React, { useState } from 'react'
 import { Col, Divider, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
+import { useRecoilState } from 'recoil';
+import { themeState } from '../../../../../store';
 
 function SideMenuColor({ sideBarColor, setSideBarColor }: any) {
+
+  // const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+
+
   const handleColorChangePrimary = (event: any) => {
-    setSideBarColor(event.target.value)
+    setSideBarColor(event.target.value);
+    // setCurrentTheme({
+    //   ...currentTheme,
+    //   colorPrimary:event.target.value
+    // })
   }
 
   const handleRefreshPrimary = () => {
-    setSideBarColor('#000000')
+    setSideBarColor('#363565')
   }
 
   return (
