@@ -8,6 +8,9 @@ import "./style.scss";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useRecoilValue } from "recoil";
+import { recipeState } from "../../../store";
+import useRecipesHook from '../actionHandler'
 
 // Temporary
 import recipeSingleThumb from '../../../assets/images/gallery/recipe-single.png'
@@ -30,6 +33,9 @@ const RecipeDetails = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const { recipeId } = useParams()
+  const { getRecipe } = useRecipesHook();
+  const recipe = useRecoilValue(recipeState)
+  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
   const settings = {
     arrows: false,
     dots: false,
@@ -39,14 +45,14 @@ const RecipeDetails = () => {
     speed: 1200,
     slidesToScroll: 1,
   };
-  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
-
+  
+console.log("recipe;::: ", recipe)
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    // getRecipe(recipeId)
   }, [])
 
 

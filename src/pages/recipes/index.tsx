@@ -1,21 +1,14 @@
 import { useState, useEffect } from "react"
+import { Row, Col, Empty } from 'antd'
+import { useRecoilValue } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom"
-import { Row, Col } from 'antd'
 import { PageHeader, RecipeCard, ExtendedButton, SearchBar } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
 import { ROUTES_CONSTANTS } from '../../config/constants'
+import { allRecipesState } from "../../store";
+import useRecipesHook from './actionHandler'
 import "./style.scss";
 
-// Temporary data
-import recipeThumb from '../../assets/images/gallery/recipeCard.png'
-import recipeThumb1 from '../../assets/images/gallery/recipeCard1.png'
-import recipeThumb2 from '../../assets/images/gallery/recipeCard2.png'
-const data = [
-  { id: '01', title: 'Sticky Orange Chicken', thumb: recipeThumb, description: 'This dish is a real crowd-pleaser. The sweet citrus glaze makes the chicken sticky and delicious—and it’s easy to make!', rating: 3, status: 'published' },
-  { id: '02', title: 'Chicharos Cubanos', thumb: recipeThumb1, description: 'These chicharos Cubanos are Cuban-style split pea soup. Made with dried green split pleas, smoked pork, potatoes, and butternut squash.', rating: 3, status: 'published' },
-  { id: '03', title: 'Succotash', thumb: recipeThumb2, description: 'This succotash is a warm vegetable dish packed with buttery corn, blistered cheery tomatoes, and tender lima beans, green beans, red on...', rating: 3, status: 'draft' },
-  { id: '04', title: 'Succotash', thumb: recipeThumb2, description: 'This succotash is a warm vegetable dish packed with buttery corn, blistered cheery tomatoes, and tender lima beans, green beans, red on...', rating: 3, status: 'draft' },
-]
 
 const Recipes = () => {
   /* VARIABLE DECLARATION
@@ -23,13 +16,16 @@ const Recipes = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [rateValue, setRateValue] = useState(3);
+  const {getAllRecipes} = useRecipesHook();
+  const allRecipes = useRecoilValue(allRecipesState)
+  const [loadingRecipes, setLoadingRecipes] = useState(false)
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    getAllRecipes(setLoadingRecipes)
   }, [])
 
 
@@ -56,21 +52,26 @@ const Recipes = () => {
             Add New Recipe
           </ExtendedButton>
         </Col>
-        {data.map((recipe, index) => {
+        {allRecipes?.map((recipe:any) => {
             return (
-              <Col key={index} xs={24} sm={12} xl={8} xxl={6}>
+              <Col key={recipe.id} xs={24} sm={12} xl={8} xxl={6}>
                 <RecipeCard
-                  title={recipe.title}
-                  thumb={recipe.thumb}
-                  description={recipe.description}
+                  title={recipe?.name}
+                  thumb={`http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
+                  description={recipe?.description}
                   rating={rateValue}
-                  status={recipe.status}
+                  status={recipe?.status}
                   onCardClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_DETAILS}/${recipe.id}`, {state: {from: location.pathname}})}
                   onRateChange={handleRateChange}
                 />
               </Col>
             )
           })}
+          {!allRecipes && !loadingRecipes &&
+            <Col xs={24}>
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </Col>
+          }
       </Row>
     </div>
   )

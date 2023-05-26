@@ -32,13 +32,11 @@ const useRecipesHook = () => {
   }
 
   // Read Single Recipe
-  const getRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true);
-    const response = await api.get(`${GET_RECIPE}${id}`);
+  const getRecipe = async (id:any) => {
+    const response = await api.get(`${GET_RECIPE}/${id}`);
     if(!response.error) {
       setRecipe(response.data)
     }
-    setLoading(false);
   }
 
   // Update Recipe

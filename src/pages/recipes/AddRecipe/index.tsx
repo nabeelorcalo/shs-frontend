@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Typography, Input, Row, Col, Upload, Space } from 'antd'
+import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber } from 'antd'
 import { ExtendedButton, PageHeader, Breadcrumb } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
@@ -10,6 +10,7 @@ import "./style.scss";
 const AddRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const [form] = Form.useForm();
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
 
 
@@ -36,6 +37,11 @@ const AddRecipe = () => {
     return e?.fileList;
   }
 
+  const onValuesChange = (changedValues: any, allValues: any) => {
+    // console.log(changedValues, " single Field changed  value ")
+    console.log("All form values ", allValues)
+  };
+
 
 
   /* RENDER APP
@@ -61,7 +67,14 @@ const AddRecipe = () => {
             <Typography.Paragraph>Set of instructions that will describe about your recipe to other people.</Typography.Paragraph>
           </div>
         
-          <Form layout="vertical" name="addNewRecipe" onFinish={submitNewRecipe}>
+          <Form 
+            layout="vertical"
+            name="addNewRecipe"
+            requiredMark={false}
+            form={form}
+            onValuesChange={onValuesChange}
+            onFinish={submitNewRecipe}
+          >
             <div className="add-recipe-form-section">
               <div className="form-section-header">
                 <div className="form-section-header-inner">
@@ -71,12 +84,12 @@ const AddRecipe = () => {
               </div>
               <div className="form-section-fields">
                 <div className="form-fields-container">
-                  <Form.Item name="recipeName" label="Name">
+                  <Form.Item name="name" label="Name" rules={[{ required: true }]}>
                     <Input className="filled" placeholder="Enter name of the recipe" />
                   </Form.Item>
 
-                  <Form.Item label="Add Image" name="recipeImage" valuePropName="fileList" getValueFromEvent={normFile}>
-                    <Upload.Dragger name="files" action="/upload.do" showUploadList={false} className="filled">
+                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile}>
+                    <Upload.Dragger name="files" showUploadList={false} className="filled">
                       <div className="shs-drag-drop">
                         <div className="shs-upload-content">
                           <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
@@ -89,7 +102,7 @@ const AddRecipe = () => {
                     </Upload.Dragger>
                   </Form.Item>
 
-                  <Form.Item name="recipeDescription" label="Description">
+                  <Form.Item name="description" label="Description" rules={[{ required: true }]}>
                     <Input.TextArea 
                       className="filled" 
                       placeholder="Write the description of internship" 
@@ -113,15 +126,15 @@ const AddRecipe = () => {
                     <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
-                  <Form.Item name="recipeIngredients" label="Ingredients">
+                  <Form.Item name="ingredients" label="Ingredients">
                     <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
-                  <Form.Item name="recipeInstructions" label="Instructions">
-                    <Input className="filled" placeholder="Enter one or steps" />
+                  <Form.Item name="instructions" label="Instructions">
+                    <Input className="filled" placeholder="Enter one or paste multiple steps" />
                   </Form.Item>
 
-                  <Form.Item name="recipeServings" label="Servings">
+                  <Form.Item name="servings" label="Servings">
                     <Input className="filled" placeholder="Add portions" />
                   </Form.Item>
                 </div>
@@ -139,13 +152,13 @@ const AddRecipe = () => {
                 <div className="form-fields-container">
                   <Row gutter={20}>
                     <Col xs={24} md={12}>
-                      <Form.Item name="prepHours" label="Hours">
-                        <Input className="filled" placeholder="Hours 0" />
+                      <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
+                        <InputNumber className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
-                      <Form.Item name="prepMinutes" label="Minutes">
-                        <Input className="filled" placeholder="Minutes 0" />
+                      <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
+                        <InputNumber className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -164,13 +177,13 @@ const AddRecipe = () => {
                 <div className="form-fields-container">
                   <Row gutter={20}>
                     <Col xs={24} md={12}>
-                      <Form.Item name="cookTimeHours" label="Hours">
-                        <Input className="filled" placeholder="Hours 0" />
+                      <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
+                        <InputNumber className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
-                      <Form.Item name="cookTimeMinutes" label="Minutes">
-                        <Input className="filled" placeholder="Minutes 0" />
+                      <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
+                        <InputNumber className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
                   </Row>
