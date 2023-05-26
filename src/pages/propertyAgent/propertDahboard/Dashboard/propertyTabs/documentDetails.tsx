@@ -10,7 +10,7 @@ const DocumentDetails = () => {
       {documentArr.map((item, index) => {
         return (
           <>
-            <div className="animate">
+            {/* <div className="animate"> */}
               <div className="flex justify-between">
                 <div className="flex justify-start">
                   <img src={item.img} alt="" />
@@ -40,7 +40,7 @@ const DocumentDetails = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            {/* </div> */}
             <Divider />
           </>
         );

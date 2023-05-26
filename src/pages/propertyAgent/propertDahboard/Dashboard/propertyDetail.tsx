@@ -6,28 +6,32 @@ import "../../style.scss";
 import AppTabs from "../../../../components/Tabs";
 import ListingDetails from "./propertyTabs/listingDetails";
 import DocumentDetails from "./propertyTabs/documentDetails";
-import { BackButton, IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
-import { ROUTES_CONSTANTS } from '../../../../config/constants';
+import {
+  BackButton,
+  IconEmail,
+  IconLocation,
+  IconPhone,
+} from "../../../../assets/images";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { getRecentListingState } from "../../../../store/getListingState";
-import sofa from '../../../../assets/images/profile/propertyagent/sofa.svg';
-import bed from '../../../../assets/images/profile/propertyagent/bed.svg';
+import sofa from "../../../../assets/images/profile/propertyagent/sofa.svg";
+import bed from "../../../../assets/images/profile/propertyagent/bed.svg";
 import useCustomHook from "../../actionHandler";
+import Documents from "./propertyTabs/documents";
 
 const PropertyDetail = () => {
-  let params = useParams()
+  let params = useParams();
   const navigate = useNavigate();
   const action = useCustomHook();
   const locate = useLocation();
   const status = location.pathname.split("/");
   const recentList = useRecoilState<any>(getRecentListingState);
-console.log(recentList,'jjjjj')
-  const recentlists = recentList[0].filter((item: any) =>
-    item.id == params.id
-  )
+  console.log(recentList, "<===jjjjj===");
+  const recentlists = recentList[0].filter((item: any) => item.id == params.id);
   useEffect(() => {
-    action.getRecentListing()
-  }, [])
+    action.getRecentListing();
+  }, []);
 
   const items = [
     {
@@ -38,7 +42,7 @@ console.log(recentList,'jjjjj')
     {
       key: "2",
       label: "Documents",
-      children: <DocumentDetails />,
+      children: <Documents />,
     },
   ];
 
@@ -64,10 +68,10 @@ console.log(recentList,'jjjjj')
                   status[2] === "published"
                     ? "#3DC575"
                     : status[2] === "rejected"
-                      ? "#D83A52"
-                      : status[2] === "pending"
-                        ? "#FFC15D"
-                        : "",
+                    ? "#D83A52"
+                    : status[2] === "pending"
+                    ? "#FFC15D"
+                    : "",
 
                 width: "82px",
                 padding: "2px 5px 5px 2px",
@@ -81,9 +85,7 @@ console.log(recentList,'jjjjj')
       <Divider />
       <Row gutter={15}>
         <Col xxl={6} xl={6} lg={7} md={6} sm={6} xs={24}>
-          <div
-            className="white-bg-color shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg"
-          >
+          <div className="white-bg-color shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] rounded-lg">
             {recentlists?.map((item: any, index: any) => {
               return (
                 <>
@@ -91,12 +93,20 @@ console.log(recentList,'jjjjj')
                     <div>
                       <BackButton
                         onClick={() => {
-                          navigate(`/${ROUTES_CONSTANTS.PROPERTY_AGENT}`)
+                          navigate(`/${ROUTES_CONSTANTS.PROPERTY_AGENT}`);
                         }}
                       />
                     </div>
                     <div className="grid mx-auto justify-items-center">
-                      <img src={pf} alt="" />
+                      <img
+                        src={
+                          item?.user?.profileImage
+                            ? `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
+                            : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                        }
+                        alt=""
+                        style={{ width: "100px", padding: "1rem" }}
+                      />
                       <Typography className="primary-color text-xl font-semibold text-center">
                         {item?.user?.firstName} {item?.user?.lastName}
                       </Typography>
@@ -129,10 +139,23 @@ console.log(recentList,'jjjjj')
                   <div>
                     <Typography className="ml-4">Attachments</Typography>
                   </div>
-                  <center>
-                    <img src={sofa} alt="" style={{ paddingTop: '1rem' }} />
-                    <img src={bed} alt="" style={{ paddingTop: '1rem' }} />
-                  </center>
+                  {item?.attachments?.map((item: any, index: any) => {
+                    return (
+                      <>
+                        <center>
+                          <img
+                            src={
+                              item?.metaData?.mimetype
+                                ? `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.mediaId}.${item?.metaData?.extension}`
+                                : sofa
+                            }
+                            alt="userImage"
+                            style={{ width: item.mediaSize, padding: "1rem" }}
+                          />
+                        </center>
+                      </>
+                    );
+                  })}
                 </>
               );
             })}

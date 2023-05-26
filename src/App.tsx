@@ -1,37 +1,40 @@
-import React, { FC, useEffect, useMemo } from "react";
-import { useLocation, useNavigate, useRoutes } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "./pages/errors/errorBoundary";
-import { getRoutes } from "./routes";
-import "./App.scss";
-import constants, { ROUTES_CONSTANTS } from "./config/constants";
-import { ConfigProvider, notification } from "antd";
-import { themeState } from "./store";
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-import { currentUserState } from "./store/Signin";
-const Context = React.createContext({ name: 'Default' });
+import React, { FC, useEffect, useMemo } from 'react'
+import { useLocation, useNavigate, useRoutes } from 'react-router-dom'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from './pages/errors/errorBoundary'
+import { getRoutes } from './routes'
+import './App.scss'
+import constants, { ROUTES_CONSTANTS } from './config/constants'
+import { ConfigProvider, notification } from 'antd'
+import { themeState } from './store'
+import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil'
+import { currentUserState } from './store/Signin'
+const Context = React.createContext({ name: 'Default' })
 
 function App() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [api, contextHolder] = notification.useNotification();
-  const contextValue = useMemo(() => ({ name: 'Student Help Squad' }), []);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
-  const accessToken = localStorage.getItem("accessToken");
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [api, contextHolder] = notification.useNotification()
+  const contextValue = useMemo(() => ({ name: 'Student Help Squad' }), [])
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const [currentTheme, setCurrentTheme] = useRecoilState(themeState)
+  const accessToken = localStorage.getItem('accessToken')
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState)
 
   /* HOOKS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if (accessToken && pathname === (`/${ROUTES_CONSTANTS.LOGIN}`)) {
-      navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+    if (accessToken && pathname === `/${ROUTES_CONSTANTS.LOGIN}`) {
+      navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`)
+    } else if (
+      !accessToken &&
+      pathname != `/${ROUTES_CONSTANTS.SIGNUP}` &&
+      pathname != `/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`
+    ) {
+      navigate(`/${ROUTES_CONSTANTS.LOGIN}`)
     }
-    else if(!accessToken && pathname != (`/${ROUTES_CONSTANTS.SIGNUP}`)){
-      navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
-    }
-  }, [pathname]);
+  }, [pathname])
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -46,13 +49,15 @@ function App() {
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             {accessToken
               ? useRoutes(
-                getRoutes(currentUser.role).concat(getRoutes(constants.PUBLIC))
+                getRoutes(currentUser.role).concat(
+                  getRoutes(constants.PUBLIC)
+                )
               )
               : useRoutes(getRoutes(constants.PUBLIC))}
           </ErrorBoundary>
         </ConfigProvider>
       </Context.Provider>
     </>
-  );
+  )
 }
-export default App;
+export default App

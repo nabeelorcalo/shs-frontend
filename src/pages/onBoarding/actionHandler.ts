@@ -9,7 +9,7 @@ import { Notifications } from "../../components";
 
 // Auth operation and save into store
 const useCustomHook = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const { SIGNUP, VERIIFCATION_STUDENT } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
@@ -17,12 +17,13 @@ const navigate = useNavigate();
     if (!data.error) {
       Notifications({
         title: "Success",
-        description: "Data Submit",
+        description: "Sign Up Success",
         type: "success",
       });
+      
       navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
-    // navigate("/company-admin-verification");   
-    }  
+      // navigate("/company-admin-verification");
+    }
     return data;
   };
   const verifcationStudent = async (body: any): Promise<any> => {

@@ -91,7 +91,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      style={{ backgroundColor: currentTheme.colorPrimary }}
+      style={{ backgroundColor: token.colorPrimary }}
       breakpoint="md"
       onBreakpoint={onBreakpoint}
     >
@@ -110,7 +110,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
         theme="dark"
-        style={{ backgroundColor: currentTheme.colorPrimary }}
+        style={{ backgroundColor: token.colorPrimary  }}
       />
     </Sider>
   );

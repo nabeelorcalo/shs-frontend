@@ -21,7 +21,7 @@ const SignupForm = ({ signupRole }: any) => {
       "email": values.Email,
       "firstName": values.firstName,
       "lastName": values.lastName,
-      "phoneNumber": values.phone,
+      // "phoneNumber": values.phone,
       "password": values.password,
       "referenceNo": values.refrenceNumber,
       "gender": values.gender,
@@ -161,7 +161,7 @@ const SignupForm = ({ signupRole }: any) => {
             </Col>
           </Row>
         )}
-        <Row>
+        {/* <Row>
           <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
             <Form.Item
               name="phone"
@@ -175,7 +175,7 @@ const SignupForm = ({ signupRole }: any) => {
               />
             </Form.Item>
           </Col>
-        </Row>
+        </Row> */}
         <Row gutter={20}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item

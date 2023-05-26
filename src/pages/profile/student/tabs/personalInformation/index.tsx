@@ -135,7 +135,7 @@ const PersonalInformation = () => {
               <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          {/* <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               name="phone"
               label="Phone Number"
@@ -149,7 +149,7 @@ const PersonalInformation = () => {
                 inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
               />
             </Form.Item>
-          </Col>
+          </Col> */}
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="National Ensurance Number"

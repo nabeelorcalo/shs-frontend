@@ -19,21 +19,40 @@ const { Option } = Select;
 const StatusOptions = [
   {
     key: "1",
-    value: "Id Card",
+    value: "ID_CARD",
   },
   {
     key: "2",
-    value: "Passport",
+    value: "PASSPORT",
   },
   {
     key: "3",
-    value: "Driving License",
+    value: "DRIVING_LICENCE",
   },
   {
     key: "4",
-    value: "Residence Permit",
+    value: "RECIDENCE_PERMIT",
   },
 ];
+
+const countryOptions = [
+  {
+    key: "1",
+    value: "PK",
+    label:"Pakistan"
+  },
+  {
+    key: "2",
+    value: "UK",
+    label:"United Kingdom"
+  },
+  {
+    key: "3",
+    value: "Bj",
+    label:"Beljium"
+  },
+  
+]
 
 const IdentityVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -110,7 +129,19 @@ const IdentityVerification = (props: any) => {
                   { required: true, message: "Please input your Country!" },
                 ]}
               >
-                <Input placeholder="Country" className="input-style" />
+                <Select
+                  placeholder='Select Country type'
+                  size="middle"
+                  style={{ width: "100%" }}
+                  suffixIcon={<CaretDownOutlined />}
+                >
+                  {countryOptions.map((option: any) => (
+                    <Option key={option.value} value={option.value}>
+                      {option.label}
+                    </Option>
+                  ))}
+                </Select>
+                {/* <Input placeholder="Country" className="input-style" /> */}
               </Form.Item>
               <Form.Item
                 label="Document Type"

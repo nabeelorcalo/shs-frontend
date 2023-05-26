@@ -73,6 +73,12 @@ const endpoints = {
   GET_GENERAL_ACTIVITY: "/general/activity",
   WITH_DRAWAL_REQUEST:"/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
-  SETTING_LOCATION: "/location"
+  SETTING_LOCATION: "/location",
+  STUDENT_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-student",
+  UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN:'/sys_admin/get-sub-admin-universities',
+  COMPANY_SUB_ADMIN_SYSTEM_ADMIN:'/sys_admin/get-sub-admin-companies',
+  ADMIN_SUB_ADMIN_SYSTEM_ADMIN: '/sys_admin/get-sub-admin',
+  ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
+  GET_DELEGATE_ADMIN_DASHBOARD:"/delegate/admin-dashboard",
 }
 export default endpoints;

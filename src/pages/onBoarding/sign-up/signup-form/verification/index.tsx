@@ -27,13 +27,13 @@ function VerificationSteps(props: any) {
 
   return (
     <div className="verify-form-signup">
-      <Form
+      {/* <Form
         layout="vertical"
         name="normal_login"
         className="login-form"
         initialValues={{ remember: true }}
         onFinish={onFinish}
-      >
+      > */}
         {currentStep == 1 && (
           <IdentityVerification
             currentStep={currentStep}
@@ -75,7 +75,7 @@ function VerificationSteps(props: any) {
             currentStep={currentStep}
             setCurrentStep={setCurrentStep} />
         )}
-      </Form>
+      {/* </Form> */}
     </div>
   );
 }
