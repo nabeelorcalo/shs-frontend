@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
 import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col, Form, Select, Button } from "antd";
 import dayjs from 'dayjs';
+import { useNavigate } from "react-router-dom"
 import {
   PageHeader,
   SearchBar,
@@ -34,6 +35,7 @@ import { allPerformanceState, allPerformancesfilterParamsState, currentUserRoleS
 const PerformanceHistory = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate()
   const { getAllPerformance } = usePerformanceHook();
   const allPerformance = useRecoilValue(allPerformanceState);
   const [filterParams, setFilterParams] = useRecoilState(allPerformancesfilterParamsState);
@@ -49,231 +51,6 @@ const PerformanceHistory = () => {
   const historyBreadCrumb = [
     { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-  ];
-
-  const columnNames = [
-    {
-      title: "No.",
-      key: "no",
-      render: (_: any, data: any, index: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {index + 1}
-        </Link> : index + 1
-      ),
-    },
-    {
-      title: "Avatar",
-      key: "avatar",
-      render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ?
-          <Space size="middle">
-            <Link
-              className="bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              <Avatar
-                size={32}
-                alt="avatar"
-                src={<img src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />}
-              />
-              {/* <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} /> */}
-            </Link>
-          </Space> :
-          <Avatar
-            size={32}
-            alt="avatar"
-            src={<img src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png" />}
-          />
-        // <Avatar size={32} alt="avatar" src={<img src={data.avatar} />} />
-      ),
-    },
-    {
-      title: "Name",
-      key: "name",
-      render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {data.userName}
-        </Link> : data.userName
-      ),
-    },
-    {
-      title: "Department",
-      key: "department",
-      render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {data.department}
-        </Link> : data.department
-      ),
-    },
-    {
-      title: "Last Evaluation",
-      key: "date",
-      render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {dayjs(data.lastEvaluationDate).format('DD/MM/YYYY')}
-        </Link> : dayjs(data.lastEvaluationDate).format('DD/MM/YYYY')
-      ),
-    },
-    {
-      title: "Evaluated By",
-      key: "evaluatedBy",
-      render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {data.evaluatedBy}
-        </Link> : data.evaluatedBy
-      ),
-    },
-    {
-      title: "Total Evaluations",
-      key: "totalEvaluations",
-      render: (_: any, data: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {data.totalEvaluations}
-        </Link> : data.totalEvaluations
-      ),
-    },
-    {
-      title: "Overall Performance",
-      key: "overallPerformance",
-      render: (_: any, data: any) => {
-        let val = Math.round(data.sumOverallRating);
-
-        return (
-          <Space size="middle">
-            <Link
-              className="flex gap-2 bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
-              <Progress
-                size={[200, 13]}
-                percent={val}
-                strokeColor={val < 50 ? "#E95060" : "#4A9D77"}
-                format={(percent: any) => {
-                  let val = Math.round(percent);
-
-                  return (
-                    <p
-                      className={
-                        "myClass font-normal " +
-                        (val < 50 ? "secondary-color" : "teriary-color")
-                      }
-                    >
-                      {val}%
-                    </p>
-                  )
-                }}
-              />
-              {data.isBadge ? <TalentBadge /> : ""}
-            </Link>
-          </Space>
-        );
-      },
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <Dropdown
-            menu={{ items }}
-            trigger={["click"]}
-            placement="bottomRight"
-            overlayClassName="menus_dropdown_main"
-          >
-            <MoreIcon
-              className="cursor-pointer"
-            // onClick={() => setActionType({ ...actionType, id: data.key })}
-            />
-          </Dropdown>
-        </Space>
-      ),
-    },
-  ];
-
-  const evaluationHistoryData = [
-    {
-      id: 1,
-      no: 1,
-      name: "Mino Marina",
-      department: "UI UX Designer",
-      evaluatedBy: "Mino Marina",
-      date: "22/09/2022",
-      totalEvaluations: "08",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 40,
-      isBadge: true,
-    },
-    {
-      id: 2,
-      no: 2,
-      name: "Mino Marina",
-      department: "UI UX Designer",
-      evaluatedBy: "Mino Marina",
-      date: "22/09/2022",
-      totalEvaluations: "08",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 80,
-      isBadge: false,
-    },
-    {
-      id: 3,
-      no: 3,
-      name: "Mino Marina",
-      department: "UI UX Designer",
-      evaluatedBy: "Mino Marina",
-      date: "22/09/2022",
-      totalEvaluations: "08",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 50,
-      isBadge: true,
-    },
-    {
-      id: 4,
-      no: 4,
-      name: "Mino Marina",
-      department: "UI UX Designer",
-      evaluatedBy: "Mino Marina",
-      date: "22/09/2022",
-      totalEvaluations: "08",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 30,
-      isBadge: false,
-    },
-    {
-      id: 5,
-      no: 5,
-      name: "Mino Marina",
-      department: "UI UX Designer",
-      evaluatedBy: "Mino Marina",
-      date: "22/09/2022",
-      totalEvaluations: "08",
-      avatar:
-        "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      performance: 100,
-      isBadge: true,
-    },
   ];
 
   const evaluatedByOptions: any = [
@@ -477,6 +254,179 @@ console.log("allPerformance:: ", allPerformance)
     resetFilterForm()
   }
 
+  const openAprreciationModal = () => {
+    setState((prevState) => ({
+      ...prevState,
+      openAprreciationModal: !state.openAprreciationModal,
+    }));
+  };
+
+  const openWarnModal = () => {
+    setState((prevState) => ({
+      ...prevState,
+      openWarnModal: !state.openWarnModal,
+    }));
+  }
+
+  // History Table Column
+  const performanceHistoryColumns = [
+    {
+      title: "No.",
+      key: "no",
+      render: (_: any, data: any, index: any) => (
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+        >
+          {index + 1}
+        </Link> : index + 1
+      ),
+    },
+    {
+      title: "Avatar",
+      key: "avatar",
+      align: 'center',
+      render: (_: any, row: any) => ( role !== constants.COMPANY_ADMIN ? 
+      (
+        <Space size="middle">
+          <Link
+            className="bread-crumb"
+            to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+          >
+            <Avatar size={32} src={row.avatar} alt={row.userName}>
+              {row.userName.split(' ').map((name:any) => name.charAt(0))}
+            </Avatar>
+          </Link>
+        </Space>
+      ): (
+        <Avatar size={32} src={row.avatar} alt={row.userName}>
+          {row.userName.split(' ').map((name:any) => name.charAt(0))}
+        </Avatar>
+      )),
+    },
+    {
+      title: "Name",
+      key: "name",
+      render: (_: any, row: any) => (
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+        >
+          {row.userName}
+        </Link> : row.userName
+      ),
+    },
+    {
+      title: "Department",
+      key: "department",
+      render: (_: any, row: any) => (
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+        >
+          {row.department}
+        </Link> : row.department
+      ),
+    },
+    {
+      title: "Last Evaluation",
+      key: "date",
+      render: (_: any, row: any) => (
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+        >
+          {dayjs(row.lastEvaluationDate).format('DD/MM/YYYY')}
+        </Link> : dayjs(row.lastEvaluationDate).format('DD/MM/YYYY')
+      ),
+    },
+    {
+      title: "Evaluated By",
+      key: "evaluatedBy",
+      render: (_: any, row: any) => (
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+        >
+          {row.evaluatedBy}
+        </Link> : row.evaluatedBy
+      ),
+    },
+    {
+      title: "Total Evaluations",
+      key: "totalEvaluations",
+      align: 'center',
+      render: (_: any, row: any) => (
+        role !== constants.COMPANY_ADMIN ? <Link
+          className="bread-crumb"
+          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+        >
+          {row.totalEvaluations}
+        </Link> : row.totalEvaluations
+      ),
+    },
+    {
+      title: "Overall Performance",
+      key: "overallPerformance",
+      render: (_: any, row: any) => {
+        let val = Math.round(row.sumOverallRating);
+
+        return (
+          <Space size="middle">
+            <Link
+              className="flex gap-2 bread-crumb"
+              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
+            >
+              <Progress
+                size={[200, 13]}
+                percent={val}
+                strokeColor={val < 50 ? "#E95060" : "#4A9D77"}
+                format={(percent: any) => {
+                  let val = Math.round(percent);
+
+                  return (
+                    <p
+                      className={
+                        "myClass font-normal " +
+                        (val < 50 ? "secondary-color" : "teriary-color")
+                      }
+                    >
+                      {val}%
+                    </p>
+                  )
+                }}
+              />
+              {row.sumOverallRating > 89 ? <TalentBadge /> : <></>}
+            </Link>
+          </Space>
+        );
+      },
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_: any, row: any) => (
+        <Space size="middle">
+          <Dropdown
+            trigger={["click"]}
+            placement="bottomRight"
+            overlayClassName="menus_dropdown_main"
+            menu={{
+              items: [
+                { label: 'View Details', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row.inEvaluationUserId}/${role !== constants.UNIVERSITY ? ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL}`) },
+                { label: 'Evaluate', key: 'Evaluate', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`)},
+                { label: 'Appreciate', key: 'Appreciate', onClick: () => openAprreciationModal()},
+                { label: 'Warn', key: 'Warn', onClick: () => openWarnModal()},
+              ]
+            }}
+          >
+            <MoreIcon className="cursor-pointer" />
+          </Dropdown>
+        </Space>
+      ),
+    },
+  ];
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -555,7 +505,7 @@ console.log("allPerformance:: ", allPerformance)
                     </Button>
                   </Space>
                 </Form.Item>
-            </Form>
+              </Form>
             {/* <div className="flex flex-col">
                <div className="flex flex-col my-2 gap-2">
                 <p className="sidebar-label">Evaluated By</p>
@@ -615,7 +565,7 @@ console.log("allPerformance:: ", allPerformance)
         <Col xs={24}>
           <BoxWrapper>
             <GlobalTable 
-              columns={columnNames} 
+              columns={performanceHistoryColumns} 
               tableData={allPerformance}
               pagination={true}
               loading={loadingAllPerformance}

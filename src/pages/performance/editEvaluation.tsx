@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Col, Row, Typography, Form } from "antd";
+import { useParams } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../config/constants";
+import dayjs from 'dayjs';
 import "./style.scss";
 import {
   PageHeader,
@@ -13,74 +15,30 @@ import {
   Notifications,
   EvaluationRating
 } from "../../components";
-import {
-  Sad,
-  SadColorLessEmoji,
-  Neutral,
-  NeutralColorLessEmoji,
-  Happy,
-  HappyColorLessIcon,
-  Awesome,
-  SatisfiedColorLessIcon,
-  DownloadIconWithBg,
-  Success,
-} from '../../assets/images';
-import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { DownloadIconWithBg } from '../../assets/images';
 import { header, tableData } from "./CompanyAdmin/pdfData";
-import useCustomHook from "./actionHandler";
-import { evaluationState } from "../../store";
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import usePerformanceHook from "./actionHandler";
+import { evaluationState, performanceDetailState } from "../../store";
+import { useRecoilValue } from "recoil";
+import type { RadioChangeEvent } from 'antd';
 
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {evalId} = useParams();
   const [form] = Form.useForm();
-  const action = useCustomHook();
+  const {getPerformanceDetail, downloadPdf } = usePerformanceHook();
   const evaluation = useRecoilValue(evaluationState);
+  const performanceDetail:any = useRecoilValue(performanceDetailState);
+  const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
+  const [evaluationValues, setEvaluationValues] = useState({})
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
 
-  const user = {
-    name: 'Calvin Grayson',
-    profession: 'Manager',
-    avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-    learningObjectives: '74',
-    discipline: '61',
-    personal: '92',
-  };
-
-  const detailedCards = [
-    { id: 0, title: 'Learning Objectives', progressColor: '#9BD5E8' },
-    { id: 1, title: 'Discipline', progressColor: '#E96F7C' },
-    { id: 2, title: 'Personal', progressColor: '#6AAD8E' },
-  ];
-
-  const emojiData = [
-    {
-      name: "Unsatisfactory",
-      comp: Sad,
-      colorLessComp: SadColorLessEmoji,
-    },
-    {
-      name: "Still Learning",
-      comp: Neutral,
-      colorLessComp: NeutralColorLessEmoji
-    },
-    {
-      name: "Meeting Expectations",
-      comp: Happy,
-      colorLessComp: HappyColorLessIcon
-    },
-    {
-      name: "Exceeding Expectations",
-      comp: Awesome,
-      colorLessComp: SatisfiedColorLessIcon
-    },
-  ];
-
+console.log("performanceDetail:: ", performanceDetail)
   const data = [
     // {
     //   id: 0,
@@ -123,6 +81,9 @@ const ViewPerformance = () => {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getPerformanceDetail(setLoadingPerfDetail, evalId)
+  }, [])
 
 
 
@@ -162,6 +123,16 @@ const ViewPerformance = () => {
     console.log('Values::: ', values)
   }
 
+  const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))
+
+  const handleRadioChange = (event: RadioChangeEvent) => {
+    const { name, value }:any = event.target
+    setEvaluationValues({
+      ...evaluationValues,
+      [name]: value
+    })
+  };
+
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -177,7 +148,7 @@ const ViewPerformance = () => {
         <p className="evaluation-txt text-teriary-color">
           Evaluation Date:
           <span className="mx-2 font-semibold text-secondary-color">
-            June 16, 2019
+            {dayjs(performanceDetail?.updatedAt).format('MMMM D, YYYY')}
           </span>
         </p>
 
@@ -185,7 +156,7 @@ const ViewPerformance = () => {
           size='large'
           className='icon-btn'
           onClick={() => {
-            action.downloadPdf(header, tableData);
+            downloadPdf(header, tableData);
             Notifications({ title: "Success", description: "Download Done", type: 'success' })
           }}
           icon={<DownloadIconWithBg />}
@@ -195,29 +166,30 @@ const ViewPerformance = () => {
         <Row gutter={[20, 10]}>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationCard
-              name={evaluation.evaluatedBy.name}
-              avatar={evaluation.evaluatedBy.avatar}
-              profession={evaluation.evaluatedBy.role}
+              name={performanceDetail?.ratedByUserName}
+              avatar={performanceDetail?.evaluatedByAvatar}
+              avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
+              profession={performanceDetail?.ratedByUserRole}
             />
           </Col>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationStatsCard
               name={"Learning Objectives"}
-              percentage={evaluation.learningObjectives.percentage}
+              percentage={performanceDetail?.learningObjectiveRating}
               color={'#9BD5E8'}
             />
           </Col>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationStatsCard
               name={"Discipline"}
-              percentage={evaluation.discipline.percentage}
+              percentage={performanceDetail?.disciplineRating}
               color={'#E96F7C'}
             />
           </Col>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationStatsCard
               name={"Personal"}
-              percentage={evaluation.personal.percentage}
+              percentage={performanceDetail?.personalRating}
               color={'#6AAD8E'}
             />
           </Col>
@@ -230,11 +202,13 @@ const ViewPerformance = () => {
               </Typography.Title>
             </div>
           </Col>
-          {evaluation.learningObjectives.questions.map((question: any, index) =>
+          {performanceDetail?.LEARNING_OBJECTIVE.map((question: any, index:any) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
               <EvaluationRating
+                name={`learningObj${index}`}
                 title={question.title}
-                value={question.value}
+                value={question.rating}
+                onChange={handleRadioChange}
               />
             </Col>
           )}
@@ -248,11 +222,13 @@ const ViewPerformance = () => {
               </Typography.Title>
             </div>
           </Col>
-          {evaluation.discipline.questions.map((question: any, index) =>
+          {performanceDetail?.DISCIPLINE.map((question: any, index:any) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
               <EvaluationRating
+                name={`discipline${index}`}
                 title={question.title}
-                value={question.value}
+                value={question.rating}
+                onChange={handleRadioChange}
               />
             </Col>
           )}
@@ -266,11 +242,13 @@ const ViewPerformance = () => {
               </Typography.Title>
             </div>
           </Col>
-          {evaluation.personal.questions.map((question: any, index) =>
+          {performanceDetail?.PERSONAL.map((question: any, index:any) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
               <EvaluationRating
+                name={`personal${index}`}
                 title={question.title}
-                value={question.value}
+                value={question.rating}
+                onChange={handleRadioChange}
               />
             </Col>
           )}
@@ -284,7 +262,7 @@ const ViewPerformance = () => {
             rows={6}
             classNme='light-blue-bg-color text-primary-color'
             placeholder="placeholder"
-            defaultValue='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book'
+            defaultValue={performanceDetail.comment}
           />
         </div>
 

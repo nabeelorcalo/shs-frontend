@@ -16,11 +16,13 @@ interface EmojiProps {
   title: string,
   value: number
   disabled?: boolean
+  name?: any
+  onChange?: any
 }
 
 
 export const EvaluationRating = (props: EmojiProps) => {
-  const { title, value, disabled=false } = props;
+  const { title, value, name, disabled=false, onChange } = props;
 
   return (
     <BoxWrapper className="evaluation-card">
@@ -29,7 +31,7 @@ export const EvaluationRating = (props: EmojiProps) => {
           {title}
         </p>
         <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
-          <Radio.Group defaultValue={value} disabled={disabled}>
+          <Radio.Group value={value} disabled={disabled} name={name} onChange={onChange}>
             <Radio.Button value={1}>
               <div className="emoji-icons">
                 <SadGray />

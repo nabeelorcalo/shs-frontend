@@ -21,6 +21,16 @@ export const allPerformancesfilterParamsState = atom({
   default: {},
 });
 
+export const performanceDetailState = atom({
+  key: 'performanceDetailState',
+  default: {},
+});
+
+export const evaluationValuesState = atom({
+  key: 'evaluationValuesState',
+  default: {},
+});
+
 const data = {
   evalDate: 'June 18, 2019',
   evaluatedBy: {

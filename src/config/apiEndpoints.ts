@@ -68,6 +68,7 @@ const endpoints = {
 
   // Performance
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
+  GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
 }
 export default endpoints;
