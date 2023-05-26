@@ -13,13 +13,11 @@ import '../style.scss';
 
 const ManagerMain = () => {
   const navigate = useNavigate();
-
   const [value, setValue] = useState("");
   const [showGrid, setShowGrid] = useState(true);
   const [showTable, setShowTable] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
-
   const searchValue = () => { };
   
   const handleClick = (buttonIndex:any) => {
@@ -60,12 +58,10 @@ const ManagerMain = () => {
                 { value: "Active", label: "Active" },
                 { value: "Inactive", label: "Inactive" },
                 { value: "Publish", label: "Publish" },
-               
               ]}
             />
           </div>
         </div>
-
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">

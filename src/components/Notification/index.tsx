@@ -8,7 +8,7 @@ interface NotificationProps {
   description: string;
   type?: string;
 }
-export const Notifications = (props: NotificationProps) => {
+export const Notifications: any = (props: NotificationProps) => {
   const { type = "success", title, description } = props;
   const typeObj: any = {
     success: <Success />,

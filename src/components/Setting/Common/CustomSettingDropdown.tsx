@@ -1,42 +1,37 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ThreeDots } from "../../../assets/images";
 import { Dropdown, MenuProps } from "antd";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './CustomSettingDropdown.scss'
 
 export const DropDownForSetting = (props: any) => {
-  const { showDeleteModal,
+  const {
+    setState,
     link,
-    showEditModal,
-    setShowDeleteModal,
     state,
     editData,
-    SetId,
-    id,
     SetEditData,
-    setShowEditModal
   } = props
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate()
+
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
-  const GetIdHandler = (id: number) => {
-    SetId(id)
-  }
 
   const GetEditHandler = (data: number) => {
     SetEditData(data)
   }
 
   const editHandler = () => {
-    GetEditHandler({...editData , isEdit:"isEdit"})
-    setShowEditModal({ ...state, showEditModal: !showEditModal }),
+    GetEditHandler({ ...editData, isEdit: "isEdit" });
+    setState({ ...state, isEditModal: true });
     setVisible(false);
   }
 
   const deleteHandler = () => {
-    setShowDeleteModal({ ...state, setShowDeleteModal: !showDeleteModal }),
-      setVisible(false), GetIdHandler(id);
+    setState({ ...state, isDeleteModal: true, id: editData?.id });
+    setVisible(false)
   }
 
   const items: MenuProps['items'] = [
@@ -44,13 +39,13 @@ export const DropDownForSetting = (props: any) => {
       key: '1',
       label: <div>
         {
-          link ? 
+          link ?
             <div>
-              <NavLink to={link}
+              <div onClick={() => navigate(link, { state: editData })}
                 className="text-primary-color custom-setting-dropdown-edit-btn font-normal"
               >
                 Edit
-              </NavLink>
+              </div>
             </div>
             :
             <span onClick={editHandler}

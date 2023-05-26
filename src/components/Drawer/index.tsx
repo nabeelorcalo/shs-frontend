@@ -23,7 +23,7 @@ export const Drawer: any = ({ title, className, placement = "right", open, onClo
       placement={placement}
       open={open}
       onClose={onClose}
-      width={(title === "Filters" && FilterWidth < 768) ? 300 : width }
+      width={(title === "Filters" && FilterWidth < 768) ? 300 : width}
       closable={closable}
       closeIcon={<IconCloseCircle />}
       className={`shs-drawer ${className}`}

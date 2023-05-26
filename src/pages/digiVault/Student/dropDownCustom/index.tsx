@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./style.scss";
 import { Space, Dropdown } from "antd";
-import { ThreeDotsIcon } from "../../../../assets/images"
+import { ThreeDots } from "../../../../assets/images"
 interface Props {
-  menu1:any,
+  menu1: any,
 }
 const CustomDroupDown = (props: Props) => {
-  const { menu1} = props;
+  const { menu1 } = props;
   const [visible, setVisible] = useState(false);
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
@@ -21,9 +21,7 @@ const CustomDroupDown = (props: Props) => {
         onVisibleChange={handleVisibleChange}
         trigger={["click"]}
       >
-        <div className="cursor-pointer">
-          <ThreeDotsIcon />
-        </div>
+        <ThreeDots className="cursor-pointer" />
       </Dropdown>
     </Space>
   );

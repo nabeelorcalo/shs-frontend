@@ -1,33 +1,44 @@
-@import '../../scss/colors';
+@import "../../scss/colors";
+
 .delegate-agent {
-  .delegate-right-menu{
+  .delegate-right-menu {
     flex-wrap: wrap;
-    @media only screen and (max-width:992px) {
+
+    @media only screen and (max-width: 992px) {
       margin: 10px 0px;
       justify-content: start;
     }
-    @media only screen and (max-width:575px) {
+
+    @media only screen and (max-width: 575px) {
       flex-direction: column;
     }
   }
+
   .main-title {
-    font-family: "Outfit";
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 32px;
-
     color: $primary-bg-color;
   }
+
   .card-main {
     background: $white-bg-color;
-    border: 1px solid #d9dbe9;
+    border: 1px solid $text-error-line-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
     padding: 5px;
   }
+
+  .four-card-main {
+    background: $white-bg-color;
+    border: 1px solid $text-error-line-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 16px;
+    padding: 14px;
+  }
+
   .card-title {
-    font-family: "Outfit";
     font-style: normal;
     font-weight: 600;
     font-size: 20px;
@@ -35,18 +46,20 @@
     color: $text-secondary-body-color;
     margin-top: 5px;
   }
+
   .card-number {
-    font-family: "Outfit";
     font-style: normal;
     font-weight: 500;
     font-size: 38px;
     line-height: 46px;
     color: $text-secondary-body-color;
   }
+
   .img-bg {
     margin-left: 10px;
     margin-top: 5px;
   }
+
   .graph-card {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
@@ -54,4 +67,3 @@
     padding: 1rem;
   }
 }
-

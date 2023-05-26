@@ -1,39 +1,55 @@
 import { useState } from 'react';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertIcon } from '../../assets/images'
+import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, More, AlertIcon, FullStop } from '../../assets/images'
 import { InternshipProgressStepper } from '../InternshipProgressStepper';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { Notifications } from '../Notification';
 import { PopUpModal } from '../Model';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from '../../pages/internships/actionHandler';
+import { Notifications } from '../../components/Notification';
 import dayjs from 'dayjs';
 import './style.scss';
 
 export const InternshipProgressCard = (props: any) => {
-  const { item, title, status, department, internType, postedBy, 
+  const { item, title, status, department, internType, postedBy,
     location, createdAt, closingDate, interns } = props;
   const [decline, setDecline] = useState(false);
   const [deleteInternship, setDeleteInternship] = useState(false);
-  const { deleteInternshipData,getDuplicateInternship } = useCustomHook();
+  const { deleteInternshipData, getDuplicateInternship } = useCustomHook();
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
   const internStatus = {
-    published:'PUBLISHED',
-    closed:'CLOSED',
-    pending:'PENDING',
-    draft:'DRAFT',
+    published: 'PUBLISHED',
+    closed: 'CLOSED',
+    pending: 'PENDING',
+    draft: 'DRAFT',
+    rejected: 'REJECTED',
   }
 
   const handleDelete = (id: any) => {
     deleteInternshipData(id);
     setDeleteInternship(false)
   }
-  const handleDublicate=(id:any)=>{
+  const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
+  const { EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
 
+  const handleUpdateStatus = (updateStatus: any) => {
+    const Obj = {
+      ...item,
+      status: updateStatus ? updateStatus : status
+    }
+    EditNewInternshipsData(Obj)
+    getAllInternshipsData()
+  }
+  const handleDeclineInternship = () => {
+    setDecline(false);
+    handleUpdateStatus('REJECTED')
+    getAllInternshipsData()
+    Notifications({ title: "Success", description: "Internship declined", type: "success" })
+  }
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -41,7 +57,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '1',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
-            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: item.id })
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: { data: item } })
           }}>
             View details
           </a>
@@ -52,14 +68,7 @@ export const InternshipProgressCard = (props: any) => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              Notifications({
-                title: "Success",
-                description: "Internship Published",
-                type: 'success'
-              })
-            }}
-          >
+            onClick={() => handleUpdateStatus('PUBLISHED')}>
             Publish
           </a>
         ),
@@ -67,7 +76,8 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft ? {
         key: '3',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`,{ state: item.id }) }}>
+          <a rel="noopener noreferrer"
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIP_PIPELINE}`, { state: { data: item } }) }}>
             Pipeline
           </a>
         ),
@@ -75,7 +85,10 @@ export const InternshipProgressCard = (props: any) => {
       status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed ? {
         key: '4',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => {
+            handleUpdateStatus('CLOSED');
+            Notifications({ title: "Success", description: "Internship closed", type: "success" })
+          }}>
             Close
           </a>
         ),
@@ -91,9 +104,10 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '6',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP,{ state: item }); }}>
-          Edit
-        </a>
+          <a rel="noopener noreferrer"
+           onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP, { state: item }) }}>
+            Edit
+          </a>
         ),
       },
       {
@@ -107,7 +121,7 @@ export const InternshipProgressCard = (props: any) => {
       {
         key: '8',
         label: (
-          <a rel="noopener noreferrer" onClick={()=>{handleDublicate(item.id)}}>
+          <a rel="noopener noreferrer" onClick={() => { handleDublicate(item.id) }}>
             Duplicate
           </a>
         ),
@@ -127,7 +141,7 @@ export const InternshipProgressCard = (props: any) => {
   return (
     <div className='flex flex-col gap-3 cursor-pointer'>
       <div className='flex flex-row justify-between'>
-        <h3>{title}</h3>
+        <h3 className='text-primary-color text-xl'>{title}</h3>
         <PopOver />
       </div>
       <div className='flex max-sm:flex-col md:flex-row gap-6'>
@@ -137,12 +151,12 @@ export const InternshipProgressCard = (props: any) => {
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <JobTimeIcon />
-          <p>{internType}</p>
+          <p className='capitalize'>{internType?.replace('_', ' ').toLowerCase()}</p>
         </div>
-        <div className='flex flex-row gap-3 items-center'>
+        {location && <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
           <p>{location}</p>
-        </div>
+        </div>}
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />
           <p>{postedBy}</p>
@@ -153,13 +167,13 @@ export const InternshipProgressCard = (props: any) => {
       </div>
       <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
         <div className='flex max-sm:flex-col md:flex-row  gap-3'>
-          {createdAt === null ? <p>Created on --</p> : <p>Created on {createdOn}</p>}
-          <p>.</p>
-          {(closingDate === null) ? <p>Expected Closing Date  -- </p> : <p>Expected Closing Date {expectedClosingDate}</p>}
+          <p>Created on {createdAt === null ? '--' : createdOn}</p>
+          <p><FullStop /></p>
+          <p>Expected Closing Date {expectedClosingDate === null ? "--" : expectedClosingDate}</p>
         </div>
         <p>
-          <span className={`${status} white-color px-3 py-1 rounded-lg`} >
-            {status}
+          <span className={`${status} white-color px-3 py-1 rounded-lg capitalize`} >
+            {status?.toLowerCase()}
           </span>
         </p>
       </div>
@@ -192,6 +206,7 @@ export const InternshipProgressCard = (props: any) => {
               type="primary"
               size="small"
               className="button-error max-sm:w-full"
+              onClick={handleDeclineInternship}
             >
               Decline
             </Button>

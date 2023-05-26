@@ -1,8 +1,6 @@
 @import "../../../../../scss/_colors.scss";
 
 .add-location {
-  font-family: outfit !important;
-
   .post-code {
     .search-bar {
       background: $text-input-bg-color;
@@ -83,7 +81,6 @@
   .add-button {
     font-size: 16px;
     font-weight: 600;
-    font-family: 'Outfit';
 
     &:hover {
       opacity: 85%;

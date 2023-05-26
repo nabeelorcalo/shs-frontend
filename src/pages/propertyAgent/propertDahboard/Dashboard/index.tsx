@@ -1,65 +1,152 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
-import { activityData, cardData, graphData, innerCard } from "./DashboardMock";
+import { activityData, graphData, innerCard } from "./DashboardMock";
+import useCustomHook from "../../actionHandler";
+import { Approved, Clip, Pending, People, Reject } from "../../../../assets/images";
 import "../../style.scss";
+import { useRecoilState } from "recoil";
+import {
+  getListingState,
+  getPropertAgents,
+  getRecentListingState
+} from "../../../../store/getListingState";
+import dayjs from "dayjs";
+import { getRecentActivities } from "../../../../store/getListingState";
 
 const MainDashboard = () => {
-  const nivagate = useNavigate();
+  const navigate = useNavigate();
+  const action = useCustomHook();
+  const propertyData = useRecoilState<any>(getListingState);
+  const totalAgent = useRecoilState<any>(getPropertAgents);
+  const recentList = useRecoilState<any>(getRecentListingState);
+  const recentActivity = useRecoilState<any>(getRecentActivities)
+
+  console.log(recentList,'gggggg')
+  
+  useEffect(() => {
+    action.propertgetlistingstata();
+    action.propertGetTotalAgents();
+    action.getRecentListing();
+    action.generalActivityData();
+  }, [])
+
   return (
     <div className="main-dashboard">
-      <div style={{ overflowX: "scroll" }}>
-        <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
-          {cardData.map((item, index) => {
-            return (
-              <div>
-                <div className="card-main">
+      <div style={{ overflowX: "scroll", cursor: "pointer" }}>
+        <div className="flex items-center gap-3" >
+          <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
+            {totalAgent[0]?.map((item: any, index: any) => {
+              return (
+                <div className="card-main w-[100%] md:w-[350px]">
                   <div className=" flex items-center p-2">
-                    <div className="rounded-[10px] h-[60px] w-[60px]"
-                      style={{ backgroundColor: `${item.bgColor}`, padding: '0.2rem' }}>
+                    <div className="rounded-[10px] h-[60px] w-[60px] light-gray-bg-color p-[0.2rem]">
                       <div className="img-bg pl-2 pt-2 pr-1">
-                        <img src={item.img} alt="" style={{ zIndex: 999 }} />
+                        <People />
                       </div>
                     </div>
                     <div className="ml-3">
-                      <Typography className="card-title">
-                        {item.cardTitle}
+                      <Typography className="card-title ">
+                        Properties Agents
                       </Typography>
-                      <Typography className="card-number">
-                        {item.cardNumber}
+                      <Typography className="card-number pt-2">
+                        {item?.totalAgents}
                       </Typography>
                     </div>
                   </div>
-                  {item.cardNumber === "33" && (
-                    <>
-                      {item.status.map((item, index) => {
-                        return (
-                          <>
-                            <div className="status flex justify-end items-center">
-                              <div
-                                className="status-dot"
-                                style={{
-                                  background:
-                                    item.statusDot === "Active"
-                                      ? "#3DC575"
-                                      : "#D83A52",
-                                }}
-                              ></div>
-                              <Typography className="status-card ml-2">
-                                {item.statusDot}
-                                <span className="ml-2">{item.number}</span>
-                              </Typography>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </>
-                  )}
+                  <div className="status flex justify-end items-center pr-3 pb-1">
+                    <div className="status-dot-active mr-[0.8rem]"></div>
+                    <Typography className="status-card ml-2">
+                      Active
+                      <span className="ml-2">({item?.activeAgents})</span>
+                    </Typography>
+                  </div>
+                  <div className="status flex justify-end items-center pr-3">
+                    <div className="status-dot-inactive"></div>
+                    <Typography className="status-card ml-2">
+                      Inactive
+                      <span className="ml-2">({item?.inactiveAgents})</span>
+                    </Typography>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              )
+            })}
+            {propertyData[0]?.map((item: any, index: any) => {
+              return (
+                <>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-gray-bg-color p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Clip />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Total Listing
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.totalListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-yellow-bg-color p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Pending />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Pending Listings
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.pendingListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-green-bg-color p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Approved />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Approved Listings
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.approvedListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-main w-[100%] md:w-[350px]">
+                    <div className=" flex items-center p-2">
+                      <div className="rounded-[10px] h-[60px] w-[60px] light-red-bg-color p-[0.2rem]">
+                        <div className="img-bg pl-2 pt-2 pr-1">
+                          <Reject />
+                        </div>
+                      </div>
+                      <div className="ml-3">
+                        <Typography className="card-title">
+                          Rejected Listings
+                        </Typography>
+                        <Typography className="card-number pt-2">
+                          {item?.rejectedListings}
+                        </Typography>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+          </div>
         </div>
       </div>
       <Row gutter={[50, 20]} className="mt-5">
@@ -81,29 +168,51 @@ const MainDashboard = () => {
             </Typography>
             <div className="inner-activities flex mt-4">
               <Row gutter={[20, 20]}>
-                {activityData.map((item, index) => {
+                {recentActivity[0]?.map((item: any, index: any) => {
                   return (
                     <Col span={24}>
                       <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
-                          <Typography className="text-[#A0A3BD] text-sm font-normal font-[outfit]">
-                            {item.date}
+                          <Typography className="text-[#A0A3BD] text-xs font-normal">
+                            {dayjs(item?.createdAt).format('DD/MMM')}
                           </Typography>
                         </Col>
                         <hr />
                         <Col xxl={16} xl={16} lg={15} md={18} sm={17} xs={19}>
                           <div className="ml-2">
-                            <Typography className="text-primary-color text-sm font-semibold font-[outfit]">
-                              {item.userStatus}
+                            <Typography className="text-primary-color text-sm font-semibold">
+                              {item?.activity}
                             </Typography>
                             <div className="flex ">
-                              <img src={item.img} alt="1" />
-                              <Typography className="text-teriary-color text-sm font-normal font-[outfit] mr-10 ml-3">
-                                {item.detail}
+                              <img
+                                src={item?.performedByuser?.profileImage?.metaData?.mimetype ?
+                                  `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.performedByuser?.profileImage.mediaId}.${item?.performedByuser?.profileImage.metaData.extension}`
+                                  :
+                                  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                }
+                                alt="userImage"
+                                style={{ width: "27px" }}
+                              />
+                              <Typography className="text-teriary-color text-sm font-normal mr-8 ml-2">
+                                {
+                                  item?.activity === "user sign up" ?
+                                    item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' registerd successfully'
+                                    :
+                                    item?.activity === 'addAssement' ?
+                                      item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' add assesment'
+                                      :
+                                      item?.activity === 'create internship' ?
+                                        item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' created internship'
+                                        :
+                                        item?.activity === 'create company manager' ?
+                                          item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName+ ' added company manager'
+                                          :
+                                          null
+                                }
                               </Typography>
                             </div>
-                            <Typography className="text-teriary-color text-sm font-normal font-[outfit]">
-                              {item.time}
+                            <Typography className="text-teriary-color text-sm font-normal">
+                              {dayjs(item?.createdAt).format('HH:mm a')}
                             </Typography>
                           </div>
                         </Col>
@@ -129,17 +238,17 @@ const MainDashboard = () => {
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
-              {innerCard.map((item, index) => {
+              {recentList[0].map((item: any, index: any) => {
                 return (
                   <>
                     <div
                       onClick={() =>
-                        item.status === "Published"
-                          ? nivagate("published")
-                          : item.status === "Rejected"
-                            ? nivagate("rejected")
-                            : item.status === "Pending"
-                              ? nivagate("pending")
+                        item?.publicationStatus === "published"
+                          ? navigate(`${item.id}`)
+                          : item?.publicationStatus === "rejected"
+                            ? navigate(`${item.id}`)
+                            : item?.publicationStatus === "pending"
+                              ? navigate(`${item.id}`)
                               : ""
                       }
                       className="inner-card"
@@ -147,44 +256,45 @@ const MainDashboard = () => {
                       <Row>
                         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
                           <Typography>
-                            <span className="text-sm font-medium color-[#363565]">
-                              {item.name}
+                            <span className="text-sm font-medium primary-color">
+                              {item?.user?.firstName} {item?.user?.lastName}
                             </span>
-                            <span className="text-xs font-normal color-[#A0A3BD]">
-                              {item.recentActivity}
+                            <span className="text-xs font-normal text-success-placeholder-color">
+                              &nbsp;Recent listed new property
                             </span>
                           </Typography>
                           <Typography>
-                            <span className="text-xs font-normal color-[#A0A3BD]">
+                            <span className="text-xs font-normal text-success-placeholder-color">
                               Address:
                             </span>
-                            <span className="text-xs font-normal color-[#4E4B66]">
-                              {item.address}
+                            <span className="text-xs font-normal text-secondary-color ">
+                              {item?.addressOne}
                             </span>
                           </Typography>
-                          <Typography className="text-xs font-normal color-[#A0A3BD]">
-                            {item.time}
+                          <Typography className="text-xs font-normal text-success-placeholder-color">
+                            {dayjs(item?.createdAt).format('HH:mm a')}
                           </Typography>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
-                          <Typography className="flex justify-end font-medium text-base color-[#4E4B66]">
-                            {item.price}
+                          <Typography className="flex justify-end font-medium text-base text-secondary-color">
+                            £{item.rent}
                           </Typography>
                           <div
                             className="p-1 mt-4 rounded-[6px]"
-                            style={{
+                            style=
+                            {{
                               background:
-                                item.status === "Published"
+                                item?.publicationStatus === "published"
                                   ? "#3DC575"
-                                  : item.status === "Rejected"
+                                  : item?.publicationStatus === "rejected"
                                     ? "#D83A52"
-                                    : item.status === "Pending"
+                                    : item?.publicationStatus === "pending"
                                       ? "#FFC15D"
                                       : "",
                             }}
                           >
-                            <Typography className="cursor-pointer text-xs font-normal text-white text-center ">
-                              {item.status}
+                            <Typography className="cursor-pointer text-xs font-normal white-color text-center capitalize">
+                              {item?.publicationStatus}
                             </Typography>
                           </div>
                         </Col>

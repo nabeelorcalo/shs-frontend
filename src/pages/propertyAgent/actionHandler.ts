@@ -1,21 +1,46 @@
 import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
+import apiEndpints from "../../config/apiEndpoints";
 import constants from "../../config/constants";
-
-// Chat operation and save into store
+import { getListingState, getPropertAgents, getRecentActivities, getRecentListingState } from "../../store/getListingState";
+import { useRecoilState } from "recoil";
+            
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [propertListingData, setPropertListingData] = useRecoilState(getListingState);
+  const [totalData, setTotalData] = useRecoilState(getPropertAgents);
+  const [recentListing, setRecentLisiting] = useRecoilState(getRecentListingState)
+  const [generalActivity, setGeneralActivity] = useRecoilState(getRecentActivities);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+  const { PROPERTY_GET_LISTING_STATS,  PROPERTY_Get_TOTAL_AGENTS, GET_RECENT_LISTING , GET_GENERAL_ACTIVITY} = apiEndpints;
+  const propertgetlistingstata = async () => {
+    const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
+    setPropertListingData(data);
+  }
+   
+  // propertagents
+  const propertGetTotalAgents= async () => {
+    const { data } = await api.get(PROPERTY_Get_TOTAL_AGENTS );
+    setTotalData(data);
+  }
 
+  // GET Recent Listing
+   
+  const getRecentListing = async () => {
+    const {data} = await api.get(GET_RECENT_LISTING);
+    setRecentLisiting(data);
+  }
+
+  // genral activity
+  const generalActivityData = async () => {
+    const { data } = await api.get(GET_GENERAL_ACTIVITY);
+    setGeneralActivity(data);
+   }
+  
   return {
-    getData,
+    propertgetlistingstata,
+    propertGetTotalAgents,
+    getRecentListing,
+    generalActivityData
   };
 };
 

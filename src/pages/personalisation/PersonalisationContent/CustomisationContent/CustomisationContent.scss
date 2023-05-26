@@ -1,0 +1,30 @@
+@import '../../../../scss/colors';
+
+#primary_color {
+    border-radius: 0.375rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+#primary_color::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+#primary_color::-webkit-color-swatch {
+    border: none;
+    border-radius: 0.375rem;
+}
+
+.ant-collapse-header {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+}
+
+.accordionIcon {
+    color: $primary-light-bg-color!important;
+    font-size: 18px !important;
+    border-radius: 4px !important;
+}

@@ -1,0 +1,23 @@
+@import "../../../../../scss/colors";
+
+.files-wrap {
+    .files {
+        transition: all 0.2s linear;
+        border-radius: 6px;
+
+        &:hover {
+            background-color: #e6f4f9;
+
+            .icons-sec {
+                display: flex;
+            }
+        }
+
+        .icons-sec {
+            display: none;
+            cursor: pointer;
+            background-color: $white-bg-color;
+            border-radius: 8px !important;
+        }
+    }
+}

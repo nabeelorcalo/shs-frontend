@@ -1,0 +1,22 @@
+@import '../../../../../scss/colors';
+.unlock-vault-password {
+  label {
+    color: $text-teriary-label-color !important;
+  }
+  .ant-input-affix-wrapper {
+    background-color: $text-input-bg-color !important;
+    border: none !important;
+
+    input {
+      background-color: $text-input-bg-color !important;
+    }
+
+    &:hover {
+      background-color: transparent !important;
+
+      input {
+        background-color: transparent !important;
+      }
+    }
+  }
+}

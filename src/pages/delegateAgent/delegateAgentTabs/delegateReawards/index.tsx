@@ -27,12 +27,12 @@ const Rewards = () => {
             <>
               <Row gutter={30} className="mb-7 mt-5">
                 <Col xxl={3} xl={4} lg={4} md={24} sm={24} xs={24}>
-                  <Typography className="text-xl font-medium font-outfit text-secondary-color">
+                  <Typography className="text-xl font-medium text-secondary-color">
                     {item.mainLable}
                   </Typography>
                 </Col>
                 <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
-                  <Typography className="text-base font-semibold font-outfit text-teriary-color ">
+                  <Typography className="text-base font-semibold text-teriary-color ">
                     {item.lableOne}
                   </Typography>
                   <Input
@@ -42,7 +42,7 @@ const Rewards = () => {
                   />
                 </Col>
                 <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
-                  <Typography className="text-base font-semibold font-outfit text-teriary-color ">
+                  <Typography className="text-base font-semibold text-teriary-color ">
                     {item.lableTwo}
                   </Typography>
                   <Input
