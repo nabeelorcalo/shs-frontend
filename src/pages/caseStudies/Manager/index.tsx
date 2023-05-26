@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { BoxWrapper, Drawer, DropDown, FiltersButton, Notifications, PageHeader, SearchBar } from "../../../components";
-import Image from "../../../assets/images/Grievances/avater-1.svg";
 import CaseStudiesTable from "../Common/caseStudiesTable";
 import Filters from "../Common/filter";
 import { Row, Col } from "antd";
@@ -12,12 +11,10 @@ const index = () => {
   useEffect(() => {
     getData();
   }, []);
+
   const caseStudyTableData = caseStudyData?.data ?? [];
-
   const TableColumn = ["No.", "Avater", " Name", "Report Name", "Department", "Assessment Date", "Status"];
-
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [value, setValue] = useState<any>();
   // search
   const handleChange = (value: any) => {
     getData({ search: value });

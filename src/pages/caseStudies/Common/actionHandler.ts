@@ -1,5 +1,5 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import React from "react";
+import React, { useRef, useState } from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 
@@ -9,6 +9,7 @@ import api from "../../../api";
 import csv from "../../../helpers/csv";
 
 // Chat operation and save into store
+let signPad: any = {};
 const useCustomHookforAssment = () => {
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -60,9 +61,26 @@ const useCustomHookforAssment = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+  const [signature, setSignature] = useState("");
+  const getSignPadValue = (value: any) => {
+    console.log(value);
+    signPad = value
+  }
+  const cancelDrawaSign = () => {
+    signPad?.clear();
+  };
+  const handleSignatue = () => {
+    // setState({ trimmedDataURL: sigPad.getTrimmedCanvas().toDataURL("image/png") });
+    console.log(signPad?.getTrimmedCanvas()?.toDataURL("image/png"));
+    console.log(signPad);
+    setSignature(signPad?.getTrimmedCanvas()?.toDataURL("image/png"))
+  };
+
   return {
     getData,
     downloadPdfOrCsv,
+    getSignPadValue,
+    cancelDrawaSign, handleSignatue, signature
   };
 };
 

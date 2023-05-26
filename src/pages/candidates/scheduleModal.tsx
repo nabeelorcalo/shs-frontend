@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import actionHandler from "./actionHandler";
 
 const ScheduleInterviewModal = (props: any) => {
-  const { open, setOpen, candidateId, data, handleEdit } = props;
+  const { open, setOpen, userId, data, handleEdit } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
   const { companyManagerList = [], getCompanyManagerList, scheduleInterview, handleUpdateInterview } = actionHandler();
   const [assignUser, setAssignUser] = useState<any[]>([]);
@@ -21,7 +21,9 @@ const ScheduleInterviewModal = (props: any) => {
     startTime: "",
     endTime: "",
     location: "",
+    description: "",
   });
+  console.log(values);
 
   useEffect(() => {
     getCompanyManagerList();
@@ -40,28 +42,30 @@ const ScheduleInterviewModal = (props: any) => {
     }
   };
 
+  console.log(values);
   const onFinish = () => {
     // modifying values obj according to create schedule request body
+    console.log(values);
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
-    values.attendees = [candidateId, ...assignUser?.map(({ id }) => id)];
+    values.attendees = [userId, ...assignUser?.map(({ id }) => id)];
+    console.log(values);
+    
     // custom hook for create schedule
     if (data) {
       handleUpdateInterview(data?.id, values).then(() => {
         // empty fields after form submitting
-        form.resetFields();
-        setOpen(false);
-        handleEdit({});
+        onCancel();
       });
     } else {
       scheduleInterview(values).then(() => {
         // empty fields after form submitting
-        form.resetFields();
-        setOpen(false);
+        onCancel();
       });
     }
   };
 
+  //  date change function
   const handleValue = (value: any) => {
     value && setValues({ ...values, dateFrom: value, dateTo: value });
   };
@@ -71,18 +75,14 @@ const ScheduleInterviewModal = (props: any) => {
     form.resetFields();
     handleEdit(undefined);
     setAssignUser([]);
-    // form.resetFields();
-    // updateData;
-    // setUpdateData({});
-    // setTime("")
+    setValues({});
   };
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       setValues({
-        dateFrom: data?.dateFrom,
-        dateTo: data?.dateTo,
+        dateFrom: dayjs(data?.dateFrom).format("YYYY-MM-DD"),
+        dateTo: dayjs(data?.dateTo).format("YYYY-MM-DD"),
         startTime: dayjs(data?.startTime).format("HH:mm:ss"),
         endTime: dayjs(data?.endTime).format("HH:mm:ss"),
         attendees: data?.attendees ?? [],
@@ -188,13 +188,19 @@ const ScheduleInterviewModal = (props: any) => {
                 <div className="heading mt-2 mb-3">Time From</div>
                 <Form.Item
                   name="startTime"
-                  rules={[{ required: true, message: "Please select start time" }]}
+                  rules={[{ required: values?.startTime ? false : true, message: "Please select start time" }]}
                   valuePropName={"date"}
                 >
                   <TimePicker
                     name="startTime"
                     className="time-p"
-                    value={dayjs(values?.startTime, "HH:mm:ss").utc()}
+                    value={
+                      data?.startTime
+                        ? values?.startTime
+                          ? dayjs(values?.startTime, "HH:mm:ss").utc()
+                          : values?.startTime
+                        : values?.startTime
+                    }
                     format={"HH:mm:ss"}
                     onChange={(e) => setValues({ ...values, startTime: e })}
                   />
@@ -204,14 +210,20 @@ const ScheduleInterviewModal = (props: any) => {
                 <div className="heading mt-2 mb-3">Time To</div>
                 <Form.Item
                   name="endTime"
-                  rules={[{ required: true, message: "Please select end time" }]}
+                  rules={[{ required: values?.endTime ? false : true, message: "Please select end time" }]}
                   valuePropName={"date"}
                 >
                   <TimePicker
                     name="endTime"
                     className="time-p"
                     format={"HH:mm:ss"}
-                    value={dayjs(values?.endTime, "HH:mm:ss").utc()}
+                    value={
+                      data?.endTime
+                        ? values?.endTime
+                          ? dayjs(values?.endTime, "HH:mm:ss").utc()
+                          : values?.endTime
+                        : values?.endTime
+                    }
                     onChange={(e) => setValues({ ...values, endTime: e })}
                   />
                 </Form.Item>
@@ -243,8 +255,9 @@ const ScheduleInterviewModal = (props: any) => {
                 onChange={(e) => setValues({ ...values, description: e?.target?.innerHTML })}
                 className="input"
                 name="description"
-                placeholder="Describe your problem"
+                placeholder="Enter description here..."
                 id="text-area"
+                value={"values?.description"}
               >
                 {values?.description}
               </textarea>

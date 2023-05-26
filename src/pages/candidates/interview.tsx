@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
 import { Schedule, DrawerIcon, IconEdit } from "../../assets/images";
@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 let updateData: any;
 const Interview = ({
+  userId,
   candidateId,
   candidateFirstName,
   candidateLastName,
@@ -45,19 +46,21 @@ const Interview = ({
           <Schedule />
           <p className="btn-text">Schedule</p>
         </button>
-        <ScheduleModal
-          setOpen={setOpen}
-          open={open}
-          candidateId={candidateId}
-          data={updateData}
-          // setUpdateData={setUpdateData}
-          handleEdit={handleEdit}
-        />
+        {open && (
+          <ScheduleModal
+            setOpen={setOpen}
+            open={open}
+            userId={userId}
+            data={updateData}
+            // setUpdateData={setUpdateData}
+            handleEdit={handleEdit}
+          />
+        )}
       </div>
       <>
         {interviewList?.length > 0 ? (
           interviewList?.map((item: any) => (
-            <>
+            <Fragment key={item?.id}>
               <div className="onTime mt-8 mb-5">{dayjs(candidateEventDate).format("DD MMM YYYY")}</div>
               <div className="main-wrapperr pb-6 relative">
                 <div className="interview-content px-4 py-4">
@@ -121,17 +124,19 @@ const Interview = ({
                     </Col>
                   </Row>
                 </div>
-                <Alert
-                  state={alert}
-                  setState={setAlert}
-                  cancelBtntxt={"No"}
-                  okBtnFunc={() => deleteInterview(item?.id)}
-                  okBtntxt={"Yes"}
-                  children={"Are you sure you want to cancel this meeting."}
-                  type={"error"}
-                />
+                {alert && (
+                  <Alert
+                    state={alert}
+                    setState={setAlert}
+                    cancelBtntxt={"No"}
+                    okBtnFunc={() => deleteInterview(item?.id)}
+                    okBtntxt={"Yes"}
+                    children={"Are you sure you want to cancel this meeting."}
+                    type={"error"}
+                  />
+                )}
               </div>
-            </>
+            </Fragment>
           ))
         ) : (
           <NoDataFound />

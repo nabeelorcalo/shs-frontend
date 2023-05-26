@@ -43,7 +43,7 @@ const useCustomHook = () => {
         count,
         data: data?.map((obj: any, index: number) => ({
           id: obj?.id,
-          no: index,
+          no: index+1,
           avater: Image,
           name: `${obj?.intern?.userDetail?.firstName} ${obj?.intern?.userDetail?.lastName}`,
           ReportName: obj?.title,
@@ -59,11 +59,9 @@ const useCustomHook = () => {
 
   // get single case-study object
   const getSelectedCasStudyData = async (id: string) => {
-    await api.get(`${CASE_STUDIES}/{id}?id=${+id}`).then(({ data }) => setSelectedCasStudyData(data?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie,
-      learningObjectives: obj?.learningObjective,
-      evidenceOfProgress: obj?.evidenceOfProgress
-    }))))
+    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => setSelectedCasStudyData(
+    data
+    ))
   }
 
   // get department list

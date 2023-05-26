@@ -222,7 +222,9 @@ const useCustomHook = () => {
     values.address = "";
     values.eventType = "INTERVIEW";
     await api.post(CREATE_MEETING, values).then(({ data }) => {
+      console.log("interviewList",interviewList);
       setInterviewList([...interviewList, data])
+      
       Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
     })
   }
@@ -245,7 +247,7 @@ const useCustomHook = () => {
     values.companyId = companyId;
     await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }) => {
       setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
-      Notifications({ title: "Interview", description: "Intervie meeting updated!" })
+      Notifications({ title: "Interview", description: "Interview meeting updated!" })
     })
   }
 
@@ -253,7 +255,7 @@ const useCustomHook = () => {
   const deleteInterview = async (meetingId: string | number) => {
     await api.delete(`${DELETE_MEETING}/${meetingId}`).then(() => {
       setInterviewList(interviewList?.filter(({ id }: any) => id !== meetingId))
-      Notifications({ title: "Interview", description: "Intervie meeting deleted!" })
+      Notifications({ title: "Interview", description: "Interview meeting deleted!" })
     });
   }
 
