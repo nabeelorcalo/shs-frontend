@@ -12,7 +12,8 @@ import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const index: React.FC = () => {
   const [Country, setCountry] = useState("");
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
+
 
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
   const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
@@ -24,6 +25,8 @@ const index: React.FC = () => {
   useEffect(() => {
     getUniversities(Country, searchValue)
   }, [searchValue])
+  
+  console.log(searchValue, "searchvale");
 
   const UniversityTableColumn =
     [
@@ -117,7 +120,7 @@ const index: React.FC = () => {
 
 
   const handleChangeSearch = (e: any) => {
-    debouncedSearch(e.target.value, setSearchValue)
+    setSearchValue(e)
   };
 
   return (
@@ -125,17 +128,17 @@ const index: React.FC = () => {
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          {/* <SearchBar handleChange={handleChange} /> */}
-          <Input
+          <SearchBar handleChange={handleChangeSearch} />
+          {/* <Input
             className='search-bar'
             placeholder="Search"
             onChange={handleChangeSearch}
             prefix={<GlassMagnifier />}
-          />
+          /> */}
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <Select onChange={(e: any) => setCountry(e)} className='md:w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
-            {dropdownValue.map((item, index) => <Select.Option key={index} value={item}>{item}</Select.Option>)}
+            {universitiesData.map((item: any, index: any) => <Select.Option key={index} value={item.university.country}>{item.university.country}</Select.Option>)}
           </Select>
           <DropDown
             requiredDownloadIcon

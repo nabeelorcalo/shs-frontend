@@ -4,6 +4,9 @@ import { Button, Form, Input, Typography } from "antd";
 import { useState } from "react";
 import { BoxWrapper } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import { useRecoilState } from 'recoil';
+import { currentUserState } from '../../../store';
+import useCustomHook from './actionHandler';
 
 
 const ChangePassword = (props: any) => {
@@ -14,8 +17,14 @@ const ChangePassword = (props: any) => {
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const { patchagentChangePassword } = useCustomHook();
+
+  // const data = useRecoilState(currentUserState);
+  // console.log(data, "data");
+
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    console.log(values);
+    patchagentChangePassword(values?.oldPassword, values?.newPassword)
   };
 
   return (
@@ -29,6 +38,7 @@ const ChangePassword = (props: any) => {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+
         >
           <div className="w-1/2">
             <Form.Item
@@ -54,7 +64,7 @@ const ChangePassword = (props: any) => {
 
             <Form.Item
               label="New Password"
-              name="password"
+              name="newPassword"
               // rules={[
               //     { required: true, message: "Please enter new your password!" },
               // ]}
@@ -108,26 +118,25 @@ const ChangePassword = (props: any) => {
             </Form.Item>
             <Typography>{passwordMatchedMessage}</Typography>
           </div>
+          <div className="flex justify-end items-end w-full h-[25vh]">
+            <Form.Item>
+              <Button
+                className='border'
+                onClick={() => setShowSideViewType(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className='ml-5'
+                type="primary"
+                htmlType="submit"
+                onClick={() => setShowSideViewType(true)}
+              >
+                Update
+              </Button>
+            </Form.Item>
+          </div>
         </Form>
-        <div className="flex justify-end items-end w-full h-[25vh]">
-          <Form.Item>
-            <Button
-              htmlType="submit"
-              className='border'
-              onClick={() => setShowSideViewType(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              className='ml-5'
-              type="primary"
-              htmlType="submit"
-              onClick={() => setShowSideViewType(false)}
-            >
-              Update
-            </Button>
-          </Form.Item>
-        </div>
       </div>
     </BoxWrapper>
   )

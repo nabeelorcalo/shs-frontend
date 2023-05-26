@@ -27,8 +27,9 @@ const useCustomHook = () => {
     const params = {
       page: 1,
       limit: 9,
-      search: searchValue
-      
+      q: searchValue,
+      Country: Country
+
     }
     // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_COMPANYADMIN_UNIVERSITES, params);

@@ -26,7 +26,7 @@ const endpoints = {
   STUDENT_INTRNE_SAWITCH: "/auth/student-intern-switch",
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
-  GET_MANAGER_DETAIL_ID:"/manager_manager/get-company-manager-detail",
+  GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: '/Contract/list',
   DEL_CONTRACT: '/Contract/delete',
@@ -70,10 +70,12 @@ const endpoints = {
   GET_ALL_UNIVERSITIES: "/university/findAll",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_COMPANYADMIN_UNIVERSITES: "/university/findAll",
-  GET_UNIVERSITYINTERNS:"/university/universityInterns",
+  GET_UNIVERSITYINTERNS: "/university/universityInterns",
   GET_GENERAL_ACTIVITY: "/general/activity",
-  WITH_DRAWAL_REQUEST:"/withdrawl-request/findAll",
+  WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
-  SETTING_LOCATION: "/location"
+  SETTING_LOCATION: "/location",
+  AGENT_PROFILE: "/auth/profile",
+  CHANGE_AGENT_PASSWORD: "/auth/change-password",
 }
 export default endpoints;
