@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound, Loader, Notifications, SignatureAndUploadModal
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound,
+  Loader, Notifications, SignatureAndUploadModal
 } from "../../../components";
 import { TextArea } from "../../../components";
 import {
   AlertIcon, CardViewIcon, More, SuccessIcon,
-  TableViewIcon, GlassMagnifier, UserAvatar, IconCloseModal, IconEdit
+  TableViewIcon, GlassMagnifier, UserAvatar, IconCloseModal
 } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Modal, Form } from 'antd';
 import useCustomHook from "./actionHandler";
-import dayjs from "dayjs";
 import SelectComp from "../../../components/Select/Select";
 import UserSelector from "../../../components/UserSelector";
 import PreviewModal from "../../certificate/certificateModal/PreviewModal";
@@ -31,6 +32,7 @@ const InternsCompanyAdmin = () => {
   const [searchValue, setSearchValue] = useState('');
   const [certificateModal, setCertificateModal] = useState(false);
   const [previewModal, setPreviewModal] = useState(false);
+  const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useState({ name: '', description: '', signature: '' })
   const [state, setState] = useState({
@@ -220,7 +222,6 @@ const InternsCompanyAdmin = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-
   const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
@@ -244,7 +245,6 @@ const InternsCompanyAdmin = () => {
     return (
       {
         key: index,
-        // value: item?.userDetail?.id,
         value: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         label: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         avatar: <UserAvatar />
@@ -253,18 +253,17 @@ const InternsCompanyAdmin = () => {
   })
 
   // intren certificate submition 
-  const handleCertificateSubmition = (values: any) => {
+  const handleCertificateSubmition = (values: any, action?: any) => {
     console.log('certificate values', values);
     setCertificateDetails({
       ...certificateDetails,
       name: values?.internName,
       description: values?.description
     })
+    if (action === 'preview') setPreviewModal(true)
+    else setSignatureModal(true)
   }
-  // console.log('certificate deatils', certificateDetails);
-  // const handlePreviewModal = () => {
-  //   setPreviewModal(true)
-  // }
+
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
@@ -593,8 +592,35 @@ const InternsCompanyAdmin = () => {
           setOpen={setPreviewModal}
           name={certificateDetails?.name}
           type="completion"
+          textSignature={certificateDetails?.signature?.includes('/') ? true : false}
           desc={certificateDetails?.description}
-          signature={<img src={certificateDetails?.signature} alt="signature" />}
+          signature={certificateDetails?.signature?.includes('/') ?
+            <img src={certificateDetails?.signature} alt="signature" /> :
+            <p>{certificateDetails?.signature}</p>
+          }
+          footer={previewFooter ? <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
+            <Button
+              type="default"
+              size="small"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => { setPreviewModal(false) }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-tertiary max-sm:w-full"
+              onClick={() => {
+                setSignatureModal(false);
+                setPreviewModal(false);
+                updateCandidatesRecords(complete.id, null, null, 'completed');
+                // setComplete({ ...complete, isToggle: false })
+              }}
+            >
+              Complete
+            </Button>
+          </div > : ''}
         />
       }
 
@@ -603,6 +629,7 @@ const InternsCompanyAdmin = () => {
           title="Issue Certificate"
           open={certificateModal}
           centered
+          width={700}
           footer={false}
           closeIcon={<IconCloseModal />}
           onCancel={handleCancel}
@@ -610,7 +637,7 @@ const InternsCompanyAdmin = () => {
           <Form
             layout="vertical"
             form={form}
-            onFinish={handleCertificateSubmition}
+            onFinish={(values) => handleCertificateSubmition(values)}
             validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           >
             <Form.Item label="Intern" name='internName' rules={[{ required: true }, { type: 'string' }]}>
@@ -633,11 +660,11 @@ const InternsCompanyAdmin = () => {
             </Form.Item>
             <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
               <Button
-                htmlType="submit"
+                // htmlType="submit"
                 type="default"
                 size="small"
                 className="white-bg-color teriary-color font-medium max-sm:w-full"
-                onClick={() => { setPreviewModal(true) }}
+                onClick={() => handleCertificateSubmition(null,'preview')}
               >
                 Preview
               </Button>
@@ -645,17 +672,20 @@ const InternsCompanyAdmin = () => {
                 type="default"
                 size="small"
                 className="button-default-tertiary max-sm:w-full"
-                onClick={() => { setCertificateModal(false) }}>
+                onClick={() => {
+                  form.resetFields();
+                  setCertificateDetails({ ...certificateDetails, name: '', description: '' });
+                  setCertificateModal(false)
+                }}>
                 Cancel
               </Button>
               <Button
                 htmlType="submit"
                 size="small"
                 className="button-tertiary max-sm:w-full"
-                onClick={() => {
-                  form.resetFields();
-                  setSignatureModal(true)
-                }}
+              // onClick={() => {
+              //   setSignatureModal(true)
+              // }}
               >
                 Continue
               </Button>
@@ -676,7 +706,10 @@ const InternsCompanyAdmin = () => {
               type="default"
               size="small"
               className="button-default-tertiary max-sm:w-full"
-              onClick={() => { setComplete({ ...complete, isToggle: false }) }}
+              onClick={() => {
+                setCertificateDetails({ name: "", signature: "", description: "" });
+                setSignatureModal(false)
+              }}
             >
               Cancel
             </Button>
@@ -685,13 +718,13 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
-                setPreviewModal(true)
+                setPreviewModal(true);
+                setPreviewFooter(true)
               }}
             >
               Sign
             </Button>
           </div >}
-
         />
       }
 

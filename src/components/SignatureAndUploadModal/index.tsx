@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Tabs } from 'antd';
 import type { TabsProps } from 'antd';
 import DragAndDropUpload from '../DragAndDropUpload';
@@ -17,17 +16,23 @@ export const SignatureAndUploadModal = (props: any) => {
     {
       key: '1',
       label: <span className='text-secondary-color font-normal'>Draw</span>,
-      children: <DrawSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails} />,
+      children: <DrawSignature
+        certificateDetails={certificateDetails}
+        setCertificateDetails={setCertificateDetails} />,
     },
     {
       key: '2',
       label: <span className='text-secondary-color font-normal'>Type</span>,
-      children: <TypeSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails} />,
+      children: <TypeSignature
+        certificateDetails={certificateDetails}
+        setCertificateDetails={setCertificateDetails} />,
     },
     {
       key: '3',
       label: <span className='text-secondary-color font-normal'>Upload</span>,
-      children: <DragAndDropUpload certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails} />,
+      children: <DragAndDropUpload
+        certificateDetails={certificateDetails}
+        setCertificateDetails={setCertificateDetails} />,
     },
   ];
   return (<PopUpModal title={<span className='text-primary-color text-xl font-medium'>{title}</span>}
