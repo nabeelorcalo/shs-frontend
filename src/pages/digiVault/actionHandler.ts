@@ -83,7 +83,7 @@ const useCustomHook = () => {
     await api.post(POST_CREATE_FOLDER_FILE, folderData);
     getDigiVaultDashboard(null);
     getFolderContent(folderId, root)
-    Notifications({ title: 'Sucess', description: 'File / Folder added successfully', type: 'success' })
+    Notifications({ title: 'Success', description: 'File / Folder added successfully', type: 'success' })
   }
 
   //delete folder

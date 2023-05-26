@@ -2,13 +2,13 @@ import React from 'react'
 import { Button, Form } from "antd";
 import { Input } from "antd";
 import { PopUpModal } from "../../../../components/Model";
-import useCustomHook from './actionHandler';
+import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
 
 const AddNewDepaertmentModal = (props: any) => {
     const { state, setState, edit, setEdit } = props;
     const [form] = Form.useForm();
-    const { postSettingDepartment, patchSettingDepartment } = useCustomHook();
+    const { postSettingDepartment, patchSettingDepartment } = useDepartmentCustomHook();
 
     const onFinish = (values: any) => {
         if (edit?.id) {

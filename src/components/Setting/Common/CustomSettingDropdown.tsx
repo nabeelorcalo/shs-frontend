@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ThreeDots } from "../../../assets/images";
 import { Dropdown, MenuProps } from "antd";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './CustomSettingDropdown.scss'
 
 export const DropDownForSetting = (props: any) => {
@@ -13,6 +13,7 @@ export const DropDownForSetting = (props: any) => {
     SetEditData,
   } = props
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate()
 
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
@@ -40,11 +41,11 @@ export const DropDownForSetting = (props: any) => {
         {
           link ?
             <div>
-              <NavLink to={link}
+              <div onClick={() => navigate(link, { state: editData })}
                 className="text-primary-color custom-setting-dropdown-edit-btn font-normal"
               >
                 Edit
-              </NavLink>
+              </div>
             </div>
             :
             <span onClick={editHandler}

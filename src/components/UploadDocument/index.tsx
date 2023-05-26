@@ -12,23 +12,17 @@ const UploadDocument = (props: any) => {
   const handleDragOver = (event: any) => {
     event.preventDefault()
     console.log(event);
-    
+
   }
 
-  // const handleDropped = (event: any) => {
-  //   event.preventDefault()
-  //   setFiles(Array.from(event.dataTransfer.files))
-  // }
-  // console.log(files)
   return (
     <>
       <div
         onDragOver={handleDragOver}
-        // onDrop={handleDropped}
         className={`flex flex-col justify-center gap-4 content-center items-center drag-drop-upload-style h-${height}`}
       >
         <div className='self-center '>
-          <DocumentUpload />
+          <DocumentUpload width={69} height={75} />
         </div>
         <div className='self-center'>
           <p
@@ -45,14 +39,14 @@ const UploadDocument = (props: any) => {
           <p
             className="text-sm light-grey-color text-center"
           >
-            Support jpeg,pdf and doc files
+            Support .dir files
           </p>
           <input
             type="file"
             ref={inputRef}
             multiple
             hidden
-            onChange={(event: any) => {setFiles({...files,files:Array.from(event.target.files)}) }}
+            onChange={(event: any) => { setFiles({ ...files, files: Array.from(event.target.files) }) }}
           />
         </div>
       </div>

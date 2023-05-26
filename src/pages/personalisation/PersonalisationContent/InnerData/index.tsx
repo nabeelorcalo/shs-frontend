@@ -40,17 +40,17 @@ const InnerData = ({ buttonPrimaryColor, buttonSecondaryColor }: any) => {
             <div className='flex justify-end gap-4 px-6'>
               <Button
                 style={{ border: `2px solid ${buttonSecondaryColor}` }}
-                label="Add Location"
+                label="Button"
                 onClick={() => { }}
                 type="default"
-                size="middle"
+                size="large"
               />
               <Button
                 color={buttonPrimaryColor}
-                label="Add Location"
+                label="Button"
                 onClick={() => { }}
                 type="primary"
-                size="middle"
+                size="large"
               />
             </div>
           </BoxWrapper>

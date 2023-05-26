@@ -4,12 +4,12 @@ import apiEndpints from "../../../../config/apiEndpoints";
 import { settingDepartmentState } from "../../../../store";
 import { Notifications } from "../../../../components";
 
-const useCustomHook = () => {
+const useDepartmentCustomHook = () => {
   const { DAPARTMENT } = apiEndpints;
   const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
 
   // get setting departments
-  const getSettingDepartment = async (q: any): Promise<any> => {
+  const getSettingDepartment = async (q: any = null): Promise<any> => {
     const param = { page: 1, limit: 10, q: q }
     const { data } = await api.get(DAPARTMENT, param);
     setSettingDepartmentdata(data)
@@ -17,14 +17,14 @@ const useCustomHook = () => {
 
   const deleteSettingDepartment = async (id: number) => {
     await api.delete(`${DAPARTMENT}/${id}`);
-    getSettingDepartment(null)
+    getSettingDepartment()
     Notifications({ title: 'Success', description: 'Department deleted successfully', type: 'success' })
   };
 
   // post setting departments
   const postSettingDepartment = async (body: any) => {
     await api.post(DAPARTMENT, body);
-    getSettingDepartment(null)
+    getSettingDepartment()
     Notifications({ title: 'Success', description: 'Department added successfully', type: 'success' })
   };
 
@@ -35,7 +35,7 @@ const useCustomHook = () => {
       description: values.description
     }
     await api.patch(`${DAPARTMENT}/${id}`, params);
-    getSettingDepartment(null)
+    getSettingDepartment()
     Notifications({ title: 'Success', description: 'Department edited successfully', type: 'success' })
   };
 
@@ -48,4 +48,4 @@ const useCustomHook = () => {
   };
 };
 
-export default useCustomHook;
+export default useDepartmentCustomHook;
