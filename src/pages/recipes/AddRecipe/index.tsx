@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber } from 'antd'
-import { ExtendedButton, PageHeader, Breadcrumb } from "../../../components";
+import React, { useState, useEffect, useRef } from "react";
+import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
+import { PageHeader, Breadcrumb, Notifications } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
+import useRecipesHook from '../actionHandler'
 
 
-// Temporary
 
 const AddRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [form] = Form.useForm();
+  const draftRef = useRef(null);
+  const publishedRef = useRef(null);
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
+  const {createRecipe} = useRecipesHook();
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState('')
 
 
 
@@ -21,26 +26,51 @@ const AddRecipe = () => {
 
   }, [])
 
+  
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function submitNewRecipe(values:any) {
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('image', values.image[0].originFileObj);
+    formData.append('description', values.description);
+    formData.append('ingredients', values.ingredients);
+    formData.append('instructions', values.instructions);
+    formData.append('kitcherGear', values.kitcherGear);
+    formData.append('servings', values.servings);
+    formData.append('prepTimeHours', values.prepTimeHours);
+    formData.append('prepTimeMins', values.prepTimeMins);
+    formData.append('cookTimeHours', values.cookTimeHours);
+    formData.append('cookTimeMins', values.cookTimeMins);
+    formData.append('status', status);
+    setLoading(true)
+    const response = await createRecipe(formData);
+    if(!response.error) {
+      Notifications({title: "Success", description: response.message, type: 'success'});
+    }
+    form.resetFields();
+    setLoading(false)
+  }
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function submitNewRecipe() {
-    console.log('Form Submit')
-  }
-
   function normFile(e: any) {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
     return e?.fileList;
   }
 
-  const onValuesChange = (changedValues: any, allValues: any) => {
-    // console.log(changedValues, " single Field changed  value ")
-    console.log("All form values ", allValues)
-  };
+  const submitAsPublished = () => {
+    setStatus('published')
+    form.submit()
+  }
+
+  const submitAsDraft = () => {
+    setStatus('draft')
+    form.submit()
+  }
 
 
 
@@ -72,7 +102,6 @@ const AddRecipe = () => {
             name="addNewRecipe"
             requiredMark={false}
             form={form}
-            onValuesChange={onValuesChange}
             onFinish={submitNewRecipe}
           >
             <div className="add-recipe-form-section">
@@ -89,7 +118,7 @@ const AddRecipe = () => {
                   </Form.Item>
 
                   <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile}>
-                    <Upload.Dragger name="files" showUploadList={false} className="filled">
+                    <Upload.Dragger multiple={false} className="filled">
                       <div className="shs-drag-drop">
                         <div className="shs-upload-content">
                           <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
@@ -190,15 +219,26 @@ const AddRecipe = () => {
                 </div>
               </div>
             </div>
-
-            <div className="add-recipe-form-footer">
-              {/* <Space size={20}> */}
-                <ExtendedButton customType="tertiary" type="link">Save Draft</ExtendedButton>
-                <ExtendedButton customType="tertiary" ghost>Cancel</ExtendedButton>
-                <ExtendedButton customType="tertiary">Publish</ExtendedButton>
+          </Form>
+          <div className="add-recipe-form-footer">
+            {/* <Space size={20}> */}
+              <Button 
+                ref={draftRef} 
+                className="button-tertiary"
+                type="link"
+                loading={loading}
+                onClick={() => submitAsDraft()}
+              >
+                Save Draft
+              </Button>
+              <Button className="button-tertiary" ghost>Cancel</Button>
+              <Button ref={publishedRef} className="button-tertiary" loading={loading}
+                onClick={() => submitAsPublished()}
+              >
+                  Publish
+                </Button>
               {/* </Space> */}
             </div>
-          </Form>
         </div>
         
       </div>

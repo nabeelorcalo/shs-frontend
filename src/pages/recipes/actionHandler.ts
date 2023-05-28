@@ -11,13 +11,8 @@ const useRecipesHook = () => {
   const { CREATE_RECIPE, GET_ALL_RECIPES, GET_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } = endpoints
 
   // Create Recipe
-  const createRecipe = async (data: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true);
-    const response = await api.post(CREATE_RECIPE, data);
-    if(!response.error) {
-      Notifications({title: "Success", description: response.message, type: 'success'});
-    }
-    setLoading(false);
+  const createRecipe = async (reqBody: any) => {
+    return await api.post(CREATE_RECIPE, reqBody, {headers: {'Content-Type': 'multipart/form-data'}})
   }
 
   // Read Recipes
