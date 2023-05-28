@@ -1,34 +1,54 @@
-import React, { useState } from "react";
-import { Typography, Row, Col, Button } from "antd";
-import { SettingShift } from "../../../../assets/images";
-import { Alert, SearchBar, BoxWrapper } from "../../../../components";
+import React, { useEffect, useState } from "react";
+import { Typography, Row, Col, Button, Input } from "antd";
+import { GlassMagnifier, SettingShift } from "../../../../assets/images";
+import { Alert, BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
-import './style.scss'
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import useShiftsCustomHook from './actionHandler'
+import duration from 'dayjs/plugin/duration';
+import dayjs from "dayjs";
+import './style.scss'
 
-const { Title, Text } = Typography;
-let overview = [
-  {
-    name: "Morning",
-    content: "51 Employees",
-    time: "Time: 08:00 to 02:00",
-    duration: "Duration 8 Hours"
-  },
-  {
-    name: "Evening",
-    content: "44 Employees",
-    time: "Time: 08:00 to 02:00",
-    duration: "Duration 8 Hours"
-  },
-];
+const { Text } = Typography;
+// let overview = [
+//   {
+//     name: "Morning",
+//     content: "51 Employees",
+//     time: "Time: 08:00 to 02:00",
+//     duration: "Duration 8 Hours"
+//   },
+//   {
+//     name: "Evening",
+//     content: "44 Employees",
+//     time: "Time: 08:00 to 02:00",
+//     duration: "Duration 8 Hours"
+//   },
+// ];
 const SettingShifts: React.FC = () => {
+  dayjs.extend(duration);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const handleChange = () => { };
+  const [searchValue, setSearchValue] = useState();
+  const { shiftsData, getAllShifts, debouncedSearch } = useShiftsCustomHook();
+
+  useEffect(() => {
+    getAllShifts(searchValue)
+  }, [searchValue])
+
+  console.log('shifts data', shiftsData);
+
+  // handle search internships 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
-        <SearchBar size="middle" handleChange={handleChange} />
+        <div className="input-wrapper">
+          <Input className='search-bar' placeholder="Search"
+            onChange={debouncedResults} prefix={<GlassMagnifier />} />
+        </div>
         <NavLink to={`${ROUTES_CONSTANTS.ADD_SHIFT}`}>
           <Button
             size="middle"
@@ -40,7 +60,9 @@ const SettingShifts: React.FC = () => {
         </NavLink>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {overview.map((data: any, index: any) => {
+        {shiftsData?.map((data: any, index: any) => {
+          const startTime = dayjs(data?.from)?.format('h:mm')
+          const endTime = dayjs(data?.to)?.format('h:mm')
           return (
             <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8}>
               <BoxWrapper className="setting-shift-box-wrapper w-full">
@@ -51,13 +73,13 @@ const SettingShifts: React.FC = () => {
                         {data?.name}
                       </Text>
                       <Text className="text-base font-medium text-teriary-color">
-                        {data.content}
+                        5 Employees
                       </Text>
                       <Text className="text-sm font-normal content-text">
-                        {data.time}
+                        {`Time: ${startTime} to ${endTime}`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
-                        {data.duration}
+                        {`Duration: ${dayjs(data?.duration).format('h:mm')} hours`}
                       </Text>
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">

@@ -24,3 +24,8 @@ export const settingsTemplateState = atom({
   key: "settingsTemplateState",
   default: [],
 });
+
+export const settingShiftsState = atom({
+  key: "settingShiftsState",
+  default: [],
+});

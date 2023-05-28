@@ -4,17 +4,8 @@ import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper, TimePickerComp } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Button,
-  Space,
-  Input,
-  Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch
 } from "antd";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import { Breadcrumb } from "../../../../../components";
@@ -23,6 +14,7 @@ import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import dayjs from "dayjs";
 import "./style.scss";
+import useShiftsCustomHook from "../actionHandler";
 
 const { Paragraph } = Typography;
 dayjs.extend(customParseFormat);
@@ -72,6 +64,8 @@ const AddShift: React.FC = () => {
       openModal: false,
       internValue: 1,
     });
+  // getting functions from custom hook 
+  const { postShiftData } = useShiftsCustomHook()
 
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
@@ -91,14 +85,35 @@ const AddShift: React.FC = () => {
   const openTimeToHandler = () => {
     setState({ ...state, openToTime: !state.openToTime })
   }
+  const handleFormValues = (values: any) => {
+    const newValues = {
+      ...values,
+      timeTo: dayjs(state.openToTimeValue).format('YYYY-MM-DD'),
+      timeFrom: dayjs(state.openFromTimeValue).format('YYYY-MM-DD')
+    }
+    postShiftData(newValues)
+    console.log('forms values are', newValues);
+
+  }
+
+  // const initialValues = {
+  //   shiftName: undefined,
+  //   timeForm: undefined,
+  //   timeTo: undefined,
+  //   shiftDuration: undefined,
+  //   roundOffCap: undefined,
+  // }
+
   return (
     <div className="leaves-add-policy">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
         <Form
+          onFinish={handleFormValues}
           layout="vertical"
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+          {/* initialValues={initialValues} */}
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -112,18 +127,14 @@ const AddShift: React.FC = () => {
                 name="shiftName"
                 label="Shift Name"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
-
-              >
+                rules={[{ required: true }, { type: "string" }]}>
                 <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
+
               <div className="flex flex-col md:flex-row justify-between md:gap-5 w-full shift-time">
                 <div className="flex flex-col justify-between w-full">
                   <Form.Item
-                    name="timeForm"
-                    required={false}
-                    rules={[{ required: true }, { type: "string" }]}
-                  >
+                    name="timeFrom">
                     <TimePickerComp
                       className="input-style"
                       label={<p className='pb-[6px]'>Time From</p>}
@@ -136,10 +147,8 @@ const AddShift: React.FC = () => {
                 </div>
                 <div className="flex flex-col w-full ">
                   <Form.Item
-                    name="timeto"
-                    required={false}
-                    rules={[{ required: true }, { type: "string" }]}
-                  >
+                    name="timeTo"
+                    required={false}>
                     <TimePickerComp
                       className="input-style"
                       label={<p className='pb-[6px]'>Time To</p>}
