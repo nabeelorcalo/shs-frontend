@@ -8,7 +8,6 @@ interface UserSelectorProps {
   className?: string;
   label?: any;
   value?: any;
-  setState?: any;
   options?: any;
   placeholder?: string;
   searchPlaceHolder?: string;
@@ -16,7 +15,6 @@ interface UserSelectorProps {
   handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
-  requiredAttributes?: any
 }
 
 const UserSelector = (props: UserSelectorProps) => {
