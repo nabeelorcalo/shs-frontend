@@ -16,14 +16,9 @@ const useRecipesHook = () => {
   }
 
   // Read Recipes
-  const getAllRecipes = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true);
-    const response = await api.get(GET_ALL_RECIPES);
-    if(!response.error) {
-      const { data } = response;
-      setAllRecipes(data);
-    }
-    setLoading(false);
+  const getAllRecipes = async (page:any) => {
+    const response = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+    return response;
   }
 
   // Read Single Recipe

@@ -79,7 +79,7 @@ const endpoints = {
 
   // RECIPES
   GET_ALL_RECIPES: "/recipe/get-recipies",
-  GET_RECIPE: "/recipe/get-recipie",
+  GET_RECIPE: "/recipe/get-recipe",
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",

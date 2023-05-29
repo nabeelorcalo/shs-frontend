@@ -1,34 +1,77 @@
 import { useState, useEffect } from "react"
 import { Row, Col, Empty } from 'antd'
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom"
-import { PageHeader, RecipeCard, ExtendedButton, SearchBar } from "../../components"
+import { PageHeader, RecipeCard, ExtendedButton, SearchBar, Loader } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
 import { ROUTES_CONSTANTS } from '../../config/constants'
+import api from '../../api';
+import endpoints from "../../config/apiEndpoints";
 import { allRecipesState } from "../../store";
-import useRecipesHook from './actionHandler'
 import "./style.scss";
 
 
 const Recipes = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const { GET_ALL_RECIPES } = endpoints
   const navigate = useNavigate();
   const location = useLocation();
   const [rateValue, setRateValue] = useState(3);
-  const {getAllRecipes} = useRecipesHook();
-  const allRecipes = useRecoilValue(allRecipesState)
+  const [allRecipes, setAllRecipes] = useRecoilState(allRecipesState)
   const [loadingRecipes, setLoadingRecipes] = useState(false)
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
 
-
+console.log("has mor::", hasMore)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAllRecipes(setLoadingRecipes)
+    fetchData();
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore, page])
 
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function fetchData () {
+    setHasMore(false)
+    setPage(1)
+    setLoadingRecipes(true)
+    try {
+      const response:any = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+      setAllRecipes(response.data);
+      setPage(page + 1);
+      setHasMore(response.data.length > 0);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoadingRecipes(false)
+    }
+  }
+
+  async function handleScroll() {
+    if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+      if(hasMore) {
+        setLoadingRecipes(true)
+        try {
+          const response = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+          setAllRecipes([...allRecipes, ...response.data]);
+          setPage(page + 1);
+          setHasMore(response.data.length > 0);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoadingRecipes(false)
+        }
+      } 
+    }
+  };
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -67,6 +110,13 @@ const Recipes = () => {
               </Col>
             )
           })}
+          {/* {loadingRecipes && */}
+          <Col xs={24}>
+            <div className="scroll-loader">
+              <Loader />
+            </div>
+          </Col>
+          {/* } */}
           {!allRecipes && !loadingRecipes &&
             <Col xs={24}>
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

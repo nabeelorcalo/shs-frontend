@@ -11,12 +11,11 @@ const AddRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [form] = Form.useForm();
-  const draftRef = useRef(null);
   const publishedRef = useRef(null);
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
   const {createRecipe} = useRecipesHook();
-  const [loading, setLoading] = useState(false)
-  const [status, setStatus] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState('');
 
 
 
@@ -163,8 +162,8 @@ const AddRecipe = () => {
                     <Input className="filled" placeholder="Enter one or paste multiple steps" />
                   </Form.Item>
 
-                  <Form.Item name="servings" label="Servings">
-                    <Input className="filled" placeholder="Add portions" />
+                  <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
+                    <InputNumber className="filled" placeholder="Add servings" />
                   </Form.Item>
                 </div>
               </div>
@@ -222,8 +221,7 @@ const AddRecipe = () => {
           </Form>
           <div className="add-recipe-form-footer">
             {/* <Space size={20}> */}
-              <Button 
-                ref={draftRef} 
+              <Button
                 className="button-tertiary"
                 type="link"
                 loading={loading}

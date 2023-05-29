@@ -7,5 +7,5 @@ export const allRecipesState = atom({
 
 export const recipeState = atom({
   key: 'recipeState',
-  default: []
+  default: {}
 })
