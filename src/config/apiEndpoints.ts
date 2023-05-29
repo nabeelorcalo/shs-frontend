@@ -76,5 +76,19 @@ const endpoints = {
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
   SETTING_PERFORMANCE: '/performance',
+
+  // Dreamup Endpoints
+  DREAMUP: {
+    GET_GOALS: '/dreamup/get-goals',
+    ADD_GOALS: 'dreamup/add-goal',
+    DELETE_GOAL: 'dreamup/delete-goal',
+    ADD_TASK: 'dreamup/add-task',
+    EDIT_TASK: 'dreamup/edit-task',
+    DELETE_TASK: 'dreamup/delete-task',
+    MARK_TASK: 'dreamup/mark-task',
+    UPDATE_LIFE_ASSESSMENT: 'dreamup/add-update-life-assesment',
+    LIFE_ASSESSMENT: 'dreamup/get-life-assesment',
+  }
+
 }
 export default endpoints;
