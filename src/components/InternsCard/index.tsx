@@ -5,7 +5,8 @@ import { ROUTES_CONSTANTS } from '../../config/constants'
 import './style.scss'
 
 export const InternsCard = (props: any) => {
-  const { id, status, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props;
+  const { id, status, pupover, name, posted_by, title, department,
+    joining_date, date_of_birth, company } = props;
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
 

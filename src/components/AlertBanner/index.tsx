@@ -7,7 +7,6 @@ interface bannerProps {
     closable?: boolean;
     actions?: any;
     hasAction?: boolean
-
 }
 const AlertBanner = (props: bannerProps) => {
     const { className, message, type, showIcon, closable, actions, hasAction } = props
