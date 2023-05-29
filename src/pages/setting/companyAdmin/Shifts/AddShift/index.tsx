@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper, TimePickerComp } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
@@ -53,7 +53,9 @@ const AddShift: React.FC = () => {
   ];
 
   const deselectArray: any = [];
-  const [state, setState] = useState(
+  const { state } = useLocation()
+  const [form] = Form.useForm();
+  const [states, setStates] = useState(
     {
       openFromTime: false,
       openToTime: false,
@@ -62,6 +64,7 @@ const AddShift: React.FC = () => {
       intern: [],
       openModal: false,
       internValue: 1,
+      applyForNewHire:false
     });
 
   // getting functions from custom hook 
@@ -70,31 +73,41 @@ const AddShift: React.FC = () => {
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
-      setState({
-        ...state, openModal: true, internValue: radioValue
+      setStates({
+        ...states, openModal: true, internValue: radioValue
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...state, internValue: radioValue, intern: [] })
+      setStates({ ...states, internValue: radioValue, intern: [] })
     }
   };
-
   const openTimeFromHandler = () => {
-    setState({ ...state, openFromTime: !state.openFromTime })
+    setStates({ ...states, openFromTime: !states.openFromTime })
   }
   const openTimeToHandler = () => {
-    setState({ ...state, openToTime: !state.openToTime })
+    setStates({ ...states, openToTime: !states.openToTime })
   }
   const handleFormValues = (values: any) => {
-    
+
     const newValues = {
       ...values,
-      timeTo: state.openToTimeValue,
-      timeFrom: state.openFromTimeValue
+      timeTo: states.openToTimeValue,
+      timeFrom: states.openFromTimeValue
     }
     console.log('forms values are', newValues);
     postShiftData(newValues)
 
+  }
+  console.log('previous state is', state);
+
+  const initialValues = {
+    shiftName: state?.name,
+    timeFrom: dayjs(state?.from),
+    timeTo: dayjs(state?.to),
+    shiftDuration: dayjs(state?.duration),
+    roundOffCap: dayjs(state?.roundOfCap),
+    applyForNewHire: state?.applyToNewHires,
+    interns: state?.interns
   }
 
   return (
@@ -103,6 +116,8 @@ const AddShift: React.FC = () => {
       <Divider />
       <BoxWrapper>
         <Form
+          form={form}
+          initialValues={initialValues}
           onFinish={handleFormValues}
           layout="vertical"
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
@@ -131,10 +146,11 @@ const AddShift: React.FC = () => {
                     <TimePickerComp
                       className="input-style"
                       label={<p className='pb-[6px]'>Time From</p>}
-                      open={state.openFromTime}
+                      open={states.openFromTime}
+                      customSetValue
                       setOpen={openTimeFromHandler}
-                      value={state.openFromTimeValue}
-                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                      value={states.openFromTimeValue}
+                      setValue={(e: string) => setStates({ ...states, openFromTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
@@ -145,10 +161,11 @@ const AddShift: React.FC = () => {
                     <TimePickerComp
                       className="input-style"
                       label={<p className='pb-[6px]'>Time To</p>}
-                      open={state.openToTime}
+                      open={states.openToTime}
+                      customSetValue
                       setOpen={openTimeToHandler}
-                      value={state.openToTimeValue}
-                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                      value={states.openToTimeValue}
+                      setValue={(e: string) => setStates({ ...states, openToTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
@@ -182,18 +199,22 @@ const AddShift: React.FC = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className=" flex items-center">
-                <Radio.Group onChange={onChange} value={state.internValue}>
-                  <Radio value={1}>All interns</Radio>
-                  <Radio value={2}>Select Interns</Radio>
-                </Radio.Group>
-                <span >
-                  <AvatarGroup maxCount={6} list={state.intern} />
-                </span>
-              </div>
+              <Form.Item name="interns">
+                <div className=" flex items-center">
+                  <Radio.Group onChange={onChange} value={states.internValue}>
+                    <Radio value={1}>All interns</Radio>
+                    <Radio value={2}>Select Interns</Radio>
+                  </Radio.Group>
+                  <span >
+                    <AvatarGroup maxCount={6} list={states.intern} />
+                  </span>
+                </div>
+              </Form.Item>
               <div className="my-5">
-                <Switch />
-                <span className="px-2">Apply to all new hires</span>
+                <Form.Item name='applyForNewHire'>
+                  <Switch checked={state?.applyToNewHires} onChange={(e: any) => setStates({ ...states, applyForNewHire: e })}/>
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item>
               </div>
             </Col>
           </Row>
@@ -215,11 +236,11 @@ const AddShift: React.FC = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={state.openModal}
-        setOpenModal={setState}
-        state={state}
-        internValue={state.internValue}
-        intern={state.intern}
+        openModal={states.openModal}
+        setOpenModal={setStates}
+        state={states}
+        internValue={states.internValue}
+        intern={states.intern}
       />
     </div>
   );

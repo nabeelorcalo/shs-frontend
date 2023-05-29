@@ -4,15 +4,12 @@ import api from "../../../../api";
 import endpoints from "../../../../config/apiEndpoints";
 import { debounce } from "lodash";
 import { Notifications } from "../../../../components";
-import { Navigate, useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
-// import constants from "../../../../config/constants";
+
 
 // Chat operation and save into store
 const useShiftsCustomHook = () => {
-  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS } = endpoints;
-  const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);
-  const navigate = useNavigate();
+  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS,DELETE_SHIFT } = endpoints;
+  const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);;
 
   // Getting shifts data 
   const getAllShifts = async (searchValue: any = null) => {
@@ -27,7 +24,6 @@ const useShiftsCustomHook = () => {
   };
 
   // Post shifts data
-
   const postShiftData = async (values: any) => {
     const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap } = values;
     const shiftDetails = {
@@ -50,12 +46,19 @@ const useShiftsCustomHook = () => {
     setSearchName(value);
   }, 500);
 
+  //delete shifts
+  const deleteShifts = async (id: any) => {
+    await api.delete(`${DELETE_SHIFT}/${id}`);
+    getAllShifts()
+    Notifications({ title: "Success", description: 'Shift deleted', type: 'success' })
+  };
 
 
 
   return {
     getAllShifts,
     postShiftData,
+    deleteShifts,
     debouncedSearch,
     shiftsData,
   };

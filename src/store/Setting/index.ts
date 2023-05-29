@@ -29,3 +29,8 @@ export const settingShiftsState = atom({
   key: "settingShiftsState",
   default: [],
 });
+
+export const settingTimesheetState = atom({
+  key: "settingTimesheetState",
+  default: [],
+});

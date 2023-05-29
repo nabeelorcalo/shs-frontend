@@ -6,30 +6,25 @@ import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useShiftsCustomHook from './actionHandler'
-import duration from 'dayjs/plugin/duration';
+// import duration from 'dayjs/plugin/duration';
 import dayjs from "dayjs";
 import './style.scss'
 
 const { Text } = Typography;
-// let overview = [
-//   {
-//     name: "Morning",
-//     content: "51 Employees",
-//     time: "Time: 08:00 to 02:00",
-//     duration: "Duration 8 Hours"
-//   },
-//   {
-//     name: "Evening",
-//     content: "44 Employees",
-//     time: "Time: 08:00 to 02:00",
-//     duration: "Duration 8 Hours"
-//   },
-// ];
+
 const SettingShifts: React.FC = () => {
-  dayjs.extend(duration);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  // dayjs.extend(duration);
+  // const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState();
-  const { shiftsData, getAllShifts, debouncedSearch } = useShiftsCustomHook();
+  const [state, setState] = useState<any>(
+    {
+      isDeleteModal: false,
+      id: null
+    }
+  )
+
+
+  const { shiftsData, getAllShifts, debouncedSearch,deleteShifts } = useShiftsCustomHook();
 
   useEffect(() => {
     getAllShifts(searchValue)
@@ -37,11 +32,14 @@ const SettingShifts: React.FC = () => {
 
   console.log('shifts data', shiftsData);
 
-  // handle search internships 
+  // handle search shifts 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
+  console.log('aksjsakjaslkjas',state);
+  
   return (
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
@@ -85,8 +83,11 @@ const SettingShifts: React.FC = () => {
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                         link={`${ROUTES_CONSTANTS.ADD_SHIFT}`}
-                        showDeleteModal={showDeleteModal}
-                        setShowDeleteModal={setShowDeleteModal}
+                        // showDeleteModal={showDeleteModal}
+                        // setShowDeleteModal={setShowDeleteModal}
+                        state={state}
+                        setState={setState}
+                        editData={data}
                       />
                     </span>
                   </div>
@@ -99,11 +100,12 @@ const SettingShifts: React.FC = () => {
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
-        state={showDeleteModal}
-        setState={setShowDeleteModal}
+        state={state.isDeleteModal}
+        setState={setState}
         type="error"
         width={500}
         title=""
+        okBtnFunc={() => deleteShifts(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />
     </div>

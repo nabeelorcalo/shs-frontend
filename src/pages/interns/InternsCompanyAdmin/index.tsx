@@ -12,7 +12,6 @@ import {
 } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Modal, Form } from 'antd';
 import useCustomHook from "./actionHandler";
-import SelectComp from "../../../components/Select/Select";
 import UserSelector from "../../../components/UserSelector";
 import PreviewModal from "../../certificate/certificateModal/PreviewModal";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
@@ -176,7 +175,6 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
-
   const handleCancel = () => {
     setCertificateModal(false);
   };
@@ -252,6 +250,24 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  const filteredDeaprtmentsData = departmentsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item?.id}`,
+        label: `${item?.name}`,
+      }
+    )
+  })
+  const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item?.university?.id}`,
+        label: `${item?.university?.name}`,
+      }
+    )
+  })
 
   // intren certificate submition 
   const handleCertificateSubmition = (values: any, action?: any) => {
@@ -264,9 +280,6 @@ const InternsCompanyAdmin = () => {
     if (action === 'preview') setPreviewModal(true)
     else setSignatureModal(true)
   }
-
-  console.log('certficate files', files);
-
 
   return (
     <>
@@ -319,25 +332,21 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredStatusData}
                 />
-                <SelectComp
+                <UserSelector
                   label="Department"
-                  placeholder='Select'
+                  placeholder="Select"
                   value={state.department}
                   onChange={(event: any) => {
-
                     setState((prevState) => ({
                       ...prevState,
                       department: event
                     }))
-
                   }}
-                  options={departmentsData?.map((item: any) => {
-                    return { value: item?.id, label: item?.name }
-                  })}
+                  options={filteredDeaprtmentsData}
                 />
-                <SelectComp
+                <UserSelector
                   label="University"
-                  placeholder='Select'
+                  placeholder="Select"
                   value={state.university}
                   onChange={(event: any) => {
                     setState((prevState) => ({
@@ -345,9 +354,7 @@ const InternsCompanyAdmin = () => {
                       university: event
                     }))
                   }}
-                  options={getAllUniversities?.map((item: any) => {
-                    return { value: item?.university?.id, label: item?.university?.name }
-                  })}
+                  options={filteredUniversitiesData}
                 />
                 <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
@@ -429,8 +436,6 @@ const InternsCompanyAdmin = () => {
                 : <div className="flex flex-wrap gap-5">
                   {
                     getAllInters?.map((item: any) => {
-                      console.log('jahjhsjhks', item);
-
                       return (
                         <InternsCard
                           pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
@@ -453,7 +458,8 @@ const InternsCompanyAdmin = () => {
         </Col>
       </Row>
 
-      <PopUpModal open={assignManager.isToggle}
+      <PopUpModal
+        open={assignManager.isToggle}
         width={600}
         close={() => { setAssignManager({ ...assignManager, isToggle: false }) }}
         title="Assign Manager"
@@ -498,7 +504,8 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      < PopUpModal open={terminate.isToggle}
+      < PopUpModal
+        open={terminate.isToggle}
         width={500}
         close={() => { setTerminate({ ...terminate, isToggle: false }) }}
         children={
@@ -550,7 +557,8 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      <PopUpModal open={complete.isToggle}
+      <PopUpModal
+        open={complete.isToggle}
         width={500}
         close={() => { setComplete({ ...complete, isToggle: false }) }}
         children={
