@@ -15,8 +15,9 @@ const useCustomHook = () => {
 
   /*  Method  to get All Goals for dream up  
   -------------------------------------------------------------------------------------*/
-  const getGolas = async () => {
-    await api.get(GET_GOALS,).then(({ data }) => {
+  const getGolas = async (payload?:any) => {
+    await api.get(`${GET_GOALS}?search=${payload}`).then(({ data }) => {
+      // console.log(data?.response);
       setGoalState(data);
     });
   }

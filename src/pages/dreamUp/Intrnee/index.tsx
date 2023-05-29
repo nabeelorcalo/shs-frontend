@@ -35,10 +35,12 @@ const DreamUp = () => {
   const { getGoalState, getGolas, deleteGoal }: any = useCustomHook();
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [id, setID] = useState('');
+  const [search, setSearch] = useState("");
+  // console.log(search,"search");
   // const tableData = useRecoilValue(getGoalsSelector);
   useEffect(() => {
-    getGolas();
-  }, [])
+    getGolas(search);
+  }, [search])
   const data = getGoalState?.response
   const columData = [
     {
@@ -139,7 +141,7 @@ const DreamUp = () => {
       </Row>
       <Row gutter={[20, 20]} className=' items-center my-8'>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => { console.log(e); }} />
+          <SearchBar handleChange={(e: any) => {setSearch(e)}} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} >
           <div className='flex items-center lg:justify-end view_history_button_wrapper'>

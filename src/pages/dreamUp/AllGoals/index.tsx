@@ -15,10 +15,13 @@ const AllGoals = () => {
 
   // const myGoalData = useState(getGoalState?.response)
   const [openAdGoal, setOpenAddGoal] = useState(false);
+  const [search, setSearch] = useState("");
   const [openAddGoalTask, setOpenAddGoalTask] = useState(false)
-  const [selectedGoal, setSelectedGoal] = useState<any>(getGoalState?.response ? getGoalState?.response?.[0]?.tasks:[]);
+  const [selectedGoal, setSelectedGoal] = useState<any>(getGoalState?.response ? getGoalState?.response[0]?.tasks:[]);
+
+  console.log(getGoalState?.response[0],"getGoalState?.response[0]");
   const [mainGoalId, setMainGoalId] = useState<any>(getGoalState?.response? getGoalState?.response[0]?.id:"");
-  console.log(selectedGoal, "completedcompleted");
+  console.log(selectedGoal, "selectedGoal");
   console.log(mainGoalId, "mainGoalId ");
   const newArr: any = []
   selectedGoal.map((data: any) => data.completed ? newArr.push(data) : []) 
@@ -26,8 +29,8 @@ const AllGoals = () => {
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, id: '' })
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
   useEffect(() => {
-    getGolas();
-  }, [])
+    getGolas(search);
+  }, [search])
   
   const customExpandIcon = ({ isActive }: any) => {
     const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
@@ -67,9 +70,7 @@ const AllGoals = () => {
         />
         <Row className='items-center' gutter={[10, 10]}>
           <Col  xs={24} sm={14}>
-            <SearchBar className="SearchBar" handleChange={(e: any) => {
-              console.log(e);
-            }} />
+            <SearchBar className="SearchBar" handleChange={(e: any) => {setSearch(e) }} />
           </Col>
           <Col xs={24} sm={10}  className="flex justify-end gap-4">
             <div className='flex items-center justify-end view_history_button_wrapper'>
