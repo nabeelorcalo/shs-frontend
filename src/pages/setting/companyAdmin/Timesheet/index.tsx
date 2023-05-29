@@ -7,66 +7,32 @@ import { PopUpModal } from "../../../../components/Model";
 import useTimesheetCustomHook from "./actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import "./style.scss";
-// import { useLocation } from "react-router-dom";
 
 const { TextArea } = Input;
 const { Text } = Typography;
 
-// let overview = [
-//   {
-//     name: "Designing",
-//     content:
-//       "Producing consistently excellent visual work and  a host of ideas",
-//   },
-//   {
-//     name: "Coordination",
-//     content:
-//       "The process of organizing people or groups so that they work together properly and well",
-//   },
-//   {
-//     name: "Training",
-//     content:
-//       "Training has specific goals of improving one's capability, capacity, productivity and performance.",
-//   },
-// ];
-
 const SettingTimesheet = () => {
-  // const { state:formData } = useLocation()
   const [form] = Form.useForm();
-  // const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  // const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState();
   const [editData, setEditData] = useState<any>({});
   const [state, setState] = useState<any>(
     {
       isDeleteModal: false,
-      isEditModal:false,
-      id: null
+      isEditModal: false,
+      id: null,
     }
   )
-console.log(editData);
 
   const { getTimeSheetsData, timeSheetData,
-    debouncedSearch, postTimeSheetData, deleteTimeSheet } = useTimesheetCustomHook();
-
-  // const [formValues, setFormValues] = useState<any>({
-  //   departmentName: "",
-  //   Description: "",
-  // });
+    debouncedSearch, postTimeSheetData,
+    deleteTimeSheet, editTimeSheets } = useTimesheetCustomHook();
 
   useEffect(() => {
     getTimeSheetsData(searchValue)
   }, [searchValue])
 
-  console.log('timesheets data', timeSheetData);
-  // console.log('state data',state);
-  
-  // const handleChange = (event: any) => {
-  //   const { name, value } = event.target;
-  //   setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
-  // };
   const close = () => {
-    setState({...state,isEditModal:false});
+    setState({ ...state, isEditModal: false });
   };
 
   // handle search timesheets 
@@ -74,13 +40,24 @@ console.log(editData);
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
   //  handle timeSheet form data 
   const handleFinish = (values: any) => {
-    console.log('form values', values);
     postTimeSheetData(values);
-    setState({...state,isEditModal:false});
+    setState({ ...state, isEditModal: false });
     form.resetFields();
+    // if (editData.id !== null) {
+    //   editTimeSheets(editData.id, values);
+    //   setState({ ...state, isEditModal: false });
+    // }
+    // else {
+    //   postTimeSheetData(values);
+    //   setState({ ...state, isEditModal: false });
+    //   form.resetFields();
+    // }
   }
+
+  // get form initial vlaues 
   const initialValues = {
     categoryName: editData?.name,
     description: editData?.description,
@@ -95,7 +72,7 @@ console.log(editData);
         </div>
         <Button
           size="middle"
-          onClick={() => { setState({...state,isEditModal:!state.isEditModal }) }}
+          onClick={() => { setState({ ...state, isEditModal: !state.isEditModal }) }}
           className="flex gap-2 setting-add-button white-color teriary-bg-color"
         >
           <SettingTimesheetIcon /> Add Category
@@ -118,10 +95,7 @@ console.log(editData);
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
-                        // editData={showEditModal}
                         SetEditData={setEditData}
-                        // showDeleteModal={showDeleteModal}
-                        // setShowDeleteModal={setShowDeleteModal}
                         state={state}
                         setState={setState}
                         editData={data}
@@ -134,7 +108,7 @@ console.log(editData);
           );
         })}
       </Row>
-      
+
       <PopUpModal
         open={state.isEditModal}
         title="Add Category"

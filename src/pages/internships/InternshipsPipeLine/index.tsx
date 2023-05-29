@@ -82,7 +82,7 @@ const InternshipPipeLine = () => {
     },
     {
       data: getStatus('OfferLetter').statusData,
-      status: 'OfferLetter',
+      status: 'Offer Letter',
       no: getStatus('OfferLetter').totalInterns,
       className: "light-purple-bg"
     },

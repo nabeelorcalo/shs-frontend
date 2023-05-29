@@ -9,7 +9,7 @@ import { Notifications } from "../../../../components";
 // Chat operation and save into store
 const useTimesheetCustomHook = () => {
   const { SETTINGS_TIMESHEET, POST_NEW_TIMESHEET,
-    DELETE_TIMESHEET,EDIT_TIMESHEET } = endpoints;
+    DELETE_TIMESHEET, EDIT_TIMESHEET } = endpoints;
   const [timeSheetData, setTimeSheetData] = useRecoilState(settingTimesheetState);;
 
   // Getting timesheets data 
@@ -52,16 +52,16 @@ const useTimesheetCustomHook = () => {
   };
 
   // Edit timeSheet 
-    const editTimeSheets = async (id: any, values: any) => {
-      const { categoryName, description, } = values;
-      const params = {
-        name: categoryName,
-        description: description,
-      }
-      await api.patch(`${EDIT_TIMESHEET}/${id}`, params);
-      getTimeSheetsData()
-      Notifications({ title: "Success", description: 'Policy updated', type: 'success' })
-    };
+  const editTimeSheets = async (id: any, values: any) => {
+    const { categoryName, description, } = values;
+    const params = {
+      name: categoryName,
+      description: description,
+    }
+    await api.patch(`${EDIT_TIMESHEET}/${id}`, params);
+    getTimeSheetsData()
+    Notifications({ title: "Success", description: 'Category updated', type: 'success' })
+  };
 
 
 
