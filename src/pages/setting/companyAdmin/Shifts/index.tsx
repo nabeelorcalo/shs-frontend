@@ -79,7 +79,7 @@ const SettingShifts: React.FC = () => {
                         {`Time: ${startTime} to ${endTime}`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
-                        {`Duration: ${dayjs(data?.duration).format('h:mm')} hours`}
+                        {`Duration: ${dayjs(data?.duration).format('h')} hours`}
                       </Text>
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">

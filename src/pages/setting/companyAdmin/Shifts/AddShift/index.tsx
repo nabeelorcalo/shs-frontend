@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import dayjs from "dayjs";
 import { NavLink } from "react-router-dom";
 import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper, TimePickerComp } from "../../../../../components";
@@ -12,9 +13,8 @@ import { Breadcrumb } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
-import dayjs from "dayjs";
-import "./style.scss";
 import useShiftsCustomHook from "../actionHandler";
+import "./style.scss";
 
 const { Paragraph } = Typography;
 dayjs.extend(customParseFormat);
@@ -24,7 +24,6 @@ const AddShift: React.FC = () => {
     { name: "Add Shift" },
     { name: "Setting" },
     { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
-
   ];
   const selectArray = [
     {
@@ -64,6 +63,7 @@ const AddShift: React.FC = () => {
       openModal: false,
       internValue: 1,
     });
+
   // getting functions from custom hook 
   const { postShiftData } = useShiftsCustomHook()
 
@@ -86,23 +86,16 @@ const AddShift: React.FC = () => {
     setState({ ...state, openToTime: !state.openToTime })
   }
   const handleFormValues = (values: any) => {
+    
     const newValues = {
       ...values,
-      timeTo: dayjs(state.openToTimeValue).format('YYYY-MM-DD'),
-      timeFrom: dayjs(state.openFromTimeValue).format('YYYY-MM-DD')
+      timeTo: state.openToTimeValue,
+      timeFrom: state.openFromTimeValue
     }
-    postShiftData(newValues)
     console.log('forms values are', newValues);
+    postShiftData(newValues)
 
   }
-
-  // const initialValues = {
-  //   shiftName: undefined,
-  //   timeForm: undefined,
-  //   timeTo: undefined,
-  //   shiftDuration: undefined,
-  //   roundOffCap: undefined,
-  // }
 
   return (
     <div className="leaves-add-policy">
@@ -164,7 +157,7 @@ const AddShift: React.FC = () => {
                 name="shiftDuration"
                 label="Shift Duration"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }]}
               >
                 <Input placeholder="0" type="number" className="input-style" />
               </Form.Item>
@@ -172,7 +165,7 @@ const AddShift: React.FC = () => {
                 name="roundOffCap"
                 label="Round Off Cap"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }]}
 
               >
                 <Input placeholder="00:00:00" type="number" className="input-style" />
