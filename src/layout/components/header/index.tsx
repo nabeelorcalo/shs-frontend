@@ -38,8 +38,9 @@ const { Header } = Layout;
 type HeaderProps = {
   collapsed: boolean;
   sidebarToggler: () => void;
-};
+  handleLogout: any;
 
+};
 
 const data = [
   {
@@ -56,8 +57,8 @@ const data = [
   },
 ];
 
-const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
-  const { LOGOUT } = apiEndpints;
+const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout}) => {
+  
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
@@ -68,9 +69,11 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const role = useRecoilValue(currentUserRoleState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
+ 
   const menuStyle = {
     boxShadow: "none",
   };
+
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
@@ -90,8 +93,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       label: "Logout",
       icon: <IconLogout />,
       onClick: (props) => {
-        localStorage.removeItem("accessToken");
-        navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+        handleLogout()
       },
     },
   ];
@@ -232,7 +234,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               placement="bottomLeft"
               arrow
               open={open}
-              onOpenChange={(open)=>{setOpen(open)}}
+              onOpenChange={(open) => { setOpen(open) }}
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">

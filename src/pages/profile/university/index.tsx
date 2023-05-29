@@ -3,7 +3,7 @@ import { Col, Divider, Row } from "antd";
 import { PageHeader } from "../../../components";
 import ChangePassword from "./changePassword";
 import StudentSideBar from "./sidebar";
-import UniversityProfileForm from "./universityForm";
+import UniversityProfileForm from "./universityTabs";
 import "../style.scss";
 
 const UniversityProfile = () => {
@@ -24,7 +24,7 @@ const UniversityProfile = () => {
         <Col xxl={18} xl={14} lg={24} md={24} sm={24} xs={24}>
           {showSideViewType === "change-password" && <ChangePassword />}
 
-          {showSideViewType === "university-form" && <UniversityProfileForm/>}
+          {showSideViewType === "university-form" && <UniversityProfileForm />}
         </Col>
       </Row>
     </div>

@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Col, Row, Menu } from "antd";
 import { DropDown, SearchBar, GlobalTable, BoxWrapper } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
+import { useRecoilState } from "recoil";
+import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
+import useCustomHook from "../../actionHandler";
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
+  const action = useCustomHook();
+  const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
+  console.log(withDrawalAmount,'><><><><><');
+  
+  useEffect(() => {
+    action.getWithDrawalRequestData(1);
+  }, [])
 
   const searchValue = () => { };
 
@@ -137,13 +147,13 @@ const WithDrawalRequest = () => {
             <DropDown
               name="Status"
               value={value}
-              options={["item 1", "item 2", "item 3"]}
+              options={["Complete", "Pending", "Rejected"]}
               setValue={setValue}
             />
             <DropDown
               name="Method"
               value={value}
-              options={["item 1", "item 2", "item 3"]}
+              options={["Bank Transfer", "Card Payment"]}
               setValue={setValue}
             />
           </div>
@@ -151,7 +161,7 @@ const WithDrawalRequest = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-              <GlobalTable tableData={tableData} columns={columns} />
+              <GlobalTable tableData={withDrawalAmount[0]} columns={columns} />
             </div>
           </BoxWrapper>
         </Col>

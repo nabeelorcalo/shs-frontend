@@ -29,6 +29,10 @@
     padding: 8px 16px 8px 16px !important;
   }
 
+  .input-style:hover {
+    background-color: $white-bg-color;
+  }
+
   .ant-input-affix-wrapper>input.ant-input {
     background: $text-input-bg-color !important;
   }
@@ -81,7 +85,6 @@
       font-size: 30px;
       font-weight: 500;
       line-height: 40px;
-      font-family: Outfit;
       text-align: center;
     }
 
@@ -90,7 +93,6 @@
       font-size: 16px;
       font-weight: 400;
       line-height: 40px;
-      font-family: Outfit;
       text-align: center;
     }
   }
@@ -110,7 +112,6 @@
 
 .verify-form-signup {
   .identity {
-
     .identity-style {
       display: flex !important;
       justify-content: center;
@@ -143,6 +144,10 @@
       padding: 8px 16px 8px 16px !important;
     }
 
+    .input-style:hover {
+      background-color: $white-bg-color;
+    }
+
     .form-inner-wrapper {
       border: 1px solid $text-error-line-color;
       box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
@@ -161,7 +166,6 @@
       border: 2px dashed $text-primary-title-color;
       border-radius: 4px;
     }
-
   }
 
   .university-detail {
@@ -197,6 +201,10 @@
       padding: 8px 16px 8px 16px !important;
     }
 
+    .input-style:hover {
+      background-color: $white-bg-color;
+    }
+
     .form-inner-wrapper {
       border: 1px solid $text-error-line-color;
       box-shadow: $accommodation-card-shadow;
@@ -215,14 +223,12 @@
       font-size: 20px;
       font-weight: 500;
       color: $primary-bg-color;
-      font-family: Outfit;
     }
 
     .list-style {
       font-size: 16px;
       font-weight: 400;
       color: $text-secondary-body-color;
-      font-family: Outfit;
     }
 
     .main-box-video {

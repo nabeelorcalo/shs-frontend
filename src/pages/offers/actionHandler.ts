@@ -1,21 +1,52 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { log } from 'console';
+import { useRecoilState } from "recoil";
 import api from "../../api";
-import constants from "../../config/constants";
+import { offerdetails } from "../../store";
+import endpoints from "../../config/apiEndpoints";
+import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [offersData, setOfferData] = useRecoilState(offerdetails);
+  const { GET_OFFERS, POST_OFFERS, EDIT_OFFERS } = endpoints;
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getOffersDetails = async () => {
+    const { data } = await api.get(GET_OFFERS);
+    setOfferData(data)
   };
 
+  const postOffersDetails = async (values: any) => {
+    const { minStayMonths, maxStayMonths, discount, propertyId } = values;
+    const sendData = {
+      propertyId: propertyId,
+      minStayMonths: +minStayMonths,
+      maxStayMonths: +maxStayMonths,
+      monthlyDiscount: discount
+    }
+    api.post(POST_OFFERS, sendData);
+    getOffersDetails()
+    Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
+  }
+
+  const editOffersDetails = async (values: any) => {
+    const { offerId, minStayMonths, maxStayMonths, discount } = values;
+    const sendData = {
+      offerId: offerId,
+      minStayMonths: +minStayMonths, 
+      maxStayMonths: +maxStayMonths,
+      monthlyDiscount: discount 
+    }
+    const res:any = api.patch(EDIT_OFFERS, sendData);
+    getOffersDetails()
+    Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
+    console.log(res?.state);
+  }
+
   return {
-    getData,
+    offersData,
+    getOffersDetails,
+    postOffersDetails,
+    editOffersDetails
   };
 };
 

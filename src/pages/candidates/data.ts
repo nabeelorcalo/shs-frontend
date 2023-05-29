@@ -61,3 +61,19 @@ export const hiringList = [
     color: "#D2D6DC",
   },
 ];
+
+export const ratingCount = [
+  { title: "exceptional", count: 5.0 },
+  { title: "very good", count: 4.0 },
+  { title: "good", count: 3.0 },
+  { title: "average", count: 2.0 },
+  { title: "poor", count: 1.0 },
+];
+
+export const interShipDropDown = [
+  "UI UX Designer",
+  "Business Analyst",
+  "Data Scientists",
+  "Product Manager",
+  "Human Resources",
+];

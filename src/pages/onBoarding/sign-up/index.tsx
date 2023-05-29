@@ -12,7 +12,7 @@ interface SignupRoleInterface {
 
 const SignUp = () => {
   const [searchParams] = useSearchParams();
-  const signupRole = searchParams.get("signupRole");
+  const signupRole= searchParams.get('signupRole');
  
   const TagLine: SignupRoleInterface = {
     MANAGER: "Manage your interns.",
@@ -33,8 +33,8 @@ const SignUp = () => {
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="primary-color text-[38px] font-medium">Sign up</Typography>
-              <Typography  className="primary-color text-[30px] font-medium pb-2">
-                {TagLine[`/${ROUTES_CONSTANTS.SIGNUP} ? signupRole : "STUDENT"`]}
+              <Typography  className="primary-color text-[30px] font-medium pb-10">
+                {TagLine[`/${ROUTES_CONSTANTS.SIGNUP}`] || (signupRole && TagLine[signupRole]) || TagLine["STUDENT"]}
               </Typography>
             </div>
             <SignupForm signupRole={signupRole} />

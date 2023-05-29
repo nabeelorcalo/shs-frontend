@@ -1,46 +1,51 @@
 @import '../../scss/colors';
-.setting{
-  .settings-row{
+
+.setting {
+  .settings-row {
     @media only screen and (max-width:576px) {
       flex-direction: column;
     }
   }
 }
-.setting-performance{
-  .performance-box{
-   border: 1px solid 
-   #d9dbe9;
-   border-left: none;
+
+.setting-performance {
+  .performance-box {
+    border: 1px solid #d9dbe9;
+    border-left: none;
 
   }
-  .performance-add-button{
-    &:hover{
-        opacity: 75%;
-        color: $text-teriary-label-color !important;
-         }
 
-}
- .ant-input .ant-input-sm {
-    &:hover{
+  .performance-add-button {
+    &:hover {
+      opacity: 75%;
+      color: $text-teriary-label-color !important;
+    }
+
+  }
+
+  .ant-input .ant-input-sm {
+    &:hover {
       border: none !important;
-         }
-}
-@media only screen and (max-width: 900px) {
-  .ant-collapse .ant-collapse-content>.ant-collapse-content-box{
-    padding: 10px 0px;
+    }
+  }
+
+  @media only screen and (max-width: 900px) {
+    .ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+      padding: 10px 0px;
+    }
   }
 }
 
-}
-.setting-location{
-  font-family: 'Outfit';
-  .location-header{
+.setting-location {
+  .location-header {
     gap: 10px;
+
     @media only screen and (max-width:1000px) {
       align-items: flex-start;
       flex-direction: column;
-     }
+    }
   }
+
   .location-box-wrapper {
     min-height: 125px !important;
     background-color: $white-bg-color;
@@ -55,21 +60,21 @@
     }
   }
 }
-.setting-add-button{
+
+.setting-add-button {
   font-size: 16px;
   font-weight: 600;
-  font-family: 'Outfit';
-  &:hover{
- opacity: 75%;
- color: $white-bg-color !important;
- outline: 3px solid rgba(161, 177, 169, 0.5) !important;
- border: none !important;
+
+  &:hover {
+    opacity: 75%;
+    color: $white-bg-color !important;
+    outline: 3px solid rgba(161, 177, 169, 0.5) !important;
+    border: none !important;
   }
-
 }
-.setting{
-  .ant-divider-horizontal{
-    background: $text-error-line-color !important;
 
+.setting {
+  .ant-divider-horizontal {
+    background: $text-error-line-color !important;
   }
 }

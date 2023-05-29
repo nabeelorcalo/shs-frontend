@@ -1,0 +1,65 @@
+@import "../../../scss/colors.scss";
+
+.side-bar-text {
+  color: $light-grey-color;
+}
+
+.personalisation-content {
+  .innner-screen {
+    box-shadow: 0px 0px 50px rgba(89, 89, 89, 0.17);
+    background-color: $white-bg-color;
+  }
+  .personalisation-content-title {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: $primary-bg-color;
+  }
+
+  .sidebar {
+    height: 100vh;
+    overflow: auto;
+  }
+
+  .box-wrapper {
+    background-color: $off-white-color;
+    box-shadow: red;
+  }
+
+  .ant-layout-content-preview {
+    padding: 10px;
+  }
+
+  .sidebar-user-profile {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(217, 217, 217, 0.25);
+    padding: 20px;
+
+    .ant-avatar {
+      min-width: 48px;
+      max-width: 48px;
+    }
+
+    .sidebar-user-profile-content {
+      flex: 1;
+      margin-left: 20px;
+      white-space: nowrap;
+
+      .ant-typography {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 1.277777778;
+        color: $white-bg-color;
+      }
+
+      .sidebar-user-profile-role {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.2857;
+        color: $sky-blue-color;
+      }
+    }
+  }
+}

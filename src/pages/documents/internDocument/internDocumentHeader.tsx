@@ -26,9 +26,22 @@ import { CheckBox } from "../../../components/Checkbox";
 
 const InternDocument = () => {
   const [selectData, setSelectData] = useState("Intern Documents");
+  const [files, setFiles] = useState([]);
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
-  const [state, setState] = useState({ searchVal: '', dateRange: '' })
+  const [state, setState] = useState({ searchVal: '', dateRange: '' });
+
+  const handleDropped = (event: any) => {
+    event.preventDefault()
+    if (files[0] === "application/pdf" || files[0] === "image/jpeg") {
+      setFiles(Array.from(event.dataTransfer.files))
+    }
+    else {
+      alert("sdfgnjdsgnfsj")
+    }
+
+  }
+  
   const items: any = [
     {
       label: <p className="text-base font-medium" onClick={() => setSelectData('Intern Documents')}>Intern Documents</p>,
@@ -147,15 +160,16 @@ const InternDocument = () => {
           >
             Cancel
           </Button>,
-          <Button
-            className="teriary-bg-color font-semibold text-base upload-button white-color"
-            onClick={() => setUploadModel(false)}
+          <Button 
+            className="teriary-bg-color font-semibold text-base upload-button white-color intern-upload-button"
+            onClick={() => { setUploadModel(false); handleDropped }}
           >
             Upload
           </Button>,
         ]}
       >
-        <UploadDocument />
+        <UploadDocument setFiles={setFiles} handleDropped={handleDropped} files={files} />
+        <p>{files[0] === ""}</p>
         {selectData === "Intern Documents" ?
           <div className="flex mt-5">
             <CheckBox />

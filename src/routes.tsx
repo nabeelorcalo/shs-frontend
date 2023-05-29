@@ -24,6 +24,7 @@ import DemoCard from "./components/ContractCard/demoCard";
 // Lazy load required start
 import Chat from "./pages/chat";
 import ManageVault from "./pages/digiVault/Student/manageVault";
+import ManageViewVault from "./pages/digiVault/Student/manageVault/file-view";
 import PropertyDetail from "./pages/propertyAgent/propertDahboard/Dashboard/propertyDetail";
 import ActivityData from "./pages/propertyAgent/propertDahboard/Dashboard/activityData";
 import AddManager from "./pages/managers/managerMain/addManager";
@@ -45,6 +46,7 @@ import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pend
 import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
+import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 
 // Lazy load required end
 
@@ -151,7 +153,7 @@ const Managers = Loadable(lazy(() => import("./pages/managers")));
 const SearchJobs = Loadable(lazy(() => import("./pages/searchJobs")));
 const SearchJobsDetails = Loadable(lazy(() => import("./pages/searchJobs/jobDetails/jobDetails")));
 const Application = Loadable(lazy(() => import("./pages/application")));
-const Profile = Loadable(lazy(() => import("./pages/profile/")));
+const Profile = Loadable(lazy(() => import("./pages/profile")));
 const Accommodation = Loadable(lazy(() => import("./pages/accommodation")));
 const AvailableProperties = Loadable(
   lazy(() => import("./pages/accommodation/AvailableProperties"))
@@ -332,6 +334,13 @@ const SystemDetailPage = Loadable(
   lazy(() => import("./pages/universities/SystemAdmin/detailPage"))
 );
 
+const CompanyProfileUni = Loadable(
+  lazy(() => import("./pages/companies/companiesMain/CompanyProfileTabs"))
+);
+const StudentProfileUni = Loadable(
+  lazy(() => import("./pages/profile/university/universityTabs/profileTabsMain"))
+);
+
 
 export const publicRoutes = [
 
@@ -358,7 +367,7 @@ export const publicRoutes = [
   {
     key: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
     path: `${ROUTES_CONSTANTS.RESET_LINK_SENT}`,
-    element: <ResetLink/>
+    element: <ResetLink />
   },
   // ------Remove below demo components------
   // Demo Graphs
@@ -608,6 +617,11 @@ const delegateAgentRoutes = [
         element: <Dashboard />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
         path: `${ROUTES_CONSTANTS.DELEGATE_MEMEBERS}`,
         element: <DelegateMembers />,
@@ -657,6 +671,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
+        element: <StudentProfileUni />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENT}`,
@@ -745,9 +764,19 @@ const companyAdminRoutes = [
     ),
     children: [
       {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `graphs`,
@@ -836,7 +865,7 @@ const companyAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.MANAGER_PROFILE}/:id`,
         element: <ManagerProfile />,
       },
       {
@@ -1278,8 +1307,13 @@ const internRoutes = [
       },
       {
         key: `manageVault`,
-        path: `digivault/:id`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id`,
         element: <ManageVault />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        element: <ManageViewVault />,
       },
       {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
@@ -1450,8 +1484,13 @@ const studentRoutes = [
       },
       {
         key: `manageVault`,
-        path: `digivault/:id`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id`,
         element: <ManageVault />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        path: `${ROUTES_CONSTANTS.DIGIVAULT}/:id/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+        element: <ManageViewVault />,
       },
       {
         key: `${ROUTES_CONSTANTS.DREAM_UP}`,
@@ -1591,9 +1630,19 @@ const universityRoutes = [
     ),
     children: [
       {
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        element: <StudentProfileUni />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.PROFILE}`,
@@ -1601,8 +1650,8 @@ const universityRoutes = [
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
-        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}`,
+        key: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}/:id`,
+        path: `${ROUTES_CONSTANTS.COMPANIES}/${ROUTES_CONSTANTS.CHAT}/:id`,
         element: <Chat />,
       },
       {
@@ -1616,14 +1665,19 @@ const universityRoutes = [
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
-        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}`,
+        key: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENT}/${ROUTES_CONSTANTS.CHAT}/:id`,
         element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
         path: `${ROUTES_CONSTANTS.COMPANIES}`,
         element: <Companies />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPANYPROFILEUNI}/:id`,
+        path: `${ROUTES_CONSTANTS.COMPANYPROFILEUNI}/:id`,
+        element: <CompanyProfileUni />,
       },
       {
         key: `${ROUTES_CONSTANTS.ATTENDANCE}`,
@@ -1708,6 +1762,11 @@ const agentRoutes = [
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
       },
       {
         key: `${ROUTES_CONSTANTS.LISTINGS}`,

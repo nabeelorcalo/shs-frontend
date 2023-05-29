@@ -1,46 +1,45 @@
-import "./style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal, Form, Input, Switch } from "antd";
+import { useState } from "react";
 import useCustomHook from "../../actionHandler";
+import "./style.scss";
+import UnlockVault from "./unlockVaultModal/unlockVault";
 
 const NewPasswordModal = (props: any) => {
-  const { newPass, setNewPass, setIsChecked } = props;
-  const { PostDigivalutData } = useCustomHook();
-  // const [form] = Form.useForm();
+  const { isModal, setIsModal, settingModal } = props;
+  const { postDigivaultPassword }: any = useCustomHook();
+  const [unlockVaultModal, setUnlockVaultModal] = useState(false)
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
-    PostDigivalutData(values)
+    values.isLock = settingModal.isLock;
+    values.lockTime = settingModal.lockTime.toString();
+    postDigivaultPassword(values);
   };
+  // const onChange = (checked: boolean) => {
+  //   setIsModal(checked && true);
+  //   setIsEnablePassword(checked)
+  // }
   return (
     <div>
       <Modal
-        open={newPass}
-        onCancel={() => {
-          setNewPass(!newPass);
-        }}
+        open={isModal}
+        onCancel={() => setIsModal(false)}
         width={500}
-        maskClosable={false}
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={false}
       >
         <div className="text-center mt-6 mb-6">
           <h1 className="color-[#363565]">Create New Password</h1>
         </div>
-        <Form onFinish={onFinish}>
+        <Form layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
           <div>
-            <label>Password</label>
-            <Form.Item
-              name="password"
-
-            >
+            <Form.Item name="password" label='password'>
               <Input.Password size="large" />
             </Form.Item>
           </div>
-
           <div>
-            <label>Confirm Password</label>
             <Form.Item
+              label='Confirm Password'
               name="confirmPassword"
               dependencies={["password"]}
               rules={[
@@ -69,10 +68,7 @@ const NewPasswordModal = (props: any) => {
           <div>
             <Button
               htmlType="submit"
-              onClick={() => {
-                setNewPass(!newPass);
-                setIsChecked(true);
-              }}
+              onClick={() => { setIsModal(false) }}
               className="create-passwor-btn primary-bg-color  min-w-full"
             >
               Continue
@@ -80,6 +76,7 @@ const NewPasswordModal = (props: any) => {
           </div>
         </Form>
       </Modal>
+      <UnlockVault setUnlockVaultModal={setUnlockVaultModal} unlockVaultModal={unlockVaultModal} />
     </div>
   );
 };

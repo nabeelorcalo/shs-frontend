@@ -1,34 +1,48 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
-import { SearchBar, FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound} from '../../../components'
+import {
+  FiltersButton, PageHeader, InternshipProgressCard,
+  BoxWrapper, NoDataFound, Loader
+} from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Spin, Select } from 'antd'
+import { Button, Col, Row, Input } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
+import SelectComp from '../../../components/Select/Select'
+import { GlassMagnifier } from "../../../assets/images";
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     showDrawer: false,
     status: undefined,
     location: undefined,
-    department: undefined
+    department: undefined,
   });
 
-  const { getAllInternshipsData, internshipData, changeHandler, isLoading,
-    getAllDepartmentData, getAllLocationsData, departmentsData, locationsData }: any = useCustomHook();
+  const statusArr = [
+    { value: "PUBLISHED", label: "Published" },
+    { value: "REJECTED", label: "Rejected" },
+    { value: "CLOSED", label: "Closed" },
+    { value: "PENDING", label: "Pending" },
+    { value: "DRAFT", label: "Draft" },
+  ]
+
+  const { getAllInternshipsData, internshipData, isLoading,
+    getAllDepartmentData, getAllLocationsData, departmentsData,
+    locationsData, debouncedSearch }: any = useCustomHook();
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department);
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
 
-  console.log('intership data is ', internshipData);
-  
+  useEffect(() => {
+    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+  }, [searchValue])
 
   const handleDrawer = () => {
     setState((prevState) => ({
@@ -36,6 +50,7 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
+  // getting filters data
   const handleStatus = (event: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -54,6 +69,7 @@ const InternshipsCompanyAdmin = () => {
       department: event
     }))
   }
+  // handle apply filters 
   const handleApplyFilter = () => {
     getAllInternshipsData(state.status, state.location, state.department);
     setState((prevState) => ({
@@ -61,6 +77,7 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: false
     }))
   }
+  // handle reset filters 
   const handleResetFilter = () => {
     setState((prevState) => ({
       ...prevState,
@@ -69,13 +86,23 @@ const InternshipsCompanyAdmin = () => {
       department: undefined
     }))
   }
+  // handle search internships 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader bordered title="Internships" />
       <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
-          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar handleChange={changeHandler} name="search bar" placeholder="Search" size="middle" />
+          <Col xl={6} lg={9} md={24} sm={24} xs={24} className='input-wrapper'>
+            <Input
+              className='search-bar'
+              placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />}
+            />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4">
             <FiltersButton label="Filters" onClick={handleDrawer} />
@@ -83,20 +110,18 @@ const InternshipsCompanyAdmin = () => {
               <>
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
-                    <label>Status</label>
-                    <Select
-                      placeholder="Select"
+                    <SelectComp
+                      label="Status"
+                      placeholder='Select'
                       value={state.status}
-                      onChange={(event: any) => {  handleStatus(event) }}
-                      options={internshipData?.map((item: any) => {
-                        return { value: item?.status, label: item?.status }
-                      })}
+                      options={statusArr}
+                      onChange={(event: any) => { handleStatus(event) }}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label>Location</label>
-                    <Select
-                      placeholder="Select"
+                    <SelectComp
+                      label="Location"
+                      placeholder='Select'
                       value={state.location}
                       onChange={(event: any) => { handleLocation(event) }}
                       options={locationsData?.map((item: any) => {
@@ -105,9 +130,9 @@ const InternshipsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label>Department</label>
-                    <Select
-                      placeholder="Select"
+                    <SelectComp
+                      label="Department"
+                      placeholder='Select'
                       value={state.department}
                       onChange={(event: any) => { handleDepartment(event) }}
                       options={departmentsData?.map((item: any) => {
@@ -136,28 +161,28 @@ const InternshipsCompanyAdmin = () => {
           </Col>
         </Row>
         {isLoading ? <div className='flex flex-col gap-7'>
-          {internshipData.length !== 0 ?
+          {internshipData?.length !== 0 ?
             internshipData?.map((item: any, index: any) => {
               return (
                 <BoxWrapper key={index} boxShadow>
                   <InternshipProgressCard
                     item={item}
-                    title={item.title}
-                    status={item.status}
-                    department={item.department.name}
-                    internType={item.internType}
-                    postedBy={item.postedBy}
-                    locationType={item.locationType}
+                    title={item?.title}
+                    status={item?.status}
+                    department={item?.department?.name}
+                    internType={item?.internType}
+                    postedBy={item?.postedBy}
+                    locationType={item?.locationType}
                     location={item?.location?.name}
-                    createdAt={item.createdAt}
-                    closingDate={item.closingDate}
-                    interns={item.interns}
+                    createdAt={item?.createdAt}
+                    closingDate={item?.closingDate}
+                    interns={item?.interns}
                   />
                 </BoxWrapper>
               )
             }) : <NoDataFound />
           }
-        </div> : <Spin tip="Processing...." />}
+        </div> : <Loader />}
       </div>
     </>
   )

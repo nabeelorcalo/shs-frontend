@@ -28,13 +28,10 @@ export default {
       description: "Please try again later or email us",
     },
   },
-  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration","Project Management"],
+  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration", "Project Management"],
   OPTIONS_COUNTRIES: ["England", "Scotland", "Wales", "Ireland"],
-  OPTIONS_GENDER: ["Male", "Female", "others"],
-  
+  OPTIONS_GENDER: ["Male", 'Female', 'others'],
 };
-
-
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
@@ -75,7 +72,7 @@ export const ROUTES_CONSTANTS: any = {
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
   CASE_STUDIES_ASSESSMENT_FORM: "case-studies/assessment-form/:id",
-  CASE_STUDIES_VIEW_DETAILS:'case-studies/view-details/:id',
+  CASE_STUDIES_VIEW_DETAILS: 'case-studies/view-details/:id',
   GRIEVANCES: "grievances",
   CALENDAR: "calendar",
   DELEGATE_MEMEBERS: "delegate-members",
@@ -103,7 +100,7 @@ export const ROUTES_CONSTANTS: any = {
   SIGNED_CompanyAdmin: "signed-company-admin",
   PENDING_VIEW: "pending-view-details",
   EDIT_CONTRACT: "edit-contract",
-  //ComapnyAdmin offerLetter
+  //ComapnyAdmin offerLettermin
   REJECTED_CompanyAdmin: "rejected-company-admin",
   PENDING_OFFER_VIEW: "pending-view-details-offer",
   EDIT_OFFER_CONTRACT: "edit-offer-letter",
@@ -117,6 +114,7 @@ export const ROUTES_CONSTANTS: any = {
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",
+  VIEW_DIGIVAULT:'view',
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
@@ -178,6 +176,9 @@ export const ROUTES_CONSTANTS: any = {
   UNIVERSITIES_PROFILE: "universities/profile",
   AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
   JOBDETAILS: 'search-jobs/job-details',
+  COMPANYPROFILEUNI: "/companies/profile",
+  STUDENTPROFILE: "/students/profile",
+  AGENTPROFILE:"/agent-profile"
 };
 
 export const STATUS_CONSTANTS: any = {
@@ -188,7 +189,7 @@ export const STATUS_CONSTANTS: any = {
   PENDING: "pending",
   CLOSED: "closed",
   REJECTED: "rejected",
-  DRAFT:"draft"
+  DRAFT: "draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
 export const formatDate = (value: any, format: string) => dayjs(value).format(format);

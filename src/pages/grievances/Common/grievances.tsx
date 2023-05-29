@@ -91,7 +91,7 @@ const Grievance = () => {
                 <div className='flex flex-row'>
                   <span className='flex justify-center items-center'><Clock24h /></span>
                   <div className='flex flex-col m-auto'>
-                    <Text className="text-base font-normal mx-2 primary-color font-[outfit] ">
+                    <Text className="text-base font-normal mx-2 primary-color">
                       Avg Resolution Time
                     </Text>
                     <Text className="text-2xl font-semibold mx-2 teriary-color">
@@ -105,7 +105,7 @@ const Grievance = () => {
                 <div className='flex flex-row'>
                   <span className='flex justify-center items-center'><ClockGrievances /></span>
                   <div className='flex flex-col  m-auto'>
-                    <Text className="text-base font-normal mx-2 primary-color font-[outfit] ">
+                    <Text className="text-base font-normal mx-2 primary-color">
                       Avg Resolution Time
                     </Text>
                     <Text className="text-2xl font-semibold mx-2 teriary-color">
