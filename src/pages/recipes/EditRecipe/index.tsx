@@ -1,36 +1,61 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom"
 import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
-import { PageHeader, Breadcrumb } from "../../../components";
+import { PageHeader, Breadcrumb, Notifications } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
-
-
-// Temporary
+import useRecipesHook from "../actionHandler";
+import { useRecoilValue } from "recoil";
+import { recipeState } from "../../../store";
 
 const EditRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const { recipeId } = useParams();
   const [form] = Form.useForm();
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState('')
+  const {updateRecipe, getRecipe} = useRecipesHook()
+  const recipe = useRecoilValue(recipeState)
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    getRecipe(recipeId)
   }, [])
+console.log("Recipe id:::: ", recipe)
 
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function submitUpdateRecipe(values:any) {
+    console.log("values::::: ", values)
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('image', values.image[0].originFileObj);
+    formData.append('description', values.description);
+    formData.append('ingredients', values.ingredients);
+    formData.append('instructions', values.instructions);
+    formData.append('kitcherGear', values.kitcherGear);
+    formData.append('servings', values.servings);
+    formData.append('prepTimeHours', values.prepTimeHours);
+    formData.append('prepTimeMins', values.prepTimeMins);
+    formData.append('cookTimeHours', values.cookTimeHours);
+    formData.append('cookTimeMins', values.cookTimeMins);
+    formData.append('status', status);
+    setLoading(true)
+    const response = await updateRecipe(recipeId, formData);
+    if(!response.error) {
+      Notifications({title: "Success", description: response.message, type: 'success'});
+    }
+    setLoading(false)
+  }
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function submitUpdatedRecipe() {
-    console.log('Form Submit')
-  }
-
   function normFile(e: any) {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
@@ -40,6 +65,7 @@ const EditRecipe = () => {
   }
 
   const submitAsPublished = () => {
+    console.log("submit")
     setStatus('published')
     form.submit()
   }
@@ -74,7 +100,17 @@ const EditRecipe = () => {
             <Typography.Paragraph>Set of instructions that will describe about your recipe to other people.</Typography.Paragraph>
           </div>
         
-          <Form layout="vertical" name="addNewRecipe" onFinish={submitUpdatedRecipe}>
+          <Form
+            form={form}
+            layout="vertical"
+            name="editRecipe"
+            requiredMark={false}
+            initialValues={recipe}
+            onValuesChange={(_, values) => {
+              console.log('Bedroom values::: ', values)
+            }}
+            onFinish={submitUpdateRecipe}
+          >
             <div className="add-recipe-form-section">
               <div className="form-section-header">
                 <div className="form-section-header-inner">

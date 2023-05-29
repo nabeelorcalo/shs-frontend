@@ -25,18 +25,21 @@ const useRecipesHook = () => {
   const getRecipe = async (id:any) => {
     const response = await api.get(`${GET_RECIPE}/${id}`);
     if(!response.error) {
-      setRecipe(response.data)
+      let {data} = response;
+      const image = [{
+        uid: data?.recipeImage?.mediaId,
+        name: `${data?.recipeImage?.filename}.${data?.recipeImage.metaData.extension}`        ,
+        url: `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
+      }]
+      setRecipe({...data, image})
     }
   }
 
   // Update Recipe
-  const updateRecipe = async (id:any, reqBody: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true);
-    const response =await api.post(`${UPDATE_RECIPE}${id}`, reqBody);
-    Notifications({title: "Success", description: response.message, type: 'success'});
-    const updatedData:any = response.data;
-    setAllRecipes(updatedData);
-    setLoading(false);
+  const updateRecipe = async (id:any, reqBody: any) => {
+    const response =await api.post(`${UPDATE_RECIPE}/${id}`, reqBody, {headers: {'Content-Type': 'multipart/form-data'}});
+    return response;
+    // Notifications({title: "Success", description: response.message, type: 'success'});
   }
 
   // Delete Agent Property

@@ -13,9 +13,7 @@ import { recipeState } from "../../../store";
 import useRecipesHook from '../actionHandler'
 
 // Temporary
-import recipeSingleThumb from '../../../assets/images/gallery/recipe-single.png'
 import avatar from '../../../assets/images/header/avatar.svg'
-
 const data = [
   { id: '001', avatar: avatar, title: 'Austin Wade' },
   { id: '002', avatar: avatar, title: 'Amelia Clark' },
@@ -85,7 +83,7 @@ console.log("recipe;::: ", recipe)
             <div className="recipe-detail-hero">
               <div className="recipe-image">
                 <figure>
-                  <img src={`http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`} alt={recipe?.name} />
+                  <img src={recipe?.image?.[0].url} />
                 </figure>
               </div>
               <div className="recipe-hero-content">
