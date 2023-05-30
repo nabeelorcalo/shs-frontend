@@ -25,7 +25,10 @@ const useCustomHook = () => {
     SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
 
   //Get all internship data
-  const getAllInternshipsData = async (status: any = null, location: any = null, department: any = null, searchValue: any = null) => {
+  const getAllInternshipsData = async (status: any = null,
+    location: any = null,
+    department: any = null,
+    searchValue: any = null) => {
     const params = {
       limit: 100,
       page: 1,

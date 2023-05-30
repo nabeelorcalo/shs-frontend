@@ -1,27 +1,40 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound, Loader
+  ToggleButton, DropDown, FiltersButton, Drawer, PopUpModal, NoDataFound,
+  Loader, Notifications, SignatureAndUploadModal
 } from "../../../components";
 import { TextArea } from "../../../components";
 import {
   AlertIcon, CardViewIcon, More, SuccessIcon,
-  TableViewIcon, GlassMagnifier, UserAvatar
+  TableViewIcon, GlassMagnifier, UserAvatar, IconCloseModal
 } from "../../../assets/images"
-import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input } from 'antd';
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Modal, Form } from 'antd';
 import useCustomHook from "./actionHandler";
-import dayjs from "dayjs";
-import SelectComp from "../../../components/Select/Select";
-import '../style.scss'
 import UserSelector from "../../../components/UserSelector";
+import PreviewModal from "../../certificate/certificateModal/PreviewModal";
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
+import '../style.scss'
+
 
 const InternsCompanyAdmin = () => {
-  const [showDrawer, setShowDrawer] = useState(false)
-  const [assignManager, setAssignManager] = useState({ isToggle: false, id: undefined, assignedManager: undefined })
-  const [terminate, setTerminate] = useState({ isToggle: false, id: undefined })
-  const [complete, setComplete] = useState({ isToggle: false, id: undefined })
-  const [listandgrid, setListandgrid] = useState(false)
+  const [form] = Form.useForm();
+  const [files, setFiles] = useState([])
+  const csvAllColum = ["No", "Posted By", "Name", "Department",
+    "Joining Date", "Date of Birth", 'Status'];
+  const [assignManager, setAssignManager] = useState(
+    { isToggle: false, id: undefined, assignedManager: undefined });
+  const [terminate, setTerminate] = useState({ isToggle: false, id: undefined });
+  const [complete, setComplete] = useState({ isToggle: false, id: undefined });
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const [certificateModal, setCertificateModal] = useState(false);
+  const [previewModal, setPreviewModal] = useState(false);
+  const [previewFooter, setPreviewFooter] = useState(false);
+  const [signatureModal, setSignatureModal] = useState(false);
+  const [certificateDetails, setCertificateDetails] = useState({ name: '', description: '', signature: '' })
   const [state, setState] = useState({
     manager: undefined,
     status: undefined,
@@ -29,13 +42,13 @@ const InternsCompanyAdmin = () => {
     university: undefined,
     dateOfJoining: undefined,
     termReason: '',
-  })
+    internDetails: ''
+  });
 
   const statusList = [
     { value: 'Employed', label: 'Employed' },
     { value: 'Completed', label: 'Completed' },
     { value: 'Terminated', label: 'Terminated' },
-    { value: 'All', label: 'All' },
   ]
 
   const { getAllInternsData, getAllInters,
@@ -114,7 +127,7 @@ const InternsCompanyAdmin = () => {
         placement="bottomRight"
         overlayStyle={{ width: 180 }}
       >
-        <More />
+        <More className="cursor-pointer" />
       </Dropdown>
     );
   };
@@ -162,6 +175,10 @@ const InternsCompanyAdmin = () => {
     },
   ];
 
+  const handleCancel = () => {
+    setCertificateModal(false);
+  };
+
   const newTableData: any = getAllInters?.map((item: any, index: any) => {
     const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
     const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
@@ -171,12 +188,12 @@ const InternsCompanyAdmin = () => {
         posted_by: <Avatar size={50} src={item?.avatar}>
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
-        name: <p>{item?.userDetail?.firstName} {item?.userDetail?.lastName}</p>,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
         status: <ButtonStatus status={item?.internStatus} />,
-        actions: <PopOver data={item} />
+        actions: item?.internStatus !== 'completed' && <PopOver data={item} />
       }
     )
   })
@@ -204,8 +221,7 @@ const InternsCompanyAdmin = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-
-  const filteredData = getAllManagers?.map((item: any, index: number) => {
+  const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
         key: index,
@@ -215,6 +231,55 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  const filteredStatusData = statusList?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.value,
+        label: item?.label,
+      }
+    )
+  })
+  const filteredInternsData = getAllInters?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        label: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        avatar: <UserAvatar />
+      }
+    )
+  })
+  const filteredDeaprtmentsData = departmentsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item?.id}`,
+        label: `${item?.name}`,
+      }
+    )
+  })
+  const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item?.university?.id}`,
+        label: `${item?.university?.name}`,
+      }
+    )
+  })
+
+  // intren certificate submition 
+  const handleCertificateSubmition = (values: any, action?: any) => {
+    console.log('certificate values', values);
+    setCertificateDetails({
+      ...certificateDetails,
+      name: values?.internName,
+      description: values?.description
+    })
+    if (action === 'preview') setPreviewModal(true)
+    else setSignatureModal(true)
+  }
 
   return (
     <>
@@ -240,26 +305,24 @@ const InternsCompanyAdmin = () => {
             title="Filters"
           >
             <>
-              <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-2">
-                  <UserSelector
-                    label="Manager"
-                    placeholder="Select"
-                    value={state.manager}
-                    onChange={(event: any) => {
-                      setState({
-                        ...state,
-                        manager: event
-                      })
-                    }}
-                    options={filteredData}
-                    hasSearch={false}
-                    handleSearch={(e: any) => console.log(e)}
-                  />
-                </div>
-                <SelectComp
+              <div className="flex flex-col gap-4">
+                <UserSelector
+                  label="Manager"
+                  placeholder="Select"
+                  value={state.manager}
+                  onChange={(event: any) => {
+                    setState({
+                      ...state,
+                      manager: event
+                    })
+                  }}
+                  options={filteredManagersData}
+                  hasSearch={false}
+                  handleSearch={(e: any) => console.log(e)}
+                />
+                <UserSelector
                   label="Status"
-                  placeholder='Select'
+                  placeholder="Select"
                   value={state.status}
                   onChange={(event: any) => {
                     setState((prevState) => ({
@@ -267,27 +330,23 @@ const InternsCompanyAdmin = () => {
                       status: event
                     }))
                   }}
-                  options={statusList}
+                  options={filteredStatusData}
                 />
-                <SelectComp
+                <UserSelector
                   label="Department"
-                  placeholder='Select'
+                  placeholder="Select"
                   value={state.department}
                   onChange={(event: any) => {
-
                     setState((prevState) => ({
                       ...prevState,
                       department: event
                     }))
-
                   }}
-                  options={departmentsData?.map((item: any) => {
-                    return { value: item?.id, label: item?.name }
-                  })}
+                  options={filteredDeaprtmentsData}
                 />
-                <SelectComp
+                <UserSelector
                   label="University"
-                  placeholder='Select'
+                  placeholder="Select"
                   value={state.university}
                   onChange={(event: any) => {
                     setState((prevState) => ({
@@ -295,9 +354,7 @@ const InternsCompanyAdmin = () => {
                       university: event
                     }))
                   }}
-                  options={getAllUniversities?.map((item: any) => {
-                    return { value: item?.university?.id, label: item?.university?.name }
-                  })}
+                  options={filteredUniversitiesData}
                 />
                 <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
@@ -355,32 +412,33 @@ const InternsCompanyAdmin = () => {
             />
             <DropDown
               options={[
-                'pdf',
-                'excel'
+                'PDF',
+                'Excel'
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, columns, newTableData, "Company Admin Interns")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns");
+                Notifications({ title: "Success", description: "Intern list downloaded", type: "success" })
               }}
             />
           </div>
         </Col>
         <Col xs={24}>
           <p className="font-semibold pb-4">Total Interns:
-            {newTableData?.length < 10 ? `0${newTableData?.length}` : newTableData?.length}
+            {getAllInters?.length < 10 ? `0${getAllInters?.length}` : getAllInters?.length}
           </p>
           {isLoading ?
             listandgrid ?
               <BoxWrapper>
                 <GlobalTable columns={columns} tableData={newTableData} />
               </BoxWrapper> :
-              newTableData?.length === 0 ? <NoDataFound />
+              getAllInters?.length === 0 ? <NoDataFound />
                 : <div className="flex flex-wrap gap-5">
                   {
                     getAllInters?.map((item: any) => {
                       return (
                         <InternsCard
-                          pupover={<PopOver data={item} />}
+                          pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={<Avatar size={50} src={item?.avatar}>
@@ -400,7 +458,8 @@ const InternsCompanyAdmin = () => {
         </Col>
       </Row>
 
-      <PopUpModal open={assignManager.isToggle}
+      <PopUpModal
+        open={assignManager.isToggle}
         width={600}
         close={() => { setAssignManager({ ...assignManager, isToggle: false }) }}
         title="Assign Manager"
@@ -416,7 +475,7 @@ const InternsCompanyAdmin = () => {
                   assignedManager: event
                 })
               }}
-              options={filteredData}
+              options={filteredManagersData}
               hasSearch={true}
               searchPlaceHolder="Search by name"
             />
@@ -445,7 +504,8 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      < PopUpModal open={terminate.isToggle}
+      < PopUpModal
+        open={terminate.isToggle}
         width={500}
         close={() => { setTerminate({ ...terminate, isToggle: false }) }}
         children={
@@ -497,7 +557,7 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      < PopUpModal
+      <PopUpModal
         open={complete.isToggle}
         width={500}
         close={() => { setComplete({ ...complete, isToggle: false }) }}
@@ -525,9 +585,11 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
-                updateCandidatesRecords(complete.id, null, null, 'completed')
                 setComplete({ ...complete, isToggle: false })
-
+                setCertificateModal(true)
+                // setPreviewModal(true)
+                // updateCandidatesRecords(complete.id, null, null, 'completed')
+                // setComplete({ ...complete, isToggle: false })
               }}
             >
               Complete
@@ -535,6 +597,151 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
+
+      {previewModal &&
+        <PreviewModal
+          open={previewModal}
+          setOpen={setPreviewModal}
+          name={certificateDetails?.name}
+          type="completion"
+          textSignature={certificateDetails?.signature?.includes('/') ? true : false}
+          desc={certificateDetails?.description}
+          signature={certificateDetails?.signature?.includes('/') ?
+            <img src={certificateDetails?.signature} alt="signature" /> :
+            <p>{certificateDetails?.signature}</p>
+          }
+          footer={previewFooter ? <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
+            <Button
+              type="default"
+              size="small"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => { setPreviewModal(false) }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-tertiary max-sm:w-full"
+              onClick={() => {
+                setSignatureModal(false);
+                setPreviewModal(false);
+                updateCandidatesRecords(complete.id, null, null, 'completed');
+                // setComplete({ ...complete, isToggle: false })
+              }}
+            >
+              Complete
+            </Button>
+          </div > : ''}
+        />
+      }
+
+      {certificateModal &&
+        <Modal
+          title="Issue Certificate"
+          open={certificateModal}
+          centered
+          width={700}
+          footer={false}
+          closeIcon={<IconCloseModal />}
+          onCancel={handleCancel}
+        >
+          <Form
+            layout="vertical"
+            form={form}
+            onFinish={(values) => handleCertificateSubmition(values)}
+            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          >
+            <Form.Item label="Intern" name='internName' rules={[{ required: true }, { type: 'string' }]}>
+              <UserSelector
+                placeholder="Select"
+                value={state.internDetails}
+                hasSearch={true}
+                searchPlaceHolder="Search"
+                options={filteredInternsData}
+                onChange={(event: any) => {
+                  setState({
+                    ...state,
+                    internDetails: event
+                  })
+                }}
+              />
+            </Form.Item>
+            <Form.Item label="Print on Certificate" name='description' rules={[{ required: true }, { type: 'string' }]} >
+              <TextArea placeholder="Enter certificate description" />
+            </Form.Item>
+            <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
+              <Button
+                // htmlType="submit"
+                type="default"
+                size="small"
+                className="white-bg-color teriary-color font-medium max-sm:w-full"
+                onClick={() => handleCertificateSubmition(null, 'preview')}
+              >
+                Preview
+              </Button>
+              <Button
+                type="default"
+                size="small"
+                className="button-default-tertiary max-sm:w-full"
+                onClick={() => {
+                  form.resetFields();
+                  setCertificateDetails({ ...certificateDetails, name: '', description: '' });
+                  setCertificateModal(false)
+                }}>
+                Cancel
+              </Button>
+              <Button
+                htmlType="submit"
+                size="small"
+                className="button-tertiary max-sm:w-full"
+              // onClick={() => {
+              //   setSignatureModal(true)
+              // }}
+              >
+                Continue
+              </Button>
+            </div >
+          </Form>
+        </Modal>
+      }
+
+      {signatureModal &&
+        <SignatureAndUploadModal
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
+          state={signatureModal}
+          closeFunc={() => setSignatureModal(false)}
+          okBtntxt='Sign'
+          files={files}
+          setFiles={setFiles}
+          footer={<div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
+            <Button
+              type="default"
+              size="small"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => {
+                setCertificateDetails({ name: "", signature: "", description: "" });
+                setSignatureModal(false)
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="small"
+              className="button-tertiary max-sm:w-full"
+              onClick={() => {
+                setPreviewModal(true);
+                setPreviewFooter(true)
+              }}
+            >
+              Sign
+            </Button>
+          </div >}
+        />
+      }
+
     </>
   );
 };

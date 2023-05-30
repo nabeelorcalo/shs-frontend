@@ -1,44 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Typography, Divider } from "antd";
 const { Text } = Typography;
 import { NavLink, Outlet } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import useTemplatesCustomHook from "./actionHandler";
 import "./Template.scss";
 
-let overview = [
-  {
-    name: "Offer Letter",
-    content:
-      "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`
-  },
-  {
-    name: "Contract",
-    content:
-      "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}`
-  },
-  {
-    name: "Rejection Letter",
-    content:
-      "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: `${ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}`
-  },
-  {
-    name: "Certificate of Appreciation",
-    content:
-      "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: `${ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}`
-  },
-  {
-    name: "Certificate of Completion",
-    content:
-      "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-    link: `${ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}`
-  },
-];
+
 
 const SettingTemplate: React.FC = () => {
+
+  const { getAllTemplates, templatesData }: any = useTemplatesCustomHook();
+
+  useEffect(() => {
+    getAllTemplates()
+  }, [])
+
+  console.log('templates data are', templatesData);
+  const categories = [...new Set(templatesData?.map((obj: any) => obj.type))];
+  let overview = [
+    {
+      type:'',
+      name: "Offer Letter",
+      content:
+        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+      link: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`
+    },
+    {
+      name: "Contract",
+      content:
+        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+      link: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}`
+    },
+    {
+      name: "Rejection Letter",
+      content:
+        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+      // link: `${ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}`
+      link: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}`
+    },
+    {
+      name: "Certificate of Appreciation",
+      content:
+        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+      // link: `${ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}`
+      link: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`
+    },
+    {
+      name: "Certificate of Completion",
+      content:
+        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+      // link: `${ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}`
+      link: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`
+    },
+  ];
+  console.log('unique', categories);
+
+
   return (
     <div className="template-setting cursor-pointer ">
       <Row gutter={[10, 10]} >

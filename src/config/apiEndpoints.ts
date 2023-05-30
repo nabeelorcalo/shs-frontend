@@ -94,5 +94,14 @@ const endpoints = {
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
   SETTING_PERFORMANCE: '/performance',
+  SETTINGS_TEMPLATES: '/template/findAll',
+  SETTINGS_SHIFTS: '/shift/findAll',
+  POST_NEW_SHIFTS: '/shift/add',
+  DELETE_SHIFT: '/shift/delete',
+  SETTINGS_TIMESHEET: '/timesheet/category/findAll',
+  POST_NEW_TIMESHEET: '/timesheet/category/add',
+  DELETE_TIMESHEET: '/timesheet/category/delete',
+  EDIT_TIMESHEET: '/timesheet/category/edit',
+  DELETE_PAYROLL: '/payroll/delete'
 }
 export default endpoints;
