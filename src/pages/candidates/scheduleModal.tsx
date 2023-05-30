@@ -6,6 +6,7 @@ import { CommonDatePicker, SearchBar } from "../../components";
 import "./style.scss";
 import dayjs from "dayjs";
 import actionHandler from "./actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 
 const ScheduleInterviewModal = (props: any) => {
   const { open, setOpen, userId, data, handleEdit } = props;
@@ -50,7 +51,7 @@ const ScheduleInterviewModal = (props: any) => {
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.attendees = [userId, ...assignUser?.map(({ id }) => id)];
     console.log(values);
-    
+
     // custom hook for create schedule
     if (data) {
       handleUpdateInterview(data?.id, values).then(() => {
@@ -137,7 +138,7 @@ const ScheduleInterviewModal = (props: any) => {
         onCancel={onCancel}
         footer={false}
       >
-        <Form form={form} onFinish={onFinish} autoComplete="off">
+        <Form form={form} onFinish={onFinish} autoComplete="off" validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
           <div className="title">
             <p>Date</p>
           </div>
@@ -146,7 +147,7 @@ const ScheduleInterviewModal = (props: any) => {
             <div className="heading mb-2">
               <p>Attendees</p>
             </div>
-            <Form.Item name="attendees" rules={[{ required: false, message: "Please select Attendees" }]}>
+            <Form.Item name="attendees" rules={[{ required: false}]}>
               <Dropdown
                 placement="bottomRight"
                 overlay={opriorityOption}
@@ -188,7 +189,7 @@ const ScheduleInterviewModal = (props: any) => {
                 <div className="heading mt-2 mb-3">Time From</div>
                 <Form.Item
                   name="startTime"
-                  rules={[{ required: values?.startTime ? false : true, message: "Please select start time" }]}
+                  rules={[{ required: values?.startTime ? false : true}]}
                   valuePropName={"date"}
                 >
                   <TimePicker
@@ -210,7 +211,7 @@ const ScheduleInterviewModal = (props: any) => {
                 <div className="heading mt-2 mb-3">Time To</div>
                 <Form.Item
                   name="endTime"
-                  rules={[{ required: values?.endTime ? false : true, message: "Please select end time" }]}
+                  rules={[{ required: values?.endTime ? false : true}]}
                   valuePropName={"date"}
                 >
                   <TimePicker
@@ -232,7 +233,7 @@ const ScheduleInterviewModal = (props: any) => {
 
             <div className="location-wrapper">
               <p className="heading mb-2 ">Location</p>
-              <Form.Item name="location" rules={[{ required: true, message: "Please select location" }]}>
+              <Form.Item name="location" rules={[{ required: true}]}>
                 <Radio.Group
                   name="location"
                   value={values?.location}
