@@ -1,6 +1,7 @@
 import {FC, useState, useCallback} from 'react';
 import useListingsHook from "../actionHandler";
 import showNotification from '../../../helpers/showNotification';
+import { Loader, Notifications } from '../../../components';
 import { 
   Button,
   Form,
@@ -11,7 +12,6 @@ import {
   Spin,
   Typography
 } from 'antd'
-import { Notifications } from '../../../components';
 interface Props {
   initValues: any
   listingId: any
@@ -41,7 +41,6 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
         showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
       } else {
         return Notifications({ title: 'Success', description: result.response?.message, type: 'success' })
-        // showNotification("success", "Success", result.response?.message);
       }
     },
     [form]
@@ -77,7 +76,7 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
         <Typography.Title level={4}>Location</Typography.Title>
       </div>
       <div className="tabs-pane-card-body">
-        <Spin spinning={spin}>
+        <Spin spinning={spin} indicator={<Loader />}>
           {initValues?.length !== 0 &&
           <Form
             form={form}

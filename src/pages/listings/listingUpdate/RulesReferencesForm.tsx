@@ -2,6 +2,7 @@ import {FC, useState, useCallback} from 'react';
 import useListingsHook from "../actionHandler";
 import showNotification from '../../../helpers/showNotification';
 import {IconAngleDown} from '../../../assets/images';
+import { Loader } from '../../../components';
 import { 
   Button,
   Form,
@@ -77,7 +78,7 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
         <Typography.Title level={4}>Rules & Prefrences</Typography.Title>
       </div>
       <div className="tabs-pane-card-body">
-        <Spin spinning={spin}>
+        <Spin spinning={spin} indicator={<Loader />}>
           {initValues?.length !== 0 &&
             <Form
               form={form}

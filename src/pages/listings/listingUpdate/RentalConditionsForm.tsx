@@ -1,6 +1,7 @@
 import {FC, useState, useCallback} from 'react';
 import useListingsHook from "../actionHandler";
 import showNotification from '../../../helpers/showNotification';
+import { Loader } from '../../../components';
 import { 
   Button,
   Form,
@@ -25,11 +26,9 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
   const [disabled, setDisabled] = useState(true)
   
   
-
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   
-
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -73,7 +72,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
         <Typography.Title level={4}>Rental Conditions</Typography.Title>
       </div>
       <div className="tabs-pane-card-body rental-condition-body">
-        <Spin spinning={spin}>
+        <Spin spinning={spin} indicator={<Loader />}>
           {initValues?.length !== 0 &&
             <Form
               form={form}
@@ -83,7 +82,6 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
               initialValues={initValues}
               onValuesChange={(_, values) => {
                 setDisabled(false)
-                console.log('Rental Conditions all values::: ', values)
               }}
               onFinish={submitUpdateListing}
             >

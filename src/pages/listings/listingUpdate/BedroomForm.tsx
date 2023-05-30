@@ -1,7 +1,8 @@
 import {FC, useState, useCallback} from 'react';
 import useListingsHook from "../actionHandler";
 import showNotification from '../../../helpers/showNotification';
-import {IconAngleDown, IconAddUpload, IconRemoveAttachment} from '../../../assets/images'
+import {IconAngleDown, IconAddUpload, IconRemoveAttachment} from '../../../assets/images';
+import { Loader } from '../../../components';
 import { 
   Button,
   Form,
@@ -29,7 +30,6 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
   const [disabled, setDisabled] = useState(true)
   
   
-
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   
@@ -63,12 +63,9 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
   }, [form, handleSubmission]);
   
 
-
-
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const normFile = (e: any) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -86,7 +83,7 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
           <Typography.Title level={4}>Bedroom Details</Typography.Title>
         </div>
         <div className="tabs-pane-card-body">
-          <Spin spinning={spin}>
+          <Spin spinning={spin} indicator={<Loader />}>
             {initValues?.length !== 0 &&
               <Form
                 form={form}
@@ -96,7 +93,6 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
                 initialValues={initValues}
                 onValuesChange={(_, values) => {
                   setDisabled(false)
-                  console.log('Bedroom values::: ', values)
                 }}
                 onFinish={submitUpdateListing}
               >

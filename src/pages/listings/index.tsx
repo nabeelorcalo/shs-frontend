@@ -449,7 +449,7 @@ const Listings = () => {
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
-                  name="attachments"
+                  name="media"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                 >
@@ -1025,7 +1025,7 @@ const Listings = () => {
     setStepCurrent(stepCurrent - 1);
   };
 
-  const onValuesChange = (changedValues: any, allValues: any) => {
+  const onValuesChange = (changedValue: any, allValues: any) => {
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
     allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
   };
@@ -1036,9 +1036,9 @@ const Listings = () => {
     for(const name in previousValues) {
       formData.append(name, previousValues[name])
     }
-    for (let i = 0; i < previousValues.attachments.length; i++) {
-      var file = previousValues.attachments[i]['originFileObj']
-      formData.append('attachments', file)
+    for (let i = 0; i < previousValues.media.length; i++) {
+      var file = previousValues.media[i]['originFileObj']
+      formData.append('media', file)
     }
     
     const result = await createListing(formData); 
@@ -1046,7 +1046,7 @@ const Listings = () => {
     showNotification("success", "Success", result.message);
     closeModalAddListing();
     setStepCurrent(0);
-    // getListings(setLoadingAllProperties)
+    getListings(setLoadingAllProperties)
   }
 
 
