@@ -1,11 +1,14 @@
 import { Tabs } from 'antd';
-import React from 'react'
 import { Info, PersnolIcon } from '../../../../assets/images';
 import { BoxWrapper } from '../../../../components';
 import CompanyInformationTabs from './companyInformationTabs';
 import CompanyProfileTabs from './personalInformationTab';
+import { useLocation } from 'react-router-dom';
 
 const CompanyTabs = () => {
+  const { state } = useLocation();
+  console.log('profile data',state);
+
   const items: any = [
     {
       key: "1",
@@ -15,7 +18,7 @@ const CompanyTabs = () => {
           <p className="text-success-placeholder-color">Personal Information</p>
         </div>
       ),
-      children: <CompanyProfileTabs />,
+      children: <CompanyProfileTabs data={state} />,
     },
     {
       key: "2",
@@ -25,7 +28,7 @@ const CompanyTabs = () => {
           <p className="text-success-placeholder-color">General Information</p>
         </div>
       ),
-      children: <CompanyInformationTabs />,
+      children: <CompanyInformationTabs data={state}/>,
     },
 
   ];

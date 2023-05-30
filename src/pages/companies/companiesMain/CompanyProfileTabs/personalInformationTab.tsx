@@ -1,22 +1,24 @@
-import React from 'react'
 import dayjs from "dayjs";
 import { Col, Row, Divider } from 'antd';
-import { BoxWrapper } from '../../../../components';
 
-const CompanyProfileTabs = () => {
+const CompanyProfileTabs = (props: any) => {
+
+  const { data } = props
+  console.log('personal data',data);
+  
   const PersnolInformationData = [
-    { title: "First name", value: "Maria" },
-    { title: "Last Name", value: "Sanoid" },
-    { title: "Gender", value: "Sanoid" },
-    { title: "Date of Birth", value: dayjs("21st April, 1996 (26 years old)").format("DD MMMM, YYYY") },
-    { title: "Persnol Email", value: "maria@gmail.com" },
-    { title: "Phone Number", value: "+44 7700 900077" },
+    { title: "First name", value: data?.user?.firstName },
+    { title: "Last Name", value: data?.user?.lastName },
+    { title: "Gender", value: data?.user?.gender },
+    { title: "Date of Birth", value: dayjs(data?.DOB).format("DD MMMM, YYYY") },
+    { title: "Persnol Email", value: data?.user?.email },
+    { title: "Phone Number", value: data?.user?.phoneNumber },
   ];
   const Address = [
-    { title: "Post Code", value: "SG12 1HW" },
-    { title: "Address", value: "263 Eversholt" },
-    { title: "City", value: "London" },
-    { title: "Country", value: "United Kingdom" },
+    { title: "Post Code", value:data?.user?.postCode },
+    { title: "Address", value: data?.user?.address },
+    { title: "City", value: data?.user?.city },
+    { title: "Country", value: data?.user?.country },
   ];
   return (
     <div>

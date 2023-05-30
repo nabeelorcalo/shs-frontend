@@ -1,12 +1,12 @@
-import React from 'react'
 import { BoxWrapper } from '../../../../components'
-import { Row, Col, Avatar, Divider } from "antd"
+import { Avatar, Divider } from "antd"
 import { Call, LocationIconNew, Mail } from '../../../../assets/images';
-const CompanyProfileSideBar = () => {
+const CompanyProfileSideBar = (props:any) => {
+  const {data}=props
   const userinfoData = [
-    { img: Mail, title: "email", value: "maria@studenthelpsquad.com" },
-    { img: Call, title: "phoneNumber", value: "+44 7700 900077" },
-    { img: LocationIconNew, title: "address", value: "263 Eversholt St, London NW11NB, UK" },
+    { img: Mail, title: data?.website },
+    { img: Call, title: data?.user?.phoneNumber },
+    { img: LocationIconNew, title: data?.user?.address },
   ];
   return (
     <BoxWrapper className='h-[80vh]'>
@@ -25,9 +25,9 @@ const CompanyProfileSideBar = () => {
         />
         {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
         <div className="py-4 text-center">
-          <p className="text-xl font-semibold text-primary-color">Maria Sanoid</p>
-          <p className="text-secondary-color font-medium text-base">Company Admin</p>
-          <p className="text-secondary-color font-medium text-base">Orcalo</p>
+          <p className="text-xl font-semibold text-primary-color">{`${data?.user?.firstName} ${data?.user?.lastName}`}</p>
+          <p className="text-secondary-color font-medium text-base">{data?.ownerRole}</p>
+          <p className="text-secondary-color font-medium text-base">{data?.businessName}</p>
         </div>
       </div>
       <Divider />

@@ -1,16 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Button,
-  Space,
-  Input,
-  Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
 import { SettingAvater } from "../../../../../assets/images";
 import { NavLink } from "react-router-dom";
@@ -67,6 +58,7 @@ const PayrollAddCategory = () => {
       intern: [],
       openModal: false,
       internValue: 1,
+      applyToNewHires:false
     });
 
   const openTimeFromHandler = () => {
@@ -77,9 +69,6 @@ const PayrollAddCategory = () => {
     setState({ ...state, openToTime: !state.openToTime })
   }
 
-  const onFinish = (values: any) => {
-    console.log("valies", values)
-  }
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
@@ -92,16 +81,26 @@ const PayrollAddCategory = () => {
     }
   };
 
+  const handlePayollForm = (values: any) => {
+    const newValues = {
+      ...values,
+      timeTo: state.openToTimeValue,
+      timeFrom: state.openFromTimeValue
+    }
+    console.log("form values are", newValues)
+  }
+
   return (
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical"
+        <Form
+          layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+          onFinish={handlePayollForm}>
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -112,43 +111,51 @@ const PayrollAddCategory = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                name="shiftName"
+                name="payrolName"
                 label="Payroll Name"
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter Name" className="input-style" />
+                <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
                 <div className="flex flex-col justify-between w-full md:pr-2 ">
                   <Form.Item
                     name="from"
                     required={false}
-                    rules={[{ required: true }, { type: "string" }]}
+                    rules={[{ required: true }]}
+                    label='Time From'
                   >
-                    <TimePickerComp
+                     <TimePickerComp
                       className="input-style"
-                      label={<p className='pb-[6px]'>Time From</p>}
                       open={state.openFromTime}
+                      customSetValue
                       setOpen={openTimeFromHandler}
                       value={state.openFromTimeValue}
                       setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
                     />
+                    {/* <TimePickerComp
+                      className="input-style"
+                      open={state.openFromTime}
+                      setOpen={openTimeFromHandler}
+                      value={state.openFromTimeValue}
+                      setValue={(e: any) => setState({ ...state, openFromTimeValue: e })}
+                    /> */}
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
                   <Form.Item
                     name="to"
                     required={false}
-                    rules={[{ required: true }, { type: "string" }]}
+                    rules={[{ required: true }]}
+                    label="Time To"
                   >
                     <TimePickerComp
                       className="input-style"
-                      label={<p className='pb-[6px]'>Time To</p>}
                       open={state.openToTime}
                       setOpen={openTimeToHandler}
                       value={state.openToTimeValue}
-                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                      setValue={(e: any) => setState({ ...state, openToTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
@@ -165,7 +172,7 @@ const PayrollAddCategory = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-            <div className=" flex items-center">
+              <div className=" flex items-center">
                 <Radio.Group onChange={onChange} value={state.internValue}>
                   <Radio value={1}>All interns</Radio>
                   <Radio value={2}>Select Interns</Radio>
@@ -175,7 +182,18 @@ const PayrollAddCategory = () => {
                 </span>
               </div>
               <div className="my-5">
-                <Switch />
+
+                <Form.Item name='applyForNewHire'>
+                  <Switch 
+                  checked={state?.applyToNewHires} 
+                  // onChange={(e: any) => setState({ ...state, applyForNewHire: e })} 
+                  />
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item>
+                {/* <Form.Item name=''>
+                  <Switch />
+                </Form.Item> */}
+
                 <span className="px-2">Apply to all new hires</span>
               </div>
             </Col>

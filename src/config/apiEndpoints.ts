@@ -102,6 +102,7 @@ const endpoints = {
   POST_NEW_TIMESHEET: '/timesheet/category/add',
   DELETE_TIMESHEET: '/timesheet/category/delete',
   EDIT_TIMESHEET: '/timesheet/category/edit',
-  DELETE_PAYROLL: '/payroll/delete'
+  DELETE_PAYROLL: '/payroll/delete',
+  GET_ALL_COMAPANIES:'/university/universityCompanies'
 }
 export default endpoints;

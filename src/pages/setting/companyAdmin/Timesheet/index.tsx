@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
 import { GlassMagnifier, SettingTimesheetIcon, } from "../../../../assets/images";
-import { Alert } from "../../../../components";
+import { Alert, Loader } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import useTimesheetCustomHook from "./actionHandler";;
 import AddCategory from "./AddCategory";
 import "./style.scss";
-
 
 const { Text } = Typography;
 
@@ -23,7 +22,7 @@ const SettingTimesheet = () => {
   )
 
   const { getTimeSheetsData, timeSheetData,
-    debouncedSearch, deleteTimeSheet } = useTimesheetCustomHook();
+    debouncedSearch, deleteTimeSheet,isLoading } = useTimesheetCustomHook();
 
   useEffect(() => {
     getTimeSheetsData(searchValue)
@@ -52,7 +51,8 @@ const SettingTimesheet = () => {
         </Button>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {timeSheetData?.map((data: any, index: any) => {
+
+        {!isLoading?timeSheetData?.map((data: any, index: any) => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} lg={12} xl={8}>
               <div className="w-full setting-time-sheet-box-wrapper">
@@ -79,7 +79,7 @@ const SettingTimesheet = () => {
               </div>
             </Col>
           );
-        })}
+        }):<Loader/>}
       </Row>
 
       {state.isEditModal && <AddCategory
