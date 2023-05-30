@@ -113,7 +113,7 @@ const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const downloadBookingRequest = useBookingRequests()
-  const [ropertiesFilterForm] = Form.useForm();
+  const [propertiesFilterForm] = Form.useForm();
   const [savedPropertiesForm] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
@@ -222,15 +222,16 @@ const Accommodation = () => {
     }
 
     if(fieldsValue.accomodationType !== undefined) {
-      if(fieldsValue.accomodationType.includes('Entire Property')) {
-        params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
-      }
-      if(fieldsValue.accomodationType.includes('Studio')) {
-        params.studio = fieldsValue.accomodationType.includes('Studio')
-      }
-      if(fieldsValue.accomodationType.includes('Rooms In Shared Property')) {
-        params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
-      }
+      // if(fieldsValue.accomodationType.includes('Entire Property')) {
+      //   params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
+      // }
+      // if(fieldsValue.accomodationType.includes('Studio')) {
+      //   params.studio = fieldsValue.accomodationType.includes('Studio')
+      // }
+      // if(fieldsValue.accomodationType.includes('Rooms In Shared Property')) {
+      //   params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
+      // }
+      params.propertyType = fieldsValue.accomodationType
     }
 
     if(fieldsValue.facilities !== undefined) {
@@ -255,7 +256,7 @@ const Accommodation = () => {
   }
 
   const resetFormFields = () => {
-    ropertiesFilterForm.resetFields()
+    propertiesFilterForm.resetFields()
     resetFilterParams()
   }
 
@@ -487,9 +488,10 @@ const Accommodation = () => {
       >
         <div className="shs-filter-form">
           <Form
-            form={ropertiesFilterForm}
+            form={propertiesFilterForm}
             layout="vertical"
             name="propertiesFilters"
+            onValuesChange={(_, values:any) => console.log('vlauess;:: ', values)}
             onFinish={submitFilters}
           >
             <div className="shs-form-group">
@@ -537,7 +539,7 @@ const Accommodation = () => {
             </Form.Item>
 
             <Form.Item name="accomodationType" label="Accomodation Type">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="Entire Property">Entire Property</Select.Option>
                 <Select.Option value="Studio">Studio</Select.Option>
                 <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>

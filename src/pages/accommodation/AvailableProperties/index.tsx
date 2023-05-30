@@ -8,7 +8,6 @@ import { useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
 import { availablePropertiesState, filterParamsState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
-import showNotification from '../../../helpers/showNotification'
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
@@ -43,7 +42,6 @@ const AvailableProperties = () => {
   const postSaveProperty = async (id:any) => {
     setLoading(true)
     const { response } = await saveProperty({propertyId: id});
-    console.log('save response;:: ', response)
     setLoading(false)
     if(!response.error) {
       return (

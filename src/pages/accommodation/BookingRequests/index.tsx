@@ -185,7 +185,6 @@ const BookingRequests = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getBookingRequests(setLoading)
-    console.log('bookingRequests:: ', bookingRequests)
   }, [])
 
 
