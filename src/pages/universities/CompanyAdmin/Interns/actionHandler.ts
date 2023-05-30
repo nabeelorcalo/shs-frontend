@@ -44,6 +44,7 @@ const useCustomHook = () => {
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+      console.log('header: ', header)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -55,6 +56,8 @@ const useCustomHook = () => {
     const body = data.map(({ id, avater, name, department, joiningDate, dateOfBirth }: any) =>
       [id, '', name, department, joiningDate, dateOfBirth]
     );
+    console.log(body,"body,body");
+    
 
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);

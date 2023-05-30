@@ -10,6 +10,8 @@
   }
 
   .incoming {
+    max-width: 300px;
+
     .incoming-message {
       padding: 10px;
       background: #fbfdff;
@@ -45,5 +47,10 @@
     border: none !important;
     box-shadow: none !important;
   }
+
+}
+
+.ant-upload-list-item-done {
+  display: none !important;
 
 }

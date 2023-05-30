@@ -25,8 +25,9 @@ const index: React.FC = () => {
   useEffect(() => {
     getUniversities(Country, searchValue)
   }, [searchValue])
-  
+
   console.log(searchValue, "searchvale");
+
 
   const UniversityTableColumn =
     [
@@ -144,7 +145,7 @@ const index: React.FC = () => {
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(event, UniversityTableColumn, univertyTableData, "Report")
+              action.downloadPdfOrCsv(event, TableColumn, univertyTableData, "Report")
               Notifications({ title: "Success", description: "University list downloaded ", type: 'success' })
             }}
           />

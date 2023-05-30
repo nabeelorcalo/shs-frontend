@@ -100,7 +100,7 @@ const index: React.FC = () => {
               requiredDownloadIcon
               options={["pdf", "excel"]}
               setValue={() => {
-                action.downloadPdfOrCsv(event, TableColumn, univertyTableData, "Interns ")
+                action.downloadPdfOrCsv(event, TableColumn, univertyTableData, "Interns")
                 Notifications({ title: "Success", description: "University interns list downloaded ", type: 'success' })
               }}
             />
