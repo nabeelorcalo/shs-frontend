@@ -1,63 +1,53 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from "../../../components";
 import { Divider, Button, Typography, Form, Input } from "antd";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import signature from "../../../assets/images/Report/signature.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import ManagerRemarks from "./managerRemarks";
 import useCustomHook from "../actionHandler";
-import useCommonCustomHook from "./actionHandler";
 import "./style.scss";
 import dayjs from "dayjs";
 import { Emoji3rd } from "../../../assets/images";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {
-  const { getSelectedCasStudyData, getParamId, selectedCasStudyData } = useCustomHook();
-  const { cancelDrawaSign, handleSignatue, signature } = useCommonCustomHook();
+  const {
+    getSelectedCasStudyData,
+    getParamId,
+    selectedCasStudyData,
+    cancelDrawaSign,
+    handleSignatue,
+    checkForImage,
+    feedbackFormData,
+    setfeedbackFormData,
+    openModal,
+    setOpenModal,
+    handleManagerSignature,
+  } = useCustomHook();
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const [formData, setFormData] = useState<any>({
-    assessmentForm: [],
-    supervisorSig: "",
-    supervisorStatus: "",
-    feedback: "",
-  });
-  // console.log(formData);
+  // console.log(feedbackFormData);
 
   useEffect(() => {
     getSelectedCasStudyData(getParamId(pathname));
   }, []);
 
   useEffect(() => {
-    setFormData({
-      ...formData,
+    setfeedbackFormData({
+      ...feedbackFormData,
       feedback: selectedCasStudyData?.feedback ?? "",
-      supervisorSig: (selectedCasStudyData?.supervisorSig || signature) ?? "",
+      supervisorSig: selectedCasStudyData?.supervisorSig ?? "",
       supervisorStatus: selectedCasStudyData?.supervisorStatus ?? "",
     });
   }, [selectedCasStudyData]);
-
-  const proImage = new Image();
-  // console.log("proImage", proImage);
-
-  useEffect(() => {
-    proImage.src = signature ?? "";
-    document.body.appendChild(proImage);
-    setFormData({
-      ...formData,
-      supervisorSig: signature ?? "",
-    });
-  }, [signature]);
 
   const breadcrumbArray = [
     { name: "Assessment Form" },
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.CASE_STUDIES}` },
   ];
 
-  const [openModal, setOpenModal] = useState(false);
   const [form] = Form.useForm();
   const tableData =
     selectedCasStudyData?.assessmentForm?.map((obj: any) => ({
@@ -67,23 +57,21 @@ const AssessmentFormCaseStudies = () => {
       managerRemarks: obj?.supervisorRemarks,
       id: obj?.id,
     })) ?? [];
-  console.log("selectedCasStudyData", selectedCasStudyData);
   const remarked = selectedCasStudyData?.remarked;
   const userDetail = selectedCasStudyData?.intern?.userDetail;
-  const onFinish = (values: any) => {
-    // Notifications({ title: "Success", description: "Cade Study finalise ", type: "success" }),
-    //   navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
-    console.log(values, "values");
+
+  const handleSubmit = (type: string) => {
+    handleManagerSignature(selectedCasStudyData?.id, type);
+    navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
-    console.log(id, supervisorRemarks);
-    setFormData({
-      ...formData,
+    setfeedbackFormData({
+      ...feedbackFormData,
       assessmentForm:
-        formData?.assessmentForm?.length > 0
-          ? formData?.assessmentForm?.map((item: any) => (item?.id === id ? { id, supervisorRemarks } : item))
-          : [...formData?.assessmentForm, { id, supervisorRemarks }],
+        feedbackFormData?.assessmentForm?.length > 0
+          ? feedbackFormData?.assessmentForm?.map((item: any) => (item?.id === id ? { id, supervisorRemarks } : item))
+          : [...feedbackFormData?.assessmentForm, { id, supervisorRemarks }],
     });
   };
   const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
@@ -138,11 +126,11 @@ const AssessmentFormCaseStudies = () => {
               </div>
             );
           })}
-          <Form layout="vertical" form={form} onFinish={onFinish}>
+          <Form layout="vertical" form={form}>
             {managerStatus === "approved" ? (
               <>
                 <Typography className="text-xl font-semibold my-1">Feedback</Typography>
-                <span className="text-base font-normal lg:w-[400px] font-[outfit]">{formData?.feedback}</span>
+                <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
               </>
             ) : (
               <>
@@ -152,8 +140,8 @@ const AssessmentFormCaseStudies = () => {
                 </Typography>
 
                 <TextArea
-                  value={formData?.feedback}
-                  onChange={(e) => setFormData({ ...formData, feedback: e?.target?.value })}
+                  value={feedbackFormData?.feedback}
+                  onChange={(e) => setfeedbackFormData({ ...feedbackFormData, feedback: e?.target?.value })}
                   rows={6}
                   placeholder="Type here..."
                 />
@@ -166,15 +154,26 @@ const AssessmentFormCaseStudies = () => {
                   {`${userDetail?.firstName} ${userDetail?.lastName}`}
                 </Typography>
                 <div className="sign-box w-full rounded-lg flex justify-center items-center">
-                  <p>{selectedCasStudyData?.internSig}</p>
-                  {/* <img src={img} /> */}
+                  <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
+                    {checkForImage(selectedCasStudyData?.internSig) ? (
+                      <img className="absolute w-full h-full overflow-hidden" src={selectedCasStudyData?.internSig} />
+                    ) : (
+                      <p>{selectedCasStudyData?.internSig}</p>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="w-full">
+              <div className="w-full relative">
                 <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
                 <div className="sign-box w-full rounded-lg flex items-center justify-around">
-                  {managerStatus === "approved" ? (
-                    <>{/* <img src={img} /> */} signature</>
+                  {feedbackFormData?.supervisorSig ? (
+                    <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
+                      {checkForImage(feedbackFormData?.supervisorSig) ? (
+                        <img className="absolute w-full h-full overflow-hidden" src={feedbackFormData?.supervisorSig} />
+                      ) : (
+                        <p>{feedbackFormData?.supervisorSig}</p>
+                      )}
+                    </div>
                   ) : (
                     <span onClick={() => setOpenModal(true)} className="sign-btn cursor-pointer">
                       Click here to sign
@@ -195,16 +194,24 @@ const AssessmentFormCaseStudies = () => {
               </Button>
             ) : (
               <>
-                <Button type="primary" className="text-error-bg-color white-color reject-btn font-semibold">
-                  <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>Reject</NavLink>
+                <Button
+                  onClick={() => handleSubmit("Rejected")}
+                  type="primary"
+                  className="text-error-bg-color white-color reject-btn font-semibold"
+                >
+                  Reject
                 </Button>
-                <Button type="primary" className="white-bg-color teriary-color save-btn font-semibold ">
+                <Button
+                  onClick={() => handleSubmit("Draft")}
+                  type="primary"
+                  className="white-bg-color teriary-color save-btn font-semibold "
+                >
                   Save Draft
                 </Button>
                 <Button
                   type="primary"
                   className="teriary-bg-color  white-color  finalise-btn font-semibold  "
-                  onClick={onFinish}
+                  onClick={() => handleSubmit("Approved")}
                 >
                   Finalise
                 </Button>
@@ -213,65 +220,7 @@ const AssessmentFormCaseStudies = () => {
           </div>
         </BoxWrapper>
       </div>
-      {/* for mobile */}
-      {/* <BoxWrapper className="block lg:hidden w-full p-3">
-        <Typography className="text-xl md:text-3xl font-medium primary-color">Mino Marina - September 2022</Typography>
-        {tableData?.map((item: any, index: number) => {
-          return (
-            <div key={index} className="mt-5 flex flex-col xs:gap-2 sm:gap-5">
-              <span className="xs:text-lg sm:text-xl font-medium text-center">{item?.learningCategories}</span>
-              <span className="text-base font-medium text-primary-color">Learning Categories</span>
-              <span className="text-xs font-normal ">{item?.learningObjectives}</span>
-              <span className="text-base font-medium text-primary-color">Evidence of Progress</span>
-              <span className="text-xs font-normal ">{item?.evidenceOfProgress}</span>
-              <span className="text-base font-medium  text-primary-color">Manager Remarks</span>
-              <div className="flex flex-row justify-between ">
-                <div className="w-full">{item?.managerRemarks}</div>
-              </div>
-            </div>
-          );
-        })}
-        <Form layout="vertical" form={form}>
-          <Typography className="text-xl font-semibold my-3 gap-2">Feedback</Typography>
-          <span className="form-title font-medium ml-2">(Optional)</span>
 
-          <TextArea rows={6} placeholder="Type here..." maxLength={6} />
-          <div className="flex xs:flex-col sm:flex-row gap-10">
-            <div className="w-full">
-              <Typography className="text-xl font-semibold mt-5 capitalize">{`${userDetail?.firstName} ${userDetail?.lastName}`}</Typography>
-              <div className="sign-box w-full rounded-lg flex justify-center">
-                <img src={signature} alt="signature" />
-              </div>
-            </div>
-            <div className="w-full">
-              <Typography className="text-xl font-semibold mt-5">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
-              <div className="sign-box w-full rounded-lg flex items-center justify-around">
-                <span onClick={() => setOpenModal(true)} className="text-[#b8bacd] cursor-pointer">
-                  Click here to sign
-                </span>
-              </div>
-            </div>
-          </div>
-        </Form>
-        <div className="flex justify-end xs:gap-1 sm :gap-5 my-5 assessment-footer">
-          <Button type="primary" className="text-error-bg-color white-color reject-btn  text-xs">
-            <NavLink to={`/${ROUTES_CONSTANTS.CASE_STUDIES}`}>Reject</NavLink>
-          </Button>
-          <Button type="primary" className="white-bg-color teriary-color save-btn  text-xs">
-            Save Draft
-          </Button>
-          <Button
-            type="primary"
-            className="teriary-bg-color  white-color finalise-btn text-xs "
-            onClick={() => {
-              Notifications({ title: "Success", description: "Cade Study finalise ", type: "success" }),
-                navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
-            }}
-          >
-            Finalise
-          </Button>
-        </div>
-      </BoxWrapper> */}
       <SignatureAndUploadModal
         title=""
         width={650}

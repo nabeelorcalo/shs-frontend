@@ -3,8 +3,8 @@ import React from 'react'
 import { DocumentCardIcon, DocImage } from '../../assets/images'
 
 const SelectedUploadCard = (props: any) => {
-  const { files, setFiles, filename, filesize, idx, } = props
-  const extension = filename.slice(-3)
+  const { files, setFiles, filename, filesize, idx,handleUploadFile } = props
+  const extension = filename?.slice(-3)
   const handleDelete = (idx: any) => {
     setFiles({...files,files:files?.files.splice(idx, 1)});
   }
@@ -27,7 +27,7 @@ const SelectedUploadCard = (props: any) => {
           </div>
         </div>
         <div>
-          <CloseCircleFilled onClick={() => { handleDelete(idx) }} />
+          <CloseCircleFilled onClick={() => { handleUploadFile({}) }} />
         </div>
       </div>
     </div>
