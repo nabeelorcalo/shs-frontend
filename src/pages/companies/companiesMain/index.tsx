@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, DropDown
+  BoxWrapper, DropDown, Loader
 } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { GlassMagnifier, More } from "../../../assets/images"
@@ -12,6 +12,7 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserState } from '../../../store';
 import { useRecoilState } from "recoil";
 import "./style.scss";
+import Index from "../../../components/calendars/FullCalendarComp/drawerComp";
 
 // const btnStyle = {
 //   "applied": "p-1 rounded-lg primary-bg-color white-color",
@@ -43,14 +44,15 @@ const CompaniesMain = () => {
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [searchValue, setSearchValue] = useState('');
-  const { companiesUniversity, getAllCompaniesData, debouncedSearch } = useCustomHook()
+  const { companiesUniversity, getAllCompaniesData,
+    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
   console.log('current user', currentUser.userUniversity.universityId);
 
   useEffect(() => {
     getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
   }, [searchValue])
-  console.log('api data',companiesUniversity);
-  
+  console.log('api data', companiesUniversity);
+
   // handle search internships 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -64,15 +66,16 @@ const CompaniesMain = () => {
   // const [listandgrid, setListandgrid] = useState(false)
   // const [isToggle, setIsToggle] = useState(false)
 
-  const action = useCustomHook()
+  // const action = useCustomHook()
   const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
+
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${action?.selectedProfile?.id}`, { state: item }) }}>
+            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${selectedProfile?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
@@ -82,12 +85,13 @@ const CompaniesMain = () => {
         key: "2",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${CHAT}/${action?.selectedProfile?.id} `) }}>
+            onClick={() => { navigate(`${CHAT}/${selectedProfile?.id} `) }}>
             Chat
           </a>
         ),
       },
     ];
+
     return (
       <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
@@ -234,7 +238,7 @@ const CompaniesMain = () => {
     return (
       {
         key: index,
-        id: companiesUniversity?.length < 10 ? `0${companiesUniversity?.length}` : companiesUniversity?.length,
+        id: companiesUniversity?.length < 10 ? `0${index + 1}` : index + 1,
         company:
           <CompanyData
             companyName={item?.businessName}
@@ -271,20 +275,20 @@ const CompaniesMain = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
           <DropDown
             options={[
-              'pdf',
-              'excel'
+              'PDF',
+              'Excel'
             ]}
             requiredDownloadIcon
             setValue={() => {
-              action.downloadPdfOrCsv(event, csvAllColum, newTableData, "Companies")
+              downloadPdfOrCsv(event, csvAllColum, newTableData, "Companies")
             }}
             value=""
           />
         </Col>
         <Col xs={24}>
-          <BoxWrapper>
+          {!isLoading ? <BoxWrapper>
             <GlobalTable columns={columns} tableData={newTableData} />
-          </BoxWrapper>
+          </BoxWrapper> : <Loader />}
         </Col>
       </Row>
 

@@ -25,7 +25,7 @@ const CompanyInformationTabs = (props: any) => {
     <div className='h-[80vh] '>
       <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Business information</p>
       <Row gutter={[30, 20]}>
-        {PersnolInformationData.map((item: any) => (
+        {PersnolInformationData?.map((item: any) => (
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
             <div className="personal-information-wrap">
               <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
@@ -37,7 +37,7 @@ const CompanyInformationTabs = (props: any) => {
       <Divider />
       <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Business information</p>
       <Row gutter={[30, 20]}>
-        {OwnerDetails.map((item: any) => (
+        {OwnerDetails?.map((item: any) => (
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
             <div className="personal-information-wrap">
               <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
@@ -49,7 +49,7 @@ const CompanyInformationTabs = (props: any) => {
       <Divider />
       <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Business information</p>
       <Row gutter={[30, 20]}>
-        {Address.map((item: any) => (
+        {Address?.map((item: any) => (
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
             <div className="personal-information-wrap">
               <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>

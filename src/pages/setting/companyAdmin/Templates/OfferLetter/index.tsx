@@ -9,9 +9,13 @@ import { NavLink } from "react-router-dom";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import '../Template.scss'
+import { useParams } from "react-router-dom";
 
 const TemplatesOfferLater = () => {
 
+  const { type } = useParams<{ type: string }>();
+
+  console.log('data type is', type)
   let overview = [
     {
       name: "Offer Letter 01",

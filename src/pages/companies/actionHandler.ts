@@ -13,14 +13,17 @@ import { debounce } from "lodash";
 const useCustomHook = () => {
   const { GET_ALL_COMAPANIES } = apiEndpints
   const [companiesUniversity, setCompaniesUniversity] = useRecoilState(universityCompaniesState);
-
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedProfile, setSelectedProfile] = useState<any>({})
-  // getting all companies datya 
-  const getAllCompaniesData = async (userId: any,search:any) => {
-    const params={ userUniversityId: 1,search }
+
+  // getting all companies data 
+  const getAllCompaniesData = async (userId: any, search: any) => {
+    setIsLoading(true)
+    const params = { userUniversityId: 1, search }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_ALL_COMAPANIES, query);
     setCompaniesUniversity(data)
+    setIsLoading(false)
   };
 
   //Search
@@ -32,7 +35,7 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "PDF" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
@@ -101,6 +104,7 @@ const useCustomHook = () => {
     debouncedSearch,
     downloadPdfOrCsv,
     selectedProfile,
+    isLoading,
     setSelectedProfile
   };
 };
