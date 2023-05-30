@@ -11,7 +11,7 @@ import { recipeState } from "../../../store";
 const EditRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { recipeId } = useParams();
+  const params:any = useParams();
   const [form] = Form.useForm();
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
   const [loading, setLoading] = useState(false)
@@ -24,15 +24,15 @@ const EditRecipe = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getRecipe(recipeId)
+    getRecipe(params.recipeId)
   }, [])
-console.log("Recipe id:::: ", recipe)
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   async function submitUpdateRecipe(values:any) {
     console.log("values::::: ", values)
     const formData = new FormData();
+    formData.append('recipeId', params.recipeId);
     formData.append('name', values.name);
     formData.append('image', values.image[0].originFileObj);
     formData.append('description', values.description);
@@ -46,7 +46,7 @@ console.log("Recipe id:::: ", recipe)
     formData.append('cookTimeMins', values.cookTimeMins);
     formData.append('status', status);
     setLoading(true)
-    const response = await updateRecipe(recipeId, formData);
+    const response = await updateRecipe(formData);
     if(!response.error) {
       Notifications({title: "Success", description: response.message, type: 'success'});
     }

@@ -36,8 +36,8 @@ const useRecipesHook = () => {
   }
 
   // Update Recipe
-  const updateRecipe = async (id:any, reqBody: any) => {
-    const response =await api.post(`${UPDATE_RECIPE}/${id}`, reqBody, {headers: {'Content-Type': 'multipart/form-data'}});
+  const updateRecipe = async (reqBody: any) => {
+    const response =await api.post(`${UPDATE_RECIPE}`, reqBody, {headers: {'Content-Type': 'multipart/form-data'}});
     return response;
     // Notifications({title: "Success", description: response.message, type: 'success'});
   }
@@ -45,10 +45,8 @@ const useRecipesHook = () => {
   // Delete Agent Property
   const deleteRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    const response = await api.delete(`${DELETE_RECIPE}${id}`);
+    const response = await api.delete(`${DELETE_RECIPE}?recipeId=${id}`,);
     Notifications({title: "Success", description: response.message, type: 'success'});
-    const updatedRecipes = allRecipes.filter((item:any) => item.id !== id);
-    setAllRecipes(updatedRecipes);
     setLoading(false);
   }
 

@@ -31,9 +31,10 @@ const RecipeDetails = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const { recipeId } = useParams()
-  const { getRecipe } = useRecipesHook();
-  const recipe:any = useRecoilValue(recipeState)
-  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
+  const { getRecipe, deleteRecipe } = useRecipesHook();
+  const recipe:any = useRecoilValue(recipeState);
+  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
+  const [loadingDelRec, setLoadingDelRec] = useState(false);
   const settings = {
     arrows: false,
     dots: false,
@@ -43,8 +44,7 @@ const RecipeDetails = () => {
     speed: 1200,
     slidesToScroll: 1,
   };
-  
-console.log("recipe;::: ", recipe)
+
 
 
   /* EVENT LISTENERS
@@ -54,6 +54,13 @@ console.log("recipe;::: ", recipe)
   }, [])
 
 
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleDelRecipe = async () => {
+    const response:any = await deleteRecipe(Number(recipeId), setLoadingDelRec)
+    setModalRecipeDeleteOpen(false)
+    navigate(`/${ROUTES_CONSTANTS.RECIPES}`)
+  }
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -185,7 +192,7 @@ console.log("recipe;::: ", recipe)
         setState={setModalRecipeDeleteOpen}
         cancelBtntxt={'Cancel'}
         okBtntxt={'Delete'}
-        // okBtnFunc={}
+        okBtnFunc={() => handleDelRecipe()}
         children={<p>Are you sure you want to delete this?</p>}
       />
     </>

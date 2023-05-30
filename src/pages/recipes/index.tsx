@@ -18,12 +18,11 @@ const Recipes = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [rateValue, setRateValue] = useState(3);
-  const [allRecipes, setAllRecipes] = useRecoilState(allRecipesState)
+  const [allRecipes, setAllRecipes]: any = useRecoilState(allRecipesState)
   const [loadingRecipes, setLoadingRecipes] = useState(false)
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
 
-console.log("has mor::", hasMore)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -60,16 +59,18 @@ console.log("has mor::", hasMore)
       if(hasMore) {
         setLoadingRecipes(true)
         try {
-          const response = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
-          setAllRecipes([...allRecipes, ...response.data]);
+          const {data}: any = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+          setAllRecipes([...allRecipes, ...data]);
           setPage(page + 1);
-          setHasMore(response.data.length > 0);
+          setHasMore(data.length > 0);
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
           setLoadingRecipes(false)
         }
-      } 
+      } else {
+        setLoadingRecipes(true)
+      }
     }
   };
 
