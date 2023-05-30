@@ -43,7 +43,7 @@ export const InternshipProgressStepper = (props: any) => {
       className: "progress_hired"
     },
     {
-      name: "Reject",
+      name: "Rejected",
       count: countFunc('reject'),
       className: "progress_reject"
     },
