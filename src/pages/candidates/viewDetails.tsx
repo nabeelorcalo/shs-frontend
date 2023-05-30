@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { Drawer, Row, Col } from "antd";
 import DrawerTabs from "./drawerTabs";
 import IndividualDetails from "./individualDetails";
 import { DrawerWidth } from "../../components";
-
+import actionHandler from "./actionHandler";
 interface Props {
   open?: boolean;
   setOpen?: any;
@@ -20,6 +20,7 @@ const DetailDrawer = (props: Props) => {
     selectedCandidate,
     selectedCandidate: {
       id,
+      userId,
       userDetail,
       rating,
       stage,
@@ -28,6 +29,12 @@ const DetailDrawer = (props: Props) => {
     },
     ...rest
   } = props;
+
+  const { studentDetails, getStudentDetails } = actionHandler();
+
+  useEffect(() => {
+    getStudentDetails(userId);
+  }, []);
 
   const width = DrawerWidth();
   return (
@@ -42,6 +49,7 @@ const DetailDrawer = (props: Props) => {
       <Row>
         <Col xs={24} lg={6}>
           <IndividualDetails
+            userId={userId}
             id={id}
             userDetail={userDetail}
             rating={rating}
@@ -49,10 +57,11 @@ const DetailDrawer = (props: Props) => {
             internshipTitle={title}
             internType={internType}
             AplliedDate={createdAt}
+            skills={studentDetails?.personal?.skills}
           />
         </Col>
         <Col xs={24} lg={18}>
-          <DrawerTabs selectedCandidate={selectedCandidate} />
+          <DrawerTabs selectedCandidate={selectedCandidate} studentDetails={studentDetails} />
         </Col>
       </Row>
     </Drawer>
