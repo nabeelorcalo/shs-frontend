@@ -5,7 +5,7 @@ import { ClockDarkIcon } from '../../../assets/images';
 import './style.scss';
 
 export const TimePickerComp = (props?: any) => {
-  const { label, open, setOpen, value = dayjs('12:08', 'HH:mm'), setValue, popupclassName,customSetValue } = props;
+  const { label, open, setOpen, value = dayjs('12:08', 'HH:mm'), setValue, popupclassName, customSetValue } = props;
 
   const format = 'HH:mm';
 
@@ -23,9 +23,9 @@ export const TimePickerComp = (props?: any) => {
         format={format}
         onOpenChange={(val) => setOpen(val)}
         onSelect={(e: any) => {
-          setTime(e) 
-          customSetValue? setValue(dayjs(e)):setValue(dayjs(e).format('HH:mm'));
-          }}
+          setTime(e)
+          customSetValue ? setValue(dayjs(e)) : setValue(dayjs(e).format('HH:mm'));
+        }}
         popupClassName={`custom-time-picker ${popupclassName}`}
         renderExtraFooter={() => <>
           <label className='absolute header'>Set Time</label>
