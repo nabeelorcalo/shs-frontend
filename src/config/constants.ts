@@ -1,6 +1,7 @@
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
+  MEDIA_URL: "http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com",
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -70,8 +71,8 @@ export const ROUTES_CONSTANTS: any = {
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
   CASE_STUDIES: "case-studies",
-  CASE_STUDIES_ASSESSMENT_FORM: "case-studies/assessment-form/:id",
-  CASE_STUDIES_VIEW_DETAILS: 'case-studies/view-details/:id',
+  CASE_STUDIES_ASSESSMENT_FORM: "case-studies/assessment-form",
+  CASE_STUDIES_VIEW_DETAILS: "case-studies/view-details",
   GRIEVANCES: "grievances",
   CALENDAR: "calendar",
   DELEGATE_MEMEBERS: "delegate-members",

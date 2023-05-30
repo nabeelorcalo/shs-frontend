@@ -59,6 +59,24 @@ const endpoints = {
   //comment
   GET_COMMENTS: '/comment/getComments',
   ADD_COMMENT: `/comment/addComment`,
+  // manager
+  GET_COMPANY_MANAGER_LIST: `/manager_manager/get-company-manager-list`,
+  GET_SINGLE_COMPANY_MANAGER_LIST: `/manager_manager/get-single-company-manager-list`,
+  //event
+  CREATE_MEETING: `/Event/create-meeting`,
+  ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
+  DELETE_MEETING:`/Event/delete-meeting`,
+  UPDATE_MEETING:`/Event/update-meeting`,
+  // template
+  GET_ALL_TEMPLATES: `/template/findAll`,
+  //student
+  STUDENT_PROFILE: `/student/profile`,
+  //documents
+  DOCUMENT_REQUEST: `/Document/request`,
+  //case-studies
+  CASE_STUDIES:`case-studies`,
+  // intern
+  INTERN_LIST:`/intern/list`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
