@@ -101,7 +101,7 @@ const Recipes = () => {
               <Col key={recipe.id} xs={24} sm={12} xl={8} xxl={6}>
                 <RecipeCard
                   title={recipe?.name}
-                  thumb={`http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
+                  thumb={`${import.meta.env.VITE_APP_AWS_MEDIA_URL}/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
                   description={recipe?.description}
                   rating={rateValue}
                   status={recipe?.status}

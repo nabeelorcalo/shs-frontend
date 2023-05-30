@@ -29,7 +29,7 @@ const useRecipesHook = () => {
       const image = [{
         uid: data?.recipeImage?.mediaId,
         name: `${data?.recipeImage?.filename}.${data?.recipeImage.metaData.extension}`        ,
-        url: `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
+        url: `${import.meta.env.VITE_APP_AWS_MEDIA_URL}/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
       }]
       setRecipe({...data, image})
     }
