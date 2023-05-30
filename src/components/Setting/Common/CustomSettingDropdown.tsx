@@ -25,7 +25,7 @@ export const DropDownForSetting = (props: any) => {
 
   const editHandler = () => {
     GetEditHandler({ ...editData, isEdit: "isEdit" });
-    setState({ ...state, isEditModal: true });
+    setState({ ...state, isEditModal: true,action:'edit' });
     setVisible(false);
   }
 
