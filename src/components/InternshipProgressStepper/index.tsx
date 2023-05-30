@@ -43,14 +43,13 @@ export const InternshipProgressStepper = (props: any) => {
       className: "progress_hired"
     },
     {
-      name: "Reject",
+      name: "Rejected",
       count: countFunc('reject'),
       className: "progress_reject"
     },
   ]
-  console.log(stepperObj[0].count)
   return (
-    <ul className="progress_stepper">
+    <ul className="progress_stepper text-lg text-secondary-color">
       {
         stepperObj.map((item: any, idx: any) => {
           return (

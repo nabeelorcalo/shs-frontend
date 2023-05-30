@@ -1,85 +1,64 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 import {
-  DropDown,
-  SearchBar,
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  FiltersButton
+  GlobalTable, PageHeader,
+  BoxWrapper, FiltersButton, Loader
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import "./style.scss";
-import "../../scss/global-color/Global-colors.scss"
-import { Avatar, Button, Divider, Dropdown } from "antd";
-import { InternshipsIcon, More } from "../../assets/images";
+import { Avatar, Button, Dropdown, Row, Col, Input, Alert } from "antd";
 import type { MenuProps } from 'antd';
-import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../config/constants";
-import { useNavigate, Link } from "react-router-dom";
+import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/images";
+import { ROUTES_CONSTANTS } from "../../config/constants";
+import useCustomHook from "./actionHandler";
+import "./style.scss";
+import UserSelector from "../../components/UserSelector";
+import AlertBanner from "../../components/AlertBanner";
 
-const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS;
-
-const tableData = [
-  {
-    no: "01",
-    title: "Research Analyst",
-    department: "Business Analyst",
-    posting_date: "01/07/2022",
-    closing_date: "01/07/2022",
-    location: "virtual",
-    status: 'pending',
-    posted_by: 'T',
-
-  },
-  {
-    no: "02",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'active',
-    posted_by: 'U',
-
-  },
-  {
-    no: "03",
-    title: "Business Analyst",
-    department: "Scientist Analyst",
-    posting_date: "01/07/2023",
-    closing_date: "01/07/2021",
-    location: "Onsite",
-    status: 'rejected',
-    posted_by: 'U',
-
-  }
-]
 
 const Internships = () => {
-  const navigate = useNavigate()
-  // const [value, setValue] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
+    status: undefined,
     value: "",
     showDrawer: false,
-    location: "",
-    department: ""
+    location: undefined,
+    department: undefined
   })
+  const { getAllInternshipsData, internshipData,
+    getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
+    departmentsData, locationsData, debouncedSearch, isLoading } = useCustomHook();
 
-  const PopOver = () => {
-    const navigate = useNavigate()
+  useEffect(() => {
+    getAllDepartmentData();
+    getAllLocationsData();
+  }, [])
+
+  useEffect(() => {
+    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+  }, [searchValue])
+
+  const handleDublicate = (id: any) => {
+    getDuplicateInternship(id)
+  }
+
+  const PopOver = (props: any) => {
+    const { item } = props;
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS) }}>
-            View details
+          <a rel="noopener noreferrer" onClick={() =>
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item } })}>
+            View Details
           </a>
         ),
       },
       {
         key: '2',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { }}>
+          <a rel="noopener noreferrer" onClick={() => { handleDublicate(item.id) }}>
             Duplicate
           </a>
         ),
@@ -140,42 +119,46 @@ const Internships = () => {
     }
   ]
 
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = internshipData?.map((item: any, index: number) => {
+    const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
+    const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
+    const currentStatus = item?.status
     return (
       {
-        no: item.no,
-        title: item.title,
-        department: item.department,
-        posting_date: item.posting_date,
-        closing_date: item.closing_date,
-        location: item.location,
+        no: internshipData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        title: item?.title,
+        department: item?.department?.name,
+        posting_date: postingDate,
+        closing_date: closingDate,
+        // location: item?.location ? item.location?.name : "___",
+        location: item?.locationType,
         status:
           <Button
             size="small"
             className={
-              `${item.status === ACTIVE ?
+              `${currentStatus === "PUBLISHED" ?
                 `text-success-bg-color`
                 :
-                item.status === PENDING ?
+                currentStatus === "PENDING" ?
                   `text-warning-bg-color`
                   :
-                  item.status === CLOSED ?
+                  currentStatus === "CLOSED" ?
                     `text-info-bg-color`
                     :
-                    item.status === REJECTED ?
+                    currentStatus === "REJECTED" ?
                       `text-error-bg-color`
-                      :
-                      `light-sky-blue-bg`
+                      : currentStatus === "DRAFT" ?
+                        `text-secondary-bg-disabled-color` : `light-sky-blue-bg`
               }  
-                text-[#fff]`
+                text-[#fff] status-btn`
             }
           >
-            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+            {currentStatus?.charAt(0)?.toUpperCase() + currentStatus?.slice(1)}
           </Button>,
-        posted_by: <Avatar
-          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-        />,
-        actions: <PopOver />
+        posted_by: <Avatar size={50} src={item?.avatar}>
+          {item?.jobPoster?.firstName?.charAt(0)}{item?.jobPoster?.lastName?.charAt(0)}
+        </Avatar>,
+        actions: <PopOver item={item} />
       }
     )
   })
@@ -188,107 +171,153 @@ const Internships = () => {
   }
 
   const updateLocation = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      location: value
+      location: event
     }))
   }
 
   const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      department: value
+      department: event
     }))
   }
-
+  const handleApplyFilter = () => {
+    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: false
+    }))
+  }
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      status: undefined,
+      location: undefined,
+      department: undefined
+    }))
+  }
+  // handle search internships 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
+  const locationFilteredData = locationsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: item?.name
+      }
+    )
+  })
+  const departmentsFilteredData = departmentsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: item?.name
+      }
+    )
+  })
   return (
     <>
-      <PageHeader title="Internships" />
-      <Divider />
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
-          </div>
-          <div className="flex max-sm:flex-col flex-row gap-4">
-            <FiltersButton
-              label="Filters"
-              onClick={handleDrawer}
-            />
-            <Drawer
-              closable
-              open={state.showDrawer}
-              onClose={handleDrawer}
-              title="Filters"
-            >
-              <React.Fragment key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Location</p>
-                    <DropDown
-                      name="name"
-                      options={[
-                        "EidinBurg",
-                        "Glasgow",
-                        "London",
-                        "Virtual",
-                        "All"
-                      ]}
-                      setValue={() => { updateLocation(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.location}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Department</p>
-                    <DropDown
-                      name="name"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                        "All"
-                      ]}
-                      setValue={() => { updateDepartment(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.department}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => navigate("#")}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => navigate("#")}>Apply</Button>
-                  </div>
+      <PageHeader title="Internships" bordered />
+      <Row gutter={[20, 20]}>
+        <Col xs={24}>
+          <AlertBanner
+            className='my-2 py-3'
+            type='info'
+            message='Your internship request for Content Writer is still pending. Remind admin to approve your request'
+            showIcon
+            actions={
+              <Link to="/">
+                <InfoAlert />
+                <span className="pl-3">Send Reminder</span>
+              </Link>
+            }
+          />
+          <AlertBanner
+            className='my-2 py-3'
+            type='error'
+            message='Your internship request for Content Writer has been declined.'
+            showIcon
+          />
+          <AlertBanner
+            className="py-3"
+            message="Your internship request for Content Writer has been approved."
+            type="success"
+            showIcon
+          />
+        </Col>
+        <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
+          <Input
+            className='search-bar'
+            placeholder="Search"
+            onChange={debouncedResults}
+            prefix={<GlassMagnifier />}
+          />
+        </Col>
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+          <FiltersButton
+            label="Filters"
+            onClick={handleDrawer}
+          />
+          <Drawer
+            closable
+            open={state.showDrawer}
+            onClose={handleDrawer}
+            title="Filters"
+          >
+            <>
+              <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
+                  <UserSelector
+                    label="Location"
+                    placeholder="Select"
+                    value={state.location}
+                    onChange={(event: any) => { updateLocation(event) }}
+                    options={locationFilteredData}
+                  />
                 </div>
-              </React.Fragment>
-            </Drawer>
-            <Button
-              type="primary"
-              size="middle"
-              icon={<InternshipsIcon />}
-              className="button-tertiary"
-              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-            >
-              New Internship
-            </Button>
-          </div>
-        </div>
-        <BoxWrapper>
-          <div className="pt-3">
-            <GlobalTable columns={columns} tableData={newTableData} />
-          </div>
-        </BoxWrapper>
-      </div>
+                <div className="flex flex-col gap-2">
+                  <UserSelector
+                    label="Department"
+                    placeholder="Select"
+                    value={state.department}
+                    onChange={(event: any) => { updateDepartment(event) }}
+                    options={departmentsFilteredData}
+                  />
+                </div>
+                <div className="flex flex-row gap-3 justify-end">
+                  <Button type="default" size="middle" className="button-default-tertiary"
+                    onClick={handleResetFilter}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary"
+                    onClick={handleApplyFilter}>Apply</Button>
+                </div>
+              </div>
+            </>
+          </Drawer>
+          <Button
+            type="primary"
+            size="middle"
+            icon={<InternshipsIcon />}
+            className="button-tertiary"
+            onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
+          >
+            New Internship
+          </Button>
+        </Col>
+        <Col xs={24}>
+          {isLoading ?
+            <BoxWrapper>
+              <div className="Internships-table">
+                <GlobalTable columns={columns} tableData={newTableData} />
+              </div>
+            </BoxWrapper> : <Loader />}
+        </Col>
+      </Row>
     </>
   );
 };

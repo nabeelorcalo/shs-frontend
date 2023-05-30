@@ -8,10 +8,11 @@ interface EmojiProps {
   size?: any,
   activeIconIndex?: number,
   onClick?: any,
+  id?: string,
 }
 
 const EmojiMoodRating = (props: EmojiProps) => {
-  const { title, data, size = 3, activeIconIndex = -1, onClick } = props;
+  const { title, data, size = 3, activeIconIndex = -1, onClick, id } = props;
 
   return (
     <BoxWrapper>
@@ -24,9 +25,9 @@ const EmojiMoodRating = (props: EmojiProps) => {
             data.map((item: any, idx: any) => {
               return (
                 <div className='emoji-container text-[#363565]'>
-                  <div key={idx} className={`flex flex-col items-center ${idx}`} onClick={onClick}>
+                  <div key={`${id}_${idx}`} className={`flex flex-col items-center ${id}_${idx}`} onClick={onClick}>
                     {
-                      activeIconIndex === idx + 1 || activeIconIndex === -1 ?
+                      activeIconIndex === idx || activeIconIndex === -1 ?
                         <item.comp className='svgIcon' />
                         :
                         <item.colorLessComp className='svgIcon' />

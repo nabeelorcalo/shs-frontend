@@ -1,62 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Typography, Row, Col, Form, Input, Button } from "antd";
-import { SettingTimesheetIcon, } from "../../../../assets/images";
-import { Alert, SearchBar } from "../../../../components";
+import { GlassMagnifier, SettingTimesheetIcon, } from "../../../../assets/images";
+import { Alert } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
-import { PopUpModal } from "../../../../components/Model";
+import useTimesheetCustomHook from "./actionHandler";;
+import AddCategory from "./AddCategory";
 import "./style.scss";
 
-const { TextArea } = Input;
-const { Title, Text } = Typography;
 
-let overview = [
-  {
-    name: "Designing",
-    content:
-      "Producing consistently excellent visual work and  a host of ideas",
-  },
-  {
-    name: "Coordination",
-    content:
-      "The process of organizing people or groups so that they work together properly and well",
-  },
-  {
-    name: "Training",
-    content:
-      "Training has specific goals of improving one's capability, capacity, productivity and performance.",
-  },
-];
+const { Text } = Typography;
 
 const SettingTimesheet = () => {
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [formValues, setFormValues] = useState<any>({
-    departmentName: "",
-    Description: "",
-  });
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
-    setFormValues((prevState: any) => ({ ...prevState, [name]: value }));
+  const [searchValue, setSearchValue] = useState();
+  const [editData, setEditData] = useState<any>({});
+  const [state, setState] = useState<any>(
+    {
+      isDeleteModal: false,
+      isEditModal: false,
+      id: null,
+      action: ''
+    }
+  )
+
+  const { getTimeSheetsData, timeSheetData,
+    debouncedSearch, deleteTimeSheet } = useTimesheetCustomHook();
+
+  useEffect(() => {
+    getTimeSheetsData(searchValue)
+  }, [searchValue])
+
+
+  // handle search timesheets 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
   };
-  const close = () => {
-    setShowEditModal(false);
-  };
+
   return (
     <div className="setting-time-sheet">
-      <div>
-        <div className="flex justify-between location-header">
-          <SearchBar size="middle" handleChange={handleChange} />
-          <Button
-            size="middle"
-            onClick={() => { setShowEditModal(!showEditModal) }}
-            className="flex gap-2 setting-add-button white-color teriary-bg-color"
-          >
-            <SettingTimesheetIcon /> Add Category
-          </Button>
+      <div className="flex justify-between location-header">
+        <div className="input-wrapper">
+          <Input className='search-bar' placeholder="Search"
+            onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
+        <Button
+          size="middle"
+          onClick={() => { setState({ ...state, isEditModal: true, action: 'add' }) }}
+          className="flex gap-2 setting-add-button white-color teriary-bg-color"
+        >
+          <SettingTimesheetIcon /> Add Category
+        </Button>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {overview.map((data: any, index: any) => {
+        {timeSheetData?.map((data: any, index: any) => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} lg={12} xl={8}>
               <div className="w-full setting-time-sheet-box-wrapper">
@@ -66,16 +62,16 @@ const SettingTimesheet = () => {
                       <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
                         {data?.name}
                       </Text>
-                      <Text className="text-base text-sm py-2 text-secondary-color ">
-                        {data.content}
+                      <Text className="text-sm py-2 text-secondary-color ">
+                        {data?.description}
                       </Text>
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
-                        showEditModal={showEditModal}
-                        showDeleteModal={showDeleteModal}
-                        setShowDeleteModal={setShowDeleteModal}
-                        setShowEditModal={setShowEditModal}
+                        SetEditData={setEditData}
+                        state={state}
+                        setState={setState}
+                        editData={data}
                       />
                     </span>
                   </div>
@@ -85,50 +81,24 @@ const SettingTimesheet = () => {
           );
         })}
       </Row>
-      <PopUpModal
-        open={showEditModal}
-        title="Add Category"
-        width={600}
-        close={close}
-        footer={
-          <div className="timesheet-department-footer"> <Button key="Cancel" className="footer-cancel-btn ">
-            Cancel
-          </Button>
-            <Button key="submit" className="footer-submit-btn ">
-              Submit
-            </Button>
-          </div>
-        }
-      >
-        <Form layout="vertical">
-          <Form.Item
-            name="locationName"
-            rules={[{ required: true, message: "Please Enter your username!" }]}
-          >
-            <div className="d-flex w-full pl-1">
-              <p className="py-2">Category Name</p>
-              <Input placeholder="Title" className="input-style" />
-            </div>
-          </Form.Item>
-          <div className="mt-3 flex flex-col">
-            <label className="pb-2">
-              Description
-              <span className="text-[red]">*</span>
-            </label>
-            <TextArea rows={6} placeholder="Write Something..." maxLength={6} />
-          </div>
-        </Form>
-      </PopUpModal>
-      <Alert
+
+      {state.isEditModal && <AddCategory
+        setEditData={setEditData}
+        editData={editData}
+        state={state}
+        setState={setState}
+      />}
+
+      {state.isDeleteModal && <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
-        state={showDeleteModal}
-        setState={setShowDeleteModal}
+        state={state.isDeleteModal}
+        setState={setState}
         type="error"
         width={500}
-        title=""
+        okBtnFunc={() => deleteTimeSheet(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
-      />
+      />}
     </div>
   );
 };

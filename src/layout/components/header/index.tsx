@@ -38,8 +38,9 @@ const { Header } = Layout;
 type HeaderProps = {
   collapsed: boolean;
   sidebarToggler: () => void;
-};
+  handleLogout: any;
 
+};
 
 const data = [
   {
@@ -56,8 +57,8 @@ const data = [
   },
 ];
 
-const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
-  const { LOGOUT } = apiEndpints;
+const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout}) => {
+  
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
@@ -69,9 +70,11 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   // const currentUser = useRecoilValue(currentUserState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
+ 
   const menuStyle = {
     boxShadow: "none",
   };
+
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
@@ -91,8 +94,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
       label: "Logout",
       icon: <IconLogout />,
       onClick: (props) => {
-        localStorage.removeItem("accessToken");
-        navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+        handleLogout()
       },
     },
   ];
@@ -123,7 +125,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SAWITCH);
-    console.log(data,"responseresponseresponseresponse");
+    console.log(data, "responseresponseresponseresponse");
     // const userData = {
     //   ...data,
     //   role: data?.role
@@ -233,7 +235,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler }) => {
               placement="bottomLeft"
               arrow
               open={open}
-              onOpenChange={(open)=>{setOpen(open)}}
+              onOpenChange={(open) => { setOpen(open) }}
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">

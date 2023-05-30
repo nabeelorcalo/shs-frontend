@@ -23,7 +23,11 @@ interface Props {
 }
 
 export const Alert: any = (props: Props) => {
-  const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children, footer } = props
+  const { title, type, width, state, setState, icon, cancelBtntxt, okBtntxt, okBtnFunc, children, footer } = props;
+  const okBtnHandler = () => {
+    okBtnFunc(type);
+    setState(!state)
+  }
   return (
     <>
       <Modal
@@ -54,7 +58,7 @@ export const Alert: any = (props: Props) => {
             {cancelBtntxt}
           </Button>,
           <Button
-            onClick={() => { okBtnFunc(type) }}
+            onClick={okBtnHandler}
             key="submit"
             className={
               type === ERROR ? "button-error"

@@ -110,7 +110,7 @@ const index = () => {
             <div>
               <div>
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
-                  Index
+                  Inbox
                 </span>
 
                 <span className="text-sm text-teriary-color">
@@ -120,7 +120,7 @@ const index = () => {
 
               <div className="flex items-center justify-between mt-4">
                 <div className="">
-                  <SearchBar handleChange={() => {}} />
+                  <SearchBar handleChange={() => { }} />
                 </div>
 
                 <div className="flex items-center cursor-pointer justify-center w-[60px] h-[48px] bg-[#E6F4F9] rounded-lg ml-2">
@@ -243,7 +243,7 @@ const index = () => {
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Type a messages…"
-                    autoSize={{ minRows: 6, maxRows: 6 }}
+                    autoSize={{ minRows: 4, maxRows: 6 }}
                   ></TextArea>
                 </div>
 

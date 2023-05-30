@@ -1,34 +1,99 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
-import constants from "../../../config/constants";
+import apiEndpints from "../../../config/apiEndpoints";
+import { internsDataState } from '../../../store/interns/index';
+import { settingDepartmentState, universityDataState } from "../../../store";
+import { managersState } from "../../../store";
+import { cadidatesListState } from "../../../store/candidates";
+import dayjs from "dayjs";
+import { Notifications } from "../../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
+    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
+    UPDATE_CANDIDATE_DETAIL } = apiEndpints
+  const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
+  const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
+  const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
+  const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
+  const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  // Get all interns data
+  const getAllInternsData = async (event: any, searchValue: any) => {
+    const { data } = await api.get(GET_ALL_INTERNS,
+      {
+        userType: 'intern',
+        InternStatus: event.status ?? null,
+        departmentId: event.department ?? null,
+        assignedManager: event.manager ?? null,
+        userUniversityId: event.university ?? null,
+        search: searchValue ? searchValue : null
+      })
+    setGetAllInters(data);
+    setIsLoading(true);
+  }
+
+  //Get all department data
+  const getAllDepartmentData = async () => {
+    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
+    setDepartmentsData(data)
   };
+
+  // Get all Managers
+  const getAllManagersData = async () => {
+    const { data } = await api.get(GET_COMPANY_MANAGERS_LIST)
+    setGetAllManagers(data);
+  }
+
+  //Get all universities data
+  const getAllUniuversitiesData = async (val: any) => {
+    const { data } = await api.get(GET_ALL_UNIVERSITIES, { page: 1, limit: 100, });
+    setGetAllUniversities(data)
+  };
+
+  // update candidate data 
+  const updateCandidatesRecords = async (internId: any, mangerId?: any, terminateReason?: any, status?: string) => {
+    const id = Number(internId)
+    const params: any = {}
+    if (status === 'completed') {
+      params["internStatus"] = 'completed'
+      params["internshipEndDate"] = dayjs()
+    } else if (terminateReason) {
+      params["terminationReason"] = terminateReason
+    } else {
+      params["assignedManager"] = mangerId
+    }
+
+    const res: any = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, params)
+    if (res === 'Success') {
+      Notifications({ title: "Success", description: "Updated successfully", type: "success" })
+    }
+  }
+
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
+
 
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "PDF" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -37,8 +102,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, title, department, joining_date, date_of_birth}: any) =>
-      [ no, title, department, joining_date, date_of_birth]
+    const body = data.map(({ no, posted_by, name, department, joining_date, date_of_birth, status }: any) =>
+      [no, posted_by, name, department, joining_date, date_of_birth, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -88,8 +153,19 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getAllDepartmentData,
     downloadPdfOrCsv,
+    getAllInternsData,
+    debouncedSearch,
+    getAllManagersData,
+    getAllUniuversitiesData,
+    updateCandidatesRecords,
+    updateInterns,
+    getAllUniversities,
+    getAllManagers,
+    getAllInters,
+    departmentsData,
+    isLoading
   };
 };
 

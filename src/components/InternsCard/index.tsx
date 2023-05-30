@@ -1,21 +1,25 @@
 import { Button, Divider } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { BoxWrapper } from '../../components'
-import '../../scss/global-color/Global-colors.scss'
+import { ROUTES_CONSTANTS } from '../../config/constants'
 import './style.scss'
 
 export const InternsCard = (props: any) => {
-  const { statusBtn, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
+  const { id, status, pupover, name, posted_by, title, department,
+    joining_date, date_of_birth, company } = props;
+  const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
+
   return (
-    <div className='interns-card-main px-4 mb-8 max-sm:w-full max-md:w-1/2 max-lg:w-full max-xl:w-1/2 max-2xl:w-1/3 max-3xl:w-1/4 3xl:w-1/5'>
+    <div className='interns-card-main'>
+      {/* flex mb-8 max-sm:w-full max-md:w-1/2
+     max-lg:w-full max-xl:w-1/2 max-2xl:w-1/3 max-3xl:w-1/4 3xl:w-1/5 */}
       <BoxWrapper className='interns-card'>
         <div className='flex flex-row justify-between'>
-          {statusBtn ? statusBtn : null}
+          {status ? status : ''}
           {pupover ? pupover : null}
         </div>
         <div className='flex flex-col gap-4 items-center main-card-jsx'>
-
           <div className='flex flex-col gap-2 items-center'>
             {posted_by}
             {name ? <p className='text-lg font-[700]'>{name}</p> : null}
@@ -38,13 +42,15 @@ export const InternsCard = (props: any) => {
             <Button
               className="border-0 accommodation-btn-info-bg text-info-color-dark"
               size="small"
-              onClick={() => { navigate("profile") }}>
+              // onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
+              onClick={() => navigate(`${STUDENTPROFILE}`)}>
               Profile
             </Button>
             <Button
               className='border-0 light-green-bg-color text-success-hover-color'
               size="small"
-              onClick={() => { navigate("chat") }}>
+              // onClick={() => navigate(`${CHAT}/${id}`)}>
+              onClick={() => navigate(`${CHAT}`)}>
               Chat
             </Button>
           </div>

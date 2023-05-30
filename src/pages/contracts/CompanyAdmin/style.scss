@@ -11,18 +11,22 @@
     display: inline-block;
     border-radius: 8px;
 
-    &.success {
+    &.SUCCESS {
       background-color: $active-color;
     }
 
-    &.rejected,
-    &.error {
+    &.REJECTED,
+    &.ERROR {
       background-color: $text-error-color;
     }
 
-    &.pending {
+    &.PENDING {
       background-color: $yellow-status-color;
     }
+  }
+
+  .ant-dropdown-trigger {
+    width: 170px;
   }
 }
 

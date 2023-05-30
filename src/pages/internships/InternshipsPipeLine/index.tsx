@@ -1,168 +1,24 @@
 import { useEffect, useState } from "react";
-import { SearchBar,PageHeader,InternshipPipeLineCard,Breadcrumb,DropDown} from "../../../components";
-import { useNavigate } from 'react-router-dom';
-import { DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon, EditIconinternships,ClosedStatus,SuccessStatus } from '../../../assets/images';
-
-import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
+import {
+  PageHeader,
+  InternshipPipeLineCard,
+  Breadcrumb,
+  NoDataFound,
+} from "../../../components";
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon,
+  EditIconinternships, GlassMagnifier
+} from '../../../assets/images'
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+// import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
+import { Avatar, Input } from "antd";
+import dayjs from 'dayjs';
 import "../style.scss";
+import UserSelector from "../../../components/UserSelector";
 
-// const { ACTIVE, PENDING, CLOSED, REJECTED } = STATUS_CONSTANTS
 
-const statusArray = [
-  {
-    status: 'Applied',
-    no: 3,
-    className: "primary-bg-color"
-  },
-  {
-    status: 'Interviewed',
-    no: 5,
-    className: "text-link-bg-color"
-  },
-  {
-    status: 'Recommended',
-    no: 2,
-    className: "purple-bg"
-  },
-  {
-    status: 'OfferLetter',
-    no: 4,
-    className: "light-purple-bg"
-  },
-  {
-    status: 'Contract',
-    no: 1,
-    className: "line-bg"
-  },
-  {
-    status: 'Hired',
-    no: 5,
-    className: "text-success-hover-bg-color"
-  }
-]
-const cardArray = [
-  {
-    name: "Jane Cooper",
-    rating: 4,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Jane Cooper",
-    rating: 4,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-
-  {
-    name: "Roman Akhmervo",
-    rating: 2,
-    time: "2 days ago",
-    status: "Hired",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5896.jpg"
-  },
-  {
-    name: "janen gooper",
-    rating: 4,
-    time: "2 days ago",
-    status: "Contract",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Jane swister",
-    rating: 5,
-    time: "2 days ago",
-    status: "Interviewed",
-    img: "https://faces-img.xcdn.link/image-lorem-face-975.jpg"
-  },
-  {
-    name: "Laura gail",
-    rating: 4,
-    time: "2 days ago",
-    status: "Recommended",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Leopard cris",
-    rating: 1,
-    time: "2 days ago",
-    status: "Recommended",
-    img: "https://faces-img.xcdn.link/image-lorem-face-1903.jpg"
-  },
-  {
-    name: "Dineo meno",
-    rating: 2,
-    time: "2 days ago",
-    status: "Hired",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Clonde filte",
-    rating: 4,
-    time: "2 days ago",
-    status: "OfferLetter",
-    img: "https://faces-img.xcdn.link/image-lorem-face-262.jpg"
-  },
-  {
-    name: "loversa tripe",
-    rating: 1,
-    time: "2 days ago",
-    status: "Contract",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Nicobe mobal",
-    rating: 3,
-    time: "2 days ago",
-    status: "OfferLetter",
-    img: "https://faces-img.xcdn.link/image-lorem-face-569.jpg"
-  },
-  {
-    name: "diverdentine stlo",
-    rating: 5,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "Desgino modu",
-    rating: 1,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-4370.jpg"
-  },
-  {
-    name: "Laiq faild",
-    rating: 3,
-    time: "2 days ago",
-    status: "Interviewed",
-    img: "https://faces-img.xcdn.link/image-lorem-face-1196.jpg"
-  },
-  {
-    name: "turba droped",
-    rating: 2,
-    time: "2 days ago",
-    status: "Recommended",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5543.jpg"
-  },
-  {
-    name: "calse doplin",
-    rating: 5,
-    time: "2 days ago",
-    status: "Applied",
-    img: "https://faces-img.xcdn.link/image-lorem-face-5750.jpg"
-  },
-  {
-    name: "lowang eenal",
-    rating: 1,
-    time: "2 days ago",
-    status: "Hired",
-    img: "https://faces-img.xcdn.link/image-lorem-face-3621.jpg"
-  },
-]
 const tempArray = [
   { name: "Pipeline" },
   {
@@ -173,122 +29,212 @@ const tempArray = [
 
 const InternshipPipeLine = () => {
   const navigate = useNavigate();
-  const [state, setState] = useState({
-    status: 'Published'
+  const { state }: any = useLocation()
+  const [searchValue, setSearchValue] = useState('')
+  const [states, setState] = useState({
+    status: undefined,
+    isOpen: false,
+    userData: {}
   })
-  const {getInternshipDetails,internshipDetails} : any = useCustomHook()
-  useEffect(() => {
-    getInternshipDetails()
-  }, [])
-  console.log(internshipDetails);
-  
-  // const handleChange = (value: string) => {
-  //   console.log(`selected ${value}`);
-  // };
+  const statusArry = [
+    { value: 'PUBLISHED', label: 'Published' },
+    { value: 'CLOSED', label: 'Closed' },
+    { value: 'REJECTED', label: 'Rejected' },
+  ]
+  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
 
-  const changeStatus = (event: any) => {
-    const value = event.target.innerHTML
-    setState((prevState) => ({
-      ...prevState,
-      status: value
-    }))
+  useEffect(() => {
+    getInternshipDetails(searchValue)
+  }, [searchValue])
+
+  const filteredStatusData = statusArry?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.value,
+        label: item?.label
+      }
+    )
+  })
+  const getStatus = (status: string) => {
+    let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
+    return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
   }
+
+  const statusArray = [
+    {
+      data: getStatus('applied').statusData,
+      status: 'Applied',
+      no: getStatus('applied').totalInterns,
+      className: "primary-bg-color"
+    },
+    {
+      data: getStatus('interviewed').statusData,
+      status: 'Interviewed',
+      no: getStatus('interviewed').totalInterns,
+      className: "text-link-bg-color"
+    },
+    {
+      data: getStatus('Recommended').statusData,
+      status: 'Recommended',
+      no: getStatus('Recommended').totalInterns,
+      className: "purple-bg"
+    },
+    {
+      data: getStatus('OfferLetter').statusData,
+      status: 'Offer Letter',
+      no: getStatus('OfferLetter').totalInterns,
+      className: "light-purple-bg"
+    },
+    {
+      data: getStatus('Contract').statusData,
+      status: 'Contract',
+      no: getStatus('Contract').totalInterns,
+      className: "line-bg"
+    },
+    {
+      data: getStatus('Hired').statusData,
+      status: 'Hired',
+      no: getStatus('Hired').totalInterns,
+      className: "text-success-hover-bg-color"
+    }
+  ]
+
+  const dateFormat = (data: string) => {
+    const date = dayjs(data); // Replace '2023-05-12' with your desired date
+    const today = dayjs(); // Get the current date
+    return `${today.diff(date, 'day')} days ago`;
+  }
+
+
+
+  // const changeStatus = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     status: event
+  //   }))
+  // }
+  // Search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
-      <PageHeader  bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
+      <PageHeader
+        bordered
+        title={<Breadcrumb breadCrumbData={tempArray} />}
+      />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <div className="flex flex-row ">
-            <h3>{internshipDetails.title}</h3>
+          <div className="flex flex-row">
+            <h3 className="font-medium text-2xl">{internshipDetails?.title}</h3>
             <span
               className='pl-4 cursor-pointer'
-              onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS + "/" + ROUTES_CONSTANTS.NEW_INTERNSHIP + '?id=1'); }}
+              onClick={() => {
+                navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
+                  { state: state.data })
+              }}
             >
               <EditIconinternships />
             </span>
           </div>
-          <div className="flex flex-row gap-4">
-            <DropDown
-              value={state.status}
-              options={[ "Published","Closed" ]}
-              setValue={() => { changeStatus(event) }}
-            />
-          </div>
+          <UserSelector
+            value={internshipDetails?.status}
+            options={filteredStatusData}
+          />
+          {/* <SelectComp
+            value={internshipDetails?.status}
+            options={statusArry}
+          /> */}
         </div>
         <div>
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>
             <div className='flex flex-row gap-3 items-center'>
               <DepartmentIcon />
-              <p>Design</p>
+              <p>{internshipDetails?.department?.name}</p>
             </div>
             <div className='flex flex-row gap-3 items-center'>
               <JobTimeIcon />
-              <p>{internshipDetails.internType}</p>
+              <p className="capitalize">{internshipDetails?.internType?.replace('_', " ").toLowerCase()}</p>
             </div>
-            <div className='flex flex-row gap-3 items-center'>
-              <LocationIconCm />
-              <p>{internshipDetails.locationType}</p>
-            </div>
+            {internshipDetails?.location?.name &&
+              <div className='flex flex-row gap-3 items-center'>
+                <LocationIconCm />
+                <p>{internshipDetails?.location?.name}</p>
+              </div>
+            }
             <div className='flex flex-row gap-3 items-center'>
               <PostedByIcon />
-              <p>Amelia Carl</p>
+              <p className="capitalize">{`${internshipDetails?.jobPoster?.firstName} ${internshipDetails?.jobPoster?.lastName}`}</p>
             </div>
           </div>
         </div>
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
+          <div className="max-sm:w-full md:w-[25%] input-wrapper">
+            <Input
+              className="search-bar"
+              placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />} />
           </div>
           <div className="flex flex-row gap-4">
-            Total Candidate: {cardArray.length}
+            <span className="font-semibold">Total Candidates:</span>{internshipDetails?.interns?.length < 10 ?
+              `0${internshipDetails?.interns?.length}`
+              : internshipDetails?.interns?.length}
           </div>
         </div>
         <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
           {
-            statusArray.map((items, idx) => {
+            statusArray.map((items, index: number) => {
               return (
-                <div className="flex flex-col p-2 ">
-                  <div key={idx} className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
+                <div className="flex flex-col p-2 " key={index}>
+                  <div className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
                     <div className="flex flex-row gap-2">
                       <div className={`h-5 w-5 rounded ${items.className}`}></div>
-                      <p>{items.status}</p>
+                      <p className="text-primary-title-color font-medium">{items.status}</p>
                     </div>
                     <div>
                       <p className="h-5 w-6 text-sm text-center rounded text-input-bg-color text-teriary-color">
-                        {
-                          ('0' + cardArray.filter((value) => {
-                            return (value.status === items.status);
-                          }).length).slice(-2)
-                        }
+                        {items?.no}
                       </p>
                     </div>
                   </div>
-                  <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
+                  {items?.data?.length > 0 ? <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
                     {
-                      cardArray.filter((item) => {
-                        return (item.status === items.status);
-                      }).map((items, idx) => {
-                        return (
-                          <>
+                      items?.data?.map((item: any, i: number) => (
+                        <>
+                          {items?.data ?
                             <InternshipPipeLineCard
-                              key={idx}
-                              name={items.name}
-                              rating={items.rating}
-                              time={items.time}
-                              status={items.status}
-                              img={items.img}
-                            />
-                          </>
-                        )
-                      })
+                              key={i}
+                              name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                              rating={item?.rating}
+                              time={dateFormat(item?.createdAt)}
+                              status={item?.stage}
+                              img={<Avatar size={50} src={item?.avatar}>
+                                {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+                              </Avatar>}
+                              handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
+                            /> : <NoDataFound />
+                          }
+                        </>
+                      ))
                     }
                   </div>
+                    :
+                    <NoDataFound />
+                  }
                 </div>
               )
             })
           }
         </div>
       </div>
+      {/* <DetailDrawer 
+      // userData={states.userData} 
+      open={states.isOpen} 
+      setOpen={() => setState({ ...states, isOpen: !states.isOpen })} 
+      /> */}
     </>
   )
 }

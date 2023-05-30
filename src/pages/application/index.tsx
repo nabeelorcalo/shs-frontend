@@ -1,90 +1,98 @@
-import { useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth } from "../../components";
-import { useNavigate } from 'react-router-dom';
-import { More } from "../../assets/images"
-import { Button, MenuProps, Dropdown, Avatar, Row, Col } from 'antd';
+import { useEffect, useState } from "react";
+import {
+  GlobalTable, PageHeader, BoxWrapper, InternsCard,
+  FiltersButton, DropDown, StageStepper, DrawerWidth
+} from "../../components";
+import { GlassMagnifier, More } from "../../assets/images"
+import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
-import '../../scss/global-color/Global-colors.scss'
 import "./style.scss";
+import dayjs from "dayjs";
 
 const ButtonStatus = (props: any) => {
+
   const btnStyle: any = {
-    "Applied": "primary-bg-color",
-    "Interviewed": "text-info-bg-color",
-    "Short Listed": "purple-bg",
-    "Offer Letter": "light-purple-bg",
-    "Hired": "text-success-bg-color",
-    "Rejected": "secondary-bg-color",
+    "applied": "primary-bg-color",
+    "interviewed": "text-info-bg-color",
+    "short Listed": "purple-bg",
+    "offer Letter": "light-purple-bg",
+    "hired": "text-success-bg-color",
+    "rejected": "secondary-bg-color",
+    "recommended": "secondary-bg-color"
   }
   return (
     <p>
-      <span
-        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-      >
+      <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
         {props.status}
       </span>
     </p>
   )
 }
 
-const PopOver = ({ state }: any) => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            state(true);
-          }}
-        >
-          View Details
-        </a>
-      ),
-    },
-
-  ];
-  return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
-  );
-};
-
-const CompanyData = ({ companyName, companyNature }: any) => {
-  return (
-    <div className="flex flex-row align-center gap-2">
-      <Avatar
-        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-      />
-      <div>
-        <p className="font-medium">{companyName}</p>
-        <p className="text-sm">{companyNature}</p>
-      </div>
-    </div>
-  )
-}
-
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-
-
-
 
 const Application = () => {
-  const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  const [listandgrid, setListandgrid] = useState(false)
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
     typeOfWork: "",
-    stage: ""
+    stage: "",
+    detailsId: null
   })
 
-  const action = useCustomHook()
+  const { applicationsData, getApplicationsData, getApplicationsDetails,
+    applicationDetailsState, downloadPdfOrCsv, debouncedSearch }: any = useCustomHook();
+
+  useEffect(() => {
+    getApplicationsData(searchValue)
+  }, [searchValue])
+
+
+  const PopOver = ({ state, item }: any) => {
+
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              state(true)
+              getApplicationsDetails(item?.id)
+            }}
+          >
+            View Details
+          </a>
+        ),
+      },
+
+    ];
+    return (
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
+    );
+  };
+
+  const CompanyData = ({ companyName, companyDetail, avatar }: any) => {
+    return (
+      <div className="flex gap-2" style={{ alignItems: "center" }}>
+        <Avatar size={50} src={avatar}>
+          {companyName.charAt(0)}
+          {/* {companyDetail.charAt(0)} */}
+        </Avatar>
+        <div>
+          <p className="font-medium">{companyName}</p>
+          <p className="text-sm">{companyDetail}</p>
+        </div>
+      </div>
+    )
+  }
+
+  // const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
   const mainDrawerWidth = DrawerWidth();
 
@@ -136,144 +144,73 @@ const Application = () => {
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      date_applied: "01/07/2022",
-      company: { name: "Alphabet Inc.", details: "Software Agency" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "On site",
-      position: "UI/UX Designer",
-      status: "Hired",
 
-    },
-    {
-      no: "02",
-      date_applied: "01/07/2022",
-      company: { name: "Intuit Inc.", details: "Sports" },
-      type_of_work: "Full Time",
-      internship_type: "Paid",
-      nature_of_work: "Hybrid (London)",
-      position: "Business Analyst",
-      status: "Offer Letter",
-    },
-    {
-      no: "03",
-      date_applied: "01/07/2022",
-      company: { name: "ServiceNOW", details: "Software Solutions" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "Virtual",
-      position: "SQA",
-      status: "Rejected",
-    },
-    {
-      no: "04",
-      date_applied: "01/07/2022",
-      company: { name: "kla Corporation Inc.", details: "Logistics" },
-      type_of_work: "Full Time",
-      internship_type: "Paid",
-      nature_of_work: "Hybrid (London)",
-      position: "Business Analyst",
-      status: "Short Listed",
-    },
-    {
-      no: "05",
-      date_applied: "01/07/2022",
-      company: { name: "SnowFlake Inc.", details: "Software Tech" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "Virtual",
-      position: "SQA",
-      status: "Interviewed",
-    },
-    {
-      no: "06",
-      date_applied: "01/07/2022",
-      company: { name: "WorkDay Inc.", details: "Design Tech" },
-      type_of_work: "Full Time",
-      internship_type: "Paid",
-      nature_of_work: "Hybrid (London)",
-      position: "Business Analyst",
-      status: "Rejected",
-    },
-    {
-      no: "07",
-      date_applied: "01/07/2022",
-      company: { name: "Fortinet Inc.", details: "Game Agency" },
-      type_of_work: "Part Time",
-      internship_type: "Un-Paid",
-      nature_of_work: "Virtual",
-      position: "SQA",
-      status: "Applied",
-    },
-  ];
-  const newTableData = tableData.map((item: any, idx: any) => {
+  const newTableData = applicationsData?.map((item: any, index: number) => {
+    const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
+    const typeOfWork = item?.internship?.internType?.replace("_", " ").toLowerCase();
     return (
       {
-        no: item.no,
-        date_applied: item.date_applied,
-        company: <CompanyData companyName={item.company?.name} companyNature={item.company?.details} />,
-        type_of_work: item.type_of_work,
-        internship_type: item.internship_type,
-        nature_of_work: item.nature_of_work,
-        position: item.position,
-        status: <ButtonStatus status={item.status} />,
-        actions:
-          <PopOver
-            state={setShowStageStepper}
-          />
+        key: index,
+        no: applicationsData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        date_applied: dateFormat,
+        company: <CompanyData companyName={item?.internship?.company?.businessName}
+          companyDetail={item?.internship?.company?.businessType} avatar={''} />,
+        type_of_work: <span className="capitalize">{typeOfWork}</span>,
+        internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
+        nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
+        position: item?.internship?.title,
+        status: <ButtonStatus status={item?.stage} />,
+        actions: <PopOver state={setShowStageStepper} item={item} />
       }
     )
   })
+
   const updateTimeFrame = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      timeFrame: value
+      timeFrame: event
     }))
   }
   const updateNatureOfWork = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      natureOfWork: value
+      natureOfWork: event
     }))
   }
   const updateTypeOfWork = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      typeOfWork: value
+      typeOfWork: event
     }))
   }
   const updateStage = (event: any) => {
-    const value = event.target.innerText;
     setState((prevState) => ({
       ...prevState,
-      stage: value
+      stage: event
     }))
   }
+  // handle search  
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader title="Applications" />
       <div className="flex flex-col gap-5">
-        <Row gutter={[20,20]}>
-          <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
+        <Row gutter={[20, 20]}>
+          <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
+            <Input
+              className='search-bar'
               placeholder="Search"
-              size="middle"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />}
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
             <FiltersButton
               label="Filters"
-              onClick={() => {
-                setShowDrawer(true);
-              }}
+              onClick={() => { setShowDrawer(true) }}
             />
             <DropDown
               options={[
@@ -282,7 +219,7 @@ const Application = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Students Applications")
               }}
               value=""
             />
@@ -301,7 +238,7 @@ const Application = () => {
                     <DropDown
                       name="Select"
                       options={["This weak", "Last weak", "This month", "Last month", "All"]}
-                      setValue={() => {updateTimeFrame(event)}}
+                      setValue={() => { updateTimeFrame(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.timeFrame}
@@ -317,10 +254,10 @@ const Application = () => {
                         "Hybrid",
                         "Virtual",
                       ]}
-                      setValue={() => { updateNatureOfWork(event) }}
+                      setValue={(event: any) => {
+                        updateNatureOfWork(event); console.log(event);
+                      }}
                       requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
                       value={state.natureOfWork}
                     />
                   </div>
@@ -372,13 +309,13 @@ const Application = () => {
               closable
               width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
-              onClose={() => { setShowStageStepper(false)}}>
-              <StageStepper />
+              onClose={() => { setShowStageStepper(false) }}>
+              <StageStepper data={applicationDetailsState} />
             </Drawer>
           </Col>
           <Col xs={24}>
             <BoxWrapper>
-              {
+              {/* {
                 listandgrid ? <div className="flex flex-row flex-wrap gap-6">
                   {
                     cardDummyArray.map((items: any, idx: any) => {
@@ -388,12 +325,12 @@ const Application = () => {
                     })
                   }
                 </div>
-                  :
-                  <GlobalTable
-                    columns={columns}
-                    tableData={newTableData}
-                  />
-              }
+                  : */}
+              <GlobalTable
+                columns={columns}
+                tableData={newTableData}
+              />
+              {/* // } */}
 
             </BoxWrapper>
           </Col>

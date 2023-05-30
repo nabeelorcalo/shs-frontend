@@ -1,21 +1,70 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import React, { useEffect } from "react";
 import api from "../../api";
-import constants from "../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import apiEndPoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import {
+  addManagerDetailState,
+  getManagerDetailState,
+} from "../../store/managerCompanyAdmin";
+import { useNavigate } from "react-router-dom";
+import { Notifications } from "../../components";
+import { settingDepartmentState } from "../../store";
 
-// Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const navigate = useNavigate();
+  const [currentManager, setCurrentManager] = useRecoilState(
+    addManagerDetailState
+  );
+  const [getCurentManager, setGetManager] = useRecoilState(
+    getManagerDetailState
+  );
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
+    settingDepartmentState
+  );
+  const limit = 100;
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const {
+    MANAGER_COMPANY_ADMIN,
+    GET_MANAGER_COMPANY_ADMIN,
+    SETTING_DAPARTMENT,
+    GET_MANAGER_DETAIL_ID,
+  } = apiEndPoints;
+  const addManagerCompany = async (body: any): Promise<any> => {
+    const { data } = await api.post(MANAGER_COMPANY_ADMIN, body);
+    if (!data.error) {
+      setCurrentManager(data.user);
+      Notifications({
+        title: "Success",
+        description: "Data Is Submit",
+        type: "success",
+      });
+      navigate(`/${ROUTES_CONSTANTS.MANAGERS}`);
+    }
+    return data;
+  };
+
+  const getManagerCompanyAdmin = async (page: any) => {
+    const param = { page: page, limit: limit };
+    const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN, param);
+    setGetManager(data);
+  };
+  const getManagerDetailId = async (id: any) => {
+    const { data } = await api.get(GET_MANAGER_DETAIL_ID + "/" + id);
+    return data;
+  };
+
+  const getSettingDepartment = async (page: any, q: any): Promise<any> => {
+    const param = { page: page, limit: limit, q: q };
+    const { data } = await api.get(SETTING_DAPARTMENT, param);
+    setSettingDepartmentdata(data);
   };
 
   return {
-    getData,
+    addManagerCompany,
+    getManagerCompanyAdmin,
+    getSettingDepartment,
+    getManagerDetailId,
   };
 };
 

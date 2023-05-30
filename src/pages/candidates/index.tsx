@@ -1,55 +1,63 @@
-import { useState } from "react";
-import { Col, Row } from "antd";
+import { useEffect } from "react";
+import { Col, Row, Select } from "antd";
 import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
-import DetailDrawer from "./viewDetails";
-import RejectModal from "./RejectModal";
+import actionHandler from "./actionHandler";
 import "./style.scss";
-
 const Candidates = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const [openRejectModal, setOpenRejectModal] = useState(false);
-  const [timeFrame, setTimeFrame] = useState('');
-  const [internship, setInternship] = useState('');
-  const [download, setDownload] = useState('');
-  const interShipDropDown = ['UI UX Designer',
-    'Business Analyst',
-    'Data Scientists',
-    'Product Manager',
-    'Human Resources']
+  const {
+    params,
+    cadidatesList,
+    handleSearch,
+    getCadidatesData,
+    timeFrame,
+    handleTimeFrameFilter,
+    internship,
+    handleInternShipFilter,
+    download,
+    setDownload,
+    getInternShipList,
+    internShipList,
+  } = actionHandler();
+
+  useEffect(() => {
+    getCadidatesData(params);
+    getInternShipList();
+  }, []);
 
   return (
     <>
       <PageHeader title="Candidates" bordered={true} />
       <Row gutter={[20, 30]} className="candidate-main">
-        <Col  xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e) => { }} />
+        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar handleChange={handleSearch} />
         </Col>
-        <Col  xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
-          <DropDown name="Time Frame" options={['This Week', 'Last Week', 'This Month', 'Last Month', 'Date Range']}
-            showDatePickerOnVal={'Date Range'}
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
+          <DropDown
+            name="Time Frame"
+            options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+            showDatePickerOnVal={"Date Range"}
             value={timeFrame}
-            setValue={setTimeFrame}
+            setValue={handleTimeFrameFilter}
             requireRangePicker
           />
-          <DropDown name="Internship"
-            options={interShipDropDown}
-            value={internship}
-            setValue={setInternship}
+
+          <Select
+            value={internship ? internship : "Internship"}
+            placeholder="Internship"
+            className="internship-filter"
+            style={{ width: 170 }}
+            onChange={handleInternShipFilter}
+            options={internShipList}
           />
-          <DropDown options={["PDF", "Excel"]} requiredDownloadIcon
-            value={download}
-            setValue={setDownload}
-          />
+          <DropDown options={["PDF", "Excel"]} requiredDownloadIcon value={download} setValue={setDownload} />
         </Col>
         <Col xs={24}>
-          <CandidateTable setOpenDrawer={setOpenDrawer} setOpenRejectModal={setOpenRejectModal} />
+          <CandidateTable tableData={cadidatesList} />
         </Col>
       </Row>
-      {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} />}
-      {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} />}
     </>
-  )
-}
+  );
+};
 
-export default Candidates
+export default Candidates;

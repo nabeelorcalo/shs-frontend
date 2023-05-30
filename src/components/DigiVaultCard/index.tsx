@@ -1,4 +1,3 @@
-// import { Education1Icon, EducationIcon } from '../../assets/images';
 import React, { useState } from "react";
 import {
   EducationWhite,
@@ -8,13 +7,20 @@ import {
   TransWhiteSub,
 } from "../../assets/images";
 import "./style.scss";
+interface Prop {
+  title?: string;
+  subTitle?: string;
+  bgColor?: any;
+  index?: any;
+  SubImg?: any;
+  TitleImg?: any;
+  onClick?: any
+}
 
 const DigivaultCard = (props: any) => {
   const { onClick, TitleImg, SubImg, title, subTitle, bgColor, index } = props;
-
-  const [isHovering, setIsHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState<any>();
   const [currentHover, setCurrentHover] = useState("");
-
   const handleMouseOver = () => {
     setIsHovering(true);
   };
@@ -36,18 +42,17 @@ const DigivaultCard = (props: any) => {
         className={`DigivaultCard hover-effect-${index}  digivault-wrapper`}
       >
         <div className={`upper-part`}>
-          <div>
-            {/* <EducationIcon  /> */}
+           {/* <EducationIcon />  */}
+           <div>
             {isHovering ? <EducationWhite /> : <TitleImg />}
-          </div>
-          {isHovering && title === "Education" && <EducationWhiteSub />}
-          {isHovering && title === "Banking" && <BankingWhiteSub />}
-          {isHovering && title === "Health" && <HealthWhiteSub />}
-          {isHovering && title === "Transportation" && <TransWhiteSub />}
-          {title === "Others" || isHovering ? "" : <SubImg />}
+          </div> 
+          {(isHovering && title === "Education") && <EducationWhiteSub />}
+          {(isHovering && title === "Banking") && <BankingWhiteSub />}
+          {(isHovering && title === "Health") && <HealthWhiteSub />}
+          {(isHovering && title === "Transportation") && <TransWhiteSub />}
+          {(title === "Others" || isHovering) ? "" : <SubImg />}
         </div>
         <h4>{title}</h4>
-
         <h6>{subTitle}</h6>
       </div>
     </div>

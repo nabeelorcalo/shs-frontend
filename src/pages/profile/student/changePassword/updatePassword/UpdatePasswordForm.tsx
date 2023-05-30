@@ -5,7 +5,6 @@ import useCustomHook from "../../../actionHandler";
 
 const CreatePasswordForm = () => {
   const action = useCustomHook();
-
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -13,7 +12,7 @@ const CreatePasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    console.log("Received values of form:", values);
     const { currentPassword, newPassword } = values;
 
     action
@@ -59,7 +58,7 @@ const CreatePasswordForm = () => {
                 label="New Password"
                 name="newPassword"
                 rules={[
-                  { required: true, message: "Please enter new your password!" },
+                  { required: true, message: "Please enter new your password!"},
                 ]}
               >
                 <Input.Password

@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { Button, Col, Divider, Progress, Row, Switch, Menu } from "antd";
-import SettingModal from "./settingModal";
+import { useEffect, useState } from "react";
+import { Col, Divider, Progress, Row, Menu, Space } from "antd";
 import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
-import NewPasswordModal from "./newPasswordModal";
 import {
   EducationImg,
   EducationImgSub,
@@ -18,22 +16,22 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  Gallery,
-  Doc,
-  Video,
-  File,
-  SettingIcon,
+  FileIcon,
+  FolderIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "./dropDownCustom";
 import { Alert } from "../../../components";
 import "./style.scss";
+import useCustomHook from "../actionHandler";
+import DigiVaultModals from "./Modals";
+import dayjs from "dayjs";
 
 const manageVaultArr = [
   {
     id: "1",
     titleImg: EducationImg,
     subImg: EducationImgSub,
-    Title: "Education",
+    title: "Education",
     subTitle: "Manage your educational documents",
     path: "education",
     bgcolor: "#4CA4FD",
@@ -42,7 +40,7 @@ const manageVaultArr = [
     id: "2",
     titleImg: BAnkingImg,
     subImg: BAnkingImgSub,
-    Title: "Banking",
+    title: "Banking",
     subTitle: "Manage your banking documents",
     path: "banking",
     bgcolor: "#5D89F2",
@@ -51,7 +49,7 @@ const manageVaultArr = [
     id: "3",
     titleImg: HealthImg,
     subImg: HealthImgSub,
-    Title: "Health",
+    title: "Health",
     subTitle: "Manage your health documents",
     path: "health",
     bgcolor: "#5D89F4",
@@ -60,7 +58,7 @@ const manageVaultArr = [
     id: "4",
     titleImg: TransImg,
     subImg: TransImgSub,
-    Title: "Transportation",
+    title: "Transportation",
     subTitle: "Manage your transportation documents",
     path: "transport",
     bgcolor: "#5D89F8",
@@ -69,7 +67,7 @@ const manageVaultArr = [
     id: "5",
     titleImg: GovImg,
     subImg: GovImgSub,
-    Title: "Government",
+    title: "Government",
     subTitle: "Manage your government documents",
     path: "government",
     bgcolor: "#5D89F8",
@@ -77,93 +75,46 @@ const manageVaultArr = [
   {
     id: "6",
     titleImg: Other,
-    Title: "Others",
+    title: "Others",
     subTitle: "Manage your others documents",
     path: "others",
     bgcolor: "#5D89F8",
   },
 ];
 
-const arraydata = [
-  {
-    icon: Gallery,
-    progressbarColor: "#4CA4FD",
-    progressbarValue: 30,
-    storage: "123GB",
-    title: "Media",
-  },
-  {
-    icon: Video,
-    progressbarColor: "#E96F7C",
-    progressbarValue: 60,
-    storage: "126GB",
-    title: "Video",
-  },
-  {
-    icon: Doc,
-    progressbarColor: "#FFC15D",
-    progressbarValue: 50,
-    storage: "28GB",
-    title: "Document",
-  },
-  {
-    icon: File,
-    progressbarColor: "#6AAD8E",
-    progressbarValue: 80,
-    storage: "128GB",
-    title: "Other Files",
-  },
-];
-
-const tableData = [
-  {
-    id: "1",
-    key: "01",
-    Title: "file",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "2",
-    key: "02",
-    Title: "file2",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "3",
-    key: "03",
-    Title: "file3",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-];
-
 const DigiVaultStudent = () => {
-  const [modal2Open, setModal2Open] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [newPass, setNewPass] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  const [state, setState] = useState({
+    isToggle: false,
+    delId: null
+  })
+  const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  console.log(getDigiVaultDashboard,"getDigiVaultDashboard");
+  
+  const studentStorage: any = studentVault?.storage;
 
-  const menu1 = (
-    <Menu>
-      <Menu.Item key="1">View</Menu.Item>
+  useEffect(() => {
+    getDigiVaultDashboard(null)
+  }, [])
+
+  const navigate = useNavigate();
+
+  const menu1 = (id: any) => {
+    return <Menu>
       <Menu.Item
         key="2"
         onClick={() => {
-          setShowDelete(!showDelete);
+          setState(
+            {
+              ...state,
+              isToggle: true,
+              delId: id
+            })
         }}
       >
         Delete
       </Menu.Item>
     </Menu>
-  );
-
-  const navigate = useNavigate();
-
+  }
   const columns = [
     {
       title: "Title",
@@ -186,51 +137,47 @@ const DigiVaultStudent = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      render: (_: any, data: any) => <CustomDroupDown menu1={menu1} />,
     },
   ];
+  const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
+    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+    return (
+      {
+        key: index,
+        Title: <p>
+          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span className="ml-2">{item.title}</span>
+        </p>,
+        datemodified: modifiedDate,
+        size: item.size ? item.size : '---',
+        Action: <Space size="middle">
+          <CustomDroupDown menu1={menu1(item.id)} />
+        </Space>
+      }
+    )
+  })
 
   return (
     <div className="digivault">
       <Alert
-        state={showDelete}
-        setState={setShowDelete}
+        state={state.isToggle}
+        setState={setState}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
+        okBtnFunc={() => deleteFolderFile(state.delId)}
       />
-
-      <NewPasswordModal
-        newPass={newPass}
-        setNewPass={setNewPass}
-        setIsChecked={setIsChecked}
-      />
-      <SettingModal modal2Open={modal2Open} setModal2Open={setModal2Open} />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-          <div className="digivault-title text-2xl font-semibold">
+          <div className="digivault-title text-2xl font-semibold ml-4">
             DigiVault
           </div>
         </Col>
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <div className="flex items-center">
-              <p className="pr-2 text-teriary-color">Lock</p>
-              <Switch
-                checked={isChecked}
-                onClick={() => {
-                  setNewPass(true);
-                }}
-              />
-            </div>
-            <Button onClick={() => setModal2Open(true)} className="setting-btn">
-              <span className="setting-btn-text font-normal text-sm">
-                Settings
-              </span>
-              <img src={SettingIcon} alt="settIcon" width={24} height={24} />
-            </Button>
+            <DigiVaultModals />
           </div>
         </Col>
       </Row>
@@ -242,16 +189,16 @@ const DigiVaultStudent = () => {
               Manage your vault
             </div>
             <Row gutter={[15, 15]} className="p-7">
-              {manageVaultArr.map((item, index) => {
+              {manageVaultArr?.map((item: any, index: number) => {
                 return (
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path)}
+                      onClick={() => navigate(item.path, { state: item.title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
-                      title={item.Title}
+                      title={item.title}
                       subTitle={item.subTitle}
                     />
                   </Col>
@@ -264,15 +211,20 @@ const DigiVaultStudent = () => {
           <div className="storage">
             <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
               <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
-                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
+                <Progress
+                  strokeLinecap="butt"
+                  strokeWidth={10}
+                  gapPosition="left"
+                  type="circle"
+                  percent={75} />
               </Col>
               <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
-                <div className="available-storage  pb-4">Available Storage</div>
-                <div className="available-storage-value">130GB / 512GB</div>
+                <div className="available-storage pb-4">Available Storage</div>
+                <div className="available-storage-value">{studentStorage?.availableStorage}</div>
               </Col>
             </Row>
-            <div className="pt-2">
-              <ColorfullIconsWithProgressbar arraydata={arraydata} />
+            <div className="mt-4">
+              <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>
         </Col>
@@ -287,7 +239,7 @@ const DigiVaultStudent = () => {
               <GlobalTable
                 pagination={false}
                 columns={columns}
-                tableData={tableData}
+                tableData={newTableData}
               />
             </div>
           </div>

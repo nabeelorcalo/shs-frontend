@@ -1,45 +1,66 @@
 @import '../../scss/_colors.scss';
 
-.internship-details {
-  .internship-right-sec {
-    @media only screen and (max-width:475px) {
-      flex-direction: column !important;
-      .main-btn {
-        display: flex;
-        justify-content: space-between;
-      }
-    }
-  }
-}
 .pipeline-heading-style {
   border: 1px solid $text-input-bg-color;
   border-radius: 5px;
 }
+
 .pipeline-cards-container {
   margin-top: 10px;
   border-left: 1px solid $text-input-bg-color;
   border-right: 1px solid $text-input-bg-color;
 }
+
 .download-icon-style {
   border: 2px solid $text-input-bg-color;
+
   &:hover {
     border: 2px solid $text-error-line-color;
   }
+
   border-radius: 5px;
 }
 
 .new-intern-main {
-  input,textarea,
-  .input .ant-select-selector  {
+  .currency-select {
+    width: 100px;
+  }
+
+  input,
+  textarea,
+  .input .ant-select-selector {
     background-color: rgba(230, 244, 249, 1);
+    border: none;
+
     &:hover {
       background-color: #fff;
     }
   }
+
+  .common-date-picker-wrapper .ant-picker {
+    background-color: rgba(230, 244, 249, 1);
+    border: none;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+
   .main-btn {
     @media only screen and (max-width:475px) {
       width: 100%;
     }
   }
 
+}
+
+.Internships-table {
+  .status-btn {
+    border-radius: 8px;
+    border: none;
+
+    &:hover {
+      color: white;
+    }
+  }
 }

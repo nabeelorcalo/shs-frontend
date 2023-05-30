@@ -1,81 +1,75 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  GlobalTable,
-  SearchBar,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  DropDown
+  GlobalTable, PageHeader, BoxWrapper,
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader
 } from "../../components";
-
-import "./style.scss";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
-import { Col, MenuProps, Row } from 'antd';
+import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
+import { Col, MenuProps, Row, Input } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
+import dayjs from "dayjs";
+import "./style.scss";
 
-const PopOver = () => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("profile");
-          }}
-        >
-          Profile
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("chat");
-          }}
-        >
-          Chat
-        </a>
-      ),
-    },
-  ];
-  return (
-    <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
-  );
-};
-
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const Interns = () => {
-  // const navigate = useNavigate()
-  // const [value, setValue] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
-  // const [state, setState] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
+  const [searchValue, setSearchValue] = useState('');
+  const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"]
+  const navigate = useNavigate();
+  const { getAllInterns, getAllInternsData,
+    downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook()
 
-  const action = useCustomHook()
-  const csvAllColum = ["No", "Title", "Department", "Joining Date", "Date of Birth"]
+  useEffect(() => {
+    getAllInternsData(searchValue);
+  }, [searchValue])
+
+  const PopOver = () => {
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              navigate("profile");
+            }}
+          >
+            Profile
+          </a>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              navigate("chat");
+            }}
+          >
+            Chat
+          </a>
+        ),
+      },
+    ];
+    return (
+      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
+    );
+  };
 
   const columns = [
     {
       dataIndex: "no",
       key: "no",
-      title: "No.",
+      title: "No",
     },
     {
       dataIndex: "posted_by",
       key: "posted_by",
-      title: "Posted By",
+      title: "Avatar",
     },
     {
       dataIndex: "name",
@@ -103,148 +97,90 @@ const Interns = () => {
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      name: "Maria Sanoid",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      date_of_birth: "01/07/2022",
-    },
-    {
-      no: "02",
-      name: "Andrea Hiyahiya",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-    },
-    {
-      no: "02",
-      name: "BBinaco Lalme",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-    },
-    {
-      no: "01",
-      name: "Cody Nguyen",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      date_of_birth: "01/07/2022",
-    },
-    {
-      no: "02",
-      name: "Kristian Warren",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-    },
-    {
-      no: "02",
-      name: "Angel Loane",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-    },
-    {
-      no: "01",
-      name: "Bessie Howard",
-      department: "Business Analyst",
-      joining_date: "01/07/2022",
-      date_of_birth: "01/07/2022",
-    },
-    {
-      no: "02",
-      name: "Adi Chen",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-    },
-    {
-      no: "02",
-      name: "Shira Chen",
-      department: "Scientist Analyst",
-      joining_date: "01/07/2023",
-      date_of_birth: "01/07/2021",
-    }
-  ];
-  const newTableData = tableData.map((item, idx) => {
+
+  const newTableData = getAllInterns?.map((item: any, index: number) => {
+    const joiningDate = dayjs(item?.joiningDate)?.format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY');
     return (
       {
-        no: item.no,
+        key: index,
+        no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
-          <Avatar
-            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-          />,
-        name: item.name,
-        department: item.department,
-        joining_date: item.joining_date,
-        date_of_birth: item.date_of_birth,
+          <Avatar size={50} src={item?.avatar}>
+            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+          </Avatar>,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob,
         actions: <PopOver />
       }
     )
   })
+
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   return (
     <>
       <PageHeader title="Interns" />
-      <div className="flex flex-col gap-5">
-        <Row gutter={[20, 20]}>
-          <Col xl={6} md={24} sm={24} xs={24}>
-            <SearchBar handleChange={() => { }} name="search bar" placeholder="Search by name" size="middle" />
-          </Col>
-          <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <div className="flex gap-4 justify-between">
-              {listandgrid ? <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => {
-                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-                }}
-                value=""
-              /> : null}
-              <ToggleButton
-                isToggle={listandgrid}
-                onTogglerClick={() => { setListandgrid(!listandgrid) }}
-                FirstIcon={CardViewIcon}
-                LastIcon={TableViewIcon}
-                className='w-[88px]'
-              />
-              {!listandgrid ? <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => {
-                  action.downloadPdfOrCsv(event, csvAllColum, tableData, "Company Admin Interns")
-                }}
-                value=""
-              /> : null}
-            </div>
-          </Col>
-        </Row>
-        <div className="pt-3">
-          {
-            !listandgrid ? <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData.map((items: any, idx: any) => {
-                  return (
-                    <InternsCard
-                      statusBtn={items.status}
-                      name={items.name}
-                      posted_by={items.posted_by}
-                      title={items.title}
-                      department={items.department}
-                      joining_date={items.joining_date}
-                      date_of_birth={items.date_of_birth}
-                    />
-                  )
-                })
-              }
-            </div>
+      <Row gutter={[20, 20]}>
+        <Col xl={6} md={24} sm={24} xs={24} className="input-wrapper">
+          <Input
+            className='search-bar'
+            placeholder="Search"
+            onChange={debouncedResults}
+            prefix={<GlassMagnifier />}
+          />
+        </Col>
+        <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+          <div className="flex justify-between gap-4">
+            <DropDown
+              options={[
+                'PDF',
+                'Excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Managers Interns")
+              }}
+            />
+            <ToggleButton
+              isToggle={listandgrid}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className='w-[88px]'
+            />
+
+          </div>
+        </Col>
+        <Col xs={24}>
+          {isLoading ?
+            !listandgrid ?
+              getAllInterns?.length === 0 ? <NoDataFound /> : <div className="flex flex-wrap gap-5">
+                {
+                  getAllInterns?.map((items: any, index: any) => {
+                    return (
+                      <InternsCard
+                        id={items?.id}
+                        key={index}
+                        // statusBtn={items?.status}
+                        name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
+                        posted_by={<Avatar size={50} src={items?.avatar}>
+                          {items?.userDetail?.firstName?.charAt(0)}{items?.userDetail?.lastName?.charAt(0)}
+                        </Avatar>}
+                        // title={items?.title}
+                        department={items?.internship?.department?.name}
+                        joining_date={dayjs(items?.createdAt)?.format('DD/MM/YYYY')}
+                        date_of_birth={dayjs(items?.userDetail?.DOB)?.format('DD/MM/YYYY')}
+                      />
+                    )
+                  })
+                }
+              </div>
               :
               <BoxWrapper>
                 <GlobalTable
@@ -253,11 +189,9 @@ const Interns = () => {
                   hideTotal={true}
                 />
               </BoxWrapper>
-          }
-        </div>
-
-
-      </div>
+            : <Loader />}
+        </Col>
+      </Row>
     </>
   );
 };
