@@ -17,6 +17,19 @@ import { getRecentActivities } from '../../store/getListingState';
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const [countingCardData, setCountingCard] = useRecoilState(
+    agentDashboardWidgetsState
+  );
+  const [totalMembersData, setTotalMembersData] = useRecoilState(
+    adminDashboardMembersDataState
+  );
+  const [growthAnalyticsData, setGrowthAnalyticsData] = useRecoilState(
+    growthAnalyticsDashboardState
+  );
+  const [regionAnalytics, setRegionAnalytics] = useRecoilState(
+    adminDashboardRegionAnalyticsState
+  );
+  const [adminActivity, setAdminActivity] = useRecoilState(getRecentActivities);
   //user roles
   const {
     AGENT,
@@ -55,19 +68,6 @@ const useCustomHook = () => {
   };
 
   // agent dashboard
-  const [countingCardData, setCountingCard] = useRecoilState(
-    agentDashboardWidgetsState
-  );
-  const [totalMembersData, setTotalMembersData] = useRecoilState(
-    adminDashboardMembersDataState
-  );
-  const [growthAnalyticsData, setGrowthAnalyticsData] = useRecoilState(
-    growthAnalyticsDashboardState
-  );
-  const [regionAnalytics, setRegionAnalytics] = useRecoilState(
-    adminDashboardRegionAnalyticsState
-  );
-  const [adminActivity, setAdminActivity] = useRecoilState(getRecentActivities);
 
   const filterGraphData = (dateRange: string[]) => {
     api
