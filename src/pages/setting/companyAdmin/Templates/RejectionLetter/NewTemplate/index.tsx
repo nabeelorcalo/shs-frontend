@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Divider,
-  Button,
-  Form,
-  Row,
-  Col,
-  Space,
-  Input,
-  Typography,
+  Divider, Button, Form, Row, Col,
+  Space, Input, Typography,
 } from "antd";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
+import "./style.scss";
+import useTemplatesCustomHook from "../../actionHandler";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../../../../../store";
+
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
@@ -27,12 +25,46 @@ const NewTemplateRejectionLetter = () => {
     { name: "Rejection Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}` },
   ];
   const [form] = Form.useForm();
-  const [textEditorValue, setTextEditorValue] = useState();
-  const onChangeHandler = (e: any) => {
-    setTextEditorValue(e)
-  }
+  const { state: templateData }: any = useLocation();
+  const [description, setDescription] = useState('');
+  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
-  const onFinish = (values: any) => { }
+
+  console.log(templateData);
+
+  const onFinish = (values: any) => {
+    const newValues = {
+      ...values,
+      textEditorValue: description,
+      templateType: templateData?.templateType ?? templateData?.type,
+    }
+    if (templateData?.templateType) {
+      postNewTemplate(newValues);
+    } else {
+      console.log('edit');
+
+      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+    }
+    form.resetFields();
+    setDescription('')
+
+  };
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
+  // const [form] = Form.useForm();
+  // const [textEditorValue, setTextEditorValue] = useState();
+  // const onChangeHandler = (e: any) => {
+  //   setTextEditorValue(e)
+  // }
+
+  // const onFinish = (values: any) => { }
 
   return (
     <div className="rejection-letter-new-template">
@@ -42,7 +74,9 @@ const NewTemplateRejectionLetter = () => {
         <Form layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+          onFinish={onFinish}
+          initialValues={initialValues}
+        >
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -58,7 +92,7 @@ const NewTemplateRejectionLetter = () => {
                 label="Template Name"
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter name"className="input-style" />
+                <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <Form.Item
                 required={false}
@@ -66,16 +100,27 @@ const NewTemplateRejectionLetter = () => {
                 label="Subject"
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter subject" className="input-style"  />
+                <Input placeholder="Enter subject" className="input-style" />
               </Form.Item>
-              <Form.Item
+              <Form.Item name="description" label="Description (optional)">
+                <div className="text-input-bg-color rounded-lg  my-2 text-editor">
+                  <ReactQuill
+                    theme="snow"
+                    defaultValue={description}
+                    value={description}
+                    onChange={setDescription}
+                    modules={textEditorData}
+                  />
+                </div>
+              </Form.Item>
+              {/* <Form.Item
                 name="description"
                 label="Description (optional)"
               >
                 <div className="text-input-bg-color rounded-lg text-editor my-2">
                   <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
                 </div>
-              </Form.Item>
+              </Form.Item> */}
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
@@ -89,7 +134,7 @@ const NewTemplateRejectionLetter = () => {
               className="teriary-bg-color white-color add-button"
               htmlType="submit"
             >
-              Add
+              Save
             </Button>
           </Space>
         </Form>

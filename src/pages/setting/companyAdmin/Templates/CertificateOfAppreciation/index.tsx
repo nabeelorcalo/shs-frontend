@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Divider, Button } from "antd";
 import { NewTemplate } from "../../../../../assets/images";
 import { Alert, Breadcrumb, SearchBar } from "../../../../../components";
