@@ -71,7 +71,7 @@ const useCustomHook = () => {
   return {
     getData,
     loadMoreData,
-    countingCardData,analyticsData,totalUserData
+    countingCardData, analyticsData, totalUserData
   };
 };
 
