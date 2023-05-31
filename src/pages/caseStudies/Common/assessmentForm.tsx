@@ -226,7 +226,6 @@ const AssessmentFormCaseStudies = () => {
           </div>
         </BoxWrapper>
       </div>
-
       <SignatureAndUploadModal
         title=""
         width={650}
