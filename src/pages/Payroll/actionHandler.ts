@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRecoilState } from 'recoil';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -15,10 +15,13 @@ const useCustomHook = () => {
   //get Payroll data from BE side
   const { PAYROLL_FINDALL, DELETE_PAYROLL } = apiEndpints;
   const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getData = async () => {
+    setIsLoading(true);
     const { data } = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10 });
     setPayrollData(data)
+    setIsLoading(false);
   }
   useEffect(() => {
     getData()
@@ -120,6 +123,7 @@ const useCustomHook = () => {
     changeHandler,
     deletePayroll,
     downloadPdfOrCsv,
+    isLoading,
   };
 };
 

@@ -3,35 +3,33 @@ import {
   Divider, Button, Form, Row, Col,
   Space, Input, Typography,
 } from "antd";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
+import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
+import { Breadcrumb, BoxWrapper } from "../../../../../../components";
+import useTemplatesCustomHook from "../../actionHandler";
+import { NavLink, useLocation } from "react-router-dom";
+import { currentUserState } from "../../../../../../store"
+import { useRecoilState } from "recoil";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
-import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { NavLink, useLocation } from "react-router-dom";
-import { Breadcrumb, BoxWrapper } from "../../../../../../components";
-import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import "./style.scss";
-import useTemplatesCustomHook from "../../actionHandler";
-import { useRecoilState } from "recoil";
-import { currentUserState } from "../../../../../../store";
+;
 
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
+  const [form] = Form.useForm();
+  const { state: templateData }: any = useLocation();
+  const [description, setDescription] = useState('');
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Rejection Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}` },
   ];
-  const [form] = Form.useForm();
-  const { state: templateData }: any = useLocation();
-  const [description, setDescription] = useState('');
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-
-
-  console.log(templateData);
 
   const onFinish = (values: any) => {
     const newValues = {
@@ -42,13 +40,10 @@ const NewTemplateRejectionLetter = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      console.log('edit');
-
       editTemplate(templateData?.id, newValues, currentUser?.company?.id);
     }
     form.resetFields();
     setDescription('')
-
   };
   const initialValues = {
     templateName: templateData?.name,
@@ -58,13 +53,6 @@ const NewTemplateRejectionLetter = () => {
   useEffect(() => {
     setDescription(templateData?.description)
   }, [templateData?.description])
-  // const [form] = Form.useForm();
-  // const [textEditorValue, setTextEditorValue] = useState();
-  // const onChangeHandler = (e: any) => {
-  //   setTextEditorValue(e)
-  // }
-
-  // const onFinish = (values: any) => { }
 
   return (
     <div className="rejection-letter-new-template">
@@ -113,14 +101,6 @@ const NewTemplateRejectionLetter = () => {
                   />
                 </div>
               </Form.Item>
-              {/* <Form.Item
-                name="description"
-                label="Description (optional)"
-              >
-                <div className="text-input-bg-color rounded-lg text-editor my-2">
-                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
-                </div>
-              </Form.Item> */}
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">

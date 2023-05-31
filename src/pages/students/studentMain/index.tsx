@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard,
-  ToggleButton, DropDown, CommonDatePicker, NoDataFound, Loader
+  ToggleButton, DropDown, NoDataFound, Loader
 } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../../assets/images"
@@ -59,32 +59,24 @@ const PopOver = () => {
   );
 };
 
-// const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
 const StudentMain = () => {
-  // const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState('');
-  const [openDatePicker, setOpenDatePicker] = useState(false)
   const [listandgrid, setListandgrid] = useState(false);
   const [states, setState] = useState({
     company: "Company",
     joiningDate: undefined
   })
   const [currentUser] = useRecoilState(currentUserState);
-
-  // const [month, setMonth] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
-  // const [isToggle, setIsToggle] = useState(false);
   const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"];
 
   const { getUniIntersTableData, universityIntersData,
     downloadPdfOrCsv, debouncedSearch, isLoading } = useStudentsCustomHook()
 
   useEffect(() => {
-    getUniIntersTableData(currentUser.userUniversity.universityId, searchValue,
+    getUniIntersTableData(currentUser?.userUniversity?.universityId, searchValue,
       states)
   }, [searchValue, states.company, states.joiningDate])
-
-  console.log('data', universityIntersData);
 
   const columns = [
     {
@@ -123,56 +115,6 @@ const StudentMain = () => {
       title: "Actions",
     },
   ];
-  // const tableData = [
-  //   {
-  //     no: "01",
-  //     name: "Deing Jing Me",
-  //     title: "Business Analyst",
-  //     companyrep: "Anika john",
-  //     company: "Power source",
-  //     date_of_joining: "01/07/2022",
-  //   },
-  //   {
-  //     no: "02",
-  //     name: "Ronald Richard",
-  //     title: "Scientist Analyst",
-  //     companyrep: "Borsa Lewa",
-  //     company: "CodingHub",
-  //     date_of_joining: "01/07/2021",
-  //   },
-  //   {
-  //     no: "03",
-  //     name: "Selan Klien",
-  //     title: "Scientist Analyst",
-  //     companyrep: "Pablo pau",
-  //     company: "Dev spot",
-  //     date_of_joining: "01/07/2021",
-  //   },
-  //   {
-  //     no: "04",
-  //     name: "Deing Jing Me",
-  //     title: "Business Analyst",
-  //     companyrep: "Anika john",
-  //     company: "Orcalo Holdings",
-  //     date_of_joining: "01/07/2022",
-  //   },
-  //   {
-  //     no: "05",
-  //     name: "Ronald Richard",
-  //     title: "Scientist Analyst",
-  //     companyrep: "Borsa Lewa",
-  //     company: "Dev spot",
-  //     date_of_joining: "01/07/2021",
-  //   },
-  //   {
-  //     no: "06",
-  //     name: "Selan Klien",
-  //     title: "Scientist Analyst",
-  //     companyrep: "Pablo pau",
-  //     company: "CodingHub",
-  //     date_of_joining: "01/07/2021",
-  //   },
-  // ];
   const newTableData = universityIntersData?.map((item: any, index: any) => {
     return (
       {
@@ -190,15 +132,6 @@ const StudentMain = () => {
       }
     )
   })
-  console.log(newTableData, "newTableData");
-
-  // const updateTimePeriod = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     time_period: value
-  //   }))
-  // }
 
   const handleSearch = (e: any) => {
     debouncedSearch(e.target.value, setSearchValue)

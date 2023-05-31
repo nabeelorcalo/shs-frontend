@@ -7,7 +7,7 @@ import { Notifications } from "../../../../components";
 import { useState } from "react";
 
 
-// Chat operation and save into store
+// timesheet operations and save into store
 const useTimesheetCustomHook = () => {
   const { SETTINGS_TIMESHEET, POST_NEW_TIMESHEET,
     DELETE_TIMESHEET, EDIT_TIMESHEET } = endpoints;
@@ -22,11 +22,11 @@ const useTimesheetCustomHook = () => {
       page: 1,
       q: searchValue ? searchValue : null
     }
-    setIsLoading(true)
+    setIsLoading(true);
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(SETTINGS_TIMESHEET, query);
     setTimeSheetData(data)
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   // Post timesheet data

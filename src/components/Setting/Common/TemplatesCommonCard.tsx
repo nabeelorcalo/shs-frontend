@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Row, Typography } from "antd";
-import TemplateCommonDropdown from "./TemplateCommonDropdown";
+// import TemplateCommonDropdown from "./TemplateCommonDropdown";
 import "./TemplatesCommonCard.scss";
 import DropDownForSetting from "./CustomSettingDropdown";
 interface ITEMPLATE {
@@ -13,7 +13,7 @@ interface ITEMPLATE {
   link?: string;
   state?: any;
   setState?: any
-  setEditData?:any 
+  setEditData?: any
 }
 
 const { Text } = Typography;
@@ -24,7 +24,7 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
       <Row gutter={[20, 20]} className="mt-5">
         {overview?.map((item: any, index: any) => {
           return (
-            <Col key={index} className="gutter-row flex" xs={24} md={6} xxl={6}>
+            <Col key={index} className="gutter-row flex" xs={24} md={12} lg={8} xl={6}>
               <div className="common-card-box-wrapper w-full">
                 <div className="flex">
                   <div className="flex px-3 justify-between mt-2 w-full">

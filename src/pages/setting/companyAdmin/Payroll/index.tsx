@@ -1,38 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Row, Col, Button } from "antd";
 import { SettingPayrollAddIcon } from "../../../../assets/images";
-import { Alert, SearchBar } from "../../../../components";
+import { Alert, Loader, SearchBar } from "../../../../components";
 import { BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../../Payroll/actionHandler";
 import dayjs from 'dayjs'
-import './style.scss'
 import duration from 'dayjs/plugin/duration';
+import './style.scss'
 
 dayjs.extend(duration);
 
 const { Text } = Typography;
-// let overview = [
-//   {
-//     name: "Payroll Cycle01",
-//     content: "51 Employees",
-//     payrollCyle: "Payroll Cycle: jan,2023 (1 month)",
-//     addedDate: "Added Date: 02/03/2023",
-//     addedBy: "Added By: Avery Wyatt"
-//   },
-//   {
-//     name: "Payroll Cycle01",
-//     content: "51 Employees",
-//     payrollCyle: "Payroll Cycle: jan,2023 (1 month)",
-//     addedDate: "Added Date: 02/03/2023",
-//     addedBy: "Added By: Avery Wyatt"
-//   },
-// ];
-
 const SettingPayroll: React.FC = () => {
-  // const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [state, setState] = useState<any>(
     {
       isDeleteModal: false,
@@ -40,13 +22,11 @@ const SettingPayroll: React.FC = () => {
       id: null,
     }
   )
-  const { getData, payrollData, changeHandler, deletePayroll } = useCustomHook();
+  const { getData, payrollData, changeHandler, deletePayroll, isLoading } = useCustomHook();
 
   useEffect(() => {
     getData()
   }, [])
-
-  console.log('payroll data is', payrollData);
 
   const calculateDays = (startingDate: any, endingDate: any) => {
     const start = dayjs(startingDate);
@@ -64,19 +44,16 @@ const SettingPayroll: React.FC = () => {
           <NavLink to={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}>
             <Button
               size="middle"
-              // onClick={() => { }}
-              className="flex gap-2 setting-add-button white-color teriary-bg-color"
-            >
+              className="flex gap-2 setting-add-button white-color teriary-bg-color">
               <SettingPayrollAddIcon /> Add Category
             </Button>
           </NavLink>
         </div>
       </div>
       <Row gutter={[20, 20]} className="mt-5">
-        {payrollData?.map((data: any, index: any) => {
+        {!isLoading ? payrollData?.map((data: any, index: any) => {
           const startingDate = dayjs(data?.from);
           const endingDate = dayjs(data?.to);
-
           const durationInDays = calculateDays(startingDate, endingDate);
           return (
             <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
@@ -88,8 +65,6 @@ const SettingPayroll: React.FC = () => {
                   <span className="float-right cursor-pointer ">
                     <DropDownForSetting
                       link={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}
-                      // showDeleteModal={showDeleteModal}
-                      // setShowDeleteModal={setShowDeleteModal}
                       state={state}
                       setState={setState}
                       editData={data}
@@ -114,7 +89,8 @@ const SettingPayroll: React.FC = () => {
               </BoxWrapper>
             </Col>
           );
-        })}
+        }) : <Loader />}
+
       </Row>
       <Alert
         cancelBtntxt="Cancel"
@@ -126,16 +102,6 @@ const SettingPayroll: React.FC = () => {
         okBtnFunc={() => deletePayroll(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />
-      {/* <Alert
-        cancelBtntxt="Cancel"
-        okBtntxt="Delete"
-        state={showDeleteModal}
-        setState={setShowDeleteModal}
-        type="error"
-        width={500}
-        title=""
-        children={<p>Are you sure you want to delete this?</p>}
-      /> */}
     </div>
   );
 };

@@ -1,38 +1,35 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Divider,
-  Button,
-  Form,
-  Row,
-  Col,
-  Space,
-  Input,
-  Typography,
+  Divider, Button, Form, Row, Col,
+  Space, Input, Typography,
 } from "antd";
 import ReactQuill from "react-quill";
-import "quill/dist/quill.snow.css";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   CertificateEyeIcon,
   CertificateTickCircle,
   TemplateCertificateLarger,
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
-import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
-import { NavLink } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
+import "quill/dist/quill.snow.css";
 import "./style.scss";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
+import useTemplatesCustomHook from "../../actionHandler";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../../../../../store";
+
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
+  // const [form] = Form.useForm();
   const [form] = Form.useForm();
-  const breadcrumbArray = [
-    { name: "New Template" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
-  ];
+  const { state: templateData }: any = useLocation();
+  const [description, setDescription] = useState('');
+  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
     toggle: false,
@@ -42,15 +39,36 @@ const NewTemplateCertiticationOfCompletion = () => {
     toggle: false,
   });
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [formValues, setFormValues] = useState<any>({
-    templateName: "",
-    subject: "",
-    description: "",
-  });
-  const [textEditorValue, setTextEditorValue] = useState();
-  const onChangeHandler = (e: any) => {
-    setTextEditorValue(e)
+
+  const breadcrumbArray = [
+    { name: "New Template" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
+  ];
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
   }
+  const onFinish = (values: any) => {
+    const newValues = {
+      ...values,
+      textEditorValue: description,
+      templateType: templateData?.templateType ?? templateData?.type,
+    }
+    if (templateData?.templateType) {
+      postNewTemplate(newValues);
+    } else {
+      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+    }
+    form.resetFields();
+    setDescription('')
+  };
+
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
 
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
@@ -68,7 +86,7 @@ const NewTemplateCertiticationOfCompletion = () => {
     setBorderColorSecond({ color: "#FFFFFF" });
   };
 
-  const onFinish = (values: any) => { }
+  // const onFinish = (values: any) => { }
 
   return (
     <div className="certificate-of-appreciation-new-template">
@@ -78,7 +96,9 @@ const NewTemplateCertiticationOfCompletion = () => {
         <Form layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+          onFinish={onFinish}
+          initialValues={initialValues}
+        >
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -104,12 +124,15 @@ const NewTemplateCertiticationOfCompletion = () => {
               >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-              <Form.Item
-                name="description"
-                label="Description (optional)"
-              >
-                <div className="text-input-bg-color rounded-lg text-editor my-2  ">
-                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+              <Form.Item name="description" label="Description (optional)">
+                <div className="text-input-bg-color rounded-lg  my-2 text-editor">
+                  <ReactQuill
+                    theme="snow"
+                    defaultValue={description}
+                    value={description}
+                    onChange={setDescription}
+                    modules={textEditorData}
+                  />
                 </div>
               </Form.Item>
             </Col>

@@ -1,36 +1,43 @@
 import { useEffect, useState } from "react";
-import { Divider, Button, Form, Row, Col, Space, Input, Typography } from "antd";
-import ReactQuill from "react-quill";
-import "quill/dist/quill.snow.css";
-import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { Breadcrumb, BoxWrapper } from "../../../../../../components";
-import { NavLink, useLocation } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
+import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { Divider, Button, Form, Row, Col, Space, Input, Typography } from "antd";
+import { Breadcrumb, BoxWrapper } from "../../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
+import { NavLink, useLocation } from "react-router-dom";
 import { currentUserState } from '../../../../../../store';
 import { useRecoilState } from "recoil";
+import ReactQuill from "react-quill";
+import "quill/dist/quill.snow.css";
 import "./style.scss";
 
 const { Title, Paragraph } = Typography;
 
 const NewTemplateOfferLetter = () => {
-  const breadcrumbArray = [
-    { name: "New Template" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Offer Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}` },
-  ];
-
   const [form] = Form.useForm();
   const { state: templateData }: any = useLocation();
   const [description, setDescription] = useState('');
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
-
-  console.log(templateData);
-
+  const breadcrumbArray = [
+    { name: "New Template" },
+    { name: "Setting" },
+    {
+      name: "Template",
+      onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`
+    },
+    {
+      name: "Offer Letter",
+      onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`
+    },
+  ];
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
@@ -40,19 +47,12 @@ const NewTemplateOfferLetter = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      console.log('edit');
-
       editTemplate(templateData?.id, newValues, currentUser?.company?.id);
     }
     form.resetFields();
     setDescription('')
-
   };
-  const initialValues = {
-    templateName: templateData?.name,
-    subject: templateData?.subject,
-    description: templateData?.description
-  }
+
   useEffect(() => {
     setDescription(templateData?.description)
   }, [templateData?.description])

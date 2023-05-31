@@ -6,15 +6,13 @@ import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useShiftsCustomHook from './actionHandler'
-// import duration from 'dayjs/plugin/duration';
 import dayjs from "dayjs";
 import './style.scss'
 
 const { Text } = Typography;
 
 const SettingShifts: React.FC = () => {
-  // dayjs.extend(duration);
-  // const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
   const [searchValue, setSearchValue] = useState();
   const [state, setState] = useState<any>(
     {
@@ -23,8 +21,7 @@ const SettingShifts: React.FC = () => {
     }
   )
 
-
-  const { shiftsData, getAllShifts, debouncedSearch,deleteShifts } = useShiftsCustomHook();
+  const { shiftsData, getAllShifts, debouncedSearch, deleteShifts } = useShiftsCustomHook();
 
   useEffect(() => {
     getAllShifts(searchValue)
@@ -38,8 +35,8 @@ const SettingShifts: React.FC = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  console.log('aksjsakjaslkjas',state);
-  
+  // console.log('aksjsakjaslkjas', state);
+
   return (
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
@@ -71,7 +68,7 @@ const SettingShifts: React.FC = () => {
                         {data?.name}
                       </Text>
                       <Text className="text-base font-medium text-teriary-color">
-                        5 Employees
+                        {data?.interns?.length <= 0 ? `${shiftsData?.length}` : `0${shiftsData?.length}`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
                         {`Time: ${startTime} to ${endTime}`}

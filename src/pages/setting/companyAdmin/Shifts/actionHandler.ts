@@ -1,15 +1,19 @@
-import { useRecoilState } from "recoil";
-import { settingShiftsState } from "../../../../store";
-import api from "../../../../api";
 import endpoints from "../../../../config/apiEndpoints";
-import { debounce } from "lodash";
 import { Notifications } from "../../../../components";
+import { settingShiftsState } from "../../../../store";
+import { useRecoilState } from "recoil";
+import { debounce } from "lodash";
+import { useState } from "react";
+import api from "../../../../api";
+import { useNavigate } from "react-router-dom";
 
 
-// Chat operation and save into store
+// Shifts operation and save into store
 const useShiftsCustomHook = () => {
-  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS,DELETE_SHIFT } = endpoints;
-  const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);;
+  // const navigate = useNavigate()
+  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS, DELETE_SHIFT } = endpoints;
+  const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);
+  const [isLoading, setIsLoading] = useState(false)
 
   // Getting shifts data 
   const getAllShifts = async (searchValue: any = null) => {
@@ -19,8 +23,10 @@ const useShiftsCustomHook = () => {
       q: searchValue ? searchValue : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    setIsLoading(true);
     const { data } = await api.get(SETTINGS_SHIFTS, query);
     setShiftsData(data)
+    setIsLoading(false);
   };
 
   // Post shifts data
@@ -35,10 +41,12 @@ const useShiftsCustomHook = () => {
       "interns": 2,
       "applyToNewHires": true
     }
+    setIsLoading(true);
     const { data } = await api.post(POST_NEW_SHIFTS, shiftDetails);
     if (data) {
+      setIsLoading(false);
+      // navigate('/')
       Notifications({ title: "Success", description: "Shift added successfully", type: "success" })
-      // navigate(`/${}`)
     }
   }
   //Search
@@ -48,19 +56,20 @@ const useShiftsCustomHook = () => {
 
   //delete shifts
   const deleteShifts = async (id: any) => {
+    setIsLoading(true);
     await api.delete(`${DELETE_SHIFT}/${id}`);
-    getAllShifts()
+    getAllShifts();
+    setIsLoading(false);
     Notifications({ title: "Success", description: 'Shift deleted', type: 'success' })
   };
 
-
-
   return {
-    getAllShifts,
+    debouncedSearch,
     postShiftData,
     deleteShifts,
-    debouncedSearch,
+    getAllShifts,
     shiftsData,
+    isLoading,
   };
 };
 

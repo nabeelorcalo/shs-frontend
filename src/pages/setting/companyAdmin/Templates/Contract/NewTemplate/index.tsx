@@ -4,48 +4,37 @@ import {
   Space, Input, Typography
 } from "antd";
 import ReactQuill from "react-quill";
-import "quill/dist/quill.snow.css";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { NavLink, useLocation } from "react-router-dom";
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import useTemplatesCustomHook from "../../actionHandler";
-import { useRecoilState } from "recoil";
+import { NavLink, useLocation } from "react-router-dom";
 import { currentUserState } from "../../../../../../store";
+import { useRecoilState } from "recoil";
+import "quill/dist/quill.snow.css";
 import "./style.scss";
 
 const { Title, Paragraph } = Typography;
 
 const NewTemplateContract = () => {
+  const [form] = Form.useForm();
+  const { state: templateData }: any = useLocation();
+  const [description, setDescription] = useState('');
+  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Contract", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
   ];
-  // const [form] = Form.useForm();
-  // const [textEditorValue, setTextEditorValue] = useState();
-  const [form] = Form.useForm();
-  const { state: templateData }: any = useLocation();
-  const [description, setDescription] = useState('');
-  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  
   const initialValues = {
     templateName: templateData?.name,
     subject: templateData?.subject,
     description: templateData?.description
   }
 
-  // const onChangeHandler = (e: any) => {
-  //   setTextEditorValue(e)
-  // }
-
-  // const onFinish = (values: any) => {
-  //   console.log(values);
-
-  // }
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
@@ -55,12 +44,10 @@ const NewTemplateContract = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      console.log('edit');
       editTemplate(templateData?.id, newValues, currentUser?.company?.id);
     }
     form.resetFields();
     setDescription('')
-
   };
 
   useEffect(() => {
@@ -115,18 +102,6 @@ const NewTemplateContract = () => {
                   />
                 </div>
               </Form.Item>
-              {/* <Form.Item
-                name="description"
-                label="Description (optional)"
-              >
-                <div className="text-input-bg-color rounded-lg text-editor  my-2">
-                  <ReactQuill 
-                  theme="snow"
-                   value={textEditorValue}
-                    onChange={onChangeHandler} 
-                    modules={textEditorData} />
-                </div>
-              </Form.Item> */}
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">

@@ -1,33 +1,28 @@
 import { useEffect, useState } from "react";
-import {
-  Divider, Button, Form, Row, Col, Space, Input, Typography
-} from "antd";
+import { Divider, Button, Form, Row, Col, Space, Input, Typography } from "antd";
 import ReactQuill from "react-quill";
-import "quill/dist/quill.snow.css";
-import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import {
-  CertificateEyeIcon,
-  CertificateTickCircle,
-  TemplateCertificateLarger,
-  TemplateCertificateSmall,
-} from "../../../../../../assets/images";
-import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
-import { NavLink, useLocation } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
-import "./style.scss";
+import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
-import { useRecoilState } from "recoil";
+import { NavLink, useLocation } from "react-router-dom";
 import { currentUserState } from "../../../../../../store";
+import { useRecoilState } from "recoil";
+import {
+  CertificateEyeIcon, CertificateTickCircle,
+  TemplateCertificateLarger, TemplateCertificateSmall
+} from "../../../../../../assets/images";
+import "quill/dist/quill.snow.css";
+import "./style.scss";
+
 
 const { Title, Paragraph } = Typography;
 const NewTemplateCertificationOfAppreciation = () => {
-  const breadcrumbArray = [
-    { name: "New Template" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}` },
-  ];
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [form] = Form.useForm();
+  const { state: templateData }: any = useLocation();
+  const [description, setDescription] = useState('');
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
     toggle: false,
@@ -36,15 +31,15 @@ const NewTemplateCertificationOfAppreciation = () => {
     color: "white",
     toggle: false,
   });
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [form] = Form.useForm();
-  const { state: templateData }: any = useLocation();
-  const [description, setDescription] = useState('');
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
-
-  console.log(templateData);
+  const breadcrumbArray = [
+    { name: "New Template" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}` },
+  ];
 
   const onFinish = (values: any) => {
     const newValues = {
@@ -55,8 +50,6 @@ const NewTemplateCertificationOfAppreciation = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      console.log('edit');
-
       editTemplate(templateData?.id, newValues, currentUser?.company?.id);
     }
     form.resetFields();
@@ -71,12 +64,7 @@ const NewTemplateCertificationOfAppreciation = () => {
   useEffect(() => {
     setDescription(templateData?.description)
   }, [templateData?.description])
-  // const [form] = Form.useForm();
-  // const [textEditorValue, setTextEditorValue] = useState();
-  // const onChangeHandler = (e: any) => {
-  //   setTextEditorValue(e)
-  // }
-  // const onFinish = (values: any) => { }
+
 
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
@@ -140,14 +128,6 @@ const NewTemplateCertificationOfAppreciation = () => {
                   />
                 </div>
               </Form.Item>
-              {/* <Form.Item
-                name="description"
-                label="Description (optional)"
-              >
-                <div className="text-input-bg-color rounded-lg text-editor my-2 ">
-                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
-                </div>
-              </Form.Item> */}
             </Col>
           </Row>
 

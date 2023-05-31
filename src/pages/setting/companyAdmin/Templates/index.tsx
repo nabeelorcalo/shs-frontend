@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Col, Row, Typography, Divider } from "antd";
-const { Text } = Typography;
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-import useTemplatesCustomHook from "./actionHandler";
 import "./Template.scss";
 
+const { Text } = Typography;
 const SettingTemplate: React.FC = () => {
   const navigate = useNavigate()
-  let overview = [
+
+  let templateTypes = [
     {
       type: "offerLetter",
       name: "Offer Letter",
@@ -28,7 +28,6 @@ const SettingTemplate: React.FC = () => {
       name: "Rejection Letter",
       content:
         "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-      // link: `${ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}`
       link: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}`
     },
     {
@@ -36,7 +35,6 @@ const SettingTemplate: React.FC = () => {
       name: "Certificate of Appreciation",
       content:
         "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-      // link: `${ROUTES_CONSTANTS.TCA_NEW_TEMPLATE}`
       link: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`
     },
     {
@@ -44,7 +42,6 @@ const SettingTemplate: React.FC = () => {
       name: "Certificate of Completion",
       content:
         "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
-      // link: `${ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}`
       link: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`
     },
   ];
@@ -52,7 +49,7 @@ const SettingTemplate: React.FC = () => {
   return (
     <div className="template-setting cursor-pointer ">
       <Row gutter={[10, 10]} >
-        {overview.map((data: any, index) => {
+        {templateTypes?.map((data: any, index: any) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={24} xl={12} xxl={8}>
               <div onClick={() => { navigate(data.link, { state: data.type }) }}>
@@ -62,7 +59,7 @@ const SettingTemplate: React.FC = () => {
                       <Text className="text-lg font-semibold text-primary-color">{data?.name}</Text>
                       <Divider className="mt-1 " />
                       <Text className="text-sm font-normal pb-2">
-                        {data.content}
+                        {data?.content}
                       </Text>
                     </div>
                   </div>

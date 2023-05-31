@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Divider, Button, Input } from "antd";
-import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
-import { Alert, Breadcrumb } from "../../../../../components";
-import { useLocation, useNavigate } from "react-router-dom";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
+import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import { useLocation, useNavigate } from "react-router-dom";
 import useTemplatesCustomHook from "../actionHandler";
+import { Alert, Breadcrumb, Loader } from "../../../../../components";
 import '../Template.scss'
 
 
@@ -23,16 +23,21 @@ const TemplatesOfferLater = () => {
       action: ''
     }
   )
+  const breadcrumbArray = [
+    { name: "Offer Letter" },
+    { name: "Setting" },
+    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+  ];
 
   const { getAllTemplates, templatesData,
-    debouncedSearch, deleteShifts }: any = useTemplatesCustomHook();
+    debouncedSearch, deleteShifts, isLoading }: any = useTemplatesCustomHook();
 
   useEffect(() => {
     getAllTemplates(searchValues)
   }, [searchValues])
 
   const filterData = templatesData?.filter((item: any) => item?.type === templateType);
-  
+
 
   // handle search templates 
   const debouncedResults = (event: any) => {
@@ -40,18 +45,12 @@ const TemplatesOfferLater = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  const breadcrumbArray = [
-    { name: "Offer Letter" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-  ];
-
   return (
     <div>
       <div>
-        <Breadcrumb breadCrumbData={breadcrumbArray}/>
+        <Breadcrumb breadCrumbData={breadcrumbArray} />
         <Divider />
-        <div className="flex justify-between">
+        <div className="flex max-sm:flex-col  justify-between gap-4">
           <div className="input-wrapper">
             <Input className='search-bar' placeholder="Search"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
@@ -65,15 +64,15 @@ const TemplatesOfferLater = () => {
           </Button>
         </div>
       </div>
-      <TemplatesCommonCard
+      {!isLoading ? <TemplatesCommonCard
         link={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}
         overview={filterData}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}
         state={state}
         setState={setState}
-        setEditData={setEditData}  
-      />
+        setEditData={setEditData}
+      /> : <Loader />}
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"
@@ -81,7 +80,6 @@ const TemplatesOfferLater = () => {
         setState={setState}
         type="error"
         width={500}
-        title=""
         okBtnFunc={() => deleteShifts(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />

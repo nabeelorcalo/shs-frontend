@@ -5,7 +5,7 @@ import {
 } from "antd";
 import { SettingAvater } from "../../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Breadcrumb, CommonDatePicker, BoxWrapper, TimePickerComp } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, TimePickerComp } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
@@ -14,6 +14,20 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
+  const deselectArray: any = [];
+  const [form] = Form.useForm();
+  const [state, setState] = useState(
+    {
+      openFromTime: false,
+      openToTime: false,
+      openFromTimeValue: "",
+      openToTimeValue: "",
+      intern: [],
+      openModal: false,
+      internValue: 1,
+      applyToNewHires: false
+    });
+
   const breadcrumbArray = [
     { name: "Add Category" },
     { name: "Setting" },
@@ -47,20 +61,6 @@ const PayrollAddCategory = () => {
     },
   ];
 
-  const deselectArray: any = [];
-  const [form] = Form.useForm();
-  const [state, setState] = useState(
-    {
-      openFromTime: false,
-      openToTime: false,
-      openFromTimeValue: "",
-      openToTimeValue: "",
-      intern: [],
-      openModal: false,
-      internValue: 1,
-      applyToNewHires:false
-    });
-
   const openTimeFromHandler = () => {
     setState({ ...state, openFromTime: !state.openFromTime })
   }
@@ -87,7 +87,6 @@ const PayrollAddCategory = () => {
       timeTo: state.openToTimeValue,
       timeFrom: state.openFromTimeValue
     }
-    console.log("form values are", newValues)
   }
 
   return (
@@ -126,7 +125,7 @@ const PayrollAddCategory = () => {
                     rules={[{ required: true }]}
                     label='Time From'
                   >
-                     <TimePickerComp
+                    <TimePickerComp
                       className="input-style"
                       open={state.openFromTime}
                       customSetValue
@@ -134,13 +133,6 @@ const PayrollAddCategory = () => {
                       value={state.openFromTimeValue}
                       setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
                     />
-                    {/* <TimePickerComp
-                      className="input-style"
-                      open={state.openFromTime}
-                      setOpen={openTimeFromHandler}
-                      value={state.openFromTimeValue}
-                      setValue={(e: any) => setState({ ...state, openFromTimeValue: e })}
-                    /> */}
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
@@ -184,16 +176,12 @@ const PayrollAddCategory = () => {
               <div className="my-5">
 
                 <Form.Item name='applyForNewHire'>
-                  <Switch 
-                  checked={state?.applyToNewHires} 
+                  <Switch
+                    checked={state?.applyToNewHires}
                   // onChange={(e: any) => setState({ ...state, applyForNewHire: e })} 
                   />
                   <span className="px-2">Apply to all new hires</span>
                 </Form.Item>
-                {/* <Form.Item name=''>
-                  <Switch />
-                </Form.Item> */}
-
                 <span className="px-2">Apply to all new hires</span>
               </div>
             </Col>
