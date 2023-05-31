@@ -9,8 +9,8 @@ import Drawer from '../../../components/Drawer'
 import { Button, Col, Row, Input } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
-import SelectComp from '../../../components/Select/Select'
 import { GlassMagnifier } from "../../../assets/images";
+import UserSelector from '../../../components/UserSelector'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
@@ -91,6 +91,33 @@ const InternshipsCompanyAdmin = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+  const filteredStatusData = statusArr?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.value,
+        label: item?.label
+      }
+    )
+  })
+  const filteredLocationData = locationsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: item?.name
+      }
+    )
+  })
+  const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: item?.name
+      }
+    )
+  })
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -110,34 +137,30 @@ const InternshipsCompanyAdmin = () => {
               <>
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
-                    <SelectComp
-                      label="Status"
+                    <UserSelector
+                      label='Status'
                       placeholder='Select'
                       value={state.status}
-                      options={statusArr}
                       onChange={(event: any) => { handleStatus(event) }}
+                      options={filteredStatusData}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <SelectComp
+                    <UserSelector
                       label="Location"
-                      placeholder='Select'
+                      placeholder="Select"
                       value={state.location}
                       onChange={(event: any) => { handleLocation(event) }}
-                      options={locationsData?.map((item: any) => {
-                        return { value: item?.id, label: item?.name }
-                      })}
+                      options={filteredLocationData}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <SelectComp
+                    <UserSelector
                       label="Department"
-                      placeholder='Select'
+                      placeholder="Select"
                       value={state.department}
                       onChange={(event: any) => { handleDepartment(event) }}
-                      options={departmentsData?.map((item: any) => {
-                        return { value: item?.id, label: item?.name }
-                      })}
+                      options={filteredDeparmentsData}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

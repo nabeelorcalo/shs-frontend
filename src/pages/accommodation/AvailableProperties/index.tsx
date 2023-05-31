@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AccommodationCard } from '../../../components';
+import { AccommodationCard, Notifications } from '../../../components';
 import "./style.scss";
 import {Empty, Spin} from 'antd';
 import thumb1 from '../../../assets/images/gallery/thumb1.png';
-import { useRecoilValue} from "recoil";
-import { availablePropertiesState } from "../../../store";
+import { useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
+import { availablePropertiesState, filterParamsState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
-import showNotification from '../../../helpers/showNotification'
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
@@ -20,6 +19,8 @@ const AvailableProperties = () => {
   const location = useLocation();
   const { getAvailableProperties } = useAvailablePropertiesHook();
   const availableProperties = useRecoilValue(availablePropertiesState);
+  const filterParams = useRecoilValue(filterParamsState);
+  const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
   const { saveProperty } = useAccommodationHook();
 
@@ -28,24 +29,26 @@ const AvailableProperties = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
+    resetFilterParams()
     getAvailableProperties(setLoading)
   }, [])
 
+  useEffect(() => {
+    getAvailableProperties(setLoading, filterParams)
+  }, [filterParams])
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const postSaveProperty = async (id:any) => {
     setLoading(true)
-    const result = await saveProperty({propertyId: id});
+    const { response } = await saveProperty({propertyId: id});
     setLoading(false)
-    // if (result.error) {
-    //   showNotification("error", constants.NOTIFICATION_DETAILS.error);
-    // } else {
-    //   showNotification("success", constants.NOTIFICATION_DETAILS.success);
-    // }
+    if(!response.error) {
+      return (
+        Notifications({ title: 'Success', description: response.message, type: 'success' })
+      )
+    }
   }
-
-  
 
 
   /* EVENT FUNCTIONS
@@ -68,10 +71,10 @@ const AvailableProperties = () => {
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={thumb1}
+                  coverPhoto={property?.coverImageData?.mediaUrl}
                   offer={property?.offer?.monthlyDiscount}
-                  rent={property?.monthlyRent}
-                  propertyAvailableFor={"week"}
+                  rent={property?.rent}
+                  propertyAvailableFor={property?.rentFrequency}
                   propertyType={property?.propertyType}
                   totalBedrooms={property?.totalBedrooms}
                   totalBathrooms={property?.totalBathrooms}
@@ -85,7 +88,7 @@ const AvailableProperties = () => {
             )
           })}
           {!availableProperties.length && !loading &&
-            <div className="shs-col-full ">
+            <div className="shs-col-full">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>
           }

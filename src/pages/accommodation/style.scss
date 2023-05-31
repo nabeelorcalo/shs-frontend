@@ -22,14 +22,38 @@
   min-width: 205px !important;
 }
 
+.requests-filterby-agent {
+  .ant-select-selector {
+    .ant-select-selection-item {
+      padding-right: 25px;
+    }
+  }
+}
+
+
+
 .agent-option {
   display: flex;
   align-items: center;
 
-  & > img {
-    height: 24px;
-    width: 24px;
+  .ant-avatar {
     margin-right: 16px;
+    min-width: 24px;
+  }
+}
+
+.ant-select-dropdown.offer-filter {
+  .ant-select-item {
+    padding-left: 0;
+    padding-right: 0;
+
+    .ant-select-item-option-state {
+      margin-right: 20px;
+    }
+
+    &.ant-select-item-option-selected {
+      background-color: #fff;
+    }
   }
 }
 

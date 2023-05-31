@@ -2,15 +2,18 @@ import { Input, Select } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import './style.scss'
 
-const TypeSignature = () => {
-  const [fontFamily, setFontFamily] = useState(null)
-  const inputRef: any = useRef()
+const TypeSignature = (props: any) => {
+
+  const { certificateDetails, setCertificateDetails } = props;
+  const [fontFamily, setFontFamily] = useState(null);
+  // const inputRef: any = useRef();
+
   const handleChange = (value: any) => {
     setFontFamily(value)
   }
-  useEffect(() => {
-    inputRef.current.focus()
-  })
+  // useEffect(() => {
+  //   inputRef.current.focus()
+  // })
   console.log(fontFamily)
   return (
     <div className="flex flex-col justify-between h-80 pb-5 type-signature-wrapper">
@@ -28,7 +31,11 @@ const TypeSignature = () => {
       />
 
       <div className='flex flex-col justify-end signature-input'>
-        <Input bordered={false} className={`text-center text-size-lg text-${fontFamily} input-no-border`}ref={inputRef} />
+        {/* ref={inputRef}  */}
+        <Input
+          onChange={(e: any) => { setCertificateDetails({ ...certificateDetails, signature: e.target.value }) }}
+          bordered={false}
+          className={`text-center text-size-lg text-${fontFamily} input-no-border`} />
         <hr className="w-96 h-0.5 mx-auto my-2 bg-signature-border border-rounded md:my-2" />
         <p className="text-sm text-center">Type your signature here</p>
       </div>

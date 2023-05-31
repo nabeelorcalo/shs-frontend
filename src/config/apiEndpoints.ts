@@ -5,7 +5,9 @@ const endpoints = {
   GET_AGENT_PROPERTIES: "property/get-agent-properties",
   ADD_PROPERTY: "property/add-property",
   GET_PROPERTY: "property/get-property?propertyId=",
+  CHECK_PROPERTY_AVAILABILITY: "/property/check-property-availability",
   UPDATE_PROPERTY: "/property/update-property?propertyId=",
+  DELETE_PROPERTY: "property/delete-property?propertyId=",
   GET_AVAILABLE_PROPERTIES: "property/get-available-properties",
   GET_SAVED_PROPERTIES: "property/get-saved-properties",
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
@@ -59,6 +61,24 @@ const endpoints = {
   //comment
   GET_COMMENTS: '/comment/getComments',
   ADD_COMMENT: `/comment/addComment`,
+  // manager
+  GET_COMPANY_MANAGER_LIST: `/manager_manager/get-company-manager-list`,
+  GET_SINGLE_COMPANY_MANAGER_LIST: `/manager_manager/get-single-company-manager-list`,
+  //event
+  CREATE_MEETING: `/Event/create-meeting`,
+  ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
+  DELETE_MEETING:`/Event/delete-meeting`,
+  UPDATE_MEETING:`/Event/update-meeting`,
+  // template
+  GET_ALL_TEMPLATES: `/template/findAll`,
+  //student
+  STUDENT_PROFILE: `/student/profile`,
+  //documents
+  DOCUMENT_REQUEST: `/Document/request`,
+  //case-studies
+  CASE_STUDIES:`case-studies`,
+  // intern
+  INTERN_LIST:`/intern/list`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
@@ -77,5 +97,15 @@ const endpoints = {
   SETTING_LOCATION: "/location",
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
+  SETTING_PERFORMANCE: '/performance',
+  SETTINGS_TEMPLATES: '/template/findAll',
+  SETTINGS_SHIFTS: '/shift/findAll',
+  POST_NEW_SHIFTS: '/shift/add',
+  DELETE_SHIFT: '/shift/delete',
+  SETTINGS_TIMESHEET: '/timesheet/category/findAll',
+  POST_NEW_TIMESHEET: '/timesheet/category/add',
+  DELETE_TIMESHEET: '/timesheet/category/delete',
+  EDIT_TIMESHEET: '/timesheet/category/edit',
+  DELETE_PAYROLL: '/payroll/delete'
 }
 export default endpoints;

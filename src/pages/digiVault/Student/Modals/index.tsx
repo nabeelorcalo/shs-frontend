@@ -26,7 +26,7 @@ const DigiVaultModals = (props: any) => {
 
   return (
     <>
-      <Switch onChange={onChange}
+      Lock <Switch onChange={onChange}
         //  defaultChecked={studentVault === undefined ? false : state.isLock}
         checked={state.isLock}
         defaultChecked={state.isLock}

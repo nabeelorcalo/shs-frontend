@@ -5,14 +5,14 @@ import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } fro
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import { Form, Select, Slider, Space, DatePicker, Dropdown, Button } from 'antd'
+import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
 import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
-import useBookingRequests from './BookingRequests/actionHandler'
+import useBookingRequests from './BookingRequests/actionHandler';
 import endpoints from "../../config/apiEndpoints";
-import { useRecoilState } from "recoil";
-import { availablePropertiesState } from "../../store";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { availablePropertiesState, filterParamsState } from "../../store";
 import api from "../../api";
 
 
@@ -113,15 +113,18 @@ const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const downloadBookingRequest = useBookingRequests()
-  const [form] = Form.useForm();
+  const [propertiesFilterForm] = Form.useForm();
+  const [savedPropertiesForm] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
-  const [availablePropertyFiltersOpen, setAvailablePropertyFiltersOpen] = useState(false)
+  const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
   const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
+  const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
+  const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false)
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const items = [
@@ -195,25 +198,58 @@ const Accommodation = () => {
     }
   };
 
-  const openAvailablePropertyFilters = () => {
-    setAvailablePropertyFiltersOpen(true)
+  const openPropertyFilters = () => {
+    setPropertyFiltersOpen(true)
   }
 
-  const closeAvailablePropertyFilters = () => {
-    setAvailablePropertyFiltersOpen(false)
+  const closePropertyFilters = () => {
+    setPropertyFiltersOpen(false)
   }
 
-  function applyFilterAvailableProperties(fieldsValue: any) {
-    const values = {
-      ...fieldsValue,
-      'moveInDate': fieldsValue['moveInDate'].format('DD/MM/YYYY'),
-      'moveOutDate': fieldsValue['moveOutDate'].format('DD/MM/YYYY'),
+  function submitFilters(fieldsValue: any) {
+    let params:any = {}
+    if(fieldsValue.priceRange !== undefined) {
+      params.minPrice = fieldsValue.priceRange[0];
+      params.maxPrice = fieldsValue.priceRange[1];
+    } else if(fieldsValue.offer !== undefined) {
+      if(fieldsValue.offer.includes('Discounts')) {
+        params.offer = fieldsValue.offer.includes('Discounts')
+      } else if(fieldsValue.offer.includes('No Deposit')) {
+        params.depositRequired = fieldsValue.offer.includes('No Deposit')
+      }
+    } else if(fieldsValue.accomodationType !== undefined) {
+      // if(fieldsValue.accomodationType.includes('Entire Property')) {
+      //   params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
+      // }
+      // if(fieldsValue.accomodationType.includes('Studio')) {
+      //   params.studio = fieldsValue.accomodationType.includes('Studio')
+      // }
+      // if(fieldsValue.accomodationType.includes('Rooms In Shared Property')) {
+      //   params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
+      // }
+      params.propertyType = fieldsValue.accomodationType
+    } else if(fieldsValue.facilities !== undefined) {
+      if(fieldsValue.facilities.includes('bills')) {
+        params.billsIncluded = fieldsValue.facilities.includes('bills')
+      } else if(fieldsValue.facilities.includes('Wi-fi')) {
+        params.hasWifi = fieldsValue.facilities.includes('Wi-fi')
+      } else if(fieldsValue.facilities.includes('laundary')) {
+        params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
+      }
     }
-    console.log('Success:', values);
+    
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        ...params
+      }
+    })
+    closePropertyFilters()
   }
 
   const resetFormFields = () => {
-    form.resetFields()
+    propertiesFilterForm.resetFields()
+    resetFilterParams()
   }
 
   const openSavedSearchesFilters = () => {
@@ -248,11 +284,6 @@ const Accommodation = () => {
   function handleFilterStatusBookingRequests(key: any) {
     console.log(key)
   }
-
-  const goToPosts = () => navigate({
-    pathname: '/accommodation',
-    search: '?sort=date&order=newest',
-  });
 
 
   /* RENDER APP
@@ -296,13 +327,13 @@ const Accommodation = () => {
             {location.pathname === '/accommodation' &&
               <FiltersButton
                 label="Filters"
-                onClick={() => openAvailablePropertyFilters()}
+                onClick={() => openPropertyFilters()}
               />
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <FiltersButton
                 label="Filters"
-                onClick={() => openSavedSearchesFilters()}
+                onClick={() => openPropertyFilters()}
               />
             }
             {location.pathname === '/accommodation/booking-requests' &&
@@ -320,7 +351,10 @@ const Accommodation = () => {
                     return (
                       <Select.Option value={option.value} key={option.value}>
                         <div className="agent-option">
-                          <img src={avatar} />
+                          <Avatar size={24} src={avatar}>
+                            AZ
+                            {/* {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)} */}
+                          </Avatar>
                           {option.label}
                         </div>
                       </Select.Option>
@@ -439,23 +473,22 @@ const Accommodation = () => {
       ***********************************************************************************/}
       <Drawer
         title="Filters"
-        open={availablePropertyFiltersOpen}
-        onClose={closeAvailablePropertyFilters}
+        open={propertyFiltersOpen}
+        onClose={closePropertyFilters}
       >
         <div className="shs-filter-form">
           <Form
-            form={form}
+            form={propertiesFilterForm}
             layout="vertical"
-            name="availablePropertiesFilters"
-            onValuesChange={(_, values) => {
-              console.log('Filter Values:: ', values)
-            }}
-            onFinish={applyFilterAvailableProperties}
+            name="propertiesFilters"
+            onValuesChange={(_, values:any) => console.log('vlauess;:: ', values)}
+            onFinish={submitFilters}
           >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
               <Form.Item name="priceRange">
                 <Slider
+                  range={true}
                   min={0}
                   max={1000}
                   marks={{
@@ -465,7 +498,7 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            <div className="shs-form-group">
+            {/* <div className="shs-form-group">
 
               <div className="form-group-title">Availability</div>
 
@@ -486,35 +519,35 @@ const Accommodation = () => {
                   showToday={false}
                 />
               </Form.Item>
+            </div> */}
 
-              <Form.Item name="offer" label="Offer">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="discounts">Discounts</Select.Option>
-                  <Select.Option value="noDeposit">No Deposit</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="offer" label="Offer">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
+                <Select.Option value="Discounts">Discounts</Select.Option>
+                <Select.Option value="No Deposit">No Deposit</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="accomodationType" label="Accomodation Type">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="privateRoom">Private Room</Select.Option>
-                  <Select.Option value="sharedRoom">Shared Room</Select.Option>
-                  <Select.Option value="apartment">Apartment</Select.Option>
-                  <Select.Option value="studio">Studio</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="accomodationType" label="Accomodation Type">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="Entire Property">Entire Property</Select.Option>
+                <Select.Option value="Studio">Studio</Select.Option>
+                <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="facilities" label="Facilities">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="bills">Bills</Select.Option>
-                  <Select.Option value="Wi-fi">Wi-fi</Select.Option>
-                  <Select.Option value="laundary">Laundary</Select.Option>
-                  <Select.Option value="meals">Meals</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
+            <Form.Item name="facilities" label="Facilities">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+                <Select.Option value="bills">Bills</Select.Option>
+                <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                <Select.Option value="laundary">Laundary</Select.Option>
+                <Select.Option value="meals">Meals</Select.Option>
+              </Select>
+            </Form.Item>
+            
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost onClick={resetFormFields}>
+                <ExtendedButton customType="tertiary" ghost onClick={() => resetFormFields()}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
@@ -534,12 +567,17 @@ const Accommodation = () => {
         onClose={closeSavedSearchesFilters}
       >
         <div className="shs-filter-form">
-          <Form layout="vertical" name="sevedSearchesFilters" onFinish={onFinish}>
+          <Form
+            form={savedPropertiesForm}
+            layout="vertical"
+            name="sevedSearchesFilters"
+            onFinish={onFinish}
+          >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
-
               <Form.Item name="priceRange">
                 <Slider
+                  range={true}
                   min={0}
                   max={1000}
                   marks={{
@@ -549,9 +587,8 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            <div className="shs-form-group">
+            {/* <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
-
               <Form.Item name="moveInDate" label="Move in Date">
                 <DatePicker
                   className="filled"
@@ -571,42 +608,42 @@ const Accommodation = () => {
                   showToday={false}
                 />
               </Form.Item>
+            </div> */}
 
-              <Form.Item name="offer" label="Offer">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="discounts">Discounts</Select.Option>
-                  <Select.Option value="noDeposit">No Deposit</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="offer" label="Offer">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
+                <Select.Option value="Discounts">Discounts</Select.Option>
+                <Select.Option value="No Deposit">No Deposit</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="accomodationType" label="Accomodation Type">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="privateRoom">Private Room</Select.Option>
-                  <Select.Option value="sharedRoom">Shared Room</Select.Option>
-                  <Select.Option value="apartment">Apartment</Select.Option>
-                  <Select.Option value="studio">Studio</Select.Option>
-                </Select>
-              </Form.Item>
+            <Form.Item name="accomodationType" label="Accomodation Type">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+                <Select.Option value="Entire Property">Entire Property</Select.Option>
+                <Select.Option value="Studio">Studio</Select.Option>
+                <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
+              </Select>
+            </Form.Item>
 
-              <Form.Item name="facilities" label="Facilities">
-                <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                  <Select.Option value="bills">Bills</Select.Option>
-                  <Select.Option value="Wi-fi">Wi-fi</Select.Option>
-                  <Select.Option value="laundary">Laundary</Select.Option>
-                  <Select.Option value="meals">Meals</Select.Option>
-                </Select>
-              </Form.Item>
-            </div>
+            <Form.Item name="facilities" label="Facilities">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+                <Select.Option value="bills">Bills</Select.Option>
+                <Select.Option value="Wi-fi">Wi-fi</Select.Option>
+                <Select.Option value="laundary">Laundary</Select.Option>
+                <Select.Option value="meals">Meals</Select.Option>
+              </Select>
+            </Form.Item>
+            
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost>
+                <ExtendedButton customType="tertiary" ghost onClick={() => resetFormFields()}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
                   Apply
                 </ExtendedButton>
               </Space>
-            </Form.Item> 
+            </Form.Item>
           </Form>
         </div>
       </Drawer>

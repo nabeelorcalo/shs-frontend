@@ -13,11 +13,12 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useLeaveCustomHook from "../actionHandler";
+import dayjs from "dayjs";
 
 const LeavesAddPolicy: React.FC = () => {
-  const [states, setState] = useState(
+  const [states, setState] = useState<any>(
     {
-      carryforward: "",
+      carryforward: null,
       assignDate: "",
       accrualFrequency: "",
       openDatePicker: false,
@@ -67,14 +68,14 @@ const LeavesAddPolicy: React.FC = () => {
     },
   ];
   const carryForwardSelectValue = [
-    { value: '1', label: '1' },
-    { value: '2', label: '2' },
-    { value: '3', label: '3' },
-    { value: '4', label: '4' },
-    { value: '5', label: '5' },
-    { value: '6', label: '6' },
-    { value: '7', label: '7' },
-    { value: '8', label: '8' },
+    { value: 1, label: '1' },
+    { value: 2, label: '2' },
+    { value: 3, label: '3' },
+    { value: 4, label: '4' },
+    { value: 5, label: '5' },
+    { value: 6, label: '6' },
+    { value: 7, label: '7' },
+    { value: 8, label: '8' },
   ]
   const assignDateSelectValue = [
     { value: 'joining Date', label: 'joining Date' },
@@ -83,21 +84,27 @@ const LeavesAddPolicy: React.FC = () => {
     { value: 'Monthly', label: 'Monthly' },
     { value: 'Yearly', label: 'Yearly' },
   ]
-
+  const validatePositiveNumber = (rule: any, value: any, callback: any) => {
+    if (value < 0) {
+      callback('Negative values are not allowed');
+    } else {
+      callback();
+    }
+  }
 
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
-      setState(prevState => ({
-        ...prevState, openModal: true, internValue: radioValue
-      }))
+      setState({
+        ...states, openModal: true, internValue: radioValue
+      })
     }
     else if (e.target.value === 1) {
-      setState(prevState => ({
-        ...prevState,
+      setState({
+        ...states,
         internValue: radioValue,
         intern: []
-      }))
+      })
     }
   };
   const openDatePickerHandler = () => {
@@ -108,21 +115,21 @@ const LeavesAddPolicy: React.FC = () => {
 
   const onFinish = (values: any) => {
     values.applyToNewHires = states.applyForNewHire;
-    console.log("valies", values.applyToNewHires)
+    values.intern = states.intern;
     if (state) {
       editSettingLeaves(state.id, values)
     }
     else {
       postSettingLeaves(values)
     }
-    // navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
+    navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
   }
   const initialValues = {
     policyName: state?.name,
     description: state?.description,
-    // carryforwardexpiration: state?.carryForwardExpiry,
+    carryforwardexpiration: dayjs(state?.carryForwardExpiry),
     applyForNewHire: state?.applyToNewHires,
-    intern: [],
+    intern: state?.intern,
     entitlement: state?.entitlement,
     carryforward: state?.maxCarryForward,
     assignDate: state?.assignedDate,
@@ -212,9 +219,9 @@ const LeavesAddPolicy: React.FC = () => {
                 name="entitlement"
                 label="Entitlement"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }, { type: "string" }, { validator: validatePositiveNumber }]}
               >
-                <Input placeholder="0" type="number" />
+                <Input placeholder="0" type="number" min={0} />
               </Form.Item>
             </Col>
           </Row>
@@ -234,7 +241,7 @@ const LeavesAddPolicy: React.FC = () => {
                 label="Maximum Carry Forward (Days Per Year)"
                 required={false}
                 name="carryforward"
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }, { type: "number" }]}
               >
                 <Select
                   className="w-full"
@@ -246,14 +253,13 @@ const LeavesAddPolicy: React.FC = () => {
               <Form.Item
                 label="Carry Forward Expiration"
                 name="carryforwardexpiration"
-              // rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }, { type: "string" }]}
               >
                 <CommonDatePicker
                   open={states.openDatePicker}
                   setOpen={openDatePickerHandler}
                   setValue={(e: any) => console.log(e)}
                 />
-                {/* <DatePicker  /> */}
               </Form.Item>
             </Col>
           </Row>

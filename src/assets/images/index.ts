@@ -169,8 +169,8 @@ export { ReactComponent as TransWhiteSub } from "../images/digivault/manageVault
 export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
 export { default as Video } from "../images/ColorfullIconsProgressbar/video.svg";
 export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
-export {ReactComponent as FileIcon} from "../images/digivault/manageVault/document-icon.svg";
-export {ReactComponent as FolderIcon} from "../images/digivault/manageVault/folder-icon.svg";
+export { ReactComponent as FileIcon } from "../images/digivault/manageVault/document-icon.svg";
+export { ReactComponent as FolderIcon } from "../images/digivault/manageVault/folder-icon.svg";
 //export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
 
@@ -509,6 +509,7 @@ export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.sv
 export { ReactComponent as SuccessStatus } from '../images/Internships/success-status.svg';
 export { ReactComponent as ClosedStatus } from '../images/Internships/closed-status.svg';
 export { ReactComponent as FullStop } from '../images/Internships/dot.svg';
+export { ReactComponent as InfoAlert } from '../images/Internships/alert.svg';
 
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";

@@ -60,7 +60,7 @@ export const ColorfullIconsWithProgressbar = (props: any) => {
             <img src={item.icon} width="40px" />
             <div className="w-full pl-3 ">
               <div className="flex justify-between">
-                <span className="font-normal text-sm content-title">
+                <span className="font-normal text-sm content-title mt-2">
                   {item.title}
                 </span>
                 <span className="font-normal text-sm storage-value">

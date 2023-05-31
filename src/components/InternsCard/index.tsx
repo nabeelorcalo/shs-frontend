@@ -4,7 +4,8 @@ import { BoxWrapper } from '../../components'
 import { ROUTES_CONSTANTS } from '../../config/constants'
 import './style.scss'
 export const InternsCard = (props: any) => {
-  const { id, status, pupover, name, posted_by, title, department, joining_date, date_of_birth, company } = props
+  const { id, status, pupover, name, posted_by, title, department,
+    joining_date, date_of_birth, company } = props;
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
 
@@ -40,13 +41,15 @@ export const InternsCard = (props: any) => {
             <Button
               className="border-0 accommodation-btn-info-bg text-info-color-dark"
               size="small"
-              onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
+              // onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
+              onClick={() => navigate(`${STUDENTPROFILE}`)}>
               Profile
             </Button>
             <Button
               className='border-0 light-green-bg-color text-success-hover-color'
               size="small"
-              onClick={() => navigate(`${CHAT}/${id}`)}>
+              // onClick={() => navigate(`${CHAT}/${id}`)}>
+              onClick={() => navigate(`${CHAT}`)}>
               Chat
             </Button>
           </div>
