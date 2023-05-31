@@ -1,10 +1,13 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import type { ColumnsType } from 'antd/es/table'
 import type { MenuProps } from 'antd';
-import { Table, Space, Dropdown, Button, Row, Col } from 'antd'
+import { Table, Space, Dropdown, Button, Row, Col, Select } from 'antd'
 import { IconAngleDown } from '../../assets/images'
 import { SearchBar, PageHeader } from "../../components";
 import "./style.scss";
+import useDelegateHook from './actionHandler'
+import { useRecoilValue } from "recoil";
+import { delegateMembersState } from "../../store";
 
 interface DataType {
   key: React.Key;
@@ -115,38 +118,13 @@ const tableData = [
 const DelegateMembers = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const statusItems: MenuProps['items'] = [
-    {
-      key: 'active',
-      label: 'Active'
-    },
-    {
-      key: 'inactive',
-      label: 'Inactive'
-    },
-  ];
+  const [loading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] = useState({})
+  const {getDelegateMembers} = useDelegateHook();
+  const delegateMembers = useRecoilValue(delegateMembersState);
 
   const typeItems: MenuProps['items'] = [
-    {
-      key: 'companyAdmin',
-      label: "Company Admin"
-    },
-    {
-      key: 'manager',
-      label: "Manager"
-    },
-    {
-      key: 'student',
-      label: "Student"
-    },
-    {
-      key: 'intern',
-      label: "Intern"
-    },
-    {
-      key: 'university',
-      label: "University"
-    },
+   
   ];
 
   const tableColumns: ColumnsType<DataType> = [
@@ -202,13 +180,40 @@ const DelegateMembers = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
+    getDelegateMembers(filterParams, setLoading)
+  }, [filterParams])
 
-  }, [])
-
-
+console.log('delegateMembers:: ', delegateMembers)
+console.log('filterparams:: ', filterParams)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
+  const handleSearch = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {
+        ...prev,
+        q: value
+      }
+    })
+  }
+
+  const handleFilterStatus = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {
+        ...prev,
+        status: value
+      }
+    })
+  }
+
+  const handleFilterType = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {
+        ...prev,
+        type: value
+      }
+    })
+  }
 
 
 
@@ -219,18 +224,36 @@ const DelegateMembers = () => {
       <PageHeader title="Delegate Members" bordered  />
       <Row gutter={[20, 20]} className="page-filterbar">
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={() => console.log('Search')} />
+          <SearchBar handleChange={handleSearch} />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 main-filter-btns">
-          <div className="requests-filterby-status">
-            <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
-              <Button className="button-sky-blue main-btn">Status<IconAngleDown /></Button>
-            </Dropdown>
+          <div className="members-filterby-status">
+            <Select
+              className="filled"
+              placeholder="Status"
+              onChange={handleFilterStatus}
+              placement="bottomRight"
+              suffixIcon={<IconAngleDown />}
+            >
+              <Select.Option value="ACTIVE">Active</Select.Option>
+              <Select.Option value="INACTIVE">Inactive</Select.Option>
+            </Select>
           </div>
-          <div className="dropdown-download">
-            <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
-              <Button className="button-sky-blue main-btn">Type<IconAngleDown /></Button>
-            </Dropdown>
+          <div className="members-filterby-status">
+            <Select
+              className="filled"
+              placeholder="Type"
+              onChange={handleFilterType}
+              placement="bottomRight"
+              suffixIcon={<IconAngleDown />}
+            >
+              <Select.Option value="COMPANY_ADMIN">Company Admin</Select.Option>
+              <Select.Option value="COMPANY_MANAGER">Manager</Select.Option>
+              <Select.Option value="STUDENT">Student</Select.Option>
+              <Select.Option value="INTERN">Intern</Select.Option>
+              <Select.Option value="UNIVERSITY">University</Select.Option>
+              <Select.Option value="DELEGATE_AGENT">Delegate Agent</Select.Option>
+            </Select>
           </div>
         </Col>
         <Col xs={24}>

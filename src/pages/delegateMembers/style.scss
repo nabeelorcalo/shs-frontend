@@ -11,7 +11,14 @@
         flex: 1
       }
     }
-    .main-filter-btns{
+    .main-filter-btns {
+      .members-filterby-status {
+        min-width: 170px;
+        .ant-select {
+          width: 100%;
+        }
+      }
+
       @media only screen and (max-width:475px) {
         flex-direction: column;
         .main-btn{
