@@ -52,6 +52,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
         </Button>}
       {label && <label className='label'>{label}</label>}
       <AntDatePicker
+        inputReadOnly={true}
         open={open}
         size={size}
         value={newVal.date}

@@ -1,11 +1,5 @@
 @import '../../scss/_colors.scss';
 
-.internship-details {
-  .ant-select-selector{
-    background-color: red !important;
-  }
-}
-
 .pipeline-heading-style {
   border: 1px solid $text-input-bg-color;
   border-radius: 5px;
@@ -28,17 +22,22 @@
 }
 
 .new-intern-main {
+  .currency-select {
+    width: 100px;
+  }
 
   input,
   textarea,
   .input .ant-select-selector {
     background-color: rgba(230, 244, 249, 1);
     border: none;
+
     &:hover {
       background-color: #fff;
     }
   }
-  .common-date-picker-wrapper .ant-picker{
+
+  .common-date-picker-wrapper .ant-picker {
     background-color: rgba(230, 244, 249, 1);
     border: none;
 
@@ -46,6 +45,7 @@
       background-color: #fff;
     }
   }
+
   .main-btn {
     @media only screen and (max-width:475px) {
       width: 100%;
@@ -58,7 +58,8 @@
   .status-btn {
     border-radius: 8px;
     border: none;
-    &:hover{
+
+    &:hover {
       color: white;
     }
   }

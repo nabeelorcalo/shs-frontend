@@ -1,22 +1,77 @@
-/// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import endpoints from '../../config/apiEndpoints';
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { useRecoilState } from 'recoil';
+import { caseStudiesFilterParam } from '../../store/case-studies';
 
-// Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
-
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  //table data 
+  const [caseStudyData, setCaseStudyData] = useState<any>({ count: 0, data: [], pagination: {} })
+  const [selectedCasStudyData, setSelectedCasStudyData] = useState<any>([])
+  // departments list 
+  const [departmentList, setDepartmentList] = useState<any>([])
+  // intern list 
+  const [internList, setInternList] = useState<any>([])
+  const { CASE_STUDIES, DAPARTMENT, INTERN_LIST } = endpoints
+  let params: any = {
+    limit: 10,
+    page: 1,
   };
+  const [filterParams, setFilterParams] = useRecoilState<any>(caseStudiesFilterParam)
+  const handleFilterParams = (filter: any) => {
+    setFilterParams({ ...params, ...filter })
+  }
+
+
+  // get case-studies table data
+  const getData = async (query?: any) => {
+    //search query check
+    if (query?.search) {
+      params.search = query?.search
+    }
+    if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
+      params = { ...params, ...filterParams }
+    }
+    await api.get(CASE_STUDIES, params).then((
+      { count, data, pagination }
+    ): any => {
+      setCaseStudyData({
+        count,
+        data: data?.map((obj: any, index: number) => ({
+          id: obj?.id,
+          no: index+1,
+          avater: Image,
+          name: `${obj?.intern?.userDetail?.firstName} ${obj?.intern?.userDetail?.lastName}`,
+          ReportName: obj?.title,
+          department: obj?.intern?.internship?.department?.name,
+          assessmentDate: dayjs(obj?.createdAt).format("DD/MM/YYYY"),
+          reportingManager: `${obj?.remarked?.firstName} ${obj?.remarked?.lastName}`,
+          status: obj?.supervisorStatus,
+        })),
+        pagination
+      })
+    });
+  };
+
+  // get single case-study object
+  const getSelectedCasStudyData = async (id: string) => {
+    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => setSelectedCasStudyData(
+    data
+    ))
+  }
+
+  // get department list
+  const getDepartmentList = async () => {
+    await api.get(DAPARTMENT, { page: 1, limit: 10 }).then(({ data }) => { setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name }))) })
+  }
+  // get intern list
+  const getInternList = async () => {
+    await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({userDetail}:any)=>userDetail)))
+  }
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -34,8 +89,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, avatar , name, ReportName, department , assessmentDate,reportingManager, status }: any) =>
-      [  no, '' , name, ReportName, department , assessmentDate,reportingManager, status  ]
+    const body = data.map(({ no, avatar, name, ReportName, department, assessmentDate, reportingManager, status }: any) =>
+      [no, '', name, ReportName, department, assessmentDate, reportingManager, status]
     );
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
@@ -83,9 +138,25 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+  const getParamId = (value: string) => {
+    return value?.substring(value?.lastIndexOf("/") + 1, value?.length);
+  };
+
   return {
-    getData,
     downloadPdfOrCsv,
+    //table data
+    getData,
+    caseStudyData,
+    getSelectedCasStudyData,
+    selectedCasStudyData,
+    handleFilterParams,
+    // department
+    getDepartmentList,
+    departmentList,
+    //internList
+    internList,
+    getInternList,
+    getParamId,
   };
 };
 
