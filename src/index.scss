@@ -423,6 +423,31 @@ svg {
   }
 }
 
+.ant-input-number {
+  width: 100%;
+
+  &::placeholder {
+    color: $light-grey-color;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+    border-color: rgba(90, 89, 128, 0.5);
+  }
+
+  &.filled {
+    background-color: $text-input-bg-color;
+    border-color: $text-input-bg-color;
+
+    &:hover,
+    &:focus {
+      background-color: #ffffff;
+      border-color: rgba(90, 89, 128, 0.5);
+    }
+  }
+}
+
 .ant-input-affix-wrapper {
   .ant-input {
   
