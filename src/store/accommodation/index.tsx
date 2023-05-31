@@ -35,7 +35,22 @@ export const bookingRequestsState = atom({
   default: []
 });
 
+export const bookingRequestsFilterState = atom({
+  key: 'bookingRequestsFilterState',
+  default: {}
+});
+
+export const bookingRequestsSearchState = atom({
+  key: 'bookingRequestsSearchState',
+  default: {}
+});
+
 export const checkPropertyAvailabilityState = atom({
   key: 'checkPropertyAvailabilityState',
   default: null
+});
+
+export const allPropertyAgentsState = atom({
+  key: 'allPropertyAgentsState',
+  default: []
 });

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps, DatePickerProps } from 'antd';
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
+import endpoints from "../../config/apiEndpoints";
 import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
+import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
+import useBookingRequests from './BookingRequests/actionHandler';
+import { availablePropertiesState, filterParamsState, allPropertyAgentsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../store";
+import useAccommodationHook from "./actionHandler";
+import { useRecoilState, useResetRecoilState, useRecoilValue } from "recoil";
 import avatar from '../../assets/images/header/avatar.svg'
+import api from "../../api";
 import dayjs from 'dayjs';
 import "./style.scss";
-import useBookingRequests from './BookingRequests/actionHandler';
-import endpoints from "../../config/apiEndpoints";
-import { useRecoilState, useResetRecoilState } from "recoil";
-import { availablePropertiesState, filterParamsState } from "../../store";
-import api from "../../api";
 
 
   // Temporary Data
@@ -118,12 +119,15 @@ const Accommodation = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
-  const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
+  const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS;
+  const {getAllPropertyAgents} = useAccommodationHook()
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
   const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
+  const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState)
+  const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState)
+  const allAgents = useRecoilValue(allPropertyAgentsState)
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false)
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
@@ -165,11 +169,10 @@ const Accommodation = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    // fetchBookingRequests()
-    console.log("availablePro: ", availableProperties)
+    getAllPropertyAgents()
   }, [])
 
-
+console.log("allAgents::: ", allAgents)
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const fetchBookingRequests = async () => {
@@ -268,8 +271,27 @@ const Accommodation = () => {
     console.log('Date::: ', date, dateString);
   }
 
-  const handleChangeStatus = (value: string) => {
-    console.log(`selected ${value}`);
+  const handleFilterAgent = (value: any) => {
+    setFilterBookingRequest((prev:any) => {
+      return {...prev, agentId: value}
+    })
+  }
+
+  const handleFilterStatus = (value: any) => {
+    setFilterBookingRequest((prev:any) => {
+      return {
+        ...prev,
+        status: value
+      }
+    })
+  }
+
+  const handleBookingRequestSearch = (value: any) => {
+    setSearchBookingRequest({searchText: value})
+  }
+  
+  const handleChangeStatus = (value: any) => {
+    console.log("selected value::: ", value)
   }
 
   function handledownloadBookingRequest (key:any) {
@@ -279,10 +301,6 @@ const Accommodation = () => {
     if(key === 'excel') {
       downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestsData, )
     }
-  }
-
-  function handleFilterStatusBookingRequests(key: any) {
-    console.log(key)
   }
 
 
@@ -314,7 +332,7 @@ const Accommodation = () => {
             }
             {location.pathname === '/accommodation/booking-requests' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar handleChange={handleBookingRequestSearch}/>
               </div>
             }
             {location.pathname === '/accommodation/payments' &&
@@ -342,20 +360,19 @@ const Accommodation = () => {
                 <Select 
                   className="filled"
                   placeholder="Agent"
-                  onChange={handleChangeStatus}
+                  onChange={handleFilterAgent}
                   popupClassName={'agents-dropdown'}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
                 >
-                  {agentOptions.map((option) => {
+                  {allAgents?.map((agent:any) => {
                     return (
-                      <Select.Option value={option.value} key={option.value}>
+                      <Select.Option value={agent?.id} key={agent?.id}>
                         <div className="agent-option">
-                          <Avatar size={24} src={avatar}>
-                            AZ
-                            {/* {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)} */}
+                          <Avatar size={24} src={agent?.avatar}>
+                            {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
                           </Avatar>
-                          {option.label}
+                          {agent?.firstName} {agent?.lastName}
                         </div>
                       </Select.Option>
                     )
@@ -364,31 +381,17 @@ const Accommodation = () => {
               </div>
 
               <div className="requests-filterby-status">
-                <Dropdown 
-                  overlayClassName="shs-dropdown" 
-                  trigger={['click']} 
+                <Select
+                  className="filled"
+                  placeholder="Status"
+                  onChange={handleFilterStatus}
                   placement="bottomRight"
-                  menu={{ 
-                    items: [
-                      {
-                        key: 'reserved',
-                        label: 'Reserved'
-                      },
-                      {
-                        key: 'pending',
-                        label: 'Pending'
-                      },
-                      {
-                        key: 'rejected',
-                        label: 'Rejected'
-                      },
-                    ],
-                    onClick: ({key}) => handleFilterStatusBookingRequests(key),
-                    selectable: true,
-                  }} 
+                  suffixIcon={<IconAngleDown />}
                 >
-                  <Button className="button-sky-blue">Status<IconAngleDown /></Button>
-                </Dropdown>
+                  <Select.Option value="reserved">Reserved</Select.Option>
+                  <Select.Option value="pending">Pending</Select.Option>
+                  <Select.Option value="rejected">Rejected</Select.Option>
+                </Select>
               </div>
               <div className="dropdown-download">
                 <Dropdown
