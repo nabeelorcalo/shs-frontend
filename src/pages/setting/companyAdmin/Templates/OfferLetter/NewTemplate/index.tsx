@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { Divider, Button, Form, Row, Col, Space, Input, Typography } from "antd";
-import ReactQuill, { Quill } from "react-quill";
+import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
-import { NavLink, useNavigate } from "react-router-dom";
-import "./style.scss";
+import { NavLink, useLocation } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
+import useTemplatesCustomHook from "../../actionHandler";
+import { currentUserState } from '../../../../../../store';
+import { useRecoilState } from "recoil";
+import "./style.scss";
+
 const { Title, Paragraph } = Typography;
 
 const NewTemplateOfferLetter = () => {
@@ -17,19 +21,54 @@ const NewTemplateOfferLetter = () => {
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Offer Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}` },
   ];
+
   const [form] = Form.useForm();
-  const [textEditorValue, setTextEditorValue] = useState();
-  const onChangeHandler = (e: any) => {
-    setTextEditorValue(e);
+  const { state: templateData }: any = useLocation();
+  const [description, setDescription] = useState('');
+  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
+
+  console.log(templateData);
+
+  const onFinish = (values: any) => {
+    const newValues = {
+      ...values,
+      textEditorValue: description,
+      templateType: templateData?.templateType ?? templateData?.type,
+    }
+    if (templateData?.templateType) {
+      postNewTemplate(newValues);
+    } else {
+      console.log('edit');
+
+      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+    }
+    form.resetFields();
+    setDescription('')
+
   };
-  const onFinish = (values: any) => {};
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
 
   return (
     <div className="offer-letter-new-template">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical" form={form} validateMessages={DEFAULT_VALIDATIONS_MESSAGES} onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          form={form}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          onFinish={onFinish}
+          initialValues={initialValues}
+        >
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -59,8 +98,9 @@ const NewTemplateOfferLetter = () => {
                 <div className="text-input-bg-color rounded-lg  my-2 text-editor">
                   <ReactQuill
                     theme="snow"
-                    value={textEditorValue}
-                    onChange={onChangeHandler}
+                    defaultValue={description}
+                    value={description}
+                    onChange={setDescription}
                     modules={textEditorData}
                   />
                 </div>
@@ -74,7 +114,7 @@ const NewTemplateOfferLetter = () => {
               </NavLink>
             </Button>
             <Button size="middle" className="teriary-bg-color white-color add-button" htmlType="submit">
-              Add
+              Save
             </Button>
           </Space>
         </Form>

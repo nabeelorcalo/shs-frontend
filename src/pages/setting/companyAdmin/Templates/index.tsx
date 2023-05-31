@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Typography, Divider } from "antd";
 const { Text } = Typography;
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useTemplatesCustomHook from "./actionHandler";
 import "./Template.scss";
 
 const SettingTemplate: React.FC = () => {
-
-  const { getAllTemplates, templatesData }: any = useTemplatesCustomHook();
-
-  useEffect(() => {
-    getAllTemplates()
-  }, [])
-
-  console.log('templates data are', templatesData);
-
+  const navigate = useNavigate()
   let overview = [
     {
       type: "offerLetter",
@@ -63,7 +55,7 @@ const SettingTemplate: React.FC = () => {
         {overview.map((data: any, index) => {
           return (
             <Col key={index} className="gutter-row" xs={24} md={24} xl={12} xxl={8}>
-              <NavLink key={index} to={`${data.link}/${data.type}`}>
+              <div onClick={() => { navigate(data.link, { state: data.type }) }}>
                 <div className="template-box-wrapper">
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
@@ -75,7 +67,7 @@ const SettingTemplate: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </NavLink>
+              </div>
             </Col>
           );
         })}

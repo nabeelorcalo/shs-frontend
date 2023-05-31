@@ -20,7 +20,7 @@ const useTimesheetCustomHook = () => {
     const params = {
       limit: 100,
       page: 1,
-      search: searchValue ? searchValue : null
+      q: searchValue ? searchValue : null
     }
     setIsLoading(true)
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})

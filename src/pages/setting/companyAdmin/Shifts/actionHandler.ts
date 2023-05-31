@@ -16,7 +16,7 @@ const useShiftsCustomHook = () => {
     const params = {
       limit: 100,
       page: 1,
-      search: searchValue ? searchValue : null
+      q: searchValue ? searchValue : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(SETTINGS_SHIFTS, query);

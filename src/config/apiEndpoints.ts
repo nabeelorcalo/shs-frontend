@@ -103,6 +103,9 @@ const endpoints = {
   DELETE_TIMESHEET: '/timesheet/category/delete',
   EDIT_TIMESHEET: '/timesheet/category/edit',
   DELETE_PAYROLL: '/payroll/delete',
-  GET_ALL_COMAPANIES:'/university/universityCompanies'
+  GET_ALL_COMAPANIES:'/university/universityCompanies',
+  DELETE_SETTING_TEMPLATE:'/template/delete',
+  POST_SETTING_TEMPLATE:'/template/add',
+  EDIT_SETTING_TEMPLATE:'/template/edit'
 }
 export default endpoints;

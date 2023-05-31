@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Col, Row, Typography } from "antd";
 import TemplateCommonDropdown from "./TemplateCommonDropdown";
 import "./TemplatesCommonCard.scss";
+import DropDownForSetting from "./CustomSettingDropdown";
 interface ITEMPLATE {
   overview: {
     name: string;
@@ -10,15 +11,18 @@ interface ITEMPLATE {
   setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteModal: boolean;
   link: string;
+  state: any;
+  setState: any
+  setEditData?:any 
 }
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const TemplatesCommonCard = (props: ITEMPLATE) => {
-  const { overview, showDeleteModal, setShowDeleteModal, link } = props;
+  const { overview, setEditData, link, state, setState } = props;
   return (
     <div className="templates-common-card">
       <Row gutter={[20, 20]} className="mt-5">
-        {overview.map((data: any, index: any) => {
+        {overview?.map((item: any, index: any) => {
           return (
             <Col key={index} className="gutter-row flex" xs={24} md={6} xxl={6}>
               <div className="common-card-box-wrapper w-full">
@@ -26,17 +30,23 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
                   <div className="flex px-3 justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
-                        {data.name}
+                        {item?.name}
                       </Text>
-                      <Text className="text-sm font-normal text-secondary-color">
-                        {data.content}
-                      </Text>
+                      <Typography dangerouslySetInnerHTML={{ __html: item?.description }}
+                        className="text-sm font-normal text-secondary-color" />
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
-                      <TemplateCommonDropdown
+                      {/* <TemplateCommonDropdown
                         link={link}
                         showDeleteModal={showDeleteModal}
                         setShowDeleteModal={setShowDeleteModal}
+                      /> */}
+                      <DropDownForSetting
+                        link={link}
+                        SetEditData={setEditData}
+                        state={state}
+                        setState={setState}
+                        editData={item}
                       />
                     </span>
                   </div>
