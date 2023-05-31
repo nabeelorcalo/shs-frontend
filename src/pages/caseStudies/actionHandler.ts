@@ -43,8 +43,7 @@ const useCustomHook = () => {
   // global set params for filter ans search
   const [filterParams, setFilterParams] = useRecoilState<any>(caseStudiesFilterParam)
   const handleFilterParams = (filter: any) => {
-    console.log(filter,"filter");
-    
+    params = { ...params, ...filter }
     setFilterParams({ ...params, ...filter })
   }
 
@@ -57,7 +56,7 @@ const useCustomHook = () => {
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
       params = { ...params, ...filterParams }
     }
-    await api.get(CASE_STUDIES, params).then((
+    await api.get(CASE_STUDIES, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
     ): any => {
       setCaseStudyData({
@@ -123,8 +122,8 @@ const useCustomHook = () => {
   }
   // get upload file form data
   const handleUploadFile = (value: any) => {
-    console.log(value,"fdddddd");
-    
+    console.log(value, "fdddddd");
+
     uploadFile = value
   }
 
