@@ -108,6 +108,13 @@ const endpoints = {
   GET_ALL_COMAPANIES:'/university/universityCompanies',
   DELETE_SETTING_TEMPLATE:'/template/delete',
   POST_SETTING_TEMPLATE:'/template/add',
-  EDIT_SETTING_TEMPLATE:'/template/edit'
+  EDIT_SETTING_TEMPLATE:'/template/edit',
+
+  // RECIPES
+  GET_ALL_RECIPES: "/recipe/get-recipies",
+  GET_RECIPE: "/recipe/get-recipe",
+  CREATE_RECIPE: "/recipe/add-recipe",
+  UPDATE_RECIPE: "/recipe/edit-recipe",
+  DELETE_RECIPE: "/recipe/delete-recipe",
 }
 export default endpoints;
