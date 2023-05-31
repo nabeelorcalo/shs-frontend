@@ -44,31 +44,7 @@ const CompaniesMain = () => {
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [searchValue, setSearchValue] = useState('');
-  const { companiesUniversity, getAllCompaniesData,
-    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
-  console.log('current user', currentUser.userUniversity.universityId);
-
-  useEffect(() => {
-    getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
-  }, [searchValue])
-  console.log('api data', companiesUniversity);
-
-  // handle search internships 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
-
-  // const [value, setValue] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
-  // const [showStageStepper, setShowStageStepper] = useState(false)
-  // const [state, setState] = useState(false)
-  // const [listandgrid, setListandgrid] = useState(false)
-  // const [isToggle, setIsToggle] = useState(false)
-
-  // const action = useCustomHook()
   const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
-
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
@@ -182,7 +158,30 @@ const CompaniesMain = () => {
 
     // },
   ];
+  const { companiesUniversity, getAllCompaniesData,
+    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
+  console.log('current user', currentUser.userUniversity.universityId);
 
+  useEffect(() => {
+    getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
+  }, [searchValue])
+  console.log('api data', companiesUniversity);
+
+  // handle search internships 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
+
+  // const [value, setValue] = useState("")
+  // const [showDrawer, setShowDrawer] = useState(false)
+  // const [showStageStepper, setShowStageStepper] = useState(false)
+  // const [state, setState] = useState(false)
+  // const [listandgrid, setListandgrid] = useState(false)
+  // const [isToggle, setIsToggle] = useState(false)
+
+  // const action = useCustomHook()
+ 
   // const tableData = [
   //   {
   //     id: "01",
@@ -252,7 +251,6 @@ const CompaniesMain = () => {
       }
     )
   })
-
 
   return (
     <>

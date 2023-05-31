@@ -93,7 +93,7 @@ const TemplatesRejectionLetter = () => {
         showDeleteModal={showDeleteModal}
       /> */}
       <TemplatesCommonCard
-        link={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}
+        link={ROUTES_CONSTANTS.REJECTION_LETTER_NEW_TEMPLATE}
         overview={filterData}
         setShowDeleteModal={setShowDeleteModal}
         showDeleteModal={showDeleteModal}

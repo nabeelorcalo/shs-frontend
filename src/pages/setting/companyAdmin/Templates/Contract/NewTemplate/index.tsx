@@ -31,6 +31,12 @@ const NewTemplateContract = () => {
   const [description, setDescription] = useState('');
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
 
   // const onChangeHandler = (e: any) => {
   //   setTextEditorValue(e)
@@ -56,11 +62,7 @@ const NewTemplateContract = () => {
     setDescription('')
 
   };
-  const initialValues = {
-    templateName: templateData?.name,
-    subject: templateData?.subject,
-    description: templateData?.description
-  }
+
   useEffect(() => {
     setDescription(templateData?.description)
   }, [templateData?.description])
@@ -76,7 +78,7 @@ const NewTemplateContract = () => {
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
           initialValues={initialValues}
-          >
+        >
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
