@@ -108,6 +108,13 @@ const endpoints = {
   POST_NEW_TIMESHEET: '/timesheet/category/add',
   DELETE_TIMESHEET: '/timesheet/category/delete',
   EDIT_TIMESHEET: '/timesheet/category/edit',
-  DELETE_PAYROLL: '/payroll/delete'
+  DELETE_PAYROLL: '/payroll/delete',
+
+  // RECIPES
+  GET_ALL_RECIPES: "/recipe/get-recipies",
+  GET_RECIPE: "/recipe/get-recipe",
+  CREATE_RECIPE: "/recipe/add-recipe",
+  UPDATE_RECIPE: "/recipe/edit-recipe",
+  DELETE_RECIPE: "/recipe/delete-recipe",
 }
 export default endpoints;

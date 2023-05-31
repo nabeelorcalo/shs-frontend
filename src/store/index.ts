@@ -17,3 +17,4 @@ export * from "./Universities";
 export * from "./Performance";
 export * from "./Offers";
 export * from "./Structure";
+export * from "./recipes";

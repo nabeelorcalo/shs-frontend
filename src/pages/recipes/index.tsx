@@ -1,38 +1,78 @@
 import { useState, useEffect } from "react"
+import { Row, Col, Empty } from 'antd'
+import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom"
-import { Row, Col } from 'antd'
-import { PageHeader, RecipeCard, ExtendedButton, SearchBar } from "../../components"
+import { PageHeader, RecipeCard, ExtendedButton, SearchBar, Loader } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
-import { ROUTES_CONSTANTS } from '../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../config/constants'
+import api from '../../api';
+import endpoints from "../../config/apiEndpoints";
+import { allRecipesState } from "../../store";
 import "./style.scss";
 
-// Temporary data
-import recipeThumb from '../../assets/images/gallery/recipeCard.png'
-import recipeThumb1 from '../../assets/images/gallery/recipeCard1.png'
-import recipeThumb2 from '../../assets/images/gallery/recipeCard2.png'
-const data = [
-  { id: '01', title: 'Sticky Orange Chicken', thumb: recipeThumb, description: 'This dish is a real crowd-pleaser. The sweet citrus glaze makes the chicken sticky and delicious—and it’s easy to make!', rating: 3, status: 'published' },
-  { id: '02', title: 'Chicharos Cubanos', thumb: recipeThumb1, description: 'These chicharos Cubanos are Cuban-style split pea soup. Made with dried green split pleas, smoked pork, potatoes, and butternut squash.', rating: 3, status: 'published' },
-  { id: '03', title: 'Succotash', thumb: recipeThumb2, description: 'This succotash is a warm vegetable dish packed with buttery corn, blistered cheery tomatoes, and tender lima beans, green beans, red on...', rating: 3, status: 'draft' },
-  { id: '04', title: 'Succotash', thumb: recipeThumb2, description: 'This succotash is a warm vegetable dish packed with buttery corn, blistered cheery tomatoes, and tender lima beans, green beans, red on...', rating: 3, status: 'draft' },
-]
 
 const Recipes = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const { GET_ALL_RECIPES } = endpoints
   const navigate = useNavigate();
   const location = useLocation();
   const [rateValue, setRateValue] = useState(3);
-
+  const [allRecipes, setAllRecipes]: any = useRecoilState(allRecipesState)
+  const [loadingRecipes, setLoadingRecipes] = useState(false)
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    fetchData();
   }, [])
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore, page])
 
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function fetchData () {
+    setHasMore(false)
+    setPage(1)
+    setLoadingRecipes(true)
+    try {
+      const response:any = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+      setAllRecipes(response.data);
+      setPage(page + 1);
+      setHasMore(response.data.length > 0);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setLoadingRecipes(false)
+    }
+  }
+
+  async function handleScroll() {
+    if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+      if(hasMore) {
+        setLoadingRecipes(true)
+        try {
+          const {data}: any = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+          setAllRecipes([...allRecipes, ...data]);
+          setPage(page + 1);
+          setHasMore(data.length > 0);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoadingRecipes(false)
+        }
+      } else {
+        setLoadingRecipes(true)
+      }
+    }
+  };
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -56,21 +96,33 @@ const Recipes = () => {
             Add New Recipe
           </ExtendedButton>
         </Col>
-        {data.map((recipe, index) => {
+        {allRecipes?.map((recipe:any) => {
             return (
-              <Col key={index} xs={24} sm={12} xl={8} xxl={6}>
+              <Col key={recipe.id} xs={24} sm={12} xl={8} xxl={6}>
                 <RecipeCard
-                  title={recipe.title}
-                  thumb={recipe.thumb}
-                  description={recipe.description}
+                  title={recipe?.name}
+                  thumb={`${constants.MEDIA_URL}/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
+                  description={recipe?.description}
                   rating={rateValue}
-                  status={recipe.status}
+                  status={recipe?.status}
                   onCardClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_DETAILS}/${recipe.id}`, {state: {from: location.pathname}})}
                   onRateChange={handleRateChange}
                 />
               </Col>
             )
           })}
+          {/* {loadingRecipes && */}
+          <Col xs={24}>
+            <div className="scroll-loader">
+              <Loader />
+            </div>
+          </Col>
+          {/* } */}
+          {!allRecipes && !loadingRecipes &&
+            <Col xs={24}>
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            </Col>
+          }
       </Row>
     </div>
   )
