@@ -4,15 +4,15 @@ import TemplateCommonDropdown from "./TemplateCommonDropdown";
 import "./TemplatesCommonCard.scss";
 import DropDownForSetting from "./CustomSettingDropdown";
 interface ITEMPLATE {
-  overview: {
-    name: string;
-    content: string;
+  overview?: {
+    name?: string;
+    content?: string;
   }[];
-  setShowDeleteModal: React.Dispatch<React.SetStateAction<boolean>>;
-  showDeleteModal: boolean;
-  link: string;
-  state: any;
-  setState: any
+  setShowDeleteModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  showDeleteModal?: boolean;
+  link?: string;
+  state?: any;
+  setState?: any
   setEditData?:any 
 }
 
