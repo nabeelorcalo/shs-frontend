@@ -50,8 +50,6 @@ const AvailableProperties = () => {
     }
   }
 
-  
-
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -66,7 +64,6 @@ const AvailableProperties = () => {
       <Spin spinning={loading}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
-            console.log('Available row::: ', property)
             let tags: any[] = [];
             if(property.allBillsIncluded) tags.push('Utility Bils');
             if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");

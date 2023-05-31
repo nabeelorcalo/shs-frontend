@@ -5,7 +5,7 @@ import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } fro
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox } from 'antd'
+import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
 import avatar from '../../assets/images/header/avatar.svg'
 import dayjs from 'dayjs';
 import "./style.scss";
@@ -211,17 +211,13 @@ const Accommodation = () => {
     if(fieldsValue.priceRange !== undefined) {
       params.minPrice = fieldsValue.priceRange[0];
       params.maxPrice = fieldsValue.priceRange[1];
-    }
-    if(fieldsValue.offer !== undefined) {
+    } else if(fieldsValue.offer !== undefined) {
       if(fieldsValue.offer.includes('Discounts')) {
         params.offer = fieldsValue.offer.includes('Discounts')
-      }
-      if(fieldsValue.offer.includes('No Deposit')) {
+      } else if(fieldsValue.offer.includes('No Deposit')) {
         params.depositRequired = fieldsValue.offer.includes('No Deposit')
       }
-    }
-
-    if(fieldsValue.accomodationType !== undefined) {
+    } else if(fieldsValue.accomodationType !== undefined) {
       // if(fieldsValue.accomodationType.includes('Entire Property')) {
       //   params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
       // }
@@ -232,16 +228,12 @@ const Accommodation = () => {
       //   params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
       // }
       params.propertyType = fieldsValue.accomodationType
-    }
-
-    if(fieldsValue.facilities !== undefined) {
+    } else if(fieldsValue.facilities !== undefined) {
       if(fieldsValue.facilities.includes('bills')) {
         params.billsIncluded = fieldsValue.facilities.includes('bills')
-      }
-      if(fieldsValue.facilities.includes('Wi-fi')) {
+      } else if(fieldsValue.facilities.includes('Wi-fi')) {
         params.hasWifi = fieldsValue.facilities.includes('Wi-fi')
-      }
-      if(fieldsValue.facilities.includes('laundary')) {
+      } else if(fieldsValue.facilities.includes('laundary')) {
         params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
       }
     }
@@ -292,11 +284,6 @@ const Accommodation = () => {
   function handleFilterStatusBookingRequests(key: any) {
     console.log(key)
   }
-
-  const goToPosts = () => navigate({
-    pathname: '/accommodation',
-    search: '?sort=date&order=newest',
-  });
 
 
   /* RENDER APP
@@ -364,7 +351,10 @@ const Accommodation = () => {
                     return (
                       <Select.Option value={option.value} key={option.value}>
                         <div className="agent-option">
-                          <img src={avatar} />
+                          <Avatar size={24} src={avatar}>
+                            AZ
+                            {/* {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)} */}
+                          </Avatar>
                           {option.label}
                         </div>
                       </Select.Option>
