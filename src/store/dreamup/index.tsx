@@ -1,17 +1,14 @@
-import { atom, selector } from "recoil";
-import { recoilPersist } from "recoil-persist";
-const { persistAtom } = recoilPersist();
+import { atom } from "recoil";
 
 // get all applications data
 export const goalsDataState = atom({
   key: "goalsDataState",
   default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 
-export const firstGoalState = selector({
+export const firstGoalState = atom({
   key: 'firstGoalState',
-  get: ({get}) => get(goalsDataState).length > 0 ? get(goalsDataState)?.response[0]?.tasks : [],
+  default: {},
 });
 
 // get all application Details data

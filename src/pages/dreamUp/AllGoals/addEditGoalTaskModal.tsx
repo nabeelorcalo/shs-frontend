@@ -5,34 +5,43 @@ import { CommonDatePicker, TextArea } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
-// const { RangePicker } = DatePicker;
-// import { Input } from '../../../components';
-import Checkbox from 'antd/es/checkbox';
+import useCustomHook from '../actionHandler';
+import dayjs from 'dayjs';
 // Leave Request Form Select Oprion Array
 export const AddEditGoalTaskModal = (props: any) => {
-  const initailVal = {
-    taskName: '',
-    notes: '',
-    date: '',
-  }
-  const { title, open, setOpenAddEditGoalTask, submitGoalTask, data } = props;
-  const [openStartDate, setOpenStartDate] = useState(false);
-  const [formVal, setFormVal] = useState(initailVal)
-  const [form] = Form.useForm();
-  // console.log(formVal);
 
-  // const handleTimeChange = (time: any) => {
-  //   const selectedHour = dayjs(time).format('h');
-  //   console.log(selectedHour);
-  // }
-  // const [requestLeave, setRequestLeave] = useState('');
-  // console.log(requestLeave, 'from modal box');
+  const action = useCustomHook();
+  const { title, open, setOpenAddEditGoalTask, goalData, initValues, setInitValues } = props;
+  const [openStartDate, setOpenStartDate] = useState(false);
+  const [form] = Form.useForm();
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const dateFormat = 'YYYY/MM/DD';
+  const addGoalTaskHandle = async () => {
+      const values = await form.validateFields();
+      console.log(goalData.id);
+      const data = {
+        goalId: goalData.id,
+        startingDate: dayjs(values.startingDate).toISOString().split('T')[0],
+        note: values.note,
+        name: values.name,
+        completed: false,
+      }
+      setLoading(true);
+      console.log(data, "======================"); 
+      await action.addGoalTask(data);
+      setDisabled(true)
+      setLoading(false);
+      setInitValues({});
+      setOpenAddEditGoalTask(false);
+      form.resetFields();
+  };
 
   return (
     <Modal
       title={title}
       open={open}
-      onCancel={() => setOpenAddEditGoalTask(false)}
+      onCancel={() => {setInitValues({}); setOpenAddEditGoalTask(false);}}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
@@ -43,32 +52,42 @@ export const AddEditGoalTaskModal = (props: any) => {
       <Form
         layout='vertical'
         form={form}
+        initialValues={initValues}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        onValuesChange={() => setDisabled(false)}
+        onFinish={addGoalTaskHandle}
       >
         <Form.Item
           label="Task Name"
-          name="taskName"
+          name="name"
+          rules={[{ required: true }]}
         >
           <Input
             id="01"
             type="text"
             name="taskName"
-            value={formVal.taskName} placeholder={"Enter your goal task name"}
-          // onChange={(e: any) => setFormVal({ ...formVal, goalName: e.target.value })}
+            placeholder={"Enter your goal task name"}
           />
         </Form.Item >
-        <Form.Item label="Notes" >
-          <TextArea rows={6} placeholder="Type a message" maxLength={8} valuue={formVal.notes} />
+        <Form.Item 
+          label="Notes" 
+          name="note"
+          rules={[{ required: true }]} 
+        >
+          <TextArea rows={6} placeholder="Type a message" maxLength={100} />
         </Form.Item>
         <Form.Item
-          name="dateTo"
-          label="Date To"  >
+          name="startingDate"
+          label="Date To" 
+          rules={[{ required: true }]} 
+        >  
           <CommonDatePicker
             name="Date Picker"
             open={openStartDate}
             setOpen={setOpenStartDate}
             setValue={(e: any) => console.log(e)}
             placement={'bottomLeft'}
+            format={dateFormat}
           />
         </Form.Item>
         <Form.Item >
@@ -76,14 +95,15 @@ export const AddEditGoalTaskModal = (props: any) => {
             <Button
               className='Leave_request_Canclebtn'
               label="Cancel"
-              onClick={() => { setOpenAddEditGoalTask(false); form.resetFields() }}
+              onClick={() => { setInitValues({}); setOpenAddEditGoalTask(false); form.resetFields(); }}
               type="primary"
               htmlType="button"
             />
             <Button
               className='Leave_request_SubmitBtn'
               label="Submit"
-              onClick={submitGoalTask}
+              disabled= {disabled}
+              loading={loading}
               type="primary"
               htmlType="submit"
             />

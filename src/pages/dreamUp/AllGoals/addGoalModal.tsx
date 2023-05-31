@@ -21,17 +21,6 @@ export const SetGoal = (props: any) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
 
-  const handleSubmission = useCallback(
-    (result:any) => {
-      if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
-      } else {
-        showNotification("success", "Success", result.response?.message);
-      }
-    },
-    [form]
-  );
-
   const addGoalHandle = async () => {
     // try {
       const values = await form.validateFields();
@@ -71,9 +60,7 @@ export const SetGoal = (props: any) => {
         layout='vertical'
         form={form}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-        onValuesChange={(_, values) => {
-          setDisabled(false)
-        }}
+        onValuesChange={() => setDisabled(false)}
         onFinish={addGoalHandle}
       >
         <Form.Item
