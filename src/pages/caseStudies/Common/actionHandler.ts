@@ -1,5 +1,5 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import React from "react";
+import React, { useRef, useState } from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 
@@ -9,6 +9,7 @@ import api from "../../../api";
 import csv from "../../../helpers/csv";
 
 // Chat operation and save into store
+let signPad: any = {};
 const useCustomHookforAssment = () => {
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -60,9 +61,55 @@ const useCustomHookforAssment = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+  const [signature, setSignature] = useState("");
+  const getSignPadValue = (value: any) => {
+    console.log(value);
+    signPad = value
+  }
+
+  const urlToFile = (url: any) => {
+    let arr = url.split(",");
+    // console.log(arr) 
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    let dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+    return file;
+  };
+  // const formatIntoPng = (isClear: boolean) => {
+  //   if (isClear) { return null; }
+  //   else {
+  //     if (sigCanvas.current) {
+  //       const dataURL = sigCanvas.current.toDataURL();
+
+  //     }
+  //   }
+  // };
+
+  const cancelDrawaSign = () => {
+    signPad?.clear();
+    setSignature("")
+  };
+  const handleSignatue = () => {
+    // setState({ trimmedDataURL: sigPad.getTrimmedCanvas().toDataURL("image/png") });
+    let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
+    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
+    console.log(file, "fileee");
+
+    // return file;
+    setSignature(signPad?.getTrimmedCanvas()?.toDataURL("image/png"))
+  };
+
   return {
     getData,
     downloadPdfOrCsv,
+    getSignPadValue,
+    cancelDrawaSign, handleSignatue, signature
   };
 };
 

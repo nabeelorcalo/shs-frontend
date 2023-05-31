@@ -12,10 +12,10 @@ const useSavedPropertiesHook = () => {
 
 
   // Get Saved Properties
-  const getSavedProperties = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+  const getSavedProperties = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any={}) => {
     setLoading(true);
     try {
-      const res = await api.get(`${GET_SAVED_PROPERTIES}`);
+      const res = await api.get(`${GET_SAVED_PROPERTIES}`, params);
       if(!res.error) {
         const { data } = res;
         setsavedProperties(data)

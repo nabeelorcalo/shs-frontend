@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./style.scss";
 import { Row, Col, Button, Modal } from "antd";
 import { CloseCircleIcon } from "../../assets/images";
@@ -34,14 +33,15 @@ const receiverInfo = [
   },
 ];
 
-const details =
-  "<b><i>During the internship period,</i></b> the intern will have following responsibilities:1.Act as a strategic thought partner to the product, design and development teams2. Lead the design of useful, usable, and desirable products and solution3. Own the end-to-end process for user <b>research, wireframing, prototyping,</b> testing, mockups, final design and implementation4. Design complex navigation flows. Turn functional requirements into simple user journeys5. Establish and promote UX/UI design guidelines, best practices and standards based on user behavior";
-
 const OfferLetterTemplateModal = (props: any) => {
-  const { open, setOpen, handleOfferLetterTemplate } = props;
-  const [textEditorValue, setTextEditorValue] = useState(details);
+  const { open, setOpen, handleOfferLetterTemplate, templateValues, setTemplateValues } = props;
   const onChangeHandler = (e: any) => {
-    setTextEditorValue(e);
+    setTemplateValues({ ...templateValues, description: e });
+  };
+
+  const onCancel = () => {
+    setOpen(false);
+    setTemplateValues({ subject: "", description: "" });
   };
 
   return (
@@ -50,7 +50,7 @@ const OfferLetterTemplateModal = (props: any) => {
         closeIcon={<img src={CloseCircleIcon} />}
         title="Offer Letter"
         open={open}
-        onCancel={() => setOpen(false)}
+        onCancel={onCancel}
         footer={""}
         width={902}
       >
@@ -98,7 +98,7 @@ const OfferLetterTemplateModal = (props: any) => {
                     <div className="text-input-bg-color rounded-lg text-editor">
                       <ReactQuill
                         theme="snow"
-                        value={textEditorValue}
+                        value={templateValues?.description}
                         onChange={onChangeHandler}
                         modules={textEditorData}
                       />
@@ -119,7 +119,7 @@ const OfferLetterTemplateModal = (props: any) => {
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <Button
                           className=" border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
-                          onClick={() => setOpen(false)}
+                          onClick={onCancel}
                         >
                           Cancel
                         </Button>

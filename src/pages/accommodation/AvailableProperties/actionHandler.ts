@@ -12,10 +12,10 @@ const useAvailablePropertiesHook = () => {
 
 
   // Get Available Properties
-  const getAvailableProperties = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+  const getAvailableProperties = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any={}) => {
     setLoading(true);
     try {
-      const res = await api.get(`${GET_AVAILABLE_PROPERTIES}`);
+      const res = await api.get(`${GET_AVAILABLE_PROPERTIES}`, params);
       if(!res.error) {
         const { data } = res;
         setAvailableProperties(data)

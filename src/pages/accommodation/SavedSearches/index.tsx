@@ -4,8 +4,8 @@ import {Empty, Spin} from 'antd'
 import { AccommodationCard } from '../../../components'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
-import { useRecoilValue} from "recoil";
-import { savedPropertiesState } from "../../../store";
+import { useRecoilValue, useResetRecoilState} from "recoil";
+import { savedPropertiesState, filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants'
 
@@ -17,6 +17,8 @@ const SavedSearches = () => {
   const location = useLocation();
   const {getSavedProperties} = useSavedPropertiesHook();
   const savedProperties= useRecoilValue(savedPropertiesState);
+  const filterParams = useRecoilValue(filterParamsState);
+  const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
 
 
@@ -24,8 +26,13 @@ const SavedSearches = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
+    resetFilterParams()
     getSavedProperties(setLoading)
   }, [])
+
+  useEffect(() => {
+    getSavedProperties(setLoading, filterParams)
+  }, [filterParams])
 
 
   /* ASYNC FUNCTIONS
@@ -45,31 +52,31 @@ const SavedSearches = () => {
     <div className="saved-searches">
       <Spin spinning={loading}>
         <div className="shs-row placeholder-height">
-          {savedProperties?.map((item:any) => {
+          {savedProperties?.map((property:any) => {
             let tags: any[] = [];
-            if(item.property.allBillsIncluded) tags.push('Utility Bils');
-            if(item.property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
+            if(property.allBillsIncluded) tags.push('Utility Bils');
+            if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
 
             return (
-              <div key={item.id} className="shs-col-5">
+              <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={thumb1}
-                  offer={item.property.offer?.monthlyDiscount}
-                  rent={item.property.monthlyRent}
-                  propertyAvailableFor={"week"}
-                  propertyType={item.property.propertyType}
-                  totalBedrooms={item.property.totalBedrooms}
-                  totalBathrooms={item.property.totalBathrooms}
-                  address={item.property.addressOne}
+                  coverPhoto={property?.coverImageData?.mediaUrl}
+                  offer={property.offer?.monthlyDiscount}
+                  rent={property.rent}
+                  propertyAvailableFor={property.rentFrequency}
+                  propertyType={property.propertyType}
+                  totalBedrooms={property.totalBedrooms}
+                  totalBathrooms={property.totalBathrooms}
+                  address={property.addressOne}
                   tags={tags}
                   onSave={() => console.log('handle clik')}
-                  onDetail={() => handleDetailClick(item.property.id)}
+                  onDetail={() => handleDetailClick(property.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
             )
           })}
-          {!savedProperties.length && !loading &&
+          {!savedProperties?.length && !loading &&
             <div className="shs-col-full ">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>

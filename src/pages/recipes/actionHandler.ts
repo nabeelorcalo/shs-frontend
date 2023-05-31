@@ -3,6 +3,7 @@ import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { allRecipesState, recipeState } from "../../store";
 import { Notifications } from '../../components';
+import constants from '../../config/constants';
 
 
 const useRecipesHook = () => {
@@ -29,7 +30,7 @@ const useRecipesHook = () => {
       const image = [{
         uid: data?.recipeImage?.mediaId,
         name: `${data?.recipeImage?.filename}.${data?.recipeImage.metaData.extension}`        ,
-        url: `${import.meta.env.VITE_APP_AWS_MEDIA_URL}/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
+        url: `${constants.MEDIA_URL}/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
       }]
       setRecipe({...data, image})
     }

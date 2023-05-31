@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { useNavigate, useLocation } from "react-router-dom"
 import { PageHeader, RecipeCard, ExtendedButton, SearchBar, Loader } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
-import { ROUTES_CONSTANTS } from '../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
 import { allRecipesState } from "../../store";
@@ -101,7 +101,7 @@ const Recipes = () => {
               <Col key={recipe.id} xs={24} sm={12} xl={8} xxl={6}>
                 <RecipeCard
                   title={recipe?.name}
-                  thumb={`${import.meta.env.VITE_APP_AWS_MEDIA_URL}/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
+                  thumb={`${constants.MEDIA_URL}/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
                   description={recipe?.description}
                   rating={rateValue}
                   status={recipe?.status}
