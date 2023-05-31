@@ -253,6 +253,7 @@ console.log("allAgents::: ", allAgents)
   const resetFormFields = () => {
     propertiesFilterForm.resetFields()
     resetFilterParams()
+    closePropertyFilters()
   }
 
   const openSavedSearchesFilters = () => {
@@ -564,7 +565,7 @@ console.log("allAgents::: ", allAgents)
 
       {/* Saved Searches Filters 
       ***********************************************************************************/}
-      <Drawer
+      {/* <Drawer
         title="Filters"
         open={savedSearchesFiltersOpen}
         onClose={closeSavedSearchesFilters}
@@ -590,7 +591,7 @@ console.log("allAgents::: ", allAgents)
                 />
               </Form.Item>
             </div>
-            {/* <div className="shs-form-group">
+            <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
               <Form.Item name="moveInDate" label="Move in Date">
                 <DatePicker
@@ -611,7 +612,7 @@ console.log("allAgents::: ", allAgents)
                   showToday={false}
                 />
               </Form.Item>
-            </div> */}
+            </div>
 
             <Form.Item name="offer" label="Offer">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
@@ -649,7 +650,7 @@ console.log("allAgents::: ", allAgents)
             </Form.Item>
           </Form>
         </div>
-      </Drawer>
+      </Drawer> */}
     </>
   )
 }

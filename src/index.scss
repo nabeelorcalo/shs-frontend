@@ -25,6 +25,10 @@ svg {
   min-height: 158px;
 }
 
+.ant-tooltip.ant-slider-tooltip {
+  z-index: 1000;
+}
+
 // 5 col grid
 .shs-row {
   display: flex;
