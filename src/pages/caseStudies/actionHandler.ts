@@ -8,14 +8,14 @@ import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
 import { caseStudiesFilterParam } from '../../store/case-studies';
 import { Notifications } from '../../components';
-import { AnymatchPattern } from 'vite';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
 // alis endpoints
 const { CASE_STUDIES, DAPARTMENT, INTERN_LIST, MEDIA_UPLOAD } = endpoints
 //signature object
-let signPad: any = {};
+let signPad: any;
 let uploadFile: any;
+let signature: any;
 const useCustomHook = () => {
   //table data 
   const [caseStudyData, setCaseStudyData] = useState<any>({ count: 0, data: [], pagination: {} })
@@ -34,7 +34,7 @@ const useCustomHook = () => {
     feedback: "",
   });
 
-  // const [signature, setSignature] = useState("");
+  const [signatureText, setSignatureText] = useState(signature ?? "");
   // get data api params
   let params: any = {
     limit: 10,
@@ -43,6 +43,8 @@ const useCustomHook = () => {
   // global set params for filter ans search
   const [filterParams, setFilterParams] = useRecoilState<any>(caseStudiesFilterParam)
   const handleFilterParams = (filter: any) => {
+    console.log(filter,"filter");
+    
     setFilterParams({ ...params, ...filter })
   }
 
@@ -91,13 +93,11 @@ const useCustomHook = () => {
   const getInternList = async () => {
     await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({ userDetail }: any) => userDetail)))
   }
-
   // media upload
   const formData = new FormData();
-
+  // covert base 64 url to file
   const urlToFile = (url: any) => {
     let arr = url.split(",");
-    // console.log(arr) 
     let mime = arr[0].match(/:(.*?);/)[1];
     let data = arr[1];
     let dataStr = atob(data);
@@ -113,48 +113,57 @@ const useCustomHook = () => {
   let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
   //upload manager signature and update feedback form data state to get signature s3 URL  
   const handleSignatureUpload = async (file: any) => {
-    console.log(file, "file");
-    formData.append('file', file);
-    await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }) => {
-      setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
-      setOpenModal(false)
-    })
+    if (file) {
+      formData.append('file', file);
+      await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }) => {
+        setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
+        setOpenModal(false)
+      })
+    }
   }
   // get upload file form data
   const handleUploadFile = (value: any) => {
-    console.log(value);
-
+    console.log(value,"fdddddd");
+    
     uploadFile = value
   }
-  console.log("uploadFile", uploadFile);
 
   // update signpad object
-  const getSignPadValue = (value: AnymatchPattern) => {
-    console.log("value", value);
-    console.log("file value", uploadFile);
-    if (uploadFile) {
-      handleSignatureUpload(uploadFile)
-    } else {
-      signPad = value
-    }
+  const getSignPadValue = (value: any) => {
+    signPad = value
   }
+
   // clear signpad canvas
-  const cancelDrawaSign = () => {
-    signPad?.clear();
-    // setSignature("")
+  const HandleCleare = () => {
+    signPad && signPad?.clear();
+    uploadFile = undefined;
+    signature = undefined
+    setSignatureText("")
   };
   //handle manager signature
   const handleSignatue = () => {
     let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
     let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
-    handleSignatureUpload(file)
+    // for text-signature 
+    if (signature) {
+      setfeedbackFormData({ ...feedbackFormData, supervisorSig: signature })
+      setOpenModal(false)
+    } else {
+      // signature canvas and upload
+      handleSignatureUpload(file ? file : uploadFile)
+    }
   };
 
+  // text signature funtion to update signature value
+  const handleTextSignature = (text: string) => {
+    setSignatureText(text)
+    signature = text
+  }
+  // main manager handle submit btn
   const handleManagerSignature = async (id: string | number, type: string) => {
     let data: any = feedbackFormData;
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then((res) => {
-      console.log("resssss", res);
       Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
     })
   }
@@ -253,8 +262,8 @@ const useCustomHook = () => {
     getParamId,
     checkForImage,
     getSignPadValue,
-    cancelDrawaSign, handleSignatue, setfeedbackFormData, feedbackFormData, openModal, setOpenModal,
-    handleManagerSignature, uploadFile, handleUploadFile
+    HandleCleare, handleSignatue, setfeedbackFormData, feedbackFormData, openModal, setOpenModal,
+    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature
   };
 };
 

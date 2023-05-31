@@ -1,4 +1,4 @@
-@import '../../scss/_colors.scss';
+@import "../../scss/_colors.scss";
 
 .type-signature-wrapper {
   border: 1px dashed $text-error-line-color;
@@ -11,15 +11,15 @@
 
   .signature-input {
     .text-poppins {
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
     }
 
     .text-montserrat {
-      font-family: 'Montserrat', sans-serif;
+      font-family: "Montserrat", sans-serif;
     }
 
     .text-roboto {
-      font-family: 'Roboto', sans-serif;
+      font-family: "Roboto", sans-serif;
     }
 
     .text-size-lg {
@@ -27,11 +27,7 @@
     }
 
     .input-no-border {
-      border: none;
-
-      &:hover {
-        border: none;
-      }
+      box-shadow: none;
     }
   }
 }

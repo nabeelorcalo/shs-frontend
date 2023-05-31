@@ -15,7 +15,7 @@ const AssessmentFormCaseStudies = () => {
     getSelectedCasStudyData,
     getParamId,
     selectedCasStudyData,
-    cancelDrawaSign,
+    HandleCleare,
     handleSignatue,
     checkForImage,
     feedbackFormData,
@@ -166,7 +166,17 @@ const AssessmentFormCaseStudies = () => {
               <div className="w-full relative">
                 <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
                 <div className="sign-box w-full rounded-lg flex items-center justify-around">
-                  {feedbackFormData?.supervisorSig ? (
+                  {!feedbackFormData?.supervisorSig && managerStatus !== "approved" ? (
+                    <span
+                      onClick={() => {
+                        setOpenModal(true);
+                        HandleCleare();
+                      }}
+                      className="sign-btn cursor-pointer"
+                    >
+                      Click here to sign
+                    </span>
+                  ) : (
                     <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
                       {checkForImage(feedbackFormData?.supervisorSig) ? (
                         <img className="absolute w-full h-full overflow-hidden" src={feedbackFormData?.supervisorSig} />
@@ -174,10 +184,6 @@ const AssessmentFormCaseStudies = () => {
                         <p>{feedbackFormData?.supervisorSig}</p>
                       )}
                     </div>
-                  ) : (
-                    <span onClick={() => setOpenModal(true)} className="sign-btn cursor-pointer">
-                      Click here to sign
-                    </span>
                   )}
                 </div>
               </div>
@@ -236,7 +242,7 @@ const AssessmentFormCaseStudies = () => {
         footer={
           <>
             <Button
-              onClick={cancelDrawaSign}
+              onClick={HandleCleare}
               className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
             >
               Cancel

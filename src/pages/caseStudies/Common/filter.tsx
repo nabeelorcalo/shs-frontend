@@ -34,45 +34,45 @@ const Filters = ({ setShowDrawer }: any) => {
     getInternList();
   }, []);
 
-  const handleAddUser = (user: any) => {
-    const filtered = intern.find((u: any) => u.id === user.id) ? true : false;
-    if (!filtered) {
-      setFilterValue({ ...filterValue, Intern: user?.id });
-      setIntern([...intern, user]);
-    }
-  };
+  // const handleAddUser = (user: any) => {
+  //   const filtered = intern.find((u: any) => u.id === user.id) ? true : false;
+  //   if (!filtered) {
+  //     setFilterValue({ ...filterValue, Intern: user?.id });
+  //     setIntern([...intern, user]);
+  //   }
+  // };
 
-  const opriorityOption = (
-    <Menu className="max-h-[300px] overflow-scroll">
-      {internList?.map((item: any) => {
-        return (
-          <Menu.Item key={item}>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <div className="mr-2">
-                  <Avatar
-                    className="h-[32px] w-[32px] rounded-full object-cover relative"
-                    src={item?.avatar}
-                    alt={item?.firstName}
-                    icon={
-                      <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                        {item?.firstName[0]}
-                        {item?.lastName[0]}
-                      </span>
-                    }
-                  />
-                </div>
-                <p>{`${item?.firstName} ${item?.lastName}`}</p>
-              </div>
-              <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
-                Add
-              </div>
-            </div>
-          </Menu.Item>
-        );
-      })}
-    </Menu>
-  );
+  // const opriorityOption = (
+  //   <Menu className="max-h-[300px] overflow-scroll">
+  //     {internList?.map((item: any) => {
+  //       return (
+  //         <Menu.Item key={item}>
+  //           <div className="flex justify-between items-center">
+  //             <div className="flex items-center">
+  //               <div className="mr-2">
+  //                 <Avatar
+  //                   className="h-[32px] w-[32px] rounded-full object-cover relative"
+  //                   src={item?.avatar}
+  //                   alt={item?.firstName}
+  //                   icon={
+  //                     <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+  //                       {item?.firstName[0]}
+  //                       {item?.lastName[0]}
+  //                     </span>
+  //                   }
+  //                 />
+  //               </div>
+  //               <p>{`${item?.firstName} ${item?.lastName}`}</p>
+  //             </div>
+  //             <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
+  //               Add
+  //             </div>
+  //           </div>
+  //         </Menu.Item>
+  //       );
+  //     })}
+  //   </Menu>
+  // );
 
   return (
     <div className="casestudies-filter_main_wrapper">
