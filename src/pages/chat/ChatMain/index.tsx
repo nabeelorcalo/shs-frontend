@@ -1,15 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./style.scss";
-import { Row, Col, Divider, Input, Image, Button, Upload } from "antd";
+import { Row, Col, Divider, Input, Image, Upload } from "antd";
 import { BoxWrapper } from "../../../components";
 import { SearchBar } from "../../../components";
-import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import type { UploadFile } from 'antd/es/upload/interface';
 import {
   Filter,
   AvatarIcon,
-  Userimg,
   EmailIcon,
   Phone,
   Location,
@@ -17,28 +14,13 @@ import {
   DocIcon,
   DocImg1,
   DocImg2,
-  Audio,
-  ShapAudio,
-  PlayIcon,
-  DoubleTik,
   SendIcon,
   PlusIcon,
   Addatech,
-  AudioPlayer,
-  SeeAll,
-} from "../../../assets/images";
 
+} from "../../../assets/images";
 // import "./styles.css";
-import EmojiPicker, {
-  EmojiStyle,
-  SkinTones,
-  Theme,
-  Categories,
-  EmojiClickData,
-  Emoji,
-  SuggestionMode,
-  SkinTonePickerLocation
-} from "emoji-picker-react";
+import EmojiPicker, { EmojiStyle, EmojiClickData, } from "emoji-picker-react";
 const { TextArea } = Input;
 
 const inboxMessage = [
@@ -119,7 +101,6 @@ const inboxMessage = [
 
   },
 ];
-
 const DocData = [
   {
     id: "1",
@@ -133,9 +114,66 @@ const DocData = [
     docName: "My tax claim",
     docSize: "197 kb",
   },
+  {
+    id: "3",
+    img: DocIcon,
+    docName: "My tax claim",
+    docSize: "197 kb",
+  },
+  {
+    id: "4",
+    img: DocIcon,
+    docName: "My tax claim",
+    docSize: "197 kb",
+  },
 ];
+const previewImages = [
+  {
+    id: "1",
+    img: DocImg1,
+  },
+  {
+    id: "2",
+    img: DocImg2,
+  },
+  {
+    id: "3",
+    img: DocImg1,
+  },
+  {
+    id: "4",
+    img: DocImg2,
+  },
+  {
+    id: "5",
+    img: DocImg1,
+  },
+  {
+    id: "6",
+    img: DocImg2,
+  },
+  {
+    id: "7",
+    img: DocImg1,
+  },
+  {
+    id: "8",
+    img: DocImg2,
+  },
+  {
+    id: "9",
+    img: DocImg1,
+  },
+  {
+    id: "10",
+    img: DocImg2,
+  },
+  {
+    id: "11",
+    img: DocImg1,
+  },
+]
 
-// const incomigMsg = [
 //   {
 //     id: "1",
 //     text: "Yeah, your Student help squad is very awesome \n and useful for my carrier. Great job! .",
@@ -159,19 +197,9 @@ const DocData = [
 // ];
 
 const index = (props: any) => {
+  const [toggleHide, setToggleHide] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState<string>("EMOJIS");
-  const { userList = inboxMessage, } = props
-  const [visible, setVisible] = useState(false);
-  const [sendMessages, setSendMessages] = useState<any>({
-    msg: "",
-    time: "",
-    isSender: false,
-    id: ''
-  })
-  const [chatData, setChatData] = useState(userList);
-  // const [value, setValue] = useState("");
-  const [selectedUser, setSelectedUser] = useState(userList[0])
-  const [showEmojis, setShowEmojis] = useState(false)
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [fileList, setFileList] = useState<any>([
     {
       uid: '-1',
@@ -180,8 +208,17 @@ const index = (props: any) => {
       url: '',
     },
   ]);
-  console.log(selectedUser, "selectedUser");
-
+  const { userList = inboxMessage, } = props
+  const [sendMessages, setSendMessages] = useState<any>({
+    msg: "",
+    time: "",
+    isSender: false,
+    id: '',
+    fileList
+  })
+  const [chatData, setChatData] = useState(userList);
+  const [selectedUser, setSelectedUser] = useState(userList[0])
+  const [showEmojis, setShowEmojis] = useState(false)
 
   const HandleSubmitMessage = () => {
     let newArr = [...inboxMessage];
@@ -201,10 +238,16 @@ const index = (props: any) => {
     }
   }
   function onClick(emojiData: EmojiClickData, event: MouseEvent) {
-    setSelectedEmoji(emojiData.unified);
+    setSelectedEmoji(emojiData.emoji);
+    console.log(emojiData.emoji);
+    setSendMessages({ ...sendMessages, msg: sendMessages.msg + "".concat(emojiData.emoji) })
+
+
   }
   const handleChange: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
+    console.log(newFileList, "newFileList");
+
 
     // 1. Limit the number of uploaded files
     // Only to show two recent uploaded files, and old ones will be replaced by the new
@@ -218,29 +261,26 @@ const index = (props: any) => {
       }
       return file;
     });
-
     setFileList(newFileList);
   };
 
   const uploadData = {
-    // action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange: handleChange,
     multiple: true,
   };
 
-
-
+  const ExpandedImagesList = !isExpanded ? previewImages?.slice(0, 4) : previewImages;
+  const expandDocumentList = !toggleHide ? DocData?.slice(0, 2) : DocData
   return (
     <div className="chat-main">
       <Row gutter={[20, 20]}>
         <Col xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
-          <div className="inbox-main">
+          <div className="inbox-main min-height-[500px] overflow-y-auto">
             <div>
               <div>
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
                   Inbox
                 </span>
-
                 <span className="text-sm text-teriary-color">
                   (<span className="mr-1">98</span> message)
                 </span>
@@ -297,121 +337,75 @@ const index = (props: any) => {
           </div>
         </Col>
         <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
-          <BoxWrapper>
-            <div className="">
-              <div className="flex items-center relative">
-                <img src={selectedUser.img} alt="userIcon" width="40px" height="40px" />
-                <p className="absolute bottom-1.5 left-[48px] h-[10px] w-[10px] z-10 list-item" style={{ color: selectedUser.isActive ? "#78DAAC" : "#78DAAC" }}></p>
+          <BoxWrapper className="message-box-container">
+            <div className="flex items-center relative">
+              <img src={selectedUser.img} alt="userIcon" width="40px" height="40px" />
+              <p className="absolute bottom-1.5 left-[48px] h-[10px] w-[10px] z-10 list-item" style={{ color: selectedUser.isActive ? "#78DAAC" : "#78DAAC" }}></p>
 
-                <span className="ml-4 primary-color font-semibold text-lg">
-                  {selectedUser.name}
-                </span>
+              <span className="ml-4 primary-color font-semibold text-lg">
+                {selectedUser.name}
+              </span>
+            </div>
+
+            <Divider />
+
+            <Row className="mb-12 max-h-[400px] min-h-[500px] overflow-y-auto ">
+              <Col xs={24}>
+                <div className={`incoming mb-4 ${sendMessages.isSender ? "ml-auto" : ""}`}>
+                  {selectedUser.messages.map((item: any) => {
+                    return (
+                      <div className="mb-4" key={item.id}>
+                        <div className="incoming-message text-base text-secondary-color mb-2">
+                          {item.msg}
+                        </div>
+                        <div className="font-normal text-sm light-grey-color mix-blend-normal">
+                          {item.time}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Col>
+            </Row>
+
+            <div className="border-1 border-solid border-[#E6F4F9] rounded-[12px] p-3">
+              <div className="flex items-end " >
+                <TextArea
+                  className="chat-textarea"
+                  bordered={false}
+                  value={sendMessages.msg}
+                  onChange={(e) => setSendMessages({ ...sendMessages, msg: e.target.value })}
+                  placeholder="Type a messages…"
+                  autoSize={{ minRows: 4, maxRows: 6 }}
+                >
+                </TextArea>
               </div>
-
-              <Divider />
-
-              <Row className="mb-12">
-                <Col xs={24}>
-                  <div className={`incoming mb-4 ${sendMessages.isSender ? "ml-auto" : ""}`}>
-                    {selectedUser.messages.map((item: any) => {
-                      return (
-                        <div className="mb-4" key={item.id}>
-                          <div className="incoming-message text-base text-secondary-color mb-2">
-                            {item.msg}
-                          </div>
-                          <div className="font-normal text-sm light-grey-color mix-blend-normal">
-                            {item.time}
-                          </div>
-                        </div>
-                      );
-                    })}
+              <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
+                <div className="flex ml-4">
+                  <div className="mr-4 cursor-pointer">
+                    <Upload {...uploadData} fileList={fileList}>
+                      <img src={Addatech} alt="sendicon" />
+                    </Upload>
                   </div>
-                </Col>
-              </Row>
-
-              {/* <Row justify="end">
-                <Col>
-                  <div className="outgoing">
-                    {outgoingMsg.map((item) => {
-                      return (
-                        <div key={item.id} className="mb-4">
-                          <div className="outgoing-message  mb-2">
-                            <p className="text-base text-secondary-color mb-4">
-                              {item.text}
-                            </p>
-                            {item.img2 && (
-                              <div className="flex justify-center">
-                                <div className="mr-2">
-                                  <img src={item.img1} />
-                                </div>
-
-                                <div>
-                                  <img src={item.img2} />
-                                </div>
-                              </div>
-                            )}
-                          </div>
-
-                          <div className="flex items-center">
-                            <p className="font-normal text-sm light-grey-color mix-blend-normal ">
-                              {item.time}
-                              <span className="ml-2">
-                                <img src={DoubleTik} alt="bluetik" />
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
+                  <div className="absolute top-60">
+                    {showEmojis && (
+                      <>
+                        <EmojiPicker
+                          onEmojiClick={onClick}
+                          autoFocusSearch={false}
+                          emojiStyle={EmojiStyle.NATIVE}
+                        />
+                      </>
+                    )}
                   </div>
-                </Col>
-              </Row> */}
 
-              <div className="border-1 border-solid border-[#E6F4F9] rounded-[12px] p-3">
-                <div>
-                  <TextArea
-                    className="chat-textarea"
-                    bordered={false}
-                    value={sendMessages.msg}
-                    onChange={(e) => setSendMessages({ ...sendMessages, msg: e.target.value })}
-                    placeholder="Type a messages…"
-                    autoSize={{ minRows: 4, maxRows: 6 }}
-                  ></TextArea>
+                  <div className="cursor-pointer">
+                    <img src={PlusIcon} className="relative" alt="sendicon" onClick={() => setShowEmojis(!showEmojis)} />
+                  </div>
                 </div>
 
-                <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
-                  <div className="flex ml-4">
-                    <div className="mr-4 cursor-pointer">
-                      {/* <Button icon={<UploadOutlined />}>Upload</Button> */}
-                      <Upload {...uploadData} fileList={fileList} >
-                        <img src={Addatech} alt="sendicon" />
-                      </Upload>
-                    </div>
-                    <div className="absolute top-28">
-                      {showEmojis && (
-                        <>
-                          <Emoji
-                            unified={selectedEmoji}
-                            emojiStyle={EmojiStyle.APPLE}
-                            size={22}
-                          />
-                          <EmojiPicker
-                            onEmojiClick={onClick}
-                            autoFocusSearch={false}
-                            emojiStyle={EmojiStyle.NATIVE}
-                          />
-                        </>
-                      )}
-                    </div>
-
-                    <div className="cursor-pointer">
-                      <img src={PlusIcon} className="relative" alt="sendicon" onClick={() => setShowEmojis(!showEmojis)} />
-                    </div>
-                  </div>
-
-                  <div className="mr-4 cursor-pointer">
-                    <img src={SendIcon} alt="sendicon" onClick={HandleSubmitMessage} />
-                  </div>
+                <div className="mr-4 cursor-pointer">
+                  <img src={SendIcon} alt="sendicon" onClick={HandleSubmitMessage} />
                 </div>
               </div>
             </div>
@@ -419,7 +413,7 @@ const index = (props: any) => {
         </Col>
 
         <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
-          <BoxWrapper>
+          <BoxWrapper className=" min-height-[500px]">
             <div className="text-center">
               <div className="relative w-[36px] h-[36px] m-auto">
                 <img src={selectedUser.img} alt="userimg" />
@@ -464,93 +458,56 @@ const index = (props: any) => {
               </div>
 
               <div className="mt-1 p-2">
-                <Row justify="center" gutter={[12, 12]}>
-                  <Col
-                    xxl={9}
-                    xl={12}
-                    lg={10}
-                    className="flex  lg:justify-end"
-                  >
-                    {/* <img src={DocImg1} alt="imgicon" /> */}
-                    <div>
-                      <Image
-                        preview={{ visible: false }}
-                        width={75}
-                        height={65}
-                        src={DocImg1}
-                        onClick={() => setVisible(true)}
-                      />
-                      <div style={{ display: 'none' }}>
-                        <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
-                          <Image src={DocImg1} className="w-[700px]" />
-                          <Image src={AudioPlayer} />
-                          <Image src={DocImg2} />
-                          <Image src={SeeAll} />
-                        </Image.PreviewGroup>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col
-                    xxl={9}
-                    xl={12}
-                    lg={10}
-                    className="flex lg:justify-start"
-                  >
-                    <img src={AudioPlayer} alt="imgicon" />
-                  </Col>
-
-                  <Col
-                    xxl={9}
-                    xl={12}
-                    lg={10}
-                    className="flex  lg:justify-end"
-                  >
-                    <img src={DocImg2} alt="imgicon" />
-                  </Col>
-
-                  <Col
-                    xxl={9}
-                    xl={12}
-                    lg={10}
-                    className="flex lg:justify-start"
-                  >
-                    <img src={SeeAll} alt="imgicon" />
-                  </Col>
+                <Row justify="center" gutter={[12, 12]} style={{ maxHeight: (isExpanded && previewImages?.length > 4) ? "280px" : "240px", overflowY: "auto" }}>
+                  {ExpandedImagesList?.map((items) => (
+                    <Col
+                      xxl={12}
+                      xl={12}
+                      lg={12}
+                      className="flex lg:justify-start"
+                    >
+                      <Image src={items.img} width={110} height={110} />
+                    </Col>
+                  ))}
                 </Row>
+                <p className="my-3 float-right p-0 cursor-pointer px-2 " onClick={() => setIsExpanded(!isExpanded)}>{
+                  isExpanded ? "Hide" : "Show All"
+                }</p>
               </div>
               <Divider />
               <div className="flex justify-between mb-4">
                 <div className="light-grey-color text-sm font-medium">
                   Documents
                 </div>
-                <div className="text-teriary-color font-normal text-base">
-                  Show all
-                </div>
-              </div>
 
-              {DocData.map((item) => {
-                return (
-                  <div key={item.id} className="flex h-[34px] mb-4">
-                    <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
-                      <img src={item.img} alt="fileIcon" />
-                    </div>
-                    <div className="ml-4">
-                      <div className="text-secondary-color text-sm font-medium">
-                        {item.docName}
+              </div>
+              <div style={{ maxHeight: (toggleHide && DocData?.length) ? "150px" : "150px", overflowY: "auto" }}>
+                {expandDocumentList.map((item) => {
+                  return (
+                    <div key={item.id} className="flex h-[34px] mb-4">
+                      <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
+                        <img src={item.img} alt="fileIcon" />
                       </div>
-                      <div className="light-grey-color text-sm font-light">
-                        {item.docSize}
+                      <div className="ml-4">
+                        <div className="text-secondary-color text-sm font-medium">
+                          {item.docName}
+                        </div>
+                        <div className="light-grey-color text-sm font-light">
+                          {item.docSize}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+              <p className="text-teriary-color font-normal text-base" onClick={() => setToggleHide(!toggleHide)}>
+                {toggleHide ? "Hide" : "Show All"}
+              </p>
             </div>
           </BoxWrapper>
         </Col>
       </Row>
-    </div >
+    </div>
   );
 };
-
 export default index;
