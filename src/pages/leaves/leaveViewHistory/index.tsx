@@ -34,35 +34,34 @@ const index = () => {
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
       <Divider />
-
       <Row className='items-center' gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={(e: any) => { console.log(e)}} />
+          <SearchBar handleChange={(e: any) => { console.log(e) }} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
-              <FiltersButton
-                label="Filters"
-                onClick={() => setOpenDrawer({ type: 'filters', open: true })}
-              />
-            <div>
-              <DropDown
-                options={[
-                  'pdf',
-                  'excel'
-                ]}
-                requiredDownloadIcon
-                setValue={() => { action.downloadPdfOrCsv(event, CsvImportData, data, "Leave History") }}
-              />
-            </div>
-            {
-              role === constants.INTERN &&
-              <Button
-                icon={<CalendarWhiteIcon className="mr-1" />}
-                label="Request Leave"
-                onClick={() => setOpenModal({ open: true, type: "addLeav" })}
-                size="middle"
-                className="Request_leave"
-              />}
+          <FiltersButton
+            label="Filters"
+            onClick={() => setOpenDrawer({ type: 'filters', open: true })}
+          />
+          <div>
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => { action.downloadPdfOrCsv(event, CsvImportData, data, "Leave History") }}
+            />
+          </div>
+          {
+            role === constants.INTERN &&
+            <Button
+              icon={<CalendarWhiteIcon className="mr-1" />}
+              label="Request Leave"
+              onClick={() => setOpenModal({ open: true, type: "addLeav" })}
+              size="middle"
+              className="Request_leave"
+            />}
         </Col>
         <Col xs={24}>
           <BoxWrapper>
@@ -72,7 +71,7 @@ const index = () => {
       </Row>
 
       {openDrawer.open && <DrawerComp
-        width={mainDrawerWidth>1400 ? 380:300}
+        width={mainDrawerWidth > 1400 ? 380 : 300}
         title={openDrawer.type === 'filters' ? "Filters" : ""}
         open={openDrawer.open}
         className={openDrawer.type === 'filters' ? "" : "Record_data"}
@@ -120,7 +119,7 @@ const index = () => {
         />}
       {openModal.open && openModal.type === 'cancel' &&
         <Alert
-        type='warning'
+          type='warning'
           state={openModal.open}
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"No"}
