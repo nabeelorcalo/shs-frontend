@@ -11,15 +11,9 @@ import endpoints from "../../../config/apiEndpoints";
 import api from "../../../api";
 
 const useCustomHook = () => {
-  const [totalMembersData, setTotalMembersData] = useRecoilState(
-    adminDashboardMembersDataState
-  );
-  const [growthAnalyticsData, setGrowthAnalyticsData] = useRecoilState(
-    growthAnalyticsDashboardState
-  );
-  const [regionAnalytics, setRegionAnalytics] = useRecoilState(
-    adminDashboardRegionAnalyticsState
-  );
+  const [totalMembersData, setTotalMembersData] = useRecoilState(adminDashboardMembersDataState);
+  const [growthAnalyticsData, setGrowthAnalyticsData] = useRecoilState(growthAnalyticsDashboardState);
+  const [regionAnalytics, setRegionAnalytics] = useRecoilState(adminDashboardRegionAnalyticsState);
   const [adminActivity, setAdminActivity] = useRecoilState(getRecentActivities);
 
   //api's endpoints
@@ -39,9 +33,7 @@ const useCustomHook = () => {
       setGrowthAnalyticsData(data.graphData);
       setRegionAnalytics(data?.geographicalResponse);
     });
-    api
-      .get(GET_GENERAL_ACTIVITY, { page: 1, limit: 10 })
-      .then(({ data }) => setAdminActivity(data));
+    api.get(GET_GENERAL_ACTIVITY, { page: 1, limit: 10 }).then(({ data }) => setAdminActivity(data));
   };
 
   return {
