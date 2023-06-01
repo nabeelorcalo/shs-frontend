@@ -73,31 +73,12 @@ const useCustomHook = () => {
 
   // agent dashboard
 
-  const filterGraphData = (dateRange: string[]) => {
-    api
-      .get(GET_SYSTEM_ADMIN_DASHBOARD, {
-        startDate: dateRange[0],
-        endDate: dateRange[1],
-      })
-      .then(({ data }) => setGrowthAnalyticsData(data.graphData));
-  };
-
   useEffect(() => {
     // agent dashboard
     if (role === AGENT) {
       api
         .get(AGENT_DASHBOARD_WIDGETS)
         .then(({ data }) => setCountingCard(data[0]));
-    }
-    if (role === SYSTEM_ADMIN) {
-      api.get(GET_SYSTEM_ADMIN_DASHBOARD).then(({ data }) => {
-        setTotalMembersData(data.totalMembersData);
-        setGrowthAnalyticsData(data.graphData);
-        setRegionAnalytics(data?.geographicalResponse);
-      });
-      api
-        .get(GET_GENERAL_ACTIVITY, { page: 1, limit: 10 })
-        .then(({ data }) => setAdminActivity(data));
     }
   }, []);
 
