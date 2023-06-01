@@ -1,5 +1,5 @@
 import { DownloadIconLeave } from "../../../../assets/images";
-import { BoxWrapper, Breadcrumb, Notifications, SearchBar } from "../../../../components";
+import { BoxWrapper, Breadcrumb, Loader, Notifications, SearchBar } from "../../../../components";
 import { Typography, Row, Col, Avatar } from "antd";
 import CustomDropDownReport from "./customDropDown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -10,7 +10,8 @@ import { useLocation } from "react-router";
 import dayjs from "dayjs";
 
 const index = () => {
-  const { selectedUniversityReportsData, getSelectedUniversityReportsData, getParamId } = useCustomHook();
+  const { selectedUniversityReportsData, downloadPdfOrCsv, getSelectedUniversityReportsData, isLoading, getParamId } =
+    useCustomHook();
   const { pathname } = useLocation();
   const overview = selectedUniversityReportsData?.map((obj: any) => ({
     id: obj?.id,
@@ -21,7 +22,6 @@ const index = () => {
     profile: obj?.remarked?.avatar,
   }));
   const TableColumn = ["Assessment Name", " Profile", "Name", "Date"];
-  const action = useCustomHook();
   const breadcrumbArray = [
     { name: "Mino Mrina" },
     { name: "Report", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT} ` },
@@ -46,7 +46,7 @@ const index = () => {
           <div
             className="drop-down-wrapper"
             onClick={() => {
-              action.downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ");
+              downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ");
               Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: "success" });
             }}
           >
@@ -54,42 +54,46 @@ const index = () => {
           </div>
         </Col>
       </Row>
-      <Row gutter={[30, 20]} className="mt-5">
-        {overview.map((data: any, index: any) => {
-          return (
-            <Col key={index} className="gutter-row" xs={24} md={24} lg={12} xl={8} xxl={6}>
-              <BoxWrapper>
-                <div className="flex justify-between">
-                  <div className="flex flex-col">
-                    <div className="flex">
-                      <span> {data.image}</span>
-                      <Typography className="pt-3 pl-2 m-0 capitalize">{data.assessmentName}</Typography>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Row gutter={[30, 20]} className="mt-5">
+          {overview.map((data: any, index: any) => {
+            return (
+              <Col key={index} className="gutter-row" xs={24} md={24} lg={12} xl={8} xxl={6}>
+                <BoxWrapper>
+                  <div className="flex justify-between">
+                    <div className="flex flex-col">
+                      <div className="flex">
+                        <span> {data.image}</span>
+                        <Typography className="pt-3 pl-2 m-0 capitalize">{data.assessmentName}</Typography>
+                      </div>
+                      <span className="text-xl lg:text-2xl font-semibold py-2">{data.date}</span>
+                      <div>
+                        <Avatar
+                          className="h-[32px] w-[32px] rounded-full object-cover relative"
+                          src={data?.avatar}
+                          alt={data?.name}
+                          icon={
+                            <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                              {data?.name[0]}
+                              {data?.name && data?.name?.split(" ")[1][0]}
+                            </span>
+                          }
+                        />{" "}
+                        <span className="capitalize">{data?.name}</span>
+                      </div>
                     </div>
-                    <span className="text-xl lg:text-2xl font-semibold py-2">{data.date}</span>
-                    <div>
-                      <Avatar
-                        className="h-[32px] w-[32px] rounded-full object-cover relative"
-                        src={data?.avatar}
-                        alt={data?.name}
-                        icon={
-                          <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                            {data?.name[0]}
-                            {data?.name && data?.name?.split(" ")[1][0]}
-                          </span>
-                        }
-                      />{" "}
-                      <span className="capitalize">{data?.name}</span>
+                    <div className="float-right place-items-end cursor-pointer ">
+                      <CustomDropDownReport viewDetailsId={getParamId(pathname)} assessmentFormID={data.id} />
                     </div>
                   </div>
-                  <div className="float-right place-items-end cursor-pointer ">
-                    <CustomDropDownReport viewDetailsId={getParamId(pathname)} assessmentFormID={data.id} />
-                  </div>
-                </div>
-              </BoxWrapper>
-            </Col>
-          );
-        })}
-      </Row>
+                </BoxWrapper>
+              </Col>
+            );
+          })}
+        </Row>
+      )}
     </div>
   );
 };

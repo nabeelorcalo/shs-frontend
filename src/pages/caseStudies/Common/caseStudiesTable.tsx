@@ -108,7 +108,7 @@ const CaseStudiesTable = (props: any) => {
 
   return (
     <>
-      <GlobalTable columns={caseStudyColumnData} pagination tableData={props.caseStudyTableData} />
+      <GlobalTable columns={caseStudyColumnData} pagination tableData={props.caseStudyTableData} loading={props?.loading} />
       <Alert
         state={openWarningModal}
         setState={setOpenWarningModal}

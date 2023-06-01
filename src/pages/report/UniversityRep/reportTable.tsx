@@ -64,7 +64,9 @@ const UniversityRepReportTable = (props: any) => {
           items={[
             {
               label: (
-                <span onClick={() => navigate(`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}`)}>View Details</span>
+                <span onClick={() => navigate(`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}`)}>
+                  View Details
+                </span>
               ),
 
               key: "feedback",
@@ -79,7 +81,7 @@ const UniversityRepReportTable = (props: any) => {
 
   return (
     <>
-      <GlobalTable columns={reportColumnData} pagination tableData={props.reportTableData} />
+      <GlobalTable columns={reportColumnData} pagination tableData={props.reportTableData} loading={props?.isLoading} />
       <Alert
         state={openWarningModal}
         setState={setOpenWarningModal}

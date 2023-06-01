@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { BoxWrapper, Breadcrumb, Notifications } from "../../../../components";
-import { Divider, Button, Typography, Form } from "antd";
+import { BoxWrapper, Breadcrumb, Loader, Notifications } from "../../../../components";
+import { Divider, Button, Typography, Form, Spin } from "antd";
 // import SignatureAndUploadModal from "../../../../components/SignatureAndUploadModal";
 import { DownloadIconLeave, Emoji1st, Emoji3rd, Emoji4th } from "../../../../assets/images";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,8 +11,14 @@ import ManagerRemarks from "./manageRemarksforUni";
 import "./style.scss";
 
 const index = () => {
-  const { getSelectedAsseessmentReport, selectedAsseessmentReport, getParamId, checkForImage, downloadPdfOrCsv } =
-    useCustomHook();
+  const {
+    getSelectedAsseessmentReport,
+    selectedAsseessmentReport,
+    getParamId,
+    checkForImage,
+    downloadPdfOrCsv,
+    isLoading,
+  } = useCustomHook();
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -43,92 +49,98 @@ const index = () => {
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       {/* for destop */}
-      <div className="scroll ">
-        <BoxWrapper className="my-5 destop-view">
-          <div className="flex justify-between">
-            <Typography className="md:text-3xl font-medium primary-color">Mino Marina - September 2022</Typography>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="scroll ">
+          <BoxWrapper className="my-5 destop-view">
+            <div className="flex justify-between">
+              <Typography className="md:text-3xl font-medium primary-color">Mino Marina - September 2022</Typography>
 
-            <div
-              className="mr-[-5px] drop-down-wrapper"
-              onClick={() => {
-                downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
-                Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: "success" });
-              }}
-            >
-              <DownloadIconLeave />
+              <div
+                className="mr-[-5px] drop-down-wrapper"
+                onClick={() => {
+                  downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
+                  Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: "success" });
+                }}
+              >
+                <DownloadIconLeave />
+              </div>
             </div>
-          </div>
-          <div className="mt-5 flex gap-10">
-            <span className="font-semibold text-xl lg:w-[200px]">Learning Categories</span>
-            <span className="font-semibold text-xl lg:w-[400px]">Learning Objectives</span>
-            <span className="font-semibold text-xl lg:w-[400px]">Evidence of Progress</span>
-            <span className="font-semibold text-xl lg:w-[400px]">Manager’s Remarks</span>
-          </div>
-          <Divider />
-          {tableData?.map((item: any) => {
-            return (
-              <div className="mt-5 flex gap-10">
-                <span className="text-base font-normal lg:w-[200px]">{item?.learningCategories}</span>
-                <span className="text-base font-normal lg:w-[400px]">{item?.learningObjectives}</span>
-                <span className="text-base font-normal lg:w-[400px]">{item?.evidenceOfProgress}</span>
-                <ManagerRemarks
-                  image={
-                    item?.managerRemarks === "Does not meet expectations" ? (
-                      <Emoji1st />
-                    ) : item?.managerRemarks === "Meets expectations" ? (
-                      <Emoji3rd />
+            <div className="mt-5 flex gap-10">
+              <span className="font-semibold text-xl lg:w-[200px]">Learning Categories</span>
+              <span className="font-semibold text-xl lg:w-[400px]">Learning Objectives</span>
+              <span className="font-semibold text-xl lg:w-[400px]">Evidence of Progress</span>
+              <span className="font-semibold text-xl lg:w-[400px]">Manager’s Remarks</span>
+            </div>
+            <Divider />
+            {tableData?.map((item: any) => {
+              return (
+                <div className="mt-5 flex gap-10">
+                  <span className="text-base font-normal lg:w-[200px]">{item?.learningCategories}</span>
+                  <span className="text-base font-normal lg:w-[400px]">{item?.learningObjectives}</span>
+                  <span className="text-base font-normal lg:w-[400px]">{item?.evidenceOfProgress}</span>
+                  <ManagerRemarks
+                    image={
+                      item?.managerRemarks === "Does not meet expectations" ? (
+                        <Emoji1st />
+                      ) : item?.managerRemarks === "Meets expectations" ? (
+                        <Emoji3rd />
+                      ) : (
+                        <Emoji4th />
+                      )
+                    }
+                    managerRemarks={item?.managerRemarks}
+                  />
+                </div>
+              );
+            })}
+            <Form layout="vertical" form={form}>
+              <Typography className="text-xl font-semibold my-1">Feedback </Typography>
+              <Typography className="font-normal text-base my-1">
+                {selectedAsseessmentReport?.feedback ?? ""}
+              </Typography>
+              <div className="flex gap-10">
+                <div className="w-full">
+                  <Typography className="text-xl font-semibold mt-5 capitalize">{`${intern?.firstName} ${intern?.lastName}`}</Typography>
+                  <div className="sign-box w-full rounded-lg flex justify-center items-center">
+                    {checkForImage(selectedAsseessmentReport?.internSig) ? (
+                      <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
+                        <img
+                          className="absolute w-full h-full overflow-hidden"
+                          src={selectedAsseessmentReport?.internSig}
+                        />
+                      </div>
                     ) : (
-                      <Emoji4th />
-                    )
-                  }
-                  managerRemarks={item?.managerRemarks}
-                />
-              </div>
-            );
-          })}
-          <Form layout="vertical" form={form}>
-            <Typography className="text-xl font-semibold my-1">Feedback </Typography>
-            <Typography className="font-normal text-base my-1">{selectedAsseessmentReport?.feedback ?? ""}</Typography>
-            <div className="flex gap-10">
-              <div className="w-full">
-                <Typography className="text-xl font-semibold mt-5 capitalize">{`${intern?.firstName} ${intern?.lastName}`}</Typography>
-                <div className="sign-box w-full rounded-lg flex justify-center items-center">
-                  {checkForImage(selectedAsseessmentReport?.internSig) ? (
-                    <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                      <img
-                        className="absolute w-full h-full overflow-hidden"
-                        src={selectedAsseessmentReport?.internSig}
-                      />
-                    </div>
-                  ) : (
-                    <p>{selectedAsseessmentReport?.internSig}</p>
-                  )}
+                      <p>{selectedAsseessmentReport?.internSig}</p>
+                    )}
+                  </div>
+                </div>
+                <div className="w-full">
+                  <Typography className="text-xl font-semibold mt-5 capitalize">{`${manager?.firstName} ${manager?.lastName}`}</Typography>
+                  <div className="sign-box w-full rounded-lg flex justify-center items-center">
+                    {checkForImage(selectedAsseessmentReport?.supervisorSig) ? (
+                      <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
+                        <img
+                          className="absolute w-full h-full overflow-hidden"
+                          src={selectedAsseessmentReport?.supervisorSig}
+                        />
+                      </div>
+                    ) : (
+                      <p>{selectedAsseessmentReport?.supervisorSig}</p>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="w-full">
-                <Typography className="text-xl font-semibold mt-5 capitalize">{`${manager?.firstName} ${manager?.lastName}`}</Typography>
-                <div className="sign-box w-full rounded-lg flex justify-center items-center">
-                  {checkForImage(selectedAsseessmentReport?.supervisorSig) ? (
-                    <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                      <img
-                        className="absolute w-full h-full overflow-hidden"
-                        src={selectedAsseessmentReport?.supervisorSig}
-                      />
-                    </div>
-                  ) : (
-                    <p>{selectedAsseessmentReport?.supervisorSig}</p>
-                  )}
-                </div>
-              </div>
+            </Form>
+            <div className="flex justify-end gap-5 my-5 assessment-footer">
+              <Button onClick={() => navigate(-2)} type="primary" className="white-bg-color teriary-color save-btn">
+                Back
+              </Button>
             </div>
-          </Form>
-          <div className="flex justify-end gap-5 my-5 assessment-footer">
-            <Button onClick={() => navigate(-2)} type="primary" className="white-bg-color teriary-color save-btn">
-              Back
-            </Button>
-          </div>
-        </BoxWrapper>
-      </div>
+          </BoxWrapper>
+        </div>
+      )}
       {/* for mobile */}
       {/* <BoxWrapper className="block lg:hidden w-full p-3">
         <Typography className="text-xl md:text-3xl font-medium primary-color">Mino Marina - September 2022</Typography>

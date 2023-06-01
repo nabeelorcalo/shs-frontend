@@ -7,7 +7,7 @@ import Filters from "./filter";
 import { Col, Row } from "antd";
 
 const index = () => {
-  const { getData, downloadPdfOrCsv, universityReports } = useCustomHook();
+  const { getData, downloadPdfOrCsv, universityReports,isLoading } = useCustomHook();
   const TableColumn = ["No.", "Avater", " Name", "Department", "Company", "Reviewer"];
   const reportTableData = universityReports?.data;
   
@@ -45,7 +45,7 @@ const index = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <UniversityRepReportTable reportTableData={reportTableData} />
+            <UniversityRepReportTable reportTableData={reportTableData} isLoading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>

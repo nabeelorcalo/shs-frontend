@@ -8,7 +8,7 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import { useRecoilState } from "recoil";
-import { universityReportsFilterParam, universityReportsTableData } from "../../store/univeristy-reports";
+import { universityReportsAPICallStatus, universityReportsFilterParam, universityReportsTableData } from "../../store/univeristy-reports";
 import endpoints from '../../config/apiEndpoints';
 import dayjs from "dayjs";
 const { UNIVERSITY_REPORTS, DAPARTMENT, UNIVERSITY_USER_REPORTS, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints
@@ -18,13 +18,15 @@ const useCustomHook = () => {
   const [universityReports, setUniversityReports] = useRecoilState<any>(universityReportsTableData)
   const [selectedUniversityReportsData, setSelectedUniversityReportsData] = useState<any>([])
   const [selectedAsseessmentReport, setSelectedAsseessmentReport] = useState<any>([])
+  // loader
+  const [isLoading, setISLoading] = useRecoilState(universityReportsAPICallStatus);
   // company manager list
   const [companyManagerList, setCompanyManagerList] = useState<any>([])
   // reports params
   let params: any = {
     limit: 10,
     page: 1,
-    
+
   };
   // global set params for filter ans search
   const [filterParams, setFilterParams] = useRecoilState<any>(universityReportsFilterParam)
@@ -37,6 +39,7 @@ const useCustomHook = () => {
   }
   // get case-studies table data
   const getData = async (query?: any) => {
+    setISLoading(true)
     //search query check
     if (query?.search) {
       params.search = query?.search
@@ -60,6 +63,7 @@ const useCustomHook = () => {
         })),
         pagination
       })
+      setISLoading(false)
     });
   };
 
@@ -83,16 +87,20 @@ const useCustomHook = () => {
 
   // get single case-study object
   const getSelectedUniversityReportsData = async (params: any) => {
-    await api.get(`${UNIVERSITY_USER_REPORTS}`, params).then(({ data }) => setSelectedUniversityReportsData(
-      data
-    ))
+    setISLoading(true)
+    await api.get(`${UNIVERSITY_USER_REPORTS}`, params).then(({ data }) => {
+      setSelectedUniversityReportsData(data)
+      setISLoading(false)
+    })
   }
 
   // get single assessment report object
   const getSelectedAsseessmentReport = async (id: any) => {
-    await api.get(`${UNIVERSITY_USER_REPORTS}/${id}`).then(({ data }) => setSelectedAsseessmentReport(
-      data
-    ))
+    setISLoading(true)
+    await api.get(`${UNIVERSITY_USER_REPORTS}/${id}`).then(({ data }) => {
+      setSelectedAsseessmentReport(data)
+      setISLoading(false)
+    })
   }
 
   const checkForImage = (url: string) => {
@@ -171,6 +179,7 @@ const useCustomHook = () => {
   };
 
   return {
+    isLoading,
     getData,
     universityReports,
     departmentList, setDepartmentList, selectedUniversityReportsData, getSelectedUniversityReportsData, getDepartmentList, handleFilterParams,

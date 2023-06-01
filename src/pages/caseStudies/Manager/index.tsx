@@ -7,7 +7,7 @@ import "./style.scss";
 import useCustomHook from "../actionHandler";
 
 const index = () => {
-  const { getData, downloadPdfOrCsv, caseStudyData } = useCustomHook();
+  const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
     getData();
   }, []);
@@ -45,7 +45,7 @@ const index = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+            <CaseStudiesTable caseStudyTableData={caseStudyTableData} loading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>
