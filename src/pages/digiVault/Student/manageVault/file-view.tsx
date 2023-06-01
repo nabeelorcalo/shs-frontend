@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Form, Menu, Modal, Row, Space, Input } from "antd";
+import { Button, Col, Divider, Menu, Modal, Row, Space } from "antd";
 import { SearchBar, Alert } from "../../../../components";
-import { FolderIcon, FileIcon, Upload } from "../../../../assets/images";
+import { FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
@@ -20,21 +20,21 @@ const ManageViewVault = () => {
     DelModalId: null,
     files: [],
     fileName: '',
+    search: null
   });
   const {
     postCreateFolderFile,
     getFolderContent,
     folderContent,
     deleteFolderFile,
-    SearchFolderContent
   }: any = useCustomHook();
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
 
   useEffect(() => {
-    getFolderContent(folderId, title)
-  }, [])
+    getFolderContent(isState.search, state)
+  }, [isState.search])
 
   const handleDropped = (event: any) => {
     event.preventDefault()
@@ -46,7 +46,6 @@ const ManageViewVault = () => {
 
   const menu2 = (id: any) => (
     <Menu>
-      {/* <Menu.Item key="1" onClick={()=> router('/digivault/view')}>View</Menu.Item> */}
       <Menu.Item
         key="2"
         onClick={() => {
@@ -61,7 +60,7 @@ const ManageViewVault = () => {
       </Menu.Item>
     </Menu>
   );
-  const newTableData = folderContent?.map((item: any, index: number) => { 
+  const newTableData = folderContent?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
       {
@@ -155,7 +154,6 @@ const ManageViewVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">
             <span className="manage-vault-title-text mr-2 capitalize">
-              {/* {titleName[2]} */}
               View
             </span>
             <span className="dash-vault-line">|</span>
@@ -179,12 +177,12 @@ const ManageViewVault = () => {
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
-                handleChange={(e: any) => SearchFolderContent(title, e, folderId)} />
+                handleChange={(e: any) => setState({ ...isState, search: e })} />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div className="div">
                 <Button
-                  className="manage-vault-btn flex items-center justify-center"
+                  className="manage-vault-btn flex items-center justify-center sm:w-full md:w-[160px]"
                   onClick={() => setState((prevState: any) => ({
                     ...prevState,
                     uploadFile: true,

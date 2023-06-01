@@ -30,11 +30,22 @@
     }
   }
 
-  .input-style {
+  .input-style,
+  .ant-input {
     background: $text-input-bg-color !important;
     border-color: $white-bg-color;
     border: 1px solid transparent;
     opacity: 1;
+
+    .ant-input {
+      background: $text-input-bg-color !important;
+      border: 0;
+
+      &:hover {
+        border: 1px solid $input-hover-color !important;
+        background: $white-bg-color !important;
+      }
+    }
 
     &:hover {
       border: 1px solid $input-hover-color !important;
@@ -56,7 +67,6 @@
       border: 1px solid $input-hover-color !important;
       background: $white-bg-color !important;
     }
-
   }
 
   :where(.css-dev-only-do-not-override-14oxq5) .ant-select-status-error:not(.ant-select-disabled) :not(.ant-select-customize-input):not(.ant-pagination-size-changer) .ant-select-selector {
@@ -111,4 +121,23 @@
     border-radius: 5px;
   }
 
+  .react-tel-input .form-control {
+    border-radius: 8px;
+    background-color: $text-input-bg-color !important;
+    border-radius: 6px !important;
+
+    &:hover {
+      background-color: transparent !important;
+      border: 1px solid gray !important;
+    }
+  }
+
+  .form-control {
+    height: 48px !important;
+    width: 100%;
+
+    .selected-flag {
+      width: 40px !important;
+    }
+  }
 }

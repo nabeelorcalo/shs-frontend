@@ -10,6 +10,10 @@
   background-color: #E6F4F9;
   border-color: #E6F4F9;
   box-shadow: none;
+  .label{
+    display: flex;
+    gap: 15px;
+  }
   span {
     margin: 0 10px;
   }

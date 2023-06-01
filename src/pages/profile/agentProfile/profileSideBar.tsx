@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Divider, Typography } from "antd";
 import { EllipsisOutlined } from '@ant-design/icons';
 import profile from "../../../assets/images/profile/student/profiled.svg";

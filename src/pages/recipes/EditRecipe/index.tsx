@@ -1,39 +1,78 @@
 import React, { useState, useEffect } from "react";
-import { Form, Typography, Input, Row, Col, Upload, Space } from 'antd'
-import { ExtendedButton, PageHeader, Breadcrumb } from "../../../components";
+import { useNavigate, useParams } from "react-router-dom"
+import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
+import { PageHeader, Breadcrumb, Notifications } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
-
-
-// Temporary
+import useRecipesHook from "../actionHandler";
+import { useRecoilValue } from "recoil";
+import { recipeState } from "../../../store";
 
 const EditRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
+  const params:any = useParams();
+  const [form] = Form.useForm();
+  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState('')
+  const {updateRecipe, getRecipe} = useRecipesHook()
+  const recipe = useRecoilValue(recipeState)
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    getRecipe(params.recipeId)
   }, [])
 
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function submitUpdateRecipe(values:any) {
+    console.log("values::::: ", values)
+    const formData = new FormData();
+    formData.append('recipeId', params.recipeId);
+    formData.append('name', values.name);
+    formData.append('image', values.image[0].originFileObj);
+    formData.append('description', values.description);
+    formData.append('ingredients', values.ingredients);
+    formData.append('instructions', values.instructions);
+    formData.append('kitcherGear', values.kitcherGear);
+    formData.append('servings', values.servings);
+    formData.append('prepTimeHours', values.prepTimeHours);
+    formData.append('prepTimeMins', values.prepTimeMins);
+    formData.append('cookTimeHours', values.cookTimeHours);
+    formData.append('cookTimeMins', values.cookTimeMins);
+    formData.append('status', status);
+    setLoading(true)
+    const response = await updateRecipe(formData);
+    if(!response.error) {
+      Notifications({title: "Success", description: response.message, type: 'success'});
+    }
+    setLoading(false)
+  }
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function submitUpdatedRecipe() {
-    console.log('Form Submit')
-  }
-
   function normFile(e: any) {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
     return e?.fileList;
+  }
+
+  const submitAsPublished = () => {
+    console.log("submit")
+    setStatus('published')
+    form.submit()
+  }
+
+  const submitAsDraft = () => {
+    setStatus('draft')
+    form.submit()
   }
 
 
@@ -61,7 +100,17 @@ const EditRecipe = () => {
             <Typography.Paragraph>Set of instructions that will describe about your recipe to other people.</Typography.Paragraph>
           </div>
         
-          <Form layout="vertical" name="addNewRecipe" onFinish={submitUpdatedRecipe}>
+          <Form
+            form={form}
+            layout="vertical"
+            name="editRecipe"
+            requiredMark={false}
+            initialValues={recipe}
+            onValuesChange={(_, values) => {
+              console.log('Bedroom values::: ', values)
+            }}
+            onFinish={submitUpdateRecipe}
+          >
             <div className="add-recipe-form-section">
               <div className="form-section-header">
                 <div className="form-section-header-inner">
@@ -71,12 +120,12 @@ const EditRecipe = () => {
               </div>
               <div className="form-section-fields">
                 <div className="form-fields-container">
-                  <Form.Item name="recipeName" label="Name">
+                  <Form.Item name="name" label="Name" rules={[{ required: true }]}>
                     <Input className="filled" placeholder="Enter name of the recipe" />
                   </Form.Item>
 
-                  <Form.Item label="Add Image" name="recipeImage" valuePropName="fileList" getValueFromEvent={normFile}>
-                    <Upload.Dragger name="files" action="/upload.do" showUploadList={false} className="filled">
+                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile}>
+                    <Upload.Dragger name="files" action="/upload.do" className="filled">
                       <div className="shs-drag-drop">
                         <div className="shs-upload-content">
                           <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
@@ -89,7 +138,7 @@ const EditRecipe = () => {
                     </Upload.Dragger>
                   </Form.Item>
 
-                  <Form.Item name="recipeDescription" label="Description">
+                  <Form.Item name="description" label="Description" rules={[{ required: true }]}>
                     <Input.TextArea 
                       className="filled" 
                       placeholder="Write the description of internship" 
@@ -113,16 +162,16 @@ const EditRecipe = () => {
                     <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
-                  <Form.Item name="recipeIngredients" label="Ingredients">
+                  <Form.Item name="ingredients" label="Ingredients">
                     <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
-                  <Form.Item name="recipeInstructions" label="Instructions">
+                  <Form.Item name="instructions" label="Instructions">
                     <Input className="filled" placeholder="Enter one or steps" />
                   </Form.Item>
 
-                  <Form.Item name="recipeServings" label="Servings">
-                    <Input className="filled" placeholder="Add portions" />
+                  <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
+                    <InputNumber className="filled" placeholder="Add servings" />
                   </Form.Item>
                 </div>
               </div>
@@ -139,12 +188,12 @@ const EditRecipe = () => {
                 <div className="form-fields-container">
                   <Row gutter={20}>
                     <Col xs={12}>
-                      <Form.Item name="prepHours" label="Hours">
-                        <Input className="filled" placeholder="Hours 0" />
+                      <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
+                        <InputNumber className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
-                      <Form.Item name="prepMinutes" label="Minutes">
+                      <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
                         <Input className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
@@ -164,12 +213,12 @@ const EditRecipe = () => {
                 <div className="form-fields-container">
                   <Row gutter={20}>
                     <Col xs={12}>
-                      <Form.Item name="cookTimeHours" label="Hours">
+                      <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
                         <Input className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
-                      <Form.Item name="cookTimeMinutes" label="Minutes">
+                      <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
                         <Input className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
@@ -177,15 +226,27 @@ const EditRecipe = () => {
                 </div>
               </div>
             </div>
-
-            <div className="add-recipe-form-footer">
-              <Space size={20}>
-                <ExtendedButton customType="tertiary" type="link">Save Draft</ExtendedButton>
-                <ExtendedButton customType="tertiary" ghost>Cancel</ExtendedButton>
-                <ExtendedButton customType="tertiary">Publish</ExtendedButton>
-              </Space>
-            </div>
           </Form>
+          <div className="add-recipe-form-footer">
+            <Space size={20}>
+              <Button
+                className="button-tertiary"
+                type="link"
+                loading={loading}
+                onClick={() => submitAsDraft()}
+              >
+                Save Draft
+              </Button>
+              <Button className="button-tertiary" ghost>Cancel</Button>
+              <Button 
+                className="button-tertiary"
+                loading={loading}
+                onClick={() => submitAsPublished()}
+              >
+                Publish
+              </Button>
+            </Space>
+          </div>
         </div>
         
       </div>

@@ -59,7 +59,7 @@ export const InternshipProgressCard = (props: any) => {
           <a rel="noopener noreferrer" onClick={() => {
             navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + status, { state: { data: item } })
           }}>
-            View details
+            View Details
           </a>
         ),
       },
@@ -105,7 +105,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '6',
         label: (
           <a rel="noopener noreferrer"
-           onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP, { state: item }) }}>
+            onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP, { state: item }) }}>
             Edit
           </a>
         ),

@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import { Notifications } from "../../../components";
 
 // Chat operation and save into store
-const useCustomHook = () => {
+const UseManagerCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
     GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
     UPDATE_CANDIDATE_DETAIL } = apiEndpints
@@ -89,7 +89,7 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "PDF" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
@@ -169,4 +169,4 @@ const useCustomHook = () => {
   };
 };
 
-export default useCustomHook;
+export default UseManagerCustomHook;
