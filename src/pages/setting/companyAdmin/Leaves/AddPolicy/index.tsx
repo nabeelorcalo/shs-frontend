@@ -253,7 +253,7 @@ const LeavesAddPolicy: React.FC = () => {
               <Form.Item
                 label="Carry Forward Expiration"
                 name="carryforwardexpiration"
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }]}
               >
                 <CommonDatePicker
                   open={states.openDatePicker}

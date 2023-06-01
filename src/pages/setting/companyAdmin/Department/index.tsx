@@ -9,14 +9,11 @@ import "./style.scss";
 
 const SettingDepartment: React.FC = () => {
   const { settingDepartmentdata, getSettingDepartment, deleteSettingDepartment } = useDepartmentCustomHook();
-  const [edit, setEdit] = useState<any>({})
-  // const [deleteModal, setDeleteModal] = useState<any>(false)
   const [state, setState] = useState<any>(
     {
       search: '',
       isEditModal: false,
       isDeleteModal: false,
-      id: null,
     }
   )
 
@@ -52,9 +49,7 @@ const SettingDepartment: React.FC = () => {
                   <DropDownForSetting
                     state={state}
                     setState={setState}
-                    id={data?.id}
                     editData={data}
-                    SetEditData={setEdit}
                   />
                 </div>
               </div>
@@ -67,7 +62,7 @@ const SettingDepartment: React.FC = () => {
         }
       </Row>
       {state.isEditModal &&
-        <AddNewDepaertmentModal state={state} setState={setState} edit={edit} setEdit={setEdit} />
+        <AddNewDepaertmentModal state={state} setState={setState} />
       }
       <Alert
         cancelBtntxt="Cancel"
