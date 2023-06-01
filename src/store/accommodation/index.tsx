@@ -5,9 +5,19 @@ export const propertyState = atom({
   default: []
 })
 
+export const galleryState = atom({
+  key: 'galleryState',
+  default: []
+})
+
 export const availablePropertiesState = atom({
   key: 'availablePropertiesState',
   default: []
+});
+
+export const filterParamsState = atom({
+  key: 'filterParamsState',
+  default: {}
 });
 
 export const savedPropertiesState = atom({
@@ -23,4 +33,9 @@ export const rentedPropertiesState = atom({
 export const bookingRequestsState = atom({
   key: 'bookingRequestsState',
   default: []
+});
+
+export const checkPropertyAvailabilityState = atom({
+  key: 'checkPropertyAvailabilityState',
+  default: null
 });

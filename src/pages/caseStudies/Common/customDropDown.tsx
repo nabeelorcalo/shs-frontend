@@ -4,7 +4,7 @@ import type { MenuProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Emoji1st, Emoji3rd, Emoji4th, ThreeDots } from "../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import useCustomHook from "./actionHandler";
+import useCustomHook from "../actionHandler";
 import ManagerRemarks from "../../report/UniversityRep/assessmentForm/manageRemarksforUni";
 
 const CustomDropDownCaseStudies = (props: any) => {

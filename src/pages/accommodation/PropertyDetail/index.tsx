@@ -12,52 +12,21 @@ import PropertyPricing from "./PropertyPricing";
 import BookingRequest from "./BookingRequest";
 import { useRecoilValue} from "recoil";
 import usePropertyHook from "./actionHandler";
-import { propertyState } from "../../../store";
+import { propertyState, galleryState } from "../../../store";
 import { IconWebLocation, IconArrowDown } from '../../../assets/images';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
 const { useBreakpoint } = Grid;
 
-// Temporary
-import thumb1 from "../../../assets/images/gallery/thumb1.png";
-import thumb2 from "../../../assets/images/gallery/thumb2.png";
-import thumb3 from "../../../assets/images/gallery/thumb3.png";
-import thumb4 from "../../../assets/images/gallery/thumb4.png";
-import thumb5 from "../../../assets/images/gallery/thumb5.png";
-import gal1 from "../../../assets/images/gallery/gal1.png";
-
-const images = [
-  {
-    original: gal1,
-    thumbnail: thumb1,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb2,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb3,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb4,
-  },
-  {
-    original: gal1,
-    thumbnail: thumb5,
-  },
-];
 
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { getProperty } = usePropertyHook();
   const property:any = useRecoilValue(propertyState);
+  const gallery = useRecoilValue(galleryState);
   const screens = useBreakpoint();
-  const navigate = useNavigate();
-  const {state} = useLocation();
-  const {propertyId} = useParams()
+  const {propertyId} = useParams();
   const [loading, setLoading] = useState(false);
   const anchorItems = [
     {
@@ -91,37 +60,27 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getProperty(propertyId, setLoading)
-    console.log("property detailLL:: ", property)
   }, [])
 
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const breadcrumbLink = () => {
-    if(state == null) return navigate('/')
-    return (
-      state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}` ? 'Available Properties'
-      :state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}/${ROUTES_CONSTANTS.RENTED_PROPERTIES}` ? 'Rented Properties'
-      : state.from === `/${ROUTES_CONSTANTS.ACCOMMODATION}/${ROUTES_CONSTANTS.SAVED_SEARCHES}` ? 'Saved Searches'
-      : 'Booking Requests'
-    )
-  }
+
 
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
     <div className="property-detail">
-      <PageHeader title="Accommodation" bordered />
       <PageHeader
         bordered
         title={
           <Breadcrumb 
             breadCrumbData={[
               { name: "Accommodation" },
-              { name: breadcrumbLink(), onClickNavigateTo: -1 },
-            ]}  
+              { name: "Available Properties", onClickNavigateTo: `/${ROUTES_CONSTANTS.ACCOMMODATION}` },
+            ]}
           />
         }
       />
@@ -130,23 +89,30 @@ const AccPropertyDetail = () => {
           {property &&
             <div className="property-detail-content">
               <div className="property-detail-content-left">
-                <div className="property-gallery">
-                  <ImageGallery
-                    items={images}
-                    showNav={false}
-                    thumbnailPosition={screens.lg ? 'left' : 'bottom'}
-                    showFullscreenButton={false}
-                    useBrowserFullscreen={false}
-                    showPlayButton={false}
-                    showBullets={true}
-                    autoPlay={false}
-                    disableThumbnailScroll={false}
-                    slideDuration={450}
-                    slideInterval={3000}
-                    onImageError={() => console.log('image error')}
-                    onThumbnailError={() => console.log('thumbanil errror')}
-                  />
-                </div>
+                {property?.attachments?.length !== 0 ?
+                  (
+                    <div className="property-gallery">
+                      <ImageGallery
+                        items={gallery}
+                        showNav={false}
+                        thumbnailPosition={screens.lg ? 'left' : 'bottom'}
+                        showFullscreenButton={false}
+                        useBrowserFullscreen={false}
+                        showPlayButton={false}
+                        showBullets={true}
+                        autoPlay={false}
+                        disableThumbnailScroll={false}
+                        slideDuration={450}
+                        slideInterval={3000}
+                        onImageError={() => console.log('image error')}
+                        onThumbnailError={() => console.log('thumbanil errror')}
+                      />
+                    </div>
+                  ) : (
+                    <></>
+                  )
+                }
+                
 
                 <div className="property-heading">
                   <Typography.Title level={3}>
@@ -186,7 +152,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Pricing
                       </div>
-                      <PropertyPricing />
+                      <PropertyPricing data={property} />
                     </div>
                   </div>
 
@@ -213,14 +179,18 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-                      <AgentDetail />
+                      <AgentDetail data={property?.user} />
                     </div>
                   </div>
 
                 </div>
               </div>
               <div className="property-detail-content-right">
-                <BookingRequest />
+                <BookingRequest
+                  propertyId={property?.id}
+                  rent={property?.rent}
+                  rentFrequency={property?.rentFrequency}
+                />
 
                 <div className="booking-request-faq">
                   <Collapse

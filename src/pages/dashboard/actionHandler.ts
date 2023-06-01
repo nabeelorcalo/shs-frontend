@@ -1,35 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-import api from '../../api';
-import endpoints from '../../config/apiEndpoints';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import api from "../../api";
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   adminDashboardMembersDataState,
   adminDashboardRegionAnalyticsState,
   agentDashboardWidgetsState,
   currentUserRoleState,
   growthAnalyticsDashboardState,
-} from '../../store';
-import constants from '../../config/constants';
-import { getRecentActivities } from '../../store/getListingState';
+} from "../../store";
+import constants from "../../config/constants";
+import { getRecentActivities } from "../../store/getListingState";
 
 // import { agent_dashboard_widgets } from "../../store";
 
 // Chat operation and save into store
+const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS } = endpoints;
+const {
+  AGENT,
+  MANAGER,
+  COMPANY_ADMIN,
+  DELEGATE_AGENT,
+  STUDENT,
+  SYSTEM_ADMIN,
+  UNIVERSITY,
+  INTERN,
+} = constants;
 const useCustomHook = () => {
   const [countingCardData, setCountingCard] = useRecoilState(
     agentDashboardWidgetsState
   );
-  const [totalMembersData, setTotalMembersData] = useRecoilState(
-    adminDashboardMembersDataState
-  );
-  const [growthAnalyticsData, setGrowthAnalyticsData] = useRecoilState(
-    growthAnalyticsDashboardState
-  );
-  const [regionAnalytics, setRegionAnalytics] = useRecoilState(
-    adminDashboardRegionAnalyticsState
-  );
-  const [adminActivity, setAdminActivity] = useRecoilState(getRecentActivities);
+
   //user roles
   const {
     AGENT,
@@ -52,13 +54,15 @@ const useCustomHook = () => {
     GET_GENERAL_ACTIVITY,
   } = endpoints;
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+  //api's endpoints
+
+  // const getData = async (type: string): Promise<any> => {
+  //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  // };
 
   const loadMoreData = () => {
     fetch(
-      'https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo'
+      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
     )
       .then((res) => res.json())
       .then((body) => {
@@ -98,14 +102,8 @@ const useCustomHook = () => {
   }, []);
 
   return {
-    getData,
     loadMoreData,
     countingCardData,
-    totalMembersData,
-    growthAnalyticsData,
-    regionAnalytics,
-    adminActivity,
-    filterGraphData,
   };
 };
 

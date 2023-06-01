@@ -193,12 +193,12 @@ const ManageVault = () => {
                     ...prevState,
                     isOpenModal: true
                   }))}
-                  className="folder-add-btn" >
+                  className="folder-add-btn sm:w-full md:w-[173px]" >
                   Create Folder
                 </Button>
               </div>
               <div className="div">
-                <Button className="manage-vault-btn flex items-center justify-center" onClick={() =>
+                <Button className="manage-vault-btn flex items-center justify-center sm:w-full md:w-[160px]" onClick={() =>
                   setState((prevState: any) => ({
                     ...prevState,
                     uploadFile: true,

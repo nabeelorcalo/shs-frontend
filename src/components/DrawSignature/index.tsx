@@ -1,6 +1,6 @@
 import SignatureCanvas from "react-signature-canvas";
 import "./style.scss";
-import customHook from "../../pages/caseStudies/Common/actionHandler";
+import customHook from "../../pages/caseStudies/actionHandler";
 import { useEffect } from "react";
 const DrawSignature = () => {
   const { getSignPadValue } = customHook();
