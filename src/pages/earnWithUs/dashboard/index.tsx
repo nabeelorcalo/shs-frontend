@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import type { ColumnsType } from 'antd/es/table'
 import { Table, Typography, Row, Col, Form, Input, Button } from 'antd'
+import { RegisterMemberAndFeddbackGraph, PopUpModal } from "../../../components";
+import useEarnWithUsHook from '../actionHandler';
+import { useRecoilValue } from "recoil";
+import { delegateDashboardState } from "../../../store";
 import {
   IconWalletMoney,
   IconInactiveMemberBal,
@@ -15,7 +19,7 @@ import {
   IconDocumentCopy,
   Logo
 } from '../../../assets/images'
-import { RegisterMemberAndFeddbackGraph, PopUpModal } from "../../../components";
+
 import "./style.scss";
 
 interface DataType {
@@ -71,6 +75,9 @@ const tableData = [
 const Dashboard = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {getDelegateDashboard} = useEarnWithUsHook();
+  const [loading, setLoading] = useState(false)
+  const delegateDashboard:any = useRecoilValue(delegateDashboardState)
   const [form] = Form.useForm();
   const [modalShareLinkOpen, setModalShareLinkOpen] = useState(false)
   const [modalInvitaionOpen, setModalInvitaionOpen] = useState(false)
@@ -120,10 +127,10 @@ const Dashboard = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    getDelegateDashboard(setLoading)
   }, [])
 
-
+console.log('delegateDashboard::: ', delegateDashboard)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -168,7 +175,7 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Current Balance</div>
-                        <div className="top-card-value">£ 6371.3</div>
+                        <div className="top-card-value">£ {delegateDashboard?.currentBalance}</div>
                       </div>
                     </div>
                   </Col>
@@ -179,7 +186,7 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Inactive Members Balance</div>
-                        <div className="top-card-value">£ 562</div>
+                        <div className="top-card-value">£ {delegateDashboard?.inactiveMemberBalance}</div>
                       </div>
                     </div>
                   </Col>
@@ -195,12 +202,12 @@ const Dashboard = () => {
                     <Row gutter={15}>
                       <Col xs={24} lg={12}>
                         <div className="top-card-inner">
-                          <div className="user-welcome-text">Welcome Back, <span>Stephen!</span></div>
+                          <div className="user-welcome-text">Welcome Back, <span>{delegateDashboard?.userRes?.lastName}</span></div>
                         </div>
                       </Col>
                       <Col xs={24} lg={12}>
                         <div className="top-card-inner ref-number">
-                          <div className="user-reference-no">Reference Number: <span>DF41331056</span></div>
+                          <div className="user-reference-no">Reference Number: <span>{delegateDashboard?.userRes?.referenceNo}</span></div>
                         </div>
                       </Col>
                     </Row>
@@ -219,7 +226,7 @@ const Dashboard = () => {
                 </div>
                 <div className="member-card-body">
                   <div className="member-card-title">Total Members</div>
-                  <div className="member-card-value">10</div>
+                  <div className="member-card-value">{delegateDashboard?.totalMembers}</div>
                 </div>
               </div>
             </Col>
@@ -230,7 +237,7 @@ const Dashboard = () => {
                 </div>
                 <div className="member-card-body">
                   <div className="member-card-title">Active Members</div>
-                  <div className="member-card-value">11</div>
+                  <div className="member-card-value">{delegateDashboard?.activeMembers}</div>
                 </div>
               </div>
             </Col>
@@ -241,7 +248,7 @@ const Dashboard = () => {
                 </div>
                 <div className="member-card-body">
                   <div className="member-card-title">Inactive Members</div>
-                  <div className="member-card-value">01</div>
+                  <div className="member-card-value">{delegateDashboard?.inactiveMembers}</div>
                 </div>
               </div>
             </Col>
@@ -254,7 +261,7 @@ const Dashboard = () => {
               <div className="registered-members">
                 <RegisterMemberAndFeddbackGraph  
                   graphName='registerMember' 
-                  title="Registered Members" 
+                  title="Registered Members"
                 />
               </div>
             </Col>

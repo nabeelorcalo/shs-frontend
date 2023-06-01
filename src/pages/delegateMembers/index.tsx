@@ -183,8 +183,6 @@ const DelegateMembers = () => {
     getDelegateMembers(filterParams, setLoading)
   }, [filterParams])
 
-console.log('delegateMembers:: ', delegateMembers)
-console.log('filterparams:: ', filterParams)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/

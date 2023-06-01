@@ -7,9 +7,16 @@ import constants from '../../config/constants';
 
 
 const useDelegateHook = () => {
-  const { GET_DELEGAE_MEMBERS } = endpoints
+  const { GET_DELEGAE_DASHBOARD, GET_DELEGAE_MEMBERS } = endpoints
   const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState)
 
+  // GET DELEGATE DASHBOARD
+  const getDelegateDashboard = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    const response = await api.get(GET_DELEGAE_DASHBOARD);
+    setDelegateMembers(response.data)
+    setLoading(false)
+  }
 
   // GET DELEGATE MEMBERS
   const getDelegateMembers = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -49,6 +56,7 @@ const useDelegateHook = () => {
   // }
 
   return {
+    getDelegateDashboard,
     getDelegateMembers
   };
 };
