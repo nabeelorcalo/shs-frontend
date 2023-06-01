@@ -115,7 +115,7 @@ const useCustomHook = () => {
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
-    Notifications({ title: "Success", description: "Internship edited successfully", type: "success" })
+    Notifications({ title: "Success", description: "Internship edited", type: "success" })
   };
 
   //Duplicate internship
