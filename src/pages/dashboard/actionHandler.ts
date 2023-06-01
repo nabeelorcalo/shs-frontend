@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
@@ -8,10 +8,13 @@ import {
   adminDashboardRegionAnalyticsState,
   agentDashboardWidgetsState,
   currentUserRoleState,
+  delegateAgenetMembersState,
+  delegateAgentDashbaordState,
   growthAnalyticsDashboardState,
 } from "../../store";
 import constants from "../../config/constants";
 import { getRecentActivities } from "../../store/getListingState";
+import { Notifications } from "../../components";
 
 // import { agent_dashboard_widgets } from "../../store";
 
@@ -48,11 +51,7 @@ const useCustomHook = () => {
   const role = useRecoilValue(currentUserRoleState);
 
   //api's endpoints
-  const {
-    AGENT_DASHBOARD_WIDGETS,
-    GET_SYSTEM_ADMIN_DASHBOARD,
-    GET_GENERAL_ACTIVITY,
-  } = endpoints;
+  const { AGENT_DASHBOARD_WIDGETS } = endpoints;
 
   //api's endpoints
 

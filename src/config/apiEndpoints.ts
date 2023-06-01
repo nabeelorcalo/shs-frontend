@@ -123,8 +123,6 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
-  //Admin Dashboard
-  GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
 
   // RECIPES
   GET_ALL_RECIPES: "/recipe/get-recipies",
@@ -132,5 +130,11 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
+
+  // Dashboard
+  GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
+  GET_DELEGATE_DASHBOARD: "delegate/dashboard",
+  GET_DELEGATE_MEMBERS: "delegate/members",
+  SEND_REFERENCE_INVITE: "delegate/invite",
 };
 export default endpoints;

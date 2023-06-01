@@ -36,6 +36,23 @@ export const adminDashboardMembersDataState = atom({
     intenrshipVacancies: 0,
   },
 });
+
+export const delegateAgentDashbaordState = atom({
+  key: 'delegateAgentDashbaordState',
+  default: {
+    activeMembers: 0,
+    currentBalance: 0,
+    graphData: [],
+    inactiveMemberBalance: 0,
+    inactiveMembers: 0,
+    totalMembers: 0,
+    userRes: null,
+  },
+});
+export const delegateAgenetMembersState = atom({
+  key: 'delegateAgenetMembersState',
+  default: [],
+});
 export const growthAnalyticsDashboardState = atom({
   key: 'growthAnalyticsDataState',
   default: [],

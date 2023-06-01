@@ -10,40 +10,65 @@ interface DataType {
   delegateAmount: string | number;
   member: string;
   status: string;
+  id?: number;
+  referredToUser?: any;
+  rewardAmount?: number;
 }
 
 const columns: ColumnsType<DataType> = [
   {
     title: "No.",
     dataIndex: "no",
-    key: "no",
+    key: "key",
+    render: (text, record, index) => (
+      <p className="min-w-[55px] text-sm">{index + 1}</p>
+    ),
   },
   {
     title: "Name",
     dataIndex: "name",
-    key: "name",
+    key: "referredToUser",
+    render: (text, record) => (
+      <p className="min-w-[110px] text-sm">
+        {record?.referredToUser?.firstName} {record?.referredToUser?.lastName}
+      </p>
+    ),
   },
   {
     title: "Delegate Amount",
     dataIndex: "delegateAmount",
-    key: "delegateAmount",
-    render: (text) => <p className="min-w-[65px]">{text}</p>,
+    key: "rewardAmount",
+    render: (text, record) => <p className="">{record?.rewardAmount}</p>,
   },
   {
     title: "Member",
     dataIndex: "member",
-    key: "member",
+    key: "referredToUser",
+    render: (text, record) => (
+      <p className=" text-sm">
+        {record?.referredToUser?.role
+          .replace(/_/g, " ")
+          .toLowerCase()
+          .replace(/(?:^|\s)\S/g, (char: string) => char.toUpperCase())}
+      </p>
+    ),
   },
   {
     title: "Status",
     dataIndex: "status",
-    key: "status",
-    render: (text) => (
+    key: "referredToUser",
+    render: (text, record) => (
       <p
         className={`text-white text-sm font-normal text-center rounded-lg px-[10px] py-[2px]
-     ${text.toLowerCase() === "active" ? "active-bg" : "text-error-bg-color"} `}
+     ${
+       record?.referredToUser?.status?.toLowerCase() === "active"
+         ? "active-bg"
+         : "text-error-bg-color"
+     } `}
       >
-        {text}
+        {record?.referredToUser?.status?.toLowerCase() === "active"
+          ? "Active"
+          : "Inactive"}
       </p>
     ),
   },
@@ -115,7 +140,8 @@ const data: DataType[] = [
     status: "Inactive",
   },
 ];
-const MembersDetails: FC<{}> = () => {
+const MembersDetails: FC<{ membersDetails: any[] }> = (props) => {
+  const { membersDetails } = props;
   return (
     <div className="bg-white xs:p-2 md:p-3 lg:p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle">
@@ -125,7 +151,7 @@ const MembersDetails: FC<{}> = () => {
       </Row>
       <GlobalTable
         columns={columns}
-        tableData={data}
+        tableData={membersDetails}
         pagination={false}
         height={388}
       />

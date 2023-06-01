@@ -12,12 +12,11 @@ import {
 import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { gutter } from "..";
-import useCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 
 const SystemAdmin = () => {
-  const { getData, analyticsData, totalUserData } = useCustomHook();
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false);
   const [rangeFilter, setRangeFilter] = useState<string[]>([]);
   const {
@@ -35,12 +34,17 @@ const SystemAdmin = () => {
     regionAnalytics,
     adminActivity,
     filterGraphData,
+    fetchAdminDahsboardData,
   } = useCustomHook();
 
   const changeDateRange = (_: any, val: string[]) => {
     setRangeFilter(val);
     filterGraphData(val);
   };
+
+  useEffect(() => {
+    fetchAdminDahsboardData();
+  }, []);
   return (
     <Row gutter={gutter}>
       <Col xs={24} xxl={12}>
