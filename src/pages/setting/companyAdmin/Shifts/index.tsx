@@ -68,7 +68,7 @@ const SettingShifts: React.FC = () => {
                         {data?.name}
                       </Text>
                       <Text className="text-base font-medium text-teriary-color">
-                        {data?.interns?.length <= 0 ? `${shiftsData?.length}` : `0${shiftsData?.length}`}
+                        {data?.interns?.length < 0 ? `${data?.interns?.length}` : `0${data?.interns?.length}`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
                         {`Time: ${startTime} to ${endTime}`}

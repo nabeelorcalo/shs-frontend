@@ -67,8 +67,8 @@ const endpoints = {
   //event
   CREATE_MEETING: `/Event/create-meeting`,
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
-  DELETE_MEETING:`/Event/delete-meeting`,
-  UPDATE_MEETING:`/Event/update-meeting`,
+  DELETE_MEETING: `/Event/delete-meeting`,
+  UPDATE_MEETING: `/Event/update-meeting`,
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
   //student
@@ -76,9 +76,9 @@ const endpoints = {
   //documents
   DOCUMENT_REQUEST: `/Document/request`,
   //case-studies
-  CASE_STUDIES:`case-studies`,
+  CASE_STUDIES: `case-studies`,
   // intern
-  INTERN_LIST:`/intern/list`,
+  INTERN_LIST: `/intern/list`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
@@ -105,10 +105,11 @@ const endpoints = {
   DELETE_TIMESHEET: '/timesheet/category/delete',
   EDIT_TIMESHEET: '/timesheet/category/edit',
   DELETE_PAYROLL: '/payroll/delete',
-  GET_ALL_COMAPANIES:'/university/universityCompanies',
-  DELETE_SETTING_TEMPLATE:'/template/delete',
-  POST_SETTING_TEMPLATE:'/template/add',
-  EDIT_SETTING_TEMPLATE:'/template/edit',
+  ADD_PAYROLL: '/payroll/add',
+  GET_ALL_COMAPANIES: '/university/universityCompanies',
+  DELETE_SETTING_TEMPLATE: '/template/delete',
+  POST_SETTING_TEMPLATE: '/template/add',
+  EDIT_SETTING_TEMPLATE: '/template/edit',
 
   // RECIPES
   GET_ALL_RECIPES: "/recipe/get-recipies",

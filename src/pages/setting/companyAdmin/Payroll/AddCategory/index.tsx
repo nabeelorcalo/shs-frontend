@@ -1,19 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Typography, Row, Col, Divider, Form, Radio,
   RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
 import { SettingAvater } from "../../../../../assets/images";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper, TimePickerComp } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useCustomHook from "../../../../Payroll/actionHandler";
+import { currentUserState } from '../../../../../store';
+import { useRecoilState } from "recoil";
+import "./style.scss";
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
+  const navigate = useNavigate();
   const deselectArray: any = [];
   const [form] = Form.useForm();
   const [state, setState] = useState(
@@ -27,13 +31,25 @@ const PayrollAddCategory = () => {
       internValue: 1,
       applyToNewHires: false
     });
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const { postPayroll, internsData, getAllInterns } = useCustomHook();
 
+  const filteredInternsData = internsData?.map((item: any, index: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
   const breadcrumbArray = [
     { name: "Add Category" },
     { name: "Setting" },
     { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
 
   ];
+
   const selectArray = [
     {
       name: "Eva Smith",
@@ -84,10 +100,22 @@ const PayrollAddCategory = () => {
   const handlePayollForm = (values: any) => {
     const newValues = {
       ...values,
-      timeTo: state.openToTimeValue,
-      timeFrom: state.openFromTimeValue
+      to: state.openToTimeValue,
+      from: state.openFromTimeValue,
+      intern: state.intern,
+      applyToNewHires: state.applyToNewHires
     }
+    form.resetFields()
+    postPayroll(newValues)
+    navigate('/settings/payroll')
+
   }
+  useEffect(() => {
+    getAllInterns(currentUser?.company?.id)
+  }, [])
+
+  console.log('interns data', internsData);
+
 
   return (
     <div className="payroll-add-category">
@@ -110,7 +138,7 @@ const PayrollAddCategory = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                name="payrolName"
+                name="payrollName"
                 label="Payroll Name"
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
@@ -122,7 +150,6 @@ const PayrollAddCategory = () => {
                   <Form.Item
                     name="from"
                     required={false}
-                    rules={[{ required: true }]}
                     label='Time From'
                   >
                     <TimePickerComp
@@ -131,7 +158,7 @@ const PayrollAddCategory = () => {
                       customSetValue
                       setOpen={openTimeFromHandler}
                       value={state.openFromTimeValue}
-                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                      setValue={(e: any) => setState({ ...state, openFromTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
@@ -139,7 +166,20 @@ const PayrollAddCategory = () => {
                   <Form.Item
                     name="to"
                     required={false}
-                    rules={[{ required: true }]}
+                    label='Time to'
+                  >
+                    <TimePickerComp
+                      className="input-style"
+                      open={state.openToTime}
+                      customSetValue
+                      setOpen={openTimeToHandler}
+                      value={state.openToTimeValue}
+                      setValue={(e: any) => setState({ ...state, openToTimeValue: e })}
+                    />
+                  </Form.Item>
+                  {/* <Form.Item
+                    name="to"
+                    required={false}
                     label="Time To"
                   >
                     <TimePickerComp
@@ -149,7 +189,7 @@ const PayrollAddCategory = () => {
                       value={state.openToTimeValue}
                       setValue={(e: any) => setState({ ...state, openToTimeValue: e })}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                 </div>
               </div>
             </Col>
@@ -174,15 +214,21 @@ const PayrollAddCategory = () => {
                 </span>
               </div>
               <div className="my-5">
-
-                <Form.Item name='applyForNewHire'>
+                <Form.Item name='applyToNewHire'>
+                  <Switch
+                    checked={state?.applyToNewHires}
+                    onChange={(e: any) => setState({ ...state, applyToNewHires: e })}
+                  />
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item>
+                {/* <Form.Item name='applyForNewHire'>
                   <Switch
                     checked={state?.applyToNewHires}
                   // onChange={(e: any) => setState({ ...state, applyForNewHire: e })} 
                   />
                   <span className="px-2">Apply to all new hires</span>
-                </Form.Item>
-                <span className="px-2">Apply to all new hires</span>
+                </Form.Item> */}
+                {/* <span className="px-2">Apply to all new hires</span> */}
               </div>
             </Col>
           </Row>
@@ -204,7 +250,7 @@ const PayrollAddCategory = () => {
         </Form>
       </BoxWrapper>
       <SettingCommonModal
-        selectArray={selectArray}
+        selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={state.openModal}
         setOpenModal={setState}

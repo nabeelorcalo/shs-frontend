@@ -28,6 +28,9 @@ const SettingPayroll: React.FC = () => {
     getData()
   }, [])
 
+  console.log('payroll data', payrollData);
+
+
   const calculateDays = (startingDate: any, endingDate: any) => {
     const start = dayjs(startingDate);
     const end = dayjs(endingDate);
@@ -74,10 +77,15 @@ const SettingPayroll: React.FC = () => {
                 <div className="flex justify-between mt-2 w-full">
                   <div className="flex flex-col">
                     <Text className="text-base font-medium mb-1 text-teriary-color">
-                      {data?.interns?.length < 10 ? `0${data?.interns?.length}` : data?.interns?.length} Employees
+                      {data?.interns?.length < 10 ? `0${data?.interns?.length}` : data?.interns?.length}
+                      Employees
                     </Text>
                     <Text className="text-sm font-normal content-text ">
-                      Payroll Cycle: {`${dayjs(data?.from).format('MMM,YYYY')} - ${dayjs(data?.to).format('MMM,YYYY')} (${durationInDays}days)`} </Text>
+                      Payroll Cycle: 
+                      {`${dayjs(data?.from).format('MMM,YYYY')} - ${dayjs(data?.to).format('MMM,YYYY')}`
+                      // (${durationInDays}days)
+                      } 
+                      </Text>
                     <Text className="text-sm font-normal content-text">
                       Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
                     </Text>
