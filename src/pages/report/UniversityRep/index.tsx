@@ -10,58 +10,7 @@ const index = () => {
   const { getData, downloadPdfOrCsv, universityReports } = useCustomHook();
   const TableColumn = ["No.", "Avater", " Name", "Department", "Company", "Reviewer"];
   const reportTableData = universityReports?.data;
-  // [
-  //   {
-  //     no: '01',
-  //     avater: Image,
-  //     name: "Mino Marina",
-  //     department: 'Design',
-  //     company: 'Power Source',
-  //     reviewer: 'Amilia Clark',
-  //   },
-  //   {
-  //     no: '02',
-  //     name: "Craig Donin",
-  //     avater: Image,
-  //     department: 'Research',
-  //     company: 'DevSpot',
-  //     reviewer: 'Jacob Jones',
-  //   },
-  //   {
-  //     no: '03',
-  //     name: "Gustavo Korsgaard",
-  //     avater: Image,
-  //     department: 'Business',
-  //     company: 'Abacus',
-  //     reviewer: 'Savannah',
-  //   },
-  //   {
-  //     no: '04',
-  //     name: "Omar Schleifer",
-  //     avater: Image,
-  //     department: 'Management',
-  //     company: 'Orcalo Holdings',
-  //     reviewer: 'Albert Flores',
-  //   },
-  //   {
-  //     no: '05',
-  //     avater: Image,
-  //     name: "Adison Donin",
-  //     department: 'Development',
-  //     company: 'Poer Source',
-  //     reviewer: 'Leslie Alexander',
-
-  //   },
-  //   {
-  //     no: '06',
-  //     name: "Lindsey Mango",
-  //     avater: Image,
-  //     department: 'Development',
-  //     company: 'Poer Source',
-  //     reviewer: 'Wade Warren',
-
-  //   },
-  // ]
+  
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   // const [value, setValue] = useState<any>()
   // const [selectedTab, setSelectedTab] = useState<any>(1)
