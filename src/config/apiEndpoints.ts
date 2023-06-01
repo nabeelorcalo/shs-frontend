@@ -85,6 +85,10 @@ const endpoints = {
   CASE_STUDIES:`case-studies`,
   // intern
   INTERN_LIST:`/intern/list`,
+  //media upload
+  MEDIA_UPLOAD:`/media/upload`,
+  //dashboards
+  SYSTEM_ADMIN_DASHBOARD:`/dashboard/system-admin`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,

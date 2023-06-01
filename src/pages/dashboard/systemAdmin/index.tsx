@@ -12,18 +12,24 @@ import {
 import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { gutter } from "..";
+import useCustomHook from "../actionHandler";
 
 const SystemAdmin = () => {
+  const { getData,analyticsData,totalUserData } = useCustomHook();
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false);
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <Row gutter={gutter}>
       <Col xs={24} xxl={12}>
-        <UserAnalytics title="Total User" count={567} data={TotalUserData} />
+        <UserAnalytics title="Total User" count={567} data={totalUserData} />
       </Col>
       <Col xs={24} xxl={12}>
-        <UserAnalytics title="Analytics" data={AnalyticsData} />
+        <UserAnalytics title="Analytics" data={analyticsData} />
       </Col>
       <Col xs={24} xxl={14}>
         <GrowthAnalyticsGraph
