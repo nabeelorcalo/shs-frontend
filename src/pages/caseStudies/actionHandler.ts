@@ -123,8 +123,6 @@ const useCustomHook = () => {
   }
   // get upload file form data
   const handleUploadFile = (value: any) => {
-    console.log(value, "fdddddd");
-
     uploadFile = value
   }
 

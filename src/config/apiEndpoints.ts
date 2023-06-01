@@ -34,14 +34,14 @@ const endpoints = {
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: '/Contract/list',
-  CONTRACT_DASHBOARD:'/Contract/dashboard',
+  CONTRACT_DASHBOARD: '/Contract/dashboard',
   DEL_CONTRACT: '/Contract/delete',
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: '/digivault/get-folder-content',
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
   POST_NEW_VAULT_PASSWORD: '/digivault/set-new-vault-password',
   POST_DIGIVAULT_PASSWORD: '/digivault/enable-disable-lock',
-  GET_COUNTRIES_LIST : 'https://restcountries.com/v3/all',
+  GET_COUNTRIES_LIST: 'https://restcountries.com/v3/all',
   POST_CREATE_FOLDER_FILE: '/digivault/create-folder-file',
   DEL_FOLDER_FILE: '/digivault/delete-folder-file',
   GET_RESERVATIONS: '/property/get-reservations',
@@ -75,8 +75,8 @@ const endpoints = {
   //event
   CREATE_MEETING: `/Event/create-meeting`,
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
-  DELETE_MEETING:`/Event/delete-meeting`,
-  UPDATE_MEETING:`/Event/update-meeting`,
+  DELETE_MEETING: `/Event/delete-meeting`,
+  UPDATE_MEETING: `/Event/update-meeting`,
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
   //student
@@ -84,18 +84,22 @@ const endpoints = {
   //documents
   DOCUMENT_REQUEST: `/Document/request`,
   //case-studies
-  CASE_STUDIES:`case-studies`,
+  CASE_STUDIES: `case-studies`,
   // intern
-  INTERN_LIST:`/intern/list`,
+  INTERN_LIST: `/intern/list`,
   //media upload
-  MEDIA_UPLOAD:`/media/upload`,
+  MEDIA_UPLOAD: `/media/upload`,
   //dashboards
-  SYSTEM_ADMIN_DASHBOARD:`/dashboard/system-admin`,
+  SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
   // End Point For Leaev Module For Intrne 
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
-  
+  // university reports
+  UNIVERSITY_REPORTS: `/university-reports`,
+  UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
+
+
   //Applications for student
   GET_APPLICATIONS: '/application/listApplications',
   GET_APPLICATIONS_DETAILS: '/application/getApplicationDetail',
@@ -115,7 +119,7 @@ const endpoints = {
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
-  
+
   SETTINGS_TEMPLATES: '/template/findAll',
   SETTINGS_SHIFTS: '/shift/findAll',
   POST_NEW_SHIFTS: '/shift/add',
