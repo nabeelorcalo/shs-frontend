@@ -1,22 +1,22 @@
 @import "../../../scss/colors";
 
 .personal-profile-form {
-    .react-tel-input .form-control {
-        border-radius: 8px;
-        background-color: $text-input-bg-color !important;
-        border-radius: 6px !important;
+  .react-tel-input .form-control {
+    border-radius: 8px;
+    background-color: $text-input-bg-color !important;
+    border-radius: 6px !important;
 
-        &:hover {
-            background-color: transparent !important;
-            border: 1px solid gray !important;
-        }
+    &:hover {
+      background-color: transparent !important;
+      border: 1px solid gray !important;
     }
+  }
 
-    .form-control {
-        height: 48px !important;
+  .form-control {
+    height: 48px !important;
 
-        .selected-flag {
-            width: 45px !important;
-        }
+    .selected-flag {
+      width: 45px !important;
     }
+  }
 }

@@ -174,28 +174,6 @@ const previewImages = [
   },
 ]
 
-//   {
-//     id: "1",
-//     text: "Yeah, your Student help squad is very awesome \n and useful for my carrier. Great job! .",
-//     time: "12:46 PM",
-//   },
-//   {
-//     id: "2",
-//     text: "By the way, can you please show me \n the preview of your new product?",
-//     time: "12:46 PM",
-//   },
-// ];
-
-// const outgoingMsg = [
-//   {
-//     id: "1",
-//     text: "By the way, can you please show me \n the preview of your new product?",
-//     time: "12:46 PM",
-//     img1: Userimg,
-//     img2: Userimg,
-//   },
-// ];
-
 const index = (props: any) => {
   const [toggleHide, setToggleHide] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState<string>("EMOJIS");
@@ -239,24 +217,15 @@ const index = (props: any) => {
   }
   function onClick(emojiData: EmojiClickData, event: MouseEvent) {
     setSelectedEmoji(emojiData.emoji);
-    console.log(emojiData.emoji);
     setSendMessages({ ...sendMessages, msg: sendMessages.msg + "".concat(emojiData.emoji) })
 
 
   }
   const handleChange: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
-    console.log(newFileList, "newFileList");
-
-
-    // 1. Limit the number of uploaded files
-    // Only to show two recent uploaded files, and old ones will be replaced by the new
     newFileList = newFileList.slice(-2);
-
-    // 2. Read from response and show file link
     newFileList = newFileList.map((file) => {
       if (file.response) {
-        // Component will show file.url as link
         file.url = file.response.url;
       }
       return file;

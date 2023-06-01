@@ -45,7 +45,6 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-emoji": "^0.5.0",
     "react-error-boundary": "^3.1.4",
     "react-grid-carousel": "^1.0.1",
     "react-image-gallery": "^1.2.11",

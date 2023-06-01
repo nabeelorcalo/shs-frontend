@@ -122,9 +122,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const navigateToInbox = () => {
     navigate("/chat");
   };
-  const storedData:any = localStorage.getItem("recoil-persist");
-  const userData = JSON.parse(storedData)
-  console.log(userData.id, "storedData");
+  // const storedData:any = localStorage.getItem("recoil-persist");
+  // const userData = JSON.parse(storedData)
+  // console.log(userData.id, "storedData");
 
 
   const GoToSwitchRole = async (body: any): Promise<any> => {

@@ -1,11 +1,8 @@
-import React from 'react'
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import React from 'react';
 import { Button, Form, Input, Typography } from "antd";
 import { useState } from "react";
 import { BoxWrapper } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
-import { useRecoilState } from 'recoil';
-import { currentUserState } from '../../../store';
 import useCustomHook from './actionHandler';
 
 
@@ -13,17 +10,12 @@ const ChangePassword = (props: any) => {
   const { showSideViewType, setShowSideViewType } = props
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
-
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { patchagentChangePassword } = useCustomHook();
 
-  // const data = useRecoilState(currentUserState);
-  // console.log(data, "data");
-
   const onFinish = (values: any) => {
-    console.log(values);
     patchagentChangePassword(values?.oldPassword, values?.newPassword)
   };
 
@@ -44,9 +36,6 @@ const ChangePassword = (props: any) => {
             <Form.Item
               label="Old Password"
               name="oldPassword"
-              // rules={[
-              //     { required: true, message: "Please enter your old password!" },
-              // ]}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
@@ -56,7 +45,6 @@ const ChangePassword = (props: any) => {
                 className="input-style"
                 onFocus={() => setShowPassCriteria(true)}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setOldPassword(e.target.value);
                 }}
               />
@@ -65,9 +53,6 @@ const ChangePassword = (props: any) => {
             <Form.Item
               label="New Password"
               name="newPassword"
-              // rules={[
-              //     { required: true, message: "Please enter new your password!" },
-              // ]}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
@@ -77,28 +62,18 @@ const ChangePassword = (props: any) => {
                 className="input-style"
                 onFocus={() => setShowPassCriteria(true)}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setPassword(e.target.value);
                 }}
-
               />
             </Form.Item>
 
             {showPassCriteria && (
               <div className="mt-[22px]">
-                {/* <PasswordCritera  value={password} /> */}
               </div>
             )}
-
             <Form.Item
               label="Confirm  Password"
               name="confirmPassword"
-              // rules={[
-              //     {
-              //         required: true,
-              //         message: "Password is required",
-              //     },
-              // ]}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
@@ -107,9 +82,7 @@ const ChangePassword = (props: any) => {
                 placeholder="Enter Password"
                 className="input-style"
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setConfirmPassword(e.target.value);
-
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
                     : setMatchedPassMessage("Password not matched");
