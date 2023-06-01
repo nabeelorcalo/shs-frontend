@@ -67,7 +67,9 @@ svg {
     width: 100%;
   }
 }
-
+.ant-avatar .ant-avatar-string {
+  text-transform: uppercase;
+}
 
 // Buttons
 .ant-btn {
