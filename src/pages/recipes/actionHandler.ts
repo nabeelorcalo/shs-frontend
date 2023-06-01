@@ -17,8 +17,8 @@ const useRecipesHook = () => {
   }
 
   // Read Recipes
-  const getAllRecipes = async (page:any) => {
-    const response = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
+  const getAllRecipes = async (params: any) => {
+    const response = await api.get(GET_ALL_RECIPES, params);
     return response;
   }
 
