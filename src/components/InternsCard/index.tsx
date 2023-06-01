@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { BoxWrapper } from '../../components'
 import { ROUTES_CONSTANTS } from '../../config/constants'
 import './style.scss'
-
 export const InternsCard = (props: any) => {
   const { id, status, pupover, name, posted_by, title, department,
     joining_date, date_of_birth, company } = props;

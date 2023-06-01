@@ -107,6 +107,8 @@ const endpoints = {
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
+  AGENT_PROFILE: "/auth/profile",
+  CHANGE_AGENT_PASSWORD: "/auth/change-password",
   SETTING_PERFORMANCE: "/performance",
 
   // Performance

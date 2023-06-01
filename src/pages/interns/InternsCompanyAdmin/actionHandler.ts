@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import { Notifications } from "../../../components";
 
 // Chat operation and save into store
-const useCustomHook = () => {
+const UseManagerCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
     GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
     UPDATE_CANDIDATE_DETAIL } = apiEndpints
@@ -169,4 +169,4 @@ const useCustomHook = () => {
   };
 };
 
-export default useCustomHook;
+export default UseManagerCustomHook;
