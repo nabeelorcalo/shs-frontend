@@ -5,7 +5,8 @@ import useCustomHook from "../actionHandler";
 import "./style.scss";
 
 const Filters: React.FC = ({ setShowDrawer }: any) => {
-  const { getData, getDepartmentList, handleFilterParams, departmentList,getCompanyManagerList,companyManagerList } = useCustomHook();
+  const { getData, getDepartmentList, handleFilterParams, departmentList, getCompanyManagerList, companyManagerList } =
+    useCustomHook();
   const company = ["Power DevSpot", "Abacus", "Orcalo Holdings", "Coding Hub"];
   const department = ["Design", "Research", "Management", "Development", "Business"];
   const reviewer = ["Mino Marino", "David Miller", "Amila Clark"];
@@ -30,7 +31,7 @@ const Filters: React.FC = ({ setShowDrawer }: any) => {
 
   useEffect(() => {
     getDepartmentList();
-    getCompanyManagerList()
+    getCompanyManagerList();
     // getInternList();
   }, []);
 

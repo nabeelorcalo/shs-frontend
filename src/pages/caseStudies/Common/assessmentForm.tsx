@@ -28,8 +28,6 @@ const AssessmentFormCaseStudies = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  // console.log(feedbackFormData);
-
   useEffect(() => {
     getSelectedCasStudyData(getParamId(pathname));
   }, []);

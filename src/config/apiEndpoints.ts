@@ -99,7 +99,6 @@ const endpoints = {
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
 
-
   //Applications for student
   GET_APPLICATIONS: '/application/listApplications',
   GET_APPLICATIONS_DETAILS: '/application/getApplicationDetail',

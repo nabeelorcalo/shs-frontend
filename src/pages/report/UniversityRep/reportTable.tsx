@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Alert, GlobalTable } from "../../../components";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ThreeDots } from "../../../assets/images";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Avatar } from "antd";
