@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
+import _ from 'lodash';
 import { Modal, Form, Input, } from 'antd'
 import { CommonDatePicker, TextArea } from '../../../components';
 import "./style.scss"
@@ -11,7 +12,16 @@ import dayjs from 'dayjs';
 export const AddEditGoalTaskModal = (props: any) => {
 
   const action = useCustomHook();
-  const { title, open, setOpenAddEditGoalTask, goalData, initValues, setInitValues } = props;
+  const { 
+    title,
+    // open, 
+    // setOpenAddEditGoalTask, 
+    goalData, 
+    // initValues, 
+    // setInitValues 
+    state,
+    setState
+  } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
@@ -19,7 +29,6 @@ export const AddEditGoalTaskModal = (props: any) => {
   const dateFormat = 'YYYY/MM/DD';
   const addGoalTaskHandle = async () => {
       const values = await form.validateFields();
-      console.log(goalData.id);
       const data = {
         goalId: goalData.id,
         startingDate: dayjs(values.startingDate).toISOString().split('T')[0],
@@ -28,20 +37,66 @@ export const AddEditGoalTaskModal = (props: any) => {
         completed: false,
       }
       setLoading(true);
-      console.log(data, "======================"); 
       await action.addGoalTask(data);
       setDisabled(true)
       setLoading(false);
-      setInitValues({});
-      setOpenAddEditGoalTask(false);
+      setState((prevState: any) => ({
+        ...prevState,
+        edit: false,
+        initValues: {},
+        openAddGoalTask: false,
+      }));
+      // setInitValues({});
+      // setOpenAddEditGoalTask(false);
       form.resetFields();
   };
+
+  const editTaskHandle = async () => {
+    const values = await form.validateFields();
+    const data = {
+      goalId: goalData.id,
+      taskId: state.taskId,
+      startingDate: dayjs(values.startingDate).toISOString().split('T')[0],
+      note: values.note,
+      name: values.name,
+      completed: false,
+    }
+    setLoading(true);
+    await action.editTask(data);
+    setDisabled(true)
+    setLoading(false);
+    setState((prevState: any) => ({
+      ...prevState,
+      edit: false,
+      initValues: {},
+      openAddGoalTask: false,
+    }));
+    // setInitValues({});
+    // setOpenAddEditGoalTask(false);
+    form.resetFields();
+};
+
+  useEffect(() => {
+    if(!state.edit) {
+      setState((prevState: any) => ({
+        ...prevState,
+        initValues: {},
+      }));
+    }
+  }, [state.edit]);
 
   return (
     <Modal
       title={title}
-      open={open}
-      onCancel={() => {setInitValues({}); setOpenAddEditGoalTask(false);}}
+      open={state.openAddGoalTask}
+      onCancel={() => {
+        // setInitValues({}); setOpenAddEditGoalTask(false);
+        setState((prevState: any) => ({
+          ...prevState,
+          initValues: {},
+          openAddGoalTask: false,
+        }));
+      }}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
@@ -52,10 +107,10 @@ export const AddEditGoalTaskModal = (props: any) => {
       <Form
         layout='vertical'
         form={form}
-        initialValues={initValues}
+        initialValues={state.initValues}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onValuesChange={() => setDisabled(false)}
-        onFinish={addGoalTaskHandle}
+        onFinish={(state.edit || !(_.isEmpty(state.initValues))) ? editTaskHandle : addGoalTaskHandle}
       >
         <Form.Item
           label="Task Name"
@@ -95,7 +150,15 @@ export const AddEditGoalTaskModal = (props: any) => {
             <Button
               className='Leave_request_Canclebtn'
               label="Cancel"
-              onClick={() => { setInitValues({}); setOpenAddEditGoalTask(false); form.resetFields(); }}
+              onClick={() => { 
+                // setInitValues({}); setOpenAddEditGoalTask(false); 
+                setState((prevState: any) => ({
+                  ...prevState,
+                  initValues: {},
+                  openAddGoalTask: false,
+                }));
+                form.resetFields(); 
+              }}
               type="primary"
               htmlType="button"
             />

@@ -6,6 +6,16 @@ export const goalsDataState = atom({
   default: [],
 });
 
+export const dashGoalsDataState = atom({
+  key: "dashGoalsDataState",
+  default: [],
+});
+
+export const barsDataState = atom({
+  key: "barsDataState",
+  default: [],
+});
+
 export const firstGoalState = atom({
   key: 'firstGoalState',
   default: {},

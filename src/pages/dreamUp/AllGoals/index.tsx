@@ -5,7 +5,6 @@ import { AddGoalIcon, AddGoalPlusIcon, CircleMinusIcon, CirclePlusIcon, GoalHead
 import { Alert, BoxWrapper, Button, Notifications, PageHeader, SearchBar } from '../../../components'
 import useCustomHook from '../actionHandler';
 import { SetGoal } from './addGoalModal';
-// import { goalsData } from './allGoalMockData';
 import "./style.scss";
 import { Collapse, Divider, Dropdown, MenuProps, Progress } from 'antd';
 import { AddEditGoalTaskModal } from './addEditGoalTaskModal';
@@ -19,12 +18,12 @@ const AllGoals = () => {
   const firstGoalsData: any = useRecoilValue(firstGoalState);
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
-  const [openAddGoalTask, setOpenAddGoalTask] = useState(false);
-  const [edit, setEdit] = useState(false);
+  // const [openAddGoalTask, setOpenAddGoalTask] = useState(false);
+  // const [edit, setEdit] = useState(false);
+  // const [initValues, setInitValues] = useState({});
   const [selectedGoal, setSelectedGoal] = useState<any>(firstGoalsData);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, data: {} })
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
-  const [initValues, setInitValues] = useState({});
   const newArr: any = []
   selectedGoal?.tasks?.map((data: any) => data.completed ? newArr.push(data) : []) 
   const calculatePercentage = Math.floor(((newArr.length) / selectedGoal?.tasks?.length) * 100);
@@ -32,17 +31,12 @@ const AllGoals = () => {
     const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
     return <span className="custom-expand-icon">{icon}</span>;
   };
-  // const [state, setState] = useState({
-  //   currentDate: dayjs().locale("en"),
-  //   openSidebar: false,
-  //   status: "Select",
-  //   timeFrameVal: "Select",
-  //   departmentVal: "Select",
-  //   isToggle: false,
-  // });
-
-  console.log(selectedGoal, 'firstGoalsData',firstGoalsData);
-  
+  const [state, setState] = useState({
+    openAddGoalTask: false,
+    edit: false,
+    initValues: {},
+    taskId: null,
+  });  
 
   useEffect(() => {
     const getGoals = async () => {
@@ -53,9 +47,13 @@ const AllGoals = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    if(!edit)
-      setInitValues({});
-  }, [edit]);
+    if(!state.edit) {
+      setState((prevState) => ({
+        ...prevState,
+        initValues: {},
+      }));
+    }
+  }, [state.edit]);
 
   const seletedTask = async() => {
     const newArr1 = [...selectedGoal?.tasks];
@@ -75,8 +73,6 @@ const AllGoals = () => {
 
   const handleDelete = async () => {
     const task = await seletedTask();
-    console.log(task);
-    console.log(typeof task.goalId);
     
     const data = {
       taskId: task.id,
@@ -88,22 +84,29 @@ const AllGoals = () => {
 
   const handleEdit = async () => {
     const task = await seletedTask();
-    console.log(task);
-    setEdit(true);
-    setInitValues({name: task.name, note: task.note, startingDate: dayjs(task.startingDate, 'YYYY/MM/DD')});
-    setOpenAddGoalTask(true); 
-    
-    const data = {
+    setState((prevState) => ({
+      ...prevState,
+      edit: true,
+      initValues: {name: task.name, note: task.note, startingDate: dayjs(task.startingDate, 'YYYY/MM/DD')},
+      openAddGoalTask: true,
       taskId: task.id,
-      goalId: task.goalId
-    }
+    }));
+    // setEdit(true);
+    // setInitValues();
+    // setOpenAddGoalTask(true);
   }
 
   const handleAdd = () => {
     if(!selectedGoal.id){
       Notifications({title: "Warning", description: "Select a goal", type: 'warning' });
     }
-    setOpenAddGoalTask(true);
+    // setOpenAddGoalTask(true);
+    setState((prevState) => ({
+      ...prevState,
+      edit: false,
+      initValues: {},
+      openAddGoalTask: true,
+    }));
   }
 
 
@@ -252,12 +255,13 @@ const AllGoals = () => {
       />}
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
-        open={openAddGoalTask}
         goalData={selectedGoal}
-        initValues= {initValues}
-        setInitValues= {setInitValues}
-        setOpenAddEditGoalTask={setOpenAddGoalTask}
-        // submitGoalTask={action.addGoalTask}
+        // initValues= {initValues}
+        // setInitValues= {setInitValues}
+        // setOpenAddEditGoalTask={setOpenAddGoalTask}
+        // open={openAddGoalTask}
+        state= {state}
+        setState= {setState}
       />
       {deletaAlert.isToggle && <Alert
         type={"error"}

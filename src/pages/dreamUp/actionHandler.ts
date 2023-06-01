@@ -4,22 +4,82 @@ import { debounce } from "lodash";
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { goalsDataState,firstGoalState } from "../../store";
+import { goalsDataState,firstGoalState, dashGoalsDataState, barsDataState } from "../../store";
 import { Notifications } from "../../components";
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const [goalsData, setGoalsData] = useRecoilState(goalsDataState);
+  const [barsData, setBarsData] = useRecoilState(barsDataState);
+  const [dashGoalsData, setDashGoalsData] = useRecoilState(dashGoalsDataState);
   const [firstGoal, setFirstGoal] = useRecoilState(firstGoalState);
   const { DREAMUP } = apiEndpints
 
   const getGoalsData = async (val?: string) => {
     const hasValue = {search: val} ?? {};
     const { data } = await api.get(DREAMUP.GET_GOALS, hasValue);
+
+    let allGoals = [];
+    if (data?.response &&  data?.response?.length !==0) {
+      const goals = data?.response;
+      for(const i in goals) {
+        const goalData = {
+          key: Number(i)+1,
+          id: goals[i].id,
+          goalName: goals[i]?.name || '--',
+          datecreated: goals[i]?.createdAt.split('T')[0] || '--',
+          totalTasks: goals[i]?.totalTasks || 0,
+          completedTasks: goals[i]?.completedTasks || 0,
+          dueDate: goals[i]?.endDate.split('T')[0] || '--',
+          status: goals[i]?.status || '--'
+        };
+        allGoals.push(goalData);
+      }
+    }
+    setDashGoalsData(allGoals as any);
     setGoalsData(data);
     setFirstGoal(data?.response[0]);
+  };
+
+  const getLifeAssessment = async (val?: string) => {
+    // const hasValue = {month: val} ?? {};
+    // const { data } = await api.get(DREAMUP.LIFE_ASSESSMENT, hasValue);
+    console.log(val?.toLocaleLowerCase());
     
+  };
+
+
+  const getBarsData = async () => {
+    const { data } = await api.get(DREAMUP.GET_GOALS);
+    let bars = [];
+    let  completedGoal = [];
+    if (data?.response &&  data?.response?.length !==0) {
+      const goals = data?.response;
+      completedGoal = goals?.filter((g:any)=>{return g.status === 'completed'});
+    }
+    const { mainGoal } = data;
+    const mGoal = {
+      content: `${mainGoal[0]?.completedTasks} of ${mainGoal[0]?.totalTasks} tasks completed`,
+      icon: '/src/assets/images/AddEventInCalendar/AchivmentIcon.svg',
+      progressbarColor: '#FFC15D',
+      progressbarValue: ((mainGoal[0]?.completedTasks/mainGoal[0]?.totalTasks)*100).toFixed(0),
+      storage: '128GB',
+      subTitle: mainGoal[0]?.name,
+      title: 'Main Goal'
+    };
+    const last = {
+      content: `${completedGoal[0]?.completedTasks} of ${completedGoal[0]?.totalTasks} tasks completed`,
+      icon: '/src/assets/images/AddEventInCalendar/AchivmentIcon.svg',
+      progressbarColor: '#4A9D77',
+      lastAchivmentTime: "1 week ago",
+      progressbarValue: ((completedGoal[0]?.completedTasks/completedGoal[0]?.totalTasks)*100).toFixed(0),
+      storage: '128GB',
+      subTitle: completedGoal[0]?.name,
+      title: 'Last Achievement'
+    }
+    bars.push(mGoal, last);
+    setBarsData(bars as any);
   };
 
   const addGoals = async (goal: any) => {
@@ -48,24 +108,31 @@ const useCustomHook = () => {
   };
 
   const editTask = async (task: any) => {
-    // const { data } = await api.post(DREAMUP.EDIT_TASK, JSON.parse(JSON.stringify(task)));
-    // if (data) {
-    //   await getGoalsData();
-    //   Notifications({ title: "Success", description: "Task Updated", type: "success" })
-    // }
+    const { data } = await api.post(DREAMUP.EDIT_TASK, task);
+    if (data) {
+      await getGoalsData();
+      Notifications({ title: "Success", description: "Task Updated", type: "success" })
+    }
     console.log(task);
   };
 
   const deleteTask = async (task: {taskId: Number, goalId: Number}) => {
-    console.log(typeof task.taskId, typeof task.goalId);
     const { data } = await api.delete(DREAMUP.DELETE_TASK, {}, task);
-    console.log(data);
-    
     if (data) {
       await getGoalsData();
       Notifications({ title: "Success", description: "Task Deleted", type: "success" })
     }
     console.log(task);
+  };
+
+  const deleteGoal = async (goal: any) => {
+    console.log(goal);
+    const { id } = goal
+    const { data } = await api.delete(DREAMUP.DELETE_GOAL, {}, {goalId: id});
+    if (data) {
+      await getGoalsData();
+      Notifications({ title: "Success", description: "Goal Deleted", type: "success" })
+    }
   };
 
   // get application details list 
@@ -78,12 +145,16 @@ const useCustomHook = () => {
     debouncedSearch,
     goalsData,
     firstGoal,
+    barsData,
+    dashGoalsData,
     getGoalsData,
     addGoals,
     addGoalTask,
     markTaskCompleted,
     editTask,
     deleteTask,
+    deleteGoal,
+    getBarsData,
   };
 };
 
