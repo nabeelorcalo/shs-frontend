@@ -27,6 +27,7 @@ const ViewInternshipDetails = () => {
     getInternshipDetails()
   }, [])
 
+
   const closingDate = dayjs(internshipDetails?.closingDate).format('DD/MM/YYYY');
 
   return (
@@ -37,13 +38,15 @@ const ViewInternshipDetails = () => {
           <div className='flex flex-row justify-between flex-wrap'>
             <div>
               <h2 className='dashboard-primary-color text-3xl font-medium'>
-                {internshipDetails.title}
+                {internshipDetails?.title}
                 <span className='pl-4 cursor-pointer'
                   onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`, { state: state.data }) }}>
                   <EditIcon />
                 </span>
               </h2>
-              <p className='text-xl'>Design</p>
+              <p className='text-xl'>
+                {internshipDetails?.department?.name}
+              </p>
             </div>
             {internshipStatus == "PUBLISHED" || internshipStatus == "CLOSED" ?
               <div className='flex flex-row gap-10 flex-wrap'>
@@ -63,34 +66,54 @@ const ViewInternshipDetails = () => {
           </div>
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Description</h3>
-            <p className='text-base'>{internshipDetails.description}</p>
+            <p className='text-base'>{internshipDetails?.description}</p>
           </div>
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Responsibilities</h3>
-            <p className='text-base'>{internshipDetails.responsibilities}</p>
+            <p className='text-base'>{internshipDetails?.responsibilities}</p>
           </div>
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Requirements</h3>
             <div className='flex flex-col gap-3'>
               <div className='mb-5'>
-                <p className='text-base'>{internshipDetails.requirements}</p>
+                <p className='text-base'>{internshipDetails?.requirements}</p>
               </div>
               <div className='flex flex-row gap-6'>
                 <div className='flex flex-col gap-3'>
-                  <p><span className='font-medium'>Internship Type:</span> <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase()}</span></p>
-                  <p><span className='font-medium'>Nature of work:</span> <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span></p>
-                  <p><span className='font-medium'>Total Positions:</span> <span>{internshipDetails.totalPositions}</span></p>
-                  <p><span className='font-medium'>Expected Closing Date: </span><span>{closingDate}</span></p>
-                  <p><span className='font-medium'>Internship Duration: </span><span>{internshipDetails.duration}</span></p>
+                  <p>
+                    <span className='font-medium'>Internship Type:</span>
+                    <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase()}</span>
+                  </p>
+                  <p>
+                    <span className='font-medium'>Nature of work:</span>
+                    <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span>
+                  </p>
+                  <p>
+                    <span className='font-medium'>Total Positions:</span>
+                    <span>{internshipDetails.totalPositions ? `${internshipDetails.totalPositions}` : `--`}</span>
+                  </p>
+                  <p>
+                    <span className='font-medium'>Expected Closing Date: </span>
+                    <span>{closingDate}</span>
+                  </p>
+                  <p>
+                    <span className='font-medium'>Internship Duration: </span>
+                    <span>{internshipDetails.duration}</span>
+                  </p>
                 </div>
                 <div className='flex flex-col gap-3'>
-                  <p><span className='font-medium'>Frequency:</span>
+                  <p>
+                    <span className='font-medium'>Frequency:</span>
                     <span className='capitalize'>
                       {internshipDetails?.salaryAmount ? ` ${internshipDetails?.salaryAmount}` : " --"}
                       {internshipDetails?.salaryFrequency ? `/ ${internshipDetails?.salaryFrequency?.toLowerCase()}` : " --"}
                     </span>
                   </p>
-                  <p><span className='font-medium'>Location: </span><span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span></p>
+                  <p>
+                    <span className='font-medium'>Location: </span>
+                    <span className='capitalize'>
+                      {internshipDetails?.location?.name ? `${internshipDetails?.location?.name}` : `--`}</span>
+                  </p>
                 </div>
               </div>
             </div>
