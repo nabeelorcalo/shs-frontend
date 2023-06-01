@@ -12,9 +12,7 @@ const useCustomHook = () => {
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
-  const [membersData, setMembersData] = useRecoilState(
-    delegateAgenetMembersState
-  );
+  const [membersData, setMembersData] = useRecoilState(delegateAgenetMembersState);
   const [totalCount, setTotalCount] = useState(0);
   const { GET_DELEGATE_MEMBERS } = endpoints;
   const getData = async (type: string): Promise<any> => {
