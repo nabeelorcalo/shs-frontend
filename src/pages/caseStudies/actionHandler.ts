@@ -6,7 +6,7 @@ import endpoints from '../../config/apiEndpoints';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { caseStudiesFilterParam } from '../../store/case-studies';
+import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
@@ -18,7 +18,8 @@ let uploadFile: any;
 let signature: any;
 const useCustomHook = () => {
   //table data 
-  const [caseStudyData, setCaseStudyData] = useState<any>({ count: 0, data: [], pagination: {} })
+  const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
+
   const [selectedCasStudyData, setSelectedCasStudyData] = useState<any>([])
   // departments list 
   const [departmentList, setDepartmentList] = useState<any>([])

@@ -766,8 +766,8 @@ const companyAdminRoutes = [
         element: <CaseStudies />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
         element: <CompanyAdminCaseStudiesAssessment />,
       },
       {

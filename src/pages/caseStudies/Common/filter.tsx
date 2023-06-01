@@ -26,7 +26,7 @@ const Filters = ({ setShowDrawer }: any) => {
     setFilterValue({});
     setIntern("");
     handleFilterParams({});
-    getData("resetFilter")
+    getData("resetFilter");
   };
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const Filters = ({ setShowDrawer }: any) => {
 
   return (
     <div className="casestudies-filter_main_wrapper">
-      <Form layout="vertical" form={form} onFinish={onFinish}>
+      <Form layout="vertical" form={form}>
         <Form.Item name="intern" label="Intern">
           <DropDownNew
             placement={"bottomRight"}
@@ -128,7 +128,7 @@ const Filters = ({ setShowDrawer }: any) => {
           <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
           </Button>
-          <Button key="submit" className="footer-submit-btn" htmlType="submit">
+          <Button key="submit" className="footer-submit-btn" htmlType="submit" onClick={onFinish}>
             Apply
           </Button>
         </div>
