@@ -57,8 +57,8 @@ const data = [
   },
 ];
 
-const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout}) => {
-  
+const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout }) => {
+
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
@@ -70,7 +70,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
   // const currentUser = useRecoilValue(currentUserState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
- 
+
   const menuStyle = {
     boxShadow: "none",
   };
@@ -122,6 +122,11 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler , handleLogout})
   const navigateToInbox = () => {
     navigate("/chat");
   };
+  // const storedData:any = localStorage.getItem("recoil-persist");
+  // const userData = JSON.parse(storedData)
+  // console.log(userData.id, "storedData");
+
+
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SAWITCH);

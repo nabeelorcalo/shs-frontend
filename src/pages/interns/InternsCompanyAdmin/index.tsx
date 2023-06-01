@@ -214,7 +214,6 @@ const InternsCompanyAdmin = () => {
       dateOfJoining: undefined
     }))
   }
-
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
