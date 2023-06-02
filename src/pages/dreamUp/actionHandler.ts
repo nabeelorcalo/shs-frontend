@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { goalsDataState,firstGoalState, dashGoalsDataState, barsDataState } from "../../store";
+import { goalsDataState,firstGoalState, dashGoalsDataState, barsDataState, lifeAssessmentState } from "../../store";
 import { Notifications } from "../../components";
 
 
@@ -14,6 +14,7 @@ const useCustomHook = () => {
   const [barsData, setBarsData] = useRecoilState(barsDataState);
   const [dashGoalsData, setDashGoalsData] = useRecoilState(dashGoalsDataState);
   const [firstGoal, setFirstGoal] = useRecoilState(firstGoalState);
+  const [lifeAssessment, setLifeAssessment] = useRecoilState(lifeAssessmentState);
   const { DREAMUP } = apiEndpints
 
   const getGoalsData = async (val?: string) => {
@@ -43,11 +44,12 @@ const useCustomHook = () => {
   };
 
   const getLifeAssessment = async (val?: string) => {
-    // const hasValue = {month: val} ?? {};
-    // const { data } = await api.get(DREAMUP.LIFE_ASSESSMENT, hasValue);
-    console.log(val?.toLocaleLowerCase());
-    
+    const hasValue = {month: val?.toLowerCase() || 'march'} ?? {};
+    const { data } = await api.get(DREAMUP.LIFE_ASSESSMENT, hasValue);
+    setLifeAssessment(data);    
   };
+
+
 
 
   const getBarsData = async () => {
@@ -147,6 +149,8 @@ const useCustomHook = () => {
     firstGoal,
     barsData,
     dashGoalsData,
+    lifeAssessment,
+    getLifeAssessment,
     getGoalsData,
     addGoals,
     addGoalTask,

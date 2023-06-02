@@ -16,6 +16,11 @@ export const barsDataState = atom({
   default: [],
 });
 
+export const lifeAssessmentState = atom({
+  key: "lifeAssessmentState",
+  default: [],
+});
+
 export const firstGoalState = atom({
   key: 'firstGoalState',
   default: {},

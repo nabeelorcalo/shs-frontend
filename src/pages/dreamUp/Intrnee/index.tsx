@@ -6,7 +6,7 @@ import { Alert, BoxWrapper, Button, DropDown, GlobalTable, HorizonalLineCard, Li
 import { ROUTES_CONSTANTS } from "../../../config/constants"
 import "./style.scss"
 import { useRecoilValue } from "recoil";
-import { barsDataState, dashGoalsDataState } from "../../../store";
+import { barsDataState, dashGoalsDataState, lifeAssessmentState } from "../../../store";
 import { useEffect, useState } from "react";
 
 const DreamUp = () => {
@@ -14,6 +14,7 @@ const DreamUp = () => {
   const action = useCustomHook();
   const goalsData: any = useRecoilValue(dashGoalsDataState);
   const LineGraphData: any = useRecoilValue(barsDataState);
+  const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
   const [searchValue, setSearchValue] = useState(null);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, data: {} })
   const [month, setMonth] = useState('March')
@@ -122,13 +123,14 @@ const DreamUp = () => {
     await action.getBarsData();
   }
   const getLifeAssessment = async (month: any) => {
-    await action.getGoalsData(month || '');
+    await action.getLifeAssessment(month || '');
   }
   useEffect(() => {
     getGoals(searchValue);
   }, [searchValue]);
 
   useEffect(() => {
+    getLifeAssessment(month);
     getBarsData(); 
   }, []);
 
@@ -150,30 +152,34 @@ const DreamUp = () => {
               arraydata={LineGraphData}
             />
           </Col>
-          <Col xs={24} md={24} lg={14} xl={8}>
-            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_balanceGraph">
-              <div className="flex items-center justify-between">
-                <h4 className="text-xl font-medium  ">Life Balance</h4>
-              </div>
-              <LifeBalanceGraph monthName={month} />
-            </BoxWrapper>
-          </Col>
-          <Col xs={24} md={24} lg={24} xl={8}>
-            <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_assesment">
-              <div style={{float: 'right'}} className="flex items-center justify-between"> 
-                <DropDown
-                  name="Select"
-                  options={yourDropDwonOptions}
-                  setValue={(event: any) => clickHandler(event)}
-                  value={month}
-                />
-              </div>
-              <div className="flex items-center justify-between Life_assesment_inner_main_heading_wraper">
-                <h4 className="text-xl font-medium  ">Life Assessment</h4>
-              </div>
-              <LifeAssessmentGraph monthName="Jan" />
-            </BoxWrapper>
-          </Col>
+            <Col xs={24} md={24} lg={14} xl={8}>
+              <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_balanceGraph">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xl font-medium  ">Life Balance</h4>
+                </div>
+                {lifeAssesmentData && 
+                  <>
+                    <LifeBalanceGraph monthName={month} />
+                  </>
+                }
+              </BoxWrapper>
+            </Col>
+            <Col xs={24} md={24} lg={24} xl={8}>
+              <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className="h-full Life_assesment">
+                <div style={{float: 'right'}} className="flex items-center justify-between"> 
+                  <DropDown
+                    name="Select"
+                    options={yourDropDwonOptions}
+                    setValue={(event: any) => clickHandler(event)}
+                    value={month}
+                  />
+                </div>
+                <div className="flex items-center justify-between Life_assesment_inner_main_heading_wraper">
+                  <h4 className="text-xl font-medium  ">Life Assessment</h4>
+                </div>
+                <LifeAssessmentGraph monthName={month} />
+              </BoxWrapper>
+            </Col> 
         </Row>
         <Row gutter={[20, 20]} className=' items-center my-8'>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>

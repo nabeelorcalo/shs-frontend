@@ -1,14 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import { Slider } from 'antd';
+import useCustomHook from '../actionHandler';
 import data from './data';
 import constants from '../../../config/constants';
 import { Finance, Relationship, Health, Education, Development, Family, Social, Recreation } from '../../../assets/images';
+import { lifeAssessmentState } from '../../../store';
+import { useRecoilValue } from 'recoil';
 
 
 export const LifeAssessmentGraph = ({monthName}: any) => {
-  const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "Social Life", "Recreation"];
-  const filteredArray = data.filter(obj => obj.month === monthName);
 
+  const action = useCustomHook();
+  const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
+  const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "SocailLife", "Recreation"];
+
+  const baseData = [
+    {
+        "month": monthName,
+        "name": "Finance",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "Relationship",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "Health",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "Education",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "Development",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "Family",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "SocailLife",
+        "value": 0
+    },
+    {
+        "month": monthName,
+        "name": "Recreation",
+        "value": 0
+    }
+  ]
+
+  function capitalizeFirstLetter(name: string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+  const filteredArray = (lifeAssesmentData && lifeAssesmentData.length > 0) ? Object.entries(lifeAssesmentData[0]).filter(([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt").map(([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value })) : baseData;
   const renderIcon = (name: string) => {
     switch (name) {
       case 'Finance':
@@ -23,7 +75,7 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
         return <Development />;
       case 'Family':
         return <Family />;
-      case 'Social Life':
+      case 'SocailLife':
         return <Social />;
       case 'Recreation':
         return <Recreation />;
@@ -32,13 +84,18 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
     }
   }
 
-  const sliderMoved = (data: any, sliderValue: any) => {
-    // it won't show changes in Life Balance graph.
-    // But when we implement recoil then
-    // we'll update the store data value
-    data.value = sliderValue;
+  const postLifeAsse = async (data: any) => {
+    await action.postLifeAssessment(data);
   }
 
+  const sliderMoved = async (data: any, sliderValue: any) => {
+    const key = (data.name);
+    const assess = {
+      month: data?.month?.toLowerCase(),
+      [key?.toLowerCase()]: sliderValue,
+    }
+    await postLifeAsse(assess);
+  }
   return (
     <>
       {assessmentsName.map((item, index) => (
@@ -61,7 +118,7 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
                 formatter: (value: any) => `0${value}`,
               }}
               onAfterChange = {(val) => sliderMoved(filteredArray[index], val)}
-              defaultValue={filteredArray[index].value}
+              value={filteredArray[index].value as number || 1}
               trackStyle={{ background: 'transparent' }}
               className="life-assessment-slider"
             />
