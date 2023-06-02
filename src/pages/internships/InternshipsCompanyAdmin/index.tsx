@@ -40,9 +40,6 @@ const InternshipsCompanyAdmin = () => {
     getAllLocationsData();
   }, [])
 
-  console.log('internships are', internshipData);
-
-
   useEffect(() => {
     getAllInternshipsData(state.status, state.location, state.department, searchValue);
   }, [searchValue])

@@ -19,17 +19,29 @@ import "./style.scss";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
+  const [description, setDescription] = useState('');
+
+  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [form] = Form.useForm();
   const { state: templateData }: any = useLocation();
-  const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
+
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
+
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Rejection Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}` },
   ];
-  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
   const onFinish = (values: any) => {
     const newValues = {
@@ -45,14 +57,6 @@ const NewTemplateRejectionLetter = () => {
     form.resetFields();
     setDescription('')
   };
-  const initialValues = {
-    templateName: templateData?.name,
-    subject: templateData?.subject,
-    description: templateData?.description
-  }
-  useEffect(() => {
-    setDescription(templateData?.description)
-  }, [templateData?.description])
 
   return (
     <div className="rejection-letter-new-template">

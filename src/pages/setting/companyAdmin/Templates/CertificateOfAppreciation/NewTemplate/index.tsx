@@ -34,6 +34,16 @@ const NewTemplateCertificationOfAppreciation = () => {
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
 
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
+
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
+  
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
@@ -56,25 +66,18 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
 
   };
-  const initialValues = {
-    templateName: templateData?.name,
-    subject: templateData?.subject,
-    description: templateData?.description
-  }
-  useEffect(() => {
-    setDescription(templateData?.description)
-  }, [templateData?.description])
-
 
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
   };
+
   const SecondBorderHandler = () => {
     setBorderColorSecond({
       color: "#3DC575",
       toggle: !borderColorSecond.toggle,
     });
   };
+
   const NoBorderHandler = () => {
     setBorderColorfirst({ color: "#FFFFFF" });
   };

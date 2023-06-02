@@ -15,20 +15,28 @@ import { useRecoilState } from "recoil";
 import "quill/dist/quill.snow.css";
 import "./style.scss";
 
-const { Title, Paragraph } = Typography;
+
 
 const NewTemplateContract = () => {
-  const [form] = Form.useForm();
-  const { state: templateData }: any = useLocation();
   const [description, setDescription] = useState('');
+
+  const [form] = Form.useForm();
+  const { Title, Paragraph } = Typography;
+  const { state: templateData }: any = useLocation();
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
+
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Contract", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
   ];
+  
   const initialValues = {
     templateName: templateData?.name,
     subject: templateData?.subject,
@@ -49,11 +57,6 @@ const NewTemplateContract = () => {
     form.resetFields();
     setDescription('')
   };
-
-  useEffect(() => {
-    setDescription(templateData?.description)
-  }, [templateData?.description])
-
 
   return (
     <div className="offer-letter-new-template">

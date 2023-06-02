@@ -7,7 +7,6 @@ import { useLocation } from 'react-router-dom';
 
 const CompanyTabs = () => {
   const { state } = useLocation();
-  console.log('profile data',state);
 
   const items: any = [
     {

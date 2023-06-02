@@ -12,14 +12,20 @@ import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import "./style.scss";
 
-const { Title, Paragraph } = Typography;
+
 
 const NewTemplateOfferLetter = () => {
-  const [form] = Form.useForm();
-  const { state: templateData }: any = useLocation();
   const [description, setDescription] = useState('');
+
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [form] = Form.useForm();
+  const { Title, Paragraph } = Typography;
+  const { state: templateData }: any = useLocation();
+
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
 
   const breadcrumbArray = [
     { name: "New Template" },
@@ -53,10 +59,7 @@ const NewTemplateOfferLetter = () => {
     setDescription('')
   };
 
-  useEffect(() => {
-    setDescription(templateData?.description)
-  }, [templateData?.description])
-
+  
   return (
     <div className="offer-letter-new-template">
       <Breadcrumb breadCrumbData={breadcrumbArray} />

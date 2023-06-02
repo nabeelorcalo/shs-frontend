@@ -3,7 +3,6 @@ import {
   Typography, Row, Col, Divider, Form, Radio,
   RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
-import { SettingAvater } from "../../../../../assets/images";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper, TimePickerComp } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
@@ -18,8 +17,6 @@ import "./style.scss";
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
   const navigate = useNavigate();
-  const deselectArray: any = [];
-  const [form] = Form.useForm();
   const [state, setState] = useState(
     {
       openFromTime: false,
@@ -31,8 +28,14 @@ const PayrollAddCategory = () => {
       internValue: 1,
       applyToNewHires: false
     });
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const { postPayroll, internsData, getAllInterns } = useCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const deselectArray: any = [];
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    getAllInterns(currentUser?.company?.id)
+  }, [])
 
   const filteredInternsData = internsData?.map((item: any, index: any) => {
     return (
@@ -49,34 +52,6 @@ const PayrollAddCategory = () => {
     { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
 
   ];
-
-  const selectArray = [
-    {
-      name: "Eva Smith",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Martha Stewart",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Evelyn Josh",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Arthur Lewis",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Tom Edward",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Carisle Cullen",
-      image: <SettingAvater />,
-    },
-  ];
-
   const openTimeFromHandler = () => {
     setState({ ...state, openFromTime: !state.openFromTime })
   }
@@ -107,15 +82,9 @@ const PayrollAddCategory = () => {
     }
     form.resetFields()
     postPayroll(newValues)
-    navigate('/settings/payroll')
+    navigate(ROUTES_CONSTANTS.PAYROLL_CATEGORY)
 
   }
-  useEffect(() => {
-    getAllInterns(currentUser?.company?.id)
-  }, [])
-
-  console.log('interns data', internsData);
-
 
   return (
     <div className="payroll-add-category">

@@ -24,52 +24,41 @@ import { currentUserState } from "../../../../../../store";
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
-  // const [form] = Form.useForm();
-  const [form] = Form.useForm();
-  const { state: templateData }: any = useLocation();
   const [description, setDescription] = useState('');
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const { state: templateData }: any = useLocation();
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
+  
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
+
   const [borderColorfirst, setBorderColorfirst] = useState<any>({
     color: "white",
     toggle: false,
   });
+
   const [borderColorSecond, setBorderColorSecond] = useState<any>({
     color: "white",
     toggle: false,
   });
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
-
+ 
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
-  const initialValues = {
-    templateName: templateData?.name,
-    subject: templateData?.subject,
-    description: templateData?.description
-  }
-  const onFinish = (values: any) => {
-    const newValues = {
-      ...values,
-      textEditorValue: description,
-      templateType: templateData?.templateType ?? templateData?.type,
-    }
-    if (templateData?.templateType) {
-      postNewTemplate(newValues);
-    } else {
-      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
-    }
-    form.resetFields();
-    setDescription('')
-  };
-
-  useEffect(() => {
-    setDescription(templateData?.description)
-  }, [templateData?.description])
-
+  
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
   };
@@ -86,7 +75,21 @@ const NewTemplateCertiticationOfCompletion = () => {
     setBorderColorSecond({ color: "#FFFFFF" });
   };
 
-  // const onFinish = (values: any) => { }
+  const onFinish = (values: any) => {
+    const newValues = {
+      ...values,
+      textEditorValue: description,
+      templateType: templateData?.templateType ?? templateData?.type,
+    }
+    if (templateData?.templateType) {
+      postNewTemplate(newValues);
+    } else {
+      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+    }
+    form.resetFields();
+    setDescription('')
+  };
+
 
   return (
     <div className="certificate-of-appreciation-new-template">

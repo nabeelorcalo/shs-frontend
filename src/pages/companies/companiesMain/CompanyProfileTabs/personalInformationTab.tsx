@@ -4,8 +4,7 @@ import { Col, Row, Divider } from 'antd';
 const CompanyProfileTabs = (props: any) => {
 
   const { data } = props
-  console.log('personal data',data);
-  
+    
   const PersnolInformationData = [
     { title: "First name", value: data?.user?.firstName },
     { title: "Last Name", value: data?.user?.lastName },

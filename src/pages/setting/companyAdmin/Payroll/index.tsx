@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Row, Col, Button } from "antd";
-import { SettingPayrollAddIcon } from "../../../../assets/images";
-import { Alert, Loader, SearchBar } from "../../../../components";
+import { Typography, Row, Col, Button, Input } from "antd";
+import { GlassMagnifier, SettingPayrollAddIcon } from "../../../../assets/images";
+import { Alert, Loader } from "../../../../components";
 import { BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
@@ -15,6 +15,7 @@ dayjs.extend(duration);
 
 const { Text } = Typography;
 const SettingPayroll: React.FC = () => {
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState<any>(
     {
       isDeleteModal: false,
@@ -22,13 +23,19 @@ const SettingPayroll: React.FC = () => {
       id: null,
     }
   )
-  const { getData, payrollData, changeHandler, deletePayroll, isLoading } = useCustomHook();
+  const { getData, payrollData, deletePayroll, isLoading, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData(searchValue)
+  }, [searchValue])
 
-  console.log('payroll data', payrollData);
+
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
+
 
 
   const calculateDays = (startingDate: any, endingDate: any) => {
@@ -43,7 +50,15 @@ const SettingPayroll: React.FC = () => {
     <div className="setting-payroll">
       <div>
         <div className="flex justify-between location-header">
-          <SearchBar size="middle" handleChange={changeHandler} />
+          <div className="input-wrapper">
+            <Input
+              className='search-bar'
+              placeholder="Search"
+              onChange={debouncedResults}
+              prefix={<GlassMagnifier />}
+            />
+          </div>
+
           <NavLink to={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}>
             <Button
               size="middle"
@@ -81,17 +96,17 @@ const SettingPayroll: React.FC = () => {
                       Employees
                     </Text>
                     <Text className="text-sm font-normal content-text ">
-                      Payroll Cycle: 
+                      Payroll Cycle:
                       {`${dayjs(data?.from).format('MMM,YYYY')} - ${dayjs(data?.to).format('MMM,YYYY')}`
-                      // (${durationInDays}days)
-                      } 
-                      </Text>
+                        // (${durationInDays}days)
+                      }
+                    </Text>
                     <Text className="text-sm font-normal content-text">
                       Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
                     </Text>
-                    <Text className="text-sm font-normal content-text">
+                    {/* <Text className="text-sm font-normal content-text">
                       Added By: {data?.addedBy}
-                    </Text>
+                    </Text> */}
                   </div>
                 </div>
               </BoxWrapper>

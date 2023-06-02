@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from 'recoil';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -18,30 +18,24 @@ const useCustomHook = () => {
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getData = async () => {
+  const getData = async (searchValue?:any) => {
+    const params ={
+      page: 1, 
+      limit: 10,
+      q:searchValue
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
-    const { data } = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10 });
+    const { data } = await api.get(PAYROLL_FINDALL,query);
     setPayrollData(data)
     setIsLoading(false);
   }
-  useEffect(() => {
-    getData()
-  }, [])
 
-  //search vehicle
-  const changeHandler = async (e: any) => {
-    const { data } = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10, q: e });
-    setPayrollData(data);
-  }
-  const debouncedResults = useMemo(() => {
-    return debounce(changeHandler, 500);
-  }, []);
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
 
-  useEffect(() => {
-    return () => {
-      debouncedResults.cancel();
-    };
-  });
 
   // delete payroll data 
   const deletePayroll = async (id: any) => {
@@ -151,7 +145,7 @@ const useCustomHook = () => {
   return {
     getData,
     payrollData,
-    changeHandler,
+    debouncedSearch,
     deletePayroll,
     downloadPdfOrCsv,
     postPayroll,

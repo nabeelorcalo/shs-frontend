@@ -4,7 +4,7 @@ import { PageHeader, BoxWrapper, Breadcrumb } from '../../components';
 import { Button } from 'antd';
 import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { ROUTES_CONSTANTS } from '../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
 import { currentUserState } from '../../store';
 import { useRecoilState } from "recoil";
@@ -42,7 +42,7 @@ const ViewInternshipDetails = () => {
             <div>
               <h2 className='dashboard-primary-color text-3xl font-medium'>
                 {internshipDetails?.title}
-                {currentUser.role === "COMPANY_ADMIN" && <span className='pl-4 cursor-pointer'
+                {currentUser.role === constants.COMPANY_ADMIN && <span className='pl-4 cursor-pointer'
                   onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`, { state: state.data }) }}>
                   <EditIcon />
                 </span>}
@@ -121,7 +121,7 @@ const ViewInternshipDetails = () => {
               </div>
             </div>
           </div>
-          {currentUser.role === "COMPANY_ADMIN" ?
+          {currentUser.role === constants.COMPANY_ADMIN ?
             internshipStatus == "PUBLISHED" || internshipStatus == "CLOSED" ?
               <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
                 <Button

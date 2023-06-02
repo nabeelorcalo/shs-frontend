@@ -17,22 +17,8 @@ import { currentUserState } from '../../../../../store';
 import { useRecoilState } from "recoil";
 import "./style.scss";
 
-
-const { Paragraph } = Typography;
-dayjs.extend(customParseFormat);
-
 const AddShift: React.FC = () => {
   const navigate = useNavigate()
-  const breadcrumbArray = [
-    { name: "Add Shift" },
-    { name: "Setting" },
-    { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
-  ];
-  const deselectArray: any = [];
-  const { state } = useLocation()
-  const [form] = Form.useForm();
-
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [states, setStates] = useState(
     {
       openFromTime: false,
@@ -45,6 +31,24 @@ const AddShift: React.FC = () => {
       applyForNewHire: false
     });
 
+  const { postShiftData, getAllInterns, internsData } = useShiftsCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const deselectArray: any = [];
+  const { state } = useLocation()
+  const [form] = Form.useForm();
+  const { Paragraph } = Typography;
+  dayjs.extend(customParseFormat);
+
+  useEffect(() => {
+    getAllInterns(currentUser?.company?.id)
+  }, [])
+
+  const breadcrumbArray = [
+    { name: "Add Shift" },
+    { name: "Setting" },
+    { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
+  ];
+
   const initialValues = {
     shiftName: state?.name,
     timeFrom: dayjs(state?.from),
@@ -55,8 +59,6 @@ const AddShift: React.FC = () => {
     interns: state?.interns
   }
   // getting functions from custom hook 
-  const { postShiftData, getAllInterns, internsData } = useShiftsCustomHook();
-
   const filteredInternsData = internsData?.map((item: any, index: any) => {
     return (
       {
@@ -111,12 +113,15 @@ const AddShift: React.FC = () => {
       setStates({ ...states, internValue: radioValue, intern: [] })
     }
   };
+
   const openTimeFromHandler = () => {
     setStates({ ...states, openFromTime: !states.openFromTime })
   }
+
   const openTimeToHandler = () => {
     setStates({ ...states, openToTime: !states.openToTime })
   }
+
   const handleFormValues = (values: any) => {
     const newValues = {
       ...values,
@@ -126,12 +131,8 @@ const AddShift: React.FC = () => {
     }
     form.resetFields()
     postShiftData(newValues)
-    navigate('/settings/shifts')
+    navigate(ROUTES_CONSTANTS.ADD_SHIFTS_MAIN)
   }
-
-  useEffect(() => {
-    getAllInterns(currentUser?.company?.id)
-  }, [])
 
   return (
     <div className="leaves-add-policy">
