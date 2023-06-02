@@ -41,10 +41,10 @@ const AssessmentCard = (props: Props) => {
 
 
     const renderStyles: any = {
-        'draft': { icon: AssessmentDraft, bg: '#FFC15E', options: items },
-        'submitted': { icon: AssessmentSubmitted, bg: '#4783FF', options: isSubmitted },
-        'approved': { icon: AssessmentAproved, bg: '#4ED185', options: isApproved },
-        'rejected': { icon: AssessmentRejected, bg: '#D83A52', options: items },
+        'Draft': { icon: AssessmentDraft, bg: '#FFC15E', options: items },
+        'Submitted': { icon: AssessmentSubmitted, bg: '#4783FF', options: isSubmitted },
+        'Approved': { icon: AssessmentAproved, bg: '#4ED185', options: isApproved },
+        'Rejected': { icon: AssessmentRejected, bg: '#D83A52', options: items },
     };
     let Icon = renderStyles[status].icon;
 

@@ -3,18 +3,33 @@ import { Likeshapethumbicon, } from '../../../assets/images'
 import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import AssessmentCard from '../../../components/AssessmentCard/AssessmentCard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { assesmentMock } from './internMockData'
 import { useNavigate } from 'react-router-dom'
 import DrawerComp from '../../../components/DrawerComp'
 import { CloseCircleFilled } from '@ant-design/icons'
 import SelfAssesmentFilterForm from './selfAssesmentFilterForm'
 import "./style.scss"
+import useCustomHook from '../actionHandler'
+import { useRecoilValue } from 'recoil'
+import { assessmentDataState } from '../../../store'
 
 const Internee = () => {
-  const navigate = useNavigate()
+  const actions = useCustomHook();
+  const navigate = useNavigate();
+  const data: any = useRecoilValue(assessmentDataState);
+
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [data, setData] = useState(assesmentMock)
+  // const [data, setData] = useState(assesmentMock);
+  const [search, setSearch] = useState({page: 1, limit: 20});
+
+  const getSelfAssesment = async (searchValue: any) => {
+    await actions.getSelfAssessment(searchValue);
+  }
+
+  useEffect(()=>{
+    getSelfAssesment(search);
+  }, [search]);
 
   return (
     <div className='self_assesment_main'>
@@ -47,11 +62,11 @@ const Internee = () => {
                 <AssessmentCard
                   id={item.id}
                   title={item.title}
-                  month={item.month}
-                  year={item.year}
-                  userName={item.userName}
+                  month={new Date(item.createdAt).toLocaleDateString('en-us', { month:"long"})}
+                  year={new Date(item.createdAt).toLocaleDateString('en-us', { year:'numeric'})}
+                  userName={`${item?.remarked?.firstName} ${item?.remarked?.lastName}`}
                   userImg={item.userImg}
-                  status={item.status}
+                  status={item.internStatus}
                   handleMenuClick={() => { }}
                 />
               </Col>

@@ -22,3 +22,5 @@ export * from "./Companies";
 export * from "./dreamup";
 export * from "./recipes";
 export * from "./chat"
+export * from "./Assessment";
+
