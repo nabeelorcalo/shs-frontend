@@ -1,7 +1,11 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import {
+  announcementDataState,
+  currentUserRoleState,
+  currentUserState,
+} from "../../../store";
 import { gutter } from "..";
 import {
   AnnouncementList,
@@ -18,14 +22,21 @@ import {
   BoxWrapper,
 } from "../../../components";
 import "../style.scss";
-import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
+import {
+  PerformanceAnalyticsData,
+  topPerformers,
+  universityList,
+} from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
+import useCustomHook from "./actionHandler";
 
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const action = useCustomHook();
+  const announcementData = useRecoilValue(announcementDataState);
   const [state, setState] = useState({
-    list: [],
+    list: announcementData,
     loading: false,
     birthdayWishlist: [
       {
@@ -52,35 +63,23 @@ const CompanyAdmin = () => {
     ],
   });
   const role = useRecoilValue(currentUserRoleState);
+  const userData = useRecoilValue(currentUserState);
 
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
-
-    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            list: body.results,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => {});
-  };
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
   };
   const handleSelect = (value: string) => {};
   useEffect(() => {
-    loadMoreData();
+    console.log("userData", userData);
+
+    action.getData();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      action.debouncedResults.cancel();
+    };
+  });
 
   return (
     <>
@@ -88,7 +87,9 @@ const CompanyAdmin = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">Maria Sanoid</span>
+            <span className="page-header-secondary-color">
+              {userData.firstName + " " + userData.lastName}
+            </span>
           </div>
         }
       />
@@ -127,14 +128,16 @@ const CompanyAdmin = () => {
           />
         </Col>
         <Col xs={24} xl={8} xxl={6}>
-          <AnnouncementList
-            data={state.list}
-            loading={state.loading}
-            loadMoreData={loadMoreData}
-            role={role}
-            handleAddAnnouncement={handleAddAnnouncement}
-            height={460}
-          />
+          {announcementData && (
+            <>
+              <AnnouncementList
+                data={announcementData}
+                role={role}
+                handleAddAnnouncement={handleAddAnnouncement}
+                height={460}
+              />
+            </>
+          )}
         </Col>
         <Col xs={24} md={24} xl={16} xxl={13}>
           <Row gutter={gutter} className="flex-col">
@@ -174,7 +177,10 @@ const CompanyAdmin = () => {
         <Col xs={24} sm={24} xl={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} xl={12} xxl={24}>
-              <TopPerformers topPerformersList={topPerformers} user={Constants?.COMPANY_ADMIN} />
+              <TopPerformers
+                topPerformersList={topPerformers}
+                user={Constants?.COMPANY_ADMIN}
+              />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails
@@ -196,7 +202,12 @@ const CompanyAdmin = () => {
               <Row gutter={gutter} justify="space-between">
                 {universityList?.map(({ logo, title, peopleList }) => (
                   <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
+                    <UniversityCard
+                      logo={logo}
+                      title={title}
+                      maxCount={6}
+                      list={peopleList}
+                    />
                   </Col>
                 ))}
               </Row>
@@ -207,7 +218,10 @@ const CompanyAdmin = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
+      <AnnouncementModal
+        isShowModal={isShowModal}
+        close={() => setIsShowModal(false)}
+      />
     </>
   );
 };
