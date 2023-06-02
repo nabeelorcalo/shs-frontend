@@ -1,11 +1,14 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import type { ColumnsType } from 'antd/es/table'
 import { Col, MenuProps, Row } from 'antd';
-import { Table, Space, Dropdown, Button } from 'antd'
+import { Table, Space, Dropdown, Button, Select } from 'antd'
 import { IconAngleDown } from '../../../assets/images'
-import { SearchBar } from "../../../components";
+import { Loader, SearchBar } from "../../../components";
+import useEarnWithUsHook from '../actionHandler';
+import { useRecoilValue } from "recoil";
+import { delegateMembersState, earnWithUsTabsState } from "../../../store";
 import "./style.scss";
-
+import dayjs from 'dayjs';
 interface DataType {
   key: React.Key;
   name: string;
@@ -18,139 +21,47 @@ interface DataType {
 }
 
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    name: 'Ana Black',
-    email: 'anablack@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
-  },
-  {
-    key: '2',
-    name: 'James',
-    email: 'james@gmail.com',
-    rewardAmount: '£3',
-    memberType: 'Student',
-    joiningDate: '20/10/2022',
-    location: 'Glasgow',
-    status: 'inactive'
-  },
-  {
-    key: '3',
-    name: 'Elijah',
-    email: 'elijah@gmail.com',
-    rewardAmount: '£5',
-    memberType: 'Intern',
-    joiningDate: '20/10/2022',
-    location: 'London',
-    status: 'active'
-  },
-  {
-    key: '4',
-    name: 'Ana Black',
-    email: 'mateo@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
-  },
-  {
-    key: '5',
-    name: 'James',
-    email: 'michael@gmail.com',
-    rewardAmount: '£3',
-    memberType: 'Student',
-    joiningDate: '20/10/2022',
-    location: 'Edinburgh',
-    status: 'inactive'
-  },
-  {
-    key: '1',
-    name: 'Ana Black',
-    email: 'anablack@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
-  },
-  {
-    key: '2',
-    name: 'James',
-    email: 'james@gmail.com',
-    rewardAmount: '£3',
-    memberType: 'Student',
-    joiningDate: '20/10/2022',
-    location: 'Glasgow',
-    status: 'inactive'
-  },
-  {
-    key: '3',
-    name: 'Elijah',
-    email: 'elijah@gmail.com',
-    rewardAmount: '£5',
-    memberType: 'Intern',
-    joiningDate: '20/10/2022',
-    location: 'London',
-    status: 'active'
-  },
-  {
-    key: '4',
-    name: 'Ana Black',
-    email: 'mateo@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
-  },
-];
-
-
-
 const DelegateMembers = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const statusItems: MenuProps['items'] = [
-    {
-      key: 'active',
-      label: 'Active'
-    },
-    {
-      key: 'inactive',
-      label: 'Inactive'
-    },
-  ];
+  const {getDelegateMembers} = useEarnWithUsHook();
+  const delegateMembers:any = useRecoilValue(delegateMembersState);
+  const tabKey = useRecoilValue(earnWithUsTabsState);
+  const [loadingMembers, setLoadingMembers] = useState(false);
+  const [filterParams, setFilterParams] = useState({})
 
-  const typeItems: MenuProps['items'] = [
-    {
-      key: 'companyAdmin',
-      label: "Company Admin"
-    },
-    {
-      key: 'manager',
-      label: "Manager"
-    },
-    {
-      key: 'student',
-      label: "Student"
-    },
-    {
-      key: 'intern',
-      label: "Intern"
-    },
-    {
-      key: 'university',
-      label: "University"
-    },
-  ];
 
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    if(tabKey === 'earnWithUsMembers') {
+      getDelegateMembers(filterParams, setLoadingMembers)
+    }
+  }, [tabKey, filterParams])
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleFilterStatus = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {...prev, status: value}
+    })
+  }
+
+  const handleFilterType = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {...prev, type: value}
+    })
+  }
+
+  const handleSearch = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {...prev, q: value}
+    })
+  }
+
+  /* Table Columns
+  -------------------------------------------------------------------------------------*/
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'No',
@@ -165,53 +76,57 @@ const DelegateMembers = () => {
     {
       title: 'Name',
       dataIndex: 'name',
+      render: (_, row:any) => (
+        <>{row?.referredToUser?.firstName} {row?.referredToUser?.lastName}</>
+      )
     },
     {
       title: 'Email',
       dataIndex: 'email',
+      render: (_, row:any) => (
+        <>{row?.referredToUser?.email}</>
+      )
     },
     {
       title: 'Reward Amount',
       dataIndex: 'rewardAmount',
+      render: (_, row:any) => (
+        <>£ {row?.rewardAmount}</>
+      )
     },
     {
       title: 'Member Type',
       dataIndex: 'memberType',
+      render: (_, row:any) => (
+        <>{row?.referredToUser?.role.toLowerCase()}</>
+      )
     },
     {
       title: 'Joining Date',
-      dataIndex: 'joiningDate',
+      dataIndex: 'createdAt',
+      render: (_, row:any) => (
+        <>{dayjs(row?.referredToUser?.createdAt).format('DD/MM/YYYY')}</>
+      )
     },
     {
       title: 'Location',
       dataIndex: 'location',
+      render: (_, row:any) => (
+        <>{row?.referredToUser?.address}</>
+      )
     },
     {
       title: 'Status',
       dataIndex: 'status',
       render: (_, row, index) => {
         return (
-          <div className={`shs-status-badge ${row.status === 'inactive' ? 'error' : 'success'}`}>
-            {row.status === 'inactive' ? 'Inactive' : 'Active'}
+          <div className={`shs-status-badge ${row.status === 'active' ? 'success' : 'error'}`}>
+            {row.status === 'active' ? 'Active' : 'Inactive'}
           </div>
         );
       },
     },
   ];
-
-
-
-  /* EVENT LISTENERS
-  -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
-
-  /* EVENT FUNCTIONS
-  -------------------------------------------------------------------------------------*/
-
 
 
   /* RENDER APP
@@ -221,23 +136,46 @@ const DelegateMembers = () => {
       <div className="earnwithus-delegate-members">
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-            <SearchBar handleChange={() => console.log('Search')} />
+            <SearchBar handleChange={handleSearch} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-              <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
-                <Button className="md:w-[170px] button-sky-blue flex justify-between">Status<IconAngleDown /></Button>
-              </Dropdown>
-              <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
-                <Button className="md:w-[170px] button-sky-blue flex justify-between">Type<IconAngleDown /></Button>
-              </Dropdown>
+            <div className="member-filterby-status">
+              <Select
+                className="filled"
+                placeholder="Status"
+                onChange={handleFilterStatus}
+                placement="bottomRight"
+                suffixIcon={<IconAngleDown />}
+              >
+                <Select.Option value="ACTIVE">Active</Select.Option>
+                <Select.Option value="INACTIVE">Inactive</Select.Option>
+              </Select>
+            </div>
+
+            <div className="member-filterby-type">
+              <Select
+                className="filled"
+                placeholder="Type"
+                onChange={handleFilterType}
+                placement="bottomRight"
+                suffixIcon={<IconAngleDown />}
+              >
+                <Select.Option value="COMPANY_ADMIN">Company Admin</Select.Option>
+                <Select.Option value="COMPANY_MANAGER">Manager</Select.Option>
+                <Select.Option value="STUDENT">Student</Select.Option>
+                <Select.Option value="INTERN">Intern</Select.Option>
+                <Select.Option value="UNIVERSITY">University</Select.Option>
+                <Select.Option value="DELEGATE_AGENT">Delegate Agent</Select.Option>
+              </Select>
+            </div>
           </Col>
           <Col xs={24}>
             <div className="shs-table-card table-delegate-members">
               <div className="shs-table">
                 <Table
-                  scroll={{ x: "max-content" }}
+                  loading={{spinning: loadingMembers, indicator: <Loader />}}
                   columns={tableColumns}
-                  dataSource={tableData}
+                  dataSource={delegateMembers}
                   pagination={{ pageSize: 5, showTotal: (total) => <>Total: <span>{total}</span></> }}
                 />
               </div>

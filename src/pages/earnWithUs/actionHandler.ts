@@ -7,7 +7,7 @@ import constants from '../../config/constants';
 
 
 const useEarnWithUsHook = () => {
-  const { GET_DELEGAE_DASHBOARD, GET_DELEGAE_MEMBERS } = endpoints
+  const { GET_DELEGAE_DASHBOARD, GET_DELEGAE_MEMBERS, SEND_REFERENCE_INVITE } = endpoints
   const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState)
   const [delegateDashboard, setDelegateDashboard] = useRecoilState(delegateDashboardState)
   
@@ -26,6 +26,12 @@ const useEarnWithUsHook = () => {
     const response = await api.get(GET_DELEGAE_MEMBERS, params);
     setDelegateMembers(response.data)
     setLoading(false)
+  }
+
+  // SEND REFERENCE INVITE
+  const sendReferenceInvite = async (params:any) => {
+    const response = await api.get(SEND_REFERENCE_INVITE, params);
+    return response
   }
 
   // Read Single Recipe
@@ -59,7 +65,8 @@ const useEarnWithUsHook = () => {
 
   return {
     getDelegateDashboard,
-    getDelegateMembers
+    getDelegateMembers,
+    sendReferenceInvite
   };
 };
 

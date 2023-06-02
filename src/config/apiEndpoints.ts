@@ -117,7 +117,7 @@ const endpoints = {
   GET_DELEGAE_MEMBERS: '/delegate/members',
   GET_DELEGAE_AGENTS: '/delegate/agents',
   PATCH_DELEGAE_ACCESS: '/delegate/access',
-  GET_DELEGAE_INVITE: '/delegate/invite',
+  SEND_REFERENCE_INVITE: '/delegate/invite',
   GET_DELEGAE_BALANCE: '/delegate/balance',
   GET_DELEGAE_ADMIN_DASHBOARD: '/delegate/admin-dashboard',
 }

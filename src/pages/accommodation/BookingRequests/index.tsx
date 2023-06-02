@@ -199,7 +199,6 @@ const BookingRequests = () => {
     getSearchBookingRequests(searchBookingRequest, setLoading)
   }, [searchBookingRequest])
 
-  console.log('filterBookingRequest::: ', filterBookingRequest)
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/

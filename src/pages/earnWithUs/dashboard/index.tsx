@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import type { ColumnsType } from 'antd/es/table'
 import { Table, Typography, Row, Col, Form, Input, Button } from 'antd'
-import { RegisterMemberAndFeddbackGraph, PopUpModal } from "../../../components";
+import { RegisterMemberAndFeddbackGraph, PopUpModal, Loader } from "../../../components";
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
-import { delegateDashboardState } from "../../../store";
+import { delegateDashboardState, delegateMembersState, earnWithUsTabsState } from "../../../store";
 import {
   IconWalletMoney,
   IconInactiveMemberBal,
@@ -19,9 +19,7 @@ import {
   IconDocumentCopy,
   Logo
 } from '../../../assets/images'
-
 import "./style.scss";
-
 interface DataType {
   key: React.Key;
   name: string;
@@ -31,106 +29,33 @@ interface DataType {
 }
 
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    name: 'Ana Black',
-    delegateAmount: '£15',
-    member: 'University',
-    status: 'active'
-  },
-  {
-    key: '2',
-    name: 'James',
-    delegateAmount: '£3',
-    member: 'Student',
-    status: 'inactive'
-  },
-  {
-    key: '3',
-    name: 'Elijah',
-    delegateAmount: '£5',
-    member: 'Intern',
-    status: 'active'
-  },
-  {
-    key: '4',
-    name: 'Ana Black',
-    delegateAmount: '£15',
-    member: 'University',
-    status: 'active'
-  },
-  {
-    key: '5',
-    name: 'James',
-    delegateAmount: '£3',
-    member: 'Student',
-    status: 'inactive'
-  },
-];
-
-
-
 const Dashboard = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {getDelegateDashboard} = useEarnWithUsHook();
-  const [loading, setLoading] = useState(false)
-  const delegateDashboard:any = useRecoilValue(delegateDashboardState)
-  const [form] = Form.useForm();
+  const {getDelegateDashboard, getDelegateMembers, sendReferenceInvite} = useEarnWithUsHook();
+  const delegateDashboard:any = useRecoilValue(delegateDashboardState);
+  const delegateMembers:any = useRecoilValue(delegateMembersState);
+  const tabKey = useRecoilValue(earnWithUsTabsState);
+  const [formShareLink] = Form.useForm();
   const [modalShareLinkOpen, setModalShareLinkOpen] = useState(false)
   const [modalInvitaionOpen, setModalInvitaionOpen] = useState(false)
-  const [initValues,  setInitValues] = useState({
-    "delegateLink": "htttp://delegate_and_earn08765808.com",
-    "email": "",
-  })
-  const tableColumns: ColumnsType<DataType> = [
-  {
-    title: 'No',
-    dataIndex: 'no.',
-    align: 'center',
-    render: (_, row, index) => {
-      return (
-        <>{index < 9?0 : null}{index + 1}</>
-      );
-    },
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Delegate Amount',
-    dataIndex: 'delegateAmount',
-  },
-  {
-    title: 'Member',
-    dataIndex: 'member',
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    align: 'center',
-    render: (_, row, index) => {
-      return (
-        <div className={`shs-status-badge ${row.status === 'inactive'? 'error' : 'success'}`}>
-          {row.status === 'inactive'? 'Inactive': 'Active'}
-        </div>
-      );
-    },
-  },
-];
-
+  const [loading, setLoading] = useState(false);
+  const [loadingMembers, setLoadingMembers] = useState(false);
+  const [loadingInvite, setLoadingInvite] = useState(false);
+  const [isCopy, setIsCopy] = useState(false)
+  const delegateLink = window?.location?.origin + "/signup?referenceNo=" + delegateDashboard?.userRes?.delegateRef ?? ""
+  const [invitedEmail, setInvitedEmail] = useState('')
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getDelegateDashboard(setLoading)
-  }, [])
+    if(tabKey === 'earnWithUsDashboard') {
+      getDelegateDashboard(setLoading)
+      getDelegateMembers({}, setLoadingMembers)
+    }
+  }, [tabKey])
 
-console.log('delegateDashboard::: ', delegateDashboard)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -139,22 +64,87 @@ console.log('delegateDashboard::: ', delegateDashboard)
   }
 
   function closeModalShareLink() {
+    formShareLink.resetFields();
+    setIsCopy(false);
     setModalShareLinkOpen(false)
   }
 
-  function openModalInvitaion() {
+  function openModalInvitaion(email:any) {
     setModalInvitaionOpen(true)
+    setInvitedEmail(email)
   }
 
   function closeModalInvitaion() {
-    setModalInvitaionOpen(false)
+    setModalInvitaionOpen(false);
+    setInvitedEmail('');
   }
 
-  function submitShareLink(values: any) {
+  async function submitShareLink(values: any) {
     console.log('Success:', values);
+    setLoadingInvite(true)
+    const response = await sendReferenceInvite(values)
+    setLoadingInvite(false)
     closeModalShareLink()
-    openModalInvitaion()
+    openModalInvitaion(values.email)
   }
+
+  const handleCopyClick = () => {
+    const inputValue = formShareLink.getFieldValue('referenceLink');
+    navigator.clipboard.writeText(inputValue).then(() => {
+      setIsCopy(true)
+      setTimeout(() => {
+        setIsCopy(false);
+      }, 5000);
+    }).catch((error) => {
+      console.error('Failed to copy value:', error);
+    });
+  };
+
+  const tableColumns: ColumnsType<DataType> = [
+    {
+      title: 'No',
+      dataIndex: 'no.',
+      align: 'center',
+      render: (_, row, index) => {
+        return (
+          <>{index < 9?0 : null}{index + 1}</>
+        );
+      },
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      render: (_, row:any) => (
+        <>{row?.referredToUser?.firstName} {row?.referredToUser?.lastName}</>
+      )
+    },
+    {
+      title: 'Delegate Amount',
+      dataIndex: 'rewardAmount',
+      render: (_, row:any) => (
+        <>£ {row?.rewardAmount}</>
+      )
+    },
+    {
+      title: 'Member',
+      dataIndex: 'member',
+      render: (_, row:any) => (
+        <>{row?.referredToUser?.role.toLowerCase()}</>
+      )
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      align: 'center',
+      render: (_, row:any) => {
+        return (
+          <div className={`shs-status-badge ${row?.referredToUser?.status === 'active'? 'success' : 'error'}`}>
+            {row?.referredToUser?.status === 'active'? 'Active' : 'Inactive'}
+          </div>
+        );
+      },
+    },
+  ];
 
 
 
@@ -191,28 +181,34 @@ console.log('delegateDashboard::: ', delegateDashboard)
                     </div>
                   </Col>
                 </Row>
+                {loading &&
+                  <Loader />
+                }
               </div>
             </Col>
             <Col xs={24} xl={12}>
-                <div className="card-share-wrapper">
-                  <div className="card-share" onClick={openModalShareLink}>
-                    <div>Share <IconShare /></div>
-                  </div>
-                  <div className="top-card card-user-welcome">
-                    <Row gutter={15}>
-                      <Col xs={24} lg={12}>
-                        <div className="top-card-inner">
-                          <div className="user-welcome-text">Welcome Back, <span>{delegateDashboard?.userRes?.lastName}</span></div>
-                        </div>
-                      </Col>
-                      <Col xs={24} lg={12}>
-                        <div className="top-card-inner ref-number">
-                          <div className="user-reference-no">Reference Number: <span>{delegateDashboard?.userRes?.referenceNo}</span></div>
-                        </div>
-                      </Col>
-                    </Row>
-                  </div>
+              <div className="card-share-wrapper">
+                <div className="card-share" onClick={openModalShareLink}>
+                  <div>Share <IconShare /></div>
                 </div>
+                <div className="top-card card-user-welcome">
+                  <Row gutter={15}>
+                    <Col xs={24} lg={12}>
+                      <div className="top-card-inner">
+                        <div className="user-welcome-text">Welcome Back, <span>{delegateDashboard?.userRes?.lastName}</span></div>
+                      </div>
+                    </Col>
+                    <Col xs={24} lg={12}>
+                      <div className="top-card-inner ref-number">
+                        <div className="user-reference-no">Reference Number: <span>{delegateDashboard?.userRes?.delegateRef}</span></div>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+                {loading &&
+                  <Loader />
+                }
+              </div>
             </Col>
           </Row>
         </div>
@@ -228,6 +224,9 @@ console.log('delegateDashboard::: ', delegateDashboard)
                   <div className="member-card-title">Total Members</div>
                   <div className="member-card-value">{delegateDashboard?.totalMembers}</div>
                 </div>
+                {loading &&
+                  <Loader />
+                }
               </div>
             </Col>
             <Col xs={24} lg={8}>
@@ -239,6 +238,9 @@ console.log('delegateDashboard::: ', delegateDashboard)
                   <div className="member-card-title">Active Members</div>
                   <div className="member-card-value">{delegateDashboard?.activeMembers}</div>
                 </div>
+                {loading &&
+                  <Loader />
+                }
               </div>
             </Col>
             <Col xs={24} lg={8}>
@@ -250,6 +252,9 @@ console.log('delegateDashboard::: ', delegateDashboard)
                   <div className="member-card-title">Inactive Members</div>
                   <div className="member-card-value">{delegateDashboard?.inactiveMembers}</div>
                 </div>
+                {loading &&
+                  <Loader />
+                }
               </div>
             </Col>
           </Row>
@@ -262,8 +267,12 @@ console.log('delegateDashboard::: ', delegateDashboard)
                 <RegisterMemberAndFeddbackGraph  
                   graphName='registerMember' 
                   title="Registered Members"
+                  graphData={delegateDashboard?.graphData}
                 />
               </div>
+              {loading &&
+                  <Loader />
+                }
             </Col>
             <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">
@@ -272,15 +281,17 @@ console.log('delegateDashboard::: ', delegateDashboard)
                   <Table
                     scroll={{ x: "max-content" }}
                     columns={tableColumns}
-                    dataSource={tableData}
+                    dataSource={delegateMembers}
                     pagination={false}
                   />
                 </div>
+                {loadingMembers &&
+                  <Loader />
+                }
               </div>
             </Col>
           </Row>
         </div>
-        
       </div>
 
       {/* STARTS: MODAL SHARE LINK
@@ -294,28 +305,33 @@ console.log('delegateDashboard::: ', delegateDashboard)
       >
         <div className="modal-share-link-title">Share Link</div>
           <Form
-            form={form}
+            form={formShareLink}
+            requiredMark={false}
             layout="vertical"
+            initialValues={{referenceLink: delegateLink}}
             name="updateListing"
-            initialValues={initValues}
             onValuesChange={(_, values) => {
-              setInitValues(prevState => ({...prevState, ...values}))
               console.log('init:: ', values)
             }}
             onFinish={submitShareLink}
           >
-            <Form.Item name="delegateLink" label="Delegate Link">
-              <Input placeholder="Placeholder" suffix={<IconDocumentCopy />} />
-            </Form.Item>
+            <div className="reference-link-item">
+              <Form.Item name="referenceLink" label="Delegate Link">
+                <Input disabled placeholder="Placeholder" suffix={<IconDocumentCopy style={{cursor: 'pointer'}} onClick={handleCopyClick} />} />
+              </Form.Item>
+              {isCopy &&
+                <div className="text-link-copied">Link Copied</div>
+              }
+            </div>
             <div className="invite-email">
               <div className="invite-email-field">
-                <Form.Item name="email" label="Email">
-                  <Input placeholder="Placeholder" />
+                <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+                  <Input type="email" placeholder="Placeholder" />
                 </Form.Item>
               </div>
               <div className="invite-email-submit">
                 <Form.Item>
-                  <Button htmlType="submit" className="button-tertiary" block>Invite</Button>
+                  <Button loading={loadingInvite} htmlType="submit" className="button-tertiary" block>Invite</Button>
                 </Form.Item>
               </div>
             </div>
@@ -348,7 +364,7 @@ console.log('delegateDashboard::: ', delegateDashboard)
           <div className="invitation-body">
             <div className="invitaion-title">Invitation Sent!</div>
             <div className="invitation-text-light">
-              We have sent an invitation to “johndoemail.com” to join Student Help Squad. 
+              We have sent an invitation to “{invitedEmail}” to join Student Help Squad. 
             </div>
             <div className="invitation-text-dark">
               If an email is not received, contact our support team. 
