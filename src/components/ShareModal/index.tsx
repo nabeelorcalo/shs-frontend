@@ -1,11 +1,6 @@
-import { Row, Col, Form } from "antd";
+import { Row, Col, Form, Input as AntInput } from "antd";
 import { FC, useState } from "react";
-import {
-  DocumentCopyIcon,
-  FacebookIcon,
-  TwitterIcon,
-  WhatsAppIcon,
-} from "../../assets/images";
+import { DocumentCopyIcon, FacebookIcon, TwitterIcon, WhatsAppIcon } from "../../assets/images";
 import { Input } from "../Input/input";
 import { PopUpModal } from "../Model";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
@@ -27,9 +22,7 @@ const ShareModal: FC<{
   const [email, setEmail] = useState("");
 
   const handleCopy = () => {
-    navigator?.clipboard
-      ?.writeText(delegateLink ?? "https://www.figma.com/file/")
-      .then(() => setIsCopid(true));
+    navigator?.clipboard?.writeText(delegateLink ?? "https://www.figma.com/file/").then(() => setIsCopid(true));
   };
   const handleFinish = () => {
     close();
@@ -47,13 +40,8 @@ const ShareModal: FC<{
       close={close}
       footer={false}
     >
-      <p className="font-medium text-base text-black text-center pt-2 pb-[30px]">
-        Share Link
-      </p>
-      <Form
-        onFinish={handleFinish}
-        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-      >
+      <p className="font-medium text-base text-black text-center pt-2 pb-[30px]">Share Link</p>
+      <Form onFinish={handleFinish} layout="vertical" validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
         <Row gutter={gutter}>
           <Col xs={24}>
             <Input
@@ -69,20 +57,12 @@ const ShareModal: FC<{
               }
             />
           </Col>
-          {isCopies && (
-            <p className="font-medium text-base text-black text-center w-full">
-              Linked Copied
-            </p>
-          )}
+          {isCopies && <p className="font-medium text-base text-black text-center w-full">Linked Copied</p>}
           <Col xs={24}>
             <Row gutter={gutter} align="middle" justify="space-between">
               <Col xs={24} xl={16}>
-                <Form.Item
-                  name="email"
-                  rules={[{ required: true }, { type: "email" }]}
-                >
-                  <Input
-                    label="Email"
+                <Form.Item name="email" label="Email" rules={[{ required: true }, { type: "email" }]}>
+                  <AntInput
                     name="email"
                     type="email"
                     onChange={(e: any) => setEmail(e.target.value)}
@@ -102,12 +82,8 @@ const ShareModal: FC<{
             </Row>
           </Col>
           <Col xs={24}>
-            <p className="font-medium text-base text-black text-center w-full pb-3">
-              OR
-            </p>
-            <p className="font-medium text-base text-black text-center w-full">
-              Share this link via:
-            </p>
+            <p className="font-medium text-base text-black text-center w-full pb-3">OR</p>
+            <p className="font-medium text-base text-black text-center w-full">Share this link via:</p>
           </Col>
           <Col xs={24}>
             <Row align="middle" justify="center" className="gap-[18px]">

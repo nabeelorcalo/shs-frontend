@@ -668,3 +668,6 @@ export { ReactComponent as NoData } from '../../assets/images/other-imgs/NoData.
 
 export { ReactComponent as OrcaloLogo } from './Personlization/orcalologo.svg';
 export { ReactComponent as EditPen } from './Personlization/editpen.svg';
+
+// Dreamup dashboard
+export { default as AchivmentIcon } from './AddEventInCalendar/AchivmentIcon.svg';

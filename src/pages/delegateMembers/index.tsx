@@ -124,7 +124,7 @@ const DelegateMembers = () => {
   const [selectedStatus, setSelectedStatus] = useState({ key: "", value: "" });
   const [search, setSearch] = useState("");
   const { getMembers, membersData, totalCount } = useCustomHook();
-  const statusItems: MenuProps["items"] = [
+  const statusItems: any[] = [
     {
       key: "ACTIVE",
       label: "Active",
@@ -135,7 +135,7 @@ const DelegateMembers = () => {
     },
   ];
 
-  const typeItems: MenuProps["items"] = [
+  const typeItems: any[] = [
     {
       key: "COMPANY_ADMIN",
       label: "Company Admin",
@@ -184,9 +184,7 @@ const DelegateMembers = () => {
     {
       title: "Email",
       dataIndex: "email",
-      render: (text, record) => (
-        <p className=" text-sm">{record?.referredToUser?.email}</p>
-      ),
+      render: (text, record) => <p className=" text-sm">{record?.referredToUser?.email}</p>,
     },
     {
       title: "Reward Amount",
@@ -209,17 +207,13 @@ const DelegateMembers = () => {
       title: "Joining Date",
       dataIndex: "joiningDate",
       render: (text, record) => (
-        <p className=" text-sm">
-          {dayjs(record?.referredToUser?.createdAt).format("YYYY/MM/DD")}
-        </p>
+        <p className=" text-sm">{dayjs(record?.referredToUser?.createdAt).format("YYYY/MM/DD")}</p>
       ),
     },
     {
       title: "Location",
       dataIndex: "location",
-      render: (text, record) => (
-        <p className=" text-sm">{record?.referredToUser?.location || "N/A"}</p>
-      ),
+      render: (text, record) => <p className=" text-sm">{record?.referredToUser?.location || "N/A"}</p>,
     },
     {
       title: "Status",
@@ -228,14 +222,10 @@ const DelegateMembers = () => {
         return (
           <div
             className={`shs-status-badge ${
-              row?.referredToUser?.status?.toLowerCase() === "active"
-                ? "success"
-                : "error"
+              row?.referredToUser?.status?.toLowerCase() === "active" ? "success" : "error"
             }`}
           >
-            {row?.referredToUser?.status?.toLowerCase() === "active"
-              ? "Active"
-              : "Inactive"}
+            {row?.referredToUser?.status?.toLowerCase() === "active" ? "Active" : "Inactive"}
           </div>
         );
       },
@@ -252,13 +242,11 @@ const DelegateMembers = () => {
   -------------------------------------------------------------------------------------*/
   const handleStatusClick = ({ key }: any) => {
     const clickedItem = statusItems.findIndex((sti) => sti?.key === key);
-    if (clickedItem !== -1)
-      setSelectedStatus({ key, value: statusItems[clickedItem]?.label });
+    if (clickedItem !== -1) setSelectedStatus({ key, value: statusItems[clickedItem]?.label });
   };
   const handleTypeClick = ({ key }: any) => {
     const clickedItem = typeItems.findIndex((sti) => sti?.key === key);
-    if (clickedItem !== -1)
-      setSelectedType({ key, value: typeItems[clickedItem]?.label });
+    if (clickedItem !== -1) setSelectedType({ key, value: typeItems[clickedItem]?.label });
   };
   const handleTableChange = (pagination: any) => {
     setPageNo(pagination);
@@ -283,13 +271,7 @@ const DelegateMembers = () => {
         <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={(word: string) => setSearch(word)} />
         </Col>
-        <Col
-          xl={18}
-          md={24}
-          sm={24}
-          xs={24}
-          className="flex justify-end gap-4 main-filter-btns"
-        >
+        <Col xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 main-filter-btns">
           <div className="requests-filterby-status">
             <Dropdown
               overlayClassName="shs-dropdown"

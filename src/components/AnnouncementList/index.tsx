@@ -14,14 +14,7 @@ interface AnnouncementProps {
 }
 
 export const AnnouncementList: any = (props: AnnouncementProps) => {
-  const {
-    data,
-    loading,
-    loadMoreData,
-    role = "",
-    handleAddAnnouncement,
-    height,
-  } = props;
+  const { data, role = "", handleAddAnnouncement, height } = props;
 
   return (
     <div className="wrapper-shadow bg-white rounded-2xl xs:p-3 2xl:p-5">
@@ -49,25 +42,21 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
           overflow: "auto",
         }}
       >
-        <InfiniteScroll
-          dataLength={data.length}
-          next={loadMoreData}
-          hasMore={!loading}
-          loader={<p>Loading ..</p>}
-          scrollableTarget="scrollableDiv"
-        >
+        {data && (
           <List
-            dataSource={data}
+            dataSource={data?.rows}
             renderItem={(item: any) => (
               <AnnouncementCard
-                text={item.email}
-                author={item.name.last}
-                avatar={item.picture.large}
-                dateTime="2023-03-09T10:00:00"
+                text={item?.description}
+                author={
+                  item?.announcer?.firstName + " " + item?.announcer?.lastName
+                }
+                avatar={`${constants.MEDIA_URL}/${item?.announcer?.profileImage.mediaId}.${item?.announcer?.profileImage.metaData.extension}`}
+                dateTime={item?.createdAt}
               />
             )}
           />
-        </InfiniteScroll>
+        )}
       </div>
     </div>
   );

@@ -16,4 +16,5 @@ export interface DatePickerInterface {
     endIcon?: any;
     monthPicker?: boolean;
     btnIcononRight?: boolean;
+    format?: string;
 }

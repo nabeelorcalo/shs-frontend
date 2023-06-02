@@ -56,7 +56,6 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
-
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
@@ -64,7 +63,6 @@ const endpoints = {
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   DUPLICATE_INTERNSHIP: "/internship/duplicateInternship",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
-
   //comment
   GET_COMMENTS: "/comment/getComments",
   ADD_COMMENT: `/comment/addComment`,
@@ -96,6 +94,10 @@ const endpoints = {
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
+  // university reports
+  UNIVERSITY_REPORTS: `/university-reports`,
+  UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
+  UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
 
   //Applications for student
   GET_APPLICATIONS: "/application/listApplications",
@@ -109,26 +111,40 @@ const endpoints = {
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
   SETTING_PERFORMANCE: '/performance',
-  SETTINGS_TEMPLATES: '/template/findAll',
-  SETTINGS_SHIFTS: '/shift/findAll',
-  POST_NEW_SHIFTS: '/shift/add',
-  DELETE_SHIFT: '/shift/delete',
-  SETTINGS_TIMESHEET: '/timesheet/category/findAll',
-  POST_NEW_TIMESHEET: '/timesheet/category/add',
-  DELETE_TIMESHEET: '/timesheet/category/delete',
-  EDIT_TIMESHEET: '/timesheet/category/edit',
-  DELETE_PAYROLL: '/payroll/delete',
-  ADD_PAYROLL: '/payroll/add',
-  GET_ALL_COMAPANIES: '/university/universityCompanies',
-  DELETE_SETTING_TEMPLATE: '/template/delete',
-  POST_SETTING_TEMPLATE: '/template/add',
-  EDIT_SETTING_TEMPLATE: '/template/edit',
+
+  // Dreamup Endpoints
+  DREAMUP: {
+    GET_GOALS: '/dreamup/get-goals',
+    ADD_GOALS: 'dreamup/add-goal',
+    DELETE_GOAL: 'dreamup/delete-goal',
+    ADD_TASK: 'dreamup/add-task',
+    EDIT_TASK: 'dreamup/edit-task',
+    DELETE_TASK: 'dreamup/delete-task',
+    MARK_TASK: 'dreamup/mark-task',
+    UPDATE_LIFE_ASSESSMENT: 'dreamup/add-update-life-assesment',
+    LIFE_ASSESSMENT: 'dreamup/get-life-assesment',
+  },
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
+
   // Performance
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
+
+  SETTINGS_TEMPLATES: "/template/findAll",
+  SETTINGS_SHIFTS: "/shift/findAll",
+  POST_NEW_SHIFTS: "/shift/add",
+  DELETE_SHIFT: "/shift/delete",
+  SETTINGS_TIMESHEET: "/timesheet/category/findAll",
+  POST_NEW_TIMESHEET: "/timesheet/category/add",
+  DELETE_TIMESHEET: "/timesheet/category/delete",
+  EDIT_TIMESHEET: "/timesheet/category/edit",
+  DELETE_PAYROLL: "/payroll/delete",
+  //Announcement api's
+  POST_NEW_ANNOUNCEMENT: "/announcement/add",
+  ANNOUNCEMENT_FINDALL: "/announcement/findAll",
+
   // RECIPES
   GET_ALL_RECIPES: "/recipe/get-recipies",
   GET_RECIPE: "/recipe/get-recipe",

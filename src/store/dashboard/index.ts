@@ -1,20 +1,17 @@
-import { recoilPersist } from 'recoil-persist';
-import { atom, selector } from 'recoil';
-import constants from '../../config/constants';
-import api from '../../api';
-import endpoints from '../../config/apiEndpoints';
+import { recoilPersist } from "recoil-persist";
+import { atom } from "recoil";
 
 const { persistAtom } = recoilPersist();
 
 export const timeTrackingState = atom({
-  key: 'timeTrackingState', // unique ID (with respect to other atoms/selectors)
-  default: '00:00:00', // default value
+  key: "timeTrackingState", // unique ID (with respect to other atoms/selectors)
+  default: "00:00:00", // default value
   effects_UNSTABLE: [persistAtom],
 });
 
 // agent dashboard
 export const agentDashboardWidgetsState = atom({
-  key: 'agentDashboardWidgetsState',
+  key: "agentDashboardWidgetsState",
   default: {
     totalProperties: 0,
     totalVacantProperties: 0,
@@ -23,8 +20,14 @@ export const agentDashboardWidgetsState = atom({
   },
 });
 
+// announcement store
+export const announcementDataState = atom({
+  key: "announcementDataState",
+  default: [],
+});
+
 export const adminDashboardMembersDataState = atom({
-  key: 'adminDashboardMembersData',
+  key: "adminDashboardMembersData",
   default: {
     totalUsers: 0,
     totalActiveUsers: 0,
@@ -38,7 +41,7 @@ export const adminDashboardMembersDataState = atom({
 });
 
 export const delegateAgentDashbaordState = atom({
-  key: 'delegateAgentDashbaordState',
+  key: "delegateAgentDashbaordState",
   default: {
     activeMembers: 0,
     currentBalance: 0,
@@ -50,21 +53,21 @@ export const delegateAgentDashbaordState = atom({
   },
 });
 export const delegateAgenetMembersState = atom({
-  key: 'delegateAgenetMembersState',
+  key: "delegateAgenetMembersState",
   default: [],
 });
 export const growthAnalyticsDashboardState = atom({
-  key: 'growthAnalyticsDataState',
+  key: "growthAnalyticsDataState",
   default: [],
 });
 
 export const adminDashboardRegionAnalyticsState = atom({
-  key: 'adminRegionAnalyticsState',
+  key: "adminRegionAnalyticsState",
   default: {},
 });
 
 // weather api
 export const weatherApiState: any = atom({
-  key: 'weatherApiState',
+  key: "weatherApiState",
   default: {},
 });
