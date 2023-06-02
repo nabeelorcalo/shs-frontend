@@ -88,7 +88,7 @@ const useCustomHook = () => {
   };
 
   // Edit internship 
-  const EditNewInternshipsData = async (values: any) => {
+  const EditNewInternshipsData = async (values: any,updateStatus?:string) => {
     const {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
@@ -115,7 +115,7 @@ const useCustomHook = () => {
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
-    Notifications({ title: "Success", description: "Internship edited", type: "success" })
+    Notifications({ title: "Success", description: `Internship ${updateStatus?updateStatus?.toLowerCase():'edited'}`, type: "success" })
   };
 
   //Duplicate internship
