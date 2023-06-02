@@ -23,9 +23,9 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     btnIcon,
     endIcon = CalendarIcon,
     btnIcononRight = false,
+    format,
     ...rest
   } = props;
-
   const [newVal, setNewVal] = useState<{ date: Dayjs, dateString: string }>({ date: dayjs(), dateString: '' });
 
   const handleChange = (date: Dayjs | any, dateString: string) => {
@@ -52,10 +52,12 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
         </Button>}
       {label && <label className='label'>{label}</label>}
       <AntDatePicker
+        inputReadOnly={true}
         open={open}
         size={size}
         value={newVal.date}
         placement={placement}
+        format={format}
         onOpenChange={() => setOpen(!open)}
         className={className}
         popupClassName={`common-datepicker-popup-wrapper ${dropdownClassName}`}

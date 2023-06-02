@@ -1,18 +1,14 @@
 import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
-import type { RadioChangeEvent } from 'antd'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { PageHeader, SearchBar } from '../../components'
-import useListingsHook from './actionHandler'
+import { PageHeader, SearchBar, Alert, Loader } from '../../components';
+import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
-import { useRecoilValue } from "recoil";
-import dayjs from 'dayjs'
-import showNotification from '../../helpers/showNotification'
-import constants from '../../config/constants'
-
+import { useRecoilValue, useRecoilState } from "recoil";
+import dayjs from 'dayjs';
+import showNotification from '../../helpers/showNotification';
 import {
   IconAddListings,
   IconAngleDown,
@@ -50,45 +46,32 @@ interface DataType {
   totalBedrooms: number;
   verificationStatus: string;
   rent: number;
-  availability: any;
   publicationStatus: string;
   availabilityStart: any;
   availabilityEnd: any;
 }
-
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    console.log('promise::: ', file)
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
 
 
 
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getListings, createListing } = useListingsHook()
-  const allProperties = useRecoilValue(listingsState)
-  const [loadingAllProperties, setLoadingAllProperties] = useState(false)
+  const { getListings, createListing, deleteListing } = useListingsHook();
+  const allProperties = useRecoilValue(listingsState);
+  // const [allProperties, setAllProperties] = useRecoilState(listingsState)
+  const [loadingAllProperties, setLoadingAllProperties] = useState(false);
+  const [loadingDelProperty, setLoadingDelProperty] = useState(false);
   const [form] = Form.useForm();
-  const mediaValue = Form.useWatch('media', form);
-  const navigate = useNavigate()
-  const [billsIncluded, setBillsIncluded] = useState(false)
-  const [modalAddListingOpen, setModalAddListingOpen] = useState(false)
-  const [current, setCurrent] = useState(0)
-  const [entireProperty, setEntireProperty] = useState(false)
-  const [uploadURL, setUploadURL] = useState(false)
-  const [uploadDevice, setUploadDevice] = useState(false)
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [listingValues, setListingValues] = useState({});
-  const [nextDisabled, setNextDisabled] = useState(true)
-
+  const navigate = useNavigate();
+  const [loadingAddListing, setLoadingAddListing] = useState(false);
+  const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
+  const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
+  const [stepCurrent, setStepCurrent] = useState(0);
+  const [entireProperty, setEntireProperty] = useState(false);
+  const [uploadURL, setUploadURL] = useState(false);
+  const [uploadDevice, setUploadDevice] = useState(false);
+  const [previousValues, setPreviousValues] = useState<any>({});
+  const [propertyID, setPropertyID] =useState('')
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -125,17 +108,7 @@ const Listings = () => {
         return (
           <>£ {text}</>
         )
-
       }
-    },
-    {
-      title: 'Availability',
-      dataIndex: 'availability',
-      render: (_, row, index) => {
-        return (
-          <>{dayjs(row.availabilityStart).format('DD/MM/YYYY')} - {dayjs(row.availabilityEnd).format('DD/MM/YYYY')}</>
-        );
-      },
     },
     {
       title: 'Publication Status',
@@ -162,7 +135,7 @@ const Listings = () => {
             menu={{
               items: [
                 { label: 'Edit', key: 'listingEdit', onClick: () => navigate(`/edit-listing/${row.id}`) },
-                { label: 'Remove', key: 'listingRemove', onClick: () => console.log('listingRemove') }
+                { label: 'Remove', key: 'listingRemove', onClick: () => openModalDeleteListing(row.id) }
               ]
             }}
           >
@@ -186,29 +159,7 @@ const Listings = () => {
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleSubmission = useCallback(
-    (result: any) => {
-      if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
-      } else {
-        showNotification("success", "Success", result.response?.message);
-      }
-    },
-    [form]
-  );
-
-  const submitAddListing = useCallback(async () => {
-    let values;
-    try {
-      values = await form.validateFields();
-    } catch (errorInfo) {
-      return;
-    }
-    // setAddListingLoading(true);
-    const result = await createListing(JSON.stringify(listingValues));
-    // setAddListingLoading(false);
-    handleSubmission(JSON.stringify(result));
-  }, [form, handleSubmission]);
+  
 
 
   /* EVENT FUNCTIONS
@@ -219,22 +170,19 @@ const Listings = () => {
 
   function closeModalAddListing() {
     form.resetFields();
-    setNextDisabled(true);
     setModalAddListingOpen(false);
+    setPreviousValues({})
   }
 
-  function onChangeRadioProperty(e: RadioChangeEvent) {
-    e.target.value === 'Entire Property' ? setEntireProperty(true) : setEntireProperty(false)
+  function openModalDeleteListing(id:any) {
+    setModalDeleteOpen(true)
+    setPropertyID(id)
   }
 
-  const onChangeSwitch = (checked: boolean) => {
-    setBillsIncluded(checked)
-  };
-
-  const onCheckboxChange = (e: CheckboxChangeEvent) => {
-    console.log("check:: ", e.target)
-    // setChecked(e.target.checked);
-  };
+  function closeModalDeleteListing() {
+    setModalDeleteOpen(false)
+    setPropertyID('')
+  }
 
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
@@ -320,9 +268,8 @@ const Listings = () => {
               name="propertyType"
               label="How will you rent your property?"
               rules={[{ required: true }]}
-
             >
-              <Radio.Group onChange={onChangeRadioProperty}>
+              <Radio.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={24}>
                     <Radio value="Entire Property" >Entire Property</Radio>
@@ -390,9 +337,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="notAvailable">Not available</Select.Option>
-                <Select.Option value="central">Central</Select.Option>
-                <Select.Option value="indvidualUnits">Indvidual units</Select.Option>
+                <Select.Option value="Not available">Not available</Select.Option>
+                <Select.Option value="Central">Central</Select.Option>
+                <Select.Option value="IndividualUnits">Indvidual units</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -403,9 +350,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="heatingNotAvailable">Not available</Select.Option>
-                <Select.Option value="centralProperty">Central Property</Select.Option>
-                <Select.Option value="centralBuilding">Central building</Select.Option>
+                <Select.Option value="Not available">Not available</Select.Option>
+                <Select.Option value="Central">Central Property</Select.Option>
+                <Select.Option value="Individual units">Central building</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -416,10 +363,10 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="heatedWaterSystemNo">No</Select.Option>
-                <Select.Option value="naturalGas">Natural gas</Select.Option>
-                <Select.Option value="heatedWaterSystemElectric">Electric</Select.Option>
-                <Select.Option value="heatedWaterSystemCenteral">Centeral property</Select.Option>
+                <Select.Option value="No">No</Select.Option>
+                <Select.Option value="Natural gas">Natural gas</Select.Option>
+                <Select.Option value="Electric">Electric</Select.Option>
+                <Select.Option value="Central property">Centeral property</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -521,8 +468,7 @@ const Listings = () => {
                       <div className="button-upload-from-device">
                         <Button className="button-tertiary">Upload from device</Button>
                       </div>
-                    )
-                    }
+                    )}
                   </Upload>
                 </Form.Item>
                 {!uploadDevice &&
@@ -556,10 +502,13 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="typeFuton">Futon</Select.Option>
-                <Select.Option value="typeAirbed">Airbed</Select.Option>
-                <Select.Option value="typeWaterbed">Waterbed</Select.Option>
-                <Select.Option value="typeQueenBed">Queen bed</Select.Option>
+                <Select.Option value="Futon">Futon</Select.Option>
+                <Select.Option value="Airbed">Airbed</Select.Option>
+                <Select.Option value="Waterbed">Waterbed</Select.Option>
+                <Select.Option value="Queen bed">Queen bed</Select.Option>
+                <Select.Option value="King bed">King bed</Select.Option>
+                <Select.Option value="Twin XL">Twin XL</Select.Option>
+                <Select.Option value="XL">XL</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -568,10 +517,10 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="allowedYes">Yes</Radio>
+                    <Radio value={true}>Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="allowedNo">No</Radio>
+                    <Radio value={false}>No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -628,9 +577,18 @@ const Listings = () => {
         </div>
         <Row gutter={30}>
           <Col xs={24}>
+            <Form.Item name="rentFrequency" label="Rent Frequency" rules={[{ required: true }]}>
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="day">Day</Select.Option>
+                <Select.Option value="week">Week</Select.Option>
+                <Select.Option value="month">Month</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
             <Form.Item
-              name="monthlyRent"
-              label="Monthly Rent"
+              name="rent"
+              label="Rent"
               rules={[{ required: true }]}
             >
               <InputNumber
@@ -651,10 +609,10 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="creditDebitCard">Credit/Debit card</Select.Option>
-                <Select.Option value="cash">Cash</Select.Option>
-                <Select.Option value="chegue">Cheque</Select.Option>
-                <Select.Option value="ibft">IBFT</Select.Option>
+                <Select.Option value="Credit/Debit Card">Credit/Debit card</Select.Option>
+                <Select.Option value="Cash">Cash</Select.Option>
+                <Select.Option value="Cheque">Cheque</Select.Option>
+                <Select.Option value="IBFT">IBFT</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -663,10 +621,10 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="yes">Yes</Radio>
+                    <Radio value={true}>Yes</Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="no">No</Radio>
+                    <Radio value={false}>No</Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -679,9 +637,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="depositHalfMont">Half month</Select.Option>
-                <Select.Option value="depositfullMonth">Full month</Select.Option>
-                <Select.Option value="depositFixed">Fixed</Select.Option>
+                <Select.Option value="Half month">Half month</Select.Option>
+                <Select.Option value="Full month">Full month</Select.Option>
+                <Select.Option value="Fixed">Fixed</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -718,8 +676,8 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
-              <Switch onChange={onChangeSwitch} checked={billsIncluded} size="small" />
+            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
+              <Switch size="small" />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -729,11 +687,11 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="electricityIcluded">Included</Select.Option>
-                <Select.Option value="electricityIcludedLimit">Included(up to a limit)</Select.Option>
-                <Select.Option value="electricityPayLandlordFixed">Pay landlord(fixed amount)</Select.Option>
-                <Select.Option value="electricityPayLandlordAmount">Pay landlord(for amount used)</Select.Option>
-                <Select.Option value="payProvider">Pay provider(for amount used)</Select.Option>
+                <Select.Option value="Included">Included</Select.Option>
+                <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -744,11 +702,11 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="waterIcluded">Included</Select.Option>
-                <Select.Option value="waterIcludedLimit">Included(up to a limit)</Select.Option>
-                <Select.Option value="waterPayLandlordFixed">Pay landlord(fixed amount)</Select.Option>
-                <Select.Option value="waterPayLandlordAmount">Pay landlord(for amount used)</Select.Option>
-                <Select.Option value="waterPayProvider">Pay provider(for amount used)</Select.Option>
+                <Select.Option value="Included">Included</Select.Option>
+                <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -759,11 +717,11 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="gasIcluded">Included</Select.Option>
-                <Select.Option value="gasIcludedLimit">Included(up to a limit)</Select.Option>
-                <Select.Option value="gasPayLandlordFixed">Pay landlord(fixed amount)</Select.Option>
-                <Select.Option value="gasPayLandlordAmount">Pay landlord(for amount used)</Select.Option>
-                <Select.Option value="gasPayProvider">Pay provider(for amount used)</Select.Option>
+                <Select.Option value="Included">Included</Select.Option>
+                <Select.Option value="Included (Up to a limit)">Included(up to a limit)</Select.Option>
+                <Select.Option value="Pay landlord (fixed amount)">Pay landlord(fixed amount)</Select.Option>
+                <Select.Option value="Pay landlord (for amount used)">Pay landlord(for amount used)</Select.Option>
+                <Select.Option value="Pay provider (for amount used)">Pay provider(for amount used)</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -799,9 +757,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="Less than 60">Less than 60</Select.Option>
-                <Select.Option value="Less than 40">Less than 40</Select.Option>
                 <Select.Option value="Less than 30">Less than 30</Select.Option>
+                <Select.Option value="Less than 40">Less than 40</Select.Option>
+                <Select.Option value="Less than 60">Less than 60</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -812,9 +770,9 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                <Select.Option value="tenantStudents">Students</Select.Option>
-                <Select.Option value="tenantProfessional">Working professionals</Select.Option>
-                <Select.Option value="tenantsNoPreferences">No preferences</Select.Option>
+                <Select.Option value="Students">Students</Select.Option>
+                <Select.Option value="Working professionals">Working professionals</Select.Option>
+                <Select.Option value="No preferences">No preferences</Select.Option>
               </Select>
             </Form.Item>
           </Col>
@@ -919,7 +877,7 @@ const Listings = () => {
                 </div>
               </div>
             </Form.Item>
-            <Form.Item name="occupationProofRequired " rules={[{ required: true }]} valuePropName="checked">
+            <Form.Item name="occupationProofRequired" rules={[{ required: true }]} valuePropName="checked">
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
                   <Checkbox >Proof of occupation or enrollment</Checkbox>
@@ -953,7 +911,7 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={8}>
-                    <Radio value="daily">
+                    <Radio value="Daily">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Daily</div>
                         <div className="radio-card-content-text">In case a tenant moves in or moves out in the middle of the month, they will be charged for each day they stayed during that month. For example: if the tenant moves in on the 28th August, they will pay for four days of rent in August.</div>
@@ -961,7 +919,7 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={8}>
-                    <Radio value="fortnightly">
+                    <Radio value="Fortnightly">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Fortnightly</div>
                         <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
@@ -969,7 +927,7 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={8}>
-                    <Radio value="monthly">
+                    <Radio value="Monthly">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Monthly</div>
                         <div className="radio-card-content-text">The tenant will always pay the entire month's rent, regardless of the move-in/move-out date. For example: if the tenant moves in on the 28th August, they will pay for the full month of August.</div>
@@ -989,7 +947,7 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
-                    <Radio value="standardCancellation">
+                    <Radio value="Standard Cancellation">
                       <div className="radio-card-content">
                         <div className="radio-card-label">Standard Cancellation</div>
                         <div className="radio-card-content-text">
@@ -1001,9 +959,9 @@ const Listings = () => {
                     </Radio>
                   </Col>
                   <Col xs={12}>
-                    <Radio value="clexibleCancellation">
+                    <Radio value="Flexible Cancellation">
                       <div className="radio-card-content">
-                        <div className="radio-card-label">Flexible cancellation</div>
+                        <div className="radio-card-label">Flexible Cancellation</div>
                         <div className="radio-card-content-text">
                           <div>If tenant cancels a booking within 24 hours of confirmation</div>
                           <div>- Full refund of the first month's rent.</div>
@@ -1050,146 +1008,46 @@ const Listings = () => {
     )
   });
 
-  function next() {
-    setListingValues((prev) => {
-      return {
-        ...prev,
-        ...form.getFieldsValue()
-      }
+  const next = () => {
+    form.validateFields().then((values) => {
+      setPreviousValues((old:any) => {
+        return {
+          ...old,
+          ...values
+        }
+      });
+      setStepCurrent(stepCurrent + 1);
     })
-    console.log('listingValues:: ', listingValues)
-    setCurrent(current + 1);
-    setNextDisabled(true);
-    console.log('listingValues:: ', listingValues)
-
-    // if(current === 0) {
-    //   setNextDisabled(true)
-    //   validateStepOne(listingValues)
-    // }
-
-    // if(current === 1) {
-    //   setNextDisabled(true)
-    //   validateStepTwo(listingValues)
-    // }
-
-    // if(current === 2) {
-    //   setNextDisabled(true)
-    //   validateStepThree(listingValues)
-    // }
+    console.log("prev vali::: ", previousValues)
   };
 
-  function prev() {
-    setCurrent(current - 1);
-    setNextDisabled(false)
+  const prev = () => {
+    setStepCurrent(stepCurrent - 1);
   };
 
-  const validateStepOne = (values: any) => {
-    const { addressOne, postCode, isFurnished } = values;
-    if (addressOne !== "" && addressOne != null
-      && postCode !== "" && postCode != null
-      && isFurnished != null
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepTwo = (values: any) => {
-    const { propertyType, hasAirConditioning, hasHeating, hasWaterHeating } = values;
-    if (propertyType !== "" && propertyType != null
-      && hasAirConditioning !== "" && hasAirConditioning != null
-      && hasHeating !== "" && hasHeating != null
-      && hasWaterHeating !== "" && hasWaterHeating != null
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepThree = (values: any) => {
-    const { media, bedType } = values;
-    if (bedType != null && bedType !== ""
-      && media != null && media.length !== 0
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepFour = (values: any) => {
-    const { monthlyRent, paymentMethod, depositType, depositAmount, minimumStay, electricityBillPayment, waterBillPayment, gasBillPayment } = values;
-    if (monthlyRent != null
-      && paymentMethod != null && paymentMethod !== ""
-      && depositType != null && depositType !== ""
-      && depositAmount != null
-      && minimumStay != null
-      && electricityBillPayment != null && electricityBillPayment !== ""
-      && waterBillPayment != null && waterBillPayment !== ""
-      && gasBillPayment != null && gasBillPayment !== ""
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepFive = (values: any) => {
-    const { gender, maxAgePreference, tenantTypePreference, couplesAllowed, tenantsCanRegisterAddress, petsAllowed,
-       musicalInstrumentsAllowed, identityProofRequired, occupationProofRequired, incomeProofRequired } = values;
-    if (gender != null && gender !== ""
-      && maxAgePreference != null && maxAgePreference !== ""
-      && tenantTypePreference != null && tenantTypePreference !== ""
-      && couplesAllowed != null
-      && tenantsCanRegisterAddress != null
-      && petsAllowed != null
-      && musicalInstrumentsAllowed != null
-      && identityProofRequired != null
-      && occupationProofRequired != null
-      && incomeProofRequired != null
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const validateStepSix = (values: any) => {
-    const { contractType, cancellationPolicy } = values;
-    if (contractType != null && contractType !== ""
-      && cancellationPolicy != null && cancellationPolicy !== ""
-    ) {
-      setNextDisabled(false)
-    } else {
-      setNextDisabled(true)
-    }
-  }
-
-  const onValuesChange = (changedValues: any, allValues: any) => {
-    // console.log(changedValues, " single Field changed  value ")
-    console.log(allValues, "All form values ")
-    if (current === 0) {
-      validateStepOne(allValues)
-    } else if (current === 1) {
-      validateStepTwo(allValues)
-    } else if (current === 2) {
-      validateStepThree(allValues)
-      if (allValues.media != null && allValues.media.length != 0) {
-        setUploadDevice(true)
-      } else {
-        setUploadDevice(false)
-      }
-    } else if (current === 3) {
-      validateStepFour(allValues)
-    } else if (current === 4) {
-      validateStepFive(allValues)
-    } else if (current === 5) {
-      validateStepSix(allValues)
-    }
+  const onValuesChange = (changedValue: any, allValues: any) => {
+    allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
+    allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
   };
 
+  const submitAddListing = async () => {
+    setLoadingAddListing(true);
+    const formData = new FormData();
+    for(const name in previousValues) {
+      formData.append(name, previousValues[name])
+    }
+    for (let i = 0; i < previousValues.media.length; i++) {
+      var file = previousValues.media[i]['originFileObj']
+      formData.append('media', file)
+    }
+    
+    const result = await createListing(formData); 
+    setLoadingAddListing(false);
+    showNotification("success", "Success", result.message);
+    closeModalAddListing();
+    setStepCurrent(0);
+    getListings(setLoadingAllProperties)
+  }
 
 
   /* RENDER APP
@@ -1221,7 +1079,7 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
-                    loading={loadingAllProperties}
+                    loading={{spinning: loadingAllProperties, indicator: <Loader />}}
                     columns={tableColumns}
                     dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
@@ -1254,33 +1112,33 @@ const Listings = () => {
         >
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">
-              {current < 6 &&
+              {stepCurrent < 6 &&
                 <Steps
                   className="add-listing-steps"
-                  current={current}
+                  current={stepCurrent}
                   items={stepItems}
                   labelPlacement="vertical"
                   progressDot
                 />
               }
               <div className="steps-content-outer">
-                {steps[current].content}
+                {steps[stepCurrent].content}
               </div>
             </div>
           </div>
           <div className="modal-add-listing-footer">
             <Space size={30}>
-              {current < 1 &&
+              {stepCurrent < 1 &&
                 <Button className="button-tertiary" ghost onClick={() => closeModalAddListing()}>Back</Button>
               }
-              {current > 0 &&
+              {stepCurrent > 0 &&
                 <Button className="button-tertiary" ghost onClick={() => prev()}>Back</Button>
               }
-              {current < 6 &&
-                <Button disabled={nextDisabled} className="button-tertiary" onClick={() => next()}>Next</Button>
+              {stepCurrent < 6 &&
+                <Button className="button-tertiary" onClick={() => next()}>Next</Button>
               }
-              {current === 6 &&
-                <Button htmlType="submit" className="button-tertiary">Publish</Button>
+              {stepCurrent === 6 &&
+                <Button loading={loadingAddListing} htmlType="submit" className="button-tertiary">Publish</Button>
               }
             </Space>
           </div>
@@ -1289,6 +1147,17 @@ const Listings = () => {
 
       {/* ENDS MODAL: ADD LISTING 
       ***********************************************************************************/}
+
+      <Alert
+        type="error"
+        width={570}
+        state={modalDeleteOpen}
+        setState={setModalDeleteOpen}
+        cancelBtntxt={'No'}
+        okBtntxt={'Yes'}
+        okBtnFunc={() => {deleteListing(propertyID, setLoadingDelProperty); closeModalDeleteListing();}}
+        children={<p>Do you really want to delete this property?</p>}
+      />
     </>
   )
 }

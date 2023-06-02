@@ -9,7 +9,7 @@ const DigiVaultModals = (props: any) => {
   const { studentVault }: any = useCustomHook();
   const [state, setState] = useState(
     {
-      isModalOpen: studentVault === undefined ? true : false,
+      isModalOpen: (studentVault?.lockResponse || studentVault === undefined) ? true : false,
       isEnable: false,
       isToggle: false,
       lockTime: '15',
@@ -26,7 +26,7 @@ const DigiVaultModals = (props: any) => {
 
   return (
     <>
-      <Switch onChange={onChange}
+      Lock <Switch onChange={onChange}
         //  defaultChecked={studentVault === undefined ? false : state.isLock}
         checked={state.isLock}
         defaultChecked={state.isLock}

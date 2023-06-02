@@ -205,10 +205,10 @@ const handleError = async (error: any) => {
 };
 
 const get = (url: any, params = {}, headers = {}) =>
-    axiosInstance
-      .get(url, { headers, params })
-      .then(handleResponse)
-      .catch(handleError);
+  axiosInstance
+    .get(url, { headers, params })
+    .then(handleResponse)
+    .catch(handleError);
 
 const post = (url: any, data = {}, config: any = {}) =>
   axiosInstance
@@ -242,7 +242,7 @@ const del = (url: any, config: any = {}, data = {}) =>
     .delete(url, {
       ...config,
       headers: { ...defaultHeaders, ...config.headers },
-      data
+      data,
     })
     .then(handleResponse)
     .catch(handleError);

@@ -8,12 +8,14 @@ import csv from '../../helpers/csv';
 import apiEndpints from "../../config/apiEndpoints";
 import { payrollDataState } from '../../store';
 import { debounce } from 'lodash';
+import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   //get Payroll data from BE side
-  const { PAYROLL_FINDALL } = apiEndpints;
+  const { PAYROLL_FINDALL, DELETE_PAYROLL } = apiEndpints;
   const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
+
   const getData = async () => {
     const { data } = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10 });
     setPayrollData(data)
@@ -24,18 +26,25 @@ const useCustomHook = () => {
 
   //search vehicle
   const changeHandler = async (e: any) => {
-    const {data} = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10, q: e });
+    const { data } = await api.get(PAYROLL_FINDALL, { page: 1, limit: 10, q: e });
     setPayrollData(data);
   }
   const debouncedResults = useMemo(() => {
     return debounce(changeHandler, 500);
   }, []);
-  
+
   useEffect(() => {
     return () => {
       debouncedResults.cancel();
     };
   });
+
+  // delete payroll data 
+  const deletePayroll = async (id: any) => {
+    await api.delete(`${DELETE_PAYROLL}/${id}`);
+    Notifications({ title: "Success", description: 'Payroll deleted', type: 'success' })
+    getData()
+  };
 
   //download pdf or excel functionality
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -106,8 +115,10 @@ const useCustomHook = () => {
   };
 
   return {
+    getData,
     payrollData,
     changeHandler,
+    deletePayroll,
     downloadPdfOrCsv,
   };
 };

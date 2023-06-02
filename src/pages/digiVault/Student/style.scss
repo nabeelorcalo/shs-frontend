@@ -1,8 +1,10 @@
 @import "../../../scss/colors";
+
 .digivault {
   .digivault-title {
     color: $primary-bg-color;
   }
+
   .ant-switch {
     height: 12px !important;
     min-width: 40px;
@@ -13,16 +15,22 @@
     }
   }
 
+  .ant-table-cell {
+    text-align: center !important;
+  }
+
+
   .setting-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     padding: 8px 16px;
     gap: 10px;
     background: $text-input-bg-color;
     border-radius: 8px;
     width: 150px;
     height: 48px;
+
     .setting-btn-text {
       font-weight: 400;
       font-size: 16px;
@@ -36,6 +44,7 @@
     border: 1px solid $text-input-bg-color;
     border-radius: 10px;
     padding: 20px;
+
     .vault-card {
       background: $white-bg-color;
       border: 1px solid $text-input-bg-color;
@@ -49,17 +58,20 @@
     background: $white-bg-color;
     border: 1px solid $text-input-bg-color;
     border-radius: 10px;
+
     .storage-bar-header {
       background: $text-input-bg-color;
       border-radius: 10px;
       padding: 10px;
     }
+
     .available-storage {
       font-weight: 500;
       font-size: 20px;
       line-height: 28px;
       color: $text-primary-title-color;
     }
+
     .available-storage-value {
       font-weight: 400;
       font-size: 14px;
@@ -84,6 +96,7 @@
     background: $white-bg-color;
     border: 1px solid $text-input-bg-color;
     border-radius: 10px;
+
     .recent-files-title {
       font-weight: 600;
       font-size: 24px;

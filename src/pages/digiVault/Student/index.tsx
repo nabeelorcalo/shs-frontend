@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Divider, Progress, Row, Menu, Space } from "antd";
-import { GlobalTable, Notifications } from "../../../components";
+import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,6 @@ import "./style.scss";
 import useCustomHook from "../actionHandler";
 import DigiVaultModals from "./Modals";
 import dayjs from "dayjs";
-import UnlockVault from "./newPasswordModal/unlockVaultModal/unlockVault";
 
 const manageVaultArr = [
   {
@@ -88,7 +87,6 @@ const DigiVaultStudent = () => {
     isToggle: false,
     delId: null
   })
-  // const [unlockPassword, setUnlockPassword] = useState(null)
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
   console.log(getDigiVaultDashboard,"getDigiVaultDashboard");
   
@@ -97,12 +95,6 @@ const DigiVaultStudent = () => {
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
-
-  // if (studentVault === undefined) {
-  //   // Notifications({ title: 'Error', description: 'Please set your password', type: 'error' })
-  //   // <UnlockVault />
-  //   // setState({ ...state, unlockVault: true })
-  // }
 
   const navigate = useNavigate();
 
@@ -178,7 +170,7 @@ const DigiVaultStudent = () => {
       />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-          <div className="digivault-title text-2xl font-semibold">
+          <div className="digivault-title text-2xl font-semibold ml-4">
             DigiVault
           </div>
         </Col>
@@ -231,7 +223,7 @@ const DigiVaultStudent = () => {
                 <div className="available-storage-value">{studentStorage?.availableStorage}</div>
               </Col>
             </Row>
-            <div className="pt-2">
+            <div className="mt-4">
               <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>

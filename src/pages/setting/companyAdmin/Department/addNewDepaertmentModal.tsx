@@ -1,20 +1,19 @@
-import React from 'react'
 import { Button, Form } from "antd";
 import { Input } from "antd";
 import { PopUpModal } from "../../../../components/Model";
-import useCustomHook from './actionHandler';
+import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
 
 const AddNewDepaertmentModal = (props: any) => {
-    const { state, setState, edit, setEdit } = props;
+    const { state, setState } = props;
     const [form] = Form.useForm();
-    const { postSettingDepartment, patchSettingDepartment } = useCustomHook();
+    const { postSettingDepartment, patchSettingDepartment } = useDepartmentCustomHook();
 
     const onFinish = (values: any) => {
-        if (edit?.id) {
-            patchSettingDepartment(values, edit?.id)
+        if (state?.editField?.id) {
+            patchSettingDepartment(values, state?.editField?.id)
             form.resetFields()
-            setState({ ...state, isEditModal: false })
+            setState({ ...state, isEditModal: false, editField: {} })
         }
         else {
             postSettingDepartment({
@@ -27,8 +26,8 @@ const AddNewDepaertmentModal = (props: any) => {
     }
 
     const initialValues = {
-        departmentName: edit?.name ?? null,
-        description: edit?.description ?? null
+        departmentName: state?.editField?.name ?? null,
+        description: state?.editField?.description ?? null
     }
 
     return (
@@ -36,7 +35,7 @@ const AddNewDepaertmentModal = (props: any) => {
             open={state.isEditModal}
             title="Department"
             width={600}
-            close={() => { setState({ ...state, isEditModal: false }), setEdit({}); form.resetFields() }}
+            close={() => { setState({ ...state, isEditModal: false , editField:{}}); form.resetFields() }}
             footer={false}
         >
             <Form

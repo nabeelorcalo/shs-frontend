@@ -1,4 +1,3 @@
-import React from 'react'
 import AssessmentFormCaseStudies from '../../Common/assessmentForm'
 
 const index = () => {

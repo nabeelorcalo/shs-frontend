@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Tabs, TabsProps } from "antd";
 import PersnolInformation from "./persnolInformation";
 import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
@@ -7,12 +7,12 @@ import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
 
 const onChange = (key: string) => {};
-
 interface IDrawerTabs {
   selectedCandidate: any;
+  studentDetails: any;
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
-  const { selectedCandidate } = props;
+  const { selectedCandidate, studentDetails } = props;
 
   const items: TabsProps["items"] = [
     {
@@ -23,7 +23,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Personal Information</p>
         </div>
       ),
-      children: <PersnolInformation selectedCandidate={selectedCandidate} />,
+      children: <PersnolInformation selectedCandidate={selectedCandidate} studentDetails={studentDetails} />,
     },
     {
       key: "2",
@@ -34,7 +34,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Documents</p>
         </div>
       ),
-      children: <DrawerDocuments />,
+      children: <DrawerDocuments email={studentDetails?.user?.email} documents={studentDetails?.documents} />,
     },
     {
       key: "3",
@@ -54,7 +54,17 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Interview</p>
         </div>
       ),
-      children: <Interview />,
+      children: (
+        <Interview
+          candidateId={selectedCandidate?.id}
+          userId={selectedCandidate?.userDetail?.id}
+          candidateFirstName={selectedCandidate?.userDetail?.firstName}
+          candidateLastName={selectedCandidate?.userDetail?.lastName}
+          candidateAvatar={selectedCandidate?.userDetail?.avatar}
+          candidateDesignation={selectedCandidate?.internship?.title}
+          candidateEventDate={selectedCandidate?.createdAt}
+        />
+      ),
     },
   ];
   return (

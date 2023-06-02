@@ -1,30 +1,29 @@
 import { useState } from "react";
 import { ThreeDots } from "../../../assets/images";
 import { Dropdown, MenuProps } from "antd";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './CustomSettingDropdown.scss'
 
+
+interface Props {
+  setState?: any,
+  link?: any,
+  state: any,
+  editData?: any,
+  // IdHandler?: any
+}
 export const DropDownForSetting = (props: any) => {
-  const {
-    setState,
-    link,
-    state,
-    editData,
-    SetEditData,
-  } = props
+  const { setState, link, state, editData, IdHandler } = props
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate()
 
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
 
-  const GetEditHandler = (data: number) => {
-    SetEditData(data)
-  }
-
   const editHandler = () => {
-    GetEditHandler({ ...editData, isEdit: "isEdit" });
-    setState({ ...state, isEditModal: true });
+    setState({ ...state, isEditModal: true, editField: editData });
+    // IdHandler(editData?.id);
     setVisible(false);
   }
 
@@ -40,11 +39,11 @@ export const DropDownForSetting = (props: any) => {
         {
           link ?
             <div>
-              <NavLink to={link}
+              <div onClick={() => navigate(link, { state: editData })}
                 className="text-primary-color custom-setting-dropdown-edit-btn font-normal"
               >
                 Edit
-              </NavLink>
+              </div>
             </div>
             :
             <span onClick={editHandler}

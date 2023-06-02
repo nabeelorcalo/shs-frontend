@@ -1,6 +1,10 @@
 @import "../../../../scss/colors";
 
 .manage-vault-main {
+  .ant-table-cell {
+    text-align: center !important;
+  }
+
   .manage-vault-title {
     .manage-vault-title-text {
       font-weight: 600;
@@ -24,6 +28,7 @@
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
     border-radius: 8px;
     color: $white-bg-color;
+
     &:hover {
       border: 1px solid $green-graph-tooltip-color;
       color: $white-bg-color;
@@ -32,12 +37,12 @@
 
   .folder-add-btn {
     height: 48px;
-    width: 100%;
     background: $white-bg-color;
     border: 1px solid $green-graph-tooltip-color;
     box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.016);
     border-radius: 8px;
     color: $green-graph-tooltip-color;
+
     &:hover {
       border: 1px solid $green-graph-tooltip-color;
       color: $green-graph-tooltip-color;
@@ -59,25 +64,29 @@
     gap: 10px;
   }
 }
-.folders-modal{
-  .cancel-btn{
+
+.folders-modal {
+  .cancel-btn {
     border-radius: 8px;
     color: #4A9D77;
     border: 1px solid #4A9D77;
-    &:hover{
+
+    &:hover {
       border: 1px solid #4A9D77;
       color: #4A9D77;
     }
   }
-  .submit-btn{
+
+  .submit-btn {
     background-color: #4A9D77;
     color: #fff;
     border-radius: 8px;
-    &:hover{
+
+    &:hover {
       border: 1px solid #4A9D77;
       background-color: #4A9D77;
       color: #fff;
     }
   }
- 
+
 }

@@ -91,7 +91,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      style={{ backgroundColor: token.colorPrimary }}
+      style={{ backgroundColor: currentTheme.colorPrimary }}
       breakpoint="md"
       onBreakpoint={onBreakpoint}
     >

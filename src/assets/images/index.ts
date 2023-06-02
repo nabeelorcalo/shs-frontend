@@ -169,8 +169,8 @@ export { ReactComponent as TransWhiteSub } from "../images/digivault/manageVault
 export { default as Gallery } from "../images/ColorfullIconsProgressbar/media.svg";
 export { default as Video } from "../images/ColorfullIconsProgressbar/video.svg";
 export { default as SettingIcon } from "../images/ColorfullIconsProgressbar/Settings.svg";
-export {ReactComponent as FileIcon} from "../images/digivault/manageVault/document-icon.svg";
-export {ReactComponent as FolderIcon} from "../images/digivault/manageVault/folder-icon.svg";
+export { ReactComponent as FileIcon } from "../images/digivault/manageVault/document-icon.svg";
+export { ReactComponent as FolderIcon } from "../images/digivault/manageVault/folder-icon.svg";
 //export { default as More } from "../images/ColorfullIconsProgressbar/More.svg";
 export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.svg";
 
@@ -477,6 +477,16 @@ export { ReactComponent as IconUploadLg } from "./recipes/icon-upload-lg.svg";
 export { ReactComponent as DownloadIconWithBg } from "./Performance/DownloadFile.svg";
 export { ReactComponent as ColorLessMedalIcon } from "./Performance/ColorlessMedalIcon.svg";
 export { ReactComponent as TalentBadge } from "./Performance/TalentBadge.svg";
+export { ReactComponent as NeutralGray } from "./Performance/neutral-gray.svg";
+export { ReactComponent as NeutralSelected } from "./Performance/neutral-selected.svg";
+export { ReactComponent as HappyGray } from "./Performance/happy-gray.svg";
+export { ReactComponent as HappySelected } from "./Performance/happy-selected.svg";
+export { ReactComponent as SadGray } from "./Performance/sad-gray.svg";
+export { ReactComponent as SadSelected } from "./Performance/sad-selected.svg";
+export { ReactComponent as AwesomeGray } from "./Performance/awesome-gray.svg";
+export { ReactComponent as AwesomeSelected } from "./Performance/awesome-selected.svg";
+export { ReactComponent as TerribleGray } from "./Performance/terrible-gray.svg";
+export { ReactComponent as TerribleSelected } from "./Performance/terrible-selected.svg";
 
 // export { ReactComponent as Location } from './location.svg';
 export { ReactComponent as Intro } from "./other-imgs/Intro.svg";
@@ -509,6 +519,7 @@ export { ReactComponent as PostedByIcon } from './ViewInternship/PostedByIcon.sv
 export { ReactComponent as SuccessStatus } from '../images/Internships/success-status.svg';
 export { ReactComponent as ClosedStatus } from '../images/Internships/closed-status.svg';
 export { ReactComponent as FullStop } from '../images/Internships/dot.svg';
+export { ReactComponent as InfoAlert } from '../images/Internships/alert.svg';
 
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
@@ -657,3 +668,6 @@ export { ReactComponent as NoData } from '../../assets/images/other-imgs/NoData.
 
 export { ReactComponent as OrcaloLogo } from './Personlization/orcalologo.svg';
 export { ReactComponent as EditPen } from './Personlization/editpen.svg';
+
+// Dreamup dashboard
+export { default as AchivmentIcon } from './AddEventInCalendar/AchivmentIcon.svg';

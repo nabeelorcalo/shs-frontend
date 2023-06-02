@@ -6,13 +6,14 @@ import constants from "../../../config/constants";
 
 export const RegisterMemberAndFeddbackGraph: FC<{
   graphName: string;
-  title?:string,
+  title?: string;
   styling?: any;
+  graphData?: any[];
 }> = (props) => {
-  const { graphName, styling,title } = props;
+  const { graphName, styling, title, graphData } = props;
   const data =
     graphName === constants.REGISTER_MEMBERS
-      ? registerMemeberData
+      ? graphData
       : resolutionFeedbackData;
   const yFields =
     graphName === constants.REGISTER_MEMBERS
@@ -44,7 +45,7 @@ export const RegisterMemberAndFeddbackGraph: FC<{
       },
       line: {
         style: {
-          stroke: 'white',
+          stroke: "white",
         },
       },
       tickLine: null,
@@ -128,7 +129,9 @@ export const RegisterMemberAndFeddbackGraph: FC<{
 
   return (
     <div className="relative">
-    <p className="font-medium text--[20px] leading-[28px] text-secondary-color">{title}</p>
+      <p className="font-medium text--[20px] leading-[28px] text-secondary-color">
+        {title}
+      </p>
       <DualAxes style={styling} {...config} />
     </div>
   );

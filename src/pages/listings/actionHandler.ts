@@ -7,19 +7,12 @@ import { listingsState, listingState } from "../../store";
 const useListingsHook = () => {
   const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [singleListing, setSingleListing] = useRecoilState(listingState)
-  const { GET_AGENT_PROPERTIES, ADD_PROPERTY, GET_PROPERTY, UPDATE_PROPERTY } = endpoints
+  const { GET_AGENT_PROPERTIES, ADD_PROPERTY, GET_PROPERTY, UPDATE_PROPERTY, DELETE_PROPERTY } = endpoints
 
   // Create Agent Property
   const createListing = async (data: any) => {
-    const submitRequest = async(reqBody:any) => {
-      try {
-        const res = await api.post(ADD_PROPERTY, reqBody)
-        return {response: res, error: undefined}
-      } catch (error) {
-        return { response: undefined, error: error };
-      }
-    }
-    return await submitRequest(data)
+    const response = await api.post(ADD_PROPERTY, data, {headers: {'Content-Type': 'multipart/form-data'}})
+    return response
   }
 
   // Update Agent Property
@@ -39,28 +32,47 @@ const useListingsHook = () => {
   const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     const response = await api.get(GET_AGENT_PROPERTIES);
-      if(!response.error) {
-        const { data } = response;
-        setAllProperties(data)
-      }
-      setLoading(false);
+    if(!response.error) {
+      const { data } = response;
+      setAllProperties(data)
+    }
+    setLoading(false);
   }
 
   // Get Single Property
   const getListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const res = await api.get(`${GET_PROPERTY}${id}`)
+    const res:any = await api.get(`${GET_PROPERTY}${id}`)
     if(!res.error) {
-      setSingleListing(res.data)
+      let {data} = res;
+      const attachments = data?.attachments?.map(({
+        mediaUrl: url,
+        ...rest
+        }:any) => ({
+        url,
+        ...rest
+        }));
+      setSingleListing({...data, attachments})
     }
     setLoading(false);
+  }
+
+  // Delete Agent Property
+  const deleteListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    await api.delete(`${DELETE_PROPERTY}${id}`)
+    setLoading(false)
+    setAllProperties(
+      allProperties.filter((property:any) => property.id !== id)
+    )
   }
 
   return {
     createListing,
     getListings,
     getListing,
-    updateListing
+    updateListing,
+    deleteListing
   };
 };
 

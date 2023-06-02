@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, FC } from "react"
 import { Link } from 'react-router-dom'
 import type { DatePickerProps, RadioChangeEvent  } from 'antd'
 import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space } from 'antd'
 import useCollapse from 'react-collapsed';
 import { DatePicker, PopUpModal, ExtendedButton } from "../../../../components"
+import usePropertyHook from "../actionHandler";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { checkPropertyAvailabilityState } from "../../../../store";
 import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif'
 import {
   SaveIcon,
@@ -21,10 +24,20 @@ const cardList = [
   {id: '002', type: 'visa', title: 'Visa', number: '9999888877776666'}
 ]
 
+interface CardProps {
+  propertyId: any
+  rent: any
+  rentFrequency: any
 
-const PropertyPricing = () => {
+}
+
+
+const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const { checkPropertyAvailability } = usePropertyHook();
+  const checkProperty = useRecoilValue(checkPropertyAvailabilityState);
+  const resetCheckAvailabilityState = useResetRecoilState(checkPropertyAvailabilityState);
   const [checkAvailability, setCheckAvailability] = useState(false)
   const [modalDisclaimerOpen, setModalDisclaimerOpen] = useState(false)
   const [modalAddRequestMessageOpen, setModalAddRequestMessageOpen] = useState(false)
@@ -35,16 +48,15 @@ const PropertyPricing = () => {
   const [ isExpanded, setExpanded ] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({isExpanded});
   const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
+  const [loading, setLoading] = useState(false)
 
 
   
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    resetCheckAvailabilityState()
   }, [])
-
-
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -145,7 +157,7 @@ const PropertyPricing = () => {
     <>
       <div className="card-booking-request">
         <div className="booking-request-header">
-          <div className="booking-request-header-title">£700 / <span>month</span></div>
+          <div className="booking-request-header-title">£{rent} / <span>{rentFrequency}</span></div>
           <div className="request-available-from">
             <div className="available-from-text">
               Available From: <span>9 February</span>
@@ -176,7 +188,7 @@ const PropertyPricing = () => {
               <div className="booking-request-general-info">
                 <div className="general-info-message">
                   <span>Total to pay per booking request</span>
-                  {checkAvailability ? (
+                  {checkProperty ? (
                     <div className="disclaimer-modal" onClick={openModalDisclaimer}>
                       <IconInfoCircle />
                     </div>
@@ -191,7 +203,7 @@ const PropertyPricing = () => {
                   )}
                 </div>
                 
-                {checkAvailability ? (
+                {checkProperty ? (
                   <Form.Item name="acceptPolicy">
                     <Checkbox checked={isAcceptPolicy} onChange={onCheckboxChange}>
                       I accept that I have read and understand the information given in <Link to="">disclaimer</Link> and <Link to="">cancelation policy</Link> .
@@ -205,14 +217,14 @@ const PropertyPricing = () => {
               </div>
             </Col>
             <Col xs={24}>
-              {checkAvailability ? (
+              {checkProperty ? (
                 <Form.Item>
-                  <Button type="primary" block htmlType="submit" disabled={!isAcceptPolicy}>
+                  <Button type="primary" block disabled={!isAcceptPolicy}>
                     Send Booking Request
                   </Button>
                 </Form.Item>
               ) : (
-                <Button type="primary" block onClick={handleCheckAvailability}>
+                <Button type="primary" block onClick={() => checkPropertyAvailability({propertyId: propertyId}, setLoading)}>
                   Check Availibility
                 </Button>
               )}

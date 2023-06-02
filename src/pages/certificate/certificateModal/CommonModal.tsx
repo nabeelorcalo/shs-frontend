@@ -10,10 +10,11 @@ interface Props {
     title?: string;
     className?: string;
     children?: ReactNode;
+    footer?:any
 }
 
 const CommonModal = (props: Props) => {
-    const { open, onCancel, width = '700px', title, className, children } = props;
+    const { open, onCancel, width = '700px', title, className, children,footer='' } = props;
     return (
         <Modal
             width={width}
@@ -22,7 +23,7 @@ const CommonModal = (props: Props) => {
             closeIcon={<img src={CloseCircleIcon} />}
             onCancel={onCancel}
             title={<span className='text-xl font-medium'>{title}</span>}
-            footer={''}
+            footer={footer}
         >
             {children}
         </Modal>

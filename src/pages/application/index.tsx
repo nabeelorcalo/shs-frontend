@@ -50,8 +50,6 @@ const Application = () => {
     getApplicationsData(searchValue)
   }, [searchValue])
 
-  console.log('applications data is', applicationsData);
-
 
   const PopOver = ({ state, item }: any) => {
 
@@ -64,11 +62,6 @@ const Application = () => {
             onClick={() => {
               state(true)
               getApplicationsDetails(item?.id)
-              // setState({
-              //   ...state,
-              //   detailsId: item?.id,
-              // })
-
             }}
           >
             View Details
@@ -155,7 +148,6 @@ const Application = () => {
   const newTableData = applicationsData?.map((item: any, index: number) => {
     const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const typeOfWork = item?.internship?.internType?.replace("_", " ").toLowerCase();
-
     return (
       {
         key: index,

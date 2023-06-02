@@ -9,7 +9,21 @@ import apiEndpoints from "../../config/apiEndpoints";
 // import { agent_dashboard_widgets } from "../../store";
 
 // Chat operation and save into store
+const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS } = endpoints;
+const {
+  AGENT,
+  MANAGER,
+  COMPANY_ADMIN,
+  DELEGATE_AGENT,
+  STUDENT,
+  SYSTEM_ADMIN,
+  UNIVERSITY,
+  INTERN,
+} = constants;
 const useCustomHook = () => {
+  const [countingCardData, setCountingCard] = useRecoilState(
+    agentDashboardWidgetsState
+  );
 
   const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
   //user roles
@@ -27,31 +41,33 @@ const useCustomHook = () => {
   
   
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+  //api's endpoints
+
+  // const getData = async (type: string): Promise<any> => {
+  //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  // };
 
   const loadMoreData = () => {
-    fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
+    fetch(
+      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
+    )
       .then((res) => res.json())
       .then((body) => {
-        return body.results
+        return body.results;
       })
-      .catch(() => {
-
-      });
+      .catch(() => {});
   };
 
   // agent dashboard
-  const [countingCardData, setCountingCard] = useRecoilState(agentDashboardWidgetsState);
-
 
   useEffect(() => {
     // agent dashboard
     if (role === AGENT) {
-      api.get(AGENT_DASHBOARD_WIDGETS).then(({ data }) => setCountingCard(data[0]))
+      api
+        .get(AGENT_DASHBOARD_WIDGETS)
+        .then(({ data }) => setCountingCard(data[0]));
     }
-  }, [])
+  }, []);
 
   const verifcationStudentData = async (body: any, query: {
     skip: boolean,
@@ -73,7 +89,6 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
     loadMoreData,
     countingCardData,
     verifcationStudentData,

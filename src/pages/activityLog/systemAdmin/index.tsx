@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Row, Spin } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import { BoxWrapper } from "../../../components";
@@ -61,19 +61,18 @@ const ActivityLog = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [state, setState] = useState<any>({
-    search:'',
+    search: '',
     role: '',
     activity: '',
     performerRole: '',
     dateTime: null,
     active: ''
   });
-  const [pagination, setPagination] = useState(1);
-  const { downloadPdfOrCsv, logDetails, getLogDetails, searchHandler } = useCustomHook();
+  const { loading, downloadPdfOrCsv, logDetails, getLogDetails } = useCustomHook();
 
   useEffect(() => {
-    getLogDetails(state.role)
-  }, [pagination])
+    getLogDetails(state)
+  }, [state.search])
 
   const resetHandler = () => {
     getLogDetails(null)
@@ -117,7 +116,7 @@ const ActivityLog = () => {
                 key={index}
                 className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.role === item && state.active}`}
                 value={item}
-                onClick={() => setState({ ...state, role: item,active:'active' })}>
+                onClick={() => setState({ ...state, role: item, active: 'active' })}>
                 {item?.toLowerCase().replace("_", " ")}
               </button>
             );
@@ -168,7 +167,7 @@ const ActivityLog = () => {
           <Button onClick={resetHandler} className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button onClick={() => getLogDetails(state)} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
+          <Button onClick={() => {getLogDetails(state),setOpenDrawer(false)}} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>
@@ -180,13 +179,11 @@ const ActivityLog = () => {
             Activity Log
           </div>
         </Col>
-
         <Divider />
-
         <Col xs={24} className='logs-content'>
           <Row gutter={[20, 30]}>
             <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={(e: any) => searchHandler(e)} />
+              <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
             </Col>
 
             <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
@@ -199,7 +196,9 @@ const ActivityLog = () => {
             </Col>
             <Col xs={24}>
               <BoxWrapper>
-                <GlobalTable columns={columns} tableData={logsTableData} />
+                {loading ? <Spin className="flex justify-center" /> :
+                  <GlobalTable columns={columns} tableData={logsTableData} />
+                }
               </BoxWrapper>
             </Col>
           </Row>
