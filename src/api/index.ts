@@ -62,10 +62,7 @@ const handleError = async (error: any) => {
 };
 
 const get = (url: any, params = {}, headers = {}) =>
-  axiosInstance
-    .get(url, { headers, params })
-    .then(handleResponse)
-    .catch(handleError);
+  axiosInstance.get(url, { headers, params }).then(handleResponse).catch(handleError);
 
 const post = (url: any, data = {}, config: any = {}) =>
   axiosInstance

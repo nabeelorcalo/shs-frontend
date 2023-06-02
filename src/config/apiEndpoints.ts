@@ -156,5 +156,13 @@ const endpoints = {
   GET_DELEGATE_DASHBOARD: "delegate/dashboard",
   GET_DELEGATE_MEMBERS: "delegate/members",
   SEND_REFERENCE_INVITE: "delegate/invite",
+  GET_CURRENT_BALANCE: "delegate/balance",
+
+  //Payment Gateway
+  LINK_BANK_ACCOUNT: "payment-gateway/account/link",
+  GET_BANK_ACCOUNT_LIST: "payment-gateway/accounts/findAll",
+  UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
+  GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
+  ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 };
 export default endpoints;
