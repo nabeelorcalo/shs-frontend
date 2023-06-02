@@ -98,6 +98,7 @@ const endpoints = {
   // university reports
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
+  UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
 
   //Applications for student
   GET_APPLICATIONS: '/application/listApplications',

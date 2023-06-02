@@ -10,8 +10,13 @@ import { useLocation } from "react-router";
 import dayjs from "dayjs";
 
 const index = () => {
+  useEffect(() => {
+    getSelectedUniversityReportsData({ internId: getParamId(pathname) });
+  }, []);
+
   const { selectedUniversityReportsData, downloadPdfOrCsv, getSelectedUniversityReportsData, isLoading, getParamId } =
     useCustomHook();
+
   const { pathname } = useLocation();
   const overview = selectedUniversityReportsData?.map((obj: any) => ({
     id: obj?.id,
@@ -30,10 +35,6 @@ const index = () => {
   const handleChange = (value: any) => {
     getSelectedUniversityReportsData({ internId: getParamId(pathname), search: value });
   };
-
-  useEffect(() => {
-    getSelectedUniversityReportsData({ internId: getParamId(pathname) });
-  }, []);
 
   return (
     <div className="view-details-university-rep">

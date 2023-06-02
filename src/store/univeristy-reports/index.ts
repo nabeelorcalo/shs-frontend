@@ -14,3 +14,8 @@ export const universityReportsAPICallStatus = atom({
   key: 'universityReportsAPICallStatus',
   default: false
 });
+
+export const universityReportsFiltersData = atom({
+  key: 'universityReportsFiltersData',
+  default: {}
+});
