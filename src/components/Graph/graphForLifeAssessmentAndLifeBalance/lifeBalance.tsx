@@ -1,6 +1,4 @@
-import React from "react";
 import ReactEcharts from "echarts-for-react";
-import data from './data';
 import {
   FinanceIcon,
   RecreationIcon,
@@ -51,55 +49,22 @@ export const LifeBalanceGraph = ({ monthName }: any) => {
     }
   }
 
-  const baseData = [
-    {
-        "month": monthName,
-        "name": "Finance",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Relationship",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Health",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Education",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Development",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Family",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "SocailLife",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Recreation",
-        "value": 0
-    }
-]
+  const baseData = assessmentsName.map(({ name }) => ({
+    month: monthName,
+    name,
+    value: 1,
+  }));
 
   function capitalizeFirstLetter(name: string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
   const setGraphDataSetting = () => {
-    const convertedData =lifeAssesmentData.length > 0 ? Object.entries(lifeAssesmentData[0]).filter(([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt").map(([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value })) : baseData;
+    const convertedData =lifeAssesmentData.length > 0 ? Object.entries(lifeAssesmentData[0]).filter(
+      ([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt"
+    ).map(
+      ([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value: value || 1 })
+    ) : baseData;
     const arr: any = [];
 
     convertedData.map((item)=> {

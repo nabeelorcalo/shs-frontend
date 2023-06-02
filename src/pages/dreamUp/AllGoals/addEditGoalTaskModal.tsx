@@ -8,17 +8,12 @@ import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
 import useCustomHook from '../actionHandler';
 import dayjs from 'dayjs';
-// Leave Request Form Select Oprion Array
 export const AddEditGoalTaskModal = (props: any) => {
 
   const action = useCustomHook();
   const { 
     title,
-    // open, 
-    // setOpenAddEditGoalTask, 
-    goalData, 
-    // initValues, 
-    // setInitValues 
+    goalData,
     state,
     setState
   } = props;
@@ -27,6 +22,16 @@ export const AddEditGoalTaskModal = (props: any) => {
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const dateFormat = 'YYYY/MM/DD';
+
+  useEffect(() => {
+    if(!state.edit) {
+      setState((prevState: any) => ({
+        ...prevState,
+        initValues: {},
+      }));
+    }
+  }, [state.edit]);
+
   const addGoalTaskHandle = async () => {
       const values = await form.validateFields();
       const data = {
@@ -46,8 +51,6 @@ export const AddEditGoalTaskModal = (props: any) => {
         initValues: {},
         openAddGoalTask: false,
       }));
-      // setInitValues({});
-      // setOpenAddEditGoalTask(false);
       form.resetFields();
   };
 
@@ -71,26 +74,15 @@ export const AddEditGoalTaskModal = (props: any) => {
       initValues: {},
       openAddGoalTask: false,
     }));
-    // setInitValues({});
-    // setOpenAddEditGoalTask(false);
     form.resetFields();
 };
 
-  useEffect(() => {
-    if(!state.edit) {
-      setState((prevState: any) => ({
-        ...prevState,
-        initValues: {},
-      }));
-    }
-  }, [state.edit]);
 
   return (
     <Modal
       title={title}
       open={state.openAddGoalTask}
       onCancel={() => {
-        // setInitValues({}); setOpenAddEditGoalTask(false);
         setState((prevState: any) => ({
           ...prevState,
           initValues: {},
@@ -150,8 +142,7 @@ export const AddEditGoalTaskModal = (props: any) => {
             <Button
               className='Leave_request_Canclebtn'
               label="Cancel"
-              onClick={() => { 
-                // setInitValues({}); setOpenAddEditGoalTask(false); 
+              onClick={() => {
                 setState((prevState: any) => ({
                   ...prevState,
                   initValues: {},

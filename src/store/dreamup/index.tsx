@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-// get all applications data
+// get all Goals data
 export const goalsDataState = atom({
   key: "goalsDataState",
   default: [],

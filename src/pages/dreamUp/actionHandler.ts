@@ -6,6 +6,7 @@ import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { goalsDataState,firstGoalState, dashGoalsDataState, barsDataState, lifeAssessmentState } from "../../store";
 import { Notifications } from "../../components";
+import { AchivmentIcon } from "../../assets/images";
 
 
 // Chat operation and save into store
@@ -44,7 +45,7 @@ const useCustomHook = () => {
   };
 
   const getLifeAssessment = async (val?: string) => {
-    const hasValue = {month: val?.toLowerCase() || 'march'} ?? {};
+    const hasValue = {month: val?.toLowerCase()} ?? {};
     const { data } = await api.get(DREAMUP.LIFE_ASSESSMENT, hasValue);
     setLifeAssessment(data);    
   };
@@ -63,7 +64,7 @@ const useCustomHook = () => {
     const { mainGoal } = data;
     const mGoal = {
       content: `${mainGoal[0]?.completedTasks} of ${mainGoal[0]?.totalTasks} tasks completed`,
-      icon: '/src/assets/images/AddEventInCalendar/AchivmentIcon.svg',
+      icon: AchivmentIcon,
       progressbarColor: '#FFC15D',
       progressbarValue: ((mainGoal[0]?.completedTasks/mainGoal[0]?.totalTasks)*100).toFixed(0),
       storage: '128GB',
@@ -72,7 +73,7 @@ const useCustomHook = () => {
     };
     const last = {
       content: `${completedGoal[0]?.completedTasks} of ${completedGoal[0]?.totalTasks} tasks completed`,
-      icon: '/src/assets/images/AddEventInCalendar/AchivmentIcon.svg',
+      icon: AchivmentIcon,
       progressbarColor: '#4A9D77',
       lastAchivmentTime: "1 week ago",
       progressbarValue: ((completedGoal[0]?.completedTasks/completedGoal[0]?.totalTasks)*100).toFixed(0),
@@ -115,7 +116,6 @@ const useCustomHook = () => {
       await getGoalsData();
       Notifications({ title: "Success", description: "Task Updated", type: "success" })
     }
-    console.log(task);
   };
 
   const deleteTask = async (task: {taskId: Number, goalId: Number}) => {
@@ -124,11 +124,9 @@ const useCustomHook = () => {
       await getGoalsData();
       Notifications({ title: "Success", description: "Task Deleted", type: "success" })
     }
-    console.log(task);
   };
 
   const deleteGoal = async (goal: any) => {
-    console.log(goal);
     const { id } = goal
     const { data } = await api.delete(DREAMUP.DELETE_GOAL, {}, {goalId: id});
     if (data) {
@@ -138,7 +136,7 @@ const useCustomHook = () => {
   };
 
   // get application details list 
-  //Search applications 
+  //Search Goals 
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);

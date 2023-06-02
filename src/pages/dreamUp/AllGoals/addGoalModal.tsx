@@ -1,17 +1,13 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
 import { Modal, Form, Row, Col, Input, } from 'antd'
 import { CommonDatePicker } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
-// const { RangePicker } = DatePicker;
-// import { Input } from '../../../components';
 import Checkbox from 'antd/es/checkbox';
 import dayjs from 'dayjs';
 import useCustomHook from '../actionHandler';
-import showNotification from '../../../helpers/showNotification';
-// Leave Request Form Select Oprion Array
 export const SetGoal = (props: any) => {
   const action = useCustomHook();
   const { title, open, setOpenAddGoal, submitAddGoal } = props;
@@ -22,7 +18,6 @@ export const SetGoal = (props: any) => {
   const [form] = Form.useForm();
 
   const addGoalHandle = async () => {
-    // try {
       const values = await form.validateFields();
       values.endDate = dayjs(values.endDate).toISOString().split('T')[0];
       values.startDate = dayjs(values.startDate).toISOString().split('T')[0];
@@ -34,14 +29,11 @@ export const SetGoal = (props: any) => {
         name: values.name,
       }
       setLoading(true);
-      console.log(data, "======================"); 
-      const result = await action.addGoals(data);
+      await action.addGoals(data);
       setDisabled(true)
       setLoading(false);
-      // handleSubmission(result);
       setOpenAddGoal(false);
       form.resetFields()
-    // } catch (errorInfo){ return }
   };
 
   return (
@@ -72,8 +64,6 @@ export const SetGoal = (props: any) => {
             id="01"
             type="text"
             name="name"
-            // value={formVal.goalName} placeholder={"Enter Goal Name"}
-            // onChange={(e: any) => setFormVal({ ...formVal, goalName: e.target.value })}
           />
         </Form.Item>
         <Row gutter={[10, 10]}>
@@ -83,7 +73,6 @@ export const SetGoal = (props: any) => {
                 name="Date Picker1"
                 open={openStartDate}
                 setOpen={setOpenStartDate}
-                // setValue={(e: any) => setFormVal({ ...formVal, startDate: e })}
                 placement={'bottomLeft'}
               />
             </Form.Item>
@@ -94,7 +83,6 @@ export const SetGoal = (props: any) => {
                 name="Date Picker"
                 open={openEndDate}
                 setOpen={setOpenEndDate}
-                // setValue={(e: any) => setFormVal({ ...formVal, endDate: e })}
                 placement={'bottomLeft'}
               />
             </Form.Item>

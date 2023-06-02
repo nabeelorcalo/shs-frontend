@@ -17,7 +17,7 @@ const DreamUp = () => {
   const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
   const [searchValue, setSearchValue] = useState(null);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, data: {} })
-  const [month, setMonth] = useState('March')
+  const [month, setMonth] = useState(new Date().toLocaleDateString('en-us', { month:"long"}))
   
   const navigate = useNavigate();
 
@@ -123,7 +123,7 @@ const DreamUp = () => {
     await action.getBarsData();
   }
   const getLifeAssessment = async (month: any) => {
-    await action.getLifeAssessment(month || '');
+    await action.getLifeAssessment(month || new Date().toLocaleDateString('en-us', { month:"long"}));
   }
   useEffect(() => {
     getGoals(searchValue);
@@ -140,7 +140,6 @@ const DreamUp = () => {
   
   const clickHandler = (event: any) => {
     setMonth(event);
-    console.log(`Change your state ${event}`);
   }
 
   return (

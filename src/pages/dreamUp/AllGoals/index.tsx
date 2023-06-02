@@ -18,9 +18,6 @@ const AllGoals = () => {
   const firstGoalsData: any = useRecoilValue(firstGoalState);
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
-  // const [openAddGoalTask, setOpenAddGoalTask] = useState(false);
-  // const [edit, setEdit] = useState(false);
-  // const [initValues, setInitValues] = useState({});
   const [selectedGoal, setSelectedGoal] = useState<any>(firstGoalsData);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, data: {} })
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
@@ -91,16 +88,12 @@ const AllGoals = () => {
       openAddGoalTask: true,
       taskId: task.id,
     }));
-    // setEdit(true);
-    // setInitValues();
-    // setOpenAddGoalTask(true);
   }
 
   const handleAdd = () => {
     if(!selectedGoal.id){
       Notifications({title: "Warning", description: "Select a goal", type: 'warning' });
     }
-    // setOpenAddGoalTask(true);
     setState((prevState) => ({
       ...prevState,
       edit: false,
@@ -256,10 +249,6 @@ const AllGoals = () => {
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
         goalData={selectedGoal}
-        // initValues= {initValues}
-        // setInitValues= {setInitValues}
-        // setOpenAddEditGoalTask={setOpenAddGoalTask}
-        // open={openAddGoalTask}
         state= {state}
         setState= {setState}
       />

@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { Slider } from 'antd';
 import useCustomHook from '../actionHandler';
-import data from './data';
-import constants from '../../../config/constants';
 import { Finance, Relationship, Health, Education, Development, Family, Social, Recreation } from '../../../assets/images';
 import { lifeAssessmentState } from '../../../store';
 import { useRecoilValue } from 'recoil';
@@ -14,53 +11,20 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
   const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
   const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "SocailLife", "Recreation"];
 
-  const baseData = [
-    {
-        "month": monthName,
-        "name": "Finance",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Relationship",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Health",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Education",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Development",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Family",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "SocailLife",
-        "value": 0
-    },
-    {
-        "month": monthName,
-        "name": "Recreation",
-        "value": 0
-    }
-  ]
+  const baseData = assessmentsName.map((name) => ({
+    month: monthName,
+    name,
+    value: 1,
+  }))
 
   function capitalizeFirstLetter(name: string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
-  const filteredArray = (lifeAssesmentData && lifeAssesmentData.length > 0) ? Object.entries(lifeAssesmentData[0]).filter(([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt").map(([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value })) : baseData;
+  const filteredArray = (lifeAssesmentData && lifeAssesmentData.length > 0) ? Object.entries(lifeAssesmentData[0]).filter(
+    ([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt"
+  ).map(
+    ([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value: value || 1 })
+  ) : baseData;
   const renderIcon = (name: string) => {
     switch (name) {
       case 'Finance':
