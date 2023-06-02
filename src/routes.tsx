@@ -766,8 +766,8 @@ const companyAdminRoutes = [
         element: <CaseStudies />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
         element: <CompanyAdminCaseStudiesAssessment />,
       },
       {
@@ -971,13 +971,13 @@ const companyAdminRoutes = [
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         element: <ViewPerformance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
         element: <EditPerformance />,
       },
       {
@@ -1113,7 +1113,7 @@ const internRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}/:evalId`,
         element: <ViewPerformance />,
       },
       {
@@ -1479,6 +1479,11 @@ const universityRoutes = [
         key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
         path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
         element: <StudentProfileUni />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
       },
       {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,

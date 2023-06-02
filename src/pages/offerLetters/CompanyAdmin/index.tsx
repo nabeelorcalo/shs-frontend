@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu } from "antd";
+import { Row, Col, Menu, Spin } from "antd";
 import {
   NewImg,
   PendingImg,
@@ -21,30 +21,7 @@ import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 
-const ContractsCard = [
-  {
-    img: <NewImg />,
-    title: "New",
-    num: "07",
-  },
-  {
-    img: <PendingImg />,
-    title: "Pending ",
-    num: "03",
-  },
-  {
-    img: <SignedImg />,
-    title: "Signed",
-    num: "05",
-  },
-  {
-    img: <RejectedImg />,
-    title: "Rejected",
-    num: "02",
-  },
-]
-
-const timeFrameDropdownData = ['This week', 'Last week', 'This month', 'Last Month', 'Date Range']
+const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
@@ -55,11 +32,19 @@ const CompanyAdmin = () => {
     datePicker: 'THIS_MONTH'
   })
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const { getOfferLetterList, contractList, searchHandler, deleteOfferLetterHandler } = useCustomHook();
+  const {
+    loading,
+    contractList,
+    offerLetterDashboard,
+    getOfferLetterList,
+    getOfferLetterDashboard,
+    deleteOfferLetterHandler
+  } = useCustomHook();
 
   useEffect(() => {
-    getOfferLetterList(state.status, state.datePicker.toUpperCase().replace(" ", "_"), state.search)
-  }, [])
+    getOfferLetterList(state.status, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
+    getOfferLetterDashboard()
+  }, [state.search])
 
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -250,10 +235,24 @@ const CompanyAdmin = () => {
       }
     )
   })
-  const searchBarHandler = (val: any) => {
-    setState({ ...state, search: val })
-    searchHandler(val, state.status, state.datePicker.toUpperCase().replace(" ", "_"));
+  const dashboardData = offerLetterDashboard?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        title: item.status,
+        num: item.count
+      }
+    )
+  })
+  const statusImageHandler = (status: any) => {
+    switch (status) {
+      case 'NEW': return <NewImg />
+      case 'PENDING': return <PendingImg />
+      case 'REJECTD': return <RejectedImg />
+      case 'SIGNED': return <SignedImg />
+    }
   }
+
   const handleValueStatus = (val: any) => {
     getOfferLetterList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
     setState({ ...state, status: val })
@@ -278,15 +277,17 @@ const CompanyAdmin = () => {
       <PageHeader title="Offer Letters" bordered={true} />
       <Row gutter={[20, 20]}>
         {
-          ContractsCard.map((item) => {
+          dashboardData.map((item: any, index: any) => {
             return (
-              <Col xl={6} lg={12} md={12} xs={24}>
+              <Col xl={6} lg={12} md={12} xs={24} key={index}>
                 <BoxWrapper className="p-6 rounded-[16px] h-[150px]">
-                  <div className="flex">
-                    {item.img}
-                    <div className="flex flex-col items-center pl-4">
-                      <p className=" text-xl font-semibold mt-2 text-primary-color">{item.title}</p>
-                      <div className="text-[38px] font-medium mt-4">{item.num}</div>
+                  <div>
+                    <div className="flex">
+                      {statusImageHandler(item.title)}
+                      <div className="flex flex-col items-center pl-4">
+                        <p className=" text-xl font-semibold mt-2 text-primary-color">{item.title}</p>
+                        <div className="text-[38px] font-medium mt-4">{item.num > 10 ? item.num : `0${item.num}`}</div>
+                      </div>
                     </div>
                   </div>
                 </BoxWrapper>
@@ -298,7 +299,7 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => searchBarHandler(e)} />
+          <SearchBar handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
@@ -319,10 +320,9 @@ const CompanyAdmin = () => {
 
       <div className="mt-4">
         <BoxWrapper>
-          <GlobalTable
-            columns={tableColumns}
-            tableData={newTableData}
-          />
+          {loading ? <Spin className="flex justify-center" /> :
+            <GlobalTable columns={tableColumns} tableData={newTableData} />
+          }
         </BoxWrapper>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { BoxWrapper } from '../../components';
+import { BoxWrapper, Loader } from '../../components';
 import { TopPerformanceCard } from '../TopPerformanceCard';
 import { MonthChanger } from '../MonthChanger';
 import './style.scss';
@@ -9,10 +9,11 @@ interface TopPerformanceProps {
   heading: string,
   data: any,
   action?: boolean,
+  loading?: boolean
 }
 
 export const TopPerformanceList: any = (props: TopPerformanceProps) => {
-  const { heading, data, action = false } = props;
+  const { heading, data, action = false, loading=false } = props;
 
   const [state, setState] = useState({
     currentMonthIndex: dayjs().month(),
@@ -57,22 +58,27 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
           </div>
         }
       </div>
-
-      <div className='performance-cards'>
-        {
-          state.data.map((item: any, idx: any) => {
-            return <TopPerformanceCard
-              avatar={item.avatar}
-              name={item.name}
-              nameClassName="text-sm text-primary-color"
-              profession={item.profession}
-              percentage={item.percentage}
-              isLate={item.isLate}
-              checkInTime={item.checkInTime}
-            />
-          })
-        }
-      </div>
+      {data && data?.length !== 0 &&
+        <div className='performance-cards'>
+          {
+            data.map((item: any, idx: any) => {
+              return <TopPerformanceCard
+                avatar={item.avatar}
+                name={item.userName}
+                nameClassName="text-sm text-primary-color"
+                profession={item.department}
+                percentage={`${Math.round(item.sumOverallRating)}%`}
+                isLate={item.isLate}
+                checkInTime={item.checkInTime}
+              />
+            })
+          }
+        </div>
+      }
+      {loading &&
+        <Loader />
+      }
+      
     </BoxWrapper>
   )
 }

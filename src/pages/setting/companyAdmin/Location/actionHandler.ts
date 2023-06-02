@@ -25,7 +25,7 @@ const useCustomHook = () => {
       address: address,
       street: street,
       town: town,
-      country: 'Pakistan',
+      country: country,
       phoneCode: phoneCode,
       phoneNumber: phoneNumber,
       email
@@ -43,7 +43,7 @@ const useCustomHook = () => {
       address: address,
       street: street,
       town: town,
-      country: 'Pakistan',
+      country: country,
       phoneCode: phoneCode,
       phoneNumber: phoneNumber,
       email

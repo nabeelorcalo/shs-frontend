@@ -2,47 +2,33 @@
 import { useRecoilState } from "recoil";
 import { generalActivityDetails } from "../../store";
 import endpoints from "../../config/apiEndpoints";
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import { useEffect, useMemo } from "react";
-import { debounce } from "lodash";
+import { useState } from "react";
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const [loading, setLoading] = useState(false);
   const { GET_GENERAL_LOG } = endpoints;
   const [logDetails, setLogDetails] = useRecoilState(generalActivityDetails);
-  useEffect(() => {
-    return () => {
-      debouncedResults.cancel();
-    };
-  });
 
   //get activity logs
   const getLogDetails = async (values: any) => {
-    const { role, activity, performerRole, dateTime } = values;
+    setLoading(true)
+    const { search, role, activity, performerRole, dateTime } = values;
     const params = {
+      search: search,
       userRole: role,
       activity: activity,
       performerRole: performerRole,
       date: dateTime
     }
     const { data } = await api.get(GET_GENERAL_LOG, params);
+    setLoading(false)
     setLogDetails(data)
   };
-
-  // search activity logs
-  const searchHandler = async (search: any) => {
-    console.log(search);
-    const { data } = await api.get(GET_GENERAL_LOG, { search: search });
-    setLogDetails(data)
-  };
-
-  const debouncedResults = useMemo(() => {
-    return debounce(searchHandler, 500);
-  }, []);
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -112,10 +98,10 @@ const useCustomHook = () => {
   };
 
   return {
+    loading,
     logDetails,
     getLogDetails,
-    downloadPdfOrCsv,
-    searchHandler
+    downloadPdfOrCsv
   };
 };
 

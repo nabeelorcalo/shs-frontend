@@ -4,14 +4,16 @@ import { Dropdown, MenuProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import './CustomSettingDropdown.scss'
 
+
+interface Props {
+  setState?: any,
+  link?: any,
+  state: any,
+  editData?: any,
+  // IdHandler?: any
+}
 export const DropDownForSetting = (props: any) => {
-  const {
-    setState,
-    link,
-    state,
-    editData,
-    SetEditData,
-  } = props
+  const { setState, link, state, editData, IdHandler } = props
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate()
 
@@ -19,13 +21,9 @@ export const DropDownForSetting = (props: any) => {
     setVisible(visible);
   };
 
-  const GetEditHandler = (data: number) => {
-    SetEditData(data)
-  }
-
   const editHandler = () => {
-    GetEditHandler({ ...editData, isEdit: "isEdit" });
-    setState({ ...state, isEditModal: true,action:'edit' });
+    setState({ ...state, isEditModal: true, editField: editData });
+    // IdHandler(editData?.id);
     setVisible(false);
   }
 

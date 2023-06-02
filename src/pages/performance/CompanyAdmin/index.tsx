@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useRecoilValue } from "recoil";
+import usePerformanceHook from "../actionHandler";
+import { topPerformersState, allPerformanceState } from "../../../store";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
@@ -15,112 +18,31 @@ import { Row, Col } from "antd";
 import "../style.scss";
 
 const CompanyAdminPerformance = () => {
-  const [state, setState] = useState({
-    topPerformanceList: [
-      {
-        id: 0,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 1,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 2,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 3,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 4,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 5,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 6,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 7,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 8,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-    ],
-  });
-
-  const performanceData = [
-    {
-      percent: "85",
-      strokeColor: "#4783FF",
-      title: "Overall",
-    },
-    {
-      percent: "85",
-      strokeColor: "#9BD5E8",
-      title: "Learning",
-    },
-    {
-      percent: "75",
-      strokeColor: "#F08D97",
-      title: "Discipline",
-    },
-    {
-      percent: "68",
-      strokeColor: "#78DAAC",
-      title: "Personal",
-    },
-  ];
-
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const { getTopPerformers, getAllPerformance } = usePerformanceHook();
+  const topPerformers = useRecoilValue(topPerformersState);
+  const allPerformance = useRecoilValue(allPerformanceState);
+  console.log('allPerformanceaaa:: ', allPerformance)
+  const [loadingTopPerformers, setLoadingTopPerformers] = useState(false)
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [month, setMonth] = useState({
     currentMonthIndex: dayjs().month(),
     selectedMonth: dayjs().format("MMM"),
     data: data,
   });
 
+
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getTopPerformers(setLoadingTopPerformers)
+    getAllPerformance(setLoadingAllPerformance, {})
+  }, [])
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   const changeMonth = (event: any) => {
     let btn = event.currentTarget.name;
     let monthIndex = month.currentMonthIndex;
@@ -135,6 +57,46 @@ const CompanyAdminPerformance = () => {
     }));
   };
 
+  const overAllPerformanceData = () => {
+    let overall = 0;
+    let learning = 0;
+    let discipline = 0;
+    let personal = 0;
+    
+    if(allPerformance != null) {
+      for(let i = 0; i < allPerformance?.length; i++  ) {
+        overall += Math.round(allPerformance[i]['sumOverallRating'] / allPerformance.length)
+        learning += Math.round(allPerformance[i]['learningObjectiveRating'] / allPerformance.length)
+        discipline += Math.round(allPerformance[i]['disciplineRating'] / allPerformance.length)
+        personal += Math.round(allPerformance[i]['personalRating'] / allPerformance.length)
+      }
+    }
+    return [
+      {
+        percent: overall,
+        strokeColor: "#4783FF",
+        title: "Overall",
+      },
+      {
+        percent: learning,
+        strokeColor: "#9BD5E8",
+        title: "Learning",
+      },
+      {
+        percent: discipline,
+        strokeColor: "#F08D97",
+        title: "Discipline",
+      },
+      {
+        percent: personal,
+        strokeColor: "#78DAAC",
+        title: "Personal",
+      },
+    ]
+  }
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <>
       <PageHeader actions title="Performance">
@@ -151,11 +113,12 @@ const CompanyAdminPerformance = () => {
             <Col xs={24}>
               <OverAllPerfomance
                 heading="Overall Performance"
-                data={performanceData}
+                data={overAllPerformanceData()}
                 trailColor="#E6F4F9"
                 strokeWidth={10}
                 type="circle"
                 width={100}
+                loading={loadingAllPerformance}
               />
             </Col>
             <Col xs={24}>
@@ -176,7 +139,12 @@ const CompanyAdminPerformance = () => {
           </Row>
         </Col>
         <Col xs={24} md={24} xl={7}>
-          <TopPerformanceList heading="Top Performers" data={state.topPerformanceList} action={true} />
+          <TopPerformanceList
+            heading="Top Performers"
+            data={topPerformers}
+            loading={loadingTopPerformers}
+            action={true} 
+          />
         </Col>
       </Row>
     </>

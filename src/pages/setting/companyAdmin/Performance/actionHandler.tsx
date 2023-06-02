@@ -11,7 +11,7 @@ const usePerformanceCustomHook = () => {
 
   // get setting locations
   const getSettingPerformance = async () => {
-    const params = { page: 1, limit: 10 }
+    const params = { page: 1, limit: 50 }
     const { data } = await api.get(SETTING_PERFORMANCE, params);
     setSettingPerformancedata(data)
   };
@@ -28,23 +28,17 @@ const usePerformanceCustomHook = () => {
     getSettingPerformance()
   }
 
-  // // edit location
-  // const editSettingLocation = async (id: any, values: any) => {
-  //   const { address, country, email, intern, locationName, phoneCode, phoneNumber, postCode, street, town } = values;
-  //   const params = {
-  //     name: locationName,
-  //     postCode: postCode,
-  //     address: address,
-  //     street: street,
-  //     town: town,
-  //     country: 'Pakistan',
-  //     phoneCode: phoneCode,
-  //     phoneNumber: phoneNumber,
-  //     email
-  //   }
-  //   await api.patch(`${LOCATION}/${id}`, params)
-  //   Notifications({ title: 'Success', description: 'Location edited successfully', type: 'success' })
-  // }
+  // // post location
+  const editSettingPerformance = async (state: any, values: any) => {
+    const { questionTitle, pType } = values;
+    const params = {
+      pType: state?.pType,
+      title: questionTitle
+    }
+    await api.patch(`${SETTING_PERFORMANCE}/${state?.id}`, params)
+    Notifications({ title: 'Success', description: 'Performance updated successfully', type: 'success' })
+    getSettingPerformance()
+  }
 
   // delete location
   const deleteSettingPerformance = async (id: number) => {
@@ -58,7 +52,7 @@ const usePerformanceCustomHook = () => {
     getSettingPerformance,
     deleteSettingPerformance,
     postSettingPerformance,
-    // editSettingLocation
+    editSettingPerformance
   };
 };
 

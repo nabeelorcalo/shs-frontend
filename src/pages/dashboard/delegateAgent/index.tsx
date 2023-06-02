@@ -1,15 +1,37 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
-import { CountingCard,FavouritesViewCard,GreetingCard,RegisterMemberAndFeddbackGraph} from "../../../components";
+import {
+  CountingCard,
+  FavouritesViewCard,
+  GreetingCard,
+  RegisterMemberAndFeddbackGraph,
+} from "../../../components";
 import MembersDetails from "./MembersDetails";
 import ShareModal from "../../../components/ShareModal";
 import InvitationModal from "../../../components/InvitationModal";
 import { gutter } from "..";
 import "../style.scss";
+import useCustomHook from "./actionHandler";
 
 const DelegateAgent = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [isShowInvitationModal, setIsShowInvitationModal] = useState<boolean>(false);
+  const [isShowInvitationModal, setIsShowInvitationModal] =
+    useState<boolean>(false);
+  const [invitationalEmail, setInvitationalEmail] = useState<string>("");
+  const {
+    delegateDashboardData: {
+      activeMembers,
+      inactiveMemberBalance,
+      inactiveMembers,
+      currentBalance,
+      graphData,
+      totalMembers,
+      userRes,
+    },
+    delegateMembers,
+    sendInvite,
+    fetchDelegateDashboardData,
+  } = useCustomHook();
 
   const [state, setState] = useState({
     loading: false,
@@ -39,6 +61,7 @@ const DelegateAgent = () => {
   };
 
   useEffect(() => {
+    fetchDelegateDashboardData();
     loadMoreData();
   }, []);
 
@@ -46,20 +69,23 @@ const DelegateAgent = () => {
     <>
       <Row gutter={gutter}>
         <Col xs={24} xxl={12}>
-          <FavouritesViewCard currentBalance={33} inactiveMembersBalance={6} />
+          <FavouritesViewCard
+            currentBalance={currentBalance.toString()}
+            inactiveMembersBalance={JSON.stringify(inactiveMemberBalance ?? 0)}
+          />
         </Col>
         <Col xs={24} xxl={12}>
           <GreetingCard
-            name={"Stephen"}
-            referenceNumber={"DF41331056"}
+            name={(userRes?.firstName || "") + " " + (userRes?.lastName || "")}
+            referenceNumber={userRes?.delegateRef ?? " "}
             handleShareModal={() => setIsShowModal(!isShowModal)}
           />
         </Col>
         <Col xs={24}>
           <CountingCard
-            totalMembers={33}
-            activeMembers={6}
-            inActiveMembers={9}
+            totalMembers={totalMembers.toString()}
+            activeMembers={activeMembers.toString()}
+            inActiveMembers={inactiveMembers.toString()}
             isSeprate={true}
           />
         </Col>
@@ -70,21 +96,33 @@ const DelegateAgent = () => {
               styling={{ height: 468 }}
               graphName="registerMember"
               title="Registered Members"
+              graphData={graphData}
             />
           </div>
         </Col>
         <Col xs={24} xl={12}>
-          <MembersDetails />
+          <MembersDetails membersDetails={delegateMembers} />
         </Col>
       </Row>
       <ShareModal
         isShowModal={isShowModal}
         close={() => setIsShowModal(false)}
-        handleInvitation={()=>setIsShowInvitationModal(true)}
+        handleInvitation={(delegateRef: string, email: string) => {
+          sendInvite(delegateRef, email).then(() => {
+            setInvitationalEmail(email);
+            setIsShowInvitationModal(true);
+          });
+        }}
+        delegateLink={
+          window?.location?.origin +
+            "/signup?referenceNo=" +
+            userRes?.delegateRef ?? ""
+        }
       />
       <InvitationModal
         isShowModal={isShowInvitationModal}
         close={() => setIsShowInvitationModal(false)}
+        email={invitationalEmail}
       />
     </>
   );
