@@ -271,8 +271,8 @@ const Dashboard = () => {
                 />
               </div>
               {loading &&
-                  <Loader />
-                }
+                <Loader />
+              }
             </Col>
             <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">

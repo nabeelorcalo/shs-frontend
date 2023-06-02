@@ -117,8 +117,21 @@ const endpoints = {
   GET_DELEGAE_MEMBERS: '/delegate/members',
   GET_DELEGAE_AGENTS: '/delegate/agents',
   PATCH_DELEGAE_ACCESS: '/delegate/access',
-  SEND_REFERENCE_INVITE: '/delegate/invite',
   GET_DELEGAE_BALANCE: '/delegate/balance',
   GET_DELEGAE_ADMIN_DASHBOARD: '/delegate/admin-dashboard',
+
+  // Dashboard
+  GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
+  GET_DELEGATE_DASHBOARD: "delegate/dashboard",
+  GET_DELEGATE_MEMBERS: "delegate/members",
+  SEND_REFERENCE_INVITE: "delegate/invite",
+  GET_CURRENT_BALANCE: "delegate/balance",
+
+  //Payment Gateway
+  LINK_BANK_ACCOUNT: "payment-gateway/account/link",
+  GET_BANK_ACCOUNT_LIST: "payment-gateway/accounts/findAll",
+  UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
+  GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
+  ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 }
 export default endpoints;

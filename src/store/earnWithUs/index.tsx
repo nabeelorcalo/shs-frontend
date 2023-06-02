@@ -14,3 +14,13 @@ export const delegateDashboardState = atom({
   key: 'delegateDashboardState',
   default: []
 })
+
+export const currentBalanceState = atom({
+  key: 'currentBalanceState',
+  default: []
+})
+
+export const accountsListState = atom({
+  key: 'accountsListState',
+  default: []
+})

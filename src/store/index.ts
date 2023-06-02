@@ -17,4 +17,4 @@ export * from "./Universities";
 export * from "./Performance";
 export * from "./Offers";
 export * from "./Structure";
-export * from "./delegate";
+export * from "./earnWithUs";

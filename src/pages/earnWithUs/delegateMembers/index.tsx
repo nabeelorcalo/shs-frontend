@@ -159,6 +159,7 @@ const DelegateMembers = () => {
                 onChange={handleFilterType}
                 placement="bottomRight"
                 suffixIcon={<IconAngleDown />}
+                popupClassName="dropdown-membaer-type-filter"
               >
                 <Select.Option value="COMPANY_ADMIN">Company Admin</Select.Option>
                 <Select.Option value="COMPANY_MANAGER">Manager</Select.Option>
