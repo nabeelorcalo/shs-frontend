@@ -22,6 +22,14 @@ const CompaniesMain = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [searchValue, setSearchValue] = useState('');
   const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
+
+  const { companiesUniversity, getAllCompaniesData,
+    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
+
+  useEffect(() => {
+    getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
+  }, [searchValue])
+
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
@@ -103,13 +111,6 @@ const CompaniesMain = () => {
       title: "Actions",
     },
   ];
-  const { companiesUniversity, getAllCompaniesData,
-    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
-
-  useEffect(() => {
-    getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
-  }, [searchValue])
-
 
   // handle search companies 
   const debouncedResults = (event: any) => {

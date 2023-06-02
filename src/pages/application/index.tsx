@@ -31,6 +31,7 @@ const ButtonStatus = (props: any) => {
 }
 
 const Application = () => {
+  const mainDrawerWidth = DrawerWidth();
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [searchValue, setSearchValue] = useState('');
@@ -43,10 +44,13 @@ const Application = () => {
   })
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
     "Nature of Work", "Position", "Status"]
-  const mainDrawerWidth = DrawerWidth();
 
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
+
+  useEffect(() => {
+    getApplicationsData(searchValue)
+  }, [searchValue])
 
   const PopOver = ({ state, item }: any) => {
     const items: MenuProps["items"] = [
@@ -186,9 +190,7 @@ const Application = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  useEffect(() => {
-    getApplicationsData(searchValue)
-  }, [searchValue])
+
 
   return (
     <>
