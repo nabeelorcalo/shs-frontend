@@ -1,18 +1,23 @@
-import React from "react";
-import { Button, Upload, Col, Form, Row, Typography } from "antd";
+import React, { useState } from "react";
+import { Button, Upload, Col, Form, Row, Typography, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
 import "../../../styles.scss";
+import useCustomHook from "../../../actionHandler";
 
 const Video = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const navigate = useNavigate();
-  const normFile = (e: any) => {
-    console.log("Upload event:", e);
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
+  const [selectedVideo, setSelectedVideo] = useState({});
+  const handleVideoUpload = (event: any) => {
+    const file = event.target.files[0];
+    setSelectedVideo(file);
+  };
+  const action = useCustomHook();
+  const onFinish = (values: any) => {
+    console.log("Video", selectedVideo);
+    // action.verifcationStudent({selectedVideo, currentStep});
+    setCurrentStep(7);
   };
 
   return (
@@ -30,7 +35,8 @@ const Video = (props: any) => {
                   <BackButton
                     onClick={() => {
                       setCurrentStep(6);
-                    }} />
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Video</Typography.Title>
@@ -56,50 +62,50 @@ const Video = (props: any) => {
               </ul>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                name="upload"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                className="flex justify-center mt-10"
+              <Form
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
               >
-                <Upload name="logo" action="/upload.do" listType="picture">
-                  <div className="main-box-video">
-                    <div className="secondary-box-div">
-                      <div className="inner-box-video">
-                        
-                        <Round />
-                      </div>
-                    </div>
-                  </div>
-                </Upload>
-              </Form.Item>
-              <Row gutter={[10, 10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    onClick={() => {
-                      navigate('/')
-                    }}
-                    className="btn-cancel btn-cancel-verification"
-                  //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                  <Form.Item>
+                <Form.Item
+                  name="introVideo"
+                  className="flex justify-center mt-10"
+                >
+                  <Input
+                    type="file"
+                    accept="video/*"
+                    onChange={handleVideoUpload}
+                  />
+                  <Button>Select Video</Button>
+                  {/* </Upload> */}
+                </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       onClick={() => {
-                        navigate('/')
+                        navigate("/");
                       }}
-                      type="primary"
-                      htmlType="submit"
-                      className="login-form-button"
+                      className="btn-cancel btn-cancel-verification"
+                    //htmlType="submit"
                     >
-                      Next
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

@@ -3,8 +3,9 @@ import { DocumentUpload } from '../../assets/images'
 import SelectedUploadCard from '../SelectedUploadCard'
 import './style.scss'
 
-export const DragAndDropUpload = () => {
-  const [files, setFiles] = useState([])
+export const DragAndDropUpload = (props: any) => {
+  const { setFiles, files } = props
+  console.log(files,'files')
   const inputRef: any = useRef();
   const handleDragOver = (event: any) => {
     event.preventDefault()
@@ -14,7 +15,6 @@ export const DragAndDropUpload = () => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files[0]))
   }
-  console.log(files);
   
   return (
     <>
@@ -28,7 +28,11 @@ export const DragAndDropUpload = () => {
             onClick={() => { inputRef.current.click() }}>Browse</span></p>
           <p className="text-sm text-center font-normal text-success-placeholder-color">Support jpeg,pdf and doc files</p>
           <input type="file" ref={inputRef} multiple hidden
-            onChange={(event: any) => { setFiles(Array.from(event.target.files)) }} />
+            onChange={(event: any) => {
+              setFiles(Array.from(event.target.files))
+            console.log(Array.from(event.target.files),'ffffflklkl')
+            
+            }} />
         </div>
       </div>
       {

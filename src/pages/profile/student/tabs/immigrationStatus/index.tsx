@@ -197,7 +197,7 @@ const ImmigrationStatus = () => {
                   }}
                 >
                   <img src={cross} alt="" />
-                  <Typography>Have share code!</Typography>
+                  <Typography>Don't have share code!</Typography>
                 </center>
               </div>
             </Col>

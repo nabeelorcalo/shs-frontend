@@ -19,6 +19,7 @@ const UniveristyMain = () => {
   useEffect(() => {
     action.getSubAdminUniversity();
   }, [])
+
   const handleChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
   };
@@ -94,7 +95,6 @@ const UniveristyMain = () => {
       key: "address",
       title: "Address",
     },
-
     {
       dataIndex: "status",
       render: (_: any, item: any) => (

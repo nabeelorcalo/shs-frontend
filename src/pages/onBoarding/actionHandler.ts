@@ -26,8 +26,13 @@ const useCustomHook = () => {
     }
     return data;
   };
-  const verifcationStudent = async (body: any): Promise<any> => {
-    const { data } = await api.post(VERIIFCATION_STUDENT, body);
+  const verifcationStudent = async (body: any, query: {
+    skip: boolean,
+    step:number
+  }): Promise<any> => {
+    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
     return data;
   };
 

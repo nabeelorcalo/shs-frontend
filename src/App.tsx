@@ -30,7 +30,9 @@ function App() {
     } else if (
       !accessToken &&
       pathname != `/${ROUTES_CONSTANTS.SIGNUP}` &&
-      pathname != `/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`
+      pathname != `/${ROUTES_CONSTANTS.VERIFICATION_STEPS}` && 
+      pathname != `/${ROUTES_CONSTANTS.FORGOT_PASSWORD}` && 
+      pathname != `/${ROUTES_CONSTANTS.RESET_LINK_SENT}`
     ) {
       navigate(`/${ROUTES_CONSTANTS.LOGIN}`)
     }

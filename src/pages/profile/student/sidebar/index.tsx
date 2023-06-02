@@ -1,20 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Typography } from "antd";
 import '../../style.scss';
 import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../../assets/images/profile/student/Vedio.svg";
+import { useRecoilState } from "recoil";
+import { studentProfileState } from "../../../../store";
+import useCustomHook from "../../actionHandler";
+import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
 
 const StudentSideBar = (props: any) => {
+  const action = useCustomHook();
   const { setShowSideViewType } = props;
   const [actionBox, setActionBox] = useState(false);
+  const studentInformation = useRecoilState<any>(studentProfileState);
+
+  console.log(studentInformation,'personalInformation')
+
+  useEffect(() => {
+    action.getStudentProfile(44);
+  },[])
 
   return (
     <div className="student-side-bar">
       <div className="main-student-side-bar">
-        {profileInfo.map((item, index) => {
-          return (
-            <>
               <div className="profile-main-detail">
                 <div className="flex justify-end relative">
                   <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
@@ -40,34 +49,36 @@ const StudentSideBar = (props: any) => {
                   )}
                 </div>
                 <center>
-                  <img src={item.profile} alt="" />
+                  <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`} alt="" width={100} />
                   <div>
-                    <Typography className="emp-name">{item.name}</Typography>
+                    <Typography className="emp-name">{studentInformation[0]?.user?.firstName} {studentInformation[0]?.user?.lastName}</Typography>
                     <Typography className="emp-desgination">
-                      {item.designation}
+                      {studentInformation[0]?.general?.userUniversity}
                     </Typography>
-                    <Typography className="emp-role">{item.role}</Typography>
+                    <Typography className="emp-role">{studentInformation[0]?.user?.role}</Typography>
                   </div>
                 </center>
               </div>
               <Divider />
+              {/* email info */}
               <div className="social-info">
                 <div className="social-icon flex items-center mt-3">
-                  <img src={item.iconEmail} alt="" />
-                  <Typography className="emp-social">{item.email}</Typography>
+                  <IconEmail/>
+                  <Typography className="emp-social">{studentInformation[0]?.user?.email}</Typography>
                 </div>
                 <div className="social-icon flex items-center mt-3">
-                  <img src={item.iconPhone} alt="" />
-                  <Typography className="emp-social">{item.phone}</Typography>
+                  <IconPhone/>
+                <Typography className="emp-social">{studentInformation[0]?.user?.phoneCode} {studentInformation[0]?.user?.phoneNumber}</Typography>
                 </div>
                 <div className="social-icon flex items-center mt-3 mb-1">
-                  <img src={item.iconLocation} alt="" />
+                  <IconLocation/>
                   <Typography className="emp-social">
-                    {item.location}
+                    {studentInformation[0]?.user?.address}
                   </Typography>
                 </div>
               </div>
               <Divider />
+              {/* skills */}
               <div className="ml-5 mb-3">
                 <Typography className="emp-name">Skills</Typography>
               </div>
@@ -79,12 +90,12 @@ const StudentSideBar = (props: any) => {
                 >
                   <PlusOutlined /> Add
                 </Button>
-                {item.skills.map((item, index) => {
+                {studentInformation[0]?.personal?.skills.map((item:any, index:any) => {
                   return (
                     <>
                       <div className="skill-box">
-                        <Typography className="skills-typography">
-                          {item.skill}
+                        <Typography className="skills-typography pl-2 pr-2">
+                          {item}
                         </Typography>
                       </div>
                     </>
@@ -119,9 +130,6 @@ const StudentSideBar = (props: any) => {
               >
                 Change Password
               </p>
-            </>
-          );
-        })}
       </div>
     </div>
   );

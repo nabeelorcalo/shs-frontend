@@ -6,18 +6,29 @@ import {
   Input,
   Row,
   Typography,
+  Select
 } from "antd";
 import { SHSLogo, BackButton } from "../../../../../assets/images";
-import type { SelectProps } from "antd";
 import { CommonDatePicker, DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
+import useCustomHook from "../../../actionHandler";
 
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [universityApproval, setUniversityApproval] = useState([])
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState<SelectProps["options"]>([]);
   const [value, setValue] = useState<string>();
   const [searchValue, setSearchValue] = useState("");
+  const action = useCustomHook();
+
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+  const onFinish = (values: any) => {
+    console.log('uni  : ', values)
+    //  action.verifcationStudent({values,currentStep})
+    setCurrentStep(4);
+  }
 
   return (
     <div className="university-detail">
@@ -33,7 +44,7 @@ const UniversityDetails = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                        setCurrentStep(2);
+                      setCurrentStep(2);
                     }}
                   />
                 </div>
@@ -48,128 +59,131 @@ const UniversityDetails = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                label="University"
-                name="UniversityDocument"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please University Valid Document!",
-                  },
-                ]}
-                style={{ width: "100%", marginBottom: "20px" }}
+              <Form
+                layout='vertical'
+                name='normal_login'
+                className='login-form'
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
               >
-                <DropDown
-                  name="Search  University"
-                  value={value}
-                  options={["search", "item 1"]}
-                  setValue={setValue}
-                  requireSearchBar
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                />
-              </Form.Item>
-              <Form.Item
-                name="Course"
-                label="Course"
-                rules={[{ required: true, message: "Please select Course!" }]}
-              >
-                <DropDown
-                  name="Enter Course Name"
-                  value={value}
-                  options={["search", "item 1"]}
-                  setValue={setValue}
-                  requireSearchBar
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                />
-              </Form.Item>
-              <Form.Item
-                label="University Email"
-                name="University Email"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your University Email!",
-                  },
-                ]}
-                style={{ width: "100%" }}
-              >
-                <Input placeholder="University Email" className="input-style" />
-              </Form.Item>
-              <Form.Item
-                name="Graduation Year"
-                label="Graduation Year"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please select Graduation Year!",
-                  },
-                ]}
-              >
-                <DropDown
-                  name="Select"
-                  value={value}
-                  options={["search", "item 1"]}
-                  setValue={setValue}
-                  requireSearchBar
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                />
-              </Form.Item>
-              <Row gutter={10}>
-                <Col xxl={12} xl={12} lg={12} md={12} xs={24}>
-                  <Form.Item label="Internship Start Date">
-                    <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
-                  </Form.Item></Col>
-                <Col xxl={12} xl={12} lg={12} md={12} xs={24}>
-                  <Form.Item label="Internship End Date">
-                    <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Form.Item
-                label="Univeristy Approval"
-                name="uploadDocument"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Upload Valid Document!",
-                  },
-                ]}
-                style={{ width: "100%", marginBottom: "20px" }}
-              >
-                <div className="dragger">
-                  <DragAndDropUpload />
-                </div>
-              </Form.Item>
-              <Row gutter={[10, 10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    onClick={() => {
-                      setCurrentStep(4);
-                    }}
-                    className="btn-cancel btn-cancel-verification"
-                  //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                  <Form.Item>
+
+                <Form.Item
+                  label="University"
+                  name="universityName"
+                  rules={[
+                    {
+                      required: false,
+                      message: "Please University Valid Document!",
+                    },
+                  ]}
+                  style={{ width: "100%", marginBottom: "20px" }}
+                >
+                  <DropDown
+                    name="Search  University"
+                    value={value}
+                    options={["search", "item 1"]}
+                    setValue={setValue}
+                    requireSearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                  />
+                </Form.Item>
+                <Form.Item
+                  name="course"
+                  label="Course"
+                  rules={[{ required: true, message: "Please select Course!" }]}
+                >
+                  <Select
+                    onChange={handleChange}
+                    options={[
+                      { value: '3DInteractionDesigninVirtualReality', label: '3D Interaction Design in Virtual Reality' },
+                      { value: 'AccountingandFinance', label: 'Accounting and Finance' },
+                      { value: 'AppliedPublicHistory', label: 'Applied Public History' },
+                      { value: 'DependentonWorkPermit', label: 'Dependent on Work Permit' },
+                      { value: 'ArtHistoryCuratorship&RenaissanceCulture', label: 'Art History, Curatorship & Renaissance Culture' },
+                      { value: 'BankingandFinance', label: 'Banking and Finance' },
+                      { value: 'BrandManagement', label: 'Brand Management' },
+                    ]}
+                  />
+                </Form.Item>
+                <Form.Item
+                  label="University Email"
+                  name="universityMail"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your University Email!",
+                    },
+                  ]}
+                  style={{ width: "100%" }}
+                >
+                  <Input placeholder="University Email" className="input-style" />
+                </Form.Item>
+                <Form.Item
+                  name="graduationYear"
+                  label="Graduation Year"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select Graduation Year!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Enter Graduation Year" className="input-style" />
+                </Form.Item>
+                <Row gutter={10}>
+                  <Col xxl={12} xl={12} lg={12} md={12} xs={24}>
+                    <Form.Item name="internshipStartDate" label="Internship Start Date">
+                      <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
+                    </Form.Item></Col>
+                  <Col xxl={12} xl={12} lg={12} md={12} xs={24}>
+                    <Form.Item name='internshipEndDate' label="Internship End Date">
+                      <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Form.Item
+                  label="Univeristy Approval"
+                  name="uniApproval"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Upload Valid Document!",
+                    },
+                  ]}
+                  style={{ width: "100%", marginBottom: "20px" }}
+                >
+                  <div className="dragger">
+                    <DragAndDropUpload
+                      files={universityApproval}
+                      setFiles={setUniversityApproval} />
+                  </div>
+                </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       onClick={() => {
                         setCurrentStep(4);
                       }}
-                      type="primary"
-                      //htmlType="submit"
-                      className="login-form-button"
+                      className="btn-cancel btn-cancel-verification"
+                    //htmlType="submit"
                     >
-                      Next
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

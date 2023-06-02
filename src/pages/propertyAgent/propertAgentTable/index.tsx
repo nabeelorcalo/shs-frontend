@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Menu, Form, Space, Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal } from "../../../components";
@@ -8,62 +8,25 @@ import "../style.scss";
 import { WarningIcon } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-
-const tableData = [
-  {
-    Actions: (
-      <div>
-        <EllipsisOutlined />
-      </div>
-    ),
-    Publishedlisting: "08",
-    status: "Active",
-    company: "kljdasfhuasd",
-    Email: "michael.mitc@example.com",
-    no: "01",
-    PhoneNumber: "070 3397 6621 ",
-    Agent: "Jenny Wilson",
-  },
-  {
-    Actions: (
-      <span>
-        <EllipsisOutlined />
-      </span>
-    ),
-    Publishedlisting: "08",
-    status: "Active",
-    company: "kljdasfhuasd",
-    PhoneNumber: "070 3397 6621 ",
-    Email: "jackson.graham@example.com",
-    no: "01",
-    Agent: "Jenny Wilson",
-  },
-  {
-    Actions: (
-      <div>
-        <EllipsisOutlined />
-      </div>
-    ),
-    Publishedlisting: "08",
-    status: "Inactive",
-    company: "kljdasfhuasd",
-    PhoneNumber: "070 3397 6621 ",
-    Email: "jackson.graham@example.com",
-    no: "01",
-    Agent: "Jenny Wilson",
-  },
-];
+import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { getPropertyAgentState } from "../../../store/getListingState";
 
 const PropertyAgentTable = () => {
+  const action = useCustomHook();
+  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const navigate = useNavigate();
   const [state, setState] = useState({
     openDrawer: false,
     open: false,
   })
   const { openDrawer, open } = state
-
   const [value, setValue] = useState("")
   const searchValue = () => { };
+
+  useEffect(() => {
+    action.getPropertyAgents();
+  }, []);
 
   const handleChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
@@ -71,47 +34,72 @@ const PropertyAgentTable = () => {
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "No",
     },
     {
       dataIndex: "Agent",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.firstName} {item?.lastName}
+        </div>
+      ),
       key: "Agent",
       title: "Agent",
     },
     {
       dataIndex: "Email",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.email}
+        </div>
+      ),
       key: "Email",
       title: "Email",
     },
     {
       dataIndex: "PhoneNumber",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.phoneNumber}
+        </div>
+      ),
       key: "PhoneNumber",
       title: "Phone Number",
     },
     {
       dataIndex: "Publishedlisting",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.counts}
+        </div>
+      ),
       key: "Publishedlisting",
       title: "Published listing",
     },
     {
       dataIndex: "status",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
           className="table-status-style text-center white-color rounded"
           style={{
             backgroundColor:
-              data.status === "Pending"
+              item?.status === "Pending"
                 ? "#FFC15D"
-                : data.status === "Active"
+                : item?.status === "ACTIVE"
                   ? "#3DC475"
-                  : data.status === "Inactive"
+                  : item?.status === "InActive"
                     ? "#D83A52"
                     : "",
             padding: " 2px 3px 2px 3px",
           }}
         >
-          {data.status}
+          {item?.status}
         </div>
       ),
       key: "status",
@@ -205,7 +193,7 @@ const PropertyAgentTable = () => {
             </div>
           </Col>
           <Col xs={24}>
-            <GlobalTable tableData={tableData} columns={columns} pagination={false} />
+            <GlobalTable tableData={agentsData[0]} columns={columns} pagination={false} />
           </Col>
         </Row>
       </div>

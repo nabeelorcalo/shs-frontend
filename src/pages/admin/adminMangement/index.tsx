@@ -111,7 +111,7 @@ const AdminManagement = () => {
   };
 
   useEffect(() => {
-    action.getSubAdminSUPERADMIN(1, "2023-03-29");
+    action.getSubAdminSUPERADMIN(1, "2023-05-31");
   }, []);
 
   const handleChangeSelect = (value: string) => {

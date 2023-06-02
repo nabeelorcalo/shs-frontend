@@ -6,12 +6,12 @@ import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import { useRecoilState } from "recoil";
 import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
 import useCustomHook from "../../actionHandler";
+import dayjs from "dayjs";
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
-  console.log(withDrawalAmount,'><><><><><');
   
   useEffect(() => {
     action.getWithDrawalRequestData(1);
@@ -22,53 +22,84 @@ const WithDrawalRequest = () => {
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "No.",
     },
     {
       dataIndex: "bankName",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.bankName}
+        </div>
+      ),
       key: "bankName",
       title: "Bank Name",
     },
     {
       dataIndex: "datetime",
+      render: (_: any, item: any) => (
+        <div>
+          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a')}
+        </div>
+      ),
       key: "datetime",
       title: "Date/Time",
     },
     {
       dataIndex: "transactionId",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.transactionId}
+        </div>
+      ),
       key: "transactionId",
       title: "Transaction Id",
     },
     {
       dataIndex: "amount",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.amount} GBP
+        </div>
+      ),
       key: "amount",
       title: "Amount",
     },
 
     {
       dataIndex: "Fee",
+      render: (_: any, item: any) => (
+        <div>
+          £ {item?.fee}
+        </div>
+      ),
       key: "Fee",
       title: "Fee",
     },
     {
       dataIndex: "status",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
           className="table-status-style text-center white-color rounded"
           style={{
             backgroundColor:
-              data.status === "Pending"
+              item?.status === "pending"
                 ? "#FFC15D"
-                : data.status === "Completed"
+                : item?.status === "completed"
                   ? "#3DC475"
-                  : data.status === "Rejected"
+                  : item?.status === "rejected"
                     ? "#D83A52"
                     : "",
             padding: " 2px 3px 2px 3px",
+            textTransform:"capitalize"
           }}
         >
-          {data.status}
+          {item?.status}
         </div>
       ),
       key: "status",

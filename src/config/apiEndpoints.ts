@@ -19,7 +19,7 @@ const endpoints = {
   CHANGEPASSWORD: '/auth/change-password',
   FORGOTPASSWORD: '/auth/forgot-password',
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
-  VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
+  VERIIFCATION_STUDENT: "/student/signup-stepper",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
   PROPERTY_Get_TOTAL_AGENTS: "/property/get-property-agents",
@@ -80,5 +80,13 @@ const endpoints = {
   ADMIN_SUB_ADMIN_SYSTEM_ADMIN: '/sys_admin/get-sub-admin',
   ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
   GET_DELEGATE_ADMIN_DASHBOARD:"/delegate/admin-dashboard",
+  GET_DELEGATE_AGENTS_DASHBOARD: "/delegate/agents",
+  ADD_DELEGATE_REWARDS:"/reward/add",
+  GET_PROPERTY_AGENTS:"/property/get-all-property-agents",
+  GET_ALL_REWARD_DATA: "/reward/findAll",
+  REFRESH_TOKEN: "/auth/refresh-token",
+  STUDENT_PROFILE: "/student/profile",
+  GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
+  STUDENT_PROFILE_COMPLETION:"/student/profile-completion",
 }
 export default endpoints;

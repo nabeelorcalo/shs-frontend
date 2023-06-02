@@ -4,96 +4,107 @@ import { Notifications } from "../components";
 
 const baseURL = constants.APP_URL;
 
+const accessToken = localStorage.getItem("accessToken");
 const defaultHeaders = {
   "Content-Type": "application/json",
-  // Authorization: 'Bearer ' + accessToken,
+  Authorization: 'Bearer ' + accessToken,
 };
 const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
 });
 
-axiosInstance.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      config.headers.Authorization = "Bearer " + accessToken;
-    }
-    return config;
-  },
-  function (error) {
-    if (error.response?.status === 401) {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        localStorage.removeItem("accessToken");
-        Notifications({ title: "Error", description: "Session expired", type: "error" });
-        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
-      }
-    }
-    return Promise.reject(error);
-  }
-);
+// axiosInstance.interceptors.request.use(
+//   function (config) {
+//     // Do something before request is sent
+//     const accessToken = localStorage.getItem("accessToken");
+//     if (accessToken) {
+//       config.headers.Authorization = "Bearer " + accessToken;
+//     }
+//     return config;
+//   },
+//   function (error) {
+//     if (error.response?.status === 401) {
+//       const accessToken = localStorage.getItem("accessToken");
+//       if (accessToken) {
+//         localStorage.removeItem("accessToken");
+//         Notifications({ title: "Error", description: "Session expired", type: "error" });
+//         window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 // shoeb code testing
 
-//  axios.interceptors.response.use(
-//    (response) => response,
+ axios.interceptors.response.use(
+   (response) => {
+     console.log("in response")
+     console.log("response",response)
+     return response
+   },
+   
 
-//    async (error) => {
-//      const { config: originalReq, response } = error;
+   async (error) => {
+    console.log("in error")
+    console.log("in error",error)
 
-//      const rememberMe = localStorage.getItem("isrememberme");
+     const { config: originalReq, response } = error;
 
-//      const token = localStorage.getItem("accessToken");
+     const rememberMe = localStorage.getItem("isrememberme");
 
-//      if (
-//        token &&
-//        originalReq.url !== `${'/auth/refresh-token'}` &&
-//        !originalReq.isRetryAttempt &&
-//        response &&
-//        response.status === 401 &&
-//        rememberMe === "true"
+     const token = localStorage.getItem("accessToken");
+
+     if (
+       token &&
+       originalReq.url !== `${'/auth/refresh-token'}` &&
+       !originalReq.isRetryAttempt &&
+       response &&
+       response.status === 401 &&
+       rememberMe === "true"
+      
+     ) 
+     {
        
-//      ) {
-//        const refreshToken = localStorage.getItem("refreshToken") ?? "";
-//        const  cognitoId  = localStorage.getItem('cognitoId');
-//        try {
-//          originalReq.isRetryAttempt = true;
-//          const response = await axios.post(
-//            `${baseURL}/${'/auth/refresh-token'}`,
-//            { username: cognitoId, refreshToken: refreshToken }
-//          );
-//          localStorage.setItem("accessToken",response?.data?.data?.accessToken);
-//          originalReq.headers[
-//            "Authorization"
-//          ] = `Bearer ${response.data.data.accessToken}`;
-//          return await axios(originalReq);
-//        } catch (e: any) {
-//          if (
-//            (e.response && e.response.status === 401) ||
-//            e.response?.data?.message === "token_refresh_error"
-//          ) {
-//            window.localStorage.clear();
+       const refreshToken = localStorage.getItem("refreshToken") ?? "";
+       const  cognitoId  = localStorage.getItem('cognitoId');
+       try {
+         originalReq.isRetryAttempt = true;
+         const response = await axios.post(
+           `${baseURL}/${'/auth/refresh-token'}`,
+           { username: cognitoId, refreshToken: refreshToken }
+         );
+         localStorage.setItem("accessToken",response?.data?.data?.accessToken);
+         originalReq.headers[
+           "Authorization"
+         ] = `Bearer ${response.data.data.accessToken}`;
+         return await axios(originalReq);
+       } catch (e: any) {
+         if (
+           (e.response && e.response.status === 401) ||
+           e.response?.data?.message === "token_refresh_error"
+         ) {
+           window.localStorage.clear();
+           return  window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
+         }
+         throw e;
+       }
+     } else {
+       console.log(response?.data?.message,'ddddddddd')
+       if (
+         response?.data?.message?.includes('Token expired')  ||
+         (response && response.status === 401)
+       ) {
+         window.localStorage.clear();
 
-//            return  window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
-//          }
-//          throw e;
-//        }
-//      } else {
-//        if (
-//          response?.data?.message === "token_decode_unauthorized" ||
-//          (response && response.status === 401)
-//        ) {
-//          window.localStorage.clear();
+         return  window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;;
+       }
 
-//          return  window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;;
-//        }
-
-//        throw error;
-//      }
-//    }
-//  );
+       throw error;
+     }
+   }
+ );
 
 
 
@@ -170,6 +181,8 @@ axiosInstance.interceptors.request.use(
 // end new
 
 const handleResponse = async (response: any) => await response.data;
+console.log("handleResponse",handleResponse);
+
 const handleError = async (error: any) => {
   let errorMessage;
   if (error?.response) {

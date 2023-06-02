@@ -27,8 +27,8 @@ const PropertyDetail = () => {
   const locate = useLocation();
   const status = location.pathname.split("/");
   const recentList = useRecoilState<any>(getRecentListingState);
-  console.log(recentList, "<===jjjjj===");
   const recentlists = recentList[0].filter((item: any) => item.id == params.id);
+
   useEffect(() => {
     action.getRecentListing();
   }, []);
@@ -68,11 +68,10 @@ const PropertyDetail = () => {
                   status[2] === "published"
                     ? "#3DC575"
                     : status[2] === "rejected"
-                    ? "#D83A52"
-                    : status[2] === "pending"
-                    ? "#FFC15D"
-                    : "",
-
+                      ? "#D83A52"
+                      : status[2] === "pending"
+                        ? "#FFC15D"
+                        : "",
                 width: "82px",
                 padding: "2px 5px 5px 2px",
               }}
@@ -101,8 +100,10 @@ const PropertyDetail = () => {
                       <img
                         src={
                           item?.user?.profileImage
-                            ? `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
-                            : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                            ?
+                            `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
+                            :
+                            "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         }
                         alt=""
                         style={{ width: "100px", padding: "1rem" }}

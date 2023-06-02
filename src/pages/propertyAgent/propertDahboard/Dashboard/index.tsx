@@ -8,6 +8,7 @@ import { Approved, Clip, Pending, People, Reject } from "../../../../assets/imag
 import "../../style.scss";
 import { useRecoilState } from "recoil";
 import {
+  getListingGraphState,
   getListingState,
   getPropertAgents,
   getRecentListingState
@@ -17,19 +18,20 @@ import { getRecentActivities } from "../../../../store/getListingState";
 
 const MainDashboard = () => {
   const navigate = useNavigate();
-  const action = useCustomHook();
+  const {getAllStatsGraph,getStatGraph,propertgetlistingstata,generalActivityData,propertGetTotalAgents,getRecentListing}  = useCustomHook();
   const propertyData = useRecoilState<any>(getListingState);
   const totalAgent = useRecoilState<any>(getPropertAgents);
   const recentList = useRecoilState<any>(getRecentListingState);
-  const recentActivity = useRecoilState<any>(getRecentActivities)
+  const recentActivity = useRecoilState<any>(getRecentActivities);
+  const graphStats = useRecoilState<any>(getListingGraphState);
+//  console.log(graphStats,"><><><>>graph data<<><><<>")
 
-  console.log(recentList,'gggggg')
-  
   useEffect(() => {
-    action.propertgetlistingstata();
-    action.propertGetTotalAgents();
-    action.getRecentListing();
-    action.generalActivityData();
+    propertgetlistingstata();
+    propertGetTotalAgents();
+  getRecentListing();
+    generalActivityData();
+    getAllStatsGraph();   
   }, [])
 
   return (
@@ -157,12 +159,13 @@ const MainDashboard = () => {
               columnWidthRatio="0.4"
               marginRatio="1.5"
               color={["#4A9D77", "#E95060", "#FFC15D"]}
-              data={graphData}
+              data={getStatGraph??[0]}
+              height='50vh'
             />
           </div>
         </Col>
         <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-card">
-          <div >
+          <div>
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
@@ -173,7 +176,7 @@ const MainDashboard = () => {
                     <Col span={24}>
                       <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
-                          <Typography className="text-[#A0A3BD] text-xs font-normal">
+                          <Typography className="text-success-placeholder-color text-xs font-normal">
                             {dayjs(item?.createdAt).format('DD/MMM')}
                           </Typography>
                         </Col>
@@ -205,7 +208,7 @@ const MainDashboard = () => {
                                         item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' created internship'
                                         :
                                         item?.activity === 'create company manager' ?
-                                          item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName+ ' added company manager'
+                                          item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' added company manager'
                                           :
                                           null
                                 }
@@ -238,7 +241,7 @@ const MainDashboard = () => {
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
-              {recentList[0].map((item: any, index: any) => {
+              {recentList[0]?.map((item: any, index: any) => {
                 return (
                   <>
                     <div
@@ -277,7 +280,7 @@ const MainDashboard = () => {
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
                           <Typography className="flex justify-end font-medium text-base text-secondary-color">
-                            £{item.rent}
+                            £{item?.rent}
                           </Typography>
                           <div
                             className="p-1 mt-4 rounded-[6px]"
@@ -293,7 +296,8 @@ const MainDashboard = () => {
                                       : "",
                             }}
                           >
-                            <Typography className="cursor-pointer text-xs font-normal white-color text-center capitalize">
+                            <Typography
+                              className="cursor-pointer text-xs font-normal white-color text-center capitalize">
                               {item?.publicationStatus}
                             </Typography>
                           </div>

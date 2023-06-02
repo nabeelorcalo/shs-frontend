@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -21,17 +21,32 @@ import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
+import { useRecoilState } from "recoil";
+import { studentProfileState } from "../../../../../store";
+import useCustomHook from "../../../actionHandler";
+import DrawerTabs from '../../../../candidates/drawerTabs';
 
 const PersonalInformation = () => {
+  const action = useCustomHook();
   const [value, setValue] = useState('');
   const [isdate1, setIsDate1] = useState(false);
   const [isDependents, setIsDependents] = React.useState(2);
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
+  const personalInformation = useRecoilState<any>(studentProfileState);
+
+  console.log(personalInformation,'personalInformation')
+
+  useEffect(() => {
+    action.getStudentProfile(44);
+  },[])
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+   console.log(values);
+   
   };
+
+  console.log("name" , personalInformation[0].user?.firstName);
 
   return (
     <div className="personal-information">
@@ -52,8 +67,9 @@ const PersonalInformation = () => {
               label="First Name"
               name="firstName"
               rules={[{ required: true }, { type: "string" }]}
+              
             >
-              <Input placeholder="Enter First Name" className="input-style" />
+              <Input  className="input-style" defaultValue={personalInformation[0].user?.firstName} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
