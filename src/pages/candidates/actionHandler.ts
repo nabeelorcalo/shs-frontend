@@ -263,7 +263,29 @@ const useCustomHook = () => {
     await api.get(GET_ALL_TEMPLATES, params).then((res) => { setTemplateList(res?.data) })
   }
   return {
-    isLoading, setISLoading, cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, handleRequestDocument, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, handleUpdateInterview, deleteInterview, getTemplates, templateList, params
+    isLoading, setISLoading,
+    cadidatesList, setCadidatesList,
+    studentDetails, getStudentDetails,
+    handleRating, rating, setRating,
+    getUserId, getCadidatesData, handleSearch,
+    timeFrame, handleTimeFrameFilter,
+    internship, handleInternShipFilter,
+    handleRequestDocument, download, setDownload,
+    openDrawer, setOpenDrawer,
+    openRejectModal, setOpenRejectModal,
+    selectedCandidate, setSelectedCandidate,
+    getInternShipList, internShipList,
+    hiringProcessList, setHiringProcessList,
+    HandleAssignee,
+    getComments, comment, setComment,
+    handleCreateComment, commentsList,
+    handleInitialPiple, handleStage,
+    companyManagerList,
+    setCompanyManagerList, getCompanyManagerList,
+    scheduleInterview, getScheduleInterviews,
+    interviewList, handleUpdateInterview,
+    deleteInterview, getTemplates,
+    templateList, params
   };
 };
 

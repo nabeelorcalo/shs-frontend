@@ -83,9 +83,11 @@ const useCustomHook = () => {
 
   // get single case-study object
   const getSelectedCasStudyData = async (id: string) => {
-    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => setSelectedCasStudyData(
-      data
-    ))
+    setISLoading(true)
+    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
+      setSelectedCasStudyData(data)
+      setISLoading(false)
+    })
   }
 
   // get department list
