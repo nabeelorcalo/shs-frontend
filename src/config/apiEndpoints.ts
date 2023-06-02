@@ -87,15 +87,12 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
-<<<<<<< HEAD
   // End Point For Leaev Module For Intrne 
-=======
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
   SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
   // End Point For Leaev Module For Intrne
->>>>>>> dev
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
@@ -111,7 +108,6 @@ const endpoints = {
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
-<<<<<<< HEAD
   SETTING_PERFORMANCE: '/performance',
   SETTINGS_TEMPLATES: '/template/findAll',
   SETTINGS_SHIFTS: '/shift/findAll',
@@ -127,34 +123,18 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: '/template/delete',
   POST_SETTING_TEMPLATE: '/template/add',
   EDIT_SETTING_TEMPLATE: '/template/edit',
-=======
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
-  SETTING_PERFORMANCE: "/performance",
-
   // Performance
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
-
-  SETTINGS_TEMPLATES: "/template/findAll",
-  SETTINGS_SHIFTS: "/shift/findAll",
-  POST_NEW_SHIFTS: "/shift/add",
-  DELETE_SHIFT: "/shift/delete",
-  SETTINGS_TIMESHEET: "/timesheet/category/findAll",
-  POST_NEW_TIMESHEET: "/timesheet/category/add",
-  DELETE_TIMESHEET: "/timesheet/category/delete",
-  EDIT_TIMESHEET: "/timesheet/category/edit",
-  DELETE_PAYROLL: "/payroll/delete",
->>>>>>> dev
-
   // RECIPES
   GET_ALL_RECIPES: "/recipe/get-recipies",
   GET_RECIPE: "/recipe/get-recipe",
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
-
   // Dashboard
   GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
   GET_DELEGATE_DASHBOARD: "delegate/dashboard",
