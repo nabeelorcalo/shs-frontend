@@ -1,6 +1,4 @@
-import React from "react";
 import ReactEcharts from "echarts-for-react";
-import data from './data';
 import {
   FinanceIcon,
   RecreationIcon,
@@ -11,8 +9,12 @@ import {
   FamilyIcon,
   SocialLifeIcon
 } from "../../../assets/images";
+import { lifeAssessmentState } from "../../../store";
+import { useRecoilValue } from "recoil";
 
 export const LifeBalanceGraph = ({ monthName }: any) => {
+
+  const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
   const assessmentsName = [
     { name: "Finance", color: "#D36DF6", secondaryColor: '#D36DF61A' },
     { name: "Relationship", color: "#6986BF", secondaryColor: '#6986BF1A' },
@@ -20,7 +22,7 @@ export const LifeBalanceGraph = ({ monthName }: any) => {
     { name: "Education", color: "#70C9B7", secondaryColor: '#DBFDF6' },
     { name: "Development", color: "#FFD817", secondaryColor: '#FFD8171A' },
     { name: "Family", color: "#4F8DFF", secondaryColor: '#4F8DFF1A' },
-    { name: "Social Life", color: "#FD7D5C", secondaryColor: '#FB45161A' },
+    { name: "SocailLife", color: "#FD7D5C", secondaryColor: '#FB45161A' },
     { name: "Recreation", color: "#FF93AD", secondaryColor: '#FF93AD1A' },
   ];
 
@@ -38,7 +40,7 @@ export const LifeBalanceGraph = ({ monthName }: any) => {
         return DevelopmentIcon;
       case 'Family':
         return FamilyIcon;
-      case 'Social Life':
+      case 'SocailLife':
         return SocialLifeIcon;
       case 'Recreation':
         return RecreationIcon;
@@ -47,14 +49,28 @@ export const LifeBalanceGraph = ({ monthName }: any) => {
     }
   }
 
+  const baseData = assessmentsName.map(({ name }) => ({
+    month: monthName,
+    name,
+    value: 1,
+  }));
+
+  function capitalizeFirstLetter(name: string) {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
   const setGraphDataSetting = () => {
-    const filteredArray = data.filter(obj => obj.month === monthName);
+    const convertedData =lifeAssesmentData.length > 0 ? Object.entries(lifeAssesmentData[0]).filter(
+      ([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt"
+    ).map(
+      ([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value: value || 1 })
+    ) : baseData;
     const arr: any = [];
 
-    filteredArray.map(function (item) {
+    convertedData.map((item)=> {
       let obj = assessmentsName.find(o => o.name === item.name);
       const name = item.name;
-      const value = item.value;
+      const value = item.value as number;
       const color = obj?.color;
       const secondaryColor = obj?.secondaryColor;
 
@@ -119,13 +135,11 @@ export const LifeBalanceGraph = ({ monthName }: any) => {
         ]
       });
     });
-
     return arr;
   }
 
   const option = {
     silent: true,
-
     series: [
       {
         radius: ['22%', '100%'],

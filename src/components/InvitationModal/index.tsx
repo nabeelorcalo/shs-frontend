@@ -3,10 +3,12 @@ import { FC } from "react";
 import { SHSLogo } from "../../assets/images";
 import { PopUpModal } from "../Model";
 
-const InvitationModal: FC<{ isShowModal: boolean; close: () => void }> = (
-  props
-) => {
-  const { isShowModal, close } = props;
+const InvitationModal: FC<{
+  isShowModal: boolean;
+  close: () => void;
+  email?: string;
+}> = (props) => {
+  const { isShowModal, close, email } = props;
 
   return (
     <PopUpModal
@@ -24,8 +26,7 @@ const InvitationModal: FC<{ isShowModal: boolean; close: () => void }> = (
           Invitation Sent!
         </p>
         <p className="font-normal text-[14px] leading-[22px] text-secondary-color max-w-[312px] text-center pb-[30px]">
-          We have sent an invitation to “johndoemail.com” to join Internship
-          Ken.
+          We have sent an invitation to “{email}” to join Internship Ken.
         </p>
         <p className="font-normal text-[14px] leading-[22px] text-primary-color max-w-[312px] text-center">
           If an email is not received, contact our support team.
