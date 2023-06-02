@@ -1,27 +1,19 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import dayjs from "dayjs";
+import { NavLink, useLocation } from "react-router-dom";
 import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper, TimePickerComp } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Button,
-  Space,
-  Input,
-  Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch
 } from "antd";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import { Breadcrumb } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
-import dayjs from "dayjs";
+import useShiftsCustomHook from "../actionHandler";
 import "./style.scss";
 
 const { Paragraph } = Typography;
@@ -32,7 +24,6 @@ const AddShift: React.FC = () => {
     { name: "Add Shift" },
     { name: "Setting" },
     { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
-
   ];
   const selectArray = [
     {
@@ -62,7 +53,9 @@ const AddShift: React.FC = () => {
   ];
 
   const deselectArray: any = [];
-  const [state, setState] = useState(
+  const { state } = useLocation()
+  const [form] = Form.useForm();
+  const [states, setStates] = useState(
     {
       openFromTime: false,
       openToTime: false,
@@ -71,34 +64,64 @@ const AddShift: React.FC = () => {
       intern: [],
       openModal: false,
       internValue: 1,
+      applyForNewHire:false
     });
+
+  // getting functions from custom hook 
+  const { postShiftData } = useShiftsCustomHook()
 
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
-      setState({
-        ...state, openModal: true, internValue: radioValue
+      setStates({
+        ...states, openModal: true, internValue: radioValue
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...state, internValue: radioValue, intern: [] })
+      setStates({ ...states, internValue: radioValue, intern: [] })
     }
   };
-
   const openTimeFromHandler = () => {
-    setState({ ...state, openFromTime: !state.openFromTime })
+    setStates({ ...states, openFromTime: !states.openFromTime })
   }
   const openTimeToHandler = () => {
-    setState({ ...state, openToTime: !state.openToTime })
+    setStates({ ...states, openToTime: !states.openToTime })
   }
+  const handleFormValues = (values: any) => {
+
+    const newValues = {
+      ...values,
+      timeTo: states.openToTimeValue,
+      timeFrom: states.openFromTimeValue
+    }
+    console.log('forms values are', newValues);
+    postShiftData(newValues)
+
+  }
+  console.log('previous state is', state);
+
+  const initialValues = {
+    shiftName: state?.name,
+    timeFrom: dayjs(state?.from),
+    timeTo: dayjs(state?.to),
+    shiftDuration: dayjs(state?.duration),
+    roundOffCap: dayjs(state?.roundOfCap),
+    applyForNewHire: state?.applyToNewHires,
+    interns: state?.interns
+  }
+
   return (
     <div className="leaves-add-policy">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
         <Form
+          form={form}
+          initialValues={initialValues}
+          onFinish={handleFormValues}
           layout="vertical"
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+          {/* initialValues={initialValues} */}
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -112,41 +135,37 @@ const AddShift: React.FC = () => {
                 name="shiftName"
                 label="Shift Name"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
-
-              >
+                rules={[{ required: true }, { type: "string" }]}>
                 <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
+
               <div className="flex flex-col md:flex-row justify-between md:gap-5 w-full shift-time">
                 <div className="flex flex-col justify-between w-full">
                   <Form.Item
-                    name="timeForm"
-                    required={false}
-                    rules={[{ required: true }, { type: "string" }]}
-                  >
+                    name="timeFrom">
                     <TimePickerComp
                       className="input-style"
                       label={<p className='pb-[6px]'>Time From</p>}
-                      open={state.openFromTime}
+                      open={states.openFromTime}
+                      customSetValue
                       setOpen={openTimeFromHandler}
-                      value={state.openFromTimeValue}
-                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                      value={states.openFromTimeValue}
+                      setValue={(e: string) => setStates({ ...states, openFromTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full ">
                   <Form.Item
-                    name="timeto"
-                    required={false}
-                    rules={[{ required: true }, { type: "string" }]}
-                  >
+                    name="timeTo"
+                    required={false}>
                     <TimePickerComp
                       className="input-style"
                       label={<p className='pb-[6px]'>Time To</p>}
-                      open={state.openToTime}
+                      open={states.openToTime}
+                      customSetValue
                       setOpen={openTimeToHandler}
-                      value={state.openToTimeValue}
-                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                      value={states.openToTimeValue}
+                      setValue={(e: string) => setStates({ ...states, openToTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
@@ -155,7 +174,7 @@ const AddShift: React.FC = () => {
                 name="shiftDuration"
                 label="Shift Duration"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }]}
               >
                 <Input placeholder="0" type="number" className="input-style" />
               </Form.Item>
@@ -163,7 +182,7 @@ const AddShift: React.FC = () => {
                 name="roundOffCap"
                 label="Round Off Cap"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }]}
 
               >
                 <Input placeholder="00:00:00" type="number" className="input-style" />
@@ -180,18 +199,22 @@ const AddShift: React.FC = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className=" flex items-center">
-                <Radio.Group onChange={onChange} value={state.internValue}>
-                  <Radio value={1}>All interns</Radio>
-                  <Radio value={2}>Select Interns</Radio>
-                </Radio.Group>
-                <span >
-                  <AvatarGroup maxCount={6} list={state.intern} />
-                </span>
-              </div>
+              <Form.Item name="interns">
+                <div className=" flex items-center">
+                  <Radio.Group onChange={onChange} value={states.internValue}>
+                    <Radio value={1}>All interns</Radio>
+                    <Radio value={2}>Select Interns</Radio>
+                  </Radio.Group>
+                  <span >
+                    <AvatarGroup maxCount={6} list={states.intern} />
+                  </span>
+                </div>
+              </Form.Item>
               <div className="my-5">
-                <Switch />
-                <span className="px-2">Apply to all new hires</span>
+                <Form.Item name='applyForNewHire'>
+                  <Switch checked={state?.applyToNewHires} onChange={(e: any) => setStates({ ...states, applyForNewHire: e })}/>
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item>
               </div>
             </Col>
           </Row>
@@ -213,11 +236,11 @@ const AddShift: React.FC = () => {
       <SettingCommonModal
         selectArray={selectArray}
         deselectArray={deselectArray}
-        openModal={state.openModal}
-        setOpenModal={setState}
-        state={state}
-        internValue={state.internValue}
-        intern={state.intern}
+        openModal={states.openModal}
+        setOpenModal={setStates}
+        state={states}
+        internValue={states.internValue}
+        intern={states.intern}
       />
     </div>
   );

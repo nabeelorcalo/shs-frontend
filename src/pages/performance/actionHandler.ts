@@ -3,8 +3,59 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
+import { allPerformanceState, internEvaluationHistoryState, topPerformersState, performanceDetailState } from "../../store";
+import { useRecoilState } from "recoil";
+import endPoints from "../../config/apiEndpoints";
 
-const useCustomHook = () => {
+const usePerformanceHook = () => {
+  const { GET_PERFORMANCE_LIST, GET_INTERN_EVALUATION_HISTORY, GET_PERFORMANCE_DETAIL } = endPoints;
+  const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+  const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
+  const [topPerformers, setTopPerformers] = useRecoilState(topPerformersState);
+  const [performanceDetail, setPerformanceDetail] = useRecoilState(performanceDetailState);
+
+  // Get All Performance
+  const getAllPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
+    setLoading(true);
+    const response = await api.get(GET_PERFORMANCE_LIST, params);
+    if(!response.error) {
+      const { data } = response;
+      setAllPerformance(data);
+    }
+    setLoading(false);
+  }
+
+  // Get Top Performers
+  const getTopPerformers = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    const response = await api.get(GET_PERFORMANCE_LIST, {sortByPerformance: true});
+    if(!response.error) {
+      const { data } = response;
+      setTopPerformers(data);
+    }
+    setLoading(false);
+  }
+
+  // Get Performance Detail
+  const getPerformanceDetail = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
+    setLoading(true);
+    const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`);
+    if(!response.error) {
+      const { data } = response;
+      setPerformanceDetail(data);
+    }
+    setLoading(false);
+  }
+
+  const getInternEvaluationHistory = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
+    setLoading(true);
+    const response = await api.get(`${GET_INTERN_EVALUATION_HISTORY}/${id}`);
+    if(!response.error) {
+      const { data } = response;
+      setInternEvalHistory(data);
+    }
+    setLoading(false);
+  }
 
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -102,11 +153,15 @@ const useCustomHook = () => {
     });
     doc.save('table.pdf');
   };
+
   return {
-    getData,
+    getTopPerformers,
+    getAllPerformance,
+    getInternEvaluationHistory,
+    getPerformanceDetail,
     downloadPdf,
     downloadHistoryDataPdf
   };
 };
 
-export default useCustomHook;
+export default usePerformanceHook;

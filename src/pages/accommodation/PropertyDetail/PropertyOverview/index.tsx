@@ -13,11 +13,12 @@ const PropertyOverview: FC<OverviewProps> = ({data}) => {
         <div className="overview-facilities">
           <div className="overview-section-label">Facilities</div>
           <ul className="overview-list facilities-list">
-            <li>Living room</li>
-            <li>Toilet</li>
-            <li>Kitchen</li>
-            <li>Basement</li>
-            <li>Parking</li>
+            {data?.buildingHas?.map((facility:any) => (
+              <li>{facility}</li>
+            ))}
+            {data?.propertyHas?.map((facility:any) =>(
+              <li>{facility}</li>
+            ))}
           </ul>
         </div>
       </div>
@@ -25,23 +26,13 @@ const PropertyOverview: FC<OverviewProps> = ({data}) => {
       <div className="overview-content amenities">
         <div className="overview-amenities">
           <div className="overview-section-label">Amenities</div>
-          <ul className="overview-list amenities-list">
-            <li>WiFi</li>
-            <li>Living Room Furniture</li>
-            <li>Bed</li>
-            <li>TV</li>
-            <li>Private Kitchenware</li>
-            <li>Washing machine</li>
-            <li>Closet</li>
-            <li>Central Heating</li>
-            <li>Wood flooring</li>
-            <li>Desk</li>
-            <li>Air Conditioning</li>
-            <li>Dryer</li>
-            <li>Dishwasher</li>
-            <li>Access Friendly</li>
-            <li>Bedroom Lock</li>
-          </ul>
+          {data?.bedroomAmenities?.length !== 0 &&
+            <ul className="overview-list amenities-list">
+              {data?.bedroomAmenities?.map((amenity:any) => (
+                <li>{amenity}</li>
+              ))}
+            </ul>
+          }
         </div>
       </div>
 
@@ -49,9 +40,8 @@ const PropertyOverview: FC<OverviewProps> = ({data}) => {
         <div className="overview-amenities">
           <div className="overview-section-label">House Rules</div>
           <ul className="overview-list house-rules">
-            <li>Playing Musical Instruments Negotiable</li>
-            <li>Pets Not Allowed</li>
-            <li>Smoking Not Allowed </li>
+            <li>{data?.petsAllowed ? 'Pets Allowed': 'Pets Not Allowed'}</li>
+            <li>{data?.musicalInstrumentsAllowed ? 'Playing Musical Instruments Negotiable': 'Playing Musical Instruments Not Allowed'}</li>
           </ul>
         </div>
       </div>
@@ -62,19 +52,19 @@ const PropertyOverview: FC<OverviewProps> = ({data}) => {
           <ul className="overview-list preferred-tenant">
             <li>
               <span>Age</span>
-              <span>No Preference</span>
+              <span>{data?.maxAgePreference ? data.maxAgePreference : 'No Preference'}</span>
             </li>
             <li>
               <span>Gender</span>
-              <span>No Preference</span>
+              <span>{data?.genderPreference ? data.genderPreference : 'No Preference'}</span>
             </li>
             <li>
               <span>Tenant Type</span>
-              <span>Working professionals only</span>
+              <span>{data?.tenantTypePreference ? data.tenantTypePreference : 'No Preference'}</span>
             </li>
             <li>
               <span>Suitable for couples</span>
-              <span>Yes</span>
+              <span>{data?.couplesAllowed ? 'Yes' : 'No'}</span>
             </li>
           </ul>
         </div>

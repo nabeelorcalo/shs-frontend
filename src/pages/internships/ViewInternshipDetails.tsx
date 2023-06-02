@@ -5,8 +5,8 @@ import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from './actionHandler';
-import './style.scss';
 import dayjs from 'dayjs';
+import './style.scss';
 
 const tempArray = [
   { name: "Job Details" },
@@ -27,8 +27,6 @@ const ViewInternshipDetails = () => {
     getInternshipDetails()
   }, [])
 
-  console.log('internship details are', internshipDetails);
-
   const closingDate = dayjs(internshipDetails?.closingDate).format('DD/MM/YYYY');
 
   return (
@@ -36,7 +34,7 @@ const ViewInternshipDetails = () => {
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <BoxWrapper>
         <div className='flex flex-col gap-6'>
-          <div className='flex flex-row justify-between  flex-wrap'>
+          <div className='flex flex-row justify-between flex-wrap'>
             <div>
               <h2 className='dashboard-primary-color text-3xl font-medium'>
                 {internshipDetails.title}
@@ -74,25 +72,25 @@ const ViewInternshipDetails = () => {
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Requirements</h3>
             <div className='flex flex-col gap-3'>
-              <div>
+              <div className='mb-5'>
                 <p className='text-base'>{internshipDetails.requirements}</p>
               </div>
               <div className='flex flex-row gap-6'>
                 <div className='flex flex-col gap-3'>
-                  <p>Internship Type: <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase()}</span></p>
-                  <p>Nature of work: <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span></p>
-                  <p>Total Positions: <span>{internshipDetails.totalPositions}</span></p>
-                  <p>Expected Closing Date: <span>{closingDate}</span></p>
-                  <p>Internship Duration: <span>{internshipDetails.duration}</span></p>
+                  <p><span className='font-medium'>Internship Type:</span> <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase()}</span></p>
+                  <p><span className='font-medium'>Nature of work:</span> <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span></p>
+                  <p><span className='font-medium'>Total Positions:</span> <span>{internshipDetails.totalPositions}</span></p>
+                  <p><span className='font-medium'>Expected Closing Date: </span><span>{closingDate}</span></p>
+                  <p><span className='font-medium'>Internship Duration: </span><span>{internshipDetails.duration}</span></p>
                 </div>
                 <div className='flex flex-col gap-3'>
-                  <p>Frequency:
+                  <p><span className='font-medium'>Frequency:</span>
                     <span className='capitalize'>
                       {internshipDetails?.salaryAmount ? ` ${internshipDetails?.salaryAmount}` : " --"}
                       {internshipDetails?.salaryFrequency ? `/ ${internshipDetails?.salaryFrequency?.toLowerCase()}` : " --"}
                     </span>
                   </p>
-                  <p>Location: <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span></p>
+                  <p><span className='font-medium'>Location: </span><span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span></p>
                 </div>
               </div>
             </div>

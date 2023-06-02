@@ -5,23 +5,21 @@ import './styles.scss'
 const { Option } = Select;
 
 interface UserSelectorProps {
+  className?: string;
   label?: any;
   value?: any;
-  setState?: any;
   options?: any;
-  suffixIcon?: any;
   placeholder?: string;
   searchPlaceHolder?: string;
   onChange?: any;
   handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
-  requiredAttributes?: any
 }
 
 const UserSelector = (props: UserSelectorProps) => {
-  const { label, value, onChange, suffixIcon, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder } = props
+  const { label, value, onChange, handleSearch,
+    placeholder, options, hasSearch, searchPlaceHolder, className } = props
 
   const handleInputSearch = (event: any) => {
     handleSearch(event.target.value)
@@ -31,8 +29,7 @@ const UserSelector = (props: UserSelectorProps) => {
     <>
       <label>{label}</label>
       <Select
-        suffixIcon={suffixIcon}
-        // style={{ width: '100%' }}
+        className={className}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

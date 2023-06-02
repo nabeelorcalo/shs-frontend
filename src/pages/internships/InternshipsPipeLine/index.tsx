@@ -13,10 +13,10 @@ import {
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 // import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
-import SelectComp from "../../../components/Select/Select";
 import { Avatar, Input } from "antd";
 import dayjs from 'dayjs';
 import "../style.scss";
+import UserSelector from "../../../components/UserSelector";
 
 
 const tempArray = [
@@ -47,9 +47,15 @@ const InternshipPipeLine = () => {
     getInternshipDetails(searchValue)
   }, [searchValue])
 
-  console.log('pipeline data', internshipDetails);
-
-
+  const filteredStatusData = statusArry?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.value,
+        label: item?.label
+      }
+    )
+  })
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
     return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
@@ -76,7 +82,7 @@ const InternshipPipeLine = () => {
     },
     {
       data: getStatus('OfferLetter').statusData,
-      status: 'OfferLetter',
+      status: 'Offer Letter',
       no: getStatus('OfferLetter').totalInterns,
       className: "light-purple-bg"
     },
@@ -99,6 +105,8 @@ const InternshipPipeLine = () => {
     const today = dayjs(); // Get the current date
     return `${today.diff(date, 'day')} days ago`;
   }
+
+
 
   // const changeStatus = (event: any) => {
   //   setState((prevState) => ({
@@ -131,10 +139,14 @@ const InternshipPipeLine = () => {
               <EditIconinternships />
             </span>
           </div>
-          <SelectComp
+          <UserSelector
+            value={internshipDetails?.status}
+            options={filteredStatusData}
+          />
+          {/* <SelectComp
             value={internshipDetails?.status}
             options={statusArry}
-          />
+          /> */}
         </div>
         <div>
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>

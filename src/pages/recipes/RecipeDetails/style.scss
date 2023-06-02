@@ -19,6 +19,7 @@
       }
 
       .recipe-image {
+        max-width: 500px;
         margin-right: 30px;
         @media(max-width: 1400px) {
           max-width: 360px;

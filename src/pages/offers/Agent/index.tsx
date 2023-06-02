@@ -13,7 +13,7 @@ const OffersAgent = () => {
 
   useEffect(() => {
     getOffersDetails()
-  }, [])
+  }, [offersData])
 
   return (
     <div className="offers-agent">
@@ -66,7 +66,7 @@ const OffersAgent = () => {
                   >
                     <div className="offer-card-body">
                       <div className="dashboard-primary-color font-semibold text-xl pb-4">
-                        {item.propertyId}
+                        {item.property?.addressOne}
                       </div>
 
                       <div className="dashboard-primary-color font-normal text-sm pb-4">

@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Col, Row, Select } from "antd";
 import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
 import "./style.scss";
-import { interShipDropDown } from "./data";
 const Candidates = () => {
   const {
     params,

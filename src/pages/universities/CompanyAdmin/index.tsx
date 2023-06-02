@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Select, Row, Col } from 'antd'
-import { IconAngleDown } from '../../../assets/images';
+import { Select, Row, Col, Input } from 'antd'
+import { GlassMagnifier, IconAngleDown } from '../../../assets/images';
 import { BoxWrapper, DropDown, Notifications, PageHeader, SearchBar } from '../../../components'
 import UniversityTable from './universityTable';
 import useCustomHook from './actionHandler';
@@ -12,17 +12,22 @@ import { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const index: React.FC = () => {
   const [Country, setCountry] = useState("");
+  const [searchValue, setSearchValue] = useState("");
+
+
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
   const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
 
   const navigate = useNavigate()
-  const { getUniversities, universitiesData }: any = useCustomHook();
+  const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
 
   useEffect(() => {
-    getUniversities(Country)
-  }, [])
-  console.log(universitiesData, "universitiesData");
+    getUniversities(Country, searchValue)
+  }, [searchValue])
+
+  console.log(searchValue, "searchvale");
+
 
   const UniversityTableColumn =
     [
@@ -115,26 +120,32 @@ const index: React.FC = () => {
   })
 
 
-  const handleChange = (e:any) => {
-    
-   };
+  const handleChangeSearch = (e: any) => {
+    setSearchValue(e)
+  };
 
   return (
     <div className='company-university '>
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleChange} />
+          <SearchBar handleChange={handleChangeSearch} />
+          {/* <Input
+            className='search-bar'
+            placeholder="Search"
+            onChange={handleChangeSearch}
+            prefix={<GlassMagnifier />}
+          /> */}
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <Select onChange={(e: any) => setCountry(e)} className='md:w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
-            {dropdownValue.map((item, index) => <Select.Option key={index} value={item}>{item}</Select.Option>)}
+            {universitiesData.map((item: any, index: any) => <Select.Option key={index} value={item.university.country}>{item.university.country}</Select.Option>)}
           </Select>
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(event, UniversityTableColumn, univertyTableData, "Report")
+              action.downloadPdfOrCsv(event, TableColumn, univertyTableData, "Report")
               Notifications({ title: "Success", description: "University list downloaded ", type: 'success' })
             }}
           />
