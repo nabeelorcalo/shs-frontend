@@ -1,63 +1,22 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Button,
-  Space,
-  Input,
-  Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
-import { SettingAvater } from "../../../../../assets/images";
-import { NavLink } from "react-router-dom";
-import { Breadcrumb, CommonDatePicker, BoxWrapper, TimePickerComp } from "../../../../../components";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Breadcrumb, BoxWrapper, TimePickerComp } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useCustomHook from "../../../../Payroll/actionHandler";
+import { currentUserState } from '../../../../../store';
+import { useRecoilState } from "recoil";
+import "./style.scss";
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
-  const breadcrumbArray = [
-    { name: "Add Category" },
-    { name: "Setting" },
-    { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
-
-  ];
-  const selectArray = [
-    {
-      name: "Eva Smith",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Martha Stewart",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Evelyn Josh",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Arthur Lewis",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Tom Edward",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Carisle Cullen",
-      image: <SettingAvater />,
-    },
-  ];
-
-  const deselectArray: any = [];
-  const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [state, setState] = useState(
     {
       openFromTime: false,
@@ -67,8 +26,32 @@ const PayrollAddCategory = () => {
       intern: [],
       openModal: false,
       internValue: 1,
+      applyToNewHires: false
     });
+  const { postPayroll, internsData, getAllInterns } = useCustomHook();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const deselectArray: any = [];
+  const [form] = Form.useForm();
 
+  useEffect(() => {
+    getAllInterns(currentUser?.company?.id)
+  }, [])
+
+  const filteredInternsData = internsData?.map((item: any, index: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
+  const breadcrumbArray = [
+    { name: "Add Category" },
+    { name: "Setting" },
+    { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
+
+  ];
   const openTimeFromHandler = () => {
     setState({ ...state, openFromTime: !state.openFromTime })
   }
@@ -77,9 +60,6 @@ const PayrollAddCategory = () => {
     setState({ ...state, openToTime: !state.openToTime })
   }
 
-  const onFinish = (values: any) => {
-    console.log("valies", values)
-  }
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
@@ -92,16 +72,31 @@ const PayrollAddCategory = () => {
     }
   };
 
+  const handlePayollForm = (values: any) => {
+    const newValues = {
+      ...values,
+      to: state.openToTimeValue,
+      from: state.openFromTimeValue,
+      intern: state.intern,
+      applyToNewHires: state.applyToNewHires
+    }
+    form.resetFields()
+    postPayroll(newValues)
+    navigate(ROUTES_CONSTANTS.PAYROLL_CATEGORY)
+
+  }
+
   return (
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical"
+        <Form
+          layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+          onFinish={handlePayollForm}>
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -112,27 +107,27 @@ const PayrollAddCategory = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                name="shiftName"
+                name="payrollName"
                 label="Payroll Name"
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter Name" className="input-style" />
+                <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
                 <div className="flex flex-col justify-between w-full md:pr-2 ">
                   <Form.Item
                     name="from"
                     required={false}
-                    rules={[{ required: true }, { type: "string" }]}
+                    label='Time From'
                   >
                     <TimePickerComp
                       className="input-style"
-                      label={<p className='pb-[6px]'>Time From</p>}
                       open={state.openFromTime}
+                      customSetValue
                       setOpen={openTimeFromHandler}
                       value={state.openFromTimeValue}
-                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                      setValue={(e: any) => setState({ ...state, openFromTimeValue: e })}
                     />
                   </Form.Item>
                 </div>
@@ -140,17 +135,30 @@ const PayrollAddCategory = () => {
                   <Form.Item
                     name="to"
                     required={false}
-                    rules={[{ required: true }, { type: "string" }]}
+                    label='Time to'
                   >
                     <TimePickerComp
                       className="input-style"
-                      label={<p className='pb-[6px]'>Time To</p>}
+                      open={state.openToTime}
+                      customSetValue
+                      setOpen={openTimeToHandler}
+                      value={state.openToTimeValue}
+                      setValue={(e: any) => setState({ ...state, openToTimeValue: e })}
+                    />
+                  </Form.Item>
+                  {/* <Form.Item
+                    name="to"
+                    required={false}
+                    label="Time To"
+                  >
+                    <TimePickerComp
+                      className="input-style"
                       open={state.openToTime}
                       setOpen={openTimeToHandler}
                       value={state.openToTimeValue}
-                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                      setValue={(e: any) => setState({ ...state, openToTimeValue: e })}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                 </div>
               </div>
             </Col>
@@ -165,7 +173,7 @@ const PayrollAddCategory = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-            <div className=" flex items-center">
+              <div className=" flex items-center">
                 <Radio.Group onChange={onChange} value={state.internValue}>
                   <Radio value={1}>All interns</Radio>
                   <Radio value={2}>Select Interns</Radio>
@@ -175,8 +183,21 @@ const PayrollAddCategory = () => {
                 </span>
               </div>
               <div className="my-5">
-                <Switch />
-                <span className="px-2">Apply to all new hires</span>
+                <Form.Item name='applyToNewHire'>
+                  <Switch
+                    checked={state?.applyToNewHires}
+                    onChange={(e: any) => setState({ ...state, applyToNewHires: e })}
+                  />
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item>
+                {/* <Form.Item name='applyForNewHire'>
+                  <Switch
+                    checked={state?.applyToNewHires}
+                  // onChange={(e: any) => setState({ ...state, applyForNewHire: e })} 
+                  />
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item> */}
+                {/* <span className="px-2">Apply to all new hires</span> */}
               </div>
             </Col>
           </Row>
@@ -198,7 +219,7 @@ const PayrollAddCategory = () => {
         </Form>
       </BoxWrapper>
       <SettingCommonModal
-        selectArray={selectArray}
+        selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={state.openModal}
         setOpenModal={setState}

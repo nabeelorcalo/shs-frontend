@@ -4,24 +4,29 @@ import api from "../../../../api";
 import endpoints from "../../../../config/apiEndpoints";
 import { debounce } from "lodash";
 import { Notifications } from "../../../../components";
+import { useState } from "react";
 
 
-// Chat operation and save into store
+// timesheet operations and save into store
 const useTimesheetCustomHook = () => {
   const { SETTINGS_TIMESHEET, POST_NEW_TIMESHEET,
     DELETE_TIMESHEET, EDIT_TIMESHEET } = endpoints;
-  const [timeSheetData, setTimeSheetData] = useRecoilState(settingTimesheetState);;
+
+  const [timeSheetData, setTimeSheetData] = useRecoilState(settingTimesheetState);
+  const [isLoading, setIsLoading] = useState(false)
 
   // Getting timesheets data 
   const getTimeSheetsData = async (searchValue: any = null) => {
     const params = {
       limit: 100,
       page: 1,
-      search: searchValue ? searchValue : null
+      q: searchValue ? searchValue : null
     }
+    setIsLoading(true);
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(SETTINGS_TIMESHEET, query);
     setTimeSheetData(data)
+    setIsLoading(false);
   };
 
   // Post timesheet data
@@ -72,6 +77,7 @@ const useTimesheetCustomHook = () => {
     deleteTimeSheet,
     debouncedSearch,
     timeSheetData,
+    isLoading
   };
 };
 

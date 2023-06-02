@@ -85,6 +85,7 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
+  // End Point For Leaev Module For Intrne
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
@@ -109,19 +110,19 @@ const endpoints = {
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
-  SETTING_PERFORMANCE: '/performance',
+  SETTING_PERFORMANCE: "/performance",
 
   // Dreamup Endpoints
   DREAMUP: {
-    GET_GOALS: '/dreamup/get-goals',
-    ADD_GOALS: 'dreamup/add-goal',
-    DELETE_GOAL: 'dreamup/delete-goal',
-    ADD_TASK: 'dreamup/add-task',
-    EDIT_TASK: 'dreamup/edit-task',
-    DELETE_TASK: 'dreamup/delete-task',
-    MARK_TASK: 'dreamup/mark-task',
-    UPDATE_LIFE_ASSESSMENT: 'dreamup/add-update-life-assesment',
-    LIFE_ASSESSMENT: 'dreamup/get-life-assesment',
+    GET_GOALS: "/dreamup/get-goals",
+    ADD_GOALS: "dreamup/add-goal",
+    DELETE_GOAL: "dreamup/delete-goal",
+    ADD_TASK: "dreamup/add-task",
+    EDIT_TASK: "dreamup/edit-task",
+    DELETE_TASK: "dreamup/delete-task",
+    MARK_TASK: "dreamup/mark-task",
+    UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
+    LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
@@ -132,6 +133,9 @@ const endpoints = {
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
 
   SETTINGS_TEMPLATES: "/template/findAll",
+  DELETE_SETTING_TEMPLATE: "/template/delete",
+  POST_SETTING_TEMPLATE: "/template/add",
+  EDIT_SETTING_TEMPLATE: "/template/edit",
   SETTINGS_SHIFTS: "/shift/findAll",
   POST_NEW_SHIFTS: "/shift/add",
   DELETE_SHIFT: "/shift/delete",
@@ -150,7 +154,6 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
-
   // Dashboard
   GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
   GET_DELEGATE_DASHBOARD: "delegate/dashboard",
@@ -164,5 +167,8 @@ const endpoints = {
   UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
   GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
+
+  GET_ALL_COMAPANIES: "/university/universityCompanies",
+  ADD_PAYROLL: "/payroll/add",
 };
 export default endpoints;

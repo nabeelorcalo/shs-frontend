@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
-  GlobalTable, PageHeader, BoxWrapper, InternsCard,
-  FiltersButton, DropDown, StageStepper, DrawerWidth
+  GlobalTable, PageHeader, BoxWrapper,
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader
 } from "../../components";
 import { GlassMagnifier, More } from "../../assets/images"
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import "./style.scss";
-import dayjs from "dayjs";
 
 const ButtonStatus = (props: any) => {
 
@@ -23,15 +23,15 @@ const ButtonStatus = (props: any) => {
   }
   return (
     <p>
-      <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
+      <span className={`px-2 py-1 rounded-lg white-color text-sm ${btnStyle[props.status]}`} >
         {props.status}
       </span>
     </p>
   )
 }
 
-
 const Application = () => {
+  const mainDrawerWidth = DrawerWidth();
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [searchValue, setSearchValue] = useState('');
@@ -42,17 +42,17 @@ const Application = () => {
     stage: "",
     detailsId: null
   })
+  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
+    "Nature of Work", "Position", "Status"]
 
   const { applicationsData, getApplicationsData, getApplicationsDetails,
-    applicationDetailsState, downloadPdfOrCsv, debouncedSearch }: any = useCustomHook();
+    applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
   useEffect(() => {
     getApplicationsData(searchValue)
   }, [searchValue])
 
-
   const PopOver = ({ state, item }: any) => {
-
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -85,17 +85,12 @@ const Application = () => {
           {/* {companyDetail.charAt(0)} */}
         </Avatar>
         <div>
-          <p className="font-medium">{companyName}</p>
-          <p className="text-sm">{companyDetail}</p>
+          <p className="font-semibold">{companyName}</p>
+          <p className="text-base">{companyDetail}</p>
         </div>
       </div>
     )
   }
-
-  // const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
-  const mainDrawerWidth = DrawerWidth();
-
 
   const columns = [
     {
@@ -147,14 +142,14 @@ const Application = () => {
 
   const newTableData = applicationsData?.map((item: any, index: number) => {
     const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
-    const typeOfWork = item?.internship?.internType?.replace("_", " ").toLowerCase();
+    const typeOfWork = item?.internship?.internType?.replace("_", " ")?.toLowerCase();
     return (
       {
         key: index,
         no: applicationsData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         date_applied: dateFormat,
         company: <CompanyData companyName={item?.internship?.company?.businessName}
-          companyDetail={item?.internship?.company?.businessType} avatar={''} />,
+          companyDetail={item?.internship?.company?.businessType} avatar={'kjlk'} />,
         type_of_work: <span className="capitalize">{typeOfWork}</span>,
         internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
         nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
@@ -194,6 +189,9 @@ const Application = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
+
+
   return (
     <>
       <PageHeader title="Applications" />
@@ -214,8 +212,8 @@ const Application = () => {
             />
             <DropDown
               options={[
-                'pdf',
-                'excel'
+                'PDF',
+                'Excel'
               ]}
               requiredDownloadIcon
               setValue={() => {
@@ -270,7 +268,6 @@ const Application = () => {
                         "Un-paid",
                         "Part Time",
                         "Full Time",
-                        "All"
                       ]}
                       setValue={() => { updateTypeOfWork(event) }}
                       requireCheckbox
@@ -289,7 +286,6 @@ const Application = () => {
                         "Accountant",
                         "Administrator",
                         "HR Cordinator",
-                        "All"
                       ]}
                       setValue={() => { updateStage(event) }}
                       requireCheckbox
@@ -314,25 +310,12 @@ const Application = () => {
             </Drawer>
           </Col>
           <Col xs={24}>
-            <BoxWrapper>
-              {/* {
-                listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                  {
-                    cardDummyArray.map((items: any, idx: any) => {
-                      return (
-                        <InternsCard />
-                      )
-                    })
-                  }
-                </div>
-                  : */}
+            {!isLoading ? <BoxWrapper>
               <GlobalTable
                 columns={columns}
                 tableData={newTableData}
               />
-              {/* // } */}
-
-            </BoxWrapper>
+            </BoxWrapper> : <Loader />}
           </Col>
         </Row>
       </div>

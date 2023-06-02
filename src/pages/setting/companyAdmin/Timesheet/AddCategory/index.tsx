@@ -7,7 +7,10 @@ const AddCategory = (props: any) => {
   const { state, setState, editData, setEditData } = props
   const [form] = Form.useForm();
   const { TextArea } = Input;
-
+  const initialValues = {
+    categoryName: editData?.name,
+    description: editData?.description,
+  }
   const { postTimeSheetData, editTimeSheets } = useTimesheetCustomHook();
 
   //  handle timeSheet form data 
@@ -27,10 +30,7 @@ const AddCategory = (props: any) => {
     setEditData({})
     form.resetFields();
   };
-  const initialValues = {
-    categoryName: editData?.name,
-    description: editData?.description,
-  }
+
   return (
     <PopUpModal
       open={state.isEditModal}
