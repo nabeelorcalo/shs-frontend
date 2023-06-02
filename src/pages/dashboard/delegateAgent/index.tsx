@@ -1,11 +1,6 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
-import {
-  CountingCard,
-  FavouritesViewCard,
-  GreetingCard,
-  RegisterMemberAndFeddbackGraph,
-} from "../../../components";
+import { CountingCard, FavouritesViewCard, GreetingCard, RegisterMemberAndFeddbackGraph } from "../../../components";
 import MembersDetails from "./MembersDetails";
 import ShareModal from "../../../components/ShareModal";
 import InvitationModal from "../../../components/InvitationModal";
@@ -15,8 +10,7 @@ import useCustomHook from "./actionHandler";
 
 const DelegateAgent = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [isShowInvitationModal, setIsShowInvitationModal] =
-    useState<boolean>(false);
+  const [isShowInvitationModal, setIsShowInvitationModal] = useState<boolean>(false);
   const [invitationalEmail, setInvitationalEmail] = useState<string>("");
   const {
     delegateDashboardData: {
@@ -31,7 +25,7 @@ const DelegateAgent = () => {
     delegateMembers,
     sendInvite,
     fetchDelegateDashboardData,
-  } = useCustomHook();
+  }: any = useCustomHook();
 
   const [state, setState] = useState({
     loading: false,
@@ -45,9 +39,7 @@ const DelegateAgent = () => {
       };
     });
 
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
+    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
       .then((res) => res.json())
       .then((body) => {
         setState((prevState) => {
@@ -113,11 +105,7 @@ const DelegateAgent = () => {
             setIsShowInvitationModal(true);
           });
         }}
-        delegateLink={
-          window?.location?.origin +
-            "/signup?referenceNo=" +
-            userRes?.delegateRef ?? ""
-        }
+        delegateLink={window?.location?.origin + "/signup?referenceNo=" + userRes?.delegateRef ?? ""}
       />
       <InvitationModal
         isShowModal={isShowInvitationModal}
