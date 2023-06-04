@@ -7,7 +7,7 @@ import {
   delegateMembersState,
   delegateDashboardState,
   currentBalanceState,
-  accountsListState
+  banksListState
 } from "../../store";
 
 
@@ -26,7 +26,7 @@ const useEarnWithUsHook = () => {
   const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState);
   const [delegateDashboard, setDelegateDashboard] = useRecoilState(delegateDashboardState);
   const [currentBalance, setCurrentBalance] = useRecoilState(currentBalanceState);
-  const [accountsList, setAccountsList] = useRecoilState(accountsListState);
+  const [banksList, setBanksList] = useRecoilState(banksListState);
 
   
 
@@ -57,10 +57,10 @@ const useEarnWithUsHook = () => {
     api.get(GET_CURRENT_BALANCE).then(({ data }) => setCurrentBalance(data?.currentBalance));
   };
 
-  // GET BANK ACCOUNTS LIST
-  const getAccountsList = () => {
+  // GET BANK BANKS LIST
+  const getBanksList = () => {
     api.get(GET_BANK_ACCOUNT_LIST).then(({ data }) => {
-      if (data?.data?.length) setAccountsList(data?.data);
+      if (data?.data?.length) setBanksList(data?.data);
     });
   };
   const linkAccount = async (payload: any) => {
@@ -105,7 +105,9 @@ const useEarnWithUsHook = () => {
     getDelegateMembers,
     sendReferenceInvite,
     getCurrentBalance,
-    getAccountsList
+    currentBalance,
+    getBanksList,
+    banksList
     
   };
 };

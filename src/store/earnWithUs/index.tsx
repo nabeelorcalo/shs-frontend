@@ -20,7 +20,7 @@ export const currentBalanceState = atom({
   default: []
 })
 
-export const accountsListState = atom({
-  key: 'accountsListState',
+export const banksListState = atom({
+  key: 'banksListState',
   default: []
 })

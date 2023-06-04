@@ -1,25 +1,34 @@
 import { useState, useEffect } from "react"
-import {Form,Input,Button,Select,Row,Col,Space,Typography} from 'antd'
+import {Form,Input,Button,Select,Row,Col,Space,Typography, InputNumber} from 'antd'
+import { PopUpModal } from "../../../components";
+import "./style.scss";
 import { 
   IconAngleDown, 
   IconBank, 
   IconEditAccount, 
   IconCheckSuccess, 
-  IconWithdrawAgain 
+  IconWithdrawAgain
 } from '../../../assets/images'
-import { PopUpModal } from "../../../components";
-import "./style.scss";
+import useEarnWithUsHook from '../actionHandler';
 
 
 
 const Withdrawals = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [isAccountList, setIsAccountList] = useState(false)
-  const [modalAddAccountOpen, setModalAddAccountOpen] = useState(false)
-  const [modalEditAccountOpen, setModalEditAccountOpen] = useState(false)
-  const [modalWithdrawSuccessfulOpen, setModalWithdrawSuccessfulOpen] = useState(false)
+  const {
+    getCurrentBalance,
+    currentBalance,
+    getBanksList,
+    banksList
+  } = useEarnWithUsHook();
   const [form] = Form.useForm();
+  const [formWithDrawals] = Form.useForm();
+  const [isAccountList, setIsAccountList] = useState(false);
+  const [modalAddAccountOpen, setModalAddAccountOpen] = useState(false);
+  const [modalEditAccountOpen, setModalEditAccountOpen] = useState(false);
+  const [modalWithdrawSuccessfulOpen, setModalWithdrawSuccessfulOpen] = useState(false);
+  const [isWithdrawDetail, setIsWithdrawDetail] = useState(false)
   const [initValues,  setInitValues] = useState({
     "withdrawAccoutn": null,
     "withdrawAmount": "",
@@ -45,7 +54,8 @@ const Withdrawals = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    getCurrentBalance();
+    getBanksList();
   }, [])
 
 
@@ -55,6 +65,16 @@ const Withdrawals = () => {
   function submitWithdrawals(values: any) {
     console.log('Success:', values);
   }
+
+  function handleChangeWithDrawals(changedField:any, values:any) {
+    console.log("with draw values::: ", values)
+    if(values.bankName != null && values.amount != null) {
+      setIsWithdrawDetail(true)
+    } else {
+      setIsWithdrawDetail(false)
+    }
+  }
+
 
   function openModalAddAccount() {
     setModalAddAccountOpen(true)
@@ -89,7 +109,7 @@ const Withdrawals = () => {
     setModalWithdrawSuccessfulOpen(false)
   }
 
-
+  console.log('banksList::: ', banksList)
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -98,7 +118,7 @@ const Withdrawals = () => {
       <div className="earnwith-withdrawals">
         <div className="withdrawals-header">
           <div className="withdrawals-title">
-            Current Balance: {"$ 2000.00"}
+            Current Balance: $ {currentBalance}
           </div>
           <div className="withdrawals-header-actions">
           {!isAccountList &&
@@ -113,31 +133,30 @@ const Withdrawals = () => {
         {!isAccountList &&
           <div className="withdrawals-body">
             <Form
-              form={form}
+              form={formWithDrawals}
               layout="vertical"
               name="updateListing"
-              initialValues={initValues}
-              onValuesChange={(_, values) => {
-                setInitValues(prevState => ({...prevState, ...values}))
-                console.log('init:: ', values)
-              }}
+              onValuesChange={handleChangeWithDrawals}
+              initialValues={{bankName: 'HBL'}}
               onFinish={submitWithdrawals}
             >
               <Row gutter={[{xs: 30, sm: 30, md:30, lg:115}, 0]}>
                 <Col xs={24} sm={12}>
-                  <Form.Item name="withdrawAccoutn" label="Withdraw Account">
+                  <Form.Item name="bankName" label="Withdraw Account">
                     <Select className="filled" placeholder="Withdraw Method" suffixIcon={<IconAngleDown />}>
-                      <Select.Option value="natwestGroup">Natwest Group</Select.Option>
-                      <Select.Option value="HBL">HBL</Select.Option>
+                      {banksList?.map((bank:any) => {
+                        return (
+                          <Select.Option key={bank?.id} value={bank?.id}>{bank?.metadata?.bank_name}</Select.Option>
+                        )
+                      })}
                     </Select>
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12}>
-                  <Form.Item name="withdrawAmount" label="Amount">
-                    <Input 
+                  <Form.Item name="amount" label="Amount">
+                    <InputNumber 
                       placeholder="Enter Amount"
                       className="filled"
-                      type="number"
                       min={0}
                       onKeyPress={(event) => {
                         if (!/[0-9]/.test(event.key)) {
@@ -148,60 +167,60 @@ const Withdrawals = () => {
                   </Form.Item>
                 </Col>
               </Row>
-              {initValues.withdrawAccoutn !== null && initValues.withdrawAmount !== '' &&
-              <div className="withdrawals-details">
-                <div className="withdrawals-details-title">Withdraw Details</div>
-                <div className="withdrawals-details-card">
-                  <Row gutter={[{xs: 30, sm: 30,md: 30, lg:158}, 14]}>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Withdraw Amount</div>
-                        <div className="item-label-value">1000 GBP</div>
-                      </div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Withdraw Fee</div>
-                        <div className="item-label-value">3 GBP</div>
-                      </div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Account Name</div>
-                        <div className="item-label-value">Porter inc</div>
-                      </div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Account Number</div>
-                        <div className="item-label-value">31926819</div>
-                      </div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Sort Code</div>
-                        <div className="item-label-value">Porter inc</div>
-                      </div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Routing Number</div>
-                        <div className="item-label-value">Porter inc</div>
-                      </div>
-                    </Col>
-                    <Col xs={24} md={12}>
-                      <div className="withdrawals-card-item">
-                        <div className="item-label">Account Type</div>
-                        <div className="item-label-value">Porter inc</div>
-                      </div>
-                    </Col>
-                  </Row>
+              {isWithdrawDetail &&
+                <div className="withdrawals-details">
+                  <div className="withdrawals-details-title">Withdraw Details</div>
+                  <div className="withdrawals-details-card">
+                    <Row gutter={[{xs: 30, sm: 30,md: 30, lg:158}, 14]}>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Withdraw Amount</div>
+                          <div className="item-label-value">1000 GBP</div>
+                        </div>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Withdraw Fee</div>
+                          <div className="item-label-value">3 GBP</div>
+                        </div>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Account Name</div>
+                          <div className="item-label-value">Porter inc</div>
+                        </div>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Account Number</div>
+                          <div className="item-label-value">31926819</div>
+                        </div>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Sort Code</div>
+                          <div className="item-label-value">Porter inc</div>
+                        </div>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Routing Number</div>
+                          <div className="item-label-value">Porter inc</div>
+                        </div>
+                      </Col>
+                      <Col xs={24} md={12}>
+                        <div className="withdrawals-card-item">
+                          <div className="item-label">Account Type</div>
+                          <div className="item-label-value">Porter inc</div>
+                        </div>
+                      </Col>
+                    </Row>
 
-                  <div className="withdraw-now">
-                    <Button className="button-tertiary" onClick={openModalWithdrawSuccessful}>WITHDRAW  NOW</Button>
+                    <div className="withdraw-now">
+                      <Button className="button-tertiary" onClick={openModalWithdrawSuccessful}>WITHDRAW  NOW</Button>
+                    </div>
                   </div>
                 </div>
-              </div>
               }
             </Form> 
           </div>

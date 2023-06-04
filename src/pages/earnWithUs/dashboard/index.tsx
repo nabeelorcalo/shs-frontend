@@ -264,15 +264,18 @@ const Dashboard = () => {
           <Row gutter={[30, 30]}>
             <Col xs={24} lg={12}>
               <div className="registered-members">
-                <RegisterMemberAndFeddbackGraph  
+                {delegateDashboard.length !== 0 &&
+                  <RegisterMemberAndFeddbackGraph  
                   graphName='registerMember' 
                   title="Registered Members"
                   graphData={delegateDashboard?.graphData}
                 />
+                }
+                {loading &&
+                  <Loader />
+                }
               </div>
-              {loading &&
-                <Loader />
-              }
+              
             </Col>
             <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">
