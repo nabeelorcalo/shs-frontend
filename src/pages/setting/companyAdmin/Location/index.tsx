@@ -6,8 +6,6 @@ import { Alert, BoxWrapper, Loader, NoDataFound, SearchBar } from "../../../../c
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "./actionHandler";
-import { settingLocationState } from "../../../../store";
-import { useRecoilState } from "recoil";
 const { Text } = Typography;
 
 const SettingLocation: React.FC = () => {
