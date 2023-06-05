@@ -10,7 +10,7 @@ import {
   MonthlyPerfomanceChart,
   TopPerformers,
   UniversityCard,
-  PageHeader
+  PageHeader,
 } from "../../../components";
 import constants from "../../../config/constants";
 import {
@@ -21,10 +21,17 @@ import {
 import "../style.scss";
 import { gutter } from "..";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import {
+  announcementDataState,
+  currentUserRoleState,
+  currentUserState,
+} from "../../../store";
+import useCustomHook from "../companyAdmin/actionHandler";
 
 const Manager = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const action = useCustomHook();
+  const announcementData: any = useRecoilValue(announcementDataState);
   const [state, setState] = useState({
     list: [],
     loading: false,
@@ -53,45 +60,26 @@ const Manager = () => {
     ],
   });
 
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
-
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            list: body.results,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => { });
-  };
+  const role = useRecoilValue(currentUserRoleState);
+  const userData = useRecoilValue(currentUserState);
 
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
   };
-
   useEffect(() => {
-    loadMoreData();
+    console.log("userData", announcementData);
+    action.getData();
   }, []);
-  const role = useRecoilValue(currentUserRoleState)
   return (
     <>
       <PageHeader
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">Maria Sanoid</span>
+            <span className="page-header-secondary-color">
+              {" "}
+              {userData.firstName + " " + userData.lastName}
+            </span>
           </div>
         }
       />
@@ -135,12 +123,10 @@ const Manager = () => {
         </Col>
         <Col xs={24} sm={24} xl={6} xxl={7}>
           <AnnouncementList
-            data={state.list}
-            loading={state.loading}
-            loadMoreData={loadMoreData}
+            data={announcementData}
             role={role}
             handleAddAnnouncement={handleAddAnnouncement}
-            height={335}
+            height={460}
           />
         </Col>
 
@@ -183,13 +169,16 @@ const Manager = () => {
                 workFromHome=""
               />
             </Col>
-            <Col xs={24} lg={12} xxl={24} >
+            <Col xs={24} lg={12} xxl={24}>
               <BirthdayWishes wishList={state.birthdayWishlist} />
             </Col>
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
+      <AnnouncementModal
+        isShowModal={isShowModal}
+        close={() => setIsShowModal(false)}
+      />
     </>
   );
 };

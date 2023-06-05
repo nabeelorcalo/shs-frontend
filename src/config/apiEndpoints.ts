@@ -60,7 +60,6 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
-
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
@@ -68,7 +67,6 @@ const endpoints = {
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   DUPLICATE_INTERNSHIP: "/internship/duplicateInternship",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
-
   //comment
   GET_COMMENTS: "/comment/getComments",
   ADD_COMMENT: `/comment/addComment`,
@@ -91,6 +89,7 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
+  // End Point For Leaev Module For Intrne 
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
@@ -99,6 +98,10 @@ const endpoints = {
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
+  // university reports
+  UNIVERSITY_REPORTS: `/university-reports`,
+  UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
+  UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
 
   //Applications for student
   GET_APPLICATIONS: "/application/listApplications",

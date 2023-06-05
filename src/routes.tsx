@@ -1576,13 +1576,13 @@ const universityRoutes = [
         element: <Report />,
       },
       {
-        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id`,
         element: <ViewDetailsReport />,
       },
       {
-        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
-        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id/${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id/${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}/:id`,
         element: <AssessmentFormReport />,
       },
     ],

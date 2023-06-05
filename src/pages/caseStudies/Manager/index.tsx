@@ -5,9 +5,9 @@ import Filters from "../Common/filter";
 import { Row, Col } from "antd";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
-
+import { debounce } from "lodash";
 const index = () => {
-  const { getData, downloadPdfOrCsv, caseStudyData } = useCustomHook();
+  const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
     getData();
   }, []);
@@ -25,7 +25,7 @@ const index = () => {
       <PageHeader title="Case Studies" actions bordered />
       <Row gutter={[20, 30]}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar size="middle" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={debounce(handleChange, 1000)} />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton
@@ -45,7 +45,7 @@ const index = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+            <CaseStudiesTable caseStudyTableData={caseStudyTableData} loading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>

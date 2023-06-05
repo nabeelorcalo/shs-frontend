@@ -19,7 +19,7 @@ const CandidateTable = (props: any) => {
     setOpenRejectModal,
     selectedCandidate,
     setSelectedCandidate,
-    loading,
+    isLoading,
   } = actionHandler();
   const { tableData = [] } = props;
   // modifying table data according to tale keys
@@ -167,11 +167,7 @@ const CandidateTable = (props: any) => {
   return (
     <>
       <BoxWrapper className="candidate-table-wrapper">
-        {loading ? (
-          <Spin className="w-full" tip="Loading...." indicator={antIcon} />
-        ) : (
-          <GlobalTable columns={columns} tableData={data} pagination />
-        )}
+        <GlobalTable columns={columns} tableData={data} loading={isLoading} pagination />
       </BoxWrapper>
       {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} />}
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}

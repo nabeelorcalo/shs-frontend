@@ -1,22 +1,102 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useState } from "react";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-
-// Chat operation and save into store
+import { useRecoilState } from "recoil";
+import endpoints from '../../config/apiEndpoints';
+import { universityReportsAPICallStatus, universityReportsFilterParam, universityReportsFiltersData, universityReportsTableData } from "../../store/univeristy-reports";
+const { UNIVERSITY_REPORTS, UNIVERSITY_USER_REPORTS, UNIVERSITY_REPORTS_FILTER } = endpoints
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [universityReports, setUniversityReports] = useRecoilState<any>(universityReportsTableData)
+  const [selectedUniversityReportsData, setSelectedUniversityReportsData] = useState<any>([])
+  const [selectedAsseessmentReport, setSelectedAsseessmentReport] = useState<any>([])
+  const [universityReportsFilters, setuniversityReportsFilters] = useRecoilState<any>(universityReportsFiltersData)
+  // loader
+  const [isLoading, setISLoading] = useRecoilState(universityReportsAPICallStatus);
+  // company manager list
+  const [companyManagerList, setCompanyManagerList] = useState<any>([])
+  // reports params
+  let params: any = {
+    limit: 10,
+    page: 1,
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
+  // global set params for filter ans search
+  const [filterParams, setFilterParams] = useRecoilState<any>(universityReportsFilterParam)
+  // handle global filters params
+  const handleFilterParams = (filter: any) => {
+    params = { ...params, ...filter }
+    setFilterParams({ ...params, ...filter })
+  }
+  // get case-studies table data
+  const getData = async (query?: any) => {
+    setISLoading(true)
+    //search query check
+    if (query?.search) {
+      params.search = query?.search
+    }
+    if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
+      params = { ...params, ...filterParams }
+    }
+    await api.get(UNIVERSITY_REPORTS, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
+      { count, data, pagination }
+    ): any => {
+      setUniversityReports({
+        count,
+        data: data?.map((obj: any, index: number) => ({
+          id: obj?.id,
+          no: index + 1,
+          avater: Image,
+          name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
+          department: obj?.company?.businessName ?? "",
+          company: obj?.internship?.department?.name ?? "",
+          reviewer: `${obj?.manager?.companyManager?.firstName} ${obj?.manager?.companyManager?.lastName}`,
+        })),
+        pagination
+      })
+      setISLoading(false)
+    });
+  };
+
+  // get params id
+  const getParamId = (value: string) => {
+    return value?.substring(value?.lastIndexOf("/") + 1, value?.length);
+  };
+
+  // get single case-study object
+  const getSelectedUniversityReportsData = async (params: any) => {
+    setISLoading(true)
+    await api.get(`${UNIVERSITY_USER_REPORTS}`, params).then(({ data }) => {
+      setSelectedUniversityReportsData(data)
+      setISLoading(false)
+    })
+  }
+
+  // get single assessment report object
+  const getSelectedAsseessmentReport = async (id: any) => {
+    setISLoading(true)
+    await api.get(`${UNIVERSITY_USER_REPORTS}/${id}`).then(({ data }) => {
+      setSelectedAsseessmentReport(data)
+      setISLoading(false)
+    })
+  }
+
+  // to check signature is image or not 
+  const checkForImage = (url: string) => {
+    let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
+    if (url && url.match(regex))
+      return true;
+    else
+      return false;
+  }
+
+  // git filters values
+  const getFiltersData = async () => {
+    await api.get(UNIVERSITY_REPORTS_FILTER).then(({ data }) => (setuniversityReportsFilters(data)))
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -35,7 +115,7 @@ const useCustomHook = () => {
     const marginLeft = 40;
 
     const body = data.map(({ no, avater, name, department, company, reviewer }: any) =>
-      [no,'', name, department, company, reviewer]
+      [no, '', name, department, company, reviewer]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -85,8 +165,10 @@ const useCustomHook = () => {
   };
 
   return {
+    isLoading,
     getData,
-    downloadPdfOrCsv,
+    universityReports, selectedUniversityReportsData, getSelectedUniversityReportsData, handleFilterParams,
+    downloadPdfOrCsv, getParamId, getSelectedAsseessmentReport, selectedAsseessmentReport, checkForImage, companyManagerList, getFiltersData, universityReportsFilters
   };
 };
 

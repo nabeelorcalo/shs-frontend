@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BoxWrapper, Breadcrumb, SignatureAndUploadModal } from "../../../components";
+import { BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
 import { Divider, Button, Typography, Form, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -23,12 +23,11 @@ const AssessmentFormCaseStudies = () => {
     openModal,
     setOpenModal,
     handleManagerSignature,
+    isLoading,
   } = useCustomHook();
 
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
-  // console.log(feedbackFormData);
 
   useEffect(() => {
     getSelectedCasStudyData(getParamId(pathname));
@@ -81,151 +80,158 @@ const AssessmentFormCaseStudies = () => {
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       {/* for destop */}
-      <div className="scroll ">
-        <BoxWrapper className="my-5 destop-view">
-          <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${
-            userDetail?.lastName
-          } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
-          <div className="mt-5 flex gap-10">
-            <span className="font-semibold text-xl lg:w-[200px] text-primary-color font-[outfit]">
-              Learning Categories
-            </span>
-            <span className="font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]">
-              Learning Objectives
-            </span>
-            <span className="font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]">
-              Evidence of Progress
-            </span>
-            <span className="font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]">
-              Manager’s Remarks
-            </span>
-          </div>
-          <Divider />
-          {tableData.map((item: any, index: number) => {
-            return (
-              <div key={index} className="mt-5 flex gap-10">
-                <span className="text-base font-normal lg:w-[200px] font-[outfit]">{item?.learningCategories}</span>
-                <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.learningObjectives}</span>
-                <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.evidenceOfProgress}</span>
-                <div className="lg:w-[400px]">
-                  {managerStatus === "approved" ? (
-                    <ManagerRemarks
-                      image={<Emoji3rd />}
-                      remarksStatus={selectedCasStudyData?.supervisorStatus}
-                      id={item?.id}
-                      managerRemarks={item?.managerRemarks}
-                    />
-                  ) : (
-                    <ManagerRemarks
-                      managerRemarks={item?.managerRemarks}
-                      id={item?.id}
-                      handleManagerRemarks={handleManagerRemarks}
-                    />
-                  )}
-                </div>
-              </div>
-            );
-          })}
-          <Form layout="vertical" form={form}>
-            {managerStatus === "approved" ? (
-              <>
-                <Typography className="text-xl font-semibold my-1">Feedback</Typography>
-                <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
-              </>
-            ) : (
-              <>
-                <Typography className="text-xl font-semibold my-1">
-                  Feedback
-                  <span className="form-title font-medium">(Optional)</span>
-                </Typography>
-
-                <TextArea
-                  value={feedbackFormData?.feedback}
-                  onChange={(e) => setfeedbackFormData({ ...feedbackFormData, feedback: e?.target?.value })}
-                  rows={6}
-                  placeholder="Type here..."
-                />
-              </>
-            )}
-
-            <div className="flex gap-10">
-              <div className="w-full">
-                <Typography className="text-xl font-semibold mt-5 capitalize">
-                  {`${userDetail?.firstName} ${userDetail?.lastName}`}
-                </Typography>
-                <div className="sign-box w-full rounded-lg flex justify-center items-center">
-                  <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                    {checkForImage(selectedCasStudyData?.internSig) ? (
-                      <img className="absolute w-full h-full overflow-hidden" src={selectedCasStudyData?.internSig} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className="scroll ">
+          <BoxWrapper className="my-5 destop-view">
+            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${
+              userDetail?.lastName
+            } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
+            <div className="mt-5 flex gap-10">
+              <span className="font-semibold text-xl lg:w-[200px] text-primary-color font-[outfit]">
+                Learning Categories
+              </span>
+              <span className="font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]">
+                Learning Objectives
+              </span>
+              <span className="font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]">
+                Evidence of Progress
+              </span>
+              <span className="font-semibold text-xl lg:w-[400px] text-primary-color font-[outfit]">
+                Manager’s Remarks
+              </span>
+            </div>
+            <Divider />
+            {tableData.map((item: any, index: number) => {
+              return (
+                <div key={index} className="mt-5 flex gap-10">
+                  <span className="text-base font-normal lg:w-[200px] font-[outfit]">{item?.learningCategories}</span>
+                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.learningObjectives}</span>
+                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.evidenceOfProgress}</span>
+                  <div className="lg:w-[400px]">
+                    {managerStatus === "approved" ? (
+                      <ManagerRemarks
+                        image={<Emoji3rd />}
+                        remarksStatus={selectedCasStudyData?.supervisorStatus}
+                        id={item?.id}
+                        managerRemarks={item?.managerRemarks}
+                      />
                     ) : (
-                      <p>{selectedCasStudyData?.internSig}</p>
+                      <ManagerRemarks
+                        managerRemarks={item?.managerRemarks}
+                        id={item?.id}
+                        handleManagerRemarks={handleManagerRemarks}
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+            <Form layout="vertical" form={form}>
+              {managerStatus === "approved" ? (
+                <>
+                  <Typography className="text-xl font-semibold my-1">Feedback</Typography>
+                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
+                </>
+              ) : (
+                <>
+                  <Typography className="text-xl font-semibold my-1">
+                    Feedback
+                    <span className="form-title font-medium">(Optional)</span>
+                  </Typography>
+
+                  <TextArea
+                    value={feedbackFormData?.feedback}
+                    onChange={(e) => setfeedbackFormData({ ...feedbackFormData, feedback: e?.target?.value })}
+                    rows={6}
+                    placeholder="Type here..."
+                  />
+                </>
+              )}
+
+              <div className="flex gap-10">
+                <div className="w-full">
+                  <Typography className="text-xl font-semibold mt-5 capitalize">
+                    {`${userDetail?.firstName} ${userDetail?.lastName}`}
+                  </Typography>
+                  <div className="sign-box w-full rounded-lg flex justify-center items-center">
+                    <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
+                      {checkForImage(selectedCasStudyData?.internSig) ? (
+                        <img className="absolute w-full h-full overflow-hidden" src={selectedCasStudyData?.internSig} />
+                      ) : (
+                        <p>{selectedCasStudyData?.internSig}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full relative">
+                  <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
+                  <div className="sign-box w-full rounded-lg flex items-center justify-around">
+                    {!feedbackFormData?.supervisorSig && managerStatus !== "approved" ? (
+                      <span
+                        onClick={() => {
+                          setOpenModal(true);
+                          HandleCleare();
+                        }}
+                        className="sign-btn cursor-pointer"
+                      >
+                        Click here to sign
+                      </span>
+                    ) : (
+                      <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
+                        {checkForImage(feedbackFormData?.supervisorSig) ? (
+                          <img
+                            className="absolute w-full h-full overflow-hidden"
+                            src={feedbackFormData?.supervisorSig}
+                          />
+                        ) : (
+                          <p>{feedbackFormData?.supervisorSig}</p>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
               </div>
-              <div className="w-full relative">
-                <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
-                <div className="sign-box w-full rounded-lg flex items-center justify-around">
-                  {!feedbackFormData?.supervisorSig && managerStatus !== "approved" ? (
-                    <span
-                      onClick={() => {
-                        setOpenModal(true);
-                        HandleCleare();
-                      }}
-                      className="sign-btn cursor-pointer"
-                    >
-                      Click here to sign
-                    </span>
-                  ) : (
-                    <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                      {checkForImage(feedbackFormData?.supervisorSig) ? (
-                        <img className="absolute w-full h-full overflow-hidden" src={feedbackFormData?.supervisorSig} />
-                      ) : (
-                        <p>{feedbackFormData?.supervisorSig}</p>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Form>
-          <div className="flex justify-end gap-5 my-5 assessment-footer">
-            {managerStatus === "approved" ? (
-              <Button
-                onClick={() => navigate(-1)}
-                type="primary"
-                className="white-bg-color teriary-color save-btn font-semibold "
-              >
-                Back
-              </Button>
-            ) : (
-              <>
+            </Form>
+            <div className="flex justify-end gap-5 my-5 assessment-footer">
+              {managerStatus === "approved" ? (
                 <Button
-                  onClick={() => handleSubmit("Rejected")}
-                  type="primary"
-                  className="text-error-bg-color white-color reject-btn font-semibold"
-                >
-                  Reject
-                </Button>
-                <Button
-                  onClick={() => handleSubmit("Draft")}
+                  onClick={() => navigate(-1)}
                   type="primary"
                   className="white-bg-color teriary-color save-btn font-semibold "
                 >
-                  Save Draft
+                  Back
                 </Button>
-                <Button
-                  type="primary"
-                  className="teriary-bg-color  white-color  finalise-btn font-semibold  "
-                  onClick={() => handleSubmit("Approved")}
-                >
-                  Finalise
-                </Button>
-              </>
-            )}
-          </div>
-        </BoxWrapper>
-      </div>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => handleSubmit("Rejected")}
+                    type="primary"
+                    className="text-error-bg-color white-color reject-btn font-semibold"
+                  >
+                    Reject
+                  </Button>
+                  <Button
+                    onClick={() => handleSubmit("Draft")}
+                    type="primary"
+                    className="white-bg-color teriary-color save-btn font-semibold "
+                  >
+                    Save Draft
+                  </Button>
+                  <Button
+                    type="primary"
+                    className="teriary-bg-color  white-color  finalise-btn font-semibold  "
+                    onClick={() => handleSubmit("Approved")}
+                  >
+                    Finalise
+                  </Button>
+                </>
+              )}
+            </div>
+          </BoxWrapper>
+        </div>
+      )}
       <SignatureAndUploadModal
         title=""
         width={650}

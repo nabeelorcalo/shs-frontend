@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-// import { useEffect, useMemo } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import jsPDF from 'jspdf';
@@ -12,15 +12,20 @@ import csv from '../../helpers/csv';
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints;
   const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
-  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const getApplicationsData = async (searchValue: any) => {
+    setIsLoading(true);
     const { data } = await api.get(GET_APPLICATIONS, {
       search: searchValue ? searchValue : null
     });
-    setApplicationsData(data)
+    if (data) {
+      setIsLoading(false)
+      setApplicationsData(data)
+    }
   };
 
   // get application details list 
@@ -38,7 +43,7 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "pdf" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
@@ -108,6 +113,7 @@ const useCustomHook = () => {
     applicationDetailsState,
     debouncedSearch,
     applicationsData,
+    isLoading
   };
 };
 
