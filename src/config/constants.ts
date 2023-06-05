@@ -1,8 +1,7 @@
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
-  // MEDIA_URL: import.meta.env.VITE_APP_MEDIA_URL,
-  MEDIA_URL: "http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com",
+  MEDIA_URL: import.meta.env.VITE_APP_MEDIA_URL,
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",

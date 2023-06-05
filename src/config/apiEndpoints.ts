@@ -98,6 +98,8 @@ const endpoints = {
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
   UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
+  //Internships Summary graph
+  ATTENDANCE_OVERVIEW: `/intern/get_attenance_overview`,
 
   //Applications for student
   GET_APPLICATIONS: "/application/listApplications",
@@ -133,9 +135,9 @@ const endpoints = {
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
 
   SETTINGS_TEMPLATES: "/template/findAll",
-  DELETE_SETTING_TEMPLATE:"/template/delete",
-  POST_SETTING_TEMPLATE:"/template/add",
-  EDIT_SETTING_TEMPLATE:"/template/edit",
+  DELETE_SETTING_TEMPLATE: "/template/delete",
+  POST_SETTING_TEMPLATE: "/template/add",
+  EDIT_SETTING_TEMPLATE: "/template/edit",
   SETTINGS_SHIFTS: "/shift/findAll",
   POST_NEW_SHIFTS: "/shift/add",
   DELETE_SHIFT: "/shift/delete",
@@ -159,8 +161,8 @@ const endpoints = {
   GET_DELEGATE_DASHBOARD: "delegate/dashboard",
   GET_DELEGATE_MEMBERS: "delegate/members",
   SEND_REFERENCE_INVITE: "delegate/invite",
-  GET_ALL_COMAPANIES:"/university/universityCompanies",
-  ADD_PAYROLL:"/payroll/add",
+  GET_ALL_COMAPANIES: "/university/universityCompanies",
+  ADD_PAYROLL: "/payroll/add",
 
 };
 export default endpoints;
