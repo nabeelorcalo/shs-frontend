@@ -1,0 +1,14 @@
+@import "../../../scss/colors";
+
+.withdrawal-requests {
+
+  .filterby-status,
+  .filterby-method {
+    min-width: 170px;
+
+    .ant-select {
+      width: 100%;
+    }
+  }
+
+}

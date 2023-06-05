@@ -24,3 +24,8 @@ export const banksListState = atom({
   key: 'banksListState',
   default: []
 })
+
+export const withdrawalRequestsState = atom({
+  key: 'withdrawalRequestsState',
+  default: []
+})

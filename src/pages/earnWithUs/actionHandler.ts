@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
@@ -5,7 +6,8 @@ import {
   delegateMembersState,
   delegateDashboardState,
   currentBalanceState,
-  banksListState
+  banksListState,
+  withdrawalRequestsState
 } from "../../store";
 
 
@@ -20,11 +22,14 @@ const useEarnWithUsHook = () => {
     UPDATE_BANK_ACCOUNT,
     GET_BANK_ACCOUNT_DETAIL,
     ADD_WITH_DRAWL_REQUEST,
+    WITH_DRAWAL_REQUEST
   } = endpoints;
   const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState);
   const [delegateDashboard, setDelegateDashboard] = useRecoilState(delegateDashboardState);
   const [currentBalance, setCurrentBalance] = useRecoilState(currentBalanceState);
   const [banksList, setBanksList] = useRecoilState(banksListState);
+  const [withdrawalRequests, setWithdrawalRequests] = useRecoilState(withdrawalRequestsState);
+  const [totalRequests, setTotalRequests] = useState(0);
 
   
 
@@ -84,6 +89,15 @@ const useEarnWithUsHook = () => {
     return response;
   };
 
+  // GET WITHDRAWAL REQUESTS
+  const getWithdrawalRequests = async (payload: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    const response = await api.get(WITH_DRAWAL_REQUEST, payload);
+    setWithdrawalRequests(response.data)
+    setTotalRequests(response.count)
+    setLoading(false)
+  }
+
   return {
     getDelegateDashboard,
     getDelegateMembers,
@@ -94,7 +108,10 @@ const useEarnWithUsHook = () => {
     banksList,
     linkAccount,
     updateBankAccount,
-    createWithdrawal
+    createWithdrawal,
+    getWithdrawalRequests,
+    withdrawalRequests,
+    totalRequests
   };
 };
 
