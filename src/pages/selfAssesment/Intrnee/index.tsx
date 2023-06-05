@@ -23,12 +23,12 @@ const Internee = () => {
   // const [data, setData] = useState(assesmentMock);
   const [search, setSearch] = useState({page: 1, limit: 20});
 
-  const getSelfAssesment = async (searchValue: any) => {
-    await actions.getSelfAssessment(searchValue);
+  const getSelfAssesment = async () => {
+    await actions.getSelfAssessment();
   }
 
   useEffect(()=>{
-    getSelfAssesment(search);
+    getSelfAssesment();
   }, [search]);
 
   return (
@@ -54,7 +54,7 @@ const Internee = () => {
               size="middle"
               className="self_assesment"
             />
-        </Col>
+        </Col>  
         <Col xs={24}>
           <Row gutter={[20, 20]}>
             {data.map((item: any) => (

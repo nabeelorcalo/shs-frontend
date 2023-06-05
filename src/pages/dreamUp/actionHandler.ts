@@ -81,7 +81,8 @@ const useCustomHook = () => {
       subTitle: completedGoal[0]?.name,
       title: 'Last Achievement'
     }
-    bars.push(mGoal, last);
+    if(data?.mainGoal && data?.mainGoal.length !== 0) bars.push(mGoal);
+    if(completedGoal?.length !== 0) bars.push(last);
     setBarsData(bars as any);
   };
 
