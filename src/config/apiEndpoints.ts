@@ -85,7 +85,7 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
-  // End Point For Leaev Module For Intrne 
+  // End Point For Leaev Module For Intrne
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
@@ -112,19 +112,19 @@ const endpoints = {
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
-  SETTING_PERFORMANCE: '/performance',
+  SETTING_PERFORMANCE: "/performance",
 
   // Dreamup Endpoints
   DREAMUP: {
-    GET_GOALS: '/dreamup/get-goals',
-    ADD_GOALS: 'dreamup/add-goal',
-    DELETE_GOAL: 'dreamup/delete-goal',
-    ADD_TASK: 'dreamup/add-task',
-    EDIT_TASK: 'dreamup/edit-task',
-    DELETE_TASK: 'dreamup/delete-task',
-    MARK_TASK: 'dreamup/mark-task',
-    UPDATE_LIFE_ASSESSMENT: 'dreamup/add-update-life-assesment',
-    LIFE_ASSESSMENT: 'dreamup/get-life-assesment',
+    GET_GOALS: "/dreamup/get-goals",
+    ADD_GOALS: "dreamup/add-goal",
+    DELETE_GOAL: "dreamup/delete-goal",
+    ADD_TASK: "dreamup/add-task",
+    EDIT_TASK: "dreamup/edit-task",
+    DELETE_TASK: "dreamup/delete-task",
+    MARK_TASK: "dreamup/mark-task",
+    UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
+    LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
@@ -163,6 +163,13 @@ const endpoints = {
   SEND_REFERENCE_INVITE: "delegate/invite",
   GET_ALL_COMAPANIES: "/university/universityCompanies",
   ADD_PAYROLL: "/payroll/add",
+  GET_CURRENT_BALANCE: "delegate/balance",
 
+  //Payment Gateway
+  LINK_BANK_ACCOUNT: "payment-gateway/account/link",
+  GET_BANK_ACCOUNT_LIST: "payment-gateway/accounts/findAll",
+  UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
+  GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
+  ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 };
 export default endpoints;

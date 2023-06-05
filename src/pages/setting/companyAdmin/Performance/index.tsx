@@ -10,7 +10,7 @@ import {
 } from "../../../../assets/images";
 import "../../style.scss";
 import usePerformanceCustomHook from "./actionHandler";
-import { Alert, DropDownForSetting } from "../../../../components";
+import { Alert, DropDownForSetting, Loader } from "../../../../components";
 const { Panel } = Collapse;
 import "./style.scss";
 
@@ -26,9 +26,14 @@ const SettingPerformance: React.FC = () => {
     isDeleteModal: false,
     editField: null
   })
-  const [id, setId] = useState<any>();
 
-  const { getSettingPerformance, settingPerformancedata, deleteSettingPerformance, postSettingPerformance, editSettingPerformance }: any = usePerformanceCustomHook()
+  const {
+    loading,
+    getSettingPerformance,
+    settingPerformancedata,
+    deleteSettingPerformance,
+    postSettingPerformance,
+    editSettingPerformance }: any = usePerformanceCustomHook()
 
   useEffect(() => {
     getSettingPerformance()
@@ -52,7 +57,7 @@ const SettingPerformance: React.FC = () => {
 
   return (
     <div className="setting-performance">
-      <Space direction="vertical" className="w-full">
+      {loading ? <Loader /> : <Space direction="vertical" className="w-full">
         <Collapse
           expandIcon={({ isActive }) =>
             isActive ? <PerformanceMinus /> : <PerformancePlus />
@@ -350,7 +355,8 @@ const SettingPerformance: React.FC = () => {
             </Row>
           </Panel>
         </Collapse>
-      </Space>
+      </Space>}
+
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

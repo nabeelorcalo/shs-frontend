@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu, Spin } from "antd";
+import { Row, Col, Menu } from "antd";
 import {
   NewImg,
   PendingImg,
@@ -13,7 +13,7 @@ import {
   GreenLock,
   RedLock,
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Notifications, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
@@ -29,7 +29,7 @@ const CompanyAdmin = () => {
   const [state, setState] = useState<any>({
     search: null,
     status: null,
-    datePicker: 'THIS_MONTH'
+    datePicker: null
   })
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const {
@@ -42,7 +42,7 @@ const CompanyAdmin = () => {
   } = useCustomHook();
 
   useEffect(() => {
-    getOfferLetterList(state.status, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
+    getOfferLetterList(state.status, state?.datePicker?.toUpperCase().replace(" ", "_"), state.search);
     getOfferLetterDashboard()
   }, [state.search])
 
@@ -254,12 +254,12 @@ const CompanyAdmin = () => {
   }
 
   const handleValueStatus = (val: any) => {
-    getOfferLetterList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
+    getOfferLetterList(val, state.datePicker?.toUpperCase()?.replace(" ", "_"), state.search);
     setState({ ...state, status: val })
   }
   const handleTimeFrameValue = (val: any) => {
     setState({ ...state, datePicker: val });
-    getOfferLetterList(state.status, val.toUpperCase().replace(" ", "_"), state.search);
+    getOfferLetterList(state.status, val.toUpperCase()?.replace(" ", "_"), state.search);
   }
   return (
     <div className="offer-letter-company-admin">
@@ -320,7 +320,7 @@ const CompanyAdmin = () => {
 
       <div className="mt-4">
         <BoxWrapper>
-          {loading ? <Spin className="flex justify-center" /> :
+          {loading ? <Loader /> :
             <GlobalTable columns={tableColumns} tableData={newTableData} />
           }
         </BoxWrapper>

@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { Col, Divider, Row } from "antd";
-import { NoDataFound, SearchBar } from "../../../components";
+import { Loader, NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import Received from "../../contracts/student/received";
 
 const OfferLetterStudent = () => {
-  const { getOfferLetterList, contractList, searchHandler } = useCustomHook();
+  const [search, setSearch] = useState(null)
+  const { getOfferLetterList, contractList,loading } = useCustomHook();
 
   useEffect(() => {
-    getOfferLetterList(null, 'THIS_MONTH')
-  }, [])
+    getOfferLetterList(null, null, search)
+  }, [search])
 
   return (
     <div className="offer-latter-student">
@@ -24,9 +25,9 @@ const OfferLetterStudent = () => {
         </Col>
         <Divider />
         <Col xl={6} lg={12} md={24} sm={24} xs={24} >
-          <SearchBar handleChange={(e: any) => searchHandler(e, null)} />
+          <SearchBar handleChange={(e: any) => setSearch(e)} />
         </Col>
-        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+        {loading ? <Loader /> : <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 40]}>
             <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="offer-letter-status">
@@ -77,7 +78,7 @@ const OfferLetterStudent = () => {
               ))}
             </Col>
           </Row>
-        </Col>
+        </Col>}
       </Row>
     </div>
   );
