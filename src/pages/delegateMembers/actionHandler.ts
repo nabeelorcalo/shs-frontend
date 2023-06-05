@@ -1,64 +1,36 @@
-import api from '../../api';
+import React, { useState } from "react";
+// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
+// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import api from "../../api";
+import constants from "../../config/constants";
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { delegateMembersState } from "../../store";
-import { Notifications } from '../../components';
-import constants from '../../config/constants';
+import { delegateAgenetMembersState } from "../../store";
 
-
-const useDelegateHook = () => {
-  const { GET_DELEGAE_DASHBOARD, GET_DELEGAE_MEMBERS } = endpoints
-  const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState)
-
-  // GET DELEGATE DASHBOARD
-  const getDelegateDashboard = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true)
-    const response = await api.get(GET_DELEGAE_DASHBOARD);
-    setDelegateMembers(response.data)
-    setLoading(false)
-  }
-
-  // GET DELEGATE MEMBERS
-  const getDelegateMembers = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true)
-    const response = await api.get(GET_DELEGAE_MEMBERS, params);
-    setDelegateMembers(response.data)
-    setLoading(false)
-  }
-
-  // Read Single Recipe
-  // const getRecipe = async (id:any) => {
-  //   const response = await api.get(`${GET_RECIPE}/${id}`);
-  //   if(!response.error) {
-  //     let {data} = response;
-  //     const image = [{
-  //       uid: data?.recipeImage?.mediaId,
-  //       name: `${data?.recipeImage?.filename}.${data?.recipeImage.metaData.extension}`        ,
-  //       url: `${constants.MEDIA_URL}/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
-  //     }]
-  //     setRecipe({...data, image})
-  //   }
-  // }
-
-  // Update Recipe
-  // const updateRecipe = async (reqBody: any) => {
-  //   const response =await api.post(`${UPDATE_RECIPE}`, reqBody, {headers: {'Content-Type': 'multipart/form-data'}});
-  //   return response;
-  //   // Notifications({title: "Success", description: response.message, type: 'success'});
-  // }
-
-  // Delete Agent Property
-  // const deleteRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-  //   setLoading(true)
-  //   const response = await api.delete(`${DELETE_RECIPE}?recipeId=${id}`,);
-  //   Notifications({title: "Success", description: response.message, type: 'success'});
-  //   setLoading(false);
-  // }
+// Chat operation and save into store
+const useCustomHook = () => {
+  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
+  // const [chatId, setChatId] = useRecoilState(chatIdState);
+  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [membersData, setMembersData] = useRecoilState(delegateAgenetMembersState);
+  const [totalCount, setTotalCount] = useState(0);
+  const { GET_DELEGATE_MEMBERS } = endpoints;
+  const getData = async (type: string): Promise<any> => {
+    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  };
+  const getMembers = async (params: any) => {
+    api.get(GET_DELEGATE_MEMBERS, params).then((result) => {
+      setMembersData(result.data);
+      setTotalCount(result.count);
+    });
+  };
 
   return {
-    getDelegateDashboard,
-    getDelegateMembers
+    getData,
+    getMembers,
+    membersData,
+    totalCount,
   };
 };
 
-export default useDelegateHook;
+export default useCustomHook;

@@ -7,10 +7,14 @@ import { Row, Col } from "antd";
 import "./style.scss";
 
 const index = () => {
-  const { getData, caseStudyData } = useCustomHook();
+  const [filterValue, setFilterValue] = useState<any>();
+  const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
     getData();
   }, []);
+
+  useEffect(() => {}, [caseStudyData]);
+  console.log("caseStudyData", caseStudyData);
 
   const caseStudyTableData = caseStudyData?.data;
 
@@ -26,7 +30,12 @@ const index = () => {
   ];
   const action = useCustomHook();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const handleChange = () => {};
+  const handleChange = (value: any) => {
+    getData({ search: value });
+  };
+  const handleFilter = () => {
+    getData(filterValue);
+  };
 
   return (
     <div className="manager-case-studies">
@@ -46,14 +55,14 @@ const index = () => {
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
+              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
               Notifications({ title: "Success", description: "Case-studies list downloaded ", type: "success" });
             }}
           />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+            <CaseStudiesTable caseStudyTableData={caseStudyTableData} loading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>
@@ -64,7 +73,12 @@ const index = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters setShowDrawer={setShowDrawer} />
+          <Filters
+            setShowDrawer={setShowDrawer}
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
+            handleFilter={handleFilter}
+          />
         </React.Fragment>
       </Drawer>
     </div>

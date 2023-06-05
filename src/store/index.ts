@@ -18,3 +18,6 @@ export * from "./Performance";
 export * from "./Offers";
 export * from "./Structure";
 export * from "./earnWithUs";
+export * from "./Companies";
+export * from "./dreamup";
+export * from "./recipes";

@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesListState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -13,7 +13,6 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMEN
 const useCustomHook = () => {
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue(currentUserState)
-
   // candidates list params
   let params: any = {
     companyId: companyId,
@@ -22,7 +21,7 @@ const useCustomHook = () => {
     page: 1,
   };
   // loader
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setISLoading] = useRecoilState(cadidatesAPICallStatus);
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
   const [studentDetails, setStudentDetails] = useState<any>();
@@ -39,12 +38,12 @@ const useCustomHook = () => {
   const [hiringProcessList, setHiringProcessList] = useState([""]);
   // filter states
   const [timeFrame, setTimeFrame] = useState("");
-  const [internship, setInternship] = useState("");
+  const [internship, setInternship] = useState<any>();
   const [download, setDownload] = useState("");
-  // company manager list
+  // company manager list 
   const [companyManagerList, setCompanyManagerList] = useState<any>([])
   //interview event list
-  const [interviewList, setInterviewList] = useState<any>([])
+  const [interviewList, setInterviewList] = useRecoilState<any>(cadidatesInterviewListState)
   //interview event list
   const [templateList, setTemplateList] = useState<any>([])
   //modal states
@@ -53,8 +52,8 @@ const useCustomHook = () => {
 
   // get cadidates data
   const getCadidatesData = async (params: any) => {
-    setLoading(true)
-    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); setLoading(false) });
+    setISLoading(true)
+    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); setISLoading(false) });
   };
   // get student details
   const getStudentDetails = async (userId: any) => {
@@ -129,8 +128,6 @@ const useCustomHook = () => {
 
   // funtion for update rating
   const handleRating = async (selectedId: string | number, rating: string | number) => {
-    console.log(id, "iddd");
-
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
@@ -151,7 +148,6 @@ const useCustomHook = () => {
   // request documents
   const handleRequestDocument = async (body: any) => {
     const res = await api.post(DOCUMENT_REQUEST, body).then((res) => console.log("res", res))
-    console.log("resres", res);
   }
 
   // get comments
@@ -221,21 +217,21 @@ const useCustomHook = () => {
     values.reapeatDay = 0;
     values.address = "";
     values.eventType = "INTERVIEW";
+    setISLoading(true)
     await api.post(CREATE_MEETING, values).then(({ data }) => {
-      console.log("interviewList",interviewList);
       setInterviewList([...interviewList, data])
-      
       Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
+      setISLoading(false)
     })
   }
 
   // get schedule interview list
   const getScheduleInterviews = async (userId: string | number) => {
     let params: any = {
-      companyId: companyId,
+      // companyId: companyId,
       userId,
-      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
-      filterType: "THIS_MONTH",
+      // currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
+      // filterType: "THIS_MONTH",
     }
     await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res) => {
       setInterviewList(res?.data)
@@ -269,7 +265,29 @@ const useCustomHook = () => {
     await api.get(GET_ALL_TEMPLATES, params).then((res) => { setTemplateList(res?.data) })
   }
   return {
-    loading, setLoading, cadidatesList, setCadidatesList, studentDetails, getStudentDetails, handleRating, rating, setRating, getUserId, getCadidatesData, handleSearch, timeFrame, handleTimeFrameFilter, internship, handleInternShipFilter, handleRequestDocument, download, setDownload, openDrawer, setOpenDrawer, openRejectModal, setOpenRejectModal, selectedCandidate, getInternShipList, internShipList, setSelectedCandidate, hiringProcessList, setHiringProcessList, HandleAssignee, getComments, comment, setComment, handleCreateComment, commentsList, handleInitialPiple, handleStage, companyManagerList, setCompanyManagerList, getCompanyManagerList, scheduleInterview, getScheduleInterviews, interviewList, handleUpdateInterview, deleteInterview, getTemplates, templateList, params
+    isLoading, setISLoading,
+    cadidatesList, setCadidatesList,
+    studentDetails, getStudentDetails,
+    handleRating, rating, setRating,
+    getUserId, getCadidatesData, handleSearch,
+    timeFrame, handleTimeFrameFilter,
+    internship, handleInternShipFilter,
+    handleRequestDocument, download, setDownload,
+    openDrawer, setOpenDrawer,
+    openRejectModal, setOpenRejectModal,
+    selectedCandidate, setSelectedCandidate,
+    getInternShipList, internShipList,
+    hiringProcessList, setHiringProcessList,
+    HandleAssignee,
+    getComments, comment, setComment,
+    handleCreateComment, commentsList,
+    handleInitialPiple, handleStage,
+    companyManagerList,
+    setCompanyManagerList, getCompanyManagerList,
+    scheduleInterview, getScheduleInterviews,
+    interviewList, handleUpdateInterview,
+    deleteInterview, getTemplates,
+    templateList, params
   };
 };
 

@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { DepartmentAddIcon } from "../../../../assets/images";
 import { Col, Row, Typography, Button } from "antd";
-import { Alert, NoDataFound, SearchBar } from "../../../../components";
+import { Alert, Loader, NoDataFound, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import useDepartmentCustomHook from "./actionHandler";
 import AddNewDepaertmentModal from "./addNewDepaertmentModal";
 import "./style.scss";
 
 const SettingDepartment: React.FC = () => {
-  const { settingDepartmentdata, getSettingDepartment, deleteSettingDepartment } = useDepartmentCustomHook();
-  const [edit, setEdit] = useState<any>({})
-  // const [deleteModal, setDeleteModal] = useState<any>(false)
+  const { settingDepartmentdata,
+    getSettingDepartment,
+    deleteSettingDepartment,
+    loading } = useDepartmentCustomHook();
   const [state, setState] = useState<any>(
     {
       search: '',
       isEditModal: false,
       isDeleteModal: false,
-      id: null,
     }
   )
 
@@ -37,37 +37,37 @@ const SettingDepartment: React.FC = () => {
           <DepartmentAddIcon /> Add Department
         </Button>
       </div>
+      {settingDepartmentdata?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">
-        {settingDepartmentdata?.length === 0 ? <NoDataFound /> : null}
         {settingDepartmentdata?.map((data: any, index: number) => (
-          <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
-            <div className="department-box-wrapper">
-              <div className="flex justify-between">
-                <div>
-                  <p className="text-lg font-semibold text-primary-color">
-                    {data?.name}
-                  </p>
+          <>
+            {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
+              <div className="department-box-wrapper">
+                <div className="flex justify-between">
+                  <div>
+                    <p className="text-lg font-semibold text-primary-color">
+                      {data?.name}
+                    </p>
+                  </div>
+                  <div className="float-right cursor-pointer">
+                    <DropDownForSetting
+                      state={state}
+                      setState={setState}
+                      editData={data}
+                    />
+                  </div>
                 </div>
-                <div className="float-right cursor-pointer">
-                  <DropDownForSetting
-                    state={state}
-                    setState={setState}
-                    id={data?.id}
-                    editData={data}
-                    SetEditData={setEdit}
-                  />
-                </div>
+                <p className="text-sm font-normal text-secondary-color ">
+                  {data?.description}
+                </p>
               </div>
-              <p className="text-sm font-normal text-secondary-color ">
-                {data?.description}
-              </p>
-            </div>
-          </Col>
+            </Col>}
+          </>
         ))
         }
       </Row>
       {state.isEditModal &&
-        <AddNewDepaertmentModal state={state} setState={setState} edit={edit} setEdit={setEdit} />
+        <AddNewDepaertmentModal state={state} setState={setState} />
       }
       <Alert
         cancelBtntxt="Cancel"

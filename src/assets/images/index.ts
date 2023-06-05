@@ -477,6 +477,16 @@ export { ReactComponent as IconUploadLg } from "./recipes/icon-upload-lg.svg";
 export { ReactComponent as DownloadIconWithBg } from "./Performance/DownloadFile.svg";
 export { ReactComponent as ColorLessMedalIcon } from "./Performance/ColorlessMedalIcon.svg";
 export { ReactComponent as TalentBadge } from "./Performance/TalentBadge.svg";
+export { ReactComponent as NeutralGray } from "./Performance/neutral-gray.svg";
+export { ReactComponent as NeutralSelected } from "./Performance/neutral-selected.svg";
+export { ReactComponent as HappyGray } from "./Performance/happy-gray.svg";
+export { ReactComponent as HappySelected } from "./Performance/happy-selected.svg";
+export { ReactComponent as SadGray } from "./Performance/sad-gray.svg";
+export { ReactComponent as SadSelected } from "./Performance/sad-selected.svg";
+export { ReactComponent as AwesomeGray } from "./Performance/awesome-gray.svg";
+export { ReactComponent as AwesomeSelected } from "./Performance/awesome-selected.svg";
+export { ReactComponent as TerribleGray } from "./Performance/terrible-gray.svg";
+export { ReactComponent as TerribleSelected } from "./Performance/terrible-selected.svg";
 
 // export { ReactComponent as Location } from './location.svg';
 export { ReactComponent as Intro } from "./other-imgs/Intro.svg";
@@ -658,3 +668,6 @@ export { ReactComponent as NoData } from '../../assets/images/other-imgs/NoData.
 
 export { ReactComponent as OrcaloLogo } from './Personlization/orcalologo.svg';
 export { ReactComponent as EditPen } from './Personlization/editpen.svg';
+
+// Dreamup dashboard
+export { default as AchivmentIcon } from './AddEventInCalendar/AchivmentIcon.svg';

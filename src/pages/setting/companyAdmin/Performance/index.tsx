@@ -8,11 +8,11 @@ import {
   PerformancePlus,
   PerformanceTick,
 } from "../../../../assets/images";
-import DropDownForPerformance from "./PerformanceDropdown";
 import "../../style.scss";
 import usePerformanceCustomHook from "./actionHandler";
-import { Alert, DropDownForSetting } from "../../../../components";
+import { Alert, DropDownForSetting, Loader } from "../../../../components";
 const { Panel } = Collapse;
+import "./style.scss";
 
 const SettingPerformance: React.FC = () => {
   const [hideButton, sethideButton] = useState<any>({
@@ -21,27 +21,43 @@ const SettingPerformance: React.FC = () => {
     personal: false,
     objectName: null
   });
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     id: null,
-    isDeleteModal: false
+    isDeleteModal: false,
+    editField: null
   })
-  const [id, setId] = useState<any>();
-  const { getSettingPerformance, settingPerformancedata, deleteSettingPerformance, postSettingPerformance }: any = usePerformanceCustomHook()
+
+  const {
+    loading,
+    getSettingPerformance,
+    settingPerformancedata,
+    deleteSettingPerformance,
+    postSettingPerformance,
+    editSettingPerformance }: any = usePerformanceCustomHook()
 
   useEffect(() => {
     getSettingPerformance()
   }, [])
 
   const finishHandler = (values: any) => {
-    console.log(values);
-
     values.pType = hideButton.objectName
-    postSettingPerformance(values)
+    if (state?.editField?.id) {
+      editSettingPerformance(state?.editField, values)
+      setState({ ...state, editField: null })
+    }
+    else (
+      postSettingPerformance(values)
+    )
     sethideButton({ ...hideButton, learning: false, discipline: false, personal: false })
   }
+
+  const initialValues = {
+    questionTitle: state?.editField?.title
+  }
+
   return (
     <div className="setting-performance">
-      <Space direction="vertical" className="w-full">
+      {loading ? <Loader /> : <Space direction="vertical" className="w-full">
         <Collapse
           expandIcon={({ isActive }) =>
             isActive ? <PerformanceMinus /> : <PerformancePlus />
@@ -59,9 +75,8 @@ const SettingPerformance: React.FC = () => {
                     className="gutter-row"
                     xs={24}
                     lg={12}
-                    xxl={12}
                   >
-                    {item.id !== id &&
+                    {item.id !== state.editField?.id &&
                       <div className="flex mx-3">
                         <Performanceinput style={{ height: "38px" }} />
                         <div className="flex pt-1 justify-between performance-box w-full">
@@ -76,12 +91,36 @@ const SettingPerformance: React.FC = () => {
                         </div>
                       </div>
                     }
+                    {
+                      item.id === state.editField?.id && (
+                        <Form onFinish={finishHandler} className="w-full flex items-start m-0" initialValues={initialValues}>
+                          <Form.Item name='questionTitle' className="ml-4 mb-[0px]">
+                            <Input
+                              placeholder="Enter text"
+                              className="sm:w-full md:w-[280px]"
+                              size="small"
+                            />
+                          </Form.Item>
+                          <Space className="ml-2 mt-2.5">
+                            <button type="submit" className="w-[30px] border-0 bg-white">
+                              <PerformanceTick className="cursor-pointer" />
+                            </button>
+                            <button className="w-[30px] border-0 bg-white"
+                              onClick={() => {
+                                setState({ ...state, editField: null })
+                              }}>
+                              <PerformanceClose className="cursor-pointer" />
+                            </button>
+                          </Space>
+                        </Form>
+                      )
+                    }
                   </Col>
                 );
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xl={14} className="my-3">
                 {!hideButton.learning && (
                   <Button
                     size="small"
@@ -94,11 +133,11 @@ const SettingPerformance: React.FC = () => {
                   </Button>
                 )}
                 {hideButton.learning && (
-                  <Form onFinish={finishHandler} className="w-full flex items-start">
+                  <Form onFinish={finishHandler} className="flex items-start w-full">
                     <Form.Item name='questionTitle' className="ml-4">
                       <Input
                         placeholder="Enter text"
-                        className="sm:w-full md:w-[200px] lg:w-[425px]"
+                        className="w-full md:w-[280px]"
                         size="small"
                       />
                     </Form.Item>
@@ -118,13 +157,12 @@ const SettingPerformance: React.FC = () => {
             </Row>
           </Panel>
         </Collapse>
+
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ? <PerformanceMinus /> :
-              <PerformancePlus />
+            isActive ? <PerformanceMinus /> : <PerformancePlus />
           }
           expandIconPosition="right"
-          key={2}
           className="bg-white"
         >
           <Panel className="text-base font-semibold text-primary-color" header="Discipline" key="2">
@@ -136,9 +174,8 @@ const SettingPerformance: React.FC = () => {
                     className="gutter-row"
                     xs={24}
                     lg={12}
-                    xxl={12}
                   >
-                    {item.id !== id &&
+                    {item.id !== state.editField?.id &&
                       <div className="flex mx-3">
                         <Performanceinput style={{ height: "38px" }} />
                         <div className="flex pt-1 justify-between performance-box w-full">
@@ -154,29 +191,27 @@ const SettingPerformance: React.FC = () => {
                       </div>
                     }
                     {
-                      item.id === id && (
-                        <div className="w-full flex px-3">
-                          <Input
-                            placeholder="Enter text"
-                            className="w-full"
-                            size="small"
-                          />
-                          <Space className="ml-2">
-                            <PerformanceTick
-                              className="cursor-pointer"
-                              onClick={() => {
-                                setId('')
-                              }}
-
+                      item.id === state.editField?.id && (
+                        <Form onFinish={finishHandler} className="w-full flex items-start" initialValues={initialValues}>
+                          <Form.Item name='questionTitle' className="ml-4 mb-0">
+                            <Input
+                              placeholder="Enter text"
+                              className="sm:w-full md:w-[280px]"
+                              size="small"
                             />
-                            <PerformanceClose
+                          </Form.Item>
+                          <Space className="ml-2 mt-2.5">
+                            <button type="submit" className="w-[30px] border-0 bg-white">
+                              <PerformanceTick className="cursor-pointer" />
+                            </button>
+                            <button type="button" className="w-[30px] border-0 bg-white"
                               onClick={() => {
-                                setId('')
-                              }}
-                              className="cursor-pointer"
-                            />
+                                setState({ ...state, editField: null })
+                              }}>
+                              <PerformanceClose className="cursor-pointer" />
+                            </button>
                           </Space>
-                        </div>
+                        </Form>
                       )
                     }
                   </Col>
@@ -196,13 +231,12 @@ const SettingPerformance: React.FC = () => {
                     <AddNewQuestion /> Add New Question
                   </Button>
                 )}
-
                 {hideButton.discipline && (
                   <Form onFinish={finishHandler} className="w-full flex items-start">
-                    <Form.Item name='questionTitle' className="ml-4">
+                    <Form.Item name='questionTitle' className="ml-4 mb-0">
                       <Input
                         placeholder="Enter text"
-                        className="w-[425px]"
+                        className="sm:w-full md:w-[280px]"
                         size="small"
                       />
                     </Form.Item>
@@ -224,15 +258,12 @@ const SettingPerformance: React.FC = () => {
         </Collapse>
         <Collapse
           expandIcon={({ isActive }) =>
-            isActive ?
-              <PerformanceMinus /> :
-              <PerformancePlus />
+            isActive ? <PerformanceMinus /> : <PerformancePlus />
           }
           expandIconPosition="right"
-          key={3}
           className="bg-white"
         >
-          <Panel className="text-base font-semibold text-primary-color" header="Personal" key="1">
+          <Panel className="text-base font-semibold text-primary-color" header="Personal" key="3">
             <Row gutter={[0, 15]}>
               {settingPerformancedata?.personal?.map((item: any, index: number) => {
                 return (
@@ -243,7 +274,7 @@ const SettingPerformance: React.FC = () => {
                     lg={12}
                     xxl={12}
                   >
-                    {item.id !== id &&
+                    {item.id !== state.editField?.id &&
                       <div className="flex mx-3">
                         <Performanceinput style={{ height: "38px" }} />
                         <div className="flex pt-1 justify-between performance-box w-full">
@@ -259,29 +290,27 @@ const SettingPerformance: React.FC = () => {
                       </div>
                     }
                     {
-                      item.id === id && (
-                        <div className="w-full flex px-3">
-                          <Input
-                            placeholder="Enter text"
-                            className="w-full"
-                            size="small"
-                          />
-                          <Space className="ml-2">
-                            <PerformanceTick
-                              className="cursor-pointer"
-                              onClick={() => {
-                                setId('')
-                              }}
-
+                      item.id === state.editField?.id && (
+                        <Form onFinish={finishHandler} className="w-full flex items-start" initialValues={initialValues}>
+                          <Form.Item name='questionTitle' className="ml-4">
+                            <Input
+                              placeholder="Enter text"
+                              className="sm:w-full md:w-[280px]"
+                              size="small"
                             />
-                            <PerformanceClose
+                          </Form.Item>
+                          <Space className="ml-2 mt-2.5">
+                            <button type="submit" className="w-[30px] border-0 bg-white">
+                              <PerformanceTick className="cursor-pointer" />
+                            </button>
+                            <button className="w-[30px] border-0 bg-white"
                               onClick={() => {
-                                setId('')
-                              }}
-                              className="cursor-pointer"
-                            />
+                                setState({ ...state, editField: null })
+                              }}>
+                              <PerformanceClose className="cursor-pointer" />
+                            </button>
                           </Space>
-                        </div>
+                        </Form>
                       )
                     }
                   </Col>
@@ -301,13 +330,12 @@ const SettingPerformance: React.FC = () => {
                     <AddNewQuestion /> Add New Question
                   </Button>
                 )}
-
                 {hideButton.personal && (
                   <Form onFinish={finishHandler} className="w-full flex items-start">
                     <Form.Item name='questionTitle' className="ml-4">
                       <Input
                         placeholder="Enter text"
-                        className="w-[425px]"
+                        className="sm:w-full md:w-[280px]"
                         size="small"
                       />
                     </Form.Item>
@@ -327,7 +355,8 @@ const SettingPerformance: React.FC = () => {
             </Row>
           </Panel>
         </Collapse>
-      </Space>
+      </Space>}
+
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

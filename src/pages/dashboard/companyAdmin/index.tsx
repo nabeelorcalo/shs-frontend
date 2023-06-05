@@ -1,7 +1,7 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
 import { gutter } from "..";
 import {
   AnnouncementList,
@@ -21,11 +21,14 @@ import "../style.scss";
 import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
+import useCustomHook from "./actionHandler";
 
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const { getAttendance, attendance, getData, debouncedResults } = useCustomHook();
+  const announcementData = useRecoilValue(announcementDataState);
   const [state, setState] = useState({
-    list: [],
+    list: announcementData,
     loading: false,
     birthdayWishlist: [
       {
@@ -52,35 +55,24 @@ const CompanyAdmin = () => {
     ],
   });
   const role = useRecoilValue(currentUserRoleState);
+  const userData = useRecoilValue(currentUserState);
 
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
-
-    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            list: body.results,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => {});
-  };
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
   };
   const handleSelect = (value: string) => {};
   useEffect(() => {
-    loadMoreData();
+    console.log("userData", userData);
+    getAttendance();
+    getData();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedResults.cancel();
+      console.log("fs");
+    };
+  });
 
   return (
     <>
@@ -88,7 +80,7 @@ const CompanyAdmin = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">Maria Sanoid</span>
+            <span className="page-header-secondary-color">{userData.firstName + " " + userData.lastName}</span>
           </div>
         }
       />
@@ -127,14 +119,16 @@ const CompanyAdmin = () => {
           />
         </Col>
         <Col xs={24} xl={8} xxl={6}>
-          <AnnouncementList
-            data={state.list}
-            loading={state.loading}
-            loadMoreData={loadMoreData}
-            role={role}
-            handleAddAnnouncement={handleAddAnnouncement}
-            height={460}
-          />
+          {announcementData && (
+            <>
+              <AnnouncementList
+                data={announcementData}
+                role={role}
+                handleAddAnnouncement={handleAddAnnouncement}
+                height={460}
+              />
+            </>
+          )}
         </Col>
         <Col xs={24} md={24} xl={16} xxl={13}>
           <Row gutter={gutter} className="flex-col">
@@ -167,6 +161,7 @@ const CompanyAdmin = () => {
                 level={4}
                 graphName="attendance"
                 styling={{ height: 230 }}
+                attendanceData={attendance}
               />
             </Col>
           </Row>

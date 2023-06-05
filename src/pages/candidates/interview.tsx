@@ -2,7 +2,7 @@ import { useEffect, useState, Fragment } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
 import { Schedule, DrawerIcon, IconEdit } from "../../assets/images";
-import { Alert, NoDataFound } from "../../components";
+import { Alert, Loader, NoDataFound } from "../../components";
 import ScheduleModal from "./scheduleModal";
 import actionHandler from "./actionHandler";
 import dayjs from "dayjs";
@@ -21,7 +21,7 @@ const Interview = ({
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
   // const [updateData, setUpdateData] = useState({});
-  const { interviewList, getScheduleInterviews, deleteInterview } = actionHandler();
+  const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
 
   useEffect(() => {
     getScheduleInterviews(candidateId);
@@ -50,7 +50,7 @@ const Interview = ({
           <ScheduleModal
             setOpen={setOpen}
             open={open}
-            userId={userId}
+            candidateId={candidateId}
             data={updateData}
             // setUpdateData={setUpdateData}
             handleEdit={handleEdit}

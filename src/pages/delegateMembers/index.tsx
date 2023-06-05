@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react"
-import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps } from 'antd';
-import { Table, Space, Dropdown, Button, Row, Col, Select } from 'antd'
-import { IconAngleDown } from '../../assets/images'
+import React, { useEffect, useState } from "react";
+import type { ColumnsType } from "antd/es/table";
+import type { MenuProps } from "antd";
+import { Table, Space, Dropdown, Button, Row, Col } from "antd";
+import { IconAngleDown } from "../../assets/images";
 import { SearchBar, PageHeader } from "../../components";
 import "./style.scss";
-import useDelegateHook from './actionHandler'
-import { useRecoilValue } from "recoil";
-import { delegateMembersState } from "../../store";
+import useCustomHook from "./actionHandler";
+import dayjs from "dayjs";
 
 interface DataType {
   key: React.Key;
@@ -18,240 +17,286 @@ interface DataType {
   joiningDate: string;
   location: string;
   status: string;
+  id?: number;
+  referredToUser?: any;
 }
-
 
 // Temporary Data
 const tableData = [
   {
-    key: '1',
-    name: 'Ana Black',
-    email: 'anablack@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
+    key: "1",
+    name: "Ana Black",
+    email: "anablack@gmail.com",
+    rewardAmount: "£15",
+    memberType: "University",
+    joiningDate: "20/10/2022",
+    location: "Virtual",
+    status: "active",
   },
   {
-    key: '2',
-    name: 'James',
-    email: 'james@gmail.com',
-    rewardAmount: '£3',
-    memberType: 'Student',
-    joiningDate: '20/10/2022',
-    location: 'Glasgow',
-    status: 'inactive'
+    key: "2",
+    name: "James",
+    email: "james@gmail.com",
+    rewardAmount: "£3",
+    memberType: "Student",
+    joiningDate: "20/10/2022",
+    location: "Glasgow",
+    status: "inactive",
   },
   {
-    key: '3',
-    name: 'Elijah',
-    email: 'elijah@gmail.com',
-    rewardAmount: '£5',
-    memberType: 'Intern',
-    joiningDate: '20/10/2022',
-    location: 'London',
-    status: 'active'
+    key: "3",
+    name: "Elijah",
+    email: "elijah@gmail.com",
+    rewardAmount: "£5",
+    memberType: "Intern",
+    joiningDate: "20/10/2022",
+    location: "London",
+    status: "active",
   },
   {
-    key: '4',
-    name: 'Ana Black',
-    email: 'mateo@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
+    key: "4",
+    name: "Ana Black",
+    email: "mateo@gmail.com",
+    rewardAmount: "£15",
+    memberType: "University",
+    joiningDate: "20/10/2022",
+    location: "Virtual",
+    status: "active",
   },
   {
-    key: '5',
-    name: 'James',
-    email: 'michael@gmail.com',
-    rewardAmount: '£3',
-    memberType: 'Student',
-    joiningDate: '20/10/2022',
-    location: 'Edinburgh',
-    status: 'inactive'
+    key: "5",
+    name: "James",
+    email: "michael@gmail.com",
+    rewardAmount: "£3",
+    memberType: "Student",
+    joiningDate: "20/10/2022",
+    location: "Edinburgh",
+    status: "inactive",
   },
   {
-    key: '1',
-    name: 'Ana Black',
-    email: 'anablack@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
+    key: "1",
+    name: "Ana Black",
+    email: "anablack@gmail.com",
+    rewardAmount: "£15",
+    memberType: "University",
+    joiningDate: "20/10/2022",
+    location: "Virtual",
+    status: "active",
   },
   {
-    key: '2',
-    name: 'James',
-    email: 'james@gmail.com',
-    rewardAmount: '£3',
-    memberType: 'Student',
-    joiningDate: '20/10/2022',
-    location: 'Glasgow',
-    status: 'inactive'
+    key: "2",
+    name: "James",
+    email: "james@gmail.com",
+    rewardAmount: "£3",
+    memberType: "Student",
+    joiningDate: "20/10/2022",
+    location: "Glasgow",
+    status: "inactive",
   },
   {
-    key: '3',
-    name: 'Elijah',
-    email: 'elijah@gmail.com',
-    rewardAmount: '£5',
-    memberType: 'Intern',
-    joiningDate: '20/10/2022',
-    location: 'London',
-    status: 'active'
+    key: "3",
+    name: "Elijah",
+    email: "elijah@gmail.com",
+    rewardAmount: "£5",
+    memberType: "Intern",
+    joiningDate: "20/10/2022",
+    location: "London",
+    status: "active",
   },
   {
-    key: '4',
-    name: 'Ana Black',
-    email: 'mateo@gmail.com',
-    rewardAmount: '£15',
-    memberType: 'University',
-    joiningDate: '20/10/2022',
-    location: 'Virtual',
-    status: 'active'
+    key: "4",
+    name: "Ana Black",
+    email: "mateo@gmail.com",
+    rewardAmount: "£15",
+    memberType: "University",
+    joiningDate: "20/10/2022",
+    location: "Virtual",
+    status: "active",
   },
 ];
 
 const DelegateMembers = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [loading, setLoading] = useState(false);
-  const [filterParams, setFilterParams] = useState({})
-  const {getDelegateMembers} = useDelegateHook();
-  const delegateMembers = useRecoilValue(delegateMembersState);
+  const [pageNo, setPageNo] = useState(1);
+  const [limit, setLimit] = useState(5);
+  const [selectedType, setSelectedType] = useState({ key: "", value: "" });
+  const [selectedStatus, setSelectedStatus] = useState({ key: "", value: "" });
+  const [search, setSearch] = useState("");
+  const { getMembers, membersData, totalCount } = useCustomHook();
+  const statusItems: any[] = [
+    {
+      key: "ACTIVE",
+      label: "Active",
+    },
+    {
+      key: "INACTIVE",
+      label: "Inactive",
+    },
+  ];
 
-  const typeItems: MenuProps['items'] = [
-   
+  const typeItems: any[] = [
+    {
+      key: "COMPANY_ADMIN",
+      label: "Company Admin",
+    },
+    {
+      key: "COMPANY_MANAGER",
+      label: "Manager",
+    },
+    {
+      key: "STUDENT",
+      label: "Student",
+    },
+    {
+      key: "INTERN",
+      label: "Intern",
+    },
+    {
+      key: "UNIVERSITY",
+      label: "University",
+    },
   ];
 
   const tableColumns: ColumnsType<DataType> = [
     {
-      title: 'No',
-      dataIndex: 'no.',
-      align: 'center',
+      title: "No",
+      dataIndex: "no.",
+      align: "center",
       render: (_, row, index) => {
         return (
-          <>{index < 9 ? 0 : null}{index + 1}</>
+          <>
+            {index < 9 ? 0 : null}
+            {index + 1}
+          </>
         );
       },
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: "Name",
+      dataIndex: "name",
+      render: (text, record) => (
+        <p className="min-w-[110px] text-sm">
+          {record?.referredToUser?.firstName} {record?.referredToUser?.lastName}
+        </p>
+      ),
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
+      title: "Email",
+      dataIndex: "email",
+      render: (text, record) => <p className=" text-sm">{record?.referredToUser?.email}</p>,
     },
     {
-      title: 'Reward Amount',
-      dataIndex: 'rewardAmount',
+      title: "Reward Amount",
+      dataIndex: "rewardAmount",
+      key: "rewardAmount",
     },
     {
-      title: 'Member Type',
-      dataIndex: 'memberType',
+      title: "Member Type",
+      dataIndex: "memberType",
+      render: (text, record) => (
+        <p className=" text-sm">
+          {record?.referredToUser?.role
+            .replace(/_/g, " ")
+            .toLowerCase()
+            .replace(/(?:^|\s)\S/g, (char: string) => char.toUpperCase())}
+        </p>
+      ),
     },
     {
-      title: 'Joining Date',
-      dataIndex: 'joiningDate',
+      title: "Joining Date",
+      dataIndex: "joiningDate",
+      render: (text, record) => (
+        <p className=" text-sm">{dayjs(record?.referredToUser?.createdAt).format("YYYY/MM/DD")}</p>
+      ),
     },
     {
-      title: 'Location',
-      dataIndex: 'location',
+      title: "Location",
+      dataIndex: "location",
+      render: (text, record) => <p className=" text-sm">{record?.referredToUser?.location || "N/A"}</p>,
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
+      title: "Status",
+      dataIndex: "status",
       render: (_, row, index) => {
         return (
-          <div className={`shs-status-badge ${row.status === 'inactive' ? 'error' : 'success'}`}>
-            {row.status === 'inactive' ? 'Inactive' : 'Active'}
+          <div
+            className={`shs-status-badge ${
+              row?.referredToUser?.status?.toLowerCase() === "active" ? "success" : "error"
+            }`}
+          >
+            {row?.referredToUser?.status?.toLowerCase() === "active" ? "Active" : "Inactive"}
           </div>
         );
       },
     },
   ];
 
-
-
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getDelegateMembers(filterParams, setLoading)
-  }, [filterParams])
-
+    getMembersData();
+  }, [pageNo, selectedStatus, selectedType, search]);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleSearch = (value:any) => {
-    setFilterParams((prev:any) => {
-      return {
-        ...prev,
-        q: value
-      }
-    })
-  }
-
-  const handleFilterStatus = (value:any) => {
-    setFilterParams((prev:any) => {
-      return {
-        ...prev,
-        status: value
-      }
-    })
-  }
-
-  const handleFilterType = (value:any) => {
-    setFilterParams((prev:any) => {
-      return {
-        ...prev,
-        type: value
-      }
-    })
-  }
-
-
+  const handleStatusClick = ({ key }: any) => {
+    const clickedItem = statusItems.findIndex((sti) => sti?.key === key);
+    if (clickedItem !== -1) setSelectedStatus({ key, value: statusItems[clickedItem]?.label });
+  };
+  const handleTypeClick = ({ key }: any) => {
+    const clickedItem = typeItems.findIndex((sti) => sti?.key === key);
+    if (clickedItem !== -1) setSelectedType({ key, value: typeItems[clickedItem]?.label });
+  };
+  const handleTableChange = (pagination: any) => {
+    setPageNo(pagination);
+  };
+  const getMembersData = () => {
+    let params: any = {
+      page: pageNo,
+      limit,
+    };
+    if (selectedStatus.key) params["status"] = selectedStatus?.key;
+    if (selectedType.key) params["type"] = selectedType?.key;
+    if (search) params["q"] = search;
+    getMembers(params);
+  };
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
     <div className="delegate-members">
-      <PageHeader title="Delegate Members" bordered  />
+      <PageHeader title="Delegate Members" bordered />
       <Row gutter={[20, 20]} className="page-filterbar">
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleSearch} />
+          <SearchBar handleChange={(word: string) => setSearch(word)} />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex justify-end gap-4 main-filter-btns">
-          <div className="members-filterby-status">
-            <Select
-              className="filled"
-              placeholder="Status"
-              onChange={handleFilterStatus}
+          <div className="requests-filterby-status">
+            <Dropdown
+              overlayClassName="shs-dropdown"
+              menu={{ items: statusItems, onClick: handleStatusClick }}
+              trigger={["click"]}
               placement="bottomRight"
-              suffixIcon={<IconAngleDown />}
             >
-              <Select.Option value="ACTIVE">Active</Select.Option>
-              <Select.Option value="INACTIVE">Inactive</Select.Option>
-            </Select>
+              <Button className="button-sky-blue main-btn">
+                {selectedStatus?.value ? selectedStatus?.value : "Status"}
+                <IconAngleDown />
+              </Button>
+            </Dropdown>
           </div>
-          <div className="members-filterby-status">
-            <Select
-              className="filled"
-              placeholder="Type"
-              onChange={handleFilterType}
+          <div className="dropdown-download">
+            <Dropdown
+              overlayClassName="shs-dropdown"
+              menu={{ items: typeItems, onClick: handleTypeClick }}
+              trigger={["click"]}
               placement="bottomRight"
-              suffixIcon={<IconAngleDown />}
             >
-              <Select.Option value="COMPANY_ADMIN">Company Admin</Select.Option>
-              <Select.Option value="COMPANY_MANAGER">Manager</Select.Option>
-              <Select.Option value="STUDENT">Student</Select.Option>
-              <Select.Option value="INTERN">Intern</Select.Option>
-              <Select.Option value="UNIVERSITY">University</Select.Option>
-              <Select.Option value="DELEGATE_AGENT">Delegate Agent</Select.Option>
-            </Select>
+              <Button className="button-sky-blue main-btn">
+                {selectedType?.value ? selectedType?.value : "Type"}
+                <IconAngleDown />
+              </Button>
+            </Dropdown>
           </div>
         </Col>
         <Col xs={24}>
@@ -260,15 +305,25 @@ const DelegateMembers = () => {
               <Table
                 scroll={{ x: "max-content" }}
                 columns={tableColumns}
-                dataSource={tableData}
-                pagination={{ pageSize: 5, showTotal: (total) => <>Total: <span>{total}</span></> }}
+                dataSource={membersData}
+                pagination={{
+                  pageSize: limit,
+                  current: pageNo,
+                  total: totalCount,
+                  onChange: handleTableChange,
+                  showTotal: (total) => (
+                    <>
+                      Total: <span>{total}</span>
+                    </>
+                  ),
+                }}
               />
             </div>
           </div>
         </Col>
       </Row>
-  </div>
-  )
-}
+    </div>
+  );
+};
 
-export default DelegateMembers
+export default DelegateMembers;

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   GlobalTable,
-  SearchBar,
   PageHeader,
   BoxWrapper,
   ToggleButton,
@@ -13,11 +12,12 @@ import {
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
-import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
-import { Avatar, Button, Col, Menu, MenuProps, Row } from 'antd';
+import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row } from 'antd';
 import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
+import { log } from "console";
 
 const PopOver: any = () => {
   const navigate = useNavigate();
@@ -48,7 +48,8 @@ const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", 
 const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     showDrawer: false,
     isToggle: false,
@@ -57,7 +58,13 @@ const Payroll = () => {
     payrollCycle: ""
   })
 
-  const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
+  const { payrollData, downloadPdfOrCsv,getData,debouncedSearch } = useCustomHook();
+
+  useEffect(()=>{
+    getData(searchValue)
+  },[searchValue])
+
+  console.log('payroll',payrollData)
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -109,9 +116,9 @@ const Payroll = () => {
           <Avatar
             src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
           />,
-        name: item.name, 
-        // department: item.department,
-        joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
+        name: item?.name, 
+        // department: item?.department,
+        joining_date: dayjs(item?.createdAt)?.format("DD/MM/YYYY"),
         payroll_cycle: `${monthFrom} - ${monthTo}`,
         actions: <PopOver />
       }
@@ -152,6 +159,12 @@ const Payroll = () => {
       payrollCycle: value
     }))
   }
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
+
 
   return (
     <div className="payroll-wrapper-main">
@@ -160,12 +173,12 @@ const Payroll = () => {
         bordered
       />
       <Row gutter={[20, 20]}>
-        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar
-            handleChange={changeHandler}
-            name="search bar"
+        <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
+        <Input
+            className='search-bar'
             placeholder="Search"
-            size="middle"
+            onChange={debouncedResults}
+            prefix={<GlassMagnifier />}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">

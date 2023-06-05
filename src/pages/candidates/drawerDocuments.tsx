@@ -15,11 +15,13 @@ const DrawerDocuments = ({ documents,email }: any) => {
         date: dayjs(docItem?.createdAt).format("DD/MMM/YYYY"),
         size: docItem?.mediaSize,
         fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
+        extension: docItem?.metaData?.extension,
       }))
     : [];
 
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({ extension: "", url: "" });
 
   return (
     <div className="doc-wrapper">
@@ -48,11 +50,13 @@ const DrawerDocuments = ({ documents,email }: any) => {
               </div>
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center">
-                  <img src={Preview} alt="" onClick={() => setOpenPreview(true)} />
-                  <PdfPreviewModal
-                    setOpen={setOpenPreview}
-                    open={openPreview}
-                    url={`${constants?.MEDIA_URL}/${data?.fileUrl}`}
+                  <img
+                    src={Preview}
+                    alt=""
+                    onClick={() => {
+                      setOpenPreview(true);
+                      setPreViewModal({ extension: data?.extension, url: `${constants?.MEDIA_URL}/${data?.fileUrl}` });
+                    }}
                   />
                 </p>
               </div>
@@ -67,6 +71,7 @@ const DrawerDocuments = ({ documents,email }: any) => {
           </div>
         ))}
       </div>
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 };

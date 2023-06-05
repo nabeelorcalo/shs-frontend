@@ -22,21 +22,13 @@
   min-width: 205px !important;
 }
 
-.requests-filterby-agent {
-  .ant-select-selector {
-    .ant-select-selection-item {
-      padding-right: 25px;
-    }
-  }
-}
-
-
-
 .agent-option {
   display: flex;
   align-items: center;
 
-  .ant-avatar {
+  & > img {
+    height: 24px;
+    width: 24px;
     margin-right: 16px;
     min-width: 24px;
 
@@ -74,5 +66,5 @@
        width: 100%;
       }
     }
-    }
   }
+}

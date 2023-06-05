@@ -6,14 +6,14 @@ import {
   BoxWrapper, FiltersButton, Loader
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Dropdown, Row, Col, Input, Alert } from "antd";
+import { Avatar, Button, Dropdown, Row, Col, Input } from "antd";
 import type { MenuProps } from 'antd';
 import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/images";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
-import "./style.scss";
 import UserSelector from "../../components/UserSelector";
 import AlertBanner from "../../components/AlertBanner";
+import "./style.scss";
 
 
 const Internships = () => {
@@ -26,9 +26,12 @@ const Internships = () => {
     location: undefined,
     department: undefined
   })
+
   const { getAllInternshipsData, internshipData,
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
-    departmentsData, locationsData, debouncedSearch, isLoading } = useCustomHook();
+    departmentsData, locationsData, debouncedSearch, isLoading,
+    deleteInternshipData
+  } = useCustomHook();
 
   useEffect(() => {
     getAllDepartmentData();
@@ -41,6 +44,10 @@ const Internships = () => {
 
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
+  }
+
+  const handleDelete = (id: any) => {
+    deleteInternshipData(id)
   }
 
   const PopOver = (props: any) => {
@@ -64,6 +71,28 @@ const Internships = () => {
         ),
       },
     ];
+    if (item?.status === "REJECTED" || item?.status === "DRAFT") {
+      items.push(
+        {
+          key: '3',
+          label: (
+            <a rel="noopener noreferrer" onClick={() => handleDelete(item.id)}>
+              Delete
+            </a>
+          ),
+        },
+        {
+          key: '4',
+          label: (
+            <a rel="noopener noreferrer"
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP, { state: item }) }}>
+              Edit
+            </a>
+          ),
+        }
+      );
+    }
+
     return (
       <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />

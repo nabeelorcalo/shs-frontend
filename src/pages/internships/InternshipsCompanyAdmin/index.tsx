@@ -194,7 +194,7 @@ const InternshipsCompanyAdmin = () => {
                     status={item?.status}
                     department={item?.department?.name}
                     internType={item?.internType}
-                    postedBy={item?.postedBy}
+                    postedBy={`${item?.jobPoster?.firstName} ${item?.jobPoster?.lastName}`}
                     locationType={item?.locationType}
                     location={item?.location?.name}
                     createdAt={item?.createdAt}

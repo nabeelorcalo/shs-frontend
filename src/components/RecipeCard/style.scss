@@ -11,7 +11,13 @@
   }
 
   .recipe-card-thumb {
+    height: 153px;
 
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
   }
 
   .recipe-card-header {

@@ -1,11 +1,21 @@
-import { useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, CommonDatePicker } from "../../../components";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import {
+  GlobalTable, PageHeader, BoxWrapper, InternsCard,
+  ToggleButton, DropDown, NoDataFound, Loader
+} from "../../../components";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, More, TableViewIcon } from "../../../assets/images"
-import { MenuProps, Row, Col } from 'antd';
+import { CardViewIcon, GlassMagnifier, More, TableViewIcon, CalendarIcon } from "../../../assets/images"
+import { MenuProps, Row, Col, Input, DatePicker } from 'antd';
 import { Dropdown, Avatar } from 'antd';
-import useCustomHook from "../actionHandler";
+import useStudentsCustomHook from "../actionHandler";
+import { currentUserState } from '../../../store';
+import { useRecoilState } from "recoil";
+import UserSelector from "../../../components/UserSelector";
+import type { DatePickerProps } from 'antd';
 import "./style.scss";
+
+
 
 const PopOver = () => {
   const navigate = useNavigate();
@@ -49,20 +59,24 @@ const PopOver = () => {
   );
 };
 
-const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-const StudentMain = () => {
-  const action = useCustomHook()
-  // const navigate = useNavigate()
-  const [openDatePicker, setOpenDatePicker] = useState(false)
-  const [month, setMonth] = useState("")
-  // const [showDrawer, setShowDrawer] = useState(false)
-  const [listandgrid, setListandgrid] = useState(false)
-  const [isToggle, setIsToggle] = useState(false)
-  const [state, setState] = useState({
-    time_period: ""
-  })
 
-  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"]
+const StudentMain = () => {
+  const [searchValue, setSearchValue] = useState('');
+  const [listandgrid, setListandgrid] = useState(false);
+  const [states, setState] = useState({
+    company: "Company",
+    joiningDate: undefined
+  })
+  const [currentUser] = useRecoilState(currentUserState);
+  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"];
+
+  const { getUniIntersTableData, universityIntersData,
+    downloadPdfOrCsv, debouncedSearch, isLoading } = useStudentsCustomHook()
+
+  useEffect(() => {
+    getUniIntersTableData(currentUser?.userUniversity?.universityId, searchValue,
+      states)
+  }, [searchValue, states.company, states.joiningDate])
 
   const columns = [
     {
@@ -101,115 +115,95 @@ const StudentMain = () => {
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      name: "Deing Jing Me",
-      title: "Business Analyst",
-      companyrep: "Anika john",
-      company: "Power source",
-      date_of_joining: "01/07/2022",
-    },
-    {
-      no: "02",
-      name: "Ronald Richard",
-      title: "Scientist Analyst",
-      companyrep: "Borsa Lewa",
-      company: "CodingHub",
-      date_of_joining: "01/07/2021",
-    },
-    {
-      no: "03",
-      name: "Selan Klien",
-      title: "Scientist Analyst",
-      companyrep: "Pablo pau",
-      company: "Dev spot",
-      date_of_joining: "01/07/2021",
-    },
-    {
-      no: "04",
-      name: "Deing Jing Me",
-      title: "Business Analyst",
-      companyrep: "Anika john",
-      company: "Orcalo Holdings",
-      date_of_joining: "01/07/2022",
-    },
-    {
-      no: "05",
-      name: "Ronald Richard",
-      title: "Scientist Analyst",
-      companyrep: "Borsa Lewa",
-      company: "Dev spot",
-      date_of_joining: "01/07/2021",
-    },
-    {
-      no: "06",
-      name: "Selan Klien",
-      title: "Scientist Analyst",
-      companyrep: "Pablo pau",
-      company: "CodingHub",
-      date_of_joining: "01/07/2021",
-    },
-  ];
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = universityIntersData?.map((item: any, index: any) => {
     return (
       {
-        no: item.no,
+        no: universityIntersData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         avatar:
-          <Avatar
-            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-          />,
-        name: item.name,
-        title: item.title,
-        companyrep: item.companyrep,
-        company: item.company,
-        date_of_joining: item.date_of_joining,
+          <Avatar size={50} src={item?.avatar}>
+            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+          </Avatar>,
+        name: `${item?.userDetail?.firstName}${item?.userDetail?.lastName}`,
+        title: item?.internship?.title,
+        companyrep: item?.userDetail?.firstName,
+        company: item?.company?.businessName,
+        date_of_joining: `${dayjs(item?.joiningDate).format('DD/MM/YYYY')}`,
         actions: <PopOver />
       }
     )
   })
-  console.log(newTableData,"newTableData");
-  
-  const updateTimePeriod = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      time_period: value
-    }))
-  }
+
+  const handleSearch = (e: any) => {
+    debouncedSearch(e.target.value, setSearchValue)
+  };
+
+  const companiesData = universityIntersData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item?.company?.id}`,
+        label: `${item?.company?.businessName}`,
+      }
+    )
+  })
+
+  const onDateChange: DatePickerProps['onChange'] = (date: any) => {
+    setState({
+      ...states,
+      joiningDate: date
+    })
+  };
   return (
     <>
       <PageHeader title="Students" />
       <Row gutter={[20, 20]} className="mt-5">
-        <Col xl={6} lg={6} md={24} sm={24} xs={24}>
-          <SearchBar
-            handleChange={() => { }}
-            name="search bar"
-            placeholder="Search"
-            size="middle"
+        <Col xl={6} lg={6} md={24} sm={24} xs={24} className="input-wrapper">
+          <Input
+            className='search-bar'
+            placeholder="Search by name"
+            onChange={handleSearch}
+            prefix={<GlassMagnifier />}
           />
         </Col>
         <Col xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-wrap gap-4 justify-end">
-          <CommonDatePicker
+          <div>
+            <DatePicker
+              placeholder="Joining"
+              suffixIcon={<img height={20} width={20} src={CalendarIcon} alt="calander_icon" />}
+              onChange={onDateChange}
+              value={states.joiningDate}
+              format='DD/MM/YYYY'
+            />
+          </div>
+          {/* <CommonDatePicker
             name="Date Picker"
             open={openDatePicker}
-            onBtnClick={() => { console.log("date picker clicked") }}
+            onBtnClick={(e: any) => { e.target.value }}
             setOpen={setOpenDatePicker}
             setValue={function noRefCheck() { }}
-          />
-          <DropDown
-            name="this month"
-            options={[
-              'This week',
-              'Last week',
-              'This month',
-              'Last month',
-              'All'
-            ]}
+          /> */}
+          <div>
+            <UserSelector
+              className=""
+              placeholder="Company"
+              value={states.company}
+              onChange={(event: any) => {
+                setState({
+                  ...states,
+                  company: event
+                })
+              }}
+              options={companiesData}
+            />
+          </div>
+
+          {/* <DropDown
+            name="Company"
+            options={companiesData}
             setValue={() => { updateTimePeriod(event) }}
             showDatePickerOnVal="custom"
-            value={state.time_period}
-          />
+            value={states.time_period}
+          /> */}
           <div className="flex justify-between gap-4">
             <ToggleButton
               isToggle={listandgrid}
@@ -220,43 +214,46 @@ const StudentMain = () => {
             />
             <DropDown
               options={[
-                'pdf',
-                'excel'
+                'PDF',
+                'Excel'
               ]}
               requiredDownloadIcon
               setValue={() => {
-
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Activity Log Detail")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "University Students")
               }}
               value=""
             />
           </div>
         </Col>
         <Col xs={24}>
-          {
-            listandgrid ? <BoxWrapper>
-              <GlobalTable
-                columns={columns}
-                tableData={newTableData}
-              />
-            </BoxWrapper> : <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                newTableData.map((items: any, idx: any) => {
-                  return (
-                    <InternsCard
-                      posted_by={items.avatar}
-                      title={items.name}
-                      department={items.title}
-                      joining_date={items.date_of_joining}
-                      date_of_birth={items.companyrep}
-                      company={items.company}
-                      id={items.no}
-                    />
-                  )
-                })
-              }
-            </div>
-
+          {!isLoading ?
+            listandgrid ?
+              <BoxWrapper>
+                <GlobalTable
+                  columns={columns}
+                  tableData={newTableData}
+                />
+              </BoxWrapper>
+              : universityIntersData?.length === 0 ? <NoDataFound /> :
+                <div className="flex flex-wrap gap-5">
+                  {
+                    universityIntersData?.map((items: any, idx: any) => {
+                      return (
+                        <InternsCard
+                          posted_by={<Avatar size={50} src={items?.avatar}>
+                            {items?.userDetail?.firstName?.charAt(0)}{items?.userDetail?.lastName?.charAt(0)}
+                          </Avatar>}
+                          title={`${items?.userDetail?.firstName}${items?.userDetail?.lastName}`}
+                          department={items?.internship?.department?.name}
+                          joining_date={`${dayjs(items?.joiningDate).format('DD/MM/YYYY')}`}
+                          date_of_birth={`${dayjs(items?.userDetail?.DOB).format('DD/MM/YYYY')}`}
+                          company={items?.company?.businessName}
+                        // id={items?.no}
+                        />
+                      )
+                    })
+                  }
+                </div> : <Loader />
 
           }
         </Col>

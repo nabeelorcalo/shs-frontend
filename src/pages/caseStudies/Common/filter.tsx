@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Avatar, Button, Form, Menu, Select } from "antd";
+import { Avatar, Button, Form, Select } from "antd";
 import { CommonDatePicker } from "../../../components";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -13,11 +13,9 @@ const Filters = ({ setShowDrawer }: any) => {
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [filterValue, setFilterValue] = useState<any>();
   const [intern, setIntern] = useState<any>();
-  console.log(intern);
 
   const onFinish = () => {
     // maintain filter params on search also
-
     handleFilterParams(filterValue);
     getData(filterValue);
     setShowDrawer(false);
@@ -26,7 +24,9 @@ const Filters = ({ setShowDrawer }: any) => {
   const ResetHandler = () => {
     // reset filter params
     setFilterValue({});
+    setIntern("");
     handleFilterParams({});
+    getData("resetFilter");
   };
 
   useEffect(() => {
@@ -34,50 +34,10 @@ const Filters = ({ setShowDrawer }: any) => {
     getInternList();
   }, []);
 
-  const handleAddUser = (user: any) => {
-    const filtered = intern.find((u: any) => u.id === user.id) ? true : false;
-    if (!filtered) {
-      setFilterValue({ ...filterValue, Intern: user?.id });
-      setIntern([...intern, user]);
-    }
-  };
-
-  const opriorityOption = (
-    <Menu className="max-h-[300px] overflow-scroll">
-      {internList?.map((item: any) => {
-        return (
-          <Menu.Item key={item}>
-            <div className="flex justify-between items-center">
-              <div className="flex items-center">
-                <div className="mr-2">
-                  <Avatar
-                    className="h-[32px] w-[32px] rounded-full object-cover relative"
-                    src={item?.avatar}
-                    alt={item?.firstName}
-                    icon={
-                      <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                        {item?.firstName[0]}
-                        {item?.lastName[0]}
-                      </span>
-                    }
-                  />
-                </div>
-                <p>{`${item?.firstName} ${item?.lastName}`}</p>
-              </div>
-              <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
-                Add
-              </div>
-            </div>
-          </Menu.Item>
-        );
-      })}
-    </Menu>
-  );
-
   return (
     <div className="casestudies-filter_main_wrapper">
-      <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item name="intern" label="Intern">
+      <Form layout="vertical" form={form}>
+        <Form.Item label="Intern">
           <DropDownNew
             placement={"bottomRight"}
             value={""}
@@ -86,7 +46,14 @@ const Filters = ({ setShowDrawer }: any) => {
                 label: (
                   <div className="max-h-[200px] overflow-y-scroll">
                     {internList?.map((item: any) => (
-                      <div key={item?.id} className="flex justify-between mb-4" onClick={() => setIntern(item)}>
+                      <div
+                        key={item?.id}
+                        className="flex justify-between mb-4"
+                        onClick={() => {
+                          setIntern(item);
+                          setFilterValue({ ...filterValue, intern: item?.id });
+                        }}
+                      >
                         <div className="flex">
                           <div className="mr-2">
                             <Avatar
@@ -134,9 +101,10 @@ const Filters = ({ setShowDrawer }: any) => {
             </div>
           </DropDownNew>
         </Form.Item>
-        <Form.Item name="department" label="Department">
+        <Form.Item label="Department">
           <Select
-            value={filterValue?.intern}
+            allowClear
+            value={filterValue?.department}
             placeholder="Select"
             onChange={(e: string) => setFilterValue({ ...filterValue, department: e })}
             options={departmentList}
@@ -149,8 +117,9 @@ const Filters = ({ setShowDrawer }: any) => {
           setOpen={setOpenDataPicker}
           setValue={(date: any) => setFilterValue({ ...filterValue, date })}
         />
-        <Form.Item name="status" label="Status" className="mt-5">
+        <Form.Item label="Status" className="mt-5">
           <Select
+            allowClear
             value={filterValue?.status}
             placeholder="Select"
             onChange={(e: string) => setFilterValue({ ...filterValue, status: e })}
@@ -161,7 +130,7 @@ const Filters = ({ setShowDrawer }: any) => {
           <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
           </Button>
-          <Button key="submit" className="footer-submit-btn" htmlType="submit">
+          <Button key="submit" className="footer-submit-btn" htmlType="submit" onClick={onFinish}>
             Apply
           </Button>
         </div>

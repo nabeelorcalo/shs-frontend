@@ -6,29 +6,52 @@ import endpoints from '../../config/apiEndpoints';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { caseStudiesFilterParam } from '../../store/case-studies';
+import { caseStudiesAPICallStatus, caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
+import { Notifications } from '../../components';
+// import { ROUTES_CONSTANTS } from '../../config/constants';
 
+// alis endpoints
+const { CASE_STUDIES, DAPARTMENT, INTERN_LIST, MEDIA_UPLOAD } = endpoints
+//signature object
+let signPad: any;
+let uploadFile: any;
+let signature: any;
 const useCustomHook = () => {
   //table data 
-  const [caseStudyData, setCaseStudyData] = useState<any>({ count: 0, data: [], pagination: {} })
+  const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
+  // loader
+  const [isLoading, setISLoading] = useRecoilState(caseStudiesAPICallStatus);
   const [selectedCasStudyData, setSelectedCasStudyData] = useState<any>([])
   // departments list 
   const [departmentList, setDepartmentList] = useState<any>([])
   // intern list 
   const [internList, setInternList] = useState<any>([])
-  const { CASE_STUDIES, DAPARTMENT, INTERN_LIST } = endpoints
+  // signature modal state
+  const [openModal, setOpenModal] = useState(false);
+  // manager feedback
+  const [feedbackFormData, setfeedbackFormData] = useState<any>({
+    assessmentForm: [],
+    supervisorSig: "",
+    supervisorStatus: "",
+    feedback: "",
+  });
+
+  const [signatureText, setSignatureText] = useState(signature ?? "");
+  // get data api params
   let params: any = {
     limit: 10,
     page: 1,
   };
+  // global set params for filter ans search
   const [filterParams, setFilterParams] = useRecoilState<any>(caseStudiesFilterParam)
   const handleFilterParams = (filter: any) => {
+    params = { ...params, ...filter }
     setFilterParams({ ...params, ...filter })
   }
 
-
   // get case-studies table data
   const getData = async (query?: any) => {
+    setISLoading(true)
     //search query check
     if (query?.search) {
       params.search = query?.search
@@ -36,14 +59,14 @@ const useCustomHook = () => {
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
       params = { ...params, ...filterParams }
     }
-    await api.get(CASE_STUDIES, params).then((
+    await api.get(CASE_STUDIES, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
     ): any => {
       setCaseStudyData({
         count,
         data: data?.map((obj: any, index: number) => ({
           id: obj?.id,
-          no: index+1,
+          no: index + 1,
           avater: Image,
           name: `${obj?.intern?.userDetail?.firstName} ${obj?.intern?.userDetail?.lastName}`,
           ReportName: obj?.title,
@@ -54,14 +77,17 @@ const useCustomHook = () => {
         })),
         pagination
       })
+      setISLoading(false)
     });
   };
 
   // get single case-study object
   const getSelectedCasStudyData = async (id: string) => {
-    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => setSelectedCasStudyData(
-    data
-    ))
+    setISLoading(true)
+    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
+      setSelectedCasStudyData(data)
+      setISLoading(false)
+    })
   }
 
   // get department list
@@ -70,7 +96,79 @@ const useCustomHook = () => {
   }
   // get intern list
   const getInternList = async () => {
-    await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({userDetail}:any)=>userDetail)))
+    await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({ userDetail }: any) => userDetail)))
+  }
+  // media upload
+  const formData = new FormData();
+  // covert base 64 url to file
+  const urlToFile = (url: any) => {
+    let arr = url.split(",");
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    let dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+    return file;
+  };
+  // custom header for "multipart/form-data"
+  let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+  //upload manager signature and update feedback form data state to get signature s3 URL  
+  const handleSignatureUpload = async (file: any) => {
+    if (file) {
+      formData.append('file', file);
+      await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }) => {
+        setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
+        setOpenModal(false)
+      })
+    }
+  }
+  // get upload file form data
+  const handleUploadFile = (value: any) => {
+    uploadFile = value
+  }
+
+  // update signpad object
+  const getSignPadValue = (value: any) => {
+    signPad = value
+  }
+
+  // clear signpad canvas
+  const HandleCleare = () => {
+    signPad && signPad?.clear();
+    uploadFile = undefined;
+    signature = undefined
+    setSignatureText("")
+  };
+  //handle manager signature
+  const handleSignatue = () => {
+    let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
+    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
+    // for text-signature 
+    if (signature) {
+      setfeedbackFormData({ ...feedbackFormData, supervisorSig: signature })
+      setOpenModal(false)
+    } else {
+      // signature canvas and upload
+      handleSignatureUpload(file ? file : uploadFile)
+    }
+  };
+
+  // text signature funtion to update signature value
+  const handleTextSignature = (text: string) => {
+    setSignatureText(text)
+    signature = text
+  }
+  // main manager handle submit btn
+  const handleManagerSignature = async (id: string | number, type: string) => {
+    let data: any = feedbackFormData;
+    type && (data.supervisorStatus = type)
+    await api.patch(`${CASE_STUDIES}/${id}`, data).then((res) => {
+      Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
+    })
   }
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -142,8 +240,17 @@ const useCustomHook = () => {
     return value?.substring(value?.lastIndexOf("/") + 1, value?.length);
   };
 
+  const checkForImage = (url: string) => {
+    let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
+    if (url && url.match(regex))
+      return true;
+    else
+      return false;
+  }
+
   return {
     downloadPdfOrCsv,
+    isLoading,
     //table data
     getData,
     caseStudyData,
@@ -157,6 +264,10 @@ const useCustomHook = () => {
     internList,
     getInternList,
     getParamId,
+    checkForImage,
+    getSignPadValue,
+    HandleCleare, handleSignatue, setfeedbackFormData, feedbackFormData, openModal, setOpenModal,
+    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature
   };
 };
 
