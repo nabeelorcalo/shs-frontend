@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
-import {Form,Input,Button,Select,Row,Col,Space,Typography, InputNumber} from 'antd'
-import { PopUpModal } from "../../../components";
+import {Form,Input,Button,Select,Row,Col,Space,Typography, InputNumber, Empty, Spin} from 'antd'
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import { Loader, Notifications, PopUpModal } from "../../../components";
 import "./style.scss";
 import { 
   IconAngleDown, 
@@ -10,6 +11,8 @@ import {
   IconWithdrawAgain
 } from '../../../assets/images'
 import useEarnWithUsHook from '../actionHandler';
+import { useRecoilValue } from "recoil";
+import { earnWithUsTabsState } from "../../../store";
 
 
 
@@ -20,58 +23,108 @@ const Withdrawals = () => {
     getCurrentBalance,
     currentBalance,
     getBanksList,
-    banksList
+    banksList,
+    linkAccount,
+    updateBankAccount,
+    createWithdrawal
   } = useEarnWithUsHook();
-  const [form] = Form.useForm();
+  const tabKey = useRecoilValue(earnWithUsTabsState);
+  const [formEditAccount] = Form.useForm();
+  const [formAddAccount] = Form.useForm();
   const [formWithDrawals] = Form.useForm();
   const [isAccountList, setIsAccountList] = useState(false);
   const [modalAddAccountOpen, setModalAddAccountOpen] = useState(false);
   const [modalEditAccountOpen, setModalEditAccountOpen] = useState(false);
   const [modalWithdrawSuccessfulOpen, setModalWithdrawSuccessfulOpen] = useState(false);
-  const [isWithdrawDetail, setIsWithdrawDetail] = useState(false)
-  const [initValues,  setInitValues] = useState({
-    "withdrawAccoutn": null,
-    "withdrawAmount": "",
-  })
-  const [addAccountValues,  setAddAccountValues] = useState({
-    "selectBank": null,
-    "accountNumber": "",
-    "accountName": "",
-    "routingNumber": "",
-    "sortCode": "",
-    "accountType": null,
-  })
-  const [editAccountValues,  setEditAccountValues] = useState({
-    "selectBank": "NatWest Group",
-    "accountNumber": "31926819",
-    "accountName": "Business: porter inc.",
-    "routingNumber": "GB29 NWBK 6016 1331 9268 19 ",
-    "sortCode": "31926819",
-    "accountType": "checking",
-  })
+  const [isWithdrawDetail, setIsWithdrawDetail] = useState(false);
+  const [loadingAddAccount, setLoadingAddAccount] = useState(false);
+  const [loadingBanks, setLoadingBanks] = useState(false);
+  const [bankId, setBankId] = useState("");
+  const [withdrawalAccountDetail, setWithdrawalAccountDetail]:any = useState({})
+  const [withdrawalAmount, setWithdrawalAmount] = useState(0);
+  const [transactionId, setTransactionId] = useState('')
+  const [loadingWithdrawal, setLoadingWithdrawal] = useState(false);
+
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getCurrentBalance();
-    getBanksList();
-  }, [])
+    if(tabKey === 'earnWithUsWithdrawals') {
+      formWithDrawals.resetFields();
+      setIsWithdrawDetail(false);
+      setIsAccountList(false)
+      getCurrentBalance();
+      getBanksList(setLoadingBanks);
+    }
+  }, [tabKey])
 
+  useEffect(() => {
+    if(!modalWithdrawSuccessfulOpen) {
+      formWithDrawals.resetFields();
+      setIsWithdrawDetail(false);
+      setIsAccountList(false)
+      getCurrentBalance();
+      getBanksList(setLoadingBanks);
+    }
+  }, [modalWithdrawSuccessfulOpen])
+
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const submitAddAccount = async (values: any) => {
+    setLoadingAddAccount(true);
+    const response:any = await linkAccount(values);
+    setLoadingAddAccount(false);
+    closeModalAddAccount();
+    Notifications({ title: "Success", description: response.message, type: "success" });
+  }
+
+  const submitUpdateAccount = async (values: any) => {
+    setLoadingAddAccount(true);
+    const response:any = updateBankAccount({ accName: values?.accName, accType: values?.accType }, bankId)
+    if (response.error) {
+      setLoadingAddAccount(false);
+      closeModalEditAccount()
+      return Notifications({title: "Error", description: response.message || response.error, type: "error",});
+    }
+
+    setLoadingAddAccount(false);
+    closeModalEditAccount();
+    Notifications({ title: "Success", description: response.message, type: "success" });
+    getBanksList(setLoadingBanks);
+  }
+
+  const  submitWithdrawals = async (values: any) => {
+    setLoadingWithdrawal(true)
+    const requsetBody = {
+      bankId: withdrawalAccountDetail?.id,
+      bankName: withdrawalAccountDetail?.metadata?.bank_name,
+      amount: values?.amount,
+    }
+    const response = await createWithdrawal(requsetBody);
+    if(!response.error) {
+      setTransactionId(response?.data?.transactionId)
+      openModalWithdrawSuccessful()
+    }
+  }
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function submitWithdrawals(values: any) {
-    console.log('Success:', values);
-  }
-
   function handleChangeWithDrawals(changedField:any, values:any) {
-    console.log("with draw values::: ", values)
     if(values.bankName != null && values.amount != null) {
       setIsWithdrawDetail(true)
     } else {
       setIsWithdrawDetail(false)
+    }
+    if(values.bankName != null) {
+      const selectedBank:any = banksList?.find((item:any) => item.id === values.bankName)
+      setWithdrawalAccountDetail(selectedBank)
+      setBankId(values.bankName)
+    }
+    if(values.amount != null) {
+      setWithdrawalAmount(values.amount)
     }
   }
 
@@ -81,24 +134,26 @@ const Withdrawals = () => {
   }
 
   function closeModalAddAccount() {
+    formAddAccount.resetFields();
     setModalAddAccountOpen(false)
   }
 
-  function submitAddAccount(values: any) {
-    console.log('Success:', values);
-  }
-
-  function openModalEditAccount() {
+  function openModalEditAccount(bank:any) {
+    setBankId(bank?.id)
+    formEditAccount.setFields([
+      { name: "bankName", value: bank?.metadata?.bank_name },
+      { name: "accNumber", value: `*******${bank?.last4}` },
+      { name: "accName", value: bank?.account_holder_name },
+      { name: "routingNumber", value: bank?.routing_number },
+      { name: "sortCode", value: "test" },
+      { name: "accType", value: bank?.account_holder_type },
+    ]);
     setModalEditAccountOpen(true)
   }
 
   function closeModalEditAccount() {
+    formEditAccount.resetFields();
     setModalEditAccountOpen(false)
-  }
-
-  function submitEditAccount(values: any) {
-    console.log('Success:', values);
-    closeModalEditAccount()
   }
 
   function openModalWithdrawSuccessful() {
@@ -109,15 +164,19 @@ const Withdrawals = () => {
     setModalWithdrawSuccessfulOpen(false)
   }
 
-  console.log('banksList::: ', banksList)
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
     <>
+    <Spin spinning={loadingBanks} indicator={<Loader />}>
       <div className="earnwith-withdrawals">
         <div className="withdrawals-header">
           <div className="withdrawals-title">
+          {isAccountList &&
+            <Button size={"small"} type="text" icon={<ArrowLeftOutlined />} onClick={() => setIsAccountList(false)}>Back</Button> 
+          }
             Current Balance: $ {currentBalance}
           </div>
           <div className="withdrawals-header-actions">
@@ -133,16 +192,16 @@ const Withdrawals = () => {
         {!isAccountList &&
           <div className="withdrawals-body">
             <Form
+              requiredMark={false}
               form={formWithDrawals}
               layout="vertical"
               name="updateListing"
               onValuesChange={handleChangeWithDrawals}
-              initialValues={{bankName: 'HBL'}}
               onFinish={submitWithdrawals}
             >
               <Row gutter={[{xs: 30, sm: 30, md:30, lg:115}, 0]}>
                 <Col xs={24} sm={12}>
-                  <Form.Item name="bankName" label="Withdraw Account">
+                  <Form.Item name="bankName" label="Withdraw Account" rules={[{ required: true }]}>
                     <Select className="filled" placeholder="Withdraw Method" suffixIcon={<IconAngleDown />}>
                       {banksList?.map((bank:any) => {
                         return (
@@ -153,7 +212,7 @@ const Withdrawals = () => {
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12}>
-                  <Form.Item name="amount" label="Amount">
+                  <Form.Item name="amount" label="Amount" rules={[{ required: true }]}>
                     <InputNumber 
                       placeholder="Enter Amount"
                       className="filled"
@@ -175,25 +234,25 @@ const Withdrawals = () => {
                       <Col xs={24} md={12}>
                         <div className="withdrawals-card-item">
                           <div className="item-label">Withdraw Amount</div>
-                          <div className="item-label-value">1000 GBP</div>
+                          <div className="item-label-value">{withdrawalAmount} GBP</div>
                         </div>
                       </Col>
                       <Col xs={24} md={12}>
                         <div className="withdrawals-card-item">
                           <div className="item-label">Withdraw Fee</div>
-                          <div className="item-label-value">3 GBP</div>
+                          <div className="item-label-value">{(withdrawalAmount / 5)} GBP</div>
                         </div>
                       </Col>
                       <Col xs={24} md={12}>
                         <div className="withdrawals-card-item">
                           <div className="item-label">Account Name</div>
-                          <div className="item-label-value">Porter inc</div>
+                          <div className="item-label-value">{withdrawalAccountDetail?.account_holder_name}</div>
                         </div>
                       </Col>
                       <Col xs={24} md={12}>
                         <div className="withdrawals-card-item">
                           <div className="item-label">Account Number</div>
-                          <div className="item-label-value">31926819</div>
+                          <div className="item-label-value">********{withdrawalAccountDetail?.last4}</div>
                         </div>
                       </Col>
                       <Col xs={24} md={12}>
@@ -205,19 +264,19 @@ const Withdrawals = () => {
                       <Col xs={24} md={12}>
                         <div className="withdrawals-card-item">
                           <div className="item-label">Routing Number</div>
-                          <div className="item-label-value">Porter inc</div>
+                          <div className="item-label-value">{withdrawalAccountDetail?.routing_number}</div>
                         </div>
                       </Col>
                       <Col xs={24} md={12}>
                         <div className="withdrawals-card-item">
                           <div className="item-label">Account Type</div>
-                          <div className="item-label-value">Porter inc</div>
+                          <div className="item-label-value">{withdrawalAccountDetail?.account_holder_type}</div>
                         </div>
                       </Col>
                     </Row>
 
                     <div className="withdraw-now">
-                      <Button className="button-tertiary" onClick={openModalWithdrawSuccessful}>WITHDRAW  NOW</Button>
+                      <Button htmlType="submit" className="button-tertiary" loading={loadingWithdrawal}>WITHDRAW  NOW</Button>
                     </div>
                   </div>
                 </div>
@@ -230,50 +289,33 @@ const Withdrawals = () => {
             <div className="account-list-header">
               <div className="account-list-header-title">Banks</div>
             </div>
-            <ul className="account-list">
-              <li className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
-                <div className="flex sm:items-center sm:flex-row flex-col gap-4">
-                  <div className="account-item-icon"><IconBank /></div>
-                  <div className="account-item-content">
-                    <div className="bank-name text-primary-color">Natwest Group</div>
-                    <div className="account-title text-primary-color">Checking*******4512</div>
-                  </div>
-                </div>
-                <div className="account-list-item-right">
-                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount className="cursor-pointer" /></div>
-                </div>
-              </li>
-
-              <li className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
-                <div className="flex sm:items-center sm:flex-row flex-col gap-4">
-                  <div className="account-item-icon"><IconBank /></div>
-                  <div className="account-item-content">
-                    <div className="bank-name text-primary-color">UBLBANK, NATIONAL ASSOCIATION</div>
-                    <div className="account-title text-primary-color">Saving*******5622</div>
-                  </div>
-                </div>
-                <div className="account-list-item-right">
-                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount className="cursor-pointer"/></div>
-                </div>
-              </li>
-
-              <li className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
-                <div className="flex sm:items-center sm:flex-row flex-col gap-4">
-                  <div className="account-item-icon"><IconBank /></div>
-                  <div className="account-item-content">
-                    <div className="bank-name text-primary-color">HBLBANK, NATIONAL ASSOCIATION</div>
-                    <div className="account-title text-primary-color">Checking*******8633</div>
-                  </div>
-                </div>
-                <div className="account-list-item-right">
-                  <div className="account-edit-btn" onClick={openModalEditAccount}><IconEditAccount className="cursor-pointer"/></div>
-                </div>
-              </li>
-            </ul>
+            {banksList.length === 0 ? (
+              <div className="no-data-found">
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              </div>
+            ): (
+              <ul className="account-list">
+                {banksList?.map((bank:any) => (
+                  <li key={bank?.id} className="sm:items-baseline justify-between py-3.5 px-3 sm:px-5">
+                    <div className="flex sm:items-center sm:flex-row flex-col gap-4">
+                      <div className="account-item-icon"><IconBank /></div>
+                      <div className="account-item-content">
+                        <div className="bank-name text-primary-color">{bank?.metadata?.bank_name}</div>
+                        <div className="account-title text-primary-color">{bank?.account_holder_type}*******{bank.last4}</div>
+                      </div>
+                    </div>
+                    <div className="account-list-item-right">
+                      <div className="account-edit-btn" onClick={() => openModalEditAccount(bank)}><IconEditAccount className="cursor-pointer" /></div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            
           </div>
         }
       </div>
-
+    </Spin>
       {/* STARTS: MODAL WITHDRAW REQUEST SUCCESSFUL
       *************************************************************************/}
       <PopUpModal
@@ -286,12 +328,12 @@ const Withdrawals = () => {
         <div className="withdraw-success-icon">
           <IconCheckSuccess />
         </div>
-        <div className="withdraw-success-title">$1000 Withdraw Request Successful</div>
+        <div className="withdraw-success-title">${withdrawalAmount} Withdraw Request Successful</div>
         <Typography.Paragraph>
           The Withdraw Request has been successfully sent
         </Typography.Paragraph>
         <Typography.Paragraph>
-          Transaction ID: TRX2MGNVHSEZR
+          Transaction ID: {transactionId}
         </Typography.Paragraph>
         <Button className="button-tertiary" icon={<IconWithdrawAgain />} onClick={closeModalWithdrawSuccessful}>
           WITHDRAW REQUEST AGAIN
@@ -311,50 +353,48 @@ const Withdrawals = () => {
         wrapClassName="modal-add-account"
       >
         <Form
-          form={form}
+          requiredMark={false}
+          form={formAddAccount}
           layout="vertical"
           name="addAccount"
-          initialValues={addAccountValues}
-          onValuesChange={(_, values) => {
-            setAddAccountValues(prevState => ({...prevState, ...values}))
-            console.log('init:: ', values)
-          }}
           onFinish={submitAddAccount}
         >
           <Row gutter={40}>
             <Col xs={24} sm={12}>
-              <Form.Item name="selectBank" label="Choose your Bank">
-                <Select className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="natwestGroup">Natwest Group</Select.Option>
+              <Form.Item name="bankName" label="Choose your Bank" rules={[{ required: true }]}>
+                <Select className="filled" placeholder="Select your bank" suffixIcon={<IconAngleDown />} >
+                  <Select.Option value="Natwest Group">Natwest Group</Select.Option>
                   <Select.Option value="HBL">HBL</Select.Option>
+                  <Select.Option value="SCB">SCB</Select.Option>
+                  <Select.Option value="UBL">UBL</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="accountNumber" label="Account Number">
+              <Form.Item name="accNumber" label="Account Number" rules={[{ required: true }]}>
                 <Input className="filled" placeholder="Enter account number" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="accountName" label="Account Name">
+              <Form.Item name="accName" label="Account Name" rules={[{ required: true }]}>
                 <Input className="filled" placeholder="Enter account name" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="routingNumber" label="Routing Number">
+              <Form.Item name="routingNumber" label="Routing Number" rules={[{ required: true, pattern: /^\d{9}$/, message: "Routing number must have 9 digits"}]}>
                 <Input className="filled" placeholder="Enter routing number" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="sortCode" label="Sort Code">
+              <Form.Item name="sortCode" label="Sort Code" rules={[{ required: true }]}>
                 <Input className="filled" placeholder="Enter sort code" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="accountType" label="Account Type">
+              <Form.Item name="accType" label="Account Type" rules={[{ required: true }]}>
                 <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="savings">Savings</Select.Option>
-                  <Select.Option value="current">Current</Select.Option>
+                  <Select.Option value="individual">Individual</Select.Option>
+                  <Select.Option value="company">Company</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -362,8 +402,8 @@ const Withdrawals = () => {
           
           <div className="add-account-modal-footer">
             <Space size={20}>
-              <Button className="btn-close-add-account-modal" onClick={closeModalAddAccount}>Cancel</Button>
-              <Button htmlType="submit" className="button-tertiary">Link Account</Button>
+              <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalAddAccount}>Cancel</Button>
+              <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Link Account</Button>
             </Space>
           </div>
         </Form>
@@ -382,28 +422,26 @@ const Withdrawals = () => {
         wrapClassName="modal-add-account"
       >
         <Form
-          form={form}
+          requiredMark={false}
+          form={formEditAccount}
           layout="vertical"
           name="editAccount"
-          initialValues={editAccountValues}
-          onValuesChange={(_, values) => {
-            setEditAccountValues(prevState => ({...prevState, ...values}))
-            console.log('init:: ', values)
-          }}
-          onFinish={submitEditAccount}
+          onFinish={submitUpdateAccount}
         >
           <Row gutter={40}>
             <Col xs={24} sm={12}>
               <Form.Item name="selectBank" label="Choose your Bank">
-                <Select className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="natwestGroup">Natwest Group</Select.Option>
+                <Select disabled className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
+                  <Select.Option value="Natwest Group">Natwest Group</Select.Option>
                   <Select.Option value="HBL">HBL</Select.Option>
+                  <Select.Option value="SCB">SCB</Select.Option>
+                  <Select.Option value="UBL">UBL</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
               <Form.Item name="accountNumber" label="Account Number">
-                <Input className="filled" placeholder="Enter account number" />
+                <Input disabled className="filled" placeholder="Enter account number" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
@@ -413,19 +451,19 @@ const Withdrawals = () => {
             </Col>
             <Col xs={24} sm={12}>
               <Form.Item name="routingNumber" label="Routing Number">
-                <Input className="filled" placeholder="Enter routing number" />
+                <Input disabled className="filled" placeholder="Enter routing number" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
               <Form.Item name="sortCode" label="Sort Code">
-                <Input className="filled" placeholder="Enter sort code" />
+                <Input disabled className="filled" placeholder="Enter sort code" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
               <Form.Item name="accountType" label="Account Type">
                 <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="checking">Checking</Select.Option>
-                  <Select.Option value="current">Current</Select.Option>
+                  <Select.Option value="individual">Individual</Select.Option>
+                  <Select.Option value="company">Company</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -433,8 +471,8 @@ const Withdrawals = () => {
           
           <div className="add-account-modal-footer">
             <Space size={20}>
-              <Button className="btn-close-add-account-modal" onClick={closeModalEditAccount}>Cancel</Button>
-              <Button htmlType="submit" className="button-tertiary">Update</Button>
+              <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalEditAccount}>Cancel</Button>
+              <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Update</Button>
             </Space>
           </div>
         </Form>

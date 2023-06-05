@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import type { ColumnsType } from 'antd/es/table'
 import { Table, Typography, Row, Col, Form, Input, Button } from 'antd'
 import { RegisterMemberAndFeddbackGraph, PopUpModal, Loader } from "../../../components";
@@ -80,7 +80,6 @@ const Dashboard = () => {
   }
 
   async function submitShareLink(values: any) {
-    console.log('Success:', values);
     setLoadingInvite(true)
     const response = await sendReferenceInvite(values)
     setLoadingInvite(false)
@@ -313,9 +312,6 @@ const Dashboard = () => {
             layout="vertical"
             initialValues={{referenceLink: delegateLink}}
             name="updateListing"
-            onValuesChange={(_, values) => {
-              console.log('init:: ', values)
-            }}
             onFinish={submitShareLink}
           >
             <div className="reference-link-item">

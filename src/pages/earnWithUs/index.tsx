@@ -11,7 +11,6 @@ import { useRecoilState } from "recoil";
 
 
 
-
 const EarnWithUs = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/

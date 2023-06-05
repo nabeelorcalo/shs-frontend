@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import type { ColumnsType } from 'antd/es/table'
-import { Col, MenuProps, Row } from 'antd';
-import { Table, Space, Dropdown, Button, Select } from 'antd'
+import { Col, Row } from 'antd';
+import { Table, Select } from 'antd'
 import { IconAngleDown } from '../../../assets/images'
 import { Loader, SearchBar } from "../../../components";
 import useEarnWithUsHook from '../actionHandler';
@@ -183,27 +183,6 @@ const DelegateMembers = () => {
             </div>
           </Col>
         </Row>
-        {/* <div className="page-filterbar">
-          <div className="page-filterbar-left">
-            <div className="searchbar-wrapper">
-              <SearchBar handleChange={() => console.log('Search')}/>
-            </div>
-          </div>
-          <div className="page-filterbar-right">
-            <Space size={20} className="main-filter-btns">
-              <div className="requests-filterby-status">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: statusItems }} trigger={['click']} placement="bottomRight">
-                  <Button className="button-sky-blue">Status<IconAngleDown /></Button>
-                </Dropdown>
-              </div>
-              <div className="dropdown-download">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: typeItems }} trigger={['click']} placement="bottomRight">
-                  <Button className="button-sky-blue">Type<IconAngleDown /></Button>
-                </Dropdown>
-              </div>
-            </Space>
-          </div>
-        </div> */}
       </div>
     </>
   )

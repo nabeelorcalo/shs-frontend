@@ -1,8 +1,6 @@
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { Notifications } from '../../components';
-import constants from '../../config/constants';
 import { 
   delegateMembersState,
   delegateDashboardState,
@@ -58,46 +56,32 @@ const useEarnWithUsHook = () => {
   };
 
   // GET BANK BANKS LIST
-  const getBanksList = () => {
+  const getBanksList = (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
     api.get(GET_BANK_ACCOUNT_LIST).then(({ data }) => {
-      if (data?.data?.length) setBanksList(data?.data);
+      if (data?.data?.length) {
+        setBanksList(data?.data)
+      }
+      setLoading(false)
     });
   };
+
+  // ADD BANK ACCOUNT
   const linkAccount = async (payload: any) => {
-    return api.post(LINK_BANK_ACCOUNT, payload).then((response) => {
-      if (response.error) {
-        Notifications({
-          title: "Error",
-          description: response.message,
-          type: "error",
-        });
-      }
-      return response;
-    });
+    const response =  await api.post(LINK_BANK_ACCOUNT, payload);
+    return response;
   };
+
+  // ADD BANK ACCOUNT
   const updateBankAccount = async (payload: any, bankId: string) => {
-    return api.patch(`${UPDATE_BANK_ACCOUNT}/${bankId}`, payload).then((response) => {
-      if (response.error) {
-        Notifications({
-          title: "Error",
-          description: response.message || response.error,
-          type: "error",
-        });
-      }
+    const response =  await api.patch(`${UPDATE_BANK_ACCOUNT}/${bankId}`, payload)
       return response;
-    });
   };
-  const addWithDrawl = async (payload: any) => {
-    return api.post(ADD_WITH_DRAWL_REQUEST, payload).then((response) => {
-      if (response.error) {
-        Notifications({
-          title: "Error",
-          description: response.message || response.error,
-          type: "error",
-        });
-      }
-      return response;
-    });
+
+  // CREATE WITHDRAWAL
+  const createWithdrawal = async (payload: any) => {
+    const response = await api.post(ADD_WITH_DRAWL_REQUEST, payload)
+    return response;
   };
 
   return {
@@ -107,8 +91,10 @@ const useEarnWithUsHook = () => {
     getCurrentBalance,
     currentBalance,
     getBanksList,
-    banksList
-    
+    banksList,
+    linkAccount,
+    updateBankAccount,
+    createWithdrawal
   };
 };
 
