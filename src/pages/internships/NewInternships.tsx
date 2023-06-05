@@ -101,7 +101,6 @@ const NewInternships = () => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
     const newVals = {
       ...values,
       amount: amount.amount,
@@ -113,6 +112,7 @@ const NewInternships = () => {
     } else {
       postNewInternshipsData(newVals);
     }
+    setStatus('')
     form.resetFields();
     setInternShipFormData({})
   };
@@ -176,10 +176,10 @@ const NewInternships = () => {
               <p>Describe the details of internship that will be reflected on internship portal</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
-              <Form.Item name="title" label="Title" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item name="title" label="Title" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
-              <Form.Item name="department" label="Department" rules={[{ required: true }, { type: 'number' }]}>
+              <Form.Item name="department" label="Department" rules={[{ required: status === 'DRAFT' ? false : true }, { type: 'number' }]}>
                 <UserSelector
                   placeholder='Select'
                   className='input'
@@ -189,7 +189,7 @@ const NewInternships = () => {
                   onChange={onSelectChange}
                 />
               </Form.Item>
-              <Form.Item label="Description" name="description" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item label="Description" name="description" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write your description of internship" />
               </Form.Item>
             </Col>
@@ -201,10 +201,10 @@ const NewInternships = () => {
               <p>Briefly define the responsibilities and requirements of the internship</p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-6 p-4'>
-              <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write about responsibilies of internship" />
               </Form.Item>
-              <Form.Item label="Requirements" name="requirements" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item label="Requirements" name="requirements" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write about requirements of internship" />
               </Form.Item>
             </Col>
@@ -231,7 +231,7 @@ const NewInternships = () => {
               {paidAndUnpaid === "PAID" ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="frequency" label="Frequency"
-                    rules={[{ required: paidAndUnpaid === "PAID" ? true : false }, { type: "string" }]}
+                    rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }]}
                   >
                     <Select
                       className='input'
@@ -241,7 +241,7 @@ const NewInternships = () => {
                     />
                   </Form.Item>
                   <Form.Item label="Amount" name="amountType"
-                    rules={[{ required: paidAndUnpaid === "PAID" ? true : false }, { type: "string" }, {
+                    rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }, {
                       validator: validatePositiveNumber,
                     }]}>
                     <div className='flex gap-1'>
@@ -276,7 +276,8 @@ const NewInternships = () => {
               {remoteOnsite === natureofwork.onsite ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="location" label="Location"
-                    rules={[{ required: remoteOnsite === natureofwork.onsite ? true : false }]}>
+                    rules={[{ required: (status !== 'DRAFT' && remoteOnsite === natureofwork.onsite) ? true : false },
+                    { type: 'string' }]}>
                     <Select
                       className='input'
                       placeholder="Select"
@@ -301,7 +302,7 @@ const NewInternships = () => {
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
               <Form.Item label="Total Positions" name="positions"
                 rules={[
-                  { required: true },
+                  { required: status === 'DRAFT' ? false : true },
                   {
                     validator: validatePositiveNumber,
                   }]}>
@@ -319,7 +320,7 @@ const NewInternships = () => {
 
                 />
               </Form.Item>
-              <Form.Item label="Internship Duration" name="duration" rules={[{ required: true }, { type: "string" }]}>
+              <Form.Item label="Internship Duration" name="duration" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <Select
                   className='input'
                   placeholder="Select"
@@ -334,9 +335,10 @@ const NewInternships = () => {
             <Button
               type="link"
               size="middle"
+              htmlType="submit"
               onClick={() => {
                 setStatus('DRAFT');
-                Notifications({ title: "Success", description: "Internship saved as draft", type: "success" })
+                // Notifications({ title: "Success", description: "Internship saved as draft", type: "success" })
               }}
               className="new-intern-btn white-bg-color teriary-color main-btn font-medium">
               Save Draft

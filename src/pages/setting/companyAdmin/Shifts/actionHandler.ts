@@ -1,46 +1,65 @@
-import { useRecoilState } from "recoil";
-import { settingShiftsState } from "../../../../store";
-import api from "../../../../api";
 import endpoints from "../../../../config/apiEndpoints";
-import { debounce } from "lodash";
 import { Notifications } from "../../../../components";
+import { settingInternsState, settingShiftsState } from "../../../../store";
+import { useRecoilState } from "recoil";
+import { debounce } from "lodash";
+import { useState } from "react";
+import api from "../../../../api";
 
 
-// Chat operation and save into store
+// Shifts operation and save into store
 const useShiftsCustomHook = () => {
-  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS,DELETE_SHIFT } = endpoints;
-  const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);;
+  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS, DELETE_SHIFT, INTERN_LIST } = endpoints;
+  const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);
+  const [internsData, setInternsData] = useRecoilState(settingInternsState);
+  const [isLoading, setIsLoading] = useState(false)
 
   // Getting shifts data 
   const getAllShifts = async (searchValue: any = null) => {
     const params = {
       limit: 100,
       page: 1,
-      search: searchValue ? searchValue : null
+      q: searchValue ? searchValue : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    setIsLoading(true);
     const { data } = await api.get(SETTINGS_SHIFTS, query);
     setShiftsData(data)
+    setIsLoading(false);
+  };
+
+  // Getting all interns data 
+  const getAllInterns = async (companyId:any) => {
+    const params = {
+      companyId: 1
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    setIsLoading(true);
+    const { data } = await api.get(INTERN_LIST,query);
+    setInternsData(data)
+    setIsLoading(false);
   };
 
   // Post shifts data
   const postShiftData = async (values: any) => {
-    const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap } = values;
+    const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap, interns } = values;
     const shiftDetails = {
       "name": shiftName,
       "from": timeFrom,
       "to": timeTo,
       "duration": shiftDuration,
       "roundOfCap": roundOffCap,
-      "interns": 2,
+      "interns": interns,
       "applyToNewHires": true
     }
+    setIsLoading(true);
     const { data } = await api.post(POST_NEW_SHIFTS, shiftDetails);
     if (data) {
-      Notifications({ title: "Success", description: "Shift added successfully", type: "success" })
-      // navigate(`/${}`)
+      setIsLoading(false);
+      Notifications({ title: "Success", description: "Shift added", type: "success" })
     }
   }
+
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
@@ -48,19 +67,23 @@ const useShiftsCustomHook = () => {
 
   //delete shifts
   const deleteShifts = async (id: any) => {
+    setIsLoading(true);
     await api.delete(`${DELETE_SHIFT}/${id}`);
-    getAllShifts()
+    getAllShifts();
+    setIsLoading(false);
     Notifications({ title: "Success", description: 'Shift deleted', type: 'success' })
   };
 
 
-
   return {
-    getAllShifts,
-    postShiftData,
-    deleteShifts,
     debouncedSearch,
+    postShiftData,
+    getAllInterns,
+    deleteShifts,
+    getAllShifts,
+    internsData,
     shiftsData,
+    isLoading,
   };
 };
 

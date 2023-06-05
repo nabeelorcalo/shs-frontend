@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Row } from "antd";
-import { TimeTracking } from "../../../components";
+import { AnnouncementModal, TimeTracking } from "../../../components";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
   TodayWeather,
@@ -12,12 +12,19 @@ import {
   PageHeader,
 } from "../../../components";
 import { Terrible, Sad, Neutral, Happy, Awesome } from "../../../assets/images";
-import CustomHook from "../actionHandler";
 import "../style.scss";
 import { gutter } from "..";
+import { useRecoilValue } from "recoil";
+import {
+  announcementDataState,
+  currentUserRoleState,
+  currentUserState,
+} from "../../../store";
+import useCustomHook from "../companyAdmin/actionHandler";
 const Intern = () => {
-  const action = CustomHook;
-
+  const action = useCustomHook();
+  const announcementData = useRecoilValue(announcementDataState);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [state, setState] = useState({
     list: [],
     loading: false,
@@ -68,30 +75,18 @@ const Intern = () => {
       comp: Awesome,
     },
   ];
-  // move this dummy api to action handler
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
 
-    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            list: body.results,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => {});
+  const role = useRecoilValue(currentUserRoleState);
+  const userData = useRecoilValue(currentUserState);
+
+  const handleAddAnnouncement = () => {
+    setIsShowModal(true);
   };
+  const handleSelect = (value: string) => {};
   useEffect(() => {
-    loadMoreData();
+    console.log("userData", userData);
+
+    action.getData();
   }, []);
 
   return (
@@ -100,7 +95,10 @@ const Intern = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">Maria Sanoid</span>
+            <span className="page-header-secondary-color">
+              {" "}
+              {userData.firstName + " " + userData.lastName}
+            </span>
           </div>
         }
       />
@@ -112,7 +110,11 @@ const Intern = () => {
               <TimeTracking />
             </Col>
             <Col xs={24} xxl={12} className="xs:order-3 2xl:order-2">
-              <EmojiMoodRating title="How are you feeling today?" data={emojiData} activeIconIndex={-1} />
+              <EmojiMoodRating
+                title="How are you feeling today?"
+                data={emojiData}
+                activeIconIndex={-1}
+              />
             </Col>
             <Col xs={24} xl={12} xxl={5} className="xs:order-2 2xl:order-3">
               <TodayWeather />
@@ -122,43 +124,80 @@ const Intern = () => {
         <Col xs={24}>
           <Row gutter={gutter}>
             <Col xs={24} xxl={7}>
-              <AnnouncementList data={state.list} loading={state.loading} loadMoreData={loadMoreData} height={460.74} />
+              {announcementData && (
+                <>
+                  <AnnouncementList
+                    data={announcementData}
+                    role={role}
+                    handleAddAnnouncement={handleAddAnnouncement}
+                    height={460}
+                  />
+                </>
+              )}
             </Col>
             <Col xs={24} xxl={12}>
               <Row gutter={gutter}>
                 <Col xs={24} xxl={24}>
                   <Row gutter={gutter}>
                     <Col flex={1} className="">
-                      <AttendanceDetail label="Avg Clock In" time="08:04am" colorClass="clock-in" />
+                      <AttendanceDetail
+                        label="Avg Clock In"
+                        time="08:04am"
+                        colorClass="clock-in"
+                      />
                     </Col>
 
                     <Col flex={1} className="">
-                      <AttendanceDetail label="Avg Clock Out" time="03:04pm" colorClass="clock-out" />
+                      <AttendanceDetail
+                        label="Avg Clock Out"
+                        time="03:04pm"
+                        colorClass="clock-out"
+                      />
                     </Col>
 
                     <Col flex={1}>
-                      <AttendanceDetail label="Avg Hours" time="05:48hrs" colorClass="avg-hours" />
+                      <AttendanceDetail
+                        label="Avg Hours"
+                        time="05:48hrs"
+                        colorClass="avg-hours"
+                      />
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} xxl={24}>
-                  <WorkingStatisticesChart heading="Working Statistices" styling={{ height: 268 }} />
+                  <WorkingStatisticesChart
+                    heading="Working Statistices"
+                    styling={{ height: 268 }}
+                  />
                 </Col>
               </Row>
             </Col>
             <Col xs={24} xxl={5}>
               <Row gutter={gutter}>
                 <Col xs={24} xl={12} xxl={24}>
-                  <BirthdayWishes wishList={state.birthdayWishlist} user="Intern" />
+                  <BirthdayWishes
+                    wishList={state.birthdayWishlist}
+                    user="Intern"
+                  />
                 </Col>
                 <Col xs={24} xl={12} xxl={24}>
-                  <LeaveDetails sickLeaves="02" casualLeaves="03" medicalLeaves="04" workFromHome="01" user="Intern" />
+                  <LeaveDetails
+                    sickLeaves="02"
+                    casualLeaves="03"
+                    medicalLeaves="04"
+                    workFromHome="01"
+                    user="Intern"
+                  />
                 </Col>
               </Row>
             </Col>
           </Row>
         </Col>
       </Row>
+      <AnnouncementModal
+        isShowModal={isShowModal}
+        close={() => setIsShowModal(false)}
+      />
     </>
   );
 };

@@ -56,7 +56,6 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
-
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
@@ -64,7 +63,6 @@ const endpoints = {
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   DUPLICATE_INTERNSHIP: "/internship/duplicateInternship",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
-
   //comment
   GET_COMMENTS: "/comment/getComments",
   ADD_COMMENT: `/comment/addComment`,
@@ -87,11 +85,12 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
+  // End Point For Leaev Module For Intrne 
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
   SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
-  // End Point For Leaev Module For Intrne 
+  // End Point For Leaev Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
@@ -134,6 +133,9 @@ const endpoints = {
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
 
   SETTINGS_TEMPLATES: "/template/findAll",
+  DELETE_SETTING_TEMPLATE:"/template/delete",
+  POST_SETTING_TEMPLATE:"/template/add",
+  EDIT_SETTING_TEMPLATE:"/template/edit",
   SETTINGS_SHIFTS: "/shift/findAll",
   POST_NEW_SHIFTS: "/shift/add",
   DELETE_SHIFT: "/shift/delete",
@@ -142,6 +144,9 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
+  //Announcement api's
+  POST_NEW_ANNOUNCEMENT: "/announcement/add",
+  ANNOUNCEMENT_FINDALL: "/announcement/findAll",
 
   // RECIPES
   GET_ALL_RECIPES: "/recipe/get-recipies",
@@ -149,11 +154,13 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
-
   // Dashboard
   GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
   GET_DELEGATE_DASHBOARD: "delegate/dashboard",
   GET_DELEGATE_MEMBERS: "delegate/members",
   SEND_REFERENCE_INVITE: "delegate/invite",
+  GET_ALL_COMAPANIES:"/university/universityCompanies",
+  ADD_PAYROLL:"/payroll/add",
+
 };
 export default endpoints;

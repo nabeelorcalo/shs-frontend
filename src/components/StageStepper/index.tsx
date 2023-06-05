@@ -9,8 +9,6 @@ interface drawerProps {
 }
 export const StageStepper = (props: drawerProps) => {
   const { data } = props
-  console.log(data);
-
   const appliedDate = dayjs(data?.createdAt).format("DD/MM/YYYY")
   const statusArray = [
     {
@@ -45,35 +43,35 @@ export const StageStepper = (props: drawerProps) => {
           />
         </div>
         <div className='flex flex-col justify-between gap-3'>
-          <p className='text-lg font-semibold'>
+          <p className='text-xl font-medium comp-title'>
             {data?.internship?.company?.businessName}.
             {data?.internship?.company?.businessSector}
           </p>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconEmail />
-            <p>intuit.inc@gmail.com</p>
+            <p className='text-sm'>{data?.internship?.company?.website}</p>
           </div>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconPhone />
-            <p>+44 7700 900077</p>
+            <p className='text-sm'>+44 7700 900077</p>
           </div>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconLocation />
-            <p>{data?.internship?.company?.ownerAddress}</p>
+            <p className='text-sm'>{data?.internship?.company?.ownerAddress}</p>
           </div>
         </div>
       </div>
       <Divider />
       <div className='flex flex-col gap-2'>
-        <p className='font-semibold'>Stage</p>
+        <p className='font-semibold comp-title text-lg'>Stage</p>
         <StageProgressStepper />
         <div className='flex flex-row flex-wrap justify-between'>
           {
             statusArray.map((item: any, idx: any) => {
               return (
                 <div className='flex flex-col gap-1'>
-                  <p className='font-semibold'>{item.title}</p>
-                  <p className='text-md'>{item.data}</p>
+                  <p className='font-semibold text-base comp-title'>{item.title}</p>
+                  <p className='text-sm'>{item.data}</p>
                 </div>
               )
             })

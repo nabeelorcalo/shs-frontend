@@ -41,14 +41,14 @@ export const InternshipProgressCard = (props: any) => {
       ...item,
       status: updateStatus ? updateStatus : status
     }
-    EditNewInternshipsData(Obj)
+    EditNewInternshipsData(Obj,updateStatus)
     getAllInternshipsData()
   }
+
   const handleDeclineInternship = () => {
     setDecline(false);
     handleUpdateStatus('REJECTED')
-    getAllInternshipsData()
-    Notifications({ title: "Success", description: "Internship declined", type: "success" })
+    getAllInternshipsData() 
   }
   const PopOver = () => {
     const navigate = useNavigate()
@@ -86,8 +86,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '4',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
-            handleUpdateStatus('CLOSED');
-            Notifications({ title: "Success", description: "Internship closed", type: "success" })
+            handleUpdateStatus('CLOSED'); 
           }}>
             Close
           </a>
