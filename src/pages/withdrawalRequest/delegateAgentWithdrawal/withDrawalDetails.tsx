@@ -8,7 +8,7 @@ import { CloseCircleFilled, PlusCircleFilled } from "@ant-design/icons";
 import { Check } from "../../../assets/images";
 
 const WithDrawalDetails = (props: any) => {
-  const { bankData, open, setOpen, transactionId, amount } = props;
+  const { bankData, open, setOpen, transactionId, amount, setAmount } = props;
   return (
     <div className="with-drawal-details">
       <PageHeader title="Withdraw Details" />
@@ -41,6 +41,7 @@ const WithDrawalDetails = (props: any) => {
             onClick={() => {
               setOpen(!open);
               props.setShow(false);
+              setAmount(0);
             }}
             style={{ color: "#363565", fontSize: "20px" }}
           />
@@ -61,6 +62,7 @@ const WithDrawalDetails = (props: any) => {
                 onClick={() => {
                   props.setShow(false);
                   setOpen(false);
+                  setAmount(0);
                 }}
                 className="teriary-light-bg-color white-color text-base font-semibold flex items-center"
               >

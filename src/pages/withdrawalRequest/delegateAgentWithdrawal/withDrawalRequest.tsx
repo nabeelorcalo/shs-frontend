@@ -98,7 +98,7 @@ const WithDrawalRequest = (props: any) => {
       form.resetFields();
       setBankData([]);
       setBankId("");
-      setAmount(0);
+      // setAmount(0);
     });
   };
 
@@ -155,6 +155,7 @@ const WithDrawalRequest = (props: any) => {
             setShow={setShow}
             bankData={bankData}
             amount={amount}
+            setAmount={setAmount}
             transactionId={transactionId}
           />
         )}
