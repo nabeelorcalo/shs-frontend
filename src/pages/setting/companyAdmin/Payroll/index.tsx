@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Row, Col, Button, Input } from "antd";
 import { GlassMagnifier, SettingPayrollAddIcon } from "../../../../assets/images";
-import { Alert, Loader } from "../../../../components";
+import { Alert, Loader, NoDataFound } from "../../../../components";
 import { BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
@@ -68,7 +68,7 @@ const SettingPayroll: React.FC = () => {
           </NavLink>
         </div>
       </div>
-      <Row gutter={[20, 20]} className="mt-5">
+      {payrollData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
         {!isLoading ? payrollData?.map((data: any, index: any) => {
           const startingDate = dayjs(data?.from);
           const endingDate = dayjs(data?.to);
@@ -114,7 +114,8 @@ const SettingPayroll: React.FC = () => {
           );
         }) : <Loader />}
 
-      </Row>
+      </Row>}
+
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

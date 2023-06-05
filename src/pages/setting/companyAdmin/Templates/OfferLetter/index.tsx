@@ -5,7 +5,7 @@ import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import useTemplatesCustomHook from "../actionHandler";
-import { Alert, Breadcrumb, Loader } from "../../../../../components";
+import { Alert, Breadcrumb, Loader, NoDataFound } from "../../../../../components";
 import '../Template.scss'
 
 
@@ -25,7 +25,7 @@ const TemplatesOfferLater = () => {
   )
   const breadcrumbArray = [
     { name: "Offer Letter" },
-    { name: "Setting" },
+    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
 
@@ -64,15 +64,18 @@ const TemplatesOfferLater = () => {
           </Button>
         </div>
       </div>
-      {!isLoading ? <TemplatesCommonCard
-        link={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}
-        overview={filterData}
-        setShowDeleteModal={setShowDeleteModal}
-        showDeleteModal={showDeleteModal}
-        state={state}
-        setState={setState}
-        setEditData={setEditData}
-      /> : <Loader />}
+      {filterData?.length === 0 ? <NoDataFound /> :
+        !isLoading ?
+          <TemplatesCommonCard
+            link={ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE}
+            overview={filterData}
+            setShowDeleteModal={setShowDeleteModal}
+            showDeleteModal={showDeleteModal}
+            state={state}
+            setState={setState}
+            setEditData={setEditData}
+          /> : <Loader />
+      }
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

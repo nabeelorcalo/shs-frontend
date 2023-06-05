@@ -3,7 +3,7 @@ import { Button, Divider, Input } from "antd";
 import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
-import { Alert, Breadcrumb, Loader, SearchBar } from "../../../../../components";
+import { Alert, Breadcrumb, Loader, NoDataFound, SearchBar } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import useTemplatesCustomHook from "../actionHandler";
 
@@ -23,7 +23,7 @@ const TemplatesCertificateOfCompletion = () => {
   )
   const breadcrumbArray = [
     { name: "Certificate of Completion" },
-    { name: "Setting" },
+    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const { getAllTemplates, templatesData,
@@ -61,15 +61,17 @@ const TemplatesCertificateOfCompletion = () => {
           </Button>
         </div>
       </div>
-      {!isLoading ? <TemplatesCommonCard
-        link={ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}
-        overview={filterData}
-        setShowDeleteModal={setShowDeleteModal}
-        showDeleteModal={showDeleteModal}
-        state={state}
-        setState={setState}
-        setEditData={setEditData}
-      /> : <Loader />}
+      {filterData?.length === 0 ? <NoDataFound /> :
+        !isLoading ? <TemplatesCommonCard
+          link={ROUTES_CONSTANTS.TCC_NEW_TEMPLATE}
+          overview={filterData}
+          setShowDeleteModal={setShowDeleteModal}
+          showDeleteModal={showDeleteModal}
+          state={state}
+          setState={setState}
+          setEditData={setEditData}
+        /> : <Loader />
+      }
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

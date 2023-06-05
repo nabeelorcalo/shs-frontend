@@ -17,11 +17,18 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (searchValue: any) => {
-    setIsLoading(true);
-    const { data } = await api.get(GET_APPLICATIONS, {
+  const getApplicationsData = async (status: any = null, searchValue: any = null,) => {
+    const params = {
+      limit: 100,
+      page: 1,
+      locationType: status.natureOfWork === 'All' ? null : status.natureOfWork,
+      salaryType: status.typeOfWork === 'All' ? null : status.typeOfWork,
+      stage: status.stage === 'All' ? null : status.stage,
       search: searchValue ? searchValue : null
-    });
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    setIsLoading(true);
+    const { data } = await api.get(GET_APPLICATIONS, query);
     if (data) {
       setIsLoading(false)
       setApplicationsData(data)

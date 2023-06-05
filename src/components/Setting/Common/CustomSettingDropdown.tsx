@@ -22,7 +22,7 @@ export const DropDownForSetting = (props: any) => {
   };
 
   const editHandler = () => {
-    setState({ ...state, isEditModal: true, editField: editData });
+    setState({ ...state, isEditModal: true, editField: editData,action:'edit' });
     // IdHandler(editData?.id);
     setVisible(false);
   }
