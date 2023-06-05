@@ -111,9 +111,7 @@ const Photograph = (props: any) => {
                     </Form.Item>
                   </Col>
                 </Row>
-
               </Form>
-
             </div>
           </div>
         </Col>

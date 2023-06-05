@@ -4,7 +4,7 @@ import { BackButton, SHSLogo } from "../../../../../assets/images";
 import "../../../styles.scss";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import useCustomHook from "../../../actionHandler";
-
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 const { Option } = Select;
 
 const DbsVerification = (props: any) => {
@@ -51,17 +51,13 @@ const DbsVerification = (props: any) => {
                 name='normal_login'
                 className='login-form'
                 initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="Upload"
                   name="dbsUploadDocument"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: true }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <div className="dragger">

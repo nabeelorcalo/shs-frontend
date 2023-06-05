@@ -92,10 +92,8 @@ const AdminManagement = () => {
   const [dashboardChecked, setDashboardChecked] = useState(true);
   const [userManagementChecked, setUserManagementChecked] = useState({});
   const [studentChecked, setStudentChecked] = useState(false);
-  const [viewStudentDetailsChecked, setViewStudentDetailsChecked] =
-    useState(false);
-  const [studentPasswordResetChecked, setStudentPasswordResetChecked] =
-    useState(false);
+  const [viewStudentDetailsChecked, setViewStudentDetailsChecked] =useState(false);
+  const [studentPasswordResetChecked, setStudentPasswordResetChecked] =useState(false);
   const [companyChecked, setCompanyChecked] = useState(false);
   const [universityChecked, setUniversityChecked] = useState(false);
   const [delegatesChecked, setDelegatesChecked] = useState(false);
@@ -110,12 +108,8 @@ const AdminManagement = () => {
     setShowDropDown(!showStudentDropDown);
   };
 
-  useEffect(() => {
-    action.getSubAdminSUPERADMIN(1, "2023-05-31");
-  }, []);
-
   const handleChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+    `selected ${value}`;
   };
 
   const onFinish = (values: any) => {
@@ -229,6 +223,10 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    action.getSubAdminSUPERADMIN(1, "2023-05-31");
+  }, []);
 
   return (
     <div className="admin-management">

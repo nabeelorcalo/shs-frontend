@@ -30,9 +30,8 @@ const useCustomHook = () => {
     skip: boolean,
     step:number
   }): Promise<any> => {
-    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+    const config ={headers: { 'Content-Type': 'multipart/form-data' }}
+    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, config);
     return data;
   };
 

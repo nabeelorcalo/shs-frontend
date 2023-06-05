@@ -122,54 +122,8 @@ const endpoints = {
   GET_PROPERTY_AGENTS:"/property/get-all-property-agents",
   GET_ALL_REWARD_DATA: "/reward/findAll",
   REFRESH_TOKEN: "/auth/refresh-token",
-  // STUDENT_PROFILE: "/student/profile",
   GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
   STUDENT_PROFILE_COMPLETION:"/student/profile-completion",
 }
-// export default endpoints;
-  // SETTING_PERFORMANCE: '/performance',
 
-  // Dreamup Endpoints
-  // DREAMUP: {
-  //   GET_GOALS: '/dreamup/get-goals',
-  //   ADD_GOALS: 'dreamup/add-goal',
-  //   DELETE_GOAL: 'dreamup/delete-goal',
-  //   ADD_TASK: 'dreamup/add-task',
-  //   EDIT_TASK: 'dreamup/edit-task',
-  //   DELETE_TASK: 'dreamup/delete-task',
-  //   MARK_TASK: 'dreamup/mark-task',
-  //   UPDATE_LIFE_ASSESSMENT: 'dreamup/add-update-life-assesment',
-  //   LIFE_ASSESSMENT: 'dreamup/get-life-assesment',
-  // },
-  // AGENT_PROFILE: "/auth/profile",
-  // CHANGE_AGENT_PASSWORD: "/auth/change-password",
-
-  // Performance
-  // GET_PERFORMANCE_LIST: "/performance/evaluation/list",
-  // GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
-  // GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
-
-  // SETTINGS_TEMPLATES: "/template/findAll",
-  // SETTINGS_SHIFTS: "/shift/findAll",
-  // POST_NEW_SHIFTS: "/shift/add",
-  // DELETE_SHIFT: "/shift/delete",
-  // SETTINGS_TIMESHEET: "/timesheet/category/findAll",
-  // POST_NEW_TIMESHEET: "/timesheet/category/add",
-  // DELETE_TIMESHEET: "/timesheet/category/delete",
-  // EDIT_TIMESHEET: "/timesheet/category/edit",
-  // DELETE_PAYROLL: "/payroll/delete",
-
-  // RECIPES
-  // GET_ALL_RECIPES: "/recipe/get-recipies",
-  // GET_RECIPE: "/recipe/get-recipe",
-  // CREATE_RECIPE: "/recipe/add-recipe",
-  // UPDATE_RECIPE: "/recipe/edit-recipe",
-  // DELETE_RECIPE: "/recipe/delete-recipe",
-
-  // // Dashboard
-  // GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
-  // GET_DELEGATE_DASHBOARD: "delegate/dashboard",
-  // GET_DELEGATE_MEMBERS: "delegate/members",
-  // SEND_REFERENCE_INVITE: "delegate/invite",
-// };
 export default endpoints;

@@ -4,7 +4,7 @@ import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images
 import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
-
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 const { Option } = Select;
 
 const Documents = (props: any) => {
@@ -57,15 +57,14 @@ const Documents = (props: any) => {
                 name='normal_login'
                 className='login-form'
                 initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
 
                 <Form.Item
                   name="visaStatus"
                   label="Visa Status"
-                  rules={[
-                    { required: true, message: "Please select Visa Status!" },
-                  ]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
                   <Select
                     onChange={handleChange}
@@ -81,12 +80,7 @@ const Documents = (props: any) => {
                 <Form.Item
                   label="Cv"
                   name="cv"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: true }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <div className="dragger">
@@ -98,12 +92,7 @@ const Documents = (props: any) => {
                 <Form.Item
                   label="Passport"
                   name="passport"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please  Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: true }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <div className="dragger">
@@ -116,12 +105,7 @@ const Documents = (props: any) => {
                 <Form.Item
                   label="BRP"
                   name="brp"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: true }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <div className="dragger">
@@ -143,9 +127,6 @@ const Documents = (props: any) => {
                     <Form.Item>
                       <Button
                         className="login-form-button"
-                        // onClick={() => {
-                        //   setCurrentStep(5);
-                        //   }}
                         htmlType="submit"
                       >
                         Next

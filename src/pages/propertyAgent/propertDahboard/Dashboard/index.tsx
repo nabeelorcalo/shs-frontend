@@ -18,20 +18,28 @@ import { getRecentActivities } from "../../../../store/getListingState";
 
 const MainDashboard = () => {
   const navigate = useNavigate();
-  const {getAllStatsGraph,getStatGraph,propertgetlistingstata,generalActivityData,propertGetTotalAgents,getRecentListing}  = useCustomHook();
+  const
+    {
+      getAllStatsGraph,
+      getStatGraph,
+      propertgetlistingstata,
+      generalActivityData,
+      propertGetTotalAgents,
+      getRecentListing
+    } = useCustomHook();
   const propertyData = useRecoilState<any>(getListingState);
   const totalAgent = useRecoilState<any>(getPropertAgents);
   const recentList = useRecoilState<any>(getRecentListingState);
   const recentActivity = useRecoilState<any>(getRecentActivities);
   const graphStats = useRecoilState<any>(getListingGraphState);
-//  console.log(graphStats,"><><><>>graph data<<><><<>")
+  //  console.log(graphStats,"><><><>>graph data<<><><<>")
 
   useEffect(() => {
     propertgetlistingstata();
     propertGetTotalAgents();
-  getRecentListing();
+    getRecentListing();
     generalActivityData();
-    getAllStatsGraph();   
+    getAllStatsGraph();
   }, [])
 
   return (
@@ -159,7 +167,7 @@ const MainDashboard = () => {
               columnWidthRatio="0.4"
               marginRatio="1.5"
               color={["#4A9D77", "#E95060", "#FFC15D"]}
-              data={getStatGraph??[0]}
+              data={getStatGraph ?? [0]}
               height='50vh'
             />
           </div>

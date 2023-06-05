@@ -12,6 +12,7 @@ import { SHSLogo, BackButton } from "../../../../../assets/images";
 import { CommonDatePicker, DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -64,18 +65,13 @@ const UniversityDetails = (props: any) => {
                 name='normal_login'
                 className='login-form'
                 initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
-
                 <Form.Item
                   label="University"
                   name="universityName"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please University Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: false }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <DropDown
@@ -91,7 +87,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   name="course"
                   label="Course"
-                  rules={[{ required: true, message: "Please select Course!" }]}
+                  rules={[{ type: "string" }, { required: true }]}
                 >
                   <Select
                     onChange={handleChange}
@@ -109,12 +105,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="University Email"
                   name="universityMail"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your University Email!",
-                    },
-                  ]}
+                  rules={[{ type: "email" }, { required: true }]}
                   style={{ width: "100%" }}
                 >
                   <Input placeholder="University Email" className="input-style" />
@@ -122,12 +113,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   name="graduationYear"
                   label="Graduation Year"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select Graduation Year!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: true }]}
                 >
                   <Input placeholder="Enter Graduation Year" className="input-style" />
                 </Form.Item>
@@ -145,12 +131,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="Univeristy Approval"
                   name="uniApproval"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
+                  rules={[{ required: true }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <div className="dragger">
@@ -166,7 +147,6 @@ const UniversityDetails = (props: any) => {
                         setCurrentStep(4);
                       }}
                       className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
                     >
                       Skip
                     </Button>

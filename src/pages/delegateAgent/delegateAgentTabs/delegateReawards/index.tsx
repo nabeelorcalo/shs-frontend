@@ -13,15 +13,11 @@ const Rewards = () => {
   const [open, setOpen] = useState({ isOpen: false, id: '' });
   const action = useCustomHook();
   const rewardData = useRecoilState<any>(getRewardState);
-  console.log(rewardData, '<==<==<=')
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
 
-  useEffect(() => {
-    action.getAllRewards(1, 10);
-  }, [])
   const columns = [
     {
       dataIndex: "Roles",
@@ -70,6 +66,7 @@ const Rewards = () => {
       title: "Actions",
     },
   ];
+
   const onFinish = (values: any) => {
     const {
       role,
@@ -93,6 +90,10 @@ const Rewards = () => {
     // Call the API with the updated rewards object
     action.addRewards({ rewards });
   };
+
+  useEffect(() => {
+    action.getAllRewards(1, 10);
+  }, [])
 
   return (
     <div className="rewards">

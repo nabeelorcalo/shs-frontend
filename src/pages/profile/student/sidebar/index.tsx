@@ -18,7 +18,7 @@ const StudentSideBar = (props: any) => {
   console.log(studentInformation,'personalInformation')
 
   useEffect(() => {
-    action.getStudentProfile(44);
+    action.getStudentProfile(studentInformation[0]?.user?.id);
   },[])
 
   return (

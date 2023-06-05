@@ -12,35 +12,7 @@ import { useRecoilState } from "recoil";
 import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
-const ButtonStatus = (props: any) => {
-  const btnStyle: any = {
-    "Active": "text-success-bg-color",
-    "In Active": "secondary-bg-color",
-  }
-  return (
-    <p>
-      <span
-        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-      >
-        {props.status}
-      </span>
-    </p>
-  )
-}
 
-const CompanyData = ({ companyName, companyNature }: any) => {
-  return (
-    <div className="flex flex-row align-center gap-2">
-      <Avatar
-        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-      />
-      <div>
-        <p className="font-medium">{companyName}</p>
-        <p className="text-sm">{companyNature}</p>
-      </div>
-    </div>
-  )
-}
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -59,7 +31,16 @@ const StudentSystemAdmin = () => {
   })
 
   const action = useCustomHook()
-  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
+  const csvAllColum = [
+    "No",
+    "Date Applied",
+    "Company",
+    "Type of Work",
+    "Internship Type",
+    "Nature of Work",
+    "Position",
+    "Status"
+  ]
   const mainDrawerWidth = DrawerWidth();
 
   useEffect(() => {

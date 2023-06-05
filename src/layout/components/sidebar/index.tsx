@@ -45,6 +45,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   useEffect(() => {
     
   }, []);
+  
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -54,7 +55,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       navigate(item.key, {state: {from: location.pathname}});
     }
   };
-
   const menuSwitcher = (role: string) => {
     if (role === constants.STUDENT) {
       return itemsStudents;
@@ -91,7 +91,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      style={{ backgroundColor: currentTheme.colorPrimary }}
+      style={{ backgroundColor: token.colorPrimary  }}
       breakpoint="md"
       onBreakpoint={onBreakpoint}
     >

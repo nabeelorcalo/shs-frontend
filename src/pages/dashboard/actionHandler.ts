@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -8,7 +7,6 @@ import constants from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
 // import { agent_dashboard_widgets } from "../../store";
 
-// Chat operation and save into store
 const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS } = endpoints;
 const {
   AGENT,
@@ -31,21 +29,10 @@ const useCustomHook = () => {
  
   const {VERIIFCATION_STUDENT , STUDENT_PROFILE_COMPLETION} = apiEndpoints;
  
-
-
   //logged in user role
   const role = useRecoilValue(currentUserRoleState);
 
   //api's endpoints
-  const { AGENT_DASHBOARD_WIDGETS } = endpoints;
-  
-  
-
-  //api's endpoints
-
-  // const getData = async (type: string): Promise<any> => {
-  //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  // };
 
   const loadMoreData = () => {
     fetch(
@@ -73,18 +60,13 @@ const useCustomHook = () => {
     skip: boolean,
     step:number
   }): Promise<any> => {
-    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body,
-      {
-      headers: { 'Content-Type': 'multipart/form-data' }
-      }
-    );
+    const config ={headers: { 'Content-Type': 'multipart/form-data' }}
+    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, config);
     return data;
   };
 
-  
   const getStudentProfile = async () => {
     const { data } = await api.get(STUDENT_PROFILE_COMPLETION);
-    console.log(data,'><><><><')
     setGetProfile(data);
   };
 

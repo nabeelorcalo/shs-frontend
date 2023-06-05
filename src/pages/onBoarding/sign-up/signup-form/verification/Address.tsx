@@ -8,6 +8,7 @@ import {
 import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -55,17 +56,13 @@ const Address = (props: any) => {
                 name='normal_login'
                 className='login-form'
                 initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="Post Code"
                   name="postCode"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please Select Valid Code!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
                   <DropDown
                     name="Search"
@@ -82,12 +79,7 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Address"
                       name="address"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Address!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: true }]}
                       style={{ width: "100%" }}
                     >
                       <Input
@@ -100,12 +92,7 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Street"
                       name="street"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Street!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: true }]}
                       style={{ width: "100%" }}
                     >
                       <Input
@@ -120,12 +107,7 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Town"
                       name="town"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Town!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: true }]}
                       style={{ width: "100%" }}
                     >
                       <Input
@@ -138,9 +120,7 @@ const Address = (props: any) => {
                     <Form.Item
                       name="country"
                       label="Country"
-                      rules={[
-                        { required: false, message: "Please select Country!" },
-                      ]}
+                      rules={[{ type: "string" }, { required: false }]}
                     >
                       <DropDown
                         name="Select"
@@ -155,19 +135,13 @@ const Address = (props: any) => {
                 <Form.Item
                   label="Proof of Address"
                   name="proofOfAddress"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: true }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <div className="dragger">
                     <DragAndDropUpload files={proofFile} setFiles={setProofFile} />
                   </div>
                 </Form.Item>
-
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button

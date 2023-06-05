@@ -17,18 +17,16 @@ const useCustomHook = () => {
     withDrawalRequestState
   );
   const [getDelegate, setGetDelegate] = useRecoilState(getDelegateAdminState);
-  const [getDelegateAgents, setGetDelegateAgents] = useRecoilState(
-    getDelegateAgentsState
-  );
+  const [getDelegateAgents, setGetDelegateAgents] = useRecoilState(getDelegateAgentsState);
   const [currentReward, setCurrentReward] = useRecoilState(addDelegateRewardState);
-  const [rewardData, setRewardData] = useRecoilState(getRewardState)
+  const [rewardData, setRewardData] = useRecoilState(getRewardState);
 
   const {
     WITH_DRAWAL_REQUEST,
     GET_DELEGATE_ADMIN_DASHBOARD,
     GET_DELEGATE_AGENTS_DASHBOARD,
     ADD_DELEGATE_REWARDS,
-    GET_ALL_REWARD_DATA
+    GET_ALL_REWARD_DATA,
   } = apiEndPoints;
 
   const limit = 100;
@@ -62,18 +60,18 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getAllRewards = async (page:any, limit:any) => {
+  const getAllRewards = async (page: any, limit: any) => {
     const param = { page: page, limit: limit };
-    const { data } = await api.get(GET_ALL_REWARD_DATA, param)
-    setRewardData(data)
-  }
+    const { data } = await api.get(GET_ALL_REWARD_DATA, param);
+    setRewardData(data);
+  };
 
   return {
     getDelegateAdmin,
     getWithDrawalRequestData,
     getAgentDelegate,
     addRewards,
-    getAllRewards
+    getAllRewards,
   };
 };
 

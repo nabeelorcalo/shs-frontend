@@ -13,13 +13,9 @@ const Dashboard = () => {
   const [arrow, setArrow] = useState<any>("Show");
   const action = useCustomHook();
   const delegateAdmin = useRecoilState<any>(getDelegateAdminState);
-  console.log(delegateAdmin, "<====delegate for graph===");
-
   const totalMembersData = delegateAdmin[0].totalMembersData;
   const rewardsData = delegateAdmin[0].rewardData;
-  useEffect(() => {
-    action.getDelegateAdmin();
-  }, []);
+  
   const mergedArrow = useMemo(() => {
     if (arrow === "Hide") {
       return false;
@@ -86,6 +82,10 @@ const Dashboard = () => {
     }
     return totalRewards;
   };
+
+  useEffect(() => {
+    action.getDelegateAdmin();
+  }, []);
 
   return (
     <div className="dashbaord-delegate">

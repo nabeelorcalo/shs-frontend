@@ -14,7 +14,6 @@ const DelegateMain = () => {
   const [value, setValue] = useState("");
   const delegateAgent = useRecoilState<any>(getDelegateAgentsState);
   const searchValue = () => { };
-  console.log(delegateAgent, "<===Agents Dashboard")
 
   useEffect(() => {
     action.getAgentDelegate();

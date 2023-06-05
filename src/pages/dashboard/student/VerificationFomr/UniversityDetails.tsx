@@ -16,8 +16,6 @@ import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../../store";
 // import "../../../styles.scss";
-
-
 const { Option } = Select;
 
 const UniversityDetails = (props: any) => {
@@ -26,7 +24,6 @@ const UniversityDetails = (props: any) => {
   const [universityApproval, setUniversityApproval] = useState([])
   const [value, setValue] = useState<string>();
   const [searchValue, setSearchValue] = useState("");
-  const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const action = useCustomHook();
 
   const handleChange = (value: string) => {
@@ -44,13 +41,6 @@ const UniversityDetails = (props: any) => {
     action.verifcationStudentData(formData, { skip: false, step: 3 })
     setCurrentStep(4);
   }
-  useEffect(() => {
-    const universityName = universitySubAdmin[0]?.university?.name;
-    console.log(universityName);
-    return () => {
-      universityName
-    };
-  }, [universitySubAdmin[0]]);
 
   return (
     <div className="university-detail">

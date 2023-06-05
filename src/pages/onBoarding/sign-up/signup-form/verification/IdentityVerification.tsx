@@ -15,6 +15,7 @@ import { CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import useCustomHook from "../../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 const { Option } = Select;
 
 const StatusOptions = [
@@ -111,6 +112,7 @@ const IdentityVerification = (props: any) => {
                 name='normal_login'
                 className='login-form'
                 initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Row gutter={20}>
@@ -118,12 +120,7 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="First Name"
                       name="firstName"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your First Name!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: false }]}
                     >
                       <Input placeholder="First Name" className="input-style" />
                     </Form.Item>
@@ -132,12 +129,7 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="Last Name"
                       name="lastName"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Last Name!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: false }]}
                     >
                       <Input placeholder="Last Name" className="input-style" />
                     </Form.Item>
@@ -146,9 +138,7 @@ const IdentityVerification = (props: any) => {
                 <Form.Item
                   label="Country"
                   name="country"
-                  rules={[
-                    { required: true, message: "Please input your Country!" },
-                  ]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
                   <Select
                     placeholder='Select Country type'
@@ -166,12 +156,7 @@ const IdentityVerification = (props: any) => {
                 <Form.Item
                   label="Document Type"
                   name="documentType"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please input your Document Type!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
                   <Select
                     placeholder='Select document type'
@@ -211,7 +196,6 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
               </Form>
-
               <div>
                 <Typography className="text-center cursor-pointer" onClick={showModal}>
                   Why I need to verify myself?
