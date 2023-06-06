@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AccommodationCard, Notifications } from '../../../components';
+import { AccommodationCard, Loader, Notifications } from '../../../components';
 import "./style.scss";
 import {Empty, Spin} from 'antd';
 import thumb1 from '../../../assets/images/gallery/thumb1.png';
@@ -61,7 +61,7 @@ const AvailableProperties = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="available-properties">
-      <Spin spinning={loading}>
+      <Spin spinning={loading} indicator={<Loader />}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
             let tags: any[] = [];

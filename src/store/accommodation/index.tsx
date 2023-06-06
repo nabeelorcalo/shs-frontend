@@ -54,3 +54,13 @@ export const allPropertyAgentsState = atom({
   key: 'allPropertyAgentsState',
   default: []
 });
+
+export const paymentsListState = atom({
+  key: 'paymentsListState',
+  default: []
+});
+
+export const paymentsFilterState = atom({
+  key: 'paymentsFilterState',
+  default: {}
+});

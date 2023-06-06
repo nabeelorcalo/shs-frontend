@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Empty, Spin} from 'antd'
-import { AccommodationCard } from '../../../components'
+import { AccommodationCard, Loader } from '../../../components'
 import "./style.scss";
-import thumb1 from '../../../assets/images/gallery/thumb1.png'
 import { useRecoilValue, useResetRecoilState} from "recoil";
 import { savedPropertiesState, filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
@@ -15,7 +14,7 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
   const location = useLocation();
-  const {getSavedProperties} = useSavedPropertiesHook();
+  const {getSavedProperties, getSearchSavedProperties} = useSavedPropertiesHook();
   const savedProperties= useRecoilValue(savedPropertiesState);
   const filterParams = useRecoilValue(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
@@ -50,7 +49,7 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="saved-searches">
-      <Spin spinning={loading}>
+      <Spin spinning={loading} indicator={<Loader />}>
         <div className="shs-row placeholder-height">
           {savedProperties?.map((property:any) => {
             let tags: any[] = [];

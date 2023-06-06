@@ -7,7 +7,7 @@ import { savedPropertiesState } from "../../../store";
 const useSavedPropertiesHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { GET_SAVED_PROPERTIES } = endpoints;
+  const { GET_SAVED_PROPERTIES, GET_SEARCH_SAVED_PROPERTIES } = endpoints;
   const [savedProperties, setsavedProperties] = useRecoilState(savedPropertiesState)
 
 
@@ -27,8 +27,22 @@ const useSavedPropertiesHook = () => {
     }
   }
 
+  // Get Saved Properties
+  const getSearchSavedProperties = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any={}) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`${GET_SEARCH_SAVED_PROPERTIES}`, params);
+        setsavedProperties(res.data)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
-    getSavedProperties
+    getSavedProperties,
+    getSearchSavedProperties
   };
 };
 
