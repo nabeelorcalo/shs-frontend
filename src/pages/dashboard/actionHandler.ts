@@ -11,16 +11,17 @@ import {
   delegateAgenetMembersState,
   delegateAgentDashbaordState,
   growthAnalyticsDashboardState,
-  internshipsSummaryState,
+  topPerformersListState,
 } from "../../store";
 import constants from "../../config/constants";
 import { getRecentActivities } from "../../store/getListingState";
 import { Notifications } from "../../components";
 
-// import { agent_dashboard_widgets } from "../../store";
-
 // Chat operation and save into store
-const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS } = endpoints;
+
+//api's endpoints
+const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST } = endpoints;
+
 const {
   AGENT,
   MANAGER,
@@ -31,30 +32,33 @@ const {
   UNIVERSITY,
   INTERN,
 } = constants;
+
 const useCustomHook = () => {
-  const [countingCardData, setCountingCard] = useRecoilState(
-    agentDashboardWidgetsState
-  );
-
-  //user roles
-  const {
-    AGENT,
-    MANAGER,
-    COMPANY_ADMIN,
-    DELEGATE_AGENT,
-    STUDENT,
-    SYSTEM_ADMIN,
-    UNIVERSITY,
-    INTERN,
-  } = constants;
-
   //logged in user role
   const role = useRecoilValue(currentUserRoleState);
+  const [countingCardData, setCountingCard] = useRecoilState(agentDashboardWidgetsState);
+  //top performers list
+  const [topPerformerList, setTopPerformersList] = useRecoilState(topPerformersListState)
 
-  //api's endpoints
-  const { AGENT_DASHBOARD_WIDGETS, ATTENDANCE_OVERVIEW } = endpoints;
 
-  //api's endpoints
+
+
+  // get top performers list
+  const getTopPerformerList = async (query?: any) => {
+    let params: any = {
+      limit: query?.limit ?? 4,
+      sortByPerformance: true
+    }
+    if (query?.startDate && query?.endDate) {
+      params.startDate = query?.startDate;
+      params.endDate = query?.endDate;
+    }
+    await api.get(GET_PERFORMANCE_LIST, params).then(res => {
+      setTopPerformersList(res?.data?.map((obj: any) => ({ image: obj?.avatar, name: obj?.userName, designation: obj?.department, progress: `${obj?.sumOverallRating?.toFixed(2)}%` })));
+      console.log(res)
+    }
+    )
+  }
 
   // const getData = async (type: string): Promise<any> => {
   //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -72,7 +76,6 @@ const useCustomHook = () => {
   };
 
   // agent dashboard
-
   useEffect(() => {
     // agent dashboard
     if (role === AGENT) {
@@ -85,6 +88,8 @@ const useCustomHook = () => {
   return {
     loadMoreData,
     countingCardData,
+    topPerformerList,
+    getTopPerformerList,
   };
 };
 

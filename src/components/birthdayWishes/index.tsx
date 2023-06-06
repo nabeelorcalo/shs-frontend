@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Carousel, Avatar, Image } from "antd";
 import { Button } from "../Button";
 import "./style.scss";
+import { BirthdayWishGift } from "../../assets/images";
 interface BirthdayProps {
   user?: string;
   wishList: any;
@@ -34,8 +35,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                   <div className="flex pl-4 items-center">
                     <p className="font-normal text-sm text-secondary-color">
                       You wished
-                      <span className="secondary-color"> {item.name} </span> a
-                      Happay Birthday.
+                      <span className="secondary-color"> {item.name} </span> a Happay Birthday.
                     </p>
                   </div>
                   <div className="relative mt-4">
@@ -45,7 +45,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                       width={70}
                       height={70}
                       preview={false}
-                      src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/6b3fe963030867.5aa3707f0c627.gif"
+                      src={BirthdayWishGift}
                     />
                   </div>
                 </div>
@@ -53,29 +53,15 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                 <>
                   <div className="flex flex-col pl-4 ">
                     <p className="text-primary-color">{item.name}</p>
-                    <p className="font-normal text-sm text-secondary-color">
-                      Has birthday today.
-                    </p>
-                    <p className="font-normal text-sm light-grey-color">
-                      {item.date}
-                    </p>
+                    <p className="font-normal text-sm text-secondary-color">Has birthday today.</p>
+                    <p className="font-normal text-sm light-grey-color">{item.date}</p>
                   </div>
-                  <Image
-                    alt="birthday"
-                    width={70}
-                    height={70}
-                    preview={false}
-                    src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/6b3fe963030867.5aa3707f0c627.gif"
-                  />
+                  <Image alt="birthday" width={70} height={70} preview={false} src={BirthdayWishGift} />
                 </>
               )}
             </div>
 
-            <div
-              className={`flex flex-row ${
-                item?.isWished ? "" : "mt-4"
-              } items-end`}
-            >
+            <div className={`flex flex-row ${item?.isWished ? "" : "mt-4"} items-end`}>
               {!item?.isWished && (
                 <Button
                   label="Wish Now"
