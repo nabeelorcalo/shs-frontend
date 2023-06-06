@@ -16,6 +16,20 @@
       font-weight: 600;
       line-height: 28px;
       color: $text-primary-title-color;
+      display: flex;
+      align-items: center;
+
+      .ant-btn.ant-btn-text {
+        min-width: 72px;
+        align-items: center;
+        padding: 0 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        background-color: rgba(9, 161, 218, 0.1);
+      }
+
     }
 
     .withdrawals-header-actions {

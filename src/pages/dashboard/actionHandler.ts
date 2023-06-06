@@ -2,7 +2,18 @@ import { useEffect } from "react";
 import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { agentDashboardWidgetsState, currentUserRoleState, studentProfileCompletionState, studentProfileState } from "../../store";
+// import { agentDashboardWidgetsState, currentUserRoleState, , studentProfileState } from "../../store";
+import {
+  adminDashboardMembersDataState,
+  adminDashboardRegionAnalyticsState,
+  agentDashboardWidgetsState,
+  studentProfileCompletionState,
+  currentUserRoleState,
+  delegateAgenetMembersState,
+  delegateAgentDashbaordState,
+  growthAnalyticsDashboardState,
+  // internshipsSummaryState,
+} from "../../store";
 import constants from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
 // import { agent_dashboard_widgets } from "../../store";
@@ -33,6 +44,13 @@ const useCustomHook = () => {
   const role = useRecoilValue(currentUserRoleState);
 
   //api's endpoints
+  const { AGENT_DASHBOARD_WIDGETS, ATTENDANCE_OVERVIEW } = endpoints;
+
+  //api's endpoints
+
+  // const getData = async (type: string): Promise<any> => {
+  //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  // };
 
   const loadMoreData = () => {
     fetch(
@@ -42,7 +60,7 @@ const useCustomHook = () => {
       .then((body) => {
         return body.results;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   // agent dashboard
