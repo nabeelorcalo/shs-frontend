@@ -16,9 +16,12 @@ const { Paragraph } = Typography;
 import "./style.scss";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../../../../store";
 
 const AddLocation: React.FC = () => {
-  const { postSettingLocation, editSettingLocation } = useCustomHook();
+  const currentUser = useRecoilState(currentUserState);
+  const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
   const navigate = useNavigate()
   const [states, setState] = useState<any>(
     {
@@ -34,7 +37,8 @@ const AddLocation: React.FC = () => {
   const deselectArray: any = [];
 
   useEffect(() => {
-    getCountriesList()
+    getCountriesList();
+    getAllInterns(currentUser[0]?.company?.id)
   }, [])
 
   const breadcrumbArray = [
@@ -42,39 +46,11 @@ const AddLocation: React.FC = () => {
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
     { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
-  const selectArray = [
-    {
-      name: "Eva Smith",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Martha Stewart",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Evelyn Josh",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Arthur Lewis",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Tom Edward",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Carisle Cullen",
-      image: <SettingAvater />,
-    },
-  ];
-
-
 
   const onFinish = (values: any) => {
     const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
     let locationValues = {
-      intern: states.intern.length,
+      intern: states.intern,
       country: country,
       phoneCode: states.phoneCode,
       address,
@@ -93,6 +69,7 @@ const AddLocation: React.FC = () => {
     }
     navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`)
   }
+  console.log("states are", state);
 
   const initialValues = {
     intern: state?.intern,
@@ -132,6 +109,15 @@ const AddLocation: React.FC = () => {
     )
   })
 
+  const filteredInternsData = internsData?.map((item: any, index: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
   return (
     <div className="add-location">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -342,7 +328,7 @@ const AddLocation: React.FC = () => {
         </Form>
       </BoxWrapper>
       <SettingCommonModal
-        selectArray={selectArray}
+        selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={states.openModal}
         setOpenModal={setState}

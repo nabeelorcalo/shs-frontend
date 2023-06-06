@@ -37,7 +37,8 @@ const endpoints = {
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: "/Contract/list",
-  CONTRACT_DASHBOARD: "/Contract/dashboard",
+  CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
+  OFFER_LETTER_DASHBOARD:'/Contract/offer-letter-dashboard',
   DEL_CONTRACT: "/Contract/delete",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
@@ -88,7 +89,7 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
-  // End Point For Leaev Module For Intrne
+  // End Point For Leaev Module For Intrne 
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
