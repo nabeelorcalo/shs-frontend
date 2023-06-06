@@ -93,9 +93,9 @@ const useEarnWithUsHook = () => {
   const getWithdrawalRequests = async (payload: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
     const response = await api.get(WITH_DRAWAL_REQUEST, payload);
-    setWithdrawalRequests(response.data)
-    setTotalRequests(response.count)
-    setLoading(false)
+    setWithdrawalRequests(response.data);
+    setTotalRequests(response.count);
+    setLoading(false);
   }
 
   return {

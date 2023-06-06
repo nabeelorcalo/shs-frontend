@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Row, Col, Select, Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table'
-import { DropDown, SearchBar, GlobalTable, Loader } from '../../../components';
+import type { ColumnsType } from 'antd/es/table';
+import type { PaginationProps } from 'antd';
+import { SearchBar, Loader } from '../../../components';
 import { IconAngleDown } from '../../../assets/images'
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
 import { earnWithUsTabsState } from "../../../store";
+import dayjs from 'dayjs';
 import "./style.scss";
 interface DataType {
   key: React.Key;
@@ -24,35 +26,41 @@ const WithDrawalRequest = () => {
   const {getWithdrawalRequests, withdrawalRequests, totalRequests} = useEarnWithUsHook();
   const tabKey = useRecoilValue(earnWithUsTabsState);
   const [loadingRequest, setLoadingRequest] = useState(false);
-  const [filterParams, setFilterParams] = useState({page:1, limit: 5})
+  const [filterParams, setFilterParams] = useState({page:1, limit: 5});
   const [pageNo, setPageNo] = useState(1);
-  const [limit, setLimit] = useState(5);
-console.log('withdrawalRequests::: ', withdrawalRequests)
+  const [statusValue, setStatusValue] = useState(undefined);
+  const [searchValue, setSearchValue] = useState(undefined);
+
+
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
+    setStatusValue(undefined);
+    setSearchValue(undefined);
+    setFilterParams({page:1, limit: 5});
     if(tabKey === 'earnWithUsWithdrawalsRequest') {
-      getWithdrawalRequests(filterParams, setLoadingRequest)
+      getWithdrawalRequests(filterParams, setLoadingRequest);
     }
-  }, [tabKey, filterParams]);
+  }, [tabKey]);
 
-  const fetchTableData = async () => {
-    getWithdrawalRequests(filterParams, setLoadingRequest)
-  }
-    
+  useEffect(() => {
+    getWithdrawalRequests(filterParams, setLoadingRequest);
+  }, [filterParams]);
+
 
     
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handlePagination = (page: any) => {
-    setPageNo(page)
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setPageNo(page.current)
     setFilterParams((prev:any) => {
-      return {...prev, page: page}
+      return {...prev, page: page.current}
     })
   };
 
   const handleFilterStatus = (value:any) => {
+    setStatusValue(value)
     setFilterParams((prev:any) => {
       return {...prev, status: value}
     })
@@ -71,7 +79,6 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
   }
 
   
-
   /* Table Columns
   -------------------------------------------------------------------------------------*/
   const columns: ColumnsType<DataType> = [
@@ -94,6 +101,11 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
       dataIndex: "createdAt",
       key: "createdAt",
       title: "Date/Time",
+      render: (_, row) => {
+        return (
+          <>{dayjs(row.createdAt).format('MMM DD YYYY HH:mm')}</>
+        );
+      },
     },
     {
       dataIndex: "transactionId",
@@ -102,19 +114,21 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
     },
     {
       dataIndex: "amount",
-      render: (_: any, data: any) => (
-          <div
-            className="text-[red]"
-          >
-            {data.amount}
-          </div>),
-    key: "amount",
-    title: "Amount",
+      key: "amount",
+      title: "Amount",
+      render: (_, row) => (
+        <div className="text-[red]">
+          - {row.amount} GBP
+        </div>
+      ),
     },
     {
       dataIndex: "fee",
       key: "fee",
       title: "Fee",
+      render: (_, row) => (
+        <>£ {row.fee}</>
+      ),
     },
     {
       dataIndex: "status",
@@ -122,18 +136,16 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
       title: "Status",
       render: (_: any, row: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="requests-badge table-status-style text-center white-color"
           style={{
-            fontSize: '14px',
             backgroundColor:
             row.status === "pending"
-                ? "#B63546"
-                : row.status === "complete"
-                ? "#3DC575"
-                : row.status === "reject"
-                ? "#D83A52"
-                : "",
-            padding: " 2px 3px 2px 3px",
+            ? "#B63546"
+            : row.status === "complete"
+            ? "#3DC575"
+            : row.status === "reject"
+            ? "#D83A52"
+            : "",
           }}
         >
           {row.status === 'pending' ? 'Pending' : row.status === 'reject' ? 'Reject': 'Complete'}
@@ -146,7 +158,7 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
     <div className='withdrawal-requests'>
       <Row gutter={[20, 20]} className="flex items-center ">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleSearch} />
+          <SearchBar value={searchValue} handleChange={handleSearch} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <div className="filterby-status">
@@ -154,6 +166,7 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
               className="filled"
               placeholder="Status"
               onChange={handleFilterStatus}
+              value={statusValue}
               placement="bottomRight"
               suffixIcon={<IconAngleDown />}
             >
@@ -163,7 +176,7 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
             </Select>
           </div>
 
-          <div className="filterby-method">
+          {/* <div className="filterby-method">
             <Select
               className="filled"
               placeholder="Method"
@@ -175,7 +188,7 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
               <Select.Option value="COMPANY_ADMIN">Bank Transfer</Select.Option>
               <Select.Option value="COMPANY_MANAGER">Card Payment</Select.Option>
             </Select>
-          </div>
+          </div> */}
         </Col>
       </Row>
       <Row className="mt-4">
@@ -186,7 +199,7 @@ console.log('withdrawalRequests::: ', withdrawalRequests)
                 loading={{spinning: loadingRequest, indicator: <Loader />}}
                 columns={columns}
                 dataSource={withdrawalRequests}
-                onChange={handlePagination}
+                onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                 pagination={{ 
                   pageSize: 5,
                   current: pageNo,
