@@ -161,6 +161,7 @@ const endpoints = {
   SEND_REFERENCE_INVITE: "delegate/invite",
   GET_ALL_COMAPANIES:"/university/universityCompanies",
   ADD_PAYROLL:"/payroll/add",
-
+  EDIT_PAYROLL:"/payroll/edit",
+  EDIT_SHIFT:"/shift/edit",
 };
 export default endpoints;

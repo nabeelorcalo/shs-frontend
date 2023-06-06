@@ -113,3 +113,9 @@
     }
   }
 }
+
+.CustomTimePicker {
+  .ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+    color: #fff;
+  }
+}

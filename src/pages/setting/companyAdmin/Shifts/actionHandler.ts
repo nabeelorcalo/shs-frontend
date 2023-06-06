@@ -6,10 +6,9 @@ import { debounce } from "lodash";
 import { useState } from "react";
 import api from "../../../../api";
 
-
 // Shifts operation and save into store
 const useShiftsCustomHook = () => {
-  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS, DELETE_SHIFT, INTERN_LIST } = endpoints;
+  const { SETTINGS_SHIFTS, POST_NEW_SHIFTS, DELETE_SHIFT, INTERN_LIST, EDIT_SHIFT } = endpoints;
   const [shiftsData, setShiftsData] = useRecoilState(settingShiftsState);
   const [internsData, setInternsData] = useRecoilState(settingInternsState);
   const [isLoading, setIsLoading] = useState(false)
@@ -29,13 +28,13 @@ const useShiftsCustomHook = () => {
   };
 
   // Getting all interns data 
-  const getAllInterns = async (companyId:any) => {
+  const getAllInterns = async (companyId: any) => {
     const params = {
       companyId: 1
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
-    const { data } = await api.get(INTERN_LIST,query);
+    const { data } = await api.get(INTERN_LIST, query);
     setInternsData(data)
     setIsLoading(false);
   };
@@ -74,6 +73,26 @@ const useShiftsCustomHook = () => {
     Notifications({ title: "Success", description: 'Shift deleted', type: 'success' })
   };
 
+  // Edit shifts 
+  const editShifts = async (id: any, values: any) => {
+    const { applyForNewHire, interns, roundOffCap, shiftDuration, shiftName, from, to } = values;
+    const params = {
+      name: shiftName,
+      from: from,
+      to: to,
+      duration: shiftDuration,
+      roundOfCap: roundOffCap,
+      interns: interns,
+      applyToNewHires: applyForNewHire
+    }
+    setIsLoading(true)
+    await api.patch(`${EDIT_SHIFT}/${id}`, params);
+    setIsLoading(false)
+    // Navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateType });
+    getAllShifts()
+    Notifications({ title: "Success", description: 'Shift updated', type: 'success' })
+  };
+
 
   return {
     debouncedSearch,
@@ -81,6 +100,7 @@ const useShiftsCustomHook = () => {
     getAllInterns,
     deleteShifts,
     getAllShifts,
+    editShifts,
     internsData,
     shiftsData,
     isLoading,

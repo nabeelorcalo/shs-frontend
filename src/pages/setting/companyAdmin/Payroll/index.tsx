@@ -20,6 +20,7 @@ const SettingPayroll: React.FC = () => {
     {
       isDeleteModal: false,
       isEditModal: false,
+      action: '',
       id: null,
     }
   )
@@ -61,72 +62,75 @@ const SettingPayroll: React.FC = () => {
 
           <NavLink to={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}>
             <Button
-              size="middle"
+              onClick={() => setState({...state, action:'add'})}
+            size="middle"
               className="flex gap-2 setting-add-button white-color teriary-bg-color">
-              <SettingPayrollAddIcon /> Add Category
-            </Button>
-          </NavLink>
-        </div>
+            <SettingPayrollAddIcon /> Add Category
+          </Button>
+        </NavLink>
       </div>
-      {payrollData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
-        {!isLoading ? payrollData?.map((data: any, index: any) => {
-          const startingDate = dayjs(data?.from);
-          const endingDate = dayjs(data?.to);
-          const durationInDays = calculateDays(startingDate, endingDate);
-          return (
-            <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
-              <BoxWrapper className="w-full">
-                <div>
-                  <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
-                    {data?.name}
+    </div>
+      {
+    payrollData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
+      {!isLoading ? payrollData?.map((data: any, index: any) => {
+        const startingDate = dayjs(data?.from);
+        const endingDate = dayjs(data?.to);
+        const durationInDays = calculateDays(startingDate, endingDate);
+        return (
+          <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
+            <BoxWrapper className="w-full">
+              <div>
+                <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
+                  {data?.name}
+                </Text>
+                <span className="float-right cursor-pointer ">
+                  <DropDownForSetting
+                    link={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}
+                    state={state}
+                    setState={setState}
+                    editData={data}
+                  />
+                </span>
+              </div>
+              <div className="flex justify-between mt-2 w-full">
+                <div className="flex flex-col">
+                  <Text className="text-base font-medium mb-1 text-teriary-color">
+                    {data?.interns?.length < 10 ? `0${data?.interns?.length}` : data?.interns?.length}
+                    Employees
                   </Text>
-                  <span className="float-right cursor-pointer ">
-                    <DropDownForSetting
-                      link={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}
-                      state={state}
-                      setState={setState}
-                      editData={data}
-                    />
-                  </span>
-                </div>
-                <div className="flex justify-between mt-2 w-full">
-                  <div className="flex flex-col">
-                    <Text className="text-base font-medium mb-1 text-teriary-color">
-                      {data?.interns?.length < 10 ? `0${data?.interns?.length}` : data?.interns?.length}
-                      Employees
-                    </Text>
-                    <Text className="text-sm font-normal content-text ">
-                      Payroll Cycle:
-                      {`${dayjs(data?.from).format('MMM,YYYY')} - ${dayjs(data?.to).format('MMM,YYYY')}`
-                        // (${durationInDays}days)
-                      }
-                    </Text>
-                    <Text className="text-sm font-normal content-text">
-                      Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
-                    </Text>
-                    {/* <Text className="text-sm font-normal content-text">
+                  <Text className="text-sm font-normal content-text ">
+                    Payroll Cycle:
+                    {`${dayjs(data?.from).format('MMM,YYYY')} - ${dayjs(data?.to).format('MMM,YYYY')}`
+                      // (${durationInDays}days)
+                    }
+                  </Text>
+                  <Text className="text-sm font-normal content-text">
+                    Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
+                  </Text>
+                  {/* <Text className="text-sm font-normal content-text">
                       Added By: {data?.addedBy}
                     </Text> */}
-                  </div>
                 </div>
-              </BoxWrapper>
-            </Col>
-          );
-        }) : <Loader />}
+              </div>
+            </BoxWrapper>
+          </Col>
+        );
+      }) : <Loader />}
 
-      </Row>}
+    </Row>
+  }
 
-      <Alert
-        cancelBtntxt="Cancel"
-        okBtntxt="Delete"
-        state={state.isDeleteModal}
-        setState={setState}
-        type="error"
-        width={500}
-        okBtnFunc={() => deletePayroll(state.id)}
-        children={<p>Are you sure you want to delete this?</p>}
-      />
-    </div>
+  <Alert
+    cancelBtntxt="Cancel"
+    okBtntxt="Delete"
+    state={state.isDeleteModal}
+    setState={setState}
+    type="error"
+    width={500}
+    okBtnFunc={() => deletePayroll(state.id)}
+    children={<p>Are you sure you want to delete this?</p>}
+  />
+    </div >
   );
 };
 

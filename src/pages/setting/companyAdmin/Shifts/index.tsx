@@ -34,8 +34,6 @@ const SettingShifts: React.FC = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  // console.log('aksjsakjaslkjas', state);
-
   return (
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
@@ -79,8 +77,6 @@ const SettingShifts: React.FC = () => {
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                         link={`${ROUTES_CONSTANTS.ADD_SHIFT}`}
-                        // showDeleteModal={showDeleteModal}
-                        // setShowDeleteModal={setShowDeleteModal}
                         state={state}
                         setState={setState}
                         editData={data}

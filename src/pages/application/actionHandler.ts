@@ -21,9 +21,9 @@ const useCustomHook = () => {
     const params = {
       limit: 100,
       page: 1,
-      locationType: status.natureOfWork === 'All' ? null : status.natureOfWork,
-      salaryType: status.typeOfWork === 'All' ? null : status.typeOfWork,
-      stage: status.stage === 'All' ? null : status.stage,
+      locationType: status.natureOfWork === 'All' ? '' : status.natureOfWork,
+      salaryType: status.typeOfWork === 'All' ? '' : status.typeOfWork,
+      stage: status.stage === 'All' ? '' : status.stage,
       search: searchValue ? searchValue : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
@@ -112,6 +112,7 @@ const useCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
+
 
   return {
     getApplicationsData,

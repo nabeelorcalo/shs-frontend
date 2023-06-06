@@ -46,13 +46,13 @@ const Application = () => {
   })
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
     "Nature of Work", "Position", "Status"]
-
+  const timeFrameDropdownData = ["This weak", "Last weak", "This month", "Last month", "Date Range"]
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
 
   useEffect(() => {
-    getApplicationsData(state.natureOfWork, state.typeOfWork, state.stage, searchValue)
+    getApplicationsData(state, searchValue)
   }, [searchValue])
 
   const PopOver = ({ state, item }: any) => {
@@ -193,7 +193,6 @@ const Application = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-
   const handleApplyFilter = () => {
     getApplicationsData(state)
     setShowDrawer(false)
@@ -242,15 +241,22 @@ const Application = () => {
               <div key=".0">
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
-                    <p>Time Fram</p>
+                    <p>Time Frame</p>
+                    <DropDown name="Time Frame" options={timeFrameDropdownData}
+                      showDatePickerOnVal={'Date Range'}
+                      requireRangePicker placement="bottom"
+                      value={state.timeFrame}
+                      setValue={(e: any) => updateTimeFrame(e)}
+                    />
+                    {/* <p>Time Frame</p>
                     <DropDown
                       name="Select"
-                      options={["This weak", "Last weak", "This month", "Last month", "All"]}
+                      options={["This weak", "Last weak", "This month", "Last month", "Date Range"]}
                       setValue={(event:any) => { updateTimeFrame(event) }}
-                      showDatePickerOnVal="custom"
+                      showDatePickerOnVal="Date Range"
                       startIcon=""
                       value={state.timeFrame}
-                    />
+                    /> */}
                   </div>
                   <div className="flex flex-col gap-2">
                     <UserSelector
