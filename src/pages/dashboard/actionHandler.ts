@@ -11,6 +11,7 @@ import {
   delegateAgenetMembersState,
   delegateAgentDashbaordState,
   growthAnalyticsDashboardState,
+  internshipsSummaryState,
 } from "../../store";
 import constants from "../../config/constants";
 import { getRecentActivities } from "../../store/getListingState";
@@ -51,7 +52,7 @@ const useCustomHook = () => {
   const role = useRecoilValue(currentUserRoleState);
 
   //api's endpoints
-  const { AGENT_DASHBOARD_WIDGETS } = endpoints;
+  const { AGENT_DASHBOARD_WIDGETS, ATTENDANCE_OVERVIEW } = endpoints;
 
   //api's endpoints
 
@@ -67,7 +68,7 @@ const useCustomHook = () => {
       .then((body) => {
         return body.results;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   // agent dashboard

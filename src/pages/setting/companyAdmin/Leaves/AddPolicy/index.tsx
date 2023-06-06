@@ -287,7 +287,7 @@ const LeavesAddPolicy: React.FC = () => {
               </Form.Item>
               <div className="my-5">
                 <Form.Item name='applyForNewHire'>
-                  <Switch checked={state?.applyToNewHires} onChange={(e: any) => setState({ ...states, applyForNewHire: e })} />
+                  <Switch defaultChecked={state?.applyToNewHires} onChange={(e: any) => setState({ ...states, applyForNewHire: e })} />
                   <span className="px-3 ">Apply to all new hires</span>
                 </Form.Item>
               </div>

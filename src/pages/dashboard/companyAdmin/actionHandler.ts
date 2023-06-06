@@ -4,16 +4,19 @@ import { useRecoilState } from "recoil";
 import "jspdf-autotable";
 import api from "../../../api";
 import apiEndpints from "../../../config/apiEndpoints";
-import { announcementDataState } from "../../../store";
+import { announcementDataState, attendanceState } from "../../../store";
 import { debounce } from "lodash";
 import { Notifications } from "../../../components";
 
 const useCustomHook = () => {
   //get Announcement data from BE side
-  const { ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT } = apiEndpints;
+  const { ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT, ATTENDANCE_OVERVIEW } = apiEndpints;
   const [announcementData, setAnnouncementDataData] = useRecoilState(
     announcementDataState
   );
+
+  const [attendance, setAttendance] = useRecoilState(attendanceState);
+
 
   const [loadData, setLoadData] = useState(false);
 
@@ -50,12 +53,22 @@ const useCustomHook = () => {
     return debounce(changeHandler, 500);
   }, []);
 
+  // get Internships Summary graph 
+  const getAttendance = async () => {
+    api.get(ATTENDANCE_OVERVIEW).then((res) => {
+      console.log(res, "dattttttttttta");
+      setAttendance(res?.attendanceOver??[])
+    })
+  }
+
   return {
     getData,
     announcementData,
     changeHandler,
     addNewAnnouncement,
     debouncedResults,
+    attendance,
+    getAttendance,
   };
 };
 

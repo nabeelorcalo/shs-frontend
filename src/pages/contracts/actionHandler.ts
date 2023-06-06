@@ -22,7 +22,7 @@ const useCustomHook = () => {
 
 
   //get contracts
-  const getContractList = async (status: any = null, time: any = null, search: any = null) => {
+  const getContractList = async (status: any = null, search: any = null, filterType?: string, startDate?: string, endDate?: string) => {
     setLoading(true)
     const params = {
       page: 1,
@@ -30,9 +30,12 @@ const useCustomHook = () => {
       status: status === 'All' ? null : status,
       type: 'CONTRACT',
       currentDate: todayDate,
-      filterType: time === 'ALL' ? null : time,
-      search: search ?? null
+      search: search ?? null,
+      filterType: filterType,
+      startDate: startDate,
+      endDate: dayjs(endDate).format('YYYY-MM-DD'),
     }
+
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
     const { data } = await api.get(GET_CONTRACT_LIST, query);
     setContractList(data)
@@ -47,7 +50,7 @@ const useCustomHook = () => {
     getContractList()
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
-  
+
   return {
     contractDashboard,
     contractList,

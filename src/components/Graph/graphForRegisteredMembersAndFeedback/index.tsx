@@ -6,11 +6,11 @@ import constants from "../../../config/constants";
 
 export const RegisterMemberAndFeddbackGraph: FC<{
   graphName: string;
-  title?: string;
+  title?:string;
   styling?: any;
-  graphData?: any[];
+  graphData?: any
 }> = (props) => {
-  const { graphName, styling, title, graphData } = props;
+  const { graphName, styling,title, graphData } = props;
   const data =
     graphName === constants.REGISTER_MEMBERS
       ? graphData

@@ -66,6 +66,13 @@ export const adminDashboardRegionAnalyticsState = atom({
   default: {},
 });
 
+
+// Internships Summary graph
+export const attendanceState: any = atom({
+  key: "attendanceState",
+  default: [],
+});
+
 // weather api
 export const weatherApiState: any = atom({
   key: "weatherApiState",
