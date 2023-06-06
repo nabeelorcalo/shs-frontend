@@ -1,4 +1,4 @@
-import { Col, Divider, Row, Tooltip } from "antd"
+import { Col, Divider, Form, Input, Row, Space, Tooltip } from "antd"
 import { useState } from "react"
 import { InTooltipIcon } from "../../../assets/images"
 import { BoxWrapper, Button, GlobalTable, PageHeader } from "../../../components"
@@ -23,6 +23,7 @@ const mockData = [
 ]
 const AssesmentForm = () => {
   const [openSignatureModal, setOpenSignatureModal] = useState(false)
+  const [formData, setFormData] = useState({ title: '', assessmentForm: {learningCategorie: '', learningObjective: '', evidenceOfProgress: ''}})
   const colum = [
     {
       render: (_: any, data: any) => (<p>{data.no}</p>),
@@ -33,7 +34,7 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg" placeholder="Type here..."></textarea>
+          <textarea onChange={(_, type='learningObjective')=> console.log(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg" placeholder="Type here..."></textarea>
         </div>),
       title: <h4>Learning Objectives
         <Tooltip placement="right" title={"Identify your learning objectives when you started the internship"} color={'#363565'}>
@@ -45,7 +46,7 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg " placeholder="Type here..."></textarea>
+          <textarea onChange={(_, type='evidenceOfProgress')=> console.log(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg " placeholder="Type here..."></textarea>
         </div>),
       title: <h4>Evidence of Progress  <Tooltip placement="right" color={'#363565'} title={"Give evidence to how your learning objectives are met"}>
         <InTooltipIcon className="ml-5" />
@@ -62,17 +63,35 @@ const AssesmentForm = () => {
       />
       <BoxWrapper className="selefAssesment_detail_form_wrapper"
         boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
-        <p className="Assesment_form_text">You need to fill out this form for university review. Once you submit the form, your manager will give their remarks before you submit it to the university.</p>
-        <Row>
-          <Col lg={5}>
-            <h5 className="report_title ">Report Title</h5>
-          </Col>
-          <Col lg={5}>
-
-          </Col>
-        </Row>
+          <Space direction="vertical" size="large">
+            <Row>
+              <p className="Assesment_form_text">You need to fill out this form for university review. Once you submit the form, your manager will give their remarks before you submit it to the university.</p>
+            </Row>
+            <Row>
+              <Col md={8} lg={10} >
+                {/* <h5 className="report_title ">Report Title</h5> */}
+              </Col>
+              <Col>
+              <Form name="basic">
+                <Form.Item
+                  label="Report Title"
+                  name="title"
+                >
+                  <Input 
+                    id="01" 
+                    placeholder="Enter Title"
+                    type="text"  
+                    name="title" 
+                    onChange={(e)=>{
+                      // console.log(e.target.value);
+                      setFormData({ ...formData, title: e.target.value});
+                    }} />
+                </Form.Item>
+              </Form>
+              </Col>
+            </Row>
+          </Space>
         <Divider />
-
         <GlobalTable
           bgWhiteTable
           pagination={false}
