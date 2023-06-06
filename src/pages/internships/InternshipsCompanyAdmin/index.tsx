@@ -29,6 +29,7 @@ const InternshipsCompanyAdmin = () => {
     { value: "CLOSED", label: "Closed" },
     { value: "PENDING", label: "Pending" },
     { value: "DRAFT", label: "Draft" },
+    { value: "All", label: "All" },
   ]
 
   const { getAllInternshipsData, internshipData, isLoading,
@@ -41,7 +42,7 @@ const InternshipsCompanyAdmin = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+    getAllInternshipsData(state, searchValue);
   }, [searchValue])
 
   const handleDrawer = () => {
@@ -71,7 +72,7 @@ const InternshipsCompanyAdmin = () => {
   }
   // handle apply filters 
   const handleApplyFilter = () => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    getAllInternshipsData(state);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -100,6 +101,7 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+
   const filteredLocationData = locationsData?.map((item: any, index: any) => {
     return (
       {
@@ -109,6 +111,10 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+  const optionsWithAllLocations = [
+    ...filteredLocationData,
+    { key: 'all', value: 'All', label: 'All' },
+  ];
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -118,6 +124,11 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+
+  const optionsWithAllDepartments = [
+    ...filteredDeparmentsData,
+    { key: 'all', value: 'All', label: 'All' },
+  ];
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -151,7 +162,7 @@ const InternshipsCompanyAdmin = () => {
                       placeholder="Select"
                       value={state.location}
                       onChange={(event: any) => { handleLocation(event) }}
-                      options={filteredLocationData}
+                      options={optionsWithAllLocations}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -160,7 +171,7 @@ const InternshipsCompanyAdmin = () => {
                       placeholder="Select"
                       value={state.department}
                       onChange={(event: any) => { handleDepartment(event) }}
-                      options={filteredDeparmentsData}
+                      options={optionsWithAllDepartments}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">

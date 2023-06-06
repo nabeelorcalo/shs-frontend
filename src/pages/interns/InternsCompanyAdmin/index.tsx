@@ -229,7 +229,11 @@ const InternsCompanyAdmin = () => {
         avatar: <UserAvatar />
       }
     )
-  })
+  });
+  const allManagers = [
+    ...filteredManagersData,
+    { key: 'all', value: 'All', label: 'All' },
+  ];
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return (
       {
@@ -239,6 +243,10 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  const allStatuses = [
+    ...filteredStatusData,
+    { key: 'all', value: 'All', label: 'All' },
+  ];
   const filteredInternsData = getAllInters?.map((item: any, index: any) => {
     return (
       {
@@ -258,6 +266,10 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  const allDepartments = [
+    ...filteredDeaprtmentsData,
+    { key: 'all', value: 'All', label: 'All' },
+  ];
   const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
     return (
       {
@@ -267,6 +279,10 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  const allUniversities = [
+    ...filteredUniversitiesData,
+    { key: 'all', value: 'All', label: 'All' },
+  ];
 
   // intren certificate submition 
   const handleCertificateSubmition = (values: any, action?: any) => {
@@ -315,7 +331,7 @@ const InternsCompanyAdmin = () => {
                       manager: event
                     })
                   }}
-                  options={filteredManagersData}
+                  options={allManagers}
                   hasSearch={false}
                   handleSearch={(e: any) => console.log(e)}
                 />
@@ -329,7 +345,7 @@ const InternsCompanyAdmin = () => {
                       status: event
                     }))
                   }}
-                  options={filteredStatusData}
+                  options={allStatuses}
                 />
                 <UserSelector
                   label="Department"
@@ -341,7 +357,7 @@ const InternsCompanyAdmin = () => {
                       department: event
                     }))
                   }}
-                  options={filteredDeaprtmentsData}
+                  options={allDepartments}
                 />
                 <UserSelector
                   label="University"
@@ -353,7 +369,7 @@ const InternsCompanyAdmin = () => {
                       university: event
                     }))
                   }}
-                  options={filteredUniversitiesData}
+                  options={allUniversities}
                 />
                 <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
