@@ -33,6 +33,10 @@ const SavedSearches = () => {
     getSavedProperties(setLoading, filterParams)
   }, [filterParams])
 
+  useEffect(() => {
+    getSearchSavedProperties(setLoading, filterParams)
+  }, [filterParams])
+
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
