@@ -11,19 +11,20 @@ import { BackButton, DocumentUpload } from "../../../../assets/images";
 import { Link } from "react-router-dom";
 import { DragAndDropUpload } from "../../../../components";
 import useCustomHook from "../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [uploadFile, setUploadFile] = useState([])
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const { Option } = Select;
   const action = useCustomHook();
 
   const onFinish = (values: any) => {
     const formData = new FormData();
     formData.append("dbsFile", uploadFile[0]);
-    console.log(uploadFile[0], 'dddd')
-    action.verifcationStudentData(formData, { skip: false, step: 2 })
-    setCurrentStep(3);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -34,7 +35,7 @@ const DbsVerification = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex">
                 <div>
-                  <BackButton onClick={() => { setCurrentStep(1) }} />
+                  <BackButton onClick={() => { setCurrentStep(currentStep - 1) }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">
@@ -51,19 +52,15 @@ const DbsVerification = (props: any) => {
                 layout="vertical"
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="Upload"
                   name="dbs"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  className="mb-[20px]"
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -83,7 +80,11 @@ const DbsVerification = (props: any) => {
                   <Col xs={24} md={24} lg={12} xl={8}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => { setCurrentStep(3) }}>
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
+                      >
                       Skip
                     </Button>
                   </Col>

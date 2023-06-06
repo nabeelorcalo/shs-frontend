@@ -7,6 +7,13 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+}
 
 const UniveristyMain = () => {
   const action = useCustomHook()
@@ -101,14 +108,7 @@ const UniveristyMain = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:
-              item?.university?.status === "Pending"
-                ? "#FFC15D"
-                : item?.university?.status === "ACTIVE"
-                  ? "#3DC475"
-                  : item?.university?.status === "INACTIVE"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor:statuses[item?.university?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -130,7 +130,7 @@ const UniveristyMain = () => {
   ];
   const menu2 = (
     <Menu>
-      <Menu.Item onClick={() => navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate( `/${ROUTES_CONSTANTS.PROFILE}`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
         <a href="create-password">Password Reset</a>

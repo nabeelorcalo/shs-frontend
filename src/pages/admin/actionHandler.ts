@@ -19,9 +19,8 @@ const useCustomHook = () => {
   const { COMPANY_SUB_ADMIN_SYSTEM_ADMIN , ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN} = apiEndPoints;
   const limit = 100;
 
-  const getSubAdminSUPERADMIN = async (page:any,currentDate:any ) => {
-    const param = { page: page, limit: limit , currentDate:currentDate,filtertYPE:'THIS_MONTH'};
-    const { data } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN, param);
+  const getSubAdminSUPERADMIN = async ( ) => {
+    const { data } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN);
     setSubAdminSuperAdmin(data);
   };
 

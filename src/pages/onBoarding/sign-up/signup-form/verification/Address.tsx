@@ -12,6 +12,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [proofFile, setProofFile] = useState([])
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -21,7 +22,7 @@ const Address = (props: any) => {
   const onFinish = (values: any) => {
     console.log('address  : ', values)
     //  action.verifcationStudent({values,currentStep})
-    setCurrentStep(6);
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -38,7 +39,7 @@ const Address = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                      setCurrentStep(4);
+                      setCurrentStep(currentStep - 1);
                     }}
                   />
                 </div>
@@ -55,14 +56,14 @@ const Address = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="Post Code"
                   name="postCode"
-                  rules={[{ type: "string" }, { required: false }]}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <DropDown
                     name="Search"
@@ -79,8 +80,8 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Address"
                       name="address"
-                      rules={[{ type: "string" }, { required: true }]}
-                      style={{ width: "100%" }}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      className="mb=[20px]"
                     >
                       <Input
                         placeholder="Enter Address line"
@@ -92,8 +93,8 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Street"
                       name="street"
-                      rules={[{ type: "string" }, { required: true }]}
-                      style={{ width: "100%" }}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      className="mb=[20px]"
                     >
                       <Input
                         placeholder="Enter Street or location"
@@ -107,8 +108,8 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Town"
                       name="town"
-                      rules={[{ type: "string" }, { required: true }]}
-                      style={{ width: "100%" }}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      className="mb=[20px]"
                     >
                       <Input
                         placeholder="Enter Town line"
@@ -135,8 +136,8 @@ const Address = (props: any) => {
                 <Form.Item
                   label="Proof of Address"
                   name="proofOfAddress"
-                  rules={[{ type: "string" }, { required: true }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  className="mb=[20px]"
                 >
                   <div className="dragger">
                     <DragAndDropUpload files={proofFile} setFiles={setProofFile} />
@@ -145,10 +146,11 @@ const Address = (props: any) => {
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        setCurrentStep(6);
-                      }}
                       className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

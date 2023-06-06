@@ -5,10 +5,36 @@ import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { CaretDownOutlined } from "@ant-design/icons";
 const { Option } = Select;
+
+const visa = [
+  {
+    value: 'studentVisa',
+    label: 'Student Visa'
+  },
+  {
+    value: 'postStudyWorkVisaPSW',
+    label: 'Post Study Work Visa PSW'
+  },
+  {
+    value: 'AppliedPublicHistory',
+    label: 'Applied Public History'
+  },
+  {
+    value: 'WorkPermit',
+    label: 'Work Permit'
+  },
+  {
+    value: 'DependentonWorkPermit',
+    label: 'Dependent on Work Permit'
+  },
+
+]
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [cvFile, setCvFile] = useState([])
   const [passportFile, setPassportFile] = useState([])
   const [brpFile, setBrpFile] = useState([])
@@ -20,7 +46,7 @@ const Documents = (props: any) => {
   const onFinish = (values: any) => {
     console.log('document  : ', values)
     //  action.verifcationStudent({values,currentStep})
-    setCurrentStep(5);
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -37,7 +63,7 @@ const Documents = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                      setCurrentStep(3);
+                      setCurrentStep(currentStep - 1);
                     }}
                   />
                 </div>
@@ -64,24 +90,29 @@ const Documents = (props: any) => {
                 <Form.Item
                   name="visaStatus"
                   label="Visa Status"
-                  rules={[{ type: "string" }, { required: false }]}
+                  rules={[
+                    { required: !dynSkip }, { type: "string" }
+                  ]}
                 >
                   <Select
                     onChange={handleChange}
-                    options={[
-                      { value: 'studentVisa', label: 'Student Visa' },
-                      { value: 'postStudyWorkVisaPSW', label: 'Post Study Work Visa PSW' },
-                      { value: 'AppliedPublicHistory', label: 'Applied Public History' },
-                      { value: 'WorkPermit', label: 'Work Permit' },
-                      { value: 'DependentonWorkPermit', label: 'Dependent on Work Permit' },
-                    ]}
-                  />
+                    size="middle"
+                    suffixIcon={<CaretDownOutlined />}
+                  >
+                    {visa?.map((option: any) => (
+                      <Option key={option.value} value={option.value}>
+                        {option.label}
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item
                   label="Cv"
                   name="cv"
-                  rules={[{ type: "string" }, { required: true }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  className="mb-[20px]"
+                  rules={[
+                    { required: !dynSkip }, { type: "string" }
+                  ]}
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -92,8 +123,10 @@ const Documents = (props: any) => {
                 <Form.Item
                   label="Passport"
                   name="passport"
-                  rules={[{ type: "string" }, { required: true }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  rules={[
+                    { required: !dynSkip }, { type: "string" }
+                  ]}
+                  className="mb-[20px]"
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -105,8 +138,10 @@ const Documents = (props: any) => {
                 <Form.Item
                   label="BRP"
                   name="brp"
-                  rules={[{ type: "string" }, { required: true }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  rules={[
+                    { required: !dynSkip }, { type: "string" }
+                  ]}
+                  className="mb-[20px]"
                 >
                   <div className="dragger">
                     <DragAndDropUpload files={brpFile} setFiles={setBrpFile} />
@@ -115,10 +150,11 @@ const Documents = (props: any) => {
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        setCurrentStep(5);
-                      }}
                       className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

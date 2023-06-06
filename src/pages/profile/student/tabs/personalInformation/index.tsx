@@ -34,29 +34,25 @@ const PersonalInformation = () => {
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
-
+// this api is pending so cant remove this log 
   console.log(personalInformation,'personalInformation')
 
   useEffect(() => {
-    action.getStudentProfile(44);
-  },[])
-
+    action.getStudentProfile(personalInformation[0]?.user?.id);
+  }, [])
+ 
   const onFinish = (values: any) => {
    console.log(values);
-   
   };
-
-  console.log("name" , personalInformation[0].user?.firstName);
 
   return (
     <div className="personal-information">
       <Form
         name="basic"
         layout="vertical"
-        initialValues={{ remember: true }}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
-        autoComplete="off"
+        autoComplete="off"     
       >
         <div>
           <Typography className="title">Personal Details</Typography>
@@ -67,9 +63,9 @@ const PersonalInformation = () => {
               label="First Name"
               name="firstName"
               rules={[{ required: true }, { type: "string" }]}
-              
+  
             >
-              <Input  className="input-style" defaultValue={personalInformation[0].user?.firstName} />
+              <Input  className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -78,7 +74,7 @@ const PersonalInformation = () => {
               name="lastName"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <Input placeholder="Enter Last Name" className="input-style" />
+              <Input  className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>

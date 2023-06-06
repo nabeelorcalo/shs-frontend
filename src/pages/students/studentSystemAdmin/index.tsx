@@ -11,8 +11,13 @@ import "./style.scss";
 import { useRecoilState } from "recoil";
 import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
-
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+};
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -62,7 +67,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.userDetail?.firstName}   {item?.userDetail?.lastName}
+          {item?.userDetail?.firstName} {item?.userDetail?.lastName}
         </div>
       ),
       key: "name",
@@ -124,14 +129,7 @@ const StudentSystemAdmin = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:
-              item?.userDetail?.status === "Pending"
-                ? "#FFC15D"
-                : item?.userDetail?.status === "ACTIVE"
-                  ? "#3DC475"
-                  : item?.userDetail?.status === "inACTIVE"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor:statuses[item?.userDetail?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -156,7 +154,7 @@ const StudentSystemAdmin = () => {
       <Menu.Item
         key="1"
         onClick={() => {
-          navigate({ pathname: "/students/student-profile" })
+          navigate({ pathname: `/${ROUTES_CONSTANTS.PROFILE}` })
         }}
       >
         Profile

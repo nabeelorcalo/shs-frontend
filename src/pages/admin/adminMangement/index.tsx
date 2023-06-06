@@ -77,6 +77,12 @@ const cities = [
   { value: "Glassgow", label: "Glassgow" },
 ];
 
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+}
+
 const AdminManagement = () => {
   const action = useCustomHook();
   const [value, setValue] = useState("");
@@ -86,16 +92,20 @@ const AdminManagement = () => {
   const adminSubAdmin = useRecoilState<any>(adminSystemAdminState);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showStudentDropDown, setShowDropDown] = useState(false);
+  const [showCompanyDropDown, setShowCompanyDropDown] = useState(false);
+  const [showUniversityDropDown, setShowUniversityDropDown] = useState(false);
   const [form1Data, setForm1Data] = useState<any>();
   const [form2Data, setForm2Data] = useState({});
   const [allChecked, setAllChecked] = useState(false);
   const [dashboardChecked, setDashboardChecked] = useState(true);
   const [userManagementChecked, setUserManagementChecked] = useState({});
   const [studentChecked, setStudentChecked] = useState(false);
-  const [viewStudentDetailsChecked, setViewStudentDetailsChecked] =useState(false);
-  const [studentPasswordResetChecked, setStudentPasswordResetChecked] =useState(false);
+  const [viewStudentDetailsChecked, setViewStudentDetailsChecked] = useState(false);
+  const [studentPasswordResetChecked, setStudentPasswordResetChecked] = useState(false);
+  const [companyPasswordResetChecked, setCompanyPasswordResetChecked] = useState(false);
   const [companyChecked, setCompanyChecked] = useState(false);
   const [universityChecked, setUniversityChecked] = useState(false);
+  const [universityPasswordChecked, setUniversityPasswordChecked] = useState(false);
   const [delegatesChecked, setDelegatesChecked] = useState(false);
   const [agentManagementChecked, setAgentManagementChecked] = useState(false);
   const [issueManagementChecked, setIssueManagementChecked] = useState(false);
@@ -106,6 +116,12 @@ const AdminManagement = () => {
   };
   const handleStudentDropdownClick = () => {
     setShowDropDown(!showStudentDropDown);
+  };
+  const handleCompanyDropdownClick = () => {
+    setShowCompanyDropDown(!showCompanyDropDown);
+  };
+  const handleUniversityDropdownClick = () => {
+    setShowUniversityDropDown(!showUniversityDropDown);
   };
 
   const handleChangeSelect = (value: string) => {
@@ -121,8 +137,14 @@ const AdminManagement = () => {
           "studentPasswordReset": studentPasswordResetChecked,
           "viewStudentDetail": studentChecked
         },
-        "company": companyChecked,
-        "university": universityChecked,
+        "company": {
+          "companyPasswordReset": companyPasswordResetChecked,
+          "viewCompanyDetail":companyChecked
+        },
+        "univeristy": {
+          "universityPasswordReset": universityPasswordChecked,
+          "viewUniversityDetail":universityChecked
+        },
         "delegates": delegatesChecked
       },
       "agentManagement": agentManagementChecked,
@@ -181,21 +203,13 @@ const AdminManagement = () => {
       key: "date",
       title: "Date",
     },
-
     {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:
-              item?.status === "Pending"
-                ? "#FFC15D"
-                : item?.status === "ACTIVE"
-                  ? "#3DC475"
-                  : item?.status === "inACTIVE"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -225,7 +239,7 @@ const AdminManagement = () => {
   );
 
   useEffect(() => {
-    action.getSubAdminSUPERADMIN(1, "2023-05-31");
+    action.getSubAdminSUPERADMIN();
   }, []);
 
   return (
@@ -326,7 +340,11 @@ const AdminManagement = () => {
       </Row>
       <Modal
         open={open}
-        closeIcon={<CloseCircleFilled className="text-teriary-color text-xl" />}
+        closeIcon={<CloseCircleFilled
+          onClick={() => {
+            setOpen(false);
+          }}
+          className="text-teriary-color text-xl" />}
         footer={null}
         title="Add User"
         centered
@@ -502,23 +520,89 @@ const AdminManagement = () => {
                       </div>
                       <div className="p-2 m-3">
                         <Checkbox
+                          onClick={handleCompanyDropdownClick}
                           className="text-base font-normal primary-color"
                           checked={companyChecked}
                           onChange={(e) => setCompanyChecked(e.target.checked)}
                         >
-                          Company <RightOutlined className="text-base" />
+                          Company {showCompanyDropDown ? (
+                            <DownOutlined />
+                          ) : (
+                            <RightOutlined />
+                          )}
                         </Checkbox>
+                        {showCompanyDropDown && (
+                          <>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={companyChecked}
+                                onChange={(e) =>
+                                  setCompanyChecked(e.target.checked)
+                                }
+                              >
+                                View Company details
+                              </Checkbox>
+                            </div>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={companyPasswordResetChecked}
+                                onChange={(e) =>
+                                  setCompanyPasswordResetChecked(
+                                    e.target.checked
+                                  )
+                                }
+                              >
+                                Company Password Reset
+                              </Checkbox>
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className=" p-2 m-3">
                         <Checkbox
+                          onClick={handleUniversityDropdownClick}
                           className="text-base font-normal primary-color"
                           checked={universityChecked}
                           onChange={(e) =>
                             setUniversityChecked(e.target.checked)
                           }
                         >
-                          University <RightOutlined className="text-base" />
+                          University {showUniversityDropDown ? (
+                            <DownOutlined />
+                          ) : (
+                            <RightOutlined />
+                          )}
                         </Checkbox>
+                        {showUniversityDropDown && (
+                          <>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={universityChecked}
+                                onChange={(e) =>
+                                  setUniversityChecked(e.target.checked)
+                                }
+                              >
+                                View University Detail
+                              </Checkbox>
+                            </div>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={universityPasswordChecked}
+                                onChange={(e) =>
+                                  setUniversityPasswordChecked(
+                                    e.target.checked
+                                  )
+                                }
+                              >
+                                University Password Reset
+                              </Checkbox>
+                            </div>
+                          </>
+                        )}
                       </div>
                       <div className=" p-2 m-3">
                         <Checkbox
@@ -528,7 +612,7 @@ const AdminManagement = () => {
                             setDelegatesChecked(e.target.checked)
                           }
                         >
-                          Delegates <RightOutlined className="text-base" />
+                          Delegates 
                         </Checkbox>
                       </div>
                     </div>

@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { getRewardState } from "../../../../store/delegate";
 import { Select } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons/lib/icons';
+import constants from "../../../../config/constants";
 
 const Rewards = () => {
   const [open, setOpen] = useState({ isOpen: false, id: '' });
@@ -74,25 +75,29 @@ const Rewards = () => {
       maxWithdrawal
     } = values;
     let rewards: any = [];
-    if (role === 'INTERN') {
-      rewards.push({ role: 'INTERN', rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
-    } else if (role === 'STUDENT') {
-      rewards.push({ role: 'STUDENT', rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
-    } else if (role === 'UNIVERSITY') {
-      rewards.push({ role: 'UNIVERSITY', rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
-    } else if (role === 'COMPANY_MANAGER') {
-      rewards.push({ role: 'COMPANY_MANAGER', rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
-    } else if (role === 'COMPANY_ADMIN') {
-      rewards.push({ role: 'COMPANY_ADMIN', rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
-    } else if (role === 'DELEGATE_AGENT') {
-      rewards.push({ role: 'DELEGATE_AGENT', rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    if (role === constants.INTERN) {
+      rewards.push({ role: constants.INTERN, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.STUDENT) {
+      rewards.push({ role: constants.STUDENT, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.UNIVERSITY) {
+      rewards.push({ role: constants.UNIVERSITY, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.MANAGER) {
+      rewards.push({ role: constants.MANAGER, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.COMPANY_ADMIN) {
+      rewards.push({ role: constants.COMPANY_ADMIN, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.DELEGATE_AGENT) {
+      rewards.push({ role: constants.DELEGATE_AGENT, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
     }
     // Call the API with the updated rewards object
     action.addRewards({ rewards });
+    setOpen({
+      isOpen: false,
+      id: ""
+    })
   };
 
   useEffect(() => {
-    action.getAllRewards(1, 10);
+    action.getAllRewards();
   }, [])
 
   return (
@@ -133,12 +138,12 @@ const Rewards = () => {
                   placeholder='Select'
                   onChange={handleChange}
                   options={[
-                    { value: 'INTERN', label: 'INTERN' },
-                    { value: 'STUDENT', label: 'STUDENT' },
-                    { value: 'COMPANY_ADMIN', label: 'COMPANY ADMIN' },
-                    { value: 'UNIVERSITY', label: 'COMPANY ADMIN' },
-                    { value: 'COMPANY_MANAGER', label: 'COMPANY_MANAGER' },
-                    { value: 'DELEGATE_AGENT', label: 'DELEGATE_AGENT' },
+                    { value: constants.INTERN, label: 'INTERN' },
+                    { value: constants.STUDENT, label: 'STUDENT' },
+                    { value: constants.COMPANY_ADMIN, label: 'COMPANY ADMIN' },
+                    { value: constants.UNIVERSITY, label: 'University' },
+                    { value: constants.MANAGER, label: 'COMPANY_MANAGER' },
+                    { value: constants.DELEGATE_AGENT, label: 'DELEGATE_AGENT' },
                   ]}
                 />
               </Form.Item>

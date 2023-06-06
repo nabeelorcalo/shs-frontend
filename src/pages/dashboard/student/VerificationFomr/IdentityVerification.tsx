@@ -2,6 +2,8 @@ import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
 import "./verifications.scss";
 import useCustomHook from "../../actionHandler";
 import { CaretDownOutlined } from '@ant-design/icons';
+import { useState } from "react";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 const { Option } = Select;
 const StatusOptions = [
@@ -43,6 +45,7 @@ const countryOptions = [
 
 const IdentityVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const action = useCustomHook();
   const onFinish = (values: any) => {
     const { firstName, lastName, country, documentType } = values;
@@ -51,8 +54,8 @@ const IdentityVerification = (props: any) => {
     formData.append("lastName", lastName);
     formData.append("country", country);
     formData.append("documentType", documentType);
-    action.verifcationStudentData(formData, { skip: false, step: 1 })
-    setCurrentStep(2);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep +1);
   }
   return (
     <div className="identity">
@@ -77,7 +80,8 @@ const IdentityVerification = (props: any) => {
                 layout="vertical"
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
               >
                 <Row gutter={[20, 20]} className="sign-up-form-wrapper">
@@ -86,12 +90,7 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="First Name"
                       name="firstName"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your First Name!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Input placeholder="First Name" className="input-style" />
                     </Form.Item>
@@ -100,12 +99,7 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="Last Name"
                       name="lastName"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Last Name!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Input placeholder="Last Name" className="input-style" />
                     </Form.Item>
@@ -114,14 +108,11 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="Country"
                       name="country"
-                      rules={[
-                        { required: true, message: "Please input your Country!" },
-                      ]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Select
                         placeholder='Select Country type'
                         size="middle"
-                        style={{ width: "100%" }}
                         suffixIcon={<CaretDownOutlined />}
                       >
                         {countryOptions.map((option: any) => (
@@ -136,17 +127,11 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="Document Type"
                       name="documentType"
-                      rules={[
-                        {
-                          required: false,
-                          message: "Please input your Document Type!",
-                        },
-                      ]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Select
                         placeholder='Select document type'
                         size="middle"
-                        style={{ width: "100%" }}
                         suffixIcon={<CaretDownOutlined />}
                       >
                         {StatusOptions.map((option: any) => (
@@ -161,7 +146,10 @@ const IdentityVerification = (props: any) => {
                     <Row gutter={[20, 20]}>
                       <Col xs={24} md={24} lg={12} xl={8}>
                         <Button className="btn-cancel btn-cancel-verification"
-                          onClick={() => { setCurrentStep(2) }}
+                          onClick={() => {
+                            setDynSkip(true);
+                          }}
+                          htmlType="submit"
                         >
                           Skip
                         </Button>
@@ -181,9 +169,6 @@ const IdentityVerification = (props: any) => {
                 </Row>
               </Form>
             </div>
-            <Typography className="text-center">
-              Why I need to verify myself?
-            </Typography>
           </div>
         </Col>
       </Row>

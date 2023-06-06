@@ -16,17 +16,10 @@ const PropertyAgentTable = () => {
   const action = useCustomHook();
   const agentsData = useRecoilState<any>(getPropertyAgentState);
   const navigate = useNavigate();
-  const [state, setState] = useState({
-    openDrawer: false,
-    open: false,
-  })
+  const [state, setState] = useState({ openDrawer: false, open: false })
   const { openDrawer, open } = state
   const [value, setValue] = useState("")
   const searchValue = () => { };
-
-  useEffect(() => {
-    action.getPropertyAgents();
-  }, []);
 
   const handleChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
@@ -123,6 +116,10 @@ const PropertyAgentTable = () => {
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    action.getPropertyAgents();
+  }, []);
 
   return (
     <div className="property-agent-table">

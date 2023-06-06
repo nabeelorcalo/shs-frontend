@@ -7,8 +7,9 @@ import useCustomHook from "../../actionHandler";
 const Video = (props: any) => {
   const navigate = useNavigate();
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [profileVideo, setProfileVideo] = useState<any>([]);
-  
+
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
@@ -21,8 +22,8 @@ const Video = (props: any) => {
   const action = useCustomHook();
   const onFinish = (values: any) => {
     const formData = new FormData();
-    formData.append("video", profileVideo[0].originFileObj);
-    action.verifcationStudentData(formData, { skip: false, step: 7 })
+    formData.append("video", profileVideo[0]?.originFileObj);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
     navigate('/')
   }
 
@@ -34,7 +35,7 @@ const Video = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton onClick={() => { setCurrentStep(6) }} />
+                  <BackButton onClick={() => { setCurrentStep(currentStep - 1) }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">Video</Typography>
@@ -64,7 +65,7 @@ const Video = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
               >
                 <Form.Item
@@ -72,6 +73,12 @@ const Video = (props: any) => {
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                   className="flex justify-center mt-10"
+                  rules={[
+                    {
+                      required: !dynSkip,
+                      // message: "Please Select Valid Code!",
+                    },
+                  ]}
                 >
                   <Upload name="introVideo" listType="picture" beforeUpload={() => false}>
                     <div className="main-box-video">
@@ -87,8 +94,11 @@ const Video = (props: any) => {
                   <Col xs={24} md={24} lg={12} xl={6} xxl={6}>
                     <Button className="btn-cancel btn-cancel-verification"
                       onClick={() => {
+                        setDynSkip(true)
                         navigate('/')
-                      }} >
+                      }}
+                      htmlType="submit"
+                    >
                       Skip
                     </Button>
                   </Col>

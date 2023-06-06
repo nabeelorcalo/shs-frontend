@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button, Col, Form, Input, Row, Typography, Select } from 'antd';
-import {  BackButton } from "../../../../assets/images";
+import { BackButton } from "../../../../assets/images";
 import { DragAndDropUpload, DropDown } from "../../../../components";
 import { CaretDownOutlined } from '@ant-design/icons';
 import useCustomHook from "../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 const countryOptions = [
   {
@@ -27,6 +28,7 @@ const { Option } = Select;
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [proofFile, setProofFile] = useState([])
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -42,8 +44,8 @@ const Address = (props: any) => {
     formData.append("documentType", country);
     formData.append("document", proofFile[0]);
 
-    action.verifcationStudentData(formData, { skip: false, step: 5 })
-    setCurrentStep(6);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -55,7 +57,7 @@ const Address = (props: any) => {
               <div className="flex">
                 <div>
                   <BackButton onClick={() => {
-                    setCurrentStep(4);
+                    setCurrentStep(currentStep - 1);
                   }} />
                 </div>
                 <div className="mx-auto">
@@ -71,18 +73,14 @@ const Address = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: true }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="Post Code"
                   name="postcode"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please Select Valid Code!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <DropDown
                     name="Search"
@@ -99,13 +97,7 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Address"
                       name="address"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your Address!",
-                        },
-                      ]}
-                      style={{ width: "100%" }}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Input
                         placeholder="Enter Address line"
@@ -119,11 +111,10 @@ const Address = (props: any) => {
                       name="street"
                       rules={[
                         {
-                          required: true,
+                          required: !dynSkip,
                           message: "Please input your Street!",
                         },
                       ]}
-                      style={{ width: "100%" }}
                     >
                       <Input
                         placeholder="Enter Street or location"
@@ -139,11 +130,10 @@ const Address = (props: any) => {
                       name="town"
                       rules={[
                         {
-                          required: true,
+                          required: !dynSkip,
                           message: "Please input your Town!",
                         },
                       ]}
-                      style={{ width: "100%" }}
                     >
                       <Input
                         placeholder="Enter Town line"
@@ -155,14 +145,11 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Country"
                       name="country"
-                      rules={[
-                        { required: true, message: "Please input your Country!" },
-                      ]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Select
                         placeholder='Select Country type'
                         size="middle"
-                        style={{ width: "100%" }}
                         suffixIcon={<CaretDownOutlined />}
                       >
                         {countryOptions.map((option: any) => (
@@ -171,20 +158,14 @@ const Address = (props: any) => {
                           </Option>
                         ))}
                       </Select>
-                      {/* <Input placeholder="Country" className="input-style" /> */}
                     </Form.Item>
                   </Col>
                 </Row>
                 <Form.Item
                   label="Proof of Address"
                   name="proofOfAddress"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  className="mb-[20px]"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <div className="dragger">
                     <DragAndDropUpload files={proofFile} setFiles={setProofFile} />
@@ -194,8 +175,9 @@ const Address = (props: any) => {
                   <Col xs={24} md={24} lg={12} xl={8}>
                     <Button className="btn-cancel btn-cancel-verification"
                       onClick={() => {
-                        setCurrentStep(6);
+                        setDynSkip(true);
                       }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

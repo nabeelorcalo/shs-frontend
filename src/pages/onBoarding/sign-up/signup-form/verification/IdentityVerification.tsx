@@ -59,6 +59,7 @@ const countryOptions = [
 const IdentityVerification = (props: any) => {
   const action = useCustomHook();
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
   const [statusValue, setStatusValue] = useState("Select");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -75,8 +76,8 @@ const IdentityVerification = (props: any) => {
     formData.append("country", country);
     formData.append("documentType", documentType);
 
-    action.verifcationStudent(formData, { skip: false, step: 1 })
-    setCurrentStep(2);
+    action.verifcationStudent(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -111,7 +112,7 @@ const IdentityVerification = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
@@ -120,7 +121,7 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="First Name"
                       name="firstName"
-                      rules={[{ type: "string" }, { required: false }]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Input placeholder="First Name" className="input-style" />
                     </Form.Item>
@@ -129,7 +130,7 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="Last Name"
                       name="lastName"
-                      rules={[{ type: "string" }, { required: false }]}
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
                       <Input placeholder="Last Name" className="input-style" />
                     </Form.Item>
@@ -138,7 +139,7 @@ const IdentityVerification = (props: any) => {
                 <Form.Item
                   label="Country"
                   name="country"
-                  rules={[{ type: "string" }, { required: false }]}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <Select
                     placeholder='Select Country type'
@@ -156,7 +157,7 @@ const IdentityVerification = (props: any) => {
                 <Form.Item
                   label="Document Type"
                   name="documentType"
-                  rules={[{ type: "string" }, { required: false }]}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <Select
                     placeholder='Select document type'
@@ -174,11 +175,11 @@ const IdentityVerification = (props: any) => {
                 <Row gutter={[130, 10]}>
                   <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        // console.log('hello')
-                        // setCurrentStep(2);
-                      }}
                       className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>
@@ -208,10 +209,12 @@ const IdentityVerification = (props: any) => {
       <Modal
         centered
         width={700}
-        closeIcon={<IconCloseModal onClick={() => {
-          setIsModalOpen(false)
-        }}
-        />}
+        closeIcon={
+          <IconCloseModal onClick={() => {
+            setIsModalOpen(false)
+          }}
+          />
+        }
         open={isModalOpen}
         footer={null}>
         <div className="verify-modal">

@@ -4,35 +4,40 @@ import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
 import { activityData, graphData, innerCard } from "./DashboardMock";
 import useCustomHook from "../../actionHandler";
-import { Approved, Clip, Pending, People, Reject } from "../../../../assets/images";
+import {
+  Approved,
+  Clip,
+  Pending,
+  People,
+  Reject,
+} from "../../../../assets/images";
 import "../../style.scss";
 import { useRecoilState } from "recoil";
 import {
   getListingGraphState,
   getListingState,
   getPropertAgents,
-  getRecentListingState
+  getRecentListingState,
 } from "../../../../store/getListingState";
 import dayjs from "dayjs";
 import { getRecentActivities } from "../../../../store/getListingState";
+import constants from "../../../../config/constants";
 
 const MainDashboard = () => {
   const navigate = useNavigate();
-  const
-    {
-      getAllStatsGraph,
-      getStatGraph,
-      propertgetlistingstata,
-      generalActivityData,
-      propertGetTotalAgents,
-      getRecentListing
-    } = useCustomHook();
+  const {
+    getAllStatsGraph,
+    getStatGraph,
+    propertgetlistingstata,
+    generalActivityData,
+    propertGetTotalAgents,
+    getRecentListing,
+  } = useCustomHook();
   const propertyData = useRecoilState<any>(getListingState);
   const totalAgent = useRecoilState<any>(getPropertAgents);
   const recentList = useRecoilState<any>(getRecentListingState);
   const recentActivity = useRecoilState<any>(getRecentActivities);
   const graphStats = useRecoilState<any>(getListingGraphState);
-  //  console.log(graphStats,"><><><>>graph data<<><><<>")
 
   useEffect(() => {
     propertgetlistingstata();
@@ -40,12 +45,12 @@ const MainDashboard = () => {
     getRecentListing();
     generalActivityData();
     getAllStatsGraph();
-  }, [])
+  }, []);
 
   return (
     <div className="main-dashboard">
       <div style={{ overflowX: "scroll", cursor: "pointer" }}>
-        <div className="flex items-center gap-3" >
+        <div className="flex items-center gap-3">
           <div className="flex items-center flex-wrap xl:flex-nowrap gap-3">
             {totalAgent[0]?.map((item: any, index: any) => {
               return (
@@ -80,7 +85,7 @@ const MainDashboard = () => {
                     </Typography>
                   </div>
                 </div>
-              )
+              );
             })}
             {propertyData[0]?.map((item: any, index: any) => {
               return (
@@ -168,11 +173,19 @@ const MainDashboard = () => {
               marginRatio="1.5"
               color={["#4A9D77", "#E95060", "#FFC15D"]}
               data={getStatGraph ?? [0]}
-              height='50vh'
+              height="50vh"
             />
           </div>
         </Col>
-        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-card">
+        <Col
+          xxl={6}
+          xl={12}
+          lg={12}
+          md={24}
+          sm={24}
+          xs={24}
+          className="recent-card"
+        >
           <div>
             <Typography className="recent-card-typo">
               Recent Activities
@@ -185,7 +198,7 @@ const MainDashboard = () => {
                       <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
                           <Typography className="text-success-placeholder-color text-xs font-normal">
-                            {dayjs(item?.createdAt).format('DD/MMM')}
+                            {dayjs(item?.createdAt).format("DD/MMM")}
                           </Typography>
                         </Col>
                         <hr />
@@ -196,34 +209,41 @@ const MainDashboard = () => {
                             </Typography>
                             <div className="flex ">
                               <img
-                                src={item?.performedByuser?.profileImage?.metaData?.mimetype ?
-                                  `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.performedByuser?.profileImage.mediaId}.${item?.performedByuser?.profileImage.metaData.extension}`
-                                  :
-                                  "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                                src={
+                                  item?.performedByuser?.profileImage?.metaData
+                                    ?.mimetype
+                                    ? `${constants.MEDIA_URL}/${item?.performedByuser?.profileImage.mediaId}.${item?.performedByuser?.profileImage.metaData.extension}`
+                                    : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                                 }
                                 alt="userImage"
                                 style={{ width: "27px" }}
                               />
                               <Typography className="text-teriary-color text-sm font-normal mr-8 ml-2">
-                                {
-                                  item?.activity === "user sign up" ?
-                                    item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' registerd successfully'
-                                    :
-                                    item?.activity === 'addAssement' ?
-                                      item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' add assesment'
-                                      :
-                                      item?.activity === 'create internship' ?
-                                        item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' created internship'
-                                        :
-                                        item?.activity === 'create company manager' ?
-                                          item?.performedByuser?.firstName + " " + item?.performedByuser?.lastName + ' added company manager'
-                                          :
-                                          null
-                                }
+                                {item?.activity === "user sign up"
+                                  ? item?.performedByuser?.firstName +
+                                    " " +
+                                    item?.performedByuser?.lastName +
+                                    " registerd successfully"
+                                  : item?.activity === "addAssement"
+                                  ? item?.performedByuser?.firstName +
+                                    " " +
+                                    item?.performedByuser?.lastName +
+                                    " add assesment"
+                                  : item?.activity === "create internship"
+                                  ? item?.performedByuser?.firstName +
+                                    " " +
+                                    item?.performedByuser?.lastName +
+                                    " created internship"
+                                  : item?.activity === "create company manager"
+                                  ? item?.performedByuser?.firstName +
+                                    " " +
+                                    item?.performedByuser?.lastName +
+                                    " added company manager"
+                                  : null}
                               </Typography>
                             </div>
                             <Typography className="text-teriary-color text-sm font-normal">
-                              {dayjs(item?.createdAt).format('HH:mm a')}
+                              {dayjs(item?.createdAt).format("HH:mm a")}
                             </Typography>
                           </div>
                         </Col>
@@ -254,13 +274,11 @@ const MainDashboard = () => {
                   <>
                     <div
                       onClick={() =>
-                        item?.publicationStatus === "published"
+                        item?.publicationStatus === "published" ||
+                        "rejected" ||
+                        "pending"
                           ? navigate(`${item.id}`)
-                          : item?.publicationStatus === "rejected"
-                            ? navigate(`${item.id}`)
-                            : item?.publicationStatus === "pending"
-                              ? navigate(`${item.id}`)
-                              : ""
+                          : ""
                       }
                       className="inner-card"
                     >
@@ -283,7 +301,7 @@ const MainDashboard = () => {
                             </span>
                           </Typography>
                           <Typography className="text-xs font-normal text-success-placeholder-color">
-                            {dayjs(item?.createdAt).format('HH:mm a')}
+                            {dayjs(item?.createdAt).format("HH:mm a")}
                           </Typography>
                         </Col>
                         <Col xxl={6} xl={6} lg={6} md={6} sm={24} xs={24}>
@@ -292,20 +310,18 @@ const MainDashboard = () => {
                           </Typography>
                           <div
                             className="p-1 mt-4 rounded-[6px]"
-                            style=
-                            {{
+                            style={{
                               background:
                                 item?.publicationStatus === "published"
                                   ? "#3DC575"
                                   : item?.publicationStatus === "rejected"
-                                    ? "#D83A52"
-                                    : item?.publicationStatus === "pending"
-                                      ? "#FFC15D"
-                                      : "",
+                                  ? "#D83A52"
+                                  : item?.publicationStatus === "pending"
+                                  ? "#FFC15D"
+                                  : "",
                             }}
                           >
-                            <Typography
-                              className="cursor-pointer text-xs font-normal white-color text-center capitalize">
+                            <Typography className="cursor-pointer text-xs font-normal white-color text-center capitalize">
                               {item?.publicationStatus}
                             </Typography>
                           </div>

@@ -14,9 +14,7 @@ const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
   const [actionBox, setActionBox] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
-
-  console.log(studentInformation,'personalInformation')
-
+  
   useEffect(() => {
     action.getStudentProfile(studentInformation[0]?.user?.id);
   },[])

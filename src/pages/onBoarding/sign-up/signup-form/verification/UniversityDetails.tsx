@@ -11,11 +11,49 @@ import {
 import { SHSLogo, BackButton } from "../../../../../assets/images";
 import { CommonDatePicker, DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
+import { CaretDownOutlined } from '@ant-design/icons';
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+const { Option } = Select;
+
+
+const courses = [
+  {
+    values: "3DInteractionDesigninVirtualReality",
+    label: "3D Interaction Design in Virtual Reality"
+  },
+  {
+    values: "AccountingandFinance",
+    label: "Accounting and Finance"
+  },
+  {
+    values: "AppliedPublicHistory",
+    label: "Applied Public History"
+  },
+  {
+    values: "DependentonWorkPermit",
+    label: "Dependent on Work Permit"
+  },
+  {
+    values: "ArtHistoryCuratorship&RenaissanceCulture",
+    label: "Art History, Curatorship & Renaissance Culture"
+  },
+  {
+    values: "BankingandFinance&RenaissanceCulture",
+    label: "Banking and Finance"
+  },
+  {
+    values: "BrandManagement",
+    label: "Brand Management"
+  },
+
+]
+
+
 
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [universityApproval, setUniversityApproval] = useState([])
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<string>();
@@ -28,7 +66,7 @@ const UniversityDetails = (props: any) => {
   const onFinish = (values: any) => {
     console.log('uni  : ', values)
     //  action.verifcationStudent({values,currentStep})
-    setCurrentStep(4);
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -45,7 +83,7 @@ const UniversityDetails = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                      setCurrentStep(2);
+                      setCurrentStep(currentStep - 1);
                     }}
                   />
                 </div>
@@ -64,7 +102,7 @@ const UniversityDetails = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
@@ -87,33 +125,31 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   name="course"
                   label="Course"
-                  rules={[{ type: "string" }, { required: true }]}
+                  rules={[{ required: !dynSkip }, { type: "string" }]}
                 >
                   <Select
                     onChange={handleChange}
-                    options={[
-                      { value: '3DInteractionDesigninVirtualReality', label: '3D Interaction Design in Virtual Reality' },
-                      { value: 'AccountingandFinance', label: 'Accounting and Finance' },
-                      { value: 'AppliedPublicHistory', label: 'Applied Public History' },
-                      { value: 'DependentonWorkPermit', label: 'Dependent on Work Permit' },
-                      { value: 'ArtHistoryCuratorship&RenaissanceCulture', label: 'Art History, Curatorship & Renaissance Culture' },
-                      { value: 'BankingandFinance', label: 'Banking and Finance' },
-                      { value: 'BrandManagement', label: 'Brand Management' },
-                    ]}
-                  />
+                    size="middle"
+                    suffixIcon={<CaretDownOutlined />}
+                  >
+                    {courses?.map((option: any) => (
+                      <Option key={option.value} value={option.value}>
+                        {option.label}
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item
                   label="University Email"
                   name="universityMail"
-                  rules={[{ type: "email" }, { required: true }]}
-                  style={{ width: "100%" }}
+                  rules={[{ type: "email" }, { required: !dynSkip }]}
                 >
                   <Input placeholder="University Email" className="input-style" />
                 </Form.Item>
                 <Form.Item
                   name="graduationYear"
                   label="Graduation Year"
-                  rules={[{ type: "string" }, { required: true }]}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <Input placeholder="Enter Graduation Year" className="input-style" />
                 </Form.Item>
@@ -131,8 +167,8 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="Univeristy Approval"
                   name="uniApproval"
-                  rules={[{ required: true }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  rules={[{ required: !dynSkip }, { type: "string" }]}
+                  className="mb-[20px]"
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -143,10 +179,11 @@ const UniversityDetails = (props: any) => {
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        setCurrentStep(4);
-                      }}
                       className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

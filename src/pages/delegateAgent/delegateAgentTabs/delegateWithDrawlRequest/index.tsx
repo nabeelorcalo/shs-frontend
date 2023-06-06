@@ -8,13 +8,19 @@ import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'Completed': '#3DC475',
+  'Rejected': '#D83A52',
+}
+
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
-  
+
   useEffect(() => {
-    action.getWithDrawalRequestData(1);
+    action.getWithDrawalRequestData();
   }, [])
 
   const searchValue = () => { };
@@ -87,16 +93,9 @@ const WithDrawalRequest = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:
-              item?.status === "pending"
-                ? "#FFC15D"
-                : item?.status === "completed"
-                  ? "#3DC475"
-                  : item?.status === "rejected"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
-            textTransform:"capitalize"
+            textTransform: "capitalize"
           }}
         >
           {item?.status}
@@ -105,7 +104,6 @@ const WithDrawalRequest = () => {
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -169,12 +167,12 @@ const WithDrawalRequest = () => {
 
   return (
     <div className="with-drawal-request">
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex  justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
+          <div className="flex justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
             <DropDown
               name="Status"
               value={value}

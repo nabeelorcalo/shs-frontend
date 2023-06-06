@@ -12,13 +12,18 @@ import {
   IconLocation,
   IconPhone,
 } from "../../../../assets/images";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { getRecentListingState } from "../../../../store/getListingState";
-import sofa from "../../../../assets/images/profile/propertyagent/sofa.svg";
-import bed from "../../../../assets/images/profile/propertyagent/bed.svg";
 import useCustomHook from "../../actionHandler";
 import Documents from "./propertyTabs/documents";
+
+const statuses: any = {
+  'published': "#3DC575",
+  "rejected": '#D83A52',
+  'pending': 'FFC15D'
+}
+
 
 const PropertyDetail = () => {
   let params = useParams();
@@ -64,14 +69,7 @@ const PropertyDetail = () => {
             <Typography
               className="text-center white-color rounded-lg"
               style={{
-                background:
-                  status[2] === "published"
-                    ? "#3DC575"
-                    : status[2] === "rejected"
-                      ? "#D83A52"
-                      : status[2] === "pending"
-                        ? "#FFC15D"
-                        : "",
+                background:statuses[status[2]],
                 width: "82px",
                 padding: "2px 5px 5px 2px",
               }}
@@ -101,7 +99,7 @@ const PropertyDetail = () => {
                         src={
                           item?.user?.profileImage
                             ?
-                            `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
+                            `${constants.MEDIA_URL}/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
                             :
                             "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         }
@@ -147,8 +145,8 @@ const PropertyDetail = () => {
                           <img
                             src={
                               item?.metaData?.mimetype
-                                ? `http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com/${item?.mediaId}.${item?.metaData?.extension}`
-                                : sofa
+                                ? `${constants.MEDIA_URL}/${item?.mediaId}.${item?.metaData?.extension}`
+                                : ''
                             }
                             alt="userImage"
                             style={{ width: item.mediaSize, padding: "1rem" }}

@@ -15,13 +15,11 @@ const ListingRequest = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const recentList = useRecoilState<any>(getRecentListingState);
-  useEffect(() => {
-    action.getRecentListing();
-  }, []);
-
+  
   const handleChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
   };
+  
   const columns = [
     {
       dataIndex: "Name",
@@ -125,6 +123,10 @@ const ListingRequest = () => {
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    action.getRecentListing();
+  }, []);
 
   return (
     <div className="listing-request">

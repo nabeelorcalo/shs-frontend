@@ -15,7 +15,7 @@ const Dashboard = () => {
   const delegateAdmin = useRecoilState<any>(getDelegateAdminState);
   const totalMembersData = delegateAdmin[0].totalMembersData;
   const rewardsData = delegateAdmin[0].rewardData;
-  
+
   const mergedArrow = useMemo(() => {
     if (arrow === "Hide") {
       return false;

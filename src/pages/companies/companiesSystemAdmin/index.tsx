@@ -13,34 +13,10 @@ import { useRecoilState } from "recoil";
 import { companySystemAdminState } from "../../../store/companySystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
-const ButtonStatus = (props: any) => {
-  const btnStyle: any = {
-    "Active": "text-success-bg-color",
-    "Blocked": "secondary-bg-color",
-  }
-  return (
-    <p>
-      <span
-        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-      >
-        {props.status}
-      </span>
-    </p>
-  )
-}
-
-const CompanyData = ({ companyName, companyNature }: any) => {
-  return (
-    <div className="flex flex-row align-center gap-2">
-      <Avatar
-        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-      />
-      <div>
-        <p className="font-medium">{companyName}</p>
-        <p className="text-sm">{companyNature}</p>
-      </div>
-    </div>
-  )
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
 }
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -144,14 +120,7 @@ const CompaniesSystemAdmin = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:
-              item?.status === "Pending"
-                ? "#FFC15D"
-                : item?.status === "ACTIVE"
-                  ? "#3DC475"
-                  : item?.status === "inACTIVE"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -310,8 +279,22 @@ const CompaniesSystemAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button
+                      type="default"
+                      size="middle"
+                      className="button-default-tertiary"
+                      onClick={() => { }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="button-tertiary"
+                      onClick={() => { }}
+                    >
+                      Apply
+                    </Button>
                   </div>
                 </div>
               </div>

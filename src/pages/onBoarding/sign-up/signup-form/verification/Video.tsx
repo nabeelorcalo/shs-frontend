@@ -7,15 +7,21 @@ import useCustomHook from "../../../actionHandler";
 
 const Video = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [selectedVideo, setSelectedVideo] = useState({});
-  const handleVideoUpload = (event: any) => {
-    const file = event.target.files[0];
-    setSelectedVideo(file);
+  const [profileVideo, setProfileVideo] = useState<any>([]);
+
+  const normFile = (e: any) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    setProfileVideo(e?.fileList)
+    return e?.fileList;
   };
   const action = useCustomHook();
   const onFinish = (values: any) => {
-    console.log("Video", selectedVideo);
+    console.log("Video", profileVideo);
     // action.verifcationStudent({selectedVideo, currentStep});
     setCurrentStep(7);
   };
@@ -34,7 +40,7 @@ const Video = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                      setCurrentStep(6);
+                      setCurrentStep(currentStep - 1);
                     }}
                   />
                 </div>
@@ -66,29 +72,39 @@ const Video = (props: any) => {
                 layout="vertical"
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
               >
                 <Form.Item
                   name="introVideo"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
                   className="flex justify-center mt-10"
+                  rules={[
+                    {
+                      required: !dynSkip,
+                    },
+                  ]}
                 >
-                  <Input
-                    type="file"
-                    accept="video/*"
-                    onChange={handleVideoUpload}
-                  />
-                  <Button>Select Video</Button>
-                  {/* </Upload> */}
+                  <Upload name="introVideo" listType="picture" beforeUpload={() => false}>
+                    <div className="main-box-video">
+                      <div className="secondary-box-div">
+                        <div className="inner-box-video">
+                          <Round className="absolute left-[13px] top-[14px]" />
+                        </div>
+                      </div>
+                    </div>
+                  </Upload>
                 </Form.Item>
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        navigate("/");
-                      }}
                       className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                      onClick={() => {
+                        setDynSkip(true)
+                        navigate('/')
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

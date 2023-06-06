@@ -9,12 +9,13 @@ const { Option } = Select;
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState([])
   const action = useCustomHook();
   const onFinish = (values: any) => {
     console.log('dbsVerification  : ', values)
     //  action.verifcationStudent({values,currentStep})
-    setCurrentStep(3);
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -31,7 +32,7 @@ const DbsVerification = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                      setCurrentStep(1);
+                      setCurrentStep(currentStep - 1);
                     }}
                   />
                 </div>
@@ -50,15 +51,15 @@ const DbsVerification = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="Upload"
                   name="dbsUploadDocument"
-                  rules={[{ type: "string" }, { required: true }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  className="mb-[20px]"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -77,11 +78,11 @@ const DbsVerification = (props: any) => {
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
-                      onClick={() => {
-                        setCurrentStep(3);
-                      }}
                       className="btn-cancel btn-cancel-verification"
-                    //htmlType="submit"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

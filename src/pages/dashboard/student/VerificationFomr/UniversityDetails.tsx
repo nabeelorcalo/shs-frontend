@@ -16,12 +16,46 @@ import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../../store";
 // import "../../../styles.scss";
+import { CaretDownOutlined } from '@ant-design/icons';
 const { Option } = Select;
+
+const courses = [
+  {
+    values: "3DInteractionDesigninVirtualReality",
+    label: "3D Interaction Design in Virtual Reality"
+  },
+  {
+    values: "AccountingandFinance",
+    label: "Accounting and Finance"
+  },
+  {
+    values: "AppliedPublicHistory",
+    label: "Applied Public History"
+  },
+  {
+    values: "DependentonWorkPermit",
+    label: "Dependent on Work Permit"
+  },
+  {
+    values: "ArtHistoryCuratorship&RenaissanceCulture",
+    label: "Art History, Curatorship & Renaissance Culture"
+  },
+  {
+    values: "BankingandFinance&RenaissanceCulture",
+    label: "Banking and Finance"
+  },
+  {
+    values: "BrandManagement",
+    label: "Brand Management"
+  },
+
+]
 
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [data, setData] = useState<SelectProps["options"]>([]);
   const [universityApproval, setUniversityApproval] = useState([])
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [value, setValue] = useState<string>();
   const [searchValue, setSearchValue] = useState("");
   const action = useCustomHook();
@@ -38,8 +72,8 @@ const UniversityDetails = (props: any) => {
     formData.append("country", universityMail);
     formData.append("documentType", graduationYear);
     formData.append("document", universityApproval[0]);
-    action.verifcationStudentData(formData, { skip: false, step: 3 })
-    setCurrentStep(4);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
   }
 
   return (
@@ -50,7 +84,7 @@ const UniversityDetails = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex">
                 <div>
-                  <BackButton onClick={() => { setCurrentStep(2) }} />
+                  <BackButton onClick={() => { setCurrentStep(currentStep - 1) }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">
@@ -67,18 +101,13 @@ const UniversityDetails = (props: any) => {
                 layout="vertical"
                 name="normal_login"
                 className="login-form"
-                initialValues={{ remember: true }}
+                initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
               >
                 <Form.Item
                   label="University"
                   name="universityName"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please University Valid Document!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: false }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
                   <DropDown
@@ -94,43 +123,31 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   name="course"
                   label="Course"
-                  rules={[{ required: true, message: "Please select Course!" }]}
+                  rules={[{ required: !dynSkip }, { type: "string" }]}
                 >
                   <Select
                     onChange={handleChange}
-                    options={[
-                      { value: '3DInteractionDesigninVirtualReality', label: '3D Interaction Design in Virtual Reality' },
-                      { value: 'AccountingandFinance', label: 'Accounting and Finance' },
-                      { value: 'AppliedPublicHistory', label: 'Applied Public History' },
-                      { value: 'DependentonWorkPermit', label: 'Dependent on Work Permit' },
-                      { value: 'ArtHistoryCuratorship&RenaissanceCulture', label: 'Art History, Curatorship & Renaissance Culture' },
-                      { value: 'BankingandFinance', label: 'Banking and Finance' },
-                      { value: 'BrandManagement', label: 'Brand Management' },
-                    ]}
-                  />
+                    size="middle"
+                    suffixIcon={<CaretDownOutlined />}
+                  >
+                    {courses?.map((option: any) => (
+                      <Option key={option.value} value={option.value}>
+                        {option.label}
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item
                   label="University Email"
                   name="universityMail"
-                  rules={[
-                    {
-                      required: false,
-                      message: "Please input your University Email!",
-                    },
-                  ]}
-                  style={{ width: "100%" }}
+                  rules={[{ type: "email" }, { required: !dynSkip }]}
                 >
                   <Input placeholder="University Email" className="input-style" />
                 </Form.Item>
                 <Form.Item
                   name="graduationYear"
                   label="Graduation Year"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select Graduation Year!",
-                    },
-                  ]}
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
                   <Input placeholder="Enter Graduation Year" className="input-style" />
                 </Form.Item>
@@ -143,13 +160,8 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="Univeristy Approval"
                   name="uniApproval"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Upload Valid Document!",
-                    },
-                  ]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  className="mb-[20px]"
+                  rules={[{ required: !dynSkip }, { type: "string" }]}
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -161,7 +173,10 @@ const UniversityDetails = (props: any) => {
                 <Row gutter={[10, 10]}>
                   <Col xs={24} md={24} lg={12} xl={8}>
                     <Button className="btn-cancel btn-cancel-verification"
-                      onClick={() => { setCurrentStep(4) }}
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
                       Skip
                     </Button>

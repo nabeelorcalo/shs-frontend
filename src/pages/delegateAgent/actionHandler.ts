@@ -31,7 +31,7 @@ const useCustomHook = () => {
 
   const limit = 100;
 
-  const getWithDrawalRequestData = async (page: any) => {
+  const getWithDrawalRequestData = async (page: any = 1) => {
     const param = { page: page, limit: limit };
     const { data } = await api.get(WITH_DRAWAL_REQUEST, param);
     setWithDrawalItems(data);
@@ -60,7 +60,7 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getAllRewards = async (page: any, limit: any) => {
+  const getAllRewards = async (page: any = 1) => {
     const param = { page: page, limit: limit };
     const { data } = await api.get(GET_ALL_REWARD_DATA, param);
     setRewardData(data);
